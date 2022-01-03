@@ -1,16 +1,14 @@
 import React from 'react';
-import GridLayout from 'react-grid-layout';
-import {connect} from 'react-redux';
+import ReactGridLayout from "react-grid-layout";
 import '../../../../node_modules/react-grid-layout/css/styles.css';
-import '../../../../node_modules/react-resizable/css/styles.css';
 
+import '../../../../node_modules/react-resizable/css/styles.css';
 import './index.less';
 import AntdBar from "../../../component/charts/antd/bar";
 import RightSlideBox from "../right";
 import {addItem, deleteItem} from "../../../redux/actions/LayoutDesigner";
-import ReactGridLayout from "react-grid-layout";
 
-class DataXLayoutContent extends React.Component<any, any> {
+export default class DataXLayoutContent extends React.Component<any, any> {
 
 
     state = {
@@ -18,8 +16,8 @@ class DataXLayoutContent extends React.Component<any, any> {
     }
 
     generateElement = () => {
-        const {layoutDesigner, openRightSlideBox, updateActiveConfig} = this.props;
-        const {chartConfig, layoutConfig, currentActive} = layoutDesigner;
+        const {dataXDesigner} = this.props;
+        const {chartConfigMap, layoutConfig} = dataXDesigner;
         return layoutConfig.map((value: any, index: any, arr: any) => {
             switch (value.name) {
                 case 'AntdBaseBar':
@@ -28,23 +26,8 @@ class DataXLayoutContent extends React.Component<any, any> {
                 case 'AntdZoneBar':
                 case 'AntdStackBar':
                     return (
-                        <div key={`${value.i}`} style={{width: '100%', height: '100%'}}>
-                            <AntdBar key={`${value.i}`} openRightSlideBox={openRightSlideBox}
-                                     updateActiveConfig={updateActiveConfig}
-                                     currentActive={currentActive}
-                                     subType={value.name}
-                                     config={chartConfig.get(value.i)}
-                                     id={value.i}/>
-                        </div>
-                    )
-                case 'BaseBar':
-                    return (
-                        <div key={`${value.i}`} style={{width: '100%', height: '100%'}}>
-                            <AntdBar key={`${value.i}`} openRightSlideBox={openRightSlideBox}
-                                     updateActiveConfig={updateActiveConfig}
-                                     currentActive={currentActive}
-                                     config={chartConfig.get(value.i)}
-                                     id={value.i}/>
+                        <div key={value?.i + ''} style={{width: '100%', height: '100%'}}>
+                            <AntdBar id={value?.i} {...this.props}/>
                         </div>
                     )
                 default:
@@ -54,9 +37,9 @@ class DataXLayoutContent extends React.Component<any, any> {
     }
 
     onDrop = (layout: any, layoutItem: any, _event: any) => {
-        const {addItem, layoutDesigner} = this.props;
+        const {addItem, dataXDesigner} = this.props;
         const chartName = _event.dataTransfer.getData('chartName');
-        const item = {...layoutItem, ...{i: layoutDesigner.count + "", name: chartName}}
+        const item = {...layoutItem, ...{i: dataXDesigner?.count, name: chartName}}
         addItem(item);
 
         //todo 目前平滑拖拽效果还需要该state支持，后续研究后需要优化掉
@@ -95,11 +78,3 @@ class DataXLayoutContent extends React.Component<any, any> {
         );
     }
 }
-
-/**
- * 右滑框容器组件
- */
-export default connect(
-    (state: any) => ({layoutDesigner: state.layoutDesigner}),
-    {addItem, deleteItem}
-)(DataXLayoutContent)

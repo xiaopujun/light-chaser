@@ -4,7 +4,7 @@ import './App.less';
 import DataXLayoutDesigner from "./container/designer";
 
 
-class App extends Component {
+class App extends Component<any> {
     render() {
         return (
             <DataXLayoutDesigner/>

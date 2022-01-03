@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
-import {Button, Layout} from 'antd';
+import {Layout} from 'antd';
+import {connect} from "react-redux";
 import LayoutTools from "./left/tools";
 import DataXLayoutContent from "./content";
+import {addItem, deleteItem} from "../../redux/actions/LayoutDesigner";
 
 
 const {Header, Footer, Sider, Content} = Layout;
 
-class DataXLayoutDesigner extends Component<any, any> {
+class DataXLayoutDesigner extends Component<any> {
     render() {
         return (
             <Layout>
@@ -16,7 +18,7 @@ class DataXLayoutDesigner extends Component<any, any> {
                         <LayoutTools/>
                     </Sider>
                     <Content>
-                        <DataXLayoutContent/>
+                        <DataXLayoutContent {...this.props}/>
                     </Content>
                 </Layout>
                 <Footer>下</Footer>
@@ -25,4 +27,7 @@ class DataXLayoutDesigner extends Component<any, any> {
     }
 }
 
-export default DataXLayoutDesigner;
+export default connect(
+    (state: any) => ({dataXDesigner: state?.dataXDesigner || {}}),
+    {addItem, deleteItem}
+)(DataXLayoutDesigner)
