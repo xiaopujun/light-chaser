@@ -6,7 +6,7 @@ import '../../../../node_modules/react-resizable/css/styles.css';
 
 import './index.less';
 import AntdBar from "../../../component/charts/antd/bar";
-import RightSlideBox from "../../../container/designer/right";
+import RightSlideBox from "../right";
 import {addItem, deleteItem, updateActiveConfig} from "../../../redux/actions/LayoutDesigner";
 import {openRightSlideBox} from '../../../redux/actions/RightSildeBox';
 import ReactGridLayout from "react-grid-layout";

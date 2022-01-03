@@ -16,7 +16,7 @@ import './index.less';
  * 右滑框外壳组件
  * @description:用于展示右滑框，控制右滑框的显示与隐藏
  */
-class Index extends Component {
+class Index extends Component<any, any> {
 
     onClose = () => {
         const {closeRightSildeBox} = this.props;
@@ -42,7 +42,7 @@ class Index extends Component {
  * 右滑框容器组件
  */
 export default connect(
-    state => ({
+    (state: any) => ({
         rightSildeBox: state.rightSildeBox,
         layoutDesigner: state.layoutDesigner
     }),
