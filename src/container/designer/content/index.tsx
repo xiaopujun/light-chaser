@@ -1,23 +1,17 @@
 import React from 'react';
 import GridLayout from 'react-grid-layout';
-import 'antd/dist/antd.css';
-import {Layout, Button} from 'antd';
 import {connect} from 'react-redux';
-import {AreaChartOutlined} from '@ant-design/icons';
 import '../../../../node_modules/react-grid-layout/css/styles.css';
 import '../../../../node_modules/react-resizable/css/styles.css';
 
 import './index.less';
-import GlowBorder from "../../../component/border/four-angle-glow";
 import AntdBar from "../../../component/charts/antd/bar";
 import RightSlideBox from "../../../container/designer/right";
 import {addItem, deleteItem, updateActiveConfig} from "../../../redux/actions/LayoutDesigner";
 import {openRightSlideBox} from '../../../redux/actions/RightSildeBox';
-import ComponentLib from "../left";
+import ReactGridLayout from "react-grid-layout";
 
-const {Content, Sider} = Layout;
-
-class DataZBigScreenDesigner extends React.Component {
+class DataXLayoutContent extends React.Component<any, any> {
 
 
     state = {
@@ -27,7 +21,7 @@ class DataZBigScreenDesigner extends React.Component {
     generateElement = () => {
         const {layoutDesigner, openRightSlideBox, updateActiveConfig} = this.props;
         const {chartConfig, layoutConfig, currentActive} = layoutDesigner;
-        return layoutConfig.map((value, index, arr) => {
+        return layoutConfig.map((value: any, index: any, arr: any) => {
             switch (value.name) {
                 case 'AntdBaseBar':
                 case 'AntdGroupBar':
@@ -60,7 +54,7 @@ class DataZBigScreenDesigner extends React.Component {
         })
     }
 
-    onDrop = (layout, layoutItem, _event) => {
+    onDrop = (layout: any, layoutItem: any, _event: any) => {
         const {addItem, layoutDesigner} = this.props;
         const chartName = _event.dataTransfer.getData('chartName');
         const item = {...layoutItem, ...{i: layoutDesigner.count + "", name: chartName}}
@@ -71,45 +65,34 @@ class DataZBigScreenDesigner extends React.Component {
         this.setState({layout: layout});
     };
 
-    onDropDragOver = (e) => {
+    onDropDragOver = (e: any) => {
         return {w: 8, h: 8}
     }
 
     render() {
         return (
-            <Layout className={'big-screen-layout-designer'} style={{minHeight: '100vh'}}>
-                <Sider width={300} className={'left-tools'}>
-                    <div className="logo">DataZ-可视化大屏布局设计器</div>
-                    <ComponentLib/>
-                </Sider>
-                <Layout className="site-layout">
-                    {/*<Header className="site-layout-background" style={{padding: 0}}/>*/}
-                    <Content className={'designer-content'} style={{margin: '0'}}>
-                        <div className="site-layout-background" style={{padding: 15, height: window.innerHeight}}>
-                            <GridLayout className="layout"
-                                        {...this.props}
-                                        layout={this.state.layout}
-                                        onDropDragOver={this.onDropDragOver}
-                                        cols={48}
-                                        rowHeight={10}
-                                        onDrop={this.onDrop}
-                                        margin={[10, 10]}
-                                        useCSSTransforms={true}
-                                        measureBeforeMount={false}
-                                        preventCollision={true}
-                                        allowOverlap={true}
-                                        onLayoutChange={this.onLayoutChange}
-                                        isBounded={true}
-                                        isDroppable={true}
-                                        height={window.innerHeight}
-                                        width={window.innerWidth - 375}>
-                                {this.generateElement()}
-                            </GridLayout>
-                        </div>
-                    </Content>
-                </Layout>
+            <>
+                <div className="site-layout-background" style={{padding: 5, height: window.innerHeight}}>
+                    <ReactGridLayout className="layout"
+                                     {...this.props}
+                                     layout={this.state.layout}
+                                     onDropDragOver={this.onDropDragOver}
+                                     cols={48}
+                                     rowHeight={10}
+                                     onDrop={this.onDrop}
+                                     margin={[10, 10]}
+                                     useCSSTransforms={true}
+                                     preventCollision={true}
+                                     allowOverlap={true}
+                                     isBounded={true}
+                                     isDroppable={true}
+                                     style={{height: window.innerHeight - 144}}
+                                     width={window.innerWidth - 375}>
+                        {this.generateElement()}
+                    </ReactGridLayout>
+                </div>
                 <RightSlideBox/>
-            </Layout>
+            </>
         );
     }
 }
@@ -118,6 +101,6 @@ class DataZBigScreenDesigner extends React.Component {
  * 右滑框容器组件
  */
 export default connect(
-    state => ({layoutDesigner: state.layoutDesigner}),
+    (state: any) => ({layoutDesigner: state.layoutDesigner}),
     {addItem, deleteItem, openRightSlideBox, updateActiveConfig}
-)(DataZBigScreenDesigner)
+)(DataXLayoutContent)

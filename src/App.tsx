@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
+import 'antd/dist/antd.css';
 import './App.less';
-import LayoutDesignre from "./container/designer/content";
+import DataXLayoutDesigner from "./container/designer";
 
 
 class App extends Component {
     render() {
         return (
-            <LayoutDesignre/>
+            <DataXLayoutDesigner/>
         );
     }
 }
