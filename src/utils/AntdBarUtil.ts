@@ -11,7 +11,7 @@ import * as initData from '../init/data/antd-bar';
  * @param data 本次更新的数据
  * @returns {*}
  */
-export function antdBarPropertiesProcess(preState, data) {
+export function antdBarPropertiesProcess(preState: any, data: any) {
     const {chartConfig, currentActive} = preState;
     const {activeId} = currentActive;
     let tempConfig = chartConfig.get(activeId);
@@ -26,9 +26,9 @@ export function antdBarPropertiesProcess(preState, data) {
  * 获取条形图的数据分组个数,主要用于设置图形的颜色组
  * @param data
  */
-export function getBarDataGroup(data) {
+export function getBarDataGroup(data: any) {
     let groups = new Set();
-    data.map((item, index) => {
+    data.map((item: any, index: any) => {
         groups.add(item.type);
     })
     return groups.size;

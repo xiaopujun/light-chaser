@@ -1,14 +1,6 @@
 import React, {Component} from 'react';
 import {Drawer} from 'antd';
 import {connect} from 'react-redux';
-import {closeRightSildeBox} from '../../../redux/actions/RightSildeBox';
-import {
-    updateTitleConfig,
-    updateBorderConfig,
-    updateBackgroundConfig,
-    updateActiveConfig,
-    updateChartConfig,
-} from '../../../redux/actions/LayoutDesigner';
 import ElementConfig from "../../../component/config/ElementConfig";
 import './index.less';
 
@@ -46,12 +38,5 @@ export default connect(
         rightSildeBox: state.rightSildeBox,
         layoutDesigner: state.layoutDesigner
     }),
-    {
-        closeRightSildeBox,
-        updateTitleConfig,
-        updateBorderConfig,
-        updateBackgroundConfig,
-        updateActiveConfig,
-        updateChartConfig,
-    }
+    {}
 )(Index)

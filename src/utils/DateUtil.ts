@@ -4,8 +4,8 @@
  * @param format 日期时间格式
  * @returns {*} 格式化后的日期时间字符串
  */
-export const dataTimeFormat = (date, format) => {
-    let o = {
+export const dataTimeFormat = (date: any, format: any) => {
+    let o: any = {
         "M+": date.getMonth() + 1, //月份
         "d+": date.getDate(), //日
         "h+": date.getHours(), //小时

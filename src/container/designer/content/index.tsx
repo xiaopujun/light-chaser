@@ -7,8 +7,7 @@ import '../../../../node_modules/react-resizable/css/styles.css';
 import './index.less';
 import AntdBar from "../../../component/charts/antd/bar";
 import RightSlideBox from "../right";
-import {addItem, deleteItem, updateActiveConfig} from "../../../redux/actions/LayoutDesigner";
-import {openRightSlideBox} from '../../../redux/actions/RightSildeBox';
+import {addItem, deleteItem} from "../../../redux/actions/LayoutDesigner";
 import ReactGridLayout from "react-grid-layout";
 
 class DataXLayoutContent extends React.Component<any, any> {
@@ -102,5 +101,5 @@ class DataXLayoutContent extends React.Component<any, any> {
  */
 export default connect(
     (state: any) => ({layoutDesigner: state.layoutDesigner}),
-    {addItem, deleteItem, openRightSlideBox, updateActiveConfig}
+    {addItem, deleteItem}
 )(DataXLayoutContent)
