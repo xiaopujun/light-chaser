@@ -1,4 +1,14 @@
 /**
+ * 组件基础属性
+ */
+export interface ElemBaseProps {
+    padding: string;
+    margin: string;
+    border: string;
+    backgroundColor: string;
+}
+
+/**
  * redux-action类型
  */
 export interface Action {

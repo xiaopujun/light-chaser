@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactGridLayout from "react-grid-layout";
 import '../../../../node_modules/react-grid-layout/css/styles.css';
-
 import '../../../../node_modules/react-resizable/css/styles.css';
 import './index.less';
 import AntdBar from "../../../component/charts/antd/bar";
@@ -69,7 +68,7 @@ export default class DataXLayoutContent extends React.Component<any, any> {
                                      isBounded={true}
                                      isDroppable={true}
                                      style={{height: window.innerHeight - 144}}
-                                     width={window.innerWidth - 375}>
+                                     width={window.innerWidth - 205}>
                         {this.generateElement()}
                     </ReactGridLayout>
                 </div>

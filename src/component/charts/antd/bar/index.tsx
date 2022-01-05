@@ -3,6 +3,7 @@ import {Bar} from "@ant-design/charts";
 import {SettingOutlined} from '@ant-design/icons';
 import './index.less';
 import GlowBorder from "../../../border/four-angle-glow";
+import EditTools from "../../../edit-tool";
 
 /**
  * 基础条形图
@@ -33,7 +34,8 @@ export default class AntdBar extends Component<any, any> {
         const barConfig = chartConfigMap?.get(id);
         return (
             <div style={{width: '100%', height: '100%'}}>
-                <Bar className={'grid-item1-bar'} {...barConfig}/>
+                <EditTools/>
+                <Bar className={'grid-item1-bar'} {...barConfig?.chartProperties}/>
             </div>
         );
     }

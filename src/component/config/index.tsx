@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Collapse} from 'antd';
-import './ElementConfig.less';
+import './index.less';
 import TitleConfig from "./title";
 import BorderConfig from "./border";
 import BackgroundConfig from "./background";
@@ -11,7 +11,7 @@ const {Panel} = Collapse;
 /**
  * 右滑框中的组件配置选项
  */
-export default class ElementConfig extends Component {
+export default class ElemPropSet extends Component {
 
 
     render() {
