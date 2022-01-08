@@ -76,12 +76,12 @@ class LayoutTools extends Component<LayoutToolsProps, any> {
         return (
             <div className={'layout-designer-tools-list'}>
                 {data.map((i: LayoutToolCollapseProps) => {
-                    return (<>
+                    return (<div key={i?.id}>
                         <Collapse className={'tools-collapse'} bordered={false}>
                             <Panel className={'tools-panel'} header={i?.sort || ''} key="1">
                                 {i?.data?.map((item: LayoutToolItemProps) => {
                                     return (
-                                        <div onDragStart={(e) => {
+                                        <div key={item?.id} onDragStart={(e) => {
                                             e.dataTransfer.setData('chartName', item?.token || '')
                                         }}
                                              className="droppable-element tool-item"
@@ -92,7 +92,7 @@ class LayoutTools extends Component<LayoutToolsProps, any> {
                                 })}
                             </Panel>
                         </Collapse>
-                    </>)
+                    </div>)
                 })}
             </div>
         );

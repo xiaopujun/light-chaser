@@ -1,7 +1,7 @@
-import {ADD_ITEM, DELETE_ITEM,} from '../constant';
+import {ADD_ITEM, DELETE_ITEM, UPDATE_ITEM_LAYOUT,} from '../constant';
 import {Action, LayoutDesignerStoreProps} from "../../global/types";
 import {getChartInitData} from "../../utils/ChartUtil";
-
+import * as _ from 'lodash'
 
 /**
  * 初始化的布局设计器状态
@@ -31,6 +31,8 @@ export default function layoutDesignerReducer(preState: LayoutDesignerStoreProps
             return addItem(preState, data);
         case DELETE_ITEM:                                   //从画布中删除组件
             return deleteItem(preState, data);
+        case UPDATE_ITEM_LAYOUT:
+            return updateItemLayout(preState, data);
         default:                                            //无更新，返回之前的状态
             return preState;
     }
@@ -60,6 +62,25 @@ function addItem(preState: LayoutDesignerStoreProps, data: any) {
  * @param action
  */
 function deleteItem(preState: LayoutDesignerStoreProps, data: any) {
+    data = parseInt(data);
+    let {layoutConfig, chartConfigMap} = preState;
+    _.remove(layoutConfig, function (item) {
+        return item?.id === data;
+    })
+    chartConfigMap.delete(data);
+    return {...preState};
+}
 
+/**
+ * @description 更新每个组件的布局属性
+ * @param preState
+ * @param data
+ */
+function updateItemLayout(preState: LayoutDesignerStoreProps, data: any) {
+    let {layoutConfig} = preState;
+    const {i, x, y, w, h} = data;
+    let index = parseInt(i);
+    layoutConfig[index] = {...layoutConfig[index], ...{x, y, w, h}};
+    return {...preState};
 }
 

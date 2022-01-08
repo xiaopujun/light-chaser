@@ -3,7 +3,7 @@ import {Layout} from 'antd';
 import {connect} from "react-redux";
 import LayoutTools from "./left/tools";
 import DataXLayoutContent from "./content";
-import {addItem, deleteItem} from "../../redux/actions/LayoutDesigner";
+import {addItem, deleteItem, updateItemLayout} from "../../redux/actions/LayoutDesigner";
 
 
 const {Header, Footer, Sider, Content} = Layout;
@@ -29,5 +29,5 @@ class DataXLayoutDesigner extends Component<any> {
 
 export default connect(
     (state: any) => ({dataXDesigner: state?.dataXDesigner || {}}),
-    {addItem, deleteItem}
+    {addItem, deleteItem, updateItemLayout}
 )(DataXLayoutDesigner)
