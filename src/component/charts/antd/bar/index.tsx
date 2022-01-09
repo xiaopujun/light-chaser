@@ -28,10 +28,11 @@ export default class AntdBar extends Component<any, any> {
         const {dataXDesigner, elemId} = this.props;
         const {chartConfigMap} = dataXDesigner;
         const barConfig = chartConfigMap?.get(elemId);
+        const {chartProperties, elemBasePeoperties} = barConfig;
         return (
-            <div style={{width: '100%', height: '100%'}}>
+            <div style={{width: '100%', height: '100%', ...elemBasePeoperties}}>
                 <EditTools {...this.props} elemId={elemId}/>
-                <Bar className={'grid-item1-bar'} {...barConfig?.chartProperties}/>
+                <Bar className={'grid-item1-bar'} {...chartProperties}/>
             </div>
         );
     }

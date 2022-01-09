@@ -2,9 +2,7 @@ import React, {Component, ReactDOM} from 'react';
 import {Button, Col, Collapse, Row} from "antd";
 import {AreaChartOutlined} from "@ant-design/icons";
 import './index.less';
-import TitleConfig from "../../../../component/config/title";
-import BorderConfig from "../../../../component/config/border";
-import BackgroundConfig from "../../../../component/config/background";
+import TitleConfig from "../../../../component/config/base";
 import ChartConfig from "../../../../component/config/chart";
 
 const {Panel} = Collapse;

@@ -10,9 +10,9 @@ class ColorPicker extends Component {
     };
 
     onChangeComplete = (color) => {
-        const {name, onChange} = this.props;
+        const {onChange} = this.props;
         const rgbColor = `rgb(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`;
-        onChange(name, rgbColor);
+        onChange(rgbColor);
         this.setState({
             color: color.rgb,
             colorArea: rgbColor

@@ -8,7 +8,8 @@ import {
     deleteItem,
     updateItemLayout,
     activeElem,
-    updateDrawerVisible
+    updateDrawerVisible,
+    updateElemBaseSet
 } from "../../redux/actions/LayoutDesigner";
 
 
@@ -35,5 +36,5 @@ class DataXLayoutDesigner extends Component<any> {
 
 export default connect(
     (state: any) => ({dataXDesigner: state?.dataXDesigner || {}}),
-    {addItem, deleteItem, updateItemLayout, activeElem, updateDrawerVisible}
+    {addItem, deleteItem, updateItemLayout, activeElem, updateDrawerVisible, updateElemBaseSet}
 )(DataXLayoutDesigner)
