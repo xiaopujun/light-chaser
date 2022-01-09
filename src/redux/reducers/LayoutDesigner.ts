@@ -1,4 +1,4 @@
-import {ADD_ITEM, DELETE_ITEM, UPDATE_ITEM_LAYOUT,} from '../constant';
+import {ACTIVE_ELEM, ADD_ITEM, DELETE_ITEM, UPDATE_DRAWER_VISIBLE, UPDATE_ITEM_LAYOUT,} from '../constant';
 import {Action, LayoutDesignerStoreProps} from "../../global/types";
 import {getChartInitData} from "../../utils/ChartUtil";
 import * as _ from 'lodash'
@@ -15,7 +15,7 @@ const initState: LayoutDesignerStoreProps = {
     },
     chartConfigMap: new Map(),//布局设计器中的图表组件列表，每次设置图表样式或数据时更新此状态中的数据来更新渲染
     layoutConfig: [],//布局配置数据，用于控制图表在页面中的整体布局位置
-    propConfigDialog: {
+    elemPropSetDialog: {
         visible: false
     }
 }
@@ -33,6 +33,10 @@ export default function layoutDesignerReducer(preState: LayoutDesignerStoreProps
             return deleteItem(preState, data);
         case UPDATE_ITEM_LAYOUT:
             return updateItemLayout(preState, data);
+        case ACTIVE_ELEM:
+            return activeElem(preState, data);
+        case UPDATE_DRAWER_VISIBLE:
+            return updateDrawerVisible(preState, data);
         default:                                            //无更新，返回之前的状态
             return preState;
     }
@@ -84,3 +88,26 @@ function updateItemLayout(preState: LayoutDesignerStoreProps, data: any) {
     return {...preState};
 }
 
+/**
+ * @description 更新右侧抽屉visible属性
+ * @param preState
+ * @param data
+ */
+function activeElem(preState: LayoutDesignerStoreProps, data: any) {
+    let {active, elemPropSetDialog} = preState;
+    const {elemId, type, subType} = data;
+    active = {...active, ...{id: elemId, type, subType}};
+    elemPropSetDialog.visible = !elemPropSetDialog.visible;
+    return {...preState, ...{active, elemPropSetDialog}};
+}
+
+/**
+ * @description 更新右侧抽屉显示状态
+ * @param preState
+ * @param data
+ */
+function updateDrawerVisible(preState: LayoutDesignerStoreProps, data: any) {
+    let {elemPropSetDialog} = preState;
+    elemPropSetDialog.visible = !elemPropSetDialog.visible;
+    return {...preState, ...{elemPropSetDialog}};
+}

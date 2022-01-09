@@ -24,10 +24,6 @@ export default class AntdBar extends Component<any, any> {
         }
     }*/
 
-    openSet = (event: any) => {
-
-    }
-
     render() {
         const {dataXDesigner, elemId} = this.props;
         const {chartConfigMap} = dataXDesigner;

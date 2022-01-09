@@ -28,7 +28,7 @@ export interface LayoutDesignerStoreProps {
     };
     chartConfigMap: Map<number, any>;
     layoutConfig: Array<any>;
-    propConfigDialog: {
+    elemPropSetDialog: {
         visible: boolean;
     }
 }

@@ -122,8 +122,9 @@ export default class DataXLayoutContent extends React.Component<any, any> {
                     >
                         {this.generateElement()}
                     </ReactGridLayout>
+                    <RightSlideBox {...this.props}/>
                 </div>
-                <RightSlideBox/>
+
             </>
         );
     }

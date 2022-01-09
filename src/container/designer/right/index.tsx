@@ -11,15 +11,22 @@ import './index.less';
 class ElemPropSetDrawer extends Component<any, any> {
 
     onClose = () => {
+        const {updateDrawerVisible} = this.props;
+        updateDrawerVisible();
     }
 
     render() {
+        const {dataXDesigner} = this.props;
+        const {elemPropSetDialog} = dataXDesigner;
         return (
             <Drawer className={'right-slide-box'} title="组件属性设置"
                     placement="right"
                     width={400}
                     mask={false}
-                    visible={false}>
+                    visible={elemPropSetDialog?.visible || false}
+                    getContainer={false}
+                    onClose={this.onClose}
+            >
                 <ElemPropSet {...this.props}/>
             </Drawer>
         );
