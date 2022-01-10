@@ -1,63 +1,67 @@
+import * as _ from 'lodash';
+
 //基础条形图初始化数据和配置
-export const antdBaseBar = {
-    elemBasePeoperties: {},
-    chartProperties: {
-        data: [
-            {
-                year: '1951 年',
-                value: 38,
-            },
-            {
-                year: '1952 年',
-                value: 52,
-            },
-            {
-                year: '1956 年',
-                value: 61,
-            },
-            {
-                year: '1957 年',
-                value: 145,
-            },
-            {
-                year: '1958 年',
-                value: 48,
-            },
-        ],
-        xField: 'value',
-        yField: 'year',
-        xAxis: {
-            grid: {
-                line: {
-                    style: {
-                        stroke: 'rgba(0,255,192,0.59)',
-                        lineWidth: 2,
-                        lineDash: [4, 5],
-                        strokeOpacity: 0.7,
-                        shadowColor: 'black',
-                        shadowBlur: 10,
-                        shadowOffsetX: 5,
-                        shadowOffsetY: 5,
-                        cursor: 'pointer'
+export const initAntdBaseBar = () => {
+    return _.cloneDeep({
+        elemBasePeoperties: {},
+        chartProperties: {
+            data: [
+                {
+                    year: '1951 年',
+                    value: 38,
+                },
+                {
+                    year: '1952 年',
+                    value: 52,
+                },
+                {
+                    year: '1956 年',
+                    value: 61,
+                },
+                {
+                    year: '1957 年',
+                    value: 145,
+                },
+                {
+                    year: '1958 年',
+                    value: 48,
+                },
+            ],
+            xField: 'value',
+            yField: 'year',
+            xAxis: {
+                grid: {
+                    line: {
+                        style: {
+                            stroke: 'rgba(0,255,192,0.59)',
+                            lineWidth: 2,
+                            lineDash: [4, 5],
+                            strokeOpacity: 0.7,
+                            shadowColor: 'black',
+                            shadowBlur: 10,
+                            shadowOffsetX: 5,
+                            shadowOffsetY: 5,
+                            cursor: 'pointer'
+                        }
                     }
-                }
-            },
-            label: {
-                style: {
-                    fill: 'rgb(0,255,234)'
+                },
+                label: {
+                    style: {
+                        fill: 'rgb(0,255,234)'
+                    },
                 },
             },
-        },
-        yAxis: {
-            grid: null,
-            line: null,
-            tickLine: null,
-            label: {style: {fill: 'rgb(0,255,234)'}}
-        },
-        color: 'rgb(0,255,234)',
-    }
-
+            yAxis: {
+                grid: null,
+                line: null,
+                tickLine: null,
+                label: {style: {fill: 'rgb(0,255,234)'}}
+            },
+            color: 'rgb(0,255,234)',
+        }
+    });
 };
+
 //分组条形图初始化数据和配置
 export const antdGroupBar = {
     elemBasePeoperties: {},

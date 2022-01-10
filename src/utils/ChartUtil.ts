@@ -1,4 +1,4 @@
-import {antdBaseBar} from '../init/data/antd-bar';
+import {initAntdBaseBar} from '../init/data/antd-bar';
 
 /**
  * 根据类型，获取图表初始化数据
@@ -7,7 +7,7 @@ import {antdBaseBar} from '../init/data/antd-bar';
 export function getChartInitData(type: string) {
     switch (type) {
         case "AntdBaseBar":
-            return antdBaseBar;
+            return initAntdBaseBar();
         default:
             return null;
     }

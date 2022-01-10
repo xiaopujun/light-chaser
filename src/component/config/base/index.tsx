@@ -27,6 +27,15 @@ class ElemBaseSet extends Component<any> {
         const {updateElemBaseSet} = this.props;
         updateElemBaseSet({paddingBottom: `${value}px`});
     }
+
+    marginTopChanged = (value: number) => {
+        const {updateElemBaseSet} = this.props;
+        updateElemBaseSet({marginTop: `${value}px`});
+    }
+    marginLeftChanged = (value: number) => {
+        const {updateElemBaseSet} = this.props;
+        updateElemBaseSet({marginLeft: `${value}px`});
+    }
     backgroundColorChanged = (color: string) => {
         const {updateElemBaseSet} = this.props;
         updateElemBaseSet({backgroundColor: color});
@@ -65,21 +74,13 @@ class ElemBaseSet extends Component<any> {
                         <div className={'config-item'}>
                             <label className={'config-item-label'}>上外边距：</label>
                             <Slider defaultValue={10} max={100} min={8} style={{width: '60%'}}
-                                    className={'config-item-value'}/>
-                        </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>下外边距：</label>
-                            <Slider defaultValue={10} max={100} min={8} style={{width: '60%'}}
+                                    onChange={this.marginTopChanged}
                                     className={'config-item-value'}/>
                         </div>
                         <div className={'config-item'}>
                             <label className={'config-item-label'}>左外边距：</label>
-                            <Slider defaultValue={10} max={100} min={8} style={{width: '60%'}}
-                                    className={'config-item-value'}/>
-                        </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>右外边距：</label>
-                            <Slider defaultValue={10} max={100} min={8} style={{width: '60%'}}
+                            <Slider defaultValue={0} max={100} min={-100} style={{width: '60%'}}
+                                    onChange={this.marginLeftChanged}
                                     className={'config-item-value'}/>
                         </div>
                     </Panel>
