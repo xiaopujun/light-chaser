@@ -29,6 +29,7 @@ export const initAntdBaseBar = () => {
             ],
             xField: 'value',
             yField: 'year',
+            seriesField: 'year',
             xAxis: {
                 grid: {
                     line: {
@@ -36,11 +37,7 @@ export const initAntdBaseBar = () => {
                             stroke: 'rgba(0,255,192,0.59)',
                             lineWidth: 2,
                             lineDash: [4, 5],
-                            strokeOpacity: 0.7,
-                            shadowColor: 'black',
-                            shadowBlur: 10,
-                            shadowOffsetX: 5,
-                            shadowOffsetY: 5,
+                            opacity: 0.7,
                             cursor: 'pointer'
                         }
                     }
@@ -58,6 +55,7 @@ export const initAntdBaseBar = () => {
                 label: {style: {fill: 'rgb(0,255,234)'}}
             },
             color: 'rgb(0,255,234)',
+            legend: false,
         }
     });
 };

@@ -1,7 +1,7 @@
 import {
     ACTIVE_ELEM,
     ADD_ITEM,
-    DELETE_ITEM, UPDATE_DRAWER_VISIBLE, UPDATE_ELEM_BASE_SET, UPDATE_ITEM_LAYOUT,
+    DELETE_ITEM, UPDATE_DRAWER_VISIBLE, UPDATE_ELEM_BASE_SET, UPDATE_ELEM_CHART_SET, UPDATE_ITEM_LAYOUT,
 } from '../constant';
 
 /**
@@ -21,5 +21,7 @@ export const activeElem = (data: any) => ({type: ACTIVE_ELEM, data});
 export const updateDrawerVisible = (data: any) => ({type: UPDATE_DRAWER_VISIBLE, data});
 //更新组件基础配置
 export const updateElemBaseSet = (data: any) => ({type: UPDATE_ELEM_BASE_SET, data});
+//更新组件图表配置
+export const updateElemChartSet = (data: any) => ({type: UPDATE_ELEM_CHART_SET, data});
 
 

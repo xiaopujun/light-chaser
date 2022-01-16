@@ -3,7 +3,7 @@ import {
     ADD_ITEM,
     DELETE_ITEM,
     UPDATE_DRAWER_VISIBLE,
-    UPDATE_ELEM_BASE_SET,
+    UPDATE_ELEM_BASE_SET, UPDATE_ELEM_CHART_SET,
     UPDATE_ITEM_LAYOUT,
 } from '../constant';
 import {Action, LayoutDesignerStoreProps} from "../../global/types";
@@ -46,6 +46,8 @@ export default function layoutDesignerReducer(preState: LayoutDesignerStoreProps
             return updateDrawerVisible(preState, data);
         case UPDATE_ELEM_BASE_SET:
             return updateElemBaseSet(preState, data);
+        case UPDATE_ELEM_CHART_SET:
+            return updateElemChartSet(preState, data);
         default:                                            //无更新，返回之前的状态
             return preState;
     }
@@ -132,5 +134,18 @@ function updateElemBaseSet(preState: LayoutDesignerStoreProps, data: any) {
     let charConfig = chartConfigMap.get(id);
     let baseConfig = charConfig?.elemBasePeoperties;
     charConfig.elemBasePeoperties = {...baseConfig, ...data};
+    return {...preState};
+}
+
+/**
+ * @description 更新图表设置
+ * @param preState
+ * @param data
+ */
+function updateElemChartSet(preState: LayoutDesignerStoreProps, data: any) {
+    let {chartConfigMap, active} = preState;
+    let activeConfig = chartConfigMap.get(active?.id);
+    // activeConfig.chartProperties = {...activeConfig.chartProperties, ...data};
+    activeConfig.chartProperties = _.merge(activeConfig.chartProperties, data);
     return {...preState};
 }

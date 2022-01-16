@@ -3,6 +3,7 @@ import {Collapse} from 'antd';
 import './index.less';
 import ElemBaseSet from "./base";
 import ElemChartSet from "./chart";
+import ElemDataSet from "./data";
 
 const {Panel} = Collapse;
 
@@ -14,7 +15,7 @@ export default class ElemPropSet extends Component<any> {
 
     render() {
         return (
-            <Collapse className={'charts-properties'} bordered={false} defaultActiveKey={['1']}>
+            <Collapse className={'charts-properties'} bordered={false}>
                 <Panel className={'charts-properties-title'} header="基础设置" key="1">
                     <ElemBaseSet {...this.props}/>
                 </Panel>
@@ -22,7 +23,7 @@ export default class ElemPropSet extends Component<any> {
                     <ElemChartSet {...this.props}/>
                 </Panel>
                 <Panel className={'charts-properties-title'} header="数据源" key="5">
-                    <p>暂无</p>
+                    <ElemDataSet/>
                 </Panel>
             </Collapse>
         );

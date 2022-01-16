@@ -60,7 +60,7 @@ class ElemBaseSet extends Component<any> {
     render() {
         return (
             <div className={'elem-base-config'}>
-                <Collapse className={'base-config-collapse'} bordered={false} defaultActiveKey={['1']}>
+                <Collapse className={'base-config-collapse'} bordered={false}>
                     <Panel className={'base-config-panel'} header="内边距" key="1">
                         <div className={'config-item'}>
                             <label className={'config-item-label'}>上内边距：</label>
