@@ -5,12 +5,28 @@ import './index.less';
 
 const {confirm} = Modal;
 
-class EditTable extends Component {
+class EditTable extends Component<any> {
 
     state: any = {
         inputModule: {},
         data: [],
-        activeId: -1
+        activeId: -1,
+        visible: false
+    }
+
+    /**
+     * @description 构造器，将本组件绑定到父组件
+     * @param props
+     */
+    constructor(props: any) {
+        super(props);
+        const {setContent} = this.props;
+        setContent && setContent(this);
+    }
+
+    visibleChanged = () => {
+        const {visible} = this.state;
+        this.setState({visible: !visible})
     }
 
     nameInput = (e: any) => {
@@ -120,12 +136,12 @@ class EditTable extends Component {
                 ),
             },
         ];
-
-        const {data, inputModule} = this.state;
+        const {data, inputModule, visible} = this.state;
         const {name, value, type} = inputModule;
         return (
             <div>
-                <Modal title="数据录入" visible={true} width={800} footer={null}>
+                <Modal title="数据录入" visible={visible} width={800} footer={<Button>刷新数据</Button>} maskClosable={true}
+                       onCancel={this.visibleChanged}>
                     <div className={'data-input'}>
                         <div className={'data-item'}>
                             <Input addonBefore="名称" value={name || ""} onInput={this.nameInput}/>
@@ -147,7 +163,6 @@ class EditTable extends Component {
                     <br/>
                     <Table size="small" dataSource={data} columns={columns}/>
                 </Modal>
-
             </div>
         );
     }
