@@ -2,16 +2,24 @@ import React, {Component} from 'react';
 import {Button, Input, Modal, Table} from "antd";
 import {DeleteOutlined, EditOutlined, ExclamationCircleOutlined} from '@ant-design/icons';
 import './index.less';
+import {updateElemChartSet} from "../../redux/actions/LayoutDesigner";
 
 const {confirm} = Modal;
 
-class EditTable extends Component<any> {
+interface EditTableProps {
+    mode: number; //显示模式
+    setContent?: (obj: any) => void;  //将子组件绑定到父组件
+    updateElemChartSet?: (data: any) => void;
+}
+
+class EditTable extends Component<EditTableProps> {
 
     state: any = {
         inputModule: {},
         data: [],
         activeId: -1,
-        visible: false
+        visible: false,
+        mode: 1,   // 展示模式 0：不包含分类  1：包含分类
     }
 
     /**
@@ -47,16 +55,17 @@ class EditTable extends Component<any> {
 
     addData = () => {
         let {inputModule, data} = this.state;
+        const {mode} = this.props;
         //校验inputModule数据
         let {name, value, type} = inputModule;
-        if (name && value && type) {
+        if (name && value && (mode === 0 ? true : type)) {
             data.push({...inputModule, ...{key: (data.length + 1) + ''}})
             //添加数据并清空输入状态
             this.setState({data: [...data], inputModule: {}})
         } else {
             Modal.error({
                 title: "提示信息",
-                content: `${name ? "" : "名称 "}${value ? "" : "数值 "}${type ? "" : '类型'}不能为空`,
+                content: `${name ? "" : "名称 "}${value ? "" : "数值 "}${mode === 0 ? "" : type ? "" : '类型'}不能为空`,
             });
         }
     }
@@ -86,23 +95,34 @@ class EditTable extends Component<any> {
 
     updateData = () => {
         let {inputModule, data, activeId} = this.state;
+        const {mode} = this.props;
         //校验inputModule数据
         let {name, value, type} = inputModule;
-        if (name && value && type) {
+        if (name && value && (mode === 0 ? true : type)) {
             data[activeId] = inputModule;
             //添加数据并清空输入状态
-            this.setState({data: [...data], inputModule: {}})
+            this.setState({data: [...data], inputModule: {}, activeId: -1})
         } else {
             Modal.error({
                 title: "提示信息",
-                content: `${name ? "" : "名称 "}${value ? "" : "数值 "}${type ? "" : '类型'}不能为空`,
+                content: `${name ? "" : "名称 "}${value ? "" : "数值 "}${mode === 0 ? "" : type ? "" : '类型'}不能为空`,
             });
         }
     }
 
+    flashData = () => {
+        let {data} = this.state;
+        const {updateElemChartSet} = this.props;
+        data && data.map((item: any) => {
+            delete item.key;
+            item.value = parseInt(item.value);
+        })
+        updateElemChartSet && updateElemChartSet({data: data});
+        this.setState({visible: false})
+    }
 
     render() {
-        const columns = [
+        let columns = [
             {
                 title: '名称',
                 dataIndex: 'name',
@@ -136,11 +156,19 @@ class EditTable extends Component<any> {
                 ),
             },
         ];
-        const {data, inputModule, visible} = this.state;
+        const {mode} = this.props;
+        const {data, inputModule, visible, activeId} = this.state;
         const {name, value, type} = inputModule;
+
+        //处理展示模式
+        if (mode === 0) {
+            columns.splice(2, 1);
+        }
+
         return (
             <div>
-                <Modal title="数据录入" visible={visible} width={800} footer={<Button>刷新数据</Button>} maskClosable={true}
+                <Modal title="数据录入" visible={visible} width={800}
+                       footer={<Button onClick={this.flashData}>刷新数据</Button>} maskClosable={true}
                        onCancel={this.visibleChanged}>
                     <div className={'data-input'}>
                         <div className={'data-item'}>
@@ -150,14 +178,17 @@ class EditTable extends Component<any> {
                         <div className={'data-item'}>
                             <Input addonBefore="数值" value={value || ""} onInput={this.valueInput}/>
                         </div>
-                        &nbsp;&nbsp;&nbsp;
-                        <div className={'data-item'}>
-                            <Input addonBefore="类型" value={type || ""} onInput={this.typeInput}/>
-                        </div>
+                        {
+                            mode !== 0 ? (<>&nbsp;&nbsp;&nbsp;
+                                <div className={'data-item'}>
+                                    <Input addonBefore="类型" value={type || ""} onInput={this.typeInput}/>
+                                </div>
+                            </>) : <></>
+                        }
                         &nbsp;&nbsp;&nbsp;
                         <div className={'data-item'}>
                             <Button onClick={this.addData}>add</Button>
-                            <Button onClick={this.updateData}>update</Button>
+                            <Button disabled={activeId === -1} onClick={this.updateData}>update</Button>
                         </div>
                     </div>
                     <br/>

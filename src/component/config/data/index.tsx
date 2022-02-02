@@ -26,7 +26,7 @@ class ElemDataSet extends Component<any> {
                 <Collapse className={'base-config-collapse'} bordered={false}>
                     <div>
                         <Button onClick={this.importData} type={'primary'}>点击录入数据</Button>
-                        <EditTable setContent={this.setContent}/>
+                        <EditTable {...this.props} mode={0} setContent={this.setContent}/>
                     </div>
                 </Collapse>
             </div>

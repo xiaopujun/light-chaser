@@ -23,7 +23,7 @@ export default class ElemPropSet extends Component<any> {
                     <ElemChartSet {...this.props}/>
                 </Panel>
                 <Panel className={'charts-properties-title'} header="数据源" key="5">
-                    <ElemDataSet/>
+                    <ElemDataSet {...this.props}/>
                 </Panel>
             </Collapse>
         );
