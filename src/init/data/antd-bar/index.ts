@@ -54,7 +54,7 @@ export const initAntdBaseBar = () => {
                 tickLine: null,
                 label: {style: {fill: 'rgb(0,255,234)'}}
             },
-            color: 'rgb(0,255,234)',
+            color: 'rgb(0,255,234,0.2)',
             legend: false,
         }
     });

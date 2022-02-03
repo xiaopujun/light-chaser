@@ -197,6 +197,13 @@ class AntdBarSet extends Component<any> {
         })
     }
 
+    barWidthChanged = (width: number) => {
+        const {updateElemChartSet} = this.props;
+        updateElemChartSet({
+            maxBarWidth: width
+        })
+    }
+
     render() {
         return (
             <div className={'elem-chart-config'}>
@@ -294,6 +301,12 @@ class AntdBarSet extends Component<any> {
                         <ColorPicker name={'mainTitleColor'}
                                      onChange={this.yTitleColorChanged}
                                      className={'config-item-value'}/>
+                    </div>
+                    <div className={'config-item'}>
+                        <label className={'config-item-label'}>条形宽度：</label>
+                        <Slider defaultValue={5} max={20} min={1} style={{width: '60%'}}
+                                onChange={this.barWidthChanged}
+                                className={'config-item-value'}/>
                     </div>
                 </Collapse>
             </div>
