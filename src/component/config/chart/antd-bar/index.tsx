@@ -217,10 +217,12 @@ class AntdBarSet extends Component<any> {
         const {active} = dataXDesigner;
         switch (active?.subType) {
             case 'AntdBaseBar':
+            case 'AntdZoneBar':
                 return <ColorPicker name={'mainTitleColor'}
                                     onChange={this.fillColorChanged}
                                     className={'config-item-value'}/>;
             case 'AntdGroupBar':
+            case 'AntdPercentBar':
                 const {chartConfigMap} = dataXDesigner;
                 let chartConfig = chartConfigMap.get(active?.id);
                 let types = new Set();
@@ -232,8 +234,6 @@ class AntdBarSet extends Component<any> {
     }
 
     render() {
-        const {dataXDesigner} = this.props;
-        const {active} = dataXDesigner;
         return (
             <div className={'elem-chart-config'}>
                 <Collapse className={'chart-config-collapse'} bordered={false}>

@@ -52,21 +52,60 @@ class EditTable extends Component<EditTableProps> {
         inputModule = {...inputModule, ...{type: e.currentTarget.value}}
         this.setState({inputModule})
     }
+    endValueInput = (e: any) => {
+        let {inputModule} = this.state;
+        inputModule = {...inputModule, ...{endValue: e.currentTarget.value}}
+        this.setState({inputModule})
+    }
+
 
     addData = () => {
         let {inputModule, data} = this.state;
         const {mode} = this.props;
         //校验inputModule数据
-        let {name, value, type} = inputModule;
-        if (name && value && (mode === 0 ? true : type)) {
-            data.push({...inputModule, ...{key: (data.length + 1) + ''}})
-            //添加数据并清空输入状态
-            this.setState({data: [...data], inputModule: {}})
-        } else {
-            Modal.error({
-                title: "提示信息",
-                content: `${name ? "" : "名称 "}${value ? "" : "数值 "}${mode === 0 ? "" : type ? "" : '类型'}不能为空`,
-            });
+        let {name, value, type, endValue} = inputModule;
+        switch (mode) {
+            case 0:
+                if (name && value) {
+                    data.push({...inputModule, ...{key: (data.length + 1) + ''}})
+                    //添加数据并清空输入状态
+                    this.setState({data: [...data], inputModule: {}})
+                } else {
+                    Modal.error({
+                        title: "提示信息",
+                        content: `${name ? "" : "名称 "}${value ? "" : "数值 "}不能为空`,
+                    });
+                }
+                break;
+            case 1:
+                if (name && value && type) {
+                    data.push({...inputModule, ...{key: (data.length + 1) + ''}})
+                    //添加数据并清空输入状态
+                    this.setState({data: [...data], inputModule: {}})
+                } else {
+                    Modal.error({
+                        title: "提示信息",
+                        content: `${name ? "" : "名称 "}${value ? "" : "数值 "}${type ? "" : '类型'}不能为空`,
+                    });
+                }
+                break;
+            case 2:
+                if (name && value && endValue) {
+                    data.push({
+                        ...inputModule, ...{
+                            key: (data.length + 1) + '',
+                            intervalValue: [parseInt(value), parseInt(endValue)],
+                            value: `${value}-${endValue}`,
+                        }
+                    })
+                    this.setState({data: [...data], inputModule: {}})
+                } else {
+                    Modal.error({
+                        title: "提示信息",
+                        content: `${name ? "" : "名称 "}${value ? "" : "起始值 "}${endValue ? "" : "结束值 "}不能为空`,
+                    });
+                }
+                break;
         }
     }
 
@@ -97,16 +136,46 @@ class EditTable extends Component<EditTableProps> {
         let {inputModule, data, activeId} = this.state;
         const {mode} = this.props;
         //校验inputModule数据
-        let {name, value, type} = inputModule;
-        if (name && value && (mode === 0 ? true : type)) {
-            data[activeId] = inputModule;
-            //添加数据并清空输入状态
-            this.setState({data: [...data], inputModule: {}, activeId: -1})
-        } else {
-            Modal.error({
-                title: "提示信息",
-                content: `${name ? "" : "名称 "}${value ? "" : "数值 "}${mode === 0 ? "" : type ? "" : '类型'}不能为空`,
-            });
+        let {name, value, type, endValue} = inputModule;
+        switch (mode) {
+            case 0:
+                if (name && value) {
+                    data[activeId] = inputModule;
+                    //添加数据并清空输入状态
+                    this.setState({data: [...data], inputModule: {}})
+                } else {
+                    Modal.error({
+                        title: "提示信息",
+                        content: `${name ? "" : "名称 "}${value ? "" : "数值 "}不能为空`,
+                    });
+                }
+                break;
+            case 1:
+                if (name && value && type) {
+                    inputModule = {...inputModule,...{}}
+                    data[activeId] = inputModule;
+                    //添加数据并清空输入状态
+                    this.setState({data: [...data], inputModule: {}})
+                } else {
+                    Modal.error({
+                        title: "提示信息",
+                        content: `${name ? "" : "名称 "}${value ? "" : "数值 "}${type ? "" : '类型'}不能为空`,
+                    });
+                }
+                break;
+            case 2:
+                if (name && value && endValue) {
+                    data[activeId] = inputModule;
+                    //添加数据并清空输入状态
+                    this.setState({data: [...data], inputModule: {}})
+                } else {
+                    Modal.error({
+                        title: "提示信息",
+                        content: `${name ? "" : "名称 "}${value ? "" : "起始值 "}${endValue ? "" : "结束值 "}不能为空`,
+                    });
+                }
+                break;
+
         }
     }
 
@@ -115,10 +184,35 @@ class EditTable extends Component<EditTableProps> {
         const {updateElemChartSet} = this.props;
         data && data.map((item: any) => {
             delete item.key;
-            item.value = parseInt(item.value);
+            item.value = parseFloat(item.value);
         })
         updateElemChartSet && updateElemChartSet({data: data});
         this.setState({visible: false})
+    }
+
+    generateEditTableByMode = () => {
+        const {mode} = this.props;
+        const {inputModule} = this.state;
+        const {type, endValue} = inputModule;
+        switch (mode) {
+            case 0:
+                return <></>;
+            case 1:
+                return (
+                    <>&nbsp;&nbsp;&nbsp;
+                        <div className={'data-item'}>
+                            <Input addonBefore="类型" value={type || ""} onInput={this.typeInput}/>
+                        </div>
+                    </>
+                );
+            case 2:
+                return (<>
+                    <div className={'data-item interval-input'} style={{width: '20%'}}>
+                        <span>-</span>
+                        <Input value={endValue || ""} onInput={this.endValueInput}/>
+                    </div>
+                </>);
+        }
     }
 
     render() {
@@ -158,10 +252,12 @@ class EditTable extends Component<EditTableProps> {
         ];
         const {mode} = this.props;
         const {data, inputModule, visible, activeId} = this.state;
-        const {name, value, type} = inputModule;
+        let {name, value} = inputModule;
+        //在区间值情况下，处理数据回显值
+        value = mode === 2 ? value && value.split("-")[0] : value;
 
         //处理展示模式
-        if (mode === 0) {
+        if (mode === 0 || mode === 2) {
             columns.splice(2, 1);
         }
 
@@ -178,13 +274,7 @@ class EditTable extends Component<EditTableProps> {
                         <div className={'data-item'}>
                             <Input addonBefore="数值" value={value || ""} onInput={this.valueInput}/>
                         </div>
-                        {
-                            mode !== 0 ? (<>&nbsp;&nbsp;&nbsp;
-                                <div className={'data-item'}>
-                                    <Input addonBefore="类型" value={type || ""} onInput={this.typeInput}/>
-                                </div>
-                            </>) : <></>
-                        }
+                        {this.generateEditTableByMode()}
                         &nbsp;&nbsp;&nbsp;
                         <div className={'data-item'}>
                             <Button onClick={this.addData}>add</Button>

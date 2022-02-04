@@ -122,230 +122,253 @@ export const initAntdGroupBar = () => {
             yField: 'name',
             seriesField: 'type',
             dodgePadding: 4,
+            xAxis: {
+                grid: null,
+                label: {
+                    style: {
+                        fill: 'rgb(0,255,234)'
+                    },
+                },
+            },
+            yAxis: {
+                grid: null,
+                label: {
+                    style: {
+                        fill: 'rgb(0,255,234)'
+                    },
+                },
+            },
+            color: ['rgb(0,255,234)', 'rgb(233,118,9)'],
+            legend: false,
+        }
+    });
+};
 
+//百分比条形图初始化数据和配置
+export const initAntdPercentBar = () => {
+    return _.cloneDeep({
+        elemBasePeoperties: {},
+        chartProperties: {
+            data: [
+                {
+                    type: 'Asia',
+                    name: '1750',
+                    value: 502,
+                },
+                {
+                    type: 'Asia',
+                    name: '1800',
+                    value: 635,
+                },
+                {
+                    type: 'Asia',
+                    name: '1850',
+                    value: 809,
+                },
+                {
+                    type: 'Asia',
+                    name: '1900',
+                    value: 947,
+                },
+                {
+                    type: 'Asia',
+                    name: '1950',
+                    value: 1402,
+                },
+                {
+                    type: 'Asia',
+                    name: '1999',
+                    value: 3634,
+                },
+                {
+                    type: 'Asia',
+                    name: '2050',
+                    value: 5268,
+                },
+                {
+                    type: 'Africa',
+                    name: '1750',
+                    value: 106,
+                },
+                {
+                    type: 'Africa',
+                    name: '1800',
+                    value: 107,
+                },
+                {
+                    type: 'Africa',
+                    name: '1850',
+                    value: 111,
+                },
+                {
+                    type: 'Africa',
+                    name: '1900',
+                    value: 133,
+                },
+                {
+                    type: 'Africa',
+                    name: '1950',
+                    value: 221,
+                },
+                {
+                    type: 'Africa',
+                    name: '1999',
+                    value: 767,
+                },
+                {
+                    type: 'Africa',
+                    name: '2050',
+                    value: 1766,
+                },
+                {
+                    type: 'Europe',
+                    name: '1750',
+                    value: 163,
+                },
+                {
+                    type: 'Europe',
+                    name: '1800',
+                    value: 203,
+                },
+                {
+                    type: 'Europe',
+                    name: '1850',
+                    value: 276,
+                },
+                {
+                    type: 'Europe',
+                    name: '1900',
+                    value: 408,
+                },
+                {
+                    type: 'Europe',
+                    name: '1950',
+                    value: 547,
+                },
+                {
+                    type: 'Europe',
+                    name: '1999',
+                    value: 729,
+                },
+                {
+                    type: 'Europe',
+                    name: '2050',
+                    value: 628,
+                },
+            ],
+            xField: 'value',
+            yField: 'name',
+            seriesField: 'type',
+            isPercent: true,
+            isStack: true,
+            xAxis: {
+                grid: {
+                    line: {
+                        style: {
+                            stroke: 'rgba(0,255,192,0.59)',
+                            lineWidth: 2,
+                            lineDash: [4, 5],
+                            strokeOpacity: 0.7,
+                            shadowColor: 'black',
+                            shadowBlur: 10,
+                            shadowOffsetX: 5,
+                            shadowOffsetY: 5,
+                            cursor: 'pointer'
+                        }
+                    }
+                },
+                label: {
+                    style: {
+                        fill: 'rgb(0,255,234)'
+                    },
+                },
+            },
+            yAxis: {
+                grid: null,
+                line: null,
+                tickLine: null,
+                label: {style: {fill: 'rgb(0,255,234)'}}
+            },
+        }
+    });
+};
+
+//区间条形图初始化数据和配置
+export const initAntdZoneBar = () => {
+    return _.cloneDeep({
+        elemBasePeoperties: {},
+        chartProperties: {
+            data: [
+                {
+                    name: '分类一',
+                    values: [76, 100],
+                },
+                {
+                    name: '分类二',
+                    values: [56, 108],
+                },
+                {
+                    name: '分类三',
+                    values: [38, 129],
+                },
+                {
+                    name: '分类四',
+                    values: [58, 155],
+                },
+                {
+                    name: '分类五',
+                    values: [45, 120],
+                },
+                {
+                    name: '分类六',
+                    values: [23, 99],
+                },
+                {
+                    name: '分类七',
+                    values: [18, 56],
+                },
+                {
+                    name: '分类八',
+                    values: [18, 34],
+                },
+            ],
+            xField: 'values',
+            yField: 'name',
+            isRange: true,
+            xAxis: {
+                grid: {
+                    line: {
+                        style: {
+                            stroke: 'rgba(0,255,192,0.59)',
+                            lineWidth: 2,
+                            lineDash: [4, 5],
+                            strokeOpacity: 0.7,
+                            shadowColor: 'black',
+                            shadowBlur: 10,
+                            shadowOffsetX: 5,
+                            shadowOffsetY: 5,
+                            cursor: 'pointer'
+                        }
+                    }
+                },
+                label: {
+                    style: {
+                        fill: 'rgb(0,255,234)'
+                    },
+                },
+            },
+            yAxis: {
+                grid: null,
+                line: null,
+                tickLine: null,
+                label: {style: {fill: 'rgb(0,255,234)'}}
+            },
+            color: 'rgb(0,255,234)',
         }
     });
 };
 
 
-//百分比条形图初始化数据和配置
-export const antdPercentBar = {
-    elemBasePeoperties: {},
-    chartProperties: {
-        data: [
-            {
-                country: 'Asia',
-                year: '1750',
-                value: 502,
-            },
-            {
-                country: 'Asia',
-                year: '1800',
-                value: 635,
-            },
-            {
-                country: 'Asia',
-                year: '1850',
-                value: 809,
-            },
-            {
-                country: 'Asia',
-                year: '1900',
-                value: 947,
-            },
-            {
-                country: 'Asia',
-                year: '1950',
-                value: 1402,
-            },
-            {
-                country: 'Asia',
-                year: '1999',
-                value: 3634,
-            },
-            {
-                country: 'Asia',
-                year: '2050',
-                value: 5268,
-            },
-            {
-                country: 'Africa',
-                year: '1750',
-                value: 106,
-            },
-            {
-                country: 'Africa',
-                year: '1800',
-                value: 107,
-            },
-            {
-                country: 'Africa',
-                year: '1850',
-                value: 111,
-            },
-            {
-                country: 'Africa',
-                year: '1900',
-                value: 133,
-            },
-            {
-                country: 'Africa',
-                year: '1950',
-                value: 221,
-            },
-            {
-                country: 'Africa',
-                year: '1999',
-                value: 767,
-            },
-            {
-                country: 'Africa',
-                year: '2050',
-                value: 1766,
-            },
-            {
-                country: 'Europe',
-                year: '1750',
-                value: 163,
-            },
-            {
-                country: 'Europe',
-                year: '1800',
-                value: 203,
-            },
-            {
-                country: 'Europe',
-                year: '1850',
-                value: 276,
-            },
-            {
-                country: 'Europe',
-                year: '1900',
-                value: 408,
-            },
-            {
-                country: 'Europe',
-                year: '1950',
-                value: 547,
-            },
-            {
-                country: 'Europe',
-                year: '1999',
-                value: 729,
-            },
-            {
-                country: 'Europe',
-                year: '2050',
-                value: 628,
-            },
-        ],
-        xField: 'value',
-        yField: 'year',
-        seriesField: 'country',
-        isPercent: true,
-        isStack: true,
-        xAxis: {
-            grid: {
-                line: {
-                    style: {
-                        stroke: 'rgba(0,255,192,0.59)',
-                        lineWidth: 2,
-                        lineDash: [4, 5],
-                        strokeOpacity: 0.7,
-                        shadowColor: 'black',
-                        shadowBlur: 10,
-                        shadowOffsetX: 5,
-                        shadowOffsetY: 5,
-                        cursor: 'pointer'
-                    }
-                }
-            },
-            label: {
-                style: {
-                    fill: 'rgb(0,255,234)'
-                },
-            },
-        },
-        yAxis: {
-            grid: null,
-            line: null,
-            tickLine: null,
-            label: {style: {fill: 'rgb(0,255,234)'}}
-        },
-    }
-};
-//区间条形图初始化数据和配置
-export const antdZoneBar = {
-    elemBasePeoperties: {},
-    chartProperties: {
-        data: [
-            {
-                type: '分类一',
-                values: [76, 100],
-            },
-            {
-                type: '分类二',
-                values: [56, 108],
-            },
-            {
-                type: '分类三',
-                values: [38, 129],
-            },
-            {
-                type: '分类四',
-                values: [58, 155],
-            },
-            {
-                type: '分类五',
-                values: [45, 120],
-            },
-            {
-                type: '分类六',
-                values: [23, 99],
-            },
-            {
-                type: '分类七',
-                values: [18, 56],
-            },
-            {
-                type: '分类八',
-                values: [18, 34],
-            },
-        ],
-        xField: 'values',
-        yField: 'type',
-        isRange: true,
-        xAxis: {
-            grid: {
-                line: {
-                    style: {
-                        stroke: 'rgba(0,255,192,0.59)',
-                        lineWidth: 2,
-                        lineDash: [4, 5],
-                        strokeOpacity: 0.7,
-                        shadowColor: 'black',
-                        shadowBlur: 10,
-                        shadowOffsetX: 5,
-                        shadowOffsetY: 5,
-                        cursor: 'pointer'
-                    }
-                }
-            },
-            label: {
-                style: {
-                    fill: 'rgb(0,255,234)'
-                },
-            },
-        },
-        yAxis: {
-            grid: null,
-            line: null,
-            tickLine: null,
-            label: {style: {fill: 'rgb(0,255,234)'}}
-        },
-        color: 'rgb(0,255,234)',
-    }
-};
 //堆叠条形图初始化数据和配置
 export const antdStackBar = {
     elemBasePeoperties: {},

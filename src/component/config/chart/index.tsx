@@ -12,6 +12,8 @@ class ElemChartSet extends Component<any> {
         switch (subType) {
             case "AntdBaseBar":
             case "AntdGroupBar":
+            case "AntdPercentBar":
+            case "AntdZoneBar":
                 return <AntdBarSet {...this.props}/>;
         }
     }
