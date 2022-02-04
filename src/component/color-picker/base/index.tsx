@@ -1,18 +1,25 @@
 import React, {Component} from 'react';
 import {Popover} from 'antd';
-import {ChromePicker,} from 'react-color';
+import {ChromePicker} from 'react-color';
 import './index.less';
+import {BaseProps} from "../../../types/Base";
 
-class ColorPicker extends Component {
+interface ColorPickerProps extends BaseProps {
+    onChange?: (color: any, e: Event, id: number | string | undefined) => void;
+    id?: number | string;
+}
+
+
+class ColorPicker extends Component<ColorPickerProps> {
     state = {
         color: 'rgba(0,255,192,0.59)',
         colorArea: 'rgba(0,255,192,0.59)'
     };
 
-    onChangeComplete = (color) => {
-        const {onChange} = this.props;
+    onChangeComplete = (color: any, event: any) => {
+        const {onChange, id} = this.props;
         const rgbColor = `rgb(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`;
-        onChange(rgbColor);
+        onChange && onChange(rgbColor, event, id);
         this.setState({
             color: color.rgb,
             colorArea: rgbColor

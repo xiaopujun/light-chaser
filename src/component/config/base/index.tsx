@@ -111,9 +111,9 @@ class ElemBaseSet extends Component<any> {
                         </div>
                         <div className={'config-item'}>
                             <label className={'config-item-label'}>颜色：</label>
-                            <ColorPicker name={'mainTitleColor'}
-                                         onChange={this.borderColorChanged}
-                                         className={'config-item-value'}/>
+                            <ColorPicker
+                                onChange={this.borderColorChanged}
+                                className={'config-item-value'}/>
                         </div>
                         <div className={'config-item'}>
                             <label className={'config-item-label'}>宽度：</label>
@@ -131,8 +131,7 @@ class ElemBaseSet extends Component<any> {
                     <Panel className={'charts-properties-title'} header="背景" key="4">
                         <div className={'config-item'}>
                             <label className={'config-item-label'}>颜色：</label>
-                            <ColorPicker name={'mainTitleColor'}
-                                         className={'config-item-value'}
+                            <ColorPicker className={'config-item-value'}
                                          onChange={this.backgroundColorChanged}/>
                         </div>
                     </Panel>

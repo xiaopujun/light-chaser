@@ -11,7 +11,8 @@ class ElemChartSet extends Component<any> {
         const {subType} = dataXDesigner?.active;
         switch (subType) {
             case "AntdBaseBar":
-                return <AntdBarSet {...this.props}/>
+            case "AntdGroupBar":
+                return <AntdBarSet {...this.props}/>;
         }
     }
 

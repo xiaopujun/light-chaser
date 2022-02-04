@@ -19,6 +19,17 @@ class ElemDataSet extends Component<any> {
         this.content && this.content?.visibleChanged();
     }
 
+    generateDataDialog = () => {
+        const {dataXDesigner} = this.props;
+        const {active} = dataXDesigner;
+        switch (active.subType) {
+            case "AntdBaseBar":
+                return <EditTable {...this.props} mode={0} setContent={this.setContent}/>;
+            case "AntdGroupBar":
+                return <EditTable {...this.props} mode={1} setContent={this.setContent}/>;
+        }
+    }
+
 
     render() {
         return (
@@ -26,7 +37,7 @@ class ElemDataSet extends Component<any> {
                 <Collapse className={'base-config-collapse'} bordered={false}>
                     <div>
                         <Button onClick={this.importData} type={'primary'}>点击录入数据</Button>
-                        <EditTable {...this.props} mode={0} setContent={this.setContent}/>
+                        {this.generateDataDialog()}
                     </div>
                 </Collapse>
             </div>

@@ -1,4 +1,4 @@
-import {initAntdBaseBar} from '../init/data/antd-bar';
+import {initAntdBaseBar, initAntdGroupBar} from '../init/data/antd-bar';
 
 /**
  * 根据类型，获取图表初始化数据
@@ -8,6 +8,8 @@ export function getChartInitData(type: string) {
     switch (type) {
         case "AntdBaseBar":
             return initAntdBaseBar();
+        case "AntdGroupBar":
+            return initAntdGroupBar();
         default:
             return null;
     }

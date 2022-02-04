@@ -7,16 +7,16 @@ import ColorPicker from "../base";
 /**
  * 组合颜色选择器，可以同时渲染多个颜色选择器。色值结果以数组返回
  */
-class GroupColorPicker extends Component {
+class GroupColorPicker extends Component<any> {
 
-    state = {
+    state: any = {
         res: []
     }
 
-    onChange = (index, data) => {
+    onChange = (color: any, e: any, id: any) => {
         let {res} = this.state;
         const {onChange} = this.props;
-        res[index] = data;
+        res[id] = color;
         onChange("color", res);
         this.setState({res})
     }
@@ -33,7 +33,7 @@ class GroupColorPicker extends Component {
                 flexDirection: "row"
             }}>
                 {tempArr.map((item, i) => {
-                    return <ColorPicker key={item} name={i} onChange={this.onChange}/>
+                    return <ColorPicker key={item} id={i} onChange={this.onChange}/>
                 })}
             </div>
         )

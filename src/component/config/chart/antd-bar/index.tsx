@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Collapse, Select, Slider, Switch} from "antd";
 import ColorPicker from '../../../color-picker/base';
+import GroupColorPicker from '../../../color-picker/group';
 import {update} from "lodash";
 import './index.less';
 
@@ -204,15 +205,41 @@ class AntdBarSet extends Component<any> {
         })
     }
 
+    groupColorChanged = (name: string, value: any) => {
+        const {updateElemChartSet} = this.props;
+        updateElemChartSet({
+            color: value
+        })
+    }
+
+    generateFillColorComp = () => {
+        const {dataXDesigner} = this.props;
+        const {active} = dataXDesigner;
+        switch (active?.subType) {
+            case 'AntdBaseBar':
+                return <ColorPicker name={'mainTitleColor'}
+                                    onChange={this.fillColorChanged}
+                                    className={'config-item-value'}/>;
+            case 'AntdGroupBar':
+                const {chartConfigMap} = dataXDesigner;
+                let chartConfig = chartConfigMap.get(active?.id);
+                let types = new Set();
+                chartConfig.chartProperties.data.map((item: any) => {
+                    types.add(item?.type);
+                });
+                return <GroupColorPicker number={types.size} onChange={this.groupColorChanged}/>;
+        }
+    }
+
     render() {
+        const {dataXDesigner} = this.props;
+        const {active} = dataXDesigner;
         return (
             <div className={'elem-chart-config'}>
                 <Collapse className={'chart-config-collapse'} bordered={false}>
                     <div className={'config-item'}>
                         <label className={'config-item-label'}>填充色：</label>
-                        <ColorPicker name={'mainTitleColor'}
-                                     onChange={this.fillColorChanged}
-                                     className={'config-item-value'}/>
+                        {this.generateFillColorComp()}
                     </div>
                     <div className={'config-item'}>
                         <label className={'config-item-label'}>显示图例：</label>
