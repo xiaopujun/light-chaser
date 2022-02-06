@@ -301,38 +301,38 @@ export const initAntdZoneBar = () => {
             data: [
                 {
                     name: '分类一',
-                    values: [76, 100],
+                    value: [76, 100],
                 },
                 {
                     name: '分类二',
-                    values: [56, 108],
+                    value: [56, 108],
                 },
                 {
                     name: '分类三',
-                    values: [38, 129],
+                    value: [38, 129],
                 },
                 {
                     name: '分类四',
-                    values: [58, 155],
+                    value: [58, 155],
                 },
                 {
                     name: '分类五',
-                    values: [45, 120],
+                    value: [45, 120],
                 },
                 {
                     name: '分类六',
-                    values: [23, 99],
+                    value: [23, 99],
                 },
                 {
                     name: '分类七',
-                    values: [18, 56],
+                    value: [18, 56],
                 },
                 {
                     name: '分类八',
-                    values: [18, 34],
+                    value: [18, 34],
                 },
             ],
-            xField: 'values',
+            xField: 'value',
             yField: 'name',
             isRange: true,
             xAxis: {
@@ -368,134 +368,135 @@ export const initAntdZoneBar = () => {
     });
 };
 
-
 //堆叠条形图初始化数据和配置
-export const antdStackBar = {
-    elemBasePeoperties: {},
-    chartProperties: {
-        data: [
-            {
-                year: '1991',
-                value: 3,
-                type: 'Lon',
-            },
-            {
-                year: '1992',
-                value: 4,
-                type: 'Lon',
-            },
-            {
-                year: '1993',
-                value: 3.5,
-                type: 'Lon',
-            },
-            {
-                year: '1994',
-                value: 5,
-                type: 'Lon',
-            },
-            {
-                year: '1995',
-                value: 4.9,
-                type: 'Lon',
-            },
-            {
-                year: '1996',
-                value: 6,
-                type: 'Lon',
-            },
-            {
-                year: '1997',
-                value: 7,
-                type: 'Lon',
-            },
-            {
-                year: '1998',
-                value: 9,
-                type: 'Lon',
-            },
-            {
-                year: '1999',
-                value: 13,
-                type: 'Lon',
-            },
-            {
-                year: '1991',
-                value: 3,
-                type: 'Bor',
-            },
-            {
-                year: '1992',
-                value: 4,
-                type: 'Bor',
-            },
-            {
-                year: '1993',
-                value: 3.5,
-                type: 'Bor',
-            },
-            {
-                year: '1994',
-                value: 5,
-                type: 'Bor',
-            },
-            {
-                year: '1995',
-                value: 4.9,
-                type: 'Bor',
-            },
-            {
-                year: '1996',
-                value: 6,
-                type: 'Bor',
-            },
-            {
-                year: '1997',
-                value: 7,
-                type: 'Bor',
-            },
-            {
-                year: '1998',
-                value: 9,
-                type: 'Bor',
-            },
-            {
-                year: '1999',
-                value: 13,
-                type: 'Bor',
-            },
-        ],
-        isStack: true,
-        xField: 'value',
-        yField: 'year',
-        seriesField: 'type',
-        xAxis: {
-            grid: {
-                line: {
-                    style: {
-                        stroke: 'rgba(0,255,192,0.59)',
-                        lineWidth: 2,
-                        lineDash: [4, 5],
-                        strokeOpacity: 0.7,
-                        shadowColor: 'black',
-                        shadowBlur: 10,
-                        shadowOffsetX: 5,
-                        shadowOffsetY: 5,
-                        cursor: 'pointer'
+export const initAntdStackBar = () => {
+    return _.cloneDeep({
+        elemBasePeoperties: {},
+        chartProperties: {
+            data: [
+                {
+                    name: '1991',
+                    value: 3,
+                    type: 'Lon',
+                },
+                {
+                    name: '1992',
+                    value: 4,
+                    type: 'Lon',
+                },
+                {
+                    name: '1993',
+                    value: 3.5,
+                    type: 'Lon',
+                },
+                {
+                    name: '1994',
+                    value: 5,
+                    type: 'Lon',
+                },
+                {
+                    name: '1995',
+                    value: 4.9,
+                    type: 'Lon',
+                },
+                {
+                    name: '1996',
+                    value: 6,
+                    type: 'Lon',
+                },
+                {
+                    name: '1997',
+                    value: 7,
+                    type: 'Lon',
+                },
+                {
+                    name: '1998',
+                    value: 9,
+                    type: 'Lon',
+                },
+                {
+                    name: '1999',
+                    value: 13,
+                    type: 'Lon',
+                },
+                {
+                    name: '1991',
+                    value: 3,
+                    type: 'Bor',
+                },
+                {
+                    name: '1992',
+                    value: 4,
+                    type: 'Bor',
+                },
+                {
+                    name: '1993',
+                    value: 3.5,
+                    type: 'Bor',
+                },
+                {
+                    name: '1994',
+                    value: 5,
+                    type: 'Bor',
+                },
+                {
+                    name: '1995',
+                    value: 4.9,
+                    type: 'Bor',
+                },
+                {
+                    name: '1996',
+                    value: 6,
+                    type: 'Bor',
+                },
+                {
+                    name: '1997',
+                    value: 7,
+                    type: 'Bor',
+                },
+                {
+                    name: '1998',
+                    value: 9,
+                    type: 'Bor',
+                },
+                {
+                    name: '1999',
+                    value: 13,
+                    type: 'Bor',
+                },
+            ],
+            isStack: true,
+            xField: 'value',
+            yField: 'name',
+            seriesField: 'type',
+            xAxis: {
+                grid: {
+                    line: {
+                        style: {
+                            stroke: 'rgba(0,255,192,0.59)',
+                            lineWidth: 2,
+                            lineDash: [4, 5],
+                            strokeOpacity: 0.7,
+                            shadowColor: 'black',
+                            shadowBlur: 10,
+                            shadowOffsetX: 5,
+                            shadowOffsetY: 5,
+                            cursor: 'pointer'
+                        }
                     }
-                }
-            },
-            label: {
-                style: {
-                    fill: 'rgb(0,255,234)'
+                },
+                label: {
+                    style: {
+                        fill: 'rgb(0,255,234)'
+                    },
                 },
             },
-        },
-        yAxis: {
-            grid: null,
-            line: null,
-            tickLine: null,
-            label: {style: {fill: 'rgb(0,255,234)'}}
-        },
-    }
+            yAxis: {
+                grid: null,
+                line: null,
+                tickLine: null,
+                label: {style: {fill: 'rgb(0,255,234)'}}
+            },
+        }
+    });
 };

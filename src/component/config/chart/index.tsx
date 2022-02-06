@@ -14,6 +14,7 @@ class ElemChartSet extends Component<any> {
             case "AntdGroupBar":
             case "AntdPercentBar":
             case "AntdZoneBar":
+            case "AntdStackBar":
                 return <AntdBarSet {...this.props}/>;
         }
     }

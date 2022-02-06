@@ -27,6 +27,7 @@ class ElemDataSet extends Component<any> {
                 return <EditTable {...this.props} mode={0} setContent={this.setContent}/>;
             case "AntdGroupBar":
             case "AntdPercentBar":
+            case "AntdStackBar":
                 return <EditTable {...this.props} mode={1} setContent={this.setContent}/>;
             case "AntdZoneBar":
                 return <EditTable {...this.props} mode={2} setContent={this.setContent}/>;

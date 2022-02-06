@@ -223,6 +223,7 @@ class AntdBarSet extends Component<any> {
                                     className={'config-item-value'}/>;
             case 'AntdGroupBar':
             case 'AntdPercentBar':
+            case 'AntdStackBar':
                 const {chartConfigMap} = dataXDesigner;
                 let chartConfig = chartConfigMap.get(active?.id);
                 let types = new Set();

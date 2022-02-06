@@ -3,6 +3,7 @@ import {Button, Input, Modal, Table} from "antd";
 import {DeleteOutlined, EditOutlined, ExclamationCircleOutlined} from '@ant-design/icons';
 import './index.less';
 import {updateElemChartSet} from "../../redux/actions/LayoutDesigner";
+import {cloneDeep} from "lodash";
 
 const {confirm} = Modal;
 
@@ -19,7 +20,7 @@ class EditTable extends Component<EditTableProps> {
         data: [],
         activeId: -1,
         visible: false,
-        mode: 1,   // 展示模式 0：不包含分类  1：包含分类
+        mode: 1,   // 展示模式 0：单值模式  1：分组模式  2：区间模式
     }
 
     /**
@@ -57,13 +58,18 @@ class EditTable extends Component<EditTableProps> {
         inputModule = {...inputModule, ...{endValue: e.currentTarget.value}}
         this.setState({inputModule})
     }
+    startValueInput = (e: any) => {
+        let {inputModule} = this.state;
+        inputModule = {...inputModule, ...{startValue: e.currentTarget.value}}
+        this.setState({inputModule})
+    }
 
 
     addData = () => {
         let {inputModule, data} = this.state;
         const {mode} = this.props;
         //校验inputModule数据
-        let {name, value, type, endValue} = inputModule;
+        let {name, value, type, endValue, startValue} = inputModule;
         switch (mode) {
             case 0:
                 if (name && value) {
@@ -90,19 +96,19 @@ class EditTable extends Component<EditTableProps> {
                 }
                 break;
             case 2:
-                if (name && value && endValue) {
+                if (name && startValue && endValue) {
                     data.push({
                         ...inputModule, ...{
                             key: (data.length + 1) + '',
-                            intervalValue: [parseInt(value), parseInt(endValue)],
-                            value: `${value}-${endValue}`,
+                            intervalValue: [parseInt(startValue), parseInt(endValue)],
+                            value: `${startValue}-${endValue}`,
                         }
                     })
                     this.setState({data: [...data], inputModule: {}})
                 } else {
                     Modal.error({
                         title: "提示信息",
-                        content: `${name ? "" : "名称 "}${value ? "" : "起始值 "}${endValue ? "" : "结束值 "}不能为空`,
+                        content: `${name ? "" : "名称 "}${startValue ? "" : "起始值 "}${endValue ? "" : "结束值 "}不能为空`,
                     });
                 }
                 break;
@@ -136,7 +142,7 @@ class EditTable extends Component<EditTableProps> {
         let {inputModule, data, activeId} = this.state;
         const {mode} = this.props;
         //校验inputModule数据
-        let {name, value, type, endValue} = inputModule;
+        let {name, value, type, startValue, endValue} = inputModule;
         switch (mode) {
             case 0:
                 if (name && value) {
@@ -152,7 +158,7 @@ class EditTable extends Component<EditTableProps> {
                 break;
             case 1:
                 if (name && value && type) {
-                    inputModule = {...inputModule,...{}}
+                    inputModule = {...inputModule, ...{}}
                     data[activeId] = inputModule;
                     //添加数据并清空输入状态
                     this.setState({data: [...data], inputModule: {}})
@@ -164,7 +170,11 @@ class EditTable extends Component<EditTableProps> {
                 }
                 break;
             case 2:
-                if (name && value && endValue) {
+                if (name && startValue && endValue) {
+                    inputModule['startValue'] = startValue;
+                    inputModule['endValue'] = endValue;
+                    inputModule['intervalValue'] = [parseInt(startValue), parseInt(endValue)];
+                    inputModule['value'] = `${startValue}-${endValue}`;
                     data[activeId] = inputModule;
                     //添加数据并清空输入状态
                     this.setState({data: [...data], inputModule: {}})
@@ -181,25 +191,48 @@ class EditTable extends Component<EditTableProps> {
 
     flashData = () => {
         let {data} = this.state;
+        let {mode} = this.props;
         const {updateElemChartSet} = this.props;
         data && data.map((item: any) => {
+            //去除公共属性
             delete item.key;
-            item.value = parseFloat(item.value);
+            //根据展示模式处理对象属性
+            switch (mode) {
+                case 0:
+                case 1:
+                    item.value = parseFloat(item.value);
+                    break;
+                case 2:
+                    delete item?.startValue;
+                    delete item?.endValue;
+                    item.value = item.intervalValue;
+                    delete item?.intervalValue;
+                    break;
+            }
         })
         updateElemChartSet && updateElemChartSet({data: data});
-        this.setState({visible: false})
+        this.setState({visible: false, data: []})
     }
 
     generateEditTableByMode = () => {
         const {mode} = this.props;
         const {inputModule} = this.state;
-        const {type, endValue} = inputModule;
+        const {value, startValue, type, endValue} = inputModule;
         switch (mode) {
             case 0:
-                return <></>;
+                return (
+                    <>
+                        <div className={'data-item'}>
+                            <Input addonBefore="数值" onInput={this.valueInput}/>
+                        </div>
+                    </>);
             case 1:
                 return (
-                    <>&nbsp;&nbsp;&nbsp;
+                    <>
+                        <div className={'data-item'}>
+                            <Input addonBefore="数值" value={value || ""} onInput={this.valueInput}/>
+                        </div>
+                        &nbsp;&nbsp;&nbsp;
                         <div className={'data-item'}>
                             <Input addonBefore="类型" value={type || ""} onInput={this.typeInput}/>
                         </div>
@@ -207,6 +240,9 @@ class EditTable extends Component<EditTableProps> {
                 );
             case 2:
                 return (<>
+                    <div className={'data-item'}>
+                        <Input addonBefore="数值" value={startValue || ""} onInput={this.startValueInput}/>
+                    </div>
                     <div className={'data-item interval-input'} style={{width: '20%'}}>
                         <span>-</span>
                         <Input value={endValue || ""} onInput={this.endValueInput}/>
@@ -252,9 +288,7 @@ class EditTable extends Component<EditTableProps> {
         ];
         const {mode} = this.props;
         const {data, inputModule, visible, activeId} = this.state;
-        let {name, value} = inputModule;
-        //在区间值情况下，处理数据回显值
-        value = mode === 2 ? value && value.split("-")[0] : value;
+        let {name, value, startValue, endValue} = inputModule;
 
         //处理展示模式
         if (mode === 0 || mode === 2) {
@@ -271,9 +305,6 @@ class EditTable extends Component<EditTableProps> {
                             <Input addonBefore="名称" value={name || ""} onInput={this.nameInput}/>
                         </div>
                         &nbsp;&nbsp;&nbsp;
-                        <div className={'data-item'}>
-                            <Input addonBefore="数值" value={value || ""} onInput={this.valueInput}/>
-                        </div>
                         {this.generateEditTableByMode()}
                         &nbsp;&nbsp;&nbsp;
                         <div className={'data-item'}>
