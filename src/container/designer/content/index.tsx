@@ -5,6 +5,7 @@ import '../../../../node_modules/react-resizable/css/styles.css';
 import './index.less';
 import AntdBar from "../../../component/charts/antd/bar";
 import RightSlideBox from "../right";
+import AntdColumn from "../../../component/charts/antd/column";
 
 export default class DataXLayoutContent extends React.Component<any, any> {
 
@@ -26,6 +27,12 @@ export default class DataXLayoutContent extends React.Component<any, any> {
                     return (
                         <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
                             <AntdBar elemId={item?.id} deleteItem={this.deleteItem} {...this.props}/>
+                        </div>
+                    );
+                case 'AntdBaseColumn':
+                    return (
+                        <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
+                            <AntdColumn elemId={item?.id} deleteItem={this.deleteItem} {...this.props}/>
                         </div>
                     )
                 default:

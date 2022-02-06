@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import {Bar} from "@ant-design/charts";
-import EditTools from "../../../edit-tool";
+import {Column} from "@ant-design/charts";
 import './index.less';
+import EditTools from "../../../edit-tool";
 
 /**
- * 基础条形图
+ * 基础柱状图
  */
-export default class AntdBar extends Component<any, any> {
+export default class AntdColumn extends Component<any, any> {
 
     render() {
         const {dataXDesigner, elemId} = this.props;
@@ -16,7 +16,7 @@ export default class AntdBar extends Component<any, any> {
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...elemBasePeoperties}}>
                 <EditTools {...this.props} elemId={elemId}/>
-                <Bar className={'grid-chart-item'} {...chartProperties}/>
+                <Column className={'grid-chart-item'} {...chartProperties}/>
             </div>
         );
     }

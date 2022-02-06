@@ -41,7 +41,7 @@ class LayoutTools extends Component<LayoutToolsProps, any> {
         }, {
             id: '2',
             sort: '柱状图',
-            data: [{id: '1', icon: <AreaChartOutlined/>, content: '柱状图', token: 'column'},]
+            data: [{id: '1', icon: <AreaChartOutlined/>, content: '基础柱状图', token: 'AntdBaseColumn'},]
         }, {
             id: '3',
             sort: '饼图',

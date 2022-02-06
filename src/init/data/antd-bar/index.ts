@@ -1,8 +1,8 @@
-import * as _ from 'lodash';
+import {cloneDeep} from 'lodash';
 
 //基础条形图初始化数据和配置
 export const initAntdBaseBar = () => {
-    return _.cloneDeep({
+    return cloneDeep({
         elemBasePeoperties: {},
         chartProperties: {
             data: [
@@ -62,7 +62,7 @@ export const initAntdBaseBar = () => {
 
 //分组条形图初始化数据和配置
 export const initAntdGroupBar = () => {
-    return _.cloneDeep({
+    return cloneDeep({
         elemBasePeoperties: {},
         chartProperties: {
             data: [
@@ -146,7 +146,7 @@ export const initAntdGroupBar = () => {
 
 //百分比条形图初始化数据和配置
 export const initAntdPercentBar = () => {
-    return _.cloneDeep({
+    return cloneDeep({
         elemBasePeoperties: {},
         chartProperties: {
             data: [
@@ -295,7 +295,7 @@ export const initAntdPercentBar = () => {
 
 //区间条形图初始化数据和配置
 export const initAntdZoneBar = () => {
-    return _.cloneDeep({
+    return cloneDeep({
         elemBasePeoperties: {},
         chartProperties: {
             data: [
@@ -370,7 +370,7 @@ export const initAntdZoneBar = () => {
 
 //堆叠条形图初始化数据和配置
 export const initAntdStackBar = () => {
-    return _.cloneDeep({
+    return cloneDeep({
         elemBasePeoperties: {},
         chartProperties: {
             data: [
