@@ -30,6 +30,10 @@ export default class DataXLayoutContent extends React.Component<any, any> {
                         </div>
                     );
                 case 'AntdBaseColumn':
+                case 'AntdGroupColumn':
+                case 'AntdPercentColumn':
+                case 'AntdZoneColumn':
+                case 'AntdStackColumn':
                     return (
                         <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
                             <AntdColumn elemId={item?.id} deleteItem={this.deleteItem} {...this.props}/>

@@ -80,148 +80,129 @@ export const initAntdStackColumn = () => {
             backgroundColor: 'rgba(23,157,169,0.12)'
         },
         chartProperties: {
-            data:[
+            data: [
                 {
-                    type: 'Asia',
-                    name: '1750',
-                    value: 502,
+                    name: '1991',
+                    value: 3,
+                    type: 'Lon',
                 },
                 {
-                    type: 'Asia',
-                    name: '1800',
-                    value: 635,
+                    name: '1992',
+                    value: 4,
+                    type: 'Lon',
                 },
                 {
-                    type: 'Asia',
-                    name: '1850',
-                    value: 809,
+                    name: '1993',
+                    value: 3.5,
+                    type: 'Lon',
                 },
                 {
-                    type: 'Asia',
-                    name: '1900',
-                    value: 947,
+                    name: '1994',
+                    value: 5,
+                    type: 'Lon',
                 },
                 {
-                    type: 'Asia',
-                    name: '1950',
-                    value: 1402,
+                    name: '1995',
+                    value: 4.9,
+                    type: 'Lon',
                 },
                 {
-                    type: 'Asia',
+                    name: '1996',
+                    value: 6,
+                    type: 'Lon',
+                },
+                {
+                    name: '1997',
+                    value: 7,
+                    type: 'Lon',
+                },
+                {
+                    name: '1998',
+                    value: 9,
+                    type: 'Lon',
+                },
+                {
                     name: '1999',
-                    value: 3634,
+                    value: 13,
+                    type: 'Lon',
                 },
                 {
-                    type: 'Asia',
-                    name: '2050',
-                    value: 5268,
+                    name: '1991',
+                    value: 3,
+                    type: 'Bor',
                 },
                 {
-                    type: 'Africa',
-                    name: '1750',
-                    value: 106,
+                    name: '1992',
+                    value: 4,
+                    type: 'Bor',
                 },
                 {
-                    type: 'Africa',
-                    name: '1800',
-                    value: 107,
+                    name: '1993',
+                    value: 3.5,
+                    type: 'Bor',
                 },
                 {
-                    type: 'Africa',
-                    name: '1850',
-                    value: 111,
+                    name: '1994',
+                    value: 5,
+                    type: 'Bor',
                 },
                 {
-                    type: 'Africa',
-                    name: '1900',
-                    value: 133,
+                    name: '1995',
+                    value: 4.9,
+                    type: 'Bor',
                 },
                 {
-                    type: 'Africa',
-                    name: '1950',
-                    value: 221,
+                    name: '1996',
+                    value: 6,
+                    type: 'Bor',
                 },
                 {
-                    type: 'Africa',
+                    name: '1997',
+                    value: 7,
+                    type: 'Bor',
+                },
+                {
+                    name: '1998',
+                    value: 9,
+                    type: 'Bor',
+                },
+                {
                     name: '1999',
-                    value: 767,
-                },
-                {
-                    type: 'Africa',
-                    name: '2050',
-                    value: 1766,
-                },
-                {
-                    type: 'Europe',
-                    name: '1750',
-                    value: 163,
-                },
-                {
-                    type: 'Europe',
-                    name: '1800',
-                    value: 203,
-                },
-                {
-                    type: 'Europe',
-                    name: '1850',
-                    value: 276,
-                },
-                {
-                    type: 'Europe',
-                    name: '1900',
-                    value: 408,
-                },
-                {
-                    type: 'Europe',
-                    name: '1950',
-                    value: 547,
-                },
-                {
-                    type: 'Europe',
-                    name: '1999',
-                    value: 729,
-                },
-                {
-                    type: 'Europe',
-                    name: '2050',
-                    value: 628,
+                    value: 13,
+                    type: 'Bor',
                 },
             ],
             isStack: true,
             xField: 'name',
             yField: 'value',
             seriesField: 'type',
-            label: {
-                // 可手动配置 label 数据标签位置
-                position: 'middle',
-                // 'top', 'bottom', 'middle'
-                // 可配置附加的布局方法
-                layout: [
-                    // 柱形图数据标签位置自动调整
-                    {
-                        type: 'interval-adjust-position',
-                    }, // 数据标签防遮挡
-                    {
-                        type: 'interval-hide-overlap',
-                    }, // 数据标签文颜色自动调整
-                    {
-                        type: 'adjust-color',
+            xAxis: {
+                grid: null,
+                label: {
+                    style: {
+                        fill: 'rgb(0,255,234)'
                     },
-                ],
+                },
+            },
+            yAxis: {
+                grid: null,
+                line: null,
+                tickLine: null,
+                label: {style: {fill: 'rgb(0,255,234)'}}
             },
         }
     });
 };
 
-//堆叠柱状图初始化数据和配置
+//分组柱状图初始化数据和配置
 export const initAntdGroupCloumn = () => {
     return cloneDeep({
         elemBasePeoperties: {
-            paddingTop:'15px',
-            paddingLeft:'15px',
-            paddingBottom:'15px',
-            paddingRight:'15px',
-            backgroundColor:'rgba(23,157,169,0.12)'
+            paddingTop: '15px',
+            paddingLeft: '15px',
+            paddingBottom: '15px',
+            paddingRight: '15px',
+            backgroundColor: 'rgba(23,157,169,0.12)'
         },
         chartProperties: {
             data: [
@@ -277,8 +258,8 @@ export const initAntdGroupCloumn = () => {
                 },
             ],
             isGroup: true,
-            xField: 'value',
-            yField: 'name',
+            xField: 'name',
+            yField: 'value',
             seriesField: 'type',
             dodgePadding: 4,
             xAxis: {
@@ -304,14 +285,14 @@ export const initAntdGroupCloumn = () => {
 };
 
 //百分比柱状图初始化数据和配置
-export const initAntdPercentBar = () => {
+export const initAntdPercentCloumn = () => {
     return cloneDeep({
         elemBasePeoperties: {
-            paddingTop:'15px',
-            paddingLeft:'15px',
-            paddingBottom:'15px',
-            paddingRight:'15px',
-            backgroundColor:'rgba(23,157,169,0.12)'
+            paddingTop: '15px',
+            paddingLeft: '15px',
+            paddingBottom: '15px',
+            paddingRight: '15px',
+            backgroundColor: 'rgba(23,157,169,0.12)'
         },
         chartProperties: {
             data: [
@@ -421,8 +402,8 @@ export const initAntdPercentBar = () => {
                     value: 628,
                 },
             ],
-            xField: 'value',
-            yField: 'name',
+            xField: 'name',
+            yField: 'value',
             seriesField: 'type',
             isPercent: true,
             isStack: true,
@@ -459,14 +440,14 @@ export const initAntdPercentBar = () => {
 };
 
 //区间柱状图初始化数据和配置
-export const initAntdZoneBar = () => {
+export const initAntdZoneCloumn = () => {
     return cloneDeep({
         elemBasePeoperties: {
-            paddingTop:'15px',
-            paddingLeft:'15px',
-            paddingBottom:'15px',
-            paddingRight:'15px',
-            backgroundColor:'rgba(23,157,169,0.12)'
+            paddingTop: '15px',
+            paddingLeft: '15px',
+            paddingBottom: '15px',
+            paddingRight: '15px',
+            backgroundColor: 'rgba(23,157,169,0.12)'
         },
         chartProperties: {
             data: [
@@ -503,8 +484,8 @@ export const initAntdZoneBar = () => {
                     value: [18, 34],
                 },
             ],
-            xField: 'value',
-            yField: 'name',
+            xField: 'name',
+            yField: 'value',
             isRange: true,
             xAxis: {
                 grid: {

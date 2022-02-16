@@ -6,7 +6,13 @@ import {
     initAntdStackBar
 } from '../init/data/antd-bar';
 
-import {initAntdBaseColumn} from '../init/data/antd-column';
+import {
+    initAntdBaseColumn,
+    initAntdPercentCloumn,
+    initAntdZoneCloumn,
+    initAntdGroupCloumn,
+    initAntdStackColumn,
+} from '../init/data/antd-column';
 
 /**
  * 根据类型，获取图表初始化数据
@@ -26,6 +32,14 @@ export function getChartInitData(type: string) {
             return initAntdStackBar();
         case "AntdBaseColumn":
             return initAntdBaseColumn();
+        case "AntdGroupColumn":
+            return initAntdGroupCloumn();
+        case "AntdPercentColumn":
+            return initAntdPercentCloumn();
+        case "AntdZoneColumn":
+            return initAntdZoneCloumn();
+        case "AntdStackColumn":
+            return initAntdStackColumn();
         default:
             return null;
     }
