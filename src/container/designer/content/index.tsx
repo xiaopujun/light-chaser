@@ -6,6 +6,7 @@ import './index.less';
 import AntdBar from "../../../component/charts/antd/bar";
 import RightSlideBox from "../right";
 import AntdColumn from "../../../component/charts/antd/column";
+import AntdPie from "../../../component/charts/antd/pie";
 
 export default class DataXLayoutContent extends React.Component<any, any> {
 
@@ -38,7 +39,14 @@ export default class DataXLayoutContent extends React.Component<any, any> {
                         <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
                             <AntdColumn elemId={item?.id} deleteItem={this.deleteItem} {...this.props}/>
                         </div>
-                    )
+                    );
+                case 'AntdPie':
+                case 'AntdRing':
+                    return (
+                        <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
+                            <AntdPie elemId={item?.id} deleteItem={this.deleteItem} {...this.props}/>
+                        </div>
+                    );
                 default:
                     return null;
             }
