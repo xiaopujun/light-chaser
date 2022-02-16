@@ -3,7 +3,13 @@ import {cloneDeep} from 'lodash';
 //基础条形图初始化数据和配置
 export const initAntdBaseBar = () => {
     return cloneDeep({
-        elemBasePeoperties: {},
+        elemBasePeoperties: {
+            paddingTop:'15px',
+            paddingLeft:'15px',
+            paddingBottom:'15px',
+            paddingRight:'15px',
+            backgroundColor:'rgba(23,157,169,0.12)'
+        },
         chartProperties: {
             data: [
                 {
@@ -63,7 +69,13 @@ export const initAntdBaseBar = () => {
 //分组条形图初始化数据和配置
 export const initAntdGroupBar = () => {
     return cloneDeep({
-        elemBasePeoperties: {},
+        elemBasePeoperties: {
+            paddingTop:'15px',
+            paddingLeft:'15px',
+            paddingBottom:'15px',
+            paddingRight:'15px',
+            backgroundColor:'rgba(23,157,169,0.12)'
+        },
         chartProperties: {
             data: [
                 {
@@ -147,7 +159,13 @@ export const initAntdGroupBar = () => {
 //百分比条形图初始化数据和配置
 export const initAntdPercentBar = () => {
     return cloneDeep({
-        elemBasePeoperties: {},
+        elemBasePeoperties: {
+            paddingTop:'15px',
+            paddingLeft:'15px',
+            paddingBottom:'15px',
+            paddingRight:'15px',
+            backgroundColor:'rgba(23,157,169,0.12)'
+        },
         chartProperties: {
             data: [
                 {
@@ -296,7 +314,13 @@ export const initAntdPercentBar = () => {
 //区间条形图初始化数据和配置
 export const initAntdZoneBar = () => {
     return cloneDeep({
-        elemBasePeoperties: {},
+        elemBasePeoperties: {
+            paddingTop:'15px',
+            paddingLeft:'15px',
+            paddingBottom:'15px',
+            paddingRight:'15px',
+            backgroundColor:'rgba(23,157,169,0.12)'
+        },
         chartProperties: {
             data: [
                 {
@@ -371,7 +395,13 @@ export const initAntdZoneBar = () => {
 //堆叠条形图初始化数据和配置
 export const initAntdStackBar = () => {
     return cloneDeep({
-        elemBasePeoperties: {},
+        elemBasePeoperties: {
+            paddingTop:'15px',
+            paddingLeft:'15px',
+            paddingBottom:'15px',
+            paddingRight:'15px',
+            backgroundColor:'rgba(23,157,169,0.12)'
+        },
         chartProperties: {
             data: [
                 {
