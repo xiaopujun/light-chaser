@@ -72,8 +72,8 @@ class LayoutTools extends Component<LayoutToolsProps, any> {
                 {id: '3', icon: <AreaChartOutlined/>, content: '多折线图', token: 'AntdMuchFoldLine'},]
         }, {
             id: '8',
-            sort: '仪表盘',
-            data: [{id: '1', icon: <AreaChartOutlined/>, content: '仪表盘', token: 'process'},]
+            sort: '进度图',
+            data: [{id: '1', icon: <AreaChartOutlined/>, content: '水波图  ', token: 'AntdLiquid'},]
         },],
     }
 

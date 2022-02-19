@@ -7,6 +7,11 @@ import AntdBar from "../../../component/charts/antd/bar";
 import RightSlideBox from "../right";
 import AntdColumn from "../../../component/charts/antd/column";
 import AntdPie from "../../../component/charts/antd/pie";
+import AntdScatter from "../../../component/charts/antd/scatter";
+import AntdArea from "../../../component/charts/antd/area";
+import AntdWordCloud from "../../../component/charts/antd/wordcloud";
+import AntdLine from "../../../component/charts/antd/line";
+import AntdLiquid from "../../../component/charts/antd/liquid";
 
 export default class DataXLayoutContent extends React.Component<any, any> {
 
@@ -47,6 +52,42 @@ export default class DataXLayoutContent extends React.Component<any, any> {
                             <AntdPie elemId={item?.id} deleteItem={this.deleteItem} {...this.props}/>
                         </div>
                     );
+                case 'AntdScatter':
+                case 'AntdBubbles':
+                    return (
+                        <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
+                            <AntdScatter key={item?.id} name={item.name} elemId={item?.id}
+                                         deleteItem={this.deleteItem} {...this.props}/>
+                        </div>
+                    );
+                case 'AntdStackArea':
+                    return (
+                        <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
+                            <AntdArea key={item?.id} name={item.name} elemId={item?.id}
+                                      deleteItem={this.deleteItem} {...this.props}/>
+                        </div>
+                    );
+                case 'AntdWordCloud':
+                    return (
+                        <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
+                            <AntdWordCloud key={item?.id} name={item.name} elemId={item?.id}
+                                           deleteItem={this.deleteItem} {...this.props}/>
+                        </div>
+                    );
+                case 'AntdMuchFoldLine':
+                    return (
+                        <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
+                            <AntdLine key={item?.id} name={item.name} elemId={item?.id}
+                                      deleteItem={this.deleteItem} {...this.props}/>
+                        </div>
+                    );
+                case 'AntdLiquid':
+                    return (
+                        <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
+                            <AntdLiquid key={item?.id} name={item.name} elemId={item?.id}
+                                        deleteItem={this.deleteItem} {...this.props}/>
+                        </div>
+                    );
                 default:
                     return null;
             }
@@ -76,6 +117,7 @@ export default class DataXLayoutContent extends React.Component<any, any> {
         const {addItem, dataXDesigner} = this.props;
         const chartName = _event.dataTransfer.getData('chartName');
         const item = {...layoutItem, ...{i: dataXDesigner?.count + "", id: dataXDesigner?.count, name: chartName}}
+        console.log("组件", item)
         addItem(item);
 
         if (this.rgl != null) {
