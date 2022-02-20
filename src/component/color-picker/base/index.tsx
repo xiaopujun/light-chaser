@@ -34,7 +34,7 @@ class ColorPicker extends Component<ColorPickerProps> {
         return (
             <Popover placement="topLeft" content={content} trigger={'click'}>
                 <div style={{backgroundColor: `${colorArea}`}}
-                     className={'color-area'}></div>
+                     className={'color-area'}/>
             </Popover>
 
         )

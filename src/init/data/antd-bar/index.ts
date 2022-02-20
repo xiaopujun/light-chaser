@@ -410,13 +410,13 @@ export const initAntdStackBar = () => {
                     type: 'Lon',
                 },
                 {
-                    name: '1992',
-                    value: 4,
+                    name: '1993',
+                    value: 3.5,
                     type: 'Lon',
                 },
                 {
-                    name: '1993',
-                    value: 3.5,
+                    name: '1992',
+                    value: 4,
                     type: 'Lon',
                 },
                 {
