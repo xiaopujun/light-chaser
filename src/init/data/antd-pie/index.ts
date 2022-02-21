@@ -3,7 +3,7 @@ import {cloneDeep} from 'lodash';
 //基础柱状图初始化数据和配置
 export const initAntdPie = () => {
     return cloneDeep({
-        elemBasePeoperties: {
+        elemBaseProperties: {
             paddingTop: '15px',
             paddingLeft: '15px',
             paddingBottom: '15px',
@@ -58,7 +58,7 @@ export const initAntdPie = () => {
 //基础柱状图初始化数据和配置
 export const initAntdRing = () => {
     return cloneDeep({
-        elemBasePeoperties: {
+        elemBaseProperties: {
             paddingTop: '15px',
             paddingLeft: '15px',
             paddingBottom: '15px',

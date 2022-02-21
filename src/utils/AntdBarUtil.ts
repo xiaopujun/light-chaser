@@ -23,13 +23,18 @@ export function antdBarPropertiesProcess(preState: any, data: any) {
 }
 
 /**
- * 获取条形图的数据分组个数,主要用于设置图形的颜色组
+ * @description 计算antd类型图表数据中目标特征值存在的总体个数
  * @param data
  */
-export function getBarDataGroup(data: any) {
+export function getAntdDataSortCount(data: Array<any>, condition: string) {
     let groups = new Set();
     data.map((item: any, index: any) => {
-        groups.add(item.type);
+        if (condition in item) {
+            groups.add(item[condition]);
+        } else {
+            throw new Error("操作对象中没有该属性，异常属性：" + condition);
+        }
+
     })
     return groups.size;
 }

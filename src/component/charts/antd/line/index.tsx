@@ -29,10 +29,10 @@ export default class AntdLine extends Component<any, any> {
         const {dataXDesigner, elemId, name} = this.props;
         const {chartConfigMap} = dataXDesigner;
         const config = chartConfigMap?.get(elemId);
-        const {chartProperties, elemBasePeoperties} = config;
+        const {chartProperties, elemBaseProperties} = config;
         chartProperties.data = this.state.data;
         return (
-            <div style={{width: '100%', height: '100%', position: 'absolute', ...elemBasePeoperties}}>
+            <div style={{width: '100%', height: '100%', position: 'absolute', ...elemBaseProperties}}>
                 <EditTools {...this.props} elemId={elemId}/>
                 <Line className={'grid-chart-item'} {...chartProperties}/>
             </div>

@@ -8,7 +8,7 @@ const {Option} = Select;
 
 interface FillColorProp {
     fillMode?: string; //0:单色、1：多色、
-    groupNumber?: number; //分组选择器个数
+    groupNumber: number; //分组选择器个数
     updateElemChartSet: (data: any) => void; //更新填充色配置回调
 }
 
@@ -19,7 +19,6 @@ class FillColor extends Component<FillColorProp> {
 
     state = {
         fillMode: '0',
-        groupNumber: 1,
         targetValue: '',
         otherValue: 'rgb(0,255,234)'
     }
@@ -27,7 +26,7 @@ class FillColor extends Component<FillColorProp> {
     constructor(props: FillColorProp) {
         super(props);
         const {fillMode = '0', groupNumber = 1} = this.props;
-        this.state = {fillMode, groupNumber, targetValue: '', otherValue: 'rgb(0,255,234)'}
+        this.state = {fillMode, targetValue: '', otherValue: 'rgb(0,255,234)'}
     }
 
     colorChanged = (data: string | string[]) => {
@@ -36,7 +35,8 @@ class FillColor extends Component<FillColorProp> {
     }
 
     generateFillColorComp = () => {
-        const {fillMode, groupNumber} = this.state;
+        const {fillMode} = this.state;
+        const {groupNumber} = this.props;
         if (fillMode === '1') {
             return <GroupColorPicker groupNumber={groupNumber} onChange={this.colorChanged}/>;
         } else {

@@ -3,7 +3,7 @@ import {cloneDeep} from 'lodash';
 //散点图初始化数据和配置
 export const initAntdScatter = () => {
     return cloneDeep({
-        elemBasePeoperties: {
+        elemBaseProperties: {
             paddingTop: '15px',
             paddingLeft: '15px',
             paddingBottom: '15px',
@@ -76,7 +76,7 @@ export const initAntdScatter = () => {
 //气泡图初始化数据和配置
 export const initAntdBubbles = () => {
     return cloneDeep({
-        elemBasePeoperties: {
+        elemBaseProperties: {
             paddingTop: '15px',
             paddingLeft: '15px',
             paddingBottom: '15px',

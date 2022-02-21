@@ -7,6 +7,7 @@ import FillColor from "../../antd/atomic_components/fill_color";
 import Legend from "../../antd/atomic_components/legned";
 import RightAngleCoordinates from "../../antd/atomic_components/right_angle_coordinates";
 import BarWidth from "../../antd/atomic_components/bar_width";
+import {getAntdDataSortCount} from "../../../../utils/AntdBarUtil";
 
 const {Option} = Select;
 
@@ -25,35 +26,31 @@ class AntdBarSet extends Component<any> {
         })
     }
 
-    generateFillColorComp = () => {
-        const {dataXDesigner} = this.props;
+
+    render() {
+        const {updateElemChartSet, dataXDesigner} = this.props;
         const {active} = dataXDesigner;
+        const {chartConfigMap} = dataXDesigner;
+        let chartConfig = chartConfigMap.get(active?.id);
+        let colorPickerNumber = 1;
         switch (active?.subType) {
             case 'AntdBaseBar':
             case 'AntdZoneBar':
-                return <ColorPicker name={'mainTitleColor'}
-                                    onChange={this.fillColorChanged}
-                                    className={'config-item-value'}/>;
+                //单条的计算条数个数
+                colorPickerNumber = chartConfig.chartProperties.data.length;
+                break;
             case 'AntdGroupBar':
             case 'AntdPercentBar':
             case 'AntdStackBar':
-                const {chartConfigMap} = dataXDesigner;
-                let chartConfig = chartConfigMap.get(active?.id);
-                let types = new Set();
-                chartConfig.chartProperties.data.map((item: any) => {
-                    types.add(item?.type);
-                });
-                return <GroupColorPicker groupNumber={types.size} onChange={this.groupColorChanged}/>;
+                //分组的计算分组个数
+                colorPickerNumber = getAntdDataSortCount(chartConfig.chartProperties.data, 'type');
+                break;
         }
-    }
-
-    render() {
-        const {updateElemChartSet} = this.props;
         return (
             <div className={'elem-chart-config'}>
                 <Collapse className={'chart-config-collapse'} bordered={false}>
                     {/*图形填充色设置*/}
-                    <FillColor updateElemChartSet={updateElemChartSet}/>
+                    <FillColor updateElemChartSet={updateElemChartSet} groupNumber={colorPickerNumber}/>
                     {/*图例配置*/}
                     <Legend updateElemChartSet={updateElemChartSet}/>
                     {/*直角坐标系配置*/}

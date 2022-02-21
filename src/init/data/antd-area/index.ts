@@ -3,7 +3,7 @@ import {cloneDeep} from 'lodash';
 //堆叠面积图初始化数据和配置
 export const initAntdStackArea = () => {
     return cloneDeep({
-        elemBasePeoperties: {
+        elemBaseProperties: {
             paddingTop: '15px',
             paddingLeft: '15px',
             paddingBottom: '15px',

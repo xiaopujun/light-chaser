@@ -13,9 +13,9 @@ export default class AntdLiquid extends Component<any, any> {
         const {dataXDesigner, elemId, name} = this.props;
         const {chartConfigMap} = dataXDesigner;
         const config = chartConfigMap?.get(elemId);
-        const {chartProperties, elemBasePeoperties} = config;
+        const {chartProperties, elemBaseProperties} = config;
         return (
-            <div style={{width: '100%', height: '100%', position: 'absolute', ...elemBasePeoperties}}>
+            <div style={{width: '100%', height: '100%', position: 'absolute', ...elemBaseProperties}}>
                 <EditTools {...this.props} elemId={elemId}/>
                 <Liquid className={'grid-chart-item'} {...chartProperties}/>
             </div>

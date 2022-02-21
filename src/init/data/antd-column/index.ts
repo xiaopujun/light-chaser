@@ -3,7 +3,7 @@ import {cloneDeep} from 'lodash';
 //基础柱状图初始化数据和配置
 export const initAntdBaseColumn = () => {
     return cloneDeep({
-        elemBasePeoperties: {
+        elemBaseProperties: {
             paddingTop: '15px',
             paddingLeft: '15px',
             paddingBottom: '15px',
@@ -72,7 +72,7 @@ export const initAntdBaseColumn = () => {
 //堆叠柱状图初始化数据和配置
 export const initAntdStackColumn = () => {
     return cloneDeep({
-        elemBasePeoperties: {
+        elemBaseProperties: {
             paddingTop: '15px',
             paddingLeft: '15px',
             paddingBottom: '15px',
@@ -197,7 +197,7 @@ export const initAntdStackColumn = () => {
 //分组柱状图初始化数据和配置
 export const initAntdGroupCloumn = () => {
     return cloneDeep({
-        elemBasePeoperties: {
+        elemBaseProperties: {
             paddingTop: '15px',
             paddingLeft: '15px',
             paddingBottom: '15px',
@@ -287,7 +287,7 @@ export const initAntdGroupCloumn = () => {
 //百分比柱状图初始化数据和配置
 export const initAntdPercentCloumn = () => {
     return cloneDeep({
-        elemBasePeoperties: {
+        elemBaseProperties: {
             paddingTop: '15px',
             paddingLeft: '15px',
             paddingBottom: '15px',
@@ -442,7 +442,7 @@ export const initAntdPercentCloumn = () => {
 //区间柱状图初始化数据和配置
 export const initAntdZoneCloumn = () => {
     return cloneDeep({
-        elemBasePeoperties: {
+        elemBaseProperties: {
             paddingTop: '15px',
             paddingLeft: '15px',
             paddingBottom: '15px',
