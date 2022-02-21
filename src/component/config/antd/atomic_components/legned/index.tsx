@@ -38,7 +38,8 @@ class Legend extends Component<LegendProp> {
             <div className={'config-group chart-fill-color'}>
                 <div className={'config-item'}>
                     <label className={'config-item-label'}>显示图例：</label>
-                    <div><Switch className={'config-item-value'} onChange={this.showLegend}/></div>
+                    <div className={'config-item-value'} style={{textAlign: 'right'}}><Switch
+                        onChange={this.showLegend}/></div>
                 </div>
                 <div className={'config-item'}>
                     <label className={'config-item-label'}>图例位置：</label>
