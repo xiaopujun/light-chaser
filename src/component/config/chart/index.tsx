@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import AntdBarSet from "./antd-bar";
+import AntdColumnSet from "./antd-column";
+import AntdAreaSet from "./antd-area";
 
 /**
  * 图表配置组件，该组件需要根据不同的组件类型、子类型，渲染不同的组件配置页面
@@ -16,6 +18,14 @@ class ElemChartSet extends Component<any> {
             case "AntdZoneBar":
             case "AntdStackBar":
                 return <AntdBarSet {...this.props}/>;
+            case "AntdBaseColumn":
+            case "AntdGroupColumn":
+            case "AntdPercentColumn":
+            case "AntdZoneColumn":
+            case "AntdStackColumn":
+                return <AntdColumnSet {...this.props}/>;
+            case "AntdStackArea":
+                return <AntdAreaSet {...this.props}/>;
         }
     }
 
