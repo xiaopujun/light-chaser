@@ -41,6 +41,8 @@ export const initAntdPie = () => {
             angleField: 'value',
             colorField: 'name',
             radius: 0.75,
+            statistic: {title: null, content: null},
+            pieStyle: {stroke: null},
             label: {
                 type: 'spider',
                 labelHeight: 28,
