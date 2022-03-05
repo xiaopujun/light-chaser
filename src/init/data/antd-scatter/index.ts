@@ -47,11 +47,7 @@ export const initAntdScatter = () => {
             xField: 'x',
             yField: 'y',
             size: 5,
-            pointStyle: {
-                stroke: 'rgb(0,255,234)',
-                lineWidth: 1,
-                fill: 'rgb(0,255,234)',
-            },
+            color: 'red',
             xAxis: {
                 grid: null,
                 line: null,

@@ -4,9 +4,9 @@ import './index.less';
 import EditTools from "../../../edit-tool";
 
 /**
- * 基础柱状图
+ * 散点图
  */
-export default class AntdScattter extends Component<any, any> {
+export default class AntdScatter extends Component<any, any> {
 
     state = {
         data: []

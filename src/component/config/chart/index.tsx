@@ -5,6 +5,9 @@ import AntdAreaSet from "./antd_area";
 import AntdPieSet from "./antd_pie";
 import AntdLiquid from "../../charts/antd/liquid";
 import AntdLiquidSet from "./antd_liquid";
+import AntdRadarSet from "./antd_radar";
+import AntdScatter from "../../charts/antd/scatter";
+import AntdScatterSet from "./antd_scatter";
 
 /**
  * 图表配置组件，该组件需要根据不同的组件类型、子类型，渲染不同的组件配置页面
@@ -33,6 +36,10 @@ class ElemChartSet extends Component<any> {
                 return <AntdPieSet {...this.props}/>;
             case "AntdLiquid":
                 return <AntdLiquidSet {...this.props}/>;
+            case "AntdRadar":
+                return <AntdRadarSet {...this.props}/>;
+            case "AntdScatter":
+                return <AntdScatterSet {...this.props}/>;
         }
     }
 
