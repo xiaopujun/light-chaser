@@ -12,14 +12,12 @@ export const initAntdLiquid = () => {
         },
         chartProperties: {
             percent: 0.25,
+            color: 'rgb(0,255,234)',
             outline: {
                 border: 4,
                 style: {
                     stroke: 'rgb(0,255,234)'
                 }
-            },
-            liquidStyle: {
-                fill: 'rgba(0,255,251,0.63)'
             },
             wave: {
                 length: 128,

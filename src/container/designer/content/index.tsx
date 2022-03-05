@@ -12,6 +12,8 @@ import AntdArea from "../../../component/charts/antd/area";
 import AntdWordCloud from "../../../component/charts/antd/wordcloud";
 import AntdLine from "../../../component/charts/antd/line";
 import AntdLiquid from "../../../component/charts/antd/liquid";
+import AntdRadar from "../../../component/charts/antd/radar";
+import AntdGauge from "../../../component/charts/antd/gauge";
 
 export default class DataXLayoutContent extends React.Component<any, any> {
 
@@ -86,6 +88,20 @@ export default class DataXLayoutContent extends React.Component<any, any> {
                         <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
                             <AntdLiquid key={item?.id} name={item.name} elemId={item?.id}
                                         deleteItem={this.deleteItem} {...this.props}/>
+                        </div>
+                    );
+                case 'AntdRadar':
+                    return (
+                        <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
+                            <AntdRadar key={item?.id} name={item.name} elemId={item?.id}
+                                       deleteItem={this.deleteItem} {...this.props}/>
+                        </div>
+                    );
+                case 'AntdGauge':
+                    return (
+                        <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
+                            <AntdGauge key={item?.id} name={item.name} elemId={item?.id}
+                                       deleteItem={this.deleteItem} {...this.props}/>
                         </div>
                     );
                 default:

@@ -72,7 +72,12 @@ class LayoutTools extends Component<LayoutToolsProps, any> {
         }, {
             id: '8',
             sort: '进度图',
-            data: [{id: '1', icon: <AreaChartOutlined/>, content: '水波图  ', token: 'AntdLiquid'},]
+            data: [{id: '1', icon: <AreaChartOutlined/>, content: '水波图  ', token: 'AntdLiquid'},
+                {id: '2', icon: <AreaChartOutlined/>, content: '仪表盘  ', token: 'AntdGauge'},]
+        }, {
+            id: '9',
+            sort: '雷达图',
+            data: [{id: '1', icon: <AreaChartOutlined/>, content: '雷达图  ', token: 'AntdRadar'}]
         },],
     }
 
