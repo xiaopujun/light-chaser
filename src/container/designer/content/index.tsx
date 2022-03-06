@@ -178,7 +178,7 @@ export default class DataXLayoutContent extends React.Component<any, any> {
         const {layoutConfig} = dataXDesigner;
         return (
             <>
-                <div className="site-layout-background" style={{padding: 5, height: window.innerHeight}}>
+                <div className="site-layout-background" style={{padding: 5, height: window.innerHeight - 64}}>
                     <ReactGridLayout ref={obj => this.rgl = obj}
                                      className="layout"
                                      layout={layoutConfig}
@@ -199,7 +199,7 @@ export default class DataXLayoutContent extends React.Component<any, any> {
                     >
                         {this.generateElement()}
                     </ReactGridLayout>
-                    <RightSlideBox {...this.props}/>
+
                 </div>
 
             </>

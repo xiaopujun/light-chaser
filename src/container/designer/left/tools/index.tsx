@@ -1,7 +1,8 @@
 import React, {Component, ReactDOM} from 'react';
-import {Collapse} from "antd";
+import {Button, Collapse} from "antd";
 import {AreaChartOutlined} from "@ant-design/icons";
 import './index.less';
+import ToolItem from "../item";
 
 const {Panel} = Collapse;
 
@@ -31,19 +32,19 @@ class LayoutTools extends Component<LayoutToolsProps, any> {
         data: [{
             id: '1',
             sort: '条形图',
-            data: [{id: '1', icon: <AreaChartOutlined/>, content: '基础条形图', token: 'AntdBaseBar'},
-                {id: '2', icon: <AreaChartOutlined/>, content: '分组条形图', token: 'AntdGroupBar'},
-                {id: '3', icon: <AreaChartOutlined/>, content: '百分比条形图', token: 'AntdPercentBar'},
-                {id: '4', icon: <AreaChartOutlined/>, content: '区间条形图', token: 'AntdZoneBar'},
-                {id: '5', icon: <AreaChartOutlined/>, content: '堆叠条形图', token: 'AntdStackBar'},]
+            data: [{id: '1', icon: <AreaChartOutlined/>, content: '基础', token: 'AntdBaseBar'},
+                {id: '2', icon: <AreaChartOutlined/>, content: '分组', token: 'AntdGroupBar'},
+                {id: '3', icon: <AreaChartOutlined/>, content: '百分比', token: 'AntdPercentBar'},
+                {id: '4', icon: <AreaChartOutlined/>, content: '区间', token: 'AntdZoneBar'},
+                {id: '5', icon: <AreaChartOutlined/>, content: '堆叠', token: 'AntdStackBar'},]
         }, {
             id: '2',
             sort: '柱状图',
-            data: [{id: '1', icon: <AreaChartOutlined/>, content: '基础柱状图', token: 'AntdBaseColumn'},
-                {id: '2', icon: <AreaChartOutlined/>, content: '分组柱状图', token: 'AntdGroupColumn'},
-                {id: '3', icon: <AreaChartOutlined/>, content: '百分比柱状图', token: 'AntdPercentColumn'},
-                {id: '4', icon: <AreaChartOutlined/>, content: '区间柱状图', token: 'AntdZoneColumn'},
-                {id: '5', icon: <AreaChartOutlined/>, content: '堆叠柱状图', token: 'AntdStackColumn'},]
+            data: [{id: '1', icon: <AreaChartOutlined/>, content: '基础', token: 'AntdBaseColumn'},
+                {id: '2', icon: <AreaChartOutlined/>, content: '分组', token: 'AntdGroupColumn'},
+                {id: '3', icon: <AreaChartOutlined/>, content: '百分比', token: 'AntdPercentColumn'},
+                {id: '4', icon: <AreaChartOutlined/>, content: '区间', token: 'AntdZoneColumn'},
+                {id: '5', icon: <AreaChartOutlined/>, content: '堆叠', token: 'AntdStackColumn'},]
         }, {
             id: '3',
             sort: '饼图',
@@ -56,9 +57,9 @@ class LayoutTools extends Component<LayoutToolsProps, any> {
         }, {
             id: '5',
             sort: '面积图',
-            data: [{id: '1', icon: <AreaChartOutlined/>, content: '基础面积图', token: 'AntdBaseArea'},
-                {id: '2', icon: <AreaChartOutlined/>, content: '堆叠面积图', token: 'AntdStackArea'},
-                {id: '3', icon: <AreaChartOutlined/>, content: '百分比面积图', token: 'AntdPercentArea'},]
+            data: [{id: '1', icon: <AreaChartOutlined/>, content: '基础', token: 'AntdBaseArea'},
+                {id: '2', icon: <AreaChartOutlined/>, content: '堆叠', token: 'AntdStackArea'},
+                {id: '3', icon: <AreaChartOutlined/>, content: '百分比', token: 'AntdPercentArea'},]
         }, {
             id: '6',
             sort: '词云图',
@@ -66,9 +67,9 @@ class LayoutTools extends Component<LayoutToolsProps, any> {
         }, {
             id: '7',
             sort: '折线图',
-            data: [{id: '1', icon: <AreaChartOutlined/>, content: '基础折线图', token: 'AntdBaseFoldLine'},
-                {id: '2', icon: <AreaChartOutlined/>, content: '阶梯折线图', token: 'AntdStepFoldLine'},
-                {id: '3', icon: <AreaChartOutlined/>, content: '多折线图', token: 'AntdMuchFoldLine'},]
+            data: [{id: '1', icon: <AreaChartOutlined/>, content: '基础', token: 'AntdBaseFoldLine'},
+                {id: '2', icon: <AreaChartOutlined/>, content: '阶梯', token: 'AntdStepFoldLine'},
+                {id: '3', icon: <AreaChartOutlined/>, content: '多', token: 'AntdMuchFoldLine'},]
         }, {
             id: '8',
             sort: '进度图',
@@ -84,8 +85,18 @@ class LayoutTools extends Component<LayoutToolsProps, any> {
     render() {
         const {data} = this.state;
         return (
-            <div className={'layout-designer-tools-list'}>
-                {data.map((i: LayoutToolCollapseProps) => {
+            <div className={'layout-designer-tools-list'} style={{height: window.innerHeight - 64}}>
+                {data.map((item: any) => {
+                    return (
+                        <>
+                            <ToolItem id={item.id} sort={item.sort} data={item.data}/>
+                            <br/>
+                        </>
+                    )
+                })}
+
+
+                {/*{data.map((i: LayoutToolCollapseProps) => {
                     return (<div key={i?.id}>
                         <Collapse className={'tools-collapse'} bordered={false}>
                             <Panel className={'tools-panel'} header={i?.sort || ''} key="1">
@@ -103,7 +114,7 @@ class LayoutTools extends Component<LayoutToolsProps, any> {
                             </Panel>
                         </Collapse>
                     </div>)
-                })}
+                })}*/}
             </div>
         );
     }

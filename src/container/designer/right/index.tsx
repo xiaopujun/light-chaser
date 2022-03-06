@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Drawer} from 'antd';
 import ElemPropSet from "../../../component/config";
 import './index.less';
 
@@ -16,17 +15,15 @@ export default class ElemPropSetDrawer extends Component<any, any> {
 
     render() {
         const {dataXDesigner} = this.props;
-        const {elemPropSetDialog} = dataXDesigner;
+        const {active} = dataXDesigner;
         return (
-            <Drawer className={'right-slide-box'} title="组件属性设置"
-                    placement="right"
-                    width={400}
-                    mask={false}
-                    visible={elemPropSetDialog?.visible || false}
-                    getContainer={false}
-                    onClose={this.onClose}>
-                <ElemPropSet {...this.props}/>
-            </Drawer>
+            <div className={'comp-config-layout'} style={{height: window.innerHeight - 64}}>
+                {active.id >= 0 ? (<ElemPropSet {...this.props}/>) :
+                    <div className={'config-message'}>
+                        <div className={'message-content'}>请激活组件进行配置...</div>
+                    </div>}
+            </div>
+
         );
     }
 }
