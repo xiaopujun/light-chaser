@@ -1,13 +1,19 @@
 import React, {Component} from 'react';
-import {Popover} from 'antd';
+import {Button, Popover} from 'antd';
 import {ChromePicker,} from 'react-color';
 import './index.less';
 import ColorPicker from "../base";
 
+
+interface GroupColorPickerProp {
+    onChange?: (data: string[]) => void;
+    groupNumber: number;
+}
+
 /**
  * 组合颜色选择器，可以同时渲染多个颜色选择器。色值结果以数组返回
  */
-class GroupColorPicker extends Component<any> {
+class GroupColorPicker extends Component<GroupColorPickerProp> {
 
     state: any = {
         res: []
@@ -17,14 +23,14 @@ class GroupColorPicker extends Component<any> {
         let {res} = this.state;
         const {onChange} = this.props;
         res[id] = color;
-        onChange("color", res);
+        onChange && onChange(res);
         this.setState({res})
     }
 
     render() {
-        const {number = 1} = this.props;
+        const {groupNumber = 1} = this.props;
         let tempArr = [];
-        for (let i = 0; i < number; i++) {
+        for (let i = 0; i < groupNumber; i++) {
             tempArr.push(i);
         }
         return (

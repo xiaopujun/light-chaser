@@ -94,8 +94,12 @@ function deleteItem(preState: LayoutDesignerStoreProps, data: any) {
 function updateItemLayout(preState: LayoutDesignerStoreProps, data: any) {
     let {layoutConfig} = preState;
     const {i, x, y, w, h} = data;
-    let index = parseInt(i);
-    layoutConfig[index] = {...layoutConfig[index], ...{x, y, w, h}};
+    for (let index = 0; index < layoutConfig.length; index++) {
+        if (layoutConfig[index].i === i) {
+            layoutConfig[index] = {...layoutConfig[index], ...{x, y, w, h}}
+            break;
+        }
+    }
     return {...preState};
 }
 
@@ -132,8 +136,8 @@ function updateElemBaseSet(preState: LayoutDesignerStoreProps, data: any) {
     let {chartConfigMap, active} = preState;
     const {id} = active;
     let charConfig = chartConfigMap.get(id);
-    let baseConfig = charConfig?.elemBasePeoperties;
-    charConfig.elemBasePeoperties = {...baseConfig, ...data};
+    let baseConfig = charConfig?.elemBaseProperties;
+    charConfig.elemBaseProperties = {...baseConfig, ...data};
     return {...preState};
 }
 

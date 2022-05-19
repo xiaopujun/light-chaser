@@ -4,33 +4,39 @@ import {connect} from "react-redux";
 import LayoutTools from "./left/tools";
 import DataXLayoutContent from "./content";
 import {
+    activeElem,
     addItem,
     deleteItem,
-    updateItemLayout,
-    activeElem,
     updateDrawerVisible,
     updateElemBaseSet,
-    updateElemChartSet
+    updateElemChartSet,
+    updateItemLayout
 } from "../../redux/actions/LayoutDesigner";
+import DesignerHeader from "./head";
+import RightSlideBox from "./right";
 
 
-const {Header, Footer, Sider, Content} = Layout;
+const {Header, Sider, Content} = Layout;
 
 class DataXLayoutDesigner extends Component<any> {
     render() {
         return (
-            <Layout>
-                <Header>头</Header>
-                <Layout style={{minHeight: window.innerHeight - 134}}>
-                    <Sider>
-                        <LayoutTools/>
-                    </Sider>
-                    <Content>
-                        <DataXLayoutContent {...this.props}/>
-                    </Content>
+            <div className={'light_chaser-designer'}>
+                <Layout>
+                    <Header><DesignerHeader/></Header>
+                    <Layout>
+                        <Sider width={300}>
+                            <LayoutTools/>
+                        </Sider>
+                        <Content>
+                            <DataXLayoutContent {...this.props}/>
+                        </Content>
+                        <Sider width={300}>
+                            <RightSlideBox {...this.props}/>
+                        </Sider>
+                    </Layout>
                 </Layout>
-                <Footer>下</Footer>
-            </Layout>
+            </div>
         );
     }
 }

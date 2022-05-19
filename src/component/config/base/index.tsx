@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Collapse, Select, Slider} from "antd";
-import ColorPicker from "../../color-picker/base";
+import ColorPicker from "../../color_picker/base";
 import './index.less';
 
 const {Panel} = Collapse;
