@@ -1,5 +1,9 @@
 # 一、启动
 
+这是一款数据可视化大屏设计器
+
+# 二、启动
+
 ```shell
 git clone https://gitee.com/xiaopujun/light-chaser.git
 
@@ -8,7 +12,7 @@ yarn install
 yarn start
 ```
 
-# 二、界面
+# 三、界面
 
 ### 图1
 
