@@ -3,7 +3,8 @@ import {
     ADD_ITEM,
     DELETE_ITEM,
     UPDATE_DRAWER_VISIBLE,
-    UPDATE_ELEM_BASE_SET, UPDATE_ELEM_CHART_SET,
+    UPDATE_ELEM_BASE_SET,
+    UPDATE_ELEM_CHART_SET,
     UPDATE_ITEM_LAYOUT,
 } from '../constant';
 import {Action, LayoutDesignerStoreProps} from "../../global/types";
