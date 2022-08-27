@@ -3,17 +3,7 @@ import ReactGridLayout, {Layout} from "react-grid-layout";
 import '../../../../node_modules/react-grid-layout/css/styles.css';
 import '../../../../node_modules/react-resizable/css/styles.css';
 import './index.less';
-import AntdBar from "../../../component/charts/antd/bar";
-import RightSlideBox from "../right";
-import AntdColumn from "../../../component/charts/antd/column";
-import AntdPie from "../../../component/charts/antd/pie";
-import AntdScatter from "../../../component/charts/antd/scatter";
-import AntdArea from "../../../component/charts/antd/area";
-import AntdWordCloud from "../../../component/charts/antd/wordcloud";
-import AntdLine from "../../../component/charts/antd/line";
-import AntdLiquid from "../../../component/charts/antd/liquid";
-import AntdRadar from "../../../component/charts/antd/radar";
-import AntdGauge from "../../../component/charts/antd/gauge";
+import getChartsTemplate from "../../../init/ComponentChartInit";
 
 export default class DataXLayoutContent extends React.Component<any, any> {
 
@@ -26,87 +16,12 @@ export default class DataXLayoutContent extends React.Component<any, any> {
         const {dataXDesigner} = this.props;
         const {layoutConfig} = dataXDesigner;
         return layoutConfig.map((item: any, index: any, arr: any) => {
-            switch (item.name) {
-                case 'AntdBaseBar':
-                case 'AntdGroupBar':
-                case 'AntdPercentBar':
-                case 'AntdZoneBar':
-                case 'AntdStackBar':
-                    return (
-                        <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
-                            <AntdBar elemId={item?.id} deleteItem={this.deleteItem} {...this.props}/>
-                        </div>
-                    );
-                case 'AntdBaseColumn':
-                case 'AntdGroupColumn':
-                case 'AntdPercentColumn':
-                case 'AntdZoneColumn':
-                case 'AntdStackColumn':
-                    return (
-                        <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
-                            <AntdColumn elemId={item?.id} deleteItem={this.deleteItem} {...this.props}/>
-                        </div>
-                    );
-                case 'AntdPie':
-                case 'AntdRing':
-                    return (
-                        <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
-                            <AntdPie elemId={item?.id} deleteItem={this.deleteItem} {...this.props}/>
-                        </div>
-                    );
-                case 'AntdScatter':
-                case 'AntdBubbles':
-                    return (
-                        <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
-                            <AntdScatter key={item?.id} name={item.name} elemId={item?.id}
-                                         deleteItem={this.deleteItem} {...this.props}/>
-                        </div>
-                    );
-                case 'AntdStackArea':
-                    return (
-                        <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
-                            <AntdArea key={item?.id} name={item.name} elemId={item?.id}
-                                      deleteItem={this.deleteItem} {...this.props}/>
-                        </div>
-                    );
-                case 'AntdWordCloud':
-                    return (
-                        <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
-                            <AntdWordCloud key={item?.id} name={item.name} elemId={item?.id}
-                                           deleteItem={this.deleteItem} {...this.props}/>
-                        </div>
-                    );
-                case 'AntdMuchFoldLine':
-                    return (
-                        <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
-                            <AntdLine key={item?.id} name={item.name} elemId={item?.id}
-                                      deleteItem={this.deleteItem} {...this.props}/>
-                        </div>
-                    );
-                case 'AntdLiquid':
-                    return (
-                        <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
-                            <AntdLiquid key={item?.id} name={item.name} elemId={item?.id}
-                                        deleteItem={this.deleteItem} {...this.props}/>
-                        </div>
-                    );
-                case 'AntdRadar':
-                    return (
-                        <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
-                            <AntdRadar key={item?.id} name={item.name} elemId={item?.id}
-                                       deleteItem={this.deleteItem} {...this.props}/>
-                        </div>
-                    );
-                case 'AntdGauge':
-                    return (
-                        <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
-                            <AntdGauge key={item?.id} name={item.name} elemId={item?.id}
-                                       deleteItem={this.deleteItem} {...this.props}/>
-                        </div>
-                    );
-                default:
-                    return null;
-            }
+            let ElementChart = getChartsTemplate(item.name);
+            return (
+                <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
+                    <ElementChart elemId={item?.id} deleteItem={this.deleteItem} {...this.props}/>
+                </div>
+            );
         })
     }
 
@@ -205,9 +120,7 @@ export default class DataXLayoutContent extends React.Component<any, any> {
                     >
                         {this.generateElement()}
                     </ReactGridLayout>
-
                 </div>
-
             </>
         );
     }
