@@ -1,4 +1,4 @@
-const {override, addLessLoader, adjustStyleLoaders} = require('customize-cra');
+const {override, addLessLoader, adjustStyleLoaders, addPostcssPlugins} = require('customize-cra');
 
 
 module.exports = override(
@@ -11,6 +11,6 @@ module.exports = override(
     adjustStyleLoaders(({use: [, , postcss]}) => {
         const postcssOptions = postcss.options;
         postcss.options = {postcssOptions};
-    })
+    }),
 )
 
