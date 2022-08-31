@@ -26,7 +26,7 @@
     "react-grid-layout": "^1.3.0",
     "react-redux": "^7.2.6",
     "redux": "^4.1.2",
-    "typescript": "^4.4.5",
+    "typescript": "^4.4.4",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
@@ -54,12 +54,12 @@
     ]
   },
   "devDependencies": {
-    "react-scripts": "^4.0.3",
-    "webpack": "4.44.2",
-    "redux-devtools-extension": "^2.13.9",
     "customize-cra": "^1.0.0",
     "less": "^3.11.1",
     "less-loader": "5.0.0",
-    "react-app-rewired": "^2.1.8"
+    "react-app-rewired": "^2.1.8",
+    "react-scripts": "^4.0.3",
+    "redux-devtools-extension": "^2.13.9",
+    "webpack": "4.44.2"
   }
 }
