@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Line} from "@ant-design/charts";
 import './index.less';
 import EditTools from "../../../edit-tool";
-import {cloneDeep} from "lodash";
 
 /**
  * 基础柱状图
@@ -26,7 +25,7 @@ export default class AntdLine extends Component<any, any> {
 
     render() {
         //todo name属性为演示获取demo数据使用，后续要去掉
-        const {dataXDesigner, elemId, name} = this.props;
+        const {dataXDesigner, elemId} = this.props;
         const {chartConfigMap} = dataXDesigner;
         const config = chartConfigMap?.get(elemId);
         const {chartProperties, elemBaseProperties} = config;

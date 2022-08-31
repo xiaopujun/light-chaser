@@ -1,4 +1,4 @@
-import React, {Component, FormEvent, FormEventHandler} from 'react';
+import React, {Component} from 'react';
 import {Select} from "antd";
 import '../index.less';
 import ColorPicker from "../../../../color_picker/base";
@@ -25,7 +25,7 @@ class FillColor extends Component<FillColorProp> {
 
     constructor(props: FillColorProp) {
         super(props);
-        const {fillMode = '0', groupNumber = 1} = this.props;
+        const {fillMode = '0'} = this.props;
         this.state = {fillMode, targetValue: '', otherValue: 'rgb(0,255,234)'}
     }
 

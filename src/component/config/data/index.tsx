@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Collapse, Select, Button, Switch} from "antd";
+import {Button, Collapse} from "antd";
 import EditTable from "../../edittable";
 
 

@@ -1,10 +1,8 @@
 import React, {Component, ReactDOM} from 'react';
-import {Button, Collapse} from "antd";
 import {AreaChartOutlined} from "@ant-design/icons";
 import './index.less';
 import ToolItem from "../item";
 
-const {Panel} = Collapse;
 
 interface LayoutToolItemProps {
     id?: string;

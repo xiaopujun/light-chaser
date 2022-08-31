@@ -1,15 +1,11 @@
 import React, {Component} from 'react';
-import {Collapse, Select, Slider, Switch} from "antd";
-import ColorPicker from '../../../color_picker/base';
-import GroupColorPicker from '../../../color_picker/group';
+import {Collapse} from "antd";
 import './index.less';
 import FillColor from "../../antd/atomic_components/fill_color";
 import Legend from "../../antd/atomic_components/legned";
 import RightAngleCoordinates from "../../antd/atomic_components/right_angle_coordinates";
 import BarWidth from "../../antd/atomic_components/bar_width";
 import {getAntdDataSortCount} from "../../../../utils/AntdBarUtil";
-
-const {Option} = Select;
 
 
 class AntdBarSet extends Component<any> {

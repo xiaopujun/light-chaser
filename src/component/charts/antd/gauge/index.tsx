@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Gauge, Radar} from "@ant-design/charts";
+import {Gauge} from "@ant-design/charts";
 import './index.less';
 import EditTools from "../../../edit-tool";
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Collapse, Slider} from "antd";
+import {Collapse} from "antd";
 import './index.less';
 import FillColor from "../../antd/atomic_components/fill_color";
 import Legend from "../../antd/atomic_components/legned";

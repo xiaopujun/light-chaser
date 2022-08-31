@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import {Button, Popover} from 'antd';
-import {ChromePicker,} from 'react-color';
 import './index.less';
 import ColorPicker from "../base";
 

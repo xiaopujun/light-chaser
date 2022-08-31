@@ -1,7 +1,3 @@
-import AntdPie from "../component/charts/antd/pie";
-import AntdScatter from "../component/charts/antd/scatter";
-import AntdLiquid from "../component/charts/antd/liquid";
-import AntdRadar from "../component/charts/antd/radar";
 import AntdBarSet from "../component/config/chart/antd_bar";
 import AntdColumnSet from "../component/config/chart/antd_column";
 import AntdAreaSet from "../component/config/chart/antd_area";
