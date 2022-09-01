@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Layout} from 'antd';
 import {connect} from "react-redux";
 import LayoutTools from "./left/tools";
-import DataXLayoutContent from "./content";
+import LCLayoutContent from "./content";
 import {
     activeElem,
     addItem,
@@ -29,7 +29,7 @@ class DataXLayoutDesigner extends Component<any> {
                             <LayoutTools/>
                         </Sider>
                         <Content>
-                            <DataXLayoutContent {...this.props}/>
+                            <LCLayoutContent {...this.props}/>
                         </Content>
                         <Sider width={300}>
                             <RightSlideBox {...this.props}/>

@@ -5,7 +5,7 @@ import 'react-resizable/css/styles.css';
 import './index.less';
 import getChartsTemplate from "../../../init/ComponentChartInit";
 
-export default class DataXLayoutContent extends React.Component<any, any> {
+export default class LCLayoutContent extends React.Component<any, any> {
 
     rgl: any = null;
 
@@ -81,12 +81,6 @@ export default class DataXLayoutContent extends React.Component<any, any> {
 
     /**
      * @description 组件大小变化回调
-     * @param layout
-     * @param oldItem
-     * @param newItem
-     * @param placeholder
-     * @param event
-     * @param element
      */
     onResizeStop = (layout: Layout[], oldItem: Layout, newItem: Layout, placeholder: Layout, event: MouseEvent, element: HTMLElement,) => {
         const {updateItemLayout} = this.props;
@@ -97,31 +91,28 @@ export default class DataXLayoutContent extends React.Component<any, any> {
         const {dataXDesigner} = this.props;
         const {layoutConfig} = dataXDesigner;
         return (
-            <>
-                <div className="site-layout-background" style={{height: window.innerHeight - 64}}>
-                    <ReactGridLayout ref={obj => this.rgl = obj}
-                                     className="layout"
-                                     layout={layoutConfig}
-                                     cols={48}
-                                     rowHeight={10}
-                                     margin={[5, 5]}
-                                     useCSSTransforms={true}
-                                     preventCollision={true}
-                                     allowOverlap={true}
-                                     isBounded={true}
-                                     isDroppable={true}
-                                     style={{height: window.innerHeight - 64}}
-                                     width={window.innerWidth - 600}
-                                     onDrop={this.onDrop}
-                                     onDrag={this.onDrag}
-                                     onDropDragOver={this.onDropDragOver}
-                                     onDragStop={this.onDragStop}
-                                     onResizeStop={this.onResizeStop}
-                    >
-                        {this.generateElement()}
-                    </ReactGridLayout>
-                </div>
-            </>
+            <div className="site-layout-background" style={{height: window.innerHeight - 64}}>
+                <ReactGridLayout ref={obj => this.rgl = obj}
+                                 className="layout"
+                                 layout={layoutConfig}
+                                 cols={48}
+                                 rowHeight={10}
+                                 margin={[5, 5]}
+                                 useCSSTransforms={true}
+                                 preventCollision={true}
+                                 allowOverlap={true}
+                                 isBounded={true}
+                                 isDroppable={true}
+                                 style={{height: window.innerHeight - 64}}
+                                 width={window.innerWidth - 600}
+                                 onDrop={this.onDrop}
+                                 onDrag={this.onDrag}
+                                 onDropDragOver={this.onDropDragOver}
+                                 onDragStop={this.onDragStop}
+                                 onResizeStop={this.onResizeStop}>
+                    {this.generateElement()}
+                </ReactGridLayout>
+            </div>
         );
     }
 }

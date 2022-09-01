@@ -41,7 +41,7 @@ export const initAntdBaseBar = () => {
                     line: {
                         style: {
                             stroke: 'rgba(0,255,192,0.59)',
-                            lineWidth: 2,
+                            lineWidth: 0,
                             lineDash: [4, 5],
                             opacity: 0.7,
                             cursor: 'pointer'
