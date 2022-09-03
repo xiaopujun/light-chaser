@@ -32,7 +32,7 @@ export function getAntdDataSortCount(data: Array<any>, condition: string) {
         if (condition in data[i])
             groups.add(data[i][condition]);
         else
-            throw new Error("操作对象中没有该属性，异常属性：" + condition);
+            throw new Error("There is no such attribute in the operation object, the exception attribute：" + condition);
     }
     return groups.size;
 }

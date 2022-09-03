@@ -32,9 +32,9 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
                 grid: {
                     line: {
                         style: {
-                            stroke: 'rgb(0,255,192)',
+                            stroke: 'rgba(0,255,192,0.59)',
                             lineWidth: 2,
-                            lineDash: [3, 5],
+                            lineDash: [4, 5],
                             opacity: 1,
                             cursor: 'pointer'
                         }
@@ -104,8 +104,8 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
                             stroke: 'rgba(0,255,192,0.59)',
                             lineWidth: 2,
                             lineDash: [4, 5],
-                            cursor: 'pointer',
-                            opacity: 1
+                            opacity: 1,
+                            cursor: 'pointer'
                         }
                     }
                 },

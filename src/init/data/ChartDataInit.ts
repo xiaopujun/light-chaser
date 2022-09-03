@@ -1,5 +1,11 @@
 import {initAntdBaseBar, initAntdGroupBar, initAntdPercentBar, initAntdStackBar, initAntdZoneBar} from "./antd-bar";
-import {initAntdBaseColumn, initAntdGroupCloumn, initAntdPercentCloumn, initAntdZoneCloumn} from "./antd-column";
+import {
+    initAntdBaseColumn,
+    initAntdGroupColumn,
+    initAntdPercentColumn,
+    initAntdStackColumn,
+    initAntdZoneColumn
+} from "./antd-column";
 import {initAntdPie, initAntdRing} from "./antd-pie";
 import {initAntdBubbles, initAntdScatter} from "./antd-scatter";
 import {initAntdStackArea} from "./antd-area";
@@ -18,10 +24,10 @@ chartInitDataMap.set('AntdPercentBar', initAntdPercentBar);
 chartInitDataMap.set('AntdZoneBar', initAntdZoneBar);
 chartInitDataMap.set('AntdStackBar', initAntdStackBar);
 chartInitDataMap.set('AntdBaseColumn', initAntdBaseColumn);
-chartInitDataMap.set('AntdGroupColumn', initAntdGroupCloumn);
-chartInitDataMap.set('AntdPercentColumn', initAntdPercentCloumn);
-chartInitDataMap.set('AntdZoneColumn', initAntdZoneCloumn);
-chartInitDataMap.set('AntdStackColumn', initAntdBaseBar);
+chartInitDataMap.set('AntdGroupColumn', initAntdGroupColumn);
+chartInitDataMap.set('AntdPercentColumn', initAntdPercentColumn);
+chartInitDataMap.set('AntdZoneColumn', initAntdZoneColumn);
+chartInitDataMap.set('AntdStackColumn', initAntdStackColumn);
 chartInitDataMap.set('AntdPie', initAntdPie);
 chartInitDataMap.set('AntdRing', initAntdRing);
 chartInitDataMap.set('AntdScatter', initAntdScatter);

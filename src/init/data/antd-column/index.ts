@@ -1,5 +1,16 @@
 import {cloneDeep} from 'lodash';
 
+let axis = {
+    grid: null,
+    label: {
+        style: {
+            fill: 'rgb(0,255,234)'
+        },
+    },
+    line: null,
+    tickLine: null
+}
+
 //基础柱状图初始化数据和配置
 export const initAntdBaseColumn = () => {
     return cloneDeep({
@@ -47,22 +58,9 @@ export const initAntdBaseColumn = () => {
             ],
             xField: 'name',
             yField: 'value',
-            xAxis: {
-                grid: null,
-                label: {
-                    style: {
-                        fill: 'rgb(0,255,234)'
-                    },
-                },
-            },
-            yAxis: {
-                grid: null,
-                label: {
-                    style: {
-                        fill: 'rgb(0,255,234)'
-                    },
-                },
-            },
+            xAxis: {...axis},
+            yAxis: {...axis},
+            seriesField: 'name',
             color: 'rgb(0,255,234)',
             legend: false,
         }
@@ -176,26 +174,14 @@ export const initAntdStackColumn = () => {
             xField: 'name',
             yField: 'value',
             seriesField: 'type',
-            xAxis: {
-                grid: null,
-                label: {
-                    style: {
-                        fill: 'rgb(0,255,234)'
-                    },
-                },
-            },
-            yAxis: {
-                grid: null,
-                line: null,
-                tickLine: null,
-                label: {style: {fill: 'rgb(0,255,234)'}}
-            },
+            xAxis: {...axis},
+            yAxis: {...axis},
         }
     });
 };
 
 //分组柱状图初始化数据和配置
-export const initAntdGroupCloumn = () => {
+export const initAntdGroupColumn = () => {
     return cloneDeep({
         elemBaseProperties: {
             paddingTop: '15px',
@@ -262,22 +248,8 @@ export const initAntdGroupCloumn = () => {
             yField: 'value',
             seriesField: 'type',
             dodgePadding: 4,
-            xAxis: {
-                grid: null,
-                label: {
-                    style: {
-                        fill: 'rgb(0,255,234)'
-                    },
-                },
-            },
-            yAxis: {
-                grid: null,
-                label: {
-                    style: {
-                        fill: 'rgb(0,255,234)'
-                    },
-                },
-            },
+            xAxis: {...axis},
+            yAxis: {...axis},
             color: ['rgb(0,255,234)', 'rgb(233,118,9)'],
             legend: false,
         }
@@ -285,7 +257,7 @@ export const initAntdGroupCloumn = () => {
 };
 
 //百分比柱状图初始化数据和配置
-export const initAntdPercentCloumn = () => {
+export const initAntdPercentColumn = () => {
     return cloneDeep({
         elemBaseProperties: {
             paddingTop: '15px',
@@ -407,40 +379,15 @@ export const initAntdPercentCloumn = () => {
             seriesField: 'type',
             isPercent: true,
             isStack: true,
-            xAxis: {
-                grid: {
-                    line: {
-                        style: {
-                            stroke: 'rgba(0,255,192,0.59)',
-                            lineWidth: 2,
-                            lineDash: [4, 5],
-                            strokeOpacity: 0.7,
-                            shadowColor: 'black',
-                            shadowBlur: 10,
-                            shadowOffsetX: 5,
-                            shadowOffsetY: 5,
-                            cursor: 'pointer'
-                        }
-                    }
-                },
-                label: {
-                    style: {
-                        fill: 'rgb(0,255,234)'
-                    },
-                },
-            },
-            yAxis: {
-                grid: null,
-                line: null,
-                tickLine: null,
-                label: {style: {fill: 'rgb(0,255,234)'}}
-            },
+            xAxis: {...axis},
+            yAxis: {...axis},
+            legend: false,
         }
     });
 };
 
 //区间柱状图初始化数据和配置
-export const initAntdZoneCloumn = () => {
+export const initAntdZoneColumn = () => {
     return cloneDeep({
         elemBaseProperties: {
             paddingTop: '15px',
@@ -484,37 +431,12 @@ export const initAntdZoneCloumn = () => {
                     value: [18, 34],
                 },
             ],
+            seriesField: 'name',
             xField: 'name',
             yField: 'value',
             isRange: true,
-            xAxis: {
-                grid: {
-                    line: {
-                        style: {
-                            stroke: 'rgba(0,255,192,0.59)',
-                            lineWidth: 2,
-                            lineDash: [4, 5],
-                            strokeOpacity: 0.7,
-                            shadowColor: 'black',
-                            shadowBlur: 10,
-                            shadowOffsetX: 5,
-                            shadowOffsetY: 5,
-                            cursor: 'pointer'
-                        }
-                    }
-                },
-                label: {
-                    style: {
-                        fill: 'rgb(0,255,234)'
-                    },
-                },
-            },
-            yAxis: {
-                grid: null,
-                line: null,
-                tickLine: null,
-                label: {style: {fill: 'rgb(0,255,234)'}}
-            },
+            xAxis: {...axis},
+            yAxis: {...axis},
             color: 'rgb(0,255,234)',
         }
     });

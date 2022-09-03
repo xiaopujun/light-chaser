@@ -13,7 +13,7 @@ interface FillColorProp {
 }
 
 /**
- * 图表填充色设置原子组件
+ * 配置项原子组件 - 图表填充色设置
  */
 class FillColor extends Component<FillColorProp> {
 
