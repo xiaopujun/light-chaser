@@ -38,7 +38,7 @@ class FillColor extends Component<FillColorProp> {
         const {fillMode} = this.state;
         const {paletteCount} = this.props;
         if (fillMode === '1') {
-            return <GroupColorPicker groupNumber={paletteCount!} onChange={this.colorChanged}/>;
+            return <GroupColorPicker paletteCount={paletteCount!} onChange={this.colorChanged}/>;
         } else {
             return <ColorPicker name={'mainTitleColor'}
                                 onChange={this.colorChanged}
