@@ -48,9 +48,9 @@ class AntdBarSet extends Component<any> {
                     {/*图形填充色设置*/}
                     <FillColor updateElemChartSet={updateElemChartSet} groupNumber={colorPickerNumber}/>
                     {/*图例配置*/}
-                    <Legend updateElemChartSet={updateElemChartSet}/>
+                    <Legend chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
                     {/*直角坐标系配置*/}
-                    <RightAngleCoordinates updateElemChartSet={updateElemChartSet}/>
+                    <RightAngleCoordinates chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
                     {/*条形图单条宽度配置*/}
                     <BarWidth updateElemChartSet={updateElemChartSet}/>
                 </Collapse>

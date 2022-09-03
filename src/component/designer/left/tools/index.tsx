@@ -86,10 +86,10 @@ class LayoutTools extends Component<LayoutToolsProps, any> {
             <div className={'layout-designer-tools-list'} style={{height: window.innerHeight - 64}}>
                 {data.map((item: any) => {
                     return (
-                        <>
+                        <div key={item.id}>
                             <ToolItem id={item.id} sort={item.sort} data={item.data}/>
                             <br/>
-                        </>
+                        </div>
                     )
                 })}
 

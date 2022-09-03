@@ -150,7 +150,6 @@ function updateElemBaseSet(preState: LayoutDesignerStoreProps, data: any) {
 function updateElemChartSet(preState: LayoutDesignerStoreProps, data: any) {
     let {chartConfigMap, active} = preState;
     let activeConfig = chartConfigMap.get(active?.id);
-    // activeConfig.chartProperties = {...activeConfig.chartProperties, ...data};
     // activeConfig.chartProperties = _.merge(activeConfig.chartProperties, data);
     activeConfig.chartProperties = _.mergeWith(activeConfig.chartProperties, data, (objValue: any, srcValue: any, key: any, object: any, source: any, stack: any) => {
         if (key === 'data') {

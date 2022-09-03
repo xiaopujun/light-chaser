@@ -30,7 +30,7 @@ class ColorPicker extends Component<ColorPickerProps> {
     render() {
         const {colorArea, color} = this.state;
         const content = (<ChromePicker className={'color-picker'} color={color}
-                                       onChangeComplete={this.onChangeComplete}/>)
+                                       onChange={this.onChangeComplete}/>)
         return (
             <Popover placement="topLeft" content={content} trigger={'click'}>
                 <div style={{backgroundColor: `${colorArea}`}}
