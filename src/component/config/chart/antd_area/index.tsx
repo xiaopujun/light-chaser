@@ -13,7 +13,7 @@ class AntdAreaSet extends Component<any> {
             <div className={'elem-chart-config'}>
                 <Collapse className={'chart-config-collapse'} bordered={false}>
                     {/*图形填充色设置*/}
-                    <FillColor updateElemChartSet={updateElemChartSet} groupNumber={1}/>
+                    <FillColor onChange={updateElemChartSet} paletteCount={1}/>
                     {/*图例配置*/}
                     <Legend updateElemChartSet={updateElemChartSet}/>
                     {/*直角坐标系配置*/}

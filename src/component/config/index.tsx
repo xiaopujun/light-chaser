@@ -3,7 +3,6 @@ import {Collapse} from 'antd';
 import './index.less';
 import ElemBaseSet from "./base";
 import ElemChartSet from "./chart";
-import ElemDataSet from "./data";
 
 const {Panel} = Collapse;
 

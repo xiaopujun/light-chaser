@@ -22,7 +22,7 @@ export default class AntdRadarSet extends Component<any> {
             <div className={'elem-chart-config'}>
                 <Collapse className={'chart-config-collapse'} bordered={false}>
                     {/*图形填充色设置*/}
-                    <FillColor updateElemChartSet={updateElemChartSet} groupNumber={1}/>
+                    <FillColor onChange={updateElemChartSet} paletteCount={1}/>
                     {/*图例*/}
                     <Legend updateElemChartSet={updateElemChartSet}/>
                     {/*极坐标系相关设置*/}

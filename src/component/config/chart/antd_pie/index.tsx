@@ -18,7 +18,7 @@ class AntdPieSet extends Component<any> {
             <div className={'elem-chart-config'}>
                 <Collapse className={'chart-config-collapse'} bordered={false}>
                     {/*图形填充色设置*/}
-                    <FillColor updateElemChartSet={updateElemChartSet} groupNumber={colorPickerNumber}/>
+                    <FillColor onChange={updateElemChartSet} paletteCount={colorPickerNumber}/>
                     {/*图例配置*/}
                     <Legend updateElemChartSet={updateElemChartSet}/>
                     {/*极坐标系*/}
