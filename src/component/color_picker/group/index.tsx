@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
-import {Button, Popover} from 'antd';
-import {ChromePicker,} from 'react-color';
 import './index.less';
 import ColorPicker from "../base";
 
 
 interface GroupColorPickerProp {
     onChange?: (data: string[]) => void;
-    groupNumber: number;
+    paletteCount: number;
+    /**
+     * 初始化颜色
+     */
+    initColor?: string;
 }
 
 /**
@@ -16,28 +18,35 @@ interface GroupColorPickerProp {
 class GroupColorPicker extends Component<GroupColorPickerProp> {
 
     state: any = {
-        res: []
+        colorArr: []
     }
 
+    constructor(props: any) {
+        super(props);
+        const {paletteCount, initColor = '#00ffdb'} = props;
+        let initColorArr: string[] = [];
+        for (let i = 0; i < paletteCount; i++)
+            initColorArr[i] = initColor;
+        this.state = {colorArr: initColorArr};
+    }
+
+
     onChange = (color: any, e: any, id: any) => {
-        let {res} = this.state;
+        let {colorArr} = this.state;
         const {onChange} = this.props;
-        res[id] = color;
-        onChange && onChange(res);
-        this.setState({res})
+        colorArr[id] = color;
+        onChange && onChange(colorArr);
+        this.setState({colorArr})
     }
 
     render() {
-        const {groupNumber = 1} = this.props;
+        const {paletteCount = 1} = this.props;
         let tempArr = [];
-        for (let i = 0; i < groupNumber; i++) {
+        for (let i = 0; i < paletteCount; i++) {
             tempArr.push(i);
         }
         return (
-            <div className={'group-color-picker'} style={{
-                display: "flex",
-                flexDirection: "row"
-            }}>
+            <div className={'group-color-picker'} style={{display: "flex", flexDirection: "row"}}>
                 {tempArr.map((item, i) => {
                     return <ColorPicker key={item} id={i} onChange={this.onChange}/>
                 })}

@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
-import {Collapse, Slider} from "antd";
+import {Collapse} from "antd";
 import './index.less';
 import FillColor from "../../antd/atomic_components/fill_color";
 import Legend from "../../antd/atomic_components/legned";
 import PolarCoordinateSystem from "../../antd/atomic_components/polar_coordinate";
 
 class AntdPieSet extends Component<any> {
+
+    fillColorChanged = (color: string | string[]) => {
+        const {updateElemChartSet} = this.props;
+        updateElemChartSet({color: color});
+    }
 
 
     render() {
@@ -18,12 +23,11 @@ class AntdPieSet extends Component<any> {
             <div className={'elem-chart-config'}>
                 <Collapse className={'chart-config-collapse'} bordered={false}>
                     {/*图形填充色设置*/}
-                    <FillColor updateElemChartSet={updateElemChartSet} groupNumber={colorPickerNumber}/>
+                    <FillColor onChange={this.fillColorChanged} paletteCount={colorPickerNumber}/>
                     {/*图例配置*/}
-                    <Legend updateElemChartSet={updateElemChartSet}/>
+                    <Legend chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
                     {/*极坐标系*/}
                     <PolarCoordinateSystem updateElemChartSet={updateElemChartSet}/>
-
                 </Collapse>
             </div>
         );

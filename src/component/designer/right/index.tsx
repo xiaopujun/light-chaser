@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ElemPropSet from "../../../component/config";
+import ElemPropSet from "../../config";
 import './index.less';
 
 /**

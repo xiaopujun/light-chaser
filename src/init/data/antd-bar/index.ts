@@ -1,15 +1,27 @@
 import {cloneDeep} from 'lodash';
 
+let elemBaseProperties = {
+    paddingTop: '15px',
+    paddingLeft: '15px',
+    paddingBottom: '15px',
+    paddingRight: '15px',
+    backgroundColor: 'rgba(23,157,169,0.12)'
+}
+let axis = {
+    grid: null,
+    label: {
+        style: {
+            fill: 'rgb(0,255,234)'
+        },
+    },
+    line: null,
+    tickLine: null
+}
+
 //基础条形图初始化数据和配置
 export const initAntdBaseBar = () => {
     return cloneDeep({
-        elemBaseProperties: {
-            paddingTop: '15px',
-            paddingLeft: '15px',
-            paddingBottom: '15px',
-            paddingRight: '15px',
-            backgroundColor: 'rgba(23,157,169,0.12)'
-        },
+        elemBaseProperties,
         chartProperties: {
             data: [
                 {
@@ -36,30 +48,8 @@ export const initAntdBaseBar = () => {
             xField: 'value',
             yField: 'name',
             seriesField: 'name',
-            xAxis: {
-                grid: {
-                    line: {
-                        style: {
-                            stroke: 'rgba(0,255,192,0.59)',
-                            lineWidth: 2,
-                            lineDash: [4, 5],
-                            opacity: 0.7,
-                            cursor: 'pointer'
-                        }
-                    }
-                },
-                label: {
-                    style: {
-                        fill: 'rgb(0,255,234)'
-                    },
-                },
-            },
-            yAxis: {
-                grid: null,
-                line: null,
-                tickLine: null,
-                label: {style: {fill: 'rgb(0,255,234)'}}
-            },
+            xAxis: {...axis},
+            yAxis: {...axis},
             color: 'rgb(0,255,234,0.2)',
             legend: false,
         }
@@ -69,13 +59,7 @@ export const initAntdBaseBar = () => {
 //分组条形图初始化数据和配置
 export const initAntdGroupBar = () => {
     return cloneDeep({
-        elemBaseProperties: {
-            paddingTop: '15px',
-            paddingLeft: '15px',
-            paddingBottom: '15px',
-            paddingRight: '15px',
-            backgroundColor: 'rgba(23,157,169,0.12)'
-        },
+        elemBaseProperties,
         chartProperties: {
             data: [
                 {
@@ -134,24 +118,8 @@ export const initAntdGroupBar = () => {
             yField: 'name',
             seriesField: 'type',
             dodgePadding: 4,
-            xAxis: {
-                grid: null,
-                line: null,
-                label: {
-                    style: {
-                        fill: 'rgb(0,255,234)'
-                    },
-                },
-            },
-            yAxis: {
-                grid: null,
-                line: null,
-                label: {
-                    style: {
-                        fill: 'rgb(0,255,234)'
-                    },
-                },
-            },
+            xAxis: {...axis},
+            yAxis: {...axis},
             color: ['rgb(0,255,234)', 'rgb(233,118,9)'],
             legend: false,
         }
@@ -161,13 +129,7 @@ export const initAntdGroupBar = () => {
 //百分比条形图初始化数据和配置
 export const initAntdPercentBar = () => {
     return cloneDeep({
-        elemBaseProperties: {
-            paddingTop: '15px',
-            paddingLeft: '15px',
-            paddingBottom: '15px',
-            paddingRight: '15px',
-            backgroundColor: 'rgba(23,157,169,0.12)'
-        },
+        elemBaseProperties,
         chartProperties: {
             data: [
                 {
@@ -281,34 +243,8 @@ export const initAntdPercentBar = () => {
             seriesField: 'type',
             isPercent: true,
             isStack: true,
-            xAxis: {
-                grid: {
-                    line: {
-                        style: {
-                            stroke: 'rgba(0,255,192,0.59)',
-                            lineWidth: 2,
-                            lineDash: [4, 5],
-                            strokeOpacity: 0.7,
-                            shadowColor: 'black',
-                            shadowBlur: 10,
-                            shadowOffsetX: 5,
-                            shadowOffsetY: 5,
-                            cursor: 'pointer'
-                        }
-                    }
-                },
-                label: {
-                    style: {
-                        fill: 'rgb(0,255,234)'
-                    },
-                },
-            },
-            yAxis: {
-                grid: null,
-                line: null,
-                tickLine: null,
-                label: {style: {fill: 'rgb(0,255,234)'}}
-            },
+            xAxis: {...axis},
+            yAxis: {...axis},
         }
     });
 };
@@ -316,13 +252,7 @@ export const initAntdPercentBar = () => {
 //区间条形图初始化数据和配置
 export const initAntdZoneBar = () => {
     return cloneDeep({
-        elemBaseProperties: {
-            paddingTop: '15px',
-            paddingLeft: '15px',
-            paddingBottom: '15px',
-            paddingRight: '15px',
-            backgroundColor: 'rgba(23,157,169,0.12)'
-        },
+        elemBaseProperties,
         chartProperties: {
             data: [
                 {
@@ -361,35 +291,10 @@ export const initAntdZoneBar = () => {
             xField: 'value',
             yField: 'name',
             isRange: true,
-            xAxis: {
-                grid: {
-                    line: {
-                        style: {
-                            stroke: 'rgba(0,255,192,0.59)',
-                            lineWidth: 2,
-                            lineDash: [4, 5],
-                            strokeOpacity: 0.7,
-                            shadowColor: 'black',
-                            shadowBlur: 10,
-                            shadowOffsetX: 5,
-                            shadowOffsetY: 5,
-                            cursor: 'pointer'
-                        }
-                    }
-                },
-                label: {
-                    style: {
-                        fill: 'rgb(0,255,234)'
-                    },
-                },
-            },
-            yAxis: {
-                grid: null,
-                line: null,
-                tickLine: null,
-                label: {style: {fill: 'rgb(0,255,234)'}}
-            },
-            color: 'rgb(0,255,234)',
+            xAxis: {...axis},
+            yAxis: {...axis},
+            color: ['rgb(0,255,234)', '#fff'],
+            seriesField: 'name',
         }
     });
 };
@@ -397,13 +302,7 @@ export const initAntdZoneBar = () => {
 //堆叠条形图初始化数据和配置
 export const initAntdStackBar = () => {
     return cloneDeep({
-        elemBaseProperties: {
-            paddingTop: '15px',
-            paddingLeft: '15px',
-            paddingBottom: '15px',
-            paddingRight: '15px',
-            backgroundColor: 'rgba(23,157,169,0.12)'
-        },
+        elemBaseProperties,
         chartProperties: {
             data: [
                 {
@@ -501,34 +400,8 @@ export const initAntdStackBar = () => {
             xField: 'value',
             yField: 'name',
             seriesField: 'type',
-            xAxis: {
-                grid: {
-                    line: {
-                        style: {
-                            stroke: 'rgba(0,255,192,0.59)',
-                            lineWidth: 2,
-                            lineDash: [4, 5],
-                            strokeOpacity: 0.7,
-                            shadowColor: 'black',
-                            shadowBlur: 10,
-                            shadowOffsetX: 5,
-                            shadowOffsetY: 5,
-                            cursor: 'pointer'
-                        }
-                    }
-                },
-                label: {
-                    style: {
-                        fill: 'rgb(0,255,234)'
-                    },
-                },
-            },
-            yAxis: {
-                grid: null,
-                line: null,
-                tickLine: null,
-                label: {style: {fill: 'rgb(0,255,234)'}}
-            },
+            xAxis: {...axis},
+            yAxis: {...axis},
         }
     });
 };

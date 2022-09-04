@@ -1,10 +1,8 @@
 import React, {Component, ReactDOM} from 'react';
-import {Button, Collapse} from "antd";
 import {AreaChartOutlined} from "@ant-design/icons";
 import './index.less';
 import ToolItem from "../item";
 
-const {Panel} = Collapse;
 
 interface LayoutToolItemProps {
     id?: string;
@@ -88,10 +86,10 @@ class LayoutTools extends Component<LayoutToolsProps, any> {
             <div className={'layout-designer-tools-list'} style={{height: window.innerHeight - 64}}>
                 {data.map((item: any) => {
                     return (
-                        <>
+                        <div key={item.id}>
                             <ToolItem id={item.id} sort={item.sort} data={item.data}/>
                             <br/>
-                        </>
+                        </div>
                     )
                 })}
 

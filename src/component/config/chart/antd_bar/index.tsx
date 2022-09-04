@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import {Collapse, Select, Slider, Switch} from "antd";
-import ColorPicker from '../../../color_picker/base';
-import GroupColorPicker from '../../../color_picker/group';
+import {Collapse} from "antd";
 import './index.less';
 import FillColor from "../../antd/atomic_components/fill_color";
 import Legend from "../../antd/atomic_components/legned";
@@ -9,12 +7,10 @@ import RightAngleCoordinates from "../../antd/atomic_components/right_angle_coor
 import BarWidth from "../../antd/atomic_components/bar_width";
 import {getAntdDataSortCount} from "../../../../utils/AntdBarUtil";
 
-const {Option} = Select;
-
 
 class AntdBarSet extends Component<any> {
 
-    fillColorChanged = (color: string) => {
+    fillColorChanged = (color: string | string[]) => {
         const {updateElemChartSet} = this.props;
         updateElemChartSet({color: color});
     }
@@ -32,29 +28,29 @@ class AntdBarSet extends Component<any> {
         const {active} = dataXDesigner;
         const {chartConfigMap} = dataXDesigner;
         let chartConfig = chartConfigMap.get(active?.id);
-        let colorPickerNumber = 1;
+        let paletteCount = 1;
         switch (active?.subType) {
             case 'AntdBaseBar':
             case 'AntdZoneBar':
                 //单条的计算条数个数
-                colorPickerNumber = chartConfig.chartProperties.data.length;
+                paletteCount = chartConfig.chartProperties.data.length;
                 break;
             case 'AntdGroupBar':
             case 'AntdPercentBar':
             case 'AntdStackBar':
                 //分组的计算分组个数
-                colorPickerNumber = getAntdDataSortCount(chartConfig.chartProperties.data, 'type');
+                paletteCount = getAntdDataSortCount(chartConfig.chartProperties.data, 'type');
                 break;
         }
         return (
             <div className={'elem-chart-config'}>
                 <Collapse className={'chart-config-collapse'} bordered={false}>
                     {/*图形填充色设置*/}
-                    <FillColor updateElemChartSet={updateElemChartSet} groupNumber={colorPickerNumber}/>
+                    <FillColor onChange={this.fillColorChanged} paletteCount={paletteCount}/>
                     {/*图例配置*/}
-                    <Legend updateElemChartSet={updateElemChartSet}/>
+                    <Legend chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
                     {/*直角坐标系配置*/}
-                    <RightAngleCoordinates updateElemChartSet={updateElemChartSet}/>
+                    <RightAngleCoordinates chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
                     {/*条形图单条宽度配置*/}
                     <BarWidth updateElemChartSet={updateElemChartSet}/>
                 </Collapse>

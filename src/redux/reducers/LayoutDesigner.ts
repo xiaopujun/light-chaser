@@ -3,7 +3,8 @@ import {
     ADD_ITEM,
     DELETE_ITEM,
     UPDATE_DRAWER_VISIBLE,
-    UPDATE_ELEM_BASE_SET, UPDATE_ELEM_CHART_SET,
+    UPDATE_ELEM_BASE_SET,
+    UPDATE_ELEM_CHART_SET,
     UPDATE_ITEM_LAYOUT,
 } from '../constant';
 import {Action, LayoutDesignerStoreProps} from "../../global/types";
@@ -149,7 +150,6 @@ function updateElemBaseSet(preState: LayoutDesignerStoreProps, data: any) {
 function updateElemChartSet(preState: LayoutDesignerStoreProps, data: any) {
     let {chartConfigMap, active} = preState;
     let activeConfig = chartConfigMap.get(active?.id);
-    // activeConfig.chartProperties = {...activeConfig.chartProperties, ...data};
     // activeConfig.chartProperties = _.merge(activeConfig.chartProperties, data);
     activeConfig.chartProperties = _.mergeWith(activeConfig.chartProperties, data, (objValue: any, srcValue: any, key: any, object: any, source: any, stack: any) => {
         if (key === 'data') {

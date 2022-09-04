@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Collapse, Slider} from "antd";
 import './index.less';
 import FillColor from "../../antd/atomic_components/fill_color";
-import Legend from "../../antd/atomic_components/legned";
 
 class AntdLiquidSet extends Component<any> {
 
@@ -32,14 +31,12 @@ class AntdLiquidSet extends Component<any> {
     }
 
     render() {
-        const {updateElemChartSet, dataXDesigner} = this.props;
-        const {active} = dataXDesigner;
-        const {chartConfigMap} = dataXDesigner;
+        const {updateElemChartSet} = this.props;
         return (
             <div className={'elem-chart-config'}>
                 <Collapse className={'chart-config-collapse'} bordered={false}>
                     {/*图形填充色设置*/}
-                    <FillColor updateElemChartSet={updateElemChartSet} groupNumber={1}/>
+                    <FillColor onChange={updateElemChartSet} paletteCount={1}/>
 
                     <div className={'config-group chart-fill-color'}>
                         <div className={'config-item'}>

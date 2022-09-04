@@ -40,6 +40,7 @@ export const initAntdPie = () => {
             appendPadding: 10,
             angleField: 'value',
             colorField: 'name',
+            color: ['#ff1616', '#ffc360', '#f8a5ff', '#2aff81', '#00ff48', '#ffc360'],
             radius: 0.75,
             statistic: {title: null, content: null},
             pieStyle: {stroke: null},

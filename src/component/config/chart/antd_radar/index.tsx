@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
-import {Collapse, Slider, Switch} from "antd";
+import {Collapse, Switch} from "antd";
 import './index.less';
 import FillColor from "../../antd/atomic_components/fill_color";
 import Legend from "../../antd/atomic_components/legned";
-import PolarCoordinateSystem from "../../antd/atomic_components/polar_coordinate";
-import OutRadius from "../../antd/atomic_components/out_radius";
+import OutRadius from "../../antd/atomic_components/out_inner_radius";
 import StartEndAngle from "../../antd/atomic_components/start_end_angle";
 
 export default class AntdRadarSet extends Component<any> {
@@ -18,14 +17,12 @@ export default class AntdRadarSet extends Component<any> {
     }
 
     render() {
-        const {updateElemChartSet, dataXDesigner} = this.props;
-        const {active} = dataXDesigner;
-        const {chartConfigMap} = dataXDesigner;
+        const {updateElemChartSet} = this.props;
         return (
             <div className={'elem-chart-config'}>
                 <Collapse className={'chart-config-collapse'} bordered={false}>
                     {/*图形填充色设置*/}
-                    <FillColor updateElemChartSet={updateElemChartSet} groupNumber={1}/>
+                    <FillColor onChange={updateElemChartSet} paletteCount={1}/>
                     {/*图例*/}
                     <Legend updateElemChartSet={updateElemChartSet}/>
                     {/*极坐标系相关设置*/}

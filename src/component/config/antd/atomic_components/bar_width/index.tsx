@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import {Select, Slider, Switch} from "antd";
+import {Slider} from "antd";
 import '../index.less';
-
-const {Option} = Select;
 
 interface BarWidthProp {
     updateElemChartSet: (data: any) => void;

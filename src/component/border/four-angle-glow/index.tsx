@@ -4,7 +4,7 @@ import './index.less';
 /**
  * 四角辉光边框
  */
-class Index extends Component {
+class FourAngleGlow extends Component<any> {
     render() {
         const {borderConfig} = this.props;
         return (
@@ -21,4 +21,4 @@ class Index extends Component {
     }
 }
 
-export default Index;
+export default FourAngleGlow;

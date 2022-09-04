@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import {Button, Input, Modal, Table} from "antd";
 import {DeleteOutlined, EditOutlined, ExclamationCircleOutlined} from '@ant-design/icons';
 import './index.less';
-import {updateElemChartSet} from "../../redux/actions/LayoutDesigner";
-import {cloneDeep} from "lodash";
 
 const {confirm} = Modal;
 
@@ -288,7 +286,7 @@ class EditTable extends Component<EditTableProps> {
         ];
         const {mode} = this.props;
         const {data, inputModule, visible, activeId} = this.state;
-        let {name, value, startValue, endValue} = inputModule;
+        let {name} = inputModule;
 
         //处理展示模式
         if (mode === 0 || mode === 2) {

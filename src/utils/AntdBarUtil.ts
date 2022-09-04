@@ -2,7 +2,6 @@
  * 用于antd-bar图表的属性拼装
  */
 import merge from "deepmerge";
-import * as initData from '../init/data/antd-bar';
 
 
 /**
@@ -25,16 +24,15 @@ export function antdBarPropertiesProcess(preState: any, data: any) {
 /**
  * @description 计算antd类型图表数据中目标特征值存在的总体个数
  * @param data
+ * @param condition
  */
 export function getAntdDataSortCount(data: Array<any>, condition: string) {
     let groups = new Set();
-    data.map((item: any, index: any) => {
-        if (condition in item) {
-            groups.add(item[condition]);
-        } else {
-            throw new Error("操作对象中没有该属性，异常属性：" + condition);
-        }
-
-    })
+    for (let i = 0; i < data.length; i++) {
+        if (condition in data[i])
+            groups.add(data[i][condition]);
+        else
+            throw new Error("There is no such attribute in the operation object, the exception attribute：" + condition);
+    }
     return groups.size;
 }

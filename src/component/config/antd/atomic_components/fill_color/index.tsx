@@ -1,4 +1,4 @@
-import React, {Component, FormEvent, FormEventHandler} from 'react';
+import React, {Component} from 'react';
 import {Select} from "antd";
 import '../index.less';
 import ColorPicker from "../../../../color_picker/base";
@@ -8,37 +8,37 @@ const {Option} = Select;
 
 interface FillColorProp {
     fillMode?: string; //0:单色、1：多色、
-    groupNumber: number; //分组选择器个数
-    updateElemChartSet: (data: any) => void; //更新填充色配置回调
+    paletteCount?: number; //调色板数量
+    onChange?: (data: string | string[]) => void;//回调函数
 }
 
 /**
- * 图表填充色设置原子组件
+ * 配置项原子组件 - 图表填充色设置
  */
 class FillColor extends Component<FillColorProp> {
 
     state = {
         fillMode: '0',
         targetValue: '',
-        otherValue: 'rgb(0,255,234)'
+        otherValue: ''
     }
 
     constructor(props: FillColorProp) {
         super(props);
-        const {fillMode = '0', groupNumber = 1} = this.props;
+        const {fillMode = '0'} = this.props;
         this.state = {fillMode, targetValue: '', otherValue: 'rgb(0,255,234)'}
     }
 
     colorChanged = (data: string | string[]) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet({color: data});
+        const {onChange} = this.props;
+        onChange && onChange(data);
     }
 
     generateFillColorComp = () => {
         const {fillMode} = this.state;
-        const {groupNumber} = this.props;
+        const {paletteCount} = this.props;
         if (fillMode === '1') {
-            return <GroupColorPicker groupNumber={groupNumber} onChange={this.colorChanged}/>;
+            return <GroupColorPicker paletteCount={paletteCount!} onChange={this.colorChanged}/>;
         } else {
             return <ColorPicker name={'mainTitleColor'}
                                 onChange={this.colorChanged}
