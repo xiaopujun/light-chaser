@@ -5,6 +5,7 @@ import AntdPieSet from "../component/config/chart/antd_pie";
 import AntdLiquidSet from "../component/config/chart/antd_liquid";
 import AntdRadarSet from "../component/config/chart/antd_radar";
 import AntdScatterSet from "../component/config/chart/antd_scatter";
+import AntdBubbleSet from "../component/config/chart/antd_bubblle";
 
 let configMap = new Map();
 
@@ -25,6 +26,7 @@ configMap.set("AntdPie", AntdPieSet);
 configMap.set("AntdLiquid", AntdLiquidSet);
 configMap.set("AntdRadar", AntdRadarSet);
 configMap.set("AntdScatter", AntdScatterSet);
+configMap.set("AntdBubbles", AntdBubbleSet);
 
 export default function getChartsConfig(chartSetName: string) {
     if ("" !== chartSetName && configMap.has(chartSetName)) {

@@ -47,7 +47,11 @@ export const initAntdScatter = () => {
             xField: 'x',
             yField: 'y',
             size: 5,
-            color: 'red',
+            seriesField: 'y',
+            pointStyle: {
+                lineWidth: 0,
+                fill: '#ff7e28',
+            },
             xAxis: {
                 grid: null,
                 line: null,
@@ -86,7 +90,7 @@ export const initAntdBubbles = () => {
             yField: 'change in male rate',
             sizeField: 'pop',
             colorField: 'continent',
-            color: ['#ffd500', '#82cab2', '#193442', '#d18768', '#7e827a'],
+            color: ['#ff0000', '#82cab2', '#193442', '#d18768', '#7e827a'],
             size: [4, 30],
             shape: 'circle',
             pointStyle: {

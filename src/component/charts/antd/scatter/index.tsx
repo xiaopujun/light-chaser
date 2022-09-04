@@ -24,9 +24,10 @@ export default class AntdScatter extends Component<any, any> {
 
     render() {
         //todo name属性为演示获取demo数据使用，后续要去掉
-        const {dataXDesigner, elemId, name} = this.props;
-        const {chartConfigMap} = dataXDesigner;
+        const {dataXDesigner, elemId} = this.props;
+        const {chartConfigMap, layoutConfig} = dataXDesigner;
         const config = chartConfigMap?.get(elemId);
+        const name = layoutConfig[elemId].name;
         const {chartProperties, elemBaseProperties} = config;
         if (name === "AntdBubbles") {
             chartProperties.data = this.state.data;
