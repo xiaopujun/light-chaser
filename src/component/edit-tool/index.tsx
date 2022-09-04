@@ -1,13 +1,13 @@
 import {DeleteOutlined, SettingOutlined} from '@ant-design/icons';
 import React, {Component} from 'react';
 import './index.less';
-import {LayoutDesignerStoreProps} from "../../global/types";
+import {LCDesignerProps} from "../../global/types";
 
 interface EditToolsProps {
     elemId: string;  //组件id
     deleteItem?: (elemId: string) => void; //删除组件回调
     activeElem?: (data: { elemId: number, type: string; subType: string }) => void; //打开右侧配置项回调
-    dataXDesigner?: LayoutDesignerStoreProps;
+    LCDesigner?: LCDesignerProps;
 }
 
 /**
@@ -24,8 +24,8 @@ class EditTools extends Component<EditToolsProps> {
     }
 
     activeElem = () => {
-        const {elemId, activeElem, dataXDesigner} = this.props;
-        let subType = dataXDesigner?.layoutConfig[parseInt(elemId)]?.name;
+        const {elemId, activeElem, LCDesigner} = this.props;
+        let subType = LCDesigner?.layoutConfig[parseInt(elemId)]?.name;
         activeElem && activeElem({elemId: parseInt(elemId), type: "", subType});
     }
 

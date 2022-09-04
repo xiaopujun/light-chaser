@@ -7,14 +7,14 @@ import {
     UPDATE_ELEM_CHART_SET,
     UPDATE_ITEM_LAYOUT,
 } from '../constant';
-import {Action, LayoutDesignerStoreProps} from "../../global/types";
+import {Action, LCDesignerProps} from "../../global/types";
 import {getChartInitData} from "../../utils/ChartUtil";
 import * as _ from 'lodash'
 
 /**
  * 初始化的布局设计器状态
  */
-const initState: LayoutDesignerStoreProps = {
+const initState: LCDesignerProps = {
     count: 0,
     active: {
         id: -1,    //激活的组件id
@@ -32,7 +32,7 @@ const initState: LayoutDesignerStoreProps = {
  *布局设计器reducer，该reducer下分发各路子的处理器，
  *分别处理当前激活状态、标题设置、背景设置、边框设置、图表属性设置
  */
-export default function layoutDesignerReducer(preState: LayoutDesignerStoreProps = initState, action: Action) {
+export default function LCDesignerReducer(preState: LCDesignerProps = initState, action: Action) {
     const {type, data} = action;
     switch (type) {
         case ADD_ITEM:                                      //添加新的组件到画布中
@@ -57,10 +57,10 @@ export default function layoutDesignerReducer(preState: LayoutDesignerStoreProps
 /**
  * 想布局设计器中添加组件
  * @param preState
- * @param action
+ * @param data
  * @returns {{layoutConfig, chartConfig, count}}
  */
-function addItem(preState: LayoutDesignerStoreProps, data: any) {
+function addItem(preState: LCDesignerProps, data: any) {
     let {count, layoutConfig, chartConfigMap} = preState;
     const {name: type} = data;
     //根据类型获取对应图表的初始化数据
@@ -75,9 +75,9 @@ function addItem(preState: LayoutDesignerStoreProps, data: any) {
 /**
  * 删除布局中的组件
  * @param preState
- * @param action
+ * @param data
  */
-function deleteItem(preState: LayoutDesignerStoreProps, data: any) {
+function deleteItem(preState: LCDesignerProps, data: any) {
     data = parseInt(data);
     let {layoutConfig, chartConfigMap} = preState;
     _.remove(layoutConfig, function (item) {
@@ -92,7 +92,7 @@ function deleteItem(preState: LayoutDesignerStoreProps, data: any) {
  * @param preState
  * @param data
  */
-function updateItemLayout(preState: LayoutDesignerStoreProps, data: any) {
+function updateItemLayout(preState: LCDesignerProps, data: any) {
     let {layoutConfig} = preState;
     const {i, x, y, w, h} = data;
     for (let index = 0; index < layoutConfig.length; index++) {
@@ -109,7 +109,7 @@ function updateItemLayout(preState: LayoutDesignerStoreProps, data: any) {
  * @param preState
  * @param data
  */
-function activeElem(preState: LayoutDesignerStoreProps, data: any) {
+function activeElem(preState: LCDesignerProps, data: any) {
     let {active, elemPropSetDialog} = preState;
     const {elemId, type, subType} = data;
     active = {...active, ...{id: elemId, type, subType}};
@@ -122,7 +122,7 @@ function activeElem(preState: LayoutDesignerStoreProps, data: any) {
  * @param preState
  * @param data
  */
-function updateDrawerVisible(preState: LayoutDesignerStoreProps, data: any) {
+function updateDrawerVisible(preState: LCDesignerProps, data: any) {
     let {elemPropSetDialog} = preState;
     elemPropSetDialog.visible = !elemPropSetDialog.visible;
     return {...preState, ...{elemPropSetDialog}};
@@ -133,7 +133,7 @@ function updateDrawerVisible(preState: LayoutDesignerStoreProps, data: any) {
  * @param preState
  * @param data
  */
-function updateElemBaseSet(preState: LayoutDesignerStoreProps, data: any) {
+function updateElemBaseSet(preState: LCDesignerProps, data: any) {
     let {chartConfigMap, active} = preState;
     const {id} = active;
     let charConfig = chartConfigMap.get(id);
@@ -147,11 +147,10 @@ function updateElemBaseSet(preState: LayoutDesignerStoreProps, data: any) {
  * @param preState
  * @param data
  */
-function updateElemChartSet(preState: LayoutDesignerStoreProps, data: any) {
+function updateElemChartSet(preState: LCDesignerProps, data: any) {
     let {chartConfigMap, active} = preState;
     let activeConfig = chartConfigMap.get(active?.id);
-    // activeConfig.chartProperties = _.merge(activeConfig.chartProperties, data);
-    activeConfig.chartProperties = _.mergeWith(activeConfig.chartProperties, data, (objValue: any, srcValue: any, key: any, object: any, source: any, stack: any) => {
+    activeConfig.chartProperties = _.mergeWith(activeConfig.chartProperties, data, (objValue: any, srcValue: any, key: any) => {
         if (key === 'data') {
             return objValue = srcValue;
         }

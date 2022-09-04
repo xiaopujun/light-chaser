@@ -25,8 +25,8 @@ export default class AntdLine extends Component<any, any> {
 
     render() {
         //todo name属性为演示获取demo数据使用，后续要去掉
-        const {dataXDesigner, elemId} = this.props;
-        const {chartConfigMap} = dataXDesigner;
+        const {LCDesigner, elemId} = this.props;
+        const {chartConfigMap} = LCDesigner;
         const config = chartConfigMap?.get(elemId);
         const {chartProperties, elemBaseProperties} = config;
         chartProperties.data = this.state.data;

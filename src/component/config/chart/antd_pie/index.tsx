@@ -14,9 +14,9 @@ class AntdPieSet extends Component<any> {
 
 
     render() {
-        const {updateElemChartSet, dataXDesigner} = this.props;
-        const {active} = dataXDesigner;
-        const {chartConfigMap} = dataXDesigner;
+        const {updateElemChartSet, LCDesigner} = this.props;
+        const {active} = LCDesigner;
+        const {chartConfigMap} = LCDesigner;
         let chartConfig = chartConfigMap.get(active?.id);
         let colorPickerNumber = chartConfig.chartProperties.data.length;
         return (

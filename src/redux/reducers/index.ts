@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 
-import layoutDesigner from './LayoutDesigner';
+import LCDesignerStore from './LCDesigner';
 
 export default combineReducers({
-    dataXDesigner: layoutDesigner,
+    LCDesignerStore: LCDesignerStore,
 })

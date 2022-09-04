@@ -3,7 +3,6 @@ import {Collapse, Slider} from "antd";
 import FillColor from "../../antd/atomic_components/fill_color";
 import RightAngleCoordinates from "../../antd/atomic_components/right_angle_coordinates";
 import {getAntdDataSortCount} from "../../../../utils/AntdBarUtil";
-import {fill} from "lodash";
 
 class AntdBubbleSet extends Component<any> {
 
@@ -14,8 +13,8 @@ class AntdBubbleSet extends Component<any> {
 
 
     render() {
-        const {updateElemChartSet, dataXDesigner} = this.props;
-        const {active, chartConfigMap} = dataXDesigner;
+        const {updateElemChartSet, LCDesigner} = this.props;
+        const {active, chartConfigMap} = LCDesigner;
         let chartConfig = chartConfigMap.get(active?.id);
         let paletteCount = getAntdDataSortCount(chartConfig.chartProperties.data, 'continent');
         return (

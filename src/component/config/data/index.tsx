@@ -20,8 +20,8 @@ class ElemDataSet extends Component<any> {
     }
 
     generateDataDialog = () => {
-        const {dataXDesigner} = this.props;
-        const {active} = dataXDesigner;
+        const {LCDesigner} = this.props;
+        const {active} = LCDesigner;
         switch (active.subType) {
             case "AntdBaseBar":
                 return <EditTable {...this.props} mode={0} setContent={this.setContent}/>;

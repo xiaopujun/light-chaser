@@ -24,9 +24,9 @@ class AntdBarSet extends Component<any> {
 
 
     render() {
-        const {updateElemChartSet, dataXDesigner} = this.props;
-        const {active} = dataXDesigner;
-        const {chartConfigMap} = dataXDesigner;
+        const {updateElemChartSet, LCDesigner} = this.props;
+        const {active} = LCDesigner;
+        const {chartConfigMap} = LCDesigner;
         let chartConfig = chartConfigMap.get(active?.id);
         let paletteCount = 1;
         switch (active?.subType) {

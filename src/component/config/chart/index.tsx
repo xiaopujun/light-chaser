@@ -8,8 +8,8 @@ import getChartsConfig from "../../../init/ComponentSetInit";
 class ElemChartSet extends Component<any> {
 
     render() {
-        const {dataXDesigner} = this.props;
-        const {subType} = dataXDesigner?.active;
+        const {LCDesigner} = this.props;
+        const {subType} = LCDesigner?.active;
         let ChartsConfig = getChartsConfig(subType);
         return (
             <div>

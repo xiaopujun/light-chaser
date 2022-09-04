@@ -9,8 +9,8 @@ import EditTools from "../../../edit-tool";
 export default class AntdGauge extends Component<any, any> {
 
     render() {
-        const {dataXDesigner, elemId} = this.props;
-        const {chartConfigMap} = dataXDesigner;
+        const {LCDesigner, elemId} = this.props;
+        const {chartConfigMap} = LCDesigner;
         const config = chartConfigMap?.get(elemId);
         const {chartProperties, elemBaseProperties} = config;
         return (
