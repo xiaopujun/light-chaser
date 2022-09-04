@@ -3,7 +3,7 @@ import {Collapse, Switch} from "antd";
 import './index.less';
 import FillColor from "../../antd/atomic_components/fill_color";
 import Legend from "../../antd/atomic_components/legned";
-import OutRadius from "../../antd/atomic_components/out_radius";
+import OutRadius from "../../antd/atomic_components/out_inner_radius";
 import StartEndAngle from "../../antd/atomic_components/start_end_angle";
 
 export default class AntdRadarSet extends Component<any> {

@@ -6,17 +6,14 @@ import getChartsConfig from "../../../init/ComponentSetInit";
  * 是所有组件属性配置页面的总分发控制枢纽
  */
 class ElemChartSet extends Component<any> {
-    generateConfig = () => {
+
+    render() {
         const {dataXDesigner} = this.props;
         const {subType} = dataXDesigner?.active;
         let ChartsConfig = getChartsConfig(subType);
-        return <ChartsConfig {...this.props}/>
-    }
-
-    render() {
         return (
             <div>
-                {this.generateConfig()}
+                <ChartsConfig {...this.props}/>
             </div>
         );
     }
