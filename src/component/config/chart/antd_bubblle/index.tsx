@@ -13,8 +13,8 @@ class AntdBubbleSet extends Component<any> {
 
 
     render() {
-        const {updateElemChartSet, LCDesigner} = this.props;
-        const {active, chartConfigMap} = LCDesigner;
+        const {updateElemChartSet, LCDesignerStore} = this.props;
+        const {active, chartConfigMap} = LCDesignerStore;
         let chartConfig = chartConfigMap.get(active?.id);
         let paletteCount = getAntdDataSortCount(chartConfig.chartProperties.data, 'continent');
         return (

@@ -42,7 +42,7 @@ class DataXLayoutDesigner extends Component<any> {
 }
 
 export default connect(
-    (state: any) => ({LCDesigner: state?.LCDesigner || {}}),
+    (state: any) => ({LCDesignerStore: state?.LCDesignerStore || {}}),
     {
         addItem,
         deleteItem,

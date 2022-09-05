@@ -24,8 +24,8 @@ export default class AntdArea extends Component<any, any> {
 
     render() {
         //todo name属性为演示获取demo数据使用，后续要去掉
-        const {LCDesigner, elemId} = this.props;
-        const {chartConfigMap} = LCDesigner;
+        const {LCDesignerStore, elemId} = this.props;
+        const {chartConfigMap} = LCDesignerStore;
         const config = chartConfigMap?.get(elemId);
         const {chartProperties, elemBaseProperties} = config;
         chartProperties.data = this.state.data;

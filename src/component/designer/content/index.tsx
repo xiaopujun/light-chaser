@@ -13,8 +13,8 @@ export default class LCLayoutContent extends React.Component<any, any> {
      * 元素生成方法
      */
     generateElement = () => {
-        const {LCDesigner} = this.props;
-        const {layoutConfig} = LCDesigner;
+        const {LCDesignerStore} = this.props;
+        const {layoutConfig} = LCDesignerStore;
         return layoutConfig.map((item: any, index: any, arr: any) => {
             let ElementChart = getChartsTemplate(item.name);
             return (
@@ -29,11 +29,11 @@ export default class LCLayoutContent extends React.Component<any, any> {
      * 删除目标组件
      */
     deleteItem = (elemId: string) => {
-        const {deleteItem, LCDesigner} = this.props;
+        const {deleteItem, LCDesignerStore} = this.props;
         deleteItem(elemId);
 
         if (this.rgl != null) {
-            const {layoutConfig} = LCDesigner;
+            const {layoutConfig} = LCDesignerStore;
             this.rgl.setState({layout: layoutConfig})
         }
     }
@@ -45,14 +45,14 @@ export default class LCLayoutContent extends React.Component<any, any> {
      * @param _event
      */
     onDrop = (layout: any, layoutItem: any, _event: any) => {
-        const {addItem, LCDesigner} = this.props;
+        const {addItem, LCDesignerStore} = this.props;
         const chartName = _event.dataTransfer.getData('chartName');
-        const item = {...layoutItem, ...{i: LCDesigner?.count + "", id: LCDesigner?.count, name: chartName}}
+        const item = {...layoutItem, ...{i: LCDesignerStore?.count + "", id: LCDesignerStore?.count, name: chartName}}
         console.log("组件", item)
         addItem(item);
 
         if (this.rgl != null) {
-            const {layoutConfig} = LCDesigner;
+            const {layoutConfig} = LCDesignerStore;
             this.rgl.setState({layout: layoutConfig})
         }
     };
@@ -88,8 +88,8 @@ export default class LCLayoutContent extends React.Component<any, any> {
     }
 
     render() {
-        const {LCDesigner} = this.props;
-        const {layoutConfig} = LCDesigner;
+        const {LCDesignerStore} = this.props;
+        const {layoutConfig} = LCDesignerStore;
         return (
             <div className="site-layout-background" style={{height: window.innerHeight - 64}}>
                 <ReactGridLayout ref={obj => this.rgl = obj}

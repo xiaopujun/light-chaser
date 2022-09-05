@@ -9,8 +9,8 @@ import './index.less';
 export default class AntdBar extends Component<any, any> {
 
     render() {
-        const {LCDesigner, elemId} = this.props;
-        const {chartConfigMap} = LCDesigner;
+        const {LCDesignerStore, elemId} = this.props;
+        const {chartConfigMap} = LCDesignerStore;
         const config = chartConfigMap?.get(elemId);
         const {chartProperties, elemBaseProperties} = config;
         return (

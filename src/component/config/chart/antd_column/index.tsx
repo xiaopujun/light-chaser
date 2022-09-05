@@ -16,8 +16,8 @@ class AntdColumnSet extends Component<any> {
     }
 
     render() {
-        const {updateElemChartSet, LCDesigner} = this.props;
-        const {active, chartConfigMap} = LCDesigner;
+        const {updateElemChartSet, LCDesignerStore} = this.props;
+        const {active, chartConfigMap} = LCDesignerStore;
         let chartConfig = chartConfigMap.get(active?.id);
         let paletteCount = 1;
         switch (active?.subType) {

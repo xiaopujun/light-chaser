@@ -14,8 +14,8 @@ export default class ElemPropSetDrawer extends Component<any, any> {
     }
 
     render() {
-        const {LCDesigner} = this.props;
-        const {active} = LCDesigner;
+        const {LCDesignerStore} = this.props;
+        const {active} = LCDesignerStore;
         return (
             <div className={'comp-config-layout'} style={{height: window.innerHeight - 64}}>
                 {active.id >= 0 ? (<ElemPropSet {...this.props}/>) :
