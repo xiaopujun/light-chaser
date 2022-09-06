@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Collapse} from "antd";
 import './index.less';
-import FillColor from "../../antd/atomic_components/fill_color";
-import Legend from "../../antd/atomic_components/legned";
-import PolarCoordinateSystem from "../../antd/atomic_components/polar_coordinate";
+import FillColor from "../../atomic_components/fill_color";
+import Legend from "../../atomic_components/legned";
+import PolarCoordinateSystem from "../../atomic_components/polar_coordinate";
 
 class AntdPieSet extends Component<any> {
 

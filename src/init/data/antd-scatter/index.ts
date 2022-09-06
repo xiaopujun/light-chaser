@@ -46,7 +46,8 @@ export const initAntdScatter = () => {
             ],
             xField: 'x',
             yField: 'y',
-            size: 5,
+            sizeField: 'y',
+            size: [4, 34],
             seriesField: 'y',
             pointStyle: {
                 lineWidth: 0,
@@ -88,7 +89,7 @@ export const initAntdBubbles = () => {
             data: [],
             xField: 'change in female rate',
             yField: 'change in male rate',
-            sizeField: 'pop',
+            sizeField: 'change in male rate',
             colorField: 'continent',
             color: ['#ff0000', '#82cab2', '#193442', '#d18768', '#7e827a'],
             size: [4, 30],

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Collapse, Slider} from "antd";
 import './index.less';
-import FillColor from "../../antd/atomic_components/fill_color";
+import FillColor from "../../atomic_components/fill_color";
 
 class AntdLiquidSet extends Component<any> {
 

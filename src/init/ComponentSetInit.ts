@@ -1,11 +1,11 @@
-import AntdBarSet from "../component/config/chart/antd_bar";
-import AntdColumnSet from "../component/config/chart/antd_column";
-import AntdAreaSet from "../component/config/chart/antd_area";
-import AntdPieSet from "../component/config/chart/antd_pie";
-import AntdLiquidSet from "../component/config/chart/antd_liquid";
-import AntdRadarSet from "../component/config/chart/antd_radar";
-import AntdScatterSet from "../component/config/chart/antd_scatter";
-import AntdBubbleSet from "../component/config/chart/antd_bubblle";
+import AntdBarSet from "../component/config/antd/chart/antd_bar";
+import AntdColumnSet from "../component/config/antd/chart/antd_column";
+import AntdAreaSet from "../component/config/antd/chart/antd_area";
+import AntdPieSet from "../component/config/antd/chart/antd_pie";
+import AntdLiquidSet from "../component/config/antd/chart/antd_liquid";
+import AntdRadarSet from "../component/config/antd/chart/antd_radar";
+import AntdScatterSet from "../component/config/antd/chart/antd_scatter";
+import AntdBubbleSet from "../component/config/antd/chart/antd_bubblle";
 
 let configMap = new Map();
 

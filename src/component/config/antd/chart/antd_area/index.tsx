@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Collapse} from "antd";
 import './index.less';
-import FillColor from "../../antd/atomic_components/fill_color";
-import Legend from "../../antd/atomic_components/legned";
-import RightAngleCoordinates from "../../antd/atomic_components/right_angle_coordinates";
+import FillColor from "../../atomic_components/fill_color";
+import Legend from "../../atomic_components/legned";
+import RightAngleCoordinates from "../../atomic_components/right_angle_coordinates";
 
 class AntdAreaSet extends Component<any> {
 

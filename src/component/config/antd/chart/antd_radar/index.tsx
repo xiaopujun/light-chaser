@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {Collapse, Switch} from "antd";
 import './index.less';
-import FillColor from "../../antd/atomic_components/fill_color";
-import Legend from "../../antd/atomic_components/legned";
-import OutRadius from "../../antd/atomic_components/out_inner_radius";
-import StartEndAngle from "../../antd/atomic_components/start_end_angle";
+import FillColor from "../../atomic_components/fill_color";
+import Legend from "../../atomic_components/legned";
+import OutRadius from "../../atomic_components/out_inner_radius";
+import StartEndAngle from "../../atomic_components/start_end_angle";
 
 export default class AntdRadarSet extends Component<any> {
 

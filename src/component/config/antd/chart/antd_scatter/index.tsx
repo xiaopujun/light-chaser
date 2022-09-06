@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Collapse, Select, Slider} from "antd";
 import './index.less';
-import FillColor from "../../antd/atomic_components/fill_color";
-import RightAngleCoordinates from "../../antd/atomic_components/right_angle_coordinates";
+import FillColor from "../../atomic_components/fill_color";
+import RightAngleCoordinates from "../../atomic_components/right_angle_coordinates";
 
 const {Option} = Select;
 
@@ -24,10 +24,10 @@ export default class AntdScatterSet extends Component<any> {
         });
     }
 
-    pointSizeChanged = (size: number) => {
+    pointSizeChanged = (range: [number, number]) => {
         const {updateElemChartSet} = this.props;
         updateElemChartSet({
-            size: size
+            size: range
         })
     }
 
@@ -51,7 +51,8 @@ export default class AntdScatterSet extends Component<any> {
                     <div className={'config-group'}>
                         <div className={'config-item'}>
                             <label className={'config-item-label'}>点元素尺寸：</label>
-                            <Slider defaultValue={5} max={20} min={0} style={{width: '60%'}}
+                            <Slider defaultValue={[1, 10]} max={20} min={0} style={{width: '60%'}}
+                                    range={true}
                                     onChange={this.pointSizeChanged}
                                     className={'config-item-value'}/>
                         </div>
