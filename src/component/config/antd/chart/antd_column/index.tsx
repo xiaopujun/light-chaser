@@ -20,7 +20,7 @@ class AntdColumnSet extends Component<any> {
         const {active, chartConfigMap} = LCDesignerStore;
         let chartConfig = chartConfigMap.get(active?.id);
         let paletteCount = 1;
-        switch (active?.subType) {
+        switch (active?.type) {
             case 'AntdBaseColumn':
             case 'AntdZoneColumn':
                 //单条的计算条数个数

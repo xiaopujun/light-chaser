@@ -9,8 +9,8 @@ class ElemChartSet extends Component<any> {
 
     render() {
         const {LCDesignerStore} = this.props;
-        const {subType} = LCDesignerStore?.active;
-        let ChartsConfig = getChartsConfig(subType);
+        const {type} = LCDesignerStore?.active;
+        let ChartsConfig = getChartsConfig(type);
         return (
             <div>
                 <ChartsConfig {...this.props}/>

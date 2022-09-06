@@ -6,7 +6,7 @@ import {LCDesignerProps} from "../../global/types";
 interface EditToolsProps {
     elemId: string;  //组件id
     deleteItem?: (elemId: string) => void; //删除组件回调
-    activeElem?: (data: { elemId: number, type: string; subType: string }) => void; //打开右侧配置项回调
+    activeElem?: (data: { elemId: number, type: string }) => void; //打开右侧配置项回调
     LCDesignerStore?: LCDesignerProps;
 }
 
@@ -25,8 +25,8 @@ class EditTools extends Component<EditToolsProps> {
 
     activeElem = () => {
         const {elemId, activeElem, LCDesignerStore} = this.props;
-        let subType = LCDesignerStore?.layoutConfig[parseInt(elemId)]?.name;
-        activeElem && activeElem({elemId: parseInt(elemId), type: "", subType});
+        let type = LCDesignerStore?.layoutConfig[parseInt(elemId)]?.name;
+        activeElem && activeElem({elemId: parseInt(elemId), type});
     }
 
     render() {

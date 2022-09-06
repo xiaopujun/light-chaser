@@ -22,7 +22,7 @@ class ElemDataSet extends Component<any> {
     generateDataDialog = () => {
         const {LCDesignerStore} = this.props;
         const {active} = LCDesignerStore;
-        switch (active.subType) {
+        switch (active.type) {
             case "AntdBaseBar":
                 return <EditTable {...this.props} mode={0} setContent={this.setContent}/>;
             case "AntdGroupBar":

@@ -19,7 +19,6 @@ const initState: LCDesignerProps = {
     active: {
         id: -1,    //激活的组件id
         type: "",    //激活的组件类型
-        subType: "",    //激活的组件子类型
     },
     chartConfigMap: new Map(),//布局设计器中的图表组件列表，每次设置图表样式或数据时更新此状态中的数据来更新渲染
     layoutConfig: [],//布局配置数据，用于控制图表在页面中的整体布局位置
@@ -111,11 +110,12 @@ function updateItemLayout(preState: LCDesignerProps, data: any) {
  */
 function activeElem(preState: LCDesignerProps, data: any) {
     let {active, elemPropSetDialog} = preState;
-    const {elemId, type, subType} = data;
-    active = {...active, ...{id: elemId, type, subType}};
+    const {elemId, type} = data;
+    active = {...active, ...{id: elemId, type}};
     elemPropSetDialog.visible = !elemPropSetDialog.visible;
     return {...preState, ...{active, elemPropSetDialog}};
 }
+
 
 /**
  * @description 更新右侧抽屉显示状态

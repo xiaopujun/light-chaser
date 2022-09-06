@@ -29,7 +29,7 @@ class AntdBarSet extends Component<any> {
         const {chartConfigMap} = LCDesignerStore;
         let chartConfig = chartConfigMap.get(active?.id);
         let paletteCount = 1;
-        switch (active?.subType) {
+        switch (active?.type) {
             case 'AntdBaseBar':
             case 'AntdZoneBar':
                 //单条的计算条数个数

@@ -24,7 +24,6 @@ export interface LCDesignerProps {
     active: {     //激活组件信息
         id: number;
         type: string;
-        subType: string;
     };
     chartConfigMap: Map<number, any>;
     layoutConfig: Array<any>;
