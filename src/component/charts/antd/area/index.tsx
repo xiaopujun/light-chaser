@@ -8,18 +8,42 @@ import EditTools from "../../../edit-tool";
  */
 export default class AntdArea extends Component<any, any> {
 
-    state = {
+    state: any = {
         data: []
     }
 
     constructor(props: any) {
         super(props);
-        fetch('https://gw.alipayobjects.com/os/bmw-prod/55424a73-7cb8-4f79-b60d-3ab627ac5698.json')
-            .then((response) => response.json())
-            .then((json) => this.setState({data: json}))
-            .catch((error) => {
-                console.log('fetch data failed', error);
-            });
+        const {LCDesignerStore, elemId} = this.props;
+        const {layoutConfig} = LCDesignerStore;
+        const chartName = layoutConfig[elemId].name;
+        switch (chartName) {
+            case "AntdBaseArea":
+                fetch('https://gw.alipayobjects.com/os/bmw-prod/360c3eae-0c73-46f0-a982-4746a6095010.json')
+                    .then((response) => response.json())
+                    .then((json) => this.setState({data: json}))
+                    .catch((error) => {
+                        console.log('fetch data failed', error);
+                    });
+                break;
+            case "AntdStackArea":
+                fetch('https://gw.alipayobjects.com/os/bmw-prod/b21e7336-0b3e-486c-9070-612ede49284e.json')
+                    .then((response) => response.json())
+                    .then((json) => this.setState({data: json}))
+                    .catch((error) => {
+                        console.log('fetch data failed', error);
+                    });
+                break;
+            case "AntdPercentArea":
+                fetch('https://gw.alipayobjects.com/os/bmw-prod/67ef5751-b228-417c-810a-962f978af3e7.json')
+                    .then((response) => response.json())
+                    .then((json) => this.setState({data: json}))
+                    .catch((error) => {
+                        console.log('fetch data failed', error);
+                    });
+                break;
+        }
+
     }
 
     render() {

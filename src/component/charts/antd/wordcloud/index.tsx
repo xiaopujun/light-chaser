@@ -9,7 +9,6 @@ import EditTools from "../../../edit-tool";
 export default class AntdWordCloud extends Component<any, any> {
 
     state = {
-        count: 0,
         data: []
     }
 
@@ -23,6 +22,14 @@ export default class AntdWordCloud extends Component<any, any> {
             });
     }
 
+    positionChanged = (data: any) => {
+        if (data.length > 0) {
+            let temp = data[data.length - 1];
+            data[data.length - 1] = data[0];
+            data[0] = temp;
+        }
+
+    }
 
     render() {
         //todo name属性为演示获取demo数据使用，后续要去掉
@@ -30,8 +37,8 @@ export default class AntdWordCloud extends Component<any, any> {
         const {chartConfigMap} = LCDesignerStore;
         const config = chartConfigMap?.get(elemId);
         const {chartProperties, elemBaseProperties} = config;
-        chartProperties.data = this.state.data;
-        console.log(chartProperties.data)
+        // chartProperties.data = this.state.data;
+        console.log('props', this.props)
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...elemBaseProperties}}>
                 <EditTools {...this.props} elemId={elemId}/>

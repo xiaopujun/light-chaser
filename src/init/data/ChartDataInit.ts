@@ -8,7 +8,7 @@ import {
 } from "./antd-column";
 import {initAntdPie, initAntdRing} from "./antd-pie";
 import {initAntdBubbles, initAntdScatter} from "./antd-scatter";
-import {initAntdStackArea} from "./antd-area";
+import {initAntdStackArea, initAntdBaseArea, initAntdPercentArea} from "./antd-area";
 import {initAntdWordCloud} from "./antd-wordcloud";
 import {initAntdMuchFoldLine} from "./antd-line";
 import {initAntdLiquid} from "./antd-liquid";
@@ -38,5 +38,7 @@ chartInitDataMap.set('AntdMuchFoldLine', initAntdMuchFoldLine);
 chartInitDataMap.set('AntdLiquid', initAntdLiquid);
 chartInitDataMap.set('AntdRadar', initAntdRadar);
 chartInitDataMap.set('AntdGauge', initAntdGauge);
+chartInitDataMap.set('AntdBaseArea', initAntdBaseArea);
+chartInitDataMap.set('AntdPercentArea', initAntdPercentArea);
 
 export default chartInitDataMap;
