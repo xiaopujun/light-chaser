@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import {Slider} from "antd";
 
+/**
+ * 圆形图渲染，内外半径设置
+ */
 export default class StartEndAngle extends Component<any> {
 
     state = {

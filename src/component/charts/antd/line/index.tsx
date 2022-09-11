@@ -14,22 +14,40 @@ export default class AntdLine extends Component<any, any> {
 
     constructor(props: any) {
         super(props);
-        fetch('https://gw.alipayobjects.com/os/bmw-prod/55424a73-7cb8-4f79-b60d-3ab627ac5698.json')
-            .then((response) => response.json())
-            .then((json) => this.setState({data: json}))
-            .catch((error) => {
-                console.log('fetch data failed', error);
-            });
+        const {LCDesignerStore, elemId} = this.props;
+        const {layoutConfig} = LCDesignerStore;
+        const chartName = layoutConfig[elemId].name;
+        switch (chartName) {
+            case "AntdBaseFoldLine":
+                fetch('https://gw.alipayobjects.com/os/bmw-prod/1d565782-dde4-4bb6-8946-ea6a38ccf184.json')
+                    .then((response) => response.json())
+                    .then((json) => this.setState({data: json}))
+                    .catch((error) => {
+                        console.log('fetch data failed', error);
+                    });
+                break;
+            case "AntdStepFoldLine":
+                break;
+            case "AntdMuchFoldLine":
+                fetch('https://gw.alipayobjects.com/os/bmw-prod/e00d52f4-2fa6-47ee-a0d7-105dd95bde20.json')
+                    .then((response) => response.json())
+                    .then((json) => this.setState({data: json}))
+                    .catch((error) => {
+                        console.log('fetch data failed', error);
+                    });
+                break;
+        }
     }
 
 
     render() {
-        //todo name属性为演示获取demo数据使用，后续要去掉
         const {LCDesignerStore, elemId} = this.props;
-        const {chartConfigMap} = LCDesignerStore;
+        const {chartConfigMap, layoutConfig} = LCDesignerStore;
         const config = chartConfigMap?.get(elemId);
         const {chartProperties, elemBaseProperties} = config;
-        chartProperties.data = this.state.data;
+        const chartName = layoutConfig[elemId].name;
+        if (chartName !== 'AntdStepFoldLine')
+            chartProperties.data = this.state.data;
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...elemBaseProperties}}>
                 <EditTools {...this.props} elemId={elemId}/>

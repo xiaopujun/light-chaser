@@ -1,5 +1,4 @@
 import {cloneDeep} from 'lodash';
-import {initAntdPercentBar} from "../antd-bar";
 
 //基础面积图初始化数据和配置
 export const initAntdBaseArea = () => {

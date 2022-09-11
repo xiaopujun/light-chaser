@@ -1,12 +1,13 @@
-import AntdBarSet from "../component/config/antd/chart/antd_bar";
-import AntdColumnSet from "../component/config/antd/chart/antd_column";
-import AntdAreaSet from "../component/config/antd/chart/antd_area";
-import AntdPieSet from "../component/config/antd/chart/antd_pie";
-import AntdLiquidSet from "../component/config/antd/chart/antd_liquid";
-import AntdRadarSet from "../component/config/antd/chart/antd_radar";
-import AntdScatterSet from "../component/config/antd/chart/antd_scatter";
-import AntdBubbleSet from "../component/config/antd/chart/antd_bubblle";
-import AntdWordCloudSet from "../component/config/antd/chart/antd_wordcloud";
+import AntdBarSet from "./antd_bar";
+import AntdColumnSet from "./antd_column";
+import AntdAreaSet from "./antd_area";
+import AntdPieSet from "./antd_pie";
+import AntdLiquidSet from "./antd_liquid";
+import AntdRadarSet from "./antd_radar";
+import AntdScatterSet from "./antd_scatter";
+import AntdBubbleSet from "./antd_bubblle";
+import AntdWordCloudSet from "./antd_wordcloud";
+import AntdFoldLineSet from "./antd_line";
 
 let configMap = new Map();
 
@@ -31,6 +32,11 @@ configMap.set("AntdBubbles", AntdBubbleSet);
 configMap.set("AntdBaseArea", AntdAreaSet);
 configMap.set("AntdPercentArea", AntdAreaSet);
 configMap.set("AntdWordCloud", AntdWordCloudSet);
+configMap.set("AntdBaseFoldLine", AntdFoldLineSet);
+configMap.set("AntdStepFoldLine", AntdFoldLineSet);
+configMap.set("AntdMuchFoldLine", AntdFoldLineSet);
+configMap.set("AntdMuchFoldLine", AntdFoldLineSet);
+configMap.set("AntdRadar", AntdRadarSet);
 
 export default function getChartsConfig(chartSetName: string) {
     if ("" !== chartSetName && configMap.has(chartSetName)) {

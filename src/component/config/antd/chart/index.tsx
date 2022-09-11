@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import getChartsConfig from "../../../../init/ComponentSetInit";
+import getChartsConfig from "./ComponentSetInit";
 
 /**
  * 图表配置组件，该组件需要根据不同的组件类型、子类型，渲染不同的组件配置页面

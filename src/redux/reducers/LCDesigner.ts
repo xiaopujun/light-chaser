@@ -150,10 +150,15 @@ function updateElemBaseSet(preState: LCDesignerProps, data: any) {
 function updateElemChartSet(preState: LCDesignerProps, data: any) {
     let {chartConfigMap, active} = preState;
     let activeConfig = chartConfigMap.get(active?.id);
-    activeConfig.chartProperties = _.mergeWith(activeConfig.chartProperties, data, (objValue: any, srcValue: any, key: any) => {
-        if (key === 'data') {
-            return objValue = srcValue;
-        }
-    });
+    const activeCompName = active?.type;
+    if (activeCompName === "AntdRadar") {
+        activeConfig.chartProperties = {...activeConfig.chartProperties, ...data}
+        console.log(activeConfig.chartProperties.yAxis)
+    } else {
+        activeConfig.chartProperties = _.mergeWith(activeConfig.chartProperties, data, (objValue: any, srcValue: any, key: any) => {
+            if (key === 'data')
+                return objValue = srcValue;
+        });
+    }
     return {...preState};
 }

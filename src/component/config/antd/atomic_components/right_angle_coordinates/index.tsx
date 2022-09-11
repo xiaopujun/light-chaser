@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
-import {Slider, Switch} from "antd";
+import {Select, Slider, Switch} from "antd";
 import ColorPicker from "../../../../color_picker/base";
+
+const {Option} = Select;
 
 interface RightAngleCoordinatesProp {
     updateElemChartSet: (data: any) => void;
@@ -225,6 +227,7 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
                                          onChange={this.xTitleColorChanged}
                                          className={'config-item-value'}/>
                         </div>
+
                     </> : <></>}
 
                 <div className={'config-item'}>
@@ -254,7 +257,6 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
                                     onChange={this.yGridLineOpacityChanged}
                                     className={'config-item-value'}/>
                         </div>
-
                         <div className={'config-item'}>
                             <label className={'config-item-label'}>y轴标题颜色：</label>
                             <ColorPicker name={'mainTitleColor'}
@@ -263,6 +265,7 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
                         </div>
                     </> :
                     <></>}
+
             </div>
         );
     }

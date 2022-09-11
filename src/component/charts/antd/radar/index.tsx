@@ -12,23 +12,11 @@ export default class AntdRadar extends Component<any, any> {
         data: []
     }
 
-    constructor(props: any) {
-        super(props);
-        fetch('https://gw.alipayobjects.com/os/antfincdn/svFjSfJkYy/radar.json')
-            .then((response) => response.json())
-            .then((json) => this.setState({data: json}))
-            .catch((error) => {
-                console.log('fetch data failed', error);
-            });
-    }
-
     render() {
-        //todo name属性为演示获取demo数据使用，后续要去掉
         const {LCDesignerStore, elemId} = this.props;
         const {chartConfigMap} = LCDesignerStore;
         const config = chartConfigMap?.get(elemId);
         const {chartProperties, elemBaseProperties} = config;
-        chartProperties.data = this.state.data;
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...elemBaseProperties}}>
                 <EditTools {...this.props} elemId={elemId}/>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Select, Switch} from "antd";
 import '../index.less';
+import ColorPicker from "../../../../color_picker/base";
 
 const {Option} = Select;
 
@@ -49,6 +50,18 @@ class Legend extends Component<any> {
         });
     }
 
+    legendTextColorChanged = (color: string | string[]) => {
+        const {updateElemChartSet} = this.props;
+        updateElemChartSet({
+            legend: {
+                itemName: {
+                    style: {
+                        fill: color
+                    }
+                },
+            }
+        });
+    }
 
     render() {
         const {showLegendDetail} = this.state;
@@ -87,8 +100,11 @@ class Legend extends Component<any> {
                                 <Option value={""}>纵向布局</Option>
                             </Select>
                         </div>
+                        <div className={'config-item'}>
+                            <label className={'config-item-label'}>文本颜色：</label>
+                            <ColorPicker onChange={this.legendTextColorChanged}/>
+                        </div>
                     </> : <></>}
-
             </div>
         );
     }

@@ -1,13 +1,13 @@
-import AntdArea from "../component/charts/antd/area";
-import AntdBar from "../component/charts/antd/bar";
-import AntdColumn from "../component/charts/antd/column";
-import AntdPie from "../component/charts/antd/pie";
-import AntdScatter from "../component/charts/antd/scatter";
-import AntdWordCloud from "../component/charts/antd/wordcloud";
-import AntdLine from "../component/charts/antd/line";
-import AntdLiquid from "../component/charts/antd/liquid";
-import AntdRadar from "../component/charts/antd/radar";
-import AntdGauge from "../component/charts/antd/gauge";
+import AntdArea from "./antd/area";
+import AntdBar from "./antd/bar";
+import AntdColumn from "./antd/column";
+import AntdPie from "./antd/pie";
+import AntdScatter from "./antd/scatter";
+import AntdWordCloud from "./antd/wordcloud";
+import AntdLine from "./antd/line";
+import AntdLiquid from "./antd/liquid";
+import AntdRadar from "./antd/radar";
+import AntdGauge from "./antd/gauge";
 
 let chartsMap = new Map();
 
@@ -29,6 +29,8 @@ chartsMap.set("AntdBaseArea", AntdArea);
 chartsMap.set("AntdStackArea", AntdArea);
 chartsMap.set("AntdPercentArea", AntdArea);
 chartsMap.set("AntdWordCloud", AntdWordCloud);
+chartsMap.set("AntdBaseFoldLine", AntdLine);
+chartsMap.set("AntdStepFoldLine", AntdLine);
 chartsMap.set("AntdMuchFoldLine", AntdLine);
 chartsMap.set("AntdLiquid", AntdLiquid);
 chartsMap.set("AntdRadar", AntdRadar);
