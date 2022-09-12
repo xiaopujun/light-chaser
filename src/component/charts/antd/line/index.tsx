@@ -16,7 +16,12 @@ export default class AntdLine extends Component<any, any> {
         super(props);
         const {LCDesignerStore, elemId} = this.props;
         const {layoutConfig} = LCDesignerStore;
-        const chartName = layoutConfig[elemId].name;
+        let chartName = "";
+        for (let i = 0; i < layoutConfig.length; i++) {
+            if (layoutConfig[i].id === elemId) {
+                chartName = layoutConfig[i].name;
+            }
+        }
         switch (chartName) {
             case "AntdBaseFoldLine":
                 fetch('https://gw.alipayobjects.com/os/bmw-prod/1d565782-dde4-4bb6-8946-ea6a38ccf184.json')
@@ -45,7 +50,12 @@ export default class AntdLine extends Component<any, any> {
         const {chartConfigMap, layoutConfig} = LCDesignerStore;
         const config = chartConfigMap?.get(elemId);
         const {chartProperties, elemBaseProperties} = config;
-        const chartName = layoutConfig[elemId].name;
+        let chartName = "";
+        for (let i = 0; i < layoutConfig.length; i++) {
+            if (layoutConfig[i].id === elemId) {
+                chartName = layoutConfig[i].name;
+            }
+        }
         if (chartName !== 'AntdStepFoldLine')
             chartProperties.data = this.state.data;
         return (

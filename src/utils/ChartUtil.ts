@@ -11,3 +11,19 @@ export function getChartInitData(type: string) {
         throw new Error('chartInitDataMap hos no relate init data');
     }
 }
+
+export function getTargetObjProperties(obj: any, key: string, value: any) {
+    if (obj.constructor === Object) {
+        //对象
+        if (key in obj)
+            return obj[key];
+    } else if (obj.constructor === Array) {
+        //数组
+        for (let i = 0; i < obj.length; i++) {
+            if (obj[i].constructor === Object && key in obj[i])
+                return obj[i][key];
+        }
+    } else {
+        throw new Error('obj is not Object or Array');
+    }
+}

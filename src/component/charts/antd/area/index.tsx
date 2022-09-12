@@ -16,7 +16,12 @@ export default class AntdArea extends Component<any, any> {
         super(props);
         const {LCDesignerStore, elemId} = this.props;
         const {layoutConfig} = LCDesignerStore;
-        const chartName = layoutConfig[elemId].name;
+        let chartName = "";
+        for (let i = 0; i < layoutConfig.length; i++) {
+            if (layoutConfig[i].id === elemId) {
+                chartName = layoutConfig[i].name;
+            }
+        }
         switch (chartName) {
             case "AntdBaseArea":
                 fetch('https://gw.alipayobjects.com/os/bmw-prod/360c3eae-0c73-46f0-a982-4746a6095010.json')

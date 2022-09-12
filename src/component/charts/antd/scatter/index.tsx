@@ -27,7 +27,12 @@ export default class AntdScatter extends Component<any, any> {
         const {LCDesignerStore, elemId} = this.props;
         const {chartConfigMap, layoutConfig} = LCDesignerStore;
         const config = chartConfigMap?.get(elemId);
-        const name = layoutConfig[elemId].name;
+        let name = "";
+        for (let i = 0; i < layoutConfig.length; i++) {
+            if (layoutConfig[i].id === elemId) {
+                name = layoutConfig[i].name;
+            }
+        }
         const {chartProperties, elemBaseProperties} = config;
         if (name === "AntdBubbles") {
             chartProperties.data = this.state.data;

@@ -157,7 +157,6 @@ function updateElemChartSet(preState: LCDesignerProps, data: any) {
     const activeCompName = active?.type;
     if (activeCompName === "AntdRadar") {
         activeConfig.chartProperties = {...activeConfig.chartProperties, ...data}
-        console.log(activeConfig.chartProperties.yAxis)
     } else {
         activeConfig.chartProperties = _.mergeWith(activeConfig.chartProperties, data, (objValue: any, srcValue: any, key: any) => {
             if (key === 'data')

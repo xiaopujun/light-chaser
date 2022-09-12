@@ -16,8 +16,7 @@ yarn start
 
 ### 图1
 
-![image.png](https://s2.loli.net/2022/05/19/osS3yZgCNVr4YeU.png)
-
+![img_1.png](img_1.png)
 ### 图2
 
 ![WechatIMG29.jpeg](https://s2.loli.net/2022/05/19/OzpPS4LhGAEik5x.jpg)

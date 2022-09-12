@@ -52,6 +52,7 @@ export const initAntdBaseBar = () => {
             yAxis: {...axis},
             color: 'rgb(0,255,234,0.2)',
             legend: false,
+            maxBarWidth: 8
         }
     });
 };
@@ -122,6 +123,7 @@ export const initAntdGroupBar = () => {
             yAxis: {...axis},
             color: ['rgb(0,255,234)', 'rgb(233,118,9)'],
             legend: false,
+            maxBarWidth: 8
         }
     });
 };
@@ -245,6 +247,7 @@ export const initAntdPercentBar = () => {
             isStack: true,
             xAxis: {...axis},
             yAxis: {...axis},
+            maxBarWidth: 8
         }
     });
 };
@@ -295,6 +298,7 @@ export const initAntdZoneBar = () => {
             yAxis: {...axis},
             color: ['rgb(0,255,234)', '#fff'],
             seriesField: 'name',
+            maxBarWidth: 8
         }
     });
 };
@@ -402,6 +406,7 @@ export const initAntdStackBar = () => {
             seriesField: 'type',
             xAxis: {...axis},
             yAxis: {...axis},
+            maxBarWidth: 8
         }
     });
 };

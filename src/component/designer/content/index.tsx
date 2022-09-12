@@ -48,7 +48,6 @@ export default class LCLayoutContent extends React.Component<any, any> {
         const {addItem, LCDesignerStore} = this.props;
         const chartName = _event.dataTransfer.getData('chartName');
         const item = {...layoutItem, ...{i: LCDesignerStore?.count + "", id: LCDesignerStore?.count, name: chartName}}
-        console.log("组件", item)
         addItem(item);
 
         if (this.rgl != null) {
@@ -62,7 +61,7 @@ export default class LCLayoutContent extends React.Component<any, any> {
      * @param e
      */
     onDropDragOver = (e: any) => {
-        return {w: 8, h: 8}
+        return {w: 6, h: 12}
     }
 
     /**
@@ -76,7 +75,6 @@ export default class LCLayoutContent extends React.Component<any, any> {
 
     onDrag = (layout: any, oldItem: any, newItem: any,
               placeholder: any, e: any, element: HTMLElement) => {
-        console.log("d");
     }
 
     /**

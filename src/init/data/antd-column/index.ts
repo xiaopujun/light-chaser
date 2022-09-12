@@ -63,6 +63,7 @@ export const initAntdBaseColumn = () => {
             seriesField: 'name',
             color: 'rgb(0,255,234)',
             legend: false,
+            maxColumnWidth: 8
         }
     });
 };
@@ -176,6 +177,7 @@ export const initAntdStackColumn = () => {
             seriesField: 'type',
             xAxis: {...axis},
             yAxis: {...axis},
+            maxColumnWidth: 8
         }
     });
 };
@@ -252,6 +254,7 @@ export const initAntdGroupColumn = () => {
             yAxis: {...axis},
             color: ['rgb(0,255,234)', 'rgb(233,118,9)'],
             legend: false,
+            maxColumnWidth: 8
         }
     });
 };
@@ -382,6 +385,7 @@ export const initAntdPercentColumn = () => {
             xAxis: {...axis},
             yAxis: {...axis},
             legend: false,
+            maxColumnWidth: 8
         }
     });
 };
@@ -438,6 +442,7 @@ export const initAntdZoneColumn = () => {
             xAxis: {...axis},
             yAxis: {...axis},
             color: 'rgb(0,255,234)',
+            maxColumnWidth: 8
         }
     });
 };
