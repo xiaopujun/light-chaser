@@ -1,4 +1,4 @@
-import {cloneDeep, fill} from 'lodash';
+import {cloneDeep} from 'lodash';
 
 //雷达图初始化数据和配置
 export const initAntdRadar = () => {
@@ -65,7 +65,6 @@ export const initAntdRadar = () => {
                     tickLine: null,
                     grid: {
                         line: {
-                            type: 'line',
                             style: {
                                 lineDash: null,
                             },

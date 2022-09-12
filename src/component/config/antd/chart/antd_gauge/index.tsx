@@ -1,72 +1,67 @@
 import React, {Component} from 'react';
-import {Collapse, Input, Select, Slider} from "antd";
-import './index.less';
-import FillColor from "../../atomic_components/fill_color";
+import {Collapse, Input, Slider, Switch} from "antd";
+import OutRadius from "../../atomic_components/out_inner_radius";
+import StartEndAngle from "../../atomic_components/start_end_angle";
 import ColorPicker from "../../../../color_picker/base";
 
-const {Option} = Select;
+class AntdGaugeSet extends Component<any> {
 
-class AntdLiquidSet extends Component<any> {
+    state: any = {
+        rangeWidth: 1,
+        stepCount: 1,
+        stepWidth: 1
+    }
 
-    fillColorChanged = (color: string | string[]) => {
+    rangeColorChanged = (color: string) => {
         const {updateElemChartSet} = this.props;
         updateElemChartSet({
-            color: color
+            range: {
+                color,
+            },
         })
     }
 
-    outRadiusChanged = (radius: number) => {
+    rangeWidthChanged = (width: number) => {
         const {updateElemChartSet} = this.props;
         updateElemChartSet({
-            radius: radius
-        })
-    }
-
-    outLineWidthChanged = (width: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet({
-            outline: {
-                border: width
+            range: {
+                width: width,
             }
         })
-    }
-
-
-    outLineIntervalChanged = (distance: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet({
-            outline: {
-                distance: distance
-            }
+        this.setState({
+            rangeWidth: width
         })
     }
 
-    outLineColorChanged = (color: string) => {
+    openMete = (data: boolean) => {
         const {updateElemChartSet} = this.props;
+        let flag = data ? 'meter' : '';
         updateElemChartSet({
-            outline: {
-                style: {
-                    stroke: color,
-                }
-            }
+            type: flag
         })
     }
 
-    numberOfWaterWavesChanged = (count: number) => {
+
+    stepCountChange = (count: number) => {
         const {updateElemChartSet} = this.props;
         updateElemChartSet({
-            wave: {
-                count: count
+            meter: {
+                steps: count
             }
         })
+        this.setState({
+            stepCount: count
+        })
     }
-
-    waveLengthChanged = (length: number) => {
+    stepWidthChange = (count: number) => {
         const {updateElemChartSet} = this.props;
         updateElemChartSet({
-            wave: {
-                length: length
+            meter: {
+                stepRatio: count
             }
+        })
+        this.setState({
+            stepWidth: count
         })
     }
 
@@ -102,7 +97,7 @@ class AntdLiquidSet extends Component<any> {
             statistic: {
                 content: {
                     style: {
-                        fill: color
+                        color: color
                     }
                 }
             }
@@ -150,66 +145,88 @@ class AntdLiquidSet extends Component<any> {
         })
     }
 
-    shapeChanged = (value: string) => {
+    titleXAxisOffsetChanged = (data: number) => {
         const {updateElemChartSet} = this.props;
         updateElemChartSet({
-            shape: value
+            statistic: {
+                title: {
+                    offsetX: data
+                }
+            }
+        })
+    }
+
+    titleYAxisOffsetChanged = (data: number) => {
+        const {updateElemChartSet} = this.props;
+        updateElemChartSet({
+            statistic: {
+                title: {
+                    offsetY: data
+                }
+            }
+        })
+    }
+
+    subscriptionXAxisOffsetChanged = (data: number) => {
+        const {updateElemChartSet} = this.props;
+        updateElemChartSet({
+            statistic: {
+                content: {
+                    offsetX: data
+                }
+            }
+        })
+    }
+
+    subscriptionYAxisOffsetChanged = (data: number) => {
+        const {updateElemChartSet} = this.props;
+        updateElemChartSet({
+            statistic: {
+                content: {
+                    offsetY: data
+                }
+            }
         })
     }
 
 
     render() {
+        const {rangeWidth, stepCount, stepWidth} = this.state;
+        const {updateElemChartSet} = this.props;
         return (
             <div className={'elem-chart-config'}>
                 <Collapse className={'chart-config-collapse'} bordered={false}>
-                    {/*图形填充色设置*/}
-                    <FillColor onChange={this.fillColorChanged} paletteCount={1}/>
-
-                    <div className={'config-group chart-fill-color'}>
-
+                    {/*极坐标系相关设置*/}
+                    <OutRadius updateElemChartSet={updateElemChartSet}/>
+                    <StartEndAngle updateElemChartSet={updateElemChartSet}/>
+                    <div className={'config-group'}>
                         <div className={'config-item'}>
-                            <label className={'config-item-label'}>图形选择：</label>
-                            <Select className={'config-item-value'} defaultValue={'circle'}
-                                    onChange={this.shapeChanged}>
-                                <Option value={'circle'}>circle</Option>
-                                <Option value={'diamond'}>diamond</Option>
-                                <Option value={'triangle'}>triangle</Option>
-                                <Option value={'pin'}>pin</Option>
-                                <Option value={'rect'}>rect</Option>
-                            </Select>
+                            <label className={'config-item-label'}>圆弧颜色：</label>
+                            <ColorPicker name={'mainTitleColor'}
+                                         onChange={this.rangeColorChanged}
+                                         className={'config-item-value'}/>
                         </div>
                         <div className={'config-item'}>
-                            <label className={'config-item-label'}>外半径：</label>
-                            <Slider defaultValue={0.75} max={1} min={0.01} step={0.01} style={{width: '60%'}}
-                                    onChange={this.outRadiusChanged}
+                            <label className={'config-item-label'}>圆弧宽度：</label>
+                            <Slider defaultValue={1} value={rangeWidth} max={50} min={0.1} step={0.1}
+                                    onChange={this.rangeWidthChanged}
                                     className={'config-item-value'}/>
                         </div>
                         <div className={'config-item'}>
-                            <label className={'config-item-label'}>边框线宽度：</label>
-                            <Slider defaultValue={0.75} max={20} min={0} step={0.1} style={{width: '60%'}}
-                                    onChange={this.outLineWidthChanged}
+                            <label className={'config-item-label'}>开启刻度仪表盘：</label>
+                            <div className={'config-item-value'} style={{textAlign: 'right'}}>
+                                <Switch onChange={this.openMete}/></div>
+                        </div>
+                        <div className={'config-item'}>
+                            <label className={'config-item-label'}>总刻度数：</label>
+                            <Slider defaultValue={1} value={stepCount} max={100} min={1} step={1}
+                                    onChange={this.stepCountChange}
                                     className={'config-item-value'}/>
                         </div>
                         <div className={'config-item'}>
-                            <label className={'config-item-label'}>边框线与水波间隔：</label>
-                            <Slider defaultValue={0} max={10} min={0} step={0.1} style={{width: '60%'}}
-                                    onChange={this.outLineIntervalChanged}
-                                    className={'config-item-value'}/>
-                        </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>边框线颜色：</label>
-                            <ColorPicker onChange={this.outLineColorChanged}/>
-                        </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>水波个数：</label>
-                            <Slider defaultValue={0} max={20} min={0} step={1} style={{width: '60%'}}
-                                    onChange={this.numberOfWaterWavesChanged}
-                                    className={'config-item-value'}/>
-                        </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>水波长度：</label>
-                            <Slider defaultValue={10} max={500} min={10} step={5} style={{width: '60%'}}
-                                    onChange={this.waveLengthChanged}
+                            <label className={'config-item-label'}>刻度宽度：</label>
+                            <Slider defaultValue={0.5} value={stepWidth} max={0.99} min={0} step={0.01}
+                                    onChange={this.stepWidthChange}
                                     className={'config-item-value'}/>
                         </div>
                         <div className={'config-item'}>
@@ -229,6 +246,18 @@ class AntdLiquidSet extends Component<any> {
                                     className={'config-item-value'}/>
                         </div>
                         <div className={'config-item'}>
+                            <label className={'config-item-label'}>中心标题x轴偏移量：</label>
+                            <Slider defaultValue={12} max={100} min={-100} step={1} style={{width: '60%'}}
+                                    onChange={this.titleXAxisOffsetChanged}
+                                    className={'config-item-value'}/>
+                        </div>
+                        <div className={'config-item'}>
+                            <label className={'config-item-label'}>中心标题y轴偏移量：</label>
+                            <Slider defaultValue={12} max={100} min={-100} step={1} style={{width: '60%'}}
+                                    onChange={this.titleYAxisOffsetChanged}
+                                    className={'config-item-value'}/>
+                        </div>
+                        <div className={'config-item'}>
                             <label className={'config-item-label'}>描述颜色：</label>
                             <ColorPicker onChange={this.subscriptionColorChanged}/>
                         </div>
@@ -245,6 +274,18 @@ class AntdLiquidSet extends Component<any> {
                                     onChange={this.subscriptionLineHeightChanged}
                                     className={'config-item-value'}/>
                         </div>
+                        <div className={'config-item'}>
+                            <label className={'config-item-label'}>描述x轴偏移量：</label>
+                            <Slider defaultValue={12} max={100} min={-100} step={1} style={{width: '60%'}}
+                                    onChange={this.subscriptionXAxisOffsetChanged}
+                                    className={'config-item-value'}/>
+                        </div>
+                        <div className={'config-item'}>
+                            <label className={'config-item-label'}>描述y轴偏移量：</label>
+                            <Slider defaultValue={12} max={100} min={-100} step={1} style={{width: '60%'}}
+                                    onChange={this.subscriptionYAxisOffsetChanged}
+                                    className={'config-item-value'}/>
+                        </div>
                     </div>
                 </Collapse>
             </div>
@@ -252,4 +293,4 @@ class AntdLiquidSet extends Component<any> {
     }
 }
 
-export default AntdLiquidSet;
+export default AntdGaugeSet;

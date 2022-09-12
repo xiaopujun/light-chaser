@@ -8,6 +8,7 @@ import AntdScatterSet from "./antd_scatter";
 import AntdBubbleSet from "./antd_bubblle";
 import AntdWordCloudSet from "./antd_wordcloud";
 import AntdFoldLineSet from "./antd_line";
+import AntdGaugeSet from "./antd_gauge";
 
 let configMap = new Map();
 
@@ -37,6 +38,7 @@ configMap.set("AntdStepFoldLine", AntdFoldLineSet);
 configMap.set("AntdMuchFoldLine", AntdFoldLineSet);
 configMap.set("AntdMuchFoldLine", AntdFoldLineSet);
 configMap.set("AntdRadar", AntdRadarSet);
+configMap.set("AntdGauge", AntdGaugeSet);
 
 export default function getChartsConfig(chartSetName: string) {
     if ("" !== chartSetName && configMap.has(chartSetName)) {

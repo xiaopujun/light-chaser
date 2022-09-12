@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import {Select, Slider, Switch} from "antd";
+import {Slider, Switch} from "antd";
 import ColorPicker from "../../../../color_picker/base";
 
-const {Option} = Select;
 
 interface RightAngleCoordinatesProp {
     updateElemChartSet: (data: any) => void;

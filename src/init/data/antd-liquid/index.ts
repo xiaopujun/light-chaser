@@ -11,7 +11,7 @@ export const initAntdLiquid = () => {
             backgroundColor: 'rgba(23,157,169,0.12)'
         },
         chartProperties: {
-            percent: 0.25,
+            percent: 0.67,
             color: 'rgb(0,255,234)',
             outline: {
                 border: 4,
@@ -23,8 +23,18 @@ export const initAntdLiquid = () => {
                 length: 128,
             },
             statistic: {
+                title: {
+                    style: {
+                        fill: '#00fce1',
+                        fontSize: 14,
+                    }
+                },
                 content: {
-                    style: {fontSize: 10}
+                    style: {
+                        fill: '#00fce1',
+                        fontSize: 14,
+                        lineHeight: '44px'
+                    }
                 }
 
             }

@@ -13,8 +13,7 @@ export const initAntdGauge = () => {
         chartProperties: {
             percent: 0.75,
             range: {
-                ticks: [0, 1 / 3, 2 / 3, 1],
-                color: ['#F4664A', '#FAAD14', '#30BF78'],
+                color: ['#30BF78'],
             },
             indicator: {
                 pointer: {
