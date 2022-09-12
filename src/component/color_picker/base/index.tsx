@@ -12,8 +12,8 @@ interface ColorPickerProps extends BaseProps {
 
 class ColorPicker extends Component<ColorPickerProps> {
     state = {
-        color: 'rgba(0,255,192,0.59)',
-        colorArea: 'rgba(0,255,192,0.59)'
+        color: 'rgb(0,249,188)',
+        colorArea: 'rgb(0,255,192)'
     };
 
     onChangeComplete = (color: any, event: any) => {

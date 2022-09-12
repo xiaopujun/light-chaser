@@ -15,7 +15,7 @@ export default class LCLayoutContent extends React.Component<any, any> {
     generateElement = () => {
         const {LCDesignerStore} = this.props;
         const {layoutConfig} = LCDesignerStore;
-        return layoutConfig.map((item: any, index: any, arr: any) => {
+        return layoutConfig.map((item: any) => {
             let ElementChart = getChartsTemplate(item.name);
             return (
                 <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>

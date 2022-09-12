@@ -78,11 +78,15 @@ function addItem(preState: LCDesignerProps, data: any) {
  */
 function deleteItem(preState: LCDesignerProps, data: any) {
     data = parseInt(data);
-    let {layoutConfig, chartConfigMap} = preState;
+    let {layoutConfig, chartConfigMap, active} = preState;
     _.remove(layoutConfig, function (item) {
         return item?.id === data;
     })
     chartConfigMap.delete(data);
+    if (data === active.id) {
+        active.id = -1;
+        active.type = "";
+    }
     return {...preState};
 }
 
