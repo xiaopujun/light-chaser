@@ -10,10 +10,12 @@ class FourAngleGlow extends Component<any> {
         return (
             <>
                 {borderConfig.showBorder ? (
-                    <div className="glow-border-out">
-                        <div className="glow-border-in">
-                            {this.props.children}
-                        </div>
+                    <div className="four-angle-glow">
+                        <span className="angle angle1"/>
+                        <span className="angle angle2"/>
+                        <span className="angle angle3"/>
+                        <span className="angle angle4"/>
+                        {this.props.children}
                     </div>
                 ) : (<>{this.props.children}</>)}
             </>

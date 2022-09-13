@@ -95,7 +95,7 @@ export default class LCLayoutContent extends React.Component<any, any> {
                                  layout={layoutConfig}
                                  cols={48}
                                  rowHeight={10}
-                                 margin={[5, 5]}
+                                 margin={[15, 15]}
                                  useCSSTransforms={true}
                                  preventCollision={true}
                                  allowOverlap={true}
