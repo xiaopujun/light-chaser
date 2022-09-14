@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Bar} from "@ant-design/charts";
 import EditTools from "../../../edit-tool";
 import './index.less';
-import FourAngleGlow from "../../../border/four-angle-glow";
 
 /**
  * 基础条形图
@@ -15,13 +14,10 @@ export default class AntdBar extends Component<any, any> {
         const config = chartConfigMap?.get(elemId);
         const {chartProperties, elemBaseProperties} = config;
         return (
-            <FourAngleGlow borderConfig={{showBorder: true}}>
-                <div style={{width: '100%', height: '100%', position: 'absolute', ...elemBaseProperties}}>
-                    <EditTools {...this.props} elemId={elemId}/>
-                    <Bar className={'grid-chart-item'} {...chartProperties}/>
-                </div>
-            </FourAngleGlow>
-
+            <div style={{width: '100%', height: '100%', position: 'absolute', ...elemBaseProperties}}>
+                <EditTools {...this.props} elemId={elemId}/>
+                <Bar className={'grid-chart-item'} {...chartProperties}/>
+            </div>
         );
     }
 }

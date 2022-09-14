@@ -4,10 +4,7 @@ import {cloneDeep} from 'lodash';
 export const initAntdBaseFoldLine = () => {
     return cloneDeep({
         elemBaseProperties: {
-            paddingTop: '15px',
-            paddingLeft: '15px',
-            paddingBottom: '15px',
-            paddingRight: '15px',
+            padding:'5px',
             backgroundColor: 'rgba(23,157,169,0.12)'
         },
         chartProperties: {
@@ -33,10 +30,7 @@ export const initAntdBaseFoldLine = () => {
 export const initAntdStepFoldLine = () => {
     return cloneDeep({
         elemBaseProperties: {
-            paddingTop: '15px',
-            paddingLeft: '15px',
-            paddingBottom: '15px',
-            paddingRight: '15px',
+            padding:'5px',
             backgroundColor: 'rgba(23,157,169,0.12)'
         },
         chartProperties: {
@@ -184,10 +178,7 @@ export const initAntdStepFoldLine = () => {
 export const initAntdMuchFoldLine = () => {
     return cloneDeep({
         elemBaseProperties: {
-            paddingTop: '15px',
-            paddingLeft: '15px',
-            paddingBottom: '15px',
-            paddingRight: '15px',
+            padding:'5px',
             backgroundColor: 'rgba(23,157,169,0.12)'
         },
         chartProperties: {

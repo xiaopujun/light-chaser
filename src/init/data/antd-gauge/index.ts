@@ -4,10 +4,7 @@ import {cloneDeep} from 'lodash';
 export const initAntdGauge = () => {
     return cloneDeep({
         elemBaseProperties: {
-            paddingTop: '15px',
-            paddingLeft: '15px',
-            paddingBottom: '15px',
-            paddingRight: '15px',
+            padding:'5px',
             backgroundColor: 'rgba(23,157,169,0.12)'
         },
         chartProperties: {

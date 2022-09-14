@@ -15,10 +15,7 @@ let axis = {
 export const initAntdBaseColumn = () => {
     return cloneDeep({
         elemBaseProperties: {
-            paddingTop: '15px',
-            paddingLeft: '15px',
-            paddingBottom: '15px',
-            paddingRight: '15px',
+            padding: '5px',
             backgroundColor: 'rgba(23,157,169,0.12)'
         },
         chartProperties: {
@@ -72,10 +69,7 @@ export const initAntdBaseColumn = () => {
 export const initAntdStackColumn = () => {
     return cloneDeep({
         elemBaseProperties: {
-            paddingTop: '15px',
-            paddingLeft: '15px',
-            paddingBottom: '15px',
-            paddingRight: '15px',
+            padding: '5px',
             backgroundColor: 'rgba(23,157,169,0.12)'
         },
         chartProperties: {
@@ -186,10 +180,7 @@ export const initAntdStackColumn = () => {
 export const initAntdGroupColumn = () => {
     return cloneDeep({
         elemBaseProperties: {
-            paddingTop: '15px',
-            paddingLeft: '15px',
-            paddingBottom: '15px',
-            paddingRight: '15px',
+            padding: '5px',
             backgroundColor: 'rgba(23,157,169,0.12)'
         },
         chartProperties: {
@@ -263,10 +254,7 @@ export const initAntdGroupColumn = () => {
 export const initAntdPercentColumn = () => {
     return cloneDeep({
         elemBaseProperties: {
-            paddingTop: '15px',
-            paddingLeft: '15px',
-            paddingBottom: '15px',
-            paddingRight: '15px',
+            padding: '5px',
             backgroundColor: 'rgba(23,157,169,0.12)'
         },
         chartProperties: {
@@ -394,10 +382,7 @@ export const initAntdPercentColumn = () => {
 export const initAntdZoneColumn = () => {
     return cloneDeep({
         elemBaseProperties: {
-            paddingTop: '15px',
-            paddingLeft: '15px',
-            paddingBottom: '15px',
-            paddingRight: '15px',
+            padding: '5px',
             backgroundColor: 'rgba(23,157,169,0.12)'
         },
         chartProperties: {

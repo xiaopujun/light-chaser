@@ -4,6 +4,7 @@ import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import './index.less';
 import getChartsTemplate from "../../charts/ComponentChartInit";
+import getBorder from "../../border";
 
 export default class LCLayoutContent extends React.Component<any, any> {
 
@@ -17,9 +18,12 @@ export default class LCLayoutContent extends React.Component<any, any> {
         const {layoutConfig} = LCDesignerStore;
         return layoutConfig.map((item: any) => {
             let ElementChart = getChartsTemplate(item.name);
+            let Border = getBorder("FourAngleGlow");
             return (
                 <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
-                    <ElementChart elemId={item?.id} deleteItem={this.deleteItem} {...this.props}/>
+                    <Border>
+                        <ElementChart elemId={item?.id} deleteItem={this.deleteItem} {...this.props}/>
+                    </Border>
                 </div>
             );
         })
