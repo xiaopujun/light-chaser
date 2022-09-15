@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Select, Switch} from "antd";
 import '../index.less';
-import ColorPicker from "../../../../color_picker/base";
+import ColorPicker from "../../../../color_picker/BaseColorPicker";
 
 const {Option} = Select;
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Slider, Switch} from "antd";
-import ColorPicker from "../../../../color_picker/base";
+import ColorPicker from "../../../../color_picker/BaseColorPicker";
 
 
 interface RightAngleCoordinatesProp {

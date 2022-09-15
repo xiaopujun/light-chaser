@@ -1,14 +1,14 @@
-import AntdBarSet from "./antd_bar";
-import AntdColumnSet from "./antd_column";
-import AntdAreaSet from "./antd_area";
-import AntdPieSet from "./antd_pie";
-import AntdLiquidSet from "./antd_liquid";
-import AntdRadarSet from "./antd_radar";
-import AntdScatterSet from "./antd_scatter";
-import AntdBubbleSet from "./antd_bubblle";
-import AntdWordCloudSet from "./antd_wordcloud";
-import AntdFoldLineSet from "./antd_line";
-import AntdGaugeSet from "./antd_gauge";
+import AntdBarSet from "./AntdBarSet";
+import AntdColumnSet from "./AntdColumnSet";
+import AntdAreaSet from "./AntdAreaSet";
+import AntdPieSet from "./AntdPieSet";
+import AntdLiquidSet from "./AntdLiquidSet";
+import AntdRadarSet from "./AntdRadarSet";
+import AntdScatterSet from "./AntdScatterSet";
+import AntdBubbleSet from "./AntdBubbleSet";
+import AntdWordCloudSet from "./AntdWordCloudSet";
+import AntdFoldLineSet from "./AntdLine";
+import AntdGaugeSet from "./AntdGaugeSet";
 
 let configMap = new Map();
 

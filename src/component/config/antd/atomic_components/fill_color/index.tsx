@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Select} from "antd";
 import '../index.less';
-import ColorPicker from "../../../../color_picker/base";
-import GroupColorPicker from "../../../../color_picker/group";
+import ColorPicker from "../../../../color_picker/BaseColorPicker";
+import GroupColorPicker from "../../../../color_picker/GroupColorPicker";
 
 const {Option} = Select;
 

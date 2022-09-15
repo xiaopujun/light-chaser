@@ -1,13 +1,13 @@
-import AntdArea from "./antd/area";
-import AntdBar from "./antd/bar";
-import AntdColumn from "./antd/column";
-import AntdPie from "./antd/pie";
-import AntdScatter from "./antd/scatter";
-import AntdWordCloud from "./antd/wordcloud";
-import AntdLine from "./antd/line";
-import AntdLiquid from "./antd/liquid";
-import AntdRadar from "./antd/radar";
-import AntdGauge from "./antd/gauge";
+import AntdArea from "./antd/AntdArea";
+import AntdBar from "./antd/AntdBar";
+import AntdColumn from "./antd/AntdColumn";
+import AntdPie from "./antd/AntdPie";
+import AntdScatter from "./antd/AntdScatter";
+import AntdWordCloud from "./antd/AntdWordCloud";
+import AntdLine from "./antd/AntdLine";
+import AntdLiquid from "./antd/AntdLiquid";
+import AntdRadar from "./antd/AntdRadar";
+import AntdGauge from "./antd/AntdGauge";
 
 let chartsMap = new Map();
 
