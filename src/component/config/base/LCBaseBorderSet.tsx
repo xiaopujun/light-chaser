@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Select, Slider} from "antd";
+import {Select} from "antd";
 import ColorPicker from "../../color_picker/BaseColorPicker";
 import LCNumberInput from "../../base/LCNumberInput";
 

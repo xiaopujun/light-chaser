@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Collapse, InputNumber, Select, Slider} from "antd";
+import {Collapse, Select} from "antd";
 import ColorPicker from "../../color_picker/BaseColorPicker";
 import './style/index.less';
 import LCPaddingSet from "./LCPaddingSet";

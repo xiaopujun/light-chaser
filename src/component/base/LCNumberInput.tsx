@@ -1,4 +1,4 @@
-import React, {ChangeEvent, ChangeEventHandler, Component} from 'react';
+import React, {Component} from 'react';
 import './style/LCNumberInput.less';
 
 interface LCNumberInputProps {

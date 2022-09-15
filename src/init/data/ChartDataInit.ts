@@ -1,19 +1,19 @@
-import {initAntdBaseBar, initAntdGroupBar, initAntdPercentBar, initAntdStackBar, initAntdZoneBar} from "./antd-bar";
+import {initAntdBaseBar, initAntdGroupBar, initAntdPercentBar, initAntdStackBar, initAntdZoneBar} from "./AntdBarDataInit";
 import {
     initAntdBaseColumn,
     initAntdGroupColumn,
     initAntdPercentColumn,
     initAntdStackColumn,
     initAntdZoneColumn
-} from "./antd-column";
-import {initAntdPie, initAntdRing} from "./antd-pie";
-import {initAntdBubbles, initAntdScatter} from "./antd-scatter";
-import {initAntdStackArea, initAntdBaseArea, initAntdPercentArea} from "./antd-area";
-import {initAntdWordCloud} from "./antd-wordcloud";
-import {initAntdBaseFoldLine, initAntdMuchFoldLine, initAntdStepFoldLine} from "./antd-line";
-import {initAntdLiquid} from "./antd-liquid";
-import {initAntdRadar} from "./antd-radar";
-import {initAntdGauge} from "./antd-gauge";
+} from "./AntdColumnDataInit";
+import {initAntdPie, initAntdRing} from "./AntdPieDataInit";
+import {initAntdBubbles, initAntdScatter} from "./AntdScatterDataInit";
+import {initAntdStackArea, initAntdBaseArea, initAntdPercentArea} from "./AntdAreaDataInit";
+import {initAntdWordCloud} from "./AntdWordCloudDataInit";
+import {initAntdBaseFoldLine, initAntdMuchFoldLine, initAntdStepFoldLine} from "./AntdLineDataInit";
+import {initAntdLiquid} from "./AntdLiquidDataInit";
+import {initAntdRadar} from "./AntdRadarDataInit";
+import {initAntdGauge} from "./AntdGaugeDataInit";
 
 
 let chartInitDataMap = new Map();
