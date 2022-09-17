@@ -48,23 +48,21 @@ export default class OutInnerRadius extends Component<OutInnerRadiusProps> {
                 {items.map(((value, index) => {
                     if (value === 'outer') {
                         return (
-                            <div key={index + ''} className={'config-item'}>
-                                <label className={'config-item-label'}>外半径：</label>
+                            <div key={index + ''} className={'lc-config-item'}>
+                                <label className={'lc-config-item-label'}>外半径：</label>
                                 <Slider defaultValue={0.75} value={outRadius} max={1} min={0.01} step={0.01}
-                                        style={{width: '60%'}}
                                         onChange={this.outRadiusChanged}
-                                        className={'config-item-value'}/>
+                                        className={'lc-config-item-value'}/>
                             </div>
                         )
                     }
                     if (value === 'inner') {
                         return (
-                            <div key={index + ""} className={'config-item'}>
-                                <label className={'config-item-label'}>内半径：</label>
+                            <div key={index + ""} className={'lc-config-item'}>
+                                <label className={'lc-config-item-label'}>内半径：</label>
                                 <Slider defaultValue={0.75} value={innerRadius} max={1} min={0} step={0.01}
-                                        style={{width: '60%'}}
                                         onChange={this.innerRadiusChanged}
-                                        className={'config-item-value'}/>
+                                        className={'lc-config-item-value'}/>
                             </div>
                         )
                     }

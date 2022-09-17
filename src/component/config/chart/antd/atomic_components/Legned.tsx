@@ -66,16 +66,16 @@ class Legend extends Component<any> {
         const {showLegendDetail} = this.state;
         return (
             <div className={'config-group chart-fill-color'}>
-                <div className={'config-item'}>
-                    <label className={'config-item-label'}>显示图例：</label>
-                    <div className={'config-item-value'} style={{textAlign: 'right'}}>
+                <div className={'lc-config-item'}>
+                    <label className={'lc-config-item-label'}>显示图例：</label>
+                    <div className={'lc-config-item-value'} style={{textAlign: 'right'}}>
                         <Switch onChange={this.showLegend}/></div>
                 </div>
                 {showLegendDetail ?
                     <>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>图例位置：</label>
-                            <Select className={'config-item-value'} defaultValue={'left-top'}
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>图例位置：</label>
+                            <Select className={'lc-config-item-value lc-select'} defaultValue={'left-top'}
                                     onChange={this.legendPositionChanged}>
                                 <Option value={"left-top"}>左上</Option>
                                 <Option value={"left"}>正左</Option>
@@ -91,16 +91,16 @@ class Legend extends Component<any> {
                                 <Option value={"bottom-right"}>下右</Option>
                             </Select>
                         </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>图例布局：</label>
-                            <Select className={'config-item-value'} defaultValue={''}
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>图例布局：</label>
+                            <Select className={'lc-config-item-value lc-select'} defaultValue={''}
                                     onChange={this.legendLayoutChanged}>
                                 <Option value={"horizontal"}>横向布局</Option>
                                 <Option value={""}>纵向布局</Option>
                             </Select>
                         </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>文本颜色：</label>
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>文本颜色：</label>
                             <ColorPicker onChange={this.legendTextColorChanged}/>
                         </div>
                     </> : <></>}

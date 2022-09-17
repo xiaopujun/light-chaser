@@ -36,17 +36,17 @@ export default class StartEndAngle extends Component<any> {
         const {startAngle, endAngle} = this.state;
         return (
             <div className={'config-group'}>
-                <div className={'config-item'}>
-                    <label className={'config-item-label'}>起始角度(单位:π)：</label>
-                    <Slider defaultValue={0} value={startAngle} max={2} min={0} step={0.1} style={{width: '60%'}}
+                <div className={'lc-config-item'}>
+                    <label className={'lc-config-item-label'}>起始角度(单位:π)：</label>
+                    <Slider defaultValue={0} value={startAngle} max={2} min={0} step={0.1}
                             onChange={this.startAngleChanged}
-                            className={'config-item-value'}/>
+                            className={'lc-config-item-value'}/>
                 </div>
-                <div className={'config-item'}>
-                    <label className={'config-item-label'}>结束角度(单位:π)：</label>
-                    <Slider defaultValue={2} value={endAngle} max={2} min={0} step={0.1} style={{width: '60%'}}
+                <div className={'lc-config-item'}>
+                    <label className={'lc-config-item-label'}>结束角度(单位:π)：</label>
+                    <Slider defaultValue={2} value={endAngle} max={2} min={0} step={0.1}
                             onChange={this.endAngleChanged}
-                            className={'config-item-value'}/>
+                            className={'lc-config-item-value'}/>
                 </div>
             </div>
         );

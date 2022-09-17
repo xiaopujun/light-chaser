@@ -36,10 +36,10 @@ class AntdWordCloudSet extends Component<any> {
 
         return (
             <div className={'elem-chart-config'}>
-                <Collapse className={'chart-config-collapse'} bordered={false}>
+
                     {/*图形填充色设置*/}
                     <FillColor onChange={this.fillColorChanged} paletteCount={1}/>
-                </Collapse>
+
             </div>
         );
     }

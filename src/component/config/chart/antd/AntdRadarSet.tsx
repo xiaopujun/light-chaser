@@ -77,7 +77,7 @@ export default class AntdRadarSet extends Component<any> {
         let paletteCount = getAntdDataSortCount(chartConfig.chartProperties.data, 'type');
         return (
             <div className={'elem-chart-config'}>
-                <Collapse className={'chart-config-collapse'} bordered={false}>
+
                     {/*图形填充色设置*/}
                     <FillColor onChange={this.fillColorChanged} paletteCount={paletteCount}/>
                     {/*图例*/}
@@ -87,50 +87,50 @@ export default class AntdRadarSet extends Component<any> {
                     <StartEndAngle updateElemChartSet={updateElemChartSet}/>
                     {/*是否曲线渲染*/}
                     <div className={'config-group'}>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>曲线渲染：</label>
-                            <div className={'config-item-value'} style={{textAlign: 'right'}}><Switch
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>曲线渲染：</label>
+                            <div className={'lc-config-item-value'} style={{textAlign: 'right'}}><Switch
                                 onChange={this.curveRendering}/></div>
                         </div>
                     </div>
                     {/*雷达图线宽*/}
                     <div className={'config-group'}>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>雷达图描边线宽：</label>
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>雷达图描边线宽：</label>
                             <Slider defaultValue={lineWidth} value={lineWidth} max={10} min={0} step={0.1}
                                     onChange={this.lineWidthChanged}
-                                    className={'config-item-value'}/>
+                                    className={'lc-config-item-value'}/>
                         </div>
                     </div>
                     {/*描边虚线*/}
                     <div className={'config-group'}>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>雷达图点描边颜色：</label>
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>雷达图点描边颜色：</label>
                             <ColorPicker name={'mainTitleColor'}
                                          onChange={this.pointColorChanged}
-                                         className={'config-item-value'}/>
+                                         className={'lc-config-item-value'}/>
                         </div>
                     </div>
                     <div className={'config-group'}>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>雷达图点填充颜色：</label>
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>雷达图点填充颜色：</label>
                             <ColorPicker name={'mainTitleColor'}
                                          onChange={this.pointFillColorChanged}
-                                         className={'config-item-value'}/>
+                                         className={'lc-config-item-value'}/>
                         </div>
                     </div>
                     <div className={'config-group'}>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>雷达图点大小：</label>
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>雷达图点大小：</label>
                             <Slider defaultValue={pointSize} value={pointSize} max={10} min={0} step={0.1}
                                     onChange={this.pointSizeChanged}
-                                    className={'config-item-value'}/>
+                                    className={'lc-config-item-value'}/>
                         </div>
                     </div>
 
                     {/*直角坐标系配置*/}
                     <RightAngleCoordinates chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
-                </Collapse>
+
             </div>
         );
     }

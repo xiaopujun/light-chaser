@@ -18,12 +18,12 @@ class AntdAreaSet extends Component<any> {
         let chartConfig = chartConfigMap.get(active?.id);
         return (
             <div className={'elem-chart-config'}>
-                <Collapse className={'chart-config-collapse'} bordered={false}>
-                    {/*图形填充色设置*/}
-                    <FillColor onChange={this.fillColorChanged} paletteCount={1}/>
-                    {/*直角坐标系配置*/}
-                    <RightAngleCoordinates chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
-                </Collapse>
+
+                {/*图形填充色设置*/}
+                <FillColor onChange={this.fillColorChanged} paletteCount={1}/>
+                {/*直角坐标系配置*/}
+                <RightAngleCoordinates chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
+
             </div>
         );
     }

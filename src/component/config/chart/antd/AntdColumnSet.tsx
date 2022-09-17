@@ -35,7 +35,7 @@ class AntdColumnSet extends Component<any> {
         }
         return (
             <div className={'elem-chart-config'}>
-                <Collapse className={'chart-config-collapse'} bordered={false}>
+
                     {/*图形填充色设置*/}
                     <FillColor paletteCount={paletteCount} onChange={this.fillColorChanged}/>
                     {/*图例配置*/}
@@ -44,7 +44,7 @@ class AntdColumnSet extends Component<any> {
                     <RightAngleCoordinates chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
                     {/*条形图单条宽度配置*/}
                     <ColumnWidth updateElemChartSet={updateElemChartSet}/>
-                </Collapse>
+
             </div>
         );
     }

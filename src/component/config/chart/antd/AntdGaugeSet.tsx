@@ -195,99 +195,99 @@ class AntdGaugeSet extends Component<any> {
         const {updateElemChartSet} = this.props;
         return (
             <div className={'elem-chart-config'}>
-                <Collapse className={'chart-config-collapse'} bordered={false}>
+
                     {/*极坐标系相关设置*/}
                     <OutRadius updateElemChartSet={updateElemChartSet}/>
                     <StartEndAngle updateElemChartSet={updateElemChartSet}/>
                     <div className={'config-group'}>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>圆弧颜色：</label>
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>圆弧颜色：</label>
                             <ColorPicker name={'mainTitleColor'}
                                          onChange={this.rangeColorChanged}
-                                         className={'config-item-value'}/>
+                                         className={'lc-config-item-value'}/>
                         </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>圆弧宽度：</label>
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>圆弧宽度：</label>
                             <Slider defaultValue={1} value={rangeWidth} max={50} min={0.1} step={0.1}
                                     onChange={this.rangeWidthChanged}
-                                    className={'config-item-value'}/>
+                                    className={'lc-config-item-value'}/>
                         </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>开启刻度仪表盘：</label>
-                            <div className={'config-item-value'} style={{textAlign: 'right'}}>
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>开启刻度仪表盘：</label>
+                            <div className={'lc-config-item-value'} style={{textAlign: 'right'}}>
                                 <Switch onChange={this.openMete}/></div>
                         </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>总刻度数：</label>
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>总刻度数：</label>
                             <Slider defaultValue={1} value={stepCount} max={100} min={1} step={1}
                                     onChange={this.stepCountChange}
-                                    className={'config-item-value'}/>
+                                    className={'lc-config-item-value'}/>
                         </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>刻度宽度：</label>
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>刻度宽度：</label>
                             <Slider defaultValue={0.5} value={stepWidth} max={0.99} min={0} step={0.01}
                                     onChange={this.stepWidthChange}
-                                    className={'config-item-value'}/>
+                                    className={'lc-config-item-value'}/>
                         </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>中心标题：</label>
-                            <Input defaultValue={""} style={{width: '60%'}}
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>中心标题：</label>
+                            <Input defaultValue={""}
                                    onChange={this.titleChanged}
-                                   className={'config-item-value'}/>
+                                   className={'lc-config-item-value'}/>
                         </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>中心标题颜色：</label>
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>中心标题颜色：</label>
                             <ColorPicker onChange={this.titleColorChanged}/>
                         </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>中心标题字体大小：</label>
-                            <Slider defaultValue={12} max={50} min={0} step={1} style={{width: '60%'}}
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>中心标题字体大小：</label>
+                            <Slider defaultValue={12} max={50} min={0} step={1}
                                     onChange={this.titleFontSizeChanged}
-                                    className={'config-item-value'}/>
+                                    className={'lc-config-item-value'}/>
                         </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>中心标题x轴偏移量：</label>
-                            <Slider defaultValue={12} max={100} min={-100} step={1} style={{width: '60%'}}
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>中心标题x轴偏移量：</label>
+                            <Slider defaultValue={12} max={100} min={-100} step={1}
                                     onChange={this.titleXAxisOffsetChanged}
-                                    className={'config-item-value'}/>
+                                    className={'lc-config-item-value'}/>
                         </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>中心标题y轴偏移量：</label>
-                            <Slider defaultValue={12} max={100} min={-100} step={1} style={{width: '60%'}}
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>中心标题y轴偏移量：</label>
+                            <Slider defaultValue={12} max={100} min={-100} step={1}
                                     onChange={this.titleYAxisOffsetChanged}
-                                    className={'config-item-value'}/>
+                                    className={'lc-config-item-value'}/>
                         </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>描述颜色：</label>
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>描述颜色：</label>
                             <ColorPicker onChange={this.subscriptionColorChanged}/>
                         </div>
 
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>描述字体大小：</label>
-                            <Slider defaultValue={12} max={50} min={0} step={1} style={{width: '60%'}}
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>描述字体大小：</label>
+                            <Slider defaultValue={12} max={50} min={0} step={1}
                                     onChange={this.subscriptionFontSizeChanged}
-                                    className={'config-item-value'}/>
+                                    className={'lc-config-item-value'}/>
                         </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>描述字体行高：</label>
-                            <Slider defaultValue={12} max={50} min={5} step={0.1} style={{width: '60%'}}
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>描述字体行高：</label>
+                            <Slider defaultValue={12} max={50} min={5} step={0.1}
                                     onChange={this.subscriptionLineHeightChanged}
-                                    className={'config-item-value'}/>
+                                    className={'lc-config-item-value'}/>
                         </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>描述x轴偏移量：</label>
-                            <Slider defaultValue={12} max={100} min={-100} step={1} style={{width: '60%'}}
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>描述x轴偏移量：</label>
+                            <Slider defaultValue={12} max={100} min={-100} step={1}
                                     onChange={this.subscriptionXAxisOffsetChanged}
-                                    className={'config-item-value'}/>
+                                    className={'lc-config-item-value'}/>
                         </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>描述y轴偏移量：</label>
-                            <Slider defaultValue={12} max={100} min={-100} step={1} style={{width: '60%'}}
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>描述y轴偏移量：</label>
+                            <Slider defaultValue={12} max={100} min={-100} step={1}
                                     onChange={this.subscriptionYAxisOffsetChanged}
-                                    className={'config-item-value'}/>
+                                    className={'lc-config-item-value'}/>
                         </div>
                     </div>
-                </Collapse>
+
             </div>
         );
     }

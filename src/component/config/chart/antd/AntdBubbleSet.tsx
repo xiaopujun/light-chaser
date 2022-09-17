@@ -35,21 +35,21 @@ class AntdBubbleSet extends Component<any> {
         let paletteCount = getAntdDataSortCount(chartConfig.chartProperties.data, 'continent');
         return (
             <div className={'elem-chart-config'}>
-                <Collapse className={'chart-config-collapse'} bordered={false}>
+
                     {/*图形填充色设置*/}
                     <FillColor paletteCount={paletteCount} onChange={this.fillColorChanged}/>
                     {/*点样式设置*/}
                     <div className={'config-group'}>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>点元素尺寸：</label>
-                            <Slider defaultValue={[1, 20]} max={20} min={0} style={{width: '60%'}}
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>点元素尺寸：</label>
+                            <Slider defaultValue={[1, 20]} max={20} min={0}
                                     range={true}
                                     onChange={this.pointSizeChanged}
-                                    className={'config-item-value'}/>
+                                    className={'lc-config-item-value'}/>
                         </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>点元素形状：</label>
-                            <Select className={'config-item-value'} defaultValue={'circle'}
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>点元素形状：</label>
+                            <Select className={'lc-config-item-value'} defaultValue={'circle'}
                                     onChange={this.shapeChanged}>
                                 <Option value={'circle'}>circle</Option>
                                 <Option value={'square'}>square</Option>
@@ -63,7 +63,7 @@ class AntdBubbleSet extends Component<any> {
                     </div>
                     {/*直角坐标系配置*/}
                     <RightAngleCoordinates chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
-                </Collapse>
+
             </div>
         );
     }

@@ -22,7 +22,7 @@ class AntdFoldLineSet extends Component<any> {
         let chartConfig = chartConfigMap.get(active?.id);
         return (
             <div className={'elem-chart-config'}>
-                <Collapse className={'chart-config-collapse'} bordered={false}>
+
                     {/*图形填充色设置*/}
                     <FillColor paletteCount={1} onChange={this.fillColorChanged}/>
                     {/*图例配置*/}
@@ -31,7 +31,7 @@ class AntdFoldLineSet extends Component<any> {
                     <RightAngleCoordinates chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
                     {/*条形图单条宽度配置*/}
                     <ColumnWidth updateElemChartSet={updateElemChartSet}/>
-                </Collapse>
+
             </div>
         );
     }

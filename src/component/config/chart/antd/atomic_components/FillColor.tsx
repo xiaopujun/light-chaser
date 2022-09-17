@@ -42,7 +42,7 @@ class FillColor extends Component<FillColorProp> {
         } else {
             return <ColorPicker name={'mainTitleColor'}
                                 onChange={this.colorChanged}
-                                className={'config-item-value'}/>;
+                                className={'lc-config-item-value'}/>;
         }
     }
 
@@ -58,15 +58,16 @@ class FillColor extends Component<FillColorProp> {
         const {fillMode = "0"} = this.state;
         return (
             <div className={'config-group chart-fill-color'}>
-                <div className={'config-item'}>
-                    <label className={'config-item-label'}>填充模式：</label>
-                    <Select className={'config-item-value'} defaultValue={fillMode} onChange={this.modeChanged}>
+                <div className={'lc-config-item'}>
+                    <label className={'lc-config-item-label'}>填充模式：</label>
+                    <Select className={'lc-config-item-value lc-select'} defaultValue={fillMode}
+                            onChange={this.modeChanged}>
                         <Option value={'0'}>单色模式</Option>
                         <Option value={'1'}>多色模式</Option>
                     </Select>
                 </div>
-                <div className={'config-item'}>
-                    <label className={'config-item-label'}>填充色：</label>
+                <div className={'lc-config-item'}>
+                    <label className={'lc-config-item-label'}>填充色：</label>
                     {this.generateFillColorComp()}
                 </div>
             </div>

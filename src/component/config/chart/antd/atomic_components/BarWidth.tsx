@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Slider} from "antd";
 import './style/index.less';
+import LCNumberInput from "../../../../base/LCNumberInput";
 
 interface BarWidthProp {
     updateElemChartSet: (data: any) => void;
@@ -21,11 +22,14 @@ class BarWidth extends Component<BarWidthProp> {
     render() {
         return (
             <div className={'config-group chart-fill-color'}>
-                <div className={'config-item'}>
-                    <label className={'config-item-label'}>条形宽度：</label>
-                    <Slider defaultValue={5} max={20} min={1} style={{width: '60%'}}
-                            onChange={this.barWidthChanged}
-                            className={'config-item-value'}/>
+                <div className={'lc-config-item'}>
+                    <label className={'lc-config-item-label'}>条形宽度：</label>
+                    <div className={'lc-config-item-value'}>
+                        <span className={'lc-input-container'}>
+                            <LCNumberInput onChange={this.barWidthChanged}/>
+                            <label>&nbsp;px</label>
+                        </span>
+                    </div>
                 </div>
             </div>
         );

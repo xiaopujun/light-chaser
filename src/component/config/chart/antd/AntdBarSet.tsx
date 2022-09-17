@@ -44,16 +44,14 @@ class AntdBarSet extends Component<any> {
         }
         return (
             <div className={'elem-chart-config'}>
-                <Collapse className={'chart-config-collapse'} bordered={false}>
-                    {/*图形填充色设置*/}
-                    <FillColor onChange={this.fillColorChanged} paletteCount={paletteCount}/>
-                    {/*图例配置*/}
-                    <Legend chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
-                    {/*直角坐标系配置*/}
-                    <RightAngleCoordinates chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
-                    {/*条形图单条宽度配置*/}
-                    <BarWidth updateElemChartSet={updateElemChartSet}/>
-                </Collapse>
+                {/*图形填充色设置*/}
+                <FillColor onChange={this.fillColorChanged} paletteCount={paletteCount}/>
+                {/*图例配置*/}
+                <Legend chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
+                {/*直角坐标系配置*/}
+                <RightAngleCoordinates chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
+                {/*条形图单条宽度配置*/}
+                <BarWidth updateElemChartSet={updateElemChartSet}/>
             </div>
         );
     }

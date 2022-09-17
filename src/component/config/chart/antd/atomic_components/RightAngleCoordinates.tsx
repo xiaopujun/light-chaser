@@ -194,73 +194,73 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
         const {showXAxisDetail, showYAxisDetail} = this.state;
         return (
             <div className={'config-group chart-fill-color'}>
-                <div className={'config-item'}>
-                    <label className={'config-item-label'}>显示x轴网格线：</label>
-                    <div className={'config-item-value'} style={{textAlign: 'right'}}><Switch
+                <div className={'lc-config-item'}>
+                    <label className={'lc-config-item-label'}>显示x轴网格线：</label>
+                    <div className={'lc-config-item-value'} style={{textAlign: 'right'}}><Switch
                         onChange={this.showXGridLine}/></div>
                 </div>
                 {showXAxisDetail ?
                     <>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>x轴网格线颜色：</label>
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>x轴网格线颜色：</label>
                             <ColorPicker name={'mainTitleColor'}
                                          onChange={this.xGridLineColorChanged}
-                                         className={'config-item-value'}/>
+                                         className={'lc-config-item-value'}/>
                         </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>x轴网格线宽：</label>
-                            <Slider defaultValue={0} max={10} min={0} style={{width: '60%'}}
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>x轴网格线宽：</label>
+                            <Slider defaultValue={0} max={10} min={0}
                                     onChange={this.xGridLineWidthChanged}
-                                    className={'config-item-value'}/>
+                                    className={'lc-config-item-value'}/>
                         </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>x轴网格透明度：</label>
-                            <Slider defaultValue={0} max={1} min={0} style={{width: '60%'}}
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>x轴网格透明度：</label>
+                            <Slider defaultValue={0} max={1} min={0}
                                     step={0.1}
                                     onChange={this.xGridLineOpacityChanged}
-                                    className={'config-item-value'}/>
+                                    className={'lc-config-item-value'}/>
                         </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>x轴标题颜色：</label>
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>x轴标题颜色：</label>
                             <ColorPicker name={'mainTitleColor'}
                                          onChange={this.xTitleColorChanged}
-                                         className={'config-item-value'}/>
+                                         className={'lc-config-item-value'}/>
                         </div>
 
                     </> : <></>}
 
-                <div className={'config-item'}>
-                    <label className={'config-item-label'}>显示y轴网格线：</label>
-                    <div className={'config-item-value'} style={{textAlign: 'right'}}><Switch
+                <div className={'lc-config-item'}>
+                    <label className={'lc-config-item-label'}>显示y轴网格线：</label>
+                    <div className={'lc-config-item-value'} style={{textAlign: 'right'}}><Switch
                         onChange={this.showYGridLine}/></div>
                 </div>
 
                 {showYAxisDetail ?
                     <>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>y轴网格线颜色：</label>
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>y轴网格线颜色：</label>
                             <ColorPicker name={'mainTitleColor'}
                                          onChange={this.yGridLineColorChanged}
-                                         className={'config-item-value'}/>
+                                         className={'lc-config-item-value'}/>
                         </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>y轴网格线宽：</label>
-                            <Slider defaultValue={0} max={10} min={0} style={{width: '60%'}}
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>y轴网格线宽：</label>
+                            <Slider defaultValue={0} max={10} min={0}
                                     onChange={this.yGridLineWidthChanged}
-                                    className={'config-item-value'}/>
+                                    className={'lc-config-item-value'}/>
                         </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>y轴网格透明度：</label>
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>y轴网格透明度：</label>
                             <Slider defaultValue={0} max={1} min={0} style={{width: '60%'}}
                                     step={0.1}
                                     onChange={this.yGridLineOpacityChanged}
-                                    className={'config-item-value'}/>
+                                    className={'lc-config-item-value'}/>
                         </div>
-                        <div className={'config-item'}>
-                            <label className={'config-item-label'}>y轴标题颜色：</label>
+                        <div className={'lc-config-item'}>
+                            <label className={'lc-config-item-label'}>y轴标题颜色：</label>
                             <ColorPicker name={'mainTitleColor'}
                                          onChange={this.yTitleColorChanged}
-                                         className={'config-item-value'}/>
+                                         className={'lc-config-item-value'}/>
                         </div>
                     </> :
                     <></>}
