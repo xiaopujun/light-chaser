@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
-import './style/LCPaddingSet.less';
 import LCNumberInput from "../../base/LCNumberInput";
 
-interface LCInputProps {
+interface PaddingSetProps {
     data?: Array<number>;
     count?: number;
     onChange?: (data: string) => void;
     unit?: string;
 }
 
-export default class LCPaddingSet extends Component<LCInputProps> {
+export default class PaddingSet extends Component<PaddingSetProps> {
 
     state: any = {
         data: []
@@ -40,9 +39,12 @@ export default class LCPaddingSet extends Component<LCInputProps> {
             )
         }
         return (
-            <>
-                {inputArr}
-            </>
+            <div className={'config-item'}>
+                <label className={'config-item-label'}>内边距：</label>
+                <div className={'config-item-value lc-input-value'}>
+                    {inputArr}
+                </div>
+            </div>
         );
     }
 }

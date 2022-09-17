@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Collapse} from 'antd';
 import './index.less';
 import ElemBaseSet from "./base";
-import ElemChartSet from "./antd/chart";
+import ElemChartSet from "./chart/antd";
 
 const {Panel} = Collapse;
 

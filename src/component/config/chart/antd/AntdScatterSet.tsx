@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Collapse, Select, Slider} from "antd";
 import './style/AntdScatterSet.less';
-import FillColor from "../atomic_components/fill_color";
-import RightAngleCoordinates from "../atomic_components/right_angle_coordinates";
+import FillColor from "./atomic_components/FillColor";
+import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";
 
 const {Option} = Select;
 

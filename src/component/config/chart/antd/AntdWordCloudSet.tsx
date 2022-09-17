@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Collapse} from "antd";
-import FillColor from "../atomic_components/fill_color";
+import FillColor from "./atomic_components/FillColor";
 
 class AntdWordCloudSet extends Component<any> {
     fillColorChanged = (color: string | string[]) => {

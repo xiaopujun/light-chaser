@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Slider} from "antd";
-import '../index.less';
+import './style/index.less';
 
 interface ColoumWidthProp {
     updateElemChartSet: (data: any) => void;

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Collapse, Input, Select, Slider} from "antd";
 import './style/AntdLiquidSet.less';
-import FillColor from "../atomic_components/fill_color";
+import FillColor from "./atomic_components/FillColor";
 import ColorPicker from "../../../color_picker/BaseColorPicker";
 
 const {Option} = Select;

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Collapse, Input, Slider, Switch} from "antd";
-import OutRadius from "../atomic_components/out_inner_radius";
-import StartEndAngle from "../atomic_components/start_end_angle";
+import OutRadius from "./atomic_components/OutInnerRadius";
+import StartEndAngle from "./atomic_components/StartEndAngle";
 import ColorPicker from "../../../color_picker/BaseColorPicker";
 
 class AntdGaugeSet extends Component<any> {

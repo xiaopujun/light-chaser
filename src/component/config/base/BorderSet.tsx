@@ -4,28 +4,46 @@ import ColorPicker from "../../color_picker/BaseColorPicker";
 import LCNumberInput from "../../base/LCNumberInput";
 
 const {Option} = Select;
-export default class LCBaseBorderSet extends Component<any> {
+
+interface BorderSetProps {
+    onChange?: () => void;
+    updateElemBaseSet?: (data: any) => void;
+}
+
+export default class BorderSet extends Component<BorderSetProps> {
+
+    borderTypeChanged = () => {
+
+    }
+
     borderStyleChanged = (style: string) => {
         const {updateElemBaseSet} = this.props;
-        updateElemBaseSet({borderStyle: style});
+        updateElemBaseSet && updateElemBaseSet({borderStyle: style});
     }
     borderWidthChanged = (width: number) => {
         const {updateElemBaseSet} = this.props;
-        updateElemBaseSet({borderWidth: `${width}px`});
+        updateElemBaseSet && updateElemBaseSet({borderWidth: `${width}px`});
     }
     borderColorChanged = (color: any) => {
         const {updateElemBaseSet} = this.props;
-        updateElemBaseSet({borderColor: color});
+        updateElemBaseSet && updateElemBaseSet({borderColor: color});
     }
     borderRadiusChanged = (radius: number) => {
         const {updateElemBaseSet} = this.props;
-        updateElemBaseSet({borderRadius: `${radius}px`});
+        updateElemBaseSet && updateElemBaseSet({borderRadius: `${radius}px`});
     }
 
     render() {
         return (
             <>
-
+                <div className={'config-item'}>
+                    <label className={'config-item-label'}>边框类型：</label>
+                    <Select defaultValue={'BaseBorder'} style={{width: '60%'}}
+                            onChange={this.borderTypeChanged}>
+                        <Option value="BaseBorder">基础边框</Option>
+                        <Option value="FourAngleGlow">四角辉光</Option>
+                    </Select>
+                </div>
                 <div className={'config-item'}>
                     <label className={'config-item-label'}>样式：</label>
                     <Select defaultValue={'solid'} style={{width: '60%'}} onChange={this.borderStyleChanged}>

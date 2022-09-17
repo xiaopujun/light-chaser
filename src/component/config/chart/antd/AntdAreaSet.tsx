@@ -1,37 +1,32 @@
 import React, {Component} from 'react';
 import {Collapse} from "antd";
-import './style/AntdPieSet.less';
-import FillColor from "../atomic_components/fill_color";
-import Legend from "../atomic_components/legned";
-import PolarCoordinateSystem from "../atomic_components/polar_coordinate";
+import './style/AntdAreaSet.less';
+import FillColor from "./atomic_components/FillColor";
+import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";
 
-class AntdPieSet extends Component<any> {
+class AntdAreaSet extends Component<any> {
 
     fillColorChanged = (color: string | string[]) => {
         const {updateElemChartSet} = this.props;
         updateElemChartSet({color: color});
     }
 
-
     render() {
         const {updateElemChartSet, LCDesignerStore} = this.props;
         const {active} = LCDesignerStore;
         const {chartConfigMap} = LCDesignerStore;
         let chartConfig = chartConfigMap.get(active?.id);
-        let colorPickerNumber = chartConfig.chartProperties.data.length;
         return (
             <div className={'elem-chart-config'}>
                 <Collapse className={'chart-config-collapse'} bordered={false}>
                     {/*图形填充色设置*/}
-                    <FillColor onChange={this.fillColorChanged} paletteCount={colorPickerNumber}/>
-                    {/*图例配置*/}
-                    <Legend chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
-                    {/*极坐标系*/}
-                    <PolarCoordinateSystem updateElemChartSet={updateElemChartSet}/>
+                    <FillColor onChange={this.fillColorChanged} paletteCount={1}/>
+                    {/*直角坐标系配置*/}
+                    <RightAngleCoordinates chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
                 </Collapse>
             </div>
         );
     }
 }
 
-export default AntdPieSet;
+export default AntdAreaSet;

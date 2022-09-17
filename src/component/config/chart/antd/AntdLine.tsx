@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Collapse} from "antd";
-import FillColor from "../atomic_components/fill_color";
-import Legend from "../atomic_components/legned";
-import RightAngleCoordinates from "../atomic_components/right_angle_coordinates";
-import ColumnWidth from "../atomic_components/column_width";
+import FillColor from "./atomic_components/FillColor";
+import Legend from "./atomic_components/Legned";
+import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";
+import ColumnWidth from "./atomic_components/ColumnWidth";
 
 class AntdFoldLineSet extends Component<any> {
 

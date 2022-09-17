@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {Collapse, Slider, Switch} from "antd";
 import './style/AntdRadarSet.less';
-import FillColor from "../atomic_components/fill_color";
-import Legend from "../atomic_components/legned";
-import OutRadius from "../atomic_components/out_inner_radius";
-import StartEndAngle from "../atomic_components/start_end_angle";
+import FillColor from "./atomic_components/FillColor";
+import Legend from "./atomic_components/Legned";
+import OutRadius from "./atomic_components/OutInnerRadius";
+import StartEndAngle from "./atomic_components/StartEndAngle";
 import {getAntdDataSortCount} from "../../../../utils/AntdBarUtil";
-import RightAngleCoordinates from "../atomic_components/right_angle_coordinates";
+import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";
 import ColorPicker from "../../../color_picker/BaseColorPicker";
 
 export default class AntdRadarSet extends Component<any> {

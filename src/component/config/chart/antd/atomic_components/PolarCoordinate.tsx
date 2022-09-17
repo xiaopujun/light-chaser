@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import OutInnerRadius from "../out_inner_radius";
-import StartEndAngle from "../start_end_angle";
+import OutInnerRadius from "./OutInnerRadius";
+import StartEndAngle from "./StartEndAngle";
 
 export default class PolarCoordinateSystem extends Component<any> {
 
