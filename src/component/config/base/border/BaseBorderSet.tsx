@@ -27,35 +27,41 @@ export default class BaseBorderSet extends Component<any> {
 
     render() {
         return (
-            <div className={'lc-base-border-set'}>
-                <div className={'config-item'}>
-                    <label className={'config-item-label'}>样式：</label>
-                    <Select defaultValue={'solid'} className={'lc-select'} onChange={this.borderStyleChanged}>
+            <>
+                <div className={'lc-config-item'}>
+                    <label className={'lc-config-item-label'}>边框线条：</label>
+                    <Select defaultValue={'solid'} className={'lc-config-item-value lc-select'}
+                            onChange={this.borderStyleChanged}>
                         <Option value="dotted">点</Option>
                         <Option value="dashed">虚线</Option>
                         <Option value="solid">实线</Option>
                     </Select>
                 </div>
-                <div className={'config-item'}>
-                    <label className={'config-item-label'}>颜色：</label>
+                <div className={'lc-config-item'}>
+                    <label className={'lc-config-item-label'}>边框颜色：</label>
                     <ColorPicker
                         onChange={this.borderColorChanged}
-                        className={'config-item-value'}/>
+                        className={'lc-config-item-value'}/>
                 </div>
-                <div className={'config-item'}>
-                    <label className={'config-item-label'}>宽度：</label>
-                    <div style={{width: '60%'}} className={'config-item-value'}>
-                        <LCNumberInput id={'baseBorderWidth'} onChange={this.borderWidthChanged}/> px
+                <div className={'lc-config-item'}>
+                    <label className={'lc-config-item-label'}>边框宽度：</label>
+                    <div className={'lc-config-item-value'}>
+                        <div className={'lc-input-container'}>
+                            <LCNumberInput id={'baseBorderWidth'} onChange={this.borderWidthChanged}/>
+                            <span>&nbsp;px</span>
+                        </div>
                     </div>
                 </div>
-                <div className={'config-item'}>
-                    <label className={'config-item-label'}>圆角：</label>
-                    <div style={{width: '60%'}} className={'config-item-value'}>
-                        <LCNumberInput id={'baseBorderRadius'} onChange={this.borderRadiusChanged}/> px
+                <div className={'lc-config-item'}>
+                    <label className={'lc-config-item-label'}>边框圆角：</label>
+                    <div className={'lc-config-item-value lc-input-container'}>
+                        <div className={'lc-input-container'}>
+                            <LCNumberInput id={'baseBorderRadius'} onChange={this.borderRadiusChanged}/>
+                            <span>&nbsp;px</span>
+                        </div>
                     </div>
                 </div>
-                s
-            </div>
+            </>
         );
     }
 }

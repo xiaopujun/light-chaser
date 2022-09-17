@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import {Select} from "antd";
-import ColorPicker from "../../color_picker/BaseColorPicker";
-import LCNumberInput from "../../base/LCNumberInput";
 import './style/BorderSet.less';
 import BaseBorderSet from "./border/BaseBorderSet";
 
@@ -38,9 +36,9 @@ export default class BorderSet extends Component<BorderSetProps> {
     render() {
         return (
             <>
-                <div className={'config-item'}>
-                    <label className={'config-item-label'}>边框类型：</label>
-                    <Select defaultValue={'BaseBorder'} className={'lc-select'} style={{width: '60%'}}
+                <div className={'lc-config-item'}>
+                    <label className={'lc-config-item-label'}>边框类型：</label>
+                    <Select defaultValue={'BaseBorder'} className={'lc-config-item-value lc-select'}
                             onChange={this.borderTypeChanged}>
                         <Option value="BaseBorder">基础边框</Option>
                         <Option value="FourAngleGlow">四角辉光</Option>

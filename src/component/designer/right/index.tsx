@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ElemPropSet from "../../config";
+import ElemPropSet from "../../config/LCComponentConfig";
 import './index.less';
 
 /**
@@ -17,10 +17,10 @@ export default class ElemPropSetDrawer extends Component<any, any> {
         const {LCDesignerStore} = this.props;
         const {active} = LCDesignerStore;
         return (
-            <div className={'comp-config-layout'} style={{height: window.innerHeight - 64}}>
+            <div className={'lc-config-panel'} style={{height: window.innerHeight - 64}}>
                 {active.id >= 0 ? (<ElemPropSet {...this.props}/>) :
-                    <div className={'config-message'}>
-                        <div className={'message-content'}>请激活组件进行配置...</div>
+                    <div className={'lc-no-panel-tips'}>
+                        <div>请激活组件进行配置...</div>
                     </div>}
             </div>
 
