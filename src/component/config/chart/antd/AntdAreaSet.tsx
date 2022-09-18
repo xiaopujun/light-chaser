@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Collapse} from "antd";
 import './style/AntdAreaSet.less';
 import FillColor from "./atomic_components/FillColor";
 import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";

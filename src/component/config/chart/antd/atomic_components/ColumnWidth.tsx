@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Slider} from "antd";
 import './style/index.less';
 import LCNumberInput from "../../../../base/LCNumberInput";
 

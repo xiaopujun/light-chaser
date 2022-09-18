@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Collapse} from "antd";
 import FillColor from "./atomic_components/FillColor";
 
 class AntdWordCloudSet extends Component<any> {

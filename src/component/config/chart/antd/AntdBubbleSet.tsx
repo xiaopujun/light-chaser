@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Collapse, Select, Slider} from "antd";
+import {Select, Slider} from "antd";
 import FillColor from "./atomic_components/FillColor";
 import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";
 import {getAntdDataSortCount} from "../../../../utils/AntdBarUtil";

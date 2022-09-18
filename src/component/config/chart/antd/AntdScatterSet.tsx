@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Collapse, Select, Slider} from "antd";
+import {Select, Slider} from "antd";
 import './style/AntdScatterSet.less';
 import FillColor from "./atomic_components/FillColor";
 import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";

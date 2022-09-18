@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Collapse, Input, Slider, Switch} from "antd";
+import {Slider, Switch} from "antd";
 import OutRadius from "./atomic_components/OutInnerRadius";
 import StartEndAngle from "./atomic_components/StartEndAngle";
 import ColorPicker from "../../../color_picker/BaseColorPicker";

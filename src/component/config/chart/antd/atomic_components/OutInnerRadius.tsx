@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Slider} from "antd";
 import LCNumberInput from "../../../../base/LCNumberInput";
 
 interface OutInnerRadiusProps {
@@ -42,7 +41,6 @@ export default class OutInnerRadius extends Component<OutInnerRadiusProps> {
     }
 
     render() {
-        const {outRadius, innerRadius} = this.state;
         const {items = ['outer', 'inner']} = this.props;
         return (
             <div className={'config-group'}>

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Slider} from "antd";
 import LCNumberInput from "../../../../base/LCNumberInput";
 
 /**
@@ -34,7 +33,6 @@ export default class StartEndAngle extends Component<any> {
     }
 
     render() {
-        const {startAngle, endAngle} = this.state;
         return (
             <div className={'config-group'}>
                 <div className={'lc-config-item'}>

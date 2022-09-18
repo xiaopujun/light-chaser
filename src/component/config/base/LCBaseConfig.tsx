@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import {Collapse, Select} from "antd";
 import './style/LCBaseConfig.less';
 import PaddingSet from "./PaddingSet";
 import BorderSet from "./BorderSet";
 import BackgroundSet from "./BackgroundSet";
 
-const {Panel} = Collapse;
 
 /**
  * 组件基础设置

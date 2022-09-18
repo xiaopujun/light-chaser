@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Collapse} from "antd";
 import FillColor from "./atomic_components/FillColor";
 import Legend from "./atomic_components/Legned";
 import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";
