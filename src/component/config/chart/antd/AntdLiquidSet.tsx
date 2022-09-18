@@ -3,6 +3,8 @@ import {Collapse, Input, Select, Slider} from "antd";
 import './style/AntdLiquidSet.less';
 import FillColor from "./atomic_components/FillColor";
 import ColorPicker from "../../../color_picker/BaseColorPicker";
+import LCNumberInput from "../../../base/LCNumberInput";
+import LCTextInput from "../../../base/LCTextInput";
 
 const {Option} = Select;
 
@@ -70,12 +72,12 @@ class AntdLiquidSet extends Component<any> {
         })
     }
 
-    titleChanged = (e: any) => {
+    titleChanged = (data: string) => {
         const {updateElemChartSet} = this.props;
         updateElemChartSet({
             statistic: {
                 title: {
-                    content: e.currentTarget.value
+                    content: data
                 }
             }
         })
@@ -162,90 +164,114 @@ class AntdLiquidSet extends Component<any> {
         return (
             <div className={'elem-chart-config'}>
 
-                    {/*图形填充色设置*/}
-                    <FillColor onChange={this.fillColorChanged} paletteCount={1}/>
+                {/*图形填充色设置*/}
+                <FillColor onChange={this.fillColorChanged} paletteCount={1}/>
 
-                    <div className={'config-group chart-fill-color'}>
+                <div className={'config-group chart-fill-color'}>
 
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>图形选择：</label>
-                            <Select className={'lc-config-item-value'} defaultValue={'circle'}
-                                    onChange={this.shapeChanged}>
-                                <Option value={'circle'}>circle</Option>
-                                <Option value={'diamond'}>diamond</Option>
-                                <Option value={'triangle'}>triangle</Option>
-                                <Option value={'pin'}>pin</Option>
-                                <Option value={'rect'}>rect</Option>
-                            </Select>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>外半径：</label>
-                            <Slider defaultValue={0.75} max={1} min={0.01} step={0.01}
-                                    onChange={this.outRadiusChanged}
-                                    className={'lc-config-item-value'}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>边框线宽度：</label>
-                            <Slider defaultValue={0.75} max={20} min={0} step={0.1}
-                                    onChange={this.outLineWidthChanged}
-                                    className={'lc-config-item-value'}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>边框线与水波间隔：</label>
-                            <Slider defaultValue={0} max={10} min={0} step={0.1}
-                                    onChange={this.outLineIntervalChanged}
-                                    className={'lc-config-item-value'}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>边框线颜色：</label>
-                            <ColorPicker onChange={this.outLineColorChanged}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>水波个数：</label>
-                            <Slider defaultValue={0} max={20} min={0} step={1}
-                                    onChange={this.numberOfWaterWavesChanged}
-                                    className={'lc-config-item-value'}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>水波长度：</label>
-                            <Slider defaultValue={10} max={500} min={10} step={5}
-                                    onChange={this.waveLengthChanged}
-                                    className={'lc-config-item-value'}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>中心标题：</label>
-                            <Input defaultValue={""}
-                                   onChange={this.titleChanged}
-                                   className={'lc-config-item-value'}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>中心标题颜色：</label>
-                            <ColorPicker onChange={this.titleColorChanged}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>中心标题字体大小：</label>
-                            <Slider defaultValue={12} max={50} min={0} step={1}
-                                    onChange={this.titleFontSizeChanged}
-                                    className={'lc-config-item-value'}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>描述颜色：</label>
-                            <ColorPicker onChange={this.subscriptionColorChanged}/>
-                        </div>
-
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>描述字体大小：</label>
-                            <Slider defaultValue={12} max={50} min={0} step={1}
-                                    onChange={this.subscriptionFontSizeChanged}
-                                    className={'lc-config-item-value'}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>描述字体行高：</label>
-                            <Slider defaultValue={12} max={50} min={5} step={0.1}
-                                    onChange={this.subscriptionLineHeightChanged}
-                                    className={'lc-config-item-value'}/>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>图形选择：</label>
+                        <Select className={'lc-config-item-value lc-select'} defaultValue={'circle'}
+                                onChange={this.shapeChanged}>
+                            <Option value={'circle'}>circle</Option>
+                            <Option value={'diamond'}>diamond</Option>
+                            <Option value={'triangle'}>triangle</Option>
+                            <Option value={'pin'}>pin</Option>
+                            <Option value={'rect'}>rect</Option>
+                        </Select>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>外半径：</label>
+                        <div className={'lc-config-item-value'}>
+                                <span className={'lc-input-container'}>
+                                    <LCNumberInput onChange={this.outRadiusChanged} max={1} step={0.01} min={0.01}/>
+                                    <label>&nbsp;px</label>
+                                </span>
                         </div>
                     </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>边框线宽度：</label>
+                        <div className={'lc-config-item-value'}>
+                                <span className={'lc-input-container'}>
+                                    <LCNumberInput onChange={this.outLineWidthChanged} max={20} step={0.1} min={0}/>
+                                    <label>&nbsp;px</label>
+                                </span>
+                        </div>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>边框线与水波间隔：</label>
+                        <div className={'lc-config-item-value'}>
+                                <span className={'lc-input-container'}>
+                                    <LCNumberInput onChange={this.outLineIntervalChanged} max={10} min={0} step={0.1}/>
+                                    <label>&nbsp;px</label>
+                                </span>
+                        </div>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>边框线颜色：</label>
+                        <ColorPicker onChange={this.outLineColorChanged}/>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>水波个数：</label>
+                        <div className={'lc-config-item-value'}>
+                                <span className={'lc-input-container'}>
+                                    <LCNumberInput onChange={this.numberOfWaterWavesChanged} max={20} min={0} step={1}/>
+                                    <label>&nbsp;px</label>
+                                </span>
+                        </div>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>水波长度：</label>
+                        <div className={'lc-config-item-value'}>
+                            <span className={'lc-input-container'}>
+                                <LCNumberInput onChange={this.waveLengthChanged} max={500} min={10} step={5}/>
+                                <label>&nbsp;px</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>中心标题：</label>
+                        <div className={'lc-config-item-value'}>
+                            <LCTextInput onChange={this.titleChanged}/>
+                        </div>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>中心标题颜色：</label>
+                        <ColorPicker onChange={this.titleColorChanged}/>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>中心标题字体大小：</label>
+                        <div className={'lc-config-item-value'}>
+                            <span className={'lc-input-container'}>
+                                <LCNumberInput onChange={this.titleFontSizeChanged} max={50} min={0} step={1}/>
+                                <label>&nbsp;px</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>描述颜色：</label>
+                        <ColorPicker onChange={this.subscriptionColorChanged}/>
+                    </div>
+
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>描述字体大小：</label>
+                        <div className={'lc-config-item-value'}>
+                            <span className={'lc-input-container'}>
+                                <LCNumberInput onChange={this.subscriptionFontSizeChanged} max={50} min={0} step={1}/>
+                                <label>&nbsp;px</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>描述字体行高：</label>
+                        <div className={'lc-config-item-value'}>
+                            <span className={'lc-input-container'}>
+                                <LCNumberInput onChange={this.subscriptionLineHeightChanged} max={50} min={0} step={1}/>
+                                <label>&nbsp;px</label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         );

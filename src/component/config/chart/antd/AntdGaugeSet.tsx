@@ -3,6 +3,7 @@ import {Collapse, Input, Slider, Switch} from "antd";
 import OutRadius from "./atomic_components/OutInnerRadius";
 import StartEndAngle from "./atomic_components/StartEndAngle";
 import ColorPicker from "../../../color_picker/BaseColorPicker";
+import LCTextInput from "../../../base/LCTextInput";
 
 class AntdGaugeSet extends Component<any> {
 
@@ -65,12 +66,12 @@ class AntdGaugeSet extends Component<any> {
         })
     }
 
-    titleChanged = (e: any) => {
+    titleChanged = (data: string) => {
         const {updateElemChartSet} = this.props;
         updateElemChartSet({
             statistic: {
                 title: {
-                    content: e.currentTarget.value
+                    content: data
                 }
             }
         })
@@ -196,97 +197,98 @@ class AntdGaugeSet extends Component<any> {
         return (
             <div className={'elem-chart-config'}>
 
-                    {/*极坐标系相关设置*/}
-                    <OutRadius updateElemChartSet={updateElemChartSet}/>
-                    <StartEndAngle updateElemChartSet={updateElemChartSet}/>
-                    <div className={'config-group'}>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>圆弧颜色：</label>
-                            <ColorPicker name={'mainTitleColor'}
-                                         onChange={this.rangeColorChanged}
-                                         className={'lc-config-item-value'}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>圆弧宽度：</label>
-                            <Slider defaultValue={1} value={rangeWidth} max={50} min={0.1} step={0.1}
-                                    onChange={this.rangeWidthChanged}
-                                    className={'lc-config-item-value'}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>开启刻度仪表盘：</label>
-                            <div className={'lc-config-item-value'} style={{textAlign: 'right'}}>
-                                <Switch onChange={this.openMete}/></div>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>总刻度数：</label>
-                            <Slider defaultValue={1} value={stepCount} max={100} min={1} step={1}
-                                    onChange={this.stepCountChange}
-                                    className={'lc-config-item-value'}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>刻度宽度：</label>
-                            <Slider defaultValue={0.5} value={stepWidth} max={0.99} min={0} step={0.01}
-                                    onChange={this.stepWidthChange}
-                                    className={'lc-config-item-value'}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>中心标题：</label>
-                            <Input defaultValue={""}
-                                   onChange={this.titleChanged}
-                                   className={'lc-config-item-value'}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>中心标题颜色：</label>
-                            <ColorPicker onChange={this.titleColorChanged}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>中心标题字体大小：</label>
-                            <Slider defaultValue={12} max={50} min={0} step={1}
-                                    onChange={this.titleFontSizeChanged}
-                                    className={'lc-config-item-value'}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>中心标题x轴偏移量：</label>
-                            <Slider defaultValue={12} max={100} min={-100} step={1}
-                                    onChange={this.titleXAxisOffsetChanged}
-                                    className={'lc-config-item-value'}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>中心标题y轴偏移量：</label>
-                            <Slider defaultValue={12} max={100} min={-100} step={1}
-                                    onChange={this.titleYAxisOffsetChanged}
-                                    className={'lc-config-item-value'}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>描述颜色：</label>
-                            <ColorPicker onChange={this.subscriptionColorChanged}/>
-                        </div>
-
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>描述字体大小：</label>
-                            <Slider defaultValue={12} max={50} min={0} step={1}
-                                    onChange={this.subscriptionFontSizeChanged}
-                                    className={'lc-config-item-value'}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>描述字体行高：</label>
-                            <Slider defaultValue={12} max={50} min={5} step={0.1}
-                                    onChange={this.subscriptionLineHeightChanged}
-                                    className={'lc-config-item-value'}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>描述x轴偏移量：</label>
-                            <Slider defaultValue={12} max={100} min={-100} step={1}
-                                    onChange={this.subscriptionXAxisOffsetChanged}
-                                    className={'lc-config-item-value'}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>描述y轴偏移量：</label>
-                            <Slider defaultValue={12} max={100} min={-100} step={1}
-                                    onChange={this.subscriptionYAxisOffsetChanged}
-                                    className={'lc-config-item-value'}/>
+                {/*极坐标系相关设置*/}
+                <OutRadius updateElemChartSet={updateElemChartSet}/>
+                <StartEndAngle updateElemChartSet={updateElemChartSet}/>
+                <div className={'config-group'}>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>圆弧颜色：</label>
+                        <ColorPicker name={'mainTitleColor'}
+                                     onChange={this.rangeColorChanged}
+                                     className={'lc-config-item-value'}/>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>圆弧宽度：</label>
+                        <Slider defaultValue={1} value={rangeWidth} max={50} min={0.1} step={0.1}
+                                onChange={this.rangeWidthChanged}
+                                className={'lc-config-item-value'}/>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>开启刻度仪表盘：</label>
+                        <div className={'lc-config-item-value'} style={{textAlign: 'right'}}>
+                            <Switch onChange={this.openMete}/></div>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>总刻度数：</label>
+                        <Slider defaultValue={1} value={stepCount} max={100} min={1} step={1}
+                                onChange={this.stepCountChange}
+                                className={'lc-config-item-value'}/>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>刻度宽度：</label>
+                        <Slider defaultValue={0.5} value={stepWidth} max={0.99} min={0} step={0.01}
+                                onChange={this.stepWidthChange}
+                                className={'lc-config-item-value'}/>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>中心标题：</label>
+                        <div className={'lc-config-item-value'}>
+                            <LCTextInput onChange={this.titleChanged}
+                            />
                         </div>
                     </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>中心标题颜色：</label>
+                        <ColorPicker onChange={this.titleColorChanged}/>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>中心标题字体大小：</label>
+                        <Slider defaultValue={12} max={50} min={0} step={1}
+                                onChange={this.titleFontSizeChanged}
+                                className={'lc-config-item-value'}/>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>中心标题x轴偏移量：</label>
+                        <Slider defaultValue={12} max={100} min={-100} step={1}
+                                onChange={this.titleXAxisOffsetChanged}
+                                className={'lc-config-item-value'}/>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>中心标题y轴偏移量：</label>
+                        <Slider defaultValue={12} max={100} min={-100} step={1}
+                                onChange={this.titleYAxisOffsetChanged}
+                                className={'lc-config-item-value'}/>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>描述颜色：</label>
+                        <ColorPicker onChange={this.subscriptionColorChanged}/>
+                    </div>
+
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>描述字体大小：</label>
+                        <Slider defaultValue={12} max={50} min={0} step={1}
+                                onChange={this.subscriptionFontSizeChanged}
+                                className={'lc-config-item-value'}/>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>描述字体行高：</label>
+                        <Slider defaultValue={12} max={50} min={5} step={0.1}
+                                onChange={this.subscriptionLineHeightChanged}
+                                className={'lc-config-item-value'}/>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>描述x轴偏移量：</label>
+                        <Slider defaultValue={12} max={100} min={-100} step={1}
+                                onChange={this.subscriptionXAxisOffsetChanged}
+                                className={'lc-config-item-value'}/>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>描述y轴偏移量：</label>
+                        <Slider defaultValue={12} max={100} min={-100} step={1}
+                                onChange={this.subscriptionYAxisOffsetChanged}
+                                className={'lc-config-item-value'}/>
+                    </div>
+                </div>
 
             </div>
         );

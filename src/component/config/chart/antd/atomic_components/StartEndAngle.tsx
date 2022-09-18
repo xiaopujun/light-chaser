@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Slider} from "antd";
+import LCNumberInput from "../../../../base/LCNumberInput";
 
 /**
  * 圆形图渲染，内外半径设置
@@ -38,15 +39,19 @@ export default class StartEndAngle extends Component<any> {
             <div className={'config-group'}>
                 <div className={'lc-config-item'}>
                     <label className={'lc-config-item-label'}>起始角度(单位:π)：</label>
-                    <Slider defaultValue={0} value={startAngle} max={2} min={0} step={0.1}
-                            onChange={this.startAngleChanged}
-                            className={'lc-config-item-value'}/>
+                    <div className={'lc-config-item-value'}>
+                                    <span className={'lc-input-container'}>
+                                        <LCNumberInput onChange={this.startAngleChanged} min={0} max={2} step={0.1}/>
+                                    </span>
+                    </div>
                 </div>
                 <div className={'lc-config-item'}>
                     <label className={'lc-config-item-label'}>结束角度(单位:π)：</label>
-                    <Slider defaultValue={2} value={endAngle} max={2} min={0} step={0.1}
-                            onChange={this.endAngleChanged}
-                            className={'lc-config-item-value'}/>
+                    <div className={'lc-config-item-value'}>
+                                    <span className={'lc-input-container'}>
+                                        <LCNumberInput onChange={this.endAngleChanged} min={0} max={2} step={0.1}/>
+                                    </span>
+                    </div>
                 </div>
             </div>
         );

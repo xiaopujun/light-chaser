@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Slider} from "antd";
+import LCNumberInput from "../../../../base/LCNumberInput";
 
 interface OutInnerRadiusProps {
     updateElemChartSet?: (config: object) => void;
@@ -50,9 +51,11 @@ export default class OutInnerRadius extends Component<OutInnerRadiusProps> {
                         return (
                             <div key={index + ''} className={'lc-config-item'}>
                                 <label className={'lc-config-item-label'}>外半径：</label>
-                                <Slider defaultValue={0.75} value={outRadius} max={1} min={0.01} step={0.01}
-                                        onChange={this.outRadiusChanged}
-                                        className={'lc-config-item-value'}/>
+                                <div className={'lc-config-item-value'}>
+                                    <span className={'lc-input-container'}>
+                                        <LCNumberInput onChange={this.outRadiusChanged} min={0} step={0.1}/>
+                                    </span>
+                                </div>
                             </div>
                         )
                     }
@@ -60,9 +63,11 @@ export default class OutInnerRadius extends Component<OutInnerRadiusProps> {
                         return (
                             <div key={index + ""} className={'lc-config-item'}>
                                 <label className={'lc-config-item-label'}>内半径：</label>
-                                <Slider defaultValue={0.75} value={innerRadius} max={1} min={0} step={0.01}
-                                        onChange={this.innerRadiusChanged}
-                                        className={'lc-config-item-value'}/>
+                                <div className={'lc-config-item-value'}>
+                                    <span className={'lc-input-container'}>
+                                        <LCNumberInput onChange={this.innerRadiusChanged} min={0} step={0.1}/>
+                                    </span>
+                                </div>
                             </div>
                         )
                     }

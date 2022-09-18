@@ -4,6 +4,9 @@ import './style/LCNumberInput.less';
 interface LCNumberInputProps {
     id?: string;
     onChange?: (data: number, id: string) => void;
+    step?: number;
+    max?: number;
+    min?: number;
 }
 
 export default class LCNumberInput extends Component<LCNumberInputProps> {
@@ -14,10 +17,10 @@ export default class LCNumberInput extends Component<LCNumberInputProps> {
     }
 
     render() {
-        const {id} = this.props;
+        const {id, step, max, min} = this.props;
         return (
             <div className={'lc-number-input'}>
-                <input id={id} onChange={this.onChange} type={'number'}/>
+                <input id={id} onChange={this.onChange} type={'number'} {...{step, max, min}}/>
             </div>
         );
     }

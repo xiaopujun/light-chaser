@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Slider, Switch} from "antd";
 import ColorPicker from "../../../../color_picker/BaseColorPicker";
+import LCNumberInput from "../../../../base/LCNumberInput";
 
 
 interface RightAngleCoordinatesProp {
@@ -209,16 +210,20 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
                         </div>
                         <div className={'lc-config-item'}>
                             <label className={'lc-config-item-label'}>x轴网格线宽：</label>
-                            <Slider defaultValue={0} max={10} min={0}
-                                    onChange={this.xGridLineWidthChanged}
-                                    className={'lc-config-item-value'}/>
+                            <div className={'lc-config-item-value'}>
+                                <span className={'lc-input-container'}>
+                                    <LCNumberInput onChange={this.xGridLineWidthChanged}/>
+                                    <label>&nbsp;px</label>
+                                </span>
+                            </div>
                         </div>
                         <div className={'lc-config-item'}>
                             <label className={'lc-config-item-label'}>x轴网格透明度：</label>
-                            <Slider defaultValue={0} max={1} min={0}
-                                    step={0.1}
-                                    onChange={this.xGridLineOpacityChanged}
-                                    className={'lc-config-item-value'}/>
+                            <div className={'lc-config-item-value'}>
+                                <span className={'lc-input-container'}>
+                                    <LCNumberInput onChange={this.xGridLineOpacityChanged} min={0} max={1} step={0.1}/>
+                                </span>
+                            </div>
                         </div>
                         <div className={'lc-config-item'}>
                             <label className={'lc-config-item-label'}>x轴标题颜色：</label>
@@ -245,16 +250,20 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
                         </div>
                         <div className={'lc-config-item'}>
                             <label className={'lc-config-item-label'}>y轴网格线宽：</label>
-                            <Slider defaultValue={0} max={10} min={0}
-                                    onChange={this.yGridLineWidthChanged}
-                                    className={'lc-config-item-value'}/>
+                            <div className={'lc-config-item-value'}>
+                                <span className={'lc-input-container'}>
+                                    <LCNumberInput onChange={this.yGridLineWidthChanged}/>
+                                    <label>&nbsp;px</label>
+                                </span>
+                            </div>
                         </div>
                         <div className={'lc-config-item'}>
                             <label className={'lc-config-item-label'}>y轴网格透明度：</label>
-                            <Slider defaultValue={0} max={1} min={0} style={{width: '60%'}}
-                                    step={0.1}
-                                    onChange={this.yGridLineOpacityChanged}
-                                    className={'lc-config-item-value'}/>
+                            <div className={'lc-config-item-value'}>
+                                <span className={'lc-input-container'}>
+                                    <LCNumberInput onChange={this.yGridLineOpacityChanged} min={0} max={1} step={0.1}/>
+                                </span>
+                            </div>
                         </div>
                         <div className={'lc-config-item'}>
                             <label className={'lc-config-item-label'}>y轴标题颜色：</label>

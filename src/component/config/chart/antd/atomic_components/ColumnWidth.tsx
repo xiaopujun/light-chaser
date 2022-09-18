@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Slider} from "antd";
 import './style/index.less';
+import LCNumberInput from "../../../../base/LCNumberInput";
 
 interface ColoumWidthProp {
     updateElemChartSet: (data: any) => void;
@@ -23,9 +24,12 @@ class ColumnWidth extends Component<ColoumWidthProp> {
             <div className={'config-group chart-fill-color'}>
                 <div className={'lc-config-item'}>
                     <label className={'lc-config-item-label'}>条形宽度：</label>
-                    <Slider defaultValue={5} max={20} min={1}
-                            onChange={this.columnWidthChanged}
-                            className={'lc-config-item-value'}/>
+                    <div className={'lc-config-item-value'}>
+                        <span className={'lc-input-container'}>
+                            <LCNumberInput onChange={this.columnWidthChanged}/>
+                            <label>&nbsp;px</label>
+                        </span>
+                    </div>
                 </div>
             </div>
         );
