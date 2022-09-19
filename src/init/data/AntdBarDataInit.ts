@@ -1,10 +1,7 @@
 import {cloneDeep} from 'lodash';
 
 let elemBaseProperties = {
-    paddingTop: '10px',
-    paddingLeft: '10px',
-    paddingBottom: '10px',
-    paddingRight: '10px',
+    padding: '10px',
     backgroundColor: 'rgba(23,157,169,0.12)'
 }
 let axis = {

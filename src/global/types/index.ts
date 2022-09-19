@@ -3,7 +3,6 @@
  */
 export interface ElemBaseProps {
     padding: string;
-    margin: string;
     border: string;
     backgroundColor: string;
 }
