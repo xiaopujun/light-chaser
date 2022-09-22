@@ -12,8 +12,9 @@ interface BorderSetProps {
 
 export default class BorderSet extends Component<BorderSetProps> {
 
-    borderTypeChanged = () => {
-
+    borderTypeChanged = (data: string) => {
+        const {updateElemBaseSet} = this.props;
+        updateElemBaseSet && updateElemBaseSet({borderType: data});
     }
 
     borderStyleChanged = (style: string) => {
