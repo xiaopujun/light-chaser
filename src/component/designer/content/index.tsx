@@ -15,10 +15,11 @@ export default class LCLayoutContent extends React.Component<any, any> {
      */
     generateElement = () => {
         const {LCDesignerStore} = this.props;
-        const {layoutConfig} = LCDesignerStore;
+        const {layoutConfig, chartConfigMap} = LCDesignerStore;
         return layoutConfig.map((item: any) => {
             let ElementChart = getChartsTemplate(item.name);
-            let Border = getBorder("FourAngleGlow");
+            let borderType = chartConfigMap.get(parseInt(item.id)).elemBaseProperties.borderType;
+            let Border = getBorder(borderType);
             return (
                 <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
                     <Border>

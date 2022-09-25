@@ -1,16 +1,12 @@
 import React, {Component} from 'react';
-import {Select} from "antd";
-import ColorPicker from "../../../color_picker/BaseColorPicker";
-import LCNumberInput from "../../../base/LCNumberInput";
-
+import BaseBorderSet from "./BaseBorderSet";
 
 export default class FourAngleGlowBorderSet extends Component<any> {
-
-
+    
     render() {
         return (
             <>
-
+                <BaseBorderSet {...this.props}/>
             </>
         );
     }

@@ -4,7 +4,7 @@ import './style/FourAngleGlow.less';
 /**
  * 四角辉光边框
  */
-class FourAngleGlow extends Component<any> {
+class FourAngleGlowBorder extends Component<any> {
     render() {
         return (
             <div className="four-angle-glow">
@@ -18,4 +18,4 @@ class FourAngleGlow extends Component<any> {
     }
 }
 
-export default FourAngleGlow;
+export default FourAngleGlowBorder;

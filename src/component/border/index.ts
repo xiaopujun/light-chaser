@@ -1,15 +1,16 @@
 import BaseBorder from "./BaseBorder";
-import FourAngleGlow from "./FourAngleGlow";
+import FourAngleGlowBorder from "./FourAngleGlowBorder";
 
 let borderMap = new Map();
 
 borderMap.set("BaseBorder", BaseBorder);
-borderMap.set("FourAngleGlow", FourAngleGlow);
+borderMap.set("FourAngleGlowBorder", FourAngleGlowBorder);
 
 export default function getBorder(borderType: string) {
     if ("" !== borderType && borderMap.has(borderType)) {
         return borderMap.get(borderType);
     } else {
-        throw new Error("borderMap has no this type:" + borderType);
+        // console.log("borderMap has no this type:" + borderType + ",use default base border config");
+        return BaseBorder;
     }
 }
