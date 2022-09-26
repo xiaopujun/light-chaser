@@ -22,7 +22,7 @@ export default class LCLayoutContent extends React.Component<any, any> {
             let Border = getBorder(borderType);
             return (
                 <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
-                    <Border>
+                    <Border {...this.props}>
                         <ElementChart elemId={item?.id} deleteItem={this.deleteItem} {...this.props}/>
                     </Border>
                 </div>

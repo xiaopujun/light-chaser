@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './style/BorderSet.less';
 import getBorderSetDetail from "./border/BorderSetInit";
 import {Select} from "antd";
+import ColorPicker from "../../color_picker/BaseColorPicker";
 
 const {Option} = Select;
 export default class BorderSet extends Component<any> {
