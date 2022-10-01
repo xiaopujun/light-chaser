@@ -23,7 +23,7 @@ class DataXLayoutDesigner extends Component<any> {
         return (
             <div className={'light_chaser-designer'}>
                 <Layout>
-                    <Header><DesignerHeader/></Header>
+                    <Header><DesignerHeader {...this.props}/></Header>
                     <Layout>
                         <Sider width={300}>
                             <LayoutTools/>
