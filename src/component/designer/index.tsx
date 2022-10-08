@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Layout} from 'antd';
 import {connect} from "react-redux";
-import LayoutTools from "./left/tools";
-import LCLayoutContent from "./content";
+import LayoutTools from "./left/Tools";
+import LCLayoutContent from "./Content";
 import {
     activeElem,
     addItem,
@@ -12,8 +12,8 @@ import {
     updateElemChartSet,
     updateItemLayout
 } from "../../redux/actions/LayoutDesigner";
-import DesignerHeader from "./head";
-import RightSlideBox from "./right";
+import DesignerHeader from "./Head";
+import RightSlideBox from "./Right";
 
 
 const {Header, Sider, Content} = Layout;

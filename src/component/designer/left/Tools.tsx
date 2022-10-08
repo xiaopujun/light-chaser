@@ -1,7 +1,7 @@
 import React, {Component, ReactDOM} from 'react';
 import {AreaChartOutlined} from "@ant-design/icons";
-import './index.less';
-import ToolItem from "../item";
+import './style/Tools.less';
+import ToolItem from "./Item";
 
 
 interface LayoutToolItemProps {

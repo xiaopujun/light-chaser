@@ -1,5 +1,5 @@
 import React, {Component, ReactDOM} from 'react';
-import './index.less';
+import './style/Item.less';
 
 
 interface ToolItemProp {

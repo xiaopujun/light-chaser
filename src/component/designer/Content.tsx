@@ -2,9 +2,9 @@ import React from 'react';
 import ReactGridLayout, {Layout} from "react-grid-layout";
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-import './index.less';
-import getChartsTemplate from "../../charts/ComponentChartInit";
-import getBorder from "../../border";
+import './style/Content.less';
+import getChartsTemplate from "../charts/ComponentChartInit";
+import getBorder from "../border";
 
 export default class LCLayoutContent extends React.Component<any, any> {
 

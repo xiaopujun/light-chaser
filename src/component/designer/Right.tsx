@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import ElemPropSet from "../../config/LCComponentConfig";
-import './index.less';
+import ElemPropSet from "../config/LCComponentConfig";
+import './style/Right.less';
 
 /**
  * 右滑框外壳组件

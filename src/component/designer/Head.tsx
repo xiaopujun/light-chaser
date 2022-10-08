@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './index.less';
+import './style/Head.less';
 import {
     EyeOutlined,
     GithubOutlined,
@@ -10,10 +10,38 @@ import {
 } from "@ant-design/icons";
 
 export default class DesignerHeader extends Component<any> {
+
+    _strMapToObj(strMap: any) {
+        let obj = Object.create(null);
+        for (let [k, v] of strMap) {
+            obj[k] = v;
+        }
+        return obj;
+    }
+
+    /**
+     *map转换为json
+     */
+    _mapToJson(map: any) {
+        return JSON.stringify(this._strMapToObj(map));
+    }
+
     save = (e: any) => {
+        let localStorage = window.localStorage;
+        let id = 0, lightChaser = [];
+        if ('lightChaser' in localStorage) {
+            let tempLC = JSON.parse(localStorage.lightChaser);
+            id = tempLC.length + 1;
+            lightChaser = tempLC;
+        }
         const {chartConfigMap, layoutConfig} = this.props.LCDesignerStore;
-        window.localStorage.setItem("chartConfigMap", JSON.stringify(chartConfigMap));
-        window.localStorage.setItem("layoutConfig", JSON.stringify(layoutConfig));
+        let config = {
+            id,
+            "chartConfigMap": this._mapToJson(chartConfigMap),
+            "layoutConfig": JSON.stringify(layoutConfig)
+        }
+        lightChaser.push(config);
+        localStorage.setItem("lightChaser", JSON.stringify(lightChaser));
         alert("save success")
     }
 
