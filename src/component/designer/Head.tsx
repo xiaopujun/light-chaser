@@ -8,8 +8,9 @@ import {
     SettingOutlined,
     SnippetsOutlined
 } from "@ant-design/icons";
+import {withRouter} from "react-router-dom";
 
-export default class DesignerHeader extends Component<any> {
+class DesignerHeader extends Component<any> {
 
     _strMapToObj(strMap: any) {
         let obj = Object.create(null);
@@ -45,6 +46,10 @@ export default class DesignerHeader extends Component<any> {
         alert("save success")
     }
 
+    preview = () => {
+        this.props.history.push('/preview');
+    }
+
     render() {
         return (
             <div className={'designer-header'}>
@@ -53,7 +58,7 @@ export default class DesignerHeader extends Component<any> {
                 </div>
                 <div className={'header-right'}>
                     <div className={'right-item'} onClick={this.save}><SaveOutlined/>&nbsp;保存</div>
-                    <div className={'right-item'}><EyeOutlined/>&nbsp;预览</div>
+                    <div className={'right-item'} onClick={this.preview}><EyeOutlined/>&nbsp;预览</div>
                     <div className={'right-item'}><SnippetsOutlined/>&nbsp;文档</div>
                     <div className={'right-item'}><SettingOutlined/>&nbsp;全局设置</div>
                     <div className={'right-item'}><PhoneOutlined/>&nbsp;联系我</div>
@@ -64,3 +69,5 @@ export default class DesignerHeader extends Component<any> {
         );
     }
 }
+
+export default withRouter(DesignerHeader);

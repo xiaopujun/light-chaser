@@ -24,7 +24,7 @@ interface LayoutToolsProps {
 /**
  * 大屏布局设计器左侧组件库工具栏
  */
-class LayoutTools extends Component<LayoutToolsProps, any> {
+class   LayoutTools extends Component<LayoutToolsProps, any> {
 
     state: any = {
         data: [{

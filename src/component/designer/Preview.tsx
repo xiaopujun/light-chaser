@@ -25,20 +25,21 @@ class Preview extends Component {
     render() {
         return (
             <div className="site-layout-background" style={{height: window.innerHeight - 64}}>
-                <ReactGridLayout className="layout"
-                    // layout={layoutConfig}
-                                 cols={48}
-                                 rowHeight={10}
-                                 margin={[15, 15]}
-                                 useCSSTransforms={true}
-                                 preventCollision={true}
-                                 allowOverlap={true}
-                                 isBounded={true}
-                                 isDroppable={true}
-                                 style={{height: window.innerHeight - 64}}
-                                 width={window.innerWidth - 600}>
-                    {this.generateElement()}
-                </ReactGridLayout>
+                preview
+                {/*<ReactGridLayout className="layout"*/}
+                {/*    // layout={layoutConfig}*/}
+                {/*                 cols={48}*/}
+                {/*                 rowHeight={10}*/}
+                {/*                 margin={[15, 15]}*/}
+                {/*                 useCSSTransforms={true}*/}
+                {/*                 preventCollision={true}*/}
+                {/*                 allowOverlap={true}*/}
+                {/*                 isBounded={true}*/}
+                {/*                 isDroppable={true}*/}
+                {/*                 style={{height: window.innerHeight - 64}}*/}
+                {/*                 width={window.innerWidth - 600}>*/}
+                {/*    {this.generateElement()}*/}
+                {/*</ReactGridLayout>*/}
             </div>
         );
     }

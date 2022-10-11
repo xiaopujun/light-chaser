@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './style/LightChaserList.less';
 import {Modal} from "antd";
+import {withRouter} from "react-router-dom";
 
 
 class LightChaserList extends Component<any> {
@@ -15,7 +16,7 @@ class LightChaserList extends Component<any> {
     }
 
     addNewBigScreenOk = () => {
-
+        this.props.history.push('/designer');
     }
 
     addNewBigScreenCancel = () => {
@@ -78,4 +79,4 @@ class LightChaserList extends Component<any> {
     }
 }
 
-export default LightChaserList;
+export default withRouter(LightChaserList);

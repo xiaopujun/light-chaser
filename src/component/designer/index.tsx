@@ -14,6 +14,7 @@ import {
 } from "../../redux/actions/LayoutDesigner";
 import DesignerHeader from "./Head";
 import RightSlideBox from "./Right";
+import {withRouter} from "react-router-dom";
 
 
 const {Header, Sider, Content} = Layout;
@@ -52,4 +53,4 @@ export default connect(
         updateElemChartSet,
         updateElemBaseSet
     }
-)(DataXLayoutDesigner)
+)(withRouter(DataXLayoutDesigner))
