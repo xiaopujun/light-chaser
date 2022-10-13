@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import './style/LightChaserList.less';
-import {Modal} from "antd";
+import '../designer/style/LightChaserList.less';
+import {Input, InputNumber, Modal} from "antd";
 import {withRouter} from "react-router-dom";
+import AddNewScreenDialog from "./AddNewScreenDialog";
 
 
 class LightChaserList extends Component<any> {
@@ -68,12 +69,8 @@ class LightChaserList extends Component<any> {
                         <div style={{width: width, height: height}} className={'lc-list-content-data'}>大屏12</div>
                     </div>
                 </div>
-                <Modal title="Basic Modal" visible={addNewScreen} onOk={this.addNewBigScreenOk}
-                       onCancel={this.addNewBigScreenCancel}>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                </Modal>
+                <AddNewScreenDialog onOk={this.addNewBigScreenOk} onCancel={this.addNewBigScreenCancel}
+                                    visible={addNewScreen}/>
             </div>
         );
     }

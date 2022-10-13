@@ -3,8 +3,8 @@ import 'antd/dist/antd.min.css';
 import './App.less';
 import {Route, Switch} from "react-router-dom";
 import LCDesigner from "./component/designer";
-import Preview from "./component/designer/Preview";
-import LightChaserList from "./component/designer/LightChaserList";
+import Preview from "./component/preview/Preview";
+import LightChaserList from "./component/list/LightChaserList";
 
 class App extends Component<any> {
     render() {
