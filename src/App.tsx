@@ -11,7 +11,7 @@ class App extends Component<any> {
         return (
             <Switch>
                 <Route path={'/list'} component={LightChaserList}/>
-                <Route path={'/designer'} exact={true} component={LCDesigner}/>
+                <Route path={'/designer'} component={LCDesigner}/>
                 <Route path={'/preview'} component={Preview}/>
             </Switch>
         );

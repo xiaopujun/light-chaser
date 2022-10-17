@@ -19,6 +19,10 @@ export interface Action {
  * 布局设计器，store类型定义
  */
 export interface LCDesignerProps {
+    id?: number,
+    screenName: string,
+    screenWidth: number,
+    screenHeight: number,
     count: number;//当前画板中组件总个数
     active: {     //激活组件信息
         id: number;

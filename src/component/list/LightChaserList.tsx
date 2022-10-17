@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import '../designer/style/LightChaserList.less';
-import {Input, InputNumber, Modal} from "antd";
 import {withRouter} from "react-router-dom";
 import AddNewScreenDialog from "./AddNewScreenDialog";
 
@@ -8,7 +7,8 @@ import AddNewScreenDialog from "./AddNewScreenDialog";
 class LightChaserList extends Component<any> {
 
     state: any = {
-        addNewScreen: false
+        addNewScreen: false,
+        addNewData: {}
     }
 
     addNewBigScreen = () => {
@@ -17,22 +17,34 @@ class LightChaserList extends Component<any> {
     }
 
     addNewBigScreenOk = () => {
-        this.props.history.push('/designer');
+        const {addNewData} = this.state;
+        this.props.history.push('/designer', {...addNewData, action: 'add'});
     }
 
     addNewBigScreenCancel = () => {
         const {addNewScreen} = this.state;
-        this.setState({addNewScreen: !addNewScreen})
+        this.setState({addNewScreen: !addNewScreen, addNewData: {}})
     }
 
     addNewDataSource = () => {
         alert("add new data source")
     }
 
+    addNewScreenDialogChanged = (data: { [k: string]: [v: any] }) => {
+        const {addNewData} = this.state;
+        this.setState({addNewData: {...addNewData, ...data}});
+    }
+
+    openScreen = (e: any) => {
+        this.props.history.push('/designer', {id: parseInt(e.target.id), action: 'update'});
+    }
+
     render() {
         const {addNewScreen} = this.state;
         let width = (window.innerWidth - 105 - (5 * 20)) / 5;
         let height = width * (9 / 16);
+        //获取本地数据
+        const lightChaser = JSON.parse(window.localStorage.lightChaser || '[]');
         return (
             <div className={'light-chaser-list'}>
                 <div className={'lc-list-head'}>
@@ -55,22 +67,17 @@ class LightChaserList extends Component<any> {
                 <div className={'lc-list-content'}>
                     <div className={'lc-list-content-title'} style={{color: '#00fffb'}}>数据大屏：</div>
                     <div className={'lc-list-content-datas'}>
-                        <div style={{width: width, height: height}} className={'lc-list-content-data'}>大屏1</div>
-                        <div style={{width: width, height: height}} className={'lc-list-content-data'}>大屏2</div>
-                        <div style={{width: width, height: height}} className={'lc-list-content-data'}>大屏3</div>
-                        <div style={{width: width, height: height}} className={'lc-list-content-data'}>大屏4</div>
-                        <div style={{width: width, height: height}} className={'lc-list-content-data'}>大屏5</div>
-                        <div style={{width: width, height: height}} className={'lc-list-content-data'}>大屏6</div>
-                        <div style={{width: width, height: height}} className={'lc-list-content-data'}>大屏7</div>
-                        <div style={{width: width, height: height}} className={'lc-list-content-data'}>大屏8</div>
-                        <div style={{width: width, height: height}} className={'lc-list-content-data'}>大屏9</div>
-                        <div style={{width: width, height: height}} className={'lc-list-content-data'}>大屏10</div>
-                        <div style={{width: width, height: height}} className={'lc-list-content-data'}>大屏11</div>
-                        <div style={{width: width, height: height}} className={'lc-list-content-data'}>大屏12</div>
+                        {lightChaser && lightChaser.map((item: any) => {
+                            return (
+                                <div key={item.id + ''} style={{width: width, height: height}} onClick={this.openScreen}
+                                     id={item.id + ''}
+                                     className={'lc-list-content-data'}>{item.screenName}</div>
+                            )
+                        })}
                     </div>
                 </div>
                 <AddNewScreenDialog onOk={this.addNewBigScreenOk} onCancel={this.addNewBigScreenCancel}
-                                    visible={addNewScreen}/>
+                                    visible={addNewScreen} onChange={this.addNewScreenDialogChanged}/>
             </div>
         );
     }

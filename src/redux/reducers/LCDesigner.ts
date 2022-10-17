@@ -1,7 +1,7 @@
 import {
     ACTIVE_ELEM,
     ADD_ITEM,
-    DELETE_ITEM,
+    DELETE_ITEM, INIT_STORE,
     UPDATE_DRAWER_VISIBLE,
     UPDATE_ELEM_BASE_SET,
     UPDATE_ELEM_CHART_SET,
@@ -15,6 +15,10 @@ import * as _ from 'lodash'
  * 初始化的布局设计器状态
  */
 const initState: LCDesignerProps = {
+    id: -1,
+    screenName: '数据大屏',
+    screenWidth: 1920,
+    screenHeight: 1080,
     count: 0,
     active: {
         id: -1,    //激活的组件id
@@ -34,6 +38,8 @@ const initState: LCDesignerProps = {
 export default function LCDesignerReducer(preState: LCDesignerProps = initState, action: Action) {
     const {type, data} = action;
     switch (type) {
+        case INIT_STORE:                                     //初始化store
+            return initStore(preState, data);
         case ADD_ITEM:                                      //添加新的组件到画布中
             return addItem(preState, data);
         case DELETE_ITEM:                                   //从画布中删除组件
@@ -52,6 +58,17 @@ export default function LCDesignerReducer(preState: LCDesignerProps = initState,
             return preState;
     }
 }
+
+/**
+ * 初始化store
+ * @param preState
+ * @param data
+ * @returns
+ */
+function initStore(preState: LCDesignerProps, data: any) {
+    return {...preState, ...data};
+}
+
 
 /**
  * 想布局设计器中添加组件

@@ -1,7 +1,12 @@
 import {
     ACTIVE_ELEM,
     ADD_ITEM,
-    DELETE_ITEM, UPDATE_DRAWER_VISIBLE, UPDATE_ELEM_BASE_SET, UPDATE_ELEM_CHART_SET, UPDATE_ITEM_LAYOUT,
+    DELETE_ITEM,
+    INIT_STORE,
+    UPDATE_DRAWER_VISIBLE,
+    UPDATE_ELEM_BASE_SET,
+    UPDATE_ELEM_CHART_SET,
+    UPDATE_ITEM_LAYOUT,
 } from '../constant';
 
 /**
@@ -9,6 +14,9 @@ import {
  * @param data
  * @returns {{data, type: string}}
  */
+
+//初始化store
+export const initStore = (data: any) => ({type: INIT_STORE, data});
 //添加组件
 export const addItem = (data: any) => ({type: ADD_ITEM, data});
 //删除组件

@@ -1,6 +1,8 @@
 .lc-new-screen-dialog {
   color: #00c2d5;
-  background-color: #0000;
+  background: rgba(29, 29, 31, 0.5);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-radius: 10px;
 
   .ant-modal-content {
     background-color: #0000;
@@ -35,6 +37,12 @@
           border: 1px solid #1094a4;
           transition: border 0.7s;
         }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+        }
+
 
         input:hover, input:active, input:checked {
           border: 1px solid #14e6ff;

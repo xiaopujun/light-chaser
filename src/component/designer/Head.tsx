@@ -4,28 +4,16 @@ import {
     EyeOutlined,
     GithubOutlined,
     GoogleOutlined,
-    PhoneOutlined, SaveOutlined,
+    PhoneOutlined,
+    SaveOutlined,
     SettingOutlined,
     SnippetsOutlined
 } from "@ant-design/icons";
 import {withRouter} from "react-router-dom";
+import {mapToJsonStr} from "../../utils/DateUtil";
 
 class DesignerHeader extends Component<any> {
 
-    _strMapToObj(strMap: any) {
-        let obj = Object.create(null);
-        for (let [k, v] of strMap) {
-            obj[k] = v;
-        }
-        return obj;
-    }
-
-    /**
-     *map转换为json
-     */
-    _mapToJson(map: any) {
-        return JSON.stringify(this._strMapToObj(map));
-    }
 
     save = (e: any) => {
         let localStorage = window.localStorage;
@@ -35,11 +23,14 @@ class DesignerHeader extends Component<any> {
             id = tempLC.length + 1;
             lightChaser = tempLC;
         }
-        const {chartConfigMap, layoutConfig} = this.props.LCDesignerStore;
+        const {chartConfigMap, layoutConfig, screenName, screenWidth, screenHeight} = this.props.LCDesignerStore;
         let config = {
             id,
-            "chartConfigMap": this._mapToJson(chartConfigMap),
-            "layoutConfig": JSON.stringify(layoutConfig)
+            "chartConfigMap": mapToJsonStr(chartConfigMap),
+            "layoutConfig": JSON.stringify(layoutConfig),
+            screenHeight,
+            screenWidth,
+            screenName
         }
         lightChaser.push(config);
         localStorage.setItem("lightChaser", JSON.stringify(lightChaser));
