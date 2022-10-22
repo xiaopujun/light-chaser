@@ -1,11 +1,12 @@
 import {
     ACTIVE_ELEM,
     ADD_ITEM,
-    DELETE_ITEM, INIT_STORE,
+    DELETE_ITEM,
     UPDATE_DRAWER_VISIBLE,
     UPDATE_ELEM_BASE_SET,
     UPDATE_ELEM_CHART_SET,
     UPDATE_ITEM_LAYOUT,
+    UPDATE_LC_DESIGNER_STORE,
 } from '../constant';
 import {Action, LCDesignerProps} from "../../global/types";
 import {getChartInitData} from "../../utils/ChartUtil";
@@ -16,9 +17,18 @@ import * as _ from 'lodash'
  */
 const initState: LCDesignerProps = {
     id: -1,
-    screenName: '数据大屏',
-    screenWidth: 1920,
-    screenHeight: 1080,
+    globalSet: {
+        saveType: 'local',//数据存储方式 local(本地）server（远程服务）
+        screenRatio: '',//屏幕比例
+        designerState: '',//设计器状态 edit(编辑）readonly(只读)
+        screenName: '数据大屏',
+        screenWidth: 1920,
+        screenHeight: 1080,
+        elemInterval: 0,//元素间隔
+        columns: 0,//列个数
+        elemBaseLineHeight: 0,//元素基准高度
+        elemCount: 0,//元素个数
+    },
     count: 0,
     active: {
         id: -1,    //激活的组件id
@@ -38,8 +48,8 @@ const initState: LCDesignerProps = {
 export default function LCDesignerReducer(preState: LCDesignerProps = initState, action: Action) {
     const {type, data} = action;
     switch (type) {
-        case INIT_STORE:                                     //初始化store
-            return initStore(preState, data);
+        case UPDATE_LC_DESIGNER_STORE:                                     //初始化store
+            return updateLCDesignerStore(preState, data);
         case ADD_ITEM:                                      //添加新的组件到画布中
             return addItem(preState, data);
         case DELETE_ITEM:                                   //从画布中删除组件
@@ -65,7 +75,7 @@ export default function LCDesignerReducer(preState: LCDesignerProps = initState,
  * @param data
  * @returns
  */
-function initStore(preState: LCDesignerProps, data: any) {
+function updateLCDesignerStore(preState: LCDesignerProps, data: any) {
     return {...preState, ...data};
 }
 

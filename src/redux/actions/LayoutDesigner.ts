@@ -2,11 +2,11 @@ import {
     ACTIVE_ELEM,
     ADD_ITEM,
     DELETE_ITEM,
-    INIT_STORE,
     UPDATE_DRAWER_VISIBLE,
     UPDATE_ELEM_BASE_SET,
     UPDATE_ELEM_CHART_SET,
     UPDATE_ITEM_LAYOUT,
+    UPDATE_LC_DESIGNER_STORE,
 } from '../constant';
 
 /**
@@ -16,7 +16,7 @@ import {
  */
 
 //初始化store
-export const initStore = (data: any) => ({type: INIT_STORE, data});
+export const updateLCDesignerStore = (data: any) => ({type: UPDATE_LC_DESIGNER_STORE, data});
 //添加组件
 export const addItem = (data: any) => ({type: ADD_ITEM, data});
 //删除组件

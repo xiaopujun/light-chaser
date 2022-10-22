@@ -19,10 +19,19 @@ export interface Action {
  * 布局设计器，store类型定义
  */
 export interface LCDesignerProps {
-    id?: number,
-    screenName: string,
-    screenWidth: number,
-    screenHeight: number,
+    id?: number, //大屏id
+    globalSet: {
+        saveType: string,//数据存储方式 local(本地）server（远程服务）
+        screenRatio: string,//屏幕比例
+        designerState: string,//设计器状态 edit(编辑）readonly(只读)
+        screenName: string,
+        screenWidth: number,
+        screenHeight: number,
+        elemInterval: number,//元素间隔
+        columns: number,//列个数
+        elemBaseLineHeight: number,//元素基准高度
+        elemCount: number,//元素个数
+    },
     count: number;//当前画板中组件总个数
     active: {     //激活组件信息
         id: number;

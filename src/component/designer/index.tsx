@@ -7,7 +7,7 @@ import {
     activeElem,
     addItem,
     deleteItem,
-    initStore,
+    updateLCDesignerStore,
     updateDrawerVisible,
     updateElemBaseSet,
     updateElemChartSet,
@@ -23,12 +23,26 @@ const {Header, Sider, Content} = Layout;
 
 class LCDesigner extends Component<any> {
 
+    constructor(props: any) {
+        super(props);
+
+    }
+
+    componentWillUnmount() {
+        // window.removeEventListener("beforeunload", () => {
+        // })
+    }
+
     componentDidMount() {
-        const {initStore} = this.props;
+        // window.addEventListener("beforeunload", (event) => {
+        //     event.preventDefault();
+        //     event.returnValue = '';
+        // })
+        const {updateLCDesignerStore} = this.props;
         const {action, screenName, screenWidth, screenHeight, id} = this.props.location.state;
         switch (action) {
             case 'add':
-                initStore({
+                updateLCDesignerStore({
                     screenName,
                     screenWidth: parseInt(screenWidth),
                     screenHeight: parseInt(screenHeight)
@@ -47,11 +61,13 @@ class LCDesigner extends Component<any> {
                     screenName: name,
                     screenWidth: width,
                     screenHeight: height,
+                    count,
                     chartConfigMap,
                     layoutConfig
                 } = config;
-                initStore({
+                updateLCDesignerStore({
                     id: screenId,
+                    count,
                     screenName: name,
                     screenWidth: width,
                     screenHeight: height,
@@ -87,7 +103,7 @@ class LCDesigner extends Component<any> {
 export default connect(
     (state: any) => ({LCDesignerStore: state?.LCDesignerStore || {}}),
     {
-        initStore,
+        updateLCDesignerStore,
         addItem,
         deleteItem,
         updateItemLayout,
