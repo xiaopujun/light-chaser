@@ -29,7 +29,6 @@ const initState: LCDesignerProps = {
         elemBaseLineHeight: 0,//元素基准高度
         elemCount: 0,//元素个数
     },
-    count: 0,
     active: {
         id: -1,    //激活的组件id
         type: "",    //激活的组件类型
@@ -48,7 +47,7 @@ const initState: LCDesignerProps = {
 export default function LCDesignerReducer(preState: LCDesignerProps = initState, action: Action) {
     const {type, data} = action;
     switch (type) {
-        case UPDATE_LC_DESIGNER_STORE:                                     //初始化store
+        case UPDATE_LC_DESIGNER_STORE:                      //初始化store
             return updateLCDesignerStore(preState, data);
         case ADD_ITEM:                                      //添加新的组件到画布中
             return addItem(preState, data);
@@ -87,15 +86,15 @@ function updateLCDesignerStore(preState: LCDesignerProps, data: any) {
  * @returns {{layoutConfig, chartConfig, count}}
  */
 function addItem(preState: LCDesignerProps, data: any) {
-    let {count, layoutConfig, chartConfigMap} = preState;
+    let {globalSet, layoutConfig, chartConfigMap} = preState;
     const {name: type} = data;
     //根据类型获取对应图表的初始化数据
     let chartInitData = getChartInitData(type);
     layoutConfig.push(data);
-    chartConfigMap.set(count, chartInitData);
-    count++; //组件数增加
+    chartConfigMap.set(globalSet.elemCount, chartInitData);
+    globalSet.elemCount++; //组件数增加
     //重组状态
-    return {...preState, ...{count, layoutConfig, chartConfigMap}};
+    return {...preState, ...{globalSet, layoutConfig, chartConfigMap}};
 }
 
 /**

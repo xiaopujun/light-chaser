@@ -17,11 +17,12 @@ class DesignerHeader extends Component<any> {
 
     save = (e: any) => {
         const {LCDesignerStore, updateLCDesignerStore, location} = this.props;
-        let {id = -1, count} = LCDesignerStore;
+        let {id = -1, globalSet} = LCDesignerStore;
+        let {elemCount} = globalSet;
         let lightChaser = window.localStorage.lightChaser;
         let config = {
             id,
-            count,
+            globalSet,
             "chartConfigMap": mapToJsonStr(this.props.LCDesignerStore.chartConfigMap),
             "layoutConfig": JSON.stringify(this.props.LCDesignerStore.layoutConfig),
             screenHeight: this.props.LCDesignerStore.screenHeight,
@@ -47,7 +48,13 @@ class DesignerHeader extends Component<any> {
             //修改路由参数，新增变为更新
             const {action} = location.state;
             if (action == 'add') {
-                this.props.history.replace("/designer", {...location.state, ...{action: 'update', id, count}});
+                this.props.history.replace("/designer", {
+                    ...location.state, ...{
+                        action: 'update',
+                        id,
+                        globalSet,
+                    }
+                });
             }
         } else {
             //更新

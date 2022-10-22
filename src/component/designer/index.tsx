@@ -61,13 +61,13 @@ class LCDesigner extends Component<any> {
                     screenName: name,
                     screenWidth: width,
                     screenHeight: height,
-                    count,
+                    globalSet,
                     chartConfigMap,
                     layoutConfig
                 } = config;
                 updateLCDesignerStore({
                     id: screenId,
-                    count,
+                    globalSet,
                     screenName: name,
                     screenWidth: width,
                     screenHeight: height,

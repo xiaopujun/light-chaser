@@ -32,7 +32,6 @@ export interface LCDesignerProps {
         elemBaseLineHeight: number,//元素基准高度
         elemCount: number,//元素个数
     },
-    count: number;//当前画板中组件总个数
     active: {     //激活组件信息
         id: number;
         type: string;

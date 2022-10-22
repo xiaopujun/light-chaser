@@ -51,8 +51,9 @@ export default class LCLayoutContent extends React.Component<any, any> {
      */
     onDrop = (layout: any, layoutItem: any, _event: any) => {
         const {addItem, LCDesignerStore} = this.props;
+        const {globalSet} = LCDesignerStore;
         const chartName = _event.dataTransfer.getData('chartName');
-        const item = {...layoutItem, ...{i: LCDesignerStore?.count + "", id: LCDesignerStore?.count, name: chartName}}
+        const item = {...layoutItem, ...{i: globalSet?.elemCount + "", id: globalSet?.elemCount, name: chartName}}
         addItem(item);
 
         if (this.rgl != null) {
