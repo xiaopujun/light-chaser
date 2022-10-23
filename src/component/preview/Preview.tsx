@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import getChartsTemplate from "../charts/ComponentChartInit";
-import getBorder from "../border";
 
 class Preview extends Component<any> {
 

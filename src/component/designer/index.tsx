@@ -7,16 +7,15 @@ import {
     activeElem,
     addItem,
     deleteItem,
-    updateLCDesignerStore,
     updateDrawerVisible,
     updateElemBaseSet,
     updateElemChartSet,
-    updateItemLayout
+    updateItemLayout,
+    updateLCDesignerStore
 } from "../../redux/actions/LayoutDesigner";
 import DesignerHeader from "./Head";
 import RightSlideBox from "./Right";
 import {withRouter} from "react-router-dom";
-import {objToMap} from "../../utils/DateUtil";
 
 
 const {Header, Sider, Content} = Layout;
@@ -43,9 +42,14 @@ class LCDesigner extends Component<any> {
         switch (action) {
             case 'add':
                 updateLCDesignerStore({
-                    screenName,
-                    screenWidth: parseInt(screenWidth),
-                    screenHeight: parseInt(screenHeight)
+                    globalSet: {
+                        screenName,
+                        screenWidth: parseInt(screenWidth),
+                        screenHeight: parseInt(screenHeight),
+                        saveType: 'local'
+                    },
+                    chartConfigs: {},
+                    layoutConfig: []
                 })
                 break;
             case 'update':

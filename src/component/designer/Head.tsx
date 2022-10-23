@@ -10,65 +10,41 @@ import {
     SnippetsOutlined
 } from "@ant-design/icons";
 import {withRouter} from "react-router-dom";
-import {mapToJsonStr} from "../../utils/DateUtil";
-import {json} from "stream/consumers";
+import {localSave, localUpdate} from "../../local/LocalStorageUtil";
 
 class DesignerHeader extends Component<any> {
 
+    updateRouteState = (id: number) => {
+        const {location, LCDesignerStore} = this.props;
+        const {action} = location.state;
+        let {globalSet} = LCDesignerStore;
+        if (action == 'add') {
+            this.props.history.replace("/designer", {
+                ...location.state, ...{
+                    action: 'update',
+                    id,
+                    globalSet,
+                }
+            });
+        }
+    }
 
     save = (e: any) => {
-        const {LCDesignerStore, updateLCDesignerStore, location} = this.props;
+        const {LCDesignerStore, updateLCDesignerStore} = this.props;
         let {id = -1, globalSet} = LCDesignerStore;
-        let {elemCount} = globalSet;
-        let lightChaser = window.localStorage.lightChaser;
-        let config = {
-            id,
-            globalSet,
-            "chartConfigs": JSON.stringify(this.props.LCDesignerStore.chartConfigs),
-            "layoutConfig": JSON.stringify(this.props.LCDesignerStore.layoutConfig),
-            screenHeight: this.props.LCDesignerStore.screenHeight,
-            screenWidth: this.props.LCDesignerStore.screenWidth,
-            screenName: this.props.LCDesignerStore.screenName
-        }
-        if (id == -1) {
-            //新增
-            id++;
-            config = {...config, ...{id}};
-            if (lightChaser == undefined) {
-                //无数据，需要初始化
-                lightChaser = new Array(config);
+        const {saveType} = globalSet;
+        if (saveType == 'local') {
+            if (id == -1) {
+                id = localSave(LCDesignerStore);
+                //更新id
+                updateLCDesignerStore({id});
+                //修改路由参数，新增变为更新
+                this.updateRouteState(id);
             } else {
-                //已有数据
-                let oldLightChaser = JSON.parse(lightChaser);
-                oldLightChaser.push(config);
+                localUpdate(LCDesignerStore);
             }
-            //保存到本地存储
-            localStorage.setItem("lightChaser", JSON.stringify(lightChaser));
-            //更新id
-            updateLCDesignerStore({id});
-            //修改路由参数，新增变为更新
-            const {action} = location.state;
-            if (action == 'add') {
-                this.props.history.replace("/designer", {
-                    ...location.state, ...{
-                        action: 'update',
-                        id,
-                        globalSet,
-                    }
-                });
-            }
-        } else {
-            //更新
-            let oldLightChaser = JSON.parse(lightChaser);
-            for (let i = 0; i < oldLightChaser.length; i++) {
-                if (oldLightChaser[i].id == id) {
-                    oldLightChaser[i] = config;
-                    break;
-                }
-            }
-            localStorage.setItem("lightChaser", JSON.stringify(oldLightChaser));
+            alert("save success");
         }
-        alert("save success")
     }
 
     preview = () => {

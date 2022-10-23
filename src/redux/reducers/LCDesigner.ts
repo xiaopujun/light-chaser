@@ -108,7 +108,7 @@ function deleteItem(preState: LCDesignerProps, data: any) {
     _.remove(layoutConfig, function (item) {
         return item?.id === data;
     })
-    delete chartConfigs[data+''];
+    delete chartConfigs[data + ''];
     if (data === active.id) {
         active.id = -1;
         active.type = "";
@@ -166,7 +166,7 @@ function updateDrawerVisible(preState: LCDesignerProps, data: any) {
 function updateElemBaseSet(preState: LCDesignerProps, data: any) {
     let {chartConfigs, active} = preState;
     const {id} = active;
-    let charConfig = chartConfigs[id+''];
+    let charConfig = chartConfigs[id + ''];
     let baseConfig = charConfig?.elemBaseProperties;
     charConfig.elemBaseProperties = {...baseConfig, ...data};
     return {...preState};
@@ -179,7 +179,7 @@ function updateElemBaseSet(preState: LCDesignerProps, data: any) {
  */
 function updateElemChartSet(preState: LCDesignerProps, data: any) {
     let {chartConfigs, active} = preState;
-    let activeConfig = chartConfigs[active?.id+''];
+    let activeConfig = chartConfigs[active?.id + ''];
     const activeCompName = active?.type;
     if (activeCompName === "AntdRadar") {
         activeConfig.chartProperties = {...activeConfig.chartProperties, ...data}
