@@ -1,25 +1,24 @@
 import React, {Component} from 'react';
-import ReactGridLayout from "react-grid-layout";
 import getChartsTemplate from "../charts/ComponentChartInit";
 import getBorder from "../border";
 
-class Preview extends Component {
+class Preview extends Component<any> {
 
     generateElement = () => {
-        const LCDesignerStore = null;
-        const {layoutConfig = [], chartConfigMap = new Map()} = LCDesignerStore!;
-        return layoutConfig.map((item: any) => {
-            let ElementChart = getChartsTemplate(item.name);
-            let borderType = chartConfigMap.get(parseInt(item.id)).elemBaseProperties.borderType;
-            let Border = getBorder(borderType);
-            return (
-                <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
-                    <Border {...this.props}>
-                        <ElementChart elemId={item?.id} {...this.props}/>
-                    </Border>
-                </div>
-            );
-        })
+        // const LCDesignerStore = null;
+        // const {layoutConfig = [], chartConfigs} = LCDesignerStore!;
+        // return layoutConfig.map((item: any) => {
+        //     let ElementChart = getChartsTemplate(item.name);
+        //     let borderType = chartConfigs[item.id].elemBaseProperties.borderType;
+        //     let Border = getBorder(borderType);
+        //     return (
+        //         <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
+        //             <Border {...this.props}>
+        //                 <ElementChart elemId={item?.id} {...this.props}/>
+        //             </Border>
+        //         </div>
+        //     );
+        // })
     }
 
     render() {

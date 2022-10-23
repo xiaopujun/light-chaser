@@ -6,12 +6,12 @@ import './style/FourAngleGlow.less';
  */
 class FourAngleGlowBorder extends Component<any> {
     render() {
-        const {active, chartConfigMap} = this.props.LCDesignerStore;
+        const {active, chartConfigs} = this.props.LCDesignerStore;
         const {
             fourAngleGlowColor,
             fourAngleGlowWidth,
             fourAngleGlowLength
-        } = chartConfigMap.get(active.id).elemBaseProperties;
+        } = chartConfigs[active.id + ''].elemBaseProperties;
         const fourAngleGlowConfig = {
             borderColor: fourAngleGlowColor,
             borderWidth: fourAngleGlowWidth,

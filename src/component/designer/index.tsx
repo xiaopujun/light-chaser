@@ -62,7 +62,7 @@ class LCDesigner extends Component<any> {
                     screenWidth: width,
                     screenHeight: height,
                     globalSet,
-                    chartConfigMap,
+                    chartConfigs,
                     layoutConfig
                 } = config;
                 updateLCDesignerStore({
@@ -71,7 +71,7 @@ class LCDesigner extends Component<any> {
                     screenName: name,
                     screenWidth: width,
                     screenHeight: height,
-                    chartConfigMap: objToMap(JSON.parse(chartConfigMap)),
+                    chartConfigs: JSON.parse(chartConfigs),
                     layoutConfig: JSON.parse(layoutConfig)
                 })
                 break;

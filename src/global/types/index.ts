@@ -36,7 +36,7 @@ export interface LCDesignerProps {
         id: number;
         type: string;
     };
-    chartConfigMap: Map<number, any>;
+    chartConfigs: any;
     layoutConfig: Array<any>;
     elemPropSetDialog: {
         visible: boolean;

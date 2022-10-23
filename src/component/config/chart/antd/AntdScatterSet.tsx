@@ -40,8 +40,8 @@ export default class AntdScatterSet extends Component<any> {
 
     render() {
         const {updateElemChartSet, LCDesignerStore} = this.props;
-        const {active, chartConfigMap} = LCDesignerStore;
-        let chartConfig = chartConfigMap.get(active?.id);
+        const {active, chartConfigs} = LCDesignerStore;
+        let chartConfig = chartConfigs[active?.id + ''];
         return (
             <div className={'elem-chart-config'}>
 

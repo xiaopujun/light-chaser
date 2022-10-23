@@ -30,39 +30,39 @@ class AntdBubbleSet extends Component<any> {
 
     render() {
         const {updateElemChartSet, LCDesignerStore} = this.props;
-        const {active, chartConfigMap} = LCDesignerStore;
-        let chartConfig = chartConfigMap.get(active?.id);
+        const {active, chartConfigs} = LCDesignerStore;
+        let chartConfig = chartConfigs[active?.id + ''];
         let paletteCount = getAntdDataSortCount(chartConfig.chartProperties.data, 'continent');
         return (
             <div className={'elem-chart-config'}>
 
-                    {/*图形填充色设置*/}
-                    <FillColor paletteCount={paletteCount} onChange={this.fillColorChanged}/>
-                    {/*点样式设置*/}
-                    <div className={'config-group'}>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>点元素尺寸：</label>
-                            <Slider defaultValue={[1, 20]} max={20} min={0}
-                                    range={true}
-                                    onChange={this.pointSizeChanged}
-                                    className={'lc-config-item-value'}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>点元素形状：</label>
-                            <Select className={'lc-config-item-value'} defaultValue={'circle'}
-                                    onChange={this.shapeChanged}>
-                                <Option value={'circle'}>circle</Option>
-                                <Option value={'square'}>square</Option>
-                                <Option value={'bowtie'}>bowtie</Option>
-                                <Option value={'diamond'}>diamond</Option>
-                                <Option value={'hexagon'}>hexagon</Option>
-                                <Option value={'triangle'}>triangle</Option>
-                                <Option value={'triangle-down'}>triangle-down</Option>
-                            </Select>
-                        </div>
+                {/*图形填充色设置*/}
+                <FillColor paletteCount={paletteCount} onChange={this.fillColorChanged}/>
+                {/*点样式设置*/}
+                <div className={'config-group'}>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>点元素尺寸：</label>
+                        <Slider defaultValue={[1, 20]} max={20} min={0}
+                                range={true}
+                                onChange={this.pointSizeChanged}
+                                className={'lc-config-item-value'}/>
                     </div>
-                    {/*直角坐标系配置*/}
-                    <RightAngleCoordinates chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>点元素形状：</label>
+                        <Select className={'lc-config-item-value'} defaultValue={'circle'}
+                                onChange={this.shapeChanged}>
+                            <Option value={'circle'}>circle</Option>
+                            <Option value={'square'}>square</Option>
+                            <Option value={'bowtie'}>bowtie</Option>
+                            <Option value={'diamond'}>diamond</Option>
+                            <Option value={'hexagon'}>hexagon</Option>
+                            <Option value={'triangle'}>triangle</Option>
+                            <Option value={'triangle-down'}>triangle-down</Option>
+                        </Select>
+                    </div>
+                </div>
+                {/*直角坐标系配置*/}
+                <RightAngleCoordinates chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
 
             </div>
         );

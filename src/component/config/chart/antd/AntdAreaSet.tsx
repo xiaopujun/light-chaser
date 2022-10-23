@@ -13,8 +13,8 @@ class AntdAreaSet extends Component<any> {
     render() {
         const {updateElemChartSet, LCDesignerStore} = this.props;
         const {active} = LCDesignerStore;
-        const {chartConfigMap} = LCDesignerStore;
-        let chartConfig = chartConfigMap.get(active?.id);
+        const {chartConfigs} = LCDesignerStore;
+        let chartConfig = chartConfigs[active?.id + ''];
         return (
             <div className={'elem-chart-config'}>
 

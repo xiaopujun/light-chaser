@@ -33,7 +33,7 @@ const initState: LCDesignerProps = {
         id: -1,    //激活的组件id
         type: "",    //激活的组件类型
     },
-    chartConfigMap: new Map(),//布局设计器中的图表组件列表，每次设置图表样式或数据时更新此状态中的数据来更新渲染
+    chartConfigs: {},//布局设计器中的图表组件列表，每次设置图表样式或数据时更新此状态中的数据来更新渲染
     layoutConfig: [],//布局配置数据，用于控制图表在页面中的整体布局位置
     elemPropSetDialog: {
         visible: false
@@ -86,15 +86,15 @@ function updateLCDesignerStore(preState: LCDesignerProps, data: any) {
  * @returns {{layoutConfig, chartConfig, count}}
  */
 function addItem(preState: LCDesignerProps, data: any) {
-    let {globalSet, layoutConfig, chartConfigMap} = preState;
+    let {globalSet, layoutConfig, chartConfigs} = preState;
     const {name: type} = data;
     //根据类型获取对应图表的初始化数据
     let chartInitData = getChartInitData(type);
     layoutConfig.push(data);
-    chartConfigMap.set(globalSet.elemCount, chartInitData);
+    chartConfigs[globalSet.elemCount + ""] = chartInitData;
     globalSet.elemCount++; //组件数增加
     //重组状态
-    return {...preState, ...{globalSet, layoutConfig, chartConfigMap}};
+    return {...preState, ...{globalSet, layoutConfig, chartConfigs}};
 }
 
 /**
@@ -104,11 +104,11 @@ function addItem(preState: LCDesignerProps, data: any) {
  */
 function deleteItem(preState: LCDesignerProps, data: any) {
     data = parseInt(data);
-    let {layoutConfig, chartConfigMap, active} = preState;
+    let {layoutConfig, chartConfigs, active} = preState;
     _.remove(layoutConfig, function (item) {
         return item?.id === data;
     })
-    chartConfigMap.delete(data);
+    delete chartConfigs[data+''];
     if (data === active.id) {
         active.id = -1;
         active.type = "";
@@ -164,9 +164,9 @@ function updateDrawerVisible(preState: LCDesignerProps, data: any) {
  * @param data
  */
 function updateElemBaseSet(preState: LCDesignerProps, data: any) {
-    let {chartConfigMap, active} = preState;
+    let {chartConfigs, active} = preState;
     const {id} = active;
-    let charConfig = chartConfigMap.get(id);
+    let charConfig = chartConfigs[id+''];
     let baseConfig = charConfig?.elemBaseProperties;
     charConfig.elemBaseProperties = {...baseConfig, ...data};
     return {...preState};
@@ -178,8 +178,8 @@ function updateElemBaseSet(preState: LCDesignerProps, data: any) {
  * @param data
  */
 function updateElemChartSet(preState: LCDesignerProps, data: any) {
-    let {chartConfigMap, active} = preState;
-    let activeConfig = chartConfigMap.get(active?.id);
+    let {chartConfigs, active} = preState;
+    let activeConfig = chartConfigs[active?.id+''];
     const activeCompName = active?.type;
     if (activeCompName === "AntdRadar") {
         activeConfig.chartProperties = {...activeConfig.chartProperties, ...data}

@@ -47,8 +47,8 @@ export default class AntdLine extends Component<any, any> {
 
     render() {
         const {LCDesignerStore, elemId} = this.props;
-        const {chartConfigMap, layoutConfig} = LCDesignerStore;
-        const config = chartConfigMap?.get(elemId);
+        const {chartConfigs, layoutConfig} = LCDesignerStore;
+        const config = chartConfigs[elemId + ''];
         const {chartProperties, elemBaseProperties} = config;
         let chartName = "";
         for (let i = 0; i < layoutConfig.length; i++) {

@@ -11,6 +11,7 @@ import {
 } from "@ant-design/icons";
 import {withRouter} from "react-router-dom";
 import {mapToJsonStr} from "../../utils/DateUtil";
+import {json} from "stream/consumers";
 
 class DesignerHeader extends Component<any> {
 
@@ -23,7 +24,7 @@ class DesignerHeader extends Component<any> {
         let config = {
             id,
             globalSet,
-            "chartConfigMap": mapToJsonStr(this.props.LCDesignerStore.chartConfigMap),
+            "chartConfigs": JSON.stringify(this.props.LCDesignerStore.chartConfigs),
             "layoutConfig": JSON.stringify(this.props.LCDesignerStore.layoutConfig),
             screenHeight: this.props.LCDesignerStore.screenHeight,
             screenWidth: this.props.LCDesignerStore.screenWidth,

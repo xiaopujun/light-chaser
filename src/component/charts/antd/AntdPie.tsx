@@ -10,8 +10,8 @@ export default class AntdPie extends Component<any, any> {
 
     render() {
         const {LCDesignerStore, elemId} = this.props;
-        const {chartConfigMap} = LCDesignerStore;
-        const config = chartConfigMap?.get(elemId);
+        const {chartConfigs} = LCDesignerStore;
+        const config = chartConfigs[elemId + ''];
         const {chartProperties, elemBaseProperties} = config;
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...elemBaseProperties}}>

@@ -17,19 +17,19 @@ class AntdFoldLineSet extends Component<any> {
 
     render() {
         const {updateElemChartSet, LCDesignerStore} = this.props;
-        const {active, chartConfigMap} = LCDesignerStore;
-        let chartConfig = chartConfigMap.get(active?.id);
+        const {active, chartConfigs} = LCDesignerStore;
+        let chartConfig = chartConfigs[active?.id + ''];
         return (
             <div className={'elem-chart-config'}>
 
-                    {/*图形填充色设置*/}
-                    <FillColor paletteCount={1} onChange={this.fillColorChanged}/>
-                    {/*图例配置*/}
-                    <Legend chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
-                    {/*直角坐标系配置*/}
-                    <RightAngleCoordinates chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
-                    {/*条形图单条宽度配置*/}
-                    <ColumnWidth updateElemChartSet={updateElemChartSet}/>
+                {/*图形填充色设置*/}
+                <FillColor paletteCount={1} onChange={this.fillColorChanged}/>
+                {/*图例配置*/}
+                <Legend chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
+                {/*直角坐标系配置*/}
+                <RightAngleCoordinates chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
+                {/*条形图单条宽度配置*/}
+                <ColumnWidth updateElemChartSet={updateElemChartSet}/>
 
             </div>
         );

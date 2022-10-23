@@ -25,8 +25,8 @@ export default class AntdScatter extends Component<any, any> {
     render() {
         //todo name属性为演示获取demo数据使用，后续要去掉
         const {LCDesignerStore, elemId} = this.props;
-        const {chartConfigMap, layoutConfig} = LCDesignerStore;
-        const config = chartConfigMap?.get(elemId);
+        const {chartConfigs,layoutConfig} = LCDesignerStore;
+        const config = chartConfigs[elemId + ''];
         let name = "";
         for (let i = 0; i < layoutConfig.length; i++) {
             if (layoutConfig[i].id === elemId) {

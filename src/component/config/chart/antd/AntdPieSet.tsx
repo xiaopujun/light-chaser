@@ -15,18 +15,18 @@ class AntdPieSet extends Component<any> {
     render() {
         const {updateElemChartSet, LCDesignerStore} = this.props;
         const {active} = LCDesignerStore;
-        const {chartConfigMap} = LCDesignerStore;
-        let chartConfig = chartConfigMap.get(active?.id);
+        const {chartConfigs} = LCDesignerStore;
+        let chartConfig = chartConfigs[active?.id + ""];
         let colorPickerNumber = chartConfig.chartProperties.data.length;
         return (
             <div className={'elem-chart-config'}>
 
-                    {/*图形填充色设置*/}
-                    <FillColor onChange={this.fillColorChanged} paletteCount={colorPickerNumber}/>
-                    {/*图例配置*/}
-                    <Legend chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
-                    {/*极坐标系*/}
-                    <PolarCoordinateSystem updateElemChartSet={updateElemChartSet}/>
+                {/*图形填充色设置*/}
+                <FillColor onChange={this.fillColorChanged} paletteCount={colorPickerNumber}/>
+                {/*图例配置*/}
+                <Legend chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
+                {/*极坐标系*/}
+                <PolarCoordinateSystem updateElemChartSet={updateElemChartSet}/>
 
             </div>
         );
