@@ -1,6 +1,6 @@
 import {
     ACTIVE_ELEM,
-    ADD_ITEM,
+    ADD_ITEM, CLEAR_LC_DESIGNER_STORE,
     DELETE_ITEM,
     UPDATE_DRAWER_VISIBLE,
     UPDATE_ELEM_BASE_SET,
@@ -11,6 +11,7 @@ import {
 import {Action, LCDesignerProps} from "../../global/types";
 import {getChartInitData} from "../../utils/ChartUtil";
 import * as _ from 'lodash'
+import deepmerge from "deepmerge";
 
 /**
  * 初始化的布局设计器状态
@@ -49,6 +50,8 @@ export default function LCDesignerReducer(preState: LCDesignerProps = initState,
     switch (type) {
         case UPDATE_LC_DESIGNER_STORE:                      //初始化store
             return updateLCDesignerStore(preState, data);
+        case CLEAR_LC_DESIGNER_STORE:                      //清除store
+            return clearLCDesignerStore(preState, data);
         case ADD_ITEM:                                      //添加新的组件到画布中
             return addItem(preState, data);
         case DELETE_ITEM:                                   //从画布中删除组件
@@ -69,13 +72,24 @@ export default function LCDesignerReducer(preState: LCDesignerProps = initState,
 }
 
 /**
+ * 清除store
+ */
+function clearLCDesignerStore(preState: LCDesignerProps, data: any) {
+    return initState;
+}
+
+
+/**
  * 初始化store
  * @param preState
  * @param data
  * @returns
  */
 function updateLCDesignerStore(preState: LCDesignerProps, data: any) {
-    return {...preState, ...data};
+    let res = {...deepmerge(preState, data)};
+    let a = {a: 'te', b: 12}
+    let c = deepmerge(a, {});
+    return res;
 }
 
 

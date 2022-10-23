@@ -1,6 +1,6 @@
 import {
     ACTIVE_ELEM,
-    ADD_ITEM,
+    ADD_ITEM, CLEAR_LC_DESIGNER_STORE,
     DELETE_ITEM,
     UPDATE_DRAWER_VISIBLE,
     UPDATE_ELEM_BASE_SET,
@@ -17,6 +17,8 @@ import {
 
 //初始化store
 export const updateLCDesignerStore = (data: any) => ({type: UPDATE_LC_DESIGNER_STORE, data});
+//清除store
+export const clearLCDesignerStore = (data: any) => ({type: CLEAR_LC_DESIGNER_STORE, data});
 //添加组件
 export const addItem = (data: any) => ({type: ADD_ITEM, data});
 //删除组件

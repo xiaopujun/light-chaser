@@ -6,6 +6,7 @@
  * 定义layoutDesigner的常量
  */
 export const UPDATE_LC_DESIGNER_STORE = 'update_lc_designer_store';
+export const CLEAR_LC_DESIGNER_STORE = 'clear_lc_designer_store';
 export const ADD_ITEM = 'add_item';
 export const DELETE_ITEM = 'delete_item';
 export const UPDATE_ITEM_LAYOUT = 'update_item_layout';

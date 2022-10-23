@@ -25,14 +25,17 @@ export const localSave = (LCDesignerStore: LCDesignerProps) => {
     let lightChaser = window.localStorage.lightChaser;
     let config = buildConfig(LCDesignerStore);
     //新增
-    id++;
-    config = {...config, ...{id}};
+
     if (lightChaser == undefined) {
+        id++;
+        config = {...config, ...{id}};
         //无数据，需要初始化
         lightChaser = new Array(config);
     } else {
         //已有数据
         lightChaser = JSON.parse(lightChaser);
+        id = lightChaser.length + 1;
+        config = {...config, ...{id}};
         lightChaser.push(config);
     }
     //保存到本地存储

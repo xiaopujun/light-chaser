@@ -5,7 +5,7 @@ import LayoutTools from "./left/Tools";
 import LCLayoutContent from "./Content";
 import {
     activeElem,
-    addItem,
+    addItem, clearLCDesignerStore,
     deleteItem,
     updateDrawerVisible,
     updateElemBaseSet,
@@ -28,6 +28,9 @@ class LCDesigner extends Component<any> {
     }
 
     componentWillUnmount() {
+        //清空状态
+        const {clearLCDesignerStore} = this.props;
+        clearLCDesignerStore && clearLCDesignerStore();
         // window.removeEventListener("beforeunload", () => {
         // })
     }
@@ -108,6 +111,7 @@ export default connect(
     (state: any) => ({LCDesignerStore: state?.LCDesignerStore || {}}),
     {
         updateLCDesignerStore,
+        clearLCDesignerStore,
         addItem,
         deleteItem,
         updateItemLayout,
