@@ -48,7 +48,8 @@ class DesignerHeader extends Component<any> {
     }
 
     preview = () => {
-        this.props.history.push('/preview');
+        const {LCDesignerStore} = this.props;
+        this.props.history.push('/view', {id: LCDesignerStore.id});
     }
 
     render() {

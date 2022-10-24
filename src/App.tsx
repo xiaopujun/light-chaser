@@ -12,7 +12,7 @@ class App extends Component<any> {
             <Switch>
                 <Route path={'/list'} component={LightChaserList}/>
                 <Route path={'/designer'} component={LCDesigner}/>
-                <Route path={'/preview'} component={Preview}/>
+                <Route path={'/view'} component={Preview}/>
             </Switch>
         );
     }
