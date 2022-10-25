@@ -1,4 +1,10 @@
-import {initAntdBaseBar, initAntdGroupBar, initAntdPercentBar, initAntdStackBar, initAntdZoneBar} from "./AntdBarDataInit";
+import {
+    initAntdBaseBar,
+    initAntdGroupBar,
+    initAntdPercentBar,
+    initAntdStackBar,
+    initAntdZoneBar
+} from "./AntdBarDataInit";
 import {
     initAntdBaseColumn,
     initAntdGroupColumn,

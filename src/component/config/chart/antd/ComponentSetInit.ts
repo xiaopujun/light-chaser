@@ -1,14 +1,16 @@
-import AntdBarSet from "./AntdBarSet";
-import AntdColumnSet from "./AntdColumnSet";
-import AntdAreaSet from "./AntdAreaSet";
-import AntdPieSet from "./AntdPieSet";
-import AntdLiquidSet from "./AntdLiquidSet";
-import AntdRadarSet from "./AntdRadarSet";
-import AntdScatterSet from "./AntdScatterSet";
-import AntdBubbleSet from "./AntdBubbleSet";
-import AntdWordCloudSet from "./AntdWordCloudSet";
-import AntdFoldLineSet from "./AntdLine";
-import AntdGaugeSet from "./AntdGaugeSet";
+import {lazy} from "react";
+
+const AntdBarSet = lazy(() => import('./AntdBarSet'));
+const AntdColumnSet = lazy(() => import('./AntdColumnSet'));
+const AntdAreaSet = lazy(() => import('./AntdAreaSet'));
+const AntdPieSet = lazy(() => import('./AntdPieSet'));
+const AntdLiquidSet = lazy(() => import('./AntdLiquidSet'));
+const AntdRadarSet = lazy(() => import('./AntdRadarSet'));
+const AntdScatterSet = lazy(() => import('./AntdScatterSet'));
+const AntdBubbleSet = lazy(() => import('./AntdBubbleSet'));
+const AntdWordCloudSet = lazy(() => import('./AntdWordCloudSet'));
+const AntdFoldLineSet = lazy(() => import('./AntdLine'));
+const AntdGaugeSet = lazy(() => import('./AntdGaugeSet'));
 
 let configMap = new Map();
 

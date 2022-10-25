@@ -6,6 +6,7 @@ import './style/AntdBar.less';
 /**
  * 基础条形图
  */
+
 export default class AntdBar extends Component<any, any> {
 
     render() {

@@ -1,5 +1,7 @@
-import BaseBorder from "./BaseBorder";
-import FourAngleGlowBorder from "./FourAngleGlowBorder";
+import {lazy} from "react";
+
+const BaseBorder = lazy(() => import('./BaseBorder'));
+const FourAngleGlowBorder = lazy(() => import('./FourAngleGlowBorder'));
 
 let borderMap = new Map();
 

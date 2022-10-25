@@ -1,13 +1,15 @@
-import AntdArea from "./antd/AntdArea";
-import AntdBar from "./antd/AntdBar";
-import AntdColumn from "./antd/AntdColumn";
-import AntdPie from "./antd/AntdPie";
-import AntdScatter from "./antd/AntdScatter";
-import AntdWordCloud from "./antd/AntdWordCloud";
-import AntdLine from "./antd/AntdLine";
-import AntdLiquid from "./antd/AntdLiquid";
-import AntdRadar from "./antd/AntdRadar";
-import AntdGauge from "./antd/AntdGauge";
+import {lazy} from "react";
+
+const AntdArea = lazy(() => import('./antd/AntdArea'));
+const AntdBar = lazy(() => import('./antd/AntdBar'));
+const AntdColumn = lazy(() => import('./antd/AntdColumn'));
+const AntdPie = lazy(() => import('./antd/AntdPie'));
+const AntdScatter = lazy(() => import('./antd/AntdScatter'));
+const AntdWordCloud = lazy(() => import('./antd/AntdWordCloud'));
+const AntdLine = lazy(() => import('./antd/AntdLine'));
+const AntdLiquid = lazy(() => import('./antd/AntdLiquid'));
+const AntdRadar = lazy(() => import('./antd/AntdRadar'));
+const AntdGauge = lazy(() => import('./antd/AntdGauge'));
 
 let chartsMap = new Map();
 
