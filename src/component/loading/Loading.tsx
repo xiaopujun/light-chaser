@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Spin} from "antd";
 
 class Loading extends Component {
     render() {
@@ -6,7 +7,7 @@ class Loading extends Component {
             width: window.innerWidth,
             height: window.innerHeight,
             backgroundColor: '#4b6cb7',
-            background: 'linear-gradient(to right, #182848, #283a62)',
+            background: 'linear-gradient(to right, #182848, #1a2848)',
             color: 'rgb(106 202 255)',
             display: 'flex',
             justifyContent: 'center',
@@ -16,7 +17,7 @@ class Loading extends Component {
         }
         return (
             <div style={style}>
-                light chaser loading ...
+                <Spin tip={'L O A D I N G . . .'}/>
             </div>
         );
     }

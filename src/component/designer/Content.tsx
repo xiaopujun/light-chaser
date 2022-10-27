@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import ReactGridLayout, {Layout} from "react-grid-layout";
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import './style/Content.less';
 import getChartsTemplate from "../charts/ComponentChartInit";
 import getBorder from "../border";
+import Loading from "../loading/Loading";
+import {Spin} from "antd";
 
 export default class LCLayoutContent extends React.Component<any, any> {
 
@@ -22,9 +24,11 @@ export default class LCLayoutContent extends React.Component<any, any> {
             let Border = getBorder(borderType);
             return (
                 <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
-                    <Border elemId={item?.id} {...this.props}>
-                        <ElementChart elemId={item?.id} deleteItem={this.deleteItem} {...this.props}/>
-                    </Border>
+                    <Suspense fallback={<Spin tip={'L O A D I N G . . .'}/>}>
+                        <Border elemId={item?.id} {...this.props}>
+                            <ElementChart elemId={item?.id} deleteItem={this.deleteItem} {...this.props}/>
+                        </Border>
+                    </Suspense>
                 </div>
             );
         })
@@ -117,6 +121,7 @@ export default class LCLayoutContent extends React.Component<any, any> {
                     {this.generateElement()}
                 </ReactGridLayout>
             </div>
+
         );
     }
 }
