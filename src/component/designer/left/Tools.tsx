@@ -24,7 +24,7 @@ interface LayoutToolsProps {
 /**
  * 大屏布局设计器左侧组件库工具栏
  */
-class   LayoutTools extends Component<LayoutToolsProps, any> {
+class LayoutTools extends Component<LayoutToolsProps, any> {
 
     state: any = {
         data: [{
@@ -92,27 +92,6 @@ class   LayoutTools extends Component<LayoutToolsProps, any> {
                         </div>
                     )
                 })}
-
-
-                {/*{data.map((i: LayoutToolCollapseProps) => {
-                    return (<div key={i?.id}>
-                        <Collapse className={'tools-collapse'} bordered={false}>
-                            <Panel className={'tools-panel'} header={i?.sort || ''} key="1">
-                                {i?.data?.map((item: LayoutToolItemProps) => {
-                                    return (
-                                        <div key={item?.id} onDragStart={(e) => {
-                                            e.dataTransfer.setData('chartName', item?.token || '')
-                                        }}
-                                             className="droppable-element tool-item"
-                                             draggable={true}>
-                                            {item?.content}
-                                        </div>
-                                    )
-                                })}
-                            </Panel>
-                        </Collapse>
-                    </div>)
-                })}*/}
             </div>
         );
     }

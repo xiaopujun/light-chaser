@@ -12,7 +12,7 @@ const Preview = lazy(() => import('./component/preview/Preview'));
 class App extends Component<any> {
     render() {
         return (
-            <Suspense fallback={<Spin tip={'L O A D I N G . . .'}/>}>
+            <Suspense fallback={<Loading/>}>
                 <Switch>
                     <Route path={'/list'} component={LightChaserList}/>
                     <Route path={'/designer'} component={LCDesigner}/>
