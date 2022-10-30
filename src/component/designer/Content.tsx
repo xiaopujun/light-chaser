@@ -20,8 +20,8 @@ export default class LCLayoutContent extends React.Component<any, any> {
         x: 0,
         y: 0,
         scale: 1,
-        minScale: 0.5,
-        maxScale: 4,
+        minScale: 0.1,
+        maxScale: 5,
         isPointerdown: false, // 按下标识
         point: {x: 0, y: 0}, // 第一个点坐标
         diff: {x: 0, y: 0}, // 相对于上一次pointermove移动差值
@@ -128,11 +128,11 @@ export default class LCLayoutContent extends React.Component<any, any> {
         const container: any = document.getElementById('lc-designer-container');
         const designer: any = document.getElementById('lc-designer-content');
 
-        this.scaleConfig.result = this.getDesignerSize(window.innerWidth, window.innerHeight - 64, window.innerWidth, window.innerHeight);
-        designer.style.width = this.scaleConfig.result.width + 'px';
-        designer.style.height = this.scaleConfig.result.height + 'px';
-        this.scaleConfig.x = (window.innerWidth - this.scaleConfig.result.width) * 0.5;
-        this.scaleConfig.y = (window.innerHeight - this.scaleConfig.result.height) * 0.5;
+        this.scaleConfig.result = {width: 1920, height: 1080};
+        // designer.style.width = this.scaleConfig.result.width + 'px';
+        // designer.style.height = this.scaleConfig.result.height + 'px';
+        this.scaleConfig.x = (window.innerWidth - 600 - this.scaleConfig.result.width) * 0.5;
+        this.scaleConfig.y = (window.innerHeight - 64 - this.scaleConfig.result.height) * 0.5;
         designer.style.transform = 'translate3d(' + this.scaleConfig.x + 'px, ' + this.scaleConfig.y + 'px, 0) scale(1)';
 
         document.addEventListener('keyup', ev => {
@@ -140,7 +140,6 @@ export default class LCLayoutContent extends React.Component<any, any> {
                 this.scaleConfig.ctrlDown = false;
             }
         })
-        //2. keydown 按键按下的时候触发  能识别功能键 比如 ctrl shift 左右箭头
         document.addEventListener('keydown', ev => {
             if (ev.keyCode === 17) {
                 this.scaleConfig.ctrlDown = true;
@@ -153,33 +152,6 @@ export default class LCLayoutContent extends React.Component<any, any> {
         this.designerWheelZoom(container, designer);
 
     }
-
-
-    getDesignerSize = (naturalWidth: any, naturalHeight: any, maxWidth: any, maxHeight: any) => {
-        const imgRatio = naturalWidth / naturalHeight;
-        const maxRatio = maxWidth / maxHeight;
-        let width, height;
-        // 如果图片实际宽高比例 >= 显示宽高比例
-        if (imgRatio >= maxRatio) {
-            if (naturalWidth > maxWidth) {
-                width = maxWidth;
-                height = maxWidth / naturalWidth * naturalHeight;
-            } else {
-                width = naturalWidth;
-                height = naturalHeight;
-            }
-        } else {
-            if (naturalHeight > maxHeight) {
-                width = maxHeight / naturalHeight * naturalWidth;
-                height = maxHeight;
-            } else {
-                width = naturalWidth;
-                height = naturalHeight;
-            }
-        }
-        return {width: width, height: height}
-    }
-
 
     // 拖拽查看
     designerDrag = (designer: any) => {
@@ -248,15 +220,13 @@ export default class LCLayoutContent extends React.Component<any, any> {
                     this.scaleConfig.scale = _scale;
                 }
                 // 目标元素是img说明鼠标在img上，以鼠标位置为缩放中心，否则默认以图片中心点为缩放中心
-                if (e.target.tagName === 'DIV') {
-                    const origin = {
-                        x: (ratio - 1) * this.scaleConfig.result.width * 0.5,
-                        y: (ratio - 1) * this.scaleConfig.result.height * 0.5
-                    };
-                    // 计算偏移量
-                    this.scaleConfig.x -= (ratio - 1) * (e.clientX - this.scaleConfig.x) - origin.x;
-                    this.scaleConfig.y -= (ratio - 1) * (e.clientY - this.scaleConfig.y) - origin.y;
-                }
+                const origin = {
+                    x: (ratio - 1) * this.scaleConfig.result.width * 0.5,
+                    y: (ratio - 1) * this.scaleConfig.result.height * 0.5
+                };
+                // 计算偏移量
+                this.scaleConfig.x -= (ratio - 1) * (e.clientX - this.scaleConfig.x - 300) - origin.x;
+                this.scaleConfig.y -= (ratio - 1) * (e.clientY - this.scaleConfig.y - 64) - origin.y;
                 designer.style.transform = 'translate3d(' + this.scaleConfig.x + 'px, ' + this.scaleConfig.y + 'px, 0) scale(' + this.scaleConfig.scale + ')';
                 e.preventDefault();
                 this.setState({scale: this.scaleConfig.scale})
@@ -269,12 +239,13 @@ export default class LCLayoutContent extends React.Component<any, any> {
         const {layoutConfig} = LCDesignerStore;
         const {scale} = this.state;
         return (
-            <div id={'lc-designer-container'} style={{overflow: "hidden", backgroundColor: '#474747'}}>
-                <div id={'lc-designer-content'} className="site-layout-background"
-                     style={{
-                         height: window.innerHeight - 64,
-                         width: window.innerWidth,
-                     }}>
+            <div id={'lc-designer-container'} style={{
+                overflow: "hidden",
+                height: `${window.innerHeight - 64}px`,
+                width: `${window.innerWidth - 600}px`,
+                backgroundColor: '#474747'
+            }}>
+                <div id={'lc-designer-content'} className="site-layout-background" style={{width: 1920, height: 1080}}>
                     <ReactGridLayout ref={obj => this.rgl = obj}
                                      className="layout"
                                      layout={layoutConfig}
@@ -286,9 +257,9 @@ export default class LCLayoutContent extends React.Component<any, any> {
                                      allowOverlap={true}
                                      isBounded={true}
                                      isDroppable={true}
-                                     style={{height: window.innerHeight - 64}}
+                                     style={{height: 1080, width: 1920, backgroundColor: '#131e26',}}
                                      transformScale={scale}
-                                     width={window.innerWidth}
+                                     width={1920}
                                      onDrop={this.onDrop}
                                      onDrag={this.onDrag}
                                      onDropDragOver={this.onDropDragOver}
