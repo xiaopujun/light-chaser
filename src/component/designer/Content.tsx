@@ -26,6 +26,7 @@ export default class LCLayoutContent extends React.Component<any, any> {
         point: {x: 0, y: 0}, // 第一个点坐标
         diff: {x: 0, y: 0}, // 相对于上一次pointermove移动差值
         lastPointermove: {x: 0, y: 0}, // 用于计算diff
+        ctrlDown: false,
     }
 
     componentDidMount() {
@@ -134,10 +135,23 @@ export default class LCLayoutContent extends React.Component<any, any> {
         this.scaleConfig.y = (window.innerHeight - this.scaleConfig.result.height) * 0.5;
         designer.style.transform = 'translate3d(' + this.scaleConfig.x + 'px, ' + this.scaleConfig.y + 'px, 0) scale(1)';
 
+        document.addEventListener('keyup', ev => {
+            if (ev.keyCode === 17) {
+                this.scaleConfig.ctrlDown = false;
+            }
+        })
+        //2. keydown 按键按下的时候触发  能识别功能键 比如 ctrl shift 左右箭头
+        document.addEventListener('keydown', ev => {
+            if (ev.keyCode === 17) {
+                this.scaleConfig.ctrlDown = true;
+            }
+        })
+
         // 拖拽查看
-        // this.designerDrag(designer);
+        this.designerDrag(designer);
         // 滚轮缩放
         this.designerWheelZoom(container, designer);
+
     }
 
 
@@ -171,34 +185,43 @@ export default class LCLayoutContent extends React.Component<any, any> {
     designerDrag = (designer: any) => {
         // 绑定 pointerdown
         designer.addEventListener('pointerdown', (e: any) => {
-            this.scaleConfig.isPointerdown = true;
-            designer.setPointerCapture(e.pointerId);
-            this.scaleConfig.point = {x: e.clientX, y: e.clientY};
-            this.scaleConfig.lastPointermove = {x: e.clientX, y: e.clientY};
+            if (this.scaleConfig.ctrlDown) {
+                this.scaleConfig.isPointerdown = true;
+                designer.setPointerCapture(e.pointerId);
+                this.scaleConfig.point = {x: e.clientX, y: e.clientY};
+                this.scaleConfig.lastPointermove = {x: e.clientX, y: e.clientY};
+            }
+
         });
         // 绑定 pointermove
         designer.addEventListener('pointermove', (e: any) => {
-            if (this.scaleConfig.isPointerdown) {
-                const current1 = {x: e.clientX, y: e.clientY};
-                this.scaleConfig.diff.x = current1.x - this.scaleConfig.lastPointermove.x;
-                this.scaleConfig.diff.y = current1.y - this.scaleConfig.lastPointermove.y;
-                this.scaleConfig.lastPointermove = {x: current1.x, y: current1.y};
-                this.scaleConfig.x += this.scaleConfig.diff.x;
-                this.scaleConfig.y += this.scaleConfig.diff.y;
-                designer.style.transform = 'translate3d(' + this.scaleConfig.x + 'px, ' + this.scaleConfig.y + 'px, 0) scale(' + this.scaleConfig.scale + ')';
+            if (this.scaleConfig.ctrlDown) {
+                if (this.scaleConfig.isPointerdown) {
+                    const current1 = {x: e.clientX, y: e.clientY};
+                    this.scaleConfig.diff.x = current1.x - this.scaleConfig.lastPointermove.x;
+                    this.scaleConfig.diff.y = current1.y - this.scaleConfig.lastPointermove.y;
+                    this.scaleConfig.lastPointermove = {x: current1.x, y: current1.y};
+                    this.scaleConfig.x += this.scaleConfig.diff.x;
+                    this.scaleConfig.y += this.scaleConfig.diff.y;
+                    designer.style.transform = 'translate3d(' + this.scaleConfig.x + 'px, ' + this.scaleConfig.y + 'px, 0) scale(' + this.scaleConfig.scale + ')';
+                }
+                e.preventDefault();
             }
-            e.preventDefault();
         });
         // 绑定 pointerup
         designer.addEventListener('pointerup', (e: any) => {
-            if (this.scaleConfig.isPointerdown) {
-                this.scaleConfig.isPointerdown = false;
+            if (this.scaleConfig.ctrlDown) {
+                if (this.scaleConfig.isPointerdown) {
+                    this.scaleConfig.isPointerdown = false;
+                }
             }
         });
         // 绑定 pointercancel
         designer.addEventListener('pointercancel', (e: any) => {
-            if (this.scaleConfig.isPointerdown) {
-                this.scaleConfig.isPointerdown = false;
+            if (this.scaleConfig.ctrlDown) {
+                if (this.scaleConfig.isPointerdown) {
+                    this.scaleConfig.isPointerdown = false;
+                }
             }
         });
     }
@@ -207,35 +230,37 @@ export default class LCLayoutContent extends React.Component<any, any> {
     // 滚轮缩放
     designerWheelZoom = (container: any, designer: any) => {
         container.addEventListener('wheel', (e: any) => {
-            let ratio = 1.1;
-            // 缩小
-            if (e.deltaY > 0) {
-                ratio = 1 / 1.1;
+            if (this.scaleConfig.ctrlDown) {
+                let ratio = 1.1;
+                // 缩小
+                if (e.deltaY > 0) {
+                    ratio = 1 / 1.1;
+                }
+                // 限制缩放倍数
+                const _scale = this.scaleConfig.scale * ratio;
+                if (_scale > this.scaleConfig.maxScale) {
+                    ratio = this.scaleConfig.maxScale / this.scaleConfig.scale;
+                    this.scaleConfig.scale = this.scaleConfig.maxScale;
+                } else if (_scale < this.scaleConfig.minScale) {
+                    ratio = this.scaleConfig.minScale / this.scaleConfig.scale;
+                    this.scaleConfig.scale = this.scaleConfig.minScale;
+                } else {
+                    this.scaleConfig.scale = _scale;
+                }
+                // 目标元素是img说明鼠标在img上，以鼠标位置为缩放中心，否则默认以图片中心点为缩放中心
+                if (e.target.tagName === 'DIV') {
+                    const origin = {
+                        x: (ratio - 1) * this.scaleConfig.result.width * 0.5,
+                        y: (ratio - 1) * this.scaleConfig.result.height * 0.5
+                    };
+                    // 计算偏移量
+                    this.scaleConfig.x -= (ratio - 1) * (e.clientX - this.scaleConfig.x) - origin.x;
+                    this.scaleConfig.y -= (ratio - 1) * (e.clientY - this.scaleConfig.y) - origin.y;
+                }
+                designer.style.transform = 'translate3d(' + this.scaleConfig.x + 'px, ' + this.scaleConfig.y + 'px, 0) scale(' + this.scaleConfig.scale + ')';
+                e.preventDefault();
+                this.setState({scale: this.scaleConfig.scale})
             }
-            // 限制缩放倍数
-            const _scale = this.scaleConfig.scale * ratio;
-            if (_scale > this.scaleConfig.maxScale) {
-                ratio = this.scaleConfig.maxScale / this.scaleConfig.scale;
-                this.scaleConfig.scale = this.scaleConfig.maxScale;
-            } else if (_scale < this.scaleConfig.minScale) {
-                ratio = this.scaleConfig.minScale / this.scaleConfig.scale;
-                this.scaleConfig.scale = this.scaleConfig.minScale;
-            } else {
-                this.scaleConfig.scale = _scale;
-            }
-            // 目标元素是img说明鼠标在img上，以鼠标位置为缩放中心，否则默认以图片中心点为缩放中心
-            if (e.target.tagName === 'DIV') {
-                const origin = {
-                    x: (ratio - 1) * this.scaleConfig.result.width * 0.5,
-                    y: (ratio - 1) * this.scaleConfig.result.height * 0.5
-                };
-                // 计算偏移量
-                this.scaleConfig.x -= (ratio - 1) * (e.clientX - this.scaleConfig.x) - origin.x;
-                this.scaleConfig.y -= (ratio - 1) * (e.clientY - this.scaleConfig.y) - origin.y;
-            }
-            designer.style.transform = 'translate3d(' + this.scaleConfig.x + 'px, ' + this.scaleConfig.y + 'px, 0) scale(' + this.scaleConfig.scale + ')';
-            e.preventDefault();
-            this.setState({scale: this.scaleConfig.scale})
         });
     }
 
