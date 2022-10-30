@@ -43,6 +43,10 @@ class Preview extends Component<any, any> {
     render() {
         const {LCDesignerStore} = this.state;
         const {layoutConfig = []} = LCDesignerStore;
+        for (let i = 0; i < layoutConfig.length; i++) {
+            layoutConfig[i].static = true;
+            layoutConfig[i].isDraggable = false;
+        }
         return (
             <div className="site-layout-background" style={{height: window.innerHeight - 64}}>
                 <ReactGridLayout className="layout"
@@ -51,8 +55,9 @@ class Preview extends Component<any, any> {
                                  rowHeight={10}
                                  margin={[15, 15]}
                                  useCSSTransforms={true}
-                                 preventCollision={true}
+                                 preventCollision={false}
                                  allowOverlap={true}
+                                 isResizable={false}
                                  isBounded={true}
                                  isDroppable={false}
                                  style={{height: window.innerHeight}}

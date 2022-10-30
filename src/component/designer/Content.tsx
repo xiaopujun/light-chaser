@@ -11,6 +11,10 @@ export default class LCLayoutContent extends React.Component<any, any> {
 
     rgl: any = null;
 
+    state: any = {
+        scale: 1
+    }
+
     scaleConfig: any = {
         result: {},
         x: 0,
@@ -99,8 +103,15 @@ export default class LCLayoutContent extends React.Component<any, any> {
         updateItemLayout(newItem);
     }
 
+
+    onDragStart = (layout: Layout[], oldItem: Layout, newItem: Layout, placeholder: Layout, event: MouseEvent, element: HTMLElement,) => {
+        console.log('dd')
+    }
+
+
     onDrag = (layout: any, oldItem: any, newItem: any,
               placeholder: any, e: any, element: HTMLElement) => {
+        console.log('23')
     }
 
     /**
@@ -124,7 +135,7 @@ export default class LCLayoutContent extends React.Component<any, any> {
         designer.style.transform = 'translate3d(' + this.scaleConfig.x + 'px, ' + this.scaleConfig.y + 'px, 0) scale(1)';
 
         // 拖拽查看
-        this.designerDrag(designer);
+        // this.designerDrag(designer);
         // 滚轮缩放
         this.designerWheelZoom(container, designer);
     }
@@ -224,18 +235,20 @@ export default class LCLayoutContent extends React.Component<any, any> {
             }
             designer.style.transform = 'translate3d(' + this.scaleConfig.x + 'px, ' + this.scaleConfig.y + 'px, 0) scale(' + this.scaleConfig.scale + ')';
             e.preventDefault();
+            this.setState({scale: this.scaleConfig.scale})
         });
     }
 
     render() {
         const {LCDesignerStore} = this.props;
         const {layoutConfig} = LCDesignerStore;
+        const {scale} = this.state;
         return (
             <div id={'lc-designer-container'} style={{overflow: "hidden", backgroundColor: '#474747'}}>
                 <div id={'lc-designer-content'} className="site-layout-background"
                      style={{
                          height: window.innerHeight - 64,
-                         width: window.innerWidth - 600
+                         width: window.innerWidth,
                      }}>
                     <ReactGridLayout ref={obj => this.rgl = obj}
                                      className="layout"
@@ -249,11 +262,13 @@ export default class LCLayoutContent extends React.Component<any, any> {
                                      isBounded={true}
                                      isDroppable={true}
                                      style={{height: window.innerHeight - 64}}
-                                     width={window.innerWidth - 600}
+                                     transformScale={scale}
+                                     width={window.innerWidth}
                                      onDrop={this.onDrop}
                                      onDrag={this.onDrag}
                                      onDropDragOver={this.onDropDragOver}
                                      onDragStop={this.onDragStop}
+                                     onDragStart={this.onDragStart}
                                      onResizeStop={this.onResizeStop}>
                         {this.generateElement()}
                     </ReactGridLayout>
