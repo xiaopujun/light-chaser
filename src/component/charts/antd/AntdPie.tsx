@@ -16,7 +16,7 @@ export default class AntdPie extends Component<any, any> {
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...elemBaseProperties}}>
                 <EditTools {...this.props} elemId={elemId}/>
-                <Pie className={'grid-chart-item'} {...chartProperties}/>
+                <Pie supportCSSTransform={true} className={'grid-chart-item'} {...chartProperties}/>
             </div>
         );
     }

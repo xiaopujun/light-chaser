@@ -10,6 +10,7 @@ interface ToolItemProp {
         icon: ReactDOM;
         content: string;
         token: string;
+        type: string;
     }>;
 }
 
@@ -22,9 +23,10 @@ export default class ToolItem extends Component<ToolItemProp> {
                 <div className={'group-line'}/>
                 <div className={'chart-button'}>
                     {data.map((item) => {
+                        let compObj = JSON.stringify({chartName: item?.token || '', type: item.type});
                         return (
                             <button key={item.id} onDragStart={(e) => {
-                                e.dataTransfer.setData('chartName', item?.token || '')
+                                e.dataTransfer.setData('compObj', compObj);
                             }} className="droppable-element tool-item" draggable={true}>
                                 <div className={'item-layout'}>
                                     <div>{item.icon}</div>

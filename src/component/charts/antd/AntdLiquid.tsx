@@ -17,7 +17,7 @@ export default class AntdLiquid extends Component<any, any> {
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...elemBaseProperties}}>
                 <EditTools {...this.props} elemId={elemId}/>
-                <Liquid className={'grid-chart-item'} {...chartProperties}/>
+                <Liquid supportCSSTransform={true} className={'grid-chart-item'} {...chartProperties}/>
             </div>
         );
     }

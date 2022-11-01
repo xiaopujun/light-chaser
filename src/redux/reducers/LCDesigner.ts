@@ -1,6 +1,7 @@
 import {
     ACTIVE_ELEM,
-    ADD_ITEM, CLEAR_LC_DESIGNER_STORE,
+    ADD_ITEM,
+    CLEAR_LC_DESIGNER_STORE,
     DELETE_ITEM,
     UPDATE_DRAWER_VISIBLE,
     UPDATE_ELEM_BASE_SET,
@@ -86,10 +87,7 @@ function clearLCDesignerStore(preState: LCDesignerProps, data: any) {
  * @returns
  */
 function updateLCDesignerStore(preState: LCDesignerProps, data: any) {
-    let res = {...deepmerge(preState, data)};
-    let a = {a: 'te', b: 12}
-    let c = deepmerge(a, {});
-    return res;
+    return {...deepmerge(preState, data)};
 }
 
 

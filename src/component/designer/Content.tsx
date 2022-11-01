@@ -6,6 +6,7 @@ import './style/Content.less';
 import getChartsTemplate from "../charts/ComponentChartInit";
 import getBorder from "../border";
 import {Spin} from "antd";
+import chartInitDataMap from "../../init/data/ChartDataInit";
 
 export default class LCLayoutContent extends React.Component<any, any> {
 
@@ -77,8 +78,15 @@ export default class LCLayoutContent extends React.Component<any, any> {
     onDrop = (layout: any, layoutItem: any, _event: any) => {
         const {addItem, LCDesignerStore} = this.props;
         const {globalSet} = LCDesignerStore;
-        const chartName = _event.dataTransfer.getData('chartName');
-        const item = {...layoutItem, ...{i: globalSet?.elemCount + "", id: globalSet?.elemCount, name: chartName}}
+        const compObj = JSON.parse(_event.dataTransfer.getData('compObj'));
+        const item = {
+            ...layoutItem, ...{
+                i: globalSet?.elemCount + "",
+                id: globalSet?.elemCount,
+                name: compObj.chartName,
+                type: compObj.type
+            }
+        }
         addItem(item);
 
         if (this.rgl != null) {
@@ -236,7 +244,7 @@ export default class LCLayoutContent extends React.Component<any, any> {
 
     render() {
         const {LCDesignerStore} = this.props;
-        const {layoutConfig} = LCDesignerStore;
+        const {layoutConfig, globalSet} = LCDesignerStore;
         const {scale} = this.state;
         return (
             <div id={'lc-designer-container'} style={{
@@ -245,7 +253,8 @@ export default class LCLayoutContent extends React.Component<any, any> {
                 width: `${window.innerWidth - 600}px`,
                 backgroundColor: '#474747'
             }}>
-                <div id={'lc-designer-content'} className="site-layout-background" style={{width: 1920, height: 1080}}>
+                <div id={'lc-designer-content'} className="site-layout-background"
+                     style={{width: globalSet.screenWidth, height: globalSet.screenHeight}}>
                     <ReactGridLayout ref={obj => this.rgl = obj}
                                      className="layout"
                                      layout={layoutConfig}
@@ -257,9 +266,9 @@ export default class LCLayoutContent extends React.Component<any, any> {
                                      allowOverlap={true}
                                      isBounded={true}
                                      isDroppable={true}
-                                     style={{height: 1080, width: 1920, backgroundColor: '#131e26',}}
+                                     style={{height: globalSet.screenHeight, backgroundColor: '#131e26',}}
                                      transformScale={scale}
-                                     width={1920}
+                                     width={globalSet.screenWidth}
                                      onDrop={this.onDrop}
                                      onDrag={this.onDrag}
                                      onDropDragOver={this.onDropDragOver}

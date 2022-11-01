@@ -16,7 +16,7 @@ export default class AntdColumn extends Component<any, any> {
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...elemBaseProperties}}>
                 <EditTools {...this.props} elemId={elemId}/>
-                <Column className={'grid-chart-item'} {...chartProperties}/>
+                <Column supportCSSTransform={true} className={'grid-chart-item'} {...chartProperties}/>
             </div>
         );
     }

@@ -48,7 +48,7 @@ class Preview extends Component<any, any> {
             layoutConfig[i].isDraggable = false;
         }
         return (
-            <div className="site-layout-background" style={{height: window.innerHeight - 64}}>
+            <div className="site-layout-background" style={{height: 1080, width: 1920, backgroundColor: '#131e26',}}>
                 <ReactGridLayout className="layout"
                                  layout={layoutConfig}
                                  cols={48}
@@ -60,8 +60,8 @@ class Preview extends Component<any, any> {
                                  isResizable={false}
                                  isBounded={true}
                                  isDroppable={false}
-                                 style={{height: window.innerHeight}}
-                                 width={window.innerWidth}>
+                                 style={{height: 1080, width: 1920, backgroundColor: '#131e26',}}
+                                 width={1920}>
                     {this.generateElement()}
                 </ReactGridLayout>
             </div>
