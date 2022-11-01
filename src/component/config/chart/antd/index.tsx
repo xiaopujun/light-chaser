@@ -1,6 +1,5 @@
 import React, {Component, Suspense} from 'react';
 import getChartsConfig from "./ComponentSetInit";
-import Loading from "../../../loading/Loading";
 import {Spin} from "antd";
 
 /**

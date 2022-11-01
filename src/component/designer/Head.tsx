@@ -18,7 +18,7 @@ class DesignerHeader extends Component<any> {
         const {location, LCDesignerStore} = this.props;
         const {action} = location.state;
         let {globalSet} = LCDesignerStore;
-        if (action == 'add') {
+        if (action === 'add') {
             this.props.history.replace("/designer", {
                 ...location.state, ...{
                     action: 'update',
@@ -33,8 +33,8 @@ class DesignerHeader extends Component<any> {
         const {LCDesignerStore, updateLCDesignerStore} = this.props;
         let {id = -1, globalSet} = LCDesignerStore;
         const {saveType} = globalSet;
-        if (saveType == 'local') {
-            if (id == -1) {
+        if (saveType === 'local') {
+            if (id === -1) {
                 id = localSave(LCDesignerStore);
                 //更新id
                 updateLCDesignerStore({id});

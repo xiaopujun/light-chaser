@@ -13,7 +13,7 @@ class Preview extends Component<any, any> {
         let screens = JSON.parse(window.localStorage.lightChaser);
         let screen;
         for (let i = 0; i < screens.length; i++) {
-            if (screens[i].id == location.state.id) {
+            if (screens[i].id === location.state.id) {
                 screen = screens[i];
                 break;
             }

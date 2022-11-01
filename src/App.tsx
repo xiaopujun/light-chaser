@@ -3,7 +3,6 @@ import 'antd/dist/antd.min.css';
 import './App.less';
 import {Route, Switch} from "react-router-dom";
 import Loading from "./component/loading/Loading";
-import {Spin} from "antd";
 
 const LightChaserList = lazy(() => import('./component/list/LightChaserList'));
 const LCDesigner = lazy(() => import('./component/designer'));

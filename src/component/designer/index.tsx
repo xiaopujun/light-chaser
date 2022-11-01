@@ -22,10 +22,6 @@ const {Header, Sider, Content} = Layout;
 
 class LCDesigner extends Component<any> {
 
-    constructor(props: any) {
-        super(props);
-
-    }
 
     componentWillUnmount() {
         //清空状态
@@ -58,7 +54,7 @@ class LCDesigner extends Component<any> {
             case 'update':
                 let configList = JSON.parse(window.localStorage.lightChaser), config;
                 for (let i = 0; i < configList.length; i++) {
-                    if (configList[i].id == id) {
+                    if (configList[i].id === id) {
                         config = configList[i];
                         break
                     }

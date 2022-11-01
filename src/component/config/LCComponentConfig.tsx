@@ -3,8 +3,7 @@ import {Collapse} from 'antd';
 import './LCComponentConfig.less';
 import LCBaseConfig from "./base/LCBaseConfig";
 import ElemChartSet from "./chart/antd";
-import {LeftOutlined, RollbackOutlined} from "@ant-design/icons";
-import {activeElem} from "../../redux/actions/LayoutDesigner";
+import {RollbackOutlined} from "@ant-design/icons";
 
 const {Panel} = Collapse;
 
@@ -23,7 +22,7 @@ export default class LCComponentConfig extends Component<any> {
         const {active, layoutConfig} = this.props.LCDesignerStore;
         let layout: any = {};
         for (let i = 0; i < layoutConfig.length; i++) {
-            if (layoutConfig[i].id == active.id) {
+            if (layoutConfig[i].id === active.id) {
                 layout = layoutConfig[i];
                 break;
             }

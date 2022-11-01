@@ -26,7 +26,7 @@ export const localSave = (LCDesignerStore: LCDesignerProps) => {
     let config = buildConfig(LCDesignerStore);
     //新增
 
-    if (lightChaser == undefined) {
+    if (lightChaser === undefined) {
         id++;
         config = {...config, ...{id}};
         //无数据，需要初始化
@@ -51,7 +51,7 @@ export const localUpdate = (LCDesignerStore: LCDesignerProps) => {
     let config = buildConfig(LCDesignerStore);
     let oldLightChaser = JSON.parse(lightChaser);
     for (let i = 0; i < oldLightChaser.length; i++) {
-        if (oldLightChaser[i].id == config.id) {
+        if (oldLightChaser[i].id === config.id) {
             oldLightChaser[i] = config;
             break;
         }

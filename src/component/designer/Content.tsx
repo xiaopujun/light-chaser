@@ -6,7 +6,6 @@ import './style/Content.less';
 import getChartsTemplate from "../charts/ComponentChartInit";
 import getBorder from "../border";
 import {Spin} from "antd";
-import chartInitDataMap from "../../init/data/ChartDataInit";
 
 export default class LCLayoutContent extends React.Component<any, any> {
 
