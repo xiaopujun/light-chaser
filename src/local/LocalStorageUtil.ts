@@ -10,7 +10,7 @@ const buildConfig = (LCDesignerStore: LCDesignerProps) => {
         id,
         globalSet,
         chartConfigs: JSON.stringify(LCDesignerStore.chartConfigs),
-        layoutConfig: JSON.stringify(LCDesignerStore.layoutConfig),
+        layoutConfigs: JSON.stringify(LCDesignerStore.layoutConfigs),
         screenHeight: LCDesignerStore.globalSet.screenHeight,
         screenWidth: LCDesignerStore.globalSet.screenWidth,
         screenName: LCDesignerStore.globalSet.screenName

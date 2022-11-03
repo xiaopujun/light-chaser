@@ -23,13 +23,13 @@ class AntdColumnSet extends Component<any> {
             case 'AntdBaseColumn':
             case 'AntdZoneColumn':
                 //单条的计算条数个数
-                paletteCount = chartConfig.chartProperties.data.length;
+                paletteCount = chartConfig.chartProps.data.length;
                 break;
             case 'AntdGroupColumn':
             case 'AntdPercentColumn':
             case 'AntdStackColumn':
                 //分组的计算分组个数
-                paletteCount = getAntdDataSortCount(chartConfig.chartProperties.data, 'type');
+                paletteCount = getAntdDataSortCount(chartConfig.chartProps.data, 'type');
                 break;
         }
         return (

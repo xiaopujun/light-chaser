@@ -3,11 +3,11 @@ import {cloneDeep} from 'lodash';
 //雷达图初始化数据和配置
 export const initAntdRadar = () => {
         return cloneDeep({
-            elemBaseProperties: {
+            baseStyle: {
                 padding: '10px',
-                backgroundColor: 'rgba(23,157,169,0.12)'
+                bgColor: 'rgba(23,157,169,0.12)'
             },
-            chartProperties: {
+            chartProps: {
                 data: [
                     {"name": "Design", "type": "a", "value": 70},
                     {"name": "Design", "type": "b", "value": 30},

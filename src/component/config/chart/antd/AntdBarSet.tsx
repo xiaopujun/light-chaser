@@ -32,13 +32,13 @@ class AntdBarSet extends Component<any> {
             case 'AntdBaseBar':
             case 'AntdZoneBar':
                 //单条的计算条数个数
-                paletteCount = chartConfig.chartProperties.data.length;
+                paletteCount = chartConfig.chartProps.data.length;
                 break;
             case 'AntdGroupBar':
             case 'AntdPercentBar':
             case 'AntdStackBar':
                 //分组的计算分组个数
-                paletteCount = getAntdDataSortCount(chartConfig.chartProperties.data, 'type');
+                paletteCount = getAntdDataSortCount(chartConfig.chartProps.data, 'type');
                 break;
         }
         return (

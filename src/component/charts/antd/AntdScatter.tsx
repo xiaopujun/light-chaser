@@ -24,22 +24,22 @@ export default class AntdScatter extends Component<any, any> {
 
     render() {
         const {LCDesignerStore, elemId} = this.props;
-        const {chartConfigs, layoutConfig} = LCDesignerStore;
+        const {chartConfigs, layoutConfigs} = LCDesignerStore;
         const config = chartConfigs[elemId + ''];
         let name = "";
-        for (let i = 0; i < layoutConfig.length; i++) {
-            if (layoutConfig[i].id === elemId) {
-                name = layoutConfig[i].name;
+        for (let i = 0; i < layoutConfigs.length; i++) {
+            if (layoutConfigs[i].id === elemId) {
+                name = layoutConfigs[i].name;
             }
         }
-        const {chartProperties, elemBaseProperties} = config;
+        const {chartProps, baseStyle} = config;
         if (name === "AntdBubbles") {
-            chartProperties.data = this.state.data;
+            chartProps.data = this.state.data;
         }
         return (
-            <div style={{width: '100%', height: '100%', position: 'absolute', ...elemBaseProperties}}>
+            <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
                 <EditTools {...this.props} elemId={elemId}/>
-                <Scatter supportCSSTransform={true} className={'grid-chart-item'} {...chartProperties}/>
+                <Scatter supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
             </div>
         );
     }

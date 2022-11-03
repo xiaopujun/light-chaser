@@ -38,10 +38,10 @@ export default class LCLayoutContent extends React.Component<any, any> {
      */
     generateElement = () => {
         const {LCDesignerStore} = this.props;
-        const {layoutConfig, chartConfigs} = LCDesignerStore;
-        return layoutConfig.map((item: any) => {
+        const {layoutConfigs, chartConfigs} = LCDesignerStore;
+        return layoutConfigs.map((item: any) => {
             let ElementChart = getChartsTemplate(item.name);
-            let borderType = chartConfigs[item.id].elemBaseProperties.borderType || 'BaseBorder';
+            let borderType = chartConfigs[item.id].baseStyle.borderType || 'BaseBorder';
             let Border = getBorder(borderType);
             return (
                 <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
@@ -63,8 +63,8 @@ export default class LCLayoutContent extends React.Component<any, any> {
         deleteItem(elemId);
 
         if (this.rgl != null) {
-            const {layoutConfig} = LCDesignerStore;
-            this.rgl.setState({layout: layoutConfig})
+            const {layoutConfigs} = LCDesignerStore;
+            this.rgl.setState({layout: layoutConfigs})
         }
     }
 
@@ -77,20 +77,25 @@ export default class LCLayoutContent extends React.Component<any, any> {
     onDrop = (layout: any, layoutItem: any, _event: any) => {
         const {addItem, LCDesignerStore} = this.props;
         const {globalSet} = LCDesignerStore;
-        const compObj = JSON.parse(_event.dataTransfer.getData('compObj'));
+        let compObj
+        try {
+            compObj = JSON.parse(_event.dataTransfer.getData('compObj'));
+        } catch (e) {
+            console.log('异常', e)
+        }
         const item = {
             ...layoutItem, ...{
                 i: globalSet?.elemCount + "",
                 id: globalSet?.elemCount,
-                name: compObj.chartName,
-                type: compObj.type
+                name: compObj?.chartName,
+                type: compObj?.type
             }
         }
         addItem(item);
 
         if (this.rgl != null) {
-            const {layoutConfig} = LCDesignerStore;
-            this.rgl.setState({layout: layoutConfig})
+            const {layoutConfigs} = LCDesignerStore;
+            this.rgl.setState({layout: layoutConfigs})
         }
     };
 
@@ -243,7 +248,7 @@ export default class LCLayoutContent extends React.Component<any, any> {
 
     render() {
         const {LCDesignerStore} = this.props;
-        const {layoutConfig, globalSet} = LCDesignerStore;
+        const {layoutConfigs, globalSet} = LCDesignerStore;
         const {scale} = this.state;
         return (
             <div id={'lc-designer-container'} style={{
@@ -256,7 +261,7 @@ export default class LCLayoutContent extends React.Component<any, any> {
                      style={{width: globalSet.screenWidth, height: globalSet.screenHeight}}>
                     <ReactGridLayout ref={obj => this.rgl = obj}
                                      className="layout"
-                                     layout={layoutConfig}
+                                     layout={layoutConfigs}
                                      cols={48}
                                      rowHeight={10}
                                      margin={[15, 15]}

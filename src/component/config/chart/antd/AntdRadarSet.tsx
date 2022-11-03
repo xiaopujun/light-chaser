@@ -74,7 +74,7 @@ export default class AntdRadarSet extends Component<any> {
         const {active} = LCDesignerStore;
         const {chartConfigs} = LCDesignerStore;
         let chartConfig = chartConfigs[active?.id + ''];
-        let paletteCount = getAntdDataSortCount(chartConfig.chartProperties.data, 'type');
+        let paletteCount = getAntdDataSortCount(chartConfig.chartProps.data, 'type');
         return (
             <div className={'elem-chart-config'}>
 

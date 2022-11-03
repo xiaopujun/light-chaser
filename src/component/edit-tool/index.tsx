@@ -25,11 +25,11 @@ class EditTools extends Component<EditToolsProps> {
 
     activeElem = () => {
         const {elemId, activeElem, LCDesignerStore} = this.props;
-        let layoutConfig = LCDesignerStore?.layoutConfig!;
+        let layoutConfigs = LCDesignerStore?.layoutConfigs!;
         let type = "";
-        for (let i = 0; i < layoutConfig.length; i++) {
-            if (layoutConfig[i].id === elemId) {
-                type = layoutConfig[i].name;
+        for (let i = 0; i < layoutConfigs.length; i++) {
+            if (layoutConfigs[i].id === elemId) {
+                type = layoutConfigs[i].name;
                 break;
             }
         }

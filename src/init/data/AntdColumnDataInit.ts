@@ -14,11 +14,11 @@ let axis = {
 //基础柱状图初始化数据和配置
 export const initAntdBaseColumn = () => {
     return cloneDeep({
-        elemBaseProperties: {
+        baseStyle: {
             padding: '5px',
-            backgroundColor: 'rgba(23,157,169,0.12)'
+            bgColor: 'rgba(23,157,169,0.12)'
         },
-        chartProperties: {
+        chartProps: {
             data: [
                 {
                     name: '家具家电',
@@ -68,11 +68,11 @@ export const initAntdBaseColumn = () => {
 //堆叠柱状图初始化数据和配置
 export const initAntdStackColumn = () => {
     return cloneDeep({
-        elemBaseProperties: {
+        baseStyle: {
             padding: '5px',
-            backgroundColor: 'rgba(23,157,169,0.12)'
+            bgColor: 'rgba(23,157,169,0.12)'
         },
-        chartProperties: {
+        chartProps: {
             data: [
                 {
                     name: '1991',
@@ -179,11 +179,11 @@ export const initAntdStackColumn = () => {
 //分组柱状图初始化数据和配置
 export const initAntdGroupColumn = () => {
     return cloneDeep({
-        elemBaseProperties: {
+        baseStyle: {
             padding: '5px',
-            backgroundColor: 'rgba(23,157,169,0.12)'
+            bgColor: 'rgba(23,157,169,0.12)'
         },
-        chartProperties: {
+        chartProps: {
             data: [
                 {
                     name: 'Mon.',
@@ -253,11 +253,11 @@ export const initAntdGroupColumn = () => {
 //百分比柱状图初始化数据和配置
 export const initAntdPercentColumn = () => {
     return cloneDeep({
-        elemBaseProperties: {
+        baseStyle: {
             padding: '5px',
-            backgroundColor: 'rgba(23,157,169,0.12)'
+            bgColor: 'rgba(23,157,169,0.12)'
         },
-        chartProperties: {
+        chartProps: {
             data: [
                 {
                     type: 'Asia',
@@ -381,11 +381,11 @@ export const initAntdPercentColumn = () => {
 //区间柱状图初始化数据和配置
 export const initAntdZoneColumn = () => {
     return cloneDeep({
-        elemBaseProperties: {
+        baseStyle: {
             padding: '5px',
-            backgroundColor: 'rgba(23,157,169,0.12)'
+            bgColor: 'rgba(23,157,169,0.12)'
         },
-        chartProperties: {
+        chartProps: {
             data: [
                 {
                     name: '分类一',

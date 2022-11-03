@@ -18,17 +18,17 @@ class Preview extends Component<any, any> {
                 break;
             }
         }
-        screen.layoutConfig = JSON.parse(screen.layoutConfig);
+        screen.layoutConfigs = JSON.parse(screen.layoutConfigs);
         screen.chartConfigs = JSON.parse(screen.chartConfigs);
         this.state = {LCDesignerStore: screen};
     }
 
     generateElement = () => {
         const {LCDesignerStore} = this.state;
-        const {layoutConfig = [], chartConfigs} = LCDesignerStore!;
-        return layoutConfig.map((item: any) => {
+        const {layoutConfigs = [], chartConfigs} = LCDesignerStore!;
+        return layoutConfigs.map((item: any) => {
             let ElementChart = getChartsTemplate(item.name);
-            let borderType = chartConfigs[item.id].elemBaseProperties.borderType;
+            let borderType = chartConfigs[item.id].baseStyle.borderType;
             let Border = getBorder(borderType);
             return (
                 <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
@@ -42,15 +42,15 @@ class Preview extends Component<any, any> {
 
     render() {
         const {LCDesignerStore} = this.state;
-        const {layoutConfig = []} = LCDesignerStore;
-        for (let i = 0; i < layoutConfig.length; i++) {
-            layoutConfig[i].static = true;
-            layoutConfig[i].isDraggable = false;
+        const {layoutConfigs = []} = LCDesignerStore;
+        for (let i = 0; i < layoutConfigs.length; i++) {
+            layoutConfigs[i].static = true;
+            layoutConfigs[i].isDraggable = false;
         }
         return (
             <div className="site-layout-background" style={{height: 1080, width: 1920, backgroundColor: '#131e26',}}>
                 <ReactGridLayout className="layout"
-                                 layout={layoutConfig}
+                                 layout={layoutConfigs}
                                  cols={48}
                                  rowHeight={10}
                                  margin={[15, 15]}

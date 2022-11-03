@@ -17,7 +17,7 @@ class AntdPieSet extends Component<any> {
         const {active} = LCDesignerStore;
         const {chartConfigs} = LCDesignerStore;
         let chartConfig = chartConfigs[active?.id + ""];
-        let colorPickerNumber = chartConfig.chartProperties.data.length;
+        let colorPickerNumber = chartConfig.chartProps.data.length;
         return (
             <div className={'elem-chart-config'}>
 

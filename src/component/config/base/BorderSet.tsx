@@ -13,7 +13,7 @@ export default class BorderSet extends Component<any> {
     render() {
         const {LCDesignerStore} = this.props;
         const {chartConfigs, active} = LCDesignerStore;
-        let borderSetKey = chartConfigs[active.id + ''].elemBaseProperties.borderType + 'Set';
+        let borderSetKey = chartConfigs[active.id + ''].baseStyle.borderType + 'Set';
         const BorderSetDetail = getBorderSetDetail(borderSetKey);
         return (
             <>

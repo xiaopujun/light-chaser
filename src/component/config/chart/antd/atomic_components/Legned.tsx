@@ -14,7 +14,7 @@ class Legend extends Component<any> {
 
     constructor(props: any) {
         super(props);
-        const {legend} = this.props?.chartConfig?.chartProperties;
+        const {legend} = this.props?.chartConfig?.chartProps;
         if (legend)
             this.state = {showLegendDetail: true}
         else

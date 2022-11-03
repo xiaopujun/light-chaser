@@ -3,11 +3,11 @@ import {cloneDeep} from 'lodash';
 //基础线图
 export const initAntdBaseFoldLine = () => {
     return cloneDeep({
-        elemBaseProperties: {
+        baseStyle: {
             padding:'5px',
-            backgroundColor: 'rgba(23,157,169,0.12)'
+            bgColor: 'rgba(23,157,169,0.12)'
         },
-        chartProperties: {
+        chartProps: {
             data: [],
             xField: 'Date',
             yField: 'scales',
@@ -29,11 +29,11 @@ export const initAntdBaseFoldLine = () => {
 //阶梯线图
 export const initAntdStepFoldLine = () => {
     return cloneDeep({
-        elemBaseProperties: {
+        baseStyle: {
             padding:'5px',
-            backgroundColor: 'rgba(23,157,169,0.12)'
+            bgColor: 'rgba(23,157,169,0.12)'
         },
-        chartProperties: {
+        chartProps: {
             data: [
                 {
                     month: 'Jan',
@@ -177,11 +177,11 @@ export const initAntdStepFoldLine = () => {
 //多重线图
 export const initAntdMuchFoldLine = () => {
     return cloneDeep({
-        elemBaseProperties: {
+        baseStyle: {
             padding:'5px',
-            backgroundColor: 'rgba(23,157,169,0.12)'
+            bgColor: 'rgba(23,157,169,0.12)'
         },
-        chartProperties: {
+        chartProps: {
             data: [],
             xField: 'year',
             yField: 'gdp',

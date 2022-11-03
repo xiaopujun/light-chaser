@@ -1,8 +1,8 @@
 import {cloneDeep} from 'lodash';
 
-let elemBaseProperties = {
+let baseStyle = {
     padding: '10px',
-    backgroundColor: 'rgba(23,157,169,0.12)'
+    bgColor: 'rgba(23,157,169,0.12)'
 }
 let axis = {
     grid: null,
@@ -18,8 +18,8 @@ let axis = {
 //基础条形图初始化数据和配置
 export const initAntdBaseBar = () => {
     return cloneDeep({
-        elemBaseProperties,
-        chartProperties: {
+        baseStyle,
+        chartProps: {
             data: [
                 {
                     name: '1951 年',
@@ -57,8 +57,8 @@ export const initAntdBaseBar = () => {
 //分组条形图初始化数据和配置
 export const initAntdGroupBar = () => {
     return cloneDeep({
-        elemBaseProperties,
-        chartProperties: {
+        baseStyle,
+        chartProps: {
             data: [
                 {
                     name: 'Mon.',
@@ -128,8 +128,8 @@ export const initAntdGroupBar = () => {
 //百分比条形图初始化数据和配置
 export const initAntdPercentBar = () => {
     return cloneDeep({
-        elemBaseProperties,
-        chartProperties: {
+        baseStyle,
+        chartProps: {
             data: [
                 {
                     type: 'Asia',
@@ -252,8 +252,8 @@ export const initAntdPercentBar = () => {
 //区间条形图初始化数据和配置
 export const initAntdZoneBar = () => {
     return cloneDeep({
-        elemBaseProperties,
-        chartProperties: {
+        baseStyle,
+        chartProps: {
             data: [
                 {
                     name: '分类一',
@@ -303,8 +303,8 @@ export const initAntdZoneBar = () => {
 //堆叠条形图初始化数据和配置
 export const initAntdStackBar = () => {
     return cloneDeep({
-        elemBaseProperties,
-        chartProperties: {
+        baseStyle,
+        chartProps: {
             data: [
                 {
                     name: '1991',

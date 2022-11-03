@@ -22,13 +22,12 @@ const initState: LCDesignerProps = {
     globalSet: {
         saveType: 'local',//数据存储方式 local(本地）server（远程服务）
         screenRatio: '',//屏幕比例
-        designerState: '',//设计器状态 edit(编辑）readonly(只读)
         screenName: '数据大屏',
         screenWidth: 1920,
         screenHeight: 1080,
         elemInterval: 0,//元素间隔
         columns: 0,//列个数
-        elemBaseLineHeight: 0,//元素基准高度
+        baseLineHeight: 0,//元素基准高度
         elemCount: 0,//元素个数
     },
     active: {
@@ -36,8 +35,8 @@ const initState: LCDesignerProps = {
         type: "",    //激活的组件类型
     },
     chartConfigs: {},//布局设计器中的图表组件列表，每次设置图表样式或数据时更新此状态中的数据来更新渲染
-    layoutConfig: [],//布局配置数据，用于控制图表在页面中的整体布局位置
-    elemPropSetDialog: {
+    layoutConfigs: [],//布局配置数据，用于控制图表在页面中的整体布局位置
+    rightDialog: {
         visible: false
     }
 }
@@ -95,18 +94,18 @@ function updateLCDesignerStore(preState: LCDesignerProps, data: any) {
  * 想布局设计器中添加组件
  * @param preState
  * @param data
- * @returns {{layoutConfig, chartConfig, count}}
+ * @returns {{layoutConfigs, chartConfig, count}}
  */
 function addItem(preState: LCDesignerProps, data: any) {
-    let {globalSet, layoutConfig, chartConfigs} = preState;
+    let {globalSet, layoutConfigs, chartConfigs} = preState;
     const {name: type} = data;
     //根据类型获取对应图表的初始化数据
     let chartInitData = getChartInitData(type);
-    layoutConfig.push(data);
+    layoutConfigs.push(data);
     chartConfigs[globalSet.elemCount + ""] = chartInitData;
     globalSet.elemCount++; //组件数增加
     //重组状态
-    return {...preState, ...{globalSet, layoutConfig, chartConfigs}};
+    return {...preState, ...{globalSet, layoutConfigs, chartConfigs}};
 }
 
 /**
@@ -116,8 +115,8 @@ function addItem(preState: LCDesignerProps, data: any) {
  */
 function deleteItem(preState: LCDesignerProps, data: any) {
     data = parseInt(data);
-    let {layoutConfig, chartConfigs, active} = preState;
-    _.remove(layoutConfig, function (item) {
+    let {layoutConfigs, chartConfigs, active} = preState;
+    _.remove(layoutConfigs, function (item) {
         return item?.id === data;
     })
     delete chartConfigs[data + ''];
@@ -134,11 +133,11 @@ function deleteItem(preState: LCDesignerProps, data: any) {
  * @param data
  */
 function updateItemLayout(preState: LCDesignerProps, data: any) {
-    let {layoutConfig} = preState;
+    let {layoutConfigs} = preState;
     const {i, x, y, w, h} = data;
-    for (let index = 0; index < layoutConfig.length; index++) {
-        if (layoutConfig[index].i === i) {
-            layoutConfig[index] = {...layoutConfig[index], ...{x, y, w, h}}
+    for (let index = 0; index < layoutConfigs.length; index++) {
+        if (layoutConfigs[index].i === i) {
+            layoutConfigs[index] = {...layoutConfigs[index], ...{x, y, w, h}}
             break;
         }
     }
@@ -151,11 +150,11 @@ function updateItemLayout(preState: LCDesignerProps, data: any) {
  * @param data
  */
 function activeElem(preState: LCDesignerProps, data: any) {
-    let {active, elemPropSetDialog} = preState;
+    let {active, rightDialog} = preState;
     const {elemId, type} = data;
     active = {...active, ...{id: elemId, type}};
-    elemPropSetDialog.visible = !elemPropSetDialog.visible;
-    return {...preState, ...{active, elemPropSetDialog}};
+    rightDialog.visible = !rightDialog.visible;
+    return {...preState, ...{active, rightDialog}};
 }
 
 
@@ -165,9 +164,9 @@ function activeElem(preState: LCDesignerProps, data: any) {
  * @param data
  */
 function updateDrawerVisible(preState: LCDesignerProps, data: any) {
-    let {elemPropSetDialog} = preState;
-    elemPropSetDialog.visible = !elemPropSetDialog.visible;
-    return {...preState, ...{elemPropSetDialog}};
+    let {rightDialog} = preState;
+    rightDialog.visible = !rightDialog.visible;
+    return {...preState, ...{rightDialog}};
 }
 
 /**
@@ -179,8 +178,8 @@ function updateElemBaseSet(preState: LCDesignerProps, data: any) {
     let {chartConfigs, active} = preState;
     const {id} = active;
     let charConfig = chartConfigs[id + ''];
-    let baseConfig = charConfig?.elemBaseProperties;
-    charConfig.elemBaseProperties = {...baseConfig, ...data};
+    let baseConfig = charConfig?.baseStyle;
+    charConfig.baseStyle = {...baseConfig, ...data};
     return {...preState};
 }
 
@@ -194,9 +193,9 @@ function updateElemChartSet(preState: LCDesignerProps, data: any) {
     let activeConfig = chartConfigs[active?.id + ''];
     const activeCompName = active?.type;
     if (activeCompName === "AntdRadar") {
-        activeConfig.chartProperties = {...activeConfig.chartProperties, ...data}
+        activeConfig.chartProps = {...activeConfig.baseStyle, ...data}
     } else {
-        activeConfig.chartProperties = _.mergeWith(activeConfig.chartProperties, data, (objValue: any, srcValue: any, key: any) => {
+        activeConfig.baseStyle = _.mergeWith(activeConfig.baseStyle, data, (objValue: any, srcValue: any, key: any) => {
             if (key === 'data')
                 return objValue = srcValue;
         });

@@ -35,11 +35,11 @@ export default class AntdWordCloud extends Component<any, any> {
         const {LCDesignerStore, elemId} = this.props;
         const {chartConfigs} = LCDesignerStore;
         const config = chartConfigs[elemId + ''];
-        const {chartProperties, elemBaseProperties} = config;
+        const {chartProps, baseStyle} = config;
         return (
-            <div style={{width: '100%', height: '100%', position: 'absolute', ...elemBaseProperties}}>
+            <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
                 <EditTools {...this.props} elemId={elemId}/>
-                <WordCloud supportCSSTransform={true} className={'grid-chart-item'} {...chartProperties}/>
+                <WordCloud supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
             </div>
         );
     }

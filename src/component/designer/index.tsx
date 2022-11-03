@@ -48,7 +48,7 @@ class LCDesigner extends Component<any> {
                         saveType: 'local'
                     },
                     chartConfigs: {},
-                    layoutConfig: []
+                    layoutConfigs: []
                 })
                 break;
             case 'update':
@@ -66,7 +66,7 @@ class LCDesigner extends Component<any> {
                     screenHeight: height,
                     globalSet,
                     chartConfigs,
-                    layoutConfig
+                    layoutConfigs
                 } = config;
                 updateLCDesignerStore({
                     id: screenId,
@@ -75,7 +75,7 @@ class LCDesigner extends Component<any> {
                     screenWidth: width,
                     screenHeight: height,
                     chartConfigs: JSON.parse(chartConfigs),
-                    layoutConfig: JSON.parse(layoutConfig)
+                    layoutConfigs: JSON.parse(layoutConfigs)
                 })
                 break;
         }

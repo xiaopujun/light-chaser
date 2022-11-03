@@ -15,11 +15,11 @@ export default class AntdArea extends Component<any, any> {
     constructor(props: any) {
         super(props);
         const {LCDesignerStore, elemId} = this.props;
-        const {layoutConfig} = LCDesignerStore;
+        const {layoutConfigs} = LCDesignerStore;
         let chartName = "";
-        for (let i = 0; i < layoutConfig.length; i++) {
-            if (layoutConfig[i].id === elemId) {
-                chartName = layoutConfig[i].name;
+        for (let i = 0; i < layoutConfigs.length; i++) {
+            if (layoutConfigs[i].id === elemId) {
+                chartName = layoutConfigs[i].name;
             }
         }
         switch (chartName) {
@@ -56,12 +56,12 @@ export default class AntdArea extends Component<any, any> {
         const {LCDesignerStore, elemId} = this.props;
         const {chartConfigs} = LCDesignerStore;
         const config = chartConfigs[elemId + ''];
-        const {chartProperties, elemBaseProperties} = config;
-        chartProperties.data = this.state.data;
+        const {chartProps, baseStyle} = config;
+        chartProps.data = this.state.data;
         return (
-            <div style={{width: '100%', height: '100%', position: 'absolute', ...elemBaseProperties}}>
+            <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
                 <EditTools {...this.props} elemId={elemId}/>
-                <Area supportCSSTransform={true} className={'grid-chart-item'} {...chartProperties}/>
+                <Area supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
             </div>
         );
     }

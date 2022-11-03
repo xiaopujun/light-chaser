@@ -32,7 +32,7 @@ class AntdBubbleSet extends Component<any> {
         const {updateElemChartSet, LCDesignerStore} = this.props;
         const {active, chartConfigs} = LCDesignerStore;
         let chartConfig = chartConfigs[active?.id + ''];
-        let paletteCount = getAntdDataSortCount(chartConfig.chartProperties.data, 'continent');
+        let paletteCount = getAntdDataSortCount(chartConfig.chartProps.data, 'continent');
         return (
             <div className={'elem-chart-config'}>
 

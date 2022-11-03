@@ -12,7 +12,7 @@ class FourAngleGlowBorder extends Component<any> {
             fourAngleGlowColor,
             fourAngleGlowWidth,
             fourAngleGlowLength
-        } = chartConfigs[elemId + ''].elemBaseProperties;
+        } = chartConfigs[elemId + ''].baseStyle;
         const fourAngleGlowConfig = {
             borderColor: fourAngleGlowColor,
             borderWidth: fourAngleGlowWidth,

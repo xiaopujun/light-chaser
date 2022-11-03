@@ -19,11 +19,11 @@ export default class LCComponentConfig extends Component<any> {
 
 
     render() {
-        const {active, layoutConfig} = this.props.LCDesignerStore;
+        const {active, layoutConfigs} = this.props.LCDesignerStore;
         let layout: any = {};
-        for (let i = 0; i < layoutConfig.length; i++) {
-            if (layoutConfig[i].id === active.id) {
-                layout = layoutConfig[i];
+        for (let i = 0; i < layoutConfigs.length; i++) {
+            if (layoutConfigs[i].id === active.id) {
+                layout = layoutConfigs[i];
                 break;
             }
         }

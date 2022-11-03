@@ -3,11 +3,11 @@ import {cloneDeep} from 'lodash';
 //散点图初始化数据和配置
 export const initAntdScatter = () => {
     return cloneDeep({
-        elemBaseProperties: {
+        baseStyle: {
             padding:'5px',
-            backgroundColor: 'rgba(23,157,169,0.12)'
+            bgColor: 'rgba(23,157,169,0.12)'
         },
-        chartProperties: {
+        chartProps: {
             data: [
                 {x: 1, y: 4.181},
                 {x: 2, y: 4.665},
@@ -74,11 +74,11 @@ export const initAntdScatter = () => {
 //气泡图初始化数据和配置
 export const initAntdBubbles = () => {
     return cloneDeep({
-        elemBaseProperties: {
+        baseStyle: {
             padding:'5px',
-            backgroundColor: 'rgba(23,157,169,0.12)'
+            bgColor: 'rgba(23,157,169,0.12)'
         },
-        chartProperties: {
+        chartProps: {
             appendPadding: 30,
             data: [],
             xField: 'change in female rate',

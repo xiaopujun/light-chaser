@@ -3,11 +3,11 @@ import {cloneDeep} from 'lodash';
 //基础柱状图初始化数据和配置
 export const initAntdPie = () => {
     return cloneDeep({
-        elemBaseProperties: {
+        baseStyle: {
             padding:'5px',
-            backgroundColor: 'rgba(23,157,169,0.12)'
+            bgColor: 'rgba(23,157,169,0.12)'
         },
-        chartProperties: {
+        chartProps: {
             data: [
                 {
                     name: '分类一',
@@ -58,11 +58,11 @@ export const initAntdPie = () => {
 //基础柱状图初始化数据和配置
 export const initAntdRing = () => {
     return cloneDeep({
-        elemBaseProperties: {
+        baseStyle: {
             padding:'5px',
-            backgroundColor: 'rgba(23,157,169,0.12)'
+            bgColor: 'rgba(23,157,169,0.12)'
         },
-        chartProperties: {
+        chartProps: {
             data: [
                 {
                     name: '分类一',

@@ -3,11 +3,11 @@ import {cloneDeep} from 'lodash';
 //堆叠面积图初始化数据和配置
 export const initAntdLiquid = () => {
     return cloneDeep({
-        elemBaseProperties: {
+        baseStyle: {
             padding:'5px',
-            backgroundColor: 'rgba(23,157,169,0.12)'
+            bgColor: 'rgba(23,157,169,0.12)'
         },
-        chartProperties: {
+        chartProps: {
             percent: 0.67,
             color: 'rgb(0,255,234)',
             outline: {
