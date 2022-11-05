@@ -12,7 +12,7 @@ import {
     updateElemChartSet,
     updateItemLayout,
     updateLCDesignerStore
-} from "../../redux/actions/LayoutDesigner";
+} from "../../redux/actions/LCDesignerAction";
 import DesignerHeader from "./Head";
 import RightSlideBox from "./Right";
 import {withRouter} from "react-router-dom";

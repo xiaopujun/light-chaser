@@ -26,7 +26,6 @@ interface ActiveProps {
  * 图标属性配置配置
  */
 interface ChartConfigsProps {
-    id?: number | string;
     baseInfo?: {
         id?: string | number;
         name?: string;

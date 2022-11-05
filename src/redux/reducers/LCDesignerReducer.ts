@@ -193,9 +193,9 @@ function updateElemChartSet(preState: LCDesignerProps, data: any) {
     let activeConfig = chartConfigs[active?.id + ''];
     const activeCompName = active?.type;
     if (activeCompName === "AntdRadar") {
-        activeConfig.chartProps = {...activeConfig.baseStyle, ...data}
+        activeConfig.chartProps = {...activeConfig.chartProps, ...data}
     } else {
-        activeConfig.baseStyle = _.mergeWith(activeConfig.baseStyle, data, (objValue: any, srcValue: any, key: any) => {
+        activeConfig.chartProps = _.mergeWith(activeConfig.chartProps, data, (objValue: any, srcValue: any, key: any) => {
             if (key === 'data')
                 return objValue = srcValue;
         });

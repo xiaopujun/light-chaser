@@ -41,7 +41,7 @@ export default class LCLayoutContent extends React.Component<any, any> {
         const {layoutConfigs, chartConfigs} = LCDesignerStore;
         return layoutConfigs.map((item: any) => {
             let ElementChart = getChartsTemplate(item.name);
-            let borderType = chartConfigs[item.id].baseStyle.borderType || 'BaseBorder';
+            let borderType = chartConfigs[item.id].baseStyle.borderType;
             let Border = getBorder(borderType);
             return (
                 <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
@@ -118,13 +118,11 @@ export default class LCLayoutContent extends React.Component<any, any> {
 
 
     onDragStart = (layout: Layout[], oldItem: Layout, newItem: Layout, placeholder: Layout, event: MouseEvent, element: HTMLElement,) => {
-        console.log('dd')
     }
 
 
     onDrag = (layout: any, oldItem: any, newItem: any,
               placeholder: any, e: any, element: HTMLElement) => {
-        console.log('23')
     }
 
     /**
