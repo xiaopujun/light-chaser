@@ -4,19 +4,22 @@ import './style/BackgroundSet.less';
 
 interface BackgroundSetProps {
     backgroundColorChanged?: (color: string | string[]) => void;
+    backgroundColor?: string;
 }
 
-export default class BackgroundSet extends Component<BackgroundSetProps> {
+export default class LcCompBackgroundSet extends Component<BackgroundSetProps> {
+
     backgroundColorChanged = (color: string | string[]) => {
         const {backgroundColorChanged} = this.props;
         backgroundColorChanged && backgroundColorChanged(color);
     }
 
     render() {
+        const {backgroundColor} = this.props;
         return (
             <div className={'lc-config-item'}>
                 <label className={'lc-config-item-label'}>背景颜色：</label>
-                <ColorPicker className={'lc-config-item-value'}
+                <ColorPicker color={backgroundColor} className={'lc-config-item-value'}
                              onChange={this.backgroundColorChanged}/>
             </div>
         );

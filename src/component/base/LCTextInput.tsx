@@ -3,6 +3,7 @@ import './style/LCTextInput.less';
 
 interface LCTextInputProps {
     onChange?: (data: string) => void;
+    defaultValue?: string | number;
 }
 
 export default class LCTextInput extends Component<LCTextInputProps> {
@@ -14,7 +15,8 @@ export default class LCTextInput extends Component<LCTextInputProps> {
 
     render() {
         return (
-            <input className={'lc-text-input'} type={'text'} onChange={this.onChange}/>
+            <input className={'lc-text-input'} defaultValue={this.props.defaultValue} type={'text'}
+                   onChange={this.onChange}/>
         );
     }
 }

@@ -6,12 +6,15 @@ import LCNumberInput from "../../base/LCNumberInput";
 
 const {Option} = Select;
 
-export default class BorderSet extends Component<any> {
+interface LcCompBorderSetProps {
+    updateElemBaseSet?: (data: any) => void;
+    borderStyle?: string;
+    borderWidth?: number;
+    borderColor?: string;
+    borderRadius?: number;
+}
 
-    borderTypeChanged = (data: string) => {
-        const {updateElemBaseSet} = this.props;
-        updateElemBaseSet && updateElemBaseSet({borderType: data});
-    }
+export default class LcCompBorderSet extends Component<LcCompBorderSetProps> {
 
     borderStyleChanged = (style: string) => {
         const {updateElemBaseSet} = this.props;
@@ -34,13 +37,12 @@ export default class BorderSet extends Component<any> {
     }
 
     render() {
-        const {LCDesignerStore} = this.props;
-        const {chartConfigs, active} = LCDesignerStore;
+        const {borderColor = 'rgb(0,249,188)', borderRadius = 0, borderStyle = 'solid', borderWidth = 0} = this.props;
         return (
             <>
                 <div className={'lc-config-item'}>
-                    <label className={'lc-config-item-label'}>边框线条：</label>
-                    <Select defaultValue={'solid'} className={'lc-config-item-value lc-select'}
+                    <label className={'lc-config-item-label'}>边框类型：</label>
+                    <Select defaultValue={borderStyle} className={'lc-config-item-value lc-select'}
                             onChange={this.borderStyleChanged}>
                         <Option value="dotted">点</Option>
                         <Option value="dashed">虚线</Option>
@@ -49,15 +51,16 @@ export default class BorderSet extends Component<any> {
                 </div>
                 <div className={'lc-config-item'}>
                     <label className={'lc-config-item-label'}>边框颜色：</label>
-                    <ColorPicker
-                        onChange={this.borderColorChanged}
-                        className={'lc-config-item-value'}/>
+                    <ColorPicker color={borderColor}
+                                 onChange={this.borderColorChanged}
+                                 className={'lc-config-item-value'}/>
                 </div>
                 <div className={'lc-config-item'}>
                     <label className={'lc-config-item-label'}>边框宽度：</label>
                     <div className={'lc-config-item-value'}>
                         <div className={'lc-input-container'}>
-                            <LCNumberInput id={'baseBorderWidth'} onChange={this.borderWidthChanged}/>
+                            <LCNumberInput id={'baseBorderWidth'} value={borderWidth}
+                                           onChange={this.borderWidthChanged}/>
                             <span>&nbsp;px</span>
                         </div>
                     </div>
@@ -66,7 +69,8 @@ export default class BorderSet extends Component<any> {
                     <label className={'lc-config-item-label'}>边框圆角：</label>
                     <div className={'lc-config-item-value lc-input-container'}>
                         <div className={'lc-input-container'}>
-                            <LCNumberInput id={'baseBorderRadius'} onChange={this.borderRadiusChanged}/>
+                            <LCNumberInput id={'baseBorderRadius'} value={borderRadius}
+                                           onChange={this.borderRadiusChanged}/>
                             <span>&nbsp;px</span>
                         </div>
                     </div>

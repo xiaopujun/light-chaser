@@ -1,34 +1,37 @@
 import React, {Component} from 'react';
-import PaddingSet from "../base/PaddingSet";
-import BackgroundSet from "../base/BackgroundSet";
-import BorderSet from "../base/BorderSet";
-import {Select} from "antd";
-import ColorPicker from "../../color_picker/BaseColorPicker";
-import LCNumberInput from "../../base/LCNumberInput";
 import LCTextInput from "../../base/LCTextInput";
+
+interface LcEmBaseInfoProps {
+    id?: number | string;
+    name?: string;
+    desc?: string;
+    type?: string;
+}
+
 
 /**
  * lc组件基础信息
  */
-class LcEmBaseInfo extends Component {
+class LcEmBaseInfo extends Component<LcEmBaseInfoProps> {
     render() {
+        const {id, name, desc, type} = this.props;
         return (
             <div className={'lc-base-info'}>
                 <div className={'lc-config-item'}>
                     <label className={'lc-config-item-label'}>ID号：</label>
-                    <label>3</label>
+                    <label>{id}</label>
                 </div>
                 <div className={'lc-config-item'}>
                     <label className={'lc-config-item-label'}>名称：</label>
-                    <LCTextInput/>
+                    <LCTextInput defaultValue={name}/>
                 </div>
                 <div className={'lc-config-item'}>
                     <label className={'lc-config-item-label'}>描述：</label>
-                    <LCTextInput/>
+                    <LCTextInput defaultValue={desc}/>
                 </div>
                 <div className={'lc-config-item'}>
                     <label className={'lc-config-item-label'}>类型：</label>
-                    <LCTextInput/>
+                    <LCTextInput defaultValue={type}/>
                 </div>
             </div>
         );

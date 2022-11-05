@@ -21,24 +21,28 @@ interface ActiveProps {
     type: string;
 }
 
+interface BaseInfo {
+    id?: string | number;
+    name?: string;
+    type?: string;
+    desc?: string;
+}
+
+export interface BaseStyle {
+    padding?: string;
+    backgroundColor?: string;
+    border?: string;
+    borderType?: string;
+    borderRadio?: number;
+}
+
 
 /**
  * 图标属性配置配置
  */
 interface ChartConfigsProps {
-    baseInfo?: {
-        id?: string | number;
-        name?: string;
-        type?: string;
-        desc?: string;
-    };
-    baseStyle?: {
-        padding?: string;
-        bgColor?: string;
-        border?: string;
-        borderType?: string;
-        borderRadio?: number;
-    };
+    baseInfo?: BaseInfo;
+    baseStyle?: BaseStyle;
     chartProps?: any;
     dataConfig?: {
         dataSourceType: string;//手动、excel、接口、数据库、

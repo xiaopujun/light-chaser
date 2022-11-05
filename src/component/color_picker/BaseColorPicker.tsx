@@ -6,6 +6,7 @@ import {BaseProps} from "../../types/Base";
 
 interface ColorPickerProps extends BaseProps {
     onChange?: (color: any, e: Event, id: number | string | undefined) => void;
+    color?: string;
     id?: number | string;
 }
 
@@ -15,6 +16,16 @@ class ColorPicker extends Component<ColorPickerProps> {
         color: 'rgb(0,249,188)',
         colorArea: 'rgb(0,255,192)'
     };
+
+    constructor(props: ColorPickerProps) {
+        super(props);
+        const {color = 'rgb(0,249,188)'} = props;
+        this.state = {
+            color: color,
+            colorArea: color
+        }
+    }
+
 
     onChangeComplete = (color: any, event: any) => {
         const {onChange, id} = this.props;

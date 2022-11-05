@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Collapse} from 'antd';
 import './LcCompConfigContainer.less';
-import LcEmBaseStyle from "./base/LcEmBaseStyle";
+import LcCompBaseStyleSet from "./base/LcCompBaseStyleSet";
 import ElemChartSet from "./chart/antd";
 import {RollbackOutlined} from "@ant-design/icons";
 import LcEmBaseInfo from "./info/LcEmBaseInfo";
@@ -38,13 +38,13 @@ export default class LcCompConfigContainer extends Component<any> {
                         <LcEmBaseInfo {...this.props}/>
                     </Panel>
                     <Panel className={'lc-config-collapse-title'} header="基础样式" key="1">
-                        <LcEmBaseStyle {...this.props}/>
+                        <LcCompBaseStyleSet {...this.props}/>
                     </Panel>
                     <Panel className={'lc-config-collapse-title'} header="组件样式" key="2">
                         <ElemChartSet {...this.props}/>
                     </Panel>
                     <Panel className={'lc-config-collapse-title'} header="数据源设置" key="5">
-                        <p style={{color: 'white'}}>未开发...</p>
+                        <p style={{color: 'white'}}>it's coding...</p>
                     </Panel>
                 </Collapse>
             </>
