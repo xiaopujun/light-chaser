@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import ReactGridLayout from 'react-grid-layout';
 import getChartsTemplate from "../charts/ComponentChartInit";
-import getBorder from "../border";
 
 class Preview extends Component<any, any> {
 
@@ -28,13 +27,9 @@ class Preview extends Component<any, any> {
         const {layoutConfigs = [], chartConfigs} = LCDesignerStore!;
         return layoutConfigs.map((item: any) => {
             let ElementChart = getChartsTemplate(item.name);
-            let borderType = chartConfigs[item.id].baseStyle.borderType;
-            let Border = getBorder(borderType);
             return (
                 <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
-                    <Border elemId={item?.id} LCDesignerStore={LCDesignerStore} {...this.props}>
-                        <ElementChart elemId={item?.id} LCDesignerStore={LCDesignerStore}/>
-                    </Border>
+                    <ElementChart elemId={item?.id} LCDesignerStore={LCDesignerStore}/>
                 </div>
             );
         })

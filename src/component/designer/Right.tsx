@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ElemPropSet from "../config/LCComponentConfig";
+import ElemPropSet from "../config/LcCompConfigContainer";
 import './style/Right.less';
 import LCNumberInput from "../base/LCNumberInput";
 

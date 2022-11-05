@@ -4,7 +4,6 @@ import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import './style/Content.less';
 import getChartsTemplate from "../charts/ComponentChartInit";
-import getBorder from "../border";
 import {Spin} from "antd";
 
 export default class LCLayoutContent extends React.Component<any, any> {
@@ -38,17 +37,13 @@ export default class LCLayoutContent extends React.Component<any, any> {
      */
     generateElement = () => {
         const {LCDesignerStore} = this.props;
-        const {layoutConfigs, chartConfigs} = LCDesignerStore;
+        const {layoutConfigs} = LCDesignerStore;
         return layoutConfigs.map((item: any) => {
             let ElementChart = getChartsTemplate(item.name);
-            let borderType = chartConfigs[item.id].baseStyle.borderType;
-            let Border = getBorder(borderType);
             return (
                 <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
                     <Suspense fallback={<Spin tip={'L O A D I N G . . .'}/>}>
-                        <Border elemId={item?.id} {...this.props}>
-                            <ElementChart elemId={item?.id} deleteItem={this.deleteItem} {...this.props}/>
-                        </Border>
+                        <ElementChart elemId={item?.id} deleteItem={this.deleteItem} {...this.props}/>
                     </Suspense>
                 </div>
             );

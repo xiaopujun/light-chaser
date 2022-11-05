@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
 import {Collapse} from 'antd';
-import './LCComponentConfig.less';
-import LCBaseConfig from "./base/LCBaseConfig";
+import './LcCompConfigContainer.less';
+import LcEmBaseStyle from "./base/LcEmBaseStyle";
 import ElemChartSet from "./chart/antd";
 import {RollbackOutlined} from "@ant-design/icons";
+import LcEmBaseInfo from "./info/LcEmBaseInfo";
 
 const {Panel} = Collapse;
 
 /**
  * 右滑框中的组件配置选项
  */
-export default class LCComponentConfig extends Component<any> {
+export default class LcCompConfigContainer extends Component<any> {
 
     cancelActive = () => {
         const {activeElem} = this.props;
@@ -33,14 +34,16 @@ export default class LCComponentConfig extends Component<any> {
                     <RollbackOutlined onClick={this.cancelActive}/>&nbsp;组件配置({layout?.type})
                 </div>
                 <Collapse className={'lc-config-collapse lc-component-config'} bordered={false}>
-                    <Panel className={'lc-config-collapse-title'} header="基础设置" key="1">
-                        <LCBaseConfig {...this.props}/>
+                    <Panel className={'lc-config-collapse-title'} header="基础信息" key="0">
+                        <LcEmBaseInfo {...this.props}/>
                     </Panel>
-                    <Panel className={'lc-config-collapse-title'} header="组件设置" key="2">
+                    <Panel className={'lc-config-collapse-title'} header="基础样式" key="1">
+                        <LcEmBaseStyle {...this.props}/>
+                    </Panel>
+                    <Panel className={'lc-config-collapse-title'} header="组件样式" key="2">
                         <ElemChartSet {...this.props}/>
                     </Panel>
-                    <Panel className={'lc-config-collapse-title'} header="数据源" key="5">
-                        {/*<ElemDataSet {...this.props}/>*/}
+                    <Panel className={'lc-config-collapse-title'} header="数据源设置" key="5">
                         <p style={{color: 'white'}}>未开发...</p>
                     </Panel>
                 </Collapse>

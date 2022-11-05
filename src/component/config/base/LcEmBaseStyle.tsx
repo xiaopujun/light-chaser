@@ -6,9 +6,9 @@ import BackgroundSet from "./BackgroundSet";
 
 
 /**
- * 组件基础设置
+ * lc组件基础样式
  */
-export default class LCBaseConfig extends Component<any> {
+export default class LcEmBaseStyle extends Component<any> {
 
     paddingChanged = (padding: string) => {
         const {updateElemBaseSet} = this.props;

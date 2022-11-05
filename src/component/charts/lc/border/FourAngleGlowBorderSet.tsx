@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import BaseBorderSet from "./BaseBorderSet";
 import ColorPicker from "../../../color_picker/BaseColorPicker";
 import LCNumberInput from "../../../base/LCNumberInput";
 
@@ -62,7 +61,6 @@ export default class FourAngleGlowBorderSet extends Component<any> {
                         </div>
                     </div>
                 </div>
-                <BaseBorderSet {...this.props}/>
             </>
         );
     }
