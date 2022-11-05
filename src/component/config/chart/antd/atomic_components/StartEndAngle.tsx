@@ -1,10 +1,17 @@
 import React, {Component} from 'react';
 import LCNumberInput from "../../../../base/LCNumberInput";
 
+
+interface StartEndAngleProps {
+    chartProps?: any;
+    updateElemChartSet?: (data: any) => void;
+}
+
+
 /**
  * 圆形图渲染，内外半径设置
  */
-export default class StartEndAngle extends Component<any> {
+export default class StartEndAngle extends Component<StartEndAngleProps> {
 
     state = {
         startAngle: 0,
@@ -15,7 +22,7 @@ export default class StartEndAngle extends Component<any> {
         const {updateElemChartSet} = this.props;
         const {endAngle} = this.state;
         if (angle <= endAngle - 0.1) {
-            updateElemChartSet({
+            updateElemChartSet && updateElemChartSet({
                 startAngle: Math.PI * angle
             })
             this.setState({startAngle: angle})
@@ -25,7 +32,7 @@ export default class StartEndAngle extends Component<any> {
         const {updateElemChartSet} = this.props;
         const {startAngle} = this.state;
         if (startAngle <= angle - 0.1) {
-            updateElemChartSet({
+            updateElemChartSet && updateElemChartSet({
                 endAngle: Math.PI * angle
             })
             this.setState({endAngle: angle})

@@ -6,11 +6,18 @@ import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";
 
 const {Option} = Select;
 
-export default class AntdScatterSet extends Component<any> {
+
+interface AntdScatterSetProps {
+    updateElemChartSet?: (data: any) => void;
+    chartProps?: any;
+    active?: any;
+}
+
+export default class AntdScatterSet extends Component<AntdScatterSetProps> {
 
     fillColorChanged = (color: string | string[]) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             pointStyle: {
                 fill: color,
             },
@@ -19,29 +26,27 @@ export default class AntdScatterSet extends Component<any> {
 
     shapeChanged = (shape: string) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             shape: shape
         });
     }
 
     pointSizeChanged = (range: [number, number]) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             size: range
         })
     }
 
     curveRendering = (data: boolean) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             smooth: data
         })
     }
 
     render() {
-        const {updateElemChartSet, LCDesignerStore} = this.props;
-        const {active, chartConfigs} = LCDesignerStore;
-        let chartConfig = chartConfigs[active?.id + ''];
+        const {updateElemChartSet, active, chartProps} = this.props;
         return (
             <div className={'elem-chart-config'}>
 
@@ -71,7 +76,7 @@ export default class AntdScatterSet extends Component<any> {
                     </div>
                 </div>
                 {/*直角坐标系配置*/}
-                <RightAngleCoordinates chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
+                <RightAngleCoordinates chartProps={chartProps} updateElemChartSet={updateElemChartSet}/>
 
             </div>
         );

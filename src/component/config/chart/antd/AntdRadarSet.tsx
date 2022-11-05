@@ -9,7 +9,14 @@ import {getAntdDataSortCount} from "../../../../utils/AntdBarUtil";
 import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";
 import ColorPicker from "../../../color_picker/BaseColorPicker";
 
-export default class AntdRadarSet extends Component<any> {
+
+interface AntdRadarSetProps {
+    updateElemChartSet?: (data: any) => void;
+    chartProps?: any;
+    active?: any;
+}
+
+export default class AntdRadarSet extends Component<AntdRadarSetProps> {
 
     state: any = {
         lineWidth: 1,
@@ -18,19 +25,19 @@ export default class AntdRadarSet extends Component<any> {
 
     fillColorChanged = (color: string | string[]) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({color: color});
+        updateElemChartSet && updateElemChartSet({color: color});
     }
 
     curveRendering = (data: boolean) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             smooth: data
         })
     }
 
     lineWidthChanged = (lineWidth: number) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             lineStyle: {
                 lineWidth,
             },
@@ -40,7 +47,7 @@ export default class AntdRadarSet extends Component<any> {
 
     pointColorChanged = (color: string) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             point: {
                 color,
             },
@@ -49,7 +56,7 @@ export default class AntdRadarSet extends Component<any> {
 
     pointSizeChanged = (size: number) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             point: {
                 size,
             },
@@ -59,7 +66,7 @@ export default class AntdRadarSet extends Component<any> {
 
     pointFillColorChanged = (color: string) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             point: {
                 style: {
                     fill: color
@@ -70,18 +77,15 @@ export default class AntdRadarSet extends Component<any> {
 
     render() {
         const {lineWidth, pointSize} = this.state;
-        const {updateElemChartSet, LCDesignerStore} = this.props;
-        const {active} = LCDesignerStore;
-        const {chartConfigs} = LCDesignerStore;
-        let chartConfig = chartConfigs[active?.id + ''];
-        let paletteCount = getAntdDataSortCount(chartConfig.chartProps.data, 'type');
+        const {updateElemChartSet, active, chartProps} = this.props;
+        let paletteCount = getAntdDataSortCount(chartProps.data, 'type');
         return (
             <div className={'elem-chart-config'}>
 
                 {/*图形填充色设置*/}
                 <FillColor onChange={this.fillColorChanged} paletteCount={paletteCount}/>
                 {/*图例*/}
-                <Legend chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
+                <Legend chartProps={chartProps} updateElemChartSet={updateElemChartSet}/>
                 {/*极坐标系相关设置*/}
                 <OutRadius items={['outer']} updateElemChartSet={updateElemChartSet}/>
                 <StartEndAngle updateElemChartSet={updateElemChartSet}/>
@@ -129,7 +133,7 @@ export default class AntdRadarSet extends Component<any> {
                 </div>
 
                 {/*直角坐标系配置*/}
-                <RightAngleCoordinates chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
+                <RightAngleCoordinates chartProps={chartProps} updateElemChartSet={updateElemChartSet}/>
 
             </div>
         );

@@ -2,7 +2,14 @@ import React, {Component} from 'react';
 import OutInnerRadius from "./OutInnerRadius";
 import StartEndAngle from "./StartEndAngle";
 
-export default class PolarCoordinateSystem extends Component<any> {
+interface PolarCoordinateSystemProps {
+    updateElemChartSet?: (data: any) => void;
+}
+
+/**
+ * 直角坐标系
+ */
+export default class PolarCoordinateSystem extends Component<PolarCoordinateSystemProps> {
 
 
     render() {

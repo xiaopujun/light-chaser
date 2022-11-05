@@ -8,25 +8,33 @@ import LCTextInput from "../../../base/LCTextInput";
 
 const {Option} = Select;
 
-class AntdLiquidSet extends Component<any> {
+
+interface AntdLiquidSetProps {
+    updateElemChartSet?: (data: any) => void;
+    chartProps?: any;
+    active?: any;
+}
+
+
+class AntdLiquidSet extends Component<AntdLiquidSetProps> {
 
     fillColorChanged = (color: string | string[]) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             color: color
         })
     }
 
     outRadiusChanged = (radius: number) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             radius: radius
         })
     }
 
     outLineWidthChanged = (width: number) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             outline: {
                 border: width
             }
@@ -36,7 +44,7 @@ class AntdLiquidSet extends Component<any> {
 
     outLineIntervalChanged = (distance: number) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             outline: {
                 distance: distance
             }
@@ -45,7 +53,7 @@ class AntdLiquidSet extends Component<any> {
 
     outLineColorChanged = (color: string) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             outline: {
                 style: {
                     stroke: color,
@@ -56,7 +64,7 @@ class AntdLiquidSet extends Component<any> {
 
     numberOfWaterWavesChanged = (count: number) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             wave: {
                 count: count
             }
@@ -65,7 +73,7 @@ class AntdLiquidSet extends Component<any> {
 
     waveLengthChanged = (length: number) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             wave: {
                 length: length
             }
@@ -74,7 +82,7 @@ class AntdLiquidSet extends Component<any> {
 
     titleChanged = (data: string) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             statistic: {
                 title: {
                     content: data
@@ -85,7 +93,7 @@ class AntdLiquidSet extends Component<any> {
 
     titleColorChanged = (color: string) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             statistic: {
                 title: {
                     style: {
@@ -100,7 +108,7 @@ class AntdLiquidSet extends Component<any> {
 
     subscriptionColorChanged = (color: string) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             statistic: {
                 content: {
                     style: {
@@ -114,7 +122,7 @@ class AntdLiquidSet extends Component<any> {
 
     titleFontSizeChanged = (size: number) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             statistic: {
                 title: {
                     style: {
@@ -128,7 +136,7 @@ class AntdLiquidSet extends Component<any> {
 
     subscriptionFontSizeChanged = (size: number) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             statistic: {
                 content: {
                     style: {
@@ -141,7 +149,7 @@ class AntdLiquidSet extends Component<any> {
 
     subscriptionLineHeightChanged = (size: number) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             statistic: {
                 content: {
                     style: {
@@ -154,7 +162,7 @@ class AntdLiquidSet extends Component<any> {
 
     shapeChanged = (value: string) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             shape: value
         })
     }
@@ -163,12 +171,9 @@ class AntdLiquidSet extends Component<any> {
     render() {
         return (
             <div className={'elem-chart-config'}>
-
                 {/*图形填充色设置*/}
                 <FillColor onChange={this.fillColorChanged} paletteCount={1}/>
-
                 <div className={'config-group chart-fill-color'}>
-
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>图形选择：</label>
                         <Select className={'lc-config-item-value lc-select'} defaultValue={'circle'}
@@ -272,7 +277,6 @@ class AntdLiquidSet extends Component<any> {
                         </div>
                     </div>
                 </div>
-
             </div>
         );
     }

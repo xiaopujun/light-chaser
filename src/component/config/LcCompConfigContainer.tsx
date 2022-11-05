@@ -5,13 +5,19 @@ import LcCompBaseStyleSet from "./base/LcCompBaseStyleSet";
 import ElemChartSet from "./chart/antd";
 import {RollbackOutlined} from "@ant-design/icons";
 import LcEmBaseInfo from "./info/LcEmBaseInfo";
+import {LCDesignerProps} from "../../global/types";
 
 const {Panel} = Collapse;
+
+interface LcCompConfigContainerProps {
+    LCDesignerStore?: LCDesignerProps;
+    activeElem?: (data: any) => void;
+}
 
 /**
  * 右滑框中的组件配置选项
  */
-export default class LcCompConfigContainer extends Component<any> {
+export default class LcCompConfigContainer extends Component<LcCompConfigContainerProps> {
 
     cancelActive = () => {
         const {activeElem} = this.props;
@@ -20,7 +26,7 @@ export default class LcCompConfigContainer extends Component<any> {
 
 
     render() {
-        const {active, layoutConfigs} = this.props.LCDesignerStore;
+        const {active, layoutConfigs} = this.props.LCDesignerStore!;
         let layout: any = {};
         for (let i = 0; i < layoutConfigs.length; i++) {
             if (layoutConfigs[i].id === active.id) {

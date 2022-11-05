@@ -6,33 +6,38 @@ import {getAntdDataSortCount} from "../../../../utils/AntdBarUtil";
 
 const {Option} = Select;
 
-class AntdBubbleSet extends Component<any> {
+interface AntdBubbleSetProps {
+    updateElemChartSet?: (data: any) => void;
+    active?: any;
+    chartProps?: any;
+}
+
+
+class AntdBubbleSet extends Component<AntdBubbleSetProps> {
 
     fillColorChanged = (color: string | string[]) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({color: color});
+        updateElemChartSet && updateElemChartSet({color: color});
     }
 
     pointSizeChanged = (range: [number, number]) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             size: range
         })
     }
 
     shapeChanged = (shape: string) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             shape: shape
         });
     }
 
 
     render() {
-        const {updateElemChartSet, LCDesignerStore} = this.props;
-        const {active, chartConfigs} = LCDesignerStore;
-        let chartConfig = chartConfigs[active?.id + ''];
-        let paletteCount = getAntdDataSortCount(chartConfig.chartProps.data, 'continent');
+        const {updateElemChartSet, active, chartProps} = this.props;
+        let paletteCount = getAntdDataSortCount(chartProps.data, 'continent');
         return (
             <div className={'elem-chart-config'}>
 
@@ -62,8 +67,7 @@ class AntdBubbleSet extends Component<any> {
                     </div>
                 </div>
                 {/*直角坐标系配置*/}
-                <RightAngleCoordinates chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
-
+                <RightAngleCoordinates chartProps={chartProps} updateElemChartSet={updateElemChartSet}/>
             </div>
         );
     }

@@ -6,44 +6,45 @@ import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";
 import ColumnWidth from "./atomic_components/ColumnWidth";
 import {getAntdDataSortCount} from "../../../../utils/AntdBarUtil";
 
+interface AntdColumnSetProps {
+    updateElemChartSet?: (data: any) => void;
+    chartProps?: any;
+    active?: any;
+}
 
-class AntdColumnSet extends Component<any> {
+class AntdColumnSet extends Component<AntdColumnSetProps> {
 
     fillColorChanged = (color: string | string[]) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({color: color})
+        updateElemChartSet && updateElemChartSet({color: color})
     }
 
     render() {
-        const {updateElemChartSet, LCDesignerStore} = this.props;
-        const {active, chartConfigs} = LCDesignerStore;
-        let chartConfig = chartConfigs[active?.id + ''];
+        const {updateElemChartSet, chartProps, active} = this.props;
         let paletteCount = 1;
         switch (active?.type) {
             case 'AntdBaseColumn':
             case 'AntdZoneColumn':
                 //单条的计算条数个数
-                paletteCount = chartConfig.chartProps.data.length;
+                paletteCount = chartProps.data.length;
                 break;
             case 'AntdGroupColumn':
             case 'AntdPercentColumn':
             case 'AntdStackColumn':
                 //分组的计算分组个数
-                paletteCount = getAntdDataSortCount(chartConfig.chartProps.data, 'type');
+                paletteCount = getAntdDataSortCount(chartProps.data, 'type');
                 break;
         }
         return (
             <div className={'elem-chart-config'}>
-
                 {/*图形填充色设置*/}
                 <FillColor paletteCount={paletteCount} onChange={this.fillColorChanged}/>
                 {/*图例配置*/}
-                <Legend chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
+                <Legend updateElemChartSet={updateElemChartSet}/>
                 {/*直角坐标系配置*/}
-                <RightAngleCoordinates chartConfig={chartConfig} updateElemChartSet={updateElemChartSet}/>
+                <RightAngleCoordinates updateElemChartSet={updateElemChartSet}/>
                 {/*条形图单条宽度配置*/}
                 <ColumnWidth updateElemChartSet={updateElemChartSet}/>
-
             </div>
         );
     }

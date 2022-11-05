@@ -1,10 +1,16 @@
 import React, {Component} from 'react';
 import FillColor from "./atomic_components/FillColor";
 
-class AntdWordCloudSet extends Component<any> {
+interface AntdWordCloudSetProps {
+    updateElemChartSet?: (data: any) => void;
+    chartProps?: any;
+    active?: any;
+}
+
+class AntdWordCloudSet extends Component<AntdWordCloudSetProps> {
     fillColorChanged = (color: string | string[]) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             color: color,
             autoFit: true,
         });
@@ -12,21 +18,21 @@ class AntdWordCloudSet extends Component<any> {
 
     shapeChanged = (shape: string) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             shape: shape
         });
     }
 
     pointSizeChanged = (range: [number, number]) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             size: range
         })
     }
 
     curveRendering = (data: boolean) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             smooth: data
         })
     }
@@ -36,8 +42,8 @@ class AntdWordCloudSet extends Component<any> {
         return (
             <div className={'elem-chart-config'}>
 
-                    {/*图形填充色设置*/}
-                    <FillColor onChange={this.fillColorChanged} paletteCount={1}/>
+                {/*图形填充色设置*/}
+                <FillColor onChange={this.fillColorChanged} paletteCount={1}/>
 
             </div>
         );

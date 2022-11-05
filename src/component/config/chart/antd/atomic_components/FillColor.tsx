@@ -10,6 +10,7 @@ interface FillColorProp {
     fillMode?: string; //0:单色、1：多色、
     paletteCount?: number; //调色板数量
     onChange?: (data: string | string[]) => void;//回调函数
+    chartProps?: any;
 }
 
 /**

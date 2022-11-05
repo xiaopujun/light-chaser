@@ -2,18 +2,19 @@ import React, {Component} from 'react';
 import './style/index.less';
 import LCNumberInput from "../../../../base/LCNumberInput";
 
-interface ColoumWidthProp {
-    updateElemChartSet: (data: any) => void;
+interface ColumnWidthProp {
+    updateElemChartSet?: (data: any) => void;
+    chartProps?: any;
 }
 
 /**
  * 条形图，单条宽度配置原子组件
  */
-class ColumnWidth extends Component<ColoumWidthProp> {
+class ColumnWidth extends Component<ColumnWidthProp> {
 
     columnWidthChanged = (width: number) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             maxColumnWidth: width
         })
     }

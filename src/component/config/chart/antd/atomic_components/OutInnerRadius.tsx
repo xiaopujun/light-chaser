@@ -3,7 +3,8 @@ import LCNumberInput from "../../../../base/LCNumberInput";
 
 interface OutInnerRadiusProps {
     updateElemChartSet?: (config: object) => void;
-    items?: ['outer'?, 'inner'?]
+    items?: ['outer'?, 'inner'?];
+    chartProps?: any;
 }
 
 /**

@@ -3,7 +3,8 @@ import './style/index.less';
 import LCNumberInput from "../../../../base/LCNumberInput";
 
 interface BarWidthProp {
-    updateElemChartSet: (data: any) => void;
+    updateElemChartSet?: (data: any) => void;
+    chartProps?: any;
 }
 
 /**
@@ -13,7 +14,7 @@ class BarWidth extends Component<BarWidthProp> {
 
     barWidthChanged = (width: number) => {
         const {updateElemChartSet} = this.props;
-        updateElemChartSet({
+        updateElemChartSet && updateElemChartSet({
             maxBarWidth: width
         })
     }
