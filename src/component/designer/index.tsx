@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Layout} from 'antd';
 import {connect} from "react-redux";
-import LayoutTools from "./left/LcDesignerLeft";
-import LCLayoutContent from "./Content";
+import LcDesignerLeft from "./left/LcDesignerLeft";
+import LCLayoutContent from "./LcDesignerContent";
 import {
     activeElem,
     addItem, clearLCDesignerStore,
@@ -13,9 +13,9 @@ import {
     updateItemLayout,
     updateLCDesignerStore
 } from "../../redux/actions/LCDesignerAction";
-import DesignerHeader from "./Head";
-import RightSlideBox from "./LcDesignerRight";
+import DesignerHeader from "./LcDesignerHeader";
 import {RouteComponentProps, withRouter} from "react-router-dom";
+import LcDesignerRight from "./LcDesignerRight";
 
 
 const {Header, Sider, Content} = Layout;
@@ -98,17 +98,21 @@ class LCDesigner extends Component<LCDesignerProps | any> {
             <div className={'light_chaser-designer'}>
                 <Layout>
                     <Header>
+                        {/*设计器头部*/}
                         <DesignerHeader {...this.props}/>
                     </Header>
                     <Layout>
                         <Sider width={300}>
-                            <LayoutTools/>
+                            {/*设计器左侧*/}
+                            <LcDesignerLeft/>
                         </Sider>
                         <Content>
+                            {/*设计器中间内容*/}
                             <LCLayoutContent {...this.props}/>
                         </Content>
                         <Sider width={300}>
-                            <RightSlideBox {...this.props}/>
+                            {/*设计器右侧配置*/}
+                            <LcDesignerRight {...this.props}/>
                         </Sider>
                     </Layout>
                 </Layout>

@@ -9,16 +9,16 @@ import {
     SettingOutlined,
     SnippetsOutlined
 } from "@ant-design/icons";
-import {RouteComponentProps, RouteProps, RouterProps, withRouter} from "react-router-dom";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 import {localSave, localUpdate} from "../../local/LocalStorageUtil";
 import {LCDesignerProps} from "../../global/types";
 
-interface DesignerHeaderProps extends RouteComponentProps {
+interface LcDesignerHeaderProps extends RouteComponentProps {
     LCDesignerStore: LCDesignerProps;
     updateLCDesignerStore?: (data: any) => void;
 }
 
-class DesignerHeader extends Component<DesignerHeaderProps | any> {
+class LcDesignerHeader extends Component<LcDesignerHeaderProps | any> {
 
     updateRouteState = (id: number) => {
         const {location, LCDesignerStore} = this.props;
@@ -78,4 +78,4 @@ class DesignerHeader extends Component<DesignerHeaderProps | any> {
     }
 }
 
-export default withRouter(DesignerHeader);
+export default withRouter(LcDesignerHeader);

@@ -7,14 +7,15 @@ import getChartsTemplate from "../charts/ComponentChartInit";
 import {Spin} from "antd";
 import {LCDesignerProps} from "../../global/types";
 
-interface LCLayoutContentProps {
+interface LcDesignerContentProps {
     LCDesignerStore?: LCDesignerProps;
+    layoutConfigs?: Array<any>;
     deleteItem?: (id: string | number) => void;
     addItem?: (data: any) => void;
     updateItemLayout?: (data: any) => void;
 }
 
-export default class LCLayoutContent extends React.Component<LCLayoutContentProps | any> {
+export default class LcDesignerContent extends React.Component<LcDesignerContentProps | any> {
 
     rgl: any = null;
 
@@ -57,8 +58,9 @@ export default class LCLayoutContent extends React.Component<LCLayoutContentProp
             return (
                 <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
                     <Suspense fallback={<Spin tip={'L O A D I N G . . .'}/>}>
-                        <ElementChart elemId={item?.id} chartConfig={chartConfig}
-                                      deleteItem={this.deleteItem} {...this.props}/>
+                        <ElementChart elemId={item?.id}
+                                      chartConfig={chartConfig}
+                                      deleteItem={this.deleteItem}/>
                     </Suspense>
                 </div>
             );
@@ -124,15 +126,6 @@ export default class LCLayoutContent extends React.Component<LCLayoutContentProp
     onDragStop = (layout: Layout[], oldItem: Layout, newItem: Layout, placeholder: Layout, event: MouseEvent, element: HTMLElement,) => {
         const {updateItemLayout} = this.props;
         updateItemLayout && updateItemLayout(newItem);
-    }
-
-
-    onDragStart = (layout: Layout[], oldItem: Layout, newItem: Layout, placeholder: Layout, event: MouseEvent, element: HTMLElement,) => {
-    }
-
-
-    onDrag = (layout: any, oldItem: any, newItem: any,
-              placeholder: any, e: any, element: HTMLElement) => {
     }
 
     /**
@@ -279,10 +272,8 @@ export default class LCLayoutContent extends React.Component<LCLayoutContentProp
                                      transformScale={scale}
                                      width={globalSet.screenWidth}
                                      onDrop={this.onDrop}
-                                     onDrag={this.onDrag}
                                      onDropDragOver={this.onDropDragOver}
                                      onDragStop={this.onDragStop}
-                                     onDragStart={this.onDragStart}
                                      onResizeStop={this.onResizeStop}>
                         {this.generateElement()}
                     </ReactGridLayout>

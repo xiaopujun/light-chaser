@@ -17,14 +17,14 @@ interface LayoutToolCollapseProps {
     data: Array<LayoutToolItemProps>;
 }
 
-interface LayoutToolsProps {
+interface LcDesignerLeftProps {
     data?: Array<LayoutToolCollapseProps>;
 }
 
 /**
  * 大屏布局设计器左侧组件库工具栏
  */
-class LayoutTools extends Component<LayoutToolsProps, any> {
+class LcDesignerLeft extends Component<LcDesignerLeftProps, any> {
 
     state: any = {
         data: [
@@ -107,4 +107,4 @@ class LayoutTools extends Component<LayoutToolsProps, any> {
     }
 }
 
-export default LayoutTools;
+export default LcDesignerLeft;
