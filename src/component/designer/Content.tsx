@@ -149,8 +149,6 @@ export default class LCLayoutContent extends React.Component<LCLayoutContentProp
         const designer: any = document.getElementById('lc-designer-content');
 
         this.scaleConfig.result = {width: 1920, height: 1080};
-        // designer.style.width = this.scaleConfig.result.width + 'px';
-        // designer.style.height = this.scaleConfig.result.height + 'px';
         this.scaleConfig.x = (window.innerWidth - 600 - this.scaleConfig.result.width) * 0.5;
         this.scaleConfig.y = (window.innerHeight - 64 - this.scaleConfig.result.height) * 0.5;
         designer.style.transform = 'translate3d(' + this.scaleConfig.x + 'px, ' + this.scaleConfig.y + 'px, 0) scale(1)';
@@ -183,7 +181,6 @@ export default class LCLayoutContent extends React.Component<LCLayoutContentProp
                 this.scaleConfig.point = {x: e.clientX, y: e.clientY};
                 this.scaleConfig.lastPointermove = {x: e.clientX, y: e.clientY};
             }
-
         });
         // 绑定 pointermove
         designer.addEventListener('pointermove', (e: any) => {
