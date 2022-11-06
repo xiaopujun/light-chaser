@@ -3,10 +3,17 @@ import {Area} from "@ant-design/charts";
 import './style/AntdArea.less';
 import EditTools from "../../edit-tool";
 
+interface AntdAreaProps {
+    elemId?: string;
+    chartConfig?: any;
+    chartName?: string;
+}
+
+
 /**
  * 基础柱状图
  */
-export default class AntdArea extends Component<any, any> {
+export default class AntdArea extends Component<AntdAreaProps> {
 
     state: any = {
         data: []
@@ -14,15 +21,7 @@ export default class AntdArea extends Component<any, any> {
 
     constructor(props: any) {
         super(props);
-        const {LCDesignerStore, elemId} = this.props;
-        const {layoutConfigs} = LCDesignerStore;
-        let chartName = "";
-        for (let i = 0; i < layoutConfigs.length; i++) {
-            if (layoutConfigs[i].id === elemId) {
-                chartName = layoutConfigs[i].name;
-            }
-        }
-        switch (chartName) {
+        switch (props.chartName) {
             case "AntdBaseArea":
                 fetch('https://gw.alipayobjects.com/os/bmw-prod/360c3eae-0c73-46f0-a982-4746a6095010.json')
                     .then((response) => response.json())
@@ -53,10 +52,8 @@ export default class AntdArea extends Component<any, any> {
 
     render() {
         //todo name属性为演示获取demo数据使用，后续要去掉
-        const {LCDesignerStore, elemId} = this.props;
-        const {chartConfigs} = LCDesignerStore;
-        const config = chartConfigs[elemId + ''];
-        const {chartProps, baseStyle} = config;
+        const {chartConfig, elemId = '-1'} = this.props;
+        const {chartProps, baseStyle} = chartConfig;
         chartProps.data = this.state.data;
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>

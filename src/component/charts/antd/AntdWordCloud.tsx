@@ -3,10 +3,16 @@ import {WordCloud} from "@ant-design/charts";
 import './style/AntdWordCloud.less';
 import EditTools from "../../edit-tool";
 
+interface AntdWordCloudProps {
+    elemId?: string;
+    chartConfig?: any;
+    chartName?: string;
+}
+
 /**
  * 基础柱状图
  */
-export default class AntdWordCloud extends Component<any, any> {
+export default class AntdWordCloud extends Component<AntdWordCloudProps> {
 
     state = {
         data: []
@@ -32,10 +38,8 @@ export default class AntdWordCloud extends Component<any, any> {
     }
 
     render() {
-        const {LCDesignerStore, elemId} = this.props;
-        const {chartConfigs} = LCDesignerStore;
-        const config = chartConfigs[elemId + ''];
-        const {chartProps, baseStyle} = config;
+        const {chartName, chartConfig, elemId} = this.props;
+        const {chartProps, baseStyle} = chartConfig;
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
                 <EditTools {...this.props} elemId={elemId}/>

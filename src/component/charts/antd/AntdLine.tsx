@@ -3,10 +3,16 @@ import {Line} from "@ant-design/charts";
 import './style/AntdLine.less';
 import EditTools from "../../edit-tool";
 
+interface AntdLineProps {
+    chartName?: string;
+    chartConfig?: any;
+    elemId?: string;
+}
+
 /**
  * 基础柱状图
  */
-export default class AntdLine extends Component<any, any> {
+export default class AntdLine extends Component<AntdLineProps> {
 
     state = {
         data: []
@@ -14,14 +20,7 @@ export default class AntdLine extends Component<any, any> {
 
     constructor(props: any) {
         super(props);
-        const {LCDesignerStore, elemId} = this.props;
-        const {layoutConfigs} = LCDesignerStore;
-        let chartName = "";
-        for (let i = 0; i < layoutConfigs.length; i++) {
-            if (layoutConfigs[i].id === elemId) {
-                chartName = layoutConfigs[i].name;
-            }
-        }
+        const {chartName} = this.props;
         switch (chartName) {
             case "AntdBaseFoldLine":
                 fetch('https://gw.alipayobjects.com/os/bmw-prod/1d565782-dde4-4bb6-8946-ea6a38ccf184.json')
@@ -46,16 +45,8 @@ export default class AntdLine extends Component<any, any> {
 
 
     render() {
-        const {LCDesignerStore, elemId} = this.props;
-        const {chartConfigs, layoutConfigs} = LCDesignerStore;
-        const config = chartConfigs[elemId + ''];
-        const {chartProps, baseStyle} = config;
-        let chartName = "";
-        for (let i = 0; i < layoutConfigs.length; i++) {
-            if (layoutConfigs[i].id === elemId) {
-                chartName = layoutConfigs[i].name;
-            }
-        }
+        const {chartConfig, chartName, elemId} = this.props;
+        const {chartProps, baseStyle} = chartConfig;
         if (chartName !== 'AntdStepFoldLine')
             chartProps.data = this.state.data;
         return (

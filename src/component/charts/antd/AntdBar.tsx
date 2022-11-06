@@ -3,17 +3,19 @@ import {Bar} from "@ant-design/charts";
 import EditTools from "../../edit-tool";
 import './style/AntdBar.less';
 
+interface AntdBarProps {
+    elemId?: string;
+    chartConfig?: any;
+}
+
 /**
  * 基础条形图
  */
-
-export default class AntdBar extends Component<any, any> {
+export default class AntdBar extends Component<AntdBarProps> {
 
     render() {
-        const {LCDesignerStore, elemId} = this.props;
-        const {chartConfigs} = LCDesignerStore;
-        const config = chartConfigs[elemId + ''];
-        const {chartProps, baseStyle} = config;
+        const {chartConfig, elemId} = this.props;
+        const {chartProps, baseStyle} = chartConfig;
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
                 <EditTools {...this.props} elemId={elemId}/>

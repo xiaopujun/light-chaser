@@ -3,10 +3,16 @@ import {Scatter} from "@ant-design/charts";
 import './style/AntdScatter.less';
 import EditTools from "../../edit-tool";
 
+interface AntdScatterProps {
+    chartName?: string;
+    chartConfig?: any;
+    elemId?: string;
+}
+
 /**
  * 散点图
  */
-export default class AntdScatter extends Component<any, any> {
+export default class AntdScatter extends Component<AntdScatterProps> {
 
     state = {
         data: []
@@ -23,17 +29,9 @@ export default class AntdScatter extends Component<any, any> {
     }
 
     render() {
-        const {LCDesignerStore, elemId} = this.props;
-        const {chartConfigs, layoutConfigs} = LCDesignerStore;
-        const config = chartConfigs[elemId + ''];
-        let name = "";
-        for (let i = 0; i < layoutConfigs.length; i++) {
-            if (layoutConfigs[i].id === elemId) {
-                name = layoutConfigs[i].name;
-            }
-        }
-        const {chartProps, baseStyle} = config;
-        if (name === "AntdBubbles") {
+        const {chartConfig, chartName, elemId} = this.props;
+        const {chartProps, baseStyle} = chartConfig;
+        if (chartName === "AntdBubbles") {
             chartProps.data = this.state.data;
         }
         return (

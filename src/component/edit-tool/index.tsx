@@ -4,7 +4,7 @@ import './index.less';
 import {LCDesignerProps} from "../../global/types";
 
 interface EditToolsProps {
-    elemId: string;  //组件id
+    elemId?: string;  //组件id
     deleteItem?: (elemId: string) => void; //删除组件回调
     activeElem?: (data: { elemId: number, type: string }) => void; //打开右侧配置项回调
     LCDesignerStore?: LCDesignerProps;
@@ -19,12 +19,12 @@ class EditTools extends Component<EditToolsProps> {
      * 删除组件
      */
     deleteItem = () => {
-        const {elemId, deleteItem} = this.props;
+        const {elemId = '-1', deleteItem} = this.props;
         deleteItem && deleteItem(elemId);
     }
 
     activeElem = () => {
-        const {elemId, activeElem, LCDesignerStore} = this.props;
+        const {elemId = '-1', activeElem, LCDesignerStore} = this.props;
         let layoutConfigs = LCDesignerStore?.layoutConfigs!;
         let type = "";
         for (let i = 0; i < layoutConfigs.length; i++) {
