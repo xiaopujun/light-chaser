@@ -4,7 +4,7 @@ import './style/Right.less';
 import LCNumberInput from "../base/LCNumberInput";
 import {LCDesignerProps} from "../../global/types";
 
-interface ElemPropSetDrawerProps {
+interface LcDesignerRightProps {
     LCDesignerStore?: LCDesignerProps;
     updateDrawerVisible?: (data?: any) => void;
 }
@@ -13,7 +13,7 @@ interface ElemPropSetDrawerProps {
  * 右滑框外壳组件
  * @description:用于展示右滑框，控制右滑框的显示与隐藏
  */
-export default class LcDesignerRight extends Component<ElemPropSetDrawerProps, any> {
+export default class LcDesignerRight extends Component<LcDesignerRightProps, any> {
 
     onClose = () => {
         const {updateDrawerVisible} = this.props;
@@ -56,7 +56,6 @@ export default class LcDesignerRight extends Component<ElemPropSetDrawerProps, a
                         </div>
                     </div>}
             </div>
-
         );
     }
 }

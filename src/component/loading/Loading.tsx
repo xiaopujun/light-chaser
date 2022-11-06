@@ -1,11 +1,17 @@
 import React, {Component} from 'react';
 import {Spin} from "antd";
 
-class Loading extends Component {
+interface LoadingProps {
+    width?: string | number;
+    height?: string | number;
+}
+
+class Loading extends Component<LoadingProps> {
     render() {
+        const {width = window.innerWidth, height = window.innerHeight} = this.props;
         const style = {
-            width: window.innerWidth,
-            height: window.innerHeight,
+            width,
+            height,
             backgroundColor: '#4b6cb7',
             background: 'linear-gradient(to right, #182848, #1a2848)',
             color: 'rgb(106 202 255)',
@@ -17,7 +23,7 @@ class Loading extends Component {
         }
         return (
             <div style={style}>
-                <Spin tip={'L O A D I N G . . .'}/>
+                <Spin tip={'loading...'}/>
             </div>
         );
     }

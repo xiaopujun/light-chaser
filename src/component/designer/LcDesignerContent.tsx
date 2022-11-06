@@ -6,6 +6,7 @@ import './style/Content.less';
 import getChartsTemplate from "../charts/ComponentChartInit";
 import {Spin} from "antd";
 import {LCDesignerProps} from "../../global/types";
+import Loading from "../loading/Loading";
 
 interface LcDesignerContentProps {
     LCDesignerStore?: LCDesignerProps;
@@ -57,7 +58,7 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
             const chartConfig = this.calculateChartConfig(item.id);
             return (
                 <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
-                    <Suspense fallback={<Spin tip={'L O A D I N G . . .'}/>}>
+                    <Suspense fallback={<Loading width={'100%'} height={'100%'}/>}>
                         <ElementChart elemId={item?.id}
                                       chartConfig={chartConfig}
                                       deleteItem={this.deleteItem}/>

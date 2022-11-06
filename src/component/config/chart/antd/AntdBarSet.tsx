@@ -46,13 +46,13 @@ class AntdBarSet extends Component<AntdBarSetProps> {
         return (
             <div className={'elem-chart-config'}>
                 {/*图形填充色设置*/}
-                <FillColor onChange={this.fillColorChanged} paletteCount={paletteCount}/>
+                <FillColor chartProps={chartProps} onChange={this.fillColorChanged} paletteCount={paletteCount}/>
                 {/*图例配置*/}
                 <Legend chartProps={chartProps} updateElemChartSet={updateElemChartSet}/>
                 {/*直角坐标系配置*/}
                 <RightAngleCoordinates chartProps={chartProps} updateElemChartSet={updateElemChartSet}/>
                 {/*条形图单条宽度配置*/}
-                <BarWidth updateElemChartSet={updateElemChartSet}/>
+                <BarWidth chartProps={chartProps} updateElemChartSet={updateElemChartSet}/>
             </div>
         );
     }

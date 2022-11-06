@@ -2,19 +2,15 @@ import React, {Component} from 'react';
 import LCTextInput from "../../base/LCTextInput";
 
 interface LcEmBaseInfoProps {
-    id?: number | string;
-    name?: string;
-    desc?: string;
-    type?: string;
+    baseInfo?: any;
 }
-
 
 /**
  * lc组件基础信息
  */
 class LcEmBaseInfo extends Component<LcEmBaseInfoProps> {
     render() {
-        const {id, name, desc, type} = this.props;
+        const {baseInfo: {id, name, desc, type}} = this.props;
         return (
             <div className={'lc-base-info'}>
                 <div className={'lc-config-item'}>
