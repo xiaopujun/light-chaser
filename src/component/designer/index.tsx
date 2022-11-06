@@ -15,13 +15,25 @@ import {
 } from "../../redux/actions/LCDesignerAction";
 import DesignerHeader from "./Head";
 import RightSlideBox from "./Right";
-import {withRouter} from "react-router-dom";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 
 
 const {Header, Sider, Content} = Layout;
 
-class LCDesigner extends Component<any> {
+interface LCDesignerProps extends RouteComponentProps {
+    LCDesignerStore: LCDesignerProps;
+    clearLCDesignerStore?: (data?: any) => void;
+    updateLCDesignerStore?: (data?: any) => void;
+    addItem?: (data?: any) => void;
+    deleteItem?: (data?: any) => void;
+    updateItemLayout?: (data?: any) => void;
+    activeElem?: (data?: any) => void;
+    updateDrawerVisible?: (data?: any) => void;
+    updateElemChartSet?: (data?: any) => void;
+    updateElemBaseSet?: (data?: any) => void;
+}
 
+class LCDesigner extends Component<LCDesignerProps | any> {
 
     componentWillUnmount() {
         //清空状态

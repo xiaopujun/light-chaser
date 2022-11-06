@@ -1,8 +1,13 @@
 import React, {Component} from 'react';
 import ReactGridLayout from 'react-grid-layout';
 import getChartsTemplate from "../charts/ComponentChartInit";
+import {RouteComponentProps} from "react-router-dom";
 
-class Preview extends Component<any, any> {
+interface LcShowProps extends RouteComponentProps {
+
+}
+
+class LcShow extends Component<LcShowProps | any> {
 
     state: any = {};
 
@@ -64,4 +69,4 @@ class Preview extends Component<any, any> {
     }
 }
 
-export default Preview;
+export default LcShow;

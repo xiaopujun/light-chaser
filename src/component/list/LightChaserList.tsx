@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
 import '../designer/style/LightChaserList.less';
-import {withRouter} from "react-router-dom";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 import AddNewScreenDialog from "./AddNewScreenDialog";
 
+interface LightChaserListProps extends RouteComponentProps {
 
-class LightChaserList extends Component<any> {
+}
+
+class LightChaserList extends Component<LightChaserListProps> {
 
     state: any = {
         addNewScreen: false,

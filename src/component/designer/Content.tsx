@@ -5,8 +5,16 @@ import 'react-resizable/css/styles.css';
 import './style/Content.less';
 import getChartsTemplate from "../charts/ComponentChartInit";
 import {Spin} from "antd";
+import {LCDesignerProps} from "../../global/types";
 
-export default class LCLayoutContent extends React.Component<any, any> {
+interface LCLayoutContentProps {
+    LCDesignerStore?: LCDesignerProps;
+    deleteItem?: (id: string | number) => void;
+    addItem?: (data: any) => void;
+    updateItemLayout?: (data: any) => void;
+}
+
+export default class LCLayoutContent extends React.Component<LCLayoutContentProps | any> {
 
     rgl: any = null;
 
@@ -32,18 +40,25 @@ export default class LCLayoutContent extends React.Component<any, any> {
         this.scaleInit();
     }
 
+    calculateChartConfig = (elemId: string | number) => {
+        const {LCDesignerStore: {chartConfigs}} = this.props;
+        return chartConfigs[elemId];
+    }
+
     /**
      * 元素生成方法
      */
     generateElement = () => {
         const {LCDesignerStore} = this.props;
-        const {layoutConfigs} = LCDesignerStore;
+        const {layoutConfigs} = LCDesignerStore!;
         return layoutConfigs.map((item: any) => {
             let ElementChart = getChartsTemplate(item.name);
+            const chartConfig = this.calculateChartConfig(item.id);
             return (
                 <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
                     <Suspense fallback={<Spin tip={'L O A D I N G . . .'}/>}>
-                        <ElementChart elemId={item?.id} deleteItem={this.deleteItem} {...this.props}/>
+                        <ElementChart elemId={item?.id} chartConfig={chartConfig}
+                                      deleteItem={this.deleteItem} {...this.props}/>
                     </Suspense>
                 </div>
             );
@@ -55,10 +70,10 @@ export default class LCLayoutContent extends React.Component<any, any> {
      */
     deleteItem = (elemId: string) => {
         const {deleteItem, LCDesignerStore} = this.props;
-        deleteItem(elemId);
+        deleteItem && deleteItem(elemId);
 
         if (this.rgl != null) {
-            const {layoutConfigs} = LCDesignerStore;
+            const {layoutConfigs} = LCDesignerStore!;
             this.rgl.setState({layout: layoutConfigs})
         }
     }
@@ -71,7 +86,7 @@ export default class LCLayoutContent extends React.Component<any, any> {
      */
     onDrop = (layout: any, layoutItem: any, _event: any) => {
         const {addItem, LCDesignerStore} = this.props;
-        const {globalSet} = LCDesignerStore;
+        const {globalSet} = LCDesignerStore!;
         let compObj
         try {
             compObj = JSON.parse(_event.dataTransfer.getData('compObj'));
@@ -86,10 +101,10 @@ export default class LCLayoutContent extends React.Component<any, any> {
                 type: compObj?.type
             }
         }
-        addItem(item);
+        addItem && addItem(item);
 
         if (this.rgl != null) {
-            const {layoutConfigs} = LCDesignerStore;
+            const {layoutConfigs} = LCDesignerStore!;
             this.rgl.setState({layout: layoutConfigs})
         }
     };
@@ -108,7 +123,7 @@ export default class LCLayoutContent extends React.Component<any, any> {
      */
     onDragStop = (layout: Layout[], oldItem: Layout, newItem: Layout, placeholder: Layout, event: MouseEvent, element: HTMLElement,) => {
         const {updateItemLayout} = this.props;
-        updateItemLayout(newItem);
+        updateItemLayout && updateItemLayout(newItem);
     }
 
 
@@ -125,7 +140,7 @@ export default class LCLayoutContent extends React.Component<any, any> {
      */
     onResizeStop = (layout: Layout[], oldItem: Layout, newItem: Layout, placeholder: Layout, event: MouseEvent, element: HTMLElement,) => {
         const {updateItemLayout} = this.props;
-        updateItemLayout(newItem);
+        updateItemLayout && updateItemLayout(newItem);
     }
 
     scaleInit = () => {
@@ -241,7 +256,7 @@ export default class LCLayoutContent extends React.Component<any, any> {
 
     render() {
         const {LCDesignerStore} = this.props;
-        const {layoutConfigs, globalSet} = LCDesignerStore;
+        const {layoutConfigs, globalSet} = LCDesignerStore!;
         const {scale} = this.state;
         return (
             <div id={'lc-designer-container'} style={{

@@ -9,15 +9,21 @@ import {
     SettingOutlined,
     SnippetsOutlined
 } from "@ant-design/icons";
-import {withRouter} from "react-router-dom";
+import {RouteComponentProps, RouteProps, RouterProps, withRouter} from "react-router-dom";
 import {localSave, localUpdate} from "../../local/LocalStorageUtil";
+import {LCDesignerProps} from "../../global/types";
 
-class DesignerHeader extends Component<any> {
+interface DesignerHeaderProps extends RouteComponentProps {
+    LCDesignerStore: LCDesignerProps;
+    updateLCDesignerStore?: (data: any) => void;
+}
+
+class DesignerHeader extends Component<DesignerHeaderProps | any> {
 
     updateRouteState = (id: number) => {
         const {location, LCDesignerStore} = this.props;
         const {action} = location.state;
-        let {globalSet} = LCDesignerStore;
+        let {globalSet} = LCDesignerStore!;
         if (action === 'add') {
             this.props.history.replace("/designer", {
                 ...location.state, ...{
@@ -37,7 +43,7 @@ class DesignerHeader extends Component<any> {
             if (id === -1) {
                 id = localSave(LCDesignerStore);
                 //更新id
-                updateLCDesignerStore({id});
+                updateLCDesignerStore && updateLCDesignerStore({id});
                 //修改路由参数，新增变为更新
                 this.updateRouteState(id);
             } else {

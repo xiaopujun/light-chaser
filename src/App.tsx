@@ -6,7 +6,7 @@ import Loading from "./component/loading/Loading";
 
 const LightChaserList = lazy(() => import('./component/list/LightChaserList'));
 const LCDesigner = lazy(() => import('./component/designer'));
-const Preview = lazy(() => import('./component/preview/Preview'));
+const Preview = lazy(() => import('./component/preview/LcShow'));
 
 class App extends Component<any> {
     render() {
