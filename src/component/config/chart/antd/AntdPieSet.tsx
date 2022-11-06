@@ -8,7 +8,7 @@ import PolarCoordinateSystem from "./atomic_components/PolarCoordinate";
 interface AntdPieSetProps {
     updateElemChartSet?: (data: any) => void;
     chartProps?: any;
-    active?: any;
+    activated?: any;
 }
 
 class AntdPieSet extends Component<AntdPieSetProps> {

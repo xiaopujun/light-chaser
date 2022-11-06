@@ -104,7 +104,7 @@ export interface LCDesignerProps {
     /**
      * 激活状态属性
      */
-    active: ActiveProps;
+    activated: ActiveProps;
     /**
      * 图表配置
      */

@@ -9,7 +9,7 @@ import {getAntdDataSortCount} from "../../../../utils/AntdBarUtil";
 interface AntdColumnSetProps {
     updateElemChartSet?: (data: any) => void;
     chartProps?: any;
-    active?: any;
+    activated?: any;
 }
 
 class AntdColumnSet extends Component<AntdColumnSetProps> {
@@ -20,9 +20,9 @@ class AntdColumnSet extends Component<AntdColumnSetProps> {
     }
 
     render() {
-        const {updateElemChartSet, chartProps, active} = this.props;
+        const {updateElemChartSet, chartProps, activated} = this.props;
         let paletteCount = 1;
-        switch (active?.type) {
+        switch (activated?.type) {
             case 'AntdBaseColumn':
             case 'AntdZoneColumn':
                 //单条的计算条数个数

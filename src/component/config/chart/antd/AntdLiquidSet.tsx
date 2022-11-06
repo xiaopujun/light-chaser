@@ -12,7 +12,7 @@ const {Option} = Select;
 interface AntdLiquidSetProps {
     updateElemChartSet?: (data: any) => void;
     chartProps?: any;
-    active?: any;
+    activated?: any;
 }
 
 

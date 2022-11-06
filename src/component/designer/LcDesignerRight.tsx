@@ -23,10 +23,10 @@ export default class ElemPropSetDrawer extends Component<ElemPropSetDrawerProps,
 
     render() {
         const {LCDesignerStore} = this.props;
-        const {active, globalSet} = LCDesignerStore!;
+        const {activated, globalSet} = LCDesignerStore!;
         return (
             <div className={'lc-config-panel'} style={{height: window.innerHeight - 64}}>
-                {active.id >= 0 ? (<ElemPropSet {...this.props}/>) :
+                {activated.id >= 0 ? (<ElemPropSet {...this.props}/>) :
                     <div className={'lc-global-set'}>
                         <div className={'lc-global-set-title'}>全局配置</div>
                         <div className={'lc-global-set-content'}>

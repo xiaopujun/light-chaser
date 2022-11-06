@@ -8,7 +8,7 @@ const {Option} = Select;
 
 interface AntdBubbleSetProps {
     updateElemChartSet?: (data: any) => void;
-    active?: any;
+    activated?: any;
     chartProps?: any;
 }
 
@@ -36,7 +36,7 @@ class AntdBubbleSet extends Component<AntdBubbleSetProps> {
 
 
     render() {
-        const {updateElemChartSet, active, chartProps} = this.props;
+        const {updateElemChartSet, activated, chartProps} = this.props;
         let paletteCount = getAntdDataSortCount(chartProps.data, 'continent');
         return (
             <div className={'elem-chart-config'}>

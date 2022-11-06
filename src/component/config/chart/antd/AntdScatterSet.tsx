@@ -10,7 +10,7 @@ const {Option} = Select;
 interface AntdScatterSetProps {
     updateElemChartSet?: (data: any) => void;
     chartProps?: any;
-    active?: any;
+    activated?: any;
 }
 
 export default class AntdScatterSet extends Component<AntdScatterSetProps> {
@@ -46,7 +46,7 @@ export default class AntdScatterSet extends Component<AntdScatterSetProps> {
     }
 
     render() {
-        const {updateElemChartSet, active, chartProps} = this.props;
+        const {updateElemChartSet, activated, chartProps} = this.props;
         return (
             <div className={'elem-chart-config'}>
 

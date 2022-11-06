@@ -9,7 +9,7 @@ import LCTextInput from "../../../base/LCTextInput";
 interface AntdGaugeSetProps {
     updateElemChartSet?: (data: any) => void;
     chartProps?: any;
-    active?: any;
+    activated?: any;
 }
 
 class AntdGaugeSet extends Component<AntdGaugeSetProps> {

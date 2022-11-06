@@ -4,7 +4,7 @@ import FillColor from "./atomic_components/FillColor";
 interface AntdWordCloudSetProps {
     updateElemChartSet?: (data: any) => void;
     chartProps?: any;
-    active?: any;
+    activated?: any;
 }
 
 class AntdWordCloudSet extends Component<AntdWordCloudSetProps> {

@@ -6,7 +6,7 @@ import {Spin} from "antd";
 interface ElemChartSetProps {
     updateElemChartSet?: (data: any) => void;
     chartProps?: any;
-    active?: any;
+    activated?: any;
 }
 
 /**
@@ -16,8 +16,8 @@ interface ElemChartSetProps {
 class ElemChartSet extends Component<ElemChartSetProps> {
 
     render() {
-        const {active} = this.props;
-        const {type} = active;
+        const {activated} = this.props;
+        const {type} = activated;
         let ChartsConfig = getChartsConfig(type);
         return (
             <Suspense fallback={<Spin tip={'loading'}/>}>

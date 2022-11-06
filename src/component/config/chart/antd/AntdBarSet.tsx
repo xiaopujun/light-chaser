@@ -8,7 +8,7 @@ import {getAntdDataSortCount} from "../../../../utils/AntdBarUtil";
 
 interface AntdBarSetProps {
     updateElemChartSet?: (data: any) => void;
-    active?: any;
+    activated?: any;
     chartProps?: any;
 }
 
@@ -28,9 +28,9 @@ class AntdBarSet extends Component<AntdBarSetProps> {
 
 
     render() {
-        const {updateElemChartSet, chartProps, active} = this.props;
+        const {updateElemChartSet, chartProps, activated} = this.props;
         let paletteCount = 1;
-        switch (active?.type) {
+        switch (activated?.type) {
             case 'AntdBaseBar':
             case 'AntdZoneBar':
                 //单条的计算条数个数

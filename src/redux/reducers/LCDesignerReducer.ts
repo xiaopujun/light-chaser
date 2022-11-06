@@ -30,7 +30,7 @@ const initState: LCDesignerProps = {
         baseLineHeight: 0,//元素基准高度
         elemCount: 0,//元素个数
     },
-    active: {
+    activated: {
         id: -1,    //激活的组件id
         type: "",    //激活的组件类型
     },
@@ -115,14 +115,14 @@ function addItem(preState: LCDesignerProps, data: any) {
  */
 function deleteItem(preState: LCDesignerProps, data: any) {
     data = parseInt(data);
-    let {layoutConfigs, chartConfigs, active} = preState;
+    let {layoutConfigs, chartConfigs, activated} = preState;
     _.remove(layoutConfigs, function (item) {
         return item?.id === data;
     })
     delete chartConfigs[data + ''];
-    if (data === active.id) {
-        active.id = -1;
-        active.type = "";
+    if (data === activated.id) {
+        activated.id = -1;
+        activated.type = "";
     }
     return {...preState};
 }
@@ -150,11 +150,11 @@ function updateItemLayout(preState: LCDesignerProps, data: any) {
  * @param data
  */
 function activeElem(preState: LCDesignerProps, data: any) {
-    let {active, rightDialog} = preState;
+    let {activated, rightDialog} = preState;
     const {elemId, type} = data;
-    active = {...active, ...{id: elemId, type}};
+    activated = {...activated, ...{id: elemId, type}};
     rightDialog.visible = !rightDialog.visible;
-    return {...preState, ...{active, rightDialog}};
+    return {...preState, ...{activated, rightDialog}};
 }
 
 
@@ -175,8 +175,8 @@ function updateDrawerVisible(preState: LCDesignerProps, data: any) {
  * @param data
  */
 function updateElemBaseSet(preState: LCDesignerProps, data: any) {
-    let {chartConfigs, active} = preState;
-    const {id} = active;
+    let {chartConfigs, activated} = preState;
+    const {id} = activated;
     let charConfig = chartConfigs[id + ''];
     let baseConfig = charConfig?.baseStyle;
     charConfig.baseStyle = {...baseConfig, ...data};
@@ -189,9 +189,9 @@ function updateElemBaseSet(preState: LCDesignerProps, data: any) {
  * @param data
  */
 function updateElemChartSet(preState: LCDesignerProps, data: any) {
-    let {chartConfigs, active} = preState;
-    let activeConfig = chartConfigs[active?.id + ''];
-    const activeCompName = active?.type;
+    let {chartConfigs, activated} = preState;
+    let activeConfig = chartConfigs[activated?.id + ''];
+    const activeCompName = activated?.type;
     if (activeCompName === "AntdRadar") {
         activeConfig.chartProps = {...activeConfig.chartProps, ...data}
     } else {

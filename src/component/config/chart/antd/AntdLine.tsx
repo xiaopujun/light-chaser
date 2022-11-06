@@ -7,7 +7,7 @@ import ColumnWidth from "./atomic_components/ColumnWidth";
 interface AntdFoldLineSetProps {
     updateElemChartSet?: (data: any) => void;
     chartProps?: any;
-    active?: any;
+    activated?: any;
 }
 
 class AntdFoldLineSet extends Component<AntdFoldLineSetProps> {
@@ -22,7 +22,7 @@ class AntdFoldLineSet extends Component<AntdFoldLineSetProps> {
     }
 
     render() {
-        const {updateElemChartSet, active, chartProps} = this.props;
+        const {updateElemChartSet, activated, chartProps} = this.props;
         return (
             <div className={'elem-chart-config'}>
                 {/*图形填充色设置*/}

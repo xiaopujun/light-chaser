@@ -13,7 +13,7 @@ import ColorPicker from "../../../color_picker/BaseColorPicker";
 interface AntdRadarSetProps {
     updateElemChartSet?: (data: any) => void;
     chartProps?: any;
-    active?: any;
+    activated?: any;
 }
 
 export default class AntdRadarSet extends Component<AntdRadarSetProps> {
@@ -77,7 +77,7 @@ export default class AntdRadarSet extends Component<AntdRadarSetProps> {
 
     render() {
         const {lineWidth, pointSize} = this.state;
-        const {updateElemChartSet, active, chartProps} = this.props;
+        const {updateElemChartSet, activated, chartProps} = this.props;
         let paletteCount = getAntdDataSortCount(chartProps.data, 'type');
         return (
             <div className={'elem-chart-config'}>

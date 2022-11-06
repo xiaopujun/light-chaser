@@ -26,10 +26,10 @@ export default class LcCompConfigContainer extends Component<LcCompConfigContain
 
 
     render() {
-        const {active, layoutConfigs} = this.props.LCDesignerStore!;
+        const {activated, layoutConfigs} = this.props.LCDesignerStore!;
         let layout: any = {};
         for (let i = 0; i < layoutConfigs.length; i++) {
-            if (layoutConfigs[i].id === active.id) {
+            if (layoutConfigs[i].id === activated.id) {
                 layout = layoutConfigs[i];
                 break;
             }
