@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
-import ElemPropSet from "../config/LcCompConfigContainer";
+import LcCompConfigContainer from "../config/LcCompConfigContainer";
 import './style/Right.less';
-import LCNumberInput from "../base/LCNumberInput";
-import {LCDesignerProps} from "../../global/types";
+import {LCDesignerProps} from "../../types/LcDesignerType";
+import LcGlobalSet from "../config/global/LcGlobalSet";
 
 interface LcDesignerRightProps {
     LCDesignerStore?: LCDesignerProps;
     updateDrawerVisible?: (data?: any) => void;
+    activeElem?: (data?: any) => void;
+    updateElemBaseSet?: (data?: any) => void;
 }
 
 /**
@@ -21,40 +23,15 @@ export default class LcDesignerRight extends Component<LcDesignerRightProps, any
     }
 
     render() {
-        const {LCDesignerStore} = this.props;
-        const {activated, globalSet} = LCDesignerStore!;
+        const {LCDesignerStore, activeElem, updateElemBaseSet} = this.props;
+        const {activated, chartConfigs, globalSet} = LCDesignerStore!;
+        const chartConfig = chartConfigs[activated.id];
         return (
             <div className={'lc-config-panel'} style={{height: window.innerHeight - 64}}>
-                {activated.id >= 0 ? (<ElemPropSet {...this.props}/>) :
-                    <div className={'lc-global-set'}>
-                        <div className={'lc-global-set-title'}>全局配置</div>
-                        <div className={'lc-global-set-content'}>
-                            <div className={'lc-config-item'}>
-                                <label className={'lc-config-item-label'}>大屏名称：</label>
-                                <div className={'lc-config-item-value'}>
-                                    <div className={'lc-input-container'}>
-                                        <label>测试大屏01</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={'lc-config-item'}>
-                                <label className={'lc-config-item-label'}>大屏宽度：</label>
-                                <div className={'lc-config-item-value'}>
-                                    <div className={'lc-input-container'}>
-                                        <LCNumberInput value={globalSet.screenWidth} width={45}/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={'lc-config-item'}>
-                                <label className={'lc-config-item-label'}>大屏高度：</label>
-                                <div className={'lc-config-item-value'}>
-                                    <div className={'lc-input-container'}>
-                                        <LCNumberInput value={globalSet.screenHeight} width={45}/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>}
+                {activated.id >= 0 ?
+                    <LcCompConfigContainer {...{activeElem, updateElemBaseSet, chartConfig, activated}} /> :
+                    <LcGlobalSet globalSet={globalSet}/>
+                }
             </div>
         );
     }

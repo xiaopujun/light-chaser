@@ -11,7 +11,7 @@ import {
 } from "@ant-design/icons";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {localSave, localUpdate} from "../../local/LocalStorageUtil";
-import {LCDesignerProps} from "../../global/types";
+import {LCDesignerProps} from "../../types/LcDesignerType";
 
 interface LcDesignerHeaderProps extends RouteComponentProps {
     LCDesignerStore: LCDesignerProps;

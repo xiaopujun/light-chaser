@@ -4,13 +4,11 @@ import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import './style/Content.less';
 import getChartsTemplate from "../charts/ComponentChartInit";
-import {Spin} from "antd";
-import {LCDesignerProps} from "../../global/types";
+import {LCDesignerProps} from "../../types/LcDesignerType";
 import Loading from "../loading/Loading";
 
 interface LcDesignerContentProps {
     LCDesignerStore?: LCDesignerProps;
-    layoutConfigs?: Array<any>;
     deleteItem?: (id: string | number) => void;
     addItem?: (data: any) => void;
     updateItemLayout?: (data: any) => void;

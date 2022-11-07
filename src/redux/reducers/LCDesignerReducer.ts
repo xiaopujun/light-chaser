@@ -9,7 +9,7 @@ import {
     UPDATE_ITEM_LAYOUT,
     UPDATE_LC_DESIGNER_STORE,
 } from '../constant';
-import {Action, LCDesignerProps} from "../../global/types";
+import {Action, LCDesignerProps} from "../../types/LcDesignerType";
 import {getChartInitData} from "../../utils/ChartUtil";
 import * as _ from 'lodash'
 import deepmerge from "deepmerge";

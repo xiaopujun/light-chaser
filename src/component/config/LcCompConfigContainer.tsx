@@ -4,14 +4,14 @@ import './LcCompConfigContainer.less';
 import LcCompBaseStyleSet from "./base/LcCompBaseStyleSet";
 import {RollbackOutlined} from "@ant-design/icons";
 import LcEmBaseInfo from "./info/LcEmBaseInfo";
-import {LCDesignerProps} from "../../global/types";
+import {LCDesignerProps} from "../../types/LcDesignerType";
 import getChartsConfig from "./chart/antd/ComponentSetInit";
 import Loading from "../loading/Loading";
 
 const {Panel} = Collapse;
 
 interface LcCompConfigContainerProps {
-    LCDesignerStore?: LCDesignerProps;
+    chartConfig?: any;
     activeElem?: (data: any) => void;
     updateElemBaseSet?: (data: any) => void;
     activated?: any;
@@ -29,8 +29,11 @@ export default class LcCompConfigContainer extends Component<LcCompConfigContain
 
 
     render() {
-        const {activated: {id: activatedId, type}, LCDesignerStore: {chartConfigs}, updateElemBaseSet} = this.props;
-        const {chartConfig: {baseInfo, chartProps, baseStyle}} = chartConfigs[activatedId];
+        const {
+            activated: {id: activatedId, type},
+            chartConfig: {baseInfo, chartProps, baseStyle},
+            updateElemBaseSet
+        } = this.props;
         let ChartsConfig = getChartsConfig(type);
         return (
             <>
@@ -42,7 +45,7 @@ export default class LcCompConfigContainer extends Component<LcCompConfigContain
                         <LcEmBaseInfo baseInfo={baseInfo}/>
                     </Panel>
                     <Panel className={'lc-config-collapse-title'} header="基础样式" key="1">
-                        <LcCompBaseStyleSet baseStyle={baseInfo} updateElemBaseSet={updateElemBaseSet}/>
+                        <LcCompBaseStyleSet baseStyle={baseStyle} updateElemBaseSet={updateElemBaseSet}/>
                     </Panel>
                     <Panel className={'lc-config-collapse-title'} header="组件样式" key="2">
                         <Suspense fallback={<Loading width={'100%'} height={'100%'}/>}>

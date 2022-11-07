@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Popover} from 'antd';
 import {ChromePicker} from 'react-color';
 import './style/BaseColorPicker.less';
-import {BaseProps} from "../../types/Base";
+import {BaseProps} from "../../types/BaseType";
 
 interface ColorPickerProps extends BaseProps {
     onChange?: (color: any, e: Event, id: number | string | undefined) => void;

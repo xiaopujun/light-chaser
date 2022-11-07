@@ -2,7 +2,7 @@
  *******************数据本地存储操作Utils*******
  ********************************************/
 
-import {LCDesignerProps} from "../global/types";
+import {LCDesignerProps} from "../types/LcDesignerType";
 
 const buildConfig = (LCDesignerStore: LCDesignerProps) => {
     let {id = -1, globalSet} = LCDesignerStore;

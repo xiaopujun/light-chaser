@@ -3,7 +3,7 @@ import './style/LCBaseConfig.less';
 import PaddingSet from "./PaddingSet";
 import LcCompBorderSet from "./LcCompBorderSet";
 import LcCompBackgroundSet from "./LcCompBackgroundSet";
-import {BaseStyle} from "../../../global/types";
+import {BaseStyle} from "../../../types/LcDesignerType";
 
 interface LcCompBaseStyleSetProps {
     baseStyle?: BaseStyle;
