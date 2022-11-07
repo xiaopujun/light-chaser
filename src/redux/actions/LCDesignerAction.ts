@@ -8,6 +8,7 @@ import {
     UPDATE_ITEM_LAYOUT,
     UPDATE_LC_DESIGNER_STORE,
 } from '../constant';
+import {DesignerOperate} from "../../enum/DesignerOperate";
 
 /**
  * 布局设计器的action
