@@ -6,7 +6,7 @@ import PolarCoordinateSystem from "./atomic_components/PolarCoordinate";
 
 
 interface AntdPieSetProps {
-    updateElemChartSet?: (data: any) => void;
+    updateChartProps?: (data: any) => void;
     chartProps?: any;
     activated?: any;
 }
@@ -14,13 +14,13 @@ interface AntdPieSetProps {
 class AntdPieSet extends Component<AntdPieSetProps> {
 
     fillColorChanged = (color: string | string[]) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({color: color});
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({color: color});
     }
 
 
     render() {
-        const {updateElemChartSet, chartProps} = this.props;
+        const {updateChartProps, chartProps} = this.props;
         let colorPickerNumber = chartProps.data.length;
         return (
             <div className={'elem-chart-config'}>
@@ -28,9 +28,9 @@ class AntdPieSet extends Component<AntdPieSetProps> {
                 {/*图形填充色设置*/}
                 <FillColor onChange={this.fillColorChanged} paletteCount={colorPickerNumber}/>
                 {/*图例配置*/}
-                <Legend chartProps={chartProps} updateElemChartSet={updateElemChartSet}/>
+                <Legend chartProps={chartProps} updateChartProps={updateChartProps}/>
                 {/*极坐标系*/}
-                <PolarCoordinateSystem updateElemChartSet={updateElemChartSet}/>
+                <PolarCoordinateSystem updateChartProps={updateChartProps}/>
 
             </div>
         );

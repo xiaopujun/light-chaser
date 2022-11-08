@@ -4,14 +4,15 @@ import {connect} from "react-redux";
 import LcDesignerLeft from "./left/LcDesignerLeft";
 import LCLayoutContent from "./LcDesignerContent";
 import {
-    activeElem,
-    addItem, clearLCDesignerStore,
-    deleteItem,
-    updateDrawerVisible,
-    updateElemBaseSet,
-    updateElemChartSet,
-    updateItemLayout,
-    updateLCDesignerStore
+    updateActive,
+    addItem,
+    clearDesignerStore,
+    delItem,
+    updateRightVisible,
+    updateBaseStyle,
+    updateChartProps,
+    updateLayout,
+    updateDesignerStore
 } from "../../redux/actions/LCDesignerAction";
 import DesignerHeader from "./LcDesignerHeader";
 import {RouteComponentProps, withRouter} from "react-router-dom";
@@ -22,23 +23,23 @@ const {Header, Sider, Content} = Layout;
 
 interface LCDesignerProps extends RouteComponentProps {
     LCDesignerStore: LCDesignerProps;
-    clearLCDesignerStore?: (data?: any) => void;
-    updateLCDesignerStore?: (data?: any) => void;
+    clearDesignerStore?: (data?: any) => void;
+    updateDesignerStore?: (data?: any) => void;
     addItem?: (data?: any) => void;
-    deleteItem?: (data?: any) => void;
-    updateItemLayout?: (data?: any) => void;
-    activeElem?: (data?: any) => void;
-    updateDrawerVisible?: (data?: any) => void;
-    updateElemChartSet?: (data?: any) => void;
-    updateElemBaseSet?: (data?: any) => void;
+    delItem?: (data?: any) => void;
+    updateLayout?: (data?: any) => void;
+    updateActive?: (data?: any) => void;
+    updateRightVisible?: (data?: any) => void;
+    updateChartProps?: (data?: any) => void;
+    updateBaseStyle?: (data?: any) => void;
 }
 
 class LCDesigner extends Component<LCDesignerProps | any> {
 
     componentWillUnmount() {
         //清空状态
-        const {clearLCDesignerStore} = this.props;
-        clearLCDesignerStore && clearLCDesignerStore();
+        const {clearDesignerStore} = this.props;
+        clearDesignerStore && clearDesignerStore();
         // window.removeEventListener("beforeunload", () => {
         // })
     }
@@ -48,11 +49,11 @@ class LCDesigner extends Component<LCDesignerProps | any> {
         //     event.preventDefault();
         //     event.returnValue = '';
         // })
-        const {updateLCDesignerStore} = this.props;
+        const {updateDesignerStore} = this.props;
         const {action, screenName, screenWidth, screenHeight, id} = this.props.location.state;
         switch (action) {
             case 'add':
-                updateLCDesignerStore({
+                updateDesignerStore({
                     globalSet: {
                         screenName,
                         screenWidth: parseInt(screenWidth),
@@ -80,7 +81,7 @@ class LCDesigner extends Component<LCDesignerProps | any> {
                     chartConfigs,
                     layoutConfigs
                 } = config;
-                updateLCDesignerStore({
+                updateDesignerStore({
                     id: screenId,
                     globalSet,
                     screenName: name,
@@ -124,14 +125,14 @@ class LCDesigner extends Component<LCDesignerProps | any> {
 export default connect(
     (state: any) => ({LCDesignerStore: state?.LCDesignerStore || {}}),
     {
-        updateLCDesignerStore,
-        clearLCDesignerStore,
+        updateActive,
         addItem,
-        deleteItem,
-        updateItemLayout,
-        activeElem,
-        updateDrawerVisible,
-        updateElemChartSet,
-        updateElemBaseSet
+        clearDesignerStore,
+        delItem,
+        updateRightVisible,
+        updateBaseStyle,
+        updateChartProps,
+        updateLayout,
+        updateDesignerStore
     }
 )(withRouter(LCDesigner))

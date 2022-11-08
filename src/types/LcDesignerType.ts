@@ -2,7 +2,7 @@
  * redux-action类型
  */
 export interface Action {
-    type: string;  //操作
+    type: string | number;  //操作
     data: any;     //数据
 }
 

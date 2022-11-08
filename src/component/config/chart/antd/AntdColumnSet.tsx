@@ -7,7 +7,7 @@ import ColumnWidth from "./atomic_components/ColumnWidth";
 import {getAntdDataSortCount} from "../../../../utils/AntdBarUtil";
 
 interface AntdColumnSetProps {
-    updateElemChartSet?: (data: any) => void;
+    updateChartProps?: (data: any) => void;
     chartProps?: any;
     activated?: any;
 }
@@ -15,12 +15,12 @@ interface AntdColumnSetProps {
 class AntdColumnSet extends Component<AntdColumnSetProps> {
 
     fillColorChanged = (color: string | string[]) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({color: color})
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({color: color})
     }
 
     render() {
-        const {updateElemChartSet, chartProps, activated} = this.props;
+        const {updateChartProps, chartProps, activated} = this.props;
         let paletteCount = 1;
         switch (activated?.type) {
             case 'AntdBaseColumn':
@@ -40,11 +40,11 @@ class AntdColumnSet extends Component<AntdColumnSetProps> {
                 {/*图形填充色设置*/}
                 <FillColor paletteCount={paletteCount} onChange={this.fillColorChanged}/>
                 {/*图例配置*/}
-                <Legend updateElemChartSet={updateElemChartSet}/>
+                <Legend updateChartProps={updateChartProps}/>
                 {/*直角坐标系配置*/}
-                <RightAngleCoordinates updateElemChartSet={updateElemChartSet}/>
+                <RightAngleCoordinates updateChartProps={updateChartProps}/>
                 {/*条形图单条宽度配置*/}
-                <ColumnWidth updateElemChartSet={updateElemChartSet}/>
+                <ColumnWidth updateChartProps={updateChartProps}/>
             </div>
         );
     }

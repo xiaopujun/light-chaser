@@ -2,11 +2,12 @@ import {DeleteOutlined, SettingOutlined} from '@ant-design/icons';
 import React, {Component} from 'react';
 import './index.less';
 import {LCDesignerProps} from "../../types/LcDesignerType";
+import {delItem} from "../../redux/actions/LCDesignerAction";
 
 interface EditToolsProps {
     elemId?: string;  //组件id
-    deleteItem?: (elemId: string) => void; //删除组件回调
-    activeElem?: (data: { elemId: number, type: string }) => void; //打开右侧配置项回调
+    delItem?: (elemId: string) => void; //删除组件回调
+    updateActive?: (data: { elemId: number, type: string }) => void; //打开右侧配置项回调
     LCDesignerStore?: LCDesignerProps;
 }
 
@@ -18,13 +19,13 @@ class EditTools extends Component<EditToolsProps> {
     /**
      * 删除组件
      */
-    deleteItem = () => {
-        const {elemId = '-1', deleteItem} = this.props;
-        deleteItem && deleteItem(elemId);
+    delItem = () => {
+        const {elemId = '-1', delItem} = this.props;
+        delItem && delItem(elemId);
     }
 
-    activeElem = () => {
-        const {elemId = '-1', activeElem, LCDesignerStore} = this.props;
+    updateActive = () => {
+        const {elemId = '-1', updateActive, LCDesignerStore} = this.props;
         let layoutConfigs = LCDesignerStore?.layoutConfigs!;
         let type = "";
         for (let i = 0; i < layoutConfigs.length; i++) {
@@ -33,14 +34,14 @@ class EditTools extends Component<EditToolsProps> {
                 break;
             }
         }
-        activeElem && activeElem({elemId: parseInt(elemId), type});
+        updateActive && updateActive({elemId: parseInt(elemId), type});
     }
 
     render() {
         return (
             <div className={'edit-tools'}>
-                <span onClick={this.deleteItem}><DeleteOutlined/></span>
-                <span onClick={this.activeElem}><SettingOutlined/></span>
+                <span onClick={this.delItem}><DeleteOutlined/></span>
+                <span onClick={this.updateActive}><SettingOutlined/></span>
             </div>
         );
     }

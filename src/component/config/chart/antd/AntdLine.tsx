@@ -5,7 +5,7 @@ import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";
 import ColumnWidth from "./atomic_components/ColumnWidth";
 
 interface AntdFoldLineSetProps {
-    updateElemChartSet?: (data: any) => void;
+    updateChartProps?: (data: any) => void;
     chartProps?: any;
     activated?: any;
 }
@@ -17,22 +17,22 @@ class AntdFoldLineSet extends Component<AntdFoldLineSetProps> {
     }
 
     fillColorChanged = (color: string | string[]) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({color: color})
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({color: color})
     }
 
     render() {
-        const {updateElemChartSet, activated, chartProps} = this.props;
+        const {updateChartProps, activated, chartProps} = this.props;
         return (
             <div className={'elem-chart-config'}>
                 {/*图形填充色设置*/}
                 <FillColor paletteCount={1} onChange={this.fillColorChanged}/>
                 {/*图例配置*/}
-                <Legend chartProps={chartProps} updateElemChartSet={updateElemChartSet}/>
+                <Legend chartProps={chartProps} updateChartProps={updateChartProps}/>
                 {/*直角坐标系配置*/}
-                <RightAngleCoordinates chartProps={chartProps} updateElemChartSet={updateElemChartSet}/>
+                <RightAngleCoordinates chartProps={chartProps} updateChartProps={updateChartProps}/>
                 {/*条形图单条宽度配置*/}
-                <ColumnWidth updateElemChartSet={updateElemChartSet}/>
+                <ColumnWidth updateChartProps={updateChartProps}/>
             </div>
         );
     }

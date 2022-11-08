@@ -6,12 +6,13 @@ import './style/Content.less';
 import getChartsTemplate from "../charts/ComponentChartInit";
 import {LCDesignerProps} from "../../types/LcDesignerType";
 import Loading from "../loading/Loading";
+import {delItem} from "../../redux/actions/LCDesignerAction";
 
 interface LcDesignerContentProps {
     LCDesignerStore?: LCDesignerProps;
-    deleteItem?: (id: string | number) => void;
+    delItem?: (id: string | number) => void;
     addItem?: (data: any) => void;
-    updateItemLayout?: (data: any) => void;
+    updateLayout?: (data: any) => void;
 }
 
 export default class LcDesignerContent extends React.Component<LcDesignerContentProps | any> {
@@ -59,7 +60,7 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
                     <Suspense fallback={<Loading width={'100%'} height={'100%'}/>}>
                         <ElementChart elemId={item?.id}
                                       chartConfig={chartConfig}
-                                      deleteItem={this.deleteItem}/>
+                                      delItem={this.delItem}/>
                     </Suspense>
                 </div>
             );
@@ -69,9 +70,9 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
     /**
      * 删除目标组件
      */
-    deleteItem = (elemId: string) => {
-        const {deleteItem, LCDesignerStore} = this.props;
-        deleteItem && deleteItem(elemId);
+    delItem = (elemId: string) => {
+        const {delItem, LCDesignerStore} = this.props;
+        delItem && delItem(elemId);
 
         if (this.rgl != null) {
             const {layoutConfigs} = LCDesignerStore!;
@@ -123,16 +124,16 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
      * @param layout
      */
     onDragStop = (layout: Layout[], oldItem: Layout, newItem: Layout, placeholder: Layout, event: MouseEvent, element: HTMLElement,) => {
-        const {updateItemLayout} = this.props;
-        updateItemLayout && updateItemLayout(newItem);
+        const {updateLayout} = this.props;
+        updateLayout && updateLayout(newItem);
     }
 
     /**
      * @description 组件大小变化回调
      */
     onResizeStop = (layout: Layout[], oldItem: Layout, newItem: Layout, placeholder: Layout, event: MouseEvent, element: HTMLElement,) => {
-        const {updateItemLayout} = this.props;
-        updateItemLayout && updateItemLayout(newItem);
+        const {updateLayout} = this.props;
+        updateLayout && updateLayout(newItem);
     }
 
     scaleInit = () => {

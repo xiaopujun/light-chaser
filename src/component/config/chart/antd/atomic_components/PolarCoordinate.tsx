@@ -3,7 +3,7 @@ import OutInnerRadius from "./OutInnerRadius";
 import StartEndAngle from "./StartEndAngle";
 
 interface PolarCoordinateSystemProps {
-    updateElemChartSet?: (data: any) => void;
+    updateChartProps?: (data: any) => void;
 }
 
 /**
@@ -13,11 +13,11 @@ export default class PolarCoordinateSystem extends Component<PolarCoordinateSyst
 
 
     render() {
-        const {updateElemChartSet} = this.props;
+        const {updateChartProps} = this.props;
         return (
             <>
-                <OutInnerRadius updateElemChartSet={updateElemChartSet}/>
-                <StartEndAngle updateElemChartSet={updateElemChartSet}/>
+                <OutInnerRadius updateChartProps={updateChartProps}/>
+                <StartEndAngle updateChartProps={updateChartProps}/>
             </>
         );
     }

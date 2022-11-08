@@ -7,7 +7,7 @@ import LCNumberInput from "../../base/LCNumberInput";
 const {Option} = Select;
 
 interface LcCompBorderSetProps {
-    updateElemBaseSet?: (data: any) => void;
+    updateBaseStyle?: (data: any) => void;
     borderStyle?: string;
     borderWidth?: number;
     borderColor?: string;
@@ -17,23 +17,23 @@ interface LcCompBorderSetProps {
 export default class LcCompBorderSet extends Component<LcCompBorderSetProps> {
 
     borderStyleChanged = (style: string) => {
-        const {updateElemBaseSet} = this.props;
-        updateElemBaseSet && updateElemBaseSet({borderStyle: style});
+        const {updateBaseStyle} = this.props;
+        updateBaseStyle && updateBaseStyle({borderStyle: style});
     }
 
     borderWidthChanged = (width: number) => {
-        const {updateElemBaseSet} = this.props;
-        updateElemBaseSet && updateElemBaseSet({borderWidth: `${width}px`});
+        const {updateBaseStyle} = this.props;
+        updateBaseStyle && updateBaseStyle({borderWidth: `${width}px`});
     }
 
     borderColorChanged = (color: any) => {
-        const {updateElemBaseSet} = this.props;
-        updateElemBaseSet && updateElemBaseSet({borderColor: color});
+        const {updateBaseStyle} = this.props;
+        updateBaseStyle && updateBaseStyle({borderColor: color});
     }
 
     borderRadiusChanged = (radius: number) => {
-        const {updateElemBaseSet} = this.props;
-        updateElemBaseSet && updateElemBaseSet({borderRadius: `${radius}px`});
+        const {updateBaseStyle} = this.props;
+        updateBaseStyle && updateBaseStyle({borderRadius: `${radius}px`});
     }
 
     render() {

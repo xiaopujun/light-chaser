@@ -1,18 +1,8 @@
-import {
-    ACTIVE_ELEM,
-    ADD_ITEM,
-    CLEAR_LC_DESIGNER_STORE,
-    DELETE_ITEM,
-    UPDATE_DRAWER_VISIBLE,
-    UPDATE_ELEM_BASE_SET,
-    UPDATE_ELEM_CHART_SET,
-    UPDATE_ITEM_LAYOUT,
-    UPDATE_LC_DESIGNER_STORE,
-} from '../constant';
 import {Action, LCDesignerProps} from "../../types/LcDesignerType";
 import {getChartInitData} from "../../utils/ChartUtil";
 import * as _ from 'lodash'
 import deepmerge from "deepmerge";
+import {DesignerOperate} from "../../enum/DesignerOperate";
 
 /**
  * 初始化的布局设计器状态
@@ -48,24 +38,24 @@ const initState: LCDesignerProps = {
 export default function LCDesignerReducer(preState: LCDesignerProps = initState, action: Action) {
     const {type, data} = action;
     switch (type) {
-        case UPDATE_LC_DESIGNER_STORE:                      //初始化store
-            return updateLCDesignerStore(preState, data);
-        case CLEAR_LC_DESIGNER_STORE:                      //清除store
-            return clearLCDesignerStore(preState, data);
-        case ADD_ITEM:                                      //添加新的组件到画布中
+        case DesignerOperate.UPDATE_DESIGNER_STORE:                      //初始化store
+            return updateDesignerStore(preState, data);
+        case DesignerOperate.CLEAR_DESIGNER_STORE:                      //清除store
+            return clearDesignerStore(preState, data);
+        case DesignerOperate.ADD_ITEM:                                       //添加新的组件到画布中
             return addItem(preState, data);
-        case DELETE_ITEM:                                   //从画布中删除组件
-            return deleteItem(preState, data);
-        case UPDATE_ITEM_LAYOUT:
-            return updateItemLayout(preState, data);
-        case ACTIVE_ELEM:
-            return activeElem(preState, data);
-        case UPDATE_DRAWER_VISIBLE:
-            return updateDrawerVisible(preState, data);
-        case UPDATE_ELEM_BASE_SET:
-            return updateElemBaseSet(preState, data);
-        case UPDATE_ELEM_CHART_SET:
-            return updateElemChartSet(preState, data);
+        case DesignerOperate.DEL_ITEM:                                   //从画布中删除组件
+            return delItem(preState, data);
+        case DesignerOperate.UPDATE_LAYOUT:
+            return updateLayout(preState, data);
+        case DesignerOperate.UPDATE_ACTIVE:
+            return updateActive(preState, data);
+        case DesignerOperate.UPDATE_RIGHT_VISIBLE:
+            return updateRightVisible(preState, data);
+        case DesignerOperate.UPDATE_BASE_STYLE:
+            return updateBaseStyle(preState, data);
+        case DesignerOperate.UPDATE_CHART_PROPS:
+            return updateChartProps(preState, data);
         default:                                            //无更新，返回之前的状态
             return preState;
     }
@@ -74,7 +64,7 @@ export default function LCDesignerReducer(preState: LCDesignerProps = initState,
 /**
  * 清除store
  */
-function clearLCDesignerStore(preState: LCDesignerProps, data: any) {
+function clearDesignerStore(preState: LCDesignerProps, data: any) {
     return initState;
 }
 
@@ -85,7 +75,7 @@ function clearLCDesignerStore(preState: LCDesignerProps, data: any) {
  * @param data
  * @returns
  */
-function updateLCDesignerStore(preState: LCDesignerProps, data: any) {
+function updateDesignerStore(preState: LCDesignerProps, data: any) {
     return {...deepmerge(preState, data)};
 }
 
@@ -113,7 +103,7 @@ function addItem(preState: LCDesignerProps, data: any) {
  * @param preState
  * @param data
  */
-function deleteItem(preState: LCDesignerProps, data: any) {
+function delItem(preState: LCDesignerProps, data: any) {
     data = parseInt(data);
     let {layoutConfigs, chartConfigs, activated} = preState;
     _.remove(layoutConfigs, function (item) {
@@ -132,7 +122,7 @@ function deleteItem(preState: LCDesignerProps, data: any) {
  * @param preState
  * @param data
  */
-function updateItemLayout(preState: LCDesignerProps, data: any) {
+function updateLayout(preState: LCDesignerProps, data: any) {
     let {layoutConfigs} = preState;
     const {i, x, y, w, h} = data;
     for (let index = 0; index < layoutConfigs.length; index++) {
@@ -149,7 +139,7 @@ function updateItemLayout(preState: LCDesignerProps, data: any) {
  * @param preState
  * @param data
  */
-function activeElem(preState: LCDesignerProps, data: any) {
+function updateActive(preState: LCDesignerProps, data: any) {
     let {activated, rightDialog} = preState;
     const {elemId, type} = data;
     activated = {...activated, ...{id: elemId, type}};
@@ -163,7 +153,7 @@ function activeElem(preState: LCDesignerProps, data: any) {
  * @param preState
  * @param data
  */
-function updateDrawerVisible(preState: LCDesignerProps, data: any) {
+function updateRightVisible(preState: LCDesignerProps, data: any) {
     let {rightDialog} = preState;
     rightDialog.visible = !rightDialog.visible;
     return {...preState, ...{rightDialog}};
@@ -174,7 +164,7 @@ function updateDrawerVisible(preState: LCDesignerProps, data: any) {
  * @param preState
  * @param data
  */
-function updateElemBaseSet(preState: LCDesignerProps, data: any) {
+function updateBaseStyle(preState: LCDesignerProps, data: any) {
     let {chartConfigs, activated} = preState;
     const {id} = activated;
     let charConfig = chartConfigs[id + ''];
@@ -188,7 +178,7 @@ function updateElemBaseSet(preState: LCDesignerProps, data: any) {
  * @param preState
  * @param data
  */
-function updateElemChartSet(preState: LCDesignerProps, data: any) {
+function updateChartProps(preState: LCDesignerProps, data: any) {
     let {chartConfigs, activated} = preState;
     let activeConfig = chartConfigs[activated?.id + ''];
     const activeCompName = activated?.type;

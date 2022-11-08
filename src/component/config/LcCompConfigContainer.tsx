@@ -12,8 +12,8 @@ const {Panel} = Collapse;
 
 interface LcCompConfigContainerProps {
     chartConfig?: any;
-    activeElem?: (data: any) => void;
-    updateElemBaseSet?: (data: any) => void;
+    updateActive?: (data: any) => void;
+    updateBaseStyle?: (data: any) => void;
     activated?: any;
 }
 
@@ -23,8 +23,8 @@ interface LcCompConfigContainerProps {
 export default class LcCompConfigContainer extends Component<LcCompConfigContainerProps | any> {
 
     cancelActive = () => {
-        const {activeElem} = this.props;
-        activeElem && activeElem({elemId: -1, type: ''});
+        const {updateActive} = this.props;
+        updateActive && updateActive({elemId: -1, type: ''});
     }
 
 
@@ -32,7 +32,7 @@ export default class LcCompConfigContainer extends Component<LcCompConfigContain
         const {
             activated: {id: activatedId, type},
             chartConfig: {baseInfo, chartProps, baseStyle},
-            updateElemBaseSet
+            updateBaseStyle
         } = this.props;
         let ChartsConfig = getChartsConfig(type);
         return (
@@ -45,11 +45,11 @@ export default class LcCompConfigContainer extends Component<LcCompConfigContain
                         <LcEmBaseInfo baseInfo={baseInfo}/>
                     </Panel>
                     <Panel className={'lc-config-collapse-title'} header="基础样式" key="1">
-                        <LcCompBaseStyleSet baseStyle={baseStyle} updateElemBaseSet={updateElemBaseSet}/>
+                        <LcCompBaseStyleSet baseStyle={baseStyle} updateBaseStyle={updateBaseStyle}/>
                     </Panel>
                     <Panel className={'lc-config-collapse-title'} header="组件样式" key="2">
                         <Suspense fallback={<Loading width={'100%'} height={'100%'}/>}>
-                            <ChartsConfig updateElemBaseSet={updateElemBaseSet} chartProps={chartProps}/>
+                            <ChartsConfig updateBaseStyle={updateBaseStyle} chartProps={chartProps}/>
                         </Suspense>
                     </Panel>
                     <Panel className={'lc-config-collapse-title'} header="数据源设置" key="5">

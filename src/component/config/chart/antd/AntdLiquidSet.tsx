@@ -10,7 +10,7 @@ const {Option} = Select;
 
 
 interface AntdLiquidSetProps {
-    updateElemChartSet?: (data: any) => void;
+    updateChartProps?: (data: any) => void;
     chartProps?: any;
     activated?: any;
 }
@@ -19,22 +19,22 @@ interface AntdLiquidSetProps {
 class AntdLiquidSet extends Component<AntdLiquidSetProps> {
 
     fillColorChanged = (color: string | string[]) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             color: color
         })
     }
 
     outRadiusChanged = (radius: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             radius: radius
         })
     }
 
     outLineWidthChanged = (width: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             outline: {
                 border: width
             }
@@ -43,8 +43,8 @@ class AntdLiquidSet extends Component<AntdLiquidSetProps> {
 
 
     outLineIntervalChanged = (distance: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             outline: {
                 distance: distance
             }
@@ -52,8 +52,8 @@ class AntdLiquidSet extends Component<AntdLiquidSetProps> {
     }
 
     outLineColorChanged = (color: string) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             outline: {
                 style: {
                     stroke: color,
@@ -63,8 +63,8 @@ class AntdLiquidSet extends Component<AntdLiquidSetProps> {
     }
 
     numberOfWaterWavesChanged = (count: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             wave: {
                 count: count
             }
@@ -72,8 +72,8 @@ class AntdLiquidSet extends Component<AntdLiquidSetProps> {
     }
 
     waveLengthChanged = (length: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             wave: {
                 length: length
             }
@@ -81,8 +81,8 @@ class AntdLiquidSet extends Component<AntdLiquidSetProps> {
     }
 
     titleChanged = (data: string) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             statistic: {
                 title: {
                     content: data
@@ -92,8 +92,8 @@ class AntdLiquidSet extends Component<AntdLiquidSetProps> {
     }
 
     titleColorChanged = (color: string) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             statistic: {
                 title: {
                     style: {
@@ -107,8 +107,8 @@ class AntdLiquidSet extends Component<AntdLiquidSetProps> {
 
 
     subscriptionColorChanged = (color: string) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             statistic: {
                 content: {
                     style: {
@@ -121,8 +121,8 @@ class AntdLiquidSet extends Component<AntdLiquidSetProps> {
 
 
     titleFontSizeChanged = (size: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             statistic: {
                 title: {
                     style: {
@@ -135,8 +135,8 @@ class AntdLiquidSet extends Component<AntdLiquidSetProps> {
 
 
     subscriptionFontSizeChanged = (size: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             statistic: {
                 content: {
                     style: {
@@ -148,8 +148,8 @@ class AntdLiquidSet extends Component<AntdLiquidSetProps> {
     }
 
     subscriptionLineHeightChanged = (size: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             statistic: {
                 content: {
                     style: {
@@ -161,8 +161,8 @@ class AntdLiquidSet extends Component<AntdLiquidSetProps> {
     }
 
     shapeChanged = (value: string) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             shape: value
         })
     }

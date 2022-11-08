@@ -5,7 +5,7 @@ import LCNumberInput from "../../../../base/LCNumberInput";
 
 
 interface RightAngleCoordinatesProp {
-    updateElemChartSet?: (data: any) => void;
+    updateChartProps?: (data: any) => void;
     chartProps?: any;
 }
 
@@ -28,8 +28,8 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
     }
 
     showXGridLine = (data: boolean) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet(data ? {
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps(data ? {
             xAxis: {
                 grid: {
                     line: {
@@ -52,8 +52,8 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
     }
 
     xGridLineColorChanged = (color: string) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             xAxis: {
                 grid: {
                     line: {
@@ -67,8 +67,8 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
     }
 
     xGridLineWidthChanged = (width: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             xAxis: {
                 grid: {
                     line: {
@@ -82,8 +82,8 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
     }
 
     xGridLineOpacityChanged = (opacity: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             xAxis: {
                 grid: {
                     line: {
@@ -97,8 +97,8 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
     }
 
     showYGridLine = (data: boolean) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet(data ? {
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps(data ? {
             yAxis: {
                 grid: {
                     line: {
@@ -121,8 +121,8 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
     }
 
     yGridLineColorChanged = (color: string) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             yAxis: {
                 grid: {
                     line: {
@@ -136,8 +136,8 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
     }
 
     yGridLineWidthChanged = (width: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             yAxis: {
                 grid: {
                     line: {
@@ -151,8 +151,8 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
     }
 
     yGridLineOpacityChanged = (opacity: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             yAxis: {
                 grid: {
                     line: {
@@ -166,8 +166,8 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
     }
 
     xTitleColorChanged = (color: string) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             xAxis: {
                 label: {
                     style: {
@@ -179,8 +179,8 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
     }
 
     yTitleColorChanged = (color: string) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             yAxis: {
                 label: {
                     style: {

@@ -3,7 +3,7 @@ import './style/index.less';
 import LCNumberInput from "../../../../base/LCNumberInput";
 
 interface ColumnWidthProp {
-    updateElemChartSet?: (data: any) => void;
+    updateChartProps?: (data: any) => void;
     chartProps?: any;
 }
 
@@ -13,8 +13,8 @@ interface ColumnWidthProp {
 class ColumnWidth extends Component<ColumnWidthProp> {
 
     columnWidthChanged = (width: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             maxColumnWidth: width
         })
     }

@@ -8,7 +8,7 @@ const {Option} = Select;
 
 
 interface AntdScatterSetProps {
-    updateElemChartSet?: (data: any) => void;
+    updateChartProps?: (data: any) => void;
     chartProps?: any;
     activated?: any;
 }
@@ -16,8 +16,8 @@ interface AntdScatterSetProps {
 export default class AntdScatterSet extends Component<AntdScatterSetProps> {
 
     fillColorChanged = (color: string | string[]) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             pointStyle: {
                 fill: color,
             },
@@ -25,28 +25,28 @@ export default class AntdScatterSet extends Component<AntdScatterSetProps> {
     }
 
     shapeChanged = (shape: string) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             shape: shape
         });
     }
 
     pointSizeChanged = (range: [number, number]) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             size: range
         })
     }
 
     curveRendering = (data: boolean) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             smooth: data
         })
     }
 
     render() {
-        const {updateElemChartSet, activated, chartProps} = this.props;
+        const {updateChartProps, activated, chartProps} = this.props;
         return (
             <div className={'elem-chart-config'}>
 
@@ -76,7 +76,7 @@ export default class AntdScatterSet extends Component<AntdScatterSetProps> {
                     </div>
                 </div>
                 {/*直角坐标系配置*/}
-                <RightAngleCoordinates chartProps={chartProps} updateElemChartSet={updateElemChartSet}/>
+                <RightAngleCoordinates chartProps={chartProps} updateChartProps={updateChartProps}/>
 
             </div>
         );

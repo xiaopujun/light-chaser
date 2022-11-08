@@ -7,7 +7,7 @@ import {BaseStyle} from "../../../types/LcDesignerType";
 
 interface LcCompBaseStyleSetProps {
     baseStyle?: BaseStyle;
-    updateElemBaseSet?: (data: any) => void;
+    updateBaseStyle?: (data: any) => void;
 }
 
 /**
@@ -16,13 +16,13 @@ interface LcCompBaseStyleSetProps {
 export default class LcCompBaseStyleSet extends Component<LcCompBaseStyleSetProps> {
 
     paddingChanged = (padding: string) => {
-        const {updateElemBaseSet} = this.props;
-        updateElemBaseSet && updateElemBaseSet({padding: padding});
+        const {updateBaseStyle} = this.props;
+        updateBaseStyle && updateBaseStyle({padding: padding});
     }
 
     backgroundColorChanged = (color: string | string[]) => {
-        const {updateElemBaseSet} = this.props;
-        updateElemBaseSet && updateElemBaseSet({backgroundColor: color});
+        const {updateBaseStyle} = this.props;
+        updateBaseStyle && updateBaseStyle({backgroundColor: color});
     }
 
     render() {
@@ -31,7 +31,7 @@ export default class LcCompBaseStyleSet extends Component<LcCompBaseStyleSetProp
             <div className={'lc-base-config'}>
                 <PaddingSet onChange={this.paddingChanged} count={4}/>
                 <LcCompBackgroundSet backgroundColorChanged={this.backgroundColorChanged} {...baseStyle}/>
-                <LcCompBorderSet updateElemBaseSet={this.props.updateElemBaseSet} {...baseStyle}/>
+                <LcCompBorderSet updateBaseStyle={this.props.updateBaseStyle} {...baseStyle}/>
             </div>
         );
     }

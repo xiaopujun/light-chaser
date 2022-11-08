@@ -5,24 +5,24 @@ import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";
 
 interface AntdAreaSetProps {
     chartConfig?: any;
-    updateElemChartSet?: (data: any) => void;
+    updateChartProps?: (data: any) => void;
 }
 
 class AntdAreaSet extends Component<AntdAreaSetProps> {
 
     fillColorChanged = (color: string | string[]) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({color: color});
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({color: color});
     }
 
     render() {
-        const {updateElemChartSet, chartConfig} = this.props;
+        const {updateChartProps, chartConfig} = this.props;
         return (
             <div className={'elem-chart-config'}>
                 {/*图形填充色设置*/}
                 <FillColor onChange={this.fillColorChanged} paletteCount={1}/>
                 {/*直角坐标系配置*/}
-                <RightAngleCoordinates updateElemChartSet={updateElemChartSet}/>
+                <RightAngleCoordinates updateChartProps={updateChartProps}/>
             </div>
         );
     }

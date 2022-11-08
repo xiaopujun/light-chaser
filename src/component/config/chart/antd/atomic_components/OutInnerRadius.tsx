@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import LCNumberInput from "../../../../base/LCNumberInput";
 
 interface OutInnerRadiusProps {
-    updateElemChartSet?: (config: object) => void;
+    updateChartProps?: (config: object) => void;
     items?: ['outer'?, 'inner'?];
     chartProps?: any;
 }
@@ -18,10 +18,10 @@ export default class OutInnerRadius extends Component<OutInnerRadiusProps> {
     }
 
     outRadiusChanged = (radius: number) => {
-        const {updateElemChartSet} = this.props;
+        const {updateChartProps} = this.props;
         const {innerRadius} = this.state;
         if (radius > innerRadius) {
-            updateElemChartSet && updateElemChartSet({
+            updateChartProps && updateChartProps({
                 radius: radius
             })
             this.setState({outRadius: radius})
@@ -31,10 +31,10 @@ export default class OutInnerRadius extends Component<OutInnerRadiusProps> {
 
 
     innerRadiusChanged = (radius: number) => {
-        const {updateElemChartSet} = this.props;
+        const {updateChartProps} = this.props;
         const {outRadius} = this.state;
         if (outRadius > radius) {
-            updateElemChartSet && updateElemChartSet({
+            updateChartProps && updateChartProps({
                 innerRadius: radius
             })
             this.setState({innerRadius: radius})

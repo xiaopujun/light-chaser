@@ -7,7 +7,7 @@ import LCTextInput from "../../../base/LCTextInput";
 
 
 interface AntdGaugeSetProps {
-    updateElemChartSet?: (data: any) => void;
+    updateChartProps?: (data: any) => void;
     chartProps?: any;
     activated?: any;
 }
@@ -21,8 +21,8 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
     }
 
     rangeColorChanged = (color: string) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             range: {
                 color,
             },
@@ -30,8 +30,8 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
     }
 
     rangeWidthChanged = (width: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             range: {
                 width: width,
             }
@@ -42,17 +42,17 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
     }
 
     openMete = (data: boolean) => {
-        const {updateElemChartSet} = this.props;
+        const {updateChartProps} = this.props;
         let flag = data ? 'meter' : '';
-        updateElemChartSet && updateElemChartSet({
+        updateChartProps && updateChartProps({
             type: flag
         })
     }
 
 
     stepCountChange = (count: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             meter: {
                 steps: count
             }
@@ -62,8 +62,8 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
         })
     }
     stepWidthChange = (count: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             meter: {
                 stepRatio: count
             }
@@ -74,8 +74,8 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
     }
 
     titleChanged = (data: string) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             statistic: {
                 title: {
                     content: data
@@ -85,8 +85,8 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
     }
 
     titleColorChanged = (color: string) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             statistic: {
                 title: {
                     style: {
@@ -100,8 +100,8 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
 
 
     subscriptionColorChanged = (color: string) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             statistic: {
                 content: {
                     style: {
@@ -114,8 +114,8 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
 
 
     titleFontSizeChanged = (size: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             statistic: {
                 title: {
                     style: {
@@ -128,8 +128,8 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
 
 
     subscriptionFontSizeChanged = (size: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             statistic: {
                 content: {
                     style: {
@@ -141,8 +141,8 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
     }
 
     subscriptionLineHeightChanged = (size: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             statistic: {
                 content: {
                     style: {
@@ -154,8 +154,8 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
     }
 
     titleXAxisOffsetChanged = (data: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             statistic: {
                 title: {
                     offsetX: data
@@ -165,8 +165,8 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
     }
 
     titleYAxisOffsetChanged = (data: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             statistic: {
                 title: {
                     offsetY: data
@@ -176,8 +176,8 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
     }
 
     subscriptionXAxisOffsetChanged = (data: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             statistic: {
                 content: {
                     offsetX: data
@@ -187,8 +187,8 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
     }
 
     subscriptionYAxisOffsetChanged = (data: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             statistic: {
                 content: {
                     offsetY: data
@@ -200,13 +200,13 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
 
     render() {
         const {rangeWidth, stepCount, stepWidth} = this.state;
-        const {updateElemChartSet} = this.props;
+        const {updateChartProps} = this.props;
         return (
             <div className={'elem-chart-config'}>
 
                 {/*极坐标系相关设置*/}
-                <OutRadius updateElemChartSet={updateElemChartSet}/>
-                <StartEndAngle updateElemChartSet={updateElemChartSet}/>
+                <OutRadius updateChartProps={updateChartProps}/>
+                <StartEndAngle updateChartProps={updateChartProps}/>
                 <div className={'config-group'}>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>圆弧颜色：</label>

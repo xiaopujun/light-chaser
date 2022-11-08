@@ -11,7 +11,7 @@ import ColorPicker from "../../../color_picker/BaseColorPicker";
 
 
 interface AntdRadarSetProps {
-    updateElemChartSet?: (data: any) => void;
+    updateChartProps?: (data: any) => void;
     chartProps?: any;
     activated?: any;
 }
@@ -24,20 +24,20 @@ export default class AntdRadarSet extends Component<AntdRadarSetProps> {
     }
 
     fillColorChanged = (color: string | string[]) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({color: color});
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({color: color});
     }
 
     curveRendering = (data: boolean) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             smooth: data
         })
     }
 
     lineWidthChanged = (lineWidth: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             lineStyle: {
                 lineWidth,
             },
@@ -46,8 +46,8 @@ export default class AntdRadarSet extends Component<AntdRadarSetProps> {
     }
 
     pointColorChanged = (color: string) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             point: {
                 color,
             },
@@ -55,8 +55,8 @@ export default class AntdRadarSet extends Component<AntdRadarSetProps> {
     }
 
     pointSizeChanged = (size: number) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             point: {
                 size,
             },
@@ -65,8 +65,8 @@ export default class AntdRadarSet extends Component<AntdRadarSetProps> {
     }
 
     pointFillColorChanged = (color: string) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             point: {
                 style: {
                     fill: color
@@ -77,7 +77,7 @@ export default class AntdRadarSet extends Component<AntdRadarSetProps> {
 
     render() {
         const {lineWidth, pointSize} = this.state;
-        const {updateElemChartSet, activated, chartProps} = this.props;
+        const {updateChartProps, activated, chartProps} = this.props;
         let paletteCount = getAntdDataSortCount(chartProps.data, 'type');
         return (
             <div className={'elem-chart-config'}>
@@ -85,10 +85,10 @@ export default class AntdRadarSet extends Component<AntdRadarSetProps> {
                 {/*图形填充色设置*/}
                 <FillColor onChange={this.fillColorChanged} paletteCount={paletteCount}/>
                 {/*图例*/}
-                <Legend chartProps={chartProps} updateElemChartSet={updateElemChartSet}/>
+                <Legend chartProps={chartProps} updateChartProps={updateChartProps}/>
                 {/*极坐标系相关设置*/}
-                <OutRadius items={['outer']} updateElemChartSet={updateElemChartSet}/>
-                <StartEndAngle updateElemChartSet={updateElemChartSet}/>
+                <OutRadius items={['outer']} updateChartProps={updateChartProps}/>
+                <StartEndAngle updateChartProps={updateChartProps}/>
                 {/*是否曲线渲染*/}
                 <div className={'config-group'}>
                     <div className={'lc-config-item'}>
@@ -133,7 +133,7 @@ export default class AntdRadarSet extends Component<AntdRadarSetProps> {
                 </div>
 
                 {/*直角坐标系配置*/}
-                <RightAngleCoordinates chartProps={chartProps} updateElemChartSet={updateElemChartSet}/>
+                <RightAngleCoordinates chartProps={chartProps} updateChartProps={updateChartProps}/>
 
             </div>
         );

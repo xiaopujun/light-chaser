@@ -1,13 +1,3 @@
-import {
-    ACTIVE_ELEM,
-    ADD_ITEM, CLEAR_LC_DESIGNER_STORE,
-    DELETE_ITEM,
-    UPDATE_DRAWER_VISIBLE,
-    UPDATE_ELEM_BASE_SET,
-    UPDATE_ELEM_CHART_SET,
-    UPDATE_ITEM_LAYOUT,
-    UPDATE_LC_DESIGNER_STORE,
-} from '../constant';
 import {DesignerOperate} from "../../enum/DesignerOperate";
 
 /**
@@ -17,22 +7,22 @@ import {DesignerOperate} from "../../enum/DesignerOperate";
  */
 
 //初始化store
-export const updateLCDesignerStore = (data: any) => ({type: UPDATE_LC_DESIGNER_STORE, data});
+export const updateDesignerStore = (data: any) => ({type: DesignerOperate.UPDATE_DESIGNER_STORE, data});
 //清除store
-export const clearLCDesignerStore = (data: any) => ({type: CLEAR_LC_DESIGNER_STORE, data});
+export const clearDesignerStore = (data: any) => ({type: DesignerOperate.CLEAR_DESIGNER_STORE, data});
 //添加组件
-export const addItem = (data: any) => ({type: ADD_ITEM, data});
+export const addItem = (data: any) => ({type: DesignerOperate.ADD_ITEM, data});
 //删除组件
-export const deleteItem = (data: any) => ({type: DELETE_ITEM, data});
+export const delItem = (data: any) => ({type: DesignerOperate.DEL_ITEM, data});
 //更新组件布局
-export const updateItemLayout = (data: any) => ({type: UPDATE_ITEM_LAYOUT, data});
+export const updateLayout = (data: any) => ({type: DesignerOperate.UPDATE_LAYOUT, data});
 //激活组件
-export const activeElem = (data: any) => ({type: ACTIVE_ELEM, data});
+export const updateActive = (data: any) => ({type: DesignerOperate.UPDATE_ACTIVE, data});
 //更新右侧抽屉显示状态
-export const updateDrawerVisible = (data: any) => ({type: UPDATE_DRAWER_VISIBLE, data});
+export const updateRightVisible = (data: any) => ({type: DesignerOperate.UPDATE_RIGHT_VISIBLE, data});
 //更新组件基础配置
-export const updateElemBaseSet = (data: any) => ({type: UPDATE_ELEM_BASE_SET, data});
+export const updateBaseStyle = (data: any) => ({type: DesignerOperate.UPDATE_BASE_STYLE, data});
 //更新组件图表配置
-export const updateElemChartSet = (data: any) => ({type: UPDATE_ELEM_CHART_SET, data});
+export const updateChartProps = (data: any) => ({type: DesignerOperate.UPDATE_CHART_PROPS, data});
 
 

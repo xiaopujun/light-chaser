@@ -4,7 +4,7 @@ import LCNumberInput from "../../../../base/LCNumberInput";
 
 interface StartEndAngleProps {
     chartProps?: any;
-    updateElemChartSet?: (data: any) => void;
+    updateChartProps?: (data: any) => void;
 }
 
 
@@ -19,20 +19,20 @@ export default class StartEndAngle extends Component<StartEndAngleProps> {
     }
 
     startAngleChanged = (angle: number) => {
-        const {updateElemChartSet} = this.props;
+        const {updateChartProps} = this.props;
         const {endAngle} = this.state;
         if (angle <= endAngle - 0.1) {
-            updateElemChartSet && updateElemChartSet({
+            updateChartProps && updateChartProps({
                 startAngle: Math.PI * angle
             })
             this.setState({startAngle: angle})
         }
     }
     endAngleChanged = (angle: number) => {
-        const {updateElemChartSet} = this.props;
+        const {updateChartProps} = this.props;
         const {startAngle} = this.state;
         if (startAngle <= angle - 0.1) {
-            updateElemChartSet && updateElemChartSet({
+            updateChartProps && updateChartProps({
                 endAngle: Math.PI * angle
             })
             this.setState({endAngle: angle})

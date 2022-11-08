@@ -6,9 +6,9 @@ import LcGlobalSet from "../config/global/LcGlobalSet";
 
 interface LcDesignerRightProps {
     LCDesignerStore?: LCDesignerProps;
-    updateDrawerVisible?: (data?: any) => void;
-    activeElem?: (data?: any) => void;
-    updateElemBaseSet?: (data?: any) => void;
+    updateRightVisible?: (data?: any) => void;
+    updateActive?: (data?: any) => void;
+    updateBaseStyle?: (data?: any) => void;
 }
 
 /**
@@ -18,18 +18,18 @@ interface LcDesignerRightProps {
 export default class LcDesignerRight extends Component<LcDesignerRightProps, any> {
 
     onClose = () => {
-        const {updateDrawerVisible} = this.props;
-        updateDrawerVisible && updateDrawerVisible();
+        const {updateRightVisible} = this.props;
+        updateRightVisible && updateRightVisible();
     }
 
     render() {
-        const {LCDesignerStore, activeElem, updateElemBaseSet} = this.props;
+        const {LCDesignerStore, updateActive, updateBaseStyle} = this.props;
         const {activated, chartConfigs, globalSet} = LCDesignerStore!;
         const chartConfig = chartConfigs[activated.id];
         return (
             <div className={'lc-config-panel'} style={{height: window.innerHeight - 64}}>
                 {activated.id >= 0 ?
-                    <LcCompConfigContainer {...{activeElem, updateElemBaseSet, chartConfig, activated}} /> :
+                    <LcCompConfigContainer {...{updateActive, updateBaseStyle, chartConfig, activated}} /> :
                     <LcGlobalSet globalSet={globalSet}/>
                 }
             </div>

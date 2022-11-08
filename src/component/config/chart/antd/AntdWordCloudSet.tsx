@@ -2,37 +2,37 @@ import React, {Component} from 'react';
 import FillColor from "./atomic_components/FillColor";
 
 interface AntdWordCloudSetProps {
-    updateElemChartSet?: (data: any) => void;
+    updateChartProps?: (data: any) => void;
     chartProps?: any;
     activated?: any;
 }
 
 class AntdWordCloudSet extends Component<AntdWordCloudSetProps> {
     fillColorChanged = (color: string | string[]) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             color: color,
             autoFit: true,
         });
     }
 
     shapeChanged = (shape: string) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             shape: shape
         });
     }
 
     pointSizeChanged = (range: [number, number]) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             size: range
         })
     }
 
     curveRendering = (data: boolean) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             smooth: data
         })
     }

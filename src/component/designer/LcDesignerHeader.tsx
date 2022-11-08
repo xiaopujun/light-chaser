@@ -12,10 +12,11 @@ import {
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {localSave, localUpdate} from "../../local/LocalStorageUtil";
 import {LCDesignerProps} from "../../types/LcDesignerType";
+import {updateDesignerStore} from "../../redux/actions/LCDesignerAction";
 
 interface LcDesignerHeaderProps extends RouteComponentProps {
     LCDesignerStore: LCDesignerProps;
-    updateLCDesignerStore?: (data: any) => void;
+    updateDesignerStore?: (data: any) => void;
 }
 
 class LcDesignerHeader extends Component<LcDesignerHeaderProps | any> {
@@ -36,14 +37,14 @@ class LcDesignerHeader extends Component<LcDesignerHeaderProps | any> {
     }
 
     save = (e: any) => {
-        const {LCDesignerStore, updateLCDesignerStore} = this.props;
+        const {LCDesignerStore, updateDesignerStore} = this.props;
         let {id = -1, globalSet} = LCDesignerStore;
         const {saveType} = globalSet;
         if (saveType === 'local') {
             if (id === -1) {
                 id = localSave(LCDesignerStore);
                 //更新id
-                updateLCDesignerStore && updateLCDesignerStore({id});
+                updateDesignerStore && updateDesignerStore({id});
                 //修改路由参数，新增变为更新
                 this.updateRouteState(id);
             } else {

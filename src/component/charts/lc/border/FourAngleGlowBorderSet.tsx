@@ -11,8 +11,8 @@ export default class FourAngleGlowBorderSet extends Component<any> {
     }
 
     componentDidMount() {
-        const {updateElemBaseSet} = this.props;
-        updateElemBaseSet && updateElemBaseSet({
+        const {updateBaseStyle} = this.props;
+        updateBaseStyle && updateBaseStyle({
             fourAngleGlowColor: '#00fbff',
             fourAngleGlowWidth: '1px',
             fourAngleGlowLength: '15px'
@@ -20,18 +20,18 @@ export default class FourAngleGlowBorderSet extends Component<any> {
     }
 
     fourAngleGlowColorChanged = (color: string | string[]) => {
-        const {updateElemBaseSet} = this.props;
-        updateElemBaseSet && updateElemBaseSet({fourAngleGlowColor: color});
+        const {updateBaseStyle} = this.props;
+        updateBaseStyle && updateBaseStyle({fourAngleGlowColor: color});
     }
 
     fourAngleGlowWidthChanged = (width: number) => {
-        const {updateElemBaseSet} = this.props;
-        updateElemBaseSet && updateElemBaseSet({fourAngleGlowWidth: width + 'px'});
+        const {updateBaseStyle} = this.props;
+        updateBaseStyle && updateBaseStyle({fourAngleGlowWidth: width + 'px'});
     }
 
     fourAngleGlowLengthChanged = (length: number) => {
-        const {updateElemBaseSet} = this.props;
-        updateElemBaseSet && updateElemBaseSet({fourAngleGlowLength: length + 'px'});
+        const {updateBaseStyle} = this.props;
+        updateBaseStyle && updateBaseStyle({fourAngleGlowLength: length + 'px'});
     }
 
     render() {

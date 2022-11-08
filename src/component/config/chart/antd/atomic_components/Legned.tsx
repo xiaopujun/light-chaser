@@ -6,7 +6,7 @@ import ColorPicker from "../../../../color_picker/BaseColorPicker";
 const {Option} = Select;
 
 interface LegendProps {
-    updateElemChartSet?: (data: any) => void;
+    updateChartProps?: (data: any) => void;
     chartProps?: any;
 }
 
@@ -28,16 +28,16 @@ class Legend extends Component<LegendProps> {
 
 
     showLegend = (data: boolean) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({legend: data});
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({legend: data});
         this.setState({
             showLegendDetail: data
         })
     }
 
     legendPositionChanged = (data: string) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             legend: {
                 position: data
             }
@@ -45,8 +45,8 @@ class Legend extends Component<LegendProps> {
     }
 
     legendLayoutChanged = (data: string) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             legend: {
                 layout: data
             }
@@ -54,8 +54,8 @@ class Legend extends Component<LegendProps> {
     }
 
     legendTextColorChanged = (color: string | string[]) => {
-        const {updateElemChartSet} = this.props;
-        updateElemChartSet && updateElemChartSet({
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
             legend: {
                 itemName: {
                     style: {
