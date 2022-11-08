@@ -22,7 +22,7 @@ class AntdFoldLineSet extends Component<AntdFoldLineSetProps> {
     }
 
     render() {
-        const {updateChartProps, activated, chartProps} = this.props;
+        const {updateChartProps, chartProps} = this.props;
         return (
             <div className={'elem-chart-config'}>
                 {/*图形填充色设置*/}

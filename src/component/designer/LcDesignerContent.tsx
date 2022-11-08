@@ -6,7 +6,6 @@ import './style/Content.less';
 import getChartsTemplate from "../charts/ComponentChartInit";
 import {LCDesignerProps} from "../../types/LcDesignerType";
 import Loading from "../loading/Loading";
-import {delItem} from "../../redux/actions/LCDesignerAction";
 
 interface LcDesignerContentProps {
     LCDesignerStore?: LCDesignerProps;

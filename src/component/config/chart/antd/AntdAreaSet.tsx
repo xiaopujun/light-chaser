@@ -16,7 +16,7 @@ class AntdAreaSet extends Component<AntdAreaSetProps> {
     }
 
     render() {
-        const {updateChartProps, chartConfig} = this.props;
+        const {updateChartProps} = this.props;
         return (
             <div className={'elem-chart-config'}>
                 {/*图形填充色设置*/}

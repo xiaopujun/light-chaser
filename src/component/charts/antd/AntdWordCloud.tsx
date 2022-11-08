@@ -38,7 +38,7 @@ export default class AntdWordCloud extends Component<AntdWordCloudProps> {
     }
 
     render() {
-        const {chartName, chartConfig, elemId} = this.props;
+        const {chartConfig, elemId} = this.props;
         const {chartProps, baseStyle} = chartConfig;
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>

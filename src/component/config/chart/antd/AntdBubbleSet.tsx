@@ -36,7 +36,7 @@ class AntdBubbleSet extends Component<AntdBubbleSetProps> {
 
 
     render() {
-        const {updateChartProps, activated, chartProps} = this.props;
+        const {updateChartProps, chartProps} = this.props;
         let paletteCount = getAntdDataSortCount(chartProps.data, 'continent');
         return (
             <div className={'elem-chart-config'}>

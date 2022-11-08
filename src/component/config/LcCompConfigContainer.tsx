@@ -1,10 +1,9 @@
 import React, {Component, Suspense} from 'react';
-import {Collapse, Spin} from 'antd';
+import {Collapse} from 'antd';
 import './LcCompConfigContainer.less';
 import LcCompBaseStyleSet from "./base/LcCompBaseStyleSet";
 import {RollbackOutlined} from "@ant-design/icons";
 import LcEmBaseInfo from "./info/LcEmBaseInfo";
-import {LCDesignerProps} from "../../types/LcDesignerType";
 import getChartsConfig from "./chart/antd/ComponentSetInit";
 import Loading from "../loading/Loading";
 

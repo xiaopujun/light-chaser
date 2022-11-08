@@ -51,6 +51,50 @@ interface ChartConfigsProps {
     };
 }
 
+interface GlobalSetProps {
+    /**
+     * 数据存储方式 local(本地）server（远程服务）
+     */
+    saveType: string,
+    /**
+     * 屏幕比例
+     */
+    screenRatio: string,
+    /**
+     * 大屏名称
+     */
+    screenName: string,
+    /**
+     * 大屏宽度
+     */
+    screenWidth: number,
+    /**
+     * 大屏高度
+     */
+    screenHeight: number,
+    /**
+     * 元素间隔距离
+     */
+    elemInterval: number,
+    /**
+     * 大屏列划分个数
+     */
+    columns: number,
+    /**
+     * 基准高度
+     */
+    baseLineHeight: number,
+    /**
+     * 元素个数
+     */
+    elemCount: number,
+}
+
+interface RightDialogProps {
+    visible: boolean;
+    title?: string;
+}
+
 
 /**
  * 布局设计器，store类型定义
@@ -63,44 +107,7 @@ export interface LCDesignerProps {
     /**
      * 全局配置
      */
-    globalSet: {
-        /**
-         * 数据存储方式 local(本地）server（远程服务）
-         */
-        saveType: string,
-        /**
-         * 屏幕比例
-         */
-        screenRatio: string,
-        /**
-         * 大屏名称
-         */
-        screenName: string,
-        /**
-         * 大屏宽度
-         */
-        screenWidth: number,
-        /**
-         * 大屏高度
-         */
-        screenHeight: number,
-        /**
-         * 元素间隔距离
-         */
-        elemInterval: number,
-        /**
-         * 大屏列划分个数
-         */
-        columns: number,
-        /**
-         * 基准高度
-         */
-        baseLineHeight: number,
-        /**
-         * 元素个数
-         */
-        elemCount: number,
-    },
+    globalSet: GlobalSetProps,
     /**
      * 激活状态属性
      */
@@ -118,7 +125,5 @@ export interface LCDesignerProps {
     /**
      * 右滑框配置
      */
-    rightDialog: {
-        visible: boolean;
-    }
+    rightDialog: RightDialogProps;
 }

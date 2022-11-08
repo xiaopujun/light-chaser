@@ -12,7 +12,6 @@ import {
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {localSave, localUpdate} from "../../local/LocalStorageUtil";
 import {LCDesignerProps} from "../../types/LcDesignerType";
-import {updateDesignerStore} from "../../redux/actions/LCDesignerAction";
 
 interface LcDesignerHeaderProps extends RouteComponentProps {
     LCDesignerStore: LCDesignerProps;

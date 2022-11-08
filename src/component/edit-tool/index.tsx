@@ -2,7 +2,6 @@ import {DeleteOutlined, SettingOutlined} from '@ant-design/icons';
 import React, {Component} from 'react';
 import './index.less';
 import {LCDesignerProps} from "../../types/LcDesignerType";
-import {delItem} from "../../redux/actions/LCDesignerAction";
 
 interface EditToolsProps {
     elemId?: string;  //组件id

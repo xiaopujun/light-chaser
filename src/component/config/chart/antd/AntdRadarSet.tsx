@@ -77,7 +77,7 @@ export default class AntdRadarSet extends Component<AntdRadarSetProps> {
 
     render() {
         const {lineWidth, pointSize} = this.state;
-        const {updateChartProps, activated, chartProps} = this.props;
+        const {updateChartProps, chartProps} = this.props;
         let paletteCount = getAntdDataSortCount(chartProps.data, 'type');
         return (
             <div className={'elem-chart-config'}>

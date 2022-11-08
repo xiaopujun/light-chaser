@@ -29,7 +29,7 @@ class LcShow extends Component<LcShowProps | any> {
 
     generateElement = () => {
         const {LCDesignerStore} = this.state;
-        const {layoutConfigs = [], chartConfigs} = LCDesignerStore!;
+        const {layoutConfigs = []} = LCDesignerStore!;
         return layoutConfigs.map((item: any) => {
             let ElementChart = getChartsTemplate(item.name);
             return (

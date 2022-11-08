@@ -27,7 +27,8 @@ const initState: LCDesignerProps = {
     chartConfigs: {},//布局设计器中的图表组件列表，每次设置图表样式或数据时更新此状态中的数据来更新渲染
     layoutConfigs: [],//布局配置数据，用于控制图表在页面中的整体布局位置
     rightDialog: {
-        visible: false
+        visible: false,
+        title: ""
     }
 }
 

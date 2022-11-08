@@ -46,7 +46,7 @@ export default class AntdScatterSet extends Component<AntdScatterSetProps> {
     }
 
     render() {
-        const {updateChartProps, activated, chartProps} = this.props;
+        const {updateChartProps, chartProps} = this.props;
         return (
             <div className={'elem-chart-config'}>
 
