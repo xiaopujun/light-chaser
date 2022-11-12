@@ -12,7 +12,8 @@ import {
     updateBaseStyle,
     updateChartProps,
     updateLayout,
-    updateDesignerStore
+    updateDesignerStore,
+    updateBaseInfo
 } from "../../redux/actions/LCDesignerAction";
 import DesignerHeader from "./LcDesignerHeader";
 import {RouteComponentProps, withRouter} from "react-router-dom";
@@ -133,6 +134,7 @@ export default connect(
         updateBaseStyle,
         updateChartProps,
         updateLayout,
-        updateDesignerStore
+        updateDesignerStore,
+        updateBaseInfo,
     }
 )(withRouter(LCDesigner))

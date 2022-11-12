@@ -51,7 +51,7 @@ export default class AntdScatterSet extends Component<AntdScatterSetProps> {
             <div className={'elem-chart-config'}>
 
                 {/*图形填充色设置*/}
-                <FillColor onChange={this.fillColorChanged} paletteCount={1}/>
+                <FillColor onChange={this.fillColorChanged} />
                 {/*点样式设置*/}
                 <div className={'config-group'}>
                     <div className={'lc-config-item'}>

@@ -9,7 +9,7 @@ export const initAntdPie = () => {
         },
         baseStyle: {
             padding: '5px',
-            bgColor: 'rgba(23,157,169,0.12)'
+            backgroundColor: 'rgba(23,157,169,0.12)'
         },
         chartProps: {
             data: [
@@ -24,18 +24,6 @@ export const initAntdPie = () => {
                 {
                     name: '分类三',
                     value: 18,
-                },
-                {
-                    name: '分类四',
-                    value: 15,
-                },
-                {
-                    name: '分类五',
-                    value: 10,
-                },
-                {
-                    name: '其他',
-                    value: 5,
                 },
             ],
             appendPadding: 10,
@@ -68,7 +56,7 @@ export const initAntdRing = () => {
         },
         baseStyle: {
             padding: '5px',
-            bgColor: 'rgba(23,157,169,0.12)'
+            backgroundColor: 'rgba(23,157,169,0.12)'
         },
         chartProps: {
             data: [
@@ -83,18 +71,6 @@ export const initAntdRing = () => {
                 {
                     name: '分类三',
                     value: 18,
-                },
-                {
-                    name: '分类四',
-                    value: 15,
-                },
-                {
-                    name: '分类五',
-                    value: 5,
-                },
-                {
-                    name: '其他',
-                    value: 5,
                 },
             ],
             appendPadding: 10,

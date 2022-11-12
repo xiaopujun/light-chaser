@@ -3,14 +3,15 @@ import {Select} from "antd";
 import './style/index.less';
 import ColorPicker from "../../../../color_picker/BaseColorPicker";
 import GroupColorPicker from "../../../../color_picker/GroupColorPicker";
+import {stringify} from "querystring";
 
 const {Option} = Select;
 
 interface FillColorProp {
     fillMode?: string; //0:单色、1：多色、
-    paletteCount?: number; //调色板数量
+    colorCount?: number;
+    colors?: string[];
     onChange?: (data: string | string[]) => void;//回调函数
-    chartProps?: any;
 }
 
 /**
@@ -18,17 +19,17 @@ interface FillColorProp {
  */
 class FillColor extends Component<FillColorProp> {
 
-    state = {
+    state: any = {
         fillMode: '0',
-        targetValue: '',
-        otherValue: ''
+        colors: [],
     }
 
     constructor(props: FillColorProp) {
         super(props);
-        const {fillMode = '0'} = this.props;
-        this.state = {fillMode, targetValue: '', otherValue: 'rgb(0,255,234)'}
+        const {fillMode = '0', colors} = this.props;
+        this.state = {fillMode, colors: colors || ['rgb(0,255,234)']};
     }
+
 
     colorChanged = (data: string | string[]) => {
         const {onChange} = this.props;
@@ -36,24 +37,31 @@ class FillColor extends Component<FillColorProp> {
     }
 
     generateFillColorComp = () => {
-        const {fillMode} = this.state;
-        const {paletteCount} = this.props;
+        const {fillMode, colors = ['rgb(0,255,234)']} = this.state;
         if (fillMode === '1') {
-            return <GroupColorPicker paletteCount={paletteCount!} onChange={this.colorChanged}/>;
+            return <GroupColorPicker colors={colors} onChange={this.colorChanged}/>;
         } else {
             return <ColorPicker name={'mainTitleColor'}
+                                color={colors[0]}
                                 onChange={this.colorChanged}
                                 className={'lc-config-item-value'}/>;
         }
     }
 
     modeChanged = (value: string) => {
-        this.setState({fillMode: value})
+        if (value === '1') {
+            //多色模式
+            const {colorCount = 1} = this.props;
+            let colorArr = [];
+            for (let i = 0; i < colorCount; i++)
+                colorArr.push('#00d8f9')
+            this.setState({fillMode: value, colors: colorArr})
+        } else {
+            //单色模式
+            this.setState({fillMode: value, colors: ['#00d8f9']})
+        }
     }
 
-    targetValueChanged = (event: any) => {
-        this.setState({targetValue: event.target.value})
-    }
 
     render() {
         const {fillMode = "0"} = this.state;
@@ -61,7 +69,7 @@ class FillColor extends Component<FillColorProp> {
             <div className={'config-group chart-fill-color'}>
                 <div className={'lc-config-item'}>
                     <label className={'lc-config-item-label'}>填充模式：</label>
-                    <Select className={'lc-config-item-value lc-select'} defaultValue={fillMode}
+                    <Select className={'lc-config-item-value lc-select'} value={fillMode}
                             onChange={this.modeChanged}>
                         <Option value={'0'}>单色模式</Option>
                         <Option value={'1'}>多色模式</Option>

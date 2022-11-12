@@ -172,7 +172,7 @@ class AntdLiquidSet extends Component<AntdLiquidSetProps> {
         return (
             <div className={'elem-chart-config'}>
                 {/*图形填充色设置*/}
-                <FillColor onChange={this.fillColorChanged} paletteCount={1}/>
+                <FillColor onChange={this.fillColorChanged} />
                 <div className={'config-group chart-fill-color'}>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>图形选择：</label>

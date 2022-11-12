@@ -4,7 +4,7 @@ import FillColor from "./atomic_components/FillColor";
 import Legend from "./atomic_components/Legned";
 import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";
 import BarWidth from "./atomic_components/BarWidth";
-import {getAntdDataSortCount} from "../../../../utils/AntdBarUtil";
+import {dataSort} from "../../../../utils/SortUtil";
 
 interface AntdBarSetProps {
     updateChartProps?: (data: any) => void;
@@ -13,6 +13,10 @@ interface AntdBarSetProps {
 }
 
 class AntdBarSet extends Component<AntdBarSetProps> {
+
+    state: any = {
+        colors: []
+    }
 
     fillColorChanged = (color: string | string[]) => {
         const {updateChartProps} = this.props;
@@ -26,26 +30,25 @@ class AntdBarSet extends Component<AntdBarSetProps> {
         })
     }
 
+    calculateFillColor = () => {
+        const {chartProps: {color}} = this.props;
+        if (typeof color == 'string')
+            return [color];
+        else
+            return color;
+    }
+
     render() {
-        const {updateChartProps, chartProps, activated} = this.props;
-        let paletteCount = 1;
-        switch (activated?.type) {
-            case 'AntdBaseBar':
-            case 'AntdZoneBar':
-                //单条的计算条数个数
-                paletteCount = chartProps.data.length;
-                break;
-            case 'AntdGroupBar':
-            case 'AntdPercentBar':
-            case 'AntdStackBar':
-                //分组的计算分组个数
-                paletteCount = getAntdDataSortCount(chartProps.data, 'type');
-                break;
-        }
+        const colors = this.calculateFillColor();
+        const {updateChartProps, chartProps} = this.props;
+        const sorts = dataSort('type', chartProps.data);
         return (
             <div className={'elem-chart-config'}>
                 {/*图形填充色设置*/}
-                <FillColor chartProps={chartProps} onChange={this.fillColorChanged} paletteCount={paletteCount}/>
+                <FillColor onChange={this.fillColorChanged}
+                           fillMode={colors.length > 1 ? '1' : '0'}
+                           colors={colors}
+                           colorCount={sorts}/>
                 {/*图例配置*/}
                 <Legend chartProps={chartProps} updateChartProps={updateChartProps}/>
                 {/*直角坐标系配置*/}

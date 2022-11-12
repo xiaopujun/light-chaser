@@ -21,24 +21,24 @@ class AntdColumnSet extends Component<AntdColumnSetProps> {
 
     render() {
         const {updateChartProps, chartProps, activated} = this.props;
-        let paletteCount = 1;
+        let colorCount = 1;
         switch (activated?.type) {
             case 'AntdBaseColumn':
             case 'AntdZoneColumn':
                 //单条的计算条数个数
-                paletteCount = chartProps.data.length;
+                colorCount = chartProps.data.length;
                 break;
             case 'AntdGroupColumn':
             case 'AntdPercentColumn':
             case 'AntdStackColumn':
                 //分组的计算分组个数
-                paletteCount = getAntdDataSortCount(chartProps.data, 'type');
+                colorCount = getAntdDataSortCount(chartProps.data, 'type');
                 break;
         }
         return (
             <div className={'elem-chart-config'}>
                 {/*图形填充色设置*/}
-                <FillColor paletteCount={paletteCount} onChange={this.fillColorChanged}/>
+                <FillColor colorCount={colorCount} onChange={this.fillColorChanged}/>
                 {/*图例配置*/}
                 <Legend updateChartProps={updateChartProps}/>
                 {/*直角坐标系配置*/}

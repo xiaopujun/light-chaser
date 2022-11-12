@@ -78,12 +78,12 @@ export default class AntdRadarSet extends Component<AntdRadarSetProps> {
     render() {
         const {lineWidth, pointSize} = this.state;
         const {updateChartProps, chartProps} = this.props;
-        let paletteCount = getAntdDataSortCount(chartProps.data, 'type');
+        let colorCount = getAntdDataSortCount(chartProps.data, 'type');
         return (
             <div className={'elem-chart-config'}>
 
                 {/*图形填充色设置*/}
-                <FillColor onChange={this.fillColorChanged} paletteCount={paletteCount}/>
+                <FillColor onChange={this.fillColorChanged} colorCount={colorCount}/>
                 {/*图例*/}
                 <Legend chartProps={chartProps} updateChartProps={updateChartProps}/>
                 {/*极坐标系相关设置*/}

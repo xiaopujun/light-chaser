@@ -14,6 +14,7 @@ interface LcCompConfigContainerProps {
     updateActive?: (data: any) => void;
     updateBaseStyle?: (data: any) => void;
     updateChartProps?: (data?: any) => void;
+    updateBaseInfo?: (data?: any) => void;
     activated?: any;
 }
 
@@ -30,9 +31,9 @@ export default class LcCompConfigContainer extends Component<LcCompConfigContain
 
     render() {
         const {
-            activated: {id: activatedId, type},
+            activated: {type},
             chartConfig: {baseInfo, chartProps, baseStyle},
-            updateBaseStyle, updateChartProps
+            updateBaseStyle, updateChartProps, updateBaseInfo
         } = this.props;
         let ChartsConfig = getChartsConfig(type);
         return (
@@ -42,7 +43,7 @@ export default class LcCompConfigContainer extends Component<LcCompConfigContain
                 </div>
                 <Collapse className={'lc-config-collapse lc-component-config'} bordered={false}>
                     <Panel className={'lc-config-collapse-title'} header="基础信息" key="0">
-                        <LcEmBaseInfo baseInfo={baseInfo}/>
+                        <LcEmBaseInfo updateBaseInfo={updateBaseInfo} baseInfo={baseInfo}/>
                     </Panel>
                     <Panel className={'lc-config-collapse-title'} header="基础样式" key="1">
                         <LcCompBaseStyleSet baseStyle={baseStyle} updateBaseStyle={updateBaseStyle}/>

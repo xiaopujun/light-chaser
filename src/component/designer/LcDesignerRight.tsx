@@ -10,6 +10,7 @@ interface LcDesignerRightProps {
     updateActive?: (data?: any) => void;
     updateBaseStyle?: (data?: any) => void;
     updateChartProps?: (data?: any) => void;
+    updateBaseInfo?: (data?: any) => void;
 }
 
 /**
@@ -24,7 +25,7 @@ export default class LcDesignerRight extends Component<LcDesignerRightProps, any
     }
 
     render() {
-        const {LCDesignerStore, updateActive, updateBaseStyle, updateChartProps} = this.props;
+        const {LCDesignerStore, updateActive, updateBaseStyle, updateChartProps, updateBaseInfo} = this.props;
         const {activated, chartConfigs, globalSet} = LCDesignerStore!;
         const chartConfig = chartConfigs[activated.id];
         return (
@@ -35,7 +36,8 @@ export default class LcDesignerRight extends Component<LcDesignerRightProps, any
                         updateBaseStyle,
                         chartConfig,
                         activated,
-                        updateChartProps
+                        updateChartProps,
+                        updateBaseInfo
                     }} /> :
                     <LcGlobalSet globalSet={globalSet}/>
                 }

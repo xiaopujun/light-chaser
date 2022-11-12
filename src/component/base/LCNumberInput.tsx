@@ -9,6 +9,7 @@ interface LCNumberInputProps {
     min?: number;
     width?: number;
     value?: number;
+    readonly?: boolean;
 }
 
 export default class LCNumberInput extends Component<LCNumberInputProps> {
@@ -19,14 +20,18 @@ export default class LCNumberInput extends Component<LCNumberInputProps> {
     }
 
     render() {
-        const {id, step, max, min, width, value} = this.props;
+        const {id, step, max, min, width, value, readonly = false} = this.props;
         return (
             <div className={'lc-number-input'} style={{width}}>
-                <input id={id} style={{width}} defaultValue={value} onChange={this.onChange} type={'number'} {...{
-                    step,
-                    max,
-                    min
-                }}/>
+                <input id={id}
+                       style={{width}}
+                       value={value}
+                       onChange={this.onChange}
+                       readOnly={readonly}
+                       type={'number'} {...{
+                    step, max, min
+                }}
+                />
             </div>
         );
     }

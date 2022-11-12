@@ -43,7 +43,7 @@ class AntdWordCloudSet extends Component<AntdWordCloudSetProps> {
             <div className={'elem-chart-config'}>
 
                 {/*图形填充色设置*/}
-                <FillColor onChange={this.fillColorChanged} paletteCount={1}/>
+                <FillColor onChange={this.fillColorChanged} />
 
             </div>
         );

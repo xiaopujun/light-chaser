@@ -26,7 +26,7 @@ class AntdFoldLineSet extends Component<AntdFoldLineSetProps> {
         return (
             <div className={'elem-chart-config'}>
                 {/*图形填充色设置*/}
-                <FillColor paletteCount={1} onChange={this.fillColorChanged}/>
+                <FillColor  onChange={this.fillColorChanged}/>
                 {/*图例配置*/}
                 <Legend chartProps={chartProps} updateChartProps={updateChartProps}/>
                 {/*直角坐标系配置*/}

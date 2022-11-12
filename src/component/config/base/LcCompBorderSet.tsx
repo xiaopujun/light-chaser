@@ -9,9 +9,9 @@ const {Option} = Select;
 interface LcCompBorderSetProps {
     updateBaseStyle?: (data: any) => void;
     borderStyle?: string;
-    borderWidth?: number;
+    borderWidth?: string;
     borderColor?: string;
-    borderRadius?: number;
+    borderRadius?: string;
 }
 
 export default class LcCompBorderSet extends Component<LcCompBorderSetProps> {
@@ -37,13 +37,20 @@ export default class LcCompBorderSet extends Component<LcCompBorderSetProps> {
     }
 
     render() {
-        const {borderColor = 'rgb(0,249,188)', borderRadius = 0, borderStyle = 'solid', borderWidth = 0} = this.props;
+        let {
+            borderColor = 'rgb(0,249,188)',
+            borderRadius = '0px',
+            borderStyle = 'no',
+            borderWidth = '0px'
+        } = this.props;
+
         return (
             <>
                 <div className={'lc-config-item'}>
                     <label className={'lc-config-item-label'}>边框类型：</label>
-                    <Select defaultValue={borderStyle} className={'lc-config-item-value lc-select'}
+                    <Select value={borderStyle} className={'lc-config-item-value lc-select'}
                             onChange={this.borderStyleChanged}>
+                        <Option value="no">请选择</Option>
                         <Option value="dotted">点</Option>
                         <Option value="dashed">虚线</Option>
                         <Option value="solid">实线</Option>
@@ -59,7 +66,8 @@ export default class LcCompBorderSet extends Component<LcCompBorderSetProps> {
                     <label className={'lc-config-item-label'}>边框宽度：</label>
                     <div className={'lc-config-item-value'}>
                         <div className={'lc-input-container'}>
-                            <LCNumberInput id={'baseBorderWidth'} value={borderWidth}
+                            <LCNumberInput id={'baseBorderWidth'}
+                                           value={parseInt(borderWidth?.replace('px', ''))}
                                            onChange={this.borderWidthChanged}/>
                             <span>&nbsp;px</span>
                         </div>
@@ -69,7 +77,7 @@ export default class LcCompBorderSet extends Component<LcCompBorderSetProps> {
                     <label className={'lc-config-item-label'}>边框圆角：</label>
                     <div className={'lc-config-item-value lc-input-container'}>
                         <div className={'lc-input-container'}>
-                            <LCNumberInput id={'baseBorderRadius'} value={borderRadius}
+                            <LCNumberInput id={'baseBorderRadius'} value={parseInt(borderRadius?.replace('px', ''))}
                                            onChange={this.borderRadiusChanged}/>
                             <span>&nbsp;px</span>
                         </div>

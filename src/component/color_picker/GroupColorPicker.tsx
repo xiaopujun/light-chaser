@@ -1,15 +1,12 @@
 import React, {Component} from 'react';
 import './style/GroupColorPicker.less';
 import ColorPicker from "./BaseColorPicker";
+import {ifError} from "assert";
 
 
 interface GroupColorPickerProp {
     onChange?: (data: string[]) => void;
-    paletteCount: number;
-    /**
-     * 初始化颜色
-     */
-    initColor?: string;
+    colors?: string[];
 }
 
 /**
@@ -18,37 +15,35 @@ interface GroupColorPickerProp {
 class GroupColorPicker extends Component<GroupColorPickerProp> {
 
     state: any = {
-        colorArr: []
+        colors: []
     }
 
     constructor(props: any) {
         super(props);
-        const {paletteCount, initColor = '#00ffdb'} = props;
-        let initColorArr: string[] = [];
-        for (let i = 0; i < paletteCount; i++)
-            initColorArr[i] = initColor;
-        this.state = {colorArr: initColorArr};
+        const {colors = []} = props;
+        if (colors.length == 0) {
+            this.state = {colors: ['#00e9ff']};
+            return;
+        }
+        this.state = {colors};
     }
 
 
     onChange = (color: any, e: any, id: any) => {
-        let {colorArr} = this.state;
+        let {colors} = this.state;
         const {onChange} = this.props;
-        colorArr[id] = color;
-        onChange && onChange(colorArr);
-        this.setState({colorArr})
+        colors[id] = color;
+        onChange && onChange(colors);
+        this.setState({colors})
     }
 
     render() {
-        const {paletteCount = 1} = this.props;
-        let tempArr = [];
-        for (let i = 0; i < paletteCount; i++) {
-            tempArr.push(i);
-        }
+        const {colors = []} = this.state;
+        console.log(colors)
         return (
             <div className={'group-color-picker'} style={{display: "flex", flexDirection: "row"}}>
-                {tempArr.map((item, i) => {
-                    return <ColorPicker key={item} id={i} onChange={this.onChange}/>
+                {colors.map((item: string, i: number) => {
+                    return <ColorPicker key={i + ''} id={i} color={item} onChange={this.onChange}/>
                 })}
             </div>
         )

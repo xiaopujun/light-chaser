@@ -57,6 +57,8 @@ export default function LCDesignerReducer(preState: LCDesignerProps = initState,
             return updateBaseStyle(preState, data);
         case DesignerOperate.UPDATE_CHART_PROPS:
             return updateChartProps(preState, data);
+        case DesignerOperate.UPDATE_BASE_INFO:
+            return updateBaseInfo(preState, data);
         default:                                            //无更新，返回之前的状态
             return preState;
     }
@@ -67,6 +69,16 @@ export default function LCDesignerReducer(preState: LCDesignerProps = initState,
  */
 function clearDesignerStore(preState: LCDesignerProps, data: any) {
     return initState;
+}
+
+/**
+ * 清除store
+ */
+function updateBaseInfo(preState: LCDesignerProps, data: any) {
+    const {chartConfigs, activated} = preState;
+    let chartConfig = chartConfigs[activated.id];
+    chartConfig.baseInfo = {...chartConfig.baseInfo, ...data};
+    return {...preState, ...{chartConfigs}};
 }
 
 

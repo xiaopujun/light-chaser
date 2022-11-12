@@ -9,7 +9,7 @@ export const initAntdLiquid = () => {
         },
         baseStyle: {
             padding: '5px',
-            bgColor: 'rgba(23,157,169,0.12)'
+            backgroundColor: 'rgba(23,157,169,0.12)'
         },
         chartProps: {
             percent: 0.67,

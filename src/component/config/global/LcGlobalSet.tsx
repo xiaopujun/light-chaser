@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import LCNumberInput from "../../base/LCNumberInput";
+import './LcGlobalSet.less';
 
 interface LcGlobalSetProps {
     globalSet?: any;
+    updateBaseInfo?: (data?: any) => void;
 }
 
 class LcGlobalSet extends Component<LcGlobalSetProps> {

@@ -24,5 +24,7 @@ export const updateRightVisible = (data: any) => ({type: DesignerOperate.UPDATE_
 export const updateBaseStyle = (data: any) => ({type: DesignerOperate.UPDATE_BASE_STYLE, data});
 //更新组件图表配置
 export const updateChartProps = (data: any) => ({type: DesignerOperate.UPDATE_CHART_PROPS, data});
+//更新组件基础信息
+export const updateBaseInfo = (data: any) => ({type: DesignerOperate.UPDATE_BASE_INFO, data});
 
 

@@ -20,7 +20,7 @@ class AntdAreaSet extends Component<AntdAreaSetProps> {
         return (
             <div className={'elem-chart-config'}>
                 {/*图形填充色设置*/}
-                <FillColor onChange={this.fillColorChanged} paletteCount={1}/>
+                <FillColor onChange={this.fillColorChanged} colorCount={1}/>
                 {/*直角坐标系配置*/}
                 <RightAngleCoordinates updateChartProps={updateChartProps}/>
             </div>

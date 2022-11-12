@@ -37,12 +37,12 @@ class AntdBubbleSet extends Component<AntdBubbleSetProps> {
 
     render() {
         const {updateChartProps, chartProps} = this.props;
-        let paletteCount = getAntdDataSortCount(chartProps.data, 'continent');
+        let colorCount = getAntdDataSortCount(chartProps.data, 'continent');
         return (
             <div className={'elem-chart-config'}>
 
                 {/*图形填充色设置*/}
-                <FillColor paletteCount={paletteCount} onChange={this.fillColorChanged}/>
+                <FillColor colorCount={colorCount} onChange={this.fillColorChanged}/>
                 {/*点样式设置*/}
                 <div className={'config-group'}>
                     <div className={'lc-config-item'}>

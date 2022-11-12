@@ -26,7 +26,7 @@ class AntdPieSet extends Component<AntdPieSetProps> {
             <div className={'elem-chart-config'}>
 
                 {/*图形填充色设置*/}
-                <FillColor onChange={this.fillColorChanged} paletteCount={colorPickerNumber}/>
+                <FillColor onChange={this.fillColorChanged} colorCount={colorPickerNumber}/>
                 {/*图例配置*/}
                 <Legend chartProps={chartProps} updateChartProps={updateChartProps}/>
                 {/*极坐标系*/}

@@ -29,8 +29,9 @@ export default class LcCompBaseStyleSet extends Component<LcCompBaseStyleSetProp
         const {baseStyle} = this.props;
         return (
             <div className={'lc-base-config'}>
-                <PaddingSet onChange={this.paddingChanged} count={4}/>
-                <LcCompBackgroundSet backgroundColorChanged={this.backgroundColorChanged} {...baseStyle}/>
+                <PaddingSet data={baseStyle?.padding} onChange={this.paddingChanged} count={4}/>
+                <LcCompBackgroundSet backgroundColorChanged={this.backgroundColorChanged}
+                                     backgroundColor={baseStyle?.backgroundColor}/>
                 <LcCompBorderSet updateBaseStyle={this.props.updateBaseStyle} {...baseStyle}/>
             </div>
         );
