@@ -7,7 +7,7 @@ interface EditToolsProps {
     elemId?: string;  //组件id
     delItem?: (elemId: string) => void; //删除组件回调
     updateActive?: (data: { elemId: number, type: string }) => void; //打开右侧配置项回调
-    LCDesignerStore?: LCDesignerProps;
+    chartConfig?: any;
 }
 
 /**
@@ -24,16 +24,8 @@ class EditTools extends Component<EditToolsProps> {
     }
 
     updateActive = () => {
-        const {elemId = '-1', updateActive, LCDesignerStore} = this.props;
-        let layoutConfigs = LCDesignerStore?.layoutConfigs!;
-        let type = "";
-        for (let i = 0; i < layoutConfigs.length; i++) {
-            if (layoutConfigs[i].id === elemId) {
-                type = layoutConfigs[i].name;
-                break;
-            }
-        }
-        updateActive && updateActive({elemId: parseInt(elemId), type});
+        const {elemId = '-1', updateActive, chartConfig} = this.props;
+        updateActive && updateActive({elemId: parseInt(elemId), type: chartConfig.baseInfo.type});
     }
 
     render() {

@@ -18,6 +18,10 @@ let axis = {
 //基础条形图初始化数据和配置
 export const initAntdBaseBar = () => {
     return cloneDeep({
+        baseInfo: {
+            name: '基础条形图',
+            type: 'AntdBaseBar'
+        },
         baseStyle,
         chartProps: {
             data: [
@@ -57,6 +61,10 @@ export const initAntdBaseBar = () => {
 //分组条形图初始化数据和配置
 export const initAntdGroupBar = () => {
     return cloneDeep({
+        baseInfo: {
+            name: '分组条形图',
+            type: 'AntdGroupBar'
+        },
         baseStyle,
         chartProps: {
             data: [
@@ -128,6 +136,10 @@ export const initAntdGroupBar = () => {
 //百分比条形图初始化数据和配置
 export const initAntdPercentBar = () => {
     return cloneDeep({
+        baseInfo: {
+            name: '百分比条形图',
+            type: 'AntdPercentBar'
+        },
         baseStyle,
         chartProps: {
             data: [
@@ -252,6 +264,10 @@ export const initAntdPercentBar = () => {
 //区间条形图初始化数据和配置
 export const initAntdZoneBar = () => {
     return cloneDeep({
+        baseInfo: {
+            name: '区间条形图',
+            type: 'AntdZoneBar'
+        },
         baseStyle,
         chartProps: {
             data: [
@@ -303,6 +319,10 @@ export const initAntdZoneBar = () => {
 //堆叠条形图初始化数据和配置
 export const initAntdStackBar = () => {
     return cloneDeep({
+        baseInfo: {
+            name: '堆叠条形图',
+            type: 'AntdStackBar'
+        },
         baseStyle,
         chartProps: {
             data: [

@@ -9,6 +9,7 @@ interface LcDesignerRightProps {
     updateRightVisible?: (data?: any) => void;
     updateActive?: (data?: any) => void;
     updateBaseStyle?: (data?: any) => void;
+    updateChartProps?: (data?: any) => void;
 }
 
 /**
@@ -23,13 +24,19 @@ export default class LcDesignerRight extends Component<LcDesignerRightProps, any
     }
 
     render() {
-        const {LCDesignerStore, updateActive, updateBaseStyle} = this.props;
+        const {LCDesignerStore, updateActive, updateBaseStyle, updateChartProps} = this.props;
         const {activated, chartConfigs, globalSet} = LCDesignerStore!;
         const chartConfig = chartConfigs[activated.id];
         return (
             <div className={'lc-config-panel'} style={{height: window.innerHeight - 64}}>
                 {activated.id >= 0 ?
-                    <LcCompConfigContainer {...{updateActive, updateBaseStyle, chartConfig, activated}} /> :
+                    <LcCompConfigContainer {...{
+                        updateActive,
+                        updateBaseStyle,
+                        chartConfig,
+                        activated,
+                        updateChartProps
+                    }} /> :
                     <LcGlobalSet globalSet={globalSet}/>
                 }
             </div>

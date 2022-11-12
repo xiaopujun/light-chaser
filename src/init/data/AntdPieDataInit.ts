@@ -3,8 +3,12 @@ import {cloneDeep} from 'lodash';
 //基础柱状图初始化数据和配置
 export const initAntdPie = () => {
     return cloneDeep({
+        baseInfo: {
+            name: '基础柱状图',
+            type: 'AntdPie'
+        },
         baseStyle: {
-            padding:'5px',
+            padding: '5px',
             bgColor: 'rgba(23,157,169,0.12)'
         },
         chartProps: {
@@ -58,8 +62,12 @@ export const initAntdPie = () => {
 //基础柱状图初始化数据和配置
 export const initAntdRing = () => {
     return cloneDeep({
+        baseInfo: {
+            name: '基础柱状图',
+            type: 'AntdRing'
+        },
         baseStyle: {
-            padding:'5px',
+            padding: '5px',
             bgColor: 'rgba(23,157,169,0.12)'
         },
         chartProps: {

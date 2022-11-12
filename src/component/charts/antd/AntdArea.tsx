@@ -7,6 +7,7 @@ interface AntdAreaProps {
     elemId?: string;
     chartConfig?: any;
     chartName?: string;
+    updateActive?: (data: { elemId: number, type: string }) => void; //打开右侧配置项回调
 }
 
 

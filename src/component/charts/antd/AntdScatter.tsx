@@ -7,6 +7,7 @@ interface AntdScatterProps {
     chartName?: string;
     chartConfig?: any;
     elemId?: string;
+    updateActive?: (data: { elemId: number, type: string }) => void; //打开右侧配置项回调
 }
 
 /**

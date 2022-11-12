@@ -1,8 +1,8 @@
-import {Action, LCDesignerProps} from "../../types/LcDesignerType";
-import {getChartInitData} from "../../utils/ChartUtil";
+import {Action, ChartConfigProps, LCDesignerProps} from "../../types/LcDesignerType";
 import * as _ from 'lodash'
 import deepmerge from "deepmerge";
 import {DesignerOperate} from "../../enum/DesignerOperate";
+import {getChartInitData} from "../../init/data/ChartDataInit";
 
 /**
  * 初始化的布局设计器状态
@@ -89,13 +89,15 @@ function updateDesignerStore(preState: LCDesignerProps, data: any) {
  */
 function addItem(preState: LCDesignerProps, data: any) {
     let {globalSet, layoutConfigs, chartConfigs} = preState;
-    const {name: type} = data;
-    //根据类型获取对应图表的初始化数据
-    let chartInitData = getChartInitData(type);
+    //更新布局
     layoutConfigs.push(data);
-    chartConfigs[globalSet.elemCount + ""] = chartInitData;
-    globalSet.elemCount++; //组件数增加
-    //重组状态
+    //更新组件配置信息
+    let initData = getChartInitData(data.name);
+    initData.baseInfo = {...initData.baseInfo, ...{id: globalSet.elemCount}}
+    chartConfigs[globalSet.elemCount + ""] = initData;
+    //id增加
+    globalSet.elemCount++;
+    //生成新store
     return {...preState, ...{globalSet, layoutConfigs, chartConfigs}};
 }
 

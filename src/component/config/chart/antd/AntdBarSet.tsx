@@ -26,7 +26,6 @@ class AntdBarSet extends Component<AntdBarSetProps> {
         })
     }
 
-
     render() {
         const {updateChartProps, chartProps, activated} = this.props;
         let paletteCount = 1;

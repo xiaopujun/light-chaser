@@ -3,8 +3,12 @@ import {cloneDeep} from 'lodash';
 //散点图初始化数据和配置
 export const initAntdScatter = () => {
     return cloneDeep({
+        baseInfo: {
+            name: '散点图',
+            type: 'AntdScatter'
+        },
         baseStyle: {
-            padding:'5px',
+            padding: '5px',
             bgColor: 'rgba(23,157,169,0.12)'
         },
         chartProps: {
@@ -74,8 +78,12 @@ export const initAntdScatter = () => {
 //气泡图初始化数据和配置
 export const initAntdBubbles = () => {
     return cloneDeep({
+        baseInfo: {
+            name: '气泡图',
+            type: 'AntdBubbles'
+        },
         baseStyle: {
-            padding:'5px',
+            padding: '5px',
             bgColor: 'rgba(23,157,169,0.12)'
         },
         chartProps: {

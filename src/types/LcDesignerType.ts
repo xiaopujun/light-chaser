@@ -1,6 +1,8 @@
 /**
  * redux-action类型
  */
+import {kebabCase} from "lodash";
+
 export interface Action {
     type: string | number;  //操作
     data: any;     //数据
@@ -40,8 +42,8 @@ export interface BaseStyle {
 /**
  * 图标属性配置配置
  */
-interface ChartConfigsProps {
-    baseInfo?: BaseInfo;
+export interface ChartConfigProps {
+    baseInfo: BaseInfo;
     baseStyle?: BaseStyle;
     chartProps?: any;
     dataConfig?: {
@@ -49,6 +51,13 @@ interface ChartConfigsProps {
         flashFrequency: string | number;
         requestType: string;
     };
+}
+
+/**
+ * 图表属性列表配置配置
+ */
+interface ChartConfigsProps {
+    [key: string | number]: ChartConfigProps;
 }
 
 interface GlobalSetProps {
@@ -115,9 +124,7 @@ export interface LCDesignerProps {
     /**
      * 图表配置
      */
-    chartConfigs: {
-        [key: string | number]: ChartConfigsProps;
-    };
+    chartConfigs: ChartConfigsProps;
     /**
      * 布局配置
      */

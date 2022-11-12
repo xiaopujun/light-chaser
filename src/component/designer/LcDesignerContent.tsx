@@ -12,6 +12,7 @@ interface LcDesignerContentProps {
     delItem?: (id: string | number) => void;
     addItem?: (data: any) => void;
     updateLayout?: (data: any) => void;
+    updateActive?: (data: any) => void; //打开右侧配置项回调
 }
 
 export default class LcDesignerContent extends React.Component<LcDesignerContentProps | any> {
@@ -49,17 +50,18 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
      * 元素生成方法
      */
     generateElement = () => {
-        const {LCDesignerStore} = this.props;
+        const {LCDesignerStore, updateActive} = this.props;
         const {layoutConfigs} = LCDesignerStore!;
         return layoutConfigs.map((item: any) => {
-            let ElementChart = getChartsTemplate(item.name);
+            let Chart = getChartsTemplate(item.name);
             const chartConfig = this.calculateChartConfig(item.id);
             return (
                 <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
                     <Suspense fallback={<Loading width={'100%'} height={'100%'}/>}>
-                        <ElementChart elemId={item?.id}
-                                      chartConfig={chartConfig}
-                                      delItem={this.delItem}/>
+                        <Chart elemId={item?.id}
+                               chartConfig={chartConfig}
+                               updateActive={updateActive}
+                               delItem={this.delItem}/>
                     </Suspense>
                 </div>
             );

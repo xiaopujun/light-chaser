@@ -3,8 +3,12 @@ import {cloneDeep} from 'lodash';
 //基础线图
 export const initAntdBaseFoldLine = () => {
     return cloneDeep({
+        baseInfo: {
+            name: '基础线图',
+            type: 'AntdBaseFoldLine'
+        },
         baseStyle: {
-            padding:'5px',
+            padding: '5px',
             bgColor: 'rgba(23,157,169,0.12)'
         },
         chartProps: {
@@ -29,8 +33,12 @@ export const initAntdBaseFoldLine = () => {
 //阶梯线图
 export const initAntdStepFoldLine = () => {
     return cloneDeep({
+        baseInfo: {
+            name: '阶梯线图',
+            type: 'AntdStepFoldLine'
+        },
         baseStyle: {
-            padding:'5px',
+            padding: '5px',
             bgColor: 'rgba(23,157,169,0.12)'
         },
         chartProps: {
@@ -177,8 +185,12 @@ export const initAntdStepFoldLine = () => {
 //多重线图
 export const initAntdMuchFoldLine = () => {
     return cloneDeep({
+        baseInfo: {
+            name: '多重线图',
+            type: 'AntdMuchFoldLine'
+        },
         baseStyle: {
-            padding:'5px',
+            padding: '5px',
             bgColor: 'rgba(23,157,169,0.12)'
         },
         chartProps: {

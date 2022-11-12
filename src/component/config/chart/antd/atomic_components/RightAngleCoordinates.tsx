@@ -15,8 +15,8 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
 
     constructor(props: any) {
         super(props);
-        const {xGrid} = props?.chartConfig?.chartProps?.xAxis
-        const {yGrid} = props?.chartConfig?.chartProps?.yAxis
+        const {xGrid} = props?.chartProps?.xAxis
+        const {yGrid} = props?.chartProps?.yAxis
         if (xGrid)
             this.state = {showXAxisDetail: true}
         else

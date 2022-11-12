@@ -49,4 +49,10 @@ chartInitDataMap.set('AntdGauge', initAntdGauge);
 chartInitDataMap.set('AntdBaseArea', initAntdBaseArea);
 chartInitDataMap.set('AntdPercentArea', initAntdPercentArea);
 
-export default chartInitDataMap;
+export function getChartInitData(type: string) {
+    if (chartInitDataMap.has(type)) {
+        return chartInitDataMap.get(type)();
+    } else {
+        throw new Error('chartInitDataMap hos no relate init data');
+    }
+}

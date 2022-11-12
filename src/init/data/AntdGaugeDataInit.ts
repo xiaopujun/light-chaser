@@ -3,8 +3,12 @@ import {cloneDeep} from 'lodash';
 //堆叠面积图初始化数据和配置
 export const initAntdGauge = () => {
     return cloneDeep({
+        baseInfo: {
+            name: '堆叠面积图',
+            type: 'AntdGauge'
+        },
         baseStyle: {
-            padding:'5px',
+            padding: '5px',
             bgColor: 'rgba(23,157,169,0.12)'
         },
         chartProps: {

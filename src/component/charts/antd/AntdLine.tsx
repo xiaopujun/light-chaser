@@ -6,6 +6,7 @@ import EditTools from "../../edit-tool";
 interface AntdLineProps {
     chartName?: string;
     chartConfig?: any;
+    updateActive?: (data: { elemId: number, type: string }) => void; //打开右侧配置项回调
     elemId?: string;
 }
 

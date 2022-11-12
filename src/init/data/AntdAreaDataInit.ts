@@ -3,6 +3,10 @@ import {cloneDeep} from 'lodash';
 //基础面积图初始化数据和配置
 export const initAntdBaseArea = () => {
     return cloneDeep({
+        baseInfo: {
+            name: '基础面积图',
+            type: 'AntdBaseArea '
+        },
         baseStyle: {
             padding: '5px',
             bgColor: 'rgba(23,157,169,0.12)'
@@ -37,6 +41,10 @@ export const initAntdBaseArea = () => {
 //堆叠面积图初始化数据和配置
 export const initAntdStackArea = () => {
     return cloneDeep({
+        baseInfo: {
+            name: '堆叠面积图',
+            type: 'AntdStackArea '
+        },
         baseStyle: {
             padding: '5px',
             bgColor: 'rgba(23,157,169,0.12)'
@@ -73,6 +81,10 @@ export const initAntdStackArea = () => {
 //百分比面积图初始化数据和配置
 export const initAntdPercentArea = () => {
     return cloneDeep({
+        baseInfo: {
+            name: '百分比面积图',
+            type: 'AntdPercentArea '
+        },
         baseStyle: {
             padding: '5px',
             bgColor: 'rgba(23,157,169,0.12)'

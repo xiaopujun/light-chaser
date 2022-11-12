@@ -6,6 +6,7 @@ import './style/AntdBar.less';
 interface AntdBarProps {
     elemId?: string;
     chartConfig?: any;
+    updateActive?: (data: { elemId: number, type: string }) => void; //打开右侧配置项回调
 }
 
 /**

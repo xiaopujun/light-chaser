@@ -5,6 +5,7 @@ import EditTools from "../../edit-tool";
 
 interface AntdWordCloudProps {
     elemId?: string;
+    updateActive?: (data: { elemId: number, type: string }) => void; //打开右侧配置项回调
     chartConfig?: any;
     chartName?: string;
 }

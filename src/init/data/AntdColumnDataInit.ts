@@ -14,6 +14,10 @@ let axis = {
 //基础柱状图初始化数据和配置
 export const initAntdBaseColumn = () => {
     return cloneDeep({
+        baseInfo: {
+            name: '基础柱状图',
+            type: 'AntdBaseColumn '
+        },
         baseStyle: {
             padding: '5px',
             bgColor: 'rgba(23,157,169,0.12)'
@@ -68,6 +72,10 @@ export const initAntdBaseColumn = () => {
 //堆叠柱状图初始化数据和配置
 export const initAntdStackColumn = () => {
     return cloneDeep({
+        baseInfo: {
+            name: '堆叠柱状图',
+            type: 'AntdStackColumn '
+        },
         baseStyle: {
             padding: '5px',
             bgColor: 'rgba(23,157,169,0.12)'
@@ -179,6 +187,10 @@ export const initAntdStackColumn = () => {
 //分组柱状图初始化数据和配置
 export const initAntdGroupColumn = () => {
     return cloneDeep({
+        baseInfo: {
+            name: '分组柱状图',
+            type: 'AntdGroupColumn '
+        },
         baseStyle: {
             padding: '5px',
             bgColor: 'rgba(23,157,169,0.12)'
@@ -253,6 +265,10 @@ export const initAntdGroupColumn = () => {
 //百分比柱状图初始化数据和配置
 export const initAntdPercentColumn = () => {
     return cloneDeep({
+        baseInfo: {
+            name: '百分比柱状图',
+            type: 'AntdPercentColumn'
+        },
         baseStyle: {
             padding: '5px',
             bgColor: 'rgba(23,157,169,0.12)'
@@ -381,6 +397,10 @@ export const initAntdPercentColumn = () => {
 //区间柱状图初始化数据和配置
 export const initAntdZoneColumn = () => {
     return cloneDeep({
+        baseInfo: {
+            name: '区间柱状图',
+            type: 'AntdZoneColumn'
+        },
         baseStyle: {
             padding: '5px',
             bgColor: 'rgba(23,157,169,0.12)'
