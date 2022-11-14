@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
+import React, {Component, Suspense} from 'react';
 import ReactGridLayout from 'react-grid-layout';
 import getChartsTemplate from "../charts/ComponentChartInit";
 import {RouteComponentProps} from "react-router-dom";
+import Loading from "../loading/Loading";
 
 interface LcShowProps extends RouteComponentProps {
 
@@ -27,14 +28,22 @@ class LcShow extends Component<LcShowProps | any> {
         this.state = {LCDesignerStore: screen};
     }
 
+    calculateChartConfig = (elemId: string | number) => {
+        const {LCDesignerStore: {chartConfigs}} = this.state;
+        return chartConfigs[elemId];
+    }
+
     generateElement = () => {
         const {LCDesignerStore} = this.state;
         const {layoutConfigs = []} = LCDesignerStore!;
         return layoutConfigs.map((item: any) => {
-            let ElementChart = getChartsTemplate(item.name);
+            let Chart = getChartsTemplate(item.name);
+            const chartConfig = this.calculateChartConfig(item.id);
             return (
                 <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
-                    <ElementChart elemId={item?.id} LCDesignerStore={LCDesignerStore}/>
+                    <Suspense fallback={<Loading width={'100%'} height={'100%'}/>}>
+                        <Chart elemId={item?.id} chartConfig={chartConfig}/>
+                    </Suspense>
                 </div>
             );
         })
@@ -44,7 +53,6 @@ class LcShow extends Component<LcShowProps | any> {
         const {LCDesignerStore} = this.state;
         const {layoutConfigs = []} = LCDesignerStore;
         for (let i = 0; i < layoutConfigs.length; i++) {
-            layoutConfigs[i].static = true;
             layoutConfigs[i].isDraggable = false;
         }
         return (
@@ -55,11 +63,8 @@ class LcShow extends Component<LcShowProps | any> {
                                  rowHeight={10}
                                  margin={[15, 15]}
                                  useCSSTransforms={true}
-                                 preventCollision={false}
+                                 preventCollision={true}
                                  allowOverlap={true}
-                                 isResizable={false}
-                                 isBounded={true}
-                                 isDroppable={false}
                                  style={{height: 1080, width: 1920, backgroundColor: '#131e26',}}
                                  width={1920}>
                     {this.generateElement()}

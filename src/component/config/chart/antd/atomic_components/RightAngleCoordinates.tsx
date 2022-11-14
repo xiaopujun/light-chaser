@@ -7,6 +7,16 @@ import LCNumberInput from "../../../../base/LCNumberInput";
 interface RightAngleCoordinatesProp {
     updateChartProps?: (data: any) => void;
     chartProps?: any;
+    showX?: boolean;
+    xLineColor?: string;
+    xWidth?: number;
+    xOpacity?: number;
+    xTitleColor?: string;
+    showY?: boolean;
+    yLineColor?: string;
+    yWidth?: number;
+    yOpacity?: number;
+    yTitleColor?: string;
 }
 
 class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
@@ -15,16 +25,8 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
 
     constructor(props: any) {
         super(props);
-        const {xGrid} = props?.chartProps?.xAxis
-        const {yGrid} = props?.chartProps?.yAxis
-        if (xGrid)
-            this.state = {showXAxisDetail: true}
-        else
-            this.state = {showXAxisDetail: false}
-        if (yGrid)
-            this.state = {showYAxisDetail: true}
-        else
-            this.state = {showYAxisDetail: false}
+        const {showY = false, showX = false} = this.props;
+        this.state = {showX, showY}
     }
 
     showXGridLine = (data: boolean) => {
@@ -48,7 +50,7 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
                 grid: null
             }
         });
-        this.setState({showXAxisDetail: data})
+        this.setState({showX: data})
     }
 
     xGridLineColorChanged = (color: string) => {
@@ -117,7 +119,7 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
                 grid: null
             }
         });
-        this.setState({showYAxisDetail: data})
+        this.setState({showY: data})
     }
 
     yGridLineColorChanged = (color: string) => {
@@ -192,19 +194,19 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
     }
 
     render() {
-        const {showXAxisDetail, showYAxisDetail} = this.state;
         return (
             <div className={'config-group chart-fill-color'}>
                 <div className={'lc-config-item'}>
                     <label className={'lc-config-item-label'}>显示x轴网格线：</label>
-                    <div className={'lc-config-item-value'} style={{textAlign: 'right'}}><Switch
-                        onChange={this.showXGridLine}/></div>
+                    <div className={'lc-config-item-value'} style={{textAlign: 'right'}}>
+                        <Switch checked={this.props?.showX} onChange={this.showXGridLine}/></div>
                 </div>
-                {showXAxisDetail ?
+                {this.state.showX ?
                     <>
                         <div className={'lc-config-item'}>
                             <label className={'lc-config-item-label'}>x轴网格线颜色：</label>
                             <ColorPicker name={'mainTitleColor'}
+                                         color={this.props?.xLineColor}
                                          onChange={this.xGridLineColorChanged}
                                          className={'lc-config-item-value'}/>
                         </div>
@@ -212,7 +214,7 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
                             <label className={'lc-config-item-label'}>x轴网格线宽：</label>
                             <div className={'lc-config-item-value'}>
                                 <span className={'lc-input-container'}>
-                                    <LCNumberInput onChange={this.xGridLineWidthChanged}/>
+                                    <LCNumberInput value={this.props?.xWidth} onChange={this.xGridLineWidthChanged}/>
                                     <label>&nbsp;px</label>
                                 </span>
                             </div>
@@ -221,13 +223,15 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
                             <label className={'lc-config-item-label'}>x轴网格透明度：</label>
                             <div className={'lc-config-item-value'}>
                                 <span className={'lc-input-container'}>
-                                    <LCNumberInput onChange={this.xGridLineOpacityChanged} min={0} max={1} step={0.1}/>
+                                    <LCNumberInput value={this.props?.xOpacity} onChange={this.xGridLineOpacityChanged}
+                                                   min={0} max={1} step={0.1}/>
                                 </span>
                             </div>
                         </div>
                         <div className={'lc-config-item'}>
                             <label className={'lc-config-item-label'}>x轴标题颜色：</label>
                             <ColorPicker name={'mainTitleColor'}
+                                         color={this.props?.xTitleColor}
                                          onChange={this.xTitleColorChanged}
                                          className={'lc-config-item-value'}/>
                         </div>
@@ -236,15 +240,16 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
 
                 <div className={'lc-config-item'}>
                     <label className={'lc-config-item-label'}>显示y轴网格线：</label>
-                    <div className={'lc-config-item-value'} style={{textAlign: 'right'}}><Switch
-                        onChange={this.showYGridLine}/></div>
+                    <div className={'lc-config-item-value'} style={{textAlign: 'right'}}>
+                        <Switch checked={this.props?.showY} onChange={this.showYGridLine}/></div>
                 </div>
 
-                {showYAxisDetail ?
+                {this.state.showY ?
                     <>
                         <div className={'lc-config-item'}>
                             <label className={'lc-config-item-label'}>y轴网格线颜色：</label>
                             <ColorPicker name={'mainTitleColor'}
+                                         color={this.props?.yLineColor}
                                          onChange={this.yGridLineColorChanged}
                                          className={'lc-config-item-value'}/>
                         </div>
@@ -252,7 +257,7 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
                             <label className={'lc-config-item-label'}>y轴网格线宽：</label>
                             <div className={'lc-config-item-value'}>
                                 <span className={'lc-input-container'}>
-                                    <LCNumberInput onChange={this.yGridLineWidthChanged}/>
+                                    <LCNumberInput value={this.props?.yWidth} onChange={this.yGridLineWidthChanged}/>
                                     <label>&nbsp;px</label>
                                 </span>
                             </div>
@@ -261,19 +266,21 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
                             <label className={'lc-config-item-label'}>y轴网格透明度：</label>
                             <div className={'lc-config-item-value'}>
                                 <span className={'lc-input-container'}>
-                                    <LCNumberInput onChange={this.yGridLineOpacityChanged} min={0} max={1} step={0.1}/>
+                                    <LCNumberInput value={this.props?.yOpacity}
+                                                   onChange={this.yGridLineOpacityChanged}
+                                                   min={0} max={1} step={0.1}/>
                                 </span>
                             </div>
                         </div>
                         <div className={'lc-config-item'}>
                             <label className={'lc-config-item-label'}>y轴标题颜色：</label>
                             <ColorPicker name={'mainTitleColor'}
+                                         color={this.props?.yTitleColor}
                                          onChange={this.yTitleColorChanged}
                                          className={'lc-config-item-value'}/>
                         </div>
                     </> :
                     <></>}
-
             </div>
         );
     }

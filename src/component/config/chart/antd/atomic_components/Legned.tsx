@@ -8,6 +8,22 @@ const {Option} = Select;
 interface LegendProps {
     updateChartProps?: (data: any) => void;
     chartProps?: any;
+    /**
+     * 是否可见
+     */
+    visible?: boolean;
+    /**
+     * 图例位置
+     */
+    position?: string;
+    /**
+     * 图例方向
+     */
+    direction?: string;
+    /**
+     * 文本颜色
+     */
+    textColor?: string;
 }
 
 /**
@@ -19,11 +35,8 @@ class Legend extends Component<LegendProps> {
 
     constructor(props: any) {
         super(props);
-        const {legend} = this.props?.chartProps;
-        if (legend)
-            this.state = {showLegendDetail: true}
-        else
-            this.state = {showLegendDetail: false}
+        const {visible = false} = this.props;
+        this.state = {visible}
     }
 
 
@@ -31,7 +44,7 @@ class Legend extends Component<LegendProps> {
         const {updateChartProps} = this.props;
         updateChartProps && updateChartProps({legend: data});
         this.setState({
-            showLegendDetail: data
+            visible: data
         })
     }
 
@@ -67,19 +80,20 @@ class Legend extends Component<LegendProps> {
     }
 
     render() {
-        const {showLegendDetail} = this.state;
+        const {visible, position, direction, textColor} = this.props;
         return (
             <div className={'config-group chart-fill-color'}>
                 <div className={'lc-config-item'}>
                     <label className={'lc-config-item-label'}>显示图例：</label>
                     <div className={'lc-config-item-value'} style={{textAlign: 'right'}}>
-                        <Switch onChange={this.showLegend}/></div>
+                        <Switch checked={visible} onChange={this.showLegend}/></div>
                 </div>
-                {showLegendDetail ?
+                {this.state.visible ?
                     <>
                         <div className={'lc-config-item'}>
                             <label className={'lc-config-item-label'}>图例位置：</label>
-                            <Select className={'lc-config-item-value lc-select'} defaultValue={'left-top'}
+                            <Select className={'lc-config-item-value lc-select'}
+                                    value={position}
                                     onChange={this.legendPositionChanged}>
                                 <Option value={"left-top"}>左上</Option>
                                 <Option value={"left"}>正左</Option>
@@ -97,7 +111,8 @@ class Legend extends Component<LegendProps> {
                         </div>
                         <div className={'lc-config-item'}>
                             <label className={'lc-config-item-label'}>图例布局：</label>
-                            <Select className={'lc-config-item-value lc-select'} defaultValue={''}
+                            <Select className={'lc-config-item-value lc-select'}
+                                    value={direction}
                                     onChange={this.legendLayoutChanged}>
                                 <Option value={"horizontal"}>横向布局</Option>
                                 <Option value={""}>纵向布局</Option>
@@ -105,7 +120,7 @@ class Legend extends Component<LegendProps> {
                         </div>
                         <div className={'lc-config-item'}>
                             <label className={'lc-config-item-label'}>文本颜色：</label>
-                            <ColorPicker onChange={this.legendTextColorChanged}/>
+                            <ColorPicker color={textColor} onChange={this.legendTextColorChanged}/>
                         </div>
                     </> : <></>}
             </div>

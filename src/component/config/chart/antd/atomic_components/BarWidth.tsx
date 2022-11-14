@@ -4,7 +4,7 @@ import LCNumberInput from "../../../../base/LCNumberInput";
 
 interface BarWidthProp {
     updateChartProps?: (data: any) => void;
-    chartProps?: any;
+    barWidth?: number;
 }
 
 /**
@@ -26,7 +26,7 @@ class BarWidth extends Component<BarWidthProp> {
                     <label className={'lc-config-item-label'}>条形宽度：</label>
                     <div className={'lc-config-item-value'}>
                         <span className={'lc-input-container'}>
-                            <LCNumberInput onChange={this.barWidthChanged}/>
+                            <LCNumberInput value={this.props?.barWidth} min={1} onChange={this.barWidthChanged}/>
                             <label>&nbsp;px</label>
                         </span>
                     </div>
