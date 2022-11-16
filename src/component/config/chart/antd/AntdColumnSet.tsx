@@ -5,6 +5,13 @@ import Legend from "./atomic_components/Legned";
 import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";
 import ColumnWidth from "./atomic_components/ColumnWidth";
 import {getAntdDataSortCount} from "../../../../utils/AntdBarUtil";
+import {
+    calculateBarWidth,
+    calculateFillColor,
+    calculateLegendConfig,
+    calculateRightAngleCoordinates
+} from "./util/AntdChartConfigUtil";
+import {dataSort} from "../../../../utils/SortUtil";
 
 interface AntdColumnSetProps {
     updateChartProps?: (data: any) => void;
@@ -20,31 +27,26 @@ class AntdColumnSet extends Component<AntdColumnSetProps> {
     }
 
     render() {
-        const {updateChartProps, chartProps, activated} = this.props;
-        let colorCount = 1;
-        switch (activated?.type) {
-            case 'AntdBaseColumn':
-            case 'AntdZoneColumn':
-                //单条的计算条数个数
-                colorCount = chartProps.data.length;
-                break;
-            case 'AntdGroupColumn':
-            case 'AntdPercentColumn':
-            case 'AntdStackColumn':
-                //分组的计算分组个数
-                colorCount = getAntdDataSortCount(chartProps.data, 'type');
-                break;
-        }
+        const colors = calculateFillColor(this.props.chartProps);
+        const {updateChartProps, chartProps} = this.props;
+        const sorts = dataSort('type', chartProps.data);
         return (
             <div className={'elem-chart-config'}>
                 {/*图形填充色设置*/}
-                <FillColor colorCount={colorCount} onChange={this.fillColorChanged}/>
+                <FillColor fillMode={colors.length > 1 ? '1' : '0'}
+                           colors={colors}
+                           colorCount={sorts}
+                           onChange={this.fillColorChanged}/>
                 {/*图例配置*/}
-                <Legend updateChartProps={updateChartProps}/>
+                <Legend {...calculateLegendConfig(this.props.chartProps)}
+                        chartProps={chartProps}
+                        updateChartProps={updateChartProps}/>
                 {/*直角坐标系配置*/}
-                <RightAngleCoordinates updateChartProps={updateChartProps}/>
+                <RightAngleCoordinates {...calculateRightAngleCoordinates(this.props.chartProps)}
+                                       chartProps={chartProps}
+                                       updateChartProps={updateChartProps}/>
                 {/*条形图单条宽度配置*/}
-                <ColumnWidth updateChartProps={updateChartProps}/>
+                <ColumnWidth {...calculateBarWidth(this.props.chartProps)} updateChartProps={updateChartProps}/>
             </div>
         );
     }

@@ -158,7 +158,8 @@ export const initAntdZoneBar = () => {
             yAxis: {...axis},
             color: ['rgb(0,255,234)', '#fff'],
             seriesField: 'name',
-            maxBarWidth: 8
+            maxBarWidth: 8,
+            legend: false,
         }
     });
 };

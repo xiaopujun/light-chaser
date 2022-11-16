@@ -16,7 +16,7 @@ export const initAntdBaseColumn = () => {
     return cloneDeep({
         baseInfo: {
             name: '基础柱状图',
-            type: 'AntdBaseColumn '
+            type: 'AntdBaseColumn'
         },
         baseStyle: {
             padding: '5px',
@@ -50,7 +50,7 @@ export const initAntdStackColumn = () => {
     return cloneDeep({
         baseInfo: {
             name: '堆叠柱状图',
-            type: 'AntdStackColumn '
+            type: 'AntdStackColumn'
         },
         baseStyle: {
             padding: '5px',
@@ -85,7 +85,7 @@ export const initAntdGroupColumn = () => {
     return cloneDeep({
         baseInfo: {
             name: '分组柱状图',
-            type: 'AntdGroupColumn '
+            type: 'AntdGroupColumn'
         },
         baseStyle: {
             padding: '5px',
