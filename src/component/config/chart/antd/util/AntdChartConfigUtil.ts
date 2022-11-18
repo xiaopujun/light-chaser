@@ -60,3 +60,16 @@ export const calculateBarWidth = (chartProps: any) => {
     const {maxBarWidth} = chartProps;
     return {barWidth: maxBarWidth}
 }
+
+/**
+ * 计算极坐标系
+ */
+export const calculatePolarCoordinate = (chartProps: any) => {
+    const {endAngle = 2, startAngle = 0, innerRadius = 0, radius = 1} = chartProps;
+    return {
+        outRadius: radius,
+        innerRadius: innerRadius,
+        startAngle: startAngle,
+        endAngle: endAngle
+    }
+}

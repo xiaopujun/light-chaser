@@ -3,7 +3,7 @@ import './style/AntdPieSet.less';
 import FillColor from "./atomic_components/FillColor";
 import Legend from "./atomic_components/Legned";
 import PolarCoordinateSystem from "./atomic_components/PolarCoordinate";
-import {calculateFillColor, calculateLegendConfig} from "./util/AntdChartConfigUtil";
+import {calculateFillColor, calculateLegendConfig, calculatePolarCoordinate} from "./util/AntdChartConfigUtil";
 import {dataSort} from "../../../../utils/SortUtil";
 
 
@@ -37,7 +37,8 @@ class AntdPieSet extends Component<AntdPieSetProps> {
                         chartProps={chartProps}
                         updateChartProps={updateChartProps}/>
                 {/*极坐标系*/}
-                <PolarCoordinateSystem updateChartProps={updateChartProps}/>
+                <PolarCoordinateSystem {...calculatePolarCoordinate(this.props.chartProps)}
+                                       updateChartProps={updateChartProps}/>
 
             </div>
         );

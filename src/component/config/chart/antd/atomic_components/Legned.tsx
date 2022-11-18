@@ -119,7 +119,7 @@ class Legend extends Component<LegendProps> {
                             </Select>
                         </div>
                         <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>文本颜色：</label>
+                            <label className={'lc-config-item-label'}>图例文本颜色：</label>
                             <ColorPicker color={textColor} onChange={this.legendTextColorChanged}/>
                         </div>
                     </> : <></>}
