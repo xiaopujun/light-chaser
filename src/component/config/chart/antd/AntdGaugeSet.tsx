@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
 import {Slider, Switch} from "antd";
-import OutRadius from "./atomic_components/OutInnerRadius";
-import StartEndAngle from "./atomic_components/StartEndAngle";
 import ColorPicker from "../../../color_picker/BaseColorPicker";
 import LCTextInput from "../../../base/LCTextInput";
+import LCNumberInput from "../../../base/LCNumberInput";
 
 
 interface AntdGaugeSetProps {
     updateChartProps?: (data: any) => void;
     chartProps?: any;
-    activated?: any;
+    items?: any;
 }
 
 class AntdGaugeSet extends Component<AntdGaugeSetProps> {
@@ -17,7 +16,11 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
     state: any = {
         rangeWidth: 1,
         stepCount: 1,
-        stepWidth: 1
+        stepWidth: 1,
+        startAngle: 0,
+        endAngle: 2,
+        outRadius: 1,
+        innerRadius: 0,
     }
 
     rangeColorChanged = (color: string) => {
@@ -113,13 +116,13 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
     }
 
 
-    titleFontSizeChanged = (size: number) => {
+    titleFontSizeChanged = (size: any) => {
         const {updateChartProps} = this.props;
         updateChartProps && updateChartProps({
             statistic: {
                 title: {
                     style: {
-                        fontSize: size + 'px'
+                        fontSize: parseInt(size)
                     }
                 }
             }
@@ -127,176 +130,337 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
     }
 
 
-    subscriptionFontSizeChanged = (size: number) => {
+    subscriptionFontSizeChanged = (size: any) => {
         const {updateChartProps} = this.props;
         updateChartProps && updateChartProps({
             statistic: {
                 content: {
                     style: {
-                        fontSize: size + 'px'
+                        fontSize: parseInt(size)
                     }
                 }
             }
         })
     }
 
-    subscriptionLineHeightChanged = (size: number) => {
+    subscriptionLineHeightChanged = (size: any) => {
         const {updateChartProps} = this.props;
         updateChartProps && updateChartProps({
             statistic: {
                 content: {
                     style: {
-                        lineHeight: size + 'px'
+                        lineHeight: parseFloat(size)
                     }
                 }
             }
         })
     }
 
-    titleXAxisOffsetChanged = (data: number) => {
+    titleXAxisOffsetChanged = (data: any) => {
         const {updateChartProps} = this.props;
         updateChartProps && updateChartProps({
             statistic: {
                 title: {
-                    offsetX: data
+                    offsetX: parseInt(data)
                 }
             }
         })
     }
 
-    titleYAxisOffsetChanged = (data: number) => {
+    titleYAxisOffsetChanged = (data: any) => {
         const {updateChartProps} = this.props;
         updateChartProps && updateChartProps({
             statistic: {
                 title: {
-                    offsetY: data
+                    offsetY: parseInt(data)
                 }
             }
         })
     }
 
-    subscriptionXAxisOffsetChanged = (data: number) => {
+    subscriptionXAxisOffsetChanged = (data: any) => {
         const {updateChartProps} = this.props;
         updateChartProps && updateChartProps({
             statistic: {
                 content: {
-                    offsetX: data
+                    offsetX: parseInt(data)
                 }
             }
         })
     }
 
-    subscriptionYAxisOffsetChanged = (data: number) => {
+    subscriptionYAxisOffsetChanged = (data: any) => {
         const {updateChartProps} = this.props;
         updateChartProps && updateChartProps({
             statistic: {
                 content: {
-                    offsetY: data
+                    offsetY: parseInt(data)
                 }
             }
         })
     }
 
+    startAngleChanged = (angle: any) => {
+        const {updateChartProps} = this.props;
+        const {endAngle} = this.state;
+        if (angle <= endAngle - 0.1) {
+            updateChartProps && updateChartProps({
+                startAngle: Math.PI * parseFloat(angle)
+            })
+        }
+    }
+    endAngleChanged = (angle: any) => {
+        const {updateChartProps} = this.props;
+        const {startAngle} = this.state;
+        if (startAngle <= angle - 0.1) {
+            updateChartProps && updateChartProps({
+                endAngle: Math.PI * parseFloat(angle)
+            })
+        }
+    }
+
+    outRadiusChanged = (radius: any) => {
+        const {updateChartProps} = this.props;
+        const {innerRadius} = this.state;
+        if (radius > innerRadius) {
+            updateChartProps && updateChartProps({
+                radius: parseFloat(radius)
+            })
+        }
+
+    }
+
+    innerRadiusChanged = (radius: any) => {
+        const {updateChartProps} = this.props;
+        const {outRadius} = this.state;
+        if (outRadius > radius) {
+            updateChartProps && updateChartProps({
+                innerRadius: parseFloat(radius)
+            })
+        }
+    }
+
+    calculateGaugeConfig = (cfg: any) => {
+        const {endAngle = 2 * Math.PI, startAngle = Math.PI, radius, statistic, innerRadius, meter, range, type} = cfg;
+        return {
+            outRadius: radius,
+            innerRadius: innerRadius,
+            startAngle: startAngle / Math.PI,
+            endAngle: endAngle / Math.PI,
+            rangeColor: range?.color,
+            rangeWidth: range?.width,
+            rangeType: type,
+            stepRatio: meter?.stepRatio,
+            stepCount: meter?.steps,
+            title: statistic?.title?.content,
+            titleOffsetX: statistic?.title?.offsetX,
+            titleOffsetY: statistic?.title?.offsetY,
+            titleFontSize: statistic?.title?.style?.fontSize,
+            titleFontColor: statistic?.title?.style?.fill,
+            descOffsetX: statistic?.content?.offsetX,
+            descOffsetY: statistic?.content?.offsetY,
+            descFontSize: statistic?.content?.style?.fontSize,
+            descFontColor: statistic?.content?.style?.fill,
+            descLineHeight: statistic?.content?.style?.lineHeight,
+        }
+    }
 
     render() {
-        const {rangeWidth, stepCount, stepWidth} = this.state;
-        const {updateChartProps} = this.props;
+        const config = this.calculateGaugeConfig(this.props.chartProps);
+        const {items = ['outer', 'inner']} = this.props;
         return (
             <div className={'elem-chart-config'}>
-
                 {/*极坐标系相关设置*/}
-                <OutRadius updateChartProps={updateChartProps}/>
-                <StartEndAngle updateChartProps={updateChartProps}/>
+                <div className={'config-group'}>
+                    {items.map(((value: string, index: number) => {
+                        if (value === 'outer') {
+                            return (
+                                <div key={index + ''} className={'lc-config-item'}>
+                                    <label className={'lc-config-item-label'}>外半径：</label>
+                                    <div className={'lc-config-item-value'}>
+                                        <span className={'lc-input-container'}>
+                                            <LCNumberInput onChange={this.outRadiusChanged}
+                                                           value={config?.outRadius}
+                                                           min={0.1}
+                                                           step={0.01}
+                                                           max={1}/>
+                                        </span>
+                                    </div>
+                                </div>
+                            )
+                        }
+                        if (value === 'inner') {
+                            return (
+                                <div key={index + ""} className={'lc-config-item'}>
+                                    <label className={'lc-config-item-label'}>内半径：</label>
+                                    <div className={'lc-config-item-value'}>
+                                        <span className={'lc-input-container'}>
+                                            <LCNumberInput onChange={this.innerRadiusChanged}
+                                                           value={config?.innerRadius}
+                                                           min={0.1}
+                                                           step={0.01}/>
+                                        </span>
+                                    </div>
+                                </div>
+                            )
+                        }
+                    }))}
+                </div>
+                <div className={'config-group'}>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>起始角度(单位:π)：</label>
+                        <div className={'lc-config-item-value'}>
+                            <span className={'lc-input-container'}>
+                                <LCNumberInput onChange={this.startAngleChanged}
+                                               value={config?.startAngle}
+                                               min={0}
+                                               max={2}
+                                               step={0.1}/>
+                            </span>
+                        </div>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>结束角度(单位:π)：</label>
+                        <div className={'lc-config-item-value'}>
+                                    <span className={'lc-input-container'}>
+                                        <LCNumberInput onChange={this.endAngleChanged}
+                                                       value={config?.endAngle}
+                                                       min={0}
+                                                       max={2}
+                                                       step={0.1}/>
+                                    </span>
+                        </div>
+                    </div>
+                </div>
                 <div className={'config-group'}>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>圆弧颜色：</label>
                         <ColorPicker name={'mainTitleColor'}
                                      onChange={this.rangeColorChanged}
+                                     color={config?.rangeColor}
                                      className={'lc-config-item-value'}/>
                     </div>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>圆弧宽度：</label>
-                        <Slider defaultValue={1} value={rangeWidth} max={50} min={0.1} step={0.1}
-                                onChange={this.rangeWidthChanged}
-                                className={'lc-config-item-value'}/>
+                        <div className={'lc-config-item-value'}>
+                                       <span className={'lc-input-container'}>
+                                             <LCNumberInput onChange={this.rangeWidthChanged}
+                                                            value={config?.rangeWidth}
+                                                            max={50} min={0.1} step={0.1}/>
+                                        </span>
+                        </div>
                     </div>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>开启刻度仪表盘：</label>
                         <div className={'lc-config-item-value'} style={{textAlign: 'right'}}>
-                            <Switch onChange={this.openMete}/></div>
+                            <Switch checked={config?.rangeType && config?.rangeType == 'meter'}
+                                    onChange={this.openMete}/></div>
                     </div>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>总刻度数：</label>
-                        <Slider defaultValue={1} value={stepCount} max={100} min={1} step={1}
-                                onChange={this.stepCountChange}
-                                className={'lc-config-item-value'}/>
+                        <div className={'lc-config-item-value'}>
+                                     <span className={'lc-input-container'}>
+                                            <LCNumberInput onChange={this.stepCountChange}
+                                                           value={config?.stepCount}
+                                                           max={100} min={1} step={1}/>
+                                        </span>
+                        </div>
                     </div>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>刻度宽度：</label>
-                        <Slider defaultValue={0.5} value={stepWidth} max={0.99} min={0} step={0.01}
-                                onChange={this.stepWidthChange}
-                                className={'lc-config-item-value'}/>
+                        <div className={'lc-config-item-value'}>
+                                    <span className={'lc-input-container'}>
+                                            <LCNumberInput onChange={this.stepWidthChange}
+                                                           value={config?.stepRatio}
+                                                           max={0.9} min={0} step={0.01}/>
+                                        </span>
+                        </div>
                     </div>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>中心标题：</label>
                         <div className={'lc-config-item-value'}>
-                            <LCTextInput onChange={this.titleChanged}
-                            />
+                            <LCTextInput value={config?.title} onChange={this.titleChanged}/>
                         </div>
                     </div>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>中心标题颜色：</label>
-                        <ColorPicker onChange={this.titleColorChanged}/>
+                        <ColorPicker color={config?.titleFontColor} onChange={this.titleColorChanged}/>
                     </div>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>中心标题字体大小：</label>
-                        <Slider defaultValue={12} max={50} min={0} step={1}
-                                onChange={this.titleFontSizeChanged}
-                                className={'lc-config-item-value'}/>
+                        <div className={'lc-config-item-value'}>
+                                    <span className={'lc-input-container'}>
+                                            <LCNumberInput onChange={this.titleFontSizeChanged}
+                                                           value={config?.titleFontSize}
+                                                           max={50} min={0} step={1}/>
+                                        </span>
+                        </div>
                     </div>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>中心标题x轴偏移量：</label>
-                        <Slider defaultValue={12} max={100} min={-100} step={1}
-                                onChange={this.titleXAxisOffsetChanged}
-                                className={'lc-config-item-value'}/>
+                        <div className={'lc-config-item-value'}>
+                                    <span className={'lc-input-container'}>
+                                            <LCNumberInput onChange={this.titleXAxisOffsetChanged}
+                                                           value={config?.titleOffsetX}
+                                                           max={100} min={-100} step={1}/>
+                                        </span>
+                        </div>
                     </div>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>中心标题y轴偏移量：</label>
-                        <Slider defaultValue={12} max={100} min={-100} step={1}
-                                onChange={this.titleYAxisOffsetChanged}
-                                className={'lc-config-item-value'}/>
+                        <div className={'lc-config-item-value'}>
+                                    <span className={'lc-input-container'}>
+                                            <LCNumberInput onChange={this.titleYAxisOffsetChanged}
+                                                           value={config?.titleOffsetY}
+                                                           max={100} min={-100} step={1}/>
+                                        </span>
+                        </div>
                     </div>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>描述颜色：</label>
-                        <ColorPicker onChange={this.subscriptionColorChanged}/>
+                        <ColorPicker color={config?.descFontColor} onChange={this.subscriptionColorChanged}/>
                     </div>
 
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>描述字体大小：</label>
-                        <Slider defaultValue={12} max={50} min={0} step={1}
-                                onChange={this.subscriptionFontSizeChanged}
-                                className={'lc-config-item-value'}/>
+                        <div className={'lc-config-item-value'}>
+                                    <span className={'lc-input-container'}>
+                                            <LCNumberInput onChange={this.subscriptionFontSizeChanged}
+                                                           value={config?.descFontSize}
+                                                           max={50} min={0} step={1}/>
+                                        </span>
+                        </div>
                     </div>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>描述字体行高：</label>
-                        <Slider defaultValue={12} max={50} min={5} step={0.1}
-                                onChange={this.subscriptionLineHeightChanged}
-                                className={'lc-config-item-value'}/>
+                        <div className={'lc-config-item-value'}>
+                                    <span className={'lc-input-container'}>
+                                            <LCNumberInput onChange={this.subscriptionLineHeightChanged}
+                                                           value={config?.descLineHeight} step={0.1}/>
+                                        </span>
+                        </div>
                     </div>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>描述x轴偏移量：</label>
-                        <Slider defaultValue={12} max={100} min={-100} step={1}
-                                onChange={this.subscriptionXAxisOffsetChanged}
-                                className={'lc-config-item-value'}/>
+                        <div className={'lc-config-item-value'}>
+                                    <span className={'lc-input-container'}>
+                                            <LCNumberInput onChange={this.subscriptionXAxisOffsetChanged}
+                                                           value={config?.descOffsetX}
+                                                           max={100} min={-100} step={1}/>
+                                        </span>
+                        </div>
                     </div>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>描述y轴偏移量：</label>
-                        <Slider defaultValue={12} max={100} min={-100} step={1}
-                                onChange={this.subscriptionYAxisOffsetChanged}
-                                className={'lc-config-item-value'}/>
+                        <div className={'lc-config-item-value'}>
+                                    <span className={'lc-input-container'}>
+                                            <LCNumberInput onChange={this.subscriptionYAxisOffsetChanged}
+                                                           value={config?.descOffsetY}
+                                                           max={100} min={-100} step={1}/>
+                                        </span>
+                        </div>
                     </div>
                 </div>
-
             </div>
         );
     }
