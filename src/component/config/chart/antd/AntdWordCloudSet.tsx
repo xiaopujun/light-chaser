@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import FillColor from "./atomic_components/FillColor";
+import {calculateFillColor} from "./util/AntdChartConfigUtil";
+import {dataSort} from "../../../../utils/SortUtil";
 
 interface AntdWordCloudSetProps {
     updateChartProps?: (data: any) => void;
@@ -38,12 +40,16 @@ class AntdWordCloudSet extends Component<AntdWordCloudSetProps> {
     }
 
     render() {
-
+        const colors = calculateFillColor(this.props.chartProps);
+        let sorts = dataSort('type', this.props.chartProps.data);
         return (
             <div className={'elem-chart-config'}>
 
                 {/*图形填充色设置*/}
-                <FillColor onChange={this.fillColorChanged} />
+                <FillColor onChange={this.fillColorChanged}
+                           fillMode={colors.length > 1 ? '1' : '0'}
+                           colors={colors}
+                           colorCount={sorts}/>
 
             </div>
         );

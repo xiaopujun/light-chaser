@@ -73,3 +73,11 @@ export const calculatePolarCoordinate = (chartProps: any) => {
         endAngle: endAngle
     }
 }
+
+/**
+ * 计算点元素尺寸
+ */
+export const calculatePointSize = (chartProps: any) => {
+    const {size = 1, shape = ''} = chartProps;
+    return {pointSize: size, pointShape: shape};
+}

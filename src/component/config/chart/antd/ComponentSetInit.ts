@@ -9,7 +9,7 @@ const AntdRadarSet = lazy(() => import('./AntdRadarSet'));
 const AntdScatterSet = lazy(() => import('./AntdScatterSet'));
 const AntdBubbleSet = lazy(() => import('./AntdBubbleSet'));
 const AntdWordCloudSet = lazy(() => import('./AntdWordCloudSet'));
-const AntdFoldLineSet = lazy(() => import('./AntdLine'));
+const AntdFoldLineSet = lazy(() => import('./AntdLineSet'));
 const AntdGaugeSet = lazy(() => import('./AntdGaugeSet'));
 
 let configMap = new Map();

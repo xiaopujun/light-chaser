@@ -39,8 +39,8 @@ class AntdBarSet extends Component<AntdBarSetProps> {
 
     render() {
         const colors = calculateFillColor(this.props.chartProps);
+        const sorts = dataSort('type', this.props.chartProps.data);
         const {updateChartProps, chartProps} = this.props;
-        const sorts = dataSort('type', chartProps.data);
         return (
             <div className={'elem-chart-config'}>
                 {/*图形填充色设置*/}

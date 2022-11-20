@@ -12,7 +12,6 @@ const {Option} = Select;
 interface AntdLiquidSetProps {
     updateChartProps?: (data: any) => void;
     chartProps?: any;
-    activated?: any;
 }
 
 
@@ -32,21 +31,11 @@ class AntdLiquidSet extends Component<AntdLiquidSetProps> {
         })
     }
 
-    outLineWidthChanged = (width: number) => {
+    outLineWidthChanged = (width: any) => {
         const {updateChartProps} = this.props;
         updateChartProps && updateChartProps({
             outline: {
-                border: width
-            }
-        })
-    }
-
-
-    outLineIntervalChanged = (distance: number) => {
-        const {updateChartProps} = this.props;
-        updateChartProps && updateChartProps({
-            outline: {
-                distance: distance
+                border: parseFloat(width)
             }
         })
     }
@@ -120,13 +109,13 @@ class AntdLiquidSet extends Component<AntdLiquidSetProps> {
     }
 
 
-    titleFontSizeChanged = (size: number) => {
+    titleFontSizeChanged = (size: any) => {
         const {updateChartProps} = this.props;
         updateChartProps && updateChartProps({
             statistic: {
                 title: {
                     style: {
-                        fontSize: size + 'px'
+                        fontSize: parseInt(size)
                     }
                 }
             }
@@ -134,26 +123,26 @@ class AntdLiquidSet extends Component<AntdLiquidSetProps> {
     }
 
 
-    subscriptionFontSizeChanged = (size: number) => {
+    subscriptionFontSizeChanged = (size: any) => {
         const {updateChartProps} = this.props;
         updateChartProps && updateChartProps({
             statistic: {
                 content: {
                     style: {
-                        fontSize: size + 'px'
+                        fontSize: parseInt(size)
                     }
                 }
             }
         })
     }
 
-    subscriptionLineHeightChanged = (size: number) => {
+    subscriptionLineHeightChanged = (size: any) => {
         const {updateChartProps} = this.props;
         updateChartProps && updateChartProps({
             statistic: {
                 content: {
                     style: {
-                        lineHeight: size + 'px'
+                        lineHeight: parseInt(size)
                     }
                 }
             }
@@ -167,16 +156,35 @@ class AntdLiquidSet extends Component<AntdLiquidSetProps> {
         })
     }
 
+    calculateLiquidConfig = (cfg: any) => {
+        const {outline, shape, radius, wave, statistic} = this.props.chartProps;
+        return {
+            shape: shape,
+            outRadius: radius,
+            outlineWidth: outline?.border,
+            outlineColor: outline?.style?.stroke,
+            waterNum: wave?.count,
+            waterLength: wave?.length,
+            title: statistic?.title?.content,
+            titleColor: statistic?.title?.style?.fill,
+            titleFontSize: statistic?.title?.style?.fontSize,
+            desColor: statistic?.content?.style?.fill,
+            desFontSize: statistic?.content?.style?.fontSize,
+            desLineHeight: statistic?.content?.style?.lineHeight,
+        }
+    }
+
 
     render() {
+        const config = this.calculateLiquidConfig(this.props.chartProps);
         return (
             <div className={'elem-chart-config'}>
                 {/*图形填充色设置*/}
-                <FillColor onChange={this.fillColorChanged} />
+                <FillColor onChange={this.fillColorChanged}/>
                 <div className={'config-group chart-fill-color'}>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>图形选择：</label>
-                        <Select className={'lc-config-item-value lc-select'} defaultValue={'circle'}
+                        <Select className={'lc-config-item-value lc-select'} value={config.shape}
                                 onChange={this.shapeChanged}>
                             <Option value={'circle'}>circle</Option>
                             <Option value={'diamond'}>diamond</Option>
@@ -189,7 +197,10 @@ class AntdLiquidSet extends Component<AntdLiquidSetProps> {
                         <label className={'lc-config-item-label'}>外半径：</label>
                         <div className={'lc-config-item-value'}>
                                 <span className={'lc-input-container'}>
-                                    <LCNumberInput onChange={this.outRadiusChanged} max={1} step={0.01} min={0.01}/>
+                                    <LCNumberInput value={parseFloat(config.outRadius)}
+                                                   onChange={this.outRadiusChanged}
+                                                   max={1}
+                                                   step={0.01} min={0.1}/>
                                     <label>&nbsp;px</label>
                                 </span>
                         </div>
@@ -198,29 +209,23 @@ class AntdLiquidSet extends Component<AntdLiquidSetProps> {
                         <label className={'lc-config-item-label'}>边框线宽度：</label>
                         <div className={'lc-config-item-value'}>
                                 <span className={'lc-input-container'}>
-                                    <LCNumberInput onChange={this.outLineWidthChanged} max={20} step={0.1} min={0}/>
-                                    <label>&nbsp;px</label>
-                                </span>
-                        </div>
-                    </div>
-                    <div className={'lc-config-item'}>
-                        <label className={'lc-config-item-label'}>边框线与水波间隔：</label>
-                        <div className={'lc-config-item-value'}>
-                                <span className={'lc-input-container'}>
-                                    <LCNumberInput onChange={this.outLineIntervalChanged} max={10} min={0} step={0.1}/>
+                                    <LCNumberInput value={config.outlineWidth}
+                                                   onChange={this.outLineWidthChanged}
+                                                   max={20} step={0.1} min={0}/>
                                     <label>&nbsp;px</label>
                                 </span>
                         </div>
                     </div>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>边框线颜色：</label>
-                        <ColorPicker onChange={this.outLineColorChanged}/>
+                        <ColorPicker color={config.outlineColor} onChange={this.outLineColorChanged}/>
                     </div>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>水波个数：</label>
                         <div className={'lc-config-item-value'}>
                                 <span className={'lc-input-container'}>
-                                    <LCNumberInput onChange={this.numberOfWaterWavesChanged} max={20} min={0} step={1}/>
+                                    <LCNumberInput value={config.waterNum} onChange={this.numberOfWaterWavesChanged}
+                                                   max={20} min={0} step={1}/>
                                     <label>&nbsp;px</label>
                                 </span>
                         </div>
@@ -229,7 +234,8 @@ class AntdLiquidSet extends Component<AntdLiquidSetProps> {
                         <label className={'lc-config-item-label'}>水波长度：</label>
                         <div className={'lc-config-item-value'}>
                             <span className={'lc-input-container'}>
-                                <LCNumberInput onChange={this.waveLengthChanged} max={500} min={10} step={5}/>
+                                <LCNumberInput value={config.waterLength} onChange={this.waveLengthChanged} max={500}
+                                               min={10} step={5}/>
                                 <label>&nbsp;px</label>
                             </span>
                         </div>
@@ -237,32 +243,35 @@ class AntdLiquidSet extends Component<AntdLiquidSetProps> {
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>中心标题：</label>
                         <div className={'lc-config-item-value'}>
-                            <LCTextInput onChange={this.titleChanged}/>
+                            <LCTextInput value={config.title} onChange={this.titleChanged}/>
                         </div>
                     </div>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>中心标题颜色：</label>
-                        <ColorPicker onChange={this.titleColorChanged}/>
+                        <ColorPicker color={config.titleColor} onChange={this.titleColorChanged}/>
                     </div>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>中心标题字体大小：</label>
                         <div className={'lc-config-item-value'}>
                             <span className={'lc-input-container'}>
-                                <LCNumberInput onChange={this.titleFontSizeChanged} max={50} min={0} step={1}/>
+                                <LCNumberInput value={config.titleFontSize}
+                                               onChange={this.titleFontSizeChanged}
+                                               max={50} min={0} step={1}/>
                                 <label>&nbsp;px</label>
                             </span>
                         </div>
                     </div>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>描述颜色：</label>
-                        <ColorPicker onChange={this.subscriptionColorChanged}/>
+                        <ColorPicker color={config.desColor} onChange={this.subscriptionColorChanged}/>
                     </div>
 
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>描述字体大小：</label>
                         <div className={'lc-config-item-value'}>
                             <span className={'lc-input-container'}>
-                                <LCNumberInput onChange={this.subscriptionFontSizeChanged} max={50} min={0} step={1}/>
+                                <LCNumberInput value={config.desFontSize} onChange={this.subscriptionFontSizeChanged}
+                                               max={50} min={0} step={1}/>
                                 <label>&nbsp;px</label>
                             </span>
                         </div>
@@ -271,7 +280,8 @@ class AntdLiquidSet extends Component<AntdLiquidSetProps> {
                         <label className={'lc-config-item-label'}>描述字体行高：</label>
                         <div className={'lc-config-item-value'}>
                             <span className={'lc-input-container'}>
-                                <LCNumberInput onChange={this.subscriptionLineHeightChanged} max={50} min={0} step={1}/>
+                                <LCNumberInput value={config.desLineHeight}
+                                               onChange={this.subscriptionLineHeightChanged} max={50} min={0} step={1}/>
                                 <label>&nbsp;px</label>
                             </span>
                         </div>

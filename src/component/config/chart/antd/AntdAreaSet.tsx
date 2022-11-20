@@ -2,9 +2,12 @@ import React, {Component} from 'react';
 import './style/AntdAreaSet.less';
 import FillColor from "./atomic_components/FillColor";
 import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";
+import {calculateFillColor, calculateRightAngleCoordinates} from "./util/AntdChartConfigUtil";
+import {dataSort} from "../../../../utils/SortUtil";
 
 interface AntdAreaSetProps {
     chartConfig?: any;
+    chartProps?: any;
     updateChartProps?: (data: any) => void;
 }
 
@@ -16,13 +19,19 @@ class AntdAreaSet extends Component<AntdAreaSetProps> {
     }
 
     render() {
-        const {updateChartProps} = this.props;
+        const {updateChartProps, chartProps} = this.props;
+        const colors = calculateFillColor(chartProps);
+        let sorts = dataSort('type', chartProps.data);
         return (
             <div className={'elem-chart-config'}>
                 {/*图形填充色设置*/}
-                <FillColor onChange={this.fillColorChanged} colorCount={1}/>
+                <FillColor onChange={this.fillColorChanged}
+                           fillMode={colors.length > 1 ? '1' : '0'}
+                           colors={colors}
+                           colorCount={sorts}/>
                 {/*直角坐标系配置*/}
-                <RightAngleCoordinates updateChartProps={updateChartProps}/>
+                <RightAngleCoordinates {...calculateRightAngleCoordinates(this.props.chartProps)}
+                                       updateChartProps={updateChartProps}/>
             </div>
         );
     }

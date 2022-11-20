@@ -37,7 +37,6 @@ export const initAntdLiquid = () => {
                         lineHeight: '44px'
                     }
                 }
-
             }
         }
     });

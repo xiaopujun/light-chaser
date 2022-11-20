@@ -3,6 +3,15 @@ import {Select, Slider} from "antd";
 import FillColor from "./atomic_components/FillColor";
 import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";
 import {getAntdDataSortCount} from "../../../../utils/AntdBarUtil";
+import {dataSort} from "../../../../utils/SortUtil";
+import PointSet from "./atomic_components/PointSet";
+import {
+    calculateFillColor,
+    calculateLegendConfig,
+    calculatePointSize,
+    calculateRightAngleCoordinates
+} from "./util/AntdChartConfigUtil";
+import Legend from "./atomic_components/Legned";
 
 const {Option} = Select;
 
@@ -37,37 +46,21 @@ class AntdBubbleSet extends Component<AntdBubbleSetProps> {
 
     render() {
         const {updateChartProps, chartProps} = this.props;
-        let colorCount = getAntdDataSortCount(chartProps.data, 'continent');
+        const colors = calculateFillColor(chartProps);
+        let sorts = dataSort('type', chartProps.data);
         return (
             <div className={'elem-chart-config'}>
-
                 {/*图形填充色设置*/}
-                <FillColor colorCount={colorCount} onChange={this.fillColorChanged}/>
+                <FillColor onChange={this.fillColorChanged}
+                           fillMode={colors.length > 1 ? '1' : '0'}
+                           colors={colors}
+                           colorCount={sorts}/>
+                <Legend updateChartProps={updateChartProps} {...calculateLegendConfig(this.props.chartProps)}/>
                 {/*点样式设置*/}
-                <div className={'config-group'}>
-                    <div className={'lc-config-item'}>
-                        <label className={'lc-config-item-label'}>点元素尺寸：</label>
-                        <Slider defaultValue={[1, 20]} max={20} min={0}
-                                range={true}
-                                onChange={this.pointSizeChanged}
-                                className={'lc-config-item-value'}/>
-                    </div>
-                    <div className={'lc-config-item'}>
-                        <label className={'lc-config-item-label'}>点元素形状：</label>
-                        <Select className={'lc-config-item-value'} defaultValue={'circle'}
-                                onChange={this.shapeChanged}>
-                            <Option value={'circle'}>circle</Option>
-                            <Option value={'square'}>square</Option>
-                            <Option value={'bowtie'}>bowtie</Option>
-                            <Option value={'diamond'}>diamond</Option>
-                            <Option value={'hexagon'}>hexagon</Option>
-                            <Option value={'triangle'}>triangle</Option>
-                            <Option value={'triangle-down'}>triangle-down</Option>
-                        </Select>
-                    </div>
-                </div>
+                <PointSet updateChartProps={updateChartProps} {...calculatePointSize(this.props.chartProps)}/>
                 {/*直角坐标系配置*/}
-                <RightAngleCoordinates chartProps={chartProps} updateChartProps={updateChartProps}/>
+                <RightAngleCoordinates {...calculateRightAngleCoordinates(this.props.chartProps)}
+                                       updateChartProps={updateChartProps}/>
             </div>
         );
     }

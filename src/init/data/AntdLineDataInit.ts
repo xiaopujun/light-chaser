@@ -12,9 +12,26 @@ export const initAntdBaseFoldLine = () => {
             backgroundColor: 'rgba(23,157,169,0.12)'
         },
         chartProps: {
-            data: [],
-            xField: 'Date',
-            yField: 'scales',
+            data: [
+                {
+                    "name": "2010-01",
+                    "value": 1998
+                },
+                {
+                    "name": "2010-02",
+                    "value": 1850
+                },
+                {
+                    "name": "2010-03",
+                    "value": 1720
+                },
+                {
+                    "name": "2010-04",
+                    "value": 1320
+                },
+            ],
+            xField: 'name',
+            yField: 'value',
             color: '#00ebff',
             xAxis: {
                 grid: null,
@@ -89,10 +106,61 @@ export const initAntdMuchFoldLine = () => {
             backgroundColor: 'rgba(23,157,169,0.12)'
         },
         chartProps: {
-            data: [],
-            xField: 'year',
-            yField: 'gdp',
-            seriesField: 'name',
+            data: [
+                {
+                    "type": "China",
+                    "name": "2000",
+                    "value": 1211
+                },
+                {
+                    "type": "China",
+                    "name": "2001",
+                    "value": 1339
+                },
+                {
+                    "type": "China",
+                    "name": "2002",
+                    "value": 14705
+                },
+                {
+                    "type": "China",
+                    "name": "2003",
+                    "value": 16602
+                },
+                {
+                    "type": "China",
+                    "name": "2004",
+                    "value": 1955
+                },
+                {
+                    "type": "United States",
+                    "name": "2000",
+                    "value": 10252
+                },
+                {
+                    "type": "United States",
+                    "name": "2001",
+                    "value": 14058
+                },
+                {
+                    "type": "United States",
+                    "name": "2002",
+                    "value": 1093
+                },
+                {
+                    "type": "United States",
+                    "name": "2003",
+                    "value": 11245
+                },
+                {
+                    "type": "United States",
+                    "name": "2004",
+                    "value": 1221
+                },
+            ],
+            xField: 'name',
+            yField: 'value',
+            seriesField: 'type',
             xAxis: {
                 grid: null,
                 line: null,
