@@ -8,20 +8,17 @@ import StartEndAngle from "./atomic_components/StartEndAngle";
 import {getAntdDataSortCount} from "../../../../utils/AntdBarUtil";
 import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";
 import ColorPicker from "../../../color_picker/BaseColorPicker";
+import LCNumberInput from "../../../base/LCNumberInput";
+import {calculateFillColor, calculateLegendConfig} from "./util/AntdChartConfigUtil";
+import {dataSort} from "../../../../utils/SortUtil";
 
 
 interface AntdRadarSetProps {
     updateChartProps?: (data: any) => void;
     chartProps?: any;
-    activated?: any;
 }
 
 export default class AntdRadarSet extends Component<AntdRadarSetProps> {
-
-    state: any = {
-        lineWidth: 1,
-        pointSize: 1,
-    }
 
     fillColorChanged = (color: string | string[]) => {
         const {updateChartProps} = this.props;
@@ -42,7 +39,6 @@ export default class AntdRadarSet extends Component<AntdRadarSetProps> {
                 lineWidth,
             },
         })
-        this.setState({lineWidth});
     }
 
     pointColorChanged = (color: string) => {
@@ -54,14 +50,13 @@ export default class AntdRadarSet extends Component<AntdRadarSetProps> {
         })
     }
 
-    pointSizeChanged = (size: number) => {
+    pointSizeChanged = (size: any) => {
         const {updateChartProps} = this.props;
         updateChartProps && updateChartProps({
             point: {
-                size,
+                size: parseInt(size),
             },
         });
-        this.setState({pointSize: size});
     }
 
     pointFillColorChanged = (color: string) => {
@@ -75,35 +70,116 @@ export default class AntdRadarSet extends Component<AntdRadarSetProps> {
         })
     }
 
+    calculateRadarConfig = (cfg: any) => {
+        const {radius, startAngle = 0, endAngle = 2 * Math.PI, smooth, lineStyle, point} = cfg;
+        return {
+            outRadius: radius,
+            startAngle: startAngle,
+            endAngle: endAngle,
+            smooth: smooth,
+            radarLineWidth: lineStyle?.lineWidth,
+            radarLineColor: point?.color,
+            pointFillColor: point?.style?.fill,
+            pointSize: point?.size
+        }
+    }
+
+    outRadiusChanged = (radius: number) => {
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
+            radius: radius
+        })
+
+    }
+
+
+    innerRadiusChanged = (radius: number) => {
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
+            innerRadius: radius
+        })
+    }
+    startAngleChanged = (angle: number) => {
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
+            startAngle: Math.PI * angle
+        })
+    }
+    endAngleChanged = (angle: number) => {
+        const {updateChartProps} = this.props;
+        updateChartProps && updateChartProps({
+            endAngle: Math.PI * angle
+        })
+        this.setState({endAngle: angle})
+    }
+
     render() {
-        const {lineWidth, pointSize} = this.state;
+        const config = this.calculateRadarConfig(this.props.chartProps);
         const {updateChartProps, chartProps} = this.props;
-        let colorCount = getAntdDataSortCount(chartProps.data, 'type');
+        const colors = calculateFillColor(this.props.chartProps);
+        const sorts = dataSort('type', this.props.chartProps.data);
         return (
             <div className={'elem-chart-config'}>
-
                 {/*图形填充色设置*/}
-                <FillColor onChange={this.fillColorChanged} colorCount={colorCount}/>
+                <FillColor onChange={this.fillColorChanged}
+                           fillMode={colors.length > 1 ? '1' : '0'}
+                           colors={colors}
+                           colorCount={sorts}/>
                 {/*图例*/}
-                <Legend chartProps={chartProps} updateChartProps={updateChartProps}/>
+                <Legend {...calculateLegendConfig(this.props.chartProps)}
+                        chartProps={chartProps}
+                        updateChartProps={updateChartProps}/>
                 {/*极坐标系相关设置*/}
-                <OutRadius items={['outer']} updateChartProps={updateChartProps}/>
-                <StartEndAngle updateChartProps={updateChartProps}/>
+                <div className={'config-group'}>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>外半径：</label>
+                        <div className={'lc-config-item-value'}>
+                                    <span className={'lc-input-container'}>
+                                        <LCNumberInput value={config?.outRadius} onChange={this.outRadiusChanged}
+                                                       min={0} step={0.1}/>
+                                    </span>
+                        </div>
+                    </div>
+                </div>
+                <div className={'config-group'}>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>起始角度(单位:π)：</label>
+                        <div className={'lc-config-item-value'}>
+                                    <span className={'lc-input-container'}>
+                                        <LCNumberInput value={config?.startAngle} onChange={this.startAngleChanged}
+                                                       min={0} max={2} step={0.1}/>
+                                    </span>
+                        </div>
+                    </div>
+                    <div className={'lc-config-item'}>
+                        <label className={'lc-config-item-label'}>结束角度(单位:π)：</label>
+                        <div className={'lc-config-item-value'}>
+                                    <span className={'lc-input-container'}>
+                                        <LCNumberInput value={config?.endAngle} onChange={this.endAngleChanged} min={0}
+                                                       max={2} step={0.1}/>
+                                    </span>
+                        </div>
+                    </div>
+                </div>
                 {/*是否曲线渲染*/}
                 <div className={'config-group'}>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>曲线渲染：</label>
-                        <div className={'lc-config-item-value'} style={{textAlign: 'right'}}><Switch
-                            onChange={this.curveRendering}/></div>
+                        <div className={'lc-config-item-value'} style={{textAlign: 'right'}}>
+                            <Switch checked={config.smooth} onChange={this.curveRendering}/></div>
                     </div>
                 </div>
                 {/*雷达图线宽*/}
                 <div className={'config-group'}>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>雷达图描边线宽：</label>
-                        <Slider defaultValue={lineWidth} value={lineWidth} max={10} min={0} step={0.1}
-                                onChange={this.lineWidthChanged}
-                                className={'lc-config-item-value'}/>
+                        <div className={'lc-config-item-value'}>
+                                    <span className={'lc-input-container'}>
+                                        <LCNumberInput value={config.radarLineWidth} onChange={this.lineWidthChanged}
+                                                       max={10} min={0} step={0.1}/>
+                                    </span>
+                        </div>
+
                     </div>
                 </div>
                 {/*描边虚线*/}
@@ -111,6 +187,7 @@ export default class AntdRadarSet extends Component<AntdRadarSetProps> {
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>雷达图点描边颜色：</label>
                         <ColorPicker name={'mainTitleColor'}
+                                     color={config.radarLineColor}
                                      onChange={this.pointColorChanged}
                                      className={'lc-config-item-value'}/>
                     </div>
@@ -119,6 +196,7 @@ export default class AntdRadarSet extends Component<AntdRadarSetProps> {
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>雷达图点填充颜色：</label>
                         <ColorPicker name={'mainTitleColor'}
+                                     color={config.pointFillColor}
                                      onChange={this.pointFillColorChanged}
                                      className={'lc-config-item-value'}/>
                     </div>
@@ -126,9 +204,12 @@ export default class AntdRadarSet extends Component<AntdRadarSetProps> {
                 <div className={'config-group'}>
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>雷达图点大小：</label>
-                        <Slider defaultValue={pointSize} value={pointSize} max={10} min={0} step={0.1}
-                                onChange={this.pointSizeChanged}
-                                className={'lc-config-item-value'}/>
+                        <div className={'lc-config-item-value'}>
+                            <span className={'lc-input-container'}>
+                                    <LCNumberInput value={config.pointSize} onChange={this.pointSizeChanged} max={100}
+                                                   min={-100} step={1}/>
+                            </span>
+                        </div>
                     </div>
                 </div>
 
