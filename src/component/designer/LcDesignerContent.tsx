@@ -251,8 +251,8 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
                     y: (ratio - 1) * this.scaleConfig.result.height * 0.5
                 };
                 // 计算偏移量
-                this.scaleConfig.x -= (ratio - 1) * (e.clientX - this.scaleConfig.x - 300) - origin.x;
-                this.scaleConfig.y -= (ratio - 1) * (e.clientY - this.scaleConfig.y - 64) - origin.y;
+                this.scaleConfig.x -= (ratio - 1) * (e.clientX - this.scaleConfig.x - 300 - 30 - 300) - origin.x;
+                this.scaleConfig.y -= (ratio - 1) * (e.clientY - this.scaleConfig.y - 64 - 30) - origin.y;
                 designer.style.transform = 'translate3d(' + this.scaleConfig.x + 'px, ' + this.scaleConfig.y + 'px, 0) scale(' + this.scaleConfig.scale + ')';
                 e.preventDefault();
                 this.setState({scale: this.scaleConfig.scale})
