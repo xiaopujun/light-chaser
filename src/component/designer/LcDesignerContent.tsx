@@ -20,8 +20,8 @@ interface LcDesignerContentProps {
 export default class LcDesignerContent extends React.Component<LcDesignerContentProps | any> {
 
     rgl: any = null;
-    rulerx: any;
-    rulery: any;
+    rulerX: any;
+    rulerY: any;
 
     state: any = {
         scale: 1
@@ -152,8 +152,8 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
             if (this.scaleConfig.isPointerdown) {
                 scrollX -= e.deltaX;
                 scrollY -= e.deltaY;
-                this.rulerx.scroll(scrollX / this.scaleConfig.scale);
-                this.rulery.scroll(scrollY / this.scaleConfig.scale);
+                this.rulerX.scroll(scrollX / this.scaleConfig.scale);
+                this.rulerY.scroll(scrollY / this.scaleConfig.scale);
             }
         });
 
@@ -264,6 +264,7 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
         const {LCDesignerStore} = this.props;
         const {layoutConfigs, globalSet} = LCDesignerStore!;
         const {scale} = this.state;
+        const unit = parseInt((100 / scale) + '');
         return (
             <div className={'lc-ruler-container'}
                  style={{
@@ -274,7 +275,8 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
                      overflow: 'hidden',
                      backgroundColor: '#131e26'
                  }}>
-                <Ruler ref={e => this.rulerx = e}
+                <Ruler ref={e => this.rulerX = e}
+                       unit={unit}
                        negativeRuler={true}
                        backgroundColor={'#131e26'}
                        textColor={'#5fccff'}
@@ -292,7 +294,8 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
                        font="12px sans-serif"
                        lineWidth={1}
                 />
-                <Ruler ref={e => this.rulery = e}
+                <Ruler ref={e => this.rulerY = e}
+                       unit={unit}
                        negativeRuler={true}
                        backgroundColor={'#131e26'}
                        textColor={'#5fccff'}
