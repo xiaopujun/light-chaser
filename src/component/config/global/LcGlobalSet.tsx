@@ -8,6 +8,47 @@ interface LcGlobalSetProps {
 }
 
 class LcGlobalSet extends Component<LcGlobalSetProps> {
+
+    changeScreenName = (name: string) => {
+
+    }
+    changeScreenWidth = (width: string) => {
+
+    }
+    changeScreenHeight = (height: string) => {
+
+    }
+
+    generateGlobalSet = () => {
+        const {globalSet} = this.props;
+        return [
+            {
+                labelName: '大屏名称',
+                compName: "LcTextInput",
+                config: {
+                    value: globalSet?.name,
+                    onChange: this.changeScreenName,
+                },
+            },
+            {
+                labelName: '大屏宽度',
+                compName: "LcNumberInput",
+                config: {
+                    data: globalSet?.screenWidth,
+                    onChange: this.changeScreenWidth,
+                },
+            },
+            {
+                labelName: '大屏高度',
+                compName: "LcNumberInput",
+                config: {
+                    data: globalSet?.screenHeight,
+                    onChange: this.changeScreenHeight,
+                },
+            },
+        ]
+    }
+
     render() {
         const {globalSet} = this.props;
         return (
