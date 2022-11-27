@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import './style/LCBaseConfig.less';
-import PaddingSet from "./PaddingSet";
-import LcCompBorderSet from "./LcCompBorderSet";
-import LcCompBackgroundSet from "./LcCompBackgroundSet";
 import {BaseStyle} from "../../../types/LcDesignerType";
+import CfgGroup from "./CfgGroup";
 
 interface LcCompBaseStyleSetProps {
     baseStyle?: BaseStyle;
@@ -25,15 +23,99 @@ export default class LcCompBaseStyleSet extends Component<LcCompBaseStyleSetProp
         updateBaseStyle && updateBaseStyle({backgroundColor: color});
     }
 
-    render() {
+    borderStyleChanged = (style: string) => {
+        const {updateBaseStyle} = this.props;
+        updateBaseStyle && updateBaseStyle({borderStyle: style});
+    }
+
+    borderWidthChanged = (width: number) => {
+        const {updateBaseStyle} = this.props;
+        updateBaseStyle && updateBaseStyle({borderWidth: `${width}px`});
+    }
+
+    borderColorChanged = (color: any) => {
+        const {updateBaseStyle} = this.props;
+        updateBaseStyle && updateBaseStyle({borderColor: color});
+    }
+
+    borderRadiusChanged = (radius: number) => {
+        const {updateBaseStyle} = this.props;
+        updateBaseStyle && updateBaseStyle({borderRadius: `${radius}px`});
+    }
+
+    generateBaseStyle = () => {
         const {baseStyle} = this.props;
-        return (
-            <div className={'lc-base-config'}>
-                <PaddingSet data={baseStyle?.padding} onChange={this.paddingChanged} count={4}/>
-                <LcCompBackgroundSet backgroundColorChanged={this.backgroundColorChanged}
-                                     backgroundColor={baseStyle?.backgroundColor}/>
-                <LcCompBorderSet updateBaseStyle={this.props.updateBaseStyle} {...baseStyle}/>
-            </div>
-        );
+        return [
+            {
+                labelName: '内边距',
+                compName: "LcPadding",
+                config: {
+                    data: baseStyle?.padding,
+                    onChange: this.paddingChanged,
+                },
+            },
+            {
+                labelName: '背景色',
+                compName: "ColorPicker",
+                config: {
+                    color: baseStyle?.backgroundColor,
+                    onChange: this.backgroundColorChanged,
+                },
+            },
+            {
+                labelName: '边框类型',
+                compName: "LcSelect",
+                config: {
+                    value: baseStyle?.borderStyle,
+                    onChange: this.borderStyleChanged,
+                    options: [
+                        {
+                            content: '请选择',
+                            value: 'no'
+                        },
+                        {
+                            content: '点',
+                            value: 'dotted'
+                        },
+                        {
+                            content: '虚线',
+                            value: 'dashed'
+                        },
+                        {
+                            content: '实线',
+                            value: 'solid'
+                        },
+                    ],
+                },
+            },
+            {
+                labelName: '边框颜色',
+                compName: "ColorPicker",
+                config: {
+                    color: baseStyle?.borderColor,
+                    onChange: this.borderColorChanged,
+                },
+            },
+            {
+                labelName: '边框宽度',
+                compName: "LcNumberInput",
+                config: {
+                    value: baseStyle?.borderWidth?.replace('px', ''),
+                    onChange: this.borderWidthChanged,
+                },
+            },
+            {
+                labelName: '边框圆角',
+                compName: "LcNumberInput",
+                config: {
+                    value: baseStyle?.borderRadius?.replace('px', ''),
+                    onChange: this.borderRadiusChanged,
+                },
+            },
+        ]
+    }
+
+    render() {
+        return <CfgGroup items={this.generateBaseStyle()}/>;
     }
 }

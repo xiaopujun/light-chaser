@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import LCNumberInput from "../../base/LCNumberInput";
 import './style/PaddingSet.less';
-import {init} from "http-proxy-middleware/dist/_handlers";
-import {bindReporter} from "web-vitals/dist/modules/lib/bindReporter";
 
 interface PaddingSetProps {
     data?: string;
@@ -41,7 +39,6 @@ export default class PaddingSet extends Component<PaddingSetProps> {
         for (let i = 0; i < data.length; i++)
             paddingSet += data[i] + 'px ';
         paddingSet = paddingSet.trim();
-        console.log(paddingSet)
         onChange && onChange(paddingSet);
     }
 
@@ -59,7 +56,6 @@ export default class PaddingSet extends Component<PaddingSetProps> {
         }
         return (
             <div className={'lc-config-item lc-padding-config'}>
-                <label className={'lc-config-item-label'}>内边距：</label>
                 <div className={'lc-config-item-value'}>
                     {itemArr}
                 </div>

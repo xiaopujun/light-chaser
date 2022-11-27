@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import LCTextInput from "../../base/LCTextInput";
+import CfgGroup from "../base/CfgGroup";
 
 interface LcEmBaseInfoProps {
     baseInfo?: any;
@@ -21,28 +21,41 @@ class LcEmBaseInfo extends Component<LcEmBaseInfoProps> {
         updateBaseInfo && updateBaseInfo({desc})
     }
 
-    render() {
+    generateConfigData = () => {
         const {baseInfo: {id, name = '', desc = '', type}} = this.props;
-        return (
-            <div className={'lc-base-info'}>
-                <div className={'lc-config-item'}>
-                    <label className={'lc-config-item-label'}>ID号：</label>
-                    <label>{id}</label>
-                </div>
-                <div className={'lc-config-item'}>
-                    <label className={'lc-config-item-label'}>名称：</label>
-                    <LCTextInput onChange={this.changeName} value={name}/>
-                </div>
-                <div className={'lc-config-item'}>
-                    <label className={'lc-config-item-label'}>描述：</label>
-                    <LCTextInput onChange={this.changeDesc} value={desc}/>
-                </div>
-                <div className={'lc-config-item'}>
-                    <label className={'lc-config-item-label'}>类型：</label>
-                    <label>{type}</label>
-                </div>
-            </div>
-        );
+        return [
+            {
+                labelName: 'ID号',
+                compName: "",
+                config: {value: id},
+            },
+            {
+                labelName: '名称',
+                compName: "LcTextInput",
+                config: {
+                    value: name,
+                    onChange: this.changeName
+                },
+            },
+            {
+                labelName: '描述',
+                compName: "LcTextInput",
+                config: {
+                    value: desc,
+                    onChange: this.changeDesc
+                },
+            },
+            {
+                labelName: '类型',
+                compName: "LcTextInput",
+                config: {value: type},
+            },
+        ]
+    }
+
+    render() {
+        const configData = this.generateConfigData();
+        return <CfgGroup items={configData}/>
     }
 }
 

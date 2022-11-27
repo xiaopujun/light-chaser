@@ -34,8 +34,10 @@ export interface BaseStyle {
     padding?: string;
     backgroundColor?: string;
     border?: string;
-    borderType?: string;
-    borderRadio?: number;
+    borderStyle?: string;
+    borderColor?: string;
+    borderRadius?: string;
+    borderWidth?: string;
 }
 
 

@@ -1,10 +1,10 @@
 import React, {Component, Suspense} from 'react';
 import {Collapse} from 'antd';
 import './LcCompConfigContainer.less';
-import LcCompBaseStyleSet from "./base/LcCompBaseStyleSet";
 import {RollbackOutlined} from "@ant-design/icons";
 import LcEmBaseInfo from "./info/LcEmBaseInfo";
 import getChartsConfig from "./chart/antd/ComponentSetInit";
+import LcCompBaseStyleSet from "./base/LcCompBaseStyleSet";
 import Loading from "../loading/Loading";
 
 const {Panel} = Collapse;
@@ -39,7 +39,7 @@ export default class LcCompConfigContainer extends Component<LcCompConfigContain
         return (
             <>
                 <div className={'lc-component-config-title'}>
-                    <RollbackOutlined onClick={this.cancelActive}/>&nbsp;组件配置()
+                    <RollbackOutlined onClick={this.cancelActive}/>&nbsp;组件配置
                 </div>
                 <Collapse className={'lc-config-collapse lc-component-config'} bordered={false}>
                     <Panel className={'lc-config-collapse-title'} header="基础信息" key="0">
