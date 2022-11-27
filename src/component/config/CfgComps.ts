@@ -14,6 +14,6 @@ cfgMap.set("GroupColorPicker", GroupColorPicker);
 cfgMap.set("LcPadding", PaddingSet);
 cfgMap.set("LcSelect", LcSelect);
 
-export const getCfgComp = (compName: string) => {
-    return cfgMap.get(compName);
+export const getCfgComp = (comp: string) => {
+    return cfgMap.get(comp);
 }

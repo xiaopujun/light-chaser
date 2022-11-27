@@ -39,4 +39,8 @@ export enum DesignerOperate {
      * 更新更新设计器图表组件样式
      */
     UPDATE_CHART_PROPS,
+    /**
+     * 更新更新设计器全局配置
+     */
+    UPDATE_GLOBAL_SET,
 }

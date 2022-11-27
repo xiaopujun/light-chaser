@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import LCNumberInput from "../../base/LCNumberInput";
 import './LcGlobalSet.less';
+import CfgGroup from "../base/CfgGroup";
 
 interface LcGlobalSetProps {
     globalSet?: any;
-    updateBaseInfo?: (data?: any) => void;
+    updateGlobalSet?: (data?: any) => void;
 }
 
 class LcGlobalSet extends Component<LcGlobalSetProps> {
@@ -19,31 +20,107 @@ class LcGlobalSet extends Component<LcGlobalSetProps> {
 
     }
 
+    changeSaveType = (type: string) => {
+
+    }
+    changeRatio = (ratio: number) => {
+
+    }
+    changeInterval = (interval: number) => {
+
+    }
+    changeColumn = (columns: number) => {
+        const {updateGlobalSet} = this.props;
+        updateGlobalSet && updateGlobalSet({columns: columns})
+    }
+    changeBaseHeight = (height: number) => {
+
+    }
+
     generateGlobalSet = () => {
         const {globalSet} = this.props;
         return [
             {
-                labelName: '大屏名称',
-                compName: "LcTextInput",
+                label: '大屏名称',
+                comp: "LcTextInput",
                 config: {
-                    value: globalSet?.name,
+                    value: globalSet?.screenName,
                     onChange: this.changeScreenName,
                 },
             },
             {
-                labelName: '大屏宽度',
-                compName: "LcNumberInput",
+                label: '大屏宽度',
+                comp: "LcNumberInput",
                 config: {
-                    data: globalSet?.screenWidth,
+                    value: globalSet?.screenWidth,
                     onChange: this.changeScreenWidth,
+                    width: 50
                 },
             },
             {
-                labelName: '大屏高度',
-                compName: "LcNumberInput",
+                label: '大屏高度',
+                comp: "LcNumberInput",
                 config: {
-                    data: globalSet?.screenHeight,
+                    value: globalSet?.screenHeight,
                     onChange: this.changeScreenHeight,
+                    width: 50
+                },
+            },
+            {
+                label: '数据存储方式',
+                comp: "LcSelect",
+                config: {
+                    value: globalSet?.saveType,
+                    onChange: this.changeSaveType,
+                    options: [
+                        {
+                            content: '本地',
+                            value: 'local'
+                        },
+                        {
+                            content: '远程',
+                            value: 'server'
+                        },
+                    ]
+                },
+            },
+            {
+                label: '屏幕比例',
+                comp: "LcTextInput",
+                config: {
+                    value: globalSet?.screenRatio,
+                    onChange: this.changeRatio,
+                },
+            },
+            {
+                label: '元素间隔距离',
+                comp: "LcNumberInput",
+                config: {
+                    value: globalSet?.elemInterval,
+                    onChange: this.changeInterval,
+                },
+            },
+            {
+                label: '列划分数量',
+                comp: "LcNumberInput",
+                config: {
+                    value: globalSet?.columns,
+                    onChange: this.changeColumn,
+                },
+            },
+            {
+                label: '元素基准高度',
+                comp: "LcNumberInput",
+                config: {
+                    value: globalSet?.baseLineHeight,
+                    onChange: this.changeBaseHeight,
+                },
+            },
+            {
+                label: '当前元素总数',
+                comp: "",
+                config: {
+                    value: globalSet?.elemCount,
                 },
             },
         ]
@@ -55,30 +132,7 @@ class LcGlobalSet extends Component<LcGlobalSetProps> {
             <div className={'lc-global-set'}>
                 <div className={'lc-global-set-title'}>全局配置</div>
                 <div className={'lc-global-set-content'}>
-                    <div className={'lc-config-item'}>
-                        <label className={'lc-config-item-label'}>大屏名称：</label>
-                        <div className={'lc-config-item-value'}>
-                            <div className={'lc-input-container'}>
-                                <label>测试大屏01</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={'lc-config-item'}>
-                        <label className={'lc-config-item-label'}>大屏宽度：</label>
-                        <div className={'lc-config-item-value'}>
-                            <div className={'lc-input-container'}>
-                                <LCNumberInput value={globalSet.screenWidth} width={45}/>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={'lc-config-item'}>
-                        <label className={'lc-config-item-label'}>大屏高度：</label>
-                        <div className={'lc-config-item-value'}>
-                            <div className={'lc-input-container'}>
-                                <LCNumberInput value={globalSet.screenHeight} width={45}/>
-                            </div>
-                        </div>
-                    </div>
+                    <CfgGroup items={this.generateGlobalSet()}/>
                 </div>
             </div>
         );

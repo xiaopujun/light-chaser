@@ -3,21 +3,30 @@ import './style/CfgItem.less';
 import {getCfgComp} from "../CfgComps";
 
 export interface CfgItemProps {
-    labelName?: string;
-    compName?: string;
+    /**
+     * 配置项label显示名
+     */
+    label?: string;
+    /**
+     * 组件名
+     */
+    comp?: string;
+    /**
+     * 组件配置项
+     */
     config?: { [key: string]: string | number | Array<any> | Function | undefined };
 }
 
 class CfgItem extends Component<CfgItemProps> {
     render() {
-        const {compName = "", labelName, config} = this.props;
+        const {comp = "", label, config} = this.props;
         let CfgComp = null;
-        if (compName !== "")
-            CfgComp = getCfgComp(compName);
+        if (comp !== "")
+            CfgComp = getCfgComp(comp);
         return (
             <div className={'lc-cfg-item'}>
-                <div className={'item-name'}>{labelName}</div>
-                {compName === "" ? <div>{config?.value}</div> : <div><CfgComp {...config}/></div>}
+                <div className={'item-name'}>{label}</div>
+                {comp === "" ? <div>{config?.value}</div> : <div><CfgComp {...config}/></div>}
             </div>
         );
     }

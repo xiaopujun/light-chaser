@@ -3,7 +3,6 @@ import {Select} from "antd";
 import './style/index.less';
 import ColorPicker from "../../../../color_picker/BaseColorPicker";
 import GroupColorPicker from "../../../../color_picker/GroupColorPicker";
-import {stringify} from "querystring";
 
 const {Option} = Select;
 
@@ -39,7 +38,7 @@ class FillColor extends Component<FillColorProp> {
     generateFillColorComp = () => {
         const {fillMode, colors = ['rgb(0,255,234)']} = this.state;
         if (fillMode === '1') {
-            return <GroupColorPicker colors={colors} onChange={this.colorChanged}/>;
+            return <GroupColorPicker value={colors} onChange={this.colorChanged}/>;
         } else {
             return <ColorPicker name={'mainTitleColor'}
                                 color={colors[0]}

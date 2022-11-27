@@ -325,7 +325,7 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
                             <ReactGridLayout ref={obj => this.rgl = obj}
                                              className="layout"
                                              layout={layoutConfigs}
-                                             cols={48}
+                                             cols={globalSet?.columns || 48}
                                              rowHeight={10}
                                              margin={[15, 15]}
                                              useCSSTransforms={true}

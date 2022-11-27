@@ -47,24 +47,24 @@ export default class LcCompBaseStyleSet extends Component<LcCompBaseStyleSetProp
         const {baseStyle} = this.props;
         return [
             {
-                labelName: '内边距',
-                compName: "LcPadding",
+                label: '内边距',
+                comp: "LcPadding",
                 config: {
-                    data: baseStyle?.padding,
+                    value: baseStyle?.padding,
                     onChange: this.paddingChanged,
                 },
             },
             {
-                labelName: '背景色',
-                compName: "ColorPicker",
+                label: '背景色',
+                comp: "ColorPicker",
                 config: {
-                    color: baseStyle?.backgroundColor,
+                    value: baseStyle?.backgroundColor,
                     onChange: this.backgroundColorChanged,
                 },
             },
             {
-                labelName: '边框类型',
-                compName: "LcSelect",
+                label: '边框类型',
+                comp: "LcSelect",
                 config: {
                     value: baseStyle?.borderStyle,
                     onChange: this.borderStyleChanged,
@@ -89,24 +89,24 @@ export default class LcCompBaseStyleSet extends Component<LcCompBaseStyleSetProp
                 },
             },
             {
-                labelName: '边框颜色',
-                compName: "ColorPicker",
+                label: '边框颜色',
+                comp: "ColorPicker",
                 config: {
-                    color: baseStyle?.borderColor,
+                    value: baseStyle?.borderColor,
                     onChange: this.borderColorChanged,
                 },
             },
             {
-                labelName: '边框宽度',
-                compName: "LcNumberInput",
+                label: '边框宽度',
+                comp: "LcNumberInput",
                 config: {
                     value: baseStyle?.borderWidth?.replace('px', ''),
                     onChange: this.borderWidthChanged,
                 },
             },
             {
-                labelName: '边框圆角',
-                compName: "LcNumberInput",
+                label: '边框圆角',
+                comp: "LcNumberInput",
                 config: {
                     value: baseStyle?.borderRadius?.replace('px', ''),
                     onChange: this.borderRadiusChanged,

@@ -25,29 +25,29 @@ class LcEmBaseInfo extends Component<LcEmBaseInfoProps> {
         const {baseInfo: {id, name = '', desc = '', type}} = this.props;
         return [
             {
-                labelName: 'ID号',
-                compName: "",
+                label: 'ID号',
+                comp: "",
                 config: {value: id},
             },
             {
-                labelName: '名称',
-                compName: "LcTextInput",
+                label: '名称',
+                comp: "LcTextInput",
                 config: {
                     value: name,
                     onChange: this.changeName
                 },
             },
             {
-                labelName: '描述',
-                compName: "LcTextInput",
+                label: '描述',
+                comp: "LcTextInput",
                 config: {
                     value: desc,
                     onChange: this.changeDesc
                 },
             },
             {
-                labelName: '类型',
-                compName: "LcTextInput",
+                label: '类型',
+                comp: "LcTextInput",
                 config: {value: type},
             },
         ]

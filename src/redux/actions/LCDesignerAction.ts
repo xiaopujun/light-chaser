@@ -26,5 +26,7 @@ export const updateBaseStyle = (data: any) => ({type: DesignerOperate.UPDATE_BAS
 export const updateChartProps = (data: any) => ({type: DesignerOperate.UPDATE_CHART_PROPS, data});
 //更新组件基础信息
 export const updateBaseInfo = (data: any) => ({type: DesignerOperate.UPDATE_BASE_INFO, data});
+//更设计器全局设置
+export const updateGlobalSet = (data: any) => ({type: DesignerOperate.UPDATE_GLOBAL_SET, data});
 
 

@@ -6,7 +6,7 @@ import {ifError} from "assert";
 
 interface GroupColorPickerProp {
     onChange?: (data: string[]) => void;
-    colors?: string[];
+    value?: string[];
 }
 
 /**
@@ -20,12 +20,12 @@ class GroupColorPicker extends Component<GroupColorPickerProp> {
 
     constructor(props: any) {
         super(props);
-        const {colors = []} = props;
-        if (colors.length == 0) {
+        const {value = []} = props;
+        if (value.length == 0) {
             this.state = {colors: ['#00e9ff']};
             return;
         }
-        this.state = {colors};
+        this.state = {colors: value};
     }
 
 

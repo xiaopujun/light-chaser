@@ -3,7 +3,7 @@ import LCNumberInput from "../../base/LCNumberInput";
 import './style/PaddingSet.less';
 
 interface PaddingSetProps {
-    data?: string;
+    value?: string;
     count?: number;
     onChange?: (data: string) => void;
     unit?: string;
@@ -17,12 +17,12 @@ export default class PaddingSet extends Component<PaddingSetProps> {
 
     constructor(props: PaddingSetProps) {
         super(props);
-        const {data} = this.props;
-        if (data == null) {
+        const {value} = this.props;
+        if (value == null) {
             this.state = {data: [0, 0, 0, 0]};
             return;
         }
-        let paddingItem = data.split(' ');
+        let paddingItem = value.split(' ');
         let initArr = [];
         for (let i = 0; i < paddingItem.length; i++)
             initArr.push(parseInt(paddingItem[i].replace('px', '')));

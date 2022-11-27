@@ -59,6 +59,8 @@ export default function LCDesignerReducer(preState: LCDesignerProps = initState,
             return updateChartProps(preState, data);
         case DesignerOperate.UPDATE_BASE_INFO:
             return updateBaseInfo(preState, data);
+        case DesignerOperate.UPDATE_GLOBAL_SET:
+            return updateGlobalSet(preState, data);
         default:                                            //无更新，返回之前的状态
             return preState;
     }
@@ -205,5 +207,17 @@ function updateChartProps(preState: LCDesignerProps, data: any) {
                 return objValue = srcValue;
         });
     }
+    return {...preState};
+}
+
+
+/**
+ * @description 更新设计器全局配置
+ * @param preState
+ * @param data
+ */
+function updateGlobalSet(preState: LCDesignerProps, data: any) {
+    const {globalSet} = preState;
+    preState.globalSet = {...globalSet, ...data};
     return {...preState};
 }
