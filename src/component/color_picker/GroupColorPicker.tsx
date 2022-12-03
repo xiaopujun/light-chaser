@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './style/GroupColorPicker.less';
 import ColorPicker from "./BaseColorPicker";
-import {ifError} from "assert";
 
 
 interface GroupColorPickerProp {
@@ -39,7 +38,6 @@ class GroupColorPicker extends Component<GroupColorPickerProp> {
 
     render() {
         const {colors = []} = this.state;
-        console.log(colors)
         return (
             <div className={'group-color-picker'} style={{display: "flex", flexDirection: "row"}}>
                 {colors.map((item: string, i: number) => {

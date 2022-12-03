@@ -1,21 +1,7 @@
 import React, {Component} from 'react';
 import './style/CfgItem.less';
 import {getCfgComp} from "../CfgComps";
-
-export interface CfgItemProps {
-    /**
-     * 配置项label显示名
-     */
-    label?: string;
-    /**
-     * 组件名
-     */
-    comp?: string;
-    /**
-     * 组件配置项
-     */
-    config?: { [key: string]: string | number | Array<any> | Function | undefined };
-}
+import {CfgItemProps} from "../../../type/ConfigItemTypes";
 
 class CfgItem extends Component<CfgItemProps> {
     render() {

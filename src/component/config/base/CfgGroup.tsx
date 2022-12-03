@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import CfgItem, {CfgItemProps} from "./CfgItem";
+import {CfgItemProps} from '../../../type/ConfigItemTypes';
+import CfgItem from "./CfgItem";
 
 interface CfgGroupProps {
     items?: Array<CfgItemProps>;
@@ -11,7 +12,11 @@ class CfgGroup extends Component<CfgGroupProps> {
         return (
             <>
                 {items.map((item: CfgItemProps, index: number) => {
-                    return <CfgItem key={index + ''} {...item}/>
+                    const {visible = true} = item;
+                    if (visible)
+                        return <CfgItem key={index + ''} {...item}/>
+                    else
+                        return;
                 })}
             </>
         );

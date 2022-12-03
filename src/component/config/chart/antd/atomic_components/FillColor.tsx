@@ -1,13 +1,9 @@
 import React, {Component} from 'react';
-import {Select} from "antd";
 import './style/index.less';
-import ColorPicker from "../../../../color_picker/BaseColorPicker";
-import GroupColorPicker from "../../../../color_picker/GroupColorPicker";
+import ColorSelector from "./ColorSelector";
 
-const {Option} = Select;
 
 interface FillColorProp {
-    fillMode?: string; //0:单色、1：多色、
     colorCount?: number;
     colors?: string[];
     onChange?: (data: string | string[]) => void;//回调函数
@@ -19,32 +15,19 @@ interface FillColorProp {
 class FillColor extends Component<FillColorProp> {
 
     state: any = {
-        fillMode: '0',
         colors: [],
     }
 
     constructor(props: FillColorProp) {
         super(props);
-        const {fillMode = '0', colors} = this.props;
-        this.state = {fillMode, colors: colors || ['rgb(0,255,234)']};
+        const {colors} = this.props;
+        this.state = {colors: colors || ['rgb(0,255,234)']};
     }
 
 
     colorChanged = (data: string | string[]) => {
         const {onChange} = this.props;
         onChange && onChange(data);
-    }
-
-    generateFillColorComp = () => {
-        const {fillMode, colors = ['rgb(0,255,234)']} = this.state;
-        if (fillMode === '1') {
-            return <GroupColorPicker value={colors} onChange={this.colorChanged}/>;
-        } else {
-            return <ColorPicker name={'mainTitleColor'}
-                                color={colors[0]}
-                                onChange={this.colorChanged}
-                                className={'lc-config-item-value'}/>;
-        }
     }
 
     modeChanged = (value: string) => {
@@ -63,21 +46,11 @@ class FillColor extends Component<FillColorProp> {
 
 
     render() {
-        const {fillMode = "0"} = this.state;
+        const {colors = ['rgb(0,255,234)']} = this.state;
         return (
-            <div className={'config-group chart-fill-color'}>
-                <div className={'lc-config-item'}>
-                    <label className={'lc-config-item-label'}>填充模式：</label>
-                    <Select className={'lc-config-item-value lc-select'} value={fillMode}
-                            onChange={this.modeChanged}>
-                        <Option value={'0'}>单色模式</Option>
-                        <Option value={'1'}>多色模式</Option>
-                    </Select>
-                </div>
-                <div className={'lc-config-item'}>
-                    <label className={'lc-config-item-label'}>填充色：</label>
-                    {this.generateFillColorComp()}
-                </div>
+            <div className={'lc-config-item'}>
+                <label className={'lc-config-item-label'}>填充色：</label>
+                <ColorSelector max={5} colors={colors} onChange={this.colorChanged}/>
             </div>
         );
     }
