@@ -14,6 +14,6 @@ export interface CfgItemProps {
     /**
      * 组件配置项
      */
-    config?: { [key: string]: string | number | Array<any> | Function | undefined };
+    config?: { [key: string]: string | number | Array<any> | Function | boolean | Object | undefined };
 
 }

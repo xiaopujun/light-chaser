@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import LCNumberInput from "../../../../base/LCNumberInput";
+import CfgGroup from "../../../base/CfgGroup";
 
 interface PolarCoordinateSystemProps {
     updateChartProps?: (data: any) => void;
@@ -78,64 +78,59 @@ export default class PolarCoordinateSystem extends Component<PolarCoordinateSyst
         }
     }
 
+    generatePolarCoordinateSystemSet = () => {
+        const {outRadius, innerRadius, startAngle, endAngle} = this.state;
+        return [
+            {
+                label: '外半径',
+                comp: "LcNumberInput",
+                config: {
+                    checked: outRadius,
+                    onChange: this.outRadiusChanged,
+                    max: 1,
+                    min: 0,
+                    step: 0.1,
+                },
+            },
+            {
+                label: '内半径',
+                comp: "LcNumberInput",
+                config: {
+                    color: innerRadius,
+                    onChange: this.innerRadiusChanged,
+                    max: 1,
+                    min: 0,
+                    step: 0.1,
+                },
+            },
+            {
+                label: '起始角度(单位:π)',
+                comp: "LcNumberInput",
+                config: {
+                    value: startAngle,
+                    onChange: this.startAngleChanged,
+                    max: 2,
+                    min: 0,
+                    step: 0.1,
+                },
+            },
+            {
+                label: '结束角度(单位:π)',
+                comp: "LcNumberInput",
+                config: {
+                    value: endAngle,
+                    onChange: this.endAngleChanged,
+                    max: 2,
+                    min: 0,
+                    step: 0.1,
+                },
+            },
+        ]
+    }
+
 
     render() {
-        const {outRadius, innerRadius, startAngle, endAngle} = this.state;
-        const {items = ['outer', 'inner']} = this.props;
-        return (
-            <>
-                <div className={'config-group'}>
-                    {items.map(((value: string, index: number) => {
-                        if (value === 'outer') {
-                            return (
-                                <div key={index + ''} className={'lc-config-item'}>
-                                    <label className={'lc-config-item-label'}>外半径：</label>
-                                    <div className={'lc-config-item-value'}>
-                                    <span className={'lc-input-container'}>
-                                        <LCNumberInput value={outRadius} onChange={this.outRadiusChanged} max={1}
-                                                       min={0} step={0.01}/>
-                                    </span>
-                                    </div>
-                                </div>
-                            )
-                        }
-                        if (value === 'inner') {
-                            return (
-                                <div key={index + ""} className={'lc-config-item'}>
-                                    <label className={'lc-config-item-label'}>内半径：</label>
-                                    <div className={'lc-config-item-value'}>
-                                    <span className={'lc-input-container'}>
-                                        <LCNumberInput value={innerRadius} onChange={this.innerRadiusChanged} min={0}
-                                                       max={1} step={0.01}/>
-                                    </span>
-                                    </div>
-                                </div>
-                            )
-                        }
-                    }))}
-                </div>
-
-                <div className={'config-group'}>
-                    <div className={'lc-config-item'}>
-                        <label className={'lc-config-item-label'}>起始角度(单位:π)：</label>
-                        <div className={'lc-config-item-value'}>
-                                    <span className={'lc-input-container'}>
-                                        <LCNumberInput value={startAngle} onChange={this.startAngleChanged} min={0}
-                                                       max={2} step={0.1}/>
-                                    </span>
-                        </div>
-                    </div>
-                    <div className={'lc-config-item'}>
-                        <label className={'lc-config-item-label'}>结束角度(单位:π)：</label>
-                        <div className={'lc-config-item-value'}>
-                                    <span className={'lc-input-container'}>
-                                        <LCNumberInput value={endAngle} onChange={this.endAngleChanged} min={0} max={2}
-                                                       step={0.1}/>
-                                    </span>
-                        </div>
-                    </div>
-                </div>
-            </>
-        );
+        let items = this.generatePolarCoordinateSystemSet();
+        return <CfgGroup items={items}/>
     }
 }

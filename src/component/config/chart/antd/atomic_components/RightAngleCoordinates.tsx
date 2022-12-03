@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {Switch} from "antd";
 import ColorPicker from "../../../../color_picker/BaseColorPicker";
-import LCNumberInput from "../../../../base/LCNumberInput";
+import CfgGroup from "../../../base/CfgGroup";
 
 
 interface RightAngleCoordinatesProp {
@@ -193,96 +192,102 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
         })
     }
 
+    generateRightAngleCoordinatesSet = () => {
+        const {showX, showY} = this.state;
+        return [
+            {
+                label: '显示x轴网格线',
+                comp: "Switch",
+                config: {
+                    checked: this.props?.showX,
+                    onChange: this.showXGridLine,
+                },
+            },
+            {
+                label: 'x轴网格线颜色',
+                comp: "ColorPicker",
+                visible: showX,
+                config: {
+                    value: this.props?.xLineColor,
+                    onChange: this.xGridLineColorChanged,
+                },
+            },
+            {
+                label: 'x轴网格线宽',
+                comp: "LcNumberInput",
+                visible: showX,
+                config: {
+                    value: this.props?.xWidth,
+                    onChange: this.xGridLineWidthChanged,
+                },
+            },
+            {
+                label: 'x轴网格透明度',
+                comp: "LcNumberInput",
+                visible: showX,
+                config: {
+                    value: this.props?.xOpacity,
+                    onChange: this.xGridLineOpacityChanged,
+                },
+            },
+            {
+                label: 'x轴标题颜色',
+                comp: "ColorPicker",
+                visible: showX,
+                config: {
+                    value: this.props?.xTitleColor,
+                    onChange: this.xTitleColorChanged,
+                },
+            },
+            {
+                label: '显示y轴网格线',
+                comp: "Switch",
+                config: {
+                    checked: this.props?.showY,
+                    onChange: this.showYGridLine,
+                },
+            },
+            {
+                label: 'y轴网格线颜色',
+                comp: "ColorPicker",
+                visible: showY,
+                config: {
+                    value: this.props?.yLineColor,
+                    onChange: this.yGridLineColorChanged,
+                },
+            },
+            {
+                label: 'y轴网格线宽',
+                comp: "LcNumberInput",
+                visible: showY,
+                config: {
+                    value: this.props?.yWidth,
+                    onChange: this.yGridLineWidthChanged,
+                },
+            },
+            {
+                label: 'y轴网格透明度',
+                comp: "LcNumberInput",
+                visible: showY,
+                config: {
+                    value: this.props?.yOpacity,
+                    onChange: this.yGridLineOpacityChanged,
+                },
+            },
+            {
+                label: 'y轴标题颜色',
+                comp: "ColorPicker",
+                visible: showY,
+                config: {
+                    value: this.props?.yTitleColor,
+                    onChange: this.yTitleColorChanged,
+                },
+            },
+        ]
+    }
+
     render() {
-        return (
-            <div className={'config-group chart-fill-color'}>
-                <div className={'lc-config-item'}>
-                    <label className={'lc-config-item-label'}>显示x轴网格线：</label>
-                    <div className={'lc-config-item-value'} style={{textAlign: 'right'}}>
-                        <Switch checked={this.props?.showX} onChange={this.showXGridLine}/></div>
-                </div>
-                {this.state.showX ?
-                    <>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>x轴网格线颜色：</label>
-                            <ColorPicker name={'mainTitleColor'}
-                                         color={this.props?.xLineColor}
-                                         onChange={this.xGridLineColorChanged}
-                                         className={'lc-config-item-value'}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>x轴网格线宽：</label>
-                            <div className={'lc-config-item-value'}>
-                                <span className={'lc-input-container'}>
-                                    <LCNumberInput value={this.props?.xWidth} onChange={this.xGridLineWidthChanged}/>
-                                    <label>&nbsp;px</label>
-                                </span>
-                            </div>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>x轴网格透明度：</label>
-                            <div className={'lc-config-item-value'}>
-                                <span className={'lc-input-container'}>
-                                    <LCNumberInput value={this.props?.xOpacity} onChange={this.xGridLineOpacityChanged}
-                                                   min={0} max={1} step={0.1}/>
-                                </span>
-                            </div>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>x轴标题颜色：</label>
-                            <ColorPicker name={'mainTitleColor'}
-                                         color={this.props?.xTitleColor}
-                                         onChange={this.xTitleColorChanged}
-                                         className={'lc-config-item-value'}/>
-                        </div>
-
-                    </> : <></>}
-
-                <div className={'lc-config-item'}>
-                    <label className={'lc-config-item-label'}>显示y轴网格线：</label>
-                    <div className={'lc-config-item-value'} style={{textAlign: 'right'}}>
-                        <Switch checked={this.props?.showY} onChange={this.showYGridLine}/></div>
-                </div>
-
-                {this.state.showY ?
-                    <>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>y轴网格线颜色：</label>
-                            <ColorPicker name={'mainTitleColor'}
-                                         color={this.props?.yLineColor}
-                                         onChange={this.yGridLineColorChanged}
-                                         className={'lc-config-item-value'}/>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>y轴网格线宽：</label>
-                            <div className={'lc-config-item-value'}>
-                                <span className={'lc-input-container'}>
-                                    <LCNumberInput value={this.props?.yWidth} onChange={this.yGridLineWidthChanged}/>
-                                    <label>&nbsp;px</label>
-                                </span>
-                            </div>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>y轴网格透明度：</label>
-                            <div className={'lc-config-item-value'}>
-                                <span className={'lc-input-container'}>
-                                    <LCNumberInput value={this.props?.yOpacity}
-                                                   onChange={this.yGridLineOpacityChanged}
-                                                   min={0} max={1} step={0.1}/>
-                                </span>
-                            </div>
-                        </div>
-                        <div className={'lc-config-item'}>
-                            <label className={'lc-config-item-label'}>y轴标题颜色：</label>
-                            <ColorPicker name={'mainTitleColor'}
-                                         color={this.props?.yTitleColor}
-                                         onChange={this.yTitleColorChanged}
-                                         className={'lc-config-item-value'}/>
-                        </div>
-                    </> :
-                    <></>}
-            </div>
-        );
+        return <CfgGroup items={this.generateRightAngleCoordinatesSet()}/>;
     }
 }
 

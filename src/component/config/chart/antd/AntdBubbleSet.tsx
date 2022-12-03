@@ -52,7 +52,6 @@ class AntdBubbleSet extends Component<AntdBubbleSetProps> {
             <div className={'elem-chart-config'}>
                 {/*图形填充色设置*/}
                 <FillColor onChange={this.fillColorChanged}
-                           fillMode={colors.length > 1 ? '1' : '0'}
                            colors={colors}
                            colorCount={sorts}/>
                 <Legend updateChartProps={updateChartProps} {...calculateLegendConfig(this.props.chartProps)}/>

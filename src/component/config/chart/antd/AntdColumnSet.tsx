@@ -33,8 +33,7 @@ class AntdColumnSet extends Component<AntdColumnSetProps> {
         return (
             <div className={'elem-chart-config'}>
                 {/*图形填充色设置*/}
-                <FillColor fillMode={colors.length > 1 ? '1' : '0'}
-                           colors={colors}
+                <FillColor colors={colors}
                            colorCount={sorts}
                            onChange={this.fillColorChanged}/>
                 {/*图例配置*/}
