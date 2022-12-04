@@ -228,6 +228,9 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
                 config: {
                     value: this.props?.xOpacity,
                     onChange: this.xGridLineOpacityChanged,
+                    min: 0,
+                    max: 1,
+                    step: 0.1
                 },
             },
             {

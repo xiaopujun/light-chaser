@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './style/index.less';
-import LCNumberInput from "../../../../base/LCNumberInput";
+import CfgGroup from "../../../base/CfgGroup";
 
 interface BarWidthProp {
     updateChartProps?: (data: any) => void;
@@ -19,20 +19,23 @@ class BarWidth extends Component<BarWidthProp> {
         })
     }
 
+    generateBarWidthSet = () => {
+        return [
+            {
+                label: '条形宽度',
+                comp: "LcNumberInput",
+                config: {
+                    value: this.props?.barWidth,
+                    onChange: this.barWidthChanged,
+                    min: 1,
+                },
+            },
+        ]
+    }
+
     render() {
-        return (
-            <div className={'config-group chart-fill-color'}>
-                <div className={'lc-config-item'}>
-                    <label className={'lc-config-item-label'}>条形宽度：</label>
-                    <div className={'lc-config-item-value'}>
-                        <span className={'lc-input-container'}>
-                            <LCNumberInput value={this.props?.barWidth} min={1} onChange={this.barWidthChanged}/>
-                            <label>&nbsp;px</label>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        );
+        const items = this.generateBarWidthSet();
+        return <CfgGroup items={items}/>;
     }
 }
 
