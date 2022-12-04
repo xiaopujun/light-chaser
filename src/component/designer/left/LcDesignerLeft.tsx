@@ -29,6 +29,14 @@ class LcDesignerLeft extends Component<LcDesignerLeftProps, any> {
     state: any = {
         data: [
             {
+                id: '0',
+                sort: '基础',
+                data: [
+                    {id: '1', type: '文本', icon: <AreaChartOutlined/>, content: '文本', token: 'Text'},
+                    {id: '2', type: '色块', icon: <AreaChartOutlined/>, content: '色块', token: 'ColorBlock'},
+                ]
+            },
+            {
                 id: '1',
                 sort: '条形图',
                 data: [{id: '1', type: '基础条形图', icon: <AreaChartOutlined/>, content: '基础', token: 'AntdBaseBar'},
