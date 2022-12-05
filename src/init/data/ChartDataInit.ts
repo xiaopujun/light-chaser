@@ -20,6 +20,8 @@ import {initAntdBaseFoldLine, initAntdMuchFoldLine, initAntdStepFoldLine} from "
 import {initAntdLiquid} from "./AntdLiquidDataInit";
 import {initAntdRadar} from "./AntdRadarDataInit";
 import {initAntdGauge} from "./AntdGaugeDataInit";
+import {initLcText} from "./LcTextDataInit";
+import {initLcColorBlock} from "./LcColorBlockDataInit";
 
 
 let chartInitDataMap = new Map();
@@ -48,6 +50,8 @@ chartInitDataMap.set('AntdRadar', initAntdRadar);
 chartInitDataMap.set('AntdGauge', initAntdGauge);
 chartInitDataMap.set('AntdBaseArea', initAntdBaseArea);
 chartInitDataMap.set('AntdPercentArea', initAntdPercentArea);
+chartInitDataMap.set('LcText', initLcText);
+chartInitDataMap.set('LcColorBlock', initLcColorBlock);
 
 export function getChartInitData(type: string) {
     if (chartInitDataMap.has(type)) {

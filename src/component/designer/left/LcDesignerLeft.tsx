@@ -32,8 +32,8 @@ class LcDesignerLeft extends Component<LcDesignerLeftProps, any> {
                 id: '0',
                 sort: '基础',
                 data: [
-                    {id: '1', type: '文本', icon: <AreaChartOutlined/>, content: '文本', token: 'Text'},
-                    {id: '2', type: '色块', icon: <AreaChartOutlined/>, content: '色块', token: 'ColorBlock'},
+                    {id: '1', type: '文本', icon: <AreaChartOutlined/>, content: '文本', token: 'LcText'},
+                    {id: '2', type: '色块', icon: <AreaChartOutlined/>, content: '色块', token: 'LcColorBlock'},
                 ]
             },
             {

@@ -1,4 +1,6 @@
 import {lazy} from "react";
+import LcText from "./lc/text/LcText";
+import LcColorBlock from "./lc/colorblock/LcColorBlock";
 
 const AntdArea = lazy(() => import('./antd/AntdArea'));
 const AntdBar = lazy(() => import('./antd/AntdBar'));
@@ -37,6 +39,8 @@ chartsMap.set("AntdMuchFoldLine", AntdLine);
 chartsMap.set("AntdLiquid", AntdLiquid);
 chartsMap.set("AntdRadar", AntdRadar);
 chartsMap.set("AntdGauge", AntdGauge);
+chartsMap.set("LcText", LcText);
+chartsMap.set("LcColorBlock", LcColorBlock);
 
 export default function getChartsTemplate(classTemplateName: string) {
     if ("" !== classTemplateName && chartsMap.has(classTemplateName)) {
