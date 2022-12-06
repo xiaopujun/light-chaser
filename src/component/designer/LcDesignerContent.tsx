@@ -121,7 +121,7 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
      * @param e
      */
     onDropDragOver = (e: any) => {
-        return {w: 6, h: 12}
+        return {w: 3, h: 3}
     }
 
     /**

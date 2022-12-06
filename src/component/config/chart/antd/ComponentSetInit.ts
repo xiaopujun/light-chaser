@@ -1,4 +1,5 @@
 import {lazy} from "react";
+import LcTextSet from "../lc/LcTextSet";
 
 const AntdBarSet = lazy(() => import('./AntdBarSet'));
 const AntdColumnSet = lazy(() => import('./AntdColumnSet'));
@@ -41,6 +42,7 @@ configMap.set("AntdMuchFoldLine", AntdFoldLineSet);
 configMap.set("AntdMuchFoldLine", AntdFoldLineSet);
 configMap.set("AntdRadar", AntdRadarSet);
 configMap.set("AntdGauge", AntdGaugeSet);
+configMap.set("LcText", LcTextSet);
 
 export default function getChartsConfig(chartSetName: string) {
     if ("" !== chartSetName && configMap.has(chartSetName)) {
