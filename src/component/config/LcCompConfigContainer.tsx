@@ -3,7 +3,7 @@ import {Collapse} from 'antd';
 import './LcCompConfigContainer.less';
 import {RollbackOutlined} from "@ant-design/icons";
 import LcEmBaseInfo from "./info/LcEmBaseInfo";
-import getChartsConfig from "./chart/antd/ComponentSetInit";
+import getChartsConfig from "./chart/ComponentSetInit";
 import LcCompBaseStyleSet from "./base/LcCompBaseStyleSet";
 import Loading from "../loading/Loading";
 

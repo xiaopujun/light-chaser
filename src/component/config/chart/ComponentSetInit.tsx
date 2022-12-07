@@ -1,17 +1,18 @@
-import {lazy} from "react";
-import LcTextSet from "../lc/LcTextSet";
+import React, {lazy} from "react";
+import LcTextSet from "./lc/LcTextSet";
 
-const AntdBarSet = lazy(() => import('./AntdBarSet'));
-const AntdColumnSet = lazy(() => import('./AntdColumnSet'));
-const AntdAreaSet = lazy(() => import('./AntdAreaSet'));
-const AntdPieSet = lazy(() => import('./AntdPieSet'));
-const AntdLiquidSet = lazy(() => import('./AntdLiquidSet'));
-const AntdRadarSet = lazy(() => import('./AntdRadarSet'));
-const AntdScatterSet = lazy(() => import('./AntdScatterSet'));
-const AntdBubbleSet = lazy(() => import('./AntdBubbleSet'));
-const AntdWordCloudSet = lazy(() => import('./AntdWordCloudSet'));
-const AntdFoldLineSet = lazy(() => import('./AntdLineSet'));
-const AntdGaugeSet = lazy(() => import('./AntdGaugeSet'));
+const AntdBarSet = lazy(() => import('./antd/AntdBarSet'));
+const AntdColumnSet = lazy(() => import('./antd/AntdColumnSet'));
+const AntdAreaSet = lazy(() => import('./antd/AntdAreaSet'));
+const AntdPieSet = lazy(() => import('./antd/AntdPieSet'));
+const AntdLiquidSet = lazy(() => import('./antd/AntdLiquidSet'));
+const AntdRadarSet = lazy(() => import('./antd/AntdRadarSet'));
+const AntdScatterSet = lazy(() => import('./antd/AntdScatterSet'));
+const AntdBubbleSet = lazy(() => import('./antd/AntdBubbleSet'));
+const AntdWordCloudSet = lazy(() => import('./antd/AntdWordCloudSet'));
+const AntdFoldLineSet = lazy(() => import('./antd/AntdLineSet'));
+const AntdGaugeSet = lazy(() => import('./antd/AntdGaugeSet'));
+const DefaultSet = lazy(() => import('./DefaultSet'));
 
 let configMap = new Map();
 
@@ -48,6 +49,6 @@ export default function getChartsConfig(chartSetName: string) {
     if ("" !== chartSetName && configMap.has(chartSetName)) {
         return configMap.get(chartSetName);
     } else {
-        throw new Error("name was null string or map don't has this config, it should be charts config's name");
+        return DefaultSet;
     }
 }
