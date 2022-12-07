@@ -1,13 +1,13 @@
 import {DeleteOutlined, SettingOutlined} from '@ant-design/icons';
 import React, {Component} from 'react';
 import './index.less';
-import {LayoutDesignerStoreProps} from "../../global/types";
+import {LCDesignerProps} from "../../types/LcDesignerType";
 
 interface EditToolsProps {
-    elemId: string;  //组件id
-    deleteItem?: (elemId: string) => void; //删除组件回调
-    activeElem?: (data: { elemId: number, type: string; subType: string }) => void; //打开右侧配置项回调
-    dataXDesigner?: LayoutDesignerStoreProps;
+    elemId?: string;  //组件id
+    delItem?: (elemId: string) => void; //删除组件回调
+    updateActive?: (data: { elemId: number, type: string }) => void; //打开右侧配置项回调
+    chartConfig?: any;
 }
 
 /**
@@ -18,22 +18,21 @@ class EditTools extends Component<EditToolsProps> {
     /**
      * 删除组件
      */
-    deleteItem = () => {
-        const {elemId, deleteItem} = this.props;
-        deleteItem && deleteItem(elemId);
+    delItem = () => {
+        const {elemId = '-1', delItem} = this.props;
+        delItem && delItem(elemId);
     }
 
-    activeElem = () => {
-        const {elemId, activeElem, dataXDesigner} = this.props;
-        let subType = dataXDesigner?.layoutConfig[parseInt(elemId)]?.name;
-        activeElem && activeElem({elemId: parseInt(elemId), type: "", subType});
+    updateActive = () => {
+        const {elemId = '-1', updateActive, chartConfig} = this.props;
+        updateActive && updateActive({elemId: parseInt(elemId), type: chartConfig.baseInfo.type});
     }
 
     render() {
         return (
             <div className={'edit-tools'}>
-                <span onClick={this.deleteItem}><DeleteOutlined/></span>
-                <span onClick={this.activeElem}><SettingOutlined/></span>
+                <span onClick={this.delItem}><DeleteOutlined/></span>
+                <span onClick={this.updateActive}><SettingOutlined/></span>
             </div>
         );
     }

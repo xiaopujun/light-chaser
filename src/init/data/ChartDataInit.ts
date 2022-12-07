@@ -1,19 +1,27 @@
-import {initAntdBaseBar, initAntdGroupBar, initAntdPercentBar, initAntdStackBar, initAntdZoneBar} from "./antd-bar";
+import {
+    initAntdBaseBar,
+    initAntdGroupBar,
+    initAntdPercentBar,
+    initAntdStackBar,
+    initAntdZoneBar
+} from "./AntdBarDataInit";
 import {
     initAntdBaseColumn,
     initAntdGroupColumn,
     initAntdPercentColumn,
     initAntdStackColumn,
     initAntdZoneColumn
-} from "./antd-column";
-import {initAntdPie, initAntdRing} from "./antd-pie";
-import {initAntdBubbles, initAntdScatter} from "./antd-scatter";
-import {initAntdStackArea} from "./antd-area";
-import {initAntdWordCloud} from "./antd-wordcloud";
-import {initAntdMuchFoldLine} from "./antd-line";
-import {initAntdLiquid} from "./antd-liquid";
-import {initAntdRadar} from "./antd-radar";
-import {initAntdGauge} from "./antd-gauge";
+} from "./AntdColumnDataInit";
+import {initAntdPie, initAntdRing} from "./AntdPieDataInit";
+import {initAntdBubbles, initAntdScatter} from "./AntdScatterDataInit";
+import {initAntdStackArea, initAntdBaseArea, initAntdPercentArea} from "./AntdAreaDataInit";
+import {initAntdWordCloud} from "./AntdWordCloudDataInit";
+import {initAntdBaseFoldLine, initAntdMuchFoldLine, initAntdStepFoldLine} from "./AntdLineDataInit";
+import {initAntdLiquid} from "./AntdLiquidDataInit";
+import {initAntdRadar} from "./AntdRadarDataInit";
+import {initAntdGauge} from "./AntdGaugeDataInit";
+import {initLcText} from "./LcTextDataInit";
+import {initLcColorBlock} from "./LcColorBlockDataInit";
 
 
 let chartInitDataMap = new Map();
@@ -34,9 +42,21 @@ chartInitDataMap.set('AntdScatter', initAntdScatter);
 chartInitDataMap.set('AntdBubbles', initAntdBubbles);
 chartInitDataMap.set('AntdStackArea', initAntdStackArea);
 chartInitDataMap.set('AntdWordCloud', initAntdWordCloud);
+chartInitDataMap.set('AntdBaseFoldLine', initAntdBaseFoldLine);
+chartInitDataMap.set('AntdStepFoldLine', initAntdStepFoldLine);
 chartInitDataMap.set('AntdMuchFoldLine', initAntdMuchFoldLine);
 chartInitDataMap.set('AntdLiquid', initAntdLiquid);
 chartInitDataMap.set('AntdRadar', initAntdRadar);
 chartInitDataMap.set('AntdGauge', initAntdGauge);
+chartInitDataMap.set('AntdBaseArea', initAntdBaseArea);
+chartInitDataMap.set('AntdPercentArea', initAntdPercentArea);
+chartInitDataMap.set('LcText', initLcText);
+chartInitDataMap.set('LcColorBlock', initLcColorBlock);
 
-export default chartInitDataMap;
+export function getChartInitData(type: string) {
+    if (chartInitDataMap.has(type)) {
+        return chartInitDataMap.get(type)();
+    } else {
+        throw new Error('chartInitDataMap hos no relate init data');
+    }
+}
