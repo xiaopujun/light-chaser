@@ -6,8 +6,8 @@ import './style/Content.less';
 import getChartsTemplate from "../charts/ComponentChartInit";
 import {LCDesignerProps} from "../../types/LcDesignerType";
 import Loading from "../loading/Loading";
-import Ruler from "@scena/react-ruler";
 import Gesto from "gesto";
+import Ruler from "@scena/react-ruler";
 
 interface LcDesignerContentProps {
     LCDesignerStore?: LCDesignerProps;
@@ -20,8 +20,6 @@ interface LcDesignerContentProps {
 export default class LcDesignerContent extends React.Component<LcDesignerContentProps | any> {
 
     rgl: any = null;
-    rulerX: any;
-    rulerY: any;
 
     state: any = {
         scale: 1
@@ -146,17 +144,6 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
         const container: any = document.getElementById('lc-designer-container');
         const designer: any = document.getElementById('lc-designer-content');
 
-        let scrollX = 0;
-        let scrollY = 0;
-        new Gesto(designer).on("drag", e => {
-            if (this.scaleConfig.isPointerdown) {
-                scrollX -= e.deltaX;
-                scrollY -= e.deltaY;
-                this.rulerX.scroll(scrollX / this.scaleConfig.scale);
-                this.rulerY.scroll(scrollY / this.scaleConfig.scale);
-            }
-        });
-
         this.scaleConfig.result = {width: 1920, height: 1080};
         this.scaleConfig.x = (window.innerWidth - 600 - this.scaleConfig.result.width) * 0.5;
         this.scaleConfig.y = (window.innerHeight - 64 - this.scaleConfig.result.height) * 0.5;
@@ -264,7 +251,6 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
         const {LCDesignerStore} = this.props;
         const {layoutConfigs, globalSet} = LCDesignerStore!;
         const {scale} = this.state;
-        const unit = parseInt((100 / scale) + '');
         return (
             <div className={'lc-ruler-container'}
                  style={{
@@ -275,74 +261,34 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
                      overflow: 'hidden',
                      backgroundColor: '#131e26'
                  }}>
-                <Ruler ref={e => this.rulerX = e}
-                       unit={unit}
-                       negativeRuler={true}
-                       backgroundColor={'#131e26'}
-                       textColor={'#5fccff'}
-                       textAlign={"center"}
-                       zoom={scale}
-                       segment={5}
-                       type="horizontal"
-                       style={{
-                           position: 'absolute',
-                           top: '0',
-                           left: '30px',
-                           height: '30px',
-                           width: 'calc(100% - 30px)'
-                       }}
-                       font="12px sans-serif"
-                       lineWidth={1}
-                />
-                <Ruler ref={e => this.rulerY = e}
-                       unit={unit}
-                       negativeRuler={true}
-                       backgroundColor={'#131e26'}
-                       textColor={'#5fccff'}
-                       textAlign={"center"}
-                       zoom={scale}
-                       segment={5}
-                       type="vertical"
-                       style={{
-                           position: 'absolute',
-                           left: '0',
-                           top: '30px',
-                           width: '30px',
-                           height: 'calc(100% - 30px)'
-                       }}
-                       font="12px sans-serif"
-                       lineWidth={1}
-                />
-                <div style={{top: '30px', left: '30px', position: 'relative'}}>
-                    <div id={'lc-designer-container'} style={{
-                        overflow: "hidden",
-                        height: `${window.innerHeight - 64}px`,
-                        width: `${window.innerWidth - 600}px`,
-                        backgroundColor: '#474747'
-                    }}>
-                        <div id={'lc-designer-content'} className="site-layout-background"
-                             style={{width: globalSet.screenWidth, height: globalSet.screenHeight}}>
-                            <ReactGridLayout ref={obj => this.rgl = obj}
-                                             className="layout"
-                                             layout={layoutConfigs}
-                                             cols={globalSet?.columns || 48}
-                                             rowHeight={10}
-                                             margin={[15, 15]}
-                                             useCSSTransforms={true}
-                                             preventCollision={true}
-                                             allowOverlap={true}
-                                             isBounded={true}
-                                             isDroppable={true}
-                                             style={{height: globalSet.screenHeight, backgroundColor: '#131e26',}}
-                                             transformScale={scale}
-                                             width={globalSet.screenWidth}
-                                             onDrop={this.onDrop}
-                                             onDropDragOver={this.onDropDragOver}
-                                             onDragStop={this.onDragStop}
-                                             onResizeStop={this.onResizeStop}>
-                                {this.generateElement()}
-                            </ReactGridLayout>
-                        </div>
+                <div id={'lc-designer-container'} style={{
+                    overflow: "hidden",
+                    height: `${window.innerHeight - 64}px`,
+                    width: `${window.innerWidth - 600}px`,
+                    backgroundColor: '#474747'
+                }}>
+                    <div id={'lc-designer-content'} className="site-layout-background"
+                         style={{width: globalSet.screenWidth, height: globalSet.screenHeight}}>
+                        <ReactGridLayout ref={obj => this.rgl = obj}
+                                         className="layout"
+                                         layout={layoutConfigs}
+                                         cols={globalSet?.columns || 48}
+                                         rowHeight={10}
+                                         margin={[15, 15]}
+                                         useCSSTransforms={true}
+                                         preventCollision={true}
+                                         allowOverlap={true}
+                                         isBounded={true}
+                                         isDroppable={true}
+                                         style={{height: globalSet.screenHeight, backgroundColor: '#131e26',}}
+                                         transformScale={scale}
+                                         width={globalSet.screenWidth}
+                                         onDrop={this.onDrop}
+                                         onDropDragOver={this.onDropDragOver}
+                                         onDragStop={this.onDragStop}
+                                         onResizeStop={this.onResizeStop}>
+                            {this.generateElement()}
+                        </ReactGridLayout>
                     </div>
                 </div>
             </div>
