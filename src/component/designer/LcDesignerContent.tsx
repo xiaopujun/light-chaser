@@ -6,8 +6,7 @@ import './style/Content.less';
 import getChartsTemplate from "../charts/ComponentChartInit";
 import {LCDesignerProps} from "../../types/LcDesignerType";
 import Loading from "../loading/Loading";
-import Gesto from "gesto";
-import Ruler from "@scena/react-ruler";
+import DragScaleProvider from "./DragScaleProvider";
 
 interface LcDesignerContentProps {
     LCDesignerStore?: LCDesignerProps;
@@ -37,10 +36,6 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
         diff: {x: 0, y: 0}, // 相对于上一次pointermove移动差值
         lastPointermove: {x: 0, y: 0}, // 用于计算diff
         ctrlDown: false,
-    }
-
-    componentDidMount() {
-        this.scaleInit();
     }
 
     calculateChartConfig = (elemId: string | number) => {
@@ -119,7 +114,7 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
      * @param e
      */
     onDropDragOver = (e: any) => {
-        return {w: 3, h: 3}
+        return {w: 5, h: 5}
     }
 
     /**
@@ -139,112 +134,10 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
         updateLayout && updateLayout(newItem);
     }
 
-    scaleInit = () => {
-        // 获取dom
-        const container: any = document.getElementById('lc-designer-container');
-        const designer: any = document.getElementById('lc-designer-content');
-
-        this.scaleConfig.result = {width: 1920, height: 1080};
-        this.scaleConfig.x = (window.innerWidth - 600 - this.scaleConfig.result.width) * 0.5;
-        this.scaleConfig.y = (window.innerHeight - 64 - this.scaleConfig.result.height) * 0.5;
-        designer.style.transform = 'translate3d(' + this.scaleConfig.x + 'px, ' + this.scaleConfig.y + 'px, 0) scale(1)';
-
-        document.addEventListener('keyup', ev => {
-            if (ev.keyCode === 17) {
-                this.scaleConfig.ctrlDown = false;
-            }
+    changeScale = (scale: number) => {
+        this.setState({
+            scale: scale
         })
-        document.addEventListener('keydown', ev => {
-            if (ev.keyCode === 17) {
-                this.scaleConfig.ctrlDown = true;
-            }
-        })
-
-        // 拖拽查看
-        this.designerDrag(designer);
-        // 滚轮缩放
-        this.designerWheelZoom(container, designer);
-
-    }
-
-    // 拖拽查看
-    designerDrag = (designer: any) => {
-        // 绑定 pointerdown
-        designer.addEventListener('pointerdown', (e: any) => {
-            if (this.scaleConfig.ctrlDown) {
-                this.scaleConfig.isPointerdown = true;
-                designer.setPointerCapture(e.pointerId);
-                this.scaleConfig.point = {x: e.clientX, y: e.clientY};
-                this.scaleConfig.lastPointermove = {x: e.clientX, y: e.clientY};
-            }
-        });
-        // 绑定 pointermove
-        designer.addEventListener('pointermove', (e: any) => {
-            if (this.scaleConfig.ctrlDown) {
-                if (this.scaleConfig.isPointerdown) {
-                    const current1 = {x: e.clientX, y: e.clientY};
-                    this.scaleConfig.diff.x = current1.x - this.scaleConfig.lastPointermove.x;
-                    this.scaleConfig.diff.y = current1.y - this.scaleConfig.lastPointermove.y;
-                    this.scaleConfig.lastPointermove = {x: current1.x, y: current1.y};
-                    this.scaleConfig.x += this.scaleConfig.diff.x;
-                    this.scaleConfig.y += this.scaleConfig.diff.y;
-                    designer.style.transform = 'translate3d(' + this.scaleConfig.x + 'px, ' + this.scaleConfig.y + 'px, 0) scale(' + this.scaleConfig.scale + ')';
-                }
-                e.preventDefault();
-            }
-        });
-        // 绑定 pointerup
-        designer.addEventListener('pointerup', (e: any) => {
-            if (this.scaleConfig.ctrlDown) {
-                if (this.scaleConfig.isPointerdown) {
-                    this.scaleConfig.isPointerdown = false;
-                }
-            }
-        });
-        // 绑定 pointercancel
-        designer.addEventListener('pointercancel', (e: any) => {
-            if (this.scaleConfig.ctrlDown) {
-                if (this.scaleConfig.isPointerdown) {
-                    this.scaleConfig.isPointerdown = false;
-                }
-            }
-        });
-    }
-
-
-    // 滚轮缩放
-    designerWheelZoom = (container: any, designer: any) => {
-        container.addEventListener('wheel', (e: any) => {
-            if (this.scaleConfig.ctrlDown) {
-                let ratio = 1.1;
-                // 缩小
-                if (e.deltaY > 0) {
-                    ratio = 1 / 1.1;
-                }
-                // 限制缩放倍数
-                const _scale = this.scaleConfig.scale * ratio;
-                if (_scale > this.scaleConfig.maxScale) {
-                    ratio = this.scaleConfig.maxScale / this.scaleConfig.scale;
-                    this.scaleConfig.scale = this.scaleConfig.maxScale;
-                } else if (_scale < this.scaleConfig.minScale) {
-                    ratio = this.scaleConfig.minScale / this.scaleConfig.scale;
-                    this.scaleConfig.scale = this.scaleConfig.minScale;
-                } else {
-                    this.scaleConfig.scale = _scale;
-                }
-                // 目标元素是img说明鼠标在img上，以鼠标位置为缩放中心，否则默认以图片中心点为缩放中心
-                const origin = {
-                    x: (ratio - 1) * this.scaleConfig.result.width * 0.5,
-                    y: (ratio - 1) * this.scaleConfig.result.height * 0.5
-                };
-                // 计算偏移量
-                this.scaleConfig.x -= (ratio - 1) * (e.clientX - this.scaleConfig.x - 300) - origin.x;
-                this.scaleConfig.y -= (ratio - 1) * (e.clientY - this.scaleConfig.y - 64) - origin.y;
-                designer.style.transform = 'translate3d(' + this.scaleConfig.x + 'px, ' + this.scaleConfig.y + 'px, 0) scale(' + this.scaleConfig.scale + ')';
-                e.preventDefault();
-                this.setState({scale: this.scaleConfig.scale})
-            }
-        });
     }
 
     render() {
@@ -252,46 +145,32 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
         const {layoutConfigs, globalSet} = LCDesignerStore!;
         const {scale} = this.state;
         return (
-            <div className={'lc-ruler-container'}
-                 style={{
-                     height: window.innerHeight - 64,
-                     position: 'relative',
-                     margin: '0',
-                     padding: '0',
-                     overflow: 'hidden',
-                     backgroundColor: '#131e26'
-                 }}>
-                <div id={'lc-designer-container'} style={{
-                    overflow: "hidden",
-                    height: `${window.innerHeight - 64}px`,
-                    width: `${window.innerWidth - 600}px`,
-                    backgroundColor: '#474747'
-                }}>
-                    <div id={'lc-designer-content'} className="site-layout-background"
-                         style={{width: globalSet.screenWidth, height: globalSet.screenHeight}}>
-                        <ReactGridLayout ref={obj => this.rgl = obj}
-                                         className="layout"
-                                         layout={layoutConfigs}
-                                         cols={globalSet?.columns || 48}
-                                         rowHeight={10}
-                                         margin={[15, 15]}
-                                         useCSSTransforms={true}
-                                         preventCollision={true}
-                                         allowOverlap={true}
-                                         isBounded={true}
-                                         isDroppable={true}
-                                         style={{height: globalSet.screenHeight, backgroundColor: '#131e26',}}
-                                         transformScale={scale}
-                                         width={globalSet.screenWidth}
-                                         onDrop={this.onDrop}
-                                         onDropDragOver={this.onDropDragOver}
-                                         onDragStop={this.onDragStop}
-                                         onResizeStop={this.onResizeStop}>
-                            {this.generateElement()}
-                        </ReactGridLayout>
-                    </div>
-                </div>
-            </div>
+            <DragScaleProvider contentWidth={globalSet.screenWidth}
+                               contentHeight={globalSet.screenHeight}
+                               containerWidth={window.innerWidth - 600}
+                               containerHeight={window.innerHeight - 64}
+                               changeScale={this.changeScale}>
+                <ReactGridLayout ref={obj => this.rgl = obj}
+                                 className="layout"
+                                 layout={layoutConfigs}
+                                 cols={globalSet?.columns || 48}
+                                 rowHeight={10}
+                                 margin={[15, 15]}
+                                 useCSSTransforms={true}
+                                 preventCollision={true}
+                                 allowOverlap={true}
+                                 isBounded={true}
+                                 isDroppable={true}
+                                 style={{height: globalSet.screenHeight, backgroundColor: '#131e26',}}
+                                 transformScale={scale}
+                                 width={globalSet.screenWidth}
+                                 onDrop={this.onDrop}
+                                 onDropDragOver={this.onDropDragOver}
+                                 onDragStop={this.onDragStop}
+                                 onResizeStop={this.onResizeStop}>
+                    {this.generateElement()}
+                </ReactGridLayout>
+            </DragScaleProvider>
         );
     }
 }
