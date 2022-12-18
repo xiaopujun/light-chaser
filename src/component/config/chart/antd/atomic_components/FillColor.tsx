@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './style/index.less';
-import ColorSelector from "./ColorSelector";
 import CfgGroup from "../../../base/CfgGroup";
 
 interface FillColorProp {

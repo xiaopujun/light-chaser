@@ -4,7 +4,6 @@ import FillColor from "./atomic_components/FillColor";
 import Legend from "./atomic_components/Legned";
 import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";
 import ColumnWidth from "./atomic_components/ColumnWidth";
-import {getAntdDataSortCount} from "../../../../utils/AntdBarUtil";
 import {
     calculateBarWidth,
     calculateFillColor,

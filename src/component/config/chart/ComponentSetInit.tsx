@@ -1,4 +1,4 @@
-import React, {lazy} from "react";
+import {lazy} from "react";
 import LcTextSet from "./lc/LcTextSet";
 
 const AntdBarSet = lazy(() => import('./antd/AntdBarSet'));

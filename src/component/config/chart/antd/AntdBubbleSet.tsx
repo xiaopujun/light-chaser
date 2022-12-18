@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import {Select, Slider} from "antd";
 import FillColor from "./atomic_components/FillColor";
 import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";
-import {getAntdDataSortCount} from "../../../../utils/AntdBarUtil";
 import {dataSort} from "../../../../utils/SortUtil";
 import PointSet from "./atomic_components/PointSet";
 import {
@@ -13,7 +11,6 @@ import {
 } from "./util/AntdChartConfigUtil";
 import Legend from "./atomic_components/Legned";
 
-const {Option} = Select;
 
 interface AntdBubbleSetProps {
     updateChartProps?: (data: any) => void;

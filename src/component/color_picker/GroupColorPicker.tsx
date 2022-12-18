@@ -20,7 +20,7 @@ class GroupColorPicker extends Component<GroupColorPickerProp> {
     constructor(props: any) {
         super(props);
         const {value = []} = props;
-        if (value.length == 0) {
+        if (value.length === 0) {
             this.state = {colors: ['#00e9ff']};
             return;
         }

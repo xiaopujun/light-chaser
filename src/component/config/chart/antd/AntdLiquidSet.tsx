@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './style/AntdLiquidSet.less';
 import FillColor from "./atomic_components/FillColor";
-import ColorPicker from "../../../color_picker/BaseColorPicker";
 import CfgGroup from "../../base/CfgGroup";
 
 

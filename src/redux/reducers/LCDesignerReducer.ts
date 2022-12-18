@@ -1,4 +1,4 @@
-import {Action, ChartConfigProps, LCDesignerProps} from "../../types/LcDesignerType";
+import {Action, LCDesignerProps} from "../../types/LcDesignerType";
 import * as _ from 'lodash'
 import deepmerge from "deepmerge";
 import {DesignerOperate} from "../../enum/DesignerOperate";

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import LCNumberInput from "../../base/LCNumberInput";
 import './LcGlobalSet.less';
 import CfgGroup from "../base/CfgGroup";
 
@@ -127,7 +126,6 @@ class LcGlobalSet extends Component<LcGlobalSetProps> {
     }
 
     render() {
-        const {globalSet} = this.props;
         return (
             <div className={'lc-global-set'}>
                 <div className={'lc-global-set-title'}>全局配置</div>

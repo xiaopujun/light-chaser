@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import ColorPicker from "../../../../color_picker/BaseColorPicker";
 import CfgGroup from "../../../base/CfgGroup";
 
 

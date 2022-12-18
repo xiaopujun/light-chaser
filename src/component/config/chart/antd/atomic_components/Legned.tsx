@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './style/index.less';
-import ColorPicker from "../../../../color_picker/BaseColorPicker";
 import CfgGroup from "../../../base/CfgGroup";
 
 

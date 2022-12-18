@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
-import {Select} from "antd";
 import './style/AntdScatterSet.less';
 import FillColor from "./atomic_components/FillColor";
 import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";
 import {calculateFillColor, calculatePointSize, calculateRightAngleCoordinates} from "./util/AntdChartConfigUtil";
 import PointSet from "./atomic_components/PointSet";
-
-const {Option} = Select;
 
 
 interface AntdScatterSetProps {

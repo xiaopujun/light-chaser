@@ -3,7 +3,7 @@
  */
 export const calculateFillColor = (chartProps: any) => {
     const {color} = chartProps;
-    if (color == undefined)
+    if (color === undefined)
         return ['#02e9fe']
     if (typeof color == 'string')
         return [color];
@@ -37,7 +37,6 @@ export const calculateLegendConfig = (chartProps: any) => {
  * 计算直角坐标系
  */
 export const calculateRightAngleCoordinates = (chartProps: any) => {
-    let res = {showX: false, showY: false};
     const {xAxis, yAxis} = chartProps;
     return {
         showX: xAxis?.grid != null,

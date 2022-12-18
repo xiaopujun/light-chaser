@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Slider, Switch} from "antd";
+import {Switch} from "antd";
 import ColorPicker from "../../../color_picker/BaseColorPicker";
 import LCTextInput from "../../../base/LCTextInput";
 import LCNumberInput from "../../../base/LCNumberInput";
@@ -353,7 +353,7 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>开启刻度仪表盘：</label>
                         <div className={'lc-config-item-value'} style={{textAlign: 'right'}}>
-                            <Switch checked={config?.rangeType && config?.rangeType == 'meter'}
+                            <Switch checked={config?.rangeType && config?.rangeType === 'meter'}
                                     onChange={this.openMete}/></div>
                     </div>
                     <div className={'lc-config-item'}>

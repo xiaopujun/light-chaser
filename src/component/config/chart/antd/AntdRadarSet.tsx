@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
-import {Slider, Switch} from "antd";
+import {Switch} from "antd";
 import './style/AntdRadarSet.less';
 import FillColor from "./atomic_components/FillColor";
 import Legend from "./atomic_components/Legned";
-import OutRadius from "./atomic_components/OutInnerRadius";
-import StartEndAngle from "./atomic_components/StartEndAngle";
-import {getAntdDataSortCount} from "../../../../utils/AntdBarUtil";
 import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";
 import ColorPicker from "../../../color_picker/BaseColorPicker";
 import LCNumberInput from "../../../base/LCNumberInput";
