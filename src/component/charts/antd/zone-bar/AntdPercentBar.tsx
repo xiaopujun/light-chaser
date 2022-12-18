@@ -1,18 +1,17 @@
 import React, {Component} from 'react';
-import {Column} from "@ant-design/charts";
-import './style/AntdColumn.less';
-import EditTools from "../../edit-tool";
+import {Bar} from "@ant-design/charts";
+import EditTools from "../../../edit-tool";
 
-interface AntdColumnProps {
-    chartConfig?: any;
+interface AntdBarProps {
     elemId?: string;
+    chartConfig?: any;
     updateActive?: (data: { elemId: number, type: string }) => void; //打开右侧配置项回调
 }
 
 /**
- * 基础柱状图
+ * 基础条形图
  */
-export default class AntdColumn extends Component<AntdColumnProps> {
+export default class AntdPercentBar extends Component<AntdBarProps> {
 
     render() {
         const {chartConfig, elemId} = this.props;
@@ -20,7 +19,7 @@ export default class AntdColumn extends Component<AntdColumnProps> {
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
                 <EditTools {...this.props} elemId={elemId}/>
-                <Column supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
+                <Bar supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
             </div>
         );
     }

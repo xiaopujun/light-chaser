@@ -1,13 +1,14 @@
 import {lazy} from "react";
 import LcText from "./lc/text/LcText";
 import LcColorBlock from "./lc/colorblock/LcColorBlock";
+import {lcComps} from "../designer";
 
 const AntdArea = lazy(() => import('./antd/AntdArea'));
-const AntdBar = lazy(() => import('./antd/AntdBar'));
-const AntdColumn = lazy(() => import('./antd/AntdColumn'));
+const AntdBar = lazy(() => import('./antd/base-bar/AntdBaseBar'));
+const AntdColumn = lazy(() => import('./antd/base-column/AntdBaseColumn'));
 const AntdPie = lazy(() => import('./antd/AntdPie'));
 const AntdScatter = lazy(() => import('./antd/AntdScatter'));
-const AntdWordCloud = lazy(() => import('./antd/AntdWordCloud'));
+const AntdWordCloud = lazy(() => import('./antd/word-cloud/AntdWordCloud'));
 const AntdLine = lazy(() => import('./antd/AntdLine'));
 const AntdLiquid = lazy(() => import('./antd/AntdLiquid'));
 const AntdRadar = lazy(() => import('./antd/AntdRadar'));
@@ -15,16 +16,6 @@ const AntdGauge = lazy(() => import('./antd/AntdGauge'));
 
 let chartsMap = new Map();
 
-chartsMap.set("AntdBaseBar", AntdBar);
-chartsMap.set("AntdGroupBar", AntdBar);
-chartsMap.set("AntdPercentBar", AntdBar);
-chartsMap.set("AntdZoneBar", AntdBar);
-chartsMap.set("AntdStackBar", AntdBar);
-chartsMap.set("AntdBaseColumn", AntdColumn);
-chartsMap.set("AntdGroupColumn", AntdColumn);
-chartsMap.set("AntdPercentColumn", AntdColumn);
-chartsMap.set("AntdZoneColumn", AntdColumn);
-chartsMap.set("AntdStackColumn", AntdColumn);
 chartsMap.set("AntdPie", AntdPie);
 chartsMap.set("AntdRing", AntdPie);
 chartsMap.set("AntdScatter", AntdScatter);
@@ -43,9 +34,9 @@ chartsMap.set("LcText", LcText);
 chartsMap.set("LcColorBlock", LcColorBlock);
 
 export default function getChartsTemplate(classTemplateName: string) {
-    if ("" !== classTemplateName && chartsMap.has(classTemplateName)) {
-        return chartsMap.get(classTemplateName);
-    } else {
+    if (classTemplateName in lcComps)
+        return lcComps[classTemplateName];
+    else {
         throw new Error("name was null string or map don't has this template, it should be charts template's name");
     }
 }

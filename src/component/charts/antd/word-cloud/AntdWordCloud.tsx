@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {WordCloud} from "@ant-design/charts";
-import './style/AntdWordCloud.less';
-import EditTools from "../../edit-tool";
+import EditTools from "../../../edit-tool";
 
 interface AntdWordCloudProps {
     elemId?: string;

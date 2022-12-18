@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Radar} from "@ant-design/charts";
-import './style/AntdRadar.less';
 import EditTools from "../../edit-tool";
 
 interface AntdRadarProps {

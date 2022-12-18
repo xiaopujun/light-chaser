@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Line} from "@ant-design/charts";
-import './style/AntdLine.less';
 import EditTools from "../../edit-tool";
 
 interface AntdLineProps {

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Scatter} from "@ant-design/charts";
-import './style/AntdScatter.less';
 import EditTools from "../../edit-tool";
 
 interface AntdScatterProps {

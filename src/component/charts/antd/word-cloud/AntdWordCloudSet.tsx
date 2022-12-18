@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import FillColor from "./atomic_components/FillColor";
-import {calculateFillColor} from "./util/AntdChartConfigUtil";
+import FillColor from "../../../config/chart/antd/atomic_components/FillColor";
+import {calculateFillColor} from "../../../config/chart/antd/util/AntdChartConfigUtil";
 import {dataSort} from "../../../../utils/SortUtil";
 
 interface AntdWordCloudSetProps {

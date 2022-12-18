@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Pie} from "@ant-design/charts";
-import './style/AntdPie.less';
 import EditTools from "../../edit-tool";
 
 interface AntdPieProps {

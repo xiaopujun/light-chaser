@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Area} from "@ant-design/charts";
-import './style/AntdArea.less';
 import EditTools from "../../edit-tool";
 
 interface AntdAreaProps {

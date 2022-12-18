@@ -1,7 +1,7 @@
 import {lazy} from "react";
 import LcTextSet from "./lc/LcTextSet";
 
-const AntdBarSet = lazy(() => import('./antd/AntdBarSet'));
+const AntdBarSet = lazy(() => import('../../charts/antd/base-bar/AntdBaseBarSet'));
 const AntdColumnSet = lazy(() => import('./antd/AntdColumnSet'));
 const AntdAreaSet = lazy(() => import('./antd/AntdAreaSet'));
 const AntdPieSet = lazy(() => import('./antd/AntdPieSet'));
@@ -9,7 +9,7 @@ const AntdLiquidSet = lazy(() => import('./antd/AntdLiquidSet'));
 const AntdRadarSet = lazy(() => import('./antd/AntdRadarSet'));
 const AntdScatterSet = lazy(() => import('./antd/AntdScatterSet'));
 const AntdBubbleSet = lazy(() => import('./antd/AntdBubbleSet'));
-const AntdWordCloudSet = lazy(() => import('./antd/AntdWordCloudSet'));
+const AntdWordCloudSet = lazy(() => import('../../charts/antd/word-cloud/AntdWordCloudSet'));
 const AntdFoldLineSet = lazy(() => import('./antd/AntdLineSet'));
 const AntdGaugeSet = lazy(() => import('./antd/AntdGaugeSet'));
 const DefaultSet = lazy(() => import('./DefaultSet'));

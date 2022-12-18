@@ -3,25 +3,30 @@ import {Layout} from 'antd';
 import {connect} from "react-redux";
 import LcDesignerLeft from "./left/LcDesignerLeft";
 import LCLayoutContent from "./LcDesignerContent";
+
 import {
-    updateActive,
     addItem,
     clearDesignerStore,
     delItem,
-    updateRightVisible,
+    updateActive,
+    updateBaseInfo,
     updateBaseStyle,
     updateChartProps,
-    updateLayout,
     updateDesignerStore,
-    updateBaseInfo,
-    updateGlobalSet
+    updateGlobalSet,
+    updateLayout,
+    updateRightVisible
 } from "../../redux/actions/LCDesignerAction";
 import DesignerHeader from "./LcDesignerHeader";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import LcDesignerRight from "./LcDesignerRight";
 
-
 const {Header, Sider, Content} = Layout;
+
+const context = require.context('../charts', true, /\.(tsx|ts)$/);
+export const lcComps: { [key: string]: React.FunctionComponent } = {};
+export const lcCompInits: { [key: string]: () => any } = {};
+export const lcCompSets: { [key: string]: React.FunctionComponent } = {};
 
 interface LCDesignerProps extends RouteComponentProps {
     LCDesignerStore: LCDesignerProps;
@@ -42,15 +47,22 @@ class LCDesigner extends Component<LCDesignerProps | any> {
         //清空状态
         const {clearDesignerStore} = this.props;
         clearDesignerStore && clearDesignerStore();
-        // window.removeEventListener("beforeunload", () => {
-        // })
+    }
+
+    doInit = () => {
+        //动态加载图表组件及图表配置组件
+        context.keys().forEach(key => {
+            const componentName = key.replace(/^\.\/([\w|-]+\/)*(\w+)\.(tsx|ts)$/, '$2');
+            if (componentName.match("Set$"))
+                lcCompSets[componentName] = context(key).default;
+            else if (componentName.match("InitData$"))
+                lcCompInits[componentName] = context(key).default;
+            else
+                lcComps[componentName] = context(key).default;
+        });
     }
 
     componentDidMount() {
-        // window.addEventListener("beforeunload", (event) => {
-        //     event.preventDefault();
-        //     event.returnValue = '';
-        // })
         const {updateDesignerStore} = this.props;
         const {action, screenName, screenWidth, screenHeight, id} = this.props.location.state;
         switch (action) {
@@ -94,6 +106,7 @@ class LCDesigner extends Component<LCDesignerProps | any> {
                 })
                 break;
         }
+        this.doInit();
     }
 
     render() {

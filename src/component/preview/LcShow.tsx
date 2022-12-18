@@ -37,7 +37,7 @@ class LcShow extends Component<LcShowProps | any> {
         const {LCDesignerStore} = this.state;
         const {layoutConfigs = []} = LCDesignerStore!;
         return layoutConfigs.map((item: any) => {
-            let Chart = getChartsTemplate(item.name);
+            let Chart: any = getChartsTemplate(item.name);
             const chartConfig = this.calculateChartConfig(item.id);
             return (
                 <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>

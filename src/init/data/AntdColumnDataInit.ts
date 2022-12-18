@@ -35,8 +35,26 @@ export const initAntdBaseColumn = () => {
             ],
             xField: 'name',
             yField: 'value',
-            xAxis: {...axis},
-            yAxis: {...axis},
+            xAxis: {
+                grid: null,
+                label: {
+                    style: {
+                        fill: 'rgb(0,255,234)'
+                    },
+                },
+                line: null,
+                tickLine: null
+            },
+            yAxis: {
+                grid: null,
+                label: {
+                    style: {
+                        fill: 'rgb(0,255,234)'
+                    },
+                },
+                line: null,
+                tickLine: null
+            },
             seriesField: 'name',
             color: 'rgb(0,255,234)',
             legend: false,
@@ -73,8 +91,26 @@ export const initAntdStackColumn = () => {
             xField: 'name',
             yField: 'value',
             seriesField: 'type',
-            xAxis: {...axis},
-            yAxis: {...axis},
+            xAxis: {
+                grid: null,
+                label: {
+                    style: {
+                        fill: 'rgb(0,255,234)'
+                    },
+                },
+                line: null,
+                tickLine: null
+            },
+            yAxis: {
+                grid: null,
+                label: {
+                    style: {
+                        fill: 'rgb(0,255,234)'
+                    },
+                },
+                line: null,
+                tickLine: null
+            },
             maxColumnWidth: 8
         }
     });
@@ -114,8 +150,26 @@ export const initAntdGroupColumn = () => {
             yField: 'value',
             seriesField: 'type',
             dodgePadding: 4,
-            xAxis: {...axis},
-            yAxis: {...axis},
+            xAxis: {
+                grid: null,
+                label: {
+                    style: {
+                        fill: 'rgb(0,255,234)'
+                    },
+                },
+                line: null,
+                tickLine: null
+            },
+            yAxis: {
+                grid: null,
+                label: {
+                    style: {
+                        fill: 'rgb(0,255,234)'
+                    },
+                },
+                line: null,
+                tickLine: null
+            },
             color: ['rgb(0,255,234)', 'rgb(233,118,9)'],
             legend: false,
             maxColumnWidth: 8
@@ -157,8 +211,26 @@ export const initAntdPercentColumn = () => {
             seriesField: 'type',
             isPercent: true,
             isStack: true,
-            xAxis: {...axis},
-            yAxis: {...axis},
+            xAxis: {
+                grid: null,
+                label: {
+                    style: {
+                        fill: 'rgb(0,255,234)'
+                    },
+                },
+                line: null,
+                tickLine: null
+            },
+            yAxis: {
+                grid: null,
+                label: {
+                    style: {
+                        fill: 'rgb(0,255,234)'
+                    },
+                },
+                line: null,
+                tickLine: null
+            },
             legend: false,
             maxColumnWidth: 8
         }
@@ -195,8 +267,26 @@ export const initAntdZoneColumn = () => {
             xField: 'name',
             yField: 'value',
             isRange: true,
-            xAxis: {...axis},
-            yAxis: {...axis},
+            xAxis: {
+                grid: null,
+                label: {
+                    style: {
+                        fill: 'rgb(0,255,234)'
+                    },
+                },
+                line: null,
+                tickLine: null
+            },
+            yAxis: {
+                grid: null,
+                label: {
+                    style: {
+                        fill: 'rgb(0,255,234)'
+                    },
+                },
+                line: null,
+                tickLine: null
+            },
             color: 'rgb(0,255,234)',
             maxColumnWidth: 8
         }

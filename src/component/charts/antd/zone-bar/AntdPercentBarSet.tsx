@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
-import './style/AntdBarSet.less';
-import FillColor from "./atomic_components/FillColor";
-import Legend from "./atomic_components/Legned";
-import RightAngleCoordinates from "./atomic_components/RightAngleCoordinates";
-import BarWidth from "./atomic_components/BarWidth";
+import '../../../config/chart/antd/style/AntdBarSet.less';
+import FillColor from "../../../config/chart/antd/atomic_components/FillColor";
+import Legend from "../../../config/chart/antd/atomic_components/Legned";
+import RightAngleCoordinates from "../../../config/chart/antd/atomic_components/RightAngleCoordinates";
+import BarWidth from "../../../config/chart/antd/atomic_components/BarWidth";
 import {dataSort} from "../../../../utils/SortUtil";
 import {
     calculateBarWidth,
     calculateFillColor,
     calculateLegendConfig,
     calculateRightAngleCoordinates
-} from "./util/AntdChartConfigUtil";
+} from "../../../config/chart/antd/util/AntdChartConfigUtil";
 
 interface AntdBarSetProps {
     updateChartProps?: (data: any) => void;
@@ -18,7 +18,7 @@ interface AntdBarSetProps {
     chartProps?: any;
 }
 
-class AntdBarSet extends Component<AntdBarSetProps> {
+class AntdPercentBarSet extends Component<AntdBarSetProps> {
 
     state: any = {
         colors: []
@@ -62,4 +62,4 @@ class AntdBarSet extends Component<AntdBarSetProps> {
     }
 }
 
-export default AntdBarSet;
+export default AntdPercentBarSet;

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Liquid} from "@ant-design/charts";
-import './style/AntdLiquid.less';
 import EditTools from "../../edit-tool";
 
 interface AntdLiquidProps {

@@ -3,9 +3,6 @@ import {AreaChartOutlined} from "@ant-design/icons";
 import './style/Tools.less';
 import ToolItem from "./Item";
 
-const context = require.context('../../charts', true, /\.tsx$/);
-
-const components: { [key: string]: React.FunctionComponent } = {};
 
 interface LayoutToolItemProps {
     id?: string;
@@ -99,13 +96,6 @@ class LcDesignerLeft extends Component<LcDesignerLeftProps, any> {
                 data: [{id: '1', type: '雷达图', icon: <AreaChartOutlined/>, content: '雷达图  ', token: 'AntdRadar'}]
             },
         ],
-    }
-
-    componentDidMount() {
-        context.keys().forEach(key => {
-            const componentName = key.replace(/^\.\/(.*)\.tsx$/, '$1');
-            components[componentName] = context(key).default;
-        });
     }
 
     render() {
