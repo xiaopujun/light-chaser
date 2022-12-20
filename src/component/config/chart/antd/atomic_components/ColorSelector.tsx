@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {MinusSquareOutlined, PlusSquareOutlined} from "@ant-design/icons";
-import GroupColorPicker from "../../../../color_picker/GroupColorPicker";
+import GroupColorPicker from "../../../../base/GroupColorPicker";
 
 interface ColorSelectorProps {
     /**

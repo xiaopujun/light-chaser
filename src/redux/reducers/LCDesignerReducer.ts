@@ -106,7 +106,6 @@ function addItem(preState: LCDesignerProps, data: any) {
     //更新布局
     layoutConfigs.push(data);
     //更新组件配置信息
-
     let initData: any = lcCompInits[data.name + "InitData"]();
     initData.baseInfo = {...initData.baseInfo, ...{id: globalSet.elemCount}}
     chartConfigs[globalSet.elemCount + ""] = initData;

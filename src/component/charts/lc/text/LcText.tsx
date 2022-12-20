@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import EditTools from "../../../edit-tool";
+import EditTools from "../../../designer/EditTool";
 
 
 interface LcTextProps {

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Radar} from "@ant-design/charts";
-import EditTools from "../../../edit-tool";
+import EditTools from "../../../designer/EditTool";
 
 interface AntdRadarProps {
     chartConfig?: any;

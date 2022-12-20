@@ -1,7 +1,7 @@
 import {cloneDeep} from 'lodash';
 
 //词云图初始化数据和配置
-export const initLcColorBlock = () => {
+const LcColorBlockInitData = () => {
     return cloneDeep({
         baseInfo: {
             name: '颜色块',
@@ -14,4 +14,4 @@ export const initLcColorBlock = () => {
         chartProps: {}
     });
 };
-
+export default LcColorBlockInitData;

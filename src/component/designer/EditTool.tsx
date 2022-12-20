@@ -1,6 +1,6 @@
 import {DeleteOutlined, SettingOutlined} from '@ant-design/icons';
 import React, {Component} from 'react';
-import './index.less';
+import './style/EditTool.less';
 
 interface EditToolsProps {
     elemId?: string;  //组件id

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Switch} from "antd";
-import ColorPicker from "../../../color_picker/BaseColorPicker";
+import ColorPicker from "../../../base/BaseColorPicker";
 import LCTextInput from "../../../base/LCTextInput";
 import LCNumberInput from "../../../base/LCNumberInput";
 

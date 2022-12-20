@@ -3,7 +3,7 @@ import ReactGridLayout, {Layout} from "react-grid-layout";
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import './style/Content.less';
-import getChartsTemplate from "../charts/ComponentChartInit";
+import getChartsTemplate from "../charts/ChartsCollection";
 import {LCDesignerProps} from "../../types/LcDesignerType";
 import Loading from "../loading/Loading";
 import DragScaleProvider from "./DragScaleProvider";

@@ -4,7 +4,7 @@ import '../../../config/chart/antd/style/AntdRadarSet.less';
 import FillColor from "../../../config/chart/antd/atomic_components/FillColor";
 import Legend from "../../../config/chart/antd/atomic_components/Legned";
 import RightAngleCoordinates from "../../../config/chart/antd/atomic_components/RightAngleCoordinates";
-import ColorPicker from "../../../color_picker/BaseColorPicker";
+import ColorPicker from "../../../base/BaseColorPicker";
 import LCNumberInput from "../../../base/LCNumberInput";
 import {calculateFillColor, calculateLegendConfig} from "../../../config/chart/antd/util/AntdChartConfigUtil";
 import {dataSort} from "../../../../utils/SortUtil";

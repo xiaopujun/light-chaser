@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Scatter} from "@ant-design/charts";
-import EditTools from "../../../edit-tool";
+import EditTools from "../../../designer/EditTool";
 
 interface AntdScatterProps {
     chartName?: string;

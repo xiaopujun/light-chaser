@@ -1,6 +1,6 @@
 import React, {Component, Suspense} from 'react';
 import ReactGridLayout from 'react-grid-layout';
-import getChartsTemplate from "../charts/ComponentChartInit";
+import getChartsTemplate from "../charts/ChartsCollection";
 import {RouteComponentProps} from "react-router-dom";
 import Loading from "../loading/Loading";
 
