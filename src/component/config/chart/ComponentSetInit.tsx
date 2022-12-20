@@ -1,17 +1,17 @@
 import {lazy} from "react";
-import LcTextSet from "./lc/LcTextSet";
+import LcTextSet from "../../charts/lc/text/LcTextSet";
 
 const AntdBarSet = lazy(() => import('../../charts/antd/base-bar/AntdBaseBarSet'));
 const AntdColumnSet = lazy(() => import('./antd/AntdColumnSet'));
-const AntdAreaSet = lazy(() => import('./antd/AntdAreaSet'));
-const AntdPieSet = lazy(() => import('./antd/AntdPieSet'));
-const AntdLiquidSet = lazy(() => import('./antd/AntdLiquidSet'));
-const AntdRadarSet = lazy(() => import('./antd/AntdRadarSet'));
-const AntdScatterSet = lazy(() => import('./antd/AntdScatterSet'));
+const AntdAreaSet = lazy(() => import('../../charts/antd/base-area/AntdBaseAreaSet'));
+const AntdPieSet = lazy(() => import('../../charts/antd/pie/AntdPieSet'));
+const AntdLiquidSet = lazy(() => import('../../charts/antd/liquid/AntdLiquidSet'));
+const AntdRadarSet = lazy(() => import('../../charts/antd/radar/AntdRadarSet'));
+const AntdScatterSet = lazy(() => import('../../charts/antd/scatter/AntdScatterSet'));
 const AntdBubbleSet = lazy(() => import('./antd/AntdBubbleSet'));
 const AntdWordCloudSet = lazy(() => import('../../charts/antd/word-cloud/AntdWordCloudSet'));
-const AntdFoldLineSet = lazy(() => import('./antd/AntdLineSet'));
-const AntdGaugeSet = lazy(() => import('./antd/AntdGaugeSet'));
+const AntdFoldLineSet = lazy(() => import('../../charts/antd/base-fold-line/AntdBaseLineSet'));
+const AntdGaugeSet = lazy(() => import('../../charts/antd/gauge/AntdGaugeSet'));
 const DefaultSet = lazy(() => import('./DefaultSet'));
 
 let configMap = new Map();

@@ -5,15 +5,13 @@ import {
     initAntdStackColumn,
     initAntdZoneColumn
 } from "./AntdColumnDataInit";
-import {initAntdPie, initAntdRing} from "./AntdPieDataInit";
-import {initAntdBubbles, initAntdScatter} from "./AntdScatterDataInit";
-import {initAntdBaseArea, initAntdPercentArea, initAntdStackArea} from "./AntdAreaDataInit";
-import {initAntdBaseFoldLine, initAntdMuchFoldLine, initAntdStepFoldLine} from "./AntdLineDataInit";
-import {initAntdLiquid} from "./AntdLiquidDataInit";
-import {initAntdRadar} from "./AntdRadarDataInit";
-import {initAntdGauge} from "./AntdGaugeDataInit";
-import {initLcText} from "./LcTextDataInit";
-import {initLcColorBlock} from "./LcColorBlockDataInit";
+import {initAntdPie, initAntdRing} from "../../component/charts/antd/pie/AntdPieInitData";
+import {initAntdBubbles, initAntdScatter} from "../../component/charts/antd/scatter/AntdScatterInitData";
+import {initAntdBaseFoldLine, initAntdMuchFoldLine, initAntdStepFoldLine} from "../../component/charts/antd/base-fold-line/AntdBaseLineDataInit";
+import {initAntdRadar} from "../../component/charts/antd/radar/AntdRadarInitData";
+import {initAntdGauge} from "../../component/charts/antd/gauge/AntdGaugeInitData";
+import {initLcText} from "../../component/charts/lc/text/LcTextInitData";
+import {initLcColorBlock} from "../../component/charts/lc/colorblock/LcColorBlockInitData";
 
 
 let chartInitDataMap = new Map();
@@ -27,15 +25,11 @@ chartInitDataMap.set('AntdPie', initAntdPie);
 chartInitDataMap.set('AntdRing', initAntdRing);
 chartInitDataMap.set('AntdScatter', initAntdScatter);
 chartInitDataMap.set('AntdBubbles', initAntdBubbles);
-chartInitDataMap.set('AntdStackArea', initAntdStackArea);
 chartInitDataMap.set('AntdBaseFoldLine', initAntdBaseFoldLine);
 chartInitDataMap.set('AntdStepFoldLine', initAntdStepFoldLine);
 chartInitDataMap.set('AntdMuchFoldLine', initAntdMuchFoldLine);
-chartInitDataMap.set('AntdLiquid', initAntdLiquid);
 chartInitDataMap.set('AntdRadar', initAntdRadar);
 chartInitDataMap.set('AntdGauge', initAntdGauge);
-chartInitDataMap.set('AntdBaseArea', initAntdBaseArea);
-chartInitDataMap.set('AntdPercentArea', initAntdPercentArea);
 chartInitDataMap.set('LcText', initLcText);
 chartInitDataMap.set('LcColorBlock', initLcColorBlock);
 
