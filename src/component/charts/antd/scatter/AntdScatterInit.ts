@@ -1,7 +1,7 @@
 import {cloneDeep} from 'lodash';
 
 //散点图初始化数据和配置
-const AntdScatterInitData = () => {
+const AntdScatterInit = () => {
     return cloneDeep({
         baseInfo: {
             name: '散点图',
@@ -52,5 +52,5 @@ const AntdScatterInitData = () => {
         }
     });
 };
-export default AntdScatterInitData;
+export default AntdScatterInit;
 

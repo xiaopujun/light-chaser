@@ -1,11 +1,12 @@
 import {cloneDeep} from 'lodash';
 
-//基础面积图初始化数据和配置
-const AntdBaseInitData = () => {
+
+//基础柱状图初始化数据和配置
+export const AntdBaseColumnInit = () => {
     return cloneDeep({
         baseInfo: {
-            name: '基础面积图',
-            type: 'AntdBaseArea'
+            name: '基础柱状图',
+            type: 'AntdBaseColumn'
         },
         baseStyle: {
             padding: '5px',
@@ -14,48 +15,42 @@ const AntdBaseInitData = () => {
         chartProps: {
             data: [
                 {
-                    "name": "2006 Q3",
-                    "value": 1
+                    name: '家具家电',
+                    value: 38,
                 },
                 {
-                    "name": "2006 Q4",
-                    "value": 1.08
-                },
-                {
-                    "name": "2007 Q1",
-                    "value": 0.47
-                },
-                {
-                    "name": "2007 Q2",
-                    "value": 1.26
-                },
-                {
-                    "name": "2007 Q3",
-                    "value": 1.00
+                    name: '粮油副食',
+                    value: 52,
                 },
             ],
             xField: 'name',
             yField: 'value',
-            legend: false,
             xAxis: {
                 grid: null,
-                line: null,
                 label: {
                     style: {
                         fill: 'rgb(0,255,234)'
                     },
                 },
+                line: null,
+                tickLine: null
             },
             yAxis: {
                 grid: null,
-                line: null,
                 label: {
                     style: {
                         fill: 'rgb(0,255,234)'
                     },
                 },
+                line: null,
+                tickLine: null
             },
+            seriesField: 'name',
+            color: 'rgb(0,255,234)',
+            legend: false,
+            maxColumnWidth: 8
         }
     });
 };
-export default AntdBaseInitData;
+export default AntdBaseColumnInit;
+

@@ -1,7 +1,7 @@
 import {cloneDeep} from 'lodash';
 
 //词云图初始化数据和配置
-const AntdWordCloudInitData = () => {
+const AntdWordCloudInit = () => {
     return cloneDeep({
         baseInfo: {
             name: '词云图',
@@ -38,5 +38,5 @@ const AntdWordCloudInitData = () => {
     });
 };
 
-export default AntdWordCloudInitData;
+export default AntdWordCloudInit;
 

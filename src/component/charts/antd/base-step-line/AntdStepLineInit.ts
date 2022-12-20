@@ -1,7 +1,7 @@
 import {cloneDeep} from 'lodash';
 
 //阶梯线图
-const AntdStepLineDataInit = () => {
+const AntdStepLineInit = () => {
     return cloneDeep({
         baseInfo: {
             name: '阶梯线图',
@@ -47,4 +47,4 @@ const AntdStepLineDataInit = () => {
         }
     });
 };
-export default AntdStepLineDataInit;
+export default AntdStepLineInit;

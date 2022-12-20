@@ -55,7 +55,7 @@ class LCDesigner extends Component<LCDesignerProps | any> {
             const componentName = key.replace(/^\.\/([\w|-]+\/)*(\w+)\.(tsx|ts)$/, '$2');
             if (componentName.match("Set$"))
                 lcCompSets[componentName] = context(key).default;
-            else if (componentName.match("InitData$"))
+            else if (componentName.match("Init$"))
                 lcCompInits[componentName] = context(key).default;
             else
                 lcComps[componentName] = context(key).default;

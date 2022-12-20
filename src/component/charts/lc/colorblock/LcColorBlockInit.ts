@@ -1,19 +1,17 @@
 import {cloneDeep} from 'lodash';
 
 //词云图初始化数据和配置
-const LcTextInitData = () => {
+const LcColorBlockInit = () => {
     return cloneDeep({
         baseInfo: {
-            name: '文本',
-            type: 'LcText'
+            name: '颜色块',
+            type: 'LcColorBlock'
         },
         baseStyle: {
             padding: '5px',
             backgroundColor: 'rgba(23,157,169,0.12)'
         },
-        chartProps: {
-            value: ''
-        }
+        chartProps: {}
     });
 };
-export default LcTextInitData;
+export default LcColorBlockInit;

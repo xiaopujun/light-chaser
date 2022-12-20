@@ -1,7 +1,7 @@
 import {cloneDeep} from 'lodash';
 
 //雷达图初始化数据和配置
-const AntdRadarInitData = () => {
+const AntdRadarInit = () => {
     return cloneDeep({
         baseInfo: {
             name: '雷达图',
@@ -91,4 +91,4 @@ const AntdRadarInitData = () => {
         }
     });
 };
-export default AntdRadarInitData;
+export default AntdRadarInit;

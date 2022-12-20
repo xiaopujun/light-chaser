@@ -1,7 +1,7 @@
 import {cloneDeep} from 'lodash';
 
 //百分比面积图初始化数据和配置
-const AntdPercentAreaInitData = () => {
+const AntdPercentAreaInit = () => {
     return cloneDeep({
         baseInfo: {
             name: '百分比面积图',
@@ -76,5 +76,5 @@ const AntdPercentAreaInitData = () => {
         }
     });
 };
-export default AntdPercentAreaInitData;
+export default AntdPercentAreaInit;
 

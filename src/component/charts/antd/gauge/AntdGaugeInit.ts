@@ -1,7 +1,7 @@
 import {cloneDeep} from 'lodash';
 
 //堆叠面积图初始化数据和配置
-const AntdGaugeInitData = () => {
+const AntdGaugeInit = () => {
     return cloneDeep({
         baseInfo: {
             name: '堆叠面积图',
@@ -39,4 +39,4 @@ const AntdGaugeInitData = () => {
         }
     });
 };
-export default AntdGaugeInitData;
+export default AntdGaugeInit;

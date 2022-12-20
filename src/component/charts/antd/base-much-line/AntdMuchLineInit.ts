@@ -1,7 +1,7 @@
 import {cloneDeep} from 'lodash';
 
 //多重线图
-const AntdMuchLineDataInit = () => {
+const AntdMuchLineInit = () => {
     return cloneDeep({
         baseInfo: {
             name: '多重线图',
@@ -87,4 +87,4 @@ const AntdMuchLineDataInit = () => {
         }
     });
 };
-export default AntdMuchLineDataInit;
+export default AntdMuchLineInit;

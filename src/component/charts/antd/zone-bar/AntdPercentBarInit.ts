@@ -1,11 +1,11 @@
 import {cloneDeep} from 'lodash';
 
 //基础条形图初始化数据和配置
-const AntdGroupBarInitData = () => {
+const AntdPercentBarInit = () => {
     return cloneDeep({
         baseInfo: {
-            name: '分组条形图',
-            type: 'AntdGroupBar'
+            name: '百分比条形图',
+            type: 'AntdPercentBar'
         },
         baseStyle: {
             padding: '10px',
@@ -14,26 +14,26 @@ const AntdGroupBarInitData = () => {
         chartProps: {
             data: [
                 {
-                    name: 'Mon.',
-                    type: 'series1',
-                    value: 2800,
+                    type: 'Asia',
+                    name: '1750',
+                    value: 502,
                 },
                 {
-                    name: 'Mon.',
-                    type: 'series2',
-                    value: 2260,
+                    type: 'Asia',
+                    name: '1800',
+                    value: 635,
                 },
                 {
-                    name: 'Tues.',
-                    type: 'series1',
-                    value: 1800,
+                    type: 'Asia',
+                    name: '1850',
+                    value: 809,
                 },
             ],
-            isGroup: true,
             xField: 'value',
             yField: 'name',
             seriesField: 'type',
-            dodgePadding: 4,
+            isPercent: true,
+            isStack: true,
             xAxis: {
                 grid: null,
                 label: {
@@ -54,11 +54,9 @@ const AntdGroupBarInitData = () => {
                 line: null,
                 tickLine: null
             },
-            color: ['rgb(0,255,234)', 'rgb(233,118,9)'],
-            legend: false,
             maxBarWidth: 8
         }
     });
 };
 
-export default AntdGroupBarInitData;
+export default AntdPercentBarInit;

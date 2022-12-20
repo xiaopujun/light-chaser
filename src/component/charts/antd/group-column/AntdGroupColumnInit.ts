@@ -1,34 +1,39 @@
 import {cloneDeep} from 'lodash';
 
-//基础条形图初始化数据和配置
-const AntdBaseBarInitData = () => {
+//基础柱状图初始化数据和配置
+export const AntdGroupColumnInit = () => {
     return cloneDeep({
         baseInfo: {
-            name: '基础条形图',
-            type: 'AntdBaseBar'
+            name: '分组柱状图',
+            type: 'AntdGroupColumn'
         },
         baseStyle: {
-            padding: '10px',
+            padding: '5px',
             backgroundColor: 'rgba(23,157,169,0.12)'
         },
         chartProps: {
             data: [
                 {
-                    name: '1951 年',
-                    value: 38,
+                    name: 'Mon.',
+                    type: 'series1',
+                    value: 2800,
                 },
                 {
-                    name: '1952 年',
-                    value: 52,
+                    name: 'Mon.',
+                    type: 'series2',
+                    value: 2260,
                 },
                 {
-                    name: '1956 年',
-                    value: 61,
+                    name: 'Tues.',
+                    type: 'series1',
+                    value: 1800,
                 },
             ],
-            xField: 'value',
-            yField: 'name',
-            seriesField: 'name',
+            isGroup: true,
+            xField: 'name',
+            yField: 'value',
+            seriesField: 'type',
+            dodgePadding: 4,
             xAxis: {
                 grid: null,
                 label: {
@@ -49,11 +54,10 @@ const AntdBaseBarInitData = () => {
                 line: null,
                 tickLine: null
             },
-            color: 'rgb(0,255,234,0.2)',
+            color: ['rgb(0,255,234)', 'rgb(233,118,9)'],
             legend: false,
-            maxBarWidth: 8
+            maxColumnWidth: 8
         }
     });
 };
-
-export default AntdBaseBarInitData;
+export default AntdGroupColumnInit;

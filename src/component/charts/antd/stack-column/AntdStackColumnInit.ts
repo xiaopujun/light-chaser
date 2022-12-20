@@ -1,11 +1,12 @@
 import {cloneDeep} from 'lodash';
 
+
 //基础柱状图初始化数据和配置
-export const AntdZoneColumnInitData = () => {
+export const AntdStackColumnInit = () => {
     return cloneDeep({
         baseInfo: {
-            name: '区间柱状图',
-            type: 'AntdZoneColumn'
+            name: '堆叠柱状图',
+            type: 'AntdStackColumn'
         },
         baseStyle: {
             padding: '5px',
@@ -14,22 +15,20 @@ export const AntdZoneColumnInitData = () => {
         chartProps: {
             data: [
                 {
-                    name: '分类一',
-                    value: [76, 100],
+                    name: '1991',
+                    value: 3,
+                    type: 'Lon',
                 },
                 {
-                    name: '分类二',
-                    value: [56, 108],
-                },
-                {
-                    name: '分类三',
-                    value: [38, 129],
+                    name: '1992',
+                    value: 4,
+                    type: 'Lon',
                 },
             ],
-            seriesField: 'name',
+            isStack: true,
             xField: 'name',
             yField: 'value',
-            isRange: true,
+            seriesField: 'type',
             xAxis: {
                 grid: null,
                 label: {
@@ -50,9 +49,8 @@ export const AntdZoneColumnInitData = () => {
                 line: null,
                 tickLine: null
             },
-            color: 'rgb(0,255,234)',
             maxColumnWidth: 8
         }
     });
 };
-export default AntdZoneColumnInitData;
+export default AntdStackColumnInit;

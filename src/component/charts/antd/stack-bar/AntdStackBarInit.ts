@@ -1,39 +1,38 @@
 import {cloneDeep} from 'lodash';
 
-//基础柱状图初始化数据和配置
-export const AntdGroupColumnInitData = () => {
+//基础条形图初始化数据和配置
+const AntdStackBarInit = () => {
     return cloneDeep({
         baseInfo: {
-            name: '分组柱状图',
-            type: 'AntdGroupColumn'
+            name: '堆叠条形图',
+            type: 'AntdStackBar'
         },
         baseStyle: {
-            padding: '5px',
+            padding: '10px',
             backgroundColor: 'rgba(23,157,169,0.12)'
         },
         chartProps: {
             data: [
                 {
-                    name: 'Mon.',
-                    type: 'series1',
-                    value: 2800,
+                    name: '1991',
+                    value: 3,
+                    type: 'Lon',
                 },
                 {
-                    name: 'Mon.',
-                    type: 'series2',
-                    value: 2260,
+                    name: '1993',
+                    value: 3.5,
+                    type: 'Lon',
                 },
                 {
-                    name: 'Tues.',
-                    type: 'series1',
-                    value: 1800,
+                    name: '1992',
+                    value: 4,
+                    type: 'Lon',
                 },
             ],
-            isGroup: true,
-            xField: 'name',
-            yField: 'value',
+            isStack: true,
+            xField: 'value',
+            yField: 'name',
             seriesField: 'type',
-            dodgePadding: 4,
             xAxis: {
                 grid: null,
                 label: {
@@ -54,10 +53,9 @@ export const AntdGroupColumnInitData = () => {
                 line: null,
                 tickLine: null
             },
-            color: ['rgb(0,255,234)', 'rgb(233,118,9)'],
-            legend: false,
-            maxColumnWidth: 8
+            maxBarWidth: 8
         }
     });
 };
-export default AntdGroupColumnInitData;
+
+export default AntdStackBarInit;

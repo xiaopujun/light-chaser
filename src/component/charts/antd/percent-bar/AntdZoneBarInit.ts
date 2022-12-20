@@ -1,7 +1,7 @@
 import {cloneDeep} from 'lodash';
 
 //基础条形图初始化数据和配置
-const AntdZoneBarInitData = () => {
+const AntdZoneBarInit = () => {
     return cloneDeep({
         baseInfo: {
             name: '区间条形图',
@@ -57,4 +57,4 @@ const AntdZoneBarInitData = () => {
     });
 };
 
-export default AntdZoneBarInitData;
+export default AntdZoneBarInit;

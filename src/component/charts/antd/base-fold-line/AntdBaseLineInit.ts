@@ -1,7 +1,7 @@
 import {cloneDeep} from 'lodash';
 
 //基础线图
-const AntdBaseLineDataInit = () => {
+const AntdBaseLineInit = () => {
     return cloneDeep({
         baseInfo: {
             name: '基础线图',
@@ -47,5 +47,5 @@ const AntdBaseLineDataInit = () => {
         }
     });
 };
-export default AntdBaseLineDataInit;
+export default AntdBaseLineInit;
 

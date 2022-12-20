@@ -1,7 +1,7 @@
 import {cloneDeep} from 'lodash';
 
 //堆叠面积图初始化数据和配置
-const AntdLiquidInitData = () => {
+const AntdLiquidInit = () => {
     return cloneDeep({
         baseInfo: {
             name: '堆叠面积图',
@@ -41,5 +41,5 @@ const AntdLiquidInitData = () => {
         }
     });
 };
-export default AntdLiquidInitData;
+export default AntdLiquidInit;
 

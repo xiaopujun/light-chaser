@@ -1,14 +1,14 @@
 import {cloneDeep} from 'lodash';
 
-//基础条形图初始化数据和配置
-const AntdPercentBarInitData = () => {
+//基础柱状图初始化数据和配置
+export const AntdPercentColumnInit = () => {
     return cloneDeep({
         baseInfo: {
-            name: '百分比条形图',
-            type: 'AntdPercentBar'
+            name: '百分比柱状图',
+            type: 'AntdPercentColumn'
         },
         baseStyle: {
-            padding: '10px',
+            padding: '5px',
             backgroundColor: 'rgba(23,157,169,0.12)'
         },
         chartProps: {
@@ -29,8 +29,8 @@ const AntdPercentBarInitData = () => {
                     value: 809,
                 },
             ],
-            xField: 'value',
-            yField: 'name',
+            xField: 'name',
+            yField: 'value',
             seriesField: 'type',
             isPercent: true,
             isStack: true,
@@ -54,9 +54,9 @@ const AntdPercentBarInitData = () => {
                 line: null,
                 tickLine: null
             },
-            maxBarWidth: 8
+            legend: false,
+            maxColumnWidth: 8
         }
     });
 };
-
-export default AntdPercentBarInitData;
+export default AntdPercentColumnInit;
