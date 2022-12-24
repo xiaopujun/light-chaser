@@ -12,7 +12,7 @@ interface AntdScatterProps {
 /**
  * 散点图
  */
-export default class AntdBubble extends Component<AntdScatterProps> {
+export default class AntdBubbles extends Component<AntdScatterProps> {
 
     state = {
         data: []

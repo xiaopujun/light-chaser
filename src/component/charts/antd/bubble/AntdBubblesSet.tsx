@@ -11,7 +11,7 @@ interface AntdScatterSetProps {
     chartProps?: any;
 }
 
-export default class AntdBubbleSet extends Component<AntdScatterSetProps> {
+export default class AntdBubblesSet extends Component<AntdScatterSetProps> {
 
     fillColorChanged = (color: string | string[]) => {
         const {updateChartProps} = this.props;

@@ -1,7 +1,7 @@
 import {cloneDeep} from 'lodash';
 
 //气泡图初始化数据和配置
-const AntdBubbleInit = () => {
+const AntdBubblesInit = () => {
     return cloneDeep({
         baseInfo: {
             name: '气泡图',
@@ -101,5 +101,5 @@ const AntdBubbleInit = () => {
         }
     });
 };
-export default AntdBubbleInit;
+export default AntdBubblesInit;
 

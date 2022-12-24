@@ -20,6 +20,14 @@ import {
 import DesignerHeader from "./LcDesignerHeader";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import LcDesignerRight from "./LcDesignerRight";
+import LcDesignerStructure from "./structure/LcDesignerStructure";
+import LcHeader from "./structure/LcHeader";
+import LcBody from "./structure/LcBody";
+import LcLeft from "./structure/LcLeft";
+import LcContent from "./structure/LcContent";
+import LcRight from "./structure/LcRight";
+import LcStructure from "./structure/LcStructure";
+import LcFoot from "./structure/LcFoot";
 
 const {Header, Sider, Content} = Layout;
 
@@ -111,29 +119,44 @@ class LCDesigner extends Component<LCDesignerProps | any> {
 
     render() {
         return (
-            <div className={'light_chaser-designer'}>
-                <Layout>
-                    <Header>
-                        {/*设计器头部*/}
-                        <DesignerHeader {...this.props}/>
-                    </Header>
-                    <Layout>
-                        <Sider width={300}>
-                            {/*设计器左侧*/}
-                            <LcDesignerLeft/>
-                        </Sider>
-                        <Content>
-                            {/*设计器中间内容*/}
-                            <LCLayoutContent {...this.props}/>
-                        </Content>
-                        <Sider width={300}>
-                            {/*设计器右侧配置*/}
-                            <LcDesignerRight {...this.props}/>
-                        </Sider>
-                    </Layout>
-                </Layout>
-            </div>
-        );
+            <>
+                <LcStructure>
+                    <LcHeader><DesignerHeader {...this.props}/></LcHeader>
+                    <LcBody>
+                        <LcLeft>{/*<LcDesignerLeft/>*/}</LcLeft>
+                        <LcContent>{/*<LCLayoutContent {...this.props}/>*/}</LcContent>
+                        <LcRight>{/*<LcDesignerRight {...this.props}/>*/}</LcRight>
+                    </LcBody>
+                    <LcFoot></LcFoot>
+                </LcStructure>
+
+
+                {/*<div className={'light_chaser-designer'}>*/}
+                {/*    <Layout>*/}
+                {/*        <Header>*/}
+                {/*            /!*设计器头部*!/*/}
+                {/*            <DesignerHeader {...this.props}/>*/}
+                {/*        </Header>*/}
+                {/*        <Layout>*/}
+                {/*            <Sider width={300}>*/}
+                {/*                /!*设计器左侧*!/*/}
+                {/*                <LcDesignerLeft/>*/}
+                {/*            </Sider>*/}
+                {/*            <Content>*/}
+                {/*                /!*设计器中间内容*!/*/}
+                {/*                <LCLayoutContent {...this.props}/>*/}
+                {/*            </Content>*/}
+                {/*            <Sider width={300}>*/}
+                {/*                /!*设计器右侧配置*!/*/}
+                {/*                <LcDesignerRight {...this.props}/>*/}
+                {/*            </Sider>*/}
+                {/*        </Layout>*/}
+                {/*    </Layout>*/}
+                {/*</div>*/}
+            </>
+
+        )
+            ;
     }
 }
 
