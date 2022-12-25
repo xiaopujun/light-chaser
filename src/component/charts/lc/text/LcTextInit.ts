@@ -1,4 +1,4 @@
-import BaseInit from "../../interface/BaseInit";
+import BaseInit, {BaseInfo} from "../../interface/BaseInit";
 
 export default class LcTextInit implements BaseInit {
     getCompName(): string {
@@ -22,6 +22,17 @@ export default class LcTextInit implements BaseInit {
             chartProps: {
                 value: ''
             }
+        };
+    }
+
+    getBaseInfo(): BaseInfo {
+        return {
+            name: "文本",
+            value: "LcText",
+            typeInfo: {
+                name: "基础",
+                type: "base"
+            },
         };
     }
 

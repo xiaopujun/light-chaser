@@ -1,13 +1,6 @@
-import BaseInit from "../../interface/BaseInit";
+import BaseInit, {BaseInfo} from "../../interface/BaseInit";
 
 export default class AntdPercentColumnInit implements BaseInit {
-    getCompName(): string {
-        return "百分比柱状图";
-    }
-
-    getCompType(): string {
-        return "AntdPercentColumn";
-    }
 
     getInitConfig(): Object {
         return {
@@ -65,6 +58,17 @@ export default class AntdPercentColumnInit implements BaseInit {
                 legend: false,
                 maxColumnWidth: 8
             }
+        };
+    }
+
+    getBaseInfo(): BaseInfo {
+        return {
+            name: "百分比柱状图",
+            value: "AntdPercentColumn",
+            typeInfo: {
+                name: "柱状图",
+                type: "colmun"
+            },
         };
     }
 

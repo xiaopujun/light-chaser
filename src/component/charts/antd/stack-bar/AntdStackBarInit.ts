@@ -1,13 +1,6 @@
-import BaseInit from "../../interface/BaseInit";
+import BaseInit, {BaseInfo} from "../../interface/BaseInit";
 
 export default class AntdStackBarInit implements BaseInit {
-    getCompName(): string {
-        return "堆叠条形图";
-    }
-
-    getCompType(): string {
-        return "AntdStackBar";
-    }
 
     getInitConfig(): Object {
         return {
@@ -63,6 +56,17 @@ export default class AntdStackBarInit implements BaseInit {
                 },
                 maxBarWidth: 8
             }
+        };
+    }
+
+    getBaseInfo(): BaseInfo {
+        return {
+            name: "堆叠条形图",
+            value: "AntdStackBar",
+            typeInfo: {
+                name: "条形图",
+                type: "bar"
+            },
         };
     }
 

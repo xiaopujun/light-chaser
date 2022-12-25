@@ -1,18 +1,11 @@
-import BaseInit from "../../interface/BaseInit";
+import BaseInit, {BaseInfo} from "../../interface/BaseInit";
 
 export default class AntdLiquidInit implements BaseInit {
-    getCompName(): string {
-        return "堆叠面积图";
-    }
-
-    getCompType(): string {
-        return "AntdLiquid";
-    }
 
     getInitConfig(): Object {
         return {
             baseInfo: {
-                name: '堆叠面积图',
+                name: '水波图',
                 type: 'AntdLiquid'
             },
             baseStyle: {
@@ -47,6 +40,17 @@ export default class AntdLiquidInit implements BaseInit {
                     }
                 }
             }
+        };
+    }
+
+    getBaseInfo(): BaseInfo {
+        return {
+            name: "水波图",
+            value: "AntdLiquid",
+            typeInfo: {
+                name: "进度图",
+                type: "progress"
+            },
         };
     }
 

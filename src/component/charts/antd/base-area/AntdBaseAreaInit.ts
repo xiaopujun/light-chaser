@@ -1,14 +1,7 @@
-import BaseInit from "../../interface/BaseInit";
+import BaseInit, {BaseInfo} from "../../interface/BaseInit";
 
 
 export default class AntdBaseAreaInit implements BaseInit {
-    getCompName(): string {
-        return "基础面积图";
-    }
-
-    getCompType(): string {
-        return "AntdBaseArea";
-    }
 
     getInitConfig(): Object {
         return {
@@ -65,6 +58,17 @@ export default class AntdBaseAreaInit implements BaseInit {
                     },
                 },
             }
+        };
+    }
+
+    getBaseInfo(): BaseInfo {
+        return {
+            name: "基础面积图",
+            value: 'AntdBaseArea',
+            typeInfo: {
+                name: "面积图",
+                type: "area"
+            },
         };
     }
 }

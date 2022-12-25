@@ -1,4 +1,4 @@
-import BaseInit from "../../interface/BaseInit";
+import BaseInit, {BaseInfo} from "../../interface/BaseInit";
 
 export default class AntdStepLineInit implements BaseInit {
     getCompName(): string {
@@ -53,6 +53,17 @@ export default class AntdStepLineInit implements BaseInit {
                     label: {style: {fill: 'rgb(0,255,234)'}}
                 },
             }
+        };
+    }
+
+    getBaseInfo(): BaseInfo {
+        return {
+            name: "阶梯线图",
+            value: "AntdStepLine",
+            typeInfo: {
+                name: "线图",
+                type: "line"
+            },
         };
     }
 

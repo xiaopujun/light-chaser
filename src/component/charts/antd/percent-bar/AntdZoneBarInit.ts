@@ -1,13 +1,6 @@
-import BaseInit from "../../interface/BaseInit";
+import BaseInit, {BaseInfo} from "../../interface/BaseInit";
 
 export default class AntdZoneBarInit implements BaseInit {
-    getCompName(): string {
-        return "区间条形图";
-    }
-
-    getCompType(): string {
-        return "AntdZoneBar";
-    }
 
     getInitConfig(): Object {
         return {
@@ -62,6 +55,17 @@ export default class AntdZoneBarInit implements BaseInit {
                 maxBarWidth: 8,
                 legend: false,
             }
+        };
+    }
+
+    getBaseInfo(): BaseInfo {
+        return {
+            name: "区间条形图",
+            value: "AntdZoneBar",
+            typeInfo: {
+                name: "条形图",
+                type: "bar"
+            },
         };
     }
 

@@ -1,4 +1,4 @@
-import BaseInit from "../../interface/BaseInit";
+import BaseInit, {BaseInfo} from "../../interface/BaseInit";
 
 export default class AntdPercentBarInit implements BaseInit {
     getCompName(): string {
@@ -64,6 +64,17 @@ export default class AntdPercentBarInit implements BaseInit {
                 },
                 maxBarWidth: 8
             }
+        };
+    }
+
+    getBaseInfo(): BaseInfo {
+        return {
+            name: "百分比条形图",
+            value: "AntdPercentBar",
+            typeInfo: {
+                name: "条形图",
+                type: "bar"
+            },
         };
     }
 

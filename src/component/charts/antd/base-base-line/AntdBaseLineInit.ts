@@ -1,13 +1,6 @@
-import BaseInit from "../../interface/BaseInit";
+import BaseInit, {BaseInfo} from "../../interface/BaseInit";
 
 export default class AntdBaseLineInit implements BaseInit {
-    getCompName(): string {
-        return "基础线图";
-    }
-
-    getCompType(): string {
-        return "AntdBaseLine";
-    }
 
     getInitConfig(): Object {
         return {
@@ -53,6 +46,17 @@ export default class AntdBaseLineInit implements BaseInit {
                     label: {style: {fill: 'rgb(0,255,234)'}}
                 },
             }
+        };
+    }
+
+    getBaseInfo(): BaseInfo {
+        return {
+            name: "基础线图",
+            value: 'AntdBaseLine',
+            typeInfo: {
+                name: "线图",
+                type: "line"
+            },
         };
     }
 }

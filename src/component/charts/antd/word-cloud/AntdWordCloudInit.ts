@@ -1,13 +1,6 @@
-import BaseInit from "../../interface/BaseInit";
+import BaseInit, {BaseInfo} from "../../interface/BaseInit";
 
 export default class AntdWordCloudInit implements BaseInit {
-    getCompName(): string {
-        return "词云图";
-    }
-
-    getCompType(): string {
-        return "AntdWordCloud";
-    }
 
     getInitConfig(): Object {
         return {
@@ -43,6 +36,18 @@ export default class AntdWordCloudInit implements BaseInit {
                 },
                 random: Math.random
             }
+        };
+    }
+
+
+    getBaseInfo(): BaseInfo {
+        return {
+            name: "词云图",
+            value: "AntdWordCloud",
+            typeInfo: {
+                name: "词云图",
+                type: "wordCloud"
+            },
         };
     }
 

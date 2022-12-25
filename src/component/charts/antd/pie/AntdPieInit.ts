@@ -1,18 +1,11 @@
-import BaseInit from "../../interface/BaseInit";
+import BaseInit, {BaseInfo} from "../../interface/BaseInit";
 
 export default class AntdPieInit implements BaseInit {
-    getCompName(): string {
-        return "基础柱状图";
-    }
-
-    getCompType(): string {
-        return "AntdPie";
-    }
 
     getInitConfig(): Object {
         return {
             baseInfo: {
-                name: '基础柱状图',
+                name: '饼图',
                 type: 'AntdPie'
             },
             baseStyle: {
@@ -53,6 +46,17 @@ export default class AntdPieInit implements BaseInit {
                     type: 'element-active',
                 }],
             }
+        };
+    }
+
+    getBaseInfo(): BaseInfo {
+        return {
+            name: "饼图",
+            value: "AntdPie",
+            typeInfo: {
+                name: "饼图",
+                type: "pie"
+            },
         };
     }
 

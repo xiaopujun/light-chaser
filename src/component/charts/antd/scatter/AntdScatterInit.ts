@@ -1,13 +1,6 @@
-import BaseInit from "../../interface/BaseInit";
+import BaseInit, {BaseInfo} from "../../interface/BaseInit";
 
 export default class AntdScatterInit implements BaseInit {
-    getCompName(): string {
-        return "散点图";
-    }
-
-    getCompType(): string {
-        return "AntdScatter";
-    }
 
     getInitConfig(): Object {
         return {
@@ -58,6 +51,17 @@ export default class AntdScatterInit implements BaseInit {
                     },
                 },
             }
+        };
+    }
+
+    getBaseInfo(): BaseInfo {
+        return {
+            name: "散点图",
+            value: "AntdScatter",
+            typeInfo: {
+                name: "散点图",
+                type: "scatterPlot"
+            },
         };
     }
 

@@ -1,18 +1,11 @@
-import BaseInit from "../../interface/BaseInit";
+import BaseInit, {BaseInfo} from "../../interface/BaseInit";
 
 export default class AntdGaugeInit implements BaseInit {
-    getCompName(): string {
-        return "堆叠面积图";
-    }
-
-    getCompType(): string {
-        return "AntdGauge";
-    }
 
     getInitConfig(): Object {
         return {
             baseInfo: {
-                name: '堆叠面积图',
+                name: '仪表盘',
                 type: 'AntdGauge'
             },
             baseStyle: {
@@ -45,6 +38,17 @@ export default class AntdGaugeInit implements BaseInit {
                     },
                 },
             }
+        };
+    }
+
+    getBaseInfo(): BaseInfo {
+        return {
+            name: "仪表盘",
+            value: "AntdGauge",
+            typeInfo: {
+                name: "进度图",
+                type: "progress"
+            },
         };
     }
 

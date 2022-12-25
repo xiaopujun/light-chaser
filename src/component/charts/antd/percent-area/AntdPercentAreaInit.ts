@@ -1,13 +1,6 @@
-import BaseInit from "../../interface/BaseInit";
+import BaseInit, {BaseInfo} from "../../interface/BaseInit";
 
 export default class AntdPercentAreaInit implements BaseInit {
-    getCompName(): string {
-        return "百分比面积图";
-    }
-
-    getCompType(): string {
-        return "AntdPercentArea";
-    }
 
     getInitConfig(): Object {
         return {
@@ -82,6 +75,17 @@ export default class AntdPercentAreaInit implements BaseInit {
                     },
                 },
             }
+        };
+    }
+
+    getBaseInfo(): BaseInfo {
+        return {
+            name: "百分比面积图",
+            value: "AntdPercentArea",
+            typeInfo: {
+                name: "面积图",
+                type: "area"
+            },
         };
     }
 

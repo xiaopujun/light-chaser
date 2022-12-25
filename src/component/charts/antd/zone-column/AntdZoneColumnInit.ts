@@ -1,13 +1,6 @@
-import BaseInit from "../../interface/BaseInit";
+import BaseInit, {BaseInfo} from "../../interface/BaseInit";
 
 export default class AntdZoneColumnInit implements BaseInit {
-    getCompName(): string {
-        return "区间柱状图";
-    }
-
-    getCompType(): string {
-        return "AntdZoneColumn";
-    }
 
     getInitConfig(): Object {
         return {
@@ -61,6 +54,17 @@ export default class AntdZoneColumnInit implements BaseInit {
                 color: 'rgb(0,255,234)',
                 maxColumnWidth: 8
             }
+        };
+    }
+
+    getBaseInfo(): BaseInfo {
+        return {
+            name: "区间柱状图",
+            value: "AntdZoneColumn",
+            typeInfo: {
+                name: "柱状图",
+                type: "column"
+            },
         };
     }
 

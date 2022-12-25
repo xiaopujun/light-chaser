@@ -1,13 +1,6 @@
-import BaseInit from "../../interface/BaseInit";
+import BaseInit, {BaseInfo} from "../../interface/BaseInit";
 
 export default class AntdMuchLineInit implements BaseInit {
-    getCompName(): string {
-        return "多重线图";
-    }
-
-    getCompType(): string {
-        return "AntdMuchFoldLine";
-    }
 
     getInitConfig(): Object {
         return {
@@ -93,6 +86,17 @@ export default class AntdMuchLineInit implements BaseInit {
                     },
                 },
             }
+        };
+    }
+
+    getBaseInfo(): BaseInfo {
+        return {
+            name: "多重线图",
+            value: "AntdMuchFoldLine",
+            typeInfo: {
+                name: "线图",
+                type: "line"
+            },
         };
     }
 

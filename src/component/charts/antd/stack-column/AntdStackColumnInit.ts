@@ -1,13 +1,6 @@
-import BaseInit from "../../interface/BaseInit";
+import BaseInit, {BaseInfo} from "../../interface/BaseInit";
 
 export default class AntdStackColumnInit implements BaseInit {
-    getCompName(): string {
-        return "堆叠柱状图";
-    }
-
-    getCompType(): string {
-        return "AntdStackColumn";
-    }
 
     getInitConfig(): Object {
         return {
@@ -58,6 +51,17 @@ export default class AntdStackColumnInit implements BaseInit {
                 },
                 maxColumnWidth: 8
             }
+        };
+    }
+
+    getBaseInfo(): BaseInfo {
+        return {
+            name: "堆叠柱状图",
+            value: "AntdStackColumn",
+            typeInfo: {
+                name: "柱状图",
+                type: "column"
+            },
         };
     }
 

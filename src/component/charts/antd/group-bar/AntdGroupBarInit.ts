@@ -1,13 +1,6 @@
-import BaseInit from "../../interface/BaseInit";
+import BaseInit, {BaseInfo} from "../../interface/BaseInit";
 
 export default class AntdGroupBarInit implements BaseInit {
-    getCompName(): string {
-        return "分组条形图";
-    }
-
-    getCompType(): string {
-        return "AntdGroupBar";
-    }
 
     getInitConfig(): Object {
         return {
@@ -66,6 +59,17 @@ export default class AntdGroupBarInit implements BaseInit {
                 legend: false,
                 maxBarWidth: 8
             }
+        };
+    }
+
+    getBaseInfo(): BaseInfo {
+        return {
+            name: "分组条形图",
+            value: "AntdGroupBar",
+            typeInfo: {
+                name: "条形图",
+                type: "bar"
+            },
         };
     }
 

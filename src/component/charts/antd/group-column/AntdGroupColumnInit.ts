@@ -1,13 +1,6 @@
-import BaseInit from "../../interface/BaseInit";
+import BaseInit, {BaseInfo} from "../../interface/BaseInit";
 
 export default class AntdGroupColumnInit implements BaseInit {
-    getCompName(): string {
-        return "分组柱状图";
-    }
-
-    getCompType(): string {
-        return "AntdGroupColumn";
-    }
 
     getInitConfig(): Object {
         return {
@@ -66,6 +59,17 @@ export default class AntdGroupColumnInit implements BaseInit {
                 legend: false,
                 maxColumnWidth: 8
             }
+        };
+    }
+
+    getBaseInfo(): BaseInfo {
+        return {
+            name: "分组柱状图",
+            value: "AntdGroupColumn",
+            typeInfo: {
+                name: "柱状图",
+                type: "column"
+            },
         };
     }
 

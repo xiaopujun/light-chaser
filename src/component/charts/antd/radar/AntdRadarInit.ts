@@ -1,13 +1,6 @@
-import BaseInit from "../../interface/BaseInit";
+import BaseInit, {BaseInfo} from "../../interface/BaseInit";
 
 export default class AntdRadarInit implements BaseInit {
-    getCompName(): string {
-        return "雷达图";
-    }
-
-    getCompType(): string {
-        return "AntdRadar";
-    }
 
     getInitConfig(): Object {
         return {
@@ -97,6 +90,17 @@ export default class AntdRadarInit implements BaseInit {
                     },
                 }
             }
+        };
+    }
+
+    getBaseInfo(): BaseInfo {
+        return {
+            name: "雷达图",
+            value: "AntdRadar",
+            typeInfo: {
+                name: "雷达图",
+                type: "radar"
+            },
         };
     }
 

@@ -1,4 +1,4 @@
-import BaseInit from "../../interface/BaseInit";
+import BaseInit, {BaseInfo} from "../../interface/BaseInit";
 
 export default class LcColorBlockInit implements BaseInit {
     getCompName(): string {
@@ -23,4 +23,14 @@ export default class LcColorBlockInit implements BaseInit {
         };
     }
 
+    getBaseInfo(): BaseInfo {
+        return {
+            name: "颜色块",
+            value: "LcColorBlock",
+            typeInfo: {
+                name: "基础",
+                type: "base"
+            },
+        };
+    }
 }
