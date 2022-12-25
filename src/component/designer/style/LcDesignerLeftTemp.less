@@ -1,0 +1,117 @@
+@import "../structure/structure";
+
+.lc-charts-sort {
+  .sort-item {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: rgba(198, 239, 255, 0.84);
+    transition: color 0.5s, background-color 0.5s, border-right-color 0.5s;
+    border-right-style: solid;
+    border-right-width: 3px;
+    border-right-color: rgba(255, 28, 28, 0);
+
+    .sort-item-icon {
+      font-size: 16px;
+    }
+
+    .sort-item-content {
+      font-size: 12px;
+    }
+  }
+
+  .sort-item:hover {
+    background-color: rgba(44, 246, 255, 0.27);
+    color: #62f0ff;
+    border-right-color: #62f0ff;
+  }
+}
+
+.lc-charts-list {
+  padding: 5px;
+  position: absolute;
+  left: 60px;
+  top: 50px;
+  width: 180px;
+  height: calc(100% - (@headerHeight + @footHeight));
+  background-color: #5c5c5c;
+
+  .menu-title {
+    display: flex;
+    justify-content: space-between;
+    height: 25px;
+    color: #78d4d5;
+    cursor: pointer;
+
+    .menu-title-content {
+      padding-left: 2px;
+    }
+  }
+
+  .charts-search {
+    .ant-input, .ant-input-search-button {
+      margin: 0;
+    }
+  }
+
+  .charts-list-items {
+    height: calc(100% - 70px);
+    overflow-y: auto;
+    margin-top: 10px;
+
+
+    .charts-list-item {
+      width: 100%;
+      height: 165px;
+      cursor: pointer;
+      background-color: rgba(12, 167, 194, 0.88);
+      margin-bottom: 10px;
+      text-align: center;
+      line-height: 165px;
+    }
+  }
+
+}
+
+.lc-charts-layer {
+  padding: 5px;
+  position: absolute;
+  left: 245px;
+  top: 50px;
+  width: 180px;
+  height: calc(100% - (@headerHeight + @footHeight));
+  background-color: #5c5c5c;
+
+  .menu-title {
+    display: flex;
+    justify-content: space-between;
+    height: 25px;
+    color: #78d4d5;
+    cursor: pointer;
+
+    .menu-title-content {
+      padding-left: 2px;
+    }
+  }
+
+  .charts-layer-items {
+    height: calc(100% - 30px);
+    overflow-y: auto;
+    margin-top: 10px;
+
+
+    .charts-layer-item {
+      width: 100%;
+      height: 30px;
+      cursor: pointer;
+      background-color: rgba(60, 226, 255, 0.31);
+      margin-bottom: 4px;
+      text-align: center;
+      line-height: 30px;
+    }
+  }
+}

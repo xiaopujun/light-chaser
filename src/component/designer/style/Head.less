@@ -27,27 +27,22 @@
       color: @menuColor;
       padding: 0 10px;
       line-height: 50px;
+      cursor: pointer;
       transition: color 0.5s, background-color 0.5s, border-bottom-color 0.5s;
-      box-sizing: border-box;
       border-bottom-style: solid;
       border-bottom-width: 6px;
       border-bottom-color: rgba(255, 28, 28, 0);
-      cursor: pointer;
 
       .item-span {
         position: relative;
         top: 3px;
-      }
-
-      a {
-        color: @menuColor;
       }
     }
 
     .right-item:hover {
       background-color: rgba(44, 246, 255, 0.27);
       color: #62f0ff;
-      border-bottom-color: #00ebff;
+      border-bottom-color: #62f0ff;
     }
   }
 }
