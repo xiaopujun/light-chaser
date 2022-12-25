@@ -1,45 +1,54 @@
-import {cloneDeep} from 'lodash';
+import BaseInit from "../../interface/BaseInit";
 
-//堆叠面积图初始化数据和配置
-const AntdLiquidInit = () => {
-    return cloneDeep({
-        baseInfo: {
-            name: '堆叠面积图',
-            type: 'AntdLiquid'
-        },
-        baseStyle: {
-            padding: '5px',
-            backgroundColor: 'rgba(23,157,169,0.12)'
-        },
-        chartProps: {
-            percent: 0.67,
-            color: 'rgb(0,255,234)',
-            outline: {
-                border: 4,
-                style: {
-                    stroke: 'rgb(0,255,234)'
-                }
+export default class AntdLiquidInit implements BaseInit {
+    getCompName(): string {
+        return "堆叠面积图";
+    }
+
+    getCompType(): string {
+        return "AntdLiquid";
+    }
+
+    getInitConfig(): Object {
+        return {
+            baseInfo: {
+                name: '堆叠面积图',
+                type: 'AntdLiquid'
             },
-            wave: {
-                length: 128,
+            baseStyle: {
+                padding: '5px',
+                backgroundColor: 'rgba(23,157,169,0.12)'
             },
-            statistic: {
-                title: {
+            chartProps: {
+                percent: 0.67,
+                color: 'rgb(0,255,234)',
+                outline: {
+                    border: 4,
                     style: {
-                        fill: '#00fce1',
-                        fontSize: 14,
+                        stroke: 'rgb(0,255,234)'
                     }
                 },
-                content: {
-                    style: {
-                        fill: '#00fce1',
-                        fontSize: 14,
-                        lineHeight: '44px'
+                wave: {
+                    length: 128,
+                },
+                statistic: {
+                    title: {
+                        style: {
+                            fill: '#00fce1',
+                            fontSize: 14,
+                        }
+                    },
+                    content: {
+                        style: {
+                            fill: '#00fce1',
+                            fontSize: 14,
+                            lineHeight: '44px'
+                        }
                     }
                 }
             }
-        }
-    });
-};
-export default AntdLiquidInit;
+        };
+    }
+
+}
 

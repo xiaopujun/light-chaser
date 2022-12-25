@@ -2,7 +2,8 @@ import {Action, LCDesignerProps} from "../../types/LcDesignerType";
 import * as _ from 'lodash'
 import deepmerge from "deepmerge";
 import {DesignerOperate} from "../../enum/DesignerOperate";
-import {lcCompInits} from "../../component/designer";
+import {lcCompInits, lcComps} from "../../component/designer";
+import BaseInit from "../../component/charts/interface/BaseInit";
 
 /**
  * 初始化的布局设计器状态
@@ -106,7 +107,9 @@ function addItem(preState: LCDesignerProps, data: any) {
     //更新布局
     layoutConfigs.push(data);
     //更新组件配置信息
-    let initData: any = lcCompInits[data.name + "Init"]();
+    console.log(lcCompInits)
+    let BaseInit: any = lcCompInits[data.name + "Init"];
+    let initData: any = new BaseInit().getInitConfig()
     initData.baseInfo = {...initData.baseInfo, ...{id: globalSet.elemCount}}
     chartConfigs[globalSet.elemCount + ""] = initData;
     //id增加

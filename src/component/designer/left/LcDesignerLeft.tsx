@@ -80,9 +80,9 @@ class LcDesignerLeft extends Component<LcDesignerLeftProps, any> {
             {
                 id: '7',
                 sort: '折线图',
-                data: [{id: '1', type: '基础折线图', icon: <AreaChartOutlined/>, content: '基础', token: 'AntdBaseFoldLine'},
-                    {id: '2', type: '阶梯折线图', icon: <AreaChartOutlined/>, content: '阶梯', token: 'AntdStepFoldLine'},
-                    {id: '3', type: '多重折线图', icon: <AreaChartOutlined/>, content: '多重', token: 'AntdMuchFoldLine'},]
+                data: [{id: '1', type: '基础折线图', icon: <AreaChartOutlined/>, content: '基础', token: 'AntdBaseLine'},
+                    {id: '2', type: '阶梯折线图', icon: <AreaChartOutlined/>, content: '阶梯', token: 'AntdStepLine'},
+                    {id: '3', type: '多重折线图', icon: <AreaChartOutlined/>, content: '多重', token: 'AntdMuchLine'},]
             },
             {
                 id: '8',

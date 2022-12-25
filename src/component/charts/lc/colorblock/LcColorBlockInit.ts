@@ -1,17 +1,26 @@
-import {cloneDeep} from 'lodash';
+import BaseInit from "../../interface/BaseInit";
 
-//词云图初始化数据和配置
-const LcColorBlockInit = () => {
-    return cloneDeep({
-        baseInfo: {
-            name: '颜色块',
-            type: 'LcColorBlock'
-        },
-        baseStyle: {
-            padding: '5px',
-            backgroundColor: 'rgba(23,157,169,0.12)'
-        },
-        chartProps: {}
-    });
-};
-export default LcColorBlockInit;
+export default class LcColorBlockInit implements BaseInit {
+    getCompName(): string {
+        return "颜色块";
+    }
+
+    getCompType(): string {
+        return "LcColorBlock";
+    }
+
+    getInitConfig(): Object {
+        return {
+            baseInfo: {
+                name: '颜色块',
+                type: 'LcColorBlock'
+            },
+            baseStyle: {
+                padding: '5px',
+                backgroundColor: 'rgba(23,157,169,0.12)'
+            },
+            chartProps: {}
+        };
+    }
+
+}

@@ -20,7 +20,6 @@ import {
 import DesignerHeader from "./LcDesignerHeader";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import LcDesignerRight from "./LcDesignerRight";
-import LcDesignerStructure from "./structure/LcDesignerStructure";
 import LcHeader from "./structure/LcHeader";
 import LcBody from "./structure/LcBody";
 import LcLeft from "./structure/LcLeft";
@@ -29,6 +28,8 @@ import LcRight from "./structure/LcRight";
 import LcStructure from "./structure/LcStructure";
 import LcFoot from "./structure/LcFoot";
 import LcDesignerLeftTemp from "./LcDesignerLeftTemp";
+
+import BaseInit from '../../component/charts/interface/BaseInit';
 
 const {Header, Sider, Content} = Layout;
 
@@ -64,9 +65,11 @@ class LCDesigner extends Component<LCDesignerProps | any> {
             const componentName = key.replace(/^\.\/([\w|-]+\/)*(\w+)\.(tsx|ts)$/, '$2');
             if (componentName.match("Set$"))
                 lcCompSets[componentName] = context(key).default;
-            else if (componentName.match("Init$"))
+            else if (componentName.match("Init$")) {
+                // let isInit = context(key).default instanceof BaseInit;
+                // console.log(`componentName${componentName},${}`,)
                 lcCompInits[componentName] = context(key).default;
-            else
+            } else
                 lcComps[componentName] = context(key).default;
         });
     }
@@ -121,41 +124,42 @@ class LCDesigner extends Component<LCDesignerProps | any> {
     render() {
         return (
             <>
-                <LcStructure>
-                    <LcHeader><DesignerHeader {...this.props}/></LcHeader>
-                    <LcBody>
-                        <LcLeft>
-                            <LcDesignerLeftTemp/>
-                        </LcLeft>
-                        <LcContent>{/*<LCLayoutContent {...this.props}/>*/}</LcContent>
-                        <LcRight>{/*<LcDesignerRight {...this.props}/>*/}</LcRight>
-                    </LcBody>
-                    <LcFoot></LcFoot>
-                </LcStructure>
+                {/*<LcStructure>*/}
+                {/*    <LcHeader><DesignerHeader {...this.props}/></LcHeader>*/}
+                {/*    <LcBody>*/}
+                {/*        <LcLeft>*/}
+                {/*            <LcDesignerLeftTemp/>*/}
+                {/*        </LcLeft>*/}
+                {/*        <LcContent>/!*<LCLayoutContent {...this.props}/>*!/</LcContent>*/}
+                {/*        <LcRight>/!*<LcDesignerRight {...this.props}/>*!/</LcRight>*/}
+                {/*    </LcBody>*/}
+                {/*    <LcFoot></LcFoot>*/}
+                {/*</LcStructure>*/}
 
 
-                {/*<div className={'light_chaser-designer'}>*/}
-                {/*    <Layout>*/}
-                {/*        <Header>*/}
-                {/*            /!*设计器头部*!/*/}
-                {/*            <DesignerHeader {...this.props}/>*/}
-                {/*        </Header>*/}
-                {/*        <Layout>*/}
-                {/*            <Sider width={300}>*/}
-                {/*                /!*设计器左侧*!/*/}
-                {/*                <LcDesignerLeftTemp/>*/}
-                {/*            </Sider>*/}
-                {/*            <Content>*/}
-                {/*                /!*设计器中间内容*!/*/}
-                {/*                <LCLayoutContent {...this.props}/>*/}
-                {/*            </Content>*/}
-                {/*            <Sider width={300}>*/}
-                {/*                /!*设计器右侧配置*!/*/}
-                {/*                <LcDesignerRight {...this.props}/>*/}
-                {/*            </Sider>*/}
-                {/*        </Layout>*/}
-                {/*    </Layout>*/}
-                {/*</div>*/}
+                <div className={'light_chaser-designer'}>
+                    <Layout>
+                        <Header>
+                            {/*设计器头部*/}
+                            <DesignerHeader {...this.props}/>
+                        </Header>
+                        <Layout>
+                            <Sider width={300}>
+                                {/*设计器左侧*/}
+                                {/*<LcDesignerLeftTemp/>*/}
+                                <LcDesignerLeft/>
+                            </Sider>
+                            <Content>
+                                {/*设计器中间内容*/}
+                                <LCLayoutContent {...this.props}/>
+                            </Content>
+                            <Sider width={300}>
+                                {/*设计器右侧配置*/}
+                                <LcDesignerRight {...this.props}/>
+                            </Sider>
+                        </Layout>
+                    </Layout>
+                </div>
             </>
 
         )
