@@ -67,7 +67,7 @@ export default class AntdPercentColumnInit implements BaseInit {
             value: "AntdPercentColumn",
             typeInfo: {
                 name: "柱状图",
-                type: "colmun"
+                type: "column"
             },
         };
     }
