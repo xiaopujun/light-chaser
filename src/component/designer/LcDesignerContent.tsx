@@ -147,7 +147,7 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
         return (
             <DragScaleProvider contentWidth={globalSet.screenWidth}
                                contentHeight={globalSet.screenHeight}
-                               containerWidth={window.innerWidth - 600}
+                               containerWidth={window.innerWidth - 260}
                                containerHeight={window.innerHeight - 64}
                                changeScale={this.changeScale}>
                 <ReactGridLayout ref={obj => this.rgl = obj}

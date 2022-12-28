@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Layout} from 'antd';
 import {connect} from "react-redux";
-import LcDesignerLeft from "./left/LcDesignerLeft";
 import LCLayoutContent from "./LcDesignerContent";
 
 import {
@@ -19,7 +18,6 @@ import {
 } from "../../redux/actions/LCDesignerAction";
 import DesignerHeader from "./LcDesignerHeader";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import LcDesignerRight from "./LcDesignerRight";
 import LcHeader from "./structure/LcHeader";
 import LcBody from "./structure/LcBody";
 import LcLeft from "./structure/LcLeft";
@@ -27,9 +25,7 @@ import LcContent from "./structure/LcContent";
 import LcRight from "./structure/LcRight";
 import LcStructure from "./structure/LcStructure";
 import LcFoot from "./structure/LcFoot";
-import LcDesignerLeftTemp from "./LcDesignerLeftTemp";
-
-import BaseInit from '../../component/charts/interface/BaseInit';
+import LcDesignerLeft from "./LcDesignerLeft";
 
 const {Header, Sider, Content} = Layout;
 
@@ -134,9 +130,9 @@ class LCDesigner extends Component<LCDesignerProps | any> {
                     <LcHeader><DesignerHeader {...this.props}/></LcHeader>
                     <LcBody>
                         <LcLeft>
-                            <LcDesignerLeftTemp/>
+                            <LcDesignerLeft/>
                         </LcLeft>
-                        <LcContent>{/*<LCLayoutContent {...this.props}/>*/}</LcContent>
+                        <LcContent><LCLayoutContent {...this.props}/></LcContent>
                         <LcRight>{/*<LcDesignerRight {...this.props}/>*/}</LcRight>
                     </LcBody>
                     <LcFoot/>
@@ -152,7 +148,7 @@ class LCDesigner extends Component<LCDesignerProps | any> {
                 {/*        <Layout>*/}
                 {/*            <Sider width={300}>*/}
                 {/*                /!*设计器左侧*!/*/}
-                {/*                /!*<LcDesignerLeftTemp/>*!/*/}
+                {/*                /!*<LcDesignerLeft/>*!/*/}
                 {/*                <LcDesignerLeft/>*/}
                 {/*            </Sider>*/}
                 {/*            <Content>*/}

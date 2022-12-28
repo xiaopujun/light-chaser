@@ -108,8 +108,8 @@ function addItem(preState: LCDesignerProps, data: any) {
     layoutConfigs.push(data);
     //更新组件配置信息
     console.log(lcCompInits)
-    let BaseInit: any = lcCompInits[data.name + "Init"];
-    let initData: any = new BaseInit().getInitConfig()
+    let initObj: any = lcCompInits[data.name + "Init"];
+    let initData: any = initObj.getInitConfig()
     initData.baseInfo = {...initData.baseInfo, ...{id: globalSet.elemCount}}
     chartConfigs[globalSet.elemCount + ""] = initData;
     //id增加

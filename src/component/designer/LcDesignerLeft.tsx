@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import './style/LcDesignerLeftTemp.less';
+import './style/LcDesignerLeft.less';
 import * as _ from 'lodash';
 
 import {
     AlignLeftOutlined,
     AppstoreFilled,
     AreaChartOutlined,
-    CloseOutlined,
     CloudFilled,
     DotChartOutlined,
     GoldenFilled,
@@ -16,16 +15,15 @@ import {
     RocketFilled,
     SignalFilled
 } from "@ant-design/icons";
-import Search from "antd/lib/input/Search";
 import {lcCompInits} from "./index";
+import LcCompList from "./LcCompList";
 
-class LcDesignerLeftTemp extends Component {
+class LcDesignerLeft extends Component {
 
     sorts: Array<any> = [];
     charts: Array<Object> = [];
     state = {
         sortKey: 'all',
-        searchKey: '',
     }
 
     sortIcon: any = {
@@ -61,10 +59,6 @@ class LcDesignerLeftTemp extends Component {
         this.setState({sortKey: e.currentTarget.id});
     }
 
-    searchChart = (searchKey: string) => {
-        this.setState({searchKey});
-    }
-
     getSortDom = () => {
         let sortDom = [];
         for (let i = 0; i < this.sorts.length; i++) {
@@ -80,64 +74,19 @@ class LcDesignerLeftTemp extends Component {
         return sortDom;
     }
 
-    getChartDom = () => {
-        let chartDom = [];
-        let tempCharts = this.charts;
-        if (this.state.sortKey != 'all') {
-            tempCharts = this.charts.filter((item: any) => {
-                return item.typeInfo.type == this.state.sortKey;
-            })
-        }
-        if (this.state.searchKey != '') {
-            tempCharts = tempCharts.filter((item: any) => {
-                let index = item.name.indexOf(this.state.searchKey);
-                return item.name.indexOf(this.state.searchKey) >= 0;
-            })
-        }
-        for (let i = 0; i < tempCharts.length; i++) {
-            let chartInfo: any = tempCharts[i];
-            const {name} = chartInfo;
-            chartDom.push(
-                <div key={i + ''} className={'charts-list-item'}>{name}</div>
-            )
-        }
-        return chartDom;
-    }
-
 
     render() {
         const sortDom = this.getSortDom();
-        const chartDom = this.getChartDom();
+        const {sortKey} = this.state;
         return (
             <>
                 <div className={'lc-charts-sort'}>
                     {sortDom}
                 </div>
-                <div className={'lc-charts-list'}>
-                    <div className={'menu-title'}>
-                        <div className={'menu-title-content'}>组件列表</div>
-                        <div><span><CloseOutlined/></span></div>
-                    </div>
-                    <div className={'charts-search'}>
-                        <Search placeholder="搜索组件" onSearch={this.searchChart} style={{width: '100%'}}/>
-                    </div>
-                    <div className={'charts-list-items'}>
-                        {chartDom}
-                    </div>
-                </div>
-
-                <div className={'lc-charts-layer'}>
-                    <div className={'menu-title'}>
-                        <div className={'menu-title-content'}>图层</div>
-                        <div><span><CloseOutlined/></span></div>
-                    </div>
-                    <div className={'charts-layer-items'}>
-                        <div className={'charts-layer-item'}>图层1</div>
-                    </div>
-                </div>
+                <LcCompList data={this.charts} sortKey={sortKey}/>
             </>
         );
     }
 }
 
-export default LcDesignerLeftTemp;
+export default LcDesignerLeft;
