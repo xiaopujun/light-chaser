@@ -22,7 +22,8 @@ class LcEmBaseInfo extends Component<LcEmBaseInfoProps> {
     }
 
     generateConfigData = () => {
-        const {baseInfo: {id, name = '', desc = '', type}} = this.props;
+        const {baseInfo = {}} = this.props;
+        const {id = -1, name = '', desc = '', type = ''} = baseInfo;
         return [
             {
                 label: 'ID号',

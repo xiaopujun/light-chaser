@@ -128,7 +128,6 @@ class LcCanvasSet extends Component<LcCanvasSetProps> {
     render() {
         return (
             <div className={'lc-global-set'}>
-                <div className={'lc-global-set-title'}>全局配置</div>
                 <div className={'lc-global-set-content'}>
                     <CfgGroup items={this.generateCanvasSet()}/>
                 </div>

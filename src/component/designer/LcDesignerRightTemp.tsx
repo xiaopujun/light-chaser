@@ -4,21 +4,19 @@ import LcConfigMenus from "./LcConfigMenus";
 import LcConfigContent from "./LcConfigContent";
 
 class LcDesignerRightTemp extends Component<any> {
+
+    state = {
+        activeMenu: ''
+    }
+
+    changeMenu = (menu: string) => this.setState({activeMenu: menu})
+
     render() {
-        const {
-            LCDesignerStore,
-            updateActive,
-            updateBaseStyle,
-            updateChartProps,
-            updateBaseInfo,
-            updateCanvasSet
-        } = this.props;
-        const {activated, chartConfigs, canvasSet} = LCDesignerStore!;
-        const chartConfig = chartConfigs[activated.id];
+        const {activeMenu} = this.state;
         return (
             <>
-                <LcConfigMenus/>
-                <LcConfigContent />
+                <LcConfigMenus onChange={this.changeMenu}/>
+                <LcConfigContent activeMenu={activeMenu} {...this.props}/>
             </>
         );
     }
