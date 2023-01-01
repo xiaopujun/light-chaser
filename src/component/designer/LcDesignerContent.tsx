@@ -43,6 +43,12 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
         return chartConfigs[elemId];
     }
 
+    updateActive = (e: any) => {
+        let {id: elemId, dataset} = e.currentTarget;
+        const {updateActive} = this.props;
+        updateActive && updateActive({elemId: parseInt(elemId), type: dataset.type});
+    }
+
     /**
      * 元素生成方法
      */
@@ -53,7 +59,10 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
             let Chart: any = getChartsTemplate(item.name);
             const chartConfig = this.calculateChartConfig(item.id);
             return (
-                <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
+                <div key={item?.id + ''} className={'lc-comp-item'}
+                     id={item.id} data-type={chartConfig?.baseInfo?.type}
+                     onClick={this.updateActive}
+                     style={{width: '100%', height: '100%'}}>
                     <Suspense fallback={<Loading width={'100%'} height={'100%'}/>}>
                         <Chart elemId={item?.id}
                                chartConfig={chartConfig}
@@ -102,7 +111,6 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
             }
         }
         addItem && addItem(item);
-
         if (this.rgl != null) {
             const {layoutConfigs} = LCDesignerStore!;
             this.rgl.setState({layout: layoutConfigs})
@@ -111,15 +119,13 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
 
     /**
      * 元素被拖动时限定目标元素大小
-     * @param e
      */
     onDropDragOver = (e: any) => {
         return {w: 5, h: 5}
     }
 
     /**
-     * @description 组件拖拽变化回调
-     * @param layout
+     * 组件拖拽变化回调
      */
     onDragStop = (layout: Layout[], oldItem: Layout, newItem: Layout, placeholder: Layout, event: MouseEvent, element: HTMLElement,) => {
         const {updateLayout} = this.props;
@@ -127,18 +133,15 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
     }
 
     /**
-     * @description 组件大小变化回调
+     * 组件大小变化回调
      */
     onResizeStop = (layout: Layout[], oldItem: Layout, newItem: Layout, placeholder: Layout, event: MouseEvent, element: HTMLElement,) => {
         const {updateLayout} = this.props;
         updateLayout && updateLayout(newItem);
     }
 
-    changeScale = (scale: number) => {
-        this.setState({
-            scale: scale
-        })
-    }
+    changeScale = (scale: number) => this.setState({scale: scale});
+
 
     render() {
         const {LCDesignerStore} = this.props;

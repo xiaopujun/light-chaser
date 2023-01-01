@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {CloseOutlined} from "@ant-design/icons";
+import {CloseOutlined, LineOutlined} from "@ant-design/icons";
 import {Input} from "antd";
 import './style/LcCompList.less';
 
@@ -59,7 +59,7 @@ class LcCompList extends Component<LcCompListProps> {
             <div className={'lc-comp-list'}>
                 <div className={'list-title'}>
                     <div className={'title-content'}>组件列表</div>
-                    <div><span><CloseOutlined/></span></div>
+                    <div><span><LineOutlined/></span></div>
                 </div>
                 <div className={'list-search'}>
                     <Input placeholder="搜索组件" onPressEnter={this.searchChart}
