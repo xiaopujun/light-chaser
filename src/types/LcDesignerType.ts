@@ -62,7 +62,7 @@ interface ChartConfigsProps {
     [key: string | number]: ChartConfigProps;
 }
 
-interface GlobalSetProps {
+interface CanvasSetProps {
     /**
      * 数据存储方式 local(本地）server（远程服务）
      */
@@ -118,7 +118,11 @@ export interface LCDesignerProps {
     /**
      * 全局配置
      */
-    globalSet: GlobalSetProps,
+    canvasSet: CanvasSetProps,
+    /**
+     * 系统配置
+     */
+    systemSet: any,
     /**
      * 激活状态属性
      */

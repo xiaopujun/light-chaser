@@ -51,12 +51,12 @@ class LcShow extends Component<LcShowProps | any> {
 
     render() {
         const {LCDesignerStore} = this.state;
-        const {layoutConfigs = [], globalSet} = LCDesignerStore;
+        const {layoutConfigs = [], canvasSet} = LCDesignerStore;
         for (let i = 0; i < layoutConfigs.length; i++)
             layoutConfigs[i].isDraggable = false;
         return (
             <div className="site-layout-background"
-                 style={{height: globalSet.screenHeight, width: globalSet.screenWidth, backgroundColor: '#131e26',}}>
+                 style={{height: canvasSet.screenHeight, width: canvasSet.screenWidth, backgroundColor: '#131e26',}}>
                 <ReactGridLayout className="layout"
                                  layout={layoutConfigs}
                                  cols={48}
@@ -66,11 +66,11 @@ class LcShow extends Component<LcShowProps | any> {
                                  preventCollision={true}
                                  allowOverlap={true}
                                  style={{
-                                     height: globalSet.screenHeight,
-                                     width: globalSet.screenWidth,
+                                     height: canvasSet.screenHeight,
+                                     width: canvasSet.screenWidth,
                                      backgroundColor: '#131e26',
                                  }}
-                                 width={globalSet.screenWidth}>
+                                 width={canvasSet.screenWidth}>
                     {this.generateElement()}
                 </ReactGridLayout>
             </div>

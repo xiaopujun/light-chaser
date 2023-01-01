@@ -12,7 +12,7 @@ import {
     updateBaseStyle,
     updateChartProps,
     updateDesignerStore,
-    updateGlobalSet,
+    updateCanvasSet,
     updateLayout,
     updateRightVisible
 } from "../../redux/actions/LCDesignerAction";
@@ -85,7 +85,7 @@ class LCDesigner extends Component<LCDesignerProps | any> {
         switch (action) {
             case 'add':
                 updateDesignerStore({
-                    globalSet: {
+                    canvasSet: {
                         screenName,
                         screenWidth: parseInt(screenWidth),
                         screenHeight: parseInt(screenHeight),
@@ -108,13 +108,13 @@ class LCDesigner extends Component<LCDesignerProps | any> {
                     screenName: name,
                     screenWidth: width,
                     screenHeight: height,
-                    globalSet,
+                    canvasSet,
                     chartConfigs,
                     layoutConfigs
                 } = config;
                 updateDesignerStore({
                     id: screenId,
-                    globalSet,
+                    canvasSet,
                     screenName: name,
                     screenWidth: width,
                     screenHeight: height,
@@ -185,6 +185,6 @@ export default connect(
         updateLayout,
         updateDesignerStore,
         updateBaseInfo,
-        updateGlobalSet
+        updateCanvasSet
     }
 )(withRouter(LCDesigner))

@@ -23,7 +23,7 @@ class PointSet extends Component<PointSetProps> {
         const {updateChartProps} = this.props;
         updateChartProps && updateChartProps({size: [1, size]})
     }
-    generateGlobalSet = () => {
+    generateCanvasSet = () => {
         const {pointSize = [1, 1], pointShape} = this.props;
         return [
             {
@@ -80,7 +80,7 @@ class PointSet extends Component<PointSetProps> {
     }
 
     render() {
-        const items = this.generateGlobalSet();
+        const items = this.generateCanvasSet();
         return <CfgGroup items={items}/>;
     }
 }

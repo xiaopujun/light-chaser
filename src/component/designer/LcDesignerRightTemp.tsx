@@ -11,9 +11,9 @@ class LcDesignerRightTemp extends Component<any> {
             updateBaseStyle,
             updateChartProps,
             updateBaseInfo,
-            updateGlobalSet
+            updateCanvasSet
         } = this.props;
-        const {activated, chartConfigs, globalSet} = LCDesignerStore!;
+        const {activated, chartConfigs, canvasSet} = LCDesignerStore!;
         const chartConfig = chartConfigs[activated.id];
         return (
             <>

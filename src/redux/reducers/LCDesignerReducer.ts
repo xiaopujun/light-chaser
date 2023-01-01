@@ -10,7 +10,7 @@ import BaseInit from "../../component/charts/interface/BaseInit";
  */
 const initState: LCDesignerProps = {
     id: -1,
-    globalSet: {
+    canvasSet: {
         saveType: 'local',//数据存储方式 local(本地）server（远程服务）
         screenRatio: '',//屏幕比例
         screenName: '数据大屏',
@@ -30,7 +30,8 @@ const initState: LCDesignerProps = {
     rightDialog: {
         visible: false,
         title: ""
-    }
+    },
+    systemSet: {}
 }
 
 /**
@@ -61,7 +62,7 @@ export default function LCDesignerReducer(preState: LCDesignerProps = initState,
         case DesignerOperate.UPDATE_BASE_INFO:
             return updateBaseInfo(preState, data);
         case DesignerOperate.UPDATE_GLOBAL_SET:
-            return updateGlobalSet(preState, data);
+            return updateCanvasSet(preState, data);
         default:                                            //无更新，返回之前的状态
             return preState;
     }
@@ -103,19 +104,19 @@ function updateDesignerStore(preState: LCDesignerProps, data: any) {
  * @returns {{layoutConfigs, chartConfig, count}}
  */
 function addItem(preState: LCDesignerProps, data: any) {
-    let {globalSet, layoutConfigs, chartConfigs} = preState;
+    let {canvasSet, layoutConfigs, chartConfigs} = preState;
     //更新布局
     layoutConfigs.push(data);
     //更新组件配置信息
     console.log(lcCompInits)
     let initObj: any = lcCompInits[data.name + "Init"];
     let initData: any = initObj.getInitConfig()
-    initData.baseInfo = {...initData.baseInfo, ...{id: globalSet.elemCount}}
-    chartConfigs[globalSet.elemCount + ""] = initData;
+    initData.baseInfo = {...initData.baseInfo, ...{id: canvasSet.elemCount}}
+    chartConfigs[canvasSet.elemCount + ""] = initData;
     //id增加
-    globalSet.elemCount++;
+    canvasSet.elemCount++;
     //生成新store
-    return {...preState, ...{globalSet, layoutConfigs, chartConfigs}};
+    return {...preState, ...{canvasSet, layoutConfigs, chartConfigs}};
 }
 
 /**
@@ -219,8 +220,8 @@ function updateChartProps(preState: LCDesignerProps, data: any) {
  * @param preState
  * @param data
  */
-function updateGlobalSet(preState: LCDesignerProps, data: any) {
-    const {globalSet} = preState;
-    preState.globalSet = {...globalSet, ...data};
+function updateCanvasSet(preState: LCDesignerProps, data: any) {
+    const {canvasSet} = preState;
+    preState.canvasSet = {...canvasSet, ...data};
     return {...preState};
 }

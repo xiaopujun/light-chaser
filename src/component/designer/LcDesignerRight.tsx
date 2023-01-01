@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import LcCompConfigContainer from "../config/LcCompConfigContainer";
 import './style/Right.less';
 import {LCDesignerProps} from "../../types/LcDesignerType";
-import LcGlobalSet from "../config/global/LcGlobalSet";
+import LcCanvasSet from "../config/canvas/LcCanvasSet";
 
 interface LcDesignerRightProps {
     LCDesignerStore?: LCDesignerProps;
@@ -11,7 +11,7 @@ interface LcDesignerRightProps {
     updateBaseStyle?: (data?: any) => void;
     updateChartProps?: (data?: any) => void;
     updateBaseInfo?: (data?: any) => void;
-    updateGlobalSet?: (data?: any) => void;
+    updateCanvasSet?: (data?: any) => void;
 }
 
 /**
@@ -32,9 +32,9 @@ export default class LcDesignerRight extends Component<LcDesignerRightProps, any
             updateBaseStyle,
             updateChartProps,
             updateBaseInfo,
-            updateGlobalSet
+            updateCanvasSet
         } = this.props;
-        const {activated, chartConfigs, globalSet} = LCDesignerStore!;
+        const {activated, chartConfigs, canvasSet} = LCDesignerStore!;
         const chartConfig = chartConfigs[activated.id];
         return (
             <div className={'lc-config-panel'} style={{height: window.innerHeight - 64}}>
@@ -47,7 +47,7 @@ export default class LcDesignerRight extends Component<LcDesignerRightProps, any
                         updateChartProps,
                         updateBaseInfo
                     }} /> :
-                    <LcGlobalSet updateGlobalSet={updateGlobalSet} globalSet={globalSet}/>
+                    <LcCanvasSet updateCanvasSet={updateCanvasSet} canvasSet={canvasSet}/>
                 }
             </div>
         );

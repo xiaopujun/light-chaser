@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import './LcGlobalSet.less';
+import './LcCanvasSet.less';
 import CfgGroup from "../base/CfgGroup";
 
-interface LcGlobalSetProps {
-    globalSet?: any;
-    updateGlobalSet?: (data?: any) => void;
+interface LcCanvasSetProps {
+    canvasSet?: any;
+    updateCanvasSet?: (data?: any) => void;
 }
 
-class LcGlobalSet extends Component<LcGlobalSetProps> {
+class LcCanvasSet extends Component<LcCanvasSetProps> {
 
     changeScreenName = (name: string) => {
 
@@ -29,21 +29,21 @@ class LcGlobalSet extends Component<LcGlobalSetProps> {
 
     }
     changeColumn = (columns: number) => {
-        const {updateGlobalSet} = this.props;
-        updateGlobalSet && updateGlobalSet({columns: columns})
+        const {updateCanvasSet} = this.props;
+        updateCanvasSet && updateCanvasSet({columns: columns})
     }
     changeBaseHeight = (height: number) => {
 
     }
 
-    generateGlobalSet = () => {
-        const {globalSet} = this.props;
+    generateCanvasSet = () => {
+        const {canvasSet} = this.props;
         return [
             {
                 label: '大屏名称',
                 comp: "LcTextInput",
                 config: {
-                    value: globalSet?.screenName,
+                    value: canvasSet?.screenName,
                     onChange: this.changeScreenName,
                 },
             },
@@ -51,7 +51,7 @@ class LcGlobalSet extends Component<LcGlobalSetProps> {
                 label: '大屏宽度',
                 comp: "LcNumberInput",
                 config: {
-                    value: globalSet?.screenWidth,
+                    value: canvasSet?.screenWidth,
                     onChange: this.changeScreenWidth,
                     width: 50
                 },
@@ -60,7 +60,7 @@ class LcGlobalSet extends Component<LcGlobalSetProps> {
                 label: '大屏高度',
                 comp: "LcNumberInput",
                 config: {
-                    value: globalSet?.screenHeight,
+                    value: canvasSet?.screenHeight,
                     onChange: this.changeScreenHeight,
                     width: 50
                 },
@@ -69,7 +69,7 @@ class LcGlobalSet extends Component<LcGlobalSetProps> {
                 label: '数据存储方式',
                 comp: "LcSelect",
                 config: {
-                    value: globalSet?.saveType,
+                    value: canvasSet?.saveType,
                     onChange: this.changeSaveType,
                     options: [
                         {
@@ -87,7 +87,7 @@ class LcGlobalSet extends Component<LcGlobalSetProps> {
                 label: '屏幕比例',
                 comp: "LcTextInput",
                 config: {
-                    value: globalSet?.screenRatio,
+                    value: canvasSet?.screenRatio,
                     onChange: this.changeRatio,
                 },
             },
@@ -95,7 +95,7 @@ class LcGlobalSet extends Component<LcGlobalSetProps> {
                 label: '元素间隔距离',
                 comp: "LcNumberInput",
                 config: {
-                    value: globalSet?.elemInterval,
+                    value: canvasSet?.elemInterval,
                     onChange: this.changeInterval,
                 },
             },
@@ -103,7 +103,7 @@ class LcGlobalSet extends Component<LcGlobalSetProps> {
                 label: '列划分数量',
                 comp: "LcNumberInput",
                 config: {
-                    value: globalSet?.columns,
+                    value: canvasSet?.columns,
                     onChange: this.changeColumn,
                 },
             },
@@ -111,7 +111,7 @@ class LcGlobalSet extends Component<LcGlobalSetProps> {
                 label: '元素基准高度',
                 comp: "LcNumberInput",
                 config: {
-                    value: globalSet?.baseLineHeight,
+                    value: canvasSet?.baseLineHeight,
                     onChange: this.changeBaseHeight,
                 },
             },
@@ -119,7 +119,7 @@ class LcGlobalSet extends Component<LcGlobalSetProps> {
                 label: '当前元素总数',
                 comp: "",
                 config: {
-                    value: globalSet?.elemCount,
+                    value: canvasSet?.elemCount,
                 },
             },
         ]
@@ -130,11 +130,11 @@ class LcGlobalSet extends Component<LcGlobalSetProps> {
             <div className={'lc-global-set'}>
                 <div className={'lc-global-set-title'}>全局配置</div>
                 <div className={'lc-global-set-content'}>
-                    <CfgGroup items={this.generateGlobalSet()}/>
+                    <CfgGroup items={this.generateCanvasSet()}/>
                 </div>
             </div>
         );
     }
 }
 
-export default LcGlobalSet;
+export default LcCanvasSet;
