@@ -28,6 +28,7 @@ import LcFoot from "./structure/LcFoot";
 import LcDesignerLeft from "./LcDesignerLeft";
 import LcDesignerRight from "./LcDesignerRight";
 import LcDesignerRightTemp from "./LcDesignerRightTemp";
+import LcDesignerFooter from "./LcDesignerFooter";
 
 const {Header, Sider, Content} = Layout;
 
@@ -138,7 +139,9 @@ class LCDesigner extends Component<LCDesignerProps | any> {
                         {/*<LcRight><LcDesignerRight {...this.props}/></LcRight>*/}
                         <LcRight><LcDesignerRightTemp {...this.props}/></LcRight>
                     </LcBody>
-                    <LcFoot/>
+                    <LcFoot>
+                        <LcDesignerFooter {...this.props}/>
+                    </LcFoot>
                 </LcStructure>
 
 

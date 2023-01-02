@@ -4,9 +4,9 @@ import {
     EyeOutlined,
     GithubOutlined,
     GoogleOutlined,
-    PhoneOutlined, QuestionCircleOutlined,
-    SaveOutlined,
-    SettingOutlined,
+    PhoneOutlined, ProfileFilled, QuestionCircleOutlined,
+    SaveOutlined, SettingFilled,
+    SettingOutlined, SkinFilled,
     SnippetsOutlined
 } from "@ant-design/icons";
 import {RouteComponentProps, withRouter} from "react-router-dom";
@@ -81,6 +81,15 @@ class LcDesignerHeader extends Component<LcDesignerHeaderProps | any> {
                     <div className={'header-title'}>LC DESIGNER</div>
                 </div>
                 <div className={'header-right'}>
+                    <div className={'right-item'}>
+                        <span className={'item-span'}><SettingFilled/>&nbsp;系统设置</span>
+                    </div>
+                    <div className={'right-item'}>
+                        <span className={'item-span'}><ProfileFilled/>&nbsp;图层</span>
+                    </div>
+                    <div className={'right-item'}>
+                        <span className={'item-span'}><SkinFilled/>&nbsp;主题</span>
+                    </div>
                     <div className={'right-item'} onClick={this.save}>
                         <span className={'item-span'}><SaveOutlined/>&nbsp;保存</span>
                     </div>
