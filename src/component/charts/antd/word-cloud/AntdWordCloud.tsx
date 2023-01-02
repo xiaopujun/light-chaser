@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {WordCloud} from "@ant-design/charts";
-import EditTools from "../../../designer/EditTool";
 
 interface AntdWordCloudProps {
     elemId?: string;
@@ -42,7 +41,7 @@ export default class AntdWordCloud extends Component<AntdWordCloudProps> {
         const {chartProps, baseStyle} = chartConfig;
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-                <EditTools {...this.props} elemId={elemId}/>
+                
                 <WordCloud supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
             </div>
         );

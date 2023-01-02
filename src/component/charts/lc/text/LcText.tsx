@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import EditTools from "../../../designer/EditTool";
 
 
 interface LcTextProps {
@@ -18,7 +17,7 @@ class LcText extends Component<LcTextProps> {
         const {color = '#fff', fontSize = 12} = chartProps;
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-                <EditTools {...this.props} elemId={elemId}/>
+                
                 <div style={{
                     color,
                     fontSize: fontSize + 'px',

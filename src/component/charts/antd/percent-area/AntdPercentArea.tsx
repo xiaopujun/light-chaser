@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Area} from "@ant-design/charts";
-import EditTools from "../../../designer/EditTool";
 
 interface AntdAreaProps {
     elemId?: string;
@@ -24,7 +23,7 @@ export default class AntdPercentArea extends Component<AntdAreaProps> {
         const {chartProps, baseStyle} = chartConfig;
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-                <EditTools {...this.props} elemId={elemId}/>
+                
                 <Area supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
             </div>
         );

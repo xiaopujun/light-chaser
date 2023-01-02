@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Column} from "@ant-design/charts";
-import EditTools from "../../../designer/EditTool";
 
 interface AntdColumnProps {
     chartConfig?: any;
@@ -18,7 +17,7 @@ export default class AntdPercentColumn extends Component<AntdColumnProps> {
         const {chartProps, baseStyle} = chartConfig;
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-                <EditTools {...this.props} elemId={elemId}/>
+                
                 <Column supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
             </div>
         );

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Bar} from "@ant-design/charts";
-import EditTools from "../../../designer/EditTool";
 
 interface AntdBarProps {
     elemId?: string;
@@ -18,7 +17,7 @@ export default class AntdStackBar extends Component<AntdBarProps> {
         const {chartProps, baseStyle} = chartConfig;
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-                <EditTools {...this.props} elemId={elemId}/>
+                
                 <Bar supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
             </div>
         );

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Liquid} from "@ant-design/charts";
-import EditTools from "../../../designer/EditTool";
 
 interface AntdLiquidProps {
     chartConfig?: any;
@@ -18,7 +17,7 @@ export default class AntdLiquid extends Component<AntdLiquidProps> {
         const {chartProps, baseStyle} = chartConfig;
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-                <EditTools {...this.props} elemId={elemId}/>
+                
                 <Liquid supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
             </div>
         );

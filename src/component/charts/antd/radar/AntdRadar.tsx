@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Radar} from "@ant-design/charts";
-import EditTools from "../../../designer/EditTool";
 
 interface AntdRadarProps {
     chartConfig?: any;
@@ -22,7 +21,7 @@ export default class AntdRadar extends Component<AntdRadarProps> {
         const {chartProps, baseStyle} = chartConfig;
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-                <EditTools {...this.props} elemId={elemId}/>
+                
                 <Radar supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
             </div>
         );

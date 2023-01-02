@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Line} from "@ant-design/charts";
-import EditTools from "../../../designer/EditTool";
 
 interface AntdLineProps {
     chartConfig?: any;
@@ -18,7 +17,7 @@ export default class AntdBaseLine extends Component<AntdLineProps> {
         const {chartProps, baseStyle} = chartConfig;
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-                <EditTools {...this.props} elemId={elemId}/>
+                
                 <Line supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
             </div>
         );

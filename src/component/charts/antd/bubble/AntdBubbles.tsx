@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Scatter} from "@ant-design/charts";
-import EditTools from "../../../designer/EditTool";
 
 interface AntdScatterProps {
     chartName?: string;
@@ -36,7 +35,7 @@ export default class AntdBubbles extends Component<AntdScatterProps> {
         }
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-                <EditTools {...this.props} elemId={elemId}/>
+                
                 <Scatter supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
             </div>
         );
