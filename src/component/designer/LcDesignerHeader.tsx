@@ -85,9 +85,6 @@ class LcDesignerHeader extends Component<LcDesignerHeaderProps | any> {
                         <span className={'item-span'}><SettingFilled/>&nbsp;系统设置</span>
                     </div>
                     <div className={'right-item'}>
-                        <span className={'item-span'}><ProfileFilled/>&nbsp;图层</span>
-                    </div>
-                    <div className={'right-item'}>
                         <span className={'item-span'}><SkinFilled/>&nbsp;主题</span>
                     </div>
                     <div className={'right-item'} onClick={this.save}>

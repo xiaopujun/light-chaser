@@ -1,55 +1,25 @@
 import React, {Component} from 'react';
-import LcCompConfigContainer from "../config/LcCompConfigContainer";
-import './style/Right.less';
-import {LCDesignerProps} from "../../types/LcDesignerType";
-import LcCanvasSet from "../config/canvas/LcCanvasSet";
+import './style/LcDesignerRight.less';
+import LcConfigMenus from "./LcConfigMenus";
+import LcConfigContent from "./LcConfigContent";
 
-interface LcDesignerRightProps {
-    LCDesignerStore?: LCDesignerProps;
-    updateRightVisible?: (data?: any) => void;
-    updateActive?: (data?: any) => void;
-    updateBaseStyle?: (data?: any) => void;
-    updateChartProps?: (data?: any) => void;
-    updateBaseInfo?: (data?: any) => void;
-    updateCanvasSet?: (data?: any) => void;
-}
+class LcDesignerRight extends Component<any> {
 
-/**
- * 右滑框外壳组件
- * @description:用于展示右滑框，控制右滑框的显示与隐藏
- */
-export default class LcDesignerRight extends Component<LcDesignerRightProps, any> {
-
-    onClose = () => {
-        const {updateRightVisible} = this.props;
-        updateRightVisible && updateRightVisible();
+    state = {
+        activeMenu: ''
     }
 
+    changeMenu = (menu: string) => this.setState({activeMenu: menu})
+
     render() {
-        const {
-            LCDesignerStore,
-            updateActive,
-            updateBaseStyle,
-            updateChartProps,
-            updateBaseInfo,
-            updateCanvasSet
-        } = this.props;
-        const {activated, chartConfigs, canvasSet} = LCDesignerStore!;
-        const chartConfig = chartConfigs[activated.id];
+        const {activeMenu} = this.state;
         return (
-            <div className={'lc-config-panel'} style={{height: window.innerHeight - 64}}>
-                {activated.id >= 0 ?
-                    <LcCompConfigContainer {...{
-                        updateActive,
-                        updateBaseStyle,
-                        chartConfig,
-                        activated,
-                        updateChartProps,
-                        updateBaseInfo
-                    }} /> :
-                    <LcCanvasSet updateCanvasSet={updateCanvasSet} canvasSet={canvasSet}/>
-                }
-            </div>
+            <>
+                <LcConfigMenus onChange={this.changeMenu}/>
+                <LcConfigContent activeMenu={activeMenu} {...this.props}/>
+            </>
         );
     }
 }
+
+export default LcDesignerRight;

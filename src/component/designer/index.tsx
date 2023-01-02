@@ -10,9 +10,9 @@ import {
     updateActive,
     updateBaseInfo,
     updateBaseStyle,
+    updateCanvasSet,
     updateChartProps,
     updateDesignerStore,
-    updateCanvasSet,
     updateLayout,
     updateRightVisible
 } from "../../redux/actions/LCDesignerAction";
@@ -27,7 +27,6 @@ import LcStructure from "./structure/LcStructure";
 import LcFoot from "./structure/LcFoot";
 import LcDesignerLeft from "./LcDesignerLeft";
 import LcDesignerRight from "./LcDesignerRight";
-import LcDesignerRightTemp from "./LcDesignerRightTemp";
 import LcDesignerFooter from "./LcDesignerFooter";
 
 const {Header, Sider, Content} = Layout;
@@ -65,6 +64,7 @@ class LCDesigner extends Component<LCDesignerProps | any> {
     }
 
     doInit = () => {
+        console.log('doinit')
         //动态加载图表组件及图表配置组件
         context.keys().forEach(key => {
             const componentName = key.replace(/^\.\/([\w|-]+\/)*(\w+)\.(tsx|ts)$/, '$2');
@@ -137,7 +137,7 @@ class LCDesigner extends Component<LCDesignerProps | any> {
                         </LcLeft>
                         <LcContent><LCLayoutContent {...this.props}/></LcContent>
                         {/*<LcRight><LcDesignerRight {...this.props}/></LcRight>*/}
-                        <LcRight><LcDesignerRightTemp {...this.props}/></LcRight>
+                        <LcRight><LcDesignerRight {...this.props}/></LcRight>
                     </LcBody>
                     <LcFoot>
                         <LcDesignerFooter {...this.props}/>

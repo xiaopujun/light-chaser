@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ClockCircleFilled, GoldenFilled} from "@ant-design/icons";
+import {ClockCircleFilled, GoldenFilled, ProfileFilled} from "@ant-design/icons";
 import './style/LcDesignerFooter.less';
 
 class LcDesignerFooter extends Component {
@@ -9,6 +9,9 @@ class LcDesignerFooter extends Component {
                 <div className={'footer-left'}>
                     <div className={'footer-item'}>
                         <span className={'item-content'}><ClockCircleFilled/>&nbsp;历史记录</span>
+                    </div>
+                    <div className={'footer-item'}>
+                        <span className={'item-content'}><ProfileFilled/>&nbsp;图层</span>
                     </div>
                     <div className={'footer-item'}>
                         <span className={'item-content'}><GoldenFilled/>&nbsp;快捷键</span>
