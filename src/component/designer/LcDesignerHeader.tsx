@@ -4,9 +4,11 @@ import {
     EyeOutlined,
     GithubOutlined,
     GoogleOutlined,
-    PhoneOutlined, ProfileFilled, QuestionCircleOutlined,
-    SaveOutlined, SettingFilled,
-    SettingOutlined, SkinFilled,
+    PhoneOutlined,
+    QuestionCircleOutlined,
+    SaveOutlined,
+    SettingFilled,
+    SkinFilled,
     SnippetsOutlined
 } from "@ant-design/icons";
 import {RouteComponentProps, withRouter} from "react-router-dom";

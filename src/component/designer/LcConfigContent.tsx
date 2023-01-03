@@ -10,6 +10,8 @@ import getChartsConfig from "../config/chart/ComponentSetInit";
 interface LcConfigContentProps {
     title?: string;
     icon?: any;
+    visible?: boolean;
+    onClose?: (visible: boolean) => void;
     activeMenu?: string;
     LCDesignerStore?: LCDesignerProps;
     updateRightVisible?: (data?: any) => void;
@@ -50,17 +52,26 @@ class LcConfigContent extends Component<LcConfigContentProps> {
         }
     }
 
+    onClose = () => {
+        const {onClose} = this.props;
+        onClose && onClose(false);
+    }
+
     render() {
+        const {visible} = this.props;
         return (
-            <div className={'lc-config-panel'}>
-                <div className={'lc-panel-top'}>
-                    <div className={'panel-title'}><HighlightFilled/>&nbsp;<span>样式</span></div>
-                    <div className={'panel-operate'}><LineOutlined/></div>
-                </div>
-                <div className={'lc-panel-content'}>
-                    {this.doRenderConfig()}
-                </div>
-            </div>
+            <>
+                {visible ? <div className={'lc-config-panel'}>
+                    <div className={'lc-panel-top'}>
+                        <div className={'panel-title'}><HighlightFilled/>&nbsp;<span>样式</span></div>
+                        <div className={'panel-operate'} onClick={this.onClose}><LineOutlined/></div>
+                    </div>
+                    <div className={'lc-panel-content'}>
+                        {this.doRenderConfig()}
+                    </div>
+                </div> : <></>}
+            </>
+
         );
     }
 }

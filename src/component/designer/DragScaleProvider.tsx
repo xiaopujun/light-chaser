@@ -139,7 +139,7 @@ class DragScaleProvider extends Component<DragScaleProviderProps> {
                 overflow: "hidden",
                 height: containerHeight,
                 width: containerWidth,
-                backgroundColor: '#474747'
+                backgroundColor: '#434343'
             }}>
                 <div id={'lc-drag-scale-content'}
                      style={{width: contentWidth, height: contentHeight}}>

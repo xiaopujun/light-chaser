@@ -6,17 +6,21 @@ import LcConfigContent from "./LcConfigContent";
 class LcDesignerRight extends Component<any> {
 
     state = {
-        activeMenu: ''
+        activeMenu: '',
+        configVisible: false
     }
 
-    changeMenu = (menu: string) => this.setState({activeMenu: menu})
+    changeMenu = (menu: string) => this.setState({activeMenu: menu, configVisible: true})
+
+    configVisibleChanged = (visible: boolean) => this.setState({configVisible: visible})
 
     render() {
-        const {activeMenu} = this.state;
+        const {activeMenu, configVisible} = this.state;
         return (
             <>
                 <LcConfigMenus onChange={this.changeMenu}/>
-                <LcConfigContent activeMenu={activeMenu} {...this.props}/>
+                <LcConfigContent visible={configVisible} onClose={this.configVisibleChanged}
+                                 activeMenu={activeMenu} {...this.props}/>
             </>
         );
     }

@@ -24,26 +24,14 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
         scale: 1
     }
 
-    scaleConfig: any = {
-        result: {},
-        x: 0,
-        y: 0,
-        scale: 1,
-        minScale: 0.1,
-        maxScale: 5,
-        isPointerdown: false, // 按下标识
-        point: {x: 0, y: 0}, // 第一个点坐标
-        diff: {x: 0, y: 0}, // 相对于上一次pointermove移动差值
-        lastPointermove: {x: 0, y: 0}, // 用于计算diff
-        ctrlDown: false,
-    }
-
     calculateChartConfig = (elemId: string | number) => {
         const {LCDesignerStore: {chartConfigs}} = this.props;
         return chartConfigs[elemId];
     }
 
     updateActive = (e: any) => {
+        //阻止事件冒泡
+        e.stopPropagation();
         let {id: elemId, dataset} = e.currentTarget;
         const {updateActive} = this.props;
         updateActive && updateActive({elemId: parseInt(elemId), type: dataset.type});
@@ -150,29 +138,35 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
         return (
             <DragScaleProvider contentWidth={canvasSet.screenWidth}
                                contentHeight={canvasSet.screenHeight}
-                               containerWidth={window.innerWidth - 260}
-                               containerHeight={window.innerHeight - 64}
+                               containerWidth={window.innerWidth - 95}
+                               containerHeight={window.innerHeight - 90}
                                changeScale={this.changeScale}>
-                <ReactGridLayout ref={obj => this.rgl = obj}
-                                 className="layout"
-                                 layout={layoutConfigs}
-                                 cols={canvasSet?.columns || 48}
-                                 rowHeight={10}
-                                 margin={[15, 15]}
-                                 useCSSTransforms={true}
-                                 preventCollision={true}
-                                 allowOverlap={true}
-                                 isBounded={true}
-                                 isDroppable={true}
-                                 style={{height: canvasSet.screenHeight, backgroundColor: '#131e26',}}
-                                 transformScale={scale}
-                                 width={canvasSet.screenWidth}
-                                 onDrop={this.onDrop}
-                                 onDropDragOver={this.onDropDragOver}
-                                 onDragStop={this.onDragStop}
-                                 onResizeStop={this.onResizeStop}>
-                    {this.generateElement()}
-                </ReactGridLayout>
+                <div className={'lc-canvas'}
+                     id={'-1'} data-type={'lcCanvas'}
+                     onClick={this.updateActive}
+                     style={{height: canvasSet.screenHeight, backgroundColor: '#131e26', width: canvasSet.screenWidth}}>
+                    <ReactGridLayout ref={obj => this.rgl = obj}
+                                     className="layout"
+                                     layout={layoutConfigs}
+                                     cols={canvasSet?.columns || 48}
+                                     rowHeight={10}
+                                     margin={[15, 15]}
+                                     useCSSTransforms={true}
+                                     preventCollision={true}
+                                     allowOverlap={true}
+                                     isBounded={true}
+                                     isDroppable={true}
+                                     style={{height: canvasSet.screenHeight}}
+                                     transformScale={scale}
+                                     width={canvasSet.screenWidth}
+                                     onDrop={this.onDrop}
+                                     onDropDragOver={this.onDropDragOver}
+                                     onDragStop={this.onDragStop}
+                                     onResizeStop={this.onResizeStop}>
+                        {this.generateElement()}
+                    </ReactGridLayout>
+                </div>
+
             </DragScaleProvider>
         );
     }
