@@ -6,6 +6,8 @@ import './style/LcCompList.less';
 interface LcCompListProps {
     data?: Array<any>;
     sortKey?: string;
+    visible?: boolean;
+    onClose?: (visible: boolean) => void;
 }
 
 class LcCompList extends Component<LcCompListProps> {
@@ -49,26 +51,33 @@ class LcCompList extends Component<LcCompListProps> {
         return chartDom;
     }
 
+    onClose = () => {
+        const {onClose} = this.props;
+        onClose && onClose(false);
+    }
+
     searchChart = (e: any) => {
         this.setState({searchKey: e.currentTarget.value});
     }
 
     render() {
-        const dataDom = this.getChartDom();
+        const {visible} = this.props;
         return (
-            <div className={'lc-comp-list'}>
-                <div className={'list-title'}>
-                    <div className={'title-content'}>组件列表</div>
-                    <div><span><LineOutlined/></span></div>
-                </div>
-                <div className={'list-search'}>
-                    <Input placeholder="搜索组件" onPressEnter={this.searchChart}
-                           style={{width: '100%'}}/>
-                </div>
-                <div className={'list-items'}>
-                    {dataDom}
-                </div>
-            </div>
+            <>
+                {visible ? <div className={'lc-comp-list'}>
+                    <div className={'list-title'}>
+                        <div className={'title-content'}>组件列表</div>
+                        <div onClick={this.onClose}><span><LineOutlined/></span></div>
+                    </div>
+                    <div className={'list-search'}>
+                        <Input placeholder="搜索组件" onPressEnter={this.searchChart}
+                               style={{width: '100%'}}/>
+                    </div>
+                    <div className={'list-items'}>
+                        {this.getChartDom()}
+                    </div>
+                </div> : <></>}
+            </>
         );
     }
 }

@@ -24,6 +24,7 @@ class LcDesignerLeft extends Component {
     charts: Array<Object> = [];
     state = {
         sortKey: 'all',
+        listVisible: false
     }
 
     sortIcon: any = {
@@ -56,7 +57,11 @@ class LcDesignerLeft extends Component {
     }
 
     changeSortKey = (e: any) => {
-        this.setState({sortKey: e.currentTarget.id});
+        this.setState({sortKey: e.currentTarget.id, listVisible: true});
+    }
+
+    listVisibleChanged = (visible: boolean) => {
+        this.setState({listVisible: visible})
     }
 
     getSortDom = () => {
@@ -74,16 +79,16 @@ class LcDesignerLeft extends Component {
         return sortDom;
     }
 
-
     render() {
         const sortDom = this.getSortDom();
-        const {sortKey} = this.state;
+        const {sortKey, listVisible} = this.state;
         return (
             <>
                 <div className={'lc-charts-sort'}>
                     {sortDom}
                 </div>
-                <LcCompList data={this.charts} sortKey={sortKey}/>
+                <LcCompList onClose={this.listVisibleChanged} visible={listVisible} data={this.charts}
+                            sortKey={sortKey}/>
             </>
         );
     }
