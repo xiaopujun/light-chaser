@@ -78,7 +78,7 @@ export default class PolarCoordinateSystem extends Component<PolarCoordinateSyst
         }
     }
 
-    generatePolarCoordinateSystemSet = () => {
+    generatePolarCoordinatesystemConfig = () => {
         const {outRadius, innerRadius, startAngle, endAngle} = this.state;
         return [
             {
@@ -130,7 +130,7 @@ export default class PolarCoordinateSystem extends Component<PolarCoordinateSyst
 
 
     render() {
-        let items = this.generatePolarCoordinateSystemSet();
+        let items = this.generatePolarCoordinatesystemConfig();
         return <CfgGroup items={items}/>
     }
 }

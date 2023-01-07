@@ -18,8 +18,6 @@ export const delItem = (data: any) => ({type: DesignerOperate.DEL_ITEM, data});
 export const updateLayout = (data: any) => ({type: DesignerOperate.UPDATE_LAYOUT, data});
 //激活组件
 export const updateActive = (data: any) => ({type: DesignerOperate.UPDATE_ACTIVE, data});
-//更新右侧抽屉显示状态
-export const updateRightVisible = (data: any) => ({type: DesignerOperate.UPDATE_RIGHT_VISIBLE, data});
 //更新组件基础配置
 export const updateBaseStyle = (data: any) => ({type: DesignerOperate.UPDATE_BASE_STYLE, data});
 //更新组件图表配置

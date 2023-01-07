@@ -12,7 +12,7 @@ import UploadDemo from "../../../test/UploadDemo";
 const {Option} = Select;
 
 interface LcCanvasSetProps {
-    canvasSet?: any;
+    canvasConfig?: any;
     updateCanvasSet?: (data?: any) => void;
 }
 
@@ -46,13 +46,13 @@ class LcCanvasSet extends Component<LcCanvasSetProps> {
     }
 
     generateCanvasSet = () => {
-        const {canvasSet} = this.props;
+        const {canvasConfig} = this.props;
         return [
             {
                 label: '大屏名称',
                 comp: "LcTextInput",
                 config: {
-                    value: canvasSet?.screenName,
+                    value: canvasConfig?.screenName,
                     onChange: this.changeScreenName,
                 },
             },
@@ -60,7 +60,7 @@ class LcCanvasSet extends Component<LcCanvasSetProps> {
                 label: '大屏宽度',
                 comp: "LcNumberInput",
                 config: {
-                    value: canvasSet?.screenWidth,
+                    value: canvasConfig?.screenWidth,
                     onChange: this.changeScreenWidth,
                     width: 50
                 },
@@ -69,7 +69,7 @@ class LcCanvasSet extends Component<LcCanvasSetProps> {
                 label: '大屏高度',
                 comp: "LcNumberInput",
                 config: {
-                    value: canvasSet?.screenHeight,
+                    value: canvasConfig?.screenHeight,
                     onChange: this.changeScreenHeight,
                     width: 50
                 },
@@ -78,7 +78,7 @@ class LcCanvasSet extends Component<LcCanvasSetProps> {
                 label: '数据存储方式',
                 comp: "LcSelect",
                 config: {
-                    value: canvasSet?.saveType,
+                    value: canvasConfig?.saveType,
                     onChange: this.changeSaveType,
                     options: [
                         {
@@ -96,7 +96,7 @@ class LcCanvasSet extends Component<LcCanvasSetProps> {
                 label: '屏幕比例',
                 comp: "LcTextInput",
                 config: {
-                    value: canvasSet?.screenRatio,
+                    value: canvasConfig?.screenRatio,
                     onChange: this.changeRatio,
                 },
             },
@@ -104,7 +104,7 @@ class LcCanvasSet extends Component<LcCanvasSetProps> {
                 label: '元素间隔距离',
                 comp: "LcNumberInput",
                 config: {
-                    value: canvasSet?.elemInterval,
+                    value: canvasConfig?.elemInterval,
                     onChange: this.changeInterval,
                 },
             },
@@ -112,7 +112,7 @@ class LcCanvasSet extends Component<LcCanvasSetProps> {
                 label: '列划分数量',
                 comp: "LcNumberInput",
                 config: {
-                    value: canvasSet?.columns,
+                    value: canvasConfig?.columns,
                     onChange: this.changeColumn,
                 },
             },
@@ -120,7 +120,7 @@ class LcCanvasSet extends Component<LcCanvasSetProps> {
                 label: '元素基准高度',
                 comp: "LcNumberInput",
                 config: {
-                    value: canvasSet?.baseLineHeight,
+                    value: canvasConfig?.baseLineHeight,
                     onChange: this.changeBaseHeight,
                 },
             },
@@ -128,7 +128,7 @@ class LcCanvasSet extends Component<LcCanvasSetProps> {
                 label: '当前元素总数',
                 comp: "",
                 config: {
-                    value: canvasSet?.elemCount,
+                    value: canvasConfig?.elemCount,
                 },
             },
         ]

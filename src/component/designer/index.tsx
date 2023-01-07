@@ -14,7 +14,6 @@ import {
     updateChartProps,
     updateDesignerStore,
     updateLayout,
-    updateRightVisible
 } from "../../redux/actions/LCDesignerAction";
 import DesignerHeader from "./LcDesignerHeader";
 import {RouteComponentProps, withRouter} from "react-router-dom";
@@ -44,7 +43,6 @@ interface LCDesignerProps extends RouteComponentProps {
     delItem?: (data?: any) => void;
     updateLayout?: (data?: any) => void;
     updateActive?: (data?: any) => void;
-    updateRightVisible?: (data?: any) => void;
     updateChartProps?: (data?: any) => void;
     updateBaseStyle?: (data?: any) => void;
 }
@@ -86,7 +84,7 @@ class LCDesigner extends Component<LCDesignerProps | any> {
         switch (action) {
             case 'add':
                 updateDesignerStore({
-                    canvasSet: {
+                    canvasConfig: {
                         screenName,
                         screenWidth: parseInt(screenWidth),
                         screenHeight: parseInt(screenHeight),
@@ -109,13 +107,13 @@ class LCDesigner extends Component<LCDesignerProps | any> {
                     screenName: name,
                     screenWidth: width,
                     screenHeight: height,
-                    canvasSet,
+                    canvasConfig,
                     chartConfigs,
                     layoutConfigs
                 } = config;
                 updateDesignerStore({
                     id: screenId,
-                    canvasSet,
+                    canvasConfig,
                     screenName: name,
                     screenWidth: width,
                     screenHeight: height,
@@ -182,7 +180,6 @@ export default connect(
         addItem,
         clearDesignerStore,
         delItem,
-        updateRightVisible,
         updateBaseStyle,
         updateChartProps,
         updateLayout,

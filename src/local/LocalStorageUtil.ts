@@ -5,15 +5,15 @@
 import {LCDesignerProps} from "../types/LcDesignerType";
 
 const buildConfig = (LCDesignerStore: LCDesignerProps) => {
-    let {id = -1, canvasSet} = LCDesignerStore;
+    let {id = -1, canvasConfig} = LCDesignerStore;
     return {
         id,
-        canvasSet,
+        canvasConfig,
         chartConfigs: JSON.stringify(LCDesignerStore.chartConfigs),
         layoutConfigs: JSON.stringify(LCDesignerStore.layoutConfigs),
-        screenHeight: LCDesignerStore.canvasSet.screenHeight,
-        screenWidth: LCDesignerStore.canvasSet.screenWidth,
-        screenName: LCDesignerStore.canvasSet.screenName
+        screenHeight: LCDesignerStore.canvasConfig.screenHeight,
+        screenWidth: LCDesignerStore.canvasConfig.screenWidth,
+        screenName: LCDesignerStore.canvasConfig.screenName
     };
 }
 

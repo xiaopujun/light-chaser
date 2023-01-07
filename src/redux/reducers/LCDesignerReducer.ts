@@ -9,7 +9,7 @@ import {lcCompInits} from "../../component/designer";
  */
 const initState: LCDesignerProps = {
     id: -1,
-    canvasSet: {
+    canvasConfig: {
         saveType: 'local',//数据存储方式 local(本地）server（远程服务）
         screenRatio: '',//屏幕比例
         screenName: '数据大屏',
@@ -26,11 +26,8 @@ const initState: LCDesignerProps = {
     },
     chartConfigs: {},//布局设计器中的图表组件列表，每次设置图表样式或数据时更新此状态中的数据来更新渲染
     layoutConfigs: [],//布局配置数据，用于控制图表在页面中的整体布局位置
-    rightDialog: {
-        visible: false,
-        title: ""
-    },
-    systemSet: {}
+    systemConfig: {},
+    bgConfig: {},
 }
 
 /**
@@ -52,8 +49,6 @@ export default function LCDesignerReducer(preState: LCDesignerProps = initState,
             return updateLayout(preState, data);
         case DesignerOperate.UPDATE_ACTIVE:
             return updateActive(preState, data);
-        case DesignerOperate.UPDATE_RIGHT_VISIBLE:
-            return updateRightVisible(preState, data);
         case DesignerOperate.UPDATE_BASE_STYLE:
             return updateBaseStyle(preState, data);
         case DesignerOperate.UPDATE_CHART_PROPS:
@@ -103,19 +98,19 @@ function updateDesignerStore(preState: LCDesignerProps, data: any) {
  * @returns {{layoutConfigs, chartConfig, count}}
  */
 function addItem(preState: LCDesignerProps, data: any) {
-    let {canvasSet, layoutConfigs, chartConfigs} = preState;
+    let {canvasConfig, layoutConfigs, chartConfigs} = preState;
     //更新布局
     layoutConfigs.push(data);
     //更新组件配置信息
     console.log(lcCompInits)
     let initObj: any = lcCompInits[data.name + "Init"];
     let initData: any = initObj.getInitConfig()
-    initData.baseInfo = {...initData.baseInfo, ...{id: canvasSet.elemCount}}
-    chartConfigs[canvasSet.elemCount + ""] = initData;
+    initData.baseInfo = {...initData.baseInfo, ...{id: canvasConfig.elemCount}}
+    chartConfigs[canvasConfig.elemCount + ""] = initData;
     //id增加
-    canvasSet.elemCount++;
+    canvasConfig.elemCount++;
     //生成新store
-    return {...preState, ...{canvasSet, layoutConfigs, chartConfigs}};
+    return {...preState, ...{canvasConfig, layoutConfigs, chartConfigs}};
 }
 
 /**
@@ -160,23 +155,10 @@ function updateLayout(preState: LCDesignerProps, data: any) {
  * @param data
  */
 function updateActive(preState: LCDesignerProps, data: any) {
-    let {activated, rightDialog} = preState;
+    let {activated} = preState;
     const {elemId, type} = data;
     activated = {...activated, ...{id: elemId, type}};
-    rightDialog.visible = !rightDialog.visible;
-    return {...preState, ...{activated, rightDialog}};
-}
-
-
-/**
- * @description 更新右侧抽屉显示状态
- * @param preState
- * @param data
- */
-function updateRightVisible(preState: LCDesignerProps, data: any) {
-    let {rightDialog} = preState;
-    rightDialog.visible = !rightDialog.visible;
-    return {...preState, ...{rightDialog}};
+    return {...preState, ...{activated}};
 }
 
 /**
@@ -220,7 +202,7 @@ function updateChartProps(preState: LCDesignerProps, data: any) {
  * @param data
  */
 function updateCanvasSet(preState: LCDesignerProps, data: any) {
-    const {canvasSet} = preState;
-    preState.canvasSet = {...canvasSet, ...data};
+    const {canvasConfig} = preState;
+    preState.canvasConfig = {...canvasConfig, ...data};
     return {...preState};
 }

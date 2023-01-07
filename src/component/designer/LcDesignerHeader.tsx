@@ -25,13 +25,13 @@ class LcDesignerHeader extends Component<LcDesignerHeaderProps | any> {
     updateRouteState = (id: number) => {
         const {location, LCDesignerStore} = this.props;
         const {action} = location.state;
-        let {canvasSet} = LCDesignerStore!;
+        let {canvasConfig} = LCDesignerStore!;
         if (action === 'add') {
             this.props.history.replace("/designer", {
                 ...location.state, ...{
                     action: 'update',
                     id,
-                    canvasSet,
+                    canvasConfig,
                 }
             });
         }
@@ -39,8 +39,8 @@ class LcDesignerHeader extends Component<LcDesignerHeaderProps | any> {
 
     save = (e: any) => {
         const {LCDesignerStore, updateDesignerStore} = this.props;
-        let {id = -1, canvasSet} = LCDesignerStore;
-        const {saveType} = canvasSet;
+        let {id = -1, canvasConfig} = LCDesignerStore;
+        const {saveType} = canvasConfig;
         if (saveType === 'local') {
             if (id === -1) {
                 id = localSave(LCDesignerStore);

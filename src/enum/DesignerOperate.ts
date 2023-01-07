@@ -24,10 +24,6 @@ export enum DesignerOperate {
      */
     UPDATE_ACTIVE,
     /**
-     * 更新设计器右滑框可见状态
-     */
-    UPDATE_RIGHT_VISIBLE,
-    /**
      * 更新设计器组件基础信息
      */
     UPDATE_BASE_INFO,

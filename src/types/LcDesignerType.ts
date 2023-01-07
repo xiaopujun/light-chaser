@@ -101,12 +101,6 @@ interface CanvasSetProps {
     elemCount: number,
 }
 
-interface RightDialogProps {
-    visible: boolean;
-    title?: string;
-}
-
-
 /**
  * 布局设计器，store类型定义
  */
@@ -118,11 +112,11 @@ export interface LCDesignerProps {
     /**
      * 画布设置
      */
-    canvasSet: CanvasSetProps,
+    canvasConfig: CanvasSetProps,
     /**
      * 系统配置
      */
-    systemSet: any,
+    systemConfig: any,
     /**
      * 激活状态属性
      */
@@ -138,9 +132,6 @@ export interface LCDesignerProps {
     /**
      * 背景设置
      */
+    bgConfig: Object;
 
-    /**
-     * 右滑框配置
-     */
-    rightDialog: RightDialogProps;
 }

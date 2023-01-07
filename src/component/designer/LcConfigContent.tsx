@@ -14,7 +14,6 @@ interface LcConfigContentProps {
     onClose?: (visible: boolean) => void;
     activeMenu?: string;
     LCDesignerStore?: LCDesignerProps;
-    updateRightVisible?: (data?: any) => void;
     updateActive?: (data?: any) => void;
     updateBaseStyle?: (data?: any) => void;
     updateChartProps?: (data?: any) => void;
@@ -26,7 +25,7 @@ class LcConfigContent extends Component<LcConfigContentProps> {
 
     doRenderConfig = () => {
         let {LCDesignerStore, activeMenu} = this.props;
-        const {activated, chartConfigs, canvasSet} = LCDesignerStore!;
+        const {activated, chartConfigs, canvasConfig} = LCDesignerStore!;
         if (activated.id == -1)
             activeMenu = '';
         switch (activeMenu) {
@@ -48,7 +47,7 @@ class LcConfigContent extends Component<LcConfigContentProps> {
             case 'theme':
                 return <div>开发中...</div>
             default:
-                return <LcCanvasSet canvasSet={canvasSet} updateCanvasSet={this.props.updateCanvasSet}/>;
+                return <LcCanvasSet canvasConfig={canvasConfig} updateCanvasSet={this.props.updateCanvasSet}/>;
         }
     }
 
