@@ -6,7 +6,7 @@ interface LcConfigMenusProps {
     onChange?: (menu: string) => void;
 }
 
-class LcConfigMenus extends Component<LcConfigMenusProps> {
+class LcConfigMenus extends Component<LcConfigMenusProps | any> {
 
     menuChange = (e: any) => {
         const {onChange} = this.props;

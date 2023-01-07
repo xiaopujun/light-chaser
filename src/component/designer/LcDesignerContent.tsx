@@ -7,6 +7,7 @@ import getChartsTemplate from "../charts/ChartsCollection";
 import {LCDesignerProps} from "../../types/LcDesignerType";
 import Loading from "../loading/Loading";
 import DragScaleProvider from "./DragScaleProvider";
+import bgImg from './pleaseupload.png';
 
 interface LcDesignerContentProps {
     LCDesignerStore?: LCDesignerProps;
@@ -132,6 +133,7 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
 
 
     render() {
+        console.log(bgImg)
         const {LCDesignerStore} = this.props;
         const {layoutConfigs, canvasSet} = LCDesignerStore!;
         const {scale} = this.state;
@@ -144,7 +146,12 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
                 <div className={'lc-canvas'}
                      id={'-1'} data-type={'lcCanvas'}
                      onClick={this.updateActive}
-                     style={{height: canvasSet.screenHeight, backgroundColor: '#131e26', width: canvasSet.screenWidth}}>
+                     style={{
+                         height: canvasSet.screenHeight,
+                         backgroundColor: '#131e26',
+                         width: canvasSet.screenWidth,
+                         backgroundImage: `url(${bgImg})`
+                     }}>
                     <ReactGridLayout ref={obj => this.rgl = obj}
                                      className="layout"
                                      layout={layoutConfigs}

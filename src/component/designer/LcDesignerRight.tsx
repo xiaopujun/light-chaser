@@ -18,7 +18,7 @@ class LcDesignerRight extends Component<any> {
         const {activeMenu, configVisible} = this.state;
         return (
             <>
-                <LcConfigMenus onChange={this.changeMenu}/>
+                <LcConfigMenus {...this.props} onChange={this.changeMenu}/>
                 <LcConfigContent visible={configVisible} onClose={this.configVisibleChanged}
                                  activeMenu={activeMenu} {...this.props}/>
             </>

@@ -1,6 +1,15 @@
 import React, {Component} from 'react';
 import './LcCanvasSet.less';
 import CfgGroup from "../base/CfgGroup";
+import Dragger from "antd/es/upload/Dragger";
+import {Button, Input, message, Select, UploadProps} from "antd";
+import PleaseUpload from '../../designer/pleaseupload.png';
+import LCNumberInput from "../../base/LCNumberInput";
+import {ColumnHeightOutlined, ColumnWidthOutlined, DragOutlined} from "@ant-design/icons";
+import BaseColorPicker from "../../base/BaseColorPicker";
+import UploadDemo from "../../../test/UploadDemo";
+
+const {Option} = Select;
 
 interface LcCanvasSetProps {
     canvasSet?: any;
@@ -126,10 +135,70 @@ class LcCanvasSet extends Component<LcCanvasSetProps> {
     }
 
     render() {
+        const _props: UploadProps = {
+            name: 'file',
+            multiple: true,
+            action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+            onChange(info) {
+                const {status} = info.file;
+                if (status !== 'uploading') {
+                    console.log(info.file, info.fileList);
+                }
+                if (status === 'done') {
+                    message.success(`${info.file.name} file uploaded successfully.`);
+                } else if (status === 'error') {
+                    message.error(`${info.file.name} file upload failed.`);
+                }
+            },
+            onDrop(e) {
+                console.log('Dropped files', e.dataTransfer.files);
+            },
+        };
         return (
             <div className={'lc-global-set'}>
                 <div className={'lc-global-set-content'}>
-                    <CfgGroup items={this.generateCanvasSet()}/>
+                    {/*<CfgGroup items={this.generateCanvasSet()}/>*/}
+
+                    <div className={'lc-upload'} style={{height: 187, width: '100%'}}>
+                        <UploadDemo/>
+                    </div>
+                    <div className={'lc-cfg-item'}>
+                        <div className={'item-name'}>模式</div>
+                        <div className={'item-value'}>
+                            <Select style={{width: 200}}>
+                                <Option value={'img'}>图片</Option>
+                                <Option value={'color'}>颜色</Option>
+                            </Select>
+                        </div>
+                    </div>
+                    <div className={'lc-cfg-item'}>
+                        <div className={'item-name'}>尺寸</div>
+                        <div className={'item-value'} style={{display: 'flex'}}>
+                            <LCNumberInput width={50} value={1920}/>
+                            &nbsp;&nbsp;&nbsp; × &nbsp;&nbsp;&nbsp;
+                            <LCNumberInput width={50} value={1080}/>
+                        </div>
+                    </div>
+                    <div className={'lc-cfg-item'}>
+                        <div className={'item-name'}>颜色</div>
+                        <div className={'item-value'} style={{display: 'flex'}}>
+                            <BaseColorPicker/>
+                        </div>
+                    </div>
+                    <div className={'lc-cfg-item'}>
+                        <div className={'item-name'}>填充</div>
+                        <div className={'item-value'} style={{display: 'flex'}}>
+                            <Button type={'primary'}>
+                                <ColumnWidthOutlined/>
+                            </Button>
+                            <Button type={'primary'}>
+                                <ColumnHeightOutlined/>
+                            </Button>
+                            <Button type={'primary'}>
+                                <DragOutlined/>
+                            </Button>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

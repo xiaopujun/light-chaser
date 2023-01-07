@@ -116,7 +116,7 @@ export interface LCDesignerProps {
      */
     id?: number,
     /**
-     * 全局配置
+     * 画布设置
      */
     canvasSet: CanvasSetProps,
     /**
@@ -135,6 +135,10 @@ export interface LCDesignerProps {
      * 布局配置
      */
     layoutConfigs: Array<any>;
+    /**
+     * 背景设置
+     */
+
     /**
      * 右滑框配置
      */

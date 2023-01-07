@@ -2,8 +2,7 @@ import {Action, LCDesignerProps} from "../../types/LcDesignerType";
 import * as _ from 'lodash'
 import deepmerge from "deepmerge";
 import {DesignerOperate} from "../../enum/DesignerOperate";
-import {lcCompInits, lcComps} from "../../component/designer";
-import BaseInit from "../../component/charts/interface/BaseInit";
+import {lcCompInits} from "../../component/designer";
 
 /**
  * 初始化的布局设计器状态
