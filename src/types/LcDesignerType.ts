@@ -101,6 +101,25 @@ interface CanvasSetProps {
     elemCount: number,
 }
 
+interface BgConfig {
+    /**
+     * 背景色
+     */
+    color?: string;
+    /**
+     * 背景图片
+     */
+    bgImg?: string;
+    /**
+     * 填充方式
+     */
+    fillType?: string;
+    /**
+     * 背景图尺寸
+     */
+    size?: [];
+}
+
 /**
  * 布局设计器，store类型定义
  */
@@ -110,6 +129,14 @@ export interface LCDesignerProps {
      */
     id?: number,
     /**
+     * 激活状态属性
+     */
+    activated: ActiveProps;
+    /**
+     * 背景设置
+     */
+    bgConfig: BgConfig;
+    /**
      * 画布设置
      */
     canvasConfig: CanvasSetProps,
@@ -118,9 +145,9 @@ export interface LCDesignerProps {
      */
     systemConfig: any,
     /**
-     * 激活状态属性
+     * 项目设置
      */
-    activated: ActiveProps;
+    projectConfig: any;
     /**
      * 图表配置
      */
@@ -129,9 +156,4 @@ export interface LCDesignerProps {
      * 布局配置
      */
     layoutConfigs: Array<any>;
-    /**
-     * 背景设置
-     */
-    bgConfig: Object;
-
 }

@@ -28,6 +28,7 @@ const initState: LCDesignerProps = {
     layoutConfigs: [],//布局配置数据，用于控制图表在页面中的整体布局位置
     systemConfig: {},
     bgConfig: {},
+    projectConfig: {}
 }
 
 /**
@@ -55,8 +56,14 @@ export default function LCDesignerReducer(preState: LCDesignerProps = initState,
             return updateChartProps(preState, data);
         case DesignerOperate.UPDATE_BASE_INFO:
             return updateBaseInfo(preState, data);
-        case DesignerOperate.UPDATE_GLOBAL_SET:
-            return updateCanvasSet(preState, data);
+        case DesignerOperate.UPDATE_CANVAS_CONFIG:
+            return updateCanvasConfig(preState, data);
+        case DesignerOperate.UPDATE_PROJECT_CONFIG:
+            return updateProjectConfig(preState, data);
+        case DesignerOperate.UPDATE_BG_CONFIG:
+            return updateBgConfig(preState, data);
+        case DesignerOperate.UPDATE_SYSTEM_CONFIG:
+            return updateSystemConfig(preState, data);
         default:                                            //无更新，返回之前的状态
             return preState;
     }
@@ -82,9 +89,6 @@ function updateBaseInfo(preState: LCDesignerProps, data: any) {
 
 /**
  * 初始化store
- * @param preState
- * @param data
- * @returns
  */
 function updateDesignerStore(preState: LCDesignerProps, data: any) {
     return {...deepmerge(preState, data)};
@@ -93,9 +97,6 @@ function updateDesignerStore(preState: LCDesignerProps, data: any) {
 
 /**
  * 想布局设计器中添加组件
- * @param preState
- * @param data
- * @returns {{layoutConfigs, chartConfig, count}}
  */
 function addItem(preState: LCDesignerProps, data: any) {
     let {canvasConfig, layoutConfigs, chartConfigs} = preState;
@@ -115,8 +116,6 @@ function addItem(preState: LCDesignerProps, data: any) {
 
 /**
  * 删除布局中的组件
- * @param preState
- * @param data
  */
 function delItem(preState: LCDesignerProps, data: any) {
     data = parseInt(data);
@@ -133,9 +132,7 @@ function delItem(preState: LCDesignerProps, data: any) {
 }
 
 /**
- * @description 更新每个组件的布局属性
- * @param preState
- * @param data
+ * 更新每个组件的布局属性
  */
 function updateLayout(preState: LCDesignerProps, data: any) {
     let {layoutConfigs} = preState;
@@ -150,9 +147,7 @@ function updateLayout(preState: LCDesignerProps, data: any) {
 }
 
 /**
- * @description 更新右侧抽屉visible属性
- * @param preState
- * @param data
+ * 更新右侧抽屉visible属性
  */
 function updateActive(preState: LCDesignerProps, data: any) {
     let {activated} = preState;
@@ -162,9 +157,7 @@ function updateActive(preState: LCDesignerProps, data: any) {
 }
 
 /**
- * @description 更新组件基础属性
- * @param preState
- * @param data
+ * 更新组件基础属性
  */
 function updateBaseStyle(preState: LCDesignerProps, data: any) {
     let {chartConfigs, activated} = preState;
@@ -176,9 +169,7 @@ function updateBaseStyle(preState: LCDesignerProps, data: any) {
 }
 
 /**
- * @description 更新图表设置
- * @param preState
- * @param data
+ * 更新图表设置
  */
 function updateChartProps(preState: LCDesignerProps, data: any) {
     let {chartConfigs, activated} = preState;
@@ -195,14 +186,32 @@ function updateChartProps(preState: LCDesignerProps, data: any) {
     return {...preState};
 }
 
-
 /**
- * @description 更新设计器全局配置
- * @param preState
- * @param data
+ * 更新设计器全局配置
  */
-function updateCanvasSet(preState: LCDesignerProps, data: any) {
+function updateCanvasConfig(preState: LCDesignerProps, data: any) {
     const {canvasConfig} = preState;
     preState.canvasConfig = {...canvasConfig, ...data};
     return {...preState};
+}
+
+/**
+ * 更新项目设置
+ */
+function updateProjectConfig(preState: LCDesignerProps, data: any) {
+
+}
+
+/**
+ * 更新背景设置
+ */
+function updateBgConfig(preState: LCDesignerProps, data: any) {
+
+}
+
+/**
+ * 更新系统设置
+ */
+function updateSystemConfig(preState: LCDesignerProps, data: any) {
+
 }

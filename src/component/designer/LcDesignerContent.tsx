@@ -133,7 +133,6 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
 
 
     render() {
-        console.log(bgImg)
         const {LCDesignerStore} = this.props;
         const {layoutConfigs, canvasConfig} = LCDesignerStore!;
         const {scale} = this.state;

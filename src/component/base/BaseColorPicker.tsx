@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, HTMLAttributes} from 'react';
 import {Popover} from 'antd';
 import {ChromePicker} from 'react-color';
 import './style/BaseColorPicker.less';
@@ -8,6 +8,8 @@ interface ColorPickerProps extends BaseProps {
     onChange?: (color: any, e: Event, id: number | string | undefined) => void;
     color?: string;
     value?: string;
+    style?: any;
+    showText?: boolean;
     id?: number | string;
 }
 
@@ -15,7 +17,8 @@ interface ColorPickerProps extends BaseProps {
 class ColorPicker extends Component<ColorPickerProps> {
     state = {
         color: 'rgb(0,249,188)',
-        colorArea: 'rgb(0,255,192)'
+        colorArea: 'rgb(0,255,192)',
+        hex: ''
     };
 
     constructor(props: ColorPickerProps) {
@@ -23,7 +26,8 @@ class ColorPicker extends Component<ColorPickerProps> {
         const {value = 'rgb(0,249,188)'} = props;
         this.state = {
             color: value,
-            colorArea: value
+            colorArea: value,
+            hex: ''
         }
     }
 
@@ -34,19 +38,23 @@ class ColorPicker extends Component<ColorPickerProps> {
         onChange && onChange(rgbColor, event, id);
         this.setState({
             color: color.rgb,
-            colorArea: rgbColor
+            colorArea: rgbColor,
+            hex: color.hex
         })
     }
 
 
     render() {
-        const {colorArea, color} = this.state;
+        const {colorArea, color, hex} = this.state;
+        const {style, showText = false} = this.props;
         const content = (<ChromePicker className={'color-picker'} color={color}
                                        onChange={this.onChangeComplete}/>)
         return (
             <Popover placement="topLeft" content={content} trigger={'click'}>
-                <div style={{backgroundColor: `${colorArea}`}}
-                     className={'color-area'}/>
+                <div style={{backgroundColor: `${colorArea}`, ...style}}
+                     className={'color-area'}>
+                    {showText ? <span>{hex}</span> : null}
+                </div>
             </Popover>
 
         )

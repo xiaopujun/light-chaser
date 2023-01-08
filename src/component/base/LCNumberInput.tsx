@@ -28,10 +28,11 @@ export default class LCNumberInput extends Component<LCNumberInputProps> {
                        value={value}
                        onChange={this.onChange}
                        readOnly={readonly}
-                       type={'number'} {...{
-                    step, max, min
-                }}
-                />
+                       type={'number'} {...{step, max, min}}/>
+                <span className="bottom"/>
+                <span className="right"/>
+                <span className="top"/>
+                <span className="left"/>
             </div>
         );
     }

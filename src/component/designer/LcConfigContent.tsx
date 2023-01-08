@@ -18,7 +18,7 @@ interface LcConfigContentProps {
     updateBaseStyle?: (data?: any) => void;
     updateChartProps?: (data?: any) => void;
     updateBaseInfo?: (data?: any) => void;
-    updateCanvasSet?: (data?: any) => void;
+    updateCanvasConfig?: (data?: any) => void;
 }
 
 class LcConfigContent extends Component<LcConfigContentProps> {
@@ -47,7 +47,7 @@ class LcConfigContent extends Component<LcConfigContentProps> {
             case 'theme':
                 return <div>开发中...</div>
             default:
-                return <LcCanvasSet canvasConfig={canvasConfig} updateCanvasSet={this.props.updateCanvasSet}/>;
+                return <LcCanvasSet canvasConfig={canvasConfig} updateCanvasConfig={this.props.updateCanvasConfig}/>;
         }
     }
 

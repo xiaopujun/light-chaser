@@ -10,7 +10,7 @@ import {
     updateActive,
     updateBaseInfo,
     updateBaseStyle,
-    updateCanvasSet,
+    updateCanvasConfig,
     updateChartProps,
     updateDesignerStore,
     updateLayout,
@@ -185,6 +185,6 @@ export default connect(
         updateLayout,
         updateDesignerStore,
         updateBaseInfo,
-        updateCanvasSet
+        updateCanvasConfig
     }
 )(withRouter(LCDesigner))

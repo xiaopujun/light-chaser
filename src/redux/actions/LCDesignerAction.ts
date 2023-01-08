@@ -24,7 +24,13 @@ export const updateBaseStyle = (data: any) => ({type: DesignerOperate.UPDATE_BAS
 export const updateChartProps = (data: any) => ({type: DesignerOperate.UPDATE_CHART_PROPS, data});
 //更新组件基础信息
 export const updateBaseInfo = (data: any) => ({type: DesignerOperate.UPDATE_BASE_INFO, data});
-//更设计器全局设置
-export const updateCanvasSet = (data: any) => ({type: DesignerOperate.UPDATE_GLOBAL_SET, data});
+//更新系统设置
+export const updateSystemConfig = (data: any) => ({type: DesignerOperate.UPDATE_SYSTEM_CONFIG, data});
+//更新背景设置
+export const updateBgConfig = (data: any) => ({type: DesignerOperate.UPDATE_BG_CONFIG, data});
+//更新画布设置
+export const updateCanvasConfig = (data: any) => ({type: DesignerOperate.UPDATE_CANVAS_CONFIG, data});
+//更新项目设置
+export const updateProjectConfig = (data: any) => ({type: DesignerOperate.UPDATE_PROJECT_CONFIG, data});
 
 

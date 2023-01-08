@@ -1,13 +1,5 @@
 export enum DesignerOperate {
     /**
-     * 更新设计器store
-     */
-    UPDATE_DESIGNER_STORE,
-    /**
-     * 清除设计器store
-     */
-    CLEAR_DESIGNER_STORE,
-    /**
      * 添加设计器组件
      */
     ADD_ITEM,
@@ -15,6 +7,14 @@ export enum DesignerOperate {
      * 删除设计器组件
      */
     DEL_ITEM,
+    /**
+     * 更新设计器store
+     */
+    UPDATE_DESIGNER_STORE,
+    /**
+     * 清除设计器store
+     */
+    CLEAR_DESIGNER_STORE,
     /**
      * 更新设计器布局
      */
@@ -38,5 +38,18 @@ export enum DesignerOperate {
     /**
      * 更新更新设计器全局配置
      */
-    UPDATE_GLOBAL_SET,
+    UPDATE_CANVAS_CONFIG,
+    /**
+     * 更新项目设置
+     */
+    UPDATE_PROJECT_CONFIG,
+    /**
+     * 更新系统设置
+     */
+    UPDATE_SYSTEM_CONFIG,
+    /**
+     * 更新背景设置
+     */
+    UPDATE_BG_CONFIG,
+
 }

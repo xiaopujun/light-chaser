@@ -1,203 +1,96 @@
 import React, {Component} from 'react';
 import './LcCanvasSet.less';
-import CfgGroup from "../base/CfgGroup";
-import Dragger from "antd/es/upload/Dragger";
-import {Button, Input, message, Select, UploadProps} from "antd";
-import PleaseUpload from '../../designer/pleaseupload.png';
 import LCNumberInput from "../../base/LCNumberInput";
 import {ColumnHeightOutlined, ColumnWidthOutlined, DragOutlined} from "@ant-design/icons";
 import BaseColorPicker from "../../base/BaseColorPicker";
-import UploadDemo from "../../../test/UploadDemo";
-
-const {Option} = Select;
+import Dragger from "antd/es/upload/Dragger";
+import {RcFile, UploadProps} from "antd/es/upload";
 
 interface LcCanvasSetProps {
     canvasConfig?: any;
-    updateCanvasSet?: (data?: any) => void;
+    updateCanvasConfig?: (data?: any) => void;
 }
 
 class LcCanvasSet extends Component<LcCanvasSetProps> {
 
-    changeScreenName = (name: string) => {
-
-    }
-    changeScreenWidth = (width: string) => {
-
-    }
-    changeScreenHeight = (height: string) => {
-
+    state = {
+        fileList: [],
+        previewImage: '',
+        previewTitle: '',
+        file: null
     }
 
-    changeSaveType = (type: string) => {
+    handleChange: UploadProps['onChange'] = ({fileList: newFileList}) => this.setState({fileList: newFileList});
 
-    }
-    changeRatio = (ratio: number) => {
-
-    }
-    changeInterval = (interval: number) => {
-
-    }
-    changeColumn = (columns: number) => {
-        const {updateCanvasSet} = this.props;
-        updateCanvasSet && updateCanvasSet({columns: columns})
-    }
-    changeBaseHeight = (height: number) => {
-
+    beforeUpload = (file: any, fileList: any) => {
+        this.getBase64(file as RcFile).then(value => {
+            this.setState({file: value})
+            return false;
+        })
     }
 
-    generateCanvasSet = () => {
-        const {canvasConfig} = this.props;
-        return [
-            {
-                label: '大屏名称',
-                comp: "LcTextInput",
-                config: {
-                    value: canvasConfig?.screenName,
-                    onChange: this.changeScreenName,
-                },
-            },
-            {
-                label: '大屏宽度',
-                comp: "LcNumberInput",
-                config: {
-                    value: canvasConfig?.screenWidth,
-                    onChange: this.changeScreenWidth,
-                    width: 50
-                },
-            },
-            {
-                label: '大屏高度',
-                comp: "LcNumberInput",
-                config: {
-                    value: canvasConfig?.screenHeight,
-                    onChange: this.changeScreenHeight,
-                    width: 50
-                },
-            },
-            {
-                label: '数据存储方式',
-                comp: "LcSelect",
-                config: {
-                    value: canvasConfig?.saveType,
-                    onChange: this.changeSaveType,
-                    options: [
-                        {
-                            content: '本地',
-                            value: 'local'
-                        },
-                        {
-                            content: '远程',
-                            value: 'server'
-                        },
-                    ]
-                },
-            },
-            {
-                label: '屏幕比例',
-                comp: "LcTextInput",
-                config: {
-                    value: canvasConfig?.screenRatio,
-                    onChange: this.changeRatio,
-                },
-            },
-            {
-                label: '元素间隔距离',
-                comp: "LcNumberInput",
-                config: {
-                    value: canvasConfig?.elemInterval,
-                    onChange: this.changeInterval,
-                },
-            },
-            {
-                label: '列划分数量',
-                comp: "LcNumberInput",
-                config: {
-                    value: canvasConfig?.columns,
-                    onChange: this.changeColumn,
-                },
-            },
-            {
-                label: '元素基准高度',
-                comp: "LcNumberInput",
-                config: {
-                    value: canvasConfig?.baseLineHeight,
-                    onChange: this.changeBaseHeight,
-                },
-            },
-            {
-                label: '当前元素总数',
-                comp: "",
-                config: {
-                    value: canvasConfig?.elemCount,
-                },
-            },
-        ]
+    getBase64 = (file: RcFile): Promise<string> => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = (error) => reject(error);
+        });
     }
 
     render() {
-        const _props: UploadProps = {
-            name: 'file',
-            multiple: true,
-            action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-            onChange(info) {
-                const {status} = info.file;
-                if (status !== 'uploading') {
-                    console.log(info.file, info.fileList);
-                }
-                if (status === 'done') {
-                    message.success(`${info.file.name} file uploaded successfully.`);
-                } else if (status === 'error') {
-                    message.error(`${info.file.name} file upload failed.`);
-                }
-            },
-            onDrop(e) {
-                console.log('Dropped files', e.dataTransfer.files);
-            },
-        };
         return (
-            <div className={'lc-global-set'}>
-                <div className={'lc-global-set-content'}>
-                    {/*<CfgGroup items={this.generateCanvasSet()}/>*/}
-
-                    <div className={'lc-upload'} style={{height: 187, width: '100%'}}>
-                        <UploadDemo/>
+            <div className={'lc-canvas-config'}>
+                <div className={'lc-bg-upload'}>
+                    <div className={'lc-upload-content'}>
+                        {this.state.file ? <img alt={"bg"} width={'100%'} height={187} src={this.state.file}/> :
+                            <Dragger listType={'picture-card'}
+                                     showUploadList={false}
+                                     beforeUpload={this.beforeUpload}
+                                     fileList={this.state.fileList}
+                                     onChange={this.handleChange}>
+                                请上传背景图
+                            </Dragger>}
                     </div>
-                    <div className={'lc-cfg-item'}>
-                        <div className={'item-name'}>模式</div>
-                        <div className={'item-value'}>
-                            <Select style={{width: 200}}>
-                                <Option value={'img'}>图片</Option>
-                                <Option value={'color'}>颜色</Option>
-                            </Select>
+                </div>
+                <div className={'lc-cfg-item'}>
+                    <div className={'item-name'}>背景模式 :</div>
+                    <div className={'item-value'}>
+                        <button className={'lc-bg-mode'}>无</button>
+                        <button className={'lc-bg-mode'}>图片</button>
+                        <button className={'lc-bg-mode'}>颜色</button>
+                    </div>
+                </div>
+                <div className={'lc-cfg-item'}>
+                    <div className={'item-name'}>图片尺寸 :</div>
+                    <div className={'item-value'} style={{display: 'flex'}}>
+                        <LCNumberInput width={100} value={1920}/>
+                        <div className={'middle-icon'}>&nbsp;&nbsp;&nbsp; × &nbsp;&nbsp;&nbsp;</div>
+                        <LCNumberInput width={100} value={1080}/>
+                    </div>
+                </div>
+                <div className={'lc-cfg-item'}>
+                    <div className={'item-name'}>颜色模式 :</div>
+                    <div className={'item-value'} style={{display: 'flex'}}>
+                        <button className={'lc-color-mode'}>单色</button>
+                        <button className={'lc-color-mode'}>线性渐变</button>
+                        <button className={'lc-color-mode'}>径向渐变</button>
+                    </div>
+                </div>
+                <div className={'lc-cfg-item'}>
+                    <div className={'item-name'}>背景颜色 :</div>
+                    <div className={'item-value'} style={{display: 'flex'}}>
+                        <div className={'bg-color-block'}>
+                            <BaseColorPicker style={{width: '100%', height: '25px', borderRadius: 2}} showText={true}/>
                         </div>
                     </div>
-                    <div className={'lc-cfg-item'}>
-                        <div className={'item-name'}>尺寸</div>
-                        <div className={'item-value'} style={{display: 'flex'}}>
-                            <LCNumberInput width={50} value={1920}/>
-                            &nbsp;&nbsp;&nbsp; × &nbsp;&nbsp;&nbsp;
-                            <LCNumberInput width={50} value={1080}/>
-                        </div>
-                    </div>
-                    <div className={'lc-cfg-item'}>
-                        <div className={'item-name'}>颜色</div>
-                        <div className={'item-value'} style={{display: 'flex'}}>
-                            <BaseColorPicker/>
-                        </div>
-                    </div>
-                    <div className={'lc-cfg-item'}>
-                        <div className={'item-name'}>填充</div>
-                        <div className={'item-value'} style={{display: 'flex'}}>
-                            <Button type={'primary'}>
-                                <ColumnWidthOutlined/>
-                            </Button>
-                            <Button type={'primary'}>
-                                <ColumnHeightOutlined/>
-                            </Button>
-                            <Button type={'primary'}>
-                                <DragOutlined/>
-                            </Button>
-                        </div>
+                </div>
+                <div className={'lc-cfg-item'}>
+                    <div className={'item-name'}>填充方式 :</div>
+                    <div className={'item-value'} style={{display: 'flex'}}>
+                        <button className={'lc-bg-fill'}>x轴</button>
+                        <button className={'lc-bg-fill'}>y轴</button>
+                        <button className={'lc-bg-fill'}>无</button>
                     </div>
                 </div>
             </div>
