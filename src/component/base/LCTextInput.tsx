@@ -6,6 +6,8 @@ interface LCTextInputProps {
     defaultValue?: string | number;
     readonly?: boolean;
     value?: string;
+    width?: number | string;
+    height?: number | string;
 }
 
 export default class LCTextInput extends Component<LCTextInputProps> {
@@ -16,13 +18,21 @@ export default class LCTextInput extends Component<LCTextInputProps> {
     }
 
     render() {
-        const {value, readonly} = this.props;
+        const {value, readonly, width, height} = this.props;
         return (
-            <input className={'lc-text-input'}
-                   value={value || ''}
-                   type={'text'}
-                   readOnly={readonly || false}
-                   onChange={this.onChange}/>
+            <div className={'lc-text-input'} style={{height, width}}>
+                <input className={'lc-input'}
+                       style={{height, width}}
+                       value={value || ''}
+                       type={'text'}
+                       readOnly={readonly || false}
+                       onChange={this.onChange}/>
+                <span className="bottom"/>
+                <span className="right"/>
+                <span className="top"/>
+                <span className="left"/>
+            </div>
+
         );
     }
 }

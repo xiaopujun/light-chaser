@@ -70,6 +70,14 @@ class LcCanvasSet extends Component<LcCanvasSetProps> {
                     </div>
                 </div>
                 <div className={'lc-cfg-item'}>
+                    <div className={'item-name'}>填充方式 :</div>
+                    <div className={'item-value'} style={{display: 'flex'}}>
+                        <button className={'lc-bg-fill'}>x轴</button>
+                        <button className={'lc-bg-fill'}>y轴</button>
+                        <button className={'lc-bg-fill'}>无</button>
+                    </div>
+                </div>
+                <div className={'lc-cfg-item'}>
                     <div className={'item-name'}>颜色模式 :</div>
                     <div className={'item-value'} style={{display: 'flex'}}>
                         <button className={'lc-color-mode'}>单色</button>
@@ -85,14 +93,7 @@ class LcCanvasSet extends Component<LcCanvasSetProps> {
                         </div>
                     </div>
                 </div>
-                <div className={'lc-cfg-item'}>
-                    <div className={'item-name'}>填充方式 :</div>
-                    <div className={'item-value'} style={{display: 'flex'}}>
-                        <button className={'lc-bg-fill'}>x轴</button>
-                        <button className={'lc-bg-fill'}>y轴</button>
-                        <button className={'lc-bg-fill'}>无</button>
-                    </div>
-                </div>
+
             </div>
         );
     }

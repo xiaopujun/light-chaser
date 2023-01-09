@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import CfgGroup from "../base/CfgGroup";
+import LCTextInput from "../../base/LCTextInput";
+import './LcEmBaseInfo.less';
 
 interface LcEmBaseInfoProps {
     baseInfo?: any;
@@ -21,42 +22,33 @@ class LcEmBaseInfo extends Component<LcEmBaseInfoProps> {
         updateBaseInfo && updateBaseInfo({desc})
     }
 
-    generateConfigData = () => {
+    render() {
         const {baseInfo = {}} = this.props;
         const {id = -1, name = '', desc = '', type = ''} = baseInfo;
-        return [
-            {
-                label: 'ID号',
-                comp: "",
-                config: {value: id},
-            },
-            {
-                label: '名称',
-                comp: "LcTextInput",
-                config: {
-                    value: name,
-                    onChange: this.changeName
-                },
-            },
-            {
-                label: '描述',
-                comp: "LcTextInput",
-                config: {
-                    value: desc,
-                    onChange: this.changeDesc
-                },
-            },
-            {
-                label: '类型',
-                comp: "LcTextInput",
-                config: {value: type},
-            },
-        ]
-    }
-
-    render() {
-        const configData = this.generateConfigData();
-        return <CfgGroup items={configData}/>
+        return (
+            <div className={'lc-base-info'}>
+                <div className={'lc-cfg-item'}>
+                    <div className={'item-name'}>ID号</div>
+                    <div className={'item-value'}>{id}</div>
+                </div>
+                <div className={'lc-cfg-item'}>
+                    <div className={'item-name'}>名称</div>
+                    <div className={'item-value'}>
+                        <LCTextInput width={'100%'} value={name} onChange={this.changeName}/>
+                    </div>
+                </div>
+                <div className={'lc-cfg-item'}>
+                    <div className={'item-name'}>描述</div>
+                    <div className={'item-value'}>
+                        <LCTextInput width={'100%'} value={desc} onChange={this.changeDesc}/>
+                    </div>
+                </div>
+                <div className={'lc-cfg-item'}>
+                    <div className={'item-name'}>类型</div>
+                    <div className={'item-value'}>{type}</div>
+                </div>
+            </div>
+        )
     }
 }
 

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import LCNumberInput from "../../base/LCNumberInput";
 import './style/PaddingSet.less';
+import LcUnderLineInput from "../../base/LcUnderLineInput";
 
 interface PaddingSetProps {
     value?: string;
@@ -55,10 +56,29 @@ export default class PaddingSet extends Component<PaddingSetProps> {
             )
         }
         return (
-            <div className={'lc-config-item lc-padding-config'}>
-                <div className={'lc-config-item-value'}>
-                    {itemArr}
+            <div className={'lc-padding-config'}>
+                <div className={'lc-padding-content'}>
+                    <div className={'lc-padding-top'}>
+                        <LcUnderLineInput type={'number'} inputStyle={{width: 20}}
+                                          containStyle={{width: 20}}/><span>px</span>
+                    </div>
+                    <div className={'lc-padding-middle'}>
+                        <div className={'lc-padding-left'}>
+                            <LcUnderLineInput type={'number'} inputStyle={{width: 20}}
+                                              containStyle={{width: 20}}/><span>px</span>
+                        </div>
+                        <div className={'lc-padding-center'}>alone</div>
+                        <div className={'lc-padding-right'}>
+                            <LcUnderLineInput type={'number'} inputStyle={{width: 20}}
+                                              containStyle={{width: 20}}/><span>px</span>
+                        </div>
+                    </div>
+                    <div className={'lc-padding-bottom'}>
+                        <LcUnderLineInput type={'number'} inputStyle={{width: 20}}
+                                          containStyle={{width: 20}}/><span>px</span>
+                    </div>
                 </div>
+
             </div>
         );
     }
