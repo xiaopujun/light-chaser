@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import './style/LCBaseConfig.less';
 import {BaseStyle} from "../../../types/LcDesignerType";
 import CfgGroup from "./CfgGroup";
+import LcRadialButton from "../../base/LcRadialButton";
+import BaseColorPicker from "../../base/BaseColorPicker";
+import LCNumberInput from "../../base/LCNumberInput";
 
 interface LcCompBaseStyleSetProps {
     baseStyle?: BaseStyle;
@@ -116,6 +119,39 @@ export default class LcCompBaseStyleSet extends Component<LcCompBaseStyleSetProp
     }
 
     render() {
-        return <CfgGroup items={this.generateBaseStyle()}/>;
+        return (
+            <div className={'lc-base-style'}>
+                {/*<CfgGroup items={this.generateBaseStyle()}/>*/}
+                <div className={'lc-cfg-item'}>
+                    <div className={'item-name'}>背景</div>
+                    <div className={'item-value'}>{}</div>
+                </div>
+                <div className={'lc-cfg-item lc-border'}>
+                    <div className={'item-name'}>边框</div>
+                    <div className={'item-value'}>
+                        <div className={'lc-border-type'}>
+                            <LcRadialButton>无</LcRadialButton>
+                            <LcRadialButton>点</LcRadialButton>
+                            <LcRadialButton>虚线</LcRadialButton>
+                            <LcRadialButton>实线</LcRadialButton>
+                        </div>
+                        <div className={'lc-border-config-content'}>
+                            <div className={'border-item'}>
+                                <div className={'item-value'}><BaseColorPicker/></div>
+                                <div className={'item-title'}>颜色</div>
+                            </div>
+                            <div className={'border-item'}>
+                                <div className={'item-value'}><LCNumberInput value={3} width={40}/></div>
+                                <div className={'item-title'}>宽度</div>
+                            </div>
+                            <div className={'border-item'}>
+                                <div className={'item-value'}><LCNumberInput value={14} width={40}/></div>
+                                <div className={'item-title'}>圆角</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
     }
 }

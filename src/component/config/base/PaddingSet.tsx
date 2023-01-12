@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import LCNumberInput from "../../base/LCNumberInput";
 import './style/PaddingSet.less';
 import LcUnderLineInput from "../../base/LcUnderLineInput";
 
@@ -24,11 +23,6 @@ export default class PaddingSet extends Component<PaddingSetProps> {
         data: ''
     }
 
-    constructor(props: PaddingSetProps) {
-        super(props);
-    }
-
-
     onChange = (e: any) => {
         let name = e.currentTarget.name;
         let value = parseInt(e.currentTarget.value);
@@ -50,7 +44,7 @@ export default class PaddingSet extends Component<PaddingSetProps> {
     }
 
     calculateModeValue = (index: number, value: number, position: string) => {
-        const {modeIndex, mode, dataArr} = this.state;
+        let {modeIndex, mode, dataArr} = this.state;
         let currentMode = mode[modeIndex];
         switch (currentMode) {
             case PaddingSet.TOP_BOTTOM:
@@ -70,10 +64,7 @@ export default class PaddingSet extends Component<PaddingSetProps> {
                 }
                 break;
             case PaddingSet.ALL:
-                dataArr[0] = value;
-                dataArr[1] = value;
-                dataArr[2] = value;
-                dataArr[3] = value;
+                dataArr = [value, value, value, value];
                 break;
             default:
                 dataArr[index] = value;
@@ -131,7 +122,6 @@ export default class PaddingSet extends Component<PaddingSetProps> {
                         <span>px</span>
                     </div>
                 </div>
-
             </div>
         );
     }

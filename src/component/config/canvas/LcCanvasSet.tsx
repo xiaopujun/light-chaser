@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import './LcCanvasSet.less';
 import LCNumberInput from "../../base/LCNumberInput";
-import {ColumnHeightOutlined, ColumnWidthOutlined, DragOutlined} from "@ant-design/icons";
 import BaseColorPicker from "../../base/BaseColorPicker";
 import Dragger from "antd/es/upload/Dragger";
 import {RcFile, UploadProps} from "antd/es/upload";
+import LcRadialButton from "../../base/LcRadialButton";
 
 interface LcCanvasSetProps {
     canvasConfig?: any;
@@ -72,9 +72,9 @@ class LcCanvasSet extends Component<LcCanvasSetProps> {
                 <div className={'lc-cfg-item'}>
                     <div className={'item-name'}>填充方式 :</div>
                     <div className={'item-value'} style={{display: 'flex'}}>
-                        <button className={'lc-bg-fill'}>x轴</button>
-                        <button className={'lc-bg-fill'}>y轴</button>
-                        <button className={'lc-bg-fill'}>无</button>
+                        <LcRadialButton className={'lc-bg-fill'}>x轴</LcRadialButton>
+                        <LcRadialButton className={'lc-bg-fill'}>y轴</LcRadialButton>
+                        <LcRadialButton className={'lc-bg-fill'}>无</LcRadialButton>
                     </div>
                 </div>
                 <div className={'lc-cfg-item'}>
