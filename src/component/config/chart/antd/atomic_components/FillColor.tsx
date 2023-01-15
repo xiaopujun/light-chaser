@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './style/index.less';
 import CfgGroup from "../../../base/CfgGroup";
+import Accordion from "../../../../base/Accordion";
 
 interface FillColorProp {
     colorCount?: number;
@@ -44,7 +45,11 @@ class FillColor extends Component<FillColorProp> {
     }
 
     render() {
-        return <CfgGroup items={this.generateFillColorSet()}/>;
+        return (
+            <Accordion title={'主色'}>
+                <CfgGroup items={this.generateFillColorSet()}/>
+            </Accordion>
+        );
     }
 }
 

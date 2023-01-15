@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './style/index.less';
 import CfgGroup from "../../../base/CfgGroup";
+import Accordion from "../../../../base/Accordion";
 
 
 interface LegendProps {
@@ -80,14 +81,6 @@ class Legend extends Component<LegendProps> {
     generateLegendSet = () => {
         const {visible, position, direction, textColor} = this.props;
         return [
-            {
-                label: '显示图例',
-                comp: "Switch",
-                config: {
-                    checked: visible,
-                    onChange: this.showLegend,
-                },
-            },
             {
                 label: '图例位置',
                 comp: "LcSelect",
@@ -180,7 +173,11 @@ class Legend extends Component<LegendProps> {
 
     render() {
         const items = this.generateLegendSet();
-        return <CfgGroup items={items}/>
+        return (
+            <Accordion title={'图例'} showSwitch={true}>
+                <CfgGroup items={items}/>
+            </Accordion>
+        )
     }
 }
 

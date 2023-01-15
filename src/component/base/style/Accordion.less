@@ -1,0 +1,57 @@
+.lc-accordion {
+  color: #01fffd;
+  background-color: rgba(0, 0, 0, 0);
+
+  .accordion-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #01fffd;
+    cursor: pointer;
+    padding: 10px 0;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+
+    .title-switch {
+      .accordion-icon {
+        transition: transform 0.2s;
+        transform: rotate(0deg);
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+    }
+  }
+
+  .accordion-active, .accordion-title:hover {
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  .accordion-active {
+    .title-switch {
+      .accordion-icon {
+        transition: transform 0.2s;
+        transform: rotate(90deg);
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+    }
+  }
+
+  .lc-accordion-body {
+    padding: 0 18px;
+    background-color: rgba(0, 0, 0, 0);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+  }
+
+  .accordion-title:after {
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+
+  }
+}
+

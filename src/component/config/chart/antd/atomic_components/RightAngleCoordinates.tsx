@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
-import CfgGroup from "../../../base/CfgGroup";
+import BaseColorPicker from "../../../../base/BaseColorPicker";
+import './style/RightAngleCoordinates.less';
+import {Switch} from "antd";
+import LCNumberInput from "../../../../base/LCNumberInput";
+import Accordion from "../../../../base/Accordion";
 
 
 interface RightAngleCoordinatesProp {
@@ -289,7 +293,62 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
     }
 
     render() {
-        return <CfgGroup items={this.generateRightAngleCoordinatesSet()}/>;
+        return (
+            <>
+                <Accordion title={'X轴'} showSwitch={true}>
+                    <div className={'lc-coordinate-plane'}>
+                        <div className={'lc-cfg-item'}>
+                            <div className={'item-name'}>X轴</div>
+                            <div className={'item-value'}>
+                                <div className={'lc-axis-switch'}>
+                                    <Switch/>
+                                </div>
+                                <div className={'lc-axis-items'}>
+                                    <div className={'lc-axis-item'}>
+                                        <div className={'lc-axis-line-color-value'}><BaseColorPicker/></div>
+                                        <div className={'lc-axis-line-color-title'}>轴线颜色</div>
+                                    </div>
+                                    <div className={'lc-axis-item'}>
+                                        <div className={'lc-axis-line-width-value'}><LCNumberInput value={4}/></div>
+                                        <div className={'lc-axis-line-width-title'}>轴线宽</div>
+                                    </div>
+                                    <div className={'lc-axis-item'}>
+                                        <div className={'lc-axis-line-opacity-value'}><LCNumberInput value={0.5}/></div>
+                                        <div className={'lc-axis-line-opacity-title'}>透明度</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Accordion>
+                <Accordion title={'Y轴'} showSwitch={true}>
+                    <div className={'lc-coordinate-plane'}>
+                        <div className={'lc-cfg-item'}>
+                            <div className={'item-name'}>Y轴</div>
+                            <div className={'item-value'}>
+                                <div className={'lc-axis-switch'}>
+                                    <Switch/>
+                                </div>
+                                <div className={'lc-axis-items'}>
+                                    <div className={'lc-axis-item'}>
+                                        <div className={'lc-axis-line-color-value'}><BaseColorPicker/></div>
+                                        <div className={'lc-axis-line-color-title'}>轴线颜色</div>
+                                    </div>
+                                    <div className={'lc-axis-item'}>
+                                        <div className={'lc-axis-line-width-value'}><LCNumberInput value={4}/></div>
+                                        <div className={'lc-axis-line-width-title'}>轴线宽</div>
+                                    </div>
+                                    <div className={'lc-axis-item'}>
+                                        <div className={'lc-axis-line-opacity-value'}><LCNumberInput value={0.5}/></div>
+                                        <div className={'lc-axis-line-opacity-title'}>透明度</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Accordion>
+            </>
+        );
     }
 }
 
