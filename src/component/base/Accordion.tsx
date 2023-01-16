@@ -15,7 +15,6 @@ class Accordion extends Component<AccordionProps> {
 
     componentDidMount() {
         const {showSwitch = false} = this.props;
-        this.accDom = document.getElementsByClassName("accordion-title");
         if (!showSwitch)
             this.titleClickMode();
     }
@@ -24,18 +23,16 @@ class Accordion extends Component<AccordionProps> {
      * 标题点击模式，点击标题，展开内容
      */
     titleClickMode = () => {
-        for (let i = 0; i < this.accDom.length; i++) {
-            let accItem: any = this.accDom[i];
-            accItem.addEventListener("click", function () {
-                accItem.classList.toggle("accordion-active");
-                let panel = accItem.nextElementSibling;
-                if (panel.style.maxHeight) {
-                    panel.style.maxHeight = null;
-                } else {
-                    panel.style.maxHeight = panel.scrollHeight + "px";
-                }
-            });
-        }
+        const accDomTemp = this.accDom;
+        accDomTemp.addEventListener("click", function () {
+            accDomTemp.classList.toggle("accordion-active");
+            let panel = accDomTemp.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+        });
     }
 
     /**
@@ -49,15 +46,13 @@ class Accordion extends Component<AccordionProps> {
      * 手风琴标题开关变化
      */
     switchChange = (data: boolean) => {
-        for (let i = 0; i < this.accDom.length; i++) {
-            let accItem: any = this.accDom[i];
-            accItem.classList.toggle("accordion-active");
-            let panel = accItem.nextElementSibling;
-            if (panel.style.maxHeight) {
-                panel.style.maxHeight = null;
-            } else {
-                panel.style.maxHeight = panel.scrollHeight + "px";
-            }
+        let accDomTemp: any = this.accDom;
+        accDomTemp.classList.toggle("accordion-active");
+        let panel = accDomTemp.nextElementSibling;
+        if (panel.style.maxHeight) {
+            panel.style.maxHeight = null;
+        } else {
+            panel.style.maxHeight = panel.scrollHeight + "px";
         }
     }
 
@@ -65,7 +60,7 @@ class Accordion extends Component<AccordionProps> {
         const {showSwitch = false, title = ''} = this.props;
         return (
             <div className={'lc-accordion'}>
-                <div className="accordion-title">
+                <div className="accordion-title" ref={dom => this.accDom = dom}>
                     <div className={'title-content'}>{title}</div>
                     <div className={'title-switch'}>{showSwitch ? <LcSwitch onChange={this.switchChange}/> :
                         <RightOutlined className={'accordion-icon'}/>}</div>

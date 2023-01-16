@@ -149,7 +149,7 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
                          backgroundColor: '#131e26',
                          width: canvasConfig.screenWidth,
                          // backgroundImage: `url(${bgImg})`
-                     }}>
+                     }}>\
                     <ReactGridLayout ref={obj => this.rgl = obj}
                                      className="layout"
                                      layout={layoutConfigs}
