@@ -46,7 +46,7 @@ class FillColor extends Component<FillColorProp> {
 
     render() {
         return (
-            <Accordion title={'主色'}>
+            <Accordion title={'图形'}>
                 <CfgGroup items={this.generateFillColorSet()}/>
             </Accordion>
         );
