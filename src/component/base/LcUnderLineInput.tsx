@@ -30,6 +30,7 @@ class LcUnderLineInput extends Component<LcUnderLineInputProps> {
                        value={value}
                        onChange={this.onChange}
                        className={'lc-underline-input'}
+                       placeholder={'请输入'}
                        style={inputStyle}/>
                 <span className={'lc-underline-span'} style={lineStyle}/>
             </div>

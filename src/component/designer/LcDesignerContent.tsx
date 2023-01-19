@@ -149,13 +149,13 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
                          backgroundColor: '#131e26',
                          width: canvasConfig.screenWidth,
                          // backgroundImage: `url(${bgImg})`
-                     }}>\
+                     }}>
                     <ReactGridLayout ref={obj => this.rgl = obj}
                                      className="layout"
                                      layout={layoutConfigs}
-                                     cols={canvasConfig?.columns || 48}
-                                     rowHeight={10}
-                                     margin={[15, 15]}
+                                     cols={canvasConfig?.columns || 1920 / 5}
+                                     rowHeight={5}
+                                     margin={[0, 0]}
                                      useCSSTransforms={true}
                                      preventCollision={true}
                                      allowOverlap={true}
