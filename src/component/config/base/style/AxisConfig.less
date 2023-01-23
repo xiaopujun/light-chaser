@@ -1,22 +1,27 @@
 .axis-config {
-  padding: 10px 0;
 
-  .axis-config-row {
+  .axis-config-item {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    margin: 10px 0;
+    padding: 10px 0;
+    min-height: 45px;
 
     .axis-config-title {
       width: 20%;
     }
 
     .axis-config-body {
-      width: 75%;
+      width: 78%;
+      display: flex;
+      flex-wrap: wrap;
+      font-size: 10px;
 
-      .axis-config-item {
-
+      .lc-config-item {
+        width: calc(50% - 10px);
+        margin: 0 10px 10px 0;
       }
+
     }
 
     .ant-radio-wrapper {
