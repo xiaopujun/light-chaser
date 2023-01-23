@@ -45,7 +45,7 @@ class AxisConfig extends Component<AxisConfigProps> {
                         </LcConfigItem>
                     </div>
                 </div>
-                {/* <div className={'axis-config-item'}>
+                <div className={'axis-config-item'}>
                     <div className={'axis-config-title'}>标签</div>
                     <div className={'axis-config-body'}></div>
                 </div>
@@ -64,7 +64,7 @@ class AxisConfig extends Component<AxisConfigProps> {
                 <div className={'axis-config-item'}>
                     <div className={'axis-config-title'}>子刻度</div>
                     <div className={'axis-config-body'}></div>
-                </div>*/}
+                </div>
             </div>
         );
     }
