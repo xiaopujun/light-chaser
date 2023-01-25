@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
 import './style/Legend.less';
-import CfgGroup from "../../../base/CfgGroup";
 import Accordion from "../../../../base/Accordion";
 import LcRadialButton from "../../../../base/LcRadialButton";
 import BaseColorPicker from "../../../../base/BaseColorPicker";
+import LcConfigItem from "../../../../base/LcConfigItem";
+import LcSelect from "../../../../base/LCSelect";
+import {Select} from "antd";
 
+const {Option} = Select;
 
 interface LegendProps {
     updateChartProps?: (data: any) => void;
@@ -177,42 +180,32 @@ class Legend extends Component<LegendProps> {
         const items = this.generateLegendSet();
         return (
             <Accordion title={'图例'} showSwitch={true}>
-                {/*<CfgGroup items={items}/>*/}
-                <div className={'lc-legend-config'}>
-                    <div className={'legend-position'}>
-                        <div className={'pos-row'}>
-                            <LcRadialButton className={'pos-item'}>左上</LcRadialButton>
-                            <LcRadialButton className={'pos-item'}>上</LcRadialButton>
-                            <LcRadialButton className={'pos-item'}>右上</LcRadialButton>
-                        </div>
-                        <div className={'pos-row'}>
-                            <LcRadialButton className={'pos-item'}>左</LcRadialButton>
-                            <span className={'pos-item'}>位置</span>
-                            <LcRadialButton className={'pos-item'}>右</LcRadialButton>
-                        </div>
-                        <div className={'pos-row'}>
-                            <LcRadialButton className={'pos-item'}>左下</LcRadialButton>
-                            <LcRadialButton className={'pos-item'}>下</LcRadialButton>
-                            <LcRadialButton className={'pos-item'}>右下</LcRadialButton>
-                        </div>
-                    </div>
-                    <div className={'legend-config-right'}>
-                        <div className={'legend-layout'}>
-                            <div className={'legend-layout-value'}>
-                                <LcRadialButton>横向</LcRadialButton>
-                                <LcRadialButton>纵向</LcRadialButton>
-                            </div>
-                            <div className={'legend-layout-title'}>布局</div>
-                        </div>
-                        <div className={'legend-color'}>
-                            <div className={'legend-label-color'}>
-                                <BaseColorPicker style={{width: 110, borderRadius: 2}} showText={true}/>
-                            </div>
-                            <div className={'legend-label-title'}>标签色</div>
-                        </div>
-                    </div>
-                </div>
-
+                <LcConfigItem title={'位置'}>
+                    <Select className={'lc-config-item-value lc-select'}
+                            onChange={this.legendPositionChanged}>
+                        <Option value={"left-top"}>左上</Option>
+                        <Option value={"left"}>正左</Option>
+                        <Option value={"left-bottom"}>左下</Option>
+                        <Option value={"top-left"}>上左</Option>
+                        <Option value={"top"}>正上</Option>
+                        <Option value={"top-right"}>上右</Option>
+                        <Option value={"right-top"}>右上</Option>
+                        <Option value={"right"}>正右</Option>
+                        <Option value={"right-bottom"}>右下</Option>
+                        <Option value={"bottom-left"}>下左</Option>
+                        <Option value={"bottom"}>正下</Option>
+                        <Option value={"bottom-right"}>下右</Option>
+                    </Select>
+                </LcConfigItem>
+                <LcConfigItem title={'布局'}>
+                    <Select>
+                        <Option>横向</Option>
+                        <Option>纵向</Option>
+                    </Select>
+                </LcConfigItem>
+                <LcConfigItem title={'颜色'}>
+                    <BaseColorPicker/>
+                </LcConfigItem>
             </Accordion>
         )
     }
