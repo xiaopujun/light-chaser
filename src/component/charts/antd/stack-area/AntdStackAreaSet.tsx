@@ -4,6 +4,7 @@ import FillColor from "../../../config/chart/antd/atomic_components/FillColor";
 import RightAngleCoordinates from "../../../config/chart/antd/atomic_components/RightAngleCoordinates";
 import {calculateFillColor, calculateRightAngleCoordinates} from "../../../config/chart/antd/util/AntdChartConfigUtil";
 import {dataSort} from "../../../../utils/SortUtil";
+import Legend from "../../../config/chart/antd/atomic_components/Legned";
 
 interface AntdAreaSetProps {
     chartConfig?: any;
@@ -28,6 +29,7 @@ class AntdStackAreaSet extends Component<AntdAreaSetProps> {
                 <FillColor onChange={this.fillColorChanged}
                            colors={colors}
                            colorCount={sorts}/>
+                <Legend/>
                 {/*直角坐标系配置*/}
                 <RightAngleCoordinates {...calculateRightAngleCoordinates(this.props.chartProps)}
                                        updateChartProps={updateChartProps}/>

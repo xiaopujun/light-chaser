@@ -8,7 +8,6 @@ interface AccordionProps {
     title?: string;
 }
 
-//todo 需要优化，dom元素获取遍历的时候不能遍历到其他组件的dom元素
 class Accordion extends Component<AccordionProps> {
 
     accDom: any = null;
@@ -60,7 +59,7 @@ class Accordion extends Component<AccordionProps> {
         const {showSwitch = false, title = ''} = this.props;
         return (
             <div className={'lc-accordion'}>
-                <div className="accordion-title" ref={dom => this.accDom = dom}>
+                <div className="accordion-header" ref={dom => this.accDom = dom}>
                     <div className={'title-content'}>{title}</div>
                     <div className={'title-switch'}>{showSwitch ? <LcSwitch onChange={this.switchChange}/> :
                         <RightOutlined className={'accordion-icon'}/>}</div>

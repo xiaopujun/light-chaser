@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import './style/CfgItem.less';
 import {getCfgComp} from "../CfgComps";
 import {CfgItemProps} from "../../../types/ConfigItemTypes";
 

@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
 import './style/LCBaseConfig.less';
 import {BaseStyle} from "../../../types/LcDesignerType";
-import LcRadialButton from "../../base/LcRadialButton";
 import BaseColorPicker from "../../base/BaseColorPicker";
 import LCNumberInput from "../../base/LCNumberInput";
-import CfgGroup from "./CfgGroup";
 import PaddingSet from "./PaddingSet";
 import Accordion from "../../base/Accordion";
+import LcConfigItem, {CfgItemLayout} from "../../base/LcConfigItem";
+import LcConfigBlock from "../../base/LcConfigBlock";
+import LcSelect from "../../base/LCSelect";
+import {Select} from "antd";
+
+const {Option} = Select;
 
 interface LcCompBaseStyleSetProps {
     baseStyle?: BaseStyle;
@@ -123,45 +127,31 @@ export default class LcCompBaseStyleSet extends Component<LcCompBaseStyleSetProp
     render() {
         return (
             <Accordion title="容器" showSwitch={false}>
-                <div className={'lc-base-style'}>
-                    <div className={'lc-cfg-item'}>
-                        <div className={'item-name'}>内边距</div>
-                        <div className={'item-value'}>
-                            <PaddingSet/>
-                        </div>
-                    </div>
-                    <div className={'lc-cfg-item'}>
-                        <div className={'item-name'}>背景</div>
-                        <div className={'item-value'}>
-                            <BaseColorPicker style={{width: '100%', borderRadius: 2}} showText={true}/>
-                        </div>
-                    </div>
-                    <div className={'lc-cfg-item lc-border'}>
-                        <div className={'item-name'}>边框</div>
-                        <div className={'item-value'}>
-                            <div className={'lc-border-type'}>
-                                <LcRadialButton>无</LcRadialButton>
-                                <LcRadialButton>点</LcRadialButton>
-                                <LcRadialButton>虚线</LcRadialButton>
-                                <LcRadialButton>实线</LcRadialButton>
-                            </div>
-                            <div className={'lc-border-config-content'}>
-                                <div className={'border-item'}>
-                                    <div className={'item-value'}><BaseColorPicker/></div>
-                                    <div className={'item-title'}>颜色</div>
-                                </div>
-                                <div className={'border-item'}>
-                                    <div className={'item-value'}><LCNumberInput value={3} width={40}/></div>
-                                    <div className={'item-title'}>宽度</div>
-                                </div>
-                                <div className={'border-item'}>
-                                    <div className={'item-value'}><LCNumberInput value={14} width={40}/></div>
-                                    <div className={'item-title'}>圆角</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <LcConfigItem title={'内边距'} layout={CfgItemLayout.ROW}>
+                    <PaddingSet/>
+                </LcConfigItem>
+                <LcConfigItem title={'背景'}>
+                    <BaseColorPicker style={{width: 80, borderRadius: 2}} showText={true}/>
+                </LcConfigItem>
+                <LcConfigItem title={'边框'} layout={CfgItemLayout.BLOCK}>
+                    <LcConfigBlock title={'类型'}>
+                        <Select defaultValue={'无'}>
+                            <Option>无</Option>
+                            <Option>点</Option>
+                            <Option>虚线</Option>
+                            <Option>实线</Option>
+                        </Select>
+                    </LcConfigBlock>
+                    <LcConfigBlock title={'颜色'}>
+                        <BaseColorPicker/>
+                    </LcConfigBlock>
+                    <LcConfigBlock title={'宽度'}>
+                        <LCNumberInput value={3} width={40}/>
+                    </LcConfigBlock>
+                    <LcConfigBlock title={'圆角'}>
+                        <LCNumberInput value={3} width={40}/>
+                    </LcConfigBlock>
+                </LcConfigItem>
             </Accordion>
         );
     }

@@ -1,40 +1,38 @@
-.lc-config-item {
-  width: 100%;
-  height: 45px;
-  color: #01fffd;
-}
-
-.config-item-lv-ud {
+.lc-cfg-item {
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-}
+  min-height: 45px;
+  padding: 5px;
 
-.config-item-lv-ud :first-child {
-  margin-bottom: 3px;
-}
+  .lc-cfg-title {
+    width: 20%;
+    font-size: 14px;
+  }
 
+  .lc-cfg-content-row {
+    display: flex;
+    width: 78%;
+    justify-content: flex-end;
+  }
 
-.config-item-lv-lr {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: row;
-}
+  .lc-cfg-content-block {
+    width: 78%;
+    display: flex;
+    flex-wrap: wrap;
 
-.config-item-lv-lr :first-child {
-  word-break: keep-all;
-  margin-right: 3px;
-}
+    .lc-cfg-block {
+      width: calc(50% - 10px);
+      margin: 0 10px 10px 0;
 
-.config-item-vl-ud {
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: space-between;
-  align-items: flex-start;
-}
+      .lc-cfg-block-title {
+        font-size: 12px;
+        margin-bottom: 3px;
+      }
 
-.config-item-vl-ud :first-child {
+      .lc-cfg-block-content {
 
+      }
+    }
+  }
 }

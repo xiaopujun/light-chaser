@@ -16,18 +16,12 @@ lc项目规范化开发文档及标准制定
 
 ![img.png](img.png)
 
-lc设计器的配置项由一级配置、二级配置项组成；
-
-上图中A为一级配置，D为二级配置。配置项的class属性名的约定名称如下
-
 |class名|说明|对应|
 |---|---|---|
-|lc-cfg-primary|一级配置容器|A|
-|lc-cfg-primary-title|一级配置标题|B|
-|lc-cfg-primary-content|一级配置内容|C|
-|lc-cfg-sub|二级配置容器|D|
-|lc-cfg-sub-title|二级配置标题|E|
-|lc-cfg-sub-row|二级配置单行配置容器|F|
-|lc-cfg-sub-item|二级配置子配置容器|G|
-|lc-cfg-sub-item-title|二级配置子配置标题|H|
-|lc-cfg-sub-item-value|二级配置子配置内容|I|
+|lc-cfg-item|设置项|A|
+|lc-cfg-title|设置项标题|B|
+|lc-cfg-content-row|设置项内容|C|
+|lc-cfg-content-block|设置项内容|C|
+|lc-cfg-block|块设置项容器|E|
+|lc-cfg-block-title|块设置项标题|F|
+|lc-cfg-block-content|块设置项内容|G|

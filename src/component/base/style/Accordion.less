@@ -2,7 +2,8 @@
   color: #01fffd;
   background-color: rgba(0, 0, 0, 0);
 
-  .accordion-title {
+  .accordion-header {
+    font-size: 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -24,7 +25,7 @@
     }
   }
 
-  .accordion-active, .accordion-title:hover {
+  .accordion-active, .accordion-header:hover {
     background-color: rgba(0, 0, 0, 0);
   }
 
@@ -45,7 +46,7 @@
     transition: max-height 0.2s ease-out;
   }
 
-  .accordion-title:after {
+  .accordion-header:after {
     color: #777;
     font-weight: bold;
     float: right;
