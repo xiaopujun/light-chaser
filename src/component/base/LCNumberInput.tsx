@@ -7,7 +7,7 @@ interface LCNumberInputProps {
     step?: number;
     max?: number;
     min?: number;
-    width?: number;
+    width?: number | string;
     value?: number;
     readonly?: boolean;
 }
