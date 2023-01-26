@@ -52,7 +52,7 @@ export default class OutInnerRadius extends Component<OutInnerRadiusProps> {
                                 <label className={'lc-config-item-label'}>外半径：</label>
                                 <div className={'lc-config-item-value'}>
                                     <span className={'lc-input-container'}>
-                                        <LCNumberInput onChange={this.outRadiusChanged} min={0} step={0.1}/>
+                                        <LCNumberInput min={0} step={0.1}/>
                                     </span>
                                 </div>
                             </div>
@@ -64,7 +64,7 @@ export default class OutInnerRadius extends Component<OutInnerRadiusProps> {
                                 <label className={'lc-config-item-label'}>内半径：</label>
                                 <div className={'lc-config-item-value'}>
                                     <span className={'lc-input-container'}>
-                                        <LCNumberInput onChange={this.innerRadiusChanged} min={0} step={0.1}/>
+                                        <LCNumberInput min={0} step={0.1}/>
                                     </span>
                                 </div>
                             </div>

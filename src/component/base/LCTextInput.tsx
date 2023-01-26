@@ -1,16 +1,7 @@
 import React, {Component} from 'react';
 import './style/LCTextInput.less';
 
-interface LCTextInputProps {
-    onChange?: (data: string) => void;
-    defaultValue?: string | number;
-    readonly?: boolean;
-    value?: string;
-    width?: number | string;
-    height?: number | string;
-}
-
-export default class LCTextInput extends Component<LCTextInputProps> {
+export default class LCTextInput extends Component<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
 
     onChange = (e: any) => {
         const {onChange} = this.props;
@@ -18,14 +9,14 @@ export default class LCTextInput extends Component<LCTextInputProps> {
     }
 
     render() {
-        const {value, readonly, width, height} = this.props;
+        const {value, readOnly, style} = this.props;
         return (
-            <div className={'lc-text-input'} style={{height, width}}>
+            <div className={'lc-text-input'} style={{height: style?.height, width: style?.width}}>
                 <input className={'lc-input'}
-                       style={{height, width}}
-                       value={value || ''}
+                       style={style}
+                       defaultValue={this.props.defaultValue}
                        type={'text'}
-                       readOnly={readonly || false}
+                       readOnly={readOnly || false}
                        onChange={this.onChange}/>
                 <span className="bottom"/>
                 <span className="right"/>

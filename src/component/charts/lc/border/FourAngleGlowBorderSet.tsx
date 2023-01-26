@@ -47,7 +47,7 @@ export default class FourAngleGlowBorderSet extends Component<any> {
                     <label className={'lc-config-item-label'}>四角辉光宽度：</label>
                     <div className={'lc-config-item-value'}>
                         <div className={'lc-input-container'}>
-                            <LCNumberInput id={'fourAngleGlowWidth'} onChange={this.fourAngleGlowWidthChanged}/>
+                            <LCNumberInput id={'fourAngleGlowWidth'}/>
                             <span>&nbsp;px</span>
                         </div>
                     </div>
@@ -56,12 +56,14 @@ export default class FourAngleGlowBorderSet extends Component<any> {
                     <label className={'lc-config-item-label'}>四角辉光长度：</label>
                     <div className={'lc-config-item-value'}>
                         <div className={'lc-input-container'}>
-                            <LCNumberInput id={'fourAngleGlowWidth'} onChange={this.fourAngleGlowLengthChanged}/>
-                            <span>&nbsp;px</span>
+                            <LCNumberInput id={'fourAngleGlowWidth'}/>
+                            <span>&nbsp;px
+                    </span>
                         </div>
                     </div>
                 </div>
             </>
-        );
+        )
+            ;
     }
 }

@@ -32,17 +32,17 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
         })
     }
 
-    rangeWidthChanged = (width: number) => {
-        const {updateChartProps} = this.props;
-        updateChartProps && updateChartProps({
-            range: {
-                width: width,
-            }
-        })
-        this.setState({
-            rangeWidth: width
-        })
-    }
+    // rangeWidthChanged = (width: number) => {
+    //     const {updateChartProps} = this.props;
+    //     updateChartProps && updateChartProps({
+    //         range: {
+    //             width: width,
+    //         }
+    //     })
+    //     this.setState({
+    //         rangeWidth: width
+    //     })
+    // }
 
     openMete = (data: boolean) => {
         const {updateChartProps} = this.props;
@@ -344,8 +344,7 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
                         <label className={'lc-config-item-label'}>圆弧宽度：</label>
                         <div className={'lc-config-item-value'}>
                                        <span className={'lc-input-container'}>
-                                             <LCNumberInput onChange={this.rangeWidthChanged}
-                                                            value={config?.rangeWidth}
+                                             <LCNumberInput value={config?.rangeWidth}
                                                             max={50} min={0.1} step={0.1}/>
                                         </span>
                         </div>
@@ -360,8 +359,7 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
                         <label className={'lc-config-item-label'}>总刻度数：</label>
                         <div className={'lc-config-item-value'}>
                                      <span className={'lc-input-container'}>
-                                            <LCNumberInput onChange={this.stepCountChange}
-                                                           value={config?.stepCount}
+                                            <LCNumberInput value={config?.stepCount}
                                                            max={100} min={1} step={1}/>
                                         </span>
                         </div>
@@ -370,8 +368,7 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
                         <label className={'lc-config-item-label'}>刻度宽度：</label>
                         <div className={'lc-config-item-value'}>
                                     <span className={'lc-input-container'}>
-                                            <LCNumberInput onChange={this.stepWidthChange}
-                                                           value={config?.stepRatio}
+                                            <LCNumberInput value={config?.stepRatio}
                                                            max={0.9} min={0} step={0.01}/>
                                         </span>
                         </div>
@@ -379,7 +376,7 @@ class AntdGaugeSet extends Component<AntdGaugeSetProps> {
                     <div className={'lc-config-item'}>
                         <label className={'lc-config-item-label'}>中心标题：</label>
                         <div className={'lc-config-item-value'}>
-                            <LCTextInput value={config?.title} onChange={this.titleChanged}/>
+                            <LCTextInput value={config?.title}/>
                         </div>
                     </div>
                     <div className={'lc-config-item'}>

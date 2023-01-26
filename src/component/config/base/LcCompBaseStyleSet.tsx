@@ -135,10 +135,10 @@ export default class LcCompBaseStyleSet extends Component<LcCompBaseStyleSetProp
                     <LcConfigBlock title={'类型'}>
                         <CfgItemBorder>
                             <LcSelect value={'无'}>
-                                <Option>无</Option>
-                                <Option>点</Option>
-                                <Option>虚线</Option>
-                                <Option>实线</Option>
+                                <Option key='none'>无</Option>
+                                <Option key='point'>点</Option>
+                                <Option key='v-line'>虚线</Option>
+                                <Option key='solid'>实线</Option>
                             </LcSelect>
                         </CfgItemBorder>
                     </LcConfigBlock>
@@ -160,7 +160,7 @@ export default class LcCompBaseStyleSet extends Component<LcCompBaseStyleSetProp
                     </LcConfigBlock>
                 </LcConfigItem>
                 <LcConfigItem title={'背景'}>
-                    <CfgItemBorder>
+                    <CfgItemBorder width={'50%'}>
                         <BaseColorPicker style={{width: '100%', borderRadius: 2}} showText={true}/>
                     </CfgItemBorder>
                 </LcConfigItem>

@@ -5,6 +5,10 @@ import BaseColorPicker from "../../base/BaseColorPicker";
 import Dragger from "antd/es/upload/Dragger";
 import {RcFile, UploadProps} from "antd/es/upload";
 import LcRadialButton from "../../base/LcRadialButton";
+import LcConfigItem from "../../base/LcConfigItem";
+import LcRadio from "../../base/LcRadio";
+import {Radio} from "antd";
+import CfgItemBorder from "../../base/CfgItemBorder";
 
 interface LcCanvasSetProps {
     canvasConfig?: any;
@@ -53,47 +57,37 @@ class LcCanvasSet extends Component<LcCanvasSetProps> {
                             </Dragger>}
                     </div>
                 </div>
-                <div className={'lc-cfg-item'}>
-                    <div className={'item-name'}>背景模式 :</div>
-                    <div className={'item-value'}>
-                        <button className={'lc-bg-mode'}>无</button>
-                        <button className={'lc-bg-mode'}>图片</button>
-                        <button className={'lc-bg-mode'}>颜色</button>
-                    </div>
-                </div>
-                <div className={'lc-cfg-item'}>
-                    <div className={'item-name'}>图片尺寸 :</div>
-                    <div className={'item-value'} style={{display: 'flex'}}>
-                        <LCNumberInput width={100} value={1920}/>
-                        <div className={'middle-icon'}>&nbsp;&nbsp;&nbsp; × &nbsp;&nbsp;&nbsp;</div>
-                        <LCNumberInput width={100} value={1080}/>
-                    </div>
-                </div>
-                <div className={'lc-cfg-item'}>
-                    <div className={'item-name'}>填充方式 :</div>
-                    <div className={'item-value'} style={{display: 'flex'}}>
-                        <LcRadialButton className={'lc-bg-fill'}>x轴</LcRadialButton>
-                        <LcRadialButton className={'lc-bg-fill'}>y轴</LcRadialButton>
-                        <LcRadialButton className={'lc-bg-fill'}>无</LcRadialButton>
-                    </div>
-                </div>
-                <div className={'lc-cfg-item'}>
-                    <div className={'item-name'}>颜色模式 :</div>
-                    <div className={'item-value'} style={{display: 'flex'}}>
-                        <button className={'lc-color-mode'}>单色</button>
-                        <button className={'lc-color-mode'}>线性渐变</button>
-                        <button className={'lc-color-mode'}>径向渐变</button>
-                    </div>
-                </div>
-                <div className={'lc-cfg-item'}>
-                    <div className={'item-name'}>背景颜色 :</div>
-                    <div className={'item-value'} style={{display: 'flex'}}>
-                        <div className={'bg-color-block'}>
-                            <BaseColorPicker style={{width: '100%', height: '25px', borderRadius: 2}} showText={true}/>
-                        </div>
-                    </div>
-                </div>
-
+                <br/>
+                <LcConfigItem title={'背景模式'}>
+                    <LcRadio>
+                        <Radio value="1">无</Radio>
+                        <Radio value="2">图片</Radio>
+                        <Radio value="3">颜色</Radio>
+                    </LcRadio>
+                </LcConfigItem>
+                <LcConfigItem title={'图片尺寸'}>
+                    <LCNumberInput style={{textAlign: 'center', width: '48%'}} value={1920}/>
+                    <LCNumberInput style={{textAlign: 'center', width: '48%'}} value={1080}/>
+                </LcConfigItem>
+                <LcConfigItem title={'填充方式'}>
+                    <LcRadio>
+                        <Radio value="1">无</Radio>
+                        <Radio value="2">x轴</Radio>
+                        <Radio value="3">y轴</Radio>
+                    </LcRadio>
+                </LcConfigItem>
+                <LcConfigItem title={'颜色模式'}>
+                    <LcRadio>
+                        <Radio value="1">单色</Radio>
+                        <Radio value="2">线性</Radio>
+                        <Radio value="3">径向</Radio>
+                    </LcRadio>
+                </LcConfigItem>
+                <LcConfigItem title={'背景颜色'}>
+                    <CfgItemBorder width={'50%'}>
+                        <BaseColorPicker style={{width: '100%', height: '18px', borderRadius: 2}} showText={true}/>
+                    </CfgItemBorder>
+                </LcConfigItem>
             </div>
         );
     }

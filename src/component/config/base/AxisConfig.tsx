@@ -8,6 +8,7 @@ import LcSwitch from "../../base/LcSwitch";
 import LcConfigItem, {CfgItemLayout} from "../../base/LcConfigItem";
 import LCNumberInput from "../../base/LCNumberInput";
 import CfgItemBorder from "../../base/CfgItemBorder";
+import LcRadio from "../../base/LcRadio";
 
 interface AxisConfigProps {
 
@@ -21,14 +22,12 @@ class AxisConfig extends Component<AxisConfigProps> {
         return (
             <>
                 <LcConfigItem title={'位置'}>
-                    <div className={'lc-cfg-item-row'}>
-                        <Radio.Group defaultValue={1}>
-                            <Radio value={1}>上</Radio>
-                            <Radio value={2}>下</Radio>
-                            <Radio value={3}>左</Radio>
-                            <Radio value={4}>右</Radio>
-                        </Radio.Group>
-                    </div>
+                    <LcRadio defaultValue="1">
+                        <Radio value="1">上</Radio>
+                        <Radio value="2">下</Radio>
+                        <Radio value="3">左</Radio>
+                        <Radio value="4">右</Radio>
+                    </LcRadio>
                 </LcConfigItem>
                 <LcConfigItem title={'标题'} layout={CfgItemLayout.BLOCK}>
                     <LcConfigBlock title={'开启'} layoutMode={LayoutMode.VL_UD}>

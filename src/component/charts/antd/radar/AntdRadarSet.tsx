@@ -131,7 +131,7 @@ export default class AntdRadarSet extends Component<AntdRadarSetProps> {
                         <label className={'lc-config-item-label'}>外半径：</label>
                         <div className={'lc-config-item-value'}>
                                     <span className={'lc-input-container'}>
-                                        <LCNumberInput value={config?.outRadius} onChange={this.outRadiusChanged}
+                                        <LCNumberInput value={config?.outRadius}
                                                        min={0} step={0.1}/>
                                     </span>
                         </div>
@@ -142,7 +142,7 @@ export default class AntdRadarSet extends Component<AntdRadarSetProps> {
                         <label className={'lc-config-item-label'}>起始角度(单位:π)：</label>
                         <div className={'lc-config-item-value'}>
                                     <span className={'lc-input-container'}>
-                                        <LCNumberInput value={config?.startAngle} onChange={this.startAngleChanged}
+                                        <LCNumberInput value={config?.startAngle}
                                                        min={0} max={2} step={0.1}/>
                                     </span>
                         </div>
@@ -151,7 +151,7 @@ export default class AntdRadarSet extends Component<AntdRadarSetProps> {
                         <label className={'lc-config-item-label'}>结束角度(单位:π)：</label>
                         <div className={'lc-config-item-value'}>
                                     <span className={'lc-input-container'}>
-                                        <LCNumberInput value={config?.endAngle} onChange={this.endAngleChanged} min={0}
+                                        <LCNumberInput value={config?.endAngle} min={0}
                                                        max={2} step={0.1}/>
                                     </span>
                         </div>
@@ -171,7 +171,7 @@ export default class AntdRadarSet extends Component<AntdRadarSetProps> {
                         <label className={'lc-config-item-label'}>雷达图描边线宽：</label>
                         <div className={'lc-config-item-value'}>
                                     <span className={'lc-input-container'}>
-                                        <LCNumberInput value={config.radarLineWidth} onChange={this.lineWidthChanged}
+                                        <LCNumberInput value={config.radarLineWidth}
                                                        max={10} min={0} step={0.1}/>
                                     </span>
                         </div>
