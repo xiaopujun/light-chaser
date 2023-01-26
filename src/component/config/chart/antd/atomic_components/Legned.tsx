@@ -6,6 +6,7 @@ import BaseColorPicker from "../../../../base/BaseColorPicker";
 import LcConfigItem from "../../../../base/LcConfigItem";
 import LcSelect from "../../../../base/LCSelect";
 import {Select} from "antd";
+import CfgItemBorder from "../../../../base/CfgItemBorder";
 
 const {Option} = Select;
 
@@ -181,30 +182,35 @@ class Legend extends Component<LegendProps> {
         return (
             <Accordion title={'图例'} showSwitch={true}>
                 <LcConfigItem title={'位置'}>
-                    <Select className={'lc-config-item-value lc-select'}
-                            onChange={this.legendPositionChanged}>
-                        <Option value={"left-top"}>左上</Option>
-                        <Option value={"left"}>正左</Option>
-                        <Option value={"left-bottom"}>左下</Option>
-                        <Option value={"top-left"}>上左</Option>
-                        <Option value={"top"}>正上</Option>
-                        <Option value={"top-right"}>上右</Option>
-                        <Option value={"right-top"}>右上</Option>
-                        <Option value={"right"}>正右</Option>
-                        <Option value={"right-bottom"}>右下</Option>
-                        <Option value={"bottom-left"}>下左</Option>
-                        <Option value={"bottom"}>正下</Option>
-                        <Option value={"bottom-right"}>下右</Option>
-                    </Select>
+                    <CfgItemBorder width={'50%'}>
+                        <LcSelect onChange={this.legendPositionChanged}>
+                            <Option value={"left-top"}>左上</Option>
+                            <Option value={"left"}>正左</Option>
+                            <Option value={"left-bottom"}>左下</Option>
+                            <Option value={"top-left"}>上左</Option>
+                            <Option value={"top"}>正上</Option>
+                            <Option value={"top-right"}>上右</Option>
+                            <Option value={"right-top"}>右上</Option>
+                            <Option value={"right"}>正右</Option>
+                            <Option value={"right-bottom"}>右下</Option>
+                            <Option value={"bottom-left"}>下左</Option>
+                            <Option value={"bottom"}>正下</Option>
+                            <Option value={"bottom-right"}>下右</Option>
+                        </LcSelect>
+                    </CfgItemBorder>
                 </LcConfigItem>
                 <LcConfigItem title={'布局'}>
-                    <Select>
-                        <Option>横向</Option>
-                        <Option>纵向</Option>
-                    </Select>
+                    <CfgItemBorder width={'50%'}>
+                        <LcSelect>
+                            <Option>横向</Option>
+                            <Option>纵向</Option>
+                        </LcSelect>
+                    </CfgItemBorder>
                 </LcConfigItem>
                 <LcConfigItem title={'颜色'}>
-                    <BaseColorPicker/>
+                    <CfgItemBorder width={'50%'}>
+                        <BaseColorPicker style={{width: '100%', borderRadius: 2}} showText={true}/>
+                    </CfgItemBorder>
                 </LcConfigItem>
             </Accordion>
         )

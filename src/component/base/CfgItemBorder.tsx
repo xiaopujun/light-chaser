@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
 
-class CfgItemBorder extends Component {
+interface CfgItemBorderProps {
+    width?: number | string;
+}
+
+class CfgItemBorder extends Component<CfgItemBorderProps> {
     render() {
+        const {width = '100%'} = this.props;
         const _style = {
-            width: '100%',
+            width: width,
             border: '1px solid #00b5ff3b',
-            padding: '2px',
+            padding: '3px',
             borderRadius: '3px'
         }
         return (
