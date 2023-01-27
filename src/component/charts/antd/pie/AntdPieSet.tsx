@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
-import '../../../config/chart/antd/style/AntdPieSet.less';
 import FillColor from "../../../config/chart/antd/atomic_components/FillColor";
 import Legend from "../../../config/chart/antd/atomic_components/Legned";
 import PolarCoordinateSystem from "../../../config/chart/antd/atomic_components/PolarCoordinate";
-import {calculateFillColor, calculateLegendConfig, calculatePolarCoordinate} from "../../../config/chart/antd/util/AntdChartConfigUtil";
+import {
+    calculateFillColor,
+    calculateLegendConfig,
+    calculatePolarCoordinate
+} from "../../../config/chart/antd/util/AntdChartConfigUtil";
 import {dataSort} from "../../../../utils/SortUtil";
 
 

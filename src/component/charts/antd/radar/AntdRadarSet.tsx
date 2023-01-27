@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Switch} from "antd";
-import '../../../config/chart/antd/style/AntdRadarSet.less';
 import FillColor from "../../../config/chart/antd/atomic_components/FillColor";
 import Legend from "../../../config/chart/antd/atomic_components/Legned";
 import RightAngleCoordinates from "../../../config/chart/antd/atomic_components/RightAngleCoordinates";

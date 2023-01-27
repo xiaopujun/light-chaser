@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import '../../../config/chart/antd/style/AntdLiquidSet.less';
 import FillColor from "../../../config/chart/antd/atomic_components/FillColor";
 import CfgGroup from "../../../config/base/CfgGroup";
 

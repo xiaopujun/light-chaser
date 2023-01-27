@@ -109,7 +109,7 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
      * 元素被拖动时限定目标元素大小
      */
     onDropDragOver = (e: any) => {
-        return {w: 5, h: 5}
+        return {w: 15, h: 15}
     }
 
     /**

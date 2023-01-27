@@ -1,9 +1,15 @@
 import React, {Component} from 'react';
-import '../../../config/chart/antd/style/AntdAreaSet.less';
 import FillColor from "../../../config/chart/antd/atomic_components/FillColor";
 import RightAngleCoordinates from "../../../config/chart/antd/atomic_components/RightAngleCoordinates";
 import {calculateFillColor, calculateRightAngleCoordinates} from "../../../config/chart/antd/util/AntdChartConfigUtil";
 import {dataSort} from "../../../../utils/SortUtil";
+import Legend from "../../../config/chart/antd/atomic_components/Legned";
+import Accordion from "../../../base/Accordion";
+import LcConfigItem from "../../../base/LcConfigItem";
+import ColorSelector from "../../../config/chart/antd/atomic_components/ColorSelector";
+import LcSwitch from "../../../base/LcSwitch";
+import CfgItemBorder from "../../../base/CfgItemBorder";
+import LCNumberInput from "../../../base/LCNumberInput";
 
 interface AntdAreaSetProps {
     chartConfig?: any;
@@ -24,11 +30,20 @@ class AntdBaseAreaSet extends Component<AntdAreaSetProps> {
         let sorts = dataSort('type', chartProps.data);
         return (
             <div className={'elem-chart-config'}>
-                {/*图形填充色设置*/}
-                <FillColor onChange={this.fillColorChanged}
-                           colors={colors}
-                           colorCount={sorts}/>
-                {/*直角坐标系配置*/}
+                <Accordion title={'图形'}>
+                    <LcConfigItem title={'填充色'}>
+                        <ColorSelector/>
+                    </LcConfigItem>
+                    <LcConfigItem title={'平滑曲线'}>
+                        <LcSwitch/>
+                    </LcConfigItem>
+                    <LcConfigItem title={'透明度'}>
+                        <CfgItemBorder width={'50%'}>
+                            <LCNumberInput/>
+                        </CfgItemBorder>
+                    </LcConfigItem>
+                </Accordion>
+                <Legend/>
                 <RightAngleCoordinates {...calculateRightAngleCoordinates(this.props.chartProps)}
                                        updateChartProps={updateChartProps}/>
             </div>

@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
-import '../../../config/chart/antd/style/AntdScatterSet.less';
 import FillColor from "../../../config/chart/antd/atomic_components/FillColor";
 import RightAngleCoordinates from "../../../config/chart/antd/atomic_components/RightAngleCoordinates";
-import {calculateFillColor, calculatePointSize, calculateRightAngleCoordinates} from "../../../config/chart/antd/util/AntdChartConfigUtil";
+import {
+    calculateFillColor,
+    calculatePointSize,
+    calculateRightAngleCoordinates
+} from "../../../config/chart/antd/util/AntdChartConfigUtil";
 import PointSet from "../../../config/chart/antd/atomic_components/PointSet";
 
 

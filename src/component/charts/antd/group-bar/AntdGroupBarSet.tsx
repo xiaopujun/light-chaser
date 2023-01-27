@@ -11,6 +11,11 @@ import {
     calculateLegendConfig,
     calculateRightAngleCoordinates
 } from "../../../config/chart/antd/util/AntdChartConfigUtil";
+import Accordion from "../../../base/Accordion";
+import LcConfigItem from "../../../base/LcConfigItem";
+import ColorSelector from "../../../config/chart/antd/atomic_components/ColorSelector";
+import CfgItemBorder from "../../../base/CfgItemBorder";
+import LCNumberInput from "../../../base/LCNumberInput";
 
 interface AntdBarSetProps {
     updateChartProps?: (data: any) => void;
@@ -43,10 +48,16 @@ class AntdGroupBarSet extends Component<AntdBarSetProps> {
         const {updateChartProps, chartProps} = this.props;
         return (
             <div className={'elem-chart-config'}>
-                {/*图形填充色设置*/}
-                <FillColor onChange={this.fillColorChanged}
-                           colors={colors}
-                           colorCount={sorts}/>
+                <Accordion title={'图形'}>
+                    <LcConfigItem title={'填充色'}>
+                        <ColorSelector/>
+                    </LcConfigItem>
+                    <LcConfigItem title={'条形宽度'}>
+                        <CfgItemBorder width={'50%'}>
+                            <LCNumberInput/>
+                        </CfgItemBorder>
+                    </LcConfigItem>
+                </Accordion>
                 {/*图例配置*/}
                 <Legend {...calculateLegendConfig(this.props.chartProps)}
                         chartProps={chartProps}
@@ -55,8 +66,6 @@ class AntdGroupBarSet extends Component<AntdBarSetProps> {
                 <RightAngleCoordinates {...calculateRightAngleCoordinates(this.props.chartProps)}
                                        chartProps={chartProps}
                                        updateChartProps={updateChartProps}/>
-                {/*条形图单条宽度配置*/}
-                <BarWidth {...calculateBarWidth(this.props.chartProps)} updateChartProps={updateChartProps}/>
             </div>
         );
     }

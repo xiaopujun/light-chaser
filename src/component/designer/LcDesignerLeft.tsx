@@ -84,9 +84,7 @@ class LcDesignerLeft extends Component {
         const {sortKey, listVisible} = this.state;
         return (
             <>
-                <div className={'lc-charts-sort'}>
-                    {sortDom}
-                </div>
+                <div className={'lc-charts-sort'}>{sortDom}</div>
                 <LcCompList onClose={this.listVisibleChanged} visible={listVisible} data={this.charts}
                             sortKey={sortKey}/>
             </>

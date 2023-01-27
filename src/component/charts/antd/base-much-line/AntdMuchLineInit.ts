@@ -6,7 +6,7 @@ export default class AntdMuchLineInit implements BaseInit {
         return {
             baseInfo: {
                 name: '多重线图',
-                type: 'AntdMuchFoldLine'
+                type: 'AntdMuchLine'
             },
             baseStyle: {
                 padding: '5px',
@@ -92,7 +92,7 @@ export default class AntdMuchLineInit implements BaseInit {
     getBaseInfo(): BaseInfo {
         return {
             name: "多重线图",
-            value: "AntdMuchFoldLine",
+            value: "AntdMuchLine",
             typeInfo: {
                 name: "线图",
                 type: "line"
