@@ -1,18 +1,15 @@
 import React, {Component} from 'react';
 import {Select} from "antd";
 import './style/LCSelect.less';
+import {SelectProps} from "rc-select/lib/Select";
 
-interface LcSelectProps {
-    onChange?: (data: any) => void;
-    value?: string | number | undefined;
-}
-
-class LcSelect extends Component<LcSelectProps> {
+class LcSelect extends Component<SelectProps> {
     render() {
         const {value = '', onChange} = this.props;
         return (
             <div className={'lc-select'}>
-                <Select value={value} size={'small'}
+                <Select value={value}
+                        size={'small'}
                         showArrow={false}
                         onChange={onChange}>
                     {this.props.children}

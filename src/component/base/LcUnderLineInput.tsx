@@ -1,14 +1,10 @@
-import React, {Component} from 'react';
+import React, {Component, InputHTMLAttributes} from 'react';
 import './style/LcUnderLineInput.less';
 
-interface LcUnderLineInputProps {
-    name?: string;
-    type?: string;
-    value?: string | number;
-    containStyle?: any;
-    inputStyle?: any;
-    lineStyle?: any;
-    onChange?: (e: any) => void;
+interface LcUnderLineInputProps extends React.InputHTMLAttributes<HTMLInputElement & InputHTMLAttributes<any>> {
+    containStyle?: React.CSSProperties;
+    inputStyle?: React.CSSProperties;
+    lineStyle?: React.CSSProperties;
 }
 
 /**
@@ -29,12 +25,11 @@ class LcUnderLineInput extends Component<LcUnderLineInputProps> {
                        type={type}
                        value={value}
                        onChange={this.onChange}
-                       className={'lc-underline-input'}
                        placeholder={'请输入'}
+                       className={'lc-underline-input'}
                        style={inputStyle}/>
                 <span className={'lc-underline-span'} style={lineStyle}/>
             </div>
-
         );
     }
 }

@@ -150,12 +150,12 @@ export default class LcCompBaseStyleSet extends Component<LcCompBaseStyleSetProp
                     </LcConfigBlock>
                     <LcConfigBlock title={'宽度'}>
                         <CfgItemBorder>
-                            <LCNumberInput value={3} width={'100%'}/>
+                            <LCNumberInput value={3} style={{width: '100%', textAlign: 'center'}}/>
                         </CfgItemBorder>
                     </LcConfigBlock>
                     <LcConfigBlock title={'圆角'}>
                         <CfgItemBorder>
-                            <LCNumberInput value={93} width={'100%'}/>
+                            <LCNumberInput value={3} style={{width: '100%', textAlign: 'center'}}/>
                         </CfgItemBorder>
                     </LcConfigBlock>
                 </LcConfigItem>

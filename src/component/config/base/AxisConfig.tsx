@@ -60,7 +60,7 @@ class AxisConfig extends Component<AxisConfigProps> {
                     </LcConfigBlock>
                     <LcConfigBlock title={'旋转角度'} layoutMode={LayoutMode.VL_UD}>
                         <CfgItemBorder>
-                            <LCNumberInput width={'100%'}/>
+                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
                         </CfgItemBorder>
                     </LcConfigBlock>
                 </LcConfigItem>
@@ -74,17 +74,17 @@ class AxisConfig extends Component<AxisConfigProps> {
                     </LcConfigBlock>
                     <LcConfigBlock title={'线宽'} layoutMode={LayoutMode.VL_UD}>
                         <CfgItemBorder>
-                            <LCNumberInput width={'100%'}/>
+                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
                         </CfgItemBorder>
                     </LcConfigBlock>
                     <LcConfigBlock title={'虚线'} layoutMode={LayoutMode.VL_UD}>
                         <CfgItemBorder>
-                            <LCNumberInput width={'100%'}/>
+                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
                         </CfgItemBorder>
                     </LcConfigBlock>
                     <LcConfigBlock title={'透明度'} layoutMode={LayoutMode.VL_UD}>
                         <CfgItemBorder>
-                            <LCNumberInput width={'100%'}/>
+                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
                         </CfgItemBorder>
                     </LcConfigBlock>
                 </LcConfigItem>
@@ -103,17 +103,17 @@ class AxisConfig extends Component<AxisConfigProps> {
                     </LcConfigBlock>
                     <LcConfigBlock title={'线宽'} layoutMode={LayoutMode.VL_UD}>
                         <CfgItemBorder>
-                            <LCNumberInput width={'100%'}/>
+                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
                         </CfgItemBorder>
                     </LcConfigBlock>
                     <LcConfigBlock title={'虚线'} layoutMode={LayoutMode.VL_UD}>
                         <CfgItemBorder>
-                            <LCNumberInput width={'100%'}/>
+                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
                         </CfgItemBorder>
                     </LcConfigBlock>
                     <LcConfigBlock title={'透明度'} layoutMode={LayoutMode.VL_UD}>
                         <CfgItemBorder>
-                            <LCNumberInput width={'100%'}/>
+                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
                         </CfgItemBorder>
                     </LcConfigBlock>
                 </LcConfigItem>
@@ -127,17 +127,17 @@ class AxisConfig extends Component<AxisConfigProps> {
                     </LcConfigBlock>
                     <LcConfigBlock title={'长度'} layoutMode={LayoutMode.VL_UD}>
                         <CfgItemBorder>
-                            <LCNumberInput width={'100%'}/>
+                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
                         </CfgItemBorder>
                     </LcConfigBlock>
                     <LcConfigBlock title={'宽度'} layoutMode={LayoutMode.VL_UD}>
                         <CfgItemBorder>
-                            <LCNumberInput width={'100%'}/>
+                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
                         </CfgItemBorder>
                     </LcConfigBlock>
                     <LcConfigBlock title={'透明度'} layoutMode={LayoutMode.VL_UD}>
                         <CfgItemBorder>
-                            <LCNumberInput width={'100%'}/>
+                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
                         </CfgItemBorder>
                     </LcConfigBlock>
                     <LcConfigBlock title={'颜色'} layoutMode={LayoutMode.VL_UD}>
@@ -156,17 +156,17 @@ class AxisConfig extends Component<AxisConfigProps> {
                     </LcConfigBlock>
                     <LcConfigBlock title={'长度'} layoutMode={LayoutMode.VL_UD}>
                         <CfgItemBorder>
-                            <LCNumberInput width={'100%'}/>
+                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
                         </CfgItemBorder>
                     </LcConfigBlock>
                     <LcConfigBlock title={'宽度'} layoutMode={LayoutMode.VL_UD}>
                         <CfgItemBorder>
-                            <LCNumberInput width={'100%'}/>
+                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
                         </CfgItemBorder>
                     </LcConfigBlock>
                     <LcConfigBlock title={'透明度'} layoutMode={LayoutMode.VL_UD}>
                         <CfgItemBorder>
-                            <LCNumberInput width={'100%'}/>
+                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
                         </CfgItemBorder>
                     </LcConfigBlock>
                     <LcConfigBlock title={'颜色'} layoutMode={LayoutMode.VL_UD}>
