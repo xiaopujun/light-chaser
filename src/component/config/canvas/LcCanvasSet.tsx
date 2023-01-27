@@ -4,7 +4,6 @@ import LCNumberInput from "../../base/LCNumberInput";
 import BaseColorPicker from "../../base/BaseColorPicker";
 import Dragger from "antd/es/upload/Dragger";
 import {RcFile, UploadProps} from "antd/es/upload";
-import LcRadialButton from "../../base/LcRadialButton";
 import LcConfigItem from "../../base/LcConfigItem";
 import LcRadio from "../../base/LcRadio";
 import {Radio} from "antd";

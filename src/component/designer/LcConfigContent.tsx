@@ -26,7 +26,7 @@ class LcConfigContent extends Component<LcConfigContentProps> {
     doRenderConfig = () => {
         let {LCDesignerStore, activeMenu} = this.props;
         const {activated, chartConfigs, canvasConfig} = LCDesignerStore!;
-        if (activated.id == -1)
+        if (activated.id === -1)
             activeMenu = '';
         switch (activeMenu) {
             case 'info':

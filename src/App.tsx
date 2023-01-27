@@ -3,14 +3,6 @@ import 'antd/dist/antd.min.css';
 import './App.less';
 import {Route, Switch} from "react-router-dom";
 import Loading from "./component/loading/Loading";
-import LcStructure from "./component/designer/structure/LcStructure";
-import LcHeader from "./component/designer/structure/LcHeader";
-import LcBody from "./component/designer/structure/LcBody";
-import LcLeft from "./component/designer/structure/LcLeft";
-import LcContent from "./component/designer/structure/LcContent";
-import LcRight from "./component/designer/structure/LcRight";
-import LcFoot from "./component/designer/structure/LcFoot";
-import StructureDemo from "./test/StructureDemo";
 
 const LightChaserList = lazy(() => import('./component/list/LightChaserList'));
 const LCDesigner = lazy(() => import('./component/designer'));

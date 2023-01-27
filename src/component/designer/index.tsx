@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Layout} from 'antd';
 import {connect} from "react-redux";
 import LCLayoutContent from "./LcDesignerContent";
 
@@ -27,8 +26,6 @@ import LcFoot from "./structure/LcFoot";
 import LcDesignerLeft from "./LcDesignerLeft";
 import LcDesignerRight from "./LcDesignerRight";
 import LcDesignerFooter from "./LcDesignerFooter";
-
-const {Header, Sider, Content} = Layout;
 
 const context = require.context('../charts', true, /\.(tsx|ts)$/);
 export const lcComps: { [key: string]: React.FunctionComponent } = {};
@@ -70,7 +67,7 @@ class LCDesigner extends Component<LCDesignerProps | any> {
                 lcCompSets[componentName] = context(key).default;
             else if (componentName.match("Init$")) {
                 const CompInit = context(key).default;
-                if (CompInit != undefined) {
+                if (CompInit !== undefined) {
                     lcCompInits[componentName] = new CompInit();
                 }
             } else

@@ -12,12 +12,12 @@ interface LcTextProps {
  */
 class LcText extends Component<LcTextProps> {
     render() {
-        const {chartConfig, elemId} = this.props;
+        const {chartConfig} = this.props;
         const {chartProps, baseStyle} = chartConfig;
         const {color = '#fff', fontSize = 12} = chartProps;
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-                
+
                 <div style={{
                     color,
                     fontSize: fontSize + 'px',

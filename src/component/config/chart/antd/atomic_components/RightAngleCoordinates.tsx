@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
-import BaseColorPicker from "../../../../base/BaseColorPicker";
 import './style/RightAngleCoordinates.less';
-import {Switch} from "antd";
-import LCNumberInput from "../../../../base/LCNumberInput";
 import Accordion from "../../../../base/Accordion";
 import AxisConfig from "../../../base/AxisConfig";
 

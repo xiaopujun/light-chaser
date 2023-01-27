@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import FillColor from "../../../config/chart/antd/atomic_components/FillColor";
 import RightAngleCoordinates from "../../../config/chart/antd/atomic_components/RightAngleCoordinates";
 import {calculateFillColor, calculateRightAngleCoordinates} from "../../../config/chart/antd/util/AntdChartConfigUtil";
 import {dataSort} from "../../../../utils/SortUtil";
@@ -32,7 +31,7 @@ class AntdStackAreaSet extends Component<AntdAreaSetProps> {
             <div className={'elem-chart-config'}>
                 <Accordion title={'图形'}>
                     <LcConfigItem title={'填充色'}>
-                        <ColorSelector/>
+                        <ColorSelector colors={colors} max={sorts}/>
                     </LcConfigItem>
                     <LcConfigItem title={'平滑曲线'}>
                         <LcSwitch/>

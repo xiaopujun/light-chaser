@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './style/Legend.less';
 import Accordion from "../../../../base/Accordion";
-import LcRadialButton from "../../../../base/LcRadialButton";
 import BaseColorPicker from "../../../../base/BaseColorPicker";
 import LcConfigItem from "../../../../base/LcConfigItem";
 import LcSelect from "../../../../base/LCSelect";
@@ -178,7 +177,6 @@ class Legend extends Component<LegendProps> {
     }
 
     render() {
-        const items = this.generateLegendSet();
         return (
             <Accordion title={'图例'} showSwitch={true}>
                 <LcConfigItem title={'位置'}>

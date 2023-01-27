@@ -23,7 +23,7 @@ class LcConfigItem extends Component<LcConfigItemProps> {
         return (
             <div className={'lc-cfg-item'}>
                 <div className={'lc-cfg-title'}>{title}</div>
-                <div className={layout == CfgItemLayout.ROW ?
+                <div className={layout === CfgItemLayout.ROW ?
                     'lc-cfg-content-row' : 'lc-cfg-content-block'}>
                     {this.props.children}
                 </div>

@@ -1,4 +1,4 @@
-import React, {Component, HTMLAttributes} from 'react';
+import React, {Component} from 'react';
 import {Popover} from 'antd';
 import {ChromePicker} from 'react-color';
 import './style/BaseColorPicker.less';

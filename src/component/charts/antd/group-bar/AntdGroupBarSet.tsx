@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
 import '../../../config/chart/antd/style/AntdBarSet.less';
-import FillColor from "../../../config/chart/antd/atomic_components/FillColor";
 import Legend from "../../../config/chart/antd/atomic_components/Legned";
 import RightAngleCoordinates from "../../../config/chart/antd/atomic_components/RightAngleCoordinates";
-import BarWidth from "../../../config/chart/antd/atomic_components/BarWidth";
 import {dataSort} from "../../../../utils/SortUtil";
 import {
-    calculateBarWidth,
     calculateFillColor,
     calculateLegendConfig,
     calculateRightAngleCoordinates
@@ -50,7 +47,7 @@ class AntdGroupBarSet extends Component<AntdBarSetProps> {
             <div className={'elem-chart-config'}>
                 <Accordion title={'图形'}>
                     <LcConfigItem title={'填充色'}>
-                        <ColorSelector/>
+                        <ColorSelector colors={colors} max={sorts}/>
                     </LcConfigItem>
                     <LcConfigItem title={'条形宽度'}>
                         <CfgItemBorder width={'50%'}>

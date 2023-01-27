@@ -13,11 +13,11 @@ interface AntdColumnProps {
 export default class AntdPercentColumn extends Component<AntdColumnProps> {
 
     render() {
-        const {chartConfig, elemId} = this.props;
+        const {chartConfig} = this.props;
         const {chartProps, baseStyle} = chartConfig;
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-                
+
                 <Column supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
             </div>
         );

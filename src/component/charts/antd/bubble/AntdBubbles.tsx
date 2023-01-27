@@ -28,14 +28,14 @@ export default class AntdBubbles extends Component<AntdScatterProps> {
     }
 
     render() {
-        const {chartConfig, chartName, elemId} = this.props;
+        const {chartConfig, chartName} = this.props;
         const {chartProps, baseStyle} = chartConfig;
         if (chartName === "AntdBubbles") {
             chartProps.data = this.state.data;
         }
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-                
+
                 <Scatter supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
             </div>
         );

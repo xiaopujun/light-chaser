@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {CloseOutlined, LineOutlined} from "@ant-design/icons";
+import {LineOutlined} from "@ant-design/icons";
 import {Input} from "antd";
 import './style/LcCompList.less';
 
@@ -25,14 +25,13 @@ class LcCompList extends Component<LcCompListProps> {
     getChartDom = () => {
         let chartDom = [];
         let tempCharts = this.data;
-        if (this.props?.sortKey != 'all') {
+        if (this.props?.sortKey !== 'all') {
             tempCharts = this.data.filter((item: any) => {
-                return item.typeInfo.type == this.props.sortKey;
+                return item.typeInfo.type === this.props.sortKey;
             })
         }
-        if (this.state.searchKey != '') {
+        if (this.state.searchKey !== '') {
             tempCharts = tempCharts.filter((item: any) => {
-                let index = item.name.indexOf(this.state.searchKey);
                 return item.name.indexOf(this.state.searchKey) >= 0;
             })
         }

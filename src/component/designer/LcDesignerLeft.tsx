@@ -45,7 +45,7 @@ class LcDesignerLeft extends Component {
         super(props);
         this.sorts.push({name: '全部', type: 'all'})
         for (const key in lcCompInits) {
-            if (lcCompInits[key] != null || lcCompInits[key] != undefined) {
+            if (lcCompInits[key] != null || lcCompInits[key] !== undefined) {
                 let initObj: any = lcCompInits[key];
                 let baseInfo = initObj.getBaseInfo();
                 let typeInfo = baseInfo?.typeInfo;

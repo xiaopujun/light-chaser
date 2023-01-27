@@ -19,11 +19,11 @@ export default class AntdStackArea extends Component<AntdAreaProps> {
     }
 
     render() {
-        const {chartConfig, elemId = '-1'} = this.props;
+        const {chartConfig} = this.props;
         const {chartProps, baseStyle} = chartConfig;
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-                
+
                 <Area supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
             </div>
         );

@@ -9,7 +9,7 @@ export default class LCTextInput extends Component<React.InputHTMLAttributes<HTM
     }
 
     render() {
-        const {value, readOnly, style} = this.props;
+        const {readOnly, style} = this.props;
         return (
             <div className={'lc-text-input'} style={{height: style?.height, width: style?.width}}>
                 <input className={'lc-input'}

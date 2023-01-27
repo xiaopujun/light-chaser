@@ -11,7 +11,7 @@ interface LcColorBlockProps {
  */
 class LcColorBlock extends Component<LcColorBlockProps> {
     render() {
-        const {chartConfig, elemId} = this.props;
+        const {chartConfig} = this.props;
         const {baseStyle} = chartConfig;
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>

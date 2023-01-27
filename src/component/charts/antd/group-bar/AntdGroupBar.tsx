@@ -13,11 +13,11 @@ interface AntdBarProps {
 export default class AntdGroupBar extends Component<AntdBarProps> {
 
     render() {
-        const {chartConfig, elemId} = this.props;
+        const {chartConfig} = this.props;
         const {chartProps, baseStyle} = chartConfig;
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-                
+
                 <Bar supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
             </div>
         );
