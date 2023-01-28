@@ -26,8 +26,8 @@ class DragScaleProvider extends Component<DragScaleProviderProps> {
     }
 
     componentDidMount() {
-        this.config.contentWidth = this.props.contentWidth;
-        this.config.contentHeight = this.props.contentHeight;
+        this.config.contentWidth = this.props.contentWidth || 1920;
+        this.config.contentHeight = this.props.contentHeight || 1080;
         this.doInit();
     }
 
@@ -39,11 +39,11 @@ class DragScaleProvider extends Component<DragScaleProviderProps> {
         this.config.y = (window.innerHeight - 64 - this.config.contentHeight) * 0.5;
         content.style.transform = 'translate3d(' + this.config.x + 'px, ' + this.config.y + 'px, 0) scale(1)';
         document.addEventListener('keyup', ev => {
-            if (ev.keyCode === 17)
+            if (ev.keyCode === 32)
                 this.config.ctrlDown = false;
         })
         document.addEventListener('keydown', ev => {
-            if (ev.keyCode === 17)
+            if (ev.keyCode === 32)
                 this.config.ctrlDown = true;
         })
         // 拖拽查看

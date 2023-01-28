@@ -11,9 +11,9 @@ const buildConfig = (LCDesignerStore: LCDesignerProps) => {
         canvasConfig,
         chartConfigs: JSON.stringify(LCDesignerStore.chartConfigs),
         layoutConfigs: JSON.stringify(LCDesignerStore.layoutConfigs),
-        screenHeight: LCDesignerStore.canvasConfig.screenHeight,
-        screenWidth: LCDesignerStore.canvasConfig.screenWidth,
-        screenName: LCDesignerStore.canvasConfig.screenName
+        screenHeight: LCDesignerStore.projectConfig.screenHeight,
+        screenWidth: LCDesignerStore.projectConfig.screenWidth,
+        screenName: LCDesignerStore.projectConfig.screenName
     };
 }
 

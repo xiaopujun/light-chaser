@@ -10,15 +10,10 @@ import {lcCompInits} from "../../component/designer";
 const initState: LCDesignerProps = {
     id: -1,
     canvasConfig: {
-        saveType: 'local',//数据存储方式 local(本地）server（远程服务）
-        screenRatio: '',//屏幕比例
-        screenName: '数据大屏',
-        screenWidth: 1920,
-        screenHeight: 1080,
         elemInterval: 0,//元素间隔
         columns: 0,//列个数
-        baseLineHeight: 0,//元素基准高度
-        elemCount: 0,//元素个数
+        baseHeight: 5,
+        canvasScale: [16, 9]
     },
     activated: {
         id: -1,    //激活的组件id
@@ -28,7 +23,9 @@ const initState: LCDesignerProps = {
     layoutConfigs: [],//布局配置数据，用于控制图表在页面中的整体布局位置
     systemConfig: {},
     bgConfig: {},
-    projectConfig: {}
+    projectConfig: {
+        elemCount: 0
+    }
 }
 
 /**
@@ -99,19 +96,16 @@ function updateDesignerStore(preState: LCDesignerProps, data: any) {
  * 想布局设计器中添加组件
  */
 function addItem(preState: LCDesignerProps, data: any) {
-    let {canvasConfig, layoutConfigs, chartConfigs} = preState;
+    let {projectConfig, layoutConfigs, chartConfigs} = preState;
     //更新布局
     layoutConfigs.push(data);
     //更新组件配置信息
-    console.log(lcCompInits)
     let initObj: any = lcCompInits[data.name + "Init"];
     let initData: any = initObj.getInitConfig()
-    initData.baseInfo = {...initData.baseInfo, ...{id: canvasConfig.elemCount}}
-    chartConfigs[canvasConfig.elemCount + ""] = initData;
-    //id增加
-    canvasConfig.elemCount++;
-    //生成新store
-    return {...preState, ...{canvasConfig, layoutConfigs, chartConfigs}};
+    initData.baseInfo = {...initData.baseInfo, ...{id: projectConfig.elemCount}}
+    chartConfigs[projectConfig.elemCount + ""] = initData;
+    projectConfig.elemCount++;
+    return {...preState, ...{projectConfig, layoutConfigs, chartConfigs}};
 }
 
 /**

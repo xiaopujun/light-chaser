@@ -64,60 +64,135 @@ interface ChartConfigsProps {
 
 interface CanvasSetProps {
     /**
-     * 数据存储方式 local(本地）server（远程服务）
-     */
-    saveType: string,
-    /**
-     * 屏幕比例
-     */
-    screenRatio: string,
-    /**
-     * 大屏名称
-     */
-    screenName: string,
-    /**
-     * 大屏宽度
-     */
-    screenWidth: number,
-    /**
-     * 大屏高度
-     */
-    screenHeight: number,
-    /**
-     * 元素间隔距离
-     */
-    elemInterval: number,
-    /**
-     * 大屏列划分个数
-     */
-    columns: number,
-    /**
      * 基准高度
      */
-    baseLineHeight: number,
+    baseHeight?: number;
     /**
-     * 元素个数
+     * 列个数
      */
-    elemCount: number,
+    columns?: number;
+    /**
+     * 元素间隔
+     */
+    elemInterval?: number;
+    /**
+     * 比例
+     */
+    canvasScale?: [number, number];
+}
+
+export enum BgMode {
+    /**
+     * 无
+     */
+    NONE,
+    /**
+     * 颜色
+     */
+    COLOR,
+    /**
+     * 图片
+     */
+    IMG,
+}
+
+export enum BgFillType {
+    /**
+     * 无
+     */
+    NONE,
+    /**
+     * X轴
+     */
+    X,
+    /**
+     * Y轴
+     */
+    Y,
+}
+
+export enum BgColorMode {
+    /**
+     * 单色
+     */
+    SINGLE,
+    /**
+     * 线性渐变
+     */
+    LINEAR_GRADIENT,
+    /**
+     * 径向渐变
+     */
+    RADIAL_GRADIENT
 }
 
 interface BgConfig {
     /**
-     * 背景色
+     * 背景模式
      */
-    color?: string;
+    bgMode?: BgMode;
     /**
-     * 背景图片
+     * 图片尺寸
      */
-    bgImg?: string;
+    imgSize?: [number, number];
+    /**
+     * 图片源数据
+     */
+    imgSource?: any;
     /**
      * 填充方式
      */
-    fillType?: string;
+    bgFillType?: BgFillType;
     /**
-     * 背景图尺寸
+     * 颜色模式
      */
-    size?: [];
+    colorMode?: BgColorMode;
+    /**
+     * 背景色
+     */
+    color?: string;
+}
+
+export interface ProjectConfig {
+    /**
+     * 大屏名称
+     */
+    screenName?: string;
+    /**
+     * 大屏描述
+     */
+    screenDes?: string;
+    /**
+     * 大屏状态
+     */
+    screenState?: string;
+    /**
+     * 大屏宽度
+     */
+    screenWidth?: number;
+    /**
+     * 大屏高度
+     */
+    screenHeight?: number;
+    /**
+     * 创建时间
+     */
+    createTime?: string;
+    /**
+     * 更新时间
+     */
+    updateTime?: string;
+    /**
+     * 元素个数
+     */
+    elemCount: number
+}
+
+export interface SystemConfig {
+    /**
+     * 数据存储方式
+     */
+    saveType?: string;
 }
 
 /**
@@ -143,11 +218,11 @@ export interface LCDesignerProps {
     /**
      * 系统配置
      */
-    systemConfig: any,
+    systemConfig: SystemConfig,
     /**
      * 项目设置
      */
-    projectConfig: any;
+    projectConfig: ProjectConfig;
     /**
      * 图表配置
      */

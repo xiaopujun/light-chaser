@@ -81,11 +81,10 @@ class LCDesigner extends Component<LCDesignerProps | any> {
         switch (action) {
             case 'add':
                 updateDesignerStore({
-                    canvasConfig: {
+                    projectConfig: {
                         screenName,
                         screenWidth: parseInt(screenWidth),
                         screenHeight: parseInt(screenHeight),
-                        saveType: 'local'
                     },
                     chartConfigs: {},
                     layoutConfigs: []
@@ -99,23 +98,14 @@ class LCDesigner extends Component<LCDesignerProps | any> {
                         break
                     }
                 }
-                let {
-                    id: screenId,
-                    screenName: name,
-                    screenWidth: width,
-                    screenHeight: height,
-                    canvasConfig,
-                    chartConfigs,
-                    layoutConfigs
-                } = config;
                 updateDesignerStore({
-                    id: screenId,
-                    canvasConfig,
-                    screenName: name,
-                    screenWidth: width,
-                    screenHeight: height,
-                    chartConfigs: JSON.parse(chartConfigs),
-                    layoutConfigs: JSON.parse(layoutConfigs)
+                    id: config.screenId,
+                    projectConfig: config.projectConfig,
+                    screenName: config.name,
+                    screenWidth: config.width,
+                    screenHeight: config.height,
+                    chartConfigs: JSON.parse(config.chartConfigs),
+                    layoutConfigs: JSON.parse(config.layoutConfigs)
                 })
                 break;
         }

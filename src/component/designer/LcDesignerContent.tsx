@@ -83,7 +83,7 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
      */
     onDrop = (layout: any, layoutItem: any, _event: any) => {
         const {addItem, LCDesignerStore} = this.props;
-        const {canvasConfig} = LCDesignerStore!;
+        const {projectConfig} = LCDesignerStore!;
         let compObj
         try {
             compObj = JSON.parse(_event.dataTransfer.getData('compObj'));
@@ -92,8 +92,8 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
         }
         const item = {
             ...layoutItem, ...{
-                i: canvasConfig?.elemCount + "",
-                id: canvasConfig?.elemCount,
+                i: projectConfig?.elemCount + "",
+                id: projectConfig?.elemCount,
                 name: compObj?.chartName,
                 type: compObj?.type
             }
@@ -133,11 +133,11 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
 
     render() {
         const {LCDesignerStore} = this.props;
-        const {layoutConfigs, canvasConfig} = LCDesignerStore!;
+        const {layoutConfigs, projectConfig} = LCDesignerStore!;
         const {scale} = this.state;
         return (
-            <DragScaleProvider contentWidth={canvasConfig.screenWidth}
-                               contentHeight={canvasConfig.screenHeight}
+            <DragScaleProvider contentWidth={projectConfig.screenWidth}
+                               contentHeight={projectConfig.screenHeight}
                                containerWidth={window.innerWidth - 95}
                                containerHeight={window.innerHeight - 90}
                                changeScale={this.changeScale}>
@@ -145,15 +145,15 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
                      id={'-1'} data-type={'lcCanvas'}
                      onClick={this.updateActive}
                      style={{
-                         height: canvasConfig.screenHeight,
+                         height: projectConfig.screenHeight,
                          backgroundColor: '#131e26',
-                         width: canvasConfig.screenWidth,
+                         width: projectConfig.screenWidth,
                          // backgroundImage: `url(${bgImg})`
                      }}>
                     <ReactGridLayout ref={obj => this.rgl = obj}
                                      className="layout"
                                      layout={layoutConfigs}
-                                     cols={canvasConfig?.columns || 1920 / 5}
+                                     cols={projectConfig?.columns || 1920 / 5}
                                      rowHeight={5}
                                      margin={[0, 0]}
                                      useCSSTransforms={true}
@@ -161,9 +161,9 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
                                      allowOverlap={true}
                                      isBounded={true}
                                      isDroppable={true}
-                                     style={{height: canvasConfig.screenHeight}}
+                                     style={{height: projectConfig.screenHeight}}
                                      transformScale={scale}
-                                     width={canvasConfig.screenWidth}
+                                     width={projectConfig.screenWidth}
                                      onDrop={this.onDrop}
                                      onDropDragOver={this.onDropDragOver}
                                      onDragStop={this.onDragStop}
