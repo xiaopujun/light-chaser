@@ -6,7 +6,7 @@ import LcConfigContent from "./LcConfigContent";
 class LcDesignerRight extends Component<any> {
 
     state = {
-        activeMenu: '',
+        activeMenu: undefined,
         configVisible: false
     }
 

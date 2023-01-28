@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './LcCanvasSet.less';
+import './LcBgConfig.less';
 import LCNumberInput from "../../base/LCNumberInput";
 import BaseColorPicker from "../../base/BaseColorPicker";
 import Dragger from "antd/es/upload/Dragger";
@@ -9,12 +9,12 @@ import LcRadio from "../../base/LcRadio";
 import {Radio} from "antd";
 import CfgItemBorder from "../../base/CfgItemBorder";
 
-interface LcCanvasSetProps {
-    canvasConfig?: any;
-    updateCanvasConfig?: (data?: any) => void;
+interface LcBgConfigProps {
+    bgConfig?: any;
+    updateBgConfig?: (data?: any) => void;
 }
 
-class LcCanvasSet extends Component<LcCanvasSetProps> {
+class LcBgConfig extends Component<LcBgConfigProps> {
 
     state = {
         fileList: [],
@@ -26,8 +26,14 @@ class LcCanvasSet extends Component<LcCanvasSetProps> {
     handleChange: UploadProps['onChange'] = ({fileList: newFileList}) => this.setState({fileList: newFileList});
 
     beforeUpload = (file: any, fileList: any) => {
+        const {updateBgConfig} = this.props;
         this.getBase64(file as RcFile).then(value => {
             this.setState({file: value})
+            // updateBgConfig && updateBgConfig({
+            //     bgConfig: {
+            //         imgResource: value
+            //     }
+            // })
             return false;
         })
     }
@@ -41,12 +47,22 @@ class LcCanvasSet extends Component<LcCanvasSetProps> {
         });
     }
 
+    getImgSource = () => {
+        const {file} = this.state;
+        if (file)
+            return file;
+        const {bgConfig} = this.props;
+        return bgConfig?.imgResource;
+    }
+
     render() {
+        const imgResource = this.getImgSource();
         return (
             <div className={'lc-canvas-config'}>
                 <div className={'lc-bg-upload'}>
                     <div className={'lc-upload-content'}>
-                        {this.state.file ? <img alt={"bg"} width={'100%'} height={187} src={this.state.file}/> :
+                        {imgResource ?
+                            <img alt={"bg"} width={'100%'} height={187} src={imgResource}/> :
                             <Dragger listType={'picture-card'}
                                      showUploadList={false}
                                      beforeUpload={this.beforeUpload}
@@ -92,4 +108,4 @@ class LcCanvasSet extends Component<LcCanvasSetProps> {
     }
 }
 
-export default LcCanvasSet;
+export default LcBgConfig;

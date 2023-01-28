@@ -200,7 +200,9 @@ function updateProjectConfig(preState: LCDesignerProps, data: any) {
  * 更新背景设置
  */
 function updateBgConfig(preState: LCDesignerProps, data: any) {
-
+    _.merge(preState, data);
+    console.log(preState)
+    return preState;
 }
 
 /**

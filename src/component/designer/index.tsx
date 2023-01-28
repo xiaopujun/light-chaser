@@ -13,6 +13,7 @@ import {
     updateChartProps,
     updateDesignerStore,
     updateLayout,
+    updateBgConfig
 } from "../../redux/actions/LCDesignerAction";
 import DesignerHeader from "./LcDesignerHeader";
 import {RouteComponentProps, withRouter} from "react-router-dom";
@@ -128,35 +129,8 @@ class LCDesigner extends Component<LCDesignerProps | any> {
                         <LcDesignerFooter {...this.props}/>
                     </LcFoot>
                 </LcStructure>
-
-
-                {/*<div className={'light_chaser-designer'}>*/}
-                {/*    <Layout>*/}
-                {/*        <Header>*/}
-                {/*            /!*设计器头部*!/*/}
-                {/*            <DesignerHeader {...this.props}/>*/}
-                {/*        </Header>*/}
-                {/*        <Layout>*/}
-                {/*            <Sider width={300}>*/}
-                {/*                /!*设计器左侧*!/*/}
-                {/*                /!*<LcDesignerLeft/>*!/*/}
-                {/*                <LcDesignerLeft/>*/}
-                {/*            </Sider>*/}
-                {/*            <Content>*/}
-                {/*                /!*设计器中间内容*!/*/}
-                {/*                <LCLayoutContent {...this.props}/>*/}
-                {/*            </Content>*/}
-                {/*            <Sider width={300}>*/}
-                {/*                /!*设计器右侧配置*!/*/}
-                {/*                <LcDesignerRight {...this.props}/>*/}
-                {/*            </Sider>*/}
-                {/*        </Layout>*/}
-                {/*    </Layout>*/}
-                {/*</div>*/}
             </>
-
-        )
-            ;
+        );
     }
 }
 
@@ -172,6 +146,7 @@ export default connect(
         updateLayout,
         updateDesignerStore,
         updateBaseInfo,
-        updateCanvasConfig
+        updateCanvasConfig,
+        updateBgConfig
     }
 )(withRouter(LCDesigner))

@@ -1,11 +1,18 @@
 import React, {Component} from 'react';
-import {HighlightFilled, LineOutlined} from "@ant-design/icons";
+import {
+    DatabaseFilled,
+    HighlightFilled,
+    InfoCircleFilled,
+    LineOutlined,
+    SkinFilled,
+    VideoCameraFilled
+} from "@ant-design/icons";
 import './style/LcConfigContent.less';
-import LcCanvasSet from "../config/canvas/LcCanvasSet";
 import LcEmBaseInfo from "../config/info/LcEmBaseInfo";
 import LcCompBaseStyleSet from "../config/base/LcCompBaseStyleSet";
 import {LCDesignerProps} from "../../types/LcDesignerType";
 import getChartsConfig from "../config/chart/ComponentSetInit";
+import LcBgConfig from "../config/canvas/LcBgConfig";
 
 interface LcConfigContentProps {
     title?: string;
@@ -19,13 +26,37 @@ interface LcConfigContentProps {
     updateChartProps?: (data?: any) => void;
     updateBaseInfo?: (data?: any) => void;
     updateCanvasConfig?: (data?: any) => void;
+    updateBgConfig?: (data?: any) => void;
 }
 
 class LcConfigContent extends Component<LcConfigContentProps> {
 
+    titleInfo: any = {
+        'info': {
+            name: '信息',
+            icon: InfoCircleFilled
+        },
+        'style': {
+            name: '样式',
+            icon: HighlightFilled
+        },
+        'data': {
+            name: '数据',
+            icon: DatabaseFilled
+        },
+        'animation': {
+            name: '动画',
+            icon: VideoCameraFilled
+        },
+        'theme': {
+            name: '主题',
+            icon: SkinFilled
+        },
+    }
+
     doRenderConfig = () => {
         let {LCDesignerStore, activeMenu} = this.props;
-        const {activated, chartConfigs, canvasConfig} = LCDesignerStore!;
+        const {activated, chartConfigs, bgConfig} = LCDesignerStore!;
         if (activated.id === -1)
             activeMenu = '';
         switch (activeMenu) {
@@ -47,7 +78,7 @@ class LcConfigContent extends Component<LcConfigContentProps> {
             case 'theme':
                 return <div>开发中...</div>
             default:
-                return <LcCanvasSet canvasConfig={canvasConfig} updateCanvasConfig={this.props.updateCanvasConfig}/>;
+                return <LcBgConfig bgConfig={bgConfig} updateBgConfig={this.props.updateBgConfig}/>;
         }
     }
 
@@ -57,12 +88,14 @@ class LcConfigContent extends Component<LcConfigContentProps> {
     }
 
     render() {
-        const {visible} = this.props;
+        const {visible, activeMenu = 'style'} = this.props;
+        const MenuIcon = this.titleInfo[activeMenu].icon;
         return (
             <>
                 {visible ? <div className={'lc-config-panel'}>
                     <div className={'lc-panel-top'}>
-                        <div className={'panel-title'}><HighlightFilled/>&nbsp;<span>样式</span></div>
+                        <div className={'panel-title'}><MenuIcon/>&nbsp;
+                            <span>{this.titleInfo[activeMenu].name}</span></div>
                         <div className={'panel-operate'} onClick={this.onClose}><LineOutlined/></div>
                     </div>
                     <div className={'lc-panel-content'}>
