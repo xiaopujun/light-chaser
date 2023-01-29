@@ -19,9 +19,7 @@ class LcBgConfig extends Component<LcBgConfigProps> {
 
     state = {
         fileList: [],
-        previewImage: '',
-        previewTitle: '',
-        file: null
+        bgImgSource: null
     }
 
     componentDidMount() {
@@ -30,7 +28,7 @@ class LcBgConfig extends Component<LcBgConfigProps> {
 
     handleChange: UploadProps['onChange'] = ({fileList: newFileList}) => this.setState({fileList: newFileList});
 
-    beforeUpload = (file: any, fileList: any) => {
+    beforeUpload = (file: any) => {
         const {updateBgConfig} = this.props;
         this.getBase64(file as RcFile).then(value => {
             localforage.setItem("bgImgSource", value).then(function (value) {
@@ -39,9 +37,8 @@ class LcBgConfig extends Component<LcBgConfigProps> {
                         imgResource: "bgImgSource"
                     }
                 })
-                console.log("存储成功")
             }).catch(function (err) {
-                console.log(err);
+                console.log(err)
             });
             this.setState({file: value})
             return false;
@@ -58,9 +55,8 @@ class LcBgConfig extends Component<LcBgConfigProps> {
     }
 
     getImgSource = () => {
-        const {file} = this.state;
-        if (file)
-            return;
+        const {bgImgSource} = this.state;
+        if (bgImgSource) return;
         const {bgConfig} = this.props;
         localforage.getItem(bgConfig?.imgResource).then((value => {
             this.setState({file: value});
@@ -68,14 +64,14 @@ class LcBgConfig extends Component<LcBgConfigProps> {
     }
 
     render() {
-        const {file} = this.state;
+        const {bgImgSource} = this.state;
         return (
             <div className={'lc-canvas-config'}>
                 <div className={'lc-bg-upload'}>
                     <div className={'lc-upload-content'}>
-                        {file ?
+                        {bgImgSource ?
                             <img alt={"bg"} width={'100%'} height={187}
-                                 src={file}/> :
+                                 src={bgImgSource}/> :
                             <Dragger listType={'picture-card'}
                                      showUploadList={false}
                                      beforeUpload={this.beforeUpload}

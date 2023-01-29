@@ -110,14 +110,14 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
     /**
      * 元素被拖动时限定目标元素大小
      */
-    onDropDragOver = (e: any) => {
+    onDropDragOver = () => {
         return {w: 15, h: 15}
     }
 
     /**
      * 组件拖拽变化回调
      */
-    onDragStop = (layout: Layout[], oldItem: Layout, newItem: Layout, placeholder: Layout, event: MouseEvent, element: HTMLElement,) => {
+    onDragStop = (layout: Layout[], oldItem: Layout, newItem: Layout) => {
         const {updateLayout} = this.props;
         updateLayout && updateLayout(newItem);
     }
@@ -125,7 +125,7 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
     /**
      * 组件大小变化回调
      */
-    onResizeStop = (layout: Layout[], oldItem: Layout, newItem: Layout, placeholder: Layout, event: MouseEvent, element: HTMLElement,) => {
+    onResizeStop = (layout: Layout[], oldItem: Layout, newItem: Layout) => {
         const {updateLayout} = this.props;
         updateLayout && updateLayout(newItem);
     }
@@ -141,11 +141,9 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
 
     render() {
         const {LCDesignerStore} = this.props;
-        const {layoutConfigs, projectConfig, bgConfig} = LCDesignerStore!;
+        const {layoutConfigs, projectConfig} = LCDesignerStore!;
         const {scale, bgImg} = this.state;
-        if (!bgImg)
-            this.getBgImgSource();
-        console.log(bgImg)
+        if (!bgImg) this.getBgImgSource();
         return (
             <DragScaleProvider contentWidth={projectConfig.screenWidth}
                                contentHeight={projectConfig.screenHeight}
