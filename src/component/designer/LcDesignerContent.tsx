@@ -7,6 +7,7 @@ import getChartsTemplate from "../charts/ChartsCollection";
 import {LCDesignerProps} from "../../types/LcDesignerType";
 import Loading from "../loading/Loading";
 import DragScaleProvider from "./DragScaleProvider";
+import localforage from 'localforage';
 
 interface LcDesignerContentProps {
     LCDesignerStore?: LCDesignerProps;
@@ -21,7 +22,8 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
     rgl: any = null;
 
     state: any = {
-        scale: 1
+        scale: 1,
+        bgImg: null
     }
 
     calculateChartConfig = (elemId: string | number) => {
@@ -130,11 +132,20 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
 
     changeScale = (scale: number) => this.setState({scale: scale});
 
+    getBgImgSource = () => {
+        const {bgConfig} = this.props.LCDesignerStore!;
+        localforage.getItem(bgConfig?.imgResource).then((value => {
+            this.setState({bgImg: value})
+        }))
+    }
 
     render() {
         const {LCDesignerStore} = this.props;
-        const {layoutConfigs, projectConfig} = LCDesignerStore!;
-        const {scale} = this.state;
+        const {layoutConfigs, projectConfig, bgConfig} = LCDesignerStore!;
+        const {scale, bgImg} = this.state;
+        if (!bgImg)
+            this.getBgImgSource();
+        console.log(bgImg)
         return (
             <DragScaleProvider contentWidth={projectConfig.screenWidth}
                                contentHeight={projectConfig.screenHeight}
@@ -148,7 +159,7 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
                          height: projectConfig.screenHeight,
                          backgroundColor: '#131e26',
                          width: projectConfig.screenWidth,
-                         // backgroundImage: `url(${bgImg})`
+                         backgroundImage: `url(${this.state.bgImg})`
                      }}>
                     <ReactGridLayout ref={obj => this.rgl = obj}
                                      className="layout"
@@ -171,7 +182,6 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
                         {this.generateElement()}
                     </ReactGridLayout>
                 </div>
-
             </DragScaleProvider>
         );
     }

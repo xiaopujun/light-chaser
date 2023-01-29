@@ -8,6 +8,7 @@ import LcConfigItem from "../../base/LcConfigItem";
 import LcRadio from "../../base/LcRadio";
 import {Radio} from "antd";
 import CfgItemBorder from "../../base/CfgItemBorder";
+import localforage from "localforage";
 
 interface LcBgConfigProps {
     bgConfig?: any;
@@ -23,17 +24,26 @@ class LcBgConfig extends Component<LcBgConfigProps> {
         file: null
     }
 
+    componentDidMount() {
+        this.getImgSource();
+    }
+
     handleChange: UploadProps['onChange'] = ({fileList: newFileList}) => this.setState({fileList: newFileList});
 
     beforeUpload = (file: any, fileList: any) => {
         const {updateBgConfig} = this.props;
         this.getBase64(file as RcFile).then(value => {
+            localforage.setItem("bgImgSource", value).then(function (value) {
+                updateBgConfig && updateBgConfig({
+                    bgConfig: {
+                        imgResource: "bgImgSource"
+                    }
+                })
+                console.log("存储成功")
+            }).catch(function (err) {
+                console.log(err);
+            });
             this.setState({file: value})
-            // updateBgConfig && updateBgConfig({
-            //     bgConfig: {
-            //         imgResource: value
-            //     }
-            // })
             return false;
         })
     }
@@ -50,19 +60,22 @@ class LcBgConfig extends Component<LcBgConfigProps> {
     getImgSource = () => {
         const {file} = this.state;
         if (file)
-            return file;
+            return;
         const {bgConfig} = this.props;
-        return bgConfig?.imgResource;
+        localforage.getItem(bgConfig?.imgResource).then((value => {
+            this.setState({file: value});
+        }))
     }
 
     render() {
-        const imgResource = this.getImgSource();
+        const {file} = this.state;
         return (
             <div className={'lc-canvas-config'}>
                 <div className={'lc-bg-upload'}>
                     <div className={'lc-upload-content'}>
-                        {imgResource ?
-                            <img alt={"bg"} width={'100%'} height={187} src={imgResource}/> :
+                        {file ?
+                            <img alt={"bg"} width={'100%'} height={187}
+                                 src={file}/> :
                             <Dragger listType={'picture-card'}
                                      showUploadList={false}
                                      beforeUpload={this.beforeUpload}
