@@ -60,7 +60,6 @@ class LCDesigner extends Component<LCDesignerProps | any> {
     }
 
     doInit = () => {
-        console.log('doinit')
         //动态加载图表组件及图表配置组件
         context.keys().forEach(key => {
             const componentName = key.replace(/^\.\/([\w|-]+\/)*(\w+)\.(tsx|ts)$/, '$2');

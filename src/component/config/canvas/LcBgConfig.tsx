@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PureComponent} from 'react';
 import './LcBgConfig.less';
 import LCNumberInput from "../../base/LCNumberInput";
 import BaseColorPicker from "../../base/BaseColorPicker";
@@ -15,15 +15,17 @@ interface LcBgConfigProps {
     updateBgConfig?: (data?: any) => void;
 }
 
-class LcBgConfig extends Component<LcBgConfigProps> {
+class LcBgConfig extends PureComponent<LcBgConfigProps> {
 
     state = {
         fileList: [],
         bgImgSource: null
     }
 
+    imgId = "";
+
     componentDidMount() {
-        this.getImgSource();
+
     }
 
     handleChange: UploadProps['onChange'] = ({fileList: newFileList}) => this.setState({fileList: newFileList});
@@ -31,18 +33,20 @@ class LcBgConfig extends Component<LcBgConfigProps> {
     beforeUpload = (file: any) => {
         const {updateBgConfig} = this.props;
         this.getBase64(file as RcFile).then(value => {
-            localforage.setItem("bgImgSource", value).then(function (value) {
-                updateBgConfig && updateBgConfig({
-                    bgConfig: {
-                        imgResource: "bgImgSource"
-                    }
-                })
-            }).catch(function (err) {
-                console.log(err)
-            });
-            this.setState({file: value})
-            return false;
+            this.setState({bgImgSource: value})
+            // let tempImgId = Date.now() + '';
+            // this.imgId = tempImgId;
+            // localforage.setItem(tempImgId, value).then(function (value) {
+            //     updateBgConfig && updateBgConfig({
+            //         bgConfig: {
+            //             imgSource: tempImgId
+            //         }
+            //     })
+            // }).catch(function (err) {
+            //     console.log(err)
+            // });
         })
+        return false;
     }
 
     getBase64 = (file: RcFile): Promise<string> => {
@@ -55,27 +59,35 @@ class LcBgConfig extends Component<LcBgConfigProps> {
     }
 
     getImgSource = () => {
+        console.log('渲染')
         const {bgImgSource} = this.state;
         if (bgImgSource) return;
         const {bgConfig} = this.props;
-        localforage.getItem(bgConfig?.imgResource).then((value => {
-            this.setState({file: value});
-        }))
+        if (bgConfig.imgSource !== '') {
+            localforage.getItem(bgConfig?.imgSource).then((value => {
+                this.setState({bgImgSource: value});
+            }))
+        }
     }
 
+    // getSnapshotBeforeUpdate(prevProps: Readonly<LcBgConfigProps>, prevState: Readonly<{}>): any {
+    //
+    // }
+
     render() {
+        console.log('render')
+        // this.getImgSource();
         const {bgImgSource} = this.state;
         return (
             <div className={'lc-canvas-config'}>
                 <div className={'lc-bg-upload'}>
                     <div className={'lc-upload-content'}>
                         {bgImgSource ?
-                            <img alt={"bg"} width={'100%'} height={187}
-                                 src={bgImgSource}/> :
+                            <img alt={"bg"} width={'100%'} height={187} src={bgImgSource}/> :
                             <Dragger listType={'picture-card'}
                                      showUploadList={false}
                                      beforeUpload={this.beforeUpload}
-                                     fileList={this.state.fileList}
+                                // fileList={this.state.fileList}
                                      onChange={this.handleChange}>
                                 请上传背景图
                             </Dragger>}

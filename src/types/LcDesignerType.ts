@@ -210,7 +210,7 @@ export interface LCDesignerProps {
     /**
      * 背景设置
      */
-    bgConfig: BgConfig;
+    bgConfig: BgConfig | undefined | null;
     /**
      * 画布设置
      */

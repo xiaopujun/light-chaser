@@ -26,6 +26,8 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
         bgImg: null
     }
 
+    bgImgId = "";
+
     calculateChartConfig = (elemId: string | number) => {
         const {LCDesignerStore: {chartConfigs}} = this.props;
         return chartConfigs[elemId];
@@ -134,31 +136,48 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
 
     getBgImgSource = () => {
         const {bgConfig} = this.props.LCDesignerStore!;
-        localforage.getItem(bgConfig?.imgResource).then((value => {
-            this.setState({bgImg: value})
-        }))
+        if (bgConfig.imgSource !== '' && bgConfig.imgSource !== this.bgImgId) {
+            localforage.getItem(bgConfig?.imgSource).then((value => {
+                this.setState({bgImg: value})
+            }))
+        }
+    }
+
+    getDragScaleProviderProps = () => {
+        const {projectConfig} = this.props.LCDesignerStore!;
+        return {
+            contentWidth: projectConfig.screenWidth,
+            contentHeight: projectConfig.screenHeight,
+            containerWidth: window.innerWidth - 95,
+            containerHeight: window.innerHeight - 90,
+        }
+    }
+
+    getBgConfigProps = () => {
+        const {projectConfig} = this.props.LCDesignerStore!;
+        const {bgImg} = this.state;
+        let bgConfigProps: any = {
+            height: projectConfig.screenHeight,
+            width: projectConfig.screenWidth,
+            backgroundColor: '#131e26',
+        }
+        if (bgImg)
+            bgConfigProps['backgroundImage'] = `url(${this.state.bgImg})`;
+        return bgConfigProps;
     }
 
     render() {
+        this.getBgImgSource();
         const {LCDesignerStore} = this.props;
         const {layoutConfigs, projectConfig} = LCDesignerStore!;
-        const {scale, bgImg} = this.state;
-        if (!bgImg) this.getBgImgSource();
+        const {scale} = this.state;
         return (
-            <DragScaleProvider contentWidth={projectConfig.screenWidth}
-                               contentHeight={projectConfig.screenHeight}
-                               containerWidth={window.innerWidth - 95}
-                               containerHeight={window.innerHeight - 90}
-                               changeScale={this.changeScale}>
+            <DragScaleProvider {...this.getDragScaleProviderProps()} changeScale={this.changeScale}>
                 <div className={'lc-canvas'}
-                     id={'-1'} data-type={'lcCanvas'}
+                     id={'-1'}
+                     data-type={'lcCanvas'}
                      onClick={this.updateActive}
-                     style={{
-                         height: projectConfig.screenHeight,
-                         backgroundColor: '#131e26',
-                         width: projectConfig.screenWidth,
-                         backgroundImage: `url(${this.state.bgImg})`
-                     }}>
+                     style={this.getBgConfigProps()}>
                     <ReactGridLayout ref={obj => this.rgl = obj}
                                      className="layout"
                                      layout={layoutConfigs}

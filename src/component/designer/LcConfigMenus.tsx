@@ -10,7 +10,6 @@ class LcConfigMenus extends Component<LcConfigMenusProps | any> {
 
     menuChange = (e: any) => {
         const {onChange} = this.props;
-        console.log(e.currentTarget.id)
         onChange && onChange(e.currentTarget.id);
     }
 
