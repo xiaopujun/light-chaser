@@ -1,4 +1,4 @@
-import React, {Component, PureComponent} from 'react';
+import React, {PureComponent} from 'react';
 import './LcBgConfig.less';
 import LCNumberInput from "../../base/LCNumberInput";
 import BaseColorPicker from "../../base/BaseColorPicker";
@@ -9,6 +9,8 @@ import LcRadio from "../../base/LcRadio";
 import {Radio} from "antd";
 import CfgItemBorder from "../../base/CfgItemBorder";
 import localforage from "localforage";
+import {observer} from "mobx-react";
+import lcBgConfigStore from "./LcBgConfigStore";
 
 interface LcBgConfigProps {
     bgConfig?: any;
@@ -17,23 +19,12 @@ interface LcBgConfigProps {
 
 class LcBgConfig extends PureComponent<LcBgConfigProps> {
 
-    state = {
-        fileList: [],
-        bgImgSource: null
-    }
-
-    imgId = "";
-
-    componentDidMount() {
-
-    }
-
     handleChange: UploadProps['onChange'] = ({fileList: newFileList}) => this.setState({fileList: newFileList});
 
     beforeUpload = (file: any) => {
         const {updateBgConfig} = this.props;
         this.getBase64(file as RcFile).then(value => {
-            this.setState({bgImgSource: value})
+            lcBgConfigStore.setBgImgSource(value);
             // let tempImgId = Date.now() + '';
             // this.imgId = tempImgId;
             // localforage.setItem(tempImgId, value).then(function (value) {
@@ -58,26 +49,11 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
         });
     }
 
-    getImgSource = () => {
-        console.log('渲染')
-        const {bgImgSource} = this.state;
-        if (bgImgSource) return;
-        const {bgConfig} = this.props;
-        if (bgConfig.imgSource !== '') {
-            localforage.getItem(bgConfig?.imgSource).then((value => {
-                this.setState({bgImgSource: value});
-            }))
-        }
-    }
-
-    // getSnapshotBeforeUpdate(prevProps: Readonly<LcBgConfigProps>, prevState: Readonly<{}>): any {
-    //
-    // }
-
     render() {
         console.log('render')
         // this.getImgSource();
-        const {bgImgSource} = this.state;
+        const {bgImgSource} = lcBgConfigStore;
+        console.log('lcBgConfigStore', lcBgConfigStore)
         return (
             <div className={'lc-canvas-config'}>
                 <div className={'lc-bg-upload'}>
@@ -87,7 +63,6 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
                             <Dragger listType={'picture-card'}
                                      showUploadList={false}
                                      beforeUpload={this.beforeUpload}
-                                // fileList={this.state.fileList}
                                      onChange={this.handleChange}>
                                 请上传背景图
                             </Dragger>}
@@ -129,4 +104,4 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
     }
 }
 
-export default LcBgConfig;
+export default observer(LcBgConfig);

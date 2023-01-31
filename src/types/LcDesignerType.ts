@@ -12,7 +12,7 @@ export interface Action {
 /**
  * 激活组件参数
  */
-interface ActiveProps {
+export interface ActiveProps {
     /**
      * 组件id
      */
@@ -58,11 +58,11 @@ export interface ChartConfigProps {
 /**
  * 图表属性列表配置配置
  */
-interface ChartConfigsProps {
+export interface ChartConfigsProps {
     [key: string | number]: ChartConfigProps;
 }
 
-interface CanvasSetProps {
+export interface CanvasSetProps {
     /**
      * 基准高度
      */
@@ -126,7 +126,7 @@ export enum BgColorMode {
     RADIAL_GRADIENT
 }
 
-interface BgConfig {
+export interface BgConfig {
     /**
      * 背景模式
      */
