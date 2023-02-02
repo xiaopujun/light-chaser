@@ -1,14 +1,9 @@
 import {makeAutoObservable} from "mobx";
 import {
     ActiveProps, BaseInfo, BaseStyle,
-    BgColorMode,
-    BgConfig,
-    BgFillType,
-    BgMode,
-    CanvasSetProps,
-    ChartConfigsProps,
-    ProjectConfig,
-    SystemConfig
+    BgColorMode, BgConfig, BgFillType,
+    BgMode, CanvasSetProps, ChartConfigsProps,
+    ProjectConfig, SystemConfig
 } from "../../../types/LcDesignerType";
 import {LcLayout} from "../type/LcDesignerTypes";
 import * as _ from "lodash";
@@ -27,7 +22,7 @@ class LcDesignerContentStore {
     /**
      * 画布设置
      */
-    canvasConfig: CanvasSetProps | undefined = {
+    canvasConfig: CanvasSetProps = {
         elemInterval: 0,
         columns: 0,
         baseHeight: 5,
@@ -36,14 +31,14 @@ class LcDesignerContentStore {
     /**
      * 激活状态属性
      */
-    activated: ActiveProps | undefined = {
+    activated: ActiveProps = {
         id: -1,
         type: ''
     };
     /**
      * 背景设置
      */
-    bgConfig: BgConfig | undefined = {
+    bgConfig: BgConfig = {
         bgMode: BgMode.NONE,
         imgSize: [1920, 1080],
         imgSource: '',
@@ -54,13 +49,13 @@ class LcDesignerContentStore {
     /**
      * 系统配置
      */
-    systemConfig: SystemConfig | undefined = {
+    systemConfig: SystemConfig = {
         saveType: 'local'
     };
     /**
      * 项目设置
      */
-    projectConfig?: ProjectConfig | undefined = {
+    projectConfig: ProjectConfig = {
         screenName: '',
         screenDes: '',
         screenState: '',
@@ -73,11 +68,11 @@ class LcDesignerContentStore {
     /**
      * 图表配置
      */
-    chartConfigs: ChartConfigsProps | undefined = {};
+    chartConfigs: ChartConfigsProps = {};
     /**
      * 布局配置
      */
-    layoutConfigs: LcLayout[] | undefined = [];
+    layoutConfigs: LcLayout[] = [];
 
     /**
      * 设置布局id
@@ -105,12 +100,12 @@ class LcDesignerContentStore {
      */
     clearStore = () => {
         this.id = -1;
-        this.canvasConfig = undefined;
-        this.activated = undefined;
-        this.bgConfig = undefined;
-        this.systemConfig = undefined;
-        this.projectConfig = undefined;
-        this.chartConfigs = undefined;
+        this.canvasConfig = {};
+        this.activated = {};
+        this.bgConfig = {};
+        this.systemConfig = {};
+        this.projectConfig = {};
+        this.chartConfigs = {};
         this.layoutConfigs = [];
     }
     /**
@@ -118,32 +113,26 @@ class LcDesignerContentStore {
      */
     addItem = (item: LcLayout) => {
         this.layoutConfigs?.push(item);
-        if (this.projectConfig) {
-            let initObj: any = lcCompInits[item.name + "Init"];
-            let initData: any = initObj.getInitConfig()
-            initData.baseInfo = {...initData.baseInfo, ...{id: this.projectConfig.elemCount}}
-            if (this.chartConfigs)
-                this.chartConfigs[this.projectConfig.elemCount + ""] = initData;
-            let {elemCount = 0} = this.projectConfig!;
-            this.projectConfig.elemCount = ++elemCount;
-        }
+        let initObj: any = lcCompInits[item.name + "Init"];
+        let initData: any = initObj.getInitConfig()
+        initData.baseInfo = {...initData.baseInfo, ...{id: this.projectConfig.elemCount}}
+        if (this.chartConfigs)
+            this.chartConfigs[this.projectConfig.elemCount + ""] = initData;
+        let {elemCount = 0} = this.projectConfig!;
+        this.projectConfig.elemCount = ++elemCount;
 
     }
     /**
      * 删除元素
      */
     delItem = (id: string | number) => {
-        if (this.layoutConfigs) {
-            _.remove(this.layoutConfigs, function (item) {
-                return item?.id === id;
-            })
-        }
-        if (this.chartConfigs) {
-            delete this.chartConfigs[id + ''];
-            if (this.activated && id === this.activated.id) {
-                this.activated.id = -1;
-                this.activated.type = "";
-            }
+        _.remove(this.layoutConfigs, function (item) {
+            return item?.id === id;
+        })
+        delete this.chartConfigs[id + ''];
+        if (this.activated && id === this.activated.id) {
+            this.activated.id = -1;
+            this.activated.type = "";
         }
     }
     /**
@@ -151,12 +140,10 @@ class LcDesignerContentStore {
      */
     updateLayout = (item: Layout) => {
         const {i, x, y, w, h} = item;
-        if (this.layoutConfigs) {
-            for (let index = 0; index < this.layoutConfigs.length; index++) {
-                if (this.layoutConfigs[index].i === i) {
-                    this.layoutConfigs[index] = {...this.layoutConfigs[index], ...{x, y, w, h}}
-                    break;
-                }
+        for (let index = 0; index < this.layoutConfigs.length; index++) {
+            if (this.layoutConfigs[index].i === i) {
+                this.layoutConfigs[index] = {...this.layoutConfigs[index], ...{x, y, w, h}}
+                break;
             }
         }
     }
@@ -171,37 +158,27 @@ class LcDesignerContentStore {
      */
     updateBaseStyle = (data: BaseStyle) => {
         const {id} = this.activated!;
-        if (this.chartConfigs) {
-            let charConfig = this.chartConfigs[id + ''];
-            let baseConfig = charConfig?.baseStyle;
+        let charConfig = this.chartConfigs[id + ''];
+        let baseConfig = charConfig?.baseStyle;
+        if (charConfig && baseConfig)
             charConfig.baseStyle = {...baseConfig, ...data};
-        }
     }
     /**
      * 更新图表组件配置
      */
     updateChartProps = (data: any) => {
-        if (this.chartConfigs) {
-            let activeConfig = this.chartConfigs[this.activated?.id + ''];
-            const activeCompName = this.activated?.type;
-            if (activeCompName === "AntdRadar") {
-                activeConfig.chartProps = {...activeConfig.chartProps, ...data}
-            } else {
-                activeConfig.chartProps = _.mergeWith(activeConfig.chartProps, data, (objValue: any, srcValue: any, key: any) => {
-                    if (key === 'data')
-                        return objValue = srcValue;
-                });
-            }
-        }
+        let activeConfig = this.chartConfigs[this.activated?.id + ''];
+        if (activeConfig)
+            activeConfig.chartProps = _.merge(activeConfig.chartProps, data);
     }
     /**
      * 更新基础信息
      */
     updateBaseInfo = (data: BaseInfo) => {
-        if (this.chartConfigs && this.activated) {
-            let chartConfig = this.chartConfigs[this.activated.id];
+        let {id = -1} = this.activated;
+        let chartConfig = this.chartConfigs[id];
+        if (chartConfig)
             chartConfig.baseInfo = {...chartConfig.baseInfo, ...data};
-        }
     }
     /**
      * 更新画布设置
@@ -227,8 +204,6 @@ class LcDesignerContentStore {
     updateSystemConfig = () => {
 
     }
-
-
 }
 
 const lcDesignerContentStore = new LcDesignerContentStore();

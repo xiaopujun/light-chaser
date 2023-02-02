@@ -1,26 +1,15 @@
 /**
- * redux-action类型
- */
-import {kebabCase} from "lodash";
-
-export interface Action {
-    type: string | number;  //操作
-    data: any;     //数据
-}
-
-
-/**
  * 激活组件参数
  */
 export interface ActiveProps {
     /**
      * 组件id
      */
-    id: number;
+    id?: number;
     /**
      * 组件类型
      */
-    type: string;
+    type?: string;
 }
 
 export interface BaseInfo {
@@ -39,7 +28,6 @@ export interface BaseStyle {
     borderRadius?: string;
     borderWidth?: string;
 }
-
 
 /**
  * 图标属性配置配置

@@ -58,7 +58,7 @@ class LcConfigContent extends Component<LcConfigContentProps> {
     doRenderConfig = () => {
         let {activeMenu} = this.props;
         const {activated, chartConfigs, bgConfig} = lcConfigContentStore!;
-        const {id: activeId, type: activeType} = activated!;
+        const {id: activeId = -1, type: activeType = ''} = activated!;
         if (activated && activated.id === -1)
             activeMenu = '';
         switch (activeMenu) {
