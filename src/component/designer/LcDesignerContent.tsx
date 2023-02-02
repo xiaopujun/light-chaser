@@ -1,80 +1,68 @@
-import React, {Suspense} from 'react';
+import React from 'react';
 import ReactGridLayout, {Layout} from "react-grid-layout";
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import './style/Content.less';
 import getChartsTemplate from "../charts/ChartsCollection";
-import {LCDesignerProps} from "../../types/LcDesignerType";
-import Loading from "../loading/Loading";
 import DragScaleProvider from "./DragScaleProvider";
 import localforage from 'localforage';
+import {observer} from "mobx-react";
+import lcDesignerContentStore, {LcDesignerContentStore} from "./store/LcDesignerContentStore";
 
-interface LcDesignerContentProps {
-    LCDesignerStore?: LCDesignerProps;
-    delItem?: (id: string | number) => void;
-    addItem?: (data: any) => void;
-    updateLayout?: (data: any) => void;
-    updateActive?: (data: any) => void; //打开右侧配置项回调
-}
-
-export default class LcDesignerContent extends React.Component<LcDesignerContentProps | any> {
+class LcDesignerContent extends React.Component<LcDesignerContentStore | any> {
 
     rgl: any = null;
-
+    bgImgId = "";
     state: any = {
         scale: 1,
         bgImg: null
     }
 
-    bgImgId = "";
-
     calculateChartConfig = (elemId: string | number) => {
-        const {LCDesignerStore: {chartConfigs}} = this.props;
-        return chartConfigs[elemId];
+        const {chartConfigs} = lcDesignerContentStore;
+        if (chartConfigs)
+            return chartConfigs[elemId];
     }
 
     updateActive = (e: any) => {
         //阻止事件冒泡
         e.stopPropagation();
         let {id: elemId, dataset} = e.currentTarget;
-        const {updateActive} = this.props;
-        updateActive && updateActive({elemId: parseInt(elemId), type: dataset.type});
+        const {updateActive} = lcDesignerContentStore;
+        updateActive && updateActive({id: parseInt(elemId), type: dataset.type});
     }
 
     /**
      * 元素生成方法
      */
     generateElement = () => {
-        const {LCDesignerStore, updateActive} = this.props;
-        const {layoutConfigs} = LCDesignerStore!;
-        return layoutConfigs.map((item: any) => {
-            let Chart: any = getChartsTemplate(item.name);
-            const chartConfig = this.calculateChartConfig(item.id);
-            return (
-                <div key={item?.id + ''} className={'lc-comp-item'}
-                     id={item.id} data-type={chartConfig?.baseInfo?.type}
-                     onClick={this.updateActive}
-                     style={{width: '100%', height: '100%'}}>
-                    <Suspense fallback={<Loading width={'100%'} height={'100%'}/>}>
+        const {layoutConfigs, updateActive} = lcDesignerContentStore!;
+        if (layoutConfigs) {
+            return layoutConfigs.map((item: any) => {
+                let Chart: any = getChartsTemplate(item.name);
+                const chartConfig = this.calculateChartConfig(item.id);
+                return (
+                    <div key={item?.id + ''} className={'lc-comp-item'}
+                         id={item.id} data-type={chartConfig?.baseInfo?.type}
+                         onClick={this.updateActive}
+                         style={{width: '100%', height: '100%'}}>
                         <Chart elemId={item?.id}
                                chartConfig={chartConfig}
                                updateActive={updateActive}
                                delItem={this.delItem}/>
-                    </Suspense>
-                </div>
-            );
-        })
+                    </div>
+                );
+            })
+        }
     }
 
     /**
      * 删除目标组件
      */
     delItem = (elemId: string) => {
-        const {delItem, LCDesignerStore} = this.props;
+        const {delItem, layoutConfigs} = lcDesignerContentStore;
         delItem && delItem(elemId);
-
         if (this.rgl != null) {
-            const {layoutConfigs} = LCDesignerStore!;
             this.rgl.setState({layout: layoutConfigs})
         }
     }
@@ -86,8 +74,7 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
      * @param _event
      */
     onDrop = (layout: any, layoutItem: any, _event: any) => {
-        const {addItem, LCDesignerStore} = this.props;
-        const {projectConfig} = LCDesignerStore!;
+        const {addItem, layoutConfigs, projectConfig} = lcDesignerContentStore;
         let compObj
         try {
             compObj = JSON.parse(_event.dataTransfer.getData('compObj'));
@@ -104,7 +91,6 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
         }
         addItem && addItem(item);
         if (this.rgl != null) {
-            const {layoutConfigs} = LCDesignerStore!;
             this.rgl.setState({layout: layoutConfigs})
         }
     };
@@ -120,7 +106,7 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
      * 组件拖拽变化回调
      */
     onDragStop = (layout: Layout[], oldItem: Layout, newItem: Layout) => {
-        const {updateLayout} = this.props;
+        const {updateLayout} = lcDesignerContentStore;
         updateLayout && updateLayout(newItem);
     }
 
@@ -128,48 +114,51 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
      * 组件大小变化回调
      */
     onResizeStop = (layout: Layout[], oldItem: Layout, newItem: Layout) => {
-        const {updateLayout} = this.props;
+        const {updateLayout} = lcDesignerContentStore;
         updateLayout && updateLayout(newItem);
     }
 
     changeScale = (scale: number) => this.setState({scale: scale});
 
     getBgImgSource = () => {
-        const {bgConfig} = this.props.LCDesignerStore!;
-        if (bgConfig.imgSource !== '' && bgConfig.imgSource !== this.bgImgId) {
-            localforage.getItem(bgConfig?.imgSource).then((value => {
-                this.setState({bgImg: value})
-            }))
+        const {bgConfig} = lcDesignerContentStore!;
+        if (bgConfig) {
+            if (bgConfig.imgSource !== '' && bgConfig.imgSource !== this.bgImgId) {
+                localforage.getItem(bgConfig?.imgSource).then((value => {
+                    this.setState({bgImg: value})
+                }))
+            }
         }
     }
 
     getDragScaleProviderProps = () => {
-        const {projectConfig} = this.props.LCDesignerStore!;
+        const {projectConfig} = lcDesignerContentStore!;
         return {
-            contentWidth: projectConfig.screenWidth,
-            contentHeight: projectConfig.screenHeight,
+            contentWidth: projectConfig?.screenWidth,
+            contentHeight: projectConfig?.screenHeight,
             containerWidth: window.innerWidth - 95,
             containerHeight: window.innerHeight - 90,
         }
     }
 
     getBgConfigProps = () => {
-        const {projectConfig} = this.props.LCDesignerStore!;
+        const {projectConfig} = lcDesignerContentStore!;
         const {bgImg} = this.state;
-        let bgConfigProps: any = {
-            height: projectConfig.screenHeight,
-            width: projectConfig.screenWidth,
-            backgroundColor: '#131e26',
+        if (projectConfig) {
+            let bgConfigProps: any = {
+                height: projectConfig.screenHeight,
+                width: projectConfig.screenWidth,
+                backgroundColor: '#131e26',
+            }
+            if (bgImg)
+                bgConfigProps['backgroundImage'] = `url(${this.state.bgImg})`;
+            return bgConfigProps;
         }
-        if (bgImg)
-            bgConfigProps['backgroundImage'] = `url(${this.state.bgImg})`;
-        return bgConfigProps;
     }
 
     render() {
         this.getBgImgSource();
-        const {LCDesignerStore} = this.props;
-        const {layoutConfigs, projectConfig} = LCDesignerStore!;
+        const {layoutConfigs, projectConfig, canvasConfig} = lcDesignerContentStore;
         const {scale} = this.state;
         return (
             <DragScaleProvider {...this.getDragScaleProviderProps()} changeScale={this.changeScale}>
@@ -181,7 +170,7 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
                     <ReactGridLayout ref={obj => this.rgl = obj}
                                      className="layout"
                                      layout={layoutConfigs}
-                                     cols={projectConfig?.columns || 1920 / 5}
+                                     cols={canvasConfig?.columns || 1920 / 5}
                                      rowHeight={5}
                                      margin={[0, 0]}
                                      useCSSTransforms={true}
@@ -189,9 +178,9 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
                                      allowOverlap={true}
                                      isBounded={true}
                                      isDroppable={true}
-                                     style={{height: projectConfig.screenHeight}}
+                                     style={{height: projectConfig?.screenHeight}}
                                      transformScale={scale}
-                                     width={projectConfig.screenWidth}
+                                     width={projectConfig?.screenWidth}
                                      onDrop={this.onDrop}
                                      onDropDragOver={this.onDropDragOver}
                                      onDragStop={this.onDragStop}
@@ -203,3 +192,6 @@ export default class LcDesignerContent extends React.Component<LcDesignerContent
         );
     }
 }
+
+export default observer(LcDesignerContent);
+

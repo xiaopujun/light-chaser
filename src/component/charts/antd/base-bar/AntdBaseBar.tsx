@@ -17,7 +17,6 @@ export default class AntdBaseBar extends Component<AntdBarProps> {
         const {chartProps, baseStyle} = chartConfig;
         return (
             <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-                
                 <Bar supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
             </div>
         );

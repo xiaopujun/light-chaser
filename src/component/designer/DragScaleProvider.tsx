@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 
 interface DragScaleProviderProps {
-    containerWidth: number;
-    containerHeight: number;
-    contentWidth: number;
-    contentHeight: number;
+    containerWidth?: number;
+    containerHeight?: number;
+    contentWidth?: number;
+    contentHeight?: number;
     changeScale?: (scale: number) => void;
 }
 

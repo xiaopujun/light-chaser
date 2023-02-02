@@ -13,6 +13,7 @@ import LcCompBaseStyleSet from "../config/base/LcCompBaseStyleSet";
 import {LCDesignerProps} from "../../types/LcDesignerType";
 import getChartsConfig from "../config/chart/ComponentSetInit";
 import LcBgConfig from "../config/canvas/LcBgConfig";
+import lcConfigContentStore from "./store/LcDesignerContentStore";
 
 interface LcConfigContentProps {
     title?: string;
@@ -55,21 +56,22 @@ class LcConfigContent extends Component<LcConfigContentProps> {
     }
 
     doRenderConfig = () => {
-        let {LCDesignerStore, activeMenu} = this.props;
-        const {activated, chartConfigs, bgConfig} = LCDesignerStore!;
-        if (activated.id === -1)
+        let {activeMenu} = this.props;
+        const {activated, chartConfigs, bgConfig} = lcConfigContentStore!;
+        const {id: activeId, type: activeType} = activated!;
+        if (activated && activated.id === -1)
             activeMenu = '';
         switch (activeMenu) {
             case 'info':
                 return <LcEmBaseInfo updateBaseInfo={this.props.updateBaseInfo}
-                                     baseInfo={chartConfigs[activated.id]?.baseInfo}/>
+                                     baseInfo={chartConfigs && chartConfigs[activeId]?.baseInfo}/>
             case 'style':
-                let ChartsConfig: any = getChartsConfig(activated.type);
+                let ChartsConfig: any = getChartsConfig(activeType);
                 return <>
                     <LcCompBaseStyleSet updateBaseStyle={this.props.updateBaseStyle}
-                                        baseStyle={chartConfigs[activated.id]?.baseStyle}/>
+                                        baseStyle={chartConfigs && chartConfigs[activeId]?.baseStyle}/>
                     <ChartsConfig updateChartProps={this.props.updateChartProps}
-                                  chartProps={chartConfigs[activated.id]?.chartProps}/>
+                                  chartProps={chartConfigs && chartConfigs[activeId]?.chartProps}/>
                 </>
             case 'data':
                 return <div>开发中...</div>
@@ -103,7 +105,6 @@ class LcConfigContent extends Component<LcConfigContentProps> {
                     </div>
                 </div> : <></>}
             </>
-
         );
     }
 }

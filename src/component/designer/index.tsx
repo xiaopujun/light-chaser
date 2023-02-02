@@ -1,22 +1,7 @@
 import React, {Component} from 'react';
-import {connect} from "react-redux";
 import LCLayoutContent from "./LcDesignerContent";
-
-import {
-    addItem,
-    clearDesignerStore,
-    delItem,
-    updateActive,
-    updateBaseInfo,
-    updateBaseStyle,
-    updateCanvasConfig,
-    updateChartProps,
-    updateDesignerStore,
-    updateLayout,
-    updateBgConfig
-} from "../../redux/actions/LCDesignerAction";
 import DesignerHeader from "./LcDesignerHeader";
-import {RouteComponentProps, withRouter} from "react-router-dom";
+import {RouteComponentProps} from "react-router-dom";
 import LcHeader from "./structure/LcHeader";
 import LcBody from "./structure/LcBody";
 import LcLeft from "./structure/LcLeft";
@@ -27,6 +12,7 @@ import LcFoot from "./structure/LcFoot";
 import LcDesignerLeft from "./LcDesignerLeft";
 import LcDesignerRight from "./LcDesignerRight";
 import LcDesignerFooter from "./LcDesignerFooter";
+import lcDesignerContentStore from './store/LcDesignerContentStore';
 
 const context = require.context('../charts', true, /\.(tsx|ts)$/);
 export const lcComps: { [key: string]: React.FunctionComponent } = {};
@@ -76,18 +62,15 @@ class LCDesigner extends Component<LCDesignerProps | any> {
     }
 
     componentDidMount() {
+        const {updateProjectConfig, setId, setChartConfigs, setLayoutConfigs} = lcDesignerContentStore;
         const {updateDesignerStore} = this.props;
         const {action, screenName, screenWidth, screenHeight, id} = this.props.location.state;
         switch (action) {
             case 'add':
-                updateDesignerStore({
-                    projectConfig: {
-                        screenName,
-                        screenWidth: parseInt(screenWidth),
-                        screenHeight: parseInt(screenHeight),
-                    },
-                    chartConfigs: {},
-                    layoutConfigs: []
+                updateProjectConfig({
+                    screenName: screenName,
+                    screenWidth: parseInt(screenWidth),
+                    screenHeight: parseInt(screenHeight),
                 })
                 break;
             case 'update':
@@ -98,15 +81,10 @@ class LCDesigner extends Component<LCDesignerProps | any> {
                         break
                     }
                 }
-                updateDesignerStore({
-                    id: config.screenId,
-                    projectConfig: config.projectConfig,
-                    screenName: config.name,
-                    screenWidth: config.width,
-                    screenHeight: config.height,
-                    chartConfigs: JSON.parse(config.chartConfigs),
-                    layoutConfigs: JSON.parse(config.layoutConfigs)
-                })
+                setId(config.screenId);
+                updateProjectConfig(config.projectConfig);
+                setChartConfigs(JSON.parse(config.chartConfigs));
+                setLayoutConfigs(JSON.parse(config.layoutConfigs));
                 break;
         }
     }
@@ -117,11 +95,8 @@ class LCDesigner extends Component<LCDesignerProps | any> {
                 <LcStructure>
                     <LcHeader><DesignerHeader {...this.props}/></LcHeader>
                     <LcBody>
-                        <LcLeft>
-                            <LcDesignerLeft/>
-                        </LcLeft>
-                        <LcContent><LCLayoutContent {...this.props}/></LcContent>
-                        {/*<LcRight><LcDesignerRight {...this.props}/></LcRight>*/}
+                        <LcLeft><LcDesignerLeft/></LcLeft>
+                        <LcContent><LCLayoutContent/></LcContent>
                         <LcRight><LcDesignerRight {...this.props}/></LcRight>
                     </LcBody>
                     <LcFoot>
@@ -133,19 +108,21 @@ class LCDesigner extends Component<LCDesignerProps | any> {
     }
 }
 
-export default connect(
-    (state: any) => ({LCDesignerStore: state?.LCDesignerStore || {}}),
-    {
-        updateActive,
-        addItem,
-        clearDesignerStore,
-        delItem,
-        updateBaseStyle,
-        updateChartProps,
-        updateLayout,
-        updateDesignerStore,
-        updateBaseInfo,
-        updateCanvasConfig,
-        updateBgConfig
-    }
-)(withRouter(LCDesigner))
+export default LCDesigner;
+
+// export default connect(
+//     (state: any) => ({LCDesignerStore: state?.LCDesignerStore || {}}),
+//     {
+//         updateActive,
+//         addItem,
+//         clearDesignerStore,
+//         delItem,
+//         updateBaseStyle,
+//         updateChartProps,
+//         updateLayout,
+//         updateDesignerStore,
+//         updateBaseInfo,
+//         updateCanvasConfig,
+//         updateBgConfig
+//     }
+// )(withRouter(LCDesigner))

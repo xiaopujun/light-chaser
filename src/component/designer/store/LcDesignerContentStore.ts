@@ -1,11 +1,19 @@
 import {makeAutoObservable} from "mobx";
 import {
-    ActiveProps, BgConfig,
+    ActiveProps, BaseInfo, BaseStyle,
+    BgColorMode,
+    BgConfig,
+    BgFillType,
+    BgMode,
     CanvasSetProps,
     ChartConfigsProps,
     ProjectConfig,
     SystemConfig
 } from "../../../types/LcDesignerType";
+import {LcLayout} from "../type/LcDesignerTypes";
+import * as _ from "lodash";
+import {Layout} from "react-grid-layout";
+import {lcCompInits} from "../index";
 
 class LcDesignerContentStore {
     constructor() {
@@ -19,7 +27,7 @@ class LcDesignerContentStore {
     /**
      * 画布设置
      */
-    canvasConfig: CanvasSetProps = {
+    canvasConfig: CanvasSetProps | undefined = {
         elemInterval: 0,
         columns: 0,
         baseHeight: 5,
@@ -28,24 +36,31 @@ class LcDesignerContentStore {
     /**
      * 激活状态属性
      */
-    activated: ActiveProps = {
+    activated: ActiveProps | undefined = {
         id: -1,
         type: ''
     };
     /**
      * 背景设置
      */
-    bgConfig: BgConfig | undefined | null;
+    bgConfig: BgConfig | undefined = {
+        bgMode: BgMode.NONE,
+        imgSize: [1920, 1080],
+        imgSource: '',
+        bgFillType: BgFillType.NONE,
+        colorMode: BgColorMode.SINGLE,
+        color: '',
+    };
     /**
      * 系统配置
      */
-    systemConfig: SystemConfig = {
+    systemConfig: SystemConfig | undefined = {
         saveType: 'local'
     };
     /**
      * 项目设置
      */
-    projectConfig: ProjectConfig = {
+    projectConfig?: ProjectConfig | undefined = {
         screenName: '',
         screenDes: '',
         screenState: '',
@@ -58,11 +73,160 @@ class LcDesignerContentStore {
     /**
      * 图表配置
      */
-    chartConfigs: ChartConfigsProps = {};
+    chartConfigs: ChartConfigsProps | undefined = {};
     /**
      * 布局配置
      */
-    layoutConfigs: Array<any> = [];
+    layoutConfigs: LcLayout[] | undefined = [];
+
+    /**
+     * 设置布局id
+     */
+    setId(id: number) {
+        this.id = id;
+    }
+
+    /**
+     * 设置图表配置
+     */
+    setChartConfigs(chartConfigs: ChartConfigsProps) {
+        this.chartConfigs = chartConfigs;
+    }
+
+    /**
+     * 设置布局配置
+     */
+    setLayoutConfigs(layoutConfigs: LcLayout[]) {
+        this.layoutConfigs = layoutConfigs;
+    }
+
+    /**
+     * 清空store
+     */
+    clearStore = () => {
+        this.id = -1;
+        this.canvasConfig = undefined;
+        this.activated = undefined;
+        this.bgConfig = undefined;
+        this.systemConfig = undefined;
+        this.projectConfig = undefined;
+        this.chartConfigs = undefined;
+        this.layoutConfigs = [];
+    }
+    /**
+     * 添加元素
+     */
+    addItem = (item: LcLayout) => {
+        this.layoutConfigs?.push(item);
+        if (this.projectConfig) {
+            let initObj: any = lcCompInits[item.name + "Init"];
+            let initData: any = initObj.getInitConfig()
+            initData.baseInfo = {...initData.baseInfo, ...{id: this.projectConfig.elemCount}}
+            if (this.chartConfigs)
+                this.chartConfigs[this.projectConfig.elemCount + ""] = initData;
+            let {elemCount = 0} = this.projectConfig!;
+            this.projectConfig.elemCount = ++elemCount;
+        }
+
+    }
+    /**
+     * 删除元素
+     */
+    delItem = (id: string | number) => {
+        if (this.layoutConfigs) {
+            _.remove(this.layoutConfigs, function (item) {
+                return item?.id === id;
+            })
+        }
+        if (this.chartConfigs) {
+            delete this.chartConfigs[id + ''];
+            if (this.activated && id === this.activated.id) {
+                this.activated.id = -1;
+                this.activated.type = "";
+            }
+        }
+    }
+    /**
+     * 更新布局
+     */
+    updateLayout = (item: Layout) => {
+        const {i, x, y, w, h} = item;
+        if (this.layoutConfigs) {
+            for (let index = 0; index < this.layoutConfigs.length; index++) {
+                if (this.layoutConfigs[index].i === i) {
+                    this.layoutConfigs[index] = {...this.layoutConfigs[index], ...{x, y, w, h}}
+                    break;
+                }
+            }
+        }
+    }
+    /**
+     * 更新激活状态元素
+     */
+    updateActive = (data: ActiveProps) => {
+        this.activated = {...this.activated, ...data};
+    }
+    /**
+     * 更新组件基础样式
+     */
+    updateBaseStyle = (data: BaseStyle) => {
+        const {id} = this.activated!;
+        if (this.chartConfigs) {
+            let charConfig = this.chartConfigs[id + ''];
+            let baseConfig = charConfig?.baseStyle;
+            charConfig.baseStyle = {...baseConfig, ...data};
+        }
+    }
+    /**
+     * 更新图表组件配置
+     */
+    updateChartProps = (data: any) => {
+        if (this.chartConfigs) {
+            let activeConfig = this.chartConfigs[this.activated?.id + ''];
+            const activeCompName = this.activated?.type;
+            if (activeCompName === "AntdRadar") {
+                activeConfig.chartProps = {...activeConfig.chartProps, ...data}
+            } else {
+                activeConfig.chartProps = _.mergeWith(activeConfig.chartProps, data, (objValue: any, srcValue: any, key: any) => {
+                    if (key === 'data')
+                        return objValue = srcValue;
+                });
+            }
+        }
+    }
+    /**
+     * 更新基础信息
+     */
+    updateBaseInfo = (data: BaseInfo) => {
+        if (this.chartConfigs && this.activated) {
+            let chartConfig = this.chartConfigs[this.activated.id];
+            chartConfig.baseInfo = {...chartConfig.baseInfo, ...data};
+        }
+    }
+    /**
+     * 更新画布设置
+     */
+    updateCanvasConfig = (data: CanvasSetProps) => {
+        this.canvasConfig = {...this.canvasConfig, ...data};
+    }
+    /**
+     * 更新项目配置
+     */
+    updateProjectConfig = (data: ProjectConfig) => {
+        this.projectConfig = {...this.projectConfig, ...data};
+    }
+    /**
+     * 更新背景配置
+     */
+    updateBgConfig = (data: BgConfig) => {
+        _.merge(this.bgConfig, data);
+    }
+    /**
+     * 更新系统配置
+     */
+    updateSystemConfig = () => {
+
+    }
 
 
 }
@@ -70,3 +234,4 @@ class LcDesignerContentStore {
 const lcDesignerContentStore = new LcDesignerContentStore();
 
 export default lcDesignerContentStore;
+export {LcDesignerContentStore};

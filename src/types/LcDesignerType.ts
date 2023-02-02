@@ -23,7 +23,7 @@ export interface ActiveProps {
     type: string;
 }
 
-interface BaseInfo {
+export interface BaseInfo {
     id?: string | number;
     name?: string;
     type?: string;
@@ -185,7 +185,7 @@ export interface ProjectConfig {
     /**
      * 元素个数
      */
-    elemCount: number
+    elemCount?: number
 }
 
 export interface SystemConfig {
