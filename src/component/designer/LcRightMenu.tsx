@@ -9,8 +9,8 @@ class LcRightMenu extends Component {
             <>
                 {visible &&
                 <div style={{
-                    width: 200,
-                    height: 300,
+                    width: 100,
+                    height: 150,
                     backgroundColor: "#009cff",
                     position: 'fixed',
                     top: position[1],

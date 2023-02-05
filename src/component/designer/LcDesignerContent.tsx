@@ -160,11 +160,20 @@ class LcDesignerContent extends React.PureComponent<LcDesignerContentStore | any
     registerRightMenu = () => {
         const {updateVisible, setPosition} = lcRightMenuStore;
         document.addEventListener("contextmenu", (event: any) => {
-            console.log(event);
             event.preventDefault();
-            updateVisible && updateVisible(true);
-            setPosition([event.clientX, event.clientY]);
+            if (event.target.className.indexOf('react-grid-item') > -1) {
+                updateVisible && updateVisible(true);
+                setPosition([event.clientX, event.clientY]);
+            } else {
+                updateVisible && updateVisible(false);
+            }
         });
+        document.addEventListener("click", (event: any) => {
+                const {visible} = lcRightMenuStore;
+                if (visible && event.button === 0)
+                    updateVisible(false);
+            }
+        );
     }
 
     render() {
