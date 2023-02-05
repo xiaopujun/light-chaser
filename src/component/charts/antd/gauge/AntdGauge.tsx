@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Gauge} from "@ant-design/charts";
+import LcCompBg from "../../LcCompBg";
 
 interface AntdGaugeProps {
     elemId?: string;
@@ -16,10 +17,9 @@ export default class AntdGauge extends Component<AntdGaugeProps> {
         const {chartConfig} = this.props;
         const {chartProps, baseStyle} = chartConfig;
         return (
-            <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-
+            <LcCompBg style={baseStyle}>
                 <Gauge supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
-            </div>
+            </LcCompBg>
         );
     }
 }

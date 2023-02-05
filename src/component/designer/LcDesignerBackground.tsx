@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import lcDesignerContentStore from './store/LcDesignerContentStore';
 import localforage from "localforage";
+import {observer} from "mobx-react";
 
 interface LcDesignerBackgroundProps {
     onClick?: (e: any) => void;
@@ -14,10 +15,14 @@ class LcDesignerBackground extends Component<LcDesignerBackgroundProps> {
     state = {
         bgImg: null
     }
-    bgImgId = "";
+    imgLoaded = false;
+    previousImgId = '';
+    lcDesBgDom: any = null;
 
     onClick = (e: any) => {
-        this.props.onClick && this.props.onClick(e);
+        const {bgConfig} = lcDesignerContentStore!;
+        if (bgConfig.imgSource && bgConfig.imgSource != '')
+            this.props.onClick && this.props.onClick(e);
     }
 
     getBgConfigProps = () => {
@@ -37,12 +42,11 @@ class LcDesignerBackground extends Component<LcDesignerBackgroundProps> {
 
     getBgImgSource = () => {
         const {bgConfig} = lcDesignerContentStore!;
-        if (bgConfig) {
-            if (bgConfig.imgSource !== '' && bgConfig.imgSource !== this.bgImgId) {
-                localforage.getItem(bgConfig?.imgSource).then((value => {
-                    this.setState({bgImg: value})
-                }))
-            }
+        if (bgConfig.imgSource && bgConfig.imgSource !== '' && bgConfig.imgSource !== this.previousImgId && !this.imgLoaded) {
+            this.previousImgId = bgConfig.imgSource;
+            localforage.getItem(bgConfig?.imgSource).then((value => {
+                this.setState({bgImg: value, imgLoaded: true});
+            }))
         }
     }
 
@@ -50,6 +54,7 @@ class LcDesignerBackground extends Component<LcDesignerBackgroundProps> {
         this.getBgImgSource();
         return (
             <div className={'lc-canvas'}
+                 ref={ref => this.lcDesBgDom = ref}
                  id={'-1'}
                  data-type={'lcCanvas'}
                  onClick={this.onClick}
@@ -60,4 +65,4 @@ class LcDesignerBackground extends Component<LcDesignerBackgroundProps> {
     }
 }
 
-export default LcDesignerBackground;
+export default observer(LcDesignerBackground);

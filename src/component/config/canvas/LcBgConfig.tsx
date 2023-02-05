@@ -10,7 +10,7 @@ import {Radio} from "antd";
 import CfgItemBorder from "../../base/CfgItemBorder";
 import localforage from "localforage";
 import {observer} from "mobx-react";
-import lcBgConfigStore from "./LcBgConfigStore";
+import lcDesignerContentStore from '../../designer/store/LcDesignerContentStore';
 
 interface LcBgConfigProps {
     bgConfig?: any;
@@ -19,23 +19,19 @@ interface LcBgConfigProps {
 
 class LcBgConfig extends PureComponent<LcBgConfigProps> {
 
+    state = {
+        bgImgSource: null
+    }
+
     handleChange: UploadProps['onChange'] = ({fileList: newFileList}) => this.setState({fileList: newFileList});
 
     beforeUpload = (file: any) => {
-        const {updateBgConfig} = this.props;
+        const {updateBgConfig} = lcDesignerContentStore;
         this.getBase64(file as RcFile).then(value => {
-            lcBgConfigStore.setBgImgSource(value);
-            // let tempImgId = Date.now() + '';
-            // this.imgId = tempImgId;
-            // localforage.setItem(tempImgId, value).then(function (value) {
-            //     updateBgConfig && updateBgConfig({
-            //         bgConfig: {
-            //             imgSource: tempImgId
-            //         }
-            //     })
-            // }).catch(function (err) {
-            //     console.log(err)
-            // });
+            localforage.setItem('lc-bg-img-source', value).then(() => {
+                this.setState({bgImgSource: value});
+                updateBgConfig({imgSource: 'lc-bg-img-source'});
+            });
         })
         return false;
     }
@@ -50,8 +46,8 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
     }
 
     render() {
-        // this.getImgSource();
-        const {bgImgSource} = lcBgConfigStore;
+        console.log('LcBgConfig render');
+        const {bgImgSource} = this.state;
         return (
             <div className={'lc-canvas-config'}>
                 <div className={'lc-bg-upload'}>
@@ -102,4 +98,4 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
     }
 }
 
-export default observer(LcBgConfig);
+export default LcBgConfig;

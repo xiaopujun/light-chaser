@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import LcCompBg from "../../LcCompBg";
 
 interface LcColorBlockProps {
     elemId?: string;
@@ -14,9 +15,9 @@ class LcColorBlock extends Component<LcColorBlockProps> {
         const {chartConfig} = this.props;
         const {baseStyle} = chartConfig;
         return (
-            <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-                
-            </div>
+            <LcCompBg style={baseStyle}>
+                <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}/>
+            </LcCompBg>
         );
     }
 }

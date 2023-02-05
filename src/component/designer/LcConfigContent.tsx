@@ -71,9 +71,8 @@ class LcConfigContent extends Component<LcConfigContentProps> {
                 return <>
                     <LcCompBaseStyleSet updateBaseStyle={this.props.updateBaseStyle}
                                         baseStyle={chartConfigs && chartConfigs[activeId]?.baseStyle}/>
-                    {ChartsConfig && <ChartsConfig updateChartProps={this.props.updateChartProps}
-                                                   chartProps={chartConfigs && chartConfigs[activeId]?.chartProps}/>}
-
+                    <ChartsConfig updateChartProps={this.props.updateChartProps}
+                                  chartProps={chartConfigs && chartConfigs[activeId]?.chartProps}/>
                 </>
             case 'data':
                 return <div>开发中...</div>

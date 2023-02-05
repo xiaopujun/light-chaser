@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Area} from "@ant-design/charts";
+import LcCompBg from "../../LcCompBg";
 
 interface AntdAreaProps {
     elemId?: string;
@@ -22,9 +23,9 @@ export default class AntdBaseArea extends Component<AntdAreaProps> {
         const {chartConfig} = this.props;
         const {chartProps, baseStyle} = chartConfig;
         return (
-            <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-                <Area supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
-            </div>
+            <LcCompBg style={baseStyle}>
+                <Area supportCSSTransform={true} className={'grid-chart-item'}  {...chartProps}/>
+            </LcCompBg>
         );
     }
 }

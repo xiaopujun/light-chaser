@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {WordCloud} from "@ant-design/charts";
+import LcCompBg from "../../LcCompBg";
 
 interface AntdWordCloudProps {
     elemId?: string;
@@ -40,10 +41,9 @@ export default class AntdWordCloud extends Component<AntdWordCloudProps> {
         const {chartConfig} = this.props;
         const {chartProps, baseStyle} = chartConfig;
         return (
-            <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-
+            <LcCompBg style={baseStyle}>
                 <WordCloud supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
-            </div>
+            </LcCompBg>
         );
     }
 }

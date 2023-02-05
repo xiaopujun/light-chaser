@@ -3,6 +3,7 @@ import 'antd/dist/antd.min.css';
 import './App.less';
 import {Route, Switch} from "react-router-dom";
 import Loading from "./component/loading/Loading";
+import LcRightMenu from "./component/designer/LcRightMenu";
 
 const LightChaserList = lazy(() => import('./component/list/LightChaserList'));
 const LCDesigner = lazy(() => import('./component/designer'));
@@ -20,6 +21,7 @@ class App extends Component<any> {
                         <Route path={'/loading'} component={Loading}/>
                     </Switch>
                 </Suspense>
+                <LcRightMenu/>
             </>
         );
     }

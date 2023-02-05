@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Bar} from "@ant-design/charts";
+import LcCompBg from "../../LcCompBg";
 
 interface AntdBarProps {
     elemId?: string;
@@ -16,10 +17,9 @@ export default class AntdGroupBar extends Component<AntdBarProps> {
         const {chartConfig} = this.props;
         const {chartProps, baseStyle} = chartConfig;
         return (
-            <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-
+            <LcCompBg style={baseStyle}>
                 <Bar supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
-            </div>
+            </LcCompBg>
         );
     }
 }

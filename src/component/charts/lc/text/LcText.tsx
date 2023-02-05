@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import LcCompBg from "../../LcCompBg";
 
 
 interface LcTextProps {
@@ -16,13 +17,12 @@ class LcText extends Component<LcTextProps> {
         const {chartProps, baseStyle} = chartConfig;
         const {color = '#fff', fontSize = 12} = chartProps;
         return (
-            <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-
+            <LcCompBg style={baseStyle}>
                 <div style={{
                     color,
                     fontSize: fontSize + 'px',
                 }}>{chartProps?.value || '文本'}</div>
-            </div>
+            </LcCompBg>
         );
     }
 }

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Scatter} from "@ant-design/charts";
+import LcCompBg from "../../LcCompBg";
 
 interface AntdScatterProps {
     chartName?: string;
@@ -34,10 +35,9 @@ export default class AntdScatter extends Component<AntdScatterProps> {
             chartProps.data = this.state.data;
         }
         return (
-            <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-
+            <LcCompBg style={baseStyle}>
                 <Scatter supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
-            </div>
+            </LcCompBg>
         );
     }
 }

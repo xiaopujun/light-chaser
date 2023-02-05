@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Radar} from "@ant-design/charts";
+import LcCompBg from "../../LcCompBg";
 
 interface AntdRadarProps {
     chartConfig?: any;
@@ -20,10 +21,9 @@ export default class AntdRadar extends Component<AntdRadarProps> {
         const {chartConfig} = this.props;
         const {chartProps, baseStyle} = chartConfig;
         return (
-            <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-
+            <LcCompBg style={baseStyle}>
                 <Radar supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
-            </div>
+            </LcCompBg>
         );
     }
 }

@@ -7,13 +7,20 @@ import getChartsTemplate from "../charts/ChartsCollection";
 import DragScaleProvider from "./DragScaleProvider";
 import {observer} from "mobx-react";
 import lcDesignerContentStore, {LcDesignerContentStore} from "./store/LcDesignerContentStore";
+import lcRightMenuStore from "./store/LcRightMenuStore";
 import LcDesignerBackground from "./LcDesignerBackground";
+import LcRightMenu from "./LcRightMenu";
 
 class LcDesignerContent extends React.PureComponent<LcDesignerContentStore | any> {
 
     rgl: any = null;
+    lcbg: any = null;
     state: any = {
         scale: 1,
+    }
+
+    componentDidMount() {
+        this.registerRightMenu();
     }
 
     calculateChartConfig = (elemId: string | number) => {
@@ -48,6 +55,13 @@ class LcDesignerContent extends React.PureComponent<LcDesignerContentStore | any
                                chartConfig={chartConfig}
                                updateActive={updateActive}
                                delItem={this.delItem}/>
+                        {/*<div id={'1'} style={{width: 100, height: 200}}>*/}
+                        {/*    <div id={'2'} style={{width: '100%', height: '100%', pointerEvents: 'none'}}>*/}
+                        {/*        <div id={'3'} style={{width: '100%', height: '100%'}}>*/}
+                        {/*            test*/}
+                        {/*        </div>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                     </div>
                 );
             })
@@ -143,10 +157,20 @@ class LcDesignerContent extends React.PureComponent<LcDesignerContentStore | any
         }
     }
 
+    registerRightMenu = () => {
+        const {updateVisible, setPosition} = lcRightMenuStore;
+        document.addEventListener("contextmenu", (event: any) => {
+            console.log(event);
+            event.preventDefault();
+            updateVisible && updateVisible(true);
+            setPosition([event.clientX, event.clientY]);
+        });
+    }
+
     render() {
         return (
             <DragScaleProvider {...this.getDragScaleProviderProps()}>
-                <LcDesignerBackground onClick={this.updateActive}>
+                <LcDesignerBackground onClick={this.updateActive} ref={obj => this.lcbg = obj}>
                     <ReactGridLayout ref={obj => this.rgl = obj} className="layout"{...this.getRGLProps()}>
                         {this.generateElement()}
                     </ReactGridLayout>

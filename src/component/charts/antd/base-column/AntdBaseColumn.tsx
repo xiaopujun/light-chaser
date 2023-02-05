@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Column} from "@ant-design/charts";
+import LcCompBg from "../../LcCompBg";
 
 interface AntdColumnProps {
     chartConfig?: any;
@@ -16,10 +17,9 @@ export default class AntdBaseColumn extends Component<AntdColumnProps> {
         const {chartConfig} = this.props;
         const {chartProps, baseStyle} = chartConfig;
         return (
-            <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-                
+            <LcCompBg style={baseStyle}>
                 <Column supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
-            </div>
+            </LcCompBg>
         );
     }
 }
