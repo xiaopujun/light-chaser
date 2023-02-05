@@ -7,6 +7,6 @@ export default function getChartsConfig(chartSetName: string) {
     if (chartSetName in lcCompSets) {
         return lcCompSets[chartSetName];
     } else {
-        return React.createElement("div", {}, "");
+        return null;
     }
 }

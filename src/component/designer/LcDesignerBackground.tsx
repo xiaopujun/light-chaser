@@ -2,15 +2,23 @@ import React, {Component} from 'react';
 import lcDesignerContentStore from './store/LcDesignerContentStore';
 import localforage from "localforage";
 
+interface LcDesignerBackgroundProps {
+    onClick?: (e: any) => void;
+}
+
 /**
  * 设计器画布背景
  */
-class LcDesignerBackground extends Component {
+class LcDesignerBackground extends Component<LcDesignerBackgroundProps> {
 
     state = {
         bgImg: null
     }
     bgImgId = "";
+
+    onClick = (e: any) => {
+        this.props.onClick && this.props.onClick(e);
+    }
 
     getBgConfigProps = () => {
         const {projectConfig} = lcDesignerContentStore!;
@@ -39,14 +47,12 @@ class LcDesignerBackground extends Component {
     }
 
     render() {
-        console.log('LcDesignerBackground render');
         this.getBgImgSource();
-        const {updateActive} = lcDesignerContentStore;
         return (
             <div className={'lc-canvas'}
                  id={'-1'}
                  data-type={'lcCanvas'}
-                 onClick={updateActive}
+                 onClick={this.onClick}
                  style={this.getBgConfigProps()}>
                 {this.props.children}
             </div>

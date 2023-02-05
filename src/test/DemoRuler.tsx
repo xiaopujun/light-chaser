@@ -25,7 +25,6 @@ class DemoRuler extends Component {
         new Gesto(body).on("drag", e => {
             let {scale} = this.state;
             scrollX -= e.deltaX;
-            console.log("scrollX", scrollX)
             this.rulerX.scroll(scrollX / scale);
         });
     }

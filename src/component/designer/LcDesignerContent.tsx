@@ -115,6 +115,7 @@ class LcDesignerContent extends React.PureComponent<LcDesignerContentStore | any
             contentHeight: projectConfig?.screenHeight,
             containerWidth: window.innerWidth - 95,
             containerHeight: window.innerHeight - 90,
+            changeScale: this.changeScale
         }
     }
 
@@ -135,20 +136,18 @@ class LcDesignerContent extends React.PureComponent<LcDesignerContentStore | any
             style: {height: projectConfig?.screenHeight},
             transformScale: scale,
             width: projectConfig?.screenWidth,
+            onDrop: this.onDrop,
+            onDropDragOver: this.onDropDragOver,
+            onDragStop: this.onDragStop,
+            onResizeStop: this.onResizeStop,
         }
     }
 
     render() {
         return (
-            <DragScaleProvider {...this.getDragScaleProviderProps()} changeScale={this.changeScale}>
-                <LcDesignerBackground>
-                    <ReactGridLayout ref={obj => this.rgl = obj}
-                                     className="layout"
-                                     {...this.getRGLProps()}
-                                     onDrop={this.onDrop}
-                                     onDropDragOver={this.onDropDragOver}
-                                     onDragStop={this.onDragStop}
-                                     onResizeStop={this.onResizeStop}>
+            <DragScaleProvider {...this.getDragScaleProviderProps()}>
+                <LcDesignerBackground onClick={this.updateActive}>
+                    <ReactGridLayout ref={obj => this.rgl = obj} className="layout"{...this.getRGLProps()}>
                         {this.generateElement()}
                     </ReactGridLayout>
                 </LcDesignerBackground>

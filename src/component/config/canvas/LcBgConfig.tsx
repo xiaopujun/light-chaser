@@ -50,10 +50,8 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
     }
 
     render() {
-        console.log('render')
         // this.getImgSource();
         const {bgImgSource} = lcBgConfigStore;
-        console.log('lcBgConfigStore', lcBgConfigStore)
         return (
             <div className={'lc-canvas-config'}>
                 <div className={'lc-bg-upload'}>

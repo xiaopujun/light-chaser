@@ -17,7 +17,6 @@ class StructureDemo extends Component {
 
     componentDidMount() {
         let dom = document.getElementById('structureContent');
-        console.log("dom", dom)
         this.setState({
             structureContent: dom
         })

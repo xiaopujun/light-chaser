@@ -14,6 +14,7 @@ import {LCDesignerProps} from "../../types/LcDesignerType";
 import getChartsConfig from "../config/chart/ComponentSetInit";
 import LcBgConfig from "../config/canvas/LcBgConfig";
 import lcConfigContentStore from "./store/LcDesignerContentStore";
+import {observer} from "mobx-react";
 
 interface LcConfigContentProps {
     title?: string;
@@ -70,8 +71,9 @@ class LcConfigContent extends Component<LcConfigContentProps> {
                 return <>
                     <LcCompBaseStyleSet updateBaseStyle={this.props.updateBaseStyle}
                                         baseStyle={chartConfigs && chartConfigs[activeId]?.baseStyle}/>
-                    <ChartsConfig updateChartProps={this.props.updateChartProps}
-                                  chartProps={chartConfigs && chartConfigs[activeId]?.chartProps}/>
+                    {ChartsConfig && <ChartsConfig updateChartProps={this.props.updateChartProps}
+                                                   chartProps={chartConfigs && chartConfigs[activeId]?.chartProps}/>}
+
                 </>
             case 'data':
                 return <div>开发中...</div>
@@ -109,4 +111,4 @@ class LcConfigContent extends Component<LcConfigContentProps> {
     }
 }
 
-export default LcConfigContent;
+export default observer(LcConfigContent);
