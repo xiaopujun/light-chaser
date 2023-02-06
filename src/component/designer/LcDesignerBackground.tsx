@@ -21,7 +21,7 @@ class LcDesignerBackground extends Component<LcDesignerBackgroundProps> {
 
     onClick = (e: any) => {
         const {bgConfig} = lcDesignerContentStore!;
-        if (bgConfig.imgSource && bgConfig.imgSource != '')
+        if (bgConfig.imgSource && bgConfig.imgSource !== '')
             this.props.onClick && this.props.onClick(e);
     }
 

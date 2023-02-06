@@ -6,6 +6,10 @@ class LcRightMenuStore {
     }
 
     /**
+     * 右键菜单操作目标id
+     */
+    targetId = -1;
+    /**
      * 右键菜单显示状态
      */
     visible = false;
@@ -13,10 +17,6 @@ class LcRightMenuStore {
      * 右键菜单位置
      */
     position = [0, 0];
-    /**
-     * 右键菜单内容
-     */
-    menuList: any[] = [];
 
     updateVisible = (visible: boolean) => {
         this.visible = visible;
@@ -26,8 +26,8 @@ class LcRightMenuStore {
         this.position = position;
     }
 
-    setMenuList = (menuList: any[]) => {
-        this.menuList = menuList;
+    setTargetId = (targetId: number) => {
+        this.targetId = targetId;
     }
 
 }

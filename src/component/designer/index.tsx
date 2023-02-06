@@ -63,7 +63,6 @@ class LCDesigner extends Component<LCDesignerProps | any> {
 
     componentDidMount() {
         const {updateProjectConfig, setId, setChartConfigs, setLayoutConfigs} = lcDesignerContentStore;
-        const {updateDesignerStore} = this.props;
         const {action, screenName, screenWidth, screenHeight, id} = this.props.location.state;
         switch (action) {
             case 'add':

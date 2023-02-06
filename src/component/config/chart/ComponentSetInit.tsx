@@ -1,5 +1,4 @@
 import {lcCompSets} from "../../designer";
-import React from "react";
 
 
 export default function getChartsConfig(chartSetName: string) {

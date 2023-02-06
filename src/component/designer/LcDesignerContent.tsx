@@ -9,7 +9,6 @@ import {observer} from "mobx-react";
 import lcDesignerContentStore, {LcDesignerContentStore} from "./store/LcDesignerContentStore";
 import lcRightMenuStore from "./store/LcRightMenuStore";
 import LcDesignerBackground from "./LcDesignerBackground";
-import LcRightMenu from "./LcRightMenu";
 
 class LcDesignerContent extends React.PureComponent<LcDesignerContentStore | any> {
 
@@ -158,12 +157,13 @@ class LcDesignerContent extends React.PureComponent<LcDesignerContentStore | any
     }
 
     registerRightMenu = () => {
-        const {updateVisible, setPosition} = lcRightMenuStore;
+        const {updateVisible, setPosition, setTargetId} = lcRightMenuStore;
         document.addEventListener("contextmenu", (event: any) => {
             event.preventDefault();
             if (event.target.className.indexOf('react-grid-item') > -1) {
                 updateVisible && updateVisible(true);
                 setPosition([event.clientX, event.clientY]);
+                setTargetId && setTargetId(parseInt(event.target.id));
             } else {
                 updateVisible && updateVisible(false);
             }

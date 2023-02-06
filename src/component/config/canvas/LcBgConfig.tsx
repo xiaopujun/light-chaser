@@ -9,7 +9,6 @@ import LcRadio from "../../base/LcRadio";
 import {Radio} from "antd";
 import CfgItemBorder from "../../base/CfgItemBorder";
 import localforage from "localforage";
-import {observer} from "mobx-react";
 import lcDesignerContentStore from '../../designer/store/LcDesignerContentStore';
 
 interface LcBgConfigProps {
