@@ -168,12 +168,12 @@ class LcDesignerContent extends React.PureComponent<LcDesignerContentStore | any
                 updateVisible && updateVisible(false);
             }
         });
-        document.addEventListener("click", (event: any) => {
-                const {visible} = lcRightMenuStore;
-                if (visible && event.button === 0)
-                    updateVisible(false);
-            }
-        );
+        // document.addEventListener("mousedown", (event: any) => {
+        //         const {visible} = lcRightMenuStore;
+        //         if (visible && event.button === 0)
+        //             updateVisible(false);
+        //     }
+        // );
     }
 
     render() {
