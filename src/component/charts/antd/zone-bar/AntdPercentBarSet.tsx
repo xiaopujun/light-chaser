@@ -12,6 +12,7 @@ import ColorSelector from "../../../config/chart/antd/atomic_components/ColorSel
 import CfgItemBorder from "../../../base/CfgItemBorder";
 import LCNumberInput from "../../../base/LCNumberInput";
 import Accordion from "../../../base/Accordion";
+import LcConfigBlock from "../../../base/LcConfigBlock";
 
 interface AntdBarSetProps {
     updateChartProps?: (data: any) => void;
@@ -46,14 +47,16 @@ class AntdPercentBarSet extends Component<AntdBarSetProps> {
             <div className={'elem-chart-config'}>
                 {/*图形填充色设置*/}
                 <Accordion title={'图形'}>
-                    <LcConfigItem title={'填充色'}>
-                        <ColorSelector colors={colors}/>
-                    </LcConfigItem>
-                    <LcConfigItem title={'条形宽度'}>
-                        <CfgItemBorder width={'50%'}>
-                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
-                        </CfgItemBorder>
-                    </LcConfigItem>
+                    <div style={{display: 'flex', flexWrap: 'wrap'}}>
+                        <LcConfigBlock title={'填充色'}>
+                            <ColorSelector colors={colors}/>
+                        </LcConfigBlock>
+                        <LcConfigBlock title={'条形宽度'}>
+                            <CfgItemBorder width={'100%'}>
+                                <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
+                            </CfgItemBorder>
+                        </LcConfigBlock>
+                    </div>
                 </Accordion>
                 <Legend {...calculateLegendConfig(this.props.chartProps)}
                         chartProps={chartProps}
