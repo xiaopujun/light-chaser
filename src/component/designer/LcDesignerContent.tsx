@@ -29,11 +29,14 @@ class LcDesignerContent extends React.PureComponent<LcDesignerContentStore | any
     }
 
     updateActive = (e: any) => {
-        //阻止事件冒泡
-        e.stopPropagation();
-        let {id: elemId, dataset} = e.currentTarget;
+        let {id: elemId, dataset} = e.target;
+        if (!elemId) {
+            elemId = e.currentTarget.id;
+            dataset = e.currentTarget.dataset;
+        }
         const {updateActive} = lcDesignerContentStore;
         updateActive && updateActive({id: parseInt(elemId), type: dataset.type});
+        return false;
     }
 
     /**
@@ -42,13 +45,14 @@ class LcDesignerContent extends React.PureComponent<LcDesignerContentStore | any
     generateElement = () => {
         const {layoutConfigs, updateActive} = lcDesignerContentStore!;
         if (layoutConfigs && layoutConfigs.length > 0) {
+
             return layoutConfigs.map((item: any) => {
                 let Chart: any = getChartsTemplate(item.name);
                 const chartConfig = this.calculateChartConfig(item.id);
                 return (
                     <div key={item?.id + ''} className={'lc-comp-item'}
                          id={item.id} data-type={chartConfig?.baseInfo?.type}
-                         onClick={this.updateActive}
+                        // onClick={this.updateActive}
                          style={{width: '100%', height: '100%'}}>
                         <Chart elemId={item?.id}
                                chartConfig={chartConfig}
@@ -158,6 +162,13 @@ class LcDesignerContent extends React.PureComponent<LcDesignerContentStore | any
 
     registerRightMenu = () => {
         const {updateVisible, setPosition, setTargetId} = lcRightMenuStore;
+        document.addEventListener("click", (event: any) => {
+                console.log("click");
+                const {visible} = lcRightMenuStore;
+                if (visible && event.button === 0)
+                    updateVisible(false);
+            }
+        );
         document.addEventListener("contextmenu", (event: any) => {
             event.preventDefault();
             if (event.target.className.indexOf('react-grid-item') > -1) {
@@ -168,19 +179,14 @@ class LcDesignerContent extends React.PureComponent<LcDesignerContentStore | any
                 updateVisible && updateVisible(false);
             }
         });
-        // document.addEventListener("mousedown", (event: any) => {
-        //         const {visible} = lcRightMenuStore;
-        //         if (visible && event.button === 0)
-        //             updateVisible(false);
-        //     }
-        // );
+
     }
 
     render() {
         return (
             <DragScaleProvider {...this.getDragScaleProviderProps()}>
                 <LcDesignerBackground onClick={this.updateActive} ref={obj => this.lcbg = obj}>
-                    <ReactGridLayout ref={obj => this.rgl = obj} className="layout"{...this.getRGLProps()}>
+                    <ReactGridLayout ref={obj => this.rgl = obj} className="layout" {...this.getRGLProps()}>
                         {this.generateElement()}
                     </ReactGridLayout>
                 </LcDesignerBackground>

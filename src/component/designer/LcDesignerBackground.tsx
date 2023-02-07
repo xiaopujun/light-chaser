@@ -31,6 +31,7 @@ class LcDesignerBackground extends Component<LcDesignerBackgroundProps> {
                 height: projectConfig.screenHeight,
                 width: projectConfig.screenWidth,
                 backgroundColor: '#131e26',
+                backgroundSize: '100% 100%',
             }
             if (bgImg)
                 bgConfigProps['backgroundImage'] = `url(${this.state.bgImg})`;
