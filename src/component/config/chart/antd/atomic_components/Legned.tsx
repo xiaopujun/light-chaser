@@ -6,6 +6,7 @@ import LcConfigItem from "../../../../base/LcConfigItem";
 import LcSelect from "../../../../base/LCSelect";
 import {Select} from "antd";
 import CfgItemBorder from "../../../../base/CfgItemBorder";
+import LcConfigBlock from "../../../../base/LcConfigBlock";
 
 const {Option} = Select;
 
@@ -179,37 +180,40 @@ class Legend extends Component<LegendProps> {
     render() {
         return (
             <Accordion title={'图例'} showSwitch={true}>
-                <LcConfigItem title={'位置'}>
-                    <CfgItemBorder width={'50%'}>
-                        <LcSelect onChange={this.legendPositionChanged}>
-                            <Option value={"left-top"}>左上</Option>
-                            <Option value={"left"}>正左</Option>
-                            <Option value={"left-bottom"}>左下</Option>
-                            <Option value={"top-left"}>上左</Option>
-                            <Option value={"top"}>正上</Option>
-                            <Option value={"top-right"}>上右</Option>
-                            <Option value={"right-top"}>右上</Option>
-                            <Option value={"right"}>正右</Option>
-                            <Option value={"right-bottom"}>右下</Option>
-                            <Option value={"bottom-left"}>下左</Option>
-                            <Option value={"bottom"}>正下</Option>
-                            <Option value={"bottom-right"}>下右</Option>
-                        </LcSelect>
-                    </CfgItemBorder>
-                </LcConfigItem>
-                <LcConfigItem title={'布局'}>
-                    <CfgItemBorder width={'50%'}>
-                        <LcSelect>
-                            <Option>横向</Option>
-                            <Option>纵向</Option>
-                        </LcSelect>
-                    </CfgItemBorder>
-                </LcConfigItem>
-                <LcConfigItem title={'颜色'}>
-                    <CfgItemBorder width={'50%'}>
-                        <BaseColorPicker style={{width: '100%', borderRadius: 2}} showText={true}/>
-                    </CfgItemBorder>
-                </LcConfigItem>
+                <div style={{display: 'flex', flexWrap: 'wrap'}}>
+                    <LcConfigBlock title={'位置'}>
+                        <CfgItemBorder width={'100%'}>
+                            <LcSelect onChange={this.legendPositionChanged}>
+                                <Option value={"left-top"}>左上</Option>
+                                <Option value={"left"}>正左</Option>
+                                <Option value={"left-bottom"}>左下</Option>
+                                <Option value={"top-left"}>上左</Option>
+                                <Option value={"top"}>正上</Option>
+                                <Option value={"top-right"}>上右</Option>
+                                <Option value={"right-top"}>右上</Option>
+                                <Option value={"right"}>正右</Option>
+                                <Option value={"right-bottom"}>右下</Option>
+                                <Option value={"bottom-left"}>下左</Option>
+                                <Option value={"bottom"}>正下</Option>
+                                <Option value={"bottom-right"}>下右</Option>
+                            </LcSelect>
+                        </CfgItemBorder>
+                    </LcConfigBlock>
+                    <LcConfigBlock title={'布局'}>
+                        <CfgItemBorder width={'100%'}>
+                            <LcSelect>
+                                <Option>横向</Option>
+                                <Option>纵向</Option>
+                            </LcSelect>
+                        </CfgItemBorder>
+                    </LcConfigBlock>
+                    <LcConfigBlock title={'颜色'}>
+                        <CfgItemBorder width={'100%'}>
+                            <BaseColorPicker style={{width: '100%', borderRadius: 2}} showText={true}/>
+                        </CfgItemBorder>
+                    </LcConfigBlock>
+                </div>
+
             </Accordion>
         )
     }

@@ -38,7 +38,7 @@ class AntdPercentAreaSet extends Component<AntdAreaSetProps> {
                     </LcConfigItem>
                     <LcConfigItem title={'透明度'}>
                         <CfgItemBorder width={'50%'}>
-                            <LCNumberInput/>
+                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
                         </CfgItemBorder>
                     </LcConfigItem>
                 </Accordion>

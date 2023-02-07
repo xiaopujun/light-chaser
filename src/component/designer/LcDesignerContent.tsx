@@ -29,6 +29,7 @@ class LcDesignerContent extends React.PureComponent<LcDesignerContentStore | any
     }
 
     updateActive = (e: any) => {
+        //todo 优化,事件处理时目前元素参数可能会存在偏差
         let {id: elemId, dataset} = e.target;
         if (!elemId) {
             elemId = e.currentTarget.id;

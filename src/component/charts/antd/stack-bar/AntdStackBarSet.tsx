@@ -51,7 +51,7 @@ class AntdStackBarSet extends Component<AntdBarSetProps> {
                     </LcConfigItem>
                     <LcConfigItem title={'条形宽度'}>
                         <CfgItemBorder width={'50%'}>
-                            <LCNumberInput/>
+                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
                         </CfgItemBorder>
                     </LcConfigItem>
                 </Accordion>

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import './style/LcConfigBlock.less';
 
 export enum LayoutMode {
     /**
