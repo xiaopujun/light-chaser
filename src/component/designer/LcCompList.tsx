@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {LineOutlined} from "@ant-design/icons";
 import {Input} from "antd";
 import './style/LcCompList.less';
+import {lcCompInits} from "./index";
+import LCTextInput from "../base/LCTextInput";
 
 interface LcCompListProps {
     data?: Array<any>;
@@ -39,12 +41,21 @@ class LcCompList extends Component<LcCompListProps> {
             let chartInfo: any = tempCharts[i];
             const {name, value} = chartInfo;
             let compObj = JSON.stringify({chartName: value, type: name});
+            let lcCompInit: any = lcCompInits[value + "Init"];
+            let chartImg = lcCompInit.getChartImg();
             chartDom.push(
                 <div draggable={true} key={i + ''}
                      onDragStart={(e) => {
                          e.dataTransfer.setData('compObj', compObj);
-                     }}
-                     className={'list-item droppable-element'}>{name}</div>
+                     }} className={'list-item droppable-element'}>
+                    <div className={'item-header'}>
+                        <div className={'item-name'}>{name}</div>
+                        <div className={'item-type'}>Antd</div>
+                    </div>
+                    <div className={'item-img'}>
+                        <img alt={'bar'}  src={chartImg}/>
+                    </div>
+                </div>
             )
         }
         return chartDom;
