@@ -52,8 +52,8 @@ class LcCompList extends Component<LcCompListProps> {
                         <div className={'item-name'}>{name}</div>
                         <div className={'item-type'}>Antd</div>
                     </div>
-                    <div className={'item-img'}>
-                        <img alt={'bar'}  src={chartImg}/>
+                    <div className={'item-content'}>
+                        <div className={'item-img'} style={{backgroundImage: `url(${chartImg})`}}/>
                     </div>
                 </div>
             )
