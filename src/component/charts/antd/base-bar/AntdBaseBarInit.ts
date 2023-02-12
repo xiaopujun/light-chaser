@@ -1,4 +1,5 @@
 import BaseInit, {BaseInfo} from "../../interface/BaseInit";
+import barImg from './bar.png';
 
 export default class AntdBaseBarInit implements BaseInit {
 
@@ -66,6 +67,10 @@ export default class AntdBaseBarInit implements BaseInit {
                 type: "bar"
             },
         };
+    }
+
+    getChartImg(): any {
+        return barImg;
     }
 
 }

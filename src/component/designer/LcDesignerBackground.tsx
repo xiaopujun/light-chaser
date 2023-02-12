@@ -33,8 +33,9 @@ class LcDesignerBackground extends Component<LcDesignerBackgroundProps> {
                 backgroundColor: '#131e26',
                 backgroundSize: '100% 100%',
             }
+            //todo 优化，图片不能全部加载到内存中，要通过链接方式渲染背景图
             if (bgImg)
-                bgConfigProps['backgroundImage'] = `url(${this.state.bgImg})`;
+                bgConfigProps['backgroundImage'] = `url(${bgImg})`;
             return bgConfigProps;
         }
     }

@@ -8,6 +8,11 @@ export default interface BaseInit {
      * 获取组件初始化配置
      */
     getInitConfig(): Object;
+
+    /**
+     * 获取组件图片缩略图
+     */
+    getChartImg(): any;
 }
 
 export interface BaseInfo {

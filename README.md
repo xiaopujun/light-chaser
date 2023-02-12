@@ -1,35 +1,47 @@
-# 一、简介
+# 简介
 
-这是一款数据可视化大屏设计器
+Light Chaser(追光者) 是一款基于React生态的大屏数据可视化设计器。通过简单的拖拽，即可生成漂亮、美观的可视化数据大屏和看板。
 
-# 二、启动
+她具有以下特点：
+
+- 高性能：通过React的特性，最大程度的减少Dom操作，通过mobx最大程度减少多余渲染。通过indexedDB，提高本地操作性能
+- 高扩展：只需按照约定实现对应接口，由此创建的React组件即可自动无缝接入LC设计器
+- 高可定制：自定义组件的配置项可有开发者完全自定义设计
+- 前后端分离：本项目100%前后端分离，极使没有后端服务。LC设计器也可以像本地应用一样完美运行
+
+# 如何使用
+
+## 克隆
 
 ```shell
 git clone https://gitee.com/xiaopujun/light-chaser.git
+```
 
+## 安装
+
+```shell
 yarn install
+```
 
+## 启动
+
+```shell
 yarn start
 ```
 
-# 三、界面
+# 效果
 
-### 图1
+![](D:\dev_project\light-chaser\preview\lc07.png)
 
-![img_1.png](img_1.png)
+![](D:\dev_project\light-chaser\preview\lc01.jpg)
 
-### 图2
+![](D:\dev_project\light-chaser\preview\lc02.jpg)
 
-![WechatIMG29.jpeg](https://s2.loli.net/2022/05/19/OzpPS4LhGAEik5x.jpg)
+![](D:\dev_project\light-chaser\preview\lc03.jpg)
 
-### 图3
+![](D:\dev_project\light-chaser\preview\lc04.jpg)
 
-![截屏2022-02-20 下午10.20.15.png](https://s2.loli.net/2022/05/19/dz18wOxfGDIMKJZ.png)
+![](D:\dev_project\light-chaser\preview\lc05.jpg)
 
-### 图4
+![](D:\dev_project\light-chaser\preview\lc06.jpg)
 
-![截屏2022-02-19 下午8.08.14.png](https://s2.loli.net/2022/05/19/eoVrjH96WaZJTNw.png)
-
-### 图5
-
-![img.png](img.png)
