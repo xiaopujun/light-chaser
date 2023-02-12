@@ -26,7 +26,7 @@ class ColumnWidth extends Component<ColumnWidthProp> {
                     <label className={'lc-config-item-label'}>条形宽度：</label>
                     <div className={'lc-config-item-value'}>
                         <span className={'lc-input-container'}>
-                            <LCNumberInput onChange={this.columnWidthChanged}/>
+                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
                             <label>&nbsp;px</label>
                         </span>
                     </div>

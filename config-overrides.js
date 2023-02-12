@@ -1,6 +1,5 @@
 const {override, addLessLoader, adjustStyleLoaders, addPostcssPlugins} = require('customize-cra');
 
-
 module.exports = override(
     addLessLoader({
         strictMath: true,

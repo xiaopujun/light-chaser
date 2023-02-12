@@ -1,55 +1,29 @@
 import React, {Component} from 'react';
-import LcCompConfigContainer from "../config/LcCompConfigContainer";
-import './style/Right.less';
-import {LCDesignerProps} from "../../types/LcDesignerType";
-import LcGlobalSet from "../config/global/LcGlobalSet";
+import './style/LcDesignerRight.less';
+import LcConfigMenus from "./LcConfigMenus";
+import LcConfigContent from "./LcConfigContent";
 
-interface LcDesignerRightProps {
-    LCDesignerStore?: LCDesignerProps;
-    updateRightVisible?: (data?: any) => void;
-    updateActive?: (data?: any) => void;
-    updateBaseStyle?: (data?: any) => void;
-    updateChartProps?: (data?: any) => void;
-    updateBaseInfo?: (data?: any) => void;
-    updateGlobalSet?: (data?: any) => void;
-}
+class LcDesignerRight extends Component<any> {
 
-/**
- * 右滑框外壳组件
- * @description:用于展示右滑框，控制右滑框的显示与隐藏
- */
-export default class LcDesignerRight extends Component<LcDesignerRightProps, any> {
-
-    onClose = () => {
-        const {updateRightVisible} = this.props;
-        updateRightVisible && updateRightVisible();
+    state = {
+        activeMenu: undefined,
+        configVisible: false
     }
 
+    changeMenu = (menu: string) => this.setState({activeMenu: menu, configVisible: true})
+
+    configVisibleChanged = (visible: boolean) => this.setState({configVisible: visible})
+
     render() {
-        const {
-            LCDesignerStore,
-            updateActive,
-            updateBaseStyle,
-            updateChartProps,
-            updateBaseInfo,
-            updateGlobalSet
-        } = this.props;
-        const {activated, chartConfigs, globalSet} = LCDesignerStore!;
-        const chartConfig = chartConfigs[activated.id];
+        const {activeMenu, configVisible} = this.state;
         return (
-            <div className={'lc-config-panel'} style={{height: window.innerHeight - 64}}>
-                {activated.id >= 0 ?
-                    <LcCompConfigContainer {...{
-                        updateActive,
-                        updateBaseStyle,
-                        chartConfig,
-                        activated,
-                        updateChartProps,
-                        updateBaseInfo
-                    }} /> :
-                    <LcGlobalSet updateGlobalSet={updateGlobalSet} globalSet={globalSet}/>
-                }
-            </div>
+            <>
+                <LcConfigMenus {...this.props} onChange={this.changeMenu}/>
+                <LcConfigContent visible={configVisible} onClose={this.configVisibleChanged}
+                                 activeMenu={activeMenu} {...this.props}/>
+            </>
         );
     }
 }
+
+export default LcDesignerRight;

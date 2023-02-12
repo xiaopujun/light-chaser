@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import ColorPicker from "../../../../color_picker/BaseColorPicker";
-import CfgGroup from "../../../base/CfgGroup";
+import './style/RightAngleCoordinates.less';
+import Accordion from "../../../../base/Accordion";
+import AxisConfig from "../../../base/AxisConfig";
 
 
 interface RightAngleCoordinatesProp {
@@ -290,7 +291,16 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
     }
 
     render() {
-        return <CfgGroup items={this.generateRightAngleCoordinatesSet()}/>;
+        return (
+            <>
+                <Accordion title={'X轴'} showSwitch={true}>
+                    <AxisConfig/>
+                </Accordion>
+                <Accordion title={'Y轴'} showSwitch={true}>
+                    <AxisConfig/>
+                </Accordion>
+            </>
+        );
     }
 }
 

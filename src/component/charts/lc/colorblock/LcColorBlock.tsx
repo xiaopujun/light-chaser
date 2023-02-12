@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import EditTools from "../../../edit-tool";
+import LcCompBg from "../../LcCompBg";
 
 interface LcColorBlockProps {
     elemId?: string;
@@ -12,12 +12,12 @@ interface LcColorBlockProps {
  */
 class LcColorBlock extends Component<LcColorBlockProps> {
     render() {
-        const {chartConfig, elemId} = this.props;
+        const {chartConfig} = this.props;
         const {baseStyle} = chartConfig;
         return (
-            <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-                <EditTools {...this.props} elemId={elemId}/>
-            </div>
+            <LcCompBg style={baseStyle}>
+                <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}/>
+            </LcCompBg>
         );
     }
 }

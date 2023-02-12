@@ -1,0 +1,41 @@
+.lc-config-menu {
+  height: 100%;
+
+  .menu-list {
+    width: 35px;
+    height: 100%;
+
+    .menu-item {
+      width: 100%;
+      padding: 5px;
+      display: flex;
+      cursor: pointer;
+      color: rgba(198, 239, 255, 0.84);
+      font-size: 12px;
+      align-items: center;
+      writing-mode: vertical-lr;
+      margin-bottom: 5px;
+      letter-spacing: 6px;
+      transition: color 0.5s, background-color 0.5s, border-left-color 0.5s;
+      border-left-style: solid;
+      border-left-width: 3px;
+      border-left-color: rgba(255, 28, 28, 0);
+
+      .item-icon {
+        font-size: 15px;
+        margin-bottom: 7px;
+      }
+
+      .item-content {
+        position: relative;
+        left: -2px;
+      }
+    }
+
+    .menu-item:hover {
+      color: #62f0ff;
+      border-left-color: #62f0ff;
+      background-color: rgba(44, 246, 255, 0.27);
+    }
+  }
+}

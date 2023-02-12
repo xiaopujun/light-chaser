@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import './style/CfgItem.less';
 import {getCfgComp} from "../CfgComps";
-import {CfgItemProps} from "../../../type/ConfigItemTypes";
+import {CfgItemProps} from "../../../types/ConfigItemTypes";
 
 class CfgItem extends Component<CfgItemProps> {
     render() {

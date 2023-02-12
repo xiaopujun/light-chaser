@@ -1,5 +1,59 @@
 .lc-padding-config {
-  .lc-config-item-value {
-    display: flex;
+  width: 200px;
+  height: 75px;
+  position: relative;
+
+  .lc-padding-content {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+
+    .lc-padding-top {
+      display: flex;
+      height: 25px;
+      line-height: 25px;
+      justify-content: center;
+      position: relative;
+      bottom: 5px;
+    }
+
+    .lc-padding-middle {
+      display: flex;
+      justify-content: space-between;
+
+      .lc-padding-left {
+        width: 50px;
+        height: 25px;
+        line-height: 25px;
+        display: flex;
+        color: #46eeff;
+      }
+
+      .lc-padding-center {
+        cursor: pointer;
+        width: 110px;
+        height: 25px;
+        border: 1px solid #01fffd;
+        border-radius: 2px;
+      }
+
+      .lc-padding-right {
+        width: 50px;
+        height: 25px;
+        display: flex;
+        position: relative;
+        line-height: 25px;
+        left: 5px;
+      }
+    }
+
+    .lc-padding-bottom {
+      height: 25px;
+      display: flex;
+      line-height: 25px;
+      justify-content: center;
+    }
+
   }
+
 }

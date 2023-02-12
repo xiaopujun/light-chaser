@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
-import CfgGroup from "../base/CfgGroup";
+import LCTextInput from "../../base/LCTextInput";
+import LcConfigItem from "../../base/LcConfigItem";
+import CfgItemBorder from "../../base/CfgItemBorder";
+import './LcEmBaseInfo.less';
 
 interface LcEmBaseInfoProps {
     baseInfo?: any;
@@ -21,41 +24,29 @@ class LcEmBaseInfo extends Component<LcEmBaseInfoProps> {
         updateBaseInfo && updateBaseInfo({desc})
     }
 
-    generateConfigData = () => {
-        const {baseInfo: {id, name = '', desc = '', type}} = this.props;
-        return [
-            {
-                label: 'ID号',
-                comp: "",
-                config: {value: id},
-            },
-            {
-                label: '名称',
-                comp: "LcTextInput",
-                config: {
-                    value: name,
-                    onChange: this.changeName
-                },
-            },
-            {
-                label: '描述',
-                comp: "LcTextInput",
-                config: {
-                    value: desc,
-                    onChange: this.changeDesc
-                },
-            },
-            {
-                label: '类型',
-                comp: "LcTextInput",
-                config: {value: type},
-            },
-        ]
-    }
-
     render() {
-        const configData = this.generateConfigData();
-        return <CfgGroup items={configData}/>
+        const {baseInfo = {}} = this.props;
+        const {id = -1, name = '', desc = '', type = ''} = baseInfo;
+        return (
+            <div className={'lc-base-info'}>
+                <LcConfigItem title={'ID号'}>
+                    <div className={'item-value'}>{id}</div>
+                </LcConfigItem>
+                <LcConfigItem title={'名称'}>
+                    <CfgItemBorder width={'50%'}>
+                        <LCTextInput style={{width: '100%', textAlign: 'right'}} defaultValue={name}/>
+                    </CfgItemBorder>
+                </LcConfigItem>
+                <LcConfigItem title={'描述'}>
+                    <CfgItemBorder width={'50%'}>
+                        <LCTextInput style={{width: '100%', textAlign: 'right'}} defaultValue={desc}/>
+                    </CfgItemBorder>
+                </LcConfigItem>
+                <LcConfigItem title={'类型'}>
+                    <div className={'item-value'}>{type}</div>
+                </LcConfigItem>
+            </div>
+        )
     }
 }
 

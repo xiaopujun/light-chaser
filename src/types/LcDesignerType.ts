@@ -1,29 +1,18 @@
 /**
- * redux-action类型
- */
-import {kebabCase} from "lodash";
-
-export interface Action {
-    type: string | number;  //操作
-    data: any;     //数据
-}
-
-
-/**
  * 激活组件参数
  */
-interface ActiveProps {
+export interface ActiveProps {
     /**
      * 组件id
      */
-    id: number;
+    id?: number;
     /**
      * 组件类型
      */
-    type: string;
+    type?: string;
 }
 
-interface BaseInfo {
+export interface BaseInfo {
     id?: string | number;
     name?: string;
     type?: string;
@@ -39,7 +28,6 @@ export interface BaseStyle {
     borderRadius?: string;
     borderWidth?: string;
 }
-
 
 /**
  * 图标属性配置配置
@@ -58,54 +46,142 @@ export interface ChartConfigProps {
 /**
  * 图表属性列表配置配置
  */
-interface ChartConfigsProps {
+export interface ChartConfigsProps {
     [key: string | number]: ChartConfigProps;
 }
 
-interface GlobalSetProps {
-    /**
-     * 数据存储方式 local(本地）server（远程服务）
-     */
-    saveType: string,
-    /**
-     * 屏幕比例
-     */
-    screenRatio: string,
-    /**
-     * 大屏名称
-     */
-    screenName: string,
-    /**
-     * 大屏宽度
-     */
-    screenWidth: number,
-    /**
-     * 大屏高度
-     */
-    screenHeight: number,
-    /**
-     * 元素间隔距离
-     */
-    elemInterval: number,
-    /**
-     * 大屏列划分个数
-     */
-    columns: number,
+export interface CanvasSetProps {
     /**
      * 基准高度
      */
-    baseLineHeight: number,
+    baseHeight?: number;
+    /**
+     * 列个数
+     */
+    columns?: number;
+    /**
+     * 元素间隔
+     */
+    elemInterval?: number;
+    /**
+     * 比例
+     */
+    canvasScale?: [number, number];
+}
+
+export enum BgMode {
+    /**
+     * 无
+     */
+    NONE,
+    /**
+     * 颜色
+     */
+    COLOR,
+    /**
+     * 图片
+     */
+    IMG,
+}
+
+export enum BgFillType {
+    /**
+     * 无
+     */
+    NONE,
+    /**
+     * X轴
+     */
+    X,
+    /**
+     * Y轴
+     */
+    Y,
+}
+
+export enum BgColorMode {
+    /**
+     * 单色
+     */
+    SINGLE,
+    /**
+     * 线性渐变
+     */
+    LINEAR_GRADIENT,
+    /**
+     * 径向渐变
+     */
+    RADIAL_GRADIENT
+}
+
+export interface BgConfig {
+    /**
+     * 背景模式
+     */
+    bgMode?: BgMode;
+    /**
+     * 图片尺寸
+     */
+    imgSize?: [number, number];
+    /**
+     * 图片源数据
+     */
+    imgSource?: any;
+    /**
+     * 填充方式
+     */
+    bgFillType?: BgFillType;
+    /**
+     * 颜色模式
+     */
+    colorMode?: BgColorMode;
+    /**
+     * 背景色
+     */
+    color?: string;
+}
+
+export interface ProjectConfig {
+    /**
+     * 大屏名称
+     */
+    screenName?: string;
+    /**
+     * 大屏描述
+     */
+    screenDes?: string;
+    /**
+     * 大屏状态
+     */
+    screenState?: string;
+    /**
+     * 大屏宽度
+     */
+    screenWidth?: number;
+    /**
+     * 大屏高度
+     */
+    screenHeight?: number;
+    /**
+     * 创建时间
+     */
+    createTime?: string;
+    /**
+     * 更新时间
+     */
+    updateTime?: string;
     /**
      * 元素个数
      */
-    elemCount: number,
+    elemCount?: number
 }
 
-interface RightDialogProps {
-    visible: boolean;
-    title?: string;
+export interface SystemConfig {
+    /**
+     * 数据存储方式
+     */
+    saveType?: string;
 }
-
 
 /**
  * 布局设计器，store类型定义
@@ -116,13 +192,25 @@ export interface LCDesignerProps {
      */
     id?: number,
     /**
-     * 全局配置
-     */
-    globalSet: GlobalSetProps,
-    /**
      * 激活状态属性
      */
     activated: ActiveProps;
+    /**
+     * 背景设置
+     */
+    bgConfig: BgConfig | undefined | null;
+    /**
+     * 画布设置
+     */
+    canvasConfig: CanvasSetProps,
+    /**
+     * 系统配置
+     */
+    systemConfig: SystemConfig,
+    /**
+     * 项目设置
+     */
+    projectConfig: ProjectConfig;
     /**
      * 图表配置
      */
@@ -131,8 +219,4 @@ export interface LCDesignerProps {
      * 布局配置
      */
     layoutConfigs: Array<any>;
-    /**
-     * 右滑框配置
-     */
-    rightDialog: RightDialogProps;
 }

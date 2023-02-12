@@ -1,23 +1,30 @@
-select {
-  background-color: transparent;
-  outline: none;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  border: 0 solid #008393;
-  border-bottom-width: 2px;
-  ransition: border-color 0.5s;
-  -webkit-transition: border-color 0.5s;
-  min-width: 45px;
-  text-align: center;
+.lc-select {
+  width: 100%;
 
-  option {
-    background-color: rgba(0, 68, 99);
+  .ant-select {
+    width: inherit;
   }
+
+  .ant-select-selector {
+    background-color: rgba(0, 0, 0, 0) !important;
+    border: none !important;
+    color: #01fffd !important;
+  }
+
 }
 
-select:hover {
-  border-color: #00ebff;
-  ransition: border-color 0.5s;
-  -webkit-transition: border-color 0.5s;
+.ant-select-item {
+  color: #00cdca !important;
 }
+
+.ant-select-dropdown {
+  background: #033e59 !important;
+
+}
+
+.ant-select-item-option-active {
+  background: #006e8b !important;
+  color: #68ffff !important;
+
+}
+

@@ -1,37 +1,24 @@
-import React, {Component} from 'react';
+import React, {Component, InputHTMLAttributes} from 'react';
 import './style/LCNumberInput.less';
 
-interface LCNumberInputProps {
-    id?: string;
-    onChange?: (data: number, id: string) => void;
-    step?: number;
-    max?: number;
-    min?: number;
-    width?: number;
-    value?: number;
-    readonly?: boolean;
-}
-
-export default class LCNumberInput extends Component<LCNumberInputProps> {
+export default class LCNumberInput extends Component<React.InputHTMLAttributes<HTMLInputElement & InputHTMLAttributes<any>>> {
 
     onChange = (e: any) => {
-        const {onChange} = this.props;
-        onChange && onChange(e?.target?.value, e?.target?.id);
+        // const {onChange} = this.props;
+
     }
 
     render() {
-        const {id, step, max, min, width, value, readonly = false} = this.props;
+        const {style} = this.props;
         return (
-            <div className={'lc-number-input'} style={{width}}>
-                <input id={id}
-                       style={{width}}
-                       value={value}
+            <div className={'lc-number-input'} style={style}>
+                <input {...this.props}
                        onChange={this.onChange}
-                       readOnly={readonly}
-                       type={'number'} {...{
-                    step, max, min
-                }}
-                />
+                       type={'number'}/>
+                <span className="bottom"/>
+                <span className="right"/>
+                <span className="top"/>
+                <span className="left"/>
             </div>
         );
     }

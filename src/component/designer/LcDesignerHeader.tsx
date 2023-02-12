@@ -5,8 +5,10 @@ import {
     GithubOutlined,
     GoogleOutlined,
     PhoneOutlined,
+    QuestionCircleOutlined,
     SaveOutlined,
-    SettingOutlined,
+    SettingFilled,
+    SkinFilled,
     SnippetsOutlined
 } from "@ant-design/icons";
 import {RouteComponentProps, withRouter} from "react-router-dom";
@@ -23,13 +25,13 @@ class LcDesignerHeader extends Component<LcDesignerHeaderProps | any> {
     updateRouteState = (id: number) => {
         const {location, LCDesignerStore} = this.props;
         const {action} = location.state;
-        let {globalSet} = LCDesignerStore!;
+        let {canvasConfig} = LCDesignerStore!;
         if (action === 'add') {
             this.props.history.replace("/designer", {
                 ...location.state, ...{
                     action: 'update',
                     id,
-                    globalSet,
+                    canvasConfig,
                 }
             });
         }
@@ -37,8 +39,8 @@ class LcDesignerHeader extends Component<LcDesignerHeaderProps | any> {
 
     save = (e: any) => {
         const {LCDesignerStore, updateDesignerStore} = this.props;
-        let {id = -1, globalSet} = LCDesignerStore;
-        const {saveType} = globalSet;
+        let {id = -1, canvasConfig} = LCDesignerStore;
+        const {saveType} = canvasConfig;
         if (saveType === 'local') {
             if (id === -1) {
                 id = localSave(LCDesignerStore);
@@ -58,20 +60,56 @@ class LcDesignerHeader extends Component<LcDesignerHeaderProps | any> {
         this.props.history.push('/view', {id: LCDesignerStore.id});
     }
 
+    questionReport = () => {
+        window.open("https://gitee.com/xiaopujun/light-chaser/issues");
+    }
+
+    contactMe = () => {
+        window.open("https://gitee.com/xiaopujun");
+    }
+
+    github = () => {
+        window.open("https://github.com/xiaopujun/light-chaser");
+    }
+
+    gitee = () => {
+        window.open("https://gitee.com/xiaopujun/light-chaser");
+    }
+
     render() {
         return (
             <div className={'designer-header'}>
                 <div className={'header-left'}>
-                    <div className={'header-title'}>LIGHT CHASER 数据大屏设计器</div>
+                    <div className={'header-title'}>LC DESIGNER</div>
                 </div>
                 <div className={'header-right'}>
-                    <div className={'right-item'} onClick={this.save}><SaveOutlined/>&nbsp;保存</div>
-                    <div className={'right-item'} onClick={this.preview}><EyeOutlined/>&nbsp;预览</div>
-                    <div className={'right-item'}><SnippetsOutlined/>&nbsp;文档</div>
-                    <div className={'right-item'}><SettingOutlined/>&nbsp;全局设置</div>
-                    <div className={'right-item'}><PhoneOutlined/>&nbsp;联系我</div>
-                    <div className={'right-item'}><GithubOutlined/>&nbsp;github</div>
-                    <div className={'right-item'}><GoogleOutlined/>&nbsp;gitee</div>
+                    <div className={'right-item'}>
+                        <span className={'item-span'}><SettingFilled/>&nbsp;系统设置</span>
+                    </div>
+                    <div className={'right-item'}>
+                        <span className={'item-span'}><SkinFilled/>&nbsp;主题</span>
+                    </div>
+                    <div className={'right-item'} onClick={this.save}>
+                        <span className={'item-span'}><SaveOutlined/>&nbsp;保存</span>
+                    </div>
+                    <div className={'right-item'} onClick={this.preview}>
+                        <span className={'item-span'}><EyeOutlined/>&nbsp;预览</span>
+                    </div>
+                    <div className={'right-item'}>
+                        <span className={'item-span'}><SnippetsOutlined/>&nbsp;文档</span>
+                    </div>
+                    <div className={'right-item'}>
+                        <span className={'item-span'}><QuestionCircleOutlined/>&nbsp;问题上报</span>
+                    </div>
+                    <div className={'right-item'}>
+                        <span className={'item-span'}><PhoneOutlined/>&nbsp;联系我</span>
+                    </div>
+                    <div className={'right-item'}>
+                        <span className={'item-span'}><GithubOutlined/>&nbsp;github</span>
+                    </div>
+                    <div className={'right-item'}>
+                        <span className={'item-span'}><GoogleOutlined/>&nbsp;gitee</span>
+                    </div>
                 </div>
             </div>
         );

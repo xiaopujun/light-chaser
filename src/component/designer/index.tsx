@@ -1,27 +1,23 @@
 import React, {Component} from 'react';
-import {Layout} from 'antd';
-import {connect} from "react-redux";
-import LcDesignerLeft from "./left/LcDesignerLeft";
 import LCLayoutContent from "./LcDesignerContent";
-import {
-    updateActive,
-    addItem,
-    clearDesignerStore,
-    delItem,
-    updateRightVisible,
-    updateBaseStyle,
-    updateChartProps,
-    updateLayout,
-    updateDesignerStore,
-    updateBaseInfo,
-    updateGlobalSet
-} from "../../redux/actions/LCDesignerAction";
 import DesignerHeader from "./LcDesignerHeader";
-import {RouteComponentProps, withRouter} from "react-router-dom";
+import {RouteComponentProps} from "react-router-dom";
+import LcHeader from "./structure/LcHeader";
+import LcBody from "./structure/LcBody";
+import LcLeft from "./structure/LcLeft";
+import LcContent from "./structure/LcContent";
+import LcRight from "./structure/LcRight";
+import LcStructure from "./structure/LcStructure";
+import LcFoot from "./structure/LcFoot";
+import LcDesignerLeft from "./LcDesignerLeft";
 import LcDesignerRight from "./LcDesignerRight";
+import LcDesignerFooter from "./LcDesignerFooter";
+import lcDesignerContentStore from './store/LcDesignerContentStore';
 
-
-const {Header, Sider, Content} = Layout;
+const context = require.context('../charts', true, /\.(tsx|ts)$/);
+export const lcComps: { [key: string]: React.FunctionComponent } = {};
+export const lcCompInits: { [key: string]: () => any } = {};
+export const lcCompSets: { [key: string]: React.FunctionComponent } = {};
 
 interface LCDesignerProps extends RouteComponentProps {
     LCDesignerStore: LCDesignerProps;
@@ -31,39 +27,49 @@ interface LCDesignerProps extends RouteComponentProps {
     delItem?: (data?: any) => void;
     updateLayout?: (data?: any) => void;
     updateActive?: (data?: any) => void;
-    updateRightVisible?: (data?: any) => void;
     updateChartProps?: (data?: any) => void;
     updateBaseStyle?: (data?: any) => void;
 }
 
 class LCDesigner extends Component<LCDesignerProps | any> {
 
+    constructor(props: any) {
+        super(props);
+        this.doInit();
+    }
+
+
     componentWillUnmount() {
         //清空状态
         const {clearDesignerStore} = this.props;
         clearDesignerStore && clearDesignerStore();
-        // window.removeEventListener("beforeunload", () => {
-        // })
+    }
+
+    doInit = () => {
+        //动态加载图表组件及图表配置组件
+        context.keys().forEach(key => {
+            const componentName = key.replace(/^\.\/([\w|-]+\/)*(\w+)\.(tsx|ts)$/, '$2');
+            if (componentName.match("Set$"))
+                lcCompSets[componentName] = context(key).default;
+            else if (componentName.match("Init$")) {
+                const CompInit = context(key).default;
+                if (CompInit !== undefined) {
+                    lcCompInits[componentName] = new CompInit();
+                }
+            } else
+                lcComps[componentName] = context(key).default;
+        });
     }
 
     componentDidMount() {
-        // window.addEventListener("beforeunload", (event) => {
-        //     event.preventDefault();
-        //     event.returnValue = '';
-        // })
-        const {updateDesignerStore} = this.props;
+        const {updateProjectConfig, setId, setChartConfigs, setLayoutConfigs} = lcDesignerContentStore;
         const {action, screenName, screenWidth, screenHeight, id} = this.props.location.state;
         switch (action) {
             case 'add':
-                updateDesignerStore({
-                    globalSet: {
-                        screenName,
-                        screenWidth: parseInt(screenWidth),
-                        screenHeight: parseInt(screenHeight),
-                        saveType: 'local'
-                    },
-                    chartConfigs: {},
-                    layoutConfigs: []
+                updateProjectConfig({
+                    screenName: screenName,
+                    screenWidth: parseInt(screenWidth),
+                    screenHeight: parseInt(screenHeight),
                 })
                 break;
             case 'update':
@@ -74,69 +80,48 @@ class LCDesigner extends Component<LCDesignerProps | any> {
                         break
                     }
                 }
-                let {
-                    id: screenId,
-                    screenName: name,
-                    screenWidth: width,
-                    screenHeight: height,
-                    globalSet,
-                    chartConfigs,
-                    layoutConfigs
-                } = config;
-                updateDesignerStore({
-                    id: screenId,
-                    globalSet,
-                    screenName: name,
-                    screenWidth: width,
-                    screenHeight: height,
-                    chartConfigs: JSON.parse(chartConfigs),
-                    layoutConfigs: JSON.parse(layoutConfigs)
-                })
+                setId(config.screenId);
+                updateProjectConfig(config.projectConfig);
+                setChartConfigs(JSON.parse(config.chartConfigs));
+                setLayoutConfigs(JSON.parse(config.layoutConfigs));
                 break;
         }
     }
 
     render() {
         return (
-            <div className={'light_chaser-designer'}>
-                <Layout>
-                    <Header>
-                        {/*设计器头部*/}
-                        <DesignerHeader {...this.props}/>
-                    </Header>
-                    <Layout>
-                        <Sider width={300}>
-                            {/*设计器左侧*/}
-                            <LcDesignerLeft/>
-                        </Sider>
-                        <Content>
-                            {/*设计器中间内容*/}
-                            <LCLayoutContent {...this.props}/>
-                        </Content>
-                        <Sider width={300}>
-                            {/*设计器右侧配置*/}
-                            <LcDesignerRight {...this.props}/>
-                        </Sider>
-                    </Layout>
-                </Layout>
-            </div>
+            <>
+                <LcStructure>
+                    <LcHeader><DesignerHeader {...this.props}/></LcHeader>
+                    <LcBody>
+                        <LcLeft><LcDesignerLeft/></LcLeft>
+                        <LcContent><LCLayoutContent/></LcContent>
+                        <LcRight><LcDesignerRight {...this.props}/></LcRight>
+                    </LcBody>
+                    <LcFoot>
+                        <LcDesignerFooter {...this.props}/>
+                    </LcFoot>
+                </LcStructure>
+            </>
         );
     }
 }
 
-export default connect(
-    (state: any) => ({LCDesignerStore: state?.LCDesignerStore || {}}),
-    {
-        updateActive,
-        addItem,
-        clearDesignerStore,
-        delItem,
-        updateRightVisible,
-        updateBaseStyle,
-        updateChartProps,
-        updateLayout,
-        updateDesignerStore,
-        updateBaseInfo,
-        updateGlobalSet
-    }
-)(withRouter(LCDesigner))
+export default LCDesigner;
+
+// export default connect(
+//     (state: any) => ({LCDesignerStore: state?.LCDesignerStore || {}}),
+//     {
+//         updateActive,
+//         addItem,
+//         clearDesignerStore,
+//         delItem,
+//         updateBaseStyle,
+//         updateChartProps,
+//         updateLayout,
+//         updateDesignerStore,
+//         updateBaseInfo,
+//         updateCanvasConfig,
+//         updateBgConfig
+//     }
+// )(withRouter(LCDesigner))

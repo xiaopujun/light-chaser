@@ -35,7 +35,7 @@ export default class LcCompConfigContainer extends Component<LcCompConfigContain
             chartConfig: {baseInfo, chartProps, baseStyle},
             updateBaseStyle, updateChartProps, updateBaseInfo
         } = this.props;
-        let ChartsConfig = getChartsConfig(type);
+        let ChartsConfig: any = getChartsConfig(type);
         return (
             <>
                 <div className={'lc-component-config-title'}>

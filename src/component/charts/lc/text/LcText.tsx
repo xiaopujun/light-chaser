@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import EditTools from "../../../edit-tool";
+import LcCompBg from "../../LcCompBg";
 
 
 interface LcTextProps {
@@ -13,17 +13,16 @@ interface LcTextProps {
  */
 class LcText extends Component<LcTextProps> {
     render() {
-        const {chartConfig, elemId} = this.props;
+        const {chartConfig} = this.props;
         const {chartProps, baseStyle} = chartConfig;
         const {color = '#fff', fontSize = 12} = chartProps;
         return (
-            <div style={{width: '100%', height: '100%', position: 'absolute', ...baseStyle}}>
-                <EditTools {...this.props} elemId={elemId}/>
+            <LcCompBg style={baseStyle}>
                 <div style={{
                     color,
                     fontSize: fontSize + 'px',
                 }}>{chartProps?.value || '文本'}</div>
-            </div>
+            </LcCompBg>
         );
     }
 }

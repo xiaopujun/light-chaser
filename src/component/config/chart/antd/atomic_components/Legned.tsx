@@ -1,8 +1,14 @@
 import React, {Component} from 'react';
-import './style/index.less';
-import ColorPicker from "../../../../color_picker/BaseColorPicker";
-import CfgGroup from "../../../base/CfgGroup";
+import './style/Legend.less';
+import Accordion from "../../../../base/Accordion";
+import BaseColorPicker from "../../../../base/BaseColorPicker";
+import LcConfigItem from "../../../../base/LcConfigItem";
+import LcSelect from "../../../../base/LCSelect";
+import {Select} from "antd";
+import CfgItemBorder from "../../../../base/CfgItemBorder";
+import LcConfigBlock from "../../../../base/LcConfigBlock";
 
+const {Option} = Select;
 
 interface LegendProps {
     updateChartProps?: (data: any) => void;
@@ -81,14 +87,6 @@ class Legend extends Component<LegendProps> {
     generateLegendSet = () => {
         const {visible, position, direction, textColor} = this.props;
         return [
-            {
-                label: '显示图例',
-                comp: "Switch",
-                config: {
-                    checked: visible,
-                    onChange: this.showLegend,
-                },
-            },
             {
                 label: '图例位置',
                 comp: "LcSelect",
@@ -180,8 +178,44 @@ class Legend extends Component<LegendProps> {
     }
 
     render() {
-        const items = this.generateLegendSet();
-        return <CfgGroup items={items}/>
+        return (
+            <Accordion title={'图例'} showSwitch={true}>
+                <div style={{display: 'flex', flexWrap: 'wrap'}}>
+                    <LcConfigBlock title={'位置'}>
+                        <CfgItemBorder width={'100%'}>
+                            <LcSelect onChange={this.legendPositionChanged}>
+                                <Option value={"left-top"}>左上</Option>
+                                <Option value={"left"}>正左</Option>
+                                <Option value={"left-bottom"}>左下</Option>
+                                <Option value={"top-left"}>上左</Option>
+                                <Option value={"top"}>正上</Option>
+                                <Option value={"top-right"}>上右</Option>
+                                <Option value={"right-top"}>右上</Option>
+                                <Option value={"right"}>正右</Option>
+                                <Option value={"right-bottom"}>右下</Option>
+                                <Option value={"bottom-left"}>下左</Option>
+                                <Option value={"bottom"}>正下</Option>
+                                <Option value={"bottom-right"}>下右</Option>
+                            </LcSelect>
+                        </CfgItemBorder>
+                    </LcConfigBlock>
+                    <LcConfigBlock title={'布局'}>
+                        <CfgItemBorder width={'100%'}>
+                            <LcSelect>
+                                <Option>横向</Option>
+                                <Option>纵向</Option>
+                            </LcSelect>
+                        </CfgItemBorder>
+                    </LcConfigBlock>
+                    <LcConfigBlock title={'颜色'}>
+                        <CfgItemBorder width={'100%'}>
+                            <BaseColorPicker style={{width: '100%', borderRadius: 2}} showText={true}/>
+                        </CfgItemBorder>
+                    </LcConfigBlock>
+                </div>
+
+            </Accordion>
+        )
     }
 }
 

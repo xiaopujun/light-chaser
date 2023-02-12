@@ -46,7 +46,7 @@ export default class StartEndAngle extends Component<StartEndAngleProps> {
                     <label className={'lc-config-item-label'}>起始角度(单位:π)：</label>
                     <div className={'lc-config-item-value'}>
                                     <span className={'lc-input-container'}>
-                                        <LCNumberInput onChange={this.startAngleChanged} min={0} max={2} step={0.1}/>
+                                        <LCNumberInput min={0} max={2} step={0.1}/>
                                     </span>
                     </div>
                 </div>
@@ -54,7 +54,7 @@ export default class StartEndAngle extends Component<StartEndAngleProps> {
                     <label className={'lc-config-item-label'}>结束角度(单位:π)：</label>
                     <div className={'lc-config-item-value'}>
                                     <span className={'lc-input-container'}>
-                                        <LCNumberInput onChange={this.endAngleChanged} min={0} max={2} step={0.1}/>
+                                        <LCNumberInput min={0} max={2} step={0.1}/>
                                     </span>
                     </div>
                 </div>
