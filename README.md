@@ -31,17 +31,17 @@ yarn start
 
 # 效果
 
-![](D:\dev_project\light-chaser\preview\lc07.png)
+![](.\preview\lc07.png)
 
-![](D:\dev_project\light-chaser\preview\lc01.jpg)
+![](.\preview\lc01.jpg)
 
-![](D:\dev_project\light-chaser\preview\lc02.jpg)
+![](.\preview\lc02.jpg)
 
-![](D:\dev_project\light-chaser\preview\lc03.jpg)
+![](.\preview\lc03.jpg)
 
-![](D:\dev_project\light-chaser\preview\lc04.jpg)
+![](.\preview\lc04.jpg)
 
-![](D:\dev_project\light-chaser\preview\lc05.jpg)
+![](.\preview\lc05.jpg)
 
-![](D:\dev_project\light-chaser\preview\lc06.jpg)
+![](.\preview\lc06.jpg)
 
