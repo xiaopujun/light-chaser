@@ -21,7 +21,7 @@ class LightChaserList extends Component<LightChaserListProps> {
 
     addNewBigScreenOk = () => {
         const {addNewData} = this.state;
-        this.props.history.push('/designer', {...addNewData, action: 'add'});
+        this.props.history.push('/designer', {...addNewData, action: 'create'});
     }
 
     addNewBigScreenCancel = () => {
@@ -39,7 +39,7 @@ class LightChaserList extends Component<LightChaserListProps> {
     }
 
     openScreen = (e: any) => {
-        this.props.history.push('/designer', {id: parseInt(e.target.id), action: 'update'});
+        this.props.history.push('/designer', {id: parseInt(e.target.id), action: 'edit'});
     }
 
     render() {

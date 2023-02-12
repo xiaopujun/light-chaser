@@ -1,10 +1,10 @@
-import {lcCompSets} from "../../designer";
+import {lcCompConfigs} from "../../designer";
 
 
 export default function getChartsConfig(chartSetName: string) {
     chartSetName += "Set";
-    if (chartSetName in lcCompSets) {
-        return lcCompSets[chartSetName];
+    if (chartSetName in lcCompConfigs) {
+        return lcCompConfigs[chartSetName];
     } else {
         return null;
     }

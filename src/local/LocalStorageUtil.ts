@@ -3,50 +3,50 @@
  ********************************************/
 
 import {LCDesignerProps} from "../types/LcDesignerType";
+import {LcDesignerContentStore} from "../component/designer/store/LcDesignerContentStore";
+import localforage from 'localforage';
+import {toJS} from "mobx";
 
-const buildConfig = (LCDesignerStore: LCDesignerProps) => {
-    let {id = -1, canvasConfig} = LCDesignerStore;
+const buildConfig = (designerStore: LCDesignerProps) => {
+    let {id = -1, canvasConfig, chartConfigs, layoutConfigs, projectConfig} = designerStore;
     return {
         id,
-        canvasConfig,
-        chartConfigs: JSON.stringify(LCDesignerStore.chartConfigs),
-        layoutConfigs: JSON.stringify(LCDesignerStore.layoutConfigs),
-        screenHeight: LCDesignerStore.projectConfig.screenHeight,
-        screenWidth: LCDesignerStore.projectConfig.screenWidth,
-        screenName: LCDesignerStore.projectConfig.screenName
+        canvasConfig: toJS(canvasConfig),
+        chartConfigs: toJS(chartConfigs),
+        layoutConfigs: toJS(layoutConfigs),
+        screenHeight: projectConfig.screenHeight,
+        screenWidth: projectConfig.screenWidth,
+        screenName: projectConfig.screenName
     };
 }
 
 /**
  * 本地数据保存
  */
-export const localSave = (LCDesignerStore: LCDesignerProps) => {
-    let {id = -1} = LCDesignerStore;
-    let lightChaser = window.localStorage.lightChaser;
-    let config = buildConfig(LCDesignerStore);
-    //新增
-
-    if (lightChaser === undefined) {
-        id++;
-        config = {...config, ...{id}};
-        //无数据，需要初始化
-        lightChaser = new Array(config);
-    } else {
-        //已有数据
-        lightChaser = JSON.parse(lightChaser);
-        id = lightChaser.length + 1;
-        config = {...config, ...{id}};
-        lightChaser.push(config);
-    }
-    //保存到本地存储
-    localStorage.setItem("lightChaser", JSON.stringify(lightChaser));
-    return id;
+export const localSave = (designerStore: LcDesignerContentStore) => {
+    let {id = -1} = designerStore;
+    return new Promise((resolve) => {
+        localforage.getItem(id + '').then((data) => {
+            let config = buildConfig(designerStore);
+            if (data) {
+                localforage.setItem(id + '', config).then(() => {
+                    resolve(id as number);
+                });
+            } else {
+                //新增
+                config.id = ++id;
+                localforage.setItem(id + '', config).then(() => {
+                    resolve(id as number);
+                });
+            }
+        });
+    })
 }
 
 /**
  * 本地数据更新
  */
-export const localUpdate = (LCDesignerStore: LCDesignerProps) => {
+export const localUpdate = (LCDesignerStore: LcDesignerContentStore) => {
     let lightChaser = window.localStorage.lightChaser;
     let config = buildConfig(LCDesignerStore);
     let oldLightChaser = JSON.parse(lightChaser);

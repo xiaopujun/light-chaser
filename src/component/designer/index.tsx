@@ -14,10 +14,9 @@ import LcDesignerRight from "./LcDesignerRight";
 import LcDesignerFooter from "./LcDesignerFooter";
 import lcDesignerContentStore from './store/LcDesignerContentStore';
 
-const context = require.context('../charts', true, /\.(tsx|ts)$/);
 export const lcComps: { [key: string]: React.FunctionComponent } = {};
 export const lcCompInits: { [key: string]: () => any } = {};
-export const lcCompSets: { [key: string]: React.FunctionComponent } = {};
+export const lcCompConfigs: { [key: string]: React.FunctionComponent } = {};
 
 interface LCDesignerProps extends RouteComponentProps {
     LCDesignerStore: LCDesignerProps;
@@ -35,9 +34,14 @@ class LCDesigner extends Component<LCDesignerProps | any> {
 
     constructor(props: any) {
         super(props);
-        this.doInit();
+        //todo 扫描组件，要优化为异步扫描
+        this.scanComponent();
     }
 
+    componentDidMount() {
+        //初始化操作类型
+        this.initOperateType();
+    }
 
     componentWillUnmount() {
         //清空状态
@@ -45,12 +49,16 @@ class LCDesigner extends Component<LCDesignerProps | any> {
         clearDesignerStore && clearDesignerStore();
     }
 
-    doInit = () => {
-        //动态加载图表组件及图表配置组件
+
+    /**
+     * 扫描组件
+     */
+    scanComponent = () => {
+        const context = require.context('../charts', true, /\.(tsx|ts)$/);
         context.keys().forEach(key => {
             const componentName = key.replace(/^\.\/([\w|-]+\/)*(\w+)\.(tsx|ts)$/, '$2');
             if (componentName.match("Set$"))
-                lcCompSets[componentName] = context(key).default;
+                lcCompConfigs[componentName] = context(key).default;
             else if (componentName.match("Init$")) {
                 const CompInit = context(key).default;
                 if (CompInit !== undefined) {
@@ -61,18 +69,21 @@ class LCDesigner extends Component<LCDesignerProps | any> {
         });
     }
 
-    componentDidMount() {
+    /**
+     * 初始化项目操作类型。新增 / 更新
+     */
+    initOperateType = () => {
         const {updateProjectConfig, setId, setChartConfigs, setLayoutConfigs} = lcDesignerContentStore;
         const {action, screenName, screenWidth, screenHeight, id} = this.props.location.state;
         switch (action) {
-            case 'add':
+            case 'create':
                 updateProjectConfig({
                     screenName: screenName,
                     screenWidth: parseInt(screenWidth),
                     screenHeight: parseInt(screenHeight),
                 })
                 break;
-            case 'update':
+            case 'edit':
                 let configList = JSON.parse(window.localStorage.lightChaser), config;
                 for (let i = 0; i < configList.length; i++) {
                     if (configList[i].id === id) {
@@ -88,40 +99,36 @@ class LCDesigner extends Component<LCDesignerProps | any> {
         }
     }
 
+    /**
+     * 初始化以创建方式打开时项目信息
+     */
+    initCreateInfo = () => {
+
+    }
+
+    /**
+     * 初始化以更新方式打开时项目信息
+     */
+    initUpdateInfo = () => {
+
+    }
+
+
     render() {
         return (
-            <>
-                <LcStructure>
-                    <LcHeader><DesignerHeader {...this.props}/></LcHeader>
-                    <LcBody>
-                        <LcLeft><LcDesignerLeft/></LcLeft>
-                        <LcContent><LCLayoutContent/></LcContent>
-                        <LcRight><LcDesignerRight {...this.props}/></LcRight>
-                    </LcBody>
-                    <LcFoot>
-                        <LcDesignerFooter {...this.props}/>
-                    </LcFoot>
-                </LcStructure>
-            </>
+            <LcStructure>
+                <LcHeader><DesignerHeader {...this.props}/></LcHeader>
+                <LcBody>
+                    <LcLeft><LcDesignerLeft/></LcLeft>
+                    <LcContent><LCLayoutContent/></LcContent>
+                    <LcRight><LcDesignerRight {...this.props}/></LcRight>
+                </LcBody>
+                <LcFoot>
+                    <LcDesignerFooter {...this.props}/>
+                </LcFoot>
+            </LcStructure>
         );
     }
 }
 
 export default LCDesigner;
-
-// export default connect(
-//     (state: any) => ({LCDesignerStore: state?.LCDesignerStore || {}}),
-//     {
-//         updateActive,
-//         addItem,
-//         clearDesignerStore,
-//         delItem,
-//         updateBaseStyle,
-//         updateChartProps,
-//         updateLayout,
-//         updateDesignerStore,
-//         updateBaseInfo,
-//         updateCanvasConfig,
-//         updateBgConfig
-//     }
-// )(withRouter(LCDesigner))

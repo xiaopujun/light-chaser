@@ -174,13 +174,14 @@ export interface ProjectConfig {
      * 元素个数
      */
     elemCount?: number
-}
-
-export interface SystemConfig {
     /**
      * 数据存储方式
      */
     saveType?: string;
+}
+
+export interface SystemConfig {
+
 }
 
 /**

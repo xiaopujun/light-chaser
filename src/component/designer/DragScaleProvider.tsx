@@ -22,7 +22,7 @@ class DragScaleProvider extends Component<DragScaleProviderProps> {
         point: {x: 0, y: 0}, // 第一个点坐标
         diff: {x: 0, y: 0}, // 相对于上一次pointermove移动差值
         lastPointermove: {x: 0, y: 0}, // 用于计算diff
-        ctrlDown: false,
+        spaceDown: false,
     }
 
     componentDidMount() {
@@ -40,11 +40,11 @@ class DragScaleProvider extends Component<DragScaleProviderProps> {
         content.style.transform = 'translate3d(' + this.config.x + 'px, ' + this.config.y + 'px, 0) scale(1)';
         document.addEventListener('keyup', ev => {
             if (ev.keyCode === 32)
-                this.config.ctrlDown = false;
+                this.config.spaceDown = false;
         })
         document.addEventListener('keydown', ev => {
             if (ev.keyCode === 32)
-                this.config.ctrlDown = true;
+                this.config.spaceDown = true;
         })
         // 拖拽查看
         this.designerDrag(content);
@@ -55,7 +55,7 @@ class DragScaleProvider extends Component<DragScaleProviderProps> {
     // 拖拽查看
     designerDrag = (designer: any) => {
         designer.addEventListener('pointerdown', (e: any) => {
-            if (this.config.ctrlDown) {
+            if (this.config.spaceDown) {
                 this.config.isPointerdown = true;
                 designer.setPointerCapture(e.pointerId);
                 this.config.point = {x: e.clientX, y: e.clientY};
@@ -63,7 +63,7 @@ class DragScaleProvider extends Component<DragScaleProviderProps> {
             }
         });
         designer.addEventListener('pointermove', (e: any) => {
-            if (this.config.ctrlDown) {
+            if (this.config.spaceDown) {
                 if (this.config.isPointerdown) {
                     const current1 = {x: e.clientX, y: e.clientY};
                     this.config.diff.x = current1.x - this.config.lastPointermove.x;
@@ -77,14 +77,14 @@ class DragScaleProvider extends Component<DragScaleProviderProps> {
             }
         });
         designer.addEventListener('pointerup', () => {
-            if (this.config.ctrlDown) {
+            if (this.config.spaceDown) {
                 if (this.config.isPointerdown) {
                     this.config.isPointerdown = false;
                 }
             }
         });
         designer.addEventListener('pointercancel', () => {
-            if (this.config.ctrlDown) {
+            if (this.config.spaceDown) {
                 if (this.config.isPointerdown) {
                     this.config.isPointerdown = false;
                 }
@@ -95,7 +95,7 @@ class DragScaleProvider extends Component<DragScaleProviderProps> {
     //滚轮缩放
     wheelZoom = (container: any, designer: any) => {
         container.addEventListener('wheel', (e: any) => {
-            if (this.config.ctrlDown) {
+            if (this.config.spaceDown) {
                 let ratio = 1.1;
                 // 缩小
                 if (e.deltaY > 0)

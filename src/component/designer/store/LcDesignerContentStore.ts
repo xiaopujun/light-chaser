@@ -63,7 +63,8 @@ class LcDesignerContentStore {
         screenHeight: 1080,
         createTime: '',
         updateTime: '',
-        elemCount: 0
+        elemCount: 0,
+        saveType: 'local'
     };
     /**
      * 图表配置
@@ -77,21 +78,21 @@ class LcDesignerContentStore {
     /**
      * 设置布局id
      */
-    setId(id: number) {
+    setId = (id: number) => {
         this.id = id;
     }
 
     /**
      * 设置图表配置
      */
-    setChartConfigs(chartConfigs: ChartConfigsProps) {
+    setChartConfigs = (chartConfigs: ChartConfigsProps) => {
         this.chartConfigs = chartConfigs;
     }
 
     /**
      * 设置布局配置
      */
-    setLayoutConfigs(layoutConfigs: LcLayout[]) {
+    setLayoutConfigs = (layoutConfigs: LcLayout[]) => {
         this.layoutConfigs = layoutConfigs;
     }
 
