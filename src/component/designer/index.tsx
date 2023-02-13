@@ -34,8 +34,11 @@ class LCDesigner extends Component<LCDesignerProps | any> {
 
     constructor(props: any) {
         super(props);
+        console.log("LCDesigner constructor", lcComps)
         //todo 扫描组件，要优化为异步扫描
         this.scanComponent();
+        console.log("LCDesigner constructor end", lcComps)
+
     }
 
     componentDidMount() {
@@ -73,28 +76,13 @@ class LCDesigner extends Component<LCDesignerProps | any> {
      * 初始化项目操作类型。新增 / 更新
      */
     initOperateType = () => {
-        const {updateProjectConfig, setId, setChartConfigs, setLayoutConfigs} = lcDesignerContentStore;
-        const {action, screenName, screenWidth, screenHeight, id} = this.props.location.state;
+        const {action} = this.props.location.state;
         switch (action) {
             case 'create':
-                updateProjectConfig({
-                    screenName: screenName,
-                    screenWidth: parseInt(screenWidth),
-                    screenHeight: parseInt(screenHeight),
-                })
+                this.initCreateInfo();
                 break;
             case 'edit':
-                let configList = JSON.parse(window.localStorage.lightChaser), config;
-                for (let i = 0; i < configList.length; i++) {
-                    if (configList[i].id === id) {
-                        config = configList[i];
-                        break
-                    }
-                }
-                setId(config.screenId);
-                updateProjectConfig(config.projectConfig);
-                setChartConfigs(JSON.parse(config.chartConfigs));
-                setLayoutConfigs(JSON.parse(config.layoutConfigs));
+                this.initEditInfo();
                 break;
         }
     }
@@ -103,14 +91,32 @@ class LCDesigner extends Component<LCDesignerProps | any> {
      * 初始化以创建方式打开时项目信息
      */
     initCreateInfo = () => {
-
+        const {updateProjectConfig} = lcDesignerContentStore;
+        const {screenName, screenWidth, screenHeight, id} = this.props.location.state;
+        updateProjectConfig({
+            screenName: screenName,
+            screenWidth: parseInt(screenWidth),
+            screenHeight: parseInt(screenHeight),
+        })
     }
 
     /**
      * 初始化以更新方式打开时项目信息
      */
-    initUpdateInfo = () => {
-
+    initEditInfo = () => {
+        const {updateProjectConfig, setId, setChartConfigs, setLayoutConfigs} = lcDesignerContentStore;
+        const {id} = this.props.location.state;
+        let configList = JSON.parse(window.localStorage.lightChaser), config;
+        for (let i = 0; i < configList.length; i++) {
+            if (configList[i].id === id) {
+                config = configList[i];
+                break
+            }
+        }
+        setId(config.screenId);
+        updateProjectConfig(config.projectConfig);
+        setChartConfigs(JSON.parse(config.chartConfigs));
+        setLayoutConfigs(JSON.parse(config.layoutConfigs));
     }
 
 

@@ -25,17 +25,21 @@ const buildConfig = (designerStore: LCDesignerProps) => {
  */
 export const localSave = (designerStore: LcDesignerContentStore) => {
     let {id = -1} = designerStore;
+    let config = buildConfig(designerStore);
     return new Promise((resolve) => {
-        localforage.getItem(id + '').then((data) => {
-            let config = buildConfig(designerStore);
-            if (data) {
-                localforage.setItem(id + '', config).then(() => {
+        localforage.getItem('light-chaser').then((data: any) => {
+            if (data && data instanceof Object) {
+                let oldData = data[id + ''];
+                if (oldData)
+                    data[id + ''] = config;
+                localforage.setItem('light-chaser', config).then(() => {
                     resolve(id as number);
                 });
             } else {
                 //新增
+                let lightChaser = {};
                 config.id = ++id;
-                localforage.setItem(id + '', config).then(() => {
+                localforage.setItem('lc' + id, config).then(() => {
                     resolve(id as number);
                 });
             }
