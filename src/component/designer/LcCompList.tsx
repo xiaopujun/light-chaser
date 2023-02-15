@@ -3,7 +3,6 @@ import {LineOutlined} from "@ant-design/icons";
 import {Input} from "antd";
 import './style/LcCompList.less';
 import {lcCompInits} from "./index";
-import LCTextInput from "../base/LCTextInput";
 
 interface LcCompListProps {
     data?: Array<any>;

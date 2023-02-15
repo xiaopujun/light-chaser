@@ -13,6 +13,7 @@ import LcDesignerLeft from "./LcDesignerLeft";
 import LcDesignerRight from "./LcDesignerRight";
 import LcDesignerFooter from "./LcDesignerFooter";
 import lcDesignerContentStore from './store/LcDesignerContentStore';
+import {localQuery} from "../../local/LocalStorageUtil";
 
 export const lcComps: { [key: string]: React.FunctionComponent } = {};
 export const lcCompInits: { [key: string]: () => any } = {};
@@ -34,10 +35,8 @@ class LCDesigner extends Component<LCDesignerProps | any> {
 
     constructor(props: any) {
         super(props);
-        console.log("LCDesigner constructor", lcComps)
         //todo 扫描组件，要优化为异步扫描
         this.scanComponent();
-        console.log("LCDesigner constructor end", lcComps)
 
     }
 
@@ -92,7 +91,7 @@ class LCDesigner extends Component<LCDesignerProps | any> {
      */
     initCreateInfo = () => {
         const {updateProjectConfig} = lcDesignerContentStore;
-        const {screenName, screenWidth, screenHeight, id} = this.props.location.state;
+        const {screenName, screenWidth, screenHeight} = this.props.location.state;
         updateProjectConfig({
             screenName: screenName,
             screenWidth: parseInt(screenWidth),
@@ -106,17 +105,14 @@ class LCDesigner extends Component<LCDesignerProps | any> {
     initEditInfo = () => {
         const {updateProjectConfig, setId, setChartConfigs, setLayoutConfigs} = lcDesignerContentStore;
         const {id} = this.props.location.state;
-        let configList = JSON.parse(window.localStorage.lightChaser), config;
-        for (let i = 0; i < configList.length; i++) {
-            if (configList[i].id === id) {
-                config = configList[i];
-                break
+        localQuery(id).then((config: any) => {
+            if (config) {
+                setId(config.id);
+                updateProjectConfig(config.projectConfig);
+                setChartConfigs(config.chartConfigs);
+                setLayoutConfigs(config.layoutConfigs);
             }
-        }
-        setId(config.screenId);
-        updateProjectConfig(config.projectConfig);
-        setChartConfigs(JSON.parse(config.chartConfigs));
-        setLayoutConfigs(JSON.parse(config.layoutConfigs));
+        })
     }
 
 

@@ -164,7 +164,6 @@ class LcDesignerContent extends React.PureComponent<LcDesignerContentStore | any
     registerRightMenu = () => {
         const {updateVisible, setPosition, setTargetId} = lcRightMenuStore;
         document.addEventListener("click", (event: any) => {
-                console.log("click");
                 const {visible} = lcRightMenuStore;
                 if (visible && event.button === 0)
                     updateVisible(false);

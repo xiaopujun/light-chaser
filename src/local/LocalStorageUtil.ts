@@ -14,33 +14,33 @@ const buildConfig = (designerStore: LCDesignerProps) => {
         canvasConfig: toJS(canvasConfig),
         chartConfigs: toJS(chartConfigs),
         layoutConfigs: toJS(layoutConfigs),
-        screenHeight: projectConfig.screenHeight,
-        screenWidth: projectConfig.screenWidth,
-        screenName: projectConfig.screenName
+        projectConfig: toJS(projectConfig),
     };
 }
 
 /**
  * 本地数据保存
  */
-export const localSave = (designerStore: LcDesignerContentStore) => {
-    let {id = -1} = designerStore;
+export const localCreate = (designerStore: LcDesignerContentStore) => {
     let config = buildConfig(designerStore);
     return new Promise((resolve) => {
-        localforage.getItem('light-chaser').then((data: any) => {
-            if (data && data instanceof Object) {
-                let oldData = data[id + ''];
-                if (oldData)
-                    data[id + ''] = config;
-                localforage.setItem('light-chaser', config).then(() => {
-                    resolve(id as number);
+        localforage.getItem('light-chaser').then((dataArr: any) => {
+            if (dataArr && dataArr instanceof Array) {
+                config.id = dataArr.length + 1;
+                dataArr.push(config);
+                localforage.setItem('light-chaser', dataArr).then((data) => {
+                    console.log('push after dataArr', dataArr)
+                    console.log('push after', data)
+                    resolve(config.id as number);
                 });
             } else {
-                //新增
-                let lightChaser = {};
-                config.id = ++id;
-                localforage.setItem('lc' + id, config).then(() => {
-                    resolve(id as number);
+                //没有没有保存过数据则初始化
+                let dataArr = [];
+                config.id = 0;
+                dataArr.push(config);
+                localforage.setItem('light-chaser', dataArr).then((data) => {
+                    console.log('push after init', data);
+                    resolve(config.id as number);
                 });
             }
         });
@@ -50,22 +50,41 @@ export const localSave = (designerStore: LcDesignerContentStore) => {
 /**
  * 本地数据更新
  */
-export const localUpdate = (LCDesignerStore: LcDesignerContentStore) => {
-    let lightChaser = window.localStorage.lightChaser;
-    let config = buildConfig(LCDesignerStore);
-    let oldLightChaser = JSON.parse(lightChaser);
-    for (let i = 0; i < oldLightChaser.length; i++) {
-        if (oldLightChaser[i].id === config.id) {
-            oldLightChaser[i] = config;
-            break;
-        }
-    }
-    localStorage.setItem("lightChaser", JSON.stringify(oldLightChaser));
+export const localUpdate = (designerStore: LcDesignerContentStore) => {
+    let config = buildConfig(designerStore);
+    return new Promise((resolve) => {
+        localforage.getItem('light-chaser').then((dataArr: any) => {
+            if (dataArr && dataArr instanceof Array) {
+                for (let i = 0; i < dataArr.length; i++) {
+                    if (dataArr[i].id === config.id) {
+                        dataArr[i] = config;
+                        break;
+                    }
+                }
+                localforage.setItem('light-chaser', dataArr).then(() => {
+                    resolve(config.id as number);
+                });
+            }
+        });
+    });
 }
 
 /**
  * 本地数据查询
  */
-export const localQuery = () => {
-
+export const localQuery = (id: number | string) => {
+    return new Promise((resolve) => {
+        localforage.getItem('light-chaser').then((dataArr: any) => {
+            if (dataArr && dataArr instanceof Array) {
+                for (let i = 0; i < dataArr.length; i++) {
+                    if (dataArr[i].id === id) {
+                        resolve(dataArr[i]);
+                        break;
+                    }
+                }
+            } else {
+                resolve(null);
+            }
+        })
+    });
 }

@@ -12,7 +12,7 @@ import {
     SnippetsOutlined
 } from "@ant-design/icons";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {localSave, localUpdate} from "../../local/LocalStorageUtil";
+import {localCreate, localUpdate} from "../../local/LocalStorageUtil";
 import {LCDesignerProps} from "../../types/LcDesignerType";
 import lcDesignerContentStore from './store/LcDesignerContentStore';
 
@@ -26,35 +26,34 @@ class LcDesignerHeader extends Component<LcDesignerHeaderProps | any> {
     updateRouteState = (id: number) => {
         const {location} = this.props;
         const {action} = location.state;
-        let {projectConfig} = lcDesignerContentStore!;
         if (action === 'create') {
             this.props.history.replace("/designer", {
                 ...location.state, ...{
                     action: 'edit',
                     id,
-                    projectConfig,
                 }
             });
         }
     }
 
     doSave = () => {
-        let {id = -1, projectConfig, setId} = lcDesignerContentStore;
-        const {saveType} = projectConfig;
+        let {id = -1, projectConfig: {saveType}, setId} = lcDesignerContentStore;
         if (saveType === 'local') {
             if (id === -1) {
-                localSave(lcDesignerContentStore).then((id: number | any) => {
-                    if (id) {
+                localCreate(lcDesignerContentStore).then((id: number | any) => {
+                    if (id > -1) {
                         //更新id
                         setId && setId(id);
                         //修改路由参数，新增变为更新
                         this.updateRouteState(id);
+                        alert("create success");
                     }
                 });
             } else {
-                localUpdate(lcDesignerContentStore);
+                localUpdate(lcDesignerContentStore).then(() => {
+                    alert("update success");
+                });
             }
-            alert("save success");
         }
     }
 
