@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import './style/Content.less';
 import ReactGridLayout, {Layout} from "react-grid-layout";
 import 'react-grid-layout/css/styles.css';
@@ -10,7 +10,7 @@ import lcDesignerContentStore, {LcDesignerContentStore} from "./store/LcDesigner
 import lcRightMenuStore from "./store/LcRightMenuStore";
 import LcDesignerBackground from "./LcDesignerBackground";
 
-class LcDesignerContent extends React.PureComponent<LcDesignerContentStore | any> {
+class LcDesignerContent extends PureComponent<LcDesignerContentStore | any> {
 
     rgl: any = null;
     lcbg: any = null;
@@ -46,7 +46,6 @@ class LcDesignerContent extends React.PureComponent<LcDesignerContentStore | any
     generateElement = () => {
         const {layoutConfigs, updateActive} = lcDesignerContentStore!;
         if (layoutConfigs && layoutConfigs.length > 0) {
-
             return layoutConfigs.map((item: any) => {
                 let Chart: any = getChartsTemplate(item.name);
                 const chartConfig = this.calculateChartConfig(item.id);
@@ -59,13 +58,6 @@ class LcDesignerContent extends React.PureComponent<LcDesignerContentStore | any
                                chartConfig={chartConfig}
                                updateActive={updateActive}
                                delItem={this.delItem}/>
-                        {/*<div id={'1'} style={{width: 100, height: 200}}>*/}
-                        {/*    <div id={'2'} style={{width: '100%', height: '100%', pointerEvents: 'none'}}>*/}
-                        {/*        <div id={'3'} style={{width: '100%', height: '100%'}}>*/}
-                        {/*            test*/}
-                        {/*        </div>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
                     </div>
                 );
             })
@@ -112,6 +104,8 @@ class LcDesignerContent extends React.PureComponent<LcDesignerContentStore | any
      * 组件拖拽变化回调
      */
     onDragStop = (layout: Layout[], oldItem: Layout, newItem: Layout) => {
+        if (JSON.stringify(oldItem) === JSON.stringify(newItem))
+            return;
         const {updateLayout} = lcDesignerContentStore;
         updateLayout && updateLayout(newItem);
     }
@@ -183,6 +177,7 @@ class LcDesignerContent extends React.PureComponent<LcDesignerContentStore | any
     }
 
     render() {
+        console.log('render LcDesignerContent')
         return (
             <DragScaleProvider {...this.getDragScaleProviderProps()}>
                 <LcDesignerBackground onClick={this.updateActive} ref={obj => this.lcbg = obj}>

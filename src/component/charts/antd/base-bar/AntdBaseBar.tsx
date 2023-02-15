@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {Bar} from "@ant-design/charts";
 import LcCompBg from "../../LcCompBg";
 
@@ -11,10 +11,13 @@ interface AntdBarProps {
 /**
  * 基础条形图
  */
-export default class AntdBaseBar extends Component<AntdBarProps> {
+export default class AntdBaseBar extends PureComponent<AntdBarProps> {
 
     render() {
+        console.log("AntdBaseBar render")
         const {chartConfig} = this.props;
+        if (!chartConfig)
+            return null;
         const {chartProps, baseStyle} = chartConfig;
         return (
             <LcCompBg style={baseStyle}>

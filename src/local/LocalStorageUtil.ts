@@ -88,3 +88,16 @@ export const localQuery = (id: number | string) => {
         })
     });
 }
+
+
+export const localGetAll = () => {
+    return new Promise((resolve) => {
+        localforage.getItem('light-chaser').then((dataArr: any) => {
+            if (dataArr && dataArr instanceof Array) {
+                resolve(dataArr);
+            } else {
+                resolve([]);
+            }
+        })
+    });
+}

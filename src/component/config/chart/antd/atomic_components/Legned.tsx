@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import './style/Legend.less';
 import Accordion from "../../../../base/Accordion";
 import BaseColorPicker from "../../../../base/BaseColorPicker";
-import LcConfigItem from "../../../../base/LcConfigItem";
 import LcSelect from "../../../../base/LCSelect";
 import {Select} from "antd";
 import CfgItemBorder from "../../../../base/CfgItemBorder";

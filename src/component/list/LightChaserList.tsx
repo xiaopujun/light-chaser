@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import '../designer/style/LightChaserList.less';
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import AddNewScreenDialog from "./AddNewScreenDialog";
+import {localGetAll} from "../../local/LocalStorageUtil";
 
 interface LightChaserListProps extends RouteComponentProps {
 
@@ -11,7 +12,16 @@ class LightChaserList extends Component<LightChaserListProps> {
 
     state: any = {
         addNewScreen: false,
-        addNewData: {}
+        addNewData: {},
+        data: [],
+    }
+
+    componentDidMount() {
+        localGetAll().then((data: any) => {
+            if (data && data.length > 0) {
+                this.setState({data})
+            }
+        })
     }
 
     addNewBigScreen = () => {
@@ -43,11 +53,9 @@ class LightChaserList extends Component<LightChaserListProps> {
     }
 
     render() {
-        const {addNewScreen} = this.state;
+        const {addNewScreen, data} = this.state;
         let width = (window.innerWidth - 105 - (5 * 20)) / 5;
         let height = width * (9 / 16);
-        //获取本地数据
-        const lightChaser = JSON.parse(window.localStorage.lightChaser || '[]');
         return (
             <div className={'light-chaser-list'}>
                 <div className={'lc-list-head'}>
@@ -70,11 +78,11 @@ class LightChaserList extends Component<LightChaserListProps> {
                 <div className={'lc-list-content'}>
                     <div className={'lc-list-content-title'} style={{color: '#00fffb'}}>数据大屏：</div>
                     <div className={'lc-list-content-datas'}>
-                        {lightChaser && lightChaser.map((item: any) => {
+                        {data && data.map((item: any) => {
                             return (
                                 <div key={item.id + ''} style={{width: width, height: height}} onClick={this.openScreen}
                                      id={item.id + ''}
-                                     className={'lc-list-content-data'}>{item.screenName}</div>
+                                     className={'lc-list-content-data'}>{item.projectConfig?.screenName}</div>
                             )
                         })}
                     </div>
