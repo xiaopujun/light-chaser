@@ -3,7 +3,7 @@ import './LcBgConfig.less';
 import LCNumberInput from "../../base/LCNumberInput";
 import BaseColorPicker from "../../base/BaseColorPicker";
 import Dragger from "antd/es/upload/Dragger";
-import {RcFile, UploadProps} from "antd/es/upload";
+import {UploadProps} from "antd/es/upload";
 import LcConfigItem from "../../base/LcConfigItem";
 import LcRadio from "../../base/LcRadio";
 import {Radio} from "antd";
@@ -19,40 +19,38 @@ interface LcBgConfigProps {
 class LcBgConfig extends PureComponent<LcBgConfigProps> {
 
     state = {
-        bgImgSource: null
+        bgImgUrl: null
     }
 
     handleChange: UploadProps['onChange'] = ({fileList: newFileList}) => this.setState({fileList: newFileList});
 
     beforeUpload = (file: any) => {
+        const fileReader = new FileReader();
         const {updateBgConfig} = lcDesignerContentStore;
-        this.getBase64(file as RcFile).then(value => {
-            localforage.setItem('lc-bg-img-source', value).then(() => {
-                this.setState({bgImgSource: value});
-                updateBgConfig({imgSource: 'lc-bg-img-source'});
+        //文件读取完毕后会的处理事件
+        fileReader.onload = (event: any) => {
+            const blob = new Blob([event.target.result], {type: file.type});
+            const bgImgUrl = URL.createObjectURL(blob);
+            localforage.setItem('lc-bg-img-source', blob).then(() => {
+                this.setState({bgImgUrl: bgImgUrl});
+                updateBgConfig({bgImgUrl: bgImgUrl});
+                //todo 更换图片的时候要释放链接和内存的关联，可以提高部分性能
+                // URL.revokeObjectURL(objectUrl);
             });
-        })
+        };
+        //通过二进制流读取文件，读取完毕后会调用上方设置好的onload事件
+        fileReader.readAsArrayBuffer(file);
         return false;
     }
 
-    getBase64 = (file: RcFile): Promise<string> => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result as string);
-            reader.onerror = (error) => reject(error);
-        });
-    }
-
     render() {
-        console.log('LcBgConfig render');
-        const {bgImgSource} = this.state;
+        const {bgImgUrl} = this.state;
         return (
             <div className={'lc-canvas-config'}>
                 <div className={'lc-bg-upload'}>
                     <div className={'lc-upload-content'}>
-                        {bgImgSource ?
-                            <img alt={"bg"} width={'100%'} height={187} src={bgImgSource}/> :
+                        {bgImgUrl ?
+                            <img alt={"bg"} width={'100%'} height={187} src={bgImgUrl}/> :
                             <Dragger listType={'picture-card'}
                                      showUploadList={false}
                                      beforeUpload={this.beforeUpload}

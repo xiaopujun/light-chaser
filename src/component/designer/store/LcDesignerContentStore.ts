@@ -41,7 +41,7 @@ class LcDesignerContentStore {
     bgConfig: BgConfig = {
         bgMode: BgMode.NONE,
         imgSize: [1920, 1080],
-        imgSource: '',
+        bgImgUrl: '',
         bgFillType: BgFillType.NONE,
         colorMode: BgColorMode.SINGLE,
         color: '',

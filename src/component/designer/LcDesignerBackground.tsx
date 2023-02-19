@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import lcDesignerContentStore from './store/LcDesignerContentStore';
-import localforage from "localforage";
 import {observer} from "mobx-react";
 
 interface LcDesignerBackgroundProps {
@@ -10,10 +9,10 @@ interface LcDesignerBackgroundProps {
 /**
  * 设计器画布背景
  */
-class LcDesignerBackground extends Component<LcDesignerBackgroundProps> {
+class LcDesignerBackground extends PureComponent<LcDesignerBackgroundProps> {
 
     state = {
-        bgImg: null
+        bgImgUrl: null
     }
     imgLoaded = false;
     previousImgId = '';
@@ -25,7 +24,7 @@ class LcDesignerBackground extends Component<LcDesignerBackgroundProps> {
 
     getBgConfigProps = () => {
         const {projectConfig} = lcDesignerContentStore!;
-        const {bgImg} = this.state;
+        const {bgImgUrl} = this.state;
         if (projectConfig) {
             let bgConfigProps: any = {
                 height: projectConfig.screenHeight,
@@ -34,23 +33,23 @@ class LcDesignerBackground extends Component<LcDesignerBackgroundProps> {
                 backgroundSize: '100% 100%',
             }
             //todo 优化，图片不能全部加载到内存中，要通过链接方式渲染背景图
-            if (bgImg)
-                bgConfigProps['backgroundImage'] = `url(${bgImg})`;
+            if (bgImgUrl)
+                bgConfigProps['backgroundImage'] = `url(${bgImgUrl})`;
             return bgConfigProps;
         }
     }
 
     getBgImgSource = () => {
         const {bgConfig} = lcDesignerContentStore!;
-        if (bgConfig.imgSource && bgConfig.imgSource !== '' && bgConfig.imgSource !== this.previousImgId && !this.imgLoaded) {
-            this.previousImgId = bgConfig.imgSource;
-            localforage.getItem(bgConfig?.imgSource).then((value => {
-                this.setState({bgImg: value, imgLoaded: true});
-            }))
+        if (bgConfig.bgImgUrl && bgConfig.bgImgUrl !== '' && bgConfig.bgImgUrl !== this.previousImgId && !this.imgLoaded) {
+            //注意此处的imgLoaded条件，如果不加，会导致死循环
+            this.imgLoaded = true;
+            this.setState({bgImgUrl: bgConfig.bgImgUrl});
         }
     }
 
     render() {
+        console.log('LcDesignerBackground render')
         this.getBgImgSource();
         return (
             <div className={'lc-canvas'}

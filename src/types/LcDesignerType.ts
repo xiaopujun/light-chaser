@@ -124,9 +124,8 @@ export interface BgConfig {
      */
     imgSize?: [number, number];
     /**
-     * 图片源数据
      */
-    imgSource?: any;
+    bgImgUrl?: any;
     /**
      * 填充方式
      */
