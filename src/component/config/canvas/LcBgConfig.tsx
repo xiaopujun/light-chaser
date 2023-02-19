@@ -77,18 +77,7 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
         const {bgImgSize = [1920, 1080]} = bgConfig;
         return (
             <div className={'lc-canvas-config'}>
-                <div className={'lc-bg-upload'}>
-                    <div className={'lc-upload-content'}>
-                        {bgConfig?.bgImgUrl ?
-                            <img alt={"bg"} width={'100%'} height={187} src={bgConfig?.bgImgUrl}/> :
-                            <Dragger listType={'picture-card'}
-                                     showUploadList={false}
-                                     beforeUpload={this.beforeUpload}>
-                                请上传背景图
-                            </Dragger>}
-                    </div>
-                </div>
-                <br/>
+
                 <LcConfigItem title={'背景模式'}>
                     <LcRadio onChange={this.bgModeChange} defaultValue={bgConfig?.bgMode}>
                         <Radio value="0">无</Radio>
@@ -96,36 +85,55 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
                         <Radio value="2">颜色</Radio>
                     </LcRadio>
                 </LcConfigItem>
-                <LcConfigItem title={'图片尺寸'}>
-                    <LCNumberInput onChange={this.bgImgSizeChange} name={'bgX'}
-                                   style={{textAlign: 'center', width: '48%'}}
-                                   defaultValue={bgImgSize[0]}/>
-                    <LCNumberInput onChange={this.bgImgSizeChange} name={'bgY'}
-                                   style={{textAlign: 'center', width: '48%'}}
-                                   defaultValue={bgImgSize[1]}/>
-                </LcConfigItem>
-                <LcConfigItem title={'填充方式'}>
-                    <LcRadio onChange={this.fillTypeChange} defaultValue={bgConfig?.bgFillType}>
-                        <Radio value="0">无</Radio>
-                        <Radio value="1">x轴</Radio>
-                        <Radio value="2">y轴</Radio>
-                    </LcRadio>
-                </LcConfigItem>
-                <LcConfigItem title={'颜色模式'}>
-                    <LcRadio onChange={this.bgColorModeChange} defaultValue={bgConfig?.bgColorMode}>
-                        <Radio value="0">单色</Radio>
-                        <Radio value="1">线性</Radio>
-                        <Radio value="2">径向</Radio>
-                    </LcRadio>
-                </LcConfigItem>
-                <LcConfigItem title={'背景颜色'}>
-                    <CfgItemBorder width={'50%'}>
-                        <BaseColorPicker onChange={this.bgColorChange}
-                                         style={{width: '100%', height: '18px', borderRadius: 2}}
-                                         value={bgConfig?.bgColor}
-                                         showText={true}/>
-                    </CfgItemBorder>
-                </LcConfigItem>
+                {bgConfig?.bgMode === '1' &&
+                <>
+                    <div className={'lc-bg-upload'}>
+                        <div className={'lc-upload-content'}>
+                            {bgConfig?.bgImgUrl ?
+                                <img alt={"bg"} width={'100%'} height={187} src={bgConfig?.bgImgUrl}/> :
+                                <Dragger listType={'picture-card'}
+                                         showUploadList={false}
+                                         beforeUpload={this.beforeUpload}>
+                                    请上传背景图
+                                </Dragger>}
+                        </div>
+                    </div>
+                    <br/>
+                    <LcConfigItem title={'图片尺寸'}>
+                        <LCNumberInput onChange={this.bgImgSizeChange} name={'bgX'}
+                                       style={{textAlign: 'center', width: '48%'}}
+                                       defaultValue={bgImgSize[0]}/>
+                        <LCNumberInput onChange={this.bgImgSizeChange} name={'bgY'}
+                                       style={{textAlign: 'center', width: '48%'}}
+                                       defaultValue={bgImgSize[1]}/>
+                    </LcConfigItem>
+                    <LcConfigItem title={'填充方式'}>
+                        <LcRadio onChange={this.fillTypeChange} defaultValue={bgConfig?.bgFillType}>
+                            <Radio value="0">无</Radio>
+                            <Radio value="1">x轴</Radio>
+                            <Radio value="2">y轴</Radio>
+                        </LcRadio>
+                    </LcConfigItem>
+                </>}
+                {bgConfig?.bgMode === '2' &&
+                <>
+                    <LcConfigItem title={'颜色模式'}>
+                        <LcRadio onChange={this.bgColorModeChange} defaultValue={bgConfig?.bgColorMode}>
+                            <Radio value="0">单色</Radio>
+                            <Radio value="1">线性</Radio>
+                            <Radio value="2">径向</Radio>
+                        </LcRadio>
+                    </LcConfigItem>
+                    <LcConfigItem title={'背景颜色'}>
+                        <CfgItemBorder width={'50%'}>
+                            <BaseColorPicker onChange={this.bgColorChange}
+                                             style={{width: '100%', height: '18px', borderRadius: 2}}
+                                             value={bgConfig?.bgColor}
+                                             showText={true}/>
+                        </CfgItemBorder>
+                    </LcConfigItem>
+                </>
+                }
             </div>
         );
     }
