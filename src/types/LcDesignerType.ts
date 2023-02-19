@@ -122,7 +122,7 @@ export interface BgConfig {
     /**
      * 图片尺寸
      */
-    imgSize?: [number, number];
+    bgImgSize?: [number, number];
     /**
      */
     bgImgUrl?: any;
@@ -133,11 +133,11 @@ export interface BgConfig {
     /**
      * 颜色模式
      */
-    colorMode?: BgColorMode;
+    bgColorMode?: BgColorMode;
     /**
      * 背景色
      */
-    color?: string;
+    bgColor?: string;
 }
 
 export interface ProjectConfig {

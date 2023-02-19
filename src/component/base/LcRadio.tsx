@@ -5,9 +5,11 @@ import {RadioGroupProps, RadioProps} from "antd/lib/radio/interface";
 
 class LcRadio extends Component<RadioProps & RadioGroupProps & React.RefAttributes<HTMLElement>> {
     render() {
-        const {style} = this.props;
         return (
-            <Radio.Group defaultValue={this.props.defaultValue} style={style} className={'lc-radio'}>
+            <Radio.Group defaultValue={this.props.defaultValue}
+                         onChange={this.props.onChange}
+                         style={this.props.style}
+                         className={'lc-radio'}>
                 {this.props.children}
             </Radio.Group>
         );

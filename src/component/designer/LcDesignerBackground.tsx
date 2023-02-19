@@ -11,49 +11,44 @@ interface LcDesignerBackgroundProps {
  */
 class LcDesignerBackground extends PureComponent<LcDesignerBackgroundProps> {
 
-    state = {
-        bgImgUrl: null
-    }
-    imgLoaded = false;
-    previousImgId = '';
-    lcDesBgDom: any = null;
-
     onClick = (e: any) => {
         this.props.onClick && this.props.onClick(e);
     }
 
     getBgConfigProps = () => {
-        const {projectConfig} = lcDesignerContentStore!;
-        const {bgImgUrl} = this.state;
+        const {projectConfig, bgConfig} = lcDesignerContentStore!;
+        let bgImgSize = '100% 100%';
+        if (bgConfig.bgImgSize && bgConfig.bgImgSize.length === 2) {
+            bgImgSize = `${bgConfig.bgImgSize[0]}px ${bgConfig.bgImgSize[1]}px`;
+        }
         if (projectConfig) {
             let bgConfigProps: any = {
                 height: projectConfig.screenHeight,
                 width: projectConfig.screenWidth,
-                backgroundColor: '#131e26',
-                backgroundSize: '100% 100%',
+                backgroundColor: bgConfig.bgColor || '#131e26',
+                backgroundSize: bgImgSize,
             }
             //todo 优化，图片不能全部加载到内存中，要通过链接方式渲染背景图
-            if (bgImgUrl)
-                bgConfigProps['backgroundImage'] = `url(${bgImgUrl})`;
+            if (bgConfig.bgImgUrl && bgConfig.bgImgUrl !== '')
+                bgConfigProps['backgroundImage'] = `url(${bgConfig.bgImgUrl})`;
             return bgConfigProps;
         }
     }
 
-    getBgImgSource = () => {
-        const {bgConfig} = lcDesignerContentStore!;
-        if (bgConfig.bgImgUrl && bgConfig.bgImgUrl !== '' && bgConfig.bgImgUrl !== this.previousImgId && !this.imgLoaded) {
-            //注意此处的imgLoaded条件，如果不加，会导致死循环
-            this.imgLoaded = true;
-            this.setState({bgImgUrl: bgConfig.bgImgUrl});
-        }
-    }
+    // getBgImgSource = () => {
+    //     const {bgConfig} = lcDesignerContentStore!;
+    //     if (bgConfig.bgImgUrl && bgConfig.bgImgUrl !== '' && bgConfig.bgImgUrl !== this.previousImgId && !this.imgLoaded) {
+    //         //注意此处的imgLoaded条件，如果不加，会导致死循环
+    //         this.imgLoaded = true;
+    //         this.setState({bgImgUrl: bgConfig.bgImgUrl});
+    //     }
+    // }
 
     render() {
         console.log('LcDesignerBackground render')
-        this.getBgImgSource();
         return (
             <div className={'lc-canvas'}
-                 ref={ref => this.lcDesBgDom = ref}
+                // ref={ref => this.lcDesBgDom = ref}
                  id={'-1'}
                  data-type={'lcCanvas'}
                  onClick={this.onClick}

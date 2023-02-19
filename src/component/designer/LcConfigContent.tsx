@@ -58,7 +58,7 @@ class LcConfigContent extends Component<LcConfigContentProps> {
 
     doRenderConfig = () => {
         let {activeMenu} = this.props;
-        const {activated, chartConfigs, bgConfig} = lcConfigContentStore!;
+        const {activated, chartConfigs} = lcConfigContentStore!;
         const {id: activeId = -1, type: activeType = ''} = activated!;
         if (activated && activated.id === -1)
             activeMenu = '';
@@ -81,7 +81,7 @@ class LcConfigContent extends Component<LcConfigContentProps> {
             case 'theme':
                 return <div>开发中...</div>
             default:
-                return <LcBgConfig bgConfig={bgConfig} updateBgConfig={this.props.updateBgConfig}/>;
+                return <LcBgConfig/>;
         }
     }
 

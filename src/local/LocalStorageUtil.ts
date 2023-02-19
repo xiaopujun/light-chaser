@@ -8,13 +8,14 @@ import localforage from 'localforage';
 import {toJS} from "mobx";
 
 const buildConfig = (designerStore: LCDesignerProps) => {
-    let {id = -1, canvasConfig, chartConfigs, layoutConfigs, projectConfig} = designerStore;
+    let {id = -1, canvasConfig, chartConfigs, layoutConfigs, projectConfig, bgConfig} = designerStore;
     return {
         id,
         canvasConfig: toJS(canvasConfig),
         chartConfigs: toJS(chartConfigs),
         layoutConfigs: toJS(layoutConfigs),
         projectConfig: toJS(projectConfig),
+        bgConfig: toJS(bgConfig),
     };
 }
 

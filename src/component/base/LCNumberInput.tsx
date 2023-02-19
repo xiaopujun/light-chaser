@@ -4,8 +4,8 @@ import './style/LCNumberInput.less';
 export default class LCNumberInput extends Component<React.InputHTMLAttributes<HTMLInputElement & InputHTMLAttributes<any>>> {
 
     onChange = (e: any) => {
-        // const {onChange} = this.props;
-
+        const {onChange} = this.props;
+        onChange && onChange(e);
     }
 
     render() {

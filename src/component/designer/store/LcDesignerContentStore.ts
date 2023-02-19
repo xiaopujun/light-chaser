@@ -1,9 +1,16 @@
-import {makeAutoObservable} from "mobx";
+import {action, makeAutoObservable, makeObservable, observable, runInAction} from "mobx";
 import {
-    ActiveProps, BaseInfo, BaseStyle,
-    BgColorMode, BgConfig, BgFillType,
-    BgMode, CanvasSetProps, ChartConfigsProps,
-    ProjectConfig, SystemConfig
+    ActiveProps,
+    BaseInfo,
+    BaseStyle,
+    BgColorMode,
+    BgConfig,
+    BgFillType,
+    BgMode,
+    CanvasSetProps,
+    ChartConfigsProps,
+    ProjectConfig,
+    SystemConfig
 } from "../../../types/LcDesignerType";
 import {LcLayout} from "../type/LcDesignerTypes";
 import * as _ from "lodash";
@@ -40,11 +47,11 @@ class LcDesignerContentStore {
      */
     bgConfig: BgConfig = {
         bgMode: BgMode.NONE,
-        imgSize: [1920, 1080],
+        bgImgSize: [1920, 1080],
         bgImgUrl: '',
         bgFillType: BgFillType.NONE,
-        colorMode: BgColorMode.SINGLE,
-        color: '',
+        bgColorMode: BgColorMode.SINGLE,
+        bgColor: '',
     };
     /**
      * 系统配置
@@ -79,21 +86,30 @@ class LcDesignerContentStore {
      * 设置布局id
      */
     setId = (id: number) => {
-        this.id = id;
+        console.log('setId', id);
+        runInAction(() => {
+            this.id = id;
+        })
     }
 
     /**
      * 设置图表配置
      */
     setChartConfigs = (chartConfigs: ChartConfigsProps) => {
-        this.chartConfigs = chartConfigs;
+        console.log('setChartConfigs', chartConfigs);
+        runInAction(() => {
+            this.chartConfigs = chartConfigs;
+        })
     }
 
     /**
      * 设置布局配置
      */
     setLayoutConfigs = (layoutConfigs: LcLayout[]) => {
-        this.layoutConfigs = layoutConfigs;
+        console.log('setLayoutConfigs', layoutConfigs);
+        runInAction(() => {
+            this.layoutConfigs = layoutConfigs;
+        })
     }
 
     /**
@@ -113,6 +129,7 @@ class LcDesignerContentStore {
      * 添加元素
      */
     addItem = (item: LcLayout) => {
+        console.log('addItem', item);
         this.layoutConfigs?.push(item);
         let initObj: any = lcCompInits[item.name + "Init"];
         let initData: any = initObj.getInitConfig()
@@ -127,6 +144,7 @@ class LcDesignerContentStore {
      * 删除元素
      */
     delItem = (id: string | number) => {
+        console.log('delItem', id);
         _.remove(this.layoutConfigs, function (item) {
             return item?.id === id;
         })
@@ -140,6 +158,7 @@ class LcDesignerContentStore {
      * 更新布局
      */
     updateLayout = (item: Layout) => {
+        console.log('updateLayout', item);
         const {i, x, y, w, h} = item;
         for (let index = 0; index < this.layoutConfigs.length; index++) {
             if (this.layoutConfigs[index].i === i) {
@@ -152,12 +171,16 @@ class LcDesignerContentStore {
      * 更新激活状态元素
      */
     updateActive = (data: ActiveProps) => {
-        this.activated = {...this.activated, ...data};
+        console.log('updateActive', data);
+        runInAction(() => {
+            this.activated = {...this.activated, ...data};
+        })
     }
     /**
      * 更新组件基础样式
      */
     updateBaseStyle = (data: BaseStyle) => {
+        console.log('updateBaseStyle', data);
         const {id} = this.activated!;
         let charConfig = this.chartConfigs[id + ''];
         let baseConfig = charConfig?.baseStyle;
@@ -168,6 +191,7 @@ class LcDesignerContentStore {
      * 更新图表组件配置
      */
     updateChartProps = (data: any) => {
+        console.log('updateChartProps', data);
         let activeConfig = this.chartConfigs[this.activated?.id + ''];
         if (activeConfig)
             activeConfig.chartProps = _.merge(activeConfig.chartProps, data);
@@ -176,6 +200,7 @@ class LcDesignerContentStore {
      * 更新基础信息
      */
     updateBaseInfo = (data: BaseInfo) => {
+        console.log('updateBaseInfo', data);
         let {id = -1} = this.activated;
         let chartConfig = this.chartConfigs[id];
         if (chartConfig)
@@ -185,19 +210,28 @@ class LcDesignerContentStore {
      * 更新画布设置
      */
     updateCanvasConfig = (data: CanvasSetProps) => {
-        this.canvasConfig = {...this.canvasConfig, ...data};
+        console.log('updateCanvasConfig', data);
+        runInAction(() => {
+            this.canvasConfig = {...this.canvasConfig, ...data};
+        })
     }
     /**
      * 更新项目配置
      */
     updateProjectConfig = (data: ProjectConfig) => {
-        this.projectConfig = {...this.projectConfig, ...data};
+        console.log('updateProjectConfig', data);
+        runInAction(() => {
+            this.projectConfig = {...this.projectConfig, ...data};
+        })
     }
     /**
      * 更新背景配置
      */
     updateBgConfig = (data: BgConfig) => {
-        _.merge(this.bgConfig, data);
+        console.log('updateBgConfig', data);
+        runInAction(() => {
+            this.bgConfig = {...this.bgConfig, ...data};
+        })
     }
     /**
      * 更新系统配置
