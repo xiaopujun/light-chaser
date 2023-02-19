@@ -118,7 +118,7 @@ export interface BgConfig {
     /**
      * 背景模式
      */
-    bgMode?: BgMode;
+    bgMode?: '0' | '1' | '2'
     /**
      * 图片尺寸
      */
@@ -129,11 +129,11 @@ export interface BgConfig {
     /**
      * 填充方式
      */
-    bgFillType?: BgFillType;
+    bgFillType?: '0' | '1' | '2';
     /**
      * 颜色模式
      */
-    bgColorMode?: BgColorMode;
+    bgColorMode?: '0' | '1' | '2';
     /**
      * 背景色
      */
