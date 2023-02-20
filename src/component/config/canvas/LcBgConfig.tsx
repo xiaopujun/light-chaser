@@ -107,7 +107,15 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
                                        style={{textAlign: 'center', width: '48%'}}
                                        defaultValue={bgImgSize[1]}/>
                     </LcConfigItem>
-                    <LcConfigItem title={'填充方式'}>
+                    <LcConfigItem title={'图片位置'}>
+                        <LCNumberInput onChange={this.bgImgSizeChange} name={'posX'}
+                                       style={{textAlign: 'center', width: '48%'}}
+                                       defaultValue={bgImgSize[0]}/>
+                        <LCNumberInput onChange={this.bgImgSizeChange} name={'posY'}
+                                       style={{textAlign: 'center', width: '48%'}}
+                                       defaultValue={bgImgSize[1]}/>
+                    </LcConfigItem>
+                    <LcConfigItem title={'重复方式'}>
                         <LcRadio onChange={this.fillTypeChange} defaultValue={bgConfig?.bgFillType}>
                             <Radio value="0">无</Radio>
                             <Radio value="1">x轴</Radio>
