@@ -7,12 +7,10 @@ import LcConfigItem from "../../base/LcConfigItem";
 import LcRadio from "../../base/LcRadio";
 import {Button, Radio, Select} from "antd";
 import CfgItemBorder from "../../base/CfgItemBorder";
-import localforage from "localforage";
 import lcDesignerContentStore from '../../designer/store/LcDesignerContentStore';
 import {observer} from "mobx-react";
 import {toJS} from "mobx";
 import LcSelect from "../../base/LCSelect";
-import LcRadialButton from "../../base/LcRadialButton";
 
 const {Option} = Select;
 
@@ -30,11 +28,9 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
         fileReader.onload = (event: any) => {
             const blob = new Blob([event.target.result], {type: file.type});
             const bgImgUrl = URL.createObjectURL(blob);
-            localforage.setItem('lc-bg-img-source', blob).then(() => {
-                updateBgConfig({bgImgUrl: bgImgUrl});
-                //todo 更换图片的时候要释放链接和内存的关联，可以提高部分性能
-                // URL.revokeObjectURL(objectUrl);
-            });
+            updateBgConfig({bgImgUrl: bgImgUrl});
+            //todo 更换图片的时候要释放链接和内存的关联，可以提高部分性能
+            // URL.revokeObjectURL(objectUrl);
         };
         //通过二进制流读取文件，读取完毕后会调用上方设置好的onload事件
         fileReader.readAsArrayBuffer(file);
@@ -120,11 +116,13 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
                         </div>
                     </div>
                     <br/>
-                    <LcConfigItem title={'背景控制'}>
-                        <Button disabled={bgConfig.bgImgUrl === ''} danger={true} ghost={true}
-                                onClick={this.clearBgImg}
-                                size={'small'}>清除背景图</Button>
-                    </LcConfigItem>
+                    {
+                        bgConfig.bgImgUrl === '' ? null : <LcConfigItem title={'背景控制'}>
+                            <Button danger={true} ghost={true}
+                                    onClick={this.clearBgImg}
+                                    size={'small'}>清除背景图</Button>
+                        </LcConfigItem>
+                    }
                     <LcConfigItem title={'图片尺寸'}>
                         <LCNumberInput onChange={this.bgImgSizeChange} name={'bgX'}
                                        style={{textAlign: 'center', width: '48%'}}

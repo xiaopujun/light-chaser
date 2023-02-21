@@ -25,14 +25,30 @@ const buildConfig = (designerStore: LCDesignerProps) => {
 export const localCreate = (designerStore: LcDesignerContentStore) => {
     let config = buildConfig(designerStore);
     return new Promise((resolve) => {
+        if (config.bgConfig?.bgImgUrl !== '') {
+            saveBgImgToIndexedDB(config.bgConfig?.bgImgUrl).then((blobKey) => {
+                if (config.bgConfig)
+                    config.bgConfig.bgImgUrl = blobKey;
+                saveDesignDataToIndexedDB(config).then(id => resolve(id));
+            }).catch((error) => {
+                console.log("save bgImg error", error);
+            });
+        } else {
+            saveDesignDataToIndexedDB(config).then(id => resolve(id));
+        }
+    });
+}
+
+const saveDesignDataToIndexedDB = (config: any) => {
+    return new Promise((resolve) => {
         localforage.getItem('light-chaser').then((dataArr: any) => {
             if (dataArr && dataArr instanceof Array) {
                 config.id = dataArr.length + 1;
                 dataArr.push(config);
                 localforage.setItem('light-chaser', dataArr).then((data) => {
-                    
-                    
                     resolve(config.id as number);
+                }).catch((error) => {
+                    resolve(-1);
                 });
             } else {
                 //没有没有保存过数据则初始化
@@ -40,12 +56,37 @@ export const localCreate = (designerStore: LcDesignerContentStore) => {
                 config.id = 0;
                 dataArr.push(config);
                 localforage.setItem('light-chaser', dataArr).then((data) => {
-                    
                     resolve(config.id as number);
+                }).catch((error) => {
+                    resolve(-1);
                 });
             }
         });
-    })
+    });
+};
+
+const saveBgImgToIndexedDB = (url: string) => {
+    return new Promise((resolve) => {
+        fetch(url)
+            .then((response) => {
+                if (response.ok)
+                    return response.blob();
+                throw new Error("get bgImg error");
+            })
+            .then((blob) => {
+                let blobKey = url.substring(url.lastIndexOf('/') + 1, url.length);
+                localforage.setItem(blobKey, blob).then((data) => {
+                    resolve(blobKey)
+                }).catch((error) => {
+                    console.log("save bgImg error", error);
+                    resolve("");
+                });
+            })
+            .catch((error) => {
+                console.log("get bgImg error", error);
+                resolve("");
+            });
+    });
 }
 
 /**
