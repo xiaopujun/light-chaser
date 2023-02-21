@@ -177,7 +177,6 @@ class LcDesignerContent extends PureComponent<LcDesignerContentStore | any> {
     }
 
     render() {
-        console.log('render LcDesignerContent')
         return (
             <DragScaleProvider {...this.getDragScaleProviderProps()}>
                 <LcDesignerBackground onClick={this.updateActive} ref={obj => this.lcbg = obj}>

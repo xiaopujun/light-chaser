@@ -30,8 +30,8 @@ export const localCreate = (designerStore: LcDesignerContentStore) => {
                 config.id = dataArr.length + 1;
                 dataArr.push(config);
                 localforage.setItem('light-chaser', dataArr).then((data) => {
-                    console.log('push after dataArr', dataArr)
-                    console.log('push after', data)
+                    
+                    
                     resolve(config.id as number);
                 });
             } else {
@@ -40,7 +40,7 @@ export const localCreate = (designerStore: LcDesignerContentStore) => {
                 config.id = 0;
                 dataArr.push(config);
                 localforage.setItem('light-chaser', dataArr).then((data) => {
-                    console.log('push after init', data);
+                    
                     resolve(config.id as number);
                 });
             }

@@ -124,12 +124,16 @@ export interface BgConfig {
      */
     bgImgSize?: [number, number];
     /**
+     * 图片重复方式
+     */
+    bgImgRepeat?: string;
+    /**
+     * 图片位置
+     */
+    bgImgPosition?: [number, number];
+    /**
      */
     bgImgUrl?: any;
-    /**
-     * 填充方式
-     */
-    bgFillType?: '0' | '1' | '2';
     /**
      * 颜色模式
      */

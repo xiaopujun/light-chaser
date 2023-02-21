@@ -1,12 +1,9 @@
-import {action, makeAutoObservable, makeObservable, observable, runInAction} from "mobx";
+import {makeAutoObservable, runInAction} from "mobx";
 import {
     ActiveProps,
     BaseInfo,
     BaseStyle,
-    BgColorMode,
     BgConfig,
-    BgFillType,
-    BgMode,
     CanvasSetProps,
     ChartConfigsProps,
     ProjectConfig,
@@ -48,8 +45,9 @@ class LcDesignerContentStore {
     bgConfig: BgConfig = {
         bgMode: '0',
         bgImgSize: [1920, 1080],
+        bgImgPosition: [0, 0],
+        bgImgRepeat: 'no-repeat',
         bgImgUrl: '',
-        bgFillType: '0',
         bgColorMode: '0',
         bgColor: '',
     };
@@ -86,7 +84,6 @@ class LcDesignerContentStore {
      * 设置布局id
      */
     setId = (id: number) => {
-
         runInAction(() => {
             this.id = id;
         })
@@ -96,7 +93,6 @@ class LcDesignerContentStore {
      * 设置图表配置
      */
     setChartConfigs = (chartConfigs: ChartConfigsProps) => {
-
         runInAction(() => {
             this.chartConfigs = chartConfigs;
         })
@@ -136,7 +132,6 @@ class LcDesignerContentStore {
      * 添加元素
      */
     addItem = (item: LcLayout) => {
-
         this.layoutConfigs?.push(item);
         let initObj: any = lcCompInits[item.name + "Init"];
         let initData: any = initObj.getInitConfig()
@@ -151,7 +146,6 @@ class LcDesignerContentStore {
      * 删除元素
      */
     delItem = (id: string | number) => {
-
         _.remove(this.layoutConfigs, function (item) {
             return item?.id === id;
         })
@@ -165,7 +159,6 @@ class LcDesignerContentStore {
      * 更新布局
      */
     updateLayout = (item: Layout) => {
-
         const {i, x, y, w, h} = item;
         for (let index = 0; index < this.layoutConfigs.length; index++) {
             if (this.layoutConfigs[index].i === i) {
@@ -178,7 +171,6 @@ class LcDesignerContentStore {
      * 更新激活状态元素
      */
     updateActive = (data: ActiveProps) => {
-
         runInAction(() => {
             this.activated = {...this.activated, ...data};
         })
@@ -187,7 +179,6 @@ class LcDesignerContentStore {
      * 更新组件基础样式
      */
     updateBaseStyle = (data: BaseStyle) => {
-
         const {id} = this.activated!;
         let charConfig = this.chartConfigs[id + ''];
         let baseConfig = charConfig?.baseStyle;
@@ -198,7 +189,6 @@ class LcDesignerContentStore {
      * 更新图表组件配置
      */
     updateChartProps = (data: any) => {
-
         let activeConfig = this.chartConfigs[this.activated?.id + ''];
         if (activeConfig)
             activeConfig.chartProps = _.merge(activeConfig.chartProps, data);
@@ -207,7 +197,6 @@ class LcDesignerContentStore {
      * 更新基础信息
      */
     updateBaseInfo = (data: BaseInfo) => {
-
         let {id = -1} = this.activated;
         let chartConfig = this.chartConfigs[id];
         if (chartConfig)
@@ -217,7 +206,6 @@ class LcDesignerContentStore {
      * 更新画布设置
      */
     updateCanvasConfig = (data: CanvasSetProps) => {
-
         runInAction(() => {
             this.canvasConfig = {...this.canvasConfig, ...data};
         })

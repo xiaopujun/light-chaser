@@ -5,12 +5,16 @@ import BaseColorPicker from "../../base/BaseColorPicker";
 import Dragger from "antd/es/upload/Dragger";
 import LcConfigItem from "../../base/LcConfigItem";
 import LcRadio from "../../base/LcRadio";
-import {Radio} from "antd";
+import {Button, Radio, Select} from "antd";
 import CfgItemBorder from "../../base/CfgItemBorder";
 import localforage from "localforage";
 import lcDesignerContentStore from '../../designer/store/LcDesignerContentStore';
 import {observer} from "mobx-react";
 import {toJS} from "mobx";
+import LcSelect from "../../base/LCSelect";
+import LcRadialButton from "../../base/LcRadialButton";
+
+const {Option} = Select;
 
 interface LcBgConfigProps {
     bgConfig?: any;
@@ -51,13 +55,24 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
         } else if (name === 'bgY' && tempBgImgSize) {
             tempBgImgSize[1] = parseInt(value);
         }
-        console.log('tempBgImgSize', tempBgImgSize)
         updateBgConfig({bgImgSize: tempBgImgSize});
     }
 
-    fillTypeChange = (e: any) => {
+    bgImgPosChange = (e: any) => {
+        let {updateBgConfig, bgConfig: {bgImgPosition}} = lcDesignerContentStore;
+        let tempBgImgPos = toJS(bgImgPosition);
+        const {target: {value, name}} = e;
+        if (name === 'posX' && tempBgImgPos) {
+            tempBgImgPos[0] = parseInt(value);
+        } else if (name === 'posY' && tempBgImgPos) {
+            tempBgImgPos[1] = parseInt(value);
+        }
+        updateBgConfig({bgImgPosition: tempBgImgPos});
+    }
+
+    fillTypeChange = (value: any) => {
         const {updateBgConfig} = lcDesignerContentStore;
-        updateBgConfig({bgFillType: e.target.value});
+        updateBgConfig({bgImgRepeat: value});
     }
 
     bgColorModeChange = (e: any) => {
@@ -70,9 +85,15 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
         updateBgConfig({bgColor: color});
     }
 
+    clearBgImg = () => {
+        const {updateBgConfig, bgConfig} = lcDesignerContentStore;
+        URL.revokeObjectURL(bgConfig?.bgImgUrl);
+        updateBgConfig({bgImgUrl: ''});
+    }
+
 
     render() {
-        console.log('LcBgConfig render')
+
         const {bgConfig} = lcDesignerContentStore;
         const {bgImgSize = [1920, 1080]} = bgConfig;
         return (
@@ -99,6 +120,11 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
                         </div>
                     </div>
                     <br/>
+                    <LcConfigItem title={'背景控制'}>
+                        <Button disabled={bgConfig.bgImgUrl === ''} danger={true} ghost={true}
+                                onClick={this.clearBgImg}
+                                size={'small'}>清除背景图</Button>
+                    </LcConfigItem>
                     <LcConfigItem title={'图片尺寸'}>
                         <LCNumberInput onChange={this.bgImgSizeChange} name={'bgX'}
                                        style={{textAlign: 'center', width: '48%'}}
@@ -108,19 +134,23 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
                                        defaultValue={bgImgSize[1]}/>
                     </LcConfigItem>
                     <LcConfigItem title={'图片位置'}>
-                        <LCNumberInput onChange={this.bgImgSizeChange} name={'posX'}
+                        <LCNumberInput onChange={this.bgImgPosChange} name={'posX'}
                                        style={{textAlign: 'center', width: '48%'}}
                                        defaultValue={bgImgSize[0]}/>
-                        <LCNumberInput onChange={this.bgImgSizeChange} name={'posY'}
+                        <LCNumberInput onChange={this.bgImgPosChange} name={'posY'}
                                        style={{textAlign: 'center', width: '48%'}}
                                        defaultValue={bgImgSize[1]}/>
                     </LcConfigItem>
                     <LcConfigItem title={'重复方式'}>
-                        <LcRadio onChange={this.fillTypeChange} defaultValue={bgConfig?.bgFillType}>
-                            <Radio value="0">无</Radio>
-                            <Radio value="1">x轴</Radio>
-                            <Radio value="2">y轴</Radio>
-                        </LcRadio>
+                        <CfgItemBorder width={'50%'}>
+                            <LcSelect onChange={this.fillTypeChange}
+                                      defaultValue={bgConfig?.bgImgRepeat}>
+                                <Option value={"no-repeat"}>不重复</Option>
+                                <Option value={"repeat-x"}>x轴重复</Option>
+                                <Option value={"repeat-y"}>y轴重复</Option>
+                                <Option value={"repeat"}>铺满</Option>
+                            </LcSelect>
+                        </CfgItemBorder>
                     </LcConfigItem>
                 </>}
                 {bgConfig?.bgMode === '2' &&

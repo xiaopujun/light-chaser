@@ -14,7 +14,6 @@ interface AntdBarProps {
 export default class AntdBaseBar extends PureComponent<AntdBarProps> {
 
     render() {
-        console.log("AntdBaseBar render")
         const {chartConfig} = this.props;
         if (!chartConfig)
             return null;
