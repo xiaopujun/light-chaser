@@ -79,7 +79,10 @@ class LcDesignerContentStore {
      * 布局配置
      */
     layoutConfigs: LcLayout[] = [];
-
+    /**
+     * 扩展参数（用于存储一些临时数据）
+     */
+    extendParams: any = {};
     /**
      * 设置布局id
      */
@@ -114,6 +117,10 @@ class LcDesignerContentStore {
             this.bgConfig = bgConfig;
         })
     }
+    /**
+     * 设置扩展临时属性
+     */
+    setExtendParams = (extendParams: any) => this.extendParams = extendParams;
 
     /**
      * 清空store

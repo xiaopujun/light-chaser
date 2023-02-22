@@ -223,4 +223,8 @@ export interface LCDesignerProps {
      * 布局配置
      */
     layoutConfigs: Array<any>;
+    /**
+     * 扩展参数
+     */
+    extendParams: any;
 }
