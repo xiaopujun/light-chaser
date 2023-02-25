@@ -103,23 +103,15 @@ class LCDesigner extends Component<LCDesignerProps | any> {
      * 初始化以更新方式打开时项目信息
      */
     initEditInfo = () => {
-        const {
-            updateProjectConfig,
-            setId,
-            setChartConfigs,
-            setLayoutConfigs,
-            setBgConfig,
-            setExtendParams
-        } = lcDesignerContentStore;
         const {id} = this.props.location.state;
         getProjectById(id).then((config: any) => {
             if (config) {
-                setId(config.id);
-                updateProjectConfig(config.projectConfig);
-                setChartConfigs(config.chartConfigs);
-                setLayoutConfigs(config.layoutConfigs);
-                setBgConfig(config.bgConfig);
-                setExtendParams(config.extendParams);
+                lcDesignerContentStore.setId(config.id);
+                lcDesignerContentStore.updateProjectConfig(config.projectConfig);
+                lcDesignerContentStore.setChartConfigs(config.chartConfigs);
+                lcDesignerContentStore.setLayoutConfigs(config.layoutConfigs);
+                lcDesignerContentStore.setBgConfig(config.bgConfig);
+                lcDesignerContentStore.setExtendParams(config.extendParams);
             }
         })
     }
