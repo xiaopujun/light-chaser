@@ -9,6 +9,7 @@ import {observer} from "mobx-react";
 import lcDesignerContentStore, {LcDesignerContentStore} from "./store/LcDesignerContentStore";
 import lcRightMenuStore from "./store/LcRightMenuStore";
 import LcDesignerBackground from "./LcDesignerBackground";
+import {toJS} from "mobx";
 
 class LcDesignerContent extends PureComponent<LcDesignerContentStore | any> {
 
@@ -177,6 +178,7 @@ class LcDesignerContent extends PureComponent<LcDesignerContentStore | any> {
     }
 
     render() {
+        console.log(toJS(lcDesignerContentStore))
         return (
             <DragScaleProvider {...this.getDragScaleProviderProps()}>
                 <LcDesignerBackground onClick={this.updateActive} ref={obj => this.lcbg = obj}>

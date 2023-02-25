@@ -16,8 +16,10 @@ const buildConfig = (designerStore: LCDesignerProps) => {
     };
 }
 
-
-const saveDesignDataToIndexedDB = (config: any) => {
+/**
+ * 保存项目到本地数据库
+ */
+const saveProjectToLocal = (config: any) => {
     return new Promise((resolve) => {
         localforage.getItem('light-chaser').then((dataArr: any) => {
             if (dataArr && dataArr instanceof Array) {
@@ -26,7 +28,7 @@ const saveDesignDataToIndexedDB = (config: any) => {
                 localforage.setItem('light-chaser', dataArr).then(() => {
                     resolve(config.id as number);
                 }).catch((error) => {
-                    console.log("saveDesignDataToIndexedDB error", error)
+                    console.log("saveProjectToLocal error", error)
                     resolve(-1);
                 });
             } else {
@@ -37,7 +39,7 @@ const saveDesignDataToIndexedDB = (config: any) => {
                 localforage.setItem('light-chaser', dataArr).then(() => {
                     resolve(config.id as number);
                 }).catch((error) => {
-                    console.log("saveDesignDataToIndexedDB error", error)
+                    console.log("saveProjectToLocal error", error)
                     resolve(-1);
                 });
             }
@@ -45,7 +47,11 @@ const saveDesignDataToIndexedDB = (config: any) => {
     });
 };
 
-const saveBgImgToIndexedDB = (url: string) => {
+/**
+ * 保存图片到本地数据库
+ * @param url 图片地址
+ */
+const saveImgToLocal = (url: string) => {
     return new Promise((resolve) => {
         fetch(url)
             .then((response) => {
@@ -72,7 +78,7 @@ const saveBgImgToIndexedDB = (url: string) => {
 /**
  * 从本地数据库获取背景图片
  */
-const getBgImgFromIndexedDB = (blobKey: string) => {
+const getImgFromLocal = (blobKey: string) => {
     return new Promise((resolve) => {
         localforage.getItem(blobKey).then((blob) => {
             if (blob) {
@@ -91,7 +97,7 @@ const getBgImgFromIndexedDB = (blobKey: string) => {
 /**
  * 从本地数据库删除背景图片
  */
-const deleteBgImgFromIndexedDB = (blobKey: string) => {
+const delImgFromLocal = (blobKey: string) => {
     return new Promise((resolve) => {
         localforage.removeItem(blobKey).then(() => {
             resolve(true);
@@ -104,30 +110,30 @@ const deleteBgImgFromIndexedDB = (blobKey: string) => {
 
 
 /**
- * 本地数据保存
+ * 创建项目
  */
-export const localCreate = (designerStore: LcDesignerContentStore) => {
+export const createProject = (designerStore: LcDesignerContentStore) => {
     let config = buildConfig(designerStore);
     return new Promise((resolve) => {
         if (config.bgConfig?.bgImgUrl !== '') {
-            saveBgImgToIndexedDB(config.bgConfig?.bgImgUrl).then((blobKey) => {
+            saveImgToLocal(config.bgConfig?.bgImgUrl).then((blobKey) => {
                 if (config.bgConfig)
                     config.bgConfig.bgImgUrl = blobKey;
-                saveDesignDataToIndexedDB(config).then(id => resolve(id));
+                saveProjectToLocal(config).then(id => resolve(id));
             }).catch((error) => {
                 console.log("save bgImg error", error);
             });
         } else {
-            saveDesignDataToIndexedDB(config).then(id => resolve(id));
+            saveProjectToLocal(config).then(id => resolve(id));
         }
     });
 }
 
 
 /**
- * 本地数据更新
+ * 更新项目
  */
-export const localUpdate = (designerStore: LcDesignerContentStore) => {
+export const updateProject = (designerStore: LcDesignerContentStore) => {
     let config = buildConfig(designerStore);
     return new Promise((resolve) => {
         localforage.getItem('light-chaser').then((dataArr: any) => {
@@ -135,12 +141,12 @@ export const localUpdate = (designerStore: LcDesignerContentStore) => {
                 for (let i = 0; i < dataArr.length; i++) {
                     if (dataArr[i].id === config.id) {
                         if (config.extendParams.oldBgImgUrl !== '') {
-                            deleteBgImgFromIndexedDB(config.extendParams.oldBgImgUrl).then(r => {
+                            delImgFromLocal(config.extendParams.oldBgImgUrl).then(r => {
                                 console.log("delete old bgImg", r);
                             });
                         }
                         if (config.bgConfig?.bgImgUrl !== '') {
-                            saveBgImgToIndexedDB(config.bgConfig?.bgImgUrl).then((blobKey) => {
+                            saveImgToLocal(config.bgConfig?.bgImgUrl).then((blobKey) => {
                                 if (config.bgConfig)
                                     config.bgConfig.bgImgUrl = blobKey;
                                 dataArr[i] = config;
@@ -165,9 +171,9 @@ export const localUpdate = (designerStore: LcDesignerContentStore) => {
 }
 
 /**
- * 本地数据查询
+ * 根据项目id获取项目
  */
-export const localQuery = (id: number | string) => {
+export const getProjectById = (id: number | string) => {
     return new Promise((resolve) => {
         localforage.getItem('light-chaser').then((dataArr: any) => {
             if (dataArr && dataArr instanceof Array) {
@@ -175,7 +181,7 @@ export const localQuery = (id: number | string) => {
                     if (dataArr[i].id === id) {
                         let target = dataArr[i];
                         if (target.bgConfig?.bgImgUrl !== '') {
-                            getBgImgFromIndexedDB(target.bgConfig?.bgImgUrl).then((url) => {
+                            getImgFromLocal(target.bgConfig?.bgImgUrl).then((url) => {
                                 if (target.bgConfig) {
                                     target.extendParams.oldBgImgUrl = target.bgConfig.bgImgUrl;
                                     target.bgConfig.bgImgUrl = url;
@@ -193,7 +199,10 @@ export const localQuery = (id: number | string) => {
 }
 
 
-export const localGetAll = () => {
+/**
+ * 查询所有项目
+ */
+export const getAllProject = () => {
     return new Promise((resolve) => {
         localforage.getItem('light-chaser').then((dataArr: any) => {
             if (dataArr && dataArr instanceof Array) {
@@ -201,6 +210,9 @@ export const localGetAll = () => {
             } else {
                 resolve([]);
             }
-        })
+        }).catch((error) => {
+            console.log("getAllProject error", error);
+            resolve([]);
+        });
     });
 }

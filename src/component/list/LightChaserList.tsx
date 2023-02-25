@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import '../designer/style/LightChaserList.less';
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import AddNewScreenDialog from "./AddNewScreenDialog";
-import {localGetAll} from "../../local/LocalStorageUtil";
+import {getAllProject} from "../../local/LocalStorageUtil";
 
 interface LightChaserListProps extends RouteComponentProps {
 
@@ -17,7 +17,7 @@ class LightChaserList extends Component<LightChaserListProps> {
     }
 
     componentDidMount() {
-        localGetAll().then((data: any) => {
+        getAllProject().then((data: any) => {
             if (data && data.length > 0) {
                 this.setState({data})
             }

@@ -12,7 +12,7 @@ import {
     SnippetsOutlined
 } from "@ant-design/icons";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {localCreate, localUpdate} from "../../local/LocalStorageUtil";
+import {createProject, updateProject} from "../../local/LocalStorageUtil";
 import {LCDesignerProps} from "../../types/LcDesignerType";
 import lcDesignerContentStore from './store/LcDesignerContentStore';
 
@@ -40,7 +40,7 @@ class LcDesignerHeader extends Component<LcDesignerHeaderProps | any> {
         let {id = -1, projectConfig: {saveType}, setId} = lcDesignerContentStore;
         if (saveType === 'local') {
             if (id === -1) {
-                localCreate(lcDesignerContentStore).then((id: number | any) => {
+                createProject(lcDesignerContentStore).then((id: number | any) => {
                     if (id > -1) {
                         //更新id
                         setId && setId(id);
@@ -50,7 +50,7 @@ class LcDesignerHeader extends Component<LcDesignerHeaderProps | any> {
                     }
                 });
             } else {
-                localUpdate(lcDesignerContentStore).then(() => {
+                updateProject(lcDesignerContentStore).then(() => {
                     alert("update success");
                 });
             }

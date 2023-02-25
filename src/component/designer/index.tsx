@@ -13,7 +13,7 @@ import LcDesignerLeft from "./LcDesignerLeft";
 import LcDesignerRight from "./LcDesignerRight";
 import LcDesignerFooter from "./LcDesignerFooter";
 import lcDesignerContentStore from './store/LcDesignerContentStore';
-import {localQuery} from "../../local/LocalStorageUtil";
+import {getProjectById} from "../../local/LocalStorageUtil";
 
 export const lcComps: { [key: string]: React.FunctionComponent } = {};
 export const lcCompInits: { [key: string]: () => any } = {};
@@ -112,7 +112,7 @@ class LCDesigner extends Component<LCDesignerProps | any> {
             setExtendParams
         } = lcDesignerContentStore;
         const {id} = this.props.location.state;
-        localQuery(id).then((config: any) => {
+        getProjectById(id).then((config: any) => {
             if (config) {
                 setId(config.id);
                 updateProjectConfig(config.projectConfig);
