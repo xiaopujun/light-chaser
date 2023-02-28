@@ -96,6 +96,12 @@ const getImgFromLocal = (blobKey: string) => {
     });
 }
 
+const delImgFormLocal = (blobKey: string) => {
+    localforage.removeItem(blobKey).then(() => {
+        console.log("del bgImg success: ", blobKey);
+    });
+}
+
 /**
  * 创建项目
  */
@@ -148,7 +154,8 @@ export const updateProject = (designerStore: LcDesignerContentStore) => {
                                 });
                             });
                         } else {
-                            //2.2 如果没有新背景图片数据，则直接更新项目
+                            //2.2 如果没有新背景图片数据，则删除原有图片（如果有）后更新项目
+                            delImgFormLocal("bgImg" + config.id);
                             dataArr[i] = config;
                             localforage.setItem('light-chaser', dataArr).then(() => {
                                 resolve(config.id as number);
