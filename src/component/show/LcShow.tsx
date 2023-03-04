@@ -3,6 +3,7 @@ import ReactGridLayout from 'react-grid-layout';
 import getChartsTemplate from "../charts/ChartsCollection";
 import {RouteComponentProps} from "react-router-dom";
 import Loading from "../loading/Loading";
+import LcDesignerBackground from "../designer/LcDesignerBackground";
 
 interface LcShowProps extends RouteComponentProps {
 
@@ -55,8 +56,7 @@ class LcShow extends Component<LcShowProps | any> {
         for (let i = 0; i < layoutConfigs.length; i++)
             layoutConfigs[i].isDraggable = false;
         return (
-            <div className="site-layout-background"
-                 style={{height: canvasConfig.screenHeight, width: canvasConfig.screenWidth, backgroundColor: '#131e26',}}>
+            <LcDesignerBackground>
                 <ReactGridLayout className="layout"
                                  layout={layoutConfigs}
                                  cols={48}
@@ -73,7 +73,7 @@ class LcShow extends Component<LcShowProps | any> {
                                  width={canvasConfig.screenWidth}>
                     {this.generateElement()}
                 </ReactGridLayout>
-            </div>
+            </LcDesignerBackground>
         );
     }
 }

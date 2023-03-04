@@ -220,7 +220,6 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
                                 bgConfig?.bgColorMode === '1' && <LcConfigItem title={'渐变角度'}>
                                     <CfgItemBorder width={'40%'}>
                                         <LCNumberInput style={{width: '100%', textAlign: 'center'}} min={0} max={360}
-                                                       step={50}
                                                        onChange={this.gradientAngleChanged}/>
                                     </CfgItemBorder>
                                 </LcConfigItem>

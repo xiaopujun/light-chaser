@@ -1,7 +1,6 @@
 import React, {PureComponent} from 'react';
 import lcDesignerContentStore from './store/LcDesignerContentStore';
 import {observer} from "mobx-react";
-import {BgMode} from "../../types/LcDesignerType";
 
 interface LcDesignerBackgroundProps {
     onClick?: (e: any) => void;
@@ -45,10 +44,8 @@ class LcDesignerBackground extends PureComponent<LcDesignerBackgroundProps> {
     }
 
     render() {
-
         return (
             <div className={'lc-canvas'}
-                // ref={ref => this.lcDesBgDom = ref}
                  id={'-1'}
                  data-type={'lcCanvas'}
                  onClick={this.onClick}
