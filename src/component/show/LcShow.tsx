@@ -4,6 +4,7 @@ import getChartsTemplate from "../charts/ChartsCollection";
 import {RouteComponentProps} from "react-router-dom";
 import Loading from "../loading/Loading";
 import LcDesignerBackground from "../designer/LcDesignerBackground";
+import {getProjectById} from "../../local/LocalStorageUtil";
 
 interface LcShowProps extends RouteComponentProps {
 
@@ -15,18 +16,10 @@ class LcShow extends Component<LcShowProps | any> {
 
     constructor(props: any) {
         super(props);
-        const {location} = this.props;
-        let screens = JSON.parse(window.localStorage.lightChaser);
-        let screen;
-        for (let i = 0; i < screens.length; i++) {
-            if (screens[i].id === location.state.id) {
-                screen = screens[i];
-                break;
-            }
-        }
-        screen.layoutConfigs = JSON.parse(screen.layoutConfigs);
-        screen.chartConfigs = JSON.parse(screen.chartConfigs);
-        this.state = {LCDesignerStore: screen};
+        const {location: {state}} = this.props;
+        getProjectById(state.id).then((project: any) => {
+            this.state = {LCDesignerStore: screen};
+        });
     }
 
     calculateChartConfig = (elemId: string | number) => {
