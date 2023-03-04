@@ -9,7 +9,6 @@ import {observer} from "mobx-react";
 import lcDesignerContentStore, {LcDesignerContentStore} from "./store/LcDesignerContentStore";
 import lcRightMenuStore from "./store/LcRightMenuStore";
 import LcDesignerBackground from "./LcDesignerBackground";
-import {toJS} from "mobx";
 
 class LcDesignerContent extends PureComponent<LcDesignerContentStore | any> {
 

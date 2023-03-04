@@ -18,7 +18,7 @@ class LcShow extends Component<LcShowProps | any> {
         super(props);
         const {location: {state}} = this.props;
         getProjectById(state.id).then((project: any) => {
-            this.state = {LCDesignerStore: screen};
+            this.state = {LCDesignerStore: project};
         });
     }
 
