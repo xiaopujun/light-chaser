@@ -21,6 +21,10 @@ interface LcBgConfigProps {
 
 class LcBgConfig extends PureComponent<LcBgConfigProps> {
 
+    //线性渐变颜色
+    lineGradientColor = ['#0b222b', '#104959'];
+    gradientAngle = 0;
+
     beforeUpload = (file: any) => {
         const fileReader = new FileReader();
         const {updateBgConfig} = lcDesignerContentStore;
@@ -66,7 +70,7 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
         updateBgConfig({bgImgPosition: tempBgImgPos});
     }
 
-    fillTypeChange = (value: any) => {
+    repeatTypeChange = (value: any) => {
         const {updateBgConfig} = lcDesignerContentStore;
         updateBgConfig({bgImgRepeat: value});
     }
@@ -85,6 +89,31 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
         const {updateBgConfig, bgConfig} = lcDesignerContentStore;
         URL.revokeObjectURL(bgConfig?.bgImgUrl);
         updateBgConfig({bgImgUrl: ''});
+    }
+
+    bgGradientColorChanged = (color: string, e: any, id: any) => {
+        const {updateBgConfig, bgConfig} = lcDesignerContentStore;
+        if (id === 'startColor')
+            this.lineGradientColor[0] = color;
+        if (id === 'endColor')
+            this.lineGradientColor[1] = color;
+        //线性渐变
+        if (bgConfig?.bgColorMode === '1') {
+            updateBgConfig({bgColor: `linear-gradient(${this.gradientAngle}deg, ${this.lineGradientColor[0]}, ${this.lineGradientColor[1]})`});
+        }
+        //径向渐变
+        if (bgConfig?.bgColorMode === '2') {
+            updateBgConfig({bgColor: `radial-gradient(circle, ${this.lineGradientColor[0]}, ${this.lineGradientColor[1]})`});
+        }
+    }
+
+    gradientAngleChanged = (e: any) => {
+        const {updateBgConfig, bgConfig} = lcDesignerContentStore;
+        this.gradientAngle = e.target.value;
+        if (bgConfig?.bgColorMode === '1')
+            updateBgConfig({bgColor: `linear-gradient(${this.gradientAngle}deg, ${this.lineGradientColor[0]}, ${this.lineGradientColor[1]})`});
+        if (bgConfig?.bgColorMode === '2')
+            updateBgConfig({bgColor: `radial-gradient(${this.gradientAngle}deg, ${this.lineGradientColor[0]}, ${this.lineGradientColor[1]})`});
     }
 
 
@@ -141,7 +170,7 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
                     </LcConfigItem>
                     <LcConfigItem title={'重复方式'}>
                         <CfgItemBorder width={'50%'}>
-                            <LcSelect onChange={this.fillTypeChange}
+                            <LcSelect onChange={this.repeatTypeChange}
                                       defaultValue={bgConfig?.bgImgRepeat}>
                                 <Option value={"no-repeat"}>不重复</Option>
                                 <Option value={"repeat-x"}>x轴重复</Option>
@@ -160,14 +189,44 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
                             <Radio value="2">径向</Radio>
                         </LcRadio>
                     </LcConfigItem>
-                    <LcConfigItem title={'背景颜色'}>
-                        <CfgItemBorder width={'50%'}>
-                            <BaseColorPicker onChange={this.bgColorChange}
-                                             style={{width: '100%', height: '18px', borderRadius: 2}}
-                                             value={bgConfig?.bgColor}
-                                             showText={true}/>
-                        </CfgItemBorder>
-                    </LcConfigItem>
+                    {
+                        bgConfig?.bgColorMode === '0' && <LcConfigItem title={'背景颜色'}>
+                            <CfgItemBorder width={'50%'}>
+                                <BaseColorPicker onChange={this.bgColorChange}
+                                                 style={{width: '100%', height: '18px', borderRadius: 2}}
+                                                 value={bgConfig?.bgColor}
+                                                 showText={true}/>
+                            </CfgItemBorder>
+                        </LcConfigItem>
+                    }
+                    {
+                        (bgConfig?.bgColorMode === '1' || bgConfig?.bgColorMode === '2') && <>
+                            <LcConfigItem title={'背景颜色'}>
+                                <CfgItemBorder width={'40%'}>
+                                    <BaseColorPicker onChange={this.bgGradientColorChanged} id={'startColor'}
+                                                     style={{width: '100%', height: '18px', borderRadius: 2}}
+                                                     value={bgConfig?.bgColor}
+                                                     showText={true}/>
+                                </CfgItemBorder>
+                                &nbsp;&nbsp;
+                                <CfgItemBorder width={'40%'}>
+                                    <BaseColorPicker onChange={this.bgGradientColorChanged} id={'endColor'}
+                                                     style={{width: '100%', height: '18px', borderRadius: 2}}
+                                                     value={bgConfig?.bgColor}
+                                                     showText={true}/>
+                                </CfgItemBorder>
+                            </LcConfigItem>
+                            {
+                                bgConfig?.bgColorMode === '1' && <LcConfigItem title={'渐变角度'}>
+                                    <CfgItemBorder width={'40%'}>
+                                        <LCNumberInput style={{width: '100%', textAlign: 'center'}} min={0} max={360}
+                                                       step={50}
+                                                       onChange={this.gradientAngleChanged}/>
+                                    </CfgItemBorder>
+                                </LcConfigItem>
+                            }
+                        </>
+                    }
                 </>
                 }
             </div>
