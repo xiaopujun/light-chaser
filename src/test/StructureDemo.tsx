@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import LcHeader from "../component/designer/structure/LcHeader";
-import LcBody from "../component/designer/structure/LcBody";
-import LcLeft from "../component/designer/structure/LcLeft";
-import LcContent from "../component/designer/structure/LcContent";
-import LcRight from "../component/designer/structure/LcRight";
-import LcFoot from "../component/designer/structure/LcFoot";
-import LcStructure from "../component/designer/structure/LcStructure";
+import LcHeader from "../designer/structure/LcHeader";
+import LcBody from "../designer/structure/LcBody";
+import LcLeft from "../designer/structure/LcLeft";
+import LcContent from "../designer/structure/LcContent";
+import LcRight from "../designer/structure/LcRight";
+import LcFoot from "../designer/structure/LcFoot";
+import LcStructure from "../designer/structure/LcStructure";
 import {Drawer} from "antd";
 
 class StructureDemo extends Component {

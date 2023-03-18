@@ -3,7 +3,7 @@ import ReactGridLayout from 'react-grid-layout';
 import getChartsTemplate from "../charts/ChartsCollection";
 import {RouteComponentProps} from "react-router-dom";
 import Loading from "../loading/Loading";
-import LcDesignerBackground from "../designer/LcDesignerBackground";
+import LcDesignerBackground from "../../designer/LcDesignerBackground";
 import {getProjectById} from "../../local/LocalStorageUtil";
 
 interface LcShowProps extends RouteComponentProps {

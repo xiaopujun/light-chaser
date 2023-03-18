@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import '../designer/style/LightChaserList.less';
+import '../../designer/style/LightChaserList.less';
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import AddNewScreenDialog from "./AddNewScreenDialog";
 import {getAllProject} from "../../local/LocalStorageUtil";

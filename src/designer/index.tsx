@@ -13,7 +13,7 @@ import LcDesignerLeft from "./LcDesignerLeft";
 import LcDesignerRight from "./LcDesignerRight";
 import LcDesignerFooter from "./LcDesignerFooter";
 import lcDesignerContentStore from './store/LcDesignerContentStore';
-import {getProjectById} from "../../local/LocalStorageUtil";
+import {getProjectById} from "../local/LocalStorageUtil";
 
 export const lcComps: { [key: string]: React.FunctionComponent } = {};
 export const lcCompInits: { [key: string]: () => any } = {};
@@ -56,7 +56,7 @@ class LCDesigner extends Component<LCDesignerProps | any> {
      * 扫描组件
      */
     scanComponent = () => {
-        const context = require.context('../charts', true, /\.(tsx|ts)$/);
+        const context = require.context('../component/charts', true, /\.(tsx|ts)$/);
         context.keys().forEach(key => {
             const componentName = key.replace(/^\.\/([\w|-]+\/)*(\w+)\.(tsx|ts)$/, '$2');
             if (componentName.match("Set$"))
@@ -90,12 +90,21 @@ class LCDesigner extends Component<LCDesignerProps | any> {
      * 初始化以创建方式打开时项目信息
      */
     initCreateInfo = () => {
-        const {updateProjectConfig} = lcDesignerContentStore;
+        const {doInit} = lcDesignerContentStore;
         const {screenName, screenWidth, screenHeight} = this.props.location.state;
-        updateProjectConfig({
-            screenName: screenName,
-            screenWidth: parseInt(screenWidth),
-            screenHeight: parseInt(screenHeight),
+        doInit({
+            canvasConfig: {
+                width: parseInt(screenWidth),
+                height: parseInt(screenHeight),
+            },
+            projectConfig: {
+                name: screenName
+            },
+            bgConfig: {
+                width: parseInt(screenWidth),
+                height: parseInt(screenHeight),
+                bgColor: '#031419',
+            }
         })
     }
 
@@ -103,15 +112,26 @@ class LCDesigner extends Component<LCDesignerProps | any> {
      * 初始化以更新方式打开时项目信息
      */
     initEditInfo = () => {
+        const {doInit} = lcDesignerContentStore;
         const {id} = this.props.location.state;
-        getProjectById(id).then((config: any) => {
-            if (config) {
-                lcDesignerContentStore.setId(config.id);
-                lcDesignerContentStore.updateProjectConfig(config.projectConfig);
-                lcDesignerContentStore.setChartConfigs(config.chartConfigs);
-                lcDesignerContentStore.setLayoutConfigs(config.layoutConfigs);
-                lcDesignerContentStore.setBgConfig(config.bgConfig);
-                lcDesignerContentStore.setExtendParams(config.extendParams);
+        getProjectById(id).then((store: any) => {
+            if (store) {
+                doInit({
+                    id: store.id,
+                    canvasConfig: store.canvasConfig,
+                    activated: store.activated,
+                    bgConfig: store.bgConfig,
+                    projectConfig: store.projectConfig,
+                    elemConfigs: store.elemConfigs,
+                    layoutConfigs: store.layoutConfigs,
+                    statisticInfo: store.statisticInfo,
+                    layers: store.layers,
+                    theme: store.theme,
+                    group: store.group,
+                    linkage: store.linkage,
+                    condition: store.condition,
+                    extendParams: store.extendParams,
+                })
             }
         })
     }

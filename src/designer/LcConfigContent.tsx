@@ -8,13 +8,13 @@ import {
     VideoCameraFilled
 } from "@ant-design/icons";
 import './style/LcConfigContent.less';
-import LcEmBaseInfo from "../config/info/LcEmBaseInfo";
-import LcCompBaseStyleSet from "../config/base/LcCompBaseStyleSet";
-import {LCDesignerProps} from "../../types/LcDesignerType";
-import getChartsConfig from "../config/chart/ComponentSetInit";
-import LcBgConfig from "../config/canvas/LcBgConfig";
+import LcEmBaseInfo from "../component/config/info/LcEmBaseInfo";
+import LcCompBaseStyleSet from "../component/config/base/LcCompBaseStyleSet";
+import getChartsConfig from "../component/config/chart/ComponentSetInit";
+import LcBgConfig from "../component/config/canvas/LcBgConfig";
 import lcConfigContentStore from "./store/LcDesignerContentStore";
 import {observer} from "mobx-react";
+import LCDesigner from "./index";
 
 interface LcConfigContentProps {
     title?: string;
@@ -22,7 +22,7 @@ interface LcConfigContentProps {
     visible?: boolean;
     onClose?: (visible: boolean) => void;
     activeMenu?: string;
-    LCDesignerStore?: LCDesignerProps;
+    LCDesignerStore?: LCDesigner;
     updateActive?: (data?: any) => void;
     updateBaseStyle?: (data?: any) => void;
     updateChartProps?: (data?: any) => void;
@@ -58,21 +58,21 @@ class LcConfigContent extends Component<LcConfigContentProps> {
 
     doRenderConfig = () => {
         let {activeMenu} = this.props;
-        const {activated, chartConfigs} = lcConfigContentStore!;
+        const {activated, elemConfigs} = lcConfigContentStore!;
         const {id: activeId = -1, type: activeType = ''} = activated!;
         if (activated && activated.id === -1)
             activeMenu = '';
         switch (activeMenu) {
             case 'info':
                 return <LcEmBaseInfo updateBaseInfo={this.props.updateBaseInfo}
-                                     baseInfo={chartConfigs && chartConfigs[activeId]?.baseInfo}/>
+                                     baseInfo={elemConfigs && elemConfigs[activeId]?.baseInfo}/>
             case 'style':
                 let ChartsConfig: any = getChartsConfig(activeType);
                 return <>
                     <LcCompBaseStyleSet updateBaseStyle={this.props.updateBaseStyle}
-                                        baseStyle={chartConfigs && chartConfigs[activeId]?.baseStyle}/>
+                                        baseStyle={elemConfigs && elemConfigs[activeId]?.baseStyle}/>
                     <ChartsConfig updateChartProps={this.props.updateChartProps}
-                                  chartProps={chartConfigs && chartConfigs[activeId]?.chartProps}/>
+                                  chartProps={elemConfigs && elemConfigs[activeId]?.chartConfig}/>
                 </>
             case 'data':
                 return <div>开发中...</div>

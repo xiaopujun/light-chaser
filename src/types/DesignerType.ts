@@ -39,6 +39,26 @@ export interface Statistic {
 }
 
 /**
+ * 基础样式
+ */
+export interface BaseStyle {
+    //内边距
+    padding?: string;
+    //背景颜色
+    backgroundColor?: string;
+    //边框
+    border?: string;
+    //边框样式
+    borderStyle?: string;
+    //边框颜色
+    borderColor?: string;
+    //边框圆角
+    borderRadius?: string;
+    //边框宽度
+    borderWidth?: string;
+}
+
+/**
  * 元素配置
  */
 export interface ElemConfig {
@@ -153,7 +173,7 @@ export interface BackgroundConfig {
     //背景图片url地址
     bgImgUrl?: string;
     //背景图片颜色模式
-    bgColorMode?: BackgroundColorMode;
+    bgColorMode?: BackgroundColorMode | undefined;
     //背景颜色
     bgColor?: string;
 }
@@ -201,7 +221,7 @@ export interface LCDesigner {
     //项目设置
     projectConfig?: ProjectConfig;
     //元素样式
-    elemConfigs?: ElemConfig[];
+    elemConfigs?: { [key: string]: ElemConfig };
     //布局信息
     layoutConfigs?: any[];
     //统计信息
@@ -214,6 +234,8 @@ export interface LCDesigner {
     group?: any;
     //联动配置
     linkage?: any;
+    //条件配置
+    condition?: any;
     //扩展参数
     extendParams?: any;
 }

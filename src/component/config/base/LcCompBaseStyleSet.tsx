@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './style/LCBaseConfig.less';
-import {BaseStyle} from "../../../types/LcDesignerType";
 import BaseColorPicker from "../../base/BaseColorPicker";
 import LCNumberInput from "../../base/LCNumberInput";
 import PaddingSet from "./PaddingSet";
@@ -10,6 +9,7 @@ import LcConfigBlock from "../../base/LcConfigBlock";
 import LcSelect from "../../base/LCSelect";
 import {Select} from "antd";
 import CfgItemBorder from "../../base/CfgItemBorder";
+import {BaseStyle} from "../../../types/DesignerType";
 
 const {Option} = Select;
 

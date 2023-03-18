@@ -3,12 +3,13 @@ import './style/Content.less';
 import ReactGridLayout, {Layout} from "react-grid-layout";
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-import getChartsTemplate from "../charts/ChartsCollection";
+import getChartsTemplate from "../component/charts/ChartsCollection";
 import DragScaleProvider from "./DragScaleProvider";
 import {observer} from "mobx-react";
 import lcDesignerContentStore, {LcDesignerContentStore} from "./store/LcDesignerContentStore";
 import lcRightMenuStore from "./store/LcRightMenuStore";
 import LcDesignerBackground from "./LcDesignerBackground";
+import {toJS} from "mobx";
 
 class LcDesignerContent extends PureComponent<LcDesignerContentStore | any> {
 
@@ -23,9 +24,9 @@ class LcDesignerContent extends PureComponent<LcDesignerContentStore | any> {
     }
 
     calculateChartConfig = (elemId: string | number) => {
-        const {chartConfigs} = lcDesignerContentStore;
-        if (chartConfigs)
-            return chartConfigs[elemId];
+        const {elemConfigs} = lcDesignerContentStore;
+        if (elemConfigs)
+            return elemConfigs[elemId];
     }
 
     updateActive = (e: any) => {
@@ -37,7 +38,6 @@ class LcDesignerContent extends PureComponent<LcDesignerContentStore | any> {
         }
         const {updateActive} = lcDesignerContentStore;
         updateActive && updateActive({id: parseInt(elemId), type: dataset.type});
-        return false;
     }
 
     /**
@@ -78,12 +78,12 @@ class LcDesignerContent extends PureComponent<LcDesignerContentStore | any> {
      *  元素拖动方法
      */
     onDrop = (layout: any, layoutItem: any, _event: any) => {
-        const {addItem, layoutConfigs, projectConfig} = lcDesignerContentStore;
+        const {addItem, layoutConfigs, statisticInfo} = lcDesignerContentStore;
         let compObj = JSON.parse(_event.dataTransfer.getData('compObj'));
         const item = {
             ...layoutItem, ...{
-                i: projectConfig?.elemCount + "",
-                id: projectConfig?.elemCount,
+                i: statisticInfo?.count + "",
+                id: statisticInfo?.count,
                 name: compObj?.chartName,
                 type: compObj?.type
             }
@@ -121,10 +121,10 @@ class LcDesignerContent extends PureComponent<LcDesignerContentStore | any> {
     changeScale = (scale: number) => this.setState({scale: scale});
 
     getDragScaleProviderProps = () => {
-        const {projectConfig} = lcDesignerContentStore!;
+        const {canvasConfig} = lcDesignerContentStore!;
         return {
-            contentWidth: projectConfig?.screenWidth,
-            contentHeight: projectConfig?.screenHeight,
+            contentWidth: canvasConfig?.width,
+            contentHeight: canvasConfig?.height,
             containerWidth: window.innerWidth - 95,
             containerHeight: window.innerHeight - 90,
             changeScale: this.changeScale
@@ -132,7 +132,7 @@ class LcDesignerContent extends PureComponent<LcDesignerContentStore | any> {
     }
 
     getRGLProps = () => {
-        const {layoutConfigs, projectConfig, canvasConfig} = lcDesignerContentStore;
+        const {layoutConfigs, canvasConfig} = lcDesignerContentStore;
         const {scale} = this.state;
         let margin: [number, number] = [0, 0];
         return {
@@ -145,9 +145,9 @@ class LcDesignerContent extends PureComponent<LcDesignerContentStore | any> {
             allowOverlap: true,
             isBounded: true,
             isDroppable: true,
-            style: {height: projectConfig?.screenHeight},
+            style: {height: canvasConfig?.height},
             transformScale: scale,
-            width: projectConfig?.screenWidth,
+            width: canvasConfig?.width,
             onDrop: this.onDrop,
             onDropDragOver: this.onDropDragOver,
             onDragStop: this.onDragStop,
@@ -177,6 +177,7 @@ class LcDesignerContent extends PureComponent<LcDesignerContentStore | any> {
     }
 
     render() {
+        console.log(toJS(lcDesignerContentStore))
         return (
             <DragScaleProvider {...this.getDragScaleProviderProps()}>
                 <LcDesignerBackground onClick={this.updateActive} ref={obj => this.lcbg = obj}>

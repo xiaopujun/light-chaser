@@ -7,10 +7,11 @@ import LcConfigItem from "../../base/LcConfigItem";
 import LcRadio from "../../base/LcRadio";
 import {Button, Radio, Select} from "antd";
 import CfgItemBorder from "../../base/CfgItemBorder";
-import lcDesignerContentStore from '../../designer/store/LcDesignerContentStore';
+import lcDesignerContentStore from '../../../designer/store/LcDesignerContentStore';
 import {observer} from "mobx-react";
 import {toJS} from "mobx";
 import LcSelect from "../../base/LCSelect";
+import {BackgroundColorMode, BackgroundMode} from "../../../types/DesignerType";
 
 const {Option} = Select;
 
@@ -59,15 +60,15 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
     }
 
     bgImgPosChange = (e: any) => {
-        let {updateBgConfig, bgConfig: {bgImgPosition}} = lcDesignerContentStore;
-        let tempBgImgPos = toJS(bgImgPosition);
+        let {updateBgConfig, bgConfig: {bgImgPos}} = lcDesignerContentStore;
+        let tempBgImgPos = toJS(bgImgPos);
         const {target: {value, name}} = e;
         if (name === 'posX' && tempBgImgPos) {
             tempBgImgPos[0] = parseInt(value);
         } else if (name === 'posY' && tempBgImgPos) {
             tempBgImgPos[1] = parseInt(value);
         }
-        updateBgConfig({bgImgPosition: tempBgImgPos});
+        updateBgConfig({bgImgPos: tempBgImgPos});
     }
 
     repeatTypeChange = (value: any) => {
@@ -87,7 +88,8 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
 
     clearBgImg = () => {
         const {updateBgConfig, bgConfig} = lcDesignerContentStore;
-        URL.revokeObjectURL(bgConfig?.bgImgUrl);
+        if (bgConfig?.bgImgUrl)
+            URL.revokeObjectURL(bgConfig.bgImgUrl);
         updateBgConfig({bgImgUrl: ''});
     }
 
@@ -98,11 +100,11 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
         if (id === 'endColor')
             this.lineGradientColor[1] = color;
         //线性渐变
-        if (bgConfig?.bgColorMode === '1') {
+        if (bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT) {
             updateBgConfig({bgColor: `linear-gradient(${this.gradientAngle}deg, ${this.lineGradientColor[0]}, ${this.lineGradientColor[1]})`});
         }
         //径向渐变
-        if (bgConfig?.bgColorMode === '2') {
+        if (bgConfig?.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT) {
             updateBgConfig({bgColor: `radial-gradient(circle, ${this.lineGradientColor[0]}, ${this.lineGradientColor[1]})`});
         }
     }
@@ -110,9 +112,9 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
     gradientAngleChanged = (e: any) => {
         const {updateBgConfig, bgConfig} = lcDesignerContentStore;
         this.gradientAngle = e.target.value;
-        if (bgConfig?.bgColorMode === '1')
+        if (bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT)
             updateBgConfig({bgColor: `linear-gradient(${this.gradientAngle}deg, ${this.lineGradientColor[0]}, ${this.lineGradientColor[1]})`});
-        if (bgConfig?.bgColorMode === '2')
+        if (bgConfig?.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT)
             updateBgConfig({bgColor: `radial-gradient(${this.gradientAngle}deg, ${this.lineGradientColor[0]}, ${this.lineGradientColor[1]})`});
     }
 
@@ -131,7 +133,7 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
                         <Radio value="2">颜色</Radio>
                     </LcRadio>
                 </LcConfigItem>
-                {bgConfig?.bgMode === '1' &&
+                {bgConfig?.bgMode === BackgroundMode.PICTURE &&
                 <>
                     <div className={'lc-bg-upload'}>
                         <div className={'lc-upload-content'}>
@@ -180,7 +182,7 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
                         </CfgItemBorder>
                     </LcConfigItem>
                 </>}
-                {bgConfig?.bgMode === '2' &&
+                {bgConfig?.bgMode === BackgroundMode.COLOR &&
                 <>
                     <LcConfigItem title={'颜色模式'}>
                         <LcRadio onChange={this.bgColorModeChange} defaultValue={bgConfig?.bgColorMode}>
@@ -190,7 +192,7 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
                         </LcRadio>
                     </LcConfigItem>
                     {
-                        bgConfig?.bgColorMode === '0' && <LcConfigItem title={'背景颜色'}>
+                        bgConfig?.bgColorMode === BackgroundColorMode.SINGLE && <LcConfigItem title={'背景颜色'}>
                             <CfgItemBorder width={'50%'}>
                                 <BaseColorPicker onChange={this.bgColorChange}
                                                  style={{width: '100%', height: '18px', borderRadius: 2}}
@@ -200,7 +202,7 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
                         </LcConfigItem>
                     }
                     {
-                        (bgConfig?.bgColorMode === '1' || bgConfig?.bgColorMode === '2') && <>
+                        (bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT || bgConfig?.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT) && <>
                             <LcConfigItem title={'背景颜色'}>
                                 <CfgItemBorder width={'40%'}>
                                     <BaseColorPicker onChange={this.bgGradientColorChanged} id={'startColor'}
@@ -217,7 +219,8 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
                                 </CfgItemBorder>
                             </LcConfigItem>
                             {
-                                bgConfig?.bgColorMode === '1' && <LcConfigItem title={'渐变角度'}>
+                                bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT &&
+                                <LcConfigItem title={'渐变角度'}>
                                     <CfgItemBorder width={'40%'}>
                                         <LCNumberInput style={{width: '100%', textAlign: 'center'}} min={0} max={360}
                                                        onChange={this.gradientAngleChanged}/>

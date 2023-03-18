@@ -1,5 +1,4 @@
-import {LCDesignerProps} from "../types/LcDesignerType";
-import {LcDesignerContentStore} from "../component/designer/store/LcDesignerContentStore";
+import {LcDesignerContentStore} from "../designer/store/LcDesignerContentStore";
 import localforage from 'localforage';
 import {toJS} from "mobx";
 
@@ -7,12 +6,12 @@ import {toJS} from "mobx";
 /**
  * 构建保存项目时的基础数据
  */
-const buildConfig = (designerStore: LCDesignerProps) => {
-    let {id = -1, canvasConfig, chartConfigs, layoutConfigs, projectConfig, bgConfig, extendParams} = designerStore;
+const buildConfig = (designerStore: LcDesignerContentStore) => {
+    let {id = -1, canvasConfig, elemConfigs, layoutConfigs, projectConfig, bgConfig, extendParams} = designerStore;
     return {
         id,
         canvasConfig: toJS(canvasConfig),
-        chartConfigs: toJS(chartConfigs),
+        elemConfigs: toJS(elemConfigs),
         layoutConfigs: toJS(layoutConfigs),
         projectConfig: toJS(projectConfig),
         bgConfig: toJS(bgConfig),
@@ -114,9 +113,9 @@ export const createProject = (designerStore: LcDesignerContentStore) => {
         config.id = id;
         let bgImgKey = 'bgImg' + id;
         //2.如果有背景图片则先处理背景图片
-        if (config.bgConfig?.bgImgUrl !== '') {
+        if (config?.bgConfig?.bgImgUrl !== '') {
             //2.1 保存背景图片到本地数据库
-            saveImgToLocal(config.bgConfig?.bgImgUrl, bgImgKey).then((blobKey) => {
+            saveImgToLocal(config.bgConfig?.bgImgUrl!, bgImgKey).then((blobKey) => {
                 if (config.bgConfig && blobKey !== '')
                     config.bgConfig.bgImgUrl = bgImgKey;
                 //2.2 保存项目到本地数据库
@@ -145,7 +144,7 @@ export const updateProject = (designerStore: LcDesignerContentStore) => {
                         if (config.bgConfig?.bgImgUrl !== '') {
                             let bgImgKey = 'bgImg' + config.id;
                             //2.1 如果有新背景图片数据，则保存新背景图片
-                            saveImgToLocal(config.bgConfig?.bgImgUrl, bgImgKey).then(() => {
+                            saveImgToLocal(config.bgConfig.bgImgUrl!, bgImgKey).then(() => {
                                 if (config.bgConfig)
                                     config.bgConfig.bgImgUrl = bgImgKey;
                                 dataArr[i] = config;

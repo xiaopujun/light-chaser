@@ -12,12 +12,12 @@ import {
     SnippetsOutlined
 } from "@ant-design/icons";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {createProject, updateProject} from "../../local/LocalStorageUtil";
-import {LCDesignerProps} from "../../types/LcDesignerType";
+import {createProject, updateProject} from "../local/LocalStorageUtil";
 import lcDesignerContentStore from './store/LcDesignerContentStore';
+import LCDesigner from "./index";
 
 interface LcDesignerHeaderProps extends RouteComponentProps {
-    LCDesignerStore: LCDesignerProps;
+    LCDesignerStore: LCDesigner;
     updateDesignerStore?: (data: any) => void;
 }
 

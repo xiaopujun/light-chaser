@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
 import lcDesignerContentStore from './store/LcDesignerContentStore';
 import {observer} from "mobx-react";
+import {BackgroundColorMode, BackgroundMode} from "../types/DesignerType";
 
 interface LcDesignerBackgroundProps {
     onClick?: (e: any) => void;
@@ -16,28 +17,28 @@ class LcDesignerBackground extends PureComponent<LcDesignerBackgroundProps> {
     }
 
     getBgConfigProps = () => {
-        const {projectConfig, bgConfig} = lcDesignerContentStore!;
+        const {bgConfig} = lcDesignerContentStore!;
         let bgImgSize = '100% 100%';
         if (bgConfig.bgImgSize && bgConfig.bgImgSize.length === 2)
             bgImgSize = `${bgConfig.bgImgSize[0]}px ${bgConfig.bgImgSize[1]}px`;
         let bgImgPosition = '0 0';
-        if (bgConfig.bgImgPosition && bgConfig.bgImgPosition.length === 2)
-            bgImgPosition = `${bgConfig.bgImgPosition[0]}px ${bgConfig.bgImgPosition[1]}px`;
-        if (projectConfig) {
+        if (bgConfig.bgImgPos && bgConfig.bgImgPos.length === 2)
+            bgImgPosition = `${bgConfig.bgImgPos[0]}px ${bgConfig.bgImgPos[1]}px`;
+        if (bgConfig) {
             let bgConfigProps: any = {
-                height: projectConfig.screenHeight,
-                width: projectConfig.screenWidth,
+                height: bgConfig.height,
+                width: bgConfig.width,
             }
             if (bgConfig.bgImgUrl && bgConfig.bgImgUrl !== '')
                 bgConfigProps['backgroundImage'] = `url(${bgConfig.bgImgUrl})`;
-            if (bgConfig?.bgColorMode === '1' || bgConfig?.bgColorMode === '2')
+            if (bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT || bgConfig?.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT)
                 bgConfigProps['background'] = bgConfig?.bgColor;
-            if (bgConfig?.bgMode === '1') {
+            if (bgConfig?.bgMode === BackgroundMode.PICTURE) {
                 bgConfigProps['backgroundSize'] = bgImgSize;
                 bgConfigProps['backgroundPosition'] = bgImgPosition;
                 bgConfigProps['backgroundRepeat'] = bgConfig?.bgImgRepeat;
             }
-            if (bgConfig?.bgColorMode === '0')
+            if (bgConfig?.bgColorMode === BackgroundColorMode.SINGLE)
                 bgConfigProps['backgroundColor'] = bgConfig.bgColor || '#131e26';
             return bgConfigProps;
         }
