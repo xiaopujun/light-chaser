@@ -120,17 +120,15 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
 
 
     render() {
-
         const {bgConfig} = lcDesignerContentStore;
         const {bgImgSize = [1920, 1080]} = bgConfig;
         return (
             <div className={'lc-canvas-config'}>
-
                 <LcConfigItem title={'背景模式'}>
                     <LcRadio onChange={this.bgModeChange} defaultValue={bgConfig?.bgMode}>
-                        <Radio value="0">无</Radio>
-                        <Radio value="1">图片</Radio>
-                        <Radio value="2">颜色</Radio>
+                        <Radio value={0}>无</Radio>
+                        <Radio value={1}>图片</Radio>
+                        <Radio value={2}>颜色</Radio>
                     </LcRadio>
                 </LcConfigItem>
                 {bgConfig?.bgMode === BackgroundMode.PICTURE &&
@@ -186,9 +184,9 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
                 <>
                     <LcConfigItem title={'颜色模式'}>
                         <LcRadio onChange={this.bgColorModeChange} defaultValue={bgConfig?.bgColorMode}>
-                            <Radio value="0">单色</Radio>
-                            <Radio value="1">线性</Radio>
-                            <Radio value="2">径向</Radio>
+                            <Radio value={0}>单色</Radio>
+                            <Radio value={1}>线性</Radio>
+                            <Radio value={2}>径向</Radio>
                         </LcRadio>
                     </LcConfigItem>
                     {

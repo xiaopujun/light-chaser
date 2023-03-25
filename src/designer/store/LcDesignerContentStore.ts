@@ -4,20 +4,8 @@ import * as _ from "lodash";
 import {Layout} from "react-grid-layout";
 import {lcCompInits} from "../index";
 import {
-    ActiveElem,
-    BackgroundColorMode,
-    BackgroundConfig,
-    BackgroundImgRepeat,
-    BackgroundMode,
-    CanvasConfig,
-    ElemConfig,
-    Layer,
-    LCDesigner,
-    ProjectConfig,
-    ProjectState,
-    SaveType,
-    Statistic,
-    Theme
+    ActiveElem, BackgroundColorMode, BackgroundConfig, BackgroundImgRepeat, BackgroundMode, CanvasConfig,
+    ElemConfig, Layer, LCDesigner, ProjectConfig, ProjectState, SaveType, Statistic, Theme
 } from "../../types/DesignerType";
 
 class LcDesignerContentStore implements LCDesigner {

@@ -136,7 +136,6 @@ class LCDesigner extends Component<LCDesignerProps | any> {
         })
     }
 
-
     render() {
         return (
             <LcStructure>
