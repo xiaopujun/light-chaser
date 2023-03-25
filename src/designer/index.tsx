@@ -14,7 +14,9 @@ import LcDesignerRight from "./right/LcDesignerRight";
 import LcDesignerFooter from "./footer/LcDesignerFooter";
 import lcDesignerContentStore from './store/LcDesignerContentStore';
 import {getProjectById} from "../local/LocalStorageUtil";
+import {headerItemScanner} from "./Scanner";
 
+const loadjs = require('loadjs');
 export const lcComps: { [key: string]: React.FunctionComponent } = {};
 export const lcCompInits: { [key: string]: () => any } = {};
 export const lcCompConfigs: { [key: string]: React.FunctionComponent } = {};
@@ -36,6 +38,7 @@ class LCDesigner extends Component<LCDesignerProps | any> {
     constructor(props: any) {
         super(props);
         //todo 扫描组件，要优化为异步扫描
+        headerItemScanner();
         this.scanComponent();
 
     }
@@ -56,6 +59,7 @@ class LCDesigner extends Component<LCDesignerProps | any> {
      * 扫描组件
      */
     scanComponent = () => {
+
         const context = require.context('../component/charts', true, /\.(tsx|ts)$/);
         context.keys().forEach(key => {
             const componentName = key.replace(/^\.\/([\w|-]+\/)*(\w+)\.(tsx|ts)$/, '$2');
