@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import LCLayoutContent from "./LcDesignerContent";
-import DesignerHeader from "./LcDesignerHeader";
+import LCLayoutContent from "./content/LcDesignerContent";
+import DesignerHeader from "./header/LcDesignerHeader";
 import {RouteComponentProps} from "react-router-dom";
 import LcHeader from "./structure/LcHeader";
 import LcBody from "./structure/LcBody";
@@ -9,9 +9,9 @@ import LcContent from "./structure/LcContent";
 import LcRight from "./structure/LcRight";
 import LcStructure from "./structure/LcStructure";
 import LcFoot from "./structure/LcFoot";
-import LcDesignerLeft from "./LcDesignerLeft";
-import LcDesignerRight from "./LcDesignerRight";
-import LcDesignerFooter from "./LcDesignerFooter";
+import LcDesignerLeft from "./left/LcDesignerLeft";
+import LcDesignerRight from "./right/LcDesignerRight";
+import LcDesignerFooter from "./footer/LcDesignerFooter";
 import lcDesignerContentStore from './store/LcDesignerContentStore';
 import {getProjectById} from "../local/LocalStorageUtil";
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './style/Head.less';
+import '../style/Head.less';
 import {
     EyeOutlined,
     GithubOutlined,
@@ -12,9 +12,9 @@ import {
     SnippetsOutlined
 } from "@ant-design/icons";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {createProject, updateProject} from "../local/LocalStorageUtil";
-import lcDesignerContentStore from './store/LcDesignerContentStore';
-import LCDesigner from "./index";
+import {createProject, updateProject} from "../../local/LocalStorageUtil";
+import lcDesignerContentStore from '../store/LcDesignerContentStore';
+import LCDesigner from "../index";
 
 interface LcDesignerHeaderProps extends RouteComponentProps {
     LCDesignerStore: LCDesigner;

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import './style/LcDesignerRight.less';
+import '../style/LcDesignerRight.less';
 import LcConfigMenus from "./LcConfigMenus";
-import LcConfigContent from "./LcConfigContent";
+import LcConfigContent from "../content/LcConfigContent";
 
 class LcDesignerRight extends Component<any> {
 

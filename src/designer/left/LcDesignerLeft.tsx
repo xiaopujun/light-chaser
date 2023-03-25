@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './style/LcDesignerLeft.less';
+import '../style/LcDesignerLeft.less';
 import * as _ from 'lodash';
 
 import {
@@ -15,7 +15,7 @@ import {
     RocketFilled,
     SignalFilled
 } from "@ant-design/icons";
-import {lcCompInits} from "./index";
+import {lcCompInits} from "../index";
 import LcCompList from "./LcCompList";
 
 class LcDesignerLeft extends Component {

@@ -1,13 +1,13 @@
 import React, {PureComponent} from 'react';
-import './style/Content.less';
+import '../style/Content.less';
 import ReactGridLayout, {Layout} from "react-grid-layout";
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-import getChartsTemplate from "../component/charts/ChartsCollection";
-import DragScaleProvider from "./DragScaleProvider";
+import getChartsTemplate from "../../component/charts/ChartsCollection";
+import DragScaleProvider from "../tools/DragScaleProvider";
 import {observer} from "mobx-react";
-import lcDesignerContentStore, {LcDesignerContentStore} from "./store/LcDesignerContentStore";
-import lcRightMenuStore from "./store/LcRightMenuStore";
+import lcDesignerContentStore, {LcDesignerContentStore} from "../store/LcDesignerContentStore";
+import lcRightMenuStore from "../store/LcRightMenuStore";
 import LcDesignerBackground from "./LcDesignerBackground";
 import {toJS} from "mobx";
 

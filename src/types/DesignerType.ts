@@ -1,3 +1,5 @@
+import {Layout} from "react-grid-layout";
+
 /**
  * 主题
  */
@@ -204,6 +206,13 @@ export interface CanvasConfig {
     width?: number;
     //画布高
     height?: number;
+}
+
+/**
+ * 布局item
+ */
+export interface LcLayout extends Layout {
+    [key: string]: any;
 }
 
 /**

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {DatabaseFilled, HighlightFilled, InfoCircleFilled, SkinFilled, VideoCameraFilled} from "@ant-design/icons";
-import './style/LcConfigMenus.less';
+import '../style/LcConfigMenus.less';
 
 interface LcConfigMenusProps {
     onChange?: (menu: string) => void;

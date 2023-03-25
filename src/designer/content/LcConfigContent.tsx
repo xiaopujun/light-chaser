@@ -7,14 +7,14 @@ import {
     SkinFilled,
     VideoCameraFilled
 } from "@ant-design/icons";
-import './style/LcConfigContent.less';
-import LcEmBaseInfo from "../component/config/info/LcEmBaseInfo";
-import LcCompBaseStyleSet from "../component/config/base/LcCompBaseStyleSet";
-import getChartsConfig from "../component/config/chart/ComponentSetInit";
-import LcBgConfig from "../component/config/canvas/LcBgConfig";
-import lcConfigContentStore from "./store/LcDesignerContentStore";
+import '../style/LcConfigContent.less';
+import LcEmBaseInfo from "../../component/config/info/LcEmBaseInfo";
+import LcCompBaseStyleSet from "../../component/config/base/LcCompBaseStyleSet";
+import getChartsConfig from "../../component/config/chart/ComponentSetInit";
+import LcBgConfig from "../../component/config/canvas/LcBgConfig";
+import lcConfigContentStore from "../store/LcDesignerContentStore";
 import {observer} from "mobx-react";
-import LCDesigner from "./index";
+import LCDesigner from "../index";
 
 interface LcConfigContentProps {
     title?: string;

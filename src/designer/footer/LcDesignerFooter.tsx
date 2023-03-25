@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ClockCircleFilled, GoldenFilled, ProfileFilled} from "@ant-design/icons";
-import './style/LcDesignerFooter.less';
+import '../style/LcDesignerFooter.less';
 
 class LcDesignerFooter extends Component {
     render() {
