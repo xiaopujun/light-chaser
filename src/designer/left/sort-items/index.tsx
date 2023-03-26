@@ -1,23 +1,13 @@
 import React, {Component} from 'react';
 import {observer} from "mobx-react";
-import {sortItems} from "./scanner";
 import leftStore from "../store/LeftStore";
+import {sortItemScanner} from "./scanner";
 
 class SortList extends Component {
 
     constructor(props: any) {
         super(props);
-        const {setSorts} = leftStore;
-        let sorts: Array<any> = [];
-        let compNames = Object.keys(sortItems);
-        if (sortItems && compNames.length > 0) {
-            for (let i = 0; i < compNames.length; i++) {
-                const sortInfo = new sortItems[compNames[i]]().getSortItemInfo();
-                sorts.push(sortInfo);
-            }
-            setSorts(sorts);
-        }
-
+        sortItemScanner();
     }
 
     changeSortKey = (e: any) => {

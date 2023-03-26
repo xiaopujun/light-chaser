@@ -81,7 +81,6 @@ class Index extends Component {
     }
 
     render() {
-        const sortDom = this.getSortDom();
         const {sortKey, listVisible} = this.state;
         return (
             <>
