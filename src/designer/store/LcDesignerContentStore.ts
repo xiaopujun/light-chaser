@@ -1,7 +1,6 @@
 import {makeAutoObservable, runInAction} from "mobx";
 import * as _ from "lodash";
 import {Layout} from "react-grid-layout";
-import {lcCompInits} from "../index";
 import {
     ActiveElem,
     BackgroundColorMode,
@@ -19,6 +18,7 @@ import {
     Statistic,
     Theme
 } from "../../types/DesignerType";
+import {lcCompInits} from "../Scanner";
 
 class LcDesignerContentStore implements LCDesigner {
     constructor() {

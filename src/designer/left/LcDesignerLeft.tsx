@@ -15,8 +15,8 @@ import {
     RocketFilled,
     SignalFilled
 } from "@ant-design/icons";
-import {lcCompInits} from "../index";
 import LcCompList from "./LcCompList";
+import {lcCompInits} from "../Scanner";
 
 class LcDesignerLeft extends Component {
 

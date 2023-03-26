@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {LineOutlined} from "@ant-design/icons";
 import {Input} from "antd";
 import '../style/LcCompList.less';
-import {lcCompInits} from "../index";
+import {lcCompInits} from "../Scanner";
 
 interface LcCompListProps {
     data?: Array<any>;

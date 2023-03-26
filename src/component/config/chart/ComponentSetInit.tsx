@@ -1,4 +1,4 @@
-import {lcCompConfigs} from "../../../designer";
+import {lcCompConfigs} from "../../../designer/Scanner";
 
 
 export default function getChartsConfig(chartSetName: string) {

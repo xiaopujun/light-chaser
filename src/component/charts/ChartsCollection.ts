@@ -1,4 +1,4 @@
-import {lcComps} from "../../designer";
+import {lcComps} from "../../designer/Scanner";
 
 export default function getChartsTemplate(classTemplateName: string) {
     if (classTemplateName in lcComps)

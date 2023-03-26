@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import LCLayoutContent from "./content/LcDesignerContent";
-import DesignerHeader from "./header/LcDesignerHeader";
+import DesignerHeader from "./header/LcHeader";
 import {RouteComponentProps} from "react-router-dom";
 import LcHeader from "./structure/LcHeader";
 import LcBody from "./structure/LcBody";
@@ -14,12 +14,7 @@ import LcDesignerRight from "./right/LcDesignerRight";
 import LcDesignerFooter from "./footer/LcDesignerFooter";
 import lcDesignerContentStore from './store/LcDesignerContentStore';
 import {getProjectById} from "../local/LocalStorageUtil";
-import {headerItemScanner} from "./Scanner";
-
-const loadjs = require('loadjs');
-export const lcComps: { [key: string]: React.FunctionComponent } = {};
-export const lcCompInits: { [key: string]: () => any } = {};
-export const lcCompConfigs: { [key: string]: React.FunctionComponent } = {};
+import {doScanInit} from "./Scanner";
 
 interface LCDesignerProps extends RouteComponentProps {
     LCDesignerStore: LCDesignerProps;
@@ -38,8 +33,7 @@ class LCDesigner extends Component<LCDesignerProps | any> {
     constructor(props: any) {
         super(props);
         //todo 扫描组件，要优化为异步扫描
-        headerItemScanner();
-        this.scanComponent();
+        doScanInit();
 
     }
 
@@ -52,27 +46,6 @@ class LCDesigner extends Component<LCDesignerProps | any> {
         //清空状态
         const {clearDesignerStore} = this.props;
         clearDesignerStore && clearDesignerStore();
-    }
-
-
-    /**
-     * 扫描组件
-     */
-    scanComponent = () => {
-
-        const context = require.context('../component/charts', true, /\.(tsx|ts)$/);
-        context.keys().forEach(key => {
-            const componentName = key.replace(/^\.\/([\w|-]+\/)*(\w+)\.(tsx|ts)$/, '$2');
-            if (componentName.match("Set$"))
-                lcCompConfigs[componentName] = context(key).default;
-            else if (componentName.match("Init$")) {
-                const CompInit = context(key).default;
-                if (CompInit !== undefined) {
-                    lcCompInits[componentName] = new CompInit();
-                }
-            } else
-                lcComps[componentName] = context(key).default;
-        });
     }
 
     /**
