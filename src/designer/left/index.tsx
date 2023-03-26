@@ -17,6 +17,7 @@ import {
 } from "@ant-design/icons";
 import LcCompList from "./LcCompList";
 import {lcCompInits} from "../Scanner";
+import SortList from "./sort-items";
 
 class Index extends Component {
 
@@ -84,7 +85,7 @@ class Index extends Component {
         const {sortKey, listVisible} = this.state;
         return (
             <>
-                <div className={'lc-charts-sort'}>{sortDom}</div>
+                <SortList/>
                 <LcCompList onClose={this.listVisibleChanged} visible={listVisible} data={this.charts}
                             sortKey={sortKey}/>
             </>
