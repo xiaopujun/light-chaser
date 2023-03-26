@@ -1,4 +1,4 @@
-import {HeaderItem, HeaderItemProps} from "./HeaderItem";
+import {HeaderItem, HeaderItemProps} from "../types/HeaderItem";
 import {EyeOutlined} from "@ant-design/icons";
 
 /**

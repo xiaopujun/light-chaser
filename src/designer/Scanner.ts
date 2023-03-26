@@ -1,4 +1,4 @@
-import {HeaderItem} from "./header/HeaderItem";
+import {HeaderItem} from "./header/types/HeaderItem";
 import React from "react";
 
 /*********************************************************************

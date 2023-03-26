@@ -11,7 +11,7 @@ interface LcDesignerHeaderProps extends RouteComponentProps {
     updateDesignerStore?: (data: any) => void;
 }
 
-class LcHeader extends Component<LcDesignerHeaderProps | any> {
+class Index extends Component<LcDesignerHeaderProps | any> {
 
     updateRouteState = (id: number) => {
         const {location} = this.props;
@@ -84,4 +84,4 @@ class LcHeader extends Component<LcDesignerHeaderProps | any> {
     }
 }
 
-export default withRouter(LcHeader);
+export default withRouter(Index);

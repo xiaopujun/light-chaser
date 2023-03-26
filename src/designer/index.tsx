@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import LCLayoutContent from "./content/LcDesignerContent";
-import DesignerHeader from "./header/LcHeader";
+import DesignerHeader from "./header";
 import {RouteComponentProps} from "react-router-dom";
 import LcHeader from "./structure/LcHeader";
 import LcBody from "./structure/LcBody";
