@@ -9,7 +9,7 @@ import LcContent from "./structure/LcContent";
 import LcRight from "./structure/LcRight";
 import LcStructure from "./structure/LcStructure";
 import LcFoot from "./structure/LcFoot";
-import LcDesignerLeft from "./left/LcDesignerLeft";
+import Index from "./left";
 import LcDesignerRight from "./right/LcDesignerRight";
 import LcDesignerFooter from "./footer/LcDesignerFooter";
 import lcDesignerContentStore from './store/LcDesignerContentStore';
@@ -118,7 +118,7 @@ class LCDesigner extends Component<LCDesignerProps | any> {
             <LcStructure>
                 <LcHeader><DesignerHeader {...this.props}/></LcHeader>
                 <LcBody>
-                    <LcLeft><LcDesignerLeft/></LcLeft>
+                    <LcLeft><Index/></LcLeft>
                     <LcContent><LCLayoutContent/></LcContent>
                     <LcRight><LcDesignerRight {...this.props}/></LcRight>
                 </LcBody>

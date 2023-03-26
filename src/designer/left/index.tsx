@@ -18,7 +18,7 @@ import {
 import LcCompList from "./LcCompList";
 import {lcCompInits} from "../Scanner";
 
-class LcDesignerLeft extends Component {
+class Index extends Component {
 
     sorts: Array<any> = [];
     charts: Array<Object> = [];
@@ -92,4 +92,4 @@ class LcDesignerLeft extends Component {
     }
 }
 
-export default LcDesignerLeft;
+export default Index;

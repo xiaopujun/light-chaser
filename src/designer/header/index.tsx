@@ -4,7 +4,7 @@ import {RouteComponentProps, withRouter} from "react-router-dom";
 import {createProject, updateProject} from "../../local/LocalStorageUtil";
 import lcDesignerContentStore from '../store/LcDesignerContentStore';
 import LCDesigner from "../index";
-import {headerItems} from "../Scanner";
+import {headerItems} from "./items/scanner";
 
 interface LcDesignerHeaderProps extends RouteComponentProps {
     LCDesignerStore: LCDesigner;
@@ -52,15 +52,15 @@ class Index extends Component<LcDesignerHeaderProps | any> {
         this.props.history.push('/view', {id: LCDesignerStore.id});
     }
 
-    buildHeaderItem = (): Array<ReactElement> => {
+    buildHeaderList = (): Array<ReactElement> => {
         let items: Array<ReactElement> = [];
         let compNames = Object.keys(headerItems);
         if (headerItems && compNames.length > 0) {
             for (let i = 0; i < compNames.length; i++) {
-                const {icon: Icon, title, onClick} = new headerItems[compNames[i]]().getHeaderItem();
+                const {icon: Icon, name, onClick} = new headerItems[compNames[i]]().getHeaderItemInfo();
                 items.push(
                     <div key={i + ''} className={'right-item'} onClick={onClick}>
-                        <span className={'item-span'}><Icon/>&nbsp;{title}</span>
+                        <span className={'item-span'}><Icon/>&nbsp;{name}</span>
                     </div>
                 );
             }
@@ -70,7 +70,7 @@ class Index extends Component<LcDesignerHeaderProps | any> {
 
 
     render() {
-        const items = this.buildHeaderItem();
+        const items = this.buildHeaderList();
         return (
             <div className={'designer-header'}>
                 <div className={'header-left'}>

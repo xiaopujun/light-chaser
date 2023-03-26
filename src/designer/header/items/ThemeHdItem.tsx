@@ -1,14 +1,14 @@
-import {HeaderItem, HeaderItemProps} from "../types/HeaderItem";
+import {AbstractHeaderItem, HeaderItemProps} from "../types/HeaderTypes";
 import {SkinFilled} from "@ant-design/icons";
 
 /**
  * header-主题设置
  */
-export default class ThemeHdItem extends HeaderItem {
-    getHeaderItem(): HeaderItemProps {
+export default class ThemeHdItem extends AbstractHeaderItem {
+    getHeaderItemInfo(): HeaderItemProps {
         return {
             icon: SkinFilled,
-            title: '主题设置',
+            name: '主题设置',
             onClick: () => {
                 alert("主题设置");
             }
