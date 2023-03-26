@@ -7,6 +7,7 @@ class SortList extends Component {
 
     constructor(props: any) {
         super(props);
+        //todo 需要优化调用结构
         sortItemScanner();
     }
 
