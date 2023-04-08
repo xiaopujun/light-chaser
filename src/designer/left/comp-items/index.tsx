@@ -8,19 +8,19 @@ class Index extends Component {
 
     getChartDom = () => {
         let chartDom = [];
-        let tempCharts = this.data;
-        if (this.props?.sortKey !== 'all') {
-            tempCharts = this.data.filter((item: any) => {
-                return item.typeInfo.type === this.props.sortKey;
+        let {comps, compKey, sortKey} = leftStore;
+        if (sortKey !== 'all') {
+            comps = comps.filter((item: any) => {
+                return item.typeInfo.type === compKey;
             })
         }
-        if (this.state.searchKey !== '') {
-            tempCharts = tempCharts.filter((item: any) => {
-                return item.name.indexOf(this.state.searchKey) >= 0;
+        if (compKey !== '') {
+            comps = comps.filter((item: any) => {
+                return item.name.indexOf(compKey) >= 0;
             })
         }
-        for (let i = 0; i < tempCharts.length; i++) {
-            let chartInfo: any = tempCharts[i];
+        for (let i = 0; i < comps.length; i++) {
+            let chartInfo: any = comps[i];
             const {name, value} = chartInfo;
             let compObj = JSON.stringify({chartName: value, type: name});
             let lcCompInit: any = lcCompInits[value + "Init"];
@@ -44,8 +44,8 @@ class Index extends Component {
     }
 
     onClose = () => {
-        const {onClose} = this.props;
-        onClose && onClose(false);
+        const {setShowComps} = leftStore;
+        setShowComps && setShowComps(false);
     }
 
     searchChart = (e: any) => {

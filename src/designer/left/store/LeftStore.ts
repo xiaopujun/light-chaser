@@ -15,6 +15,8 @@ class LeftStore {
     comps: Array<any> = [];
     //组件列表class
     compsClazz: any = {};
+    //组件搜索key
+    compKey: string = '';
 
     //是否展示组件列表
     showComps: boolean = false;
@@ -41,6 +43,8 @@ class LeftStore {
     setCompsClazz = (compsClazz: any) => this.compsClazz = compsClazz;
 
     setShowComps = (showComps: boolean) => this.showComps = showComps;
+
+    setCompKey = (key: string) => this.compKey = key;
 
 }
 
