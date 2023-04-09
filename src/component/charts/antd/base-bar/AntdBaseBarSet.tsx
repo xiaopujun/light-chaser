@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import '../../../config/chart/antd/style/AntdBarSet.less';
 import Legend from "../../../config/chart/antd/atomic_components/Legned";
 import RightAngleCoordinates from "../../../config/chart/antd/atomic_components/RightAngleCoordinates";
@@ -13,6 +13,7 @@ import LcConfigItem from "../../../base/LcConfigItem";
 import ColorSelector from "../../../config/chart/antd/atomic_components/ColorSelector";
 import LCNumberInput from "../../../base/LCNumberInput";
 import CfgItemBorder from "../../../base/CfgItemBorder";
+import {AbstractConfig} from "../../interface/AbstractConfig";
 
 interface AntdBarSetProps {
     updateChartProps?: (data: any) => void;
@@ -20,7 +21,7 @@ interface AntdBarSetProps {
     chartProps?: any;
 }
 
-class AntdBaseBarSet extends Component<AntdBarSetProps> {
+class AntdBaseBarSet extends AbstractConfig<AntdBarSetProps> {
 
     state: any = {
         colors: []

@@ -6,7 +6,7 @@ class LeftStore {
     }
 
     //分类列表搜索key
-    sortKey: string = '';
+    classifyKey: string = '';
     //分类列表
     sorts: Array<any> = [];
     //分类列表class
@@ -21,7 +21,7 @@ class LeftStore {
     //是否展示组件列表
     showComps: boolean = false;
 
-    setSortKey = (key: string) => this.sortKey = key;
+    setSortKey = (key: string) => this.classifyKey = key;
 
     setSorts = (sorts: Array<any>) => this.sorts = sorts;
 

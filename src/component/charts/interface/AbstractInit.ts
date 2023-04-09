@@ -1,18 +1,18 @@
-export default interface BaseInit {
+export abstract class AbstractInit {
     /**
      * 获取基础信息
      */
-    getBaseInfo(): BaseInfo;
+    abstract getBaseInfo(): BaseInfo;
 
     /**
      * 获取组件初始化配置
      */
-    getInitConfig(): Object;
+    abstract getInitConfig(): Object;
 
     /**
      * 获取组件图片缩略图
      */
-    getChartImg(): any;
+    abstract getChartImg(): any;
 }
 
 export interface BaseInfo {

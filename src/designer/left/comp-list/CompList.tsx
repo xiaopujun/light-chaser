@@ -1,43 +1,35 @@
 import React, {Component} from 'react';
 import {LineOutlined} from "@ant-design/icons";
 import {Input} from "antd";
-import '../style/LcCompList.less';
-import {lcCompInits} from "../Scanner";
+import leftStore from "../store/LeftStore";
+import {lcCompInits} from "../../Scanner";
+import compListStore from "./CompListStore";
+import classifyListStore from "../classify-list/ClassifyListStore";
 
-interface LcCompListProps {
-    data?: Array<any>;
-    sortKey?: string;
-    visible?: boolean;
-    onClose?: (visible: boolean) => void;
-}
-
-class LcCompList extends Component<LcCompListProps> {
-
-    data: Array<Object> = [];
-    state = {
-        searchKey: '',
-    }
+class CompList extends Component {
 
     constructor(props: any) {
         super(props);
-        this.data = props.data;
+        const {doInit} = compListStore;
+        doInit && doInit();
     }
 
     getChartDom = () => {
         let chartDom = [];
-        let tempCharts = this.data;
-        if (this.props?.sortKey !== 'all') {
-            tempCharts = this.data.filter((item: any) => {
-                return item.typeInfo.type === this.props.sortKey;
+        let {classifyKey} = classifyListStore;
+        let {comps, compKey} = compListStore;
+        if (classifyKey !== 'all') {
+            comps = comps.filter((item: any) => {
+                return item.typeInfo.type === compKey;
             })
         }
-        if (this.state.searchKey !== '') {
-            tempCharts = tempCharts.filter((item: any) => {
-                return item.name.indexOf(this.state.searchKey) >= 0;
+        if (compKey !== '') {
+            comps = comps.filter((item: any) => {
+                return item.name.indexOf(compKey) >= 0;
             })
         }
-        for (let i = 0; i < tempCharts.length; i++) {
-            let chartInfo: any = tempCharts[i];
+        for (let i = 0; i < comps.length; i++) {
+            let chartInfo: any = comps[i];
             const {name, value} = chartInfo;
             let compObj = JSON.stringify({chartName: value, type: name});
             let lcCompInit: any = lcCompInits[value + "Init"];
@@ -61,8 +53,8 @@ class LcCompList extends Component<LcCompListProps> {
     }
 
     onClose = () => {
-        const {onClose} = this.props;
-        onClose && onClose(false);
+        const {setShowComps} = leftStore;
+        setShowComps && setShowComps(false);
     }
 
     searchChart = (e: any) => {
@@ -70,10 +62,10 @@ class LcCompList extends Component<LcCompListProps> {
     }
 
     render() {
-        const {visible} = this.props;
+        const {showComps} = leftStore;
         return (
             <>
-                {visible ? <div className={'lc-comp-list'}>
+                {showComps ? <div className={'lc-comp-list'}>
                     <div className={'list-title'}>
                         <div className={'title-content'}>组件列表</div>
                         <div onClick={this.onClose}><span><LineOutlined/></span></div>
@@ -91,4 +83,4 @@ class LcCompList extends Component<LcCompListProps> {
     }
 }
 
-export default LcCompList;
+export default CompList;

@@ -1,7 +1,7 @@
-import BaseInit, {BaseInfo} from "../../interface/BaseInit";
+import {AbstractInit, BaseInfo} from "../../interface/AbstractInit";
 import barImg from './bar.png';
 
-export default class AntdBaseBarInit implements BaseInit {
+export default class AntdBaseBarInit extends AbstractInit {
 
     getInitConfig(): Object {
         return {
