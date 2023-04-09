@@ -116,7 +116,9 @@ class LCDesigner extends Component<LCDesignerProps | any> {
     render() {
         return (
             <LcStructure>
-                <LcHeader><DesignerHeader {...this.props}/></LcHeader>
+                <LcHeader>
+                    <DesignerHeader {...this.props}/>
+                </LcHeader>
                 <LcBody>
                     <LcLeft><Index/></LcLeft>
                     <LcContent><LCLayoutContent/></LcContent>

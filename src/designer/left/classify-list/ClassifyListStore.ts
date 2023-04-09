@@ -20,7 +20,7 @@ class ClassifyListStore {
     /**
      * 分类搜索关键字
      */
-    classifyKey: string = "";
+    classifyKey: string = 'all';
 
     /**
      * 初始化

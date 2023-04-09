@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {LineOutlined} from "@ant-design/icons";
 import {Input} from "antd";
-import leftStore from "../store/LeftStore";
 import {lcCompInits} from "../../Scanner";
 import compListStore from "./CompListStore";
 import classifyListStore from "../classify-list/ClassifyListStore";
+import './CompList.less';
+import {toJS} from "mobx";
 
 class CompList extends Component {
 
@@ -16,8 +17,8 @@ class CompList extends Component {
 
     getChartDom = () => {
         let chartDom = [];
-        let {classifyKey} = classifyListStore;
-        let {comps, compKey} = compListStore;
+        let {classifyKey} = toJS(classifyListStore)
+        let {comps, compKey} = toJS(compListStore);
         if (classifyKey !== 'all') {
             comps = comps.filter((item: any) => {
                 return item.typeInfo.type === compKey;
@@ -53,8 +54,8 @@ class CompList extends Component {
     }
 
     onClose = () => {
-        const {setShowComps} = leftStore;
-        setShowComps && setShowComps(false);
+        const {setVisible} = compListStore;
+        setVisible && setVisible(false);
     }
 
     searchChart = (e: any) => {
@@ -62,10 +63,10 @@ class CompList extends Component {
     }
 
     render() {
-        const {showComps} = leftStore;
+        const {visible} = compListStore;
         return (
             <>
-                {showComps ? <div className={'lc-comp-list'}>
+                {visible ? <div className={'lc-comp-list'}>
                     <div className={'list-title'}>
                         <div className={'title-content'}>组件列表</div>
                         <div onClick={this.onClose}><span><LineOutlined/></span></div>

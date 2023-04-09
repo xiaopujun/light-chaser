@@ -3,7 +3,7 @@ import '../style/LcDesignerLeft.less';
 import SortList from "./classify-list/ClassifyList";
 import CompList from "./comp-list/CompList";
 
-class Index extends Component {
+class LcLet extends Component {
 
     render() {
         return (
@@ -15,4 +15,4 @@ class Index extends Component {
     }
 }
 
-export default Index;
+export default LcLet;
