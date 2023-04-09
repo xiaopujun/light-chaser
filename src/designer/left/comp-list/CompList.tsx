@@ -6,6 +6,7 @@ import compListStore from "./CompListStore";
 import classifyListStore from "../classify-list/ClassifyListStore";
 import './CompList.less';
 import {toJS} from "mobx";
+import {observer} from "mobx-react";
 
 class CompList extends Component {
 
@@ -84,4 +85,4 @@ class CompList extends Component {
     }
 }
 
-export default CompList;
+export default observer(CompList);
