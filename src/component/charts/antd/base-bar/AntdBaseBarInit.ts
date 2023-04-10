@@ -61,11 +61,11 @@ export default class AntdBaseBarInit extends AbstractInit {
     getBaseInfo(): BaseInfo {
         return {
             name: "基础条形图",
-            value: 'AntdBaseBar',
-            typeInfo: {
-                name: "条形图",
-                type: "bar"
-            },
+            key: 'AntdBaseBar',
+            typeName: "条形图",
+            typeKey: "bar",
+            sourceName: "Antd",
+            sourceKey: "antd",
         };
     }
 

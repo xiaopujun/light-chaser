@@ -21,17 +21,23 @@ export interface BaseInfo {
      */
     name: string;
     /**
-     * 组件名称
+     * 组件标识
      */
-    value: string;
+    key: string;
     /**
-     * 组件类型
+     * 类型名称
      */
-    typeInfo: TypeInfo;
-}
-
-
-interface TypeInfo {
-    name: string;
-    type: string;
+    typeName: string;
+    /**
+     * 类型标识
+     */
+    typeKey: string;
+    /**
+     * 来源名称
+     */
+    sourceName: string;
+    /**
+     * 来源标识
+     */
+    sourceKey: string;
 }

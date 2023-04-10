@@ -44,6 +44,10 @@ class CompListStore {
     setVisible = (visible: boolean) => {
         this.visible = visible;
     }
+
+    setCompKey = (key: string) => {
+        this.compKey = key;
+    }
 }
 
 const compListStore = new CompListStore();

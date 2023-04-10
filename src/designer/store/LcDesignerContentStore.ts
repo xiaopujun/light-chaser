@@ -214,7 +214,7 @@ class LcDesignerContentStore implements LCDesigner {
      */
     addItem = (item: LcLayout) => {
         this.layoutConfigs?.push(item);
-        let initObj: any = lcCompInits[item.name + "Init"];
+        let initObj: any = lcCompInits[item.compKey + "Init"];
         let initData: any = initObj.getInitConfig()
         initData.baseInfo = {...initData.baseInfo, ...{id: this.statisticInfo?.count}}
         if (this.elemConfigs && this.statisticInfo)

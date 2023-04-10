@@ -23,6 +23,6 @@ export interface ClassifyItemProps {
 }
 
 export enum ClassifyEnum {
-    ALL,
-    BAR,
+    ALL = 'all',
+    BAR = 'bar',
 }

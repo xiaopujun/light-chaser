@@ -46,7 +46,7 @@ class LcDesignerContent extends PureComponent<LcDesignerContentStore | any> {
         const {layoutConfigs, updateActive} = lcDesignerContentStore!;
         if (layoutConfigs && layoutConfigs.length > 0) {
             return layoutConfigs.map((item: any) => {
-                let Chart: any = getChartsTemplate(item.name);
+                let Chart: any = getChartsTemplate(item.compKey);
                 const chartConfig = this.calculateChartConfig(item.id);
                 return (
                     <div key={item?.id + ''} className={'lc-comp-item'}
@@ -83,8 +83,8 @@ class LcDesignerContent extends PureComponent<LcDesignerContentStore | any> {
             ...layoutItem, ...{
                 i: statisticInfo?.count + "",
                 id: statisticInfo?.count,
-                name: compObj?.chartName,
-                type: compObj?.type
+                compName: compObj?.compName,
+                compKey: compObj?.compKey
             }
         }
         addItem && addItem(item);

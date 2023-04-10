@@ -22,7 +22,7 @@ class CompList extends Component {
         let {comps, compKey} = toJS(compListStore);
         if (classifyKey !== 'all') {
             comps = comps.filter((item: any) => {
-                return item.typeInfo.type === compKey;
+                return item.typeKey === classifyKey;
             })
         }
         if (compKey !== '') {
@@ -31,10 +31,10 @@ class CompList extends Component {
             })
         }
         for (let i = 0; i < comps.length; i++) {
-            let chartInfo: any = comps[i];
-            const {name, value} = chartInfo;
-            let compObj = JSON.stringify({chartName: value, type: name});
-            let lcCompInit: any = lcCompInits[value + "Init"];
+            let compInfo: any = comps[i];
+            const {name, key} = compInfo;
+            let compObj = JSON.stringify({compName: name, compKey: key});
+            let lcCompInit: any = lcCompInits[key + "Init"];
             let chartImg = lcCompInit.getChartImg();
             chartDom.push(
                 <div draggable={true} key={i + ''}
@@ -60,7 +60,8 @@ class CompList extends Component {
     }
 
     searchChart = (e: any) => {
-        this.setState({searchKey: e.currentTarget.value});
+        const {setCompKey} = compListStore;
+        setCompKey && setCompKey(e.currentTarget.value);
     }
 
     render() {
