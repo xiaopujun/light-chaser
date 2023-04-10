@@ -4,7 +4,7 @@ import lcRightMenuStore from "../store/LcRightMenuStore";
 import lcDesignerContentStore from "../store/LcDesignerContentStore";
 import '../style/LcRightMenu.less';
 
-class LcRightMenu extends Component {
+class OperateMenu extends Component {
 
     menuList = [
         {
@@ -56,4 +56,4 @@ class LcRightMenu extends Component {
     }
 }
 
-export default observer(LcRightMenu);
+export default observer(OperateMenu);

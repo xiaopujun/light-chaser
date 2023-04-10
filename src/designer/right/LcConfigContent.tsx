@@ -7,7 +7,6 @@ import {
     SkinFilled,
     VideoCameraFilled
 } from "@ant-design/icons";
-import '../style/LcConfigContent.less';
 import LcEmBaseInfo from "../../component/config/info/LcEmBaseInfo";
 import LcCompBaseStyleSet from "../../component/config/base/LcCompBaseStyleSet";
 import getChartsConfig from "../../component/config/chart/ComponentSetInit";

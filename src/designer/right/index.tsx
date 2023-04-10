@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import '../style/LcDesignerRight.less';
 import LcConfigMenus from "./LcConfigMenus";
-import LcConfigContent from "../content/LcConfigContent";
+import LcConfigContent from "./LcConfigContent";
 
-class LcDesignerRight extends Component<any> {
+class Index extends Component<any> {
 
     state = {
         activeMenu: undefined,
@@ -26,4 +26,4 @@ class LcDesignerRight extends Component<any> {
     }
 }
 
-export default LcDesignerRight;
+export default Index;
