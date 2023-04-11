@@ -7,13 +7,13 @@ import {
     SkinFilled,
     VideoCameraFilled
 } from "@ant-design/icons";
-import LcEmBaseInfo from "../../component/config/info/LcEmBaseInfo";
-import LcCompBaseStyleSet from "../../component/config/base/LcCompBaseStyleSet";
-import getChartsConfig from "../../component/config/chart/ComponentSetInit";
-import LcBgConfig from "../../component/config/canvas/LcBgConfig";
-import lcConfigContentStore from "../store/LcDesignerContentStore";
+import LcEmBaseInfo from "../../../component/config/info/LcEmBaseInfo";
+import LcCompBaseStyleSet from "../../../component/config/base/LcCompBaseStyleSet";
+import getChartsConfig from "../../../component/config/chart/ComponentSetInit";
+import LcBgConfig from "../../../component/config/canvas/LcBgConfig";
+import lcConfigContentStore from "../../store/LcDesignerContentStore";
 import {observer} from "mobx-react";
-import LCDesigner from "../index";
+import LCDesigner from "../../index";
 
 interface LcConfigContentProps {
     title?: string;
@@ -30,7 +30,7 @@ interface LcConfigContentProps {
     updateBgConfig?: (data?: any) => void;
 }
 
-class LcConfigContent extends Component<LcConfigContentProps> {
+class ConfigContent extends Component<LcConfigContentProps> {
 
     titleInfo: any = {
         'info': {
@@ -109,4 +109,4 @@ class LcConfigContent extends Component<LcConfigContentProps> {
     }
 }
 
-export default observer(LcConfigContent);
+export default observer(ConfigContent);

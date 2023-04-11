@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import '../style/LcDesignerRight.less';
-import LcConfigMenus from "./LcConfigMenus";
-import LcConfigContent from "./LcConfigContent";
+import MenuList from "./menu-list/MenuList";
+import LcConfigContent from "./config-content/ConfigContent";
 
 class Index extends Component<any> {
 
@@ -18,7 +18,7 @@ class Index extends Component<any> {
         const {activeMenu, configVisible} = this.state;
         return (
             <>
-                <LcConfigMenus {...this.props} onChange={this.changeMenu}/>
+                <MenuList {...this.props} onChange={this.changeMenu}/>
                 <LcConfigContent visible={configVisible} onClose={this.configVisibleChanged}
                                  activeMenu={activeMenu} {...this.props}/>
             </>
