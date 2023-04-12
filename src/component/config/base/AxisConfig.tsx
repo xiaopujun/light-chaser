@@ -1,14 +1,14 @@
 import {Radio} from 'antd';
 import React, {Component} from 'react';
 import './style/AxisConfig.less';
-import LcUnderLineInput from "../../base/LcUnderLineInput";
-import BaseColorPicker from "../../base/BaseColorPicker";
-import LcConfigBlock, {LayoutMode} from "../../base/LcConfigBlock";
-import LcSwitch from "../../base/LcSwitch";
-import LcConfigItem, {CfgItemLayout} from "../../base/LcConfigItem";
-import LCNumberInput from "../../base/LCNumberInput";
-import CfgItemBorder from "../../base/CfgItemBorder";
-import LcRadio from "../../base/LcRadio";
+import LcUnderLineInput from "../../../lib/LcUnderLineInput";
+import BaseColorPicker from "../../../lib/BaseColorPicker";
+import LcConfigBlock, {LayoutMode} from "../../../lib/LcConfigBlock";
+import LcSwitch from "../../../lib/LcSwitch";
+import LcConfigItem, {CfgItemLayout} from "../../../lib/LcConfigItem";
+import LCNumberInput from "../../../lib/LCNumberInput";
+import CfgItemBorder from "../../../lib/CfgItemBorder";
+import LcRadio from "../../../lib/LcRadio";
 
 interface AxisConfigProps {
 

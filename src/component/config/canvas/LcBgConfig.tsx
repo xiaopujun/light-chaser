@@ -1,16 +1,16 @@
 import React, {PureComponent} from 'react';
 import './LcBgConfig.less';
-import LCNumberInput from "../../base/LCNumberInput";
-import BaseColorPicker from "../../base/BaseColorPicker";
+import LCNumberInput from "../../../lib/LCNumberInput";
+import BaseColorPicker from "../../../lib/BaseColorPicker";
 import Dragger from "antd/es/upload/Dragger";
-import LcConfigItem from "../../base/LcConfigItem";
-import LcRadio from "../../base/LcRadio";
+import LcConfigItem from "../../../lib/LcConfigItem";
+import LcRadio from "../../../lib/LcRadio";
 import {Button, Radio, Select} from "antd";
-import CfgItemBorder from "../../base/CfgItemBorder";
+import CfgItemBorder from "../../../lib/CfgItemBorder";
 import lcDesignerContentStore from '../../../designer/store/LcDesignerContentStore';
 import {observer} from "mobx-react";
 import {toJS} from "mobx";
-import LcSelect from "../../base/LCSelect";
+import LcSelect from "../../../lib/LCSelect";
 import {BackgroundColorMode, BackgroundMode} from "../../../types/DesignerType";
 
 const {Option} = Select;

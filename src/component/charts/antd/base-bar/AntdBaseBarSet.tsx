@@ -8,11 +8,11 @@ import {
     calculateLegendConfig,
     calculateRightAngleCoordinates
 } from "../../../config/chart/antd/util/AntdChartConfigUtil";
-import Accordion from "../../../base/Accordion";
-import LcConfigItem from "../../../base/LcConfigItem";
+import Accordion from "../../../../lib/Accordion";
+import LcConfigItem from "../../../../lib/LcConfigItem";
 import ColorSelector from "../../../config/chart/antd/atomic_components/ColorSelector";
-import LCNumberInput from "../../../base/LCNumberInput";
-import CfgItemBorder from "../../../base/CfgItemBorder";
+import LCNumberInput from "../../../../lib/LCNumberInput";
+import CfgItemBorder from "../../../../lib/CfgItemBorder";
 import {AbstractConfig} from "../../interface/AbstractConfig";
 
 interface AntdBarSetProps {
