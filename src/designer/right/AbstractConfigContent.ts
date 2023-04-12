@@ -1,4 +1,4 @@
-import {MenuInfo} from "../menu-list/AbstractMenu";
+import {MenuInfo} from "./menu-list/AbstractMenu";
 import React from "react";
 
 export abstract class AbstractConfigContent {
@@ -10,5 +10,5 @@ export abstract class AbstractConfigContent {
     /**
      * 获取右侧菜单对应的配置内容的映射关系
      */
-    abstract getMenuToConfigContentMap(): { [key: string]: React.Component | React.FC | any };
+    abstract getMenuToConfigContentMap(): { [key: string]: React.Component | React.FC };
 }

@@ -6,7 +6,7 @@ export abstract class AbstractMenu {
 
 export interface MenuInfo {
     //图标
-    icon: React.Component | React.FC | any;
+    icon: React.Component | React.FC;
     //名称
     name: string;
     //标识
