@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {getCfgComp} from "../CfgComps";
-import {CfgItemProps} from "../../types/ConfigItemTypes";
+import {CfgItemProps} from "../../../types/ConfigItemTypes";
 
 class CfgItem extends Component<CfgItemProps> {
     render() {

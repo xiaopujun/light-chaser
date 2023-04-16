@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './style/RightAngleCoordinates.less';
-import Accordion from "../../../../lib/Accordion";
+import Accordion from "../../../../Accordion";
 import AxisConfig from "../../../base/AxisConfig";
 
 

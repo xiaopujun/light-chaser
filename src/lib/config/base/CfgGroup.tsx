@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {CfgItemProps} from '../../types/ConfigItemTypes';
+import {CfgItemProps} from '../../../types/ConfigItemTypes';
 import CfgItem from "./CfgItem";
 
 interface CfgGroupProps {

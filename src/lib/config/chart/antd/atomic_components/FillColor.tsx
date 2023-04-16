@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './style/index.less';
 import CfgGroup from "../../../base/CfgGroup";
-import Accordion from "../../../../lib/Accordion";
+import Accordion from "../../../../Accordion";
 
 interface FillColorProp {
     colorCount?: number;

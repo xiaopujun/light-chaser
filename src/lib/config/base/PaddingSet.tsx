@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './style/PaddingSet.less';
-import LcUnderLineInput from "../../lib/LcUnderLineInput";
+import LcUnderLineInput from "../../LcUnderLineInput";
 
 interface PaddingSetProps {
     value?: string;

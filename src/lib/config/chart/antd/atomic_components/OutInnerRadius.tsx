@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import LCNumberInput from "../../../../lib/LCNumberInput";
+import LCNumberInput from "../../../../LCNumberInput";
 
 interface OutInnerRadiusProps {
     updateChartProps?: (config: object) => void;

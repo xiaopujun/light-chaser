@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import './style/Legend.less';
-import Accordion from "../../../../lib/Accordion";
-import BaseColorPicker from "../../../../lib/BaseColorPicker";
-import LcSelect from "../../../../lib/LCSelect";
+import Accordion from "../../../../Accordion";
+import BaseColorPicker from "../../../../BaseColorPicker";
+import LcSelect from "../../../../LCSelect";
 import {Select} from "antd";
-import CfgItemBorder from "../../../../lib/CfgItemBorder";
-import LcConfigBlock from "../../../../lib/LcConfigBlock";
+import CfgItemBorder from "../../../../CfgItemBorder";
+import LcConfigBlock from "../../../../LcConfigBlock";
 
 const {Option} = Select;
 

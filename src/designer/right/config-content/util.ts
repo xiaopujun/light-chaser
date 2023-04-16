@@ -1,12 +1,5 @@
 import {MenuInfo} from "../menu-list/AbstractMenu";
-import {
-    DatabaseFilled,
-    HighlightFilled,
-    MediumCircleFilled,
-    PictureFilled,
-    SkinFilled,
-    VideoCameraFilled
-} from "@ant-design/icons";
+import {DatabaseFilled, HighlightFilled, MediumCircleFilled, SkinFilled, VideoCameraFilled} from "@ant-design/icons";
 
 export const getDefaultMenuList = (): Array<MenuInfo> => {
     return [
@@ -14,11 +7,6 @@ export const getDefaultMenuList = (): Array<MenuInfo> => {
             icon: VideoCameraFilled,
             name: '动画',
             key: 'animation',
-        },
-        {
-            icon: PictureFilled,
-            name: '背景',
-            key: 'bg',
         },
         {
             icon: DatabaseFilled,
