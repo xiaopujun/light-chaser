@@ -1,5 +1,5 @@
-import {MenuInfo} from "../menu-list/AbstractMenu";
 import {DatabaseFilled, HighlightFilled, MediumCircleFilled, SkinFilled, VideoCameraFilled} from "@ant-design/icons";
+import {MenuInfo} from "../../types/MenuType";
 
 export const getDefaultMenuList = (): Array<MenuInfo> => {
     return [

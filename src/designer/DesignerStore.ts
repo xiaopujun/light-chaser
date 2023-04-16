@@ -5,6 +5,7 @@ import {AbstractConfig} from "../interf/AbstractConfig";
 import {AbstractInit} from "../interf/AbstractInit";
 import {AbstractClassifyItem} from "../interf/AbstractClassifyItem";
 import headerStore from "./header/HeaderStore";
+import rightStore from "./right/RightStore";
 
 class DesignerStore {
 
@@ -49,13 +50,16 @@ class DesignerStore {
             const comp = compCtx(key).default;
             if (comp && AbstractComp.isPrototypeOf(comp))
                 this.compsClazz[keyName] = comp;
-            if (comp && AbstractConfig.isPrototypeOf(comp))
+            if (comp && AbstractConfig.isPrototypeOf(comp)) {
                 this.compConfigClazz[keyName] = comp;
+            }
             if (comp && AbstractInit.isPrototypeOf(comp)) {
                 this.compInitClazz[keyName] = comp;
                 this.compInitObj[keyName] = new comp();
             }
         });
+        const {doInit} = rightStore;
+        doInit && doInit(this.compConfigClazz);
     }
 
     scannerClassify = () => {

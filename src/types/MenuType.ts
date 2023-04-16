@@ -1,9 +1,5 @@
 import React from "react";
 
-export abstract class AbstractMenu {
-    abstract getMenuInfo(): MenuInfo;
-}
-
 export interface MenuInfo {
     //图标
     icon: React.Component | React.FC;

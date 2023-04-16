@@ -1,5 +1,5 @@
 import React from "react";
-import {MenuInfo} from "../designer/right/menu-list/AbstractMenu";
+import {MenuInfo} from "../types/MenuType";
 
 export abstract class AbstractConfig {
     /**

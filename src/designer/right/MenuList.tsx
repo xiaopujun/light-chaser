@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import '../../style/LcConfigMenus.less';
-import menuStore from "./MenuStore";
-import {MenuInfo} from "./AbstractMenu";
+import '../style/LcConfigMenus.less';
+import {MenuInfo} from "../../types/MenuType";
+import rightStore from "./RightStore";
+import {observer} from "mobx-react";
 
 interface LcConfigMenusProps {
     onChange?: (menu: string) => void;
@@ -11,8 +12,6 @@ class MenuList extends Component<LcConfigMenusProps | any> {
 
     constructor(props: any) {
         super(props);
-        const {doInit} = menuStore;
-        doInit && doInit();
     }
 
     menuChange = (e: any) => {
@@ -21,7 +20,7 @@ class MenuList extends Component<LcConfigMenusProps | any> {
     }
 
     buildMenuList = () => {
-        const {menus} = menuStore;
+        const {menus} = rightStore;
         return menus.map((item: MenuInfo) => {
             const Icon: any = item.icon;
             return (
@@ -44,4 +43,4 @@ class MenuList extends Component<LcConfigMenusProps | any> {
     }
 }
 
-export default MenuList;
+export default observer(MenuList);

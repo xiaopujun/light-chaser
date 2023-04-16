@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import '../style/LcDesignerRight.less';
-import MenuList from "./menu-list/MenuList";
-import LcConfigContent from "./config-content/ConfigContent";
+import MenuList from "./MenuList";
+import LcConfigContent from "./ConfigContent";
 
 class Index extends Component<any> {
 
