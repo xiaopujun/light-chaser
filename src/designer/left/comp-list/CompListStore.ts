@@ -1,6 +1,6 @@
 import {makeAutoObservable} from "mobx";
 import {AbstractInit} from "../../../interf/AbstractInit";
-import {AbstractChart} from "../../../interf/AbstractChart";
+import {AbstractComp} from "../../../interf/AbstractComp";
 import {AbstractConfig} from "../../../interf/AbstractConfig";
 
 class CompListStore {
@@ -27,7 +27,7 @@ class CompListStore {
                         initClazz[clazzName] = Clazz;
                         comps.push(new Clazz().getBaseInfo());
                     }
-                    if (AbstractChart.isPrototypeOf(Clazz))
+                    if (AbstractComp.isPrototypeOf(Clazz))
                         compClazz[clazzName] = Clazz;
                     if (AbstractConfig.isPrototypeOf(Clazz))
                         configClazz[clazzName] = Clazz;

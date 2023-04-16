@@ -1,5 +1,5 @@
 import {makeAutoObservable} from "mobx";
-import {AbstractClassifyItem} from "./ClassifyTypes";
+import {AbstractClassifyItem} from "../../../interf/AbstractClassifyItem";
 
 /**
  * 左侧分类列表store

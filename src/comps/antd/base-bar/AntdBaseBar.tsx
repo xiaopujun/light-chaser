@@ -1,7 +1,7 @@
 import React from 'react';
 import {Bar} from "@ant-design/charts";
 import LcCompBg from "../../LcCompBg";
-import {AbstractChart} from "../../../interf/AbstractChart";
+import {AbstractComp} from "../../../interf/AbstractComp";
 
 interface AntdBarProps {
     elemId?: string;
@@ -12,7 +12,7 @@ interface AntdBarProps {
 /**
  * 基础条形图
  */
-export default class AntdBaseBar extends AbstractChart<AntdBarProps> {
+export default class AntdBaseBar extends AbstractComp<AntdBarProps> {
 
     render() {
         const {chartConfig} = this.props;
