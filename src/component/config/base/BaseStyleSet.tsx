@@ -21,7 +21,7 @@ interface LcCompBaseStyleSetProps {
 /**
  * lc组件基础样式
  */
-export default class LcCompBaseStyleSet extends Component<LcCompBaseStyleSetProps> {
+export default class BaseStyleSet extends Component<LcCompBaseStyleSetProps> {
 
     paddingChanged = (padding: string) => {
         const {updateBaseStyle} = this.props;

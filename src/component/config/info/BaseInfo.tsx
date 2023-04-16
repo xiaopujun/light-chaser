@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import LCTextInput from "../../../lib/LCTextInput";
 import LcConfigItem from "../../../lib/LcConfigItem";
 import CfgItemBorder from "../../../lib/CfgItemBorder";
-import './LcEmBaseInfo.less';
+import './BaseInfo.less';
 
 interface LcEmBaseInfoProps {
     baseInfo?: any;
@@ -12,7 +12,7 @@ interface LcEmBaseInfoProps {
 /**
  * lc组件基础信息
  */
-class LcEmBaseInfo extends Component<LcEmBaseInfoProps> {
+class BaseInfo extends Component<LcEmBaseInfoProps> {
 
     changeName = (name: string) => {
         const {updateBaseInfo} = this.props;
@@ -50,4 +50,4 @@ class LcEmBaseInfo extends Component<LcEmBaseInfoProps> {
     }
 }
 
-export default LcEmBaseInfo;
+export default BaseInfo;

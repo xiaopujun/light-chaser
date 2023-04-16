@@ -1,9 +1,9 @@
 import {AbstractConfig} from "../../interface/AbstractConfig";
 import {getDefaultMenuList} from "../../../../designer/right/config-content/util";
-import LcEmBaseInfo from "../../../config/info/LcEmBaseInfo";
 import {MenuInfo} from "../../../../designer/right/menu-list/AbstractMenu";
 import {ClassType} from "react";
 import AntdBaseBarConfigContent from "./AntdBaseBarConfigContent";
+import BaseInfo from "../../../config/info/BaseInfo";
 
 export class AntdBaseBarConfig extends AbstractConfig {
     getMenuList(): Array<MenuInfo> {
@@ -12,7 +12,7 @@ export class AntdBaseBarConfig extends AbstractConfig {
 
     getMenuToConfigContentMap(): { [key: string]: ClassType<any, any, any> } {
         return {
-            'info': LcEmBaseInfo,
+            'info': BaseInfo,
             'style': AntdBaseBarConfigContent,
         };
     }

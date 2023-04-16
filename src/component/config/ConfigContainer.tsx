@@ -1,10 +1,10 @@
 import React, {Component, Suspense} from 'react';
 import {Collapse} from 'antd';
-import './LcCompConfigContainer.less';
+import './ConfigContainer.less';
 import {RollbackOutlined} from "@ant-design/icons";
-import LcEmBaseInfo from "./info/LcEmBaseInfo";
+import BaseInfo from "./info/BaseInfo";
 import getChartsConfig from "./chart/ComponentSetInit";
-import LcCompBaseStyleSet from "./base/LcCompBaseStyleSet";
+import BaseStyleSet from "./base/BaseStyleSet";
 import Loading from "../loading/Loading";
 
 const {Panel} = Collapse;
@@ -21,7 +21,7 @@ interface LcCompConfigContainerProps {
 /**
  * 右滑框中的组件配置选项
  */
-export default class LcCompConfigContainer extends Component<LcCompConfigContainerProps | any> {
+export default class ConfigContainer extends Component<LcCompConfigContainerProps | any> {
 
     cancelActive = () => {
         const {updateActive} = this.props;
@@ -43,10 +43,10 @@ export default class LcCompConfigContainer extends Component<LcCompConfigContain
                 </div>
                 <Collapse className={'lc-config-collapse lc-component-config'} bordered={false}>
                     <Panel className={'lc-config-collapse-title'} header="基础信息" key="0">
-                        <LcEmBaseInfo updateBaseInfo={updateBaseInfo} baseInfo={baseInfo}/>
+                        <BaseInfo updateBaseInfo={updateBaseInfo} baseInfo={baseInfo}/>
                     </Panel>
                     <Panel className={'lc-config-collapse-title'} header="基础样式" key="1">
-                        <LcCompBaseStyleSet baseStyle={baseStyle} updateBaseStyle={updateBaseStyle}/>
+                        <BaseStyleSet baseStyle={baseStyle} updateBaseStyle={updateBaseStyle}/>
                     </Panel>
                     <Panel className={'lc-config-collapse-title'} header="组件样式" key="2">
                         <Suspense fallback={<Loading width={'100%'} height={'100%'}/>}>

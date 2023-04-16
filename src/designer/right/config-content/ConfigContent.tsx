@@ -7,8 +7,8 @@ import {
     SkinFilled,
     VideoCameraFilled
 } from "@ant-design/icons";
-import LcEmBaseInfo from "../../../component/config/info/LcEmBaseInfo";
-import LcCompBaseStyleSet from "../../../component/config/base/LcCompBaseStyleSet";
+import BaseInfo from "../../../component/config/info/BaseInfo";
+import BaseStyleSet from "../../../component/config/base/BaseStyleSet";
 import getChartsConfig from "../../../component/config/chart/ComponentSetInit";
 import LcBgConfig from "../../../component/config/canvas/LcBgConfig";
 import lcConfigContentStore from "../../store/LcDesignerContentStore";
@@ -63,13 +63,13 @@ class ConfigContent extends Component<LcConfigContentProps> {
             activeMenu = '';
         switch (activeMenu) {
             case 'info':
-                return <LcEmBaseInfo updateBaseInfo={this.props.updateBaseInfo}
-                                     baseInfo={elemConfigs && elemConfigs[activeId]?.baseInfo}/>
+                return <BaseInfo updateBaseInfo={this.props.updateBaseInfo}
+                                 baseInfo={elemConfigs && elemConfigs[activeId]?.baseInfo}/>
             case 'style':
                 let ChartsConfig: any = getChartsConfig(activeType);
                 return <>
-                    <LcCompBaseStyleSet updateBaseStyle={this.props.updateBaseStyle}
-                                        baseStyle={elemConfigs && elemConfigs[activeId]?.baseStyle}/>
+                    <BaseStyleSet updateBaseStyle={this.props.updateBaseStyle}
+                                  baseStyle={elemConfigs && elemConfigs[activeId]?.baseStyle}/>
                     <ChartsConfig updateChartProps={this.props.updateChartProps}
                                   chartProps={elemConfigs && elemConfigs[activeId]?.chartConfig}/>
                 </>

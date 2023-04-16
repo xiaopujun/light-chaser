@@ -23,9 +23,9 @@ class MenuList extends Component<LcConfigMenusProps | any> {
     buildMenuList = () => {
         const {menus} = menuStore;
         return menus.map((item: MenuInfo) => {
-            const Icon = item.icon;
+            const Icon: any = item.icon;
             return (
-                <div className={'menu-item'} id={item.key} onClick={this.menuChange}>
+                <div className={'menu-item'} key={item.key} id={item.key} onClick={this.menuChange}>
                     <div className={'item-icon'}><Icon/></div>
                     <div className={'item-content'}>{item.name}</div>
                 </div>
