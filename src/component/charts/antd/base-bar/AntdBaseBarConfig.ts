@@ -1,4 +1,4 @@
-import {AbstractConfig} from "../../interface/AbstractConfig";
+import {AbstractConfig} from "../../../../types/AbstractConfig";
 import {getDefaultMenuList} from "../../../../designer/right/config-content/util";
 import {MenuInfo} from "../../../../designer/right/menu-list/AbstractMenu";
 import {ClassType} from "react";
@@ -14,6 +14,9 @@ export class AntdBaseBarConfig extends AbstractConfig {
         return {
             'info': BaseInfo,
             'style': AntdBaseBarConfigContent,
+            'data': BaseInfo,
+            'animation': BaseInfo,
+            'theme': BaseInfo
         };
     }
 }

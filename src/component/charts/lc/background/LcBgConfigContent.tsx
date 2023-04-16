@@ -1,17 +1,17 @@
 import React, {PureComponent} from 'react';
 import './LcBgConfig.less';
-import LCNumberInput from "../../../lib/LCNumberInput";
-import BaseColorPicker from "../../../lib/BaseColorPicker";
+import LCNumberInput from "../../../../lib/LCNumberInput";
+import BaseColorPicker from "../../../../lib/BaseColorPicker";
 import Dragger from "antd/es/upload/Dragger";
-import LcConfigItem from "../../../lib/LcConfigItem";
-import LcRadio from "../../../lib/LcRadio";
+import LcConfigItem from "../../../../lib/LcConfigItem";
+import LcRadio from "../../../../lib/LcRadio";
 import {Button, Radio, Select} from "antd";
-import CfgItemBorder from "../../../lib/CfgItemBorder";
-import lcDesignerContentStore from '../../../designer/store/LcDesignerContentStore';
+import CfgItemBorder from "../../../../lib/CfgItemBorder";
+import lcDesignerContentStore from '../../../../designer/store/LcDesignerContentStore';
 import {observer} from "mobx-react";
 import {toJS} from "mobx";
-import LcSelect from "../../../lib/LCSelect";
-import {BackgroundColorMode, BackgroundMode} from "../../../types/DesignerType";
+import LcSelect from "../../../../lib/LCSelect";
+import {BackgroundColorMode, BackgroundMode} from "../../../../types/DesignerType";
 
 const {Option} = Select;
 
@@ -20,7 +20,7 @@ interface LcBgConfigProps {
     updateBgConfig?: (data?: any) => void;
 }
 
-class LcBgConfig extends PureComponent<LcBgConfigProps> {
+class LcBgConfigContent extends PureComponent<LcBgConfigProps> {
 
     //线性渐变颜色
     lineGradientColor = ['#0b222b', '#104959'];
@@ -234,4 +234,4 @@ class LcBgConfig extends PureComponent<LcBgConfigProps> {
     }
 }
 
-export default observer(LcBgConfig)
+export default observer(LcBgConfigContent)

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Bar} from "@ant-design/charts";
 import LcCompBg from "../../LcCompBg";
-import {AbstractChart} from "../../interface/AbstractChart";
+import {AbstractChart} from "../../../../types/AbstractChart";
 
 interface AntdBarProps {
     elemId?: string;

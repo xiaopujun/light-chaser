@@ -26,9 +26,8 @@ export const compScanner = () => {
             lcCompConfigs[componentName] = context(key).default;
         else if (componentName.match("Init$")) {
             const CompInit = context(key).default;
-            if (CompInit !== undefined) {
+            if (CompInit !== undefined)
                 lcCompInits[componentName] = new CompInit();
-            }
         } else
             lcComps[componentName] = context(key).default;
     });

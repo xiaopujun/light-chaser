@@ -1,7 +1,7 @@
 import {makeAutoObservable} from "mobx";
-import {AbstractInit} from "../../../component/charts/interface/AbstractInit";
-import {AbstractChart} from "../../../component/charts/interface/AbstractChart";
-import {AbstractConfig} from "../../../component/charts/interface/AbstractConfig";
+import {AbstractInit} from "../../../types/AbstractInit";
+import {AbstractChart} from "../../../types/AbstractChart";
+import {AbstractConfig} from "../../../types/AbstractConfig";
 
 class CompListStore {
     constructor() {

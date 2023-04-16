@@ -1,16 +1,11 @@
 import React, {Component} from 'react';
 import {
-    DatabaseFilled,
-    HighlightFilled,
-    InfoCircleFilled,
-    LineOutlined,
-    SkinFilled,
-    VideoCameraFilled
+    DatabaseFilled, HighlightFilled, InfoCircleFilled, LineOutlined, SkinFilled, VideoCameraFilled
 } from "@ant-design/icons";
 import BaseInfo from "../../../component/config/info/BaseInfo";
 import BaseStyleSet from "../../../component/config/base/BaseStyleSet";
 import getChartsConfig from "../../../component/config/chart/ComponentSetInit";
-import LcBgConfig from "../../../component/config/canvas/LcBgConfig";
+import LcBgConfig from "../../../component/charts/lc/background/LcBgConfigContent";
 import lcConfigContentStore from "../../store/LcDesignerContentStore";
 import {observer} from "mobx-react";
 import LCDesigner from "../../index";
@@ -71,8 +66,7 @@ class ConfigContent extends Component<LcConfigContentProps> {
                     <BaseStyleSet updateBaseStyle={this.props.updateBaseStyle}
                                   baseStyle={elemConfigs && elemConfigs[activeId]?.baseStyle}/>
                     <ChartsConfig updateChartProps={this.props.updateChartProps}
-                                  chartProps={elemConfigs && elemConfigs[activeId]?.chartConfig}/>
-                </>
+                                  chartProps={elemConfigs && elemConfigs[activeId]?.chartConfig}/></>
             case 'data':
                 return <div>开发中...</div>
             case 'animation':
