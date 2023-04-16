@@ -4,14 +4,15 @@ import {RouteComponentProps, withRouter} from "react-router-dom";
 import {createProject, updateProject} from "../../local/LocalStorageUtil";
 import lcDesignerContentStore from '../store/LcDesignerContentStore';
 import LCDesigner from "../index";
-import {headerItems} from "./items/scanner";
+import headerStore from "./HeaderStore";
+import {HeaderItemProps} from "../../types/HeaderTypes";
 
 interface LcDesignerHeaderProps extends RouteComponentProps {
     LCDesignerStore: LCDesigner;
     updateDesignerStore?: (data: any) => void;
 }
 
-class Index extends Component<LcDesignerHeaderProps | any> {
+class Header extends Component<LcDesignerHeaderProps | any> {
 
     updateRouteState = (id: number) => {
         const {location} = this.props;
@@ -53,18 +54,16 @@ class Index extends Component<LcDesignerHeaderProps | any> {
     }
 
     buildHeaderList = (): Array<ReactElement> => {
+        const {headerInfoArr} = headerStore;
         let items: Array<ReactElement> = [];
-        let compNames = Object.keys(headerItems);
-        if (headerItems && compNames.length > 0) {
-            for (let i = 0; i < compNames.length; i++) {
-                const {icon: Icon, name, onClick} = new headerItems[compNames[i]]().getHeaderItemInfo();
-                items.push(
-                    <div key={i + ''} className={'right-item'} onClick={onClick}>
-                        <span className={'item-span'}><Icon/>&nbsp;{name}</span>
-                    </div>
-                );
-            }
-        }
+        headerInfoArr && headerInfoArr.map((item: HeaderItemProps, index: number) => {
+            const {icon: Icon, name, onClick} = item;
+            items.push(
+                <div key={index + ''} className={'right-item'} onClick={onClick}>
+                    <span className={'item-span'}><Icon/>&nbsp;{name}</span>
+                </div>
+            );
+        });
         return items;
     }
 
@@ -84,4 +83,4 @@ class Index extends Component<LcDesignerHeaderProps | any> {
     }
 }
 
-export default withRouter(Index);
+export default withRouter(Header);

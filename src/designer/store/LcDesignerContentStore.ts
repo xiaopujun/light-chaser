@@ -18,7 +18,7 @@ import {
     Statistic,
     Theme
 } from "../../types/DesignerType";
-import {lcCompInits} from "../Scanner";
+import designerStore from "../DesignerStore";
 
 class LcDesignerContentStore implements LCDesigner {
     constructor() {
@@ -214,7 +214,9 @@ class LcDesignerContentStore implements LCDesigner {
      */
     addItem = (item: LcLayout) => {
         this.layoutConfigs?.push(item);
-        let initObj: any = lcCompInits[item.compKey + "Init"];
+        const {loaded, compInitObj} = designerStore;
+        if (!loaded) return;
+        let initObj: any = compInitObj[item.compKey + "Init"];
         let initData: any = initObj.getInitConfig()
         initData.baseInfo = {...initData.baseInfo, ...{id: this.statisticInfo?.count}}
         if (this.elemConfigs && this.statisticInfo)

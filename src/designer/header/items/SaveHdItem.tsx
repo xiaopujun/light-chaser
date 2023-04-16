@@ -1,4 +1,4 @@
-import {AbstractHeaderItem, HeaderItemProps} from "../types/HeaderTypes";
+import {AbstractHeaderItem, HeaderItemProps} from "../../../types/HeaderTypes";
 import {SaveOutlined} from "@ant-design/icons";
 
 /**

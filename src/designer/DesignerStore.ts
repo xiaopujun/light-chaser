@@ -1,25 +1,34 @@
 import {makeAutoObservable} from "mobx";
-import {AbstractHeaderItem} from "./header/types/HeaderTypes";
-import {lcCompConfigs, lcCompInits, lcComps} from "./Scanner";
+import {AbstractHeaderItem} from "../types/HeaderTypes";
 import React from "react";
 import {AbstractComp} from "../interf/AbstractComp";
 import {AbstractConfig} from "../interf/AbstractConfig";
 import {AbstractInit} from "../interf/AbstractInit";
+import {AbstractClassifyItem} from "../interf/AbstractClassifyItem";
 
 class DesignerStore {
     constructor() {
         makeAutoObservable(this);
     }
 
-    headers: { [key: string]: React.Component | React.FC | any } = {};
-    comps: { [key: string]: React.Component | React.FC | any } = {};
-    compInits: { [key: string]: React.Component | React.FC | any } = {};
-    compConfigs: { [key: string]: React.Component | React.FC | any } = {};
-    compTypes: { [key: string]: React.Component | React.FC | any } = {};
+    headersClazz: { [key: string]: React.Component | React.FC | any } = {};
+    compsClazz: { [key: string]: React.Component | React.FC | any } = {};
+    compInitClazz: { [key: string]: React.Component | React.FC | any } = {};
+    compConfigClazz: { [key: string]: React.Component | React.FC | any } = {};
+    compTypeClazz: { [key: string]: React.Component | React.FC | any } = {};
+    classifyClazz: { [key: string]: React.Component | React.FC | any } = {};
 
+    compInitObj: { [key: string]: Object } = {};
+
+    loaded: boolean = false;
+
+
+    //todo 扫描组件，要优化为异步扫描
     doInit = () => {
         this.scannerHeader();
         this.scannerCompsData();
+        this.scannerClassify();
+        this.loaded = true;
     }
 
     scannerHeader = () => {
@@ -28,22 +37,35 @@ class DesignerStore {
             const keyName = key.replace(/^\.\/([\w|-]+\/)*(\w+)\.(tsx|ts)$/, '$2');
             const comp = headerCtx(key).default;
             if (comp && AbstractHeaderItem.isPrototypeOf(comp))
-                this.headers[keyName] = comp;
+                this.headersClazz[keyName] = comp;
         });
     }
 
     scannerCompsData = () => {
-        const compCtx = require.context('../src/comps', true, /\.(tsx|ts)$/);
+        const compCtx = require.context('../comps', true, /\.(tsx|ts)$/);
         compCtx.keys().forEach(key => {
             const keyName = key.replace(/^\.\/([\w|-]+\/)*(\w+)\.(tsx|ts)$/, '$2');
             const comp = compCtx(key).default;
             if (comp && AbstractComp.isPrototypeOf(comp))
-                this.comps[keyName] = comp;
+                this.compsClazz[keyName] = comp;
             if (comp && AbstractConfig.isPrototypeOf(comp))
-                this.compConfigs[keyName] = comp;
-            if (comp && AbstractInit.isPrototypeOf(comp))
-                this.compInits[keyName] = comp;
+                this.compConfigClazz[keyName] = comp;
+            if (comp && AbstractInit.isPrototypeOf(comp)) {
+                this.compInitClazz[keyName] = comp;
+                this.compInitObj[keyName] = new comp().getInitConfig();
+            }
         });
+    }
+
+    scannerClassify = () => {
+        const classifyCtx = require.context('./left/classify-list/items', true, /\.(tsx|ts)$/);
+        classifyCtx.keys().forEach(key => {
+            const keyName = key.replace(/^\.\/([\w|-]+\/)*(\w+)\.(tsx|ts)$/, '$2');
+            const comp = classifyCtx(key).default;
+            if (comp && AbstractClassifyItem.isPrototypeOf(comp)) {
+                this.classifyClazz[keyName] = comp;
+            }
+        })
     }
 }
 

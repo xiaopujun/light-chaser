@@ -2,12 +2,12 @@ import React, {PureComponent} from 'react';
 import ReactGridLayout, {Layout} from "react-grid-layout";
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-import getChartsTemplate from "../../comps/ChartsCollection";
 import DragScaleProvider from "../tools/DragScaleProvider";
 import {observer} from "mobx-react";
 import lcDesignerContentStore, {LcDesignerContentStore} from "../store/LcDesignerContentStore";
 import lcRightMenuStore from "../store/LcRightMenuStore";
 import LcDesignerBackground from "./LcDesignerBackground";
+import designerStore from "../DesignerStore";
 
 class LcDesignerContent extends PureComponent<LcDesignerContentStore | any> {
 
@@ -44,8 +44,9 @@ class LcDesignerContent extends PureComponent<LcDesignerContentStore | any> {
     generateElement = () => {
         const {layoutConfigs, updateActive} = lcDesignerContentStore!;
         if (layoutConfigs && layoutConfigs.length > 0) {
+            const {compsClazz} = designerStore;
             return layoutConfigs.map((item: any) => {
-                let Chart: any = getChartsTemplate(item.compKey);
+                let Chart: any = compsClazz[item.compKey];
                 const chartConfig = this.calculateChartConfig(item.id);
                 return (
                     <div key={item?.id + ''} className={'lc-comp-item'}

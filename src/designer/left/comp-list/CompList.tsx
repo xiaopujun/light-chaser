@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {LineOutlined} from "@ant-design/icons";
 import {Input} from "antd";
-import {lcCompInits} from "../../Scanner";
 import compListStore from "./CompListStore";
 import classifyListStore from "../classify-list/ClassifyListStore";
 import './CompList.less';
 import {toJS} from "mobx";
 import {observer} from "mobx-react";
+import designerStore from "../../DesignerStore";
 
 class CompList extends Component {
 
@@ -33,8 +33,9 @@ class CompList extends Component {
         for (let i = 0; i < comps.length; i++) {
             let compInfo: any = comps[i];
             const {name, key} = compInfo;
+            const {compInitObj} = designerStore;
             let compObj = JSON.stringify({compName: name, compKey: key});
-            let lcCompInit: any = lcCompInits[key + "Init"];
+            let lcCompInit: any = compInitObj[key + "Init"];
             let chartImg = lcCompInit.getChartImg();
             chartDom.push(
                 <div draggable={true} key={i + ''}

@@ -13,8 +13,8 @@ import DesignerLeft from "./left";
 import Index from "./right";
 import LcDesignerFooter from "./footer/LcDesignerFooter";
 import lcDesignerContentStore from './store/LcDesignerContentStore';
+import designerStore from './DesignerStore';
 import {getProjectById} from "../local/LocalStorageUtil";
-import {doScanInit} from "./Scanner";
 
 interface LCDesignerProps extends RouteComponentProps {
     LCDesignerStore: LCDesignerProps;
@@ -32,9 +32,8 @@ class LCDesigner extends Component<LCDesignerProps | any> {
 
     constructor(props: any) {
         super(props);
-        //todo 扫描组件，要优化为异步扫描
-        doScanInit();
-
+        const {doInit} = designerStore;
+        doInit && doInit();
     }
 
     componentDidMount() {
