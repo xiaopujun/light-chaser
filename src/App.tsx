@@ -2,12 +2,12 @@ import React, {Component, lazy, Suspense} from 'react';
 import 'antd/dist/antd.min.css';
 import './App.less';
 import {Route, Switch} from "react-router-dom";
-import Loading from "./component/loading/Loading";
+import Loading from "./lib/loading/Loading";
 import LcRightMenu from "./designer/tools/OperateMenu";
 
-const LightChaserList = lazy(() => import('./component/list/LightChaserList'));
+const LightChaserList = lazy(() => import('./list/LightChaserList'));
 const LCDesigner = lazy(() => import('./designer'));
-const Preview = lazy(() => import('./component/show/LcShow'));
+const Preview = lazy(() => import('./show/LcShow'));
 
 class App extends Component<any> {
     render() {

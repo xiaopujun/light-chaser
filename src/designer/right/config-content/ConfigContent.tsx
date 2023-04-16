@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import {
     DatabaseFilled, HighlightFilled, InfoCircleFilled, LineOutlined, SkinFilled, VideoCameraFilled
 } from "@ant-design/icons";
-import BaseInfo from "../../../component/config/info/BaseInfo";
-import BaseStyleSet from "../../../component/config/base/BaseStyleSet";
-import getChartsConfig from "../../../component/config/chart/ComponentSetInit";
-import LcBgConfig from "../../../component/charts/lc/background/LcBgConfigContent";
+import BaseInfo from "../../../lib/config/info/BaseInfo";
+import BaseStyleSet from "../../../lib/config/base/BaseStyleSet";
+import getChartsConfig from "../../../lib/config/chart/ComponentSetInit";
+import LcBgConfig from "../../../comps/lc/background/LcBgConfigContent";
 import lcConfigContentStore from "../../store/LcDesignerContentStore";
 import {observer} from "mobx-react";
 import LCDesigner from "../../index";

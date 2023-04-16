@@ -19,7 +19,7 @@ export const doScanInit = () => {
 
 
 export const compScanner = () => {
-    const context = require.context('../component/charts', true, /\.(tsx|ts)$/);
+    const context = require.context('../comps', true, /\.(tsx|ts)$/);
     context.keys().forEach(key => {
         const componentName = key.replace(/^\.\/([\w|-]+\/)*(\w+)\.(tsx|ts)$/, '$2');
         if (componentName.match("Set$"))

@@ -1,7 +1,7 @@
 import {makeAutoObservable} from "mobx";
-import {AbstractInit} from "../../../types/AbstractInit";
-import {AbstractChart} from "../../../types/AbstractChart";
-import {AbstractConfig} from "../../../types/AbstractConfig";
+import {AbstractInit} from "../../../interf/AbstractInit";
+import {AbstractChart} from "../../../interf/AbstractChart";
+import {AbstractConfig} from "../../../interf/AbstractConfig";
 
 class CompListStore {
     constructor() {
@@ -14,7 +14,7 @@ class CompListStore {
     visible: boolean = true;
 
     doInit = () => {
-        const compCtx = require.context('../../../component/charts', true, /\.(tsx|ts)$/);
+        const compCtx = require.context('../../../comps', true, /\.(tsx|ts)$/);
         const compClazz: { [key: string]: any } = {},
             initClazz: { [key: string]: any } = {},
             configClazz: { [key: string]: any } = {};
