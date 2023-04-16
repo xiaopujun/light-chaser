@@ -1,4 +1,4 @@
-import {makeAutoObservable} from "mobx";
+import {makeAutoObservable, toJS} from "mobx";
 import React from "react";
 import {HeaderItemProps} from "../../types/HeaderTypes";
 

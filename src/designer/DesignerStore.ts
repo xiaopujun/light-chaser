@@ -1,15 +1,12 @@
-import {makeAutoObservable} from "mobx";
 import {AbstractHeaderItem} from "../types/HeaderTypes";
 import React from "react";
 import {AbstractComp} from "../interf/AbstractComp";
 import {AbstractConfig} from "../interf/AbstractConfig";
 import {AbstractInit} from "../interf/AbstractInit";
 import {AbstractClassifyItem} from "../interf/AbstractClassifyItem";
+import headerStore from "./header/HeaderStore";
 
 class DesignerStore {
-    constructor() {
-        makeAutoObservable(this);
-    }
 
     headersClazz: { [key: string]: React.Component | React.FC | any } = {};
     compsClazz: { [key: string]: React.Component | React.FC | any } = {};
@@ -33,12 +30,16 @@ class DesignerStore {
 
     scannerHeader = () => {
         const headerCtx = require.context('./header/items', true, /\.(tsx|ts)$/);
+        let headersClazz: { [key: string]: React.Component | React.FC | any } = {};
         headerCtx.keys().forEach(key => {
             const keyName = key.replace(/^\.\/([\w|-]+\/)*(\w+)\.(tsx|ts)$/, '$2');
             const comp = headerCtx(key).default;
             if (comp && AbstractHeaderItem.isPrototypeOf(comp))
-                this.headersClazz[keyName] = comp;
+                headersClazz[keyName] = comp;
         });
+        this.headersClazz = headersClazz;
+        const {doInit} = headerStore;
+        doInit(headersClazz);
     }
 
     scannerCompsData = () => {
@@ -52,7 +53,7 @@ class DesignerStore {
                 this.compConfigClazz[keyName] = comp;
             if (comp && AbstractInit.isPrototypeOf(comp)) {
                 this.compInitClazz[keyName] = comp;
-                this.compInitObj[keyName] = new comp().getInitConfig();
+                this.compInitObj[keyName] = new comp();
             }
         });
     }
