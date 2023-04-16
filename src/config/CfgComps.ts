@@ -1,9 +1,9 @@
-import LCTextInput from "../LCTextInput";
-import LCNumberInput from "../LCNumberInput";
-import ColorPicker from "../BaseColorPicker";
-import GroupColorPicker from "../GroupColorPicker";
+import LCTextInput from "../lib/LCTextInput";
+import LCNumberInput from "../lib/LCNumberInput";
+import ColorPicker from "../lib/BaseColorPicker";
+import GroupColorPicker from "../lib/GroupColorPicker";
 import PaddingSet from "./base/PaddingSet";
-import LcSelect from "../LCSelect";
+import LcSelect from "../lib/LCSelect";
 import ColorSelector from "./chart/antd/atomic_components/ColorSelector";
 import {Switch} from "antd";
 

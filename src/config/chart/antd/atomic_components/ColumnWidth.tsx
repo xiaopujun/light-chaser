@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './style/index.less';
-import LCNumberInput from "../../../../LCNumberInput";
+import LCNumberInput from "../../../../lib/LCNumberInput";
 
 interface ColumnWidthProp {
     updateChartProps?: (data: any) => void;

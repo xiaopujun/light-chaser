@@ -3,7 +3,7 @@ import {getDefaultMenuList} from "../../../designer/right/config-content/util";
 import {MenuInfo} from "../../../designer/right/menu-list/AbstractMenu";
 import {ClassType} from "react";
 import AntdBaseBarConfigContent from "./AntdBaseBarConfigContent";
-import BaseInfo from "../../../lib/config/info/BaseInfo";
+import BaseInfo from "../../../config/info/BaseInfo";
 
 export class AntdBaseBarConfig extends AbstractConfig {
     getMenuList(): Array<MenuInfo> {

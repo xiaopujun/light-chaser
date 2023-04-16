@@ -5,7 +5,7 @@ import {RollbackOutlined} from "@ant-design/icons";
 import BaseInfo from "./info/BaseInfo";
 import getChartsConfig from "./chart/ComponentSetInit";
 import BaseStyleSet from "./base/BaseStyleSet";
-import Loading from "../loading/Loading";
+import Loading from "../lib/loading/Loading";
 
 const {Panel} = Collapse;
 

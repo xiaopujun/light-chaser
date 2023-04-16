@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
-import '../../../lib/config/chart/antd/style/AntdBarSet.less';
-import Legend from "../../../lib/config/chart/antd/atomic_components/Legned";
-import RightAngleCoordinates from "../../../lib/config/chart/antd/atomic_components/RightAngleCoordinates";
+import '../../../config/chart/antd/style/AntdBarSet.less';
+import Legend from "../../../config/chart/antd/atomic_components/Legned";
+import RightAngleCoordinates from "../../../config/chart/antd/atomic_components/RightAngleCoordinates";
 import {dataSort} from "../../../utils/SortUtil";
 import {
     calculateFillColor, calculateLegendConfig, calculateRightAngleCoordinates
-} from "../../../lib/config/chart/antd/util/AntdChartConfigUtil";
+} from "../../../config/chart/antd/util/AntdChartConfigUtil";
 import Accordion from "../../../lib/Accordion";
 import LcConfigItem from "../../../lib/LcConfigItem";
-import ColorSelector from "../../../lib/config/chart/antd/atomic_components/ColorSelector";
+import ColorSelector from "../../../config/chart/antd/atomic_components/ColorSelector";
 import LCNumberInput from "../../../lib/LCNumberInput";
 import CfgItemBorder from "../../../lib/CfgItemBorder";
 

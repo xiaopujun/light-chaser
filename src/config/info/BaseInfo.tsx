@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import LCTextInput from "../../LCTextInput";
-import LcConfigItem from "../../LcConfigItem";
-import CfgItemBorder from "../../CfgItemBorder";
+import LCTextInput from "../../lib/LCTextInput";
+import LcConfigItem from "../../lib/LcConfigItem";
+import CfgItemBorder from "../../lib/CfgItemBorder";
 import './BaseInfo.less';
 
 interface LcEmBaseInfoProps {

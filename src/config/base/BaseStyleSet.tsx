@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 import './style/LCBaseConfig.less';
-import BaseColorPicker from "../../BaseColorPicker";
-import LCNumberInput from "../../LCNumberInput";
+import BaseColorPicker from "../../lib/BaseColorPicker";
+import LCNumberInput from "../../lib/LCNumberInput";
 import PaddingSet from "./PaddingSet";
-import Accordion from "../../Accordion";
-import LcConfigItem, {CfgItemLayout} from "../../LcConfigItem";
-import LcConfigBlock from "../../LcConfigBlock";
-import LcSelect from "../../LCSelect";
+import Accordion from "../../lib/Accordion";
+import LcConfigItem, {CfgItemLayout} from "../../lib/LcConfigItem";
+import LcConfigBlock from "../../lib/LcConfigBlock";
+import LcSelect from "../../lib/LCSelect";
 import {Select} from "antd";
-import CfgItemBorder from "../../CfgItemBorder";
-import {BaseStyle} from "../../../types/DesignerType";
+import CfgItemBorder from "../../lib/CfgItemBorder";
+import {BaseStyle} from "../../types/DesignerType";
 
 const {Option} = Select;
 
