@@ -3,6 +3,7 @@ import '../style/LcConfigMenus.less';
 import {MenuInfo} from "../../types/MenuType";
 import rightStore from "./RightStore";
 import {observer} from "mobx-react";
+import lcDesignerContentStore from "../store/LcDesignerContentStore";
 
 interface LcConfigMenusProps {
     onChange?: (menu: string) => void;
@@ -10,17 +11,19 @@ interface LcConfigMenusProps {
 
 class MenuList extends Component<LcConfigMenusProps | any> {
 
-    constructor(props: any) {
-        super(props);
-    }
-
     menuChange = (e: any) => {
         const {onChange} = this.props;
         onChange && onChange(e.currentTarget.id);
     }
 
     buildMenuList = () => {
-        const {menus} = rightStore;
+        const {activated: {id, type}} = lcDesignerContentStore;
+        const {configObjs}: any = rightStore;
+        let menus = [];
+        if (id === -1)
+            menus = configObjs['LcBgConfig'].getMenuList();
+        else
+            menus = configObjs[`${type}Config`].getMenuList();
         return menus.map((item: MenuInfo) => {
             const Icon: any = item.icon;
             return (

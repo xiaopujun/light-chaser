@@ -5,7 +5,7 @@ import AntdBaseBarConfigContent from "./AntdBaseBarConfigContent";
 import BaseInfo from "../../../lib/config/info/BaseInfo";
 import {MenuInfo} from "../../../types/MenuType";
 
-export class AntdBaseBarConfig extends AbstractConfig {
+export default class AntdBaseBarConfig extends AbstractConfig {
     getMenuList(): Array<MenuInfo> {
         return getDefaultMenuList();
     }
