@@ -4,7 +4,9 @@ import Legend from "../../../lib/config/chart/antd/atomic_components/Legned";
 import RightAngleCoordinates from "../../../lib/config/chart/antd/atomic_components/RightAngleCoordinates";
 import {dataSort} from "../../../utils/SortUtil";
 import {
-    calculateFillColor, calculateLegendConfig, calculateRightAngleCoordinates
+    calculateFillColor,
+    calculateLegendConfig,
+    calculateRightAngleCoordinates
 } from "../../../lib/config/chart/antd/util/AntdChartConfigUtil";
 import Accordion from "../../../lib/Accordion";
 import LcConfigItem from "../../../lib/LcConfigItem";

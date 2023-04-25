@@ -1,16 +1,34 @@
-import {makeAutoObservable} from "mobx";
+import {action, makeObservable, observable} from "mobx";
 import React from "react";
 import {MenuInfo} from "../../types/MenuType";
 
 class RightStore {
     constructor() {
-        makeAutoObservable(this);
+        makeObservable(this, {
+            configObjs: observable,
+            activeMenu: observable,
+            loaded: observable,
+            contentVisible: observable,
+            setActiveMenu: action,
+            setMenus: action
+        })
     }
 
     menus: Array<MenuInfo> = []
     configObjs: { [key: string]: Object } = {};
-    activated: string = 'backgrounds';
+    activeMenu: string = 'backgrounds';
     loaded: boolean = false;
+    contentVisible: boolean = false;
+
+    setActiveMenu = (menu: string) => {
+        this.activeMenu = menu;
+        if (!this.contentVisible)
+            this.contentVisible = true;
+    }
+
+    setMenus = (menus: Array<MenuInfo>) => {
+        this.menus = menus;
+    }
 
     doInit = (configClazz: { [key: string]: React.Component | React.FC | any } = {}) => {
         let configObjs: { [key: string]: Object } = {};

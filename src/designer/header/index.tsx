@@ -5,7 +5,6 @@ import {createProject, updateProject} from "../../local/LocalStorageUtil";
 import lcDesignerContentStore from '../store/LcDesignerContentStore';
 import LCDesigner from "../index";
 import headerStore from "./HeaderStore";
-import {HeaderItemProps} from "../../types/HeaderTypes";
 
 interface LcDesignerHeaderProps extends RouteComponentProps {
     LCDesignerStore: LCDesigner;
@@ -56,14 +55,14 @@ class Header extends Component<LcDesignerHeaderProps | any> {
     buildHeaderList = (): Array<ReactElement> => {
         const {headerInfoArr} = headerStore;
         let items: Array<ReactElement> = [];
-        headerInfoArr && headerInfoArr.map((item: HeaderItemProps, index: number) => {
-            const {icon: Icon, name, onClick} = item;
+        for (let i = 0; i < headerInfoArr.length; i++) {
+            const {icon: Icon, name, onClick} = headerInfoArr[i];
             items.push(
-                <div key={index + ''} className={'right-item'} onClick={onClick}>
+                <div key={i + ''} className={'right-item'} onClick={onClick}>
                     <span className={'item-span'}><Icon/>&nbsp;{name}</span>
                 </div>
             );
-        });
+        }
         return items;
     }
 

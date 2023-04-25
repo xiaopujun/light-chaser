@@ -45,7 +45,7 @@ class LcDesignerContentStore implements LCDesigner {
     /**
      * 激活状态属性
      */
-    activated: ActiveElem = {
+    activeElem: ActiveElem = {
         id: -1, //元素id
         type: '' //元素类型
     };
@@ -133,7 +133,7 @@ class LcDesignerContentStore implements LCDesigner {
     doInit = (store: LCDesigner) => {
         this.id = store.id ?? this.id;
         this.canvasConfig = store.canvasConfig || this.canvasConfig;
-        this.activated = store.activated || this.activated;
+        this.activeElem = store.activeElem || this.activeElem;
         this.bgConfig = store.bgConfig ? {...this.bgConfig, ...store.bgConfig} : this.bgConfig;
         this.projectConfig = store.projectConfig || this.projectConfig;
         this.elemConfigs = store.elemConfigs || this.elemConfigs;
@@ -153,7 +153,7 @@ class LcDesignerContentStore implements LCDesigner {
     doClear = () => {
         this.id = -1;
         this.canvasConfig = {};
-        this.activated = {};
+        this.activeElem = {};
         this.bgConfig = {};
         this.projectConfig = {};
         this.elemConfigs = {};
@@ -236,9 +236,9 @@ class LcDesignerContentStore implements LCDesigner {
             return item?.id === id;
         })
         delete this.elemConfigs[id + ''];
-        if (this.activated && id === this.activated.id) {
-            this.activated.id = -1;
-            this.activated.type = "";
+        if (this.activeElem && id === this.activeElem.id) {
+            this.activeElem.id = -1;
+            this.activeElem.type = "";
         }
     }
 
@@ -260,7 +260,7 @@ class LcDesignerContentStore implements LCDesigner {
      */
     updateActive = (data: ActiveElem) => {
         runInAction(() => {
-            this.activated = {...this.activated, ...data};
+            this.activeElem = {...this.activeElem, ...data};
         })
     }
 
@@ -268,7 +268,7 @@ class LcDesignerContentStore implements LCDesigner {
      * 更新组件基础样式
      */
     updateBaseStyle = (data: any) => {
-        const {id} = this.activated!;
+        const {id} = this.activeElem!;
         let charConfig = this.elemConfigs[id + ''];
         let baseConfig = charConfig?.baseStyle;
         if (charConfig && baseConfig)
@@ -279,7 +279,7 @@ class LcDesignerContentStore implements LCDesigner {
      * 更新图表组件配置
      */
     updateChartProps = (data: any) => {
-        let activeConfig: ElemConfig = this.elemConfigs[this.activated?.id + ''];
+        let activeConfig: ElemConfig = this.elemConfigs[this.activeElem?.id + ''];
         if (activeConfig)
             activeConfig.chartConfig = _.merge(activeConfig.chartConfig, data);
     }
@@ -288,7 +288,7 @@ class LcDesignerContentStore implements LCDesigner {
      * 更新基础信息
      */
     updateBaseInfo = (data: any) => {
-        let {id = -1} = this.activated;
+        let {id = -1} = this.activeElem;
         let chartConfig: ElemConfig = this.elemConfigs[id];
         if (chartConfig)
             chartConfig.baseInfo = {...chartConfig.baseInfo, ...data};

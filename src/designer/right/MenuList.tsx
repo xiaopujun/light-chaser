@@ -12,18 +12,19 @@ interface LcConfigMenusProps {
 class MenuList extends Component<LcConfigMenusProps | any> {
 
     menuChange = (e: any) => {
-        const {onChange} = this.props;
-        onChange && onChange(e.currentTarget.id);
+        const {setActiveMenu} = rightStore;
+        setActiveMenu && setActiveMenu(e.currentTarget.id);
     }
 
     buildMenuList = () => {
-        const {activated: {id, type}} = lcDesignerContentStore;
-        const {configObjs}: any = rightStore;
-        let menus = [];
+        const {activeElem: {id, type}} = lcDesignerContentStore;
+        const {configObjs, setMenus}: any = rightStore;
+        let menus;
         if (id === -1)
             menus = configObjs['LcBgConfig'].getMenuList();
         else
             menus = configObjs[`${type}Config`].getMenuList();
+        setMenus && setMenus(menus);
         return menus.map((item: MenuInfo) => {
             const Icon: any = item.icon;
             return (

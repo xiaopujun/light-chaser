@@ -5,22 +5,15 @@ import LcConfigContent from "./ConfigContent";
 
 class Index extends Component<any> {
 
-    state = {
-        activeMenu: undefined,
-        configVisible: false
-    }
-
     changeMenu = (menu: string) => this.setState({activeMenu: menu, configVisible: true})
 
     configVisibleChanged = (visible: boolean) => this.setState({configVisible: visible})
 
     render() {
-        const {activeMenu, configVisible} = this.state;
         return (
             <>
                 <MenuList {...this.props} onChange={this.changeMenu}/>
-                <LcConfigContent visible={configVisible} onClose={this.configVisibleChanged}
-                                 activeMenu={activeMenu} {...this.props}/>
+                <LcConfigContent onClose={this.configVisibleChanged}{...this.props}/>
             </>
         );
     }

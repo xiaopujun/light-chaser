@@ -95,7 +95,7 @@ class LCDesigner extends Component<LCDesignerProps | any> {
                 doInit({
                     id: store.id,
                     canvasConfig: store.canvasConfig,
-                    activated: store.activated,
+                    activeElem: store.activeElem,
                     bgConfig: store.bgConfig,
                     projectConfig: store.projectConfig,
                     elemConfigs: store.elemConfigs,
