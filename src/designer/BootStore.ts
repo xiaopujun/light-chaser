@@ -7,7 +7,7 @@ import {AbstractClassifyItem} from "../interf/AbstractClassifyItem";
 import headerStore from "./header/HeaderStore";
 import rightStore from "./right/RightStore";
 
-class DesignerStore {
+class BootStore {
 
     headersClazz: { [key: string]: React.Component | React.FC | any } = {};
     compsClazz: { [key: string]: React.Component | React.FC | any } = {};
@@ -74,5 +74,5 @@ class DesignerStore {
     }
 }
 
-const designerStore = new DesignerStore();
-export default designerStore;
+const bootStore = new BootStore();
+export default bootStore;

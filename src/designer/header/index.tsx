@@ -2,7 +2,7 @@ import React, {Component, ReactElement} from 'react';
 import '../style/Head.less';
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {createProject, updateProject} from "../../local/LocalStorageUtil";
-import lcDesignerContentStore from '../store/LcDesignerContentStore';
+import lcDesignerContentStore from '../store/DesignerStore';
 import LCDesigner from "../index";
 import headerStore from "./HeaderStore";
 

@@ -18,9 +18,9 @@ import {
     Statistic,
     Theme
 } from "../../types/DesignerType";
-import designerStore from "../DesignerStore";
+import bootStore from "../BootStore";
 
-class LcDesignerContentStore implements LCDesigner {
+class DesignerStore implements LCDesigner {
     constructor() {
         makeAutoObservable(this);
     }
@@ -214,7 +214,7 @@ class LcDesignerContentStore implements LCDesigner {
      */
     addItem = (item: LcLayout) => {
         this.layoutConfigs?.push(item);
-        const {loaded, compInitObj} = designerStore;
+        const {loaded, compInitObj} = bootStore;
         if (!loaded) return;
         let initObj: any = compInitObj[item.compKey + "Init"];
         let initData: any = initObj.getInitConfig()
@@ -331,9 +331,9 @@ class LcDesignerContentStore implements LCDesigner {
     }
 }
 
-const lcDesignerContentStore = new LcDesignerContentStore();
+const designerStore = new DesignerStore();
 
-export default lcDesignerContentStore;
+export default designerStore;
 export {
-    LcDesignerContentStore
+    DesignerStore
 };

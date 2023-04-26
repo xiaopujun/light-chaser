@@ -1,4 +1,4 @@
-import {LcDesignerContentStore} from "../designer/store/LcDesignerContentStore";
+import {DesignerStore} from "../designer/store/DesignerStore";
 import localforage from 'localforage';
 import {toJS} from "mobx";
 
@@ -6,7 +6,7 @@ import {toJS} from "mobx";
 /**
  * 构建保存项目时的基础数据
  */
-const buildConfig = (designerStore: LcDesignerContentStore) => {
+const buildConfig = (designerStore: DesignerStore) => {
     let {id = -1, canvasConfig, elemConfigs, layoutConfigs, projectConfig, bgConfig, extendParams} = designerStore;
     return {
         id,
@@ -104,7 +104,7 @@ const delImgFormLocal = (blobKey: string) => {
 /**
  * 创建项目
  */
-export const createProject = (designerStore: LcDesignerContentStore) => {
+export const createProject = (designerStore: DesignerStore) => {
     return new Promise((resolve) => {
         //1.构建保存项目时的基础数据
         let config = buildConfig(designerStore);
@@ -132,7 +132,7 @@ export const createProject = (designerStore: LcDesignerContentStore) => {
 /**
  * 更新项目
  */
-export const updateProject = (designerStore: LcDesignerContentStore) => {
+export const updateProject = (designerStore: DesignerStore) => {
     return new Promise((resolve) => {
         //1.构建更新项目时的基础数据
         let config = buildConfig(designerStore);

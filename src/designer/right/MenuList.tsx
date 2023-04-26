@@ -3,7 +3,7 @@ import '../style/LcConfigMenus.less';
 import {MenuInfo} from "../../types/MenuType";
 import rightStore from "./RightStore";
 import {observer} from "mobx-react";
-import lcDesignerContentStore from "../store/LcDesignerContentStore";
+import lcDesignerContentStore from "../store/DesignerStore";
 
 interface LcConfigMenusProps {
     onChange?: (menu: string) => void;

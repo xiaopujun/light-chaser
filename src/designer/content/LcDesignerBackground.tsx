@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import lcDesignerContentStore from '../store/LcDesignerContentStore';
+import lcDesignerContentStore from '../store/DesignerStore';
 import {observer} from "mobx-react";
 import {BackgroundColorMode, BackgroundMode} from "../../types/DesignerType";
 

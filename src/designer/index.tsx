@@ -10,10 +10,10 @@ import LcRight from "./structure/LcRight";
 import LcStructure from "./structure/LcStructure";
 import LcFoot from "./structure/LcFoot";
 import DesignerLeft from "./left";
-import Index from "./right";
+import Right from "./right";
 import LcDesignerFooter from "./footer/LcDesignerFooter";
-import lcDesignerContentStore from './store/LcDesignerContentStore';
-import designerStore from './DesignerStore';
+import lcDesignerContentStore from './store/DesignerStore';
+import designerStore from './BootStore';
 import {getProjectById} from "../local/LocalStorageUtil";
 
 interface LCDesignerProps extends RouteComponentProps {
@@ -121,7 +121,7 @@ class LCDesigner extends Component<LCDesignerProps | any> {
                 <LcBody>
                     <LcLeft><DesignerLeft/></LcLeft>
                     <LcContent><LCLayoutContent/></LcContent>
-                    <LcRight><Index {...this.props}/></LcRight>
+                    <LcRight><Right {...this.props}/></LcRight>
                 </LcBody>
                 <LcFoot>
                     <LcDesignerFooter {...this.props}/>

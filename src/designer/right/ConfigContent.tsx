@@ -1,17 +1,9 @@
 import React, {Component} from 'react';
-import {
-    DatabaseFilled,
-    HighlightFilled,
-    InfoCircleFilled,
-    LineOutlined,
-    SkinFilled,
-    VideoCameraFilled
-} from "@ant-design/icons";
-import lcConfigContentStore from "../store/LcDesignerContentStore";
+import {LineOutlined} from "@ant-design/icons";
+import lcConfigContentStore from "../store/DesignerStore";
 import {observer} from "mobx-react";
 import LCDesigner from "../index";
 import rightStore from "./RightStore";
-import {toJS} from "mobx";
 
 interface LcConfigContentProps {
     title?: string;
@@ -30,34 +22,11 @@ interface LcConfigContentProps {
 
 class ConfigContent extends Component<LcConfigContentProps> {
 
-    titleInfo: any = {
-        'info': {
-            name: '信息',
-            icon: InfoCircleFilled
-        },
-        'style': {
-            name: '样式',
-            icon: HighlightFilled
-        },
-        'data': {
-            name: '数据',
-            icon: DatabaseFilled
-        },
-        'animation': {
-            name: '动画',
-            icon: VideoCameraFilled
-        },
-        'theme': {
-            name: '主题',
-            icon: SkinFilled
-        },
-    }
-
-    doRenderConfig = () => {
-        let {activeMenu, configObjs} = toJS(rightStore);
-        const {activeElem} = toJS(lcConfigContentStore)!;
+    buildConfigContent = () => {
+        let {activeMenu, configObjs} = rightStore;
+        const {activeElem} = lcConfigContentStore!;
         let abstractConfigObj: any = configObjs[activeElem.type + 'Config'];
-        let menuToConfigComp = abstractConfigObj.getMenuToConfigContentMap()!;
+        let menuToConfigComp = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp = menuToConfigComp[activeMenu];
         return <ConfigComp/>;
     }
@@ -85,7 +54,7 @@ class ConfigContent extends Component<LcConfigContentProps> {
                         <div className={'panel-operate'} onClick={this.onClose}><LineOutlined/></div>
                     </div>
                     <div className={'lc-panel-content'}>
-                        {this.doRenderConfig()}
+                        {this.buildConfigContent()}
                     </div>
                 </div> : <></>}
             </>

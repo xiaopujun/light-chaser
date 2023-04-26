@@ -4,12 +4,12 @@ import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import DragScaleProvider from "../tools/DragScaleProvider";
 import {observer} from "mobx-react";
-import lcDesignerContentStore, {LcDesignerContentStore} from "../store/LcDesignerContentStore";
+import lcDesignerContentStore, {DesignerStore} from "../store/DesignerStore";
 import lcRightMenuStore from "../store/LcRightMenuStore";
 import LcDesignerBackground from "./LcDesignerBackground";
-import designerStore from "../DesignerStore";
+import designerStore from "../BootStore";
 
-class LcDesignerContent extends PureComponent<LcDesignerContentStore | any> {
+class LcDesignerContent extends PureComponent<DesignerStore | any> {
 
     rgl: any = null;
     lcbg: any = null;

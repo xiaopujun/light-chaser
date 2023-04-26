@@ -7,7 +7,7 @@ import LcConfigItem from "../../../lib/LcConfigItem";
 import LcRadio from "../../../lib/LcRadio";
 import {Button, Radio, Select} from "antd";
 import CfgItemBorder from "../../../lib/CfgItemBorder";
-import lcDesignerContentStore from '../../../designer/store/LcDesignerContentStore';
+import lcDesignerContentStore from '../../../designer/store/DesignerStore';
 import {observer} from "mobx-react";
 import {toJS} from "mobx";
 import LcSelect from "../../../lib/LCSelect";
