@@ -4,12 +4,13 @@ import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import DragScaleProvider from "../tools/DragScaleProvider";
 import {observer} from "mobx-react";
-import lcDesignerContentStore, {DesignerStore} from "../store/DesignerStore";
+import designerStore, {DesignerStore} from "../store/DesignerStore";
 import lcRightMenuStore from "../store/LcRightMenuStore";
 import LcDesignerBackground from "./LcDesignerBackground";
-import designerStore from "../BootStore";
+import rootStore from "../BootStore";
+import {toJS} from "mobx";
 
-class LcDesignerContent extends PureComponent<DesignerStore | any> {
+class DesignerContent extends PureComponent<DesignerStore | any> {
 
     rgl: any = null;
     lcbg: any = null;
@@ -22,7 +23,7 @@ class LcDesignerContent extends PureComponent<DesignerStore | any> {
     }
 
     calculateChartConfig = (elemId: string | number) => {
-        const {elemConfigs} = lcDesignerContentStore;
+        const {elemConfigs} = designerStore;
         if (elemConfigs)
             return elemConfigs[elemId];
     }
@@ -34,7 +35,7 @@ class LcDesignerContent extends PureComponent<DesignerStore | any> {
             elemId = e.currentTarget.id;
             dataset = e.currentTarget.dataset;
         }
-        const {updateActive} = lcDesignerContentStore;
+        const {updateActive} = designerStore;
         updateActive && updateActive({id: parseInt(elemId), type: dataset.type});
     }
 
@@ -42,21 +43,19 @@ class LcDesignerContent extends PureComponent<DesignerStore | any> {
      * 元素生成方法
      */
     generateElement = () => {
-        const {layoutConfigs, updateActive} = lcDesignerContentStore!;
+        const {layoutConfigs, updateActive} = designerStore!;
+        console.log(toJS(designerStore))
         if (layoutConfigs && layoutConfigs.length > 0) {
-            const {compsClazz} = designerStore;
+            const {compsClazz} = rootStore;
             return layoutConfigs.map((item: any) => {
                 let Chart: any = compsClazz[item.compKey];
-                const chartConfig = this.calculateChartConfig(item.id);
+                const compConfig: any = this.calculateChartConfig(item.id);
                 return (
                     <div key={item?.id + ''} className={'lc-comp-item'}
-                         id={item.id} data-type={chartConfig?.baseInfo?.type}
+                         id={item.id} data-type={compConfig?.info?.type}
                         // onClick={this.updateActive}
                          style={{width: '100%', height: '100%'}}>
-                        <Chart elemId={item?.id}
-                               chartConfig={chartConfig}
-                               updateActive={updateActive}
-                               delItem={this.delItem}/>
+                        <Chart config={compConfig}/>
                     </div>
                 );
             })
@@ -67,7 +66,7 @@ class LcDesignerContent extends PureComponent<DesignerStore | any> {
      * 删除目标组件
      */
     delItem = (elemId: string) => {
-        const {delItem, layoutConfigs} = lcDesignerContentStore;
+        const {delItem, layoutConfigs} = designerStore;
         delItem && delItem(elemId);
         if (this.rgl != null)
             this.rgl.setState({layout: layoutConfigs})
@@ -77,7 +76,7 @@ class LcDesignerContent extends PureComponent<DesignerStore | any> {
      *  元素拖动方法
      */
     onDrop = (layout: any, layoutItem: any, _event: any) => {
-        const {addItem, layoutConfigs, statisticInfo} = lcDesignerContentStore;
+        const {addItem, layoutConfigs, statisticInfo} = designerStore;
         let compObj = JSON.parse(_event.dataTransfer.getData('compObj'));
         const item = {
             ...layoutItem, ...{
@@ -105,7 +104,7 @@ class LcDesignerContent extends PureComponent<DesignerStore | any> {
     onDragStop = (layout: Layout[], oldItem: Layout, newItem: Layout) => {
         if (JSON.stringify(oldItem) === JSON.stringify(newItem))
             return;
-        const {updateLayout} = lcDesignerContentStore;
+        const {updateLayout} = designerStore;
         updateLayout && updateLayout(newItem);
     }
 
@@ -113,14 +112,14 @@ class LcDesignerContent extends PureComponent<DesignerStore | any> {
      * 组件大小变化回调
      */
     onResizeStop = (layout: Layout[], oldItem: Layout, newItem: Layout) => {
-        const {updateLayout} = lcDesignerContentStore;
+        const {updateLayout} = designerStore;
         updateLayout && updateLayout(newItem);
     }
 
     changeScale = (scale: number) => this.setState({scale: scale});
 
     getDragScaleProviderProps = () => {
-        const {canvasConfig} = lcDesignerContentStore!;
+        const {canvasConfig} = designerStore!;
         return {
             contentWidth: canvasConfig?.width,
             contentHeight: canvasConfig?.height,
@@ -131,7 +130,7 @@ class LcDesignerContent extends PureComponent<DesignerStore | any> {
     }
 
     getRGLProps = () => {
-        const {layoutConfigs, canvasConfig} = lcDesignerContentStore;
+        const {layoutConfigs, canvasConfig} = designerStore;
         const {scale} = this.state;
         let margin: [number, number] = [0, 0];
         return {
@@ -188,5 +187,5 @@ class LcDesignerContent extends PureComponent<DesignerStore | any> {
     }
 }
 
-export default observer(LcDesignerContent);
+export default observer(DesignerContent);
 

@@ -1,27 +1,22 @@
 import React from 'react';
-import {Bar} from "@ant-design/charts";
 import LcCompBg from "../../LcCompBg";
-import {AbstractComp} from "../../../interf/AbstractComp";
-
-interface AntdBarProps {
-    elemId?: string;
-    chartConfig?: any;
-    updateActive?: (data: { elemId: number, type: string }) => void; //打开右侧配置项回调
-}
+import {AbstractComp} from "../../../types/lc-interface/AbstractComp";
+import {CompType} from "../../../types/CompType";
+import {Bar} from "@ant-design/charts";
 
 /**
  * 基础条形图
  */
-export default class AntdBaseBar extends AbstractComp<AntdBarProps> {
+export default class AntdBaseBar extends AbstractComp<CompType> {
 
     render() {
-        const {chartConfig} = this.props;
-        if (!chartConfig)
+        const {config} = this.props;
+        if (!config)
             return null;
-        const {chartProps, baseStyle} = chartConfig;
+        const {style} = config;
         return (
-            <LcCompBg style={baseStyle}>
-                <Bar supportCSSTransform={true} className={'grid-chart-item'} {...chartProps}/>
+            <LcCompBg style={style?.baseStyle}>
+                <Bar supportCSSTransform={true} className={'grid-chart-item'} {...style?.chartStyle}/>
             </LcCompBg>
         );
     }

@@ -1,4 +1,4 @@
-import {AbstractConfig} from "../../../interf/AbstractConfig";
+import {AbstractConfig} from "../../../types/lc-interface/AbstractConfig";
 import {PictureFilled} from "@ant-design/icons";
 import LcBgConfigContent from "./LcBgConfigContent";
 import React from "react";

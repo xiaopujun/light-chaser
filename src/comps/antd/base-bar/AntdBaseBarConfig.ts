@@ -1,4 +1,4 @@
-import {AbstractConfig} from "../../../interf/AbstractConfig";
+import {AbstractConfig} from "../../../types/lc-interface/AbstractConfig";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {ClassType} from "react";
 import BaseInfo from "../../../lib/config/info/BaseInfo";

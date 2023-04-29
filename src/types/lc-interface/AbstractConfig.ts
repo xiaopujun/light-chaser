@@ -1,5 +1,5 @@
 import React from "react";
-import {MenuInfo} from "../types/MenuType";
+import {MenuInfo} from "../MenuType";
 
 export abstract class AbstractConfig {
     /**

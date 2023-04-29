@@ -218,7 +218,7 @@ class DesignerStore implements LCDesigner {
         if (!loaded) return;
         let initObj: any = compInitObj[item.compKey + "Init"];
         let initData: any = initObj.getInitConfig()
-        initData.baseInfo = {...initData.baseInfo, ...{id: this.statisticInfo?.count}}
+        initData.info = {...initData.info, ...{id: this.statisticInfo?.count}}
         if (this.elemConfigs && this.statisticInfo)
             this.elemConfigs[this.statisticInfo.count + ""] = initData;
         let {count = 0} = this.statisticInfo!;
@@ -259,6 +259,8 @@ class DesignerStore implements LCDesigner {
      * 更新激活状态元素
      */
     updateActive = (data: ActiveElem) => {
+        if (data.id === this.activeElem.id)
+            return;
         runInAction(() => {
             this.activeElem = {...this.activeElem, ...data};
         })

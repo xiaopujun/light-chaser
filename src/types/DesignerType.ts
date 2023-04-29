@@ -64,16 +64,7 @@ export interface BaseStyle {
  * 元素配置
  */
 export interface ElemConfig {
-    //基础信息
-    baseInfo?: any;
-    //基础样式
-    baseStyle?: any;
-    //图表配置
-    chartConfig?: any;
-    //数据配置
-    dataConfig?: any;
-    //主题（配置单个元素的主题）
-    theme?: Theme;
+    [key: string]: Object;
 }
 
 /**

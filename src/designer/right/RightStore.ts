@@ -38,7 +38,6 @@ class RightStore {
         this.configObjs = configObjs;
     }
 
-
 }
 
 const rightStore = new RightStore();

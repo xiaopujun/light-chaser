@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
+import {ConfigType} from "../../../types/ConfigType";
 
-class AntdBaseBarConfigTheme extends Component {
+class AntdBaseBarConfigTheme extends Component<ConfigType> {
 
 
     render() {

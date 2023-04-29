@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {LineOutlined} from "@ant-design/icons";
-import lcConfigContentStore from "../store/DesignerStore";
+import designerStore from "../store/DesignerStore";
 import {observer} from "mobx-react";
 import LCDesigner from "../index";
 import rightStore from "./RightStore";
@@ -24,7 +24,8 @@ class ConfigContent extends Component<LcConfigContentProps> {
 
     buildConfigContent = () => {
         let {activeMenu, configObjs} = rightStore;
-        const {activeElem} = lcConfigContentStore!;
+        const {activeElem, elemConfigs} = designerStore!;
+        const elemConfig = elemConfigs[activeElem.id!];
         let abstractConfigObj: any = configObjs[activeElem.type + 'Config'];
         let menuToConfigComp = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp = menuToConfigComp[activeMenu];

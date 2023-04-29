@@ -1,6 +1,6 @@
 import {AppstoreFilled} from "@ant-design/icons";
 import {ClassifyEnum, ClassifyItemProps} from "../../../../types/ClassifyType";
-import {AbstractClassifyItem} from "../../../../interf/AbstractClassifyItem";
+import {AbstractClassifyItem} from "../../../../types/lc-interface/AbstractClassifyItem";
 
 export default class AllClassify extends AbstractClassifyItem {
     getClassifyItemInfo(): ClassifyItemProps {
