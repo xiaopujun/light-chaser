@@ -36,33 +36,33 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
 
 
     render() {
-        // const colors = calculateFillColor(this.props.chartProps);
-        // const sorts = dataSort('type', this.props.chartProps.data);
-        // const {updateChartProps, chartProps} = this.props;
+        const colors = calculateFillColor(this.props.config);
+        const sorts = dataSort('type', this.props.config.data);
+        const {updateConfig, config: {chartStyle}} = this.props;
         return (
             <>
                 <BaseStyleSet/>
-                {/*<div className={'elem-chart-config'}>*/}
-                {/*    /!*图形填充色设置*!/*/}
-                {/*    <Accordion title={'图形'}>*/}
-                {/*        <LcConfigItem title={'填充色'}>*/}
-                {/*            <ColorSelector colors={colors} max={sorts}/>*/}
-                {/*        </LcConfigItem>*/}
-                {/*        <LcConfigItem title={'条形宽度'}>*/}
-                {/*            <CfgItemBorder width={'50%'}>*/}
-                {/*                <LCNumberInput style={{width: '100%'}}/>*/}
-                {/*            </CfgItemBorder>*/}
-                {/*        </LcConfigItem>*/}
-                {/*    </Accordion>*/}
-                {/*    /!*图例配置*!/*/}
-                {/*    <Legend {...calculateLegendConfig(this.props.chartProps)}*/}
-                {/*            chartProps={chartProps}*/}
-                {/*            updateChartProps={updateChartProps}/>*/}
-                {/*    /!*直角坐标系配置*!/*/}
-                {/*    <RightAngleCoordinates {...calculateRightAngleCoordinates(this.props.chartProps)}*/}
-                {/*                           chartProps={chartProps}*/}
-                {/*                           updateChartProps={updateChartProps}/>*/}
-                {/*</div>*/}
+                <div className={'elem-chart-config'}>
+                    {/*图形填充色设置*/}
+                    <Accordion title={'图形'}>
+                        <LcConfigItem title={'填充色'}>
+                            <ColorSelector colors={colors} max={sorts}/>
+                        </LcConfigItem>
+                        <LcConfigItem title={'条形宽度'}>
+                            <CfgItemBorder width={'50%'}>
+                                <LCNumberInput style={{width: '100%'}}/>
+                            </CfgItemBorder>
+                        </LcConfigItem>
+                    </Accordion>
+                    {/*图例配置*/}
+                    <Legend {...calculateLegendConfig(chartStyle)}
+                            chartProps={chartStyle}
+                            updateChartProps={updateConfig}/>
+                    {/*直角坐标系配置*/}
+                    <RightAngleCoordinates {...calculateRightAngleCoordinates(chartStyle)}
+                                           chartProps={chartStyle}
+                                           updateChartProps={updateConfig}/>
+                </div>
             </>
         );
     }

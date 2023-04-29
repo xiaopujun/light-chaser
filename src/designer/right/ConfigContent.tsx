@@ -26,10 +26,12 @@ class ConfigContent extends Component<LcConfigContentProps> {
         let {activeMenu, configObjs} = rightStore;
         const {activeElem, elemConfigs} = designerStore!;
         const elemConfig = elemConfigs[activeElem.id!];
+        console.log('elemConfig', elemConfig)
+        console.log('activeMenu', activeMenu)
         let abstractConfigObj: any = configObjs[activeElem.type + 'Config'];
         let menuToConfigComp = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp = menuToConfigComp[activeMenu];
-        return <ConfigComp/>;
+        return <ConfigComp config={elemConfig[activeMenu]}/>;
     }
 
     onClose = () => {

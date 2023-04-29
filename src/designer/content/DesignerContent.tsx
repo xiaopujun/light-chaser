@@ -43,8 +43,7 @@ class DesignerContent extends PureComponent<DesignerStore | any> {
      * 元素生成方法
      */
     generateElement = () => {
-        const {layoutConfigs, updateActive} = designerStore!;
-        console.log(toJS(designerStore))
+        const {layoutConfigs} = designerStore!;
         if (layoutConfigs && layoutConfigs.length > 0) {
             const {compsClazz} = rootStore;
             return layoutConfigs.map((item: any) => {
