@@ -8,6 +8,7 @@ import designerStore, {DesignerStore} from "../store/DesignerStore";
 import lcRightMenuStore from "../store/LcRightMenuStore";
 import LcDesignerBackground from "./LcDesignerBackground";
 import rootStore from "../BootStore";
+import rightStore from "../right/RightStore";
 
 class DesignerContent extends PureComponent<DesignerStore | any> {
 
@@ -34,8 +35,14 @@ class DesignerContent extends PureComponent<DesignerStore | any> {
             elemId = e.currentTarget.id;
             dataset = e.currentTarget.dataset;
         }
-        const {updateActive} = designerStore;
+        const {updateActive, activeElem, elemConfigs} = designerStore;
+        if (elemId === activeElem?.id)
+            return;
         updateActive && updateActive({id: parseInt(elemId), type: dataset.type});
+        const {setActiveMenu} = rightStore;
+        const elemConfig = elemConfigs[elemId];
+        const activeMenu = Object.keys(elemConfig)[0];
+        setActiveMenu(activeMenu);
     }
 
     /**

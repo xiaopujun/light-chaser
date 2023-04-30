@@ -4,7 +4,6 @@ import designerStore from "../store/DesignerStore";
 import {observer} from "mobx-react";
 import LCDesigner from "../index";
 import rightStore from "./RightStore";
-import {toJS} from "mobx";
 
 interface LcConfigContentProps {
     title?: string;
@@ -28,26 +27,18 @@ class ConfigContent extends Component<LcConfigContentProps> {
         const {activeElem, elemConfigs} = designerStore!;
         const elemConfig = elemConfigs[activeElem.id!];
         let abstractConfigObj: any = configObjs[activeElem.type + 'Config'];
-        console.log("abstractConfigObj", toJS(abstractConfigObj))
-        console.log("configObjs", toJS(configObjs))
-        console.log("activeElem", toJS(activeElem))
-        console.log("elemConfig", toJS(elemConfig))
         let menuToConfigComp = abstractConfigObj.getMenuToConfigContentMap();
-        console.log("menuToConfigComp", toJS(menuToConfigComp))
-        if (!(activeMenu in elemConfig))
-            activeMenu = Object.keys(elemConfig)[0];
         const ConfigComp = menuToConfigComp[activeMenu];
-
-        console.log("ConfigComp", toJS(ConfigComp))
         return <ConfigComp config={elemConfig[activeMenu]}/>;
     }
 
     onClose = () => {
-        const {onClose} = this.props;
-        onClose && onClose(false);
+        const {setContentVisible} = rightStore;
+        setContentVisible && setContentVisible(false);
     }
 
     render() {
+        console.log('ConfigContent render')
         const {contentVisible, activeMenu, menus} = rightStore;
         let activeMenuName = '';
         for (let i = 0; i < menus.length; i++) {

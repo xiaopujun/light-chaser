@@ -30,6 +30,10 @@ class RightStore {
         this.menus = menus;
     }
 
+    setContentVisible = (visible: boolean) => {
+        this.contentVisible = visible;
+    }
+
     doInit = (configClazz: { [key: string]: React.Component | React.FC | any } = {}) => {
         let configObjs: { [key: string]: Object } = {};
         Object.keys(configClazz).forEach((key: string) => {
