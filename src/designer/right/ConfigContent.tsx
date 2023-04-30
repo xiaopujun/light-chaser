@@ -34,7 +34,11 @@ class ConfigContent extends Component<LcConfigContentProps> {
         console.log("elemConfig", toJS(elemConfig))
         let menuToConfigComp = abstractConfigObj.getMenuToConfigContentMap();
         console.log("menuToConfigComp", toJS(menuToConfigComp))
+        if (!(activeMenu in elemConfig))
+            activeMenu = Object.keys(elemConfig)[0];
         const ConfigComp = menuToConfigComp[activeMenu];
+
+        console.log("ConfigComp", toJS(ConfigComp))
         return <ConfigComp config={elemConfig[activeMenu]}/>;
     }
 

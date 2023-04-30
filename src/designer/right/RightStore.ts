@@ -16,7 +16,7 @@ class RightStore {
 
     menus: Array<MenuInfo> = []
     configObjs: { [key: string]: Object } = {};
-    activeMenu: string = 'backgrounds';
+    activeMenu: string = 'background';
     loaded: boolean = false;
     contentVisible: boolean = false;
 

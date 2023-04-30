@@ -79,9 +79,23 @@ class DesignerStore implements LCDesigner {
     };
 
     /**
-     * 图表配置
+     * 组件配置
      */
-    elemConfigs: { [key: string]: ElemConfig } = {};
+    elemConfigs: { [key: string]: ElemConfig } = {
+        '-1': {
+            'background': {
+                width: 1920,//背景宽
+                height: 1080,//背景高
+                bgMode: BackgroundMode.NONE,//背景模式
+                bgImgSize: [1920, 1080],//背景图片尺寸
+                bgImgPos: [0, 0],//背景图片位置
+                bgImgRepeat: BackgroundImgRepeat.NO_REPEAT,//背景图片重复方式
+                bgImgUrl: '',//背景图片url地址
+                bgColorMode: BackgroundColorMode.SINGLE,//背景图片颜色模式
+                bgColor: '#040d18',//背景颜色
+            }
+        }
+    };
 
     /**
      * 布局配置

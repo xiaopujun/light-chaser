@@ -12,15 +12,11 @@ import {observer} from "mobx-react";
 import {toJS} from "mobx";
 import LcSelect from "../../../lib/LCSelect";
 import {BackgroundColorMode, BackgroundMode} from "../../../types/DesignerType";
+import {ConfigType} from "../../../types/ConfigType";
 
 const {Option} = Select;
 
-interface LcBgConfigProps {
-    bgConfig?: any;
-    updateBgConfig?: (data?: any) => void;
-}
-
-class LcBgConfigContent extends PureComponent<LcBgConfigProps> {
+class LcBgConfigContent extends PureComponent<ConfigType> {
 
     //线性渐变颜色
     lineGradientColor = ['#0b222b', '#104959'];
