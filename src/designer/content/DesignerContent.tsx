@@ -8,7 +8,6 @@ import designerStore, {DesignerStore} from "../store/DesignerStore";
 import lcRightMenuStore from "../store/LcRightMenuStore";
 import LcDesignerBackground from "./LcDesignerBackground";
 import rootStore from "../BootStore";
-import {toJS} from "mobx";
 
 class DesignerContent extends PureComponent<DesignerStore | any> {
 

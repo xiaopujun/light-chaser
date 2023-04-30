@@ -47,7 +47,7 @@ class DesignerStore implements LCDesigner {
      */
     activeElem: ActiveElem = {
         id: -1, //元素id
-        type: '' //元素类型
+        type: 'LcBg' //元素类型
     };
 
     /**

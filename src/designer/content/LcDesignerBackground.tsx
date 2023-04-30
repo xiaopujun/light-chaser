@@ -48,7 +48,7 @@ class LcDesignerBackground extends PureComponent<LcDesignerBackgroundProps> {
         return (
             <div className={'lc-canvas'}
                  id={'-1'}
-                 data-type={'lcCanvas'}
+                 data-type={'LcBg'}
                  onClick={this.onClick}
                  style={this.getBgConfigProps()}>
                 {this.props.children}

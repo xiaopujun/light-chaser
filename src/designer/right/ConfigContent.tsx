@@ -4,6 +4,7 @@ import designerStore from "../store/DesignerStore";
 import {observer} from "mobx-react";
 import LCDesigner from "../index";
 import rightStore from "./RightStore";
+import {toJS} from "mobx";
 
 interface LcConfigContentProps {
     title?: string;
@@ -26,10 +27,13 @@ class ConfigContent extends Component<LcConfigContentProps> {
         let {activeMenu, configObjs} = rightStore;
         const {activeElem, elemConfigs} = designerStore!;
         const elemConfig = elemConfigs[activeElem.id!];
-        console.log('elemConfig', elemConfig)
-        console.log('activeMenu', activeMenu)
         let abstractConfigObj: any = configObjs[activeElem.type + 'Config'];
+        console.log("abstractConfigObj", toJS(abstractConfigObj))
+        console.log("configObjs", toJS(configObjs))
+        console.log("activeElem", toJS(activeElem))
+        console.log("elemConfig", toJS(elemConfig))
         let menuToConfigComp = abstractConfigObj.getMenuToConfigContentMap();
+        console.log("menuToConfigComp", toJS(menuToConfigComp))
         const ConfigComp = menuToConfigComp[activeMenu];
         return <ConfigComp config={elemConfig[activeMenu]}/>;
     }
