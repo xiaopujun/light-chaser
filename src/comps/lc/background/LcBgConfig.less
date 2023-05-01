@@ -1,4 +1,8 @@
+@import "../../../designer/style/DesignerStyle.less";
+
 .lc-canvas-config {
+  font-size: 12px;
+  color: #00ebff;
 
   .lc-bg-upload {
     width: 100%;
@@ -23,7 +27,8 @@
         background-color: rgba(46, 77, 88, 0.27);
 
         .ant-upload-drag-container {
-          color: #cdcdcd;
+          color: @lc-config-color-4;
+          font-size: @lc-font-size-sl;
         }
       }
     }

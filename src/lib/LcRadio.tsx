@@ -9,6 +9,7 @@ class LcRadio extends Component<RadioProps & RadioGroupProps & React.RefAttribut
             <Radio.Group defaultValue={this.props.defaultValue}
                          onChange={this.props.onChange}
                          style={this.props.style}
+                         size={'small'}
                          className={'lc-radio'}>
                 {this.props.children}
             </Radio.Group>

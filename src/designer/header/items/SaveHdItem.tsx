@@ -1,5 +1,5 @@
 import {AbstractHeaderItem, HeaderItemProps} from "../../../types/HeaderTypes";
-import {SaveOutlined} from "@ant-design/icons";
+import {SaveFilled} from "@ant-design/icons";
 
 /**
  * header-保存
@@ -7,7 +7,7 @@ import {SaveOutlined} from "@ant-design/icons";
 export default class SaveHdItem extends AbstractHeaderItem {
     getHeaderItemInfo(): HeaderItemProps {
         return {
-            icon: SaveOutlined,
+            icon: SaveFilled,
             name: '保存',
             onClick: () => {
                 alert("保存");

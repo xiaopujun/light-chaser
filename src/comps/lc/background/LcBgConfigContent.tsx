@@ -5,7 +5,7 @@ import BaseColorPicker from "../../../lib/BaseColorPicker";
 import Dragger from "antd/es/upload/Dragger";
 import LcConfigItem from "../../../lib/LcConfigItem";
 import LcRadio from "../../../lib/LcRadio";
-import {Button, Radio, Select} from "antd";
+import {Button, InputNumber, Radio, Select} from "antd";
 import CfgItemBorder from "../../../lib/CfgItemBorder";
 import lcDesignerContentStore from '../../../designer/store/DesignerStore';
 import {observer} from "mobx-react";
@@ -13,6 +13,7 @@ import {toJS} from "mobx";
 import LcSelect from "../../../lib/LCSelect";
 import {BackgroundColorMode, BackgroundMode} from "../../../types/DesignerType";
 import {ConfigType} from "../../../types/ConfigType";
+import NumberInput from "../../../lib/NumberInput";
 
 const {Option} = Select;
 
@@ -120,7 +121,7 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
         const {bgImgSize = [1920, 1080]} = bgConfig;
         return (
             <div className={'lc-canvas-config'}>
-                <LcConfigItem title={'背景模式'}>
+                <LcConfigItem title={'模式'}>
                     <LcRadio onChange={this.bgModeChange} defaultValue={bgConfig?.bgMode}>
                         <Radio value={0}>无</Radio>
                         <Radio value={1}>图片</Radio>
@@ -148,37 +149,40 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
                                     size={'small'}>清除背景图</Button>
                         </LcConfigItem>
                     }
-                    <LcConfigItem title={'图片尺寸'}>
-                        <LCNumberInput onChange={this.bgImgSizeChange} name={'bgX'}
-                                       style={{textAlign: 'center', width: '48%'}}
-                                       defaultValue={bgImgSize[0]}/>
-                        <LCNumberInput onChange={this.bgImgSizeChange} name={'bgY'}
-                                       style={{textAlign: 'center', width: '48%'}}
-                                       defaultValue={bgImgSize[1]}/>
+                    <LcConfigItem title={'尺寸'}>
+                        <NumberInput size={'small'} addonBefore="W " defaultValue={100}/>
+                        {/*<InputNumber size={'small'} addonBefore="W" defaultValue={100}/>*/}
+                        {/*<LCNumberInput onChange={this.bgImgSizeChange} name={'bgX'}*/}
+                        {/*               style={{textAlign: 'center', width: '48%'}}*/}
+                        {/*               defaultValue={bgImgSize[0]}/>*/}
+                        <NumberInput size={'small'} addonBefore="H " defaultValue={100}/>
+                        {/*<LCNumberInput onChange={this.bgImgSizeChange} name={'bgY'}*/}
+                        {/*               style={{textAlign: 'center', width: '48%'}}*/}
+                        {/*               defaultValue={bgImgSize[1]}/>*/}
                     </LcConfigItem>
-                    <LcConfigItem title={'图片位置'}>
-                        <LCNumberInput onChange={this.bgImgPosChange} name={'posX'}
-                                       style={{textAlign: 'center', width: '48%'}}
-                                       defaultValue={bgImgSize[0]}/>
-                        <LCNumberInput onChange={this.bgImgPosChange} name={'posY'}
-                                       style={{textAlign: 'center', width: '48%'}}
-                                       defaultValue={bgImgSize[1]}/>
+                    <LcConfigItem title={'位置'}>
+                        <NumberInput size={'small'} addonBefore="X " defaultValue={100}/>
+                        <NumberInput size={'small'} addonBefore="Y " defaultValue={100}/>
+                        {/*<LCNumberInput onChange={this.bgImgPosChange} name={'posX'}*/}
+                        {/*               style={{textAlign: 'center', width: '48%'}}*/}
+                        {/*               defaultValue={bgImgSize[0]}/>*/}
+                        {/*<LCNumberInput onChange={this.bgImgPosChange} name={'posY'}*/}
+                        {/*               style={{textAlign: 'center', width: '48%'}}*/}
+                        {/*               defaultValue={bgImgSize[1]}/>*/}
                     </LcConfigItem>
-                    <LcConfigItem title={'重复方式'}>
-                        <CfgItemBorder width={'50%'}>
-                            <LcSelect onChange={this.repeatTypeChange}
-                                      defaultValue={bgConfig?.bgImgRepeat}>
-                                <Option value={"no-repeat"}>不重复</Option>
-                                <Option value={"repeat-x"}>x轴重复</Option>
-                                <Option value={"repeat-y"}>y轴重复</Option>
-                                <Option value={"repeat"}>铺满</Option>
-                            </LcSelect>
-                        </CfgItemBorder>
+                    <LcConfigItem title={'重复'}>
+                        <LcSelect onChange={this.repeatTypeChange}
+                                  defaultValue={bgConfig?.bgImgRepeat}>
+                            <Option value={"no-repeat"}>不重复</Option>
+                            <Option value={"repeat-x"}>x轴重复</Option>
+                            <Option value={"repeat-y"}>y轴重复</Option>
+                            <Option value={"repeat"}>铺满</Option>
+                        </LcSelect>
                     </LcConfigItem>
                 </>}
                 {bgConfig?.bgMode === BackgroundMode.COLOR &&
                 <>
-                    <LcConfigItem title={'颜色模式'}>
+                    <LcConfigItem title={'颜色'}>
                         <LcRadio onChange={this.bgColorModeChange} defaultValue={bgConfig?.bgColorMode}>
                             <Radio value={0}>单色</Radio>
                             <Radio value={1}>线性</Radio>

@@ -1,26 +1,29 @@
+@import "../../designer/style/DesignerStyle.less";
+
 .lc-cfg-item {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   min-height: 45px;
   padding: 5px;
-  color: #01fffd;
 
   .lc-cfg-title {
     width: 20%;
-    font-size: 14px;
-    color: #01fffd;
+    font-size: @lc-font-size-sl;
+    color: @lc-config-color-3;
   }
 
   .lc-cfg-content-row {
     display: flex;
     width: 78%;
     justify-content: flex-end;
+    color: @lc-config-color-4;
   }
 
   .lc-cfg-content-block {
     width: 78%;
     display: flex;
     flex-wrap: wrap;
+    color: @lc-config-color-4;
   }
 }

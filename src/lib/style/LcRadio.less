@@ -1,10 +1,16 @@
+@import '../../designer/style/DesignerStyle.less';
+
 .lc-radio {
   .ant-radio-wrapper {
-    color: #01fffd;
+    color: @lc-config-color-4;
+    font-size: @lc-font-size-sl;
 
     .ant-radio-inner {
       border-color: rgb(137 214 223 / 51%);
-      background: #1e7b85;
+      background: #1b5964;
+      width: 14px;
+      height: 14px;
+      box-shadow: none;
     }
 
   }
@@ -12,7 +18,7 @@
   .ant-radio-wrapper-checked {
     .ant-radio-inner {
       border-color: rgb(137 214 223 / 51%);
-      background: #01fffd;
+      background: #54fffe;
 
     }
   }

@@ -1,0 +1,29 @@
+@import "../../designer/style/DesignerStyle.less";
+
+.lc-input-number {
+  .ant-input-number-group-addon {
+    background-color: inherit;
+    font-size: @lc-font-size-ml;
+    color: @lc-config-color-4;
+    border: none;
+  }
+
+  .ant-input-number {
+    background-color: inherit;
+    font-size: @lc-font-size-sl;
+    color: @lc-config-color-4;
+    border: none;
+
+    .ant-input-number-handler-wrap {
+      background: inherit;
+
+      .ant-input-number-handler {
+        border: none;
+      }
+
+      .ant-input-number-handler:active {
+        background: inherit;
+      }
+    }
+  }
+}

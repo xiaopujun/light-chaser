@@ -1,5 +1,5 @@
 import {AbstractHeaderItem, HeaderItemProps} from "../../../types/HeaderTypes";
-import {EyeOutlined} from "@ant-design/icons";
+import {EyeFilled} from "@ant-design/icons";
 
 /**
  * header-预览
@@ -7,7 +7,7 @@ import {EyeOutlined} from "@ant-design/icons";
 export default class PreViewHdItem extends AbstractHeaderItem {
     getHeaderItemInfo(): HeaderItemProps {
         return {
-            icon: EyeOutlined,
+            icon: EyeFilled,
             name: '预览',
             onClick: () => {
                 alert("预览");
