@@ -11,6 +11,7 @@ import CfgItemBorder from "../../CfgItemBorder";
 import LcRadio from "../../LcRadio";
 import NumberInput from "../../NumberInput";
 import ConfigItem from "../item/ConfigItem";
+import ConfigCard from "../card/ConfigCard";
 
 interface AxisConfigProps {
 
@@ -23,8 +24,7 @@ class AxisConfig extends Component<AxisConfigProps> {
     render() {
         return (
             <>
-
-                <ConfigItem title={'位置'} contentStyle={{width: '250px', paddingLeft: '10px'}}>
+                <ConfigItem title={'位置'} contentStyle={{width: '250px', paddingLeft: '20px'}}>
                     <LcRadio defaultValue="1">
                         <Radio value="1">上</Radio>
                         <Radio value="2">下</Radio>
@@ -32,6 +32,24 @@ class AxisConfig extends Component<AxisConfigProps> {
                         <Radio value="4">右</Radio>
                     </LcRadio>
                 </ConfigItem>
+
+                <ConfigCard title={'标题'}>
+                    <ConfigItem title={'开启'}>
+                        <LcSwitch/>
+                    </ConfigItem>
+                    <ConfigItem title={'自动旋转'}>
+                        <LcSwitch/>
+                    </ConfigItem>
+                    <ConfigItem title={'内容'}>
+                        <LcUnderLineInput type={'text'}/>
+                    </ConfigItem>
+                    <ConfigItem title={'颜色'}>
+                        <CfgItemBorder>
+                            <BaseColorPicker style={{width: '100%', borderRadius: 2, height: 24}} showText={true}/>
+                        </CfgItemBorder>
+                    </ConfigItem>
+                </ConfigCard>
+
 
                 <LcConfigItem title={'标题'} layout={CfgItemLayout.BLOCK}>
                     <LcConfigBlock title={'开启'} layoutMode={LayoutMode.VL_UD}>
@@ -51,24 +69,10 @@ class AxisConfig extends Component<AxisConfigProps> {
                         </CfgItemBorder>
                     </LcConfigBlock>
                 </LcConfigItem>
-
-                <LcConfigItem title={'标题'} layout={CfgItemLayout.BLOCK}>
-                    <LcConfigBlock title={'开启'} layoutMode={LayoutMode.VL_UD}>
-                        <LcSwitch/>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'自动旋转'} layoutMode={LayoutMode.VL_UD}>
-                        <LcSwitch/>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'自动隐藏'} layoutMode={LayoutMode.VL_UD}>
-                        <LcSwitch/>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'旋转角度'} layoutMode={LayoutMode.VL_UD}>
-                        <CfgItemBorder>
-                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
-                        </CfgItemBorder>
-                    </LcConfigBlock>
-                </LcConfigItem>
-
+                <br/>
+                <br/>
+                <br/>
+                <br/>
                 <LcConfigItem title={'轴线'} layout={CfgItemLayout.BLOCK}>
                     <LcConfigBlock title={'开启'} layoutMode={LayoutMode.VL_UD}>
                         <LcSwitch/>
@@ -92,6 +96,7 @@ class AxisConfig extends Component<AxisConfigProps> {
                         </CfgItemBorder>
                     </LcConfigBlock>
                 </LcConfigItem>
+
 
                 <LcConfigItem title={'网格线'} layout={CfgItemLayout.BLOCK}>
                     <LcConfigBlock title={'开启'} layoutMode={LayoutMode.VL_UD}>

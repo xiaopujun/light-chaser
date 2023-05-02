@@ -20,7 +20,7 @@
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    background-color: rgba(23, 72, 98, 0.38);
+    background-color: rgb(125, 211, 255);
     outline: none;
     opacity: 0;
     transform: scale(1);
@@ -32,11 +32,10 @@
     content: "";
     float: right;
     display: inline-block;
-    margin: 5px 0 5px 0;
     border-radius: 7px;
     width: 36px;
-    height: 14px;
-    background-color: rgba(53, 79, 134, 0.38);
+    height: 15px;
+    background-color: rgba(64, 130, 163, 0.84);
     vertical-align: top;
     transition: background-color 0.2s, opacity 0.2s;
   }
@@ -44,12 +43,11 @@
   .lc-switch-label > span::after {
     content: "";
     position: absolute;
-    top: 2px;
-    right: 16px;
+    right: 21px;
     border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    background-color: #9fe3ff;
+    width: 15px;
+    height: 15px;
+    background-color: #4c98bf;
     box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
     transition: background-color 0.2s, transform 0.2s;
   }
@@ -60,12 +58,12 @@
   }
 
   .lc-switch-label > input:checked + span::before {
-    background-color: #85b8b7;
+    background-color: #33a2a0;
   }
 
   .lc-switch-label > input:checked + span::after {
-    background-color: #018786;
-    transform: translateX(16px);
+    background-color: #51fffe;
+    transform: translateX(21px);
   }
 
   .lc-switch-label:hover > input {

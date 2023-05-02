@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
+import React, {Component, CSSProperties} from 'react';
 import './style/LcSwitch.less';
 
 interface LcSwitchProps {
     onChange?: (data: boolean) => void;
+    containerStyle?: CSSProperties;
 }
 
 class LcSwitch extends Component<LcSwitchProps> {
@@ -13,8 +14,9 @@ class LcSwitch extends Component<LcSwitchProps> {
     }
 
     render() {
+        const {containerStyle = {top: 2.5}} = this.props;
         return (
-            <div className="lc-switch">
+            <div className="lc-switch" style={{...containerStyle}}>
                 <label className="lc-switch-label">
                     <input onChange={this.onChange} type="checkbox"/><span/>
                 </label>
