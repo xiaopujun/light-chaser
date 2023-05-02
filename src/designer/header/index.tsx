@@ -1,5 +1,5 @@
 import React, {Component, ReactElement} from 'react';
-import '../style/Head.less';
+import './Head.less';
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {createProject, updateProject} from "../../local/LocalStorageUtil";
 import lcDesignerContentStore from '../store/DesignerStore';
@@ -72,7 +72,7 @@ class Header extends Component<LcDesignerHeaderProps | any> {
         return (
             <div className={'designer-header'}>
                 <div className={'header-left'}>
-                    <div className={'header-title'}>LC DESIGNER</div>
+                    <div className={'header-title'}>L C</div>
                 </div>
                 <div className={'header-right'}>
                     {items}

@@ -1,5 +1,7 @@
+@headerBgColor: #111216;
 @headerHeight: 50px;
 @leftWidth: 60px;
+@leftBgColor: #111216;
 @rightWidth: 35px;
 @contentWidth: calc(100% - (@leftWidth + @rightWidth));
 @contentHeight: calc(100% - (@headerHeight + @footHeight));
@@ -10,7 +12,7 @@
 
   .structure-header {
     height: @headerHeight;
-    background-color: #00182e;
+    background-color: @headerBgColor;
   }
 
   .structure-body {
@@ -22,7 +24,7 @@
     .structure-body-left {
       width: @leftWidth;
       height: calc(100% + 40px);
-      background-color: #002546;
+      background-color: @leftBgColor;
     }
 
     .structure-body-content {

@@ -1,11 +1,11 @@
-@import '../../structure/structure.less';
+@import '../../../designer/style/DesignerStyle.less';
 
 .lc-comp-list {
   top: 50px;
   left: 60px;
   width: 180px;
   position: absolute;
-  background-color: #203d4b;
+  background-color: @compListBgColor;
   z-index: 1;
   height: calc(100% - (@headerHeight + @footHeight));
 
@@ -18,7 +18,7 @@
     padding: 3px 5px;
     align-items: center;
     justify-content: space-between;
-    background-color: #00394d;
+    background-color: @compListTitleBgColor;
 
   }
 
@@ -29,7 +29,7 @@
       color: #c9c9c9;
       border-radius: 0;
       background-color: rgba(0, 0, 0, 0);
-      border: 2px solid rgb(0, 127, 174);
+      border: 2px solid rgb(54, 54, 54);
     }
   }
 
@@ -44,12 +44,12 @@
       height: 116px;
       cursor: pointer;
       margin-bottom: 10px;
-      background-color: rgba(12, 167, 194, 0.88);
+      background-color: @compListItemBgColor;
 
       .item-header {
         height: 23px;
         line-height: 23px;
-        background-color: #0080bdfa;
+        background-color: @compListItemTitleColor;
         display: flex;
         justify-content: space-between;
         padding: 0 5px;
