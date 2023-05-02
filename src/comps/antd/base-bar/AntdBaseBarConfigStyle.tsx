@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import '../../../lib/config/chart/antd/style/AntdBarSet.less';
 import Legend from "../../../lib/config/chart/antd/atomic_components/Legned";
 import RightAngleCoordinates from "../../../lib/config/chart/antd/atomic_components/RightAngleCoordinates";
-import {dataSort} from "../../../utils/SortUtil";
 import {
-    calculateFillColor,
     calculateLegendConfig,
     calculateRightAngleCoordinates
 } from "../../../lib/config/chart/antd/util/AntdChartConfigUtil";
@@ -37,8 +35,8 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
 
 
     render() {
-        const colors = calculateFillColor(this.props.config);
-        const sorts = dataSort('type', this.props.config.data);
+        // const colors = calculateFillColor(this.props.config);
+        // const sorts = dataSort('type', this.props.config.data);
         const {updateConfig, config: {chartStyle}} = this.props;
         return (
             <>

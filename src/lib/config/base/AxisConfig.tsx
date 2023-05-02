@@ -3,15 +3,12 @@ import React, {Component} from 'react';
 import './style/AxisConfig.less';
 import LcUnderLineInput from "../../LcUnderLineInput";
 import BaseColorPicker from "../../BaseColorPicker";
-import LcConfigBlock, {LayoutMode} from "../../LcConfigBlock";
 import LcSwitch from "../../LcSwitch";
-import LcConfigItem, {CfgItemLayout} from "../../LcConfigItem";
-import LCNumberInput from "../../LCNumberInput";
 import CfgItemBorder from "../../CfgItemBorder";
 import LcRadio from "../../LcRadio";
-import NumberInput from "../../NumberInput";
 import ConfigItem from "../item/ConfigItem";
 import ConfigCard from "../card/ConfigCard";
+import NumberInput from "../../NumberInput";
 
 interface AxisConfigProps {
 
@@ -32,7 +29,6 @@ class AxisConfig extends Component<AxisConfigProps> {
                         <Radio value="4">右</Radio>
                     </LcRadio>
                 </ConfigItem>
-
                 <ConfigCard title={'标题'}>
                     <ConfigItem title={'开启'}>
                         <LcSwitch/>
@@ -45,145 +41,117 @@ class AxisConfig extends Component<AxisConfigProps> {
                     </ConfigItem>
                     <ConfigItem title={'颜色'}>
                         <CfgItemBorder>
-                            <BaseColorPicker style={{width: '100%', borderRadius: 2, height: 24}} showText={true}/>
+                            <BaseColorPicker style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
                         </CfgItemBorder>
                     </ConfigItem>
                 </ConfigCard>
-
-
-                <LcConfigItem title={'标题'} layout={CfgItemLayout.BLOCK}>
-                    <LcConfigBlock title={'开启'} layoutMode={LayoutMode.VL_UD}>
+                <ConfigCard title={'轴线'}>
+                    <ConfigItem title={'开启'}>
                         <LcSwitch/>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'自动旋转'} layoutMode={LayoutMode.VL_UD}>
+                    </ConfigItem>
+                    <ConfigItem title={'颜色'}>
+                        <CfgItemBorder>
+                            <BaseColorPicker style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
+                        </CfgItemBorder>
+                    </ConfigItem>
+                    <ConfigItem title={'线宽'}>
+                        <NumberInput size={'small'} type={'number'}/>
+                    </ConfigItem>
+                    <ConfigItem title={'虚线'}>
+                        <NumberInput size={'small'} type={'number'}/>
+                    </ConfigItem>
+                    <ConfigItem title={'透明度'}>
+                        <NumberInput size={'small'} type={'number'}/>
+                    </ConfigItem>
+                </ConfigCard>
+                <ConfigCard title={'网格线'}>
+                    <ConfigItem title={'开启'}>
                         <LcSwitch/>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'内容'} className={''} layoutMode={LayoutMode.VL_UD}>
-                        <CfgItemBorder>
-                            <LcUnderLineInput type={'text'}/>
-                        </CfgItemBorder>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'颜色'} layoutMode={LayoutMode.VL_UD}>
-                        <CfgItemBorder>
-                            <BaseColorPicker style={{width: '100%', borderRadius: 2, height: 24}} showText={true}/>
-                        </CfgItemBorder>
-                    </LcConfigBlock>
-                </LcConfigItem>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <LcConfigItem title={'轴线'} layout={CfgItemLayout.BLOCK}>
-                    <LcConfigBlock title={'开启'} layoutMode={LayoutMode.VL_UD}>
+                    </ConfigItem>
+                    <ConfigItem title={'对齐'}>
                         <LcSwitch/>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'轴线颜色'} layoutMode={LayoutMode.VL_UD}>
-                        <BaseColorPicker style={{width: '100%', borderRadius: 2, height: 23}} showText={true}/>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'线宽'} layoutMode={LayoutMode.VL_UD}>
+                    </ConfigItem>
+                    <ConfigItem title={'线宽'}>
+                        <NumberInput size={'small'} type={'number'}/>
+                    </ConfigItem>
+                    <ConfigItem title={'虚线'}>
+                        <NumberInput size={'small'} type={'number'}/>
+                    </ConfigItem>
+                    <ConfigItem title={'透明度'}>
+                        <NumberInput size={'small'} type={'number'}/>
+                    </ConfigItem>
+                    <ConfigItem title={'颜色'}>
                         <CfgItemBorder>
-                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
+                            <BaseColorPicker style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
                         </CfgItemBorder>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'虚线'} layoutMode={LayoutMode.VL_UD}>
-                        <CfgItemBorder>
-                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
-                        </CfgItemBorder>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'透明度'} layoutMode={LayoutMode.VL_UD}>
-                        <CfgItemBorder>
-                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
-                        </CfgItemBorder>
-                    </LcConfigBlock>
-                </LcConfigItem>
-
-
-                <LcConfigItem title={'网格线'} layout={CfgItemLayout.BLOCK}>
-                    <LcConfigBlock title={'开启'} layoutMode={LayoutMode.VL_UD}>
+                    </ConfigItem>
+                </ConfigCard>
+                <ConfigCard title={'网格线'}>
+                    <ConfigItem title={'开启'}>
                         <LcSwitch/>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'刻度对齐'} layoutMode={LayoutMode.VL_UD}>
+                    </ConfigItem>
+                    <ConfigItem title={'刻度对齐'}>
                         <LcSwitch/>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'颜色'} layoutMode={LayoutMode.VL_UD}>
+                    </ConfigItem>
+                    <ConfigItem title={'线宽'}>
+                        <NumberInput size={'small'} type={'number'}/>
+                    </ConfigItem>
+                    <ConfigItem title={'虚线'}>
+                        <NumberInput size={'small'} type={'number'}/>
+                    </ConfigItem>
+                    <ConfigItem title={'透明度'}>
+                        <NumberInput size={'small'} type={'number'}/>
+                    </ConfigItem>
+                    <ConfigItem title={'颜色'}>
                         <CfgItemBorder>
-                            <BaseColorPicker style={{width: '100%', borderRadius: 2, height: 23}} showText={true}/>
+                            <BaseColorPicker style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
                         </CfgItemBorder>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'线宽'} layoutMode={LayoutMode.VL_UD}>
-                        <CfgItemBorder>
-                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
-                        </CfgItemBorder>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'虚线'} layoutMode={LayoutMode.VL_UD}>
-                        <CfgItemBorder>
-                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
-                        </CfgItemBorder>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'透明度'} layoutMode={LayoutMode.VL_UD}>
-                        <CfgItemBorder>
-                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
-                        </CfgItemBorder>
-                    </LcConfigBlock>
-                </LcConfigItem>
-
-                <LcConfigItem title={'刻度线'} layout={CfgItemLayout.BLOCK}>
-                    <LcConfigBlock title={'开启'} layoutMode={LayoutMode.VL_UD}>
+                    </ConfigItem>
+                </ConfigCard>
+                <ConfigCard title={'刻度线'}>
+                    <ConfigItem title={'开启'}>
                         <LcSwitch/>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'对齐'} layoutMode={LayoutMode.VL_UD}>
+                    </ConfigItem>
+                    <ConfigItem title={'对齐'}>
                         <LcSwitch/>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'长度'} layoutMode={LayoutMode.VL_UD}>
+                    </ConfigItem>
+                    <ConfigItem title={'长度'}>
+                        <NumberInput size={'small'} type={'number'}/>
+                    </ConfigItem>
+                    <ConfigItem title={'宽度'}>
+                        <NumberInput size={'small'} type={'number'}/>
+                    </ConfigItem>
+                    <ConfigItem title={'透明度'}>
+                        <NumberInput size={'small'} type={'number'}/>
+                    </ConfigItem>
+                    <ConfigItem title={'颜色'}>
                         <CfgItemBorder>
-                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
+                            <BaseColorPicker style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
                         </CfgItemBorder>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'宽度'} layoutMode={LayoutMode.VL_UD}>
-                        <CfgItemBorder>
-                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
-                        </CfgItemBorder>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'透明度'} layoutMode={LayoutMode.VL_UD}>
-                        <CfgItemBorder>
-                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
-                        </CfgItemBorder>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'颜色'} layoutMode={LayoutMode.VL_UD}>
-                        <CfgItemBorder>
-                            <BaseColorPicker style={{width: '100%', borderRadius: 2, height: 23}} showText={true}/>
-                        </CfgItemBorder>
-                    </LcConfigBlock>
-                </LcConfigItem>
-
-                <LcConfigItem title={'子刻度'} layout={CfgItemLayout.BLOCK}>
-                    <LcConfigBlock title={'开启'} layoutMode={LayoutMode.VL_UD}>
+                    </ConfigItem>
+                </ConfigCard>
+                <ConfigCard title={'子刻度'}>
+                    <ConfigItem title={'开启'}>
                         <LcSwitch/>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'对齐'} layoutMode={LayoutMode.VL_UD}>
+                    </ConfigItem>
+                    <ConfigItem title={'对齐'}>
                         <LcSwitch/>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'长度'} layoutMode={LayoutMode.VL_UD}>
+                    </ConfigItem>
+                    <ConfigItem title={'长度'}>
+                        <NumberInput size={'small'} type={'number'}/>
+                    </ConfigItem>
+                    <ConfigItem title={'宽度'}>
+                        <NumberInput size={'small'} type={'number'}/>
+                    </ConfigItem>
+                    <ConfigItem title={'透明度'}>
+                        <NumberInput size={'small'} type={'number'}/>
+                    </ConfigItem>
+                    <ConfigItem title={'颜色'}>
                         <CfgItemBorder>
-                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
+                            <BaseColorPicker style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
                         </CfgItemBorder>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'宽度'} layoutMode={LayoutMode.VL_UD}>
-                        <CfgItemBorder>
-                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
-                        </CfgItemBorder>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'透明度'} layoutMode={LayoutMode.VL_UD}>
-                        <CfgItemBorder>
-                            <LCNumberInput style={{width: '100%', textAlign: 'center'}}/>
-                        </CfgItemBorder>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'颜色'} layoutMode={LayoutMode.VL_UD}>
-                        <CfgItemBorder>
-                            <BaseColorPicker style={{width: '100%', borderRadius: 2, height: 23}} showText={true}/>
-                        </CfgItemBorder>
-                    </LcConfigBlock>
-                </LcConfigItem>
+                    </ConfigItem>
+                </ConfigCard>
             </>
         );
     }

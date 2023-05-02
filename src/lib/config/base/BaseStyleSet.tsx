@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
 import './style/LCBaseConfig.less';
 import BaseColorPicker from "../../BaseColorPicker";
-import LCNumberInput from "../../LCNumberInput";
-import PaddingSet from "./PaddingSet";
 import Accordion from "../../Accordion";
-import LcConfigItem, {CfgItemLayout} from "../../LcConfigItem";
-import LcConfigBlock from "../../LcConfigBlock";
 import LcSelect from "../../LCSelect";
 import {Select} from "antd";
 import CfgItemBorder from "../../CfgItemBorder";

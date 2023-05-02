@@ -117,7 +117,7 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
 
     render() {
         const {bgConfig} = lcDesignerContentStore;
-        const {bgImgSize = [1920, 1080]} = bgConfig;
+        // const {bgImgSize = [1920, 1080]} = bgConfig;
         return (
             <div className={'lc-canvas-config'}>
                 <LcConfigItem title={'模式'}>

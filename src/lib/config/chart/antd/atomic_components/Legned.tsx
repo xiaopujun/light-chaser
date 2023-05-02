@@ -6,7 +6,6 @@ import LcSelect from "../../../../LCSelect";
 import {Select} from "antd";
 import CfgItemBorder from "../../../../CfgItemBorder";
 import ConfigItem from "../../../item/ConfigItem";
-import ConfigCard from "../../../card/ConfigCard";
 
 const {Option} = Select;
 
