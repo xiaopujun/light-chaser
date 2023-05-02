@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import LCTextInput from "../../LCTextInput";
-import LcConfigItem from "../../LcConfigItem";
-import CfgItemBorder from "../../CfgItemBorder";
 import './BaseInfo.less';
+import ConfigCard from "../card/ConfigCard";
+import ConfigItem from "../item/ConfigItem";
+import LcUnderLineInput from "../../LcUnderLineInput";
 
 interface LcEmBaseInfoProps {
     baseInfo?: any;
@@ -29,22 +29,18 @@ class BaseInfo extends Component<LcEmBaseInfoProps> {
         const {id = -1, name = '', desc = '', type = ''} = baseInfo;
         return (
             <div className={'lc-base-info'}>
-                <LcConfigItem title={'ID号'}>
-                    <div className={'item-value'}>{id}</div>
-                </LcConfigItem>
-                <LcConfigItem title={'名称'}>
-                    <CfgItemBorder width={'50%'}>
-                        <LCTextInput style={{width: '100%', textAlign: 'right'}} defaultValue={name}/>
-                    </CfgItemBorder>
-                </LcConfigItem>
-                <LcConfigItem title={'描述'}>
-                    <CfgItemBorder width={'50%'}>
-                        <LCTextInput style={{width: '100%', textAlign: 'right'}} defaultValue={desc}/>
-                    </CfgItemBorder>
-                </LcConfigItem>
-                <LcConfigItem title={'类型'}>
-                    <div className={'item-value'}>{type}</div>
-                </LcConfigItem>
+                <ConfigCard title={'基础信息'}>
+                    <ConfigItem title={'ID号'}>{id}</ConfigItem>
+                    <ConfigItem title={'名称'}>
+                        <LcUnderLineInput type={'text'}/>
+                    </ConfigItem>
+                    <ConfigItem title={'描述'}>
+                        <LcUnderLineInput type={'text'}/>
+                    </ConfigItem>
+                    <ConfigItem title={'类型'}>
+                        <div className={'item-value'}>{type}</div>
+                    </ConfigItem>
+                </ConfigCard>
             </div>
         )
     }

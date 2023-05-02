@@ -2,7 +2,6 @@ import React, {PureComponent} from 'react';
 import './LcBgConfig.less';
 import BaseColorPicker from "../../../lib/BaseColorPicker";
 import Dragger from "antd/es/upload/Dragger";
-import LcConfigItem from "../../../lib/LcConfigItem";
 import LcRadio from "../../../lib/LcRadio";
 import {Button, Radio, Select} from "antd";
 import CfgItemBorder from "../../../lib/CfgItemBorder";
@@ -13,6 +12,8 @@ import LcSelect from "../../../lib/LCSelect";
 import {BackgroundColorMode, BackgroundMode} from "../../../types/DesignerType";
 import {ConfigType} from "../../../types/ConfigType";
 import NumberInput from "../../../lib/NumberInput";
+import ConfigItem from "../../../lib/config/item/ConfigItem";
+import ConfigCard from "../../../lib/config/card/ConfigCard";
 
 const {Option} = Select;
 
@@ -120,13 +121,13 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
         // const {bgImgSize = [1920, 1080]} = bgConfig;
         return (
             <div className={'lc-canvas-config'}>
-                <LcConfigItem title={'模式'}>
+                <ConfigItem title={'模式'} contentStyle={{width: '250px', paddingLeft: '20px'}}>
                     <LcRadio onChange={this.bgModeChange} defaultValue={bgConfig?.bgMode}>
                         <Radio value={0}>无</Radio>
                         <Radio value={1}>图片</Radio>
                         <Radio value={2}>颜色</Radio>
                     </LcRadio>
-                </LcConfigItem>
+                </ConfigItem>
                 {bgConfig?.bgMode === BackgroundMode.PICTURE &&
                 <>
                     <div className={'lc-bg-upload'}>
@@ -142,34 +143,21 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
                     </div>
                     <br/>
                     {
-                        bgConfig.bgImgUrl === '' ? null : <LcConfigItem title={'背景控制'}>
+                        bgConfig.bgImgUrl === '' ? null : <ConfigItem title={'背景控制'} contentStyle={{paddingLeft: 10}}>
                             <Button danger={true} ghost={true}
                                     onClick={this.clearBgImg}
                                     size={'small'}>清除背景图</Button>
-                        </LcConfigItem>
+                        </ConfigItem>
                     }
-                    <LcConfigItem title={'尺寸'}>
-                        <NumberInput size={'small'} addonBefore="W " defaultValue={100}/>
-                        {/*<InputNumber size={'small'} addonBefore="W" defaultValue={100}/>*/}
-                        {/*<LCNumberInput onChange={this.bgImgSizeChange} name={'bgX'}*/}
-                        {/*               style={{textAlign: 'center', width: '48%'}}*/}
-                        {/*               defaultValue={bgImgSize[0]}/>*/}
-                        <NumberInput size={'small'} addonBefore="H " defaultValue={100}/>
-                        {/*<LCNumberInput onChange={this.bgImgSizeChange} name={'bgY'}*/}
-                        {/*               style={{textAlign: 'center', width: '48%'}}*/}
-                        {/*               defaultValue={bgImgSize[1]}/>*/}
-                    </LcConfigItem>
-                    <LcConfigItem title={'位置'}>
-                        <NumberInput size={'small'} addonBefore="X " defaultValue={100}/>
-                        <NumberInput size={'small'} addonBefore="Y " defaultValue={100}/>
-                        {/*<LCNumberInput onChange={this.bgImgPosChange} name={'posX'}*/}
-                        {/*               style={{textAlign: 'center', width: '48%'}}*/}
-                        {/*               defaultValue={bgImgSize[0]}/>*/}
-                        {/*<LCNumberInput onChange={this.bgImgPosChange} name={'posY'}*/}
-                        {/*               style={{textAlign: 'center', width: '48%'}}*/}
-                        {/*               defaultValue={bgImgSize[1]}/>*/}
-                    </LcConfigItem>
-                    <LcConfigItem title={'重复'}>
+                    <ConfigCard title={'尺寸'}>
+                        <ConfigItem title={"宽度"}> <NumberInput size={'small'} defaultValue={100}/></ConfigItem>
+                        <ConfigItem title={"高度"}> <NumberInput size={'small'} defaultValue={100}/></ConfigItem>
+                    </ConfigCard>
+                    <ConfigCard title={'位置'}>
+                        <ConfigItem title={"X轴"}> <NumberInput size={'small'} defaultValue={100}/></ConfigItem>
+                        <ConfigItem title={"Y轴"}> <NumberInput size={'small'} defaultValue={100}/></ConfigItem>
+                    </ConfigCard>
+                    <ConfigItem title={'重复方式'} contentStyle={{paddingLeft: '20px'}}>
                         <LcSelect onChange={this.repeatTypeChange}
                                   defaultValue={bgConfig?.bgImgRepeat}>
                             <Option value={"no-repeat"}>不重复</Option>
@@ -177,50 +165,51 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
                             <Option value={"repeat-y"}>y轴重复</Option>
                             <Option value={"repeat"}>铺满</Option>
                         </LcSelect>
-                    </LcConfigItem>
+                    </ConfigItem>
                 </>}
                 {bgConfig?.bgMode === BackgroundMode.COLOR &&
                 <>
-                    <LcConfigItem title={'颜色'}>
+                    <ConfigItem title={'类型'} contentStyle={{paddingLeft: '20px'}}>
                         <LcRadio onChange={this.bgColorModeChange} defaultValue={bgConfig?.bgColorMode}>
                             <Radio value={0}>单色</Radio>
                             <Radio value={1}>线性</Radio>
                             <Radio value={2}>径向</Radio>
                         </LcRadio>
-                    </LcConfigItem>
+                    </ConfigItem>
                     {
-                        bgConfig?.bgColorMode === BackgroundColorMode.SINGLE && <LcConfigItem title={'背景颜色'}>
-                            <CfgItemBorder width={'50%'}>
+                        bgConfig?.bgColorMode === BackgroundColorMode.SINGLE &&
+                        <ConfigItem title={'颜色'} contentStyle={{width: 130, paddingLeft: 18}}>
+                            <CfgItemBorder>
                                 <BaseColorPicker onChange={this.bgColorChange}
                                                  style={{width: '100%', height: '15px', borderRadius: 2}}
                                                  value={bgConfig?.bgColor}
                                                  showText={true}/>
                             </CfgItemBorder>
-                        </LcConfigItem>
+                        </ConfigItem>
                     }
                     {
                         (bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT || bgConfig?.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT) && <>
-                            <LcConfigItem title={'背景颜色'}>
-                                <CfgItemBorder width={'40%'}>
+                            <ConfigItem title={'颜色'} contentStyle={{width: '250px', paddingLeft: 18, display: "flex"}}>
+                                <CfgItemBorder>
                                     <BaseColorPicker onChange={this.bgGradientColorChanged} id={'startColor'}
                                                      style={{width: '100%', height: '15px', borderRadius: 2}}
                                                      value={bgConfig?.bgColor}
                                                      showText={true}/>
                                 </CfgItemBorder>
                                 &nbsp;&nbsp;
-                                <CfgItemBorder width={'40%'}>
+                                <CfgItemBorder>
                                     <BaseColorPicker onChange={this.bgGradientColorChanged} id={'endColor'}
                                                      style={{width: '100%', height: '15px', borderRadius: 2}}
                                                      value={bgConfig?.bgColor}
                                                      showText={true}/>
                                 </CfgItemBorder>
-                            </LcConfigItem>
+                            </ConfigItem>
                             {
                                 bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT &&
-                                <LcConfigItem title={'渐变角度'}>
+                                <ConfigItem title={'角度'} contentStyle={{paddingLeft: 18}}>
                                     <NumberInput type={"number"} size={'small'} min={0} max={360}
                                         /* onChange={this.gradientAngleChanged}*//>
-                                </LcConfigItem>
+                                </ConfigItem>
                             }
                         </>
                     }

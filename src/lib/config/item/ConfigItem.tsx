@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React, {Component, CSSProperties} from 'react';
 import './ConfigItem.less';
 
 interface ConfigItemProps {
     title: string;
-    contentStyle?: any;
+    contentStyle?: CSSProperties;
 }
 
 class ConfigItem extends Component<ConfigItemProps> {
