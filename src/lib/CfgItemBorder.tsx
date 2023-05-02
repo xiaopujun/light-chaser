@@ -10,7 +10,7 @@ class CfgItemBorder extends Component<CfgItemBorderProps> {
         const _style = {
             width: width,
             border: '1px solid #00b5ff6b',
-            padding: '3px',
+            padding: '2px',
             borderRadius: '3px'
         }
         return (

@@ -9,12 +9,13 @@ import {
     calculateRightAngleCoordinates
 } from "../../../lib/config/chart/antd/util/AntdChartConfigUtil";
 import Accordion from "../../../lib/Accordion";
-import LcConfigItem from "../../../lib/LcConfigItem";
-import ColorSelector from "../../../lib/config/chart/antd/atomic_components/ColorSelector";
-import LCNumberInput from "../../../lib/LCNumberInput";
 import CfgItemBorder from "../../../lib/CfgItemBorder";
 import BaseStyleSet from "../../../lib/config/base/BaseStyleSet";
 import {ConfigType} from "../../../types/ConfigType";
+import ConfigItem from "../../../lib/config/item/ConfigItem";
+import BaseColorPicker from "../../../lib/BaseColorPicker";
+import ConfigCard from "../../../lib/config/card/ConfigCard";
+import NumberInput from "../../../lib/NumberInput";
 
 class AntdBaseBarConfigStyle extends Component<ConfigType> {
 
@@ -43,22 +44,22 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
             <>
                 <BaseStyleSet/>
                 <div className={'elem-chart-config'}>
-                    {/*图形填充色设置*/}
                     <Accordion title={'图形'}>
-                        <LcConfigItem title={'填充色'}>
-                            <ColorSelector colors={colors} max={sorts}/>
-                        </LcConfigItem>
-                        <LcConfigItem title={'条形宽度'}>
-                            <CfgItemBorder width={'50%'}>
-                                <LCNumberInput style={{width: '100%'}}/>
-                            </CfgItemBorder>
-                        </LcConfigItem>
+                        <ConfigCard title={'x轴'}>
+                            <ConfigItem title={'宽度'}>
+                                <NumberInput size={'small'}/>
+                            </ConfigItem>
+                            <ConfigItem title={'颜色'}>
+                                <CfgItemBorder>
+                                    <BaseColorPicker style={{width: '100%', height: '15px', borderRadius: 2}}
+                                                     showText={true}/>
+                                </CfgItemBorder>
+                            </ConfigItem>
+                        </ConfigCard>
                     </Accordion>
-                    {/*图例配置*/}
                     <Legend {...calculateLegendConfig(chartStyle)}
                             chartProps={chartStyle}
                             updateChartProps={updateConfig}/>
-                    {/*直角坐标系配置*/}
                     <RightAngleCoordinates {...calculateRightAngleCoordinates(chartStyle)}
                                            chartProps={chartStyle}
                                            updateChartProps={updateConfig}/>

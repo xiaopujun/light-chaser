@@ -1,29 +1,34 @@
 @import "../../designer/style/DesignerStyle.less";
 
 .lc-input-number {
+  background: none;
+  font-size: @lc-font-size-sm;
+  color: @lc-config-color-4;
+  border: none;
+
+  .ant-input-number-handler-wrap {
+    background-color: rgba(0, 0, 0, 0);
+
+    .ant-input-number-handler {
+      border: none;
+    }
+
+    .ant-input-number-handler:active {
+      background-color: rgba(0, 0, 0, 0);
+    }
+  }
+
   .ant-input-number-group-addon {
-    background-color: inherit;
+    background-color: rgba(0, 0, 0, 0);
     font-size: @lc-font-size-ml;
     color: @lc-config-color-4;
     border: none;
   }
 
   .ant-input-number {
-    background-color: inherit;
+    background-color: rgba(0, 0, 0, 0);
     font-size: @lc-font-size-sl;
     color: @lc-config-color-4;
     border: none;
-
-    .ant-input-number-handler-wrap {
-      background: inherit;
-
-      .ant-input-number-handler {
-        border: none;
-      }
-
-      .ant-input-number-handler:active {
-        background: inherit;
-      }
-    }
   }
 }

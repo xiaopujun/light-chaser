@@ -1,14 +1,16 @@
+@import "../../designer/style/DesignerStyle.less";
+
 .lc-accordion {
-  color: #01fffd;
+  color: @lc-config-color-2;
   background-color: rgba(0, 0, 0, 0);
 
   .accordion-header {
-    font-size: 16px;
-    font-weight: 600;
+    font-size: @lc-font-size-ml;
+    font-weight: 500;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #00adc0;
+    color: @lc-config-color-2;
     cursor: pointer;
     padding: 10px 0;
     width: 100%;
@@ -41,6 +43,9 @@
   }
 
   .lc-accordion-body {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 5px;
     background-color: rgba(0, 0, 0, 0);
     max-height: 0;
     overflow: hidden;
@@ -48,7 +53,7 @@
   }
 
   .accordion-header:after {
-    color: #777;
+    color: @lc-config-color-2;
     font-weight: bold;
     float: right;
     margin-left: 5px;

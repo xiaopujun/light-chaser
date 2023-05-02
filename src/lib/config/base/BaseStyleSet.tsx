@@ -10,6 +10,9 @@ import LcSelect from "../../LCSelect";
 import {Select} from "antd";
 import CfgItemBorder from "../../CfgItemBorder";
 import {BaseStyle} from "../../../types/DesignerType";
+import ConfigCard from "../card/ConfigCard";
+import ConfigItem from "../item/ConfigItem";
+import NumberInput from "../../NumberInput";
 
 const {Option} = Select;
 
@@ -56,42 +59,50 @@ export default class BaseStyleSet extends Component<LcCompBaseStyleSetProps> {
     render() {
         return (
             <Accordion title="容器" showSwitch={false}>
-                <LcConfigItem title={'内边距'} layout={CfgItemLayout.ROW}>
-                    <PaddingSet/>
-                </LcConfigItem>
-                <LcConfigItem title={'边框'} layout={CfgItemLayout.BLOCK}>
-                    <LcConfigBlock title={'类型'}>
+                <ConfigCard title={'内边距'}>
+                    <ConfigItem title={'上边距'}>
+                        <NumberInput style={{textAlign: 'center'}} size={'small'}/>
+                    </ConfigItem>
+                    <ConfigItem title={'下边距'}>
+                        <NumberInput style={{textAlign: 'center'}} size={'small'}/>
+                    </ConfigItem>
+                    <ConfigItem title={'左边距'}>
+                        <NumberInput style={{textAlign: 'center'}} size={'small'}/>
+                    </ConfigItem>
+                    <ConfigItem title={'右边距'}>
+                        <NumberInput style={{textAlign: 'center'}} size={'small'}/>
+                    </ConfigItem>
+                </ConfigCard>
+                <ConfigCard title={'边框'}>
+                    <ConfigItem title={'类型'}>
+                        <LcSelect value={'无'}>
+                            <Option key='none'>无</Option>
+                            <Option key='point'>点</Option>
+                            <Option key='v-line'>虚线</Option>
+                            <Option key='solid'>实线</Option>
+                        </LcSelect>
+                    </ConfigItem>
+                    <ConfigItem title={'颜色'}>
                         <CfgItemBorder>
-                            <LcSelect value={'无'}>
-                                <Option key='none'>无</Option>
-                                <Option key='point'>点</Option>
-                                <Option key='v-line'>虚线</Option>
-                                <Option key='solid'>实线</Option>
-                            </LcSelect>
+                            <BaseColorPicker style={{width: '100%', height: '15px', borderRadius: 2}}
+                                             showText={true}/>
                         </CfgItemBorder>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'颜色'}>
+                    </ConfigItem>
+                    <ConfigItem title={'宽度'}>
+                        <NumberInput size={'small'}/>
+                    </ConfigItem>
+                    <ConfigItem title={'圆角'}>
+                        <NumberInput size={'small'}/>
+                    </ConfigItem>
+                </ConfigCard>
+                <ConfigCard title={'背景'}>
+                    <ConfigItem title={'颜色'}>
                         <CfgItemBorder>
-                            <BaseColorPicker showText={true}
-                                             style={{width: '100%', borderRadius: '3px', height: '24px'}}/>
+                            <BaseColorPicker style={{width: '100%', height: '15px', borderRadius: 2}}
+                                             showText={true}/>
                         </CfgItemBorder>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'宽度'}>
-                        <CfgItemBorder>
-                            <LCNumberInput value={3} style={{width: '100%', textAlign: 'center'}}/>
-                        </CfgItemBorder>
-                    </LcConfigBlock>
-                    <LcConfigBlock title={'圆角'}>
-                        <CfgItemBorder>
-                            <LCNumberInput value={3} style={{width: '100%', textAlign: 'center'}}/>
-                        </CfgItemBorder>
-                    </LcConfigBlock>
-                </LcConfigItem>
-                <LcConfigItem title={'背景'}>
-                    <CfgItemBorder width={'50%'}>
-                        <BaseColorPicker style={{width: '100%', borderRadius: 2}} showText={true}/>
-                    </CfgItemBorder>
-                </LcConfigItem>
+                    </ConfigItem>
+                </ConfigCard>
             </Accordion>
         );
     }

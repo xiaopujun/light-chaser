@@ -1,11 +1,10 @@
 import React, {PureComponent} from 'react';
 import './LcBgConfig.less';
-import LCNumberInput from "../../../lib/LCNumberInput";
 import BaseColorPicker from "../../../lib/BaseColorPicker";
 import Dragger from "antd/es/upload/Dragger";
 import LcConfigItem from "../../../lib/LcConfigItem";
 import LcRadio from "../../../lib/LcRadio";
-import {Button, InputNumber, Radio, Select} from "antd";
+import {Button, Radio, Select} from "antd";
 import CfgItemBorder from "../../../lib/CfgItemBorder";
 import lcDesignerContentStore from '../../../designer/store/DesignerStore';
 import {observer} from "mobx-react";
@@ -193,7 +192,7 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
                         bgConfig?.bgColorMode === BackgroundColorMode.SINGLE && <LcConfigItem title={'背景颜色'}>
                             <CfgItemBorder width={'50%'}>
                                 <BaseColorPicker onChange={this.bgColorChange}
-                                                 style={{width: '100%', height: '18px', borderRadius: 2}}
+                                                 style={{width: '100%', height: '15px', borderRadius: 2}}
                                                  value={bgConfig?.bgColor}
                                                  showText={true}/>
                             </CfgItemBorder>
@@ -204,14 +203,14 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
                             <LcConfigItem title={'背景颜色'}>
                                 <CfgItemBorder width={'40%'}>
                                     <BaseColorPicker onChange={this.bgGradientColorChanged} id={'startColor'}
-                                                     style={{width: '100%', height: '18px', borderRadius: 2}}
+                                                     style={{width: '100%', height: '15px', borderRadius: 2}}
                                                      value={bgConfig?.bgColor}
                                                      showText={true}/>
                                 </CfgItemBorder>
                                 &nbsp;&nbsp;
                                 <CfgItemBorder width={'40%'}>
                                     <BaseColorPicker onChange={this.bgGradientColorChanged} id={'endColor'}
-                                                     style={{width: '100%', height: '18px', borderRadius: 2}}
+                                                     style={{width: '100%', height: '15px', borderRadius: 2}}
                                                      value={bgConfig?.bgColor}
                                                      showText={true}/>
                                 </CfgItemBorder>
@@ -219,10 +218,8 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
                             {
                                 bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT &&
                                 <LcConfigItem title={'渐变角度'}>
-                                    <CfgItemBorder width={'40%'}>
-                                        <LCNumberInput style={{width: '100%', textAlign: 'center'}} min={0} max={360}
-                                                       onChange={this.gradientAngleChanged}/>
-                                    </CfgItemBorder>
+                                    <NumberInput type={"number"} size={'small'} min={0} max={360}
+                                        /* onChange={this.gradientAngleChanged}*//>
                                 </LcConfigItem>
                             }
                         </>
