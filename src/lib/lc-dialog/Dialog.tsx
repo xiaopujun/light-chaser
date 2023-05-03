@@ -14,25 +14,13 @@ interface DialogProps {
 
 class Dialog extends Component<DialogProps> {
 
-    constructor(props: DialogProps) {
-        super(props);
-        const {visible} = props;
-        this.state = {visible};
-    }
-
-    state = {
-        visible: false
-    }
-
     onClose = () => {
-        this.setState({visible: false});
         const {onClose} = this.props;
         onClose && onClose();
     }
 
     render() {
-        const {title = '设置', children, width = 400, height, className} = this.props;
-        const {visible} = this.state;
+        const {title = '设置', visible = false, children, width = 400, height, className} = this.props;
         if (!visible)
             return null;
         return ReactDOM.createPortal(

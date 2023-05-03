@@ -18,7 +18,7 @@ class CanvasHdConfigImpl extends Component {
     render() {
         const {canvasVisible} = headerStore;
         return (
-            <Dialog title={'画布设置'} visible={canvasVisible} className={'lc-canvas-config'} onClose={this.onClose}>
+            <Dialog title={'画布设置'} visible={canvasVisible} onClose={this.onClose}>
                 <div style={{display: 'flex', flexWrap: 'wrap'}}>
                     <ConfigItem title={'宽度'}>
                         <NumberInput/>
