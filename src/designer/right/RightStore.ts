@@ -1,6 +1,6 @@
 import {action, makeObservable, observable} from "mobx";
 import React from "react";
-import {MenuInfo} from "../../types/MenuType";
+import {MenuInfo} from "../../framework/types/MenuType";
 
 class RightStore {
     constructor() {

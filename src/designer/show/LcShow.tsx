@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import ReactGridLayout from 'react-grid-layout';
 import {RouteComponentProps} from "react-router-dom";
-import LcDesignerBackground from "../designer/content/DesignerBackground";
-import {getProjectById} from "../local/LocalStorageUtil";
+import LcDesignerBackground from "../content/DesignerBackground";
+import {getProjectById} from "../../utils/LocalStorageUtil";
 
 interface LcShowProps extends RouteComponentProps {
 

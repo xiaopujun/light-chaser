@@ -14,7 +14,7 @@ import Right from "./right";
 import DesignerFooter from "./footer/DesignerFooter";
 import lcDesignerContentStore from './store/DesignerStore';
 import designerStore from './BootStore';
-import {getProjectById} from "../local/LocalStorageUtil";
+import {getProjectById} from "../utils/LocalStorageUtil";
 
 interface LCDesignerProps extends RouteComponentProps {
     LCDesignerStore: LCDesignerProps;

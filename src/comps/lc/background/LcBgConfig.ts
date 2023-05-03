@@ -1,8 +1,8 @@
-import {AbstractConfig} from "../../../types/lc-interface/AbstractConfig";
+import {AbstractConfig} from "../../../framework/abstract/AbstractConfig";
 import {PictureFilled} from "@ant-design/icons";
 import LcBgConfigContent from "./LcBgConfigContent";
 import React from "react";
-import {MenuInfo} from "../../../types/MenuType";
+import {MenuInfo} from "../../../framework/types/MenuType";
 
 export default class LcBgConfig extends AbstractConfig {
     getMenuList(): Array<MenuInfo> {

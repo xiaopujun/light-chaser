@@ -1,4 +1,4 @@
-import {ClassifyItemProps} from "../ClassifyType";
+import {ClassifyItemProps} from "../types/ClassifyType";
 
 export abstract class AbstractClassifyItem {
     /**

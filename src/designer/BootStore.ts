@@ -1,9 +1,9 @@
-import {AbstractHeaderItem} from "../types/HeaderTypes";
+import {AbstractHeaderItem} from "../framework/types/HeaderTypes";
 import React from "react";
-import {AbstractComp} from "../types/lc-interface/AbstractComp";
-import {AbstractConfig} from "../types/lc-interface/AbstractConfig";
-import {AbstractInit} from "../types/lc-interface/AbstractInit";
-import {AbstractClassifyItem} from "../types/lc-interface/AbstractClassifyItem";
+import {AbstractComp} from "../framework/abstract/AbstractComp";
+import {AbstractConfig} from "../framework/abstract/AbstractConfig";
+import {AbstractInit} from "../framework/abstract/AbstractInit";
+import {AbstractClassifyItem} from "../framework/abstract/AbstractClassifyItem";
 import headerStore from "./header/HeaderStore";
 import rightStore from "./right/RightStore";
 

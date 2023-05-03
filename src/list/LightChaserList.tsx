@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './style/LightChaserList.less';
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import AddNewScreenDialog from "./AddNewScreenDialog";
-import {getAllProject} from "../local/LocalStorageUtil";
+import {getAllProject} from "../utils/LocalStorageUtil";
 
 interface LightChaserListProps extends RouteComponentProps {
 

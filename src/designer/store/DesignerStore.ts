@@ -17,7 +17,7 @@ import {
     SaveType,
     Statistic,
     Theme
-} from "../../types/DesignerType";
+} from "../../framework/types/DesignerType";
 import bootStore from "../BootStore";
 
 class DesignerStore implements LCDesigner {

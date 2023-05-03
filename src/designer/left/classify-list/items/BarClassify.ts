@@ -1,6 +1,6 @@
 import {AlignLeftOutlined} from "@ant-design/icons";
-import {ClassifyEnum, ClassifyItemProps} from "../../../../types/ClassifyType";
-import {AbstractClassifyItem} from "../../../../types/lc-interface/AbstractClassifyItem";
+import {ClassifyEnum, ClassifyItemProps} from "../../../../framework/types/ClassifyType";
+import {AbstractClassifyItem} from "../../../../framework/abstract/AbstractClassifyItem";
 
 export default class BarClassify extends AbstractClassifyItem {
     getClassifyItemInfo(): ClassifyItemProps {

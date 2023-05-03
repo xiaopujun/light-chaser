@@ -1,4 +1,4 @@
-import {MenuInfo} from "../MenuType";
+import {MenuInfo} from "../types/MenuType";
 
 export abstract class AbstractMenu {
     abstract getMenuInfo(): MenuInfo;

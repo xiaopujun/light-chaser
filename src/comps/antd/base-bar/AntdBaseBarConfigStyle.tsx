@@ -9,7 +9,7 @@ import {
 import Accordion from "../../../lib/Accordion";
 import CfgItemBorder from "../../../lib/CfgItemBorder";
 import BaseStyleSet from "../../../lib/config/base/BaseStyleSet";
-import {ConfigType} from "../../../types/ConfigType";
+import {ConfigType} from "../../../framework/types/ConfigType";
 import ConfigItem from "../../../lib/config/item/ConfigItem";
 import BaseColorPicker from "../../../lib/BaseColorPicker";
 import ConfigCard from "../../../lib/config/card/ConfigCard";

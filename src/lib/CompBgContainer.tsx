@@ -6,9 +6,16 @@ interface CompBgContainerProps {
 
 class CompBgContainer extends Component<CompBgContainerProps> {
     render() {
-        const {style = {width: '100%', height: '100%', pointerEvents: 'none', position: 'absolute'}} = this.props;
+        let _style: CSSProperties = {
+            ...{
+                width: '100%',
+                height: '100%',
+                pointerEvents: 'none',
+                position: 'absolute'
+            }, ...this.props.style
+        };
         return (
-            <div style={{...style}}>
+            <div style={{..._style}}>
                 {this.props.children}
             </div>
         );

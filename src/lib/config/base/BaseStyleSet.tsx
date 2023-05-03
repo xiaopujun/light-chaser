@@ -5,7 +5,7 @@ import Accordion from "../../Accordion";
 import LcSelect from "../../LCSelect";
 import {Select} from "antd";
 import CfgItemBorder from "../../CfgItemBorder";
-import {BaseStyle} from "../../../types/DesignerType";
+import {BaseStyle} from "../../../framework/types/DesignerType";
 import ConfigCard from "../card/ConfigCard";
 import ConfigItem from "../item/ConfigItem";
 import NumberInput from "../../NumberInput";

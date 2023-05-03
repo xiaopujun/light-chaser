@@ -1,7 +1,7 @@
 import {makeAutoObservable} from "mobx";
-import {AbstractInit} from "../../../types/lc-interface/AbstractInit";
-import {AbstractComp} from "../../../types/lc-interface/AbstractComp";
-import {AbstractConfig} from "../../../types/lc-interface/AbstractConfig";
+import {AbstractInit} from "../../../framework/abstract/AbstractInit";
+import {AbstractComp} from "../../../framework/abstract/AbstractComp";
+import {AbstractConfig} from "../../../framework/abstract/AbstractConfig";
 
 class CompListStore {
     constructor() {

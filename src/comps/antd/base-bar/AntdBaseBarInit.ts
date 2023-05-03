@@ -1,4 +1,4 @@
-import {AbstractInit, BaseInfo} from "../../../types/lc-interface/AbstractInit";
+import {AbstractInit, BaseInfo} from "../../../framework/abstract/AbstractInit";
 import barImg from './bar.png';
 
 export default class AntdBaseBarInit extends AbstractInit {

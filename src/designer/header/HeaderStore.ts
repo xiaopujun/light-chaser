@@ -1,6 +1,6 @@
 import {makeAutoObservable} from "mobx";
 import React from "react";
-import {HeaderItemProps} from "../../types/HeaderTypes";
+import {HeaderItemProps} from "../../framework/types/HeaderTypes";
 
 class HeaderStore {
     constructor() {
