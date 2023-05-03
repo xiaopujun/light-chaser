@@ -1,5 +1,5 @@
 import React, {Component, ReactElement} from 'react';
-import './Head.less';
+import './DesignerHeader.less';
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {createProject, updateProject} from "../../local/LocalStorageUtil";
 import lcDesignerContentStore from '../store/DesignerStore';

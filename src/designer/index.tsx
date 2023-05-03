@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import LCLayoutContent from "./content/DesignerContent";
-import DesignerHeader from "./header";
+import DesignerHeader from "./header/DesignerHeader";
 import {RouteComponentProps} from "react-router-dom";
 import LcHeader from "./structure/LcHeader";
 import LcBody from "./structure/LcBody";
@@ -11,7 +11,7 @@ import LcStructure from "./structure/LcStructure";
 import LcFoot from "./structure/LcFoot";
 import DesignerLeft from "./left";
 import Right from "./right";
-import LcDesignerFooter from "./footer/LcDesignerFooter";
+import DesignerFooter from "./footer/DesignerFooter";
 import lcDesignerContentStore from './store/DesignerStore';
 import designerStore from './BootStore';
 import {getProjectById} from "../local/LocalStorageUtil";
@@ -124,7 +124,7 @@ class LCDesigner extends Component<LCDesignerProps | any> {
                     <LcRight><Right {...this.props}/></LcRight>
                 </LcBody>
                 <LcFoot>
-                    <LcDesignerFooter {...this.props}/>
+                    <DesignerFooter {...this.props}/>
                 </LcFoot>
             </LcStructure>
         );

@@ -10,7 +10,7 @@ interface LcDesignerBackgroundProps {
 /**
  * 设计器画布背景
  */
-class LcDesignerBackground extends PureComponent<LcDesignerBackgroundProps> {
+class DesignerBackground extends PureComponent<LcDesignerBackgroundProps> {
 
     onClick = (e: any) => {
         this.props.onClick && this.props.onClick(e);
@@ -57,4 +57,4 @@ class LcDesignerBackground extends PureComponent<LcDesignerBackgroundProps> {
     }
 }
 
-export default observer(LcDesignerBackground);
+export default observer(DesignerBackground);

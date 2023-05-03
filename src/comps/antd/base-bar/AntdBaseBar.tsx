@@ -1,5 +1,5 @@
 import React from 'react';
-import LcCompBg from "../../LcCompBg";
+import CompBgContainer from "../../../lib/CompBgContainer";
 import {AbstractComp} from "../../../types/lc-interface/AbstractComp";
 import {CompType} from "../../../types/CompType";
 import {Bar} from "@ant-design/charts";
@@ -15,9 +15,9 @@ export default class AntdBaseBar extends AbstractComp<CompType> {
             return null;
         const {style} = config;
         return (
-            <LcCompBg style={style?.baseStyle}>
+            <CompBgContainer style={style?.baseStyle}>
                 <Bar supportCSSTransform={true} className={'grid-chart-item'} {...style?.chartStyle}/>
-            </LcCompBg>
+            </CompBgContainer>
         );
     }
 }

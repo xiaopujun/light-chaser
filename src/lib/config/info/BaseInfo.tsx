@@ -34,11 +34,11 @@ class BaseInfo extends Component<LcEmBaseInfoProps> {
                     <ConfigItem title={'名称'}>
                         <LcUnderLineInput type={'text'}/>
                     </ConfigItem>
-                    <ConfigItem title={'描述'}>
-                        <LcUnderLineInput type={'text'}/>
-                    </ConfigItem>
                     <ConfigItem title={'类型'}>
                         <div className={'item-value'}>{type}</div>
+                    </ConfigItem>
+                    <ConfigItem title={'描述'}>
+                        <LcUnderLineInput type={'text'}/>
                     </ConfigItem>
                 </ConfigCard>
             </div>
