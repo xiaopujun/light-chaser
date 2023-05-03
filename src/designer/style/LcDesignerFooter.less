@@ -1,3 +1,5 @@
+@import "../../designer/style/DesignerStyle.less";
+
 .lc-designer-footer {
   height: 40px;
   display: flex;
@@ -11,7 +13,7 @@
       height: 100%;
       font-size: 12px;
       line-height: 37px;
-      color: #00f2ff;
+      color: @footer-item-color;
       padding: 0 10px;
       cursor: pointer;
       border-top-style: solid;
@@ -36,7 +38,7 @@
     display: flex;
 
     .right-info-item {
-      color: #00f2ff;
+      color: @footer-item-color;
       margin-right: 20px;
     }
   }
