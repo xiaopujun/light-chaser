@@ -4,6 +4,7 @@ import './App.less';
 import {Route, Switch} from "react-router-dom";
 import Loading from "./lib/loading/Loading";
 import LcRightMenu from "./designer/tools/OperateMenu";
+import CanvasHdConfigImpl from "./designer/header/impl/CanvasHdConfigImpl";
 
 const LightChaserList = lazy(() => import('./list/LightChaserList'));
 const LCDesigner = lazy(() => import('./designer'));
@@ -15,6 +16,7 @@ class App extends Component<any> {
             <>
                 <Suspense fallback={<Loading/>}>
                     <Switch>
+                        <Route path={'/header/canvas/config'} component={CanvasHdConfigImpl}/>
                         <Route path={'/list'} component={LightChaserList}/>
                         <Route path={'/designer'} component={LCDesigner}/>
                         <Route path={'/view'} component={Preview}/>
