@@ -1,7 +1,6 @@
-import React, {Component, Suspense} from 'react';
+import React, {Component} from 'react';
 import ReactGridLayout from 'react-grid-layout';
 import {RouteComponentProps} from "react-router-dom";
-import Loading from "../lib/loading/Loading";
 import LcDesignerBackground from "../designer/content/DesignerBackground";
 import {getProjectById} from "../local/LocalStorageUtil";
 
