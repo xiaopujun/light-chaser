@@ -1,18 +1,11 @@
-@headerBgColor: #111216;
-@headerHeight: 50px;
-@leftWidth: 60px;
-@leftBgColor: #111216;
-@rightWidth: 35px;
-@contentWidth: calc(100% - (@leftWidth + @rightWidth));
-@contentHeight: calc(100% - (@headerHeight + @footHeight));
-@footHeight: 40px;
+@import "../../designer/style/DesignerStyle.less";
 
 .lc-designer-structure {
   height: 100%;
 
   .structure-header {
     height: @headerHeight;
-    background-color: @headerBgColor;
+    background-color: @headBgColor;
   }
 
   .structure-body {
@@ -34,7 +27,7 @@
 
     .structure-body-right {
       width: @rightWidth;
-      background-color: #001528;
+      background-color: @rightMenuListBgColor;
     }
   }
 

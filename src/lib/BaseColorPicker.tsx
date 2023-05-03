@@ -16,21 +16,20 @@ interface ColorPickerProps extends BaseProps {
 
 class ColorPicker extends Component<ColorPickerProps> {
     state = {
-        color: 'rgb(0,249,188)',
-        colorArea: 'rgb(0,255,192)',
-        hex: ''
+        color: '#353D35',
+        colorArea: '#353D35',
+        hex: '#353D35'
     };
 
     constructor(props: ColorPickerProps) {
         super(props);
-        const {value = 'rgb(0,249,188)'} = props;
+        const {value = '#353D35'} = props;
         this.state = {
             color: value,
             colorArea: value,
-            hex: ''
+            hex: '353D35'
         }
     }
-
 
     onChangeComplete = (color: any, event: any) => {
         const {onChange, id} = this.props;
@@ -43,12 +42,12 @@ class ColorPicker extends Component<ColorPickerProps> {
         })
     }
 
-
     render() {
         const {colorArea, color, hex} = this.state;
         const {style, showText = false} = this.props;
         const content = (<ChromePicker className={'color-picker'} color={color}
                                        onChange={this.onChangeComplete}/>)
+
         return (
             <Popover placement="topLeft" content={content} trigger={'click'}>
                 <div style={{backgroundColor: `${colorArea}`, ...style}}
