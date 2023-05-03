@@ -1,10 +1,12 @@
 import React, {Component, ReactElement} from 'react';
 import './DesignerHeader.less';
-import {RouteComponentProps, withRouter} from "react-router-dom";
+import {RouteComponentProps} from "react-router-dom";
 import {createProject, updateProject} from "../../utils/LocalStorageUtil";
 import lcDesignerContentStore from '../store/DesignerStore';
 import LCDesigner from "../index";
 import headerStore from "./HeaderStore";
+import CanvasHdConfigImpl from "./impl/CanvasHdConfigImpl";
+import {observer} from "mobx-react";
 
 interface LcDesignerHeaderProps extends RouteComponentProps {
     LCDesignerStore: LCDesigner;
@@ -68,6 +70,7 @@ class Header extends Component<LcDesignerHeaderProps | any> {
 
 
     render() {
+        const {canvasVisible} = headerStore;
         const items = this.buildHeaderList();
         return (
             <div className={'designer-header'}>
@@ -77,9 +80,10 @@ class Header extends Component<LcDesignerHeaderProps | any> {
                 <div className={'header-right'}>
                     {items}
                 </div>
+                {canvasVisible && <CanvasHdConfigImpl/>}
             </div>
         );
     }
 }
 
-export default withRouter(Header);
+export default observer(Header);

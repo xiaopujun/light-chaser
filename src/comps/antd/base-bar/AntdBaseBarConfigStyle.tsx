@@ -1,19 +1,18 @@
 import React, {Component} from 'react';
-import '../../../lib/config/chart/antd/style/AntdBarSet.less';
-import Legend from "../../../lib/config/chart/antd/atomic_components/Legned";
-import RightAngleCoordinates from "../../../lib/config/chart/antd/atomic_components/RightAngleCoordinates";
+import Legend from "../../../lib/common-fragment/legend/Legned";
+import RightAngleCoordinates from "../../../lib/common-fragment/right-angle-coordinates/RightAngleCoordinates";
 import {
     calculateLegendConfig,
     calculateRightAngleCoordinates
-} from "../../../lib/config/chart/antd/util/AntdChartConfigUtil";
-import Accordion from "../../../lib/Accordion";
-import CfgItemBorder from "../../../lib/CfgItemBorder";
-import BaseStyleSet from "../../../lib/config/base/BaseStyleSet";
+} from "../../../utils/AntdChartConfigUtil";
+import Accordion from "../../../lib/lc-accordion/Accordion";
+import CfgItemBorder from "../../../lib/config-item-border/CfgItemBorder";
+import BaseStyleSet from "../../../lib/common-fragment/base-style/BaseStyleSet";
 import {ConfigType} from "../../../framework/types/ConfigType";
-import ConfigItem from "../../../lib/config/item/ConfigItem";
-import BaseColorPicker from "../../../lib/BaseColorPicker";
-import ConfigCard from "../../../lib/config/card/ConfigCard";
-import NumberInput from "../../../lib/NumberInput";
+import ConfigItem from "../../../lib/config-item/ConfigItem";
+import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
+import ConfigCard from "../../../lib/config-card/ConfigCard";
+import NumberInput from "../../../lib/lc-input/NumberInput";
 
 class AntdBaseBarConfigStyle extends Component<ConfigType> {
 

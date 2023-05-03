@@ -8,7 +8,12 @@ class HeaderStore {
     }
 
     headerInfoArr: Array<HeaderItemProps> = [];
+    canvasVisible: boolean = false;
     loaded: boolean = false;
+
+    setCanvasVisible = (visible: boolean) => {
+        this.canvasVisible = visible;
+    }
 
     doInit = (headersClazz: { [key: string]: React.Component | React.FC | any } = {}) => {
         let headerInfoArr: Array<HeaderItemProps> = [];

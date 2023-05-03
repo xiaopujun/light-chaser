@@ -1,19 +1,19 @@
 import React, {PureComponent} from 'react';
 import './LcBgConfig.less';
-import BaseColorPicker from "../../../lib/BaseColorPicker";
+import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import Dragger from "antd/es/upload/Dragger";
-import LcRadio from "../../../lib/LcRadio";
+import LcRadio from "../../../lib/lc-radio/LcRadio";
 import {Button, Radio, Select} from "antd";
-import CfgItemBorder from "../../../lib/CfgItemBorder";
+import CfgItemBorder from "../../../lib/config-item-border/CfgItemBorder";
 import lcDesignerContentStore from '../../../designer/store/DesignerStore';
 import {observer} from "mobx-react";
 import {toJS} from "mobx";
-import LcSelect from "../../../lib/LCSelect";
+import LcSelect from "../../../lib/lc-select/LCSelect";
 import {BackgroundColorMode, BackgroundMode} from "../../../framework/types/DesignerType";
 import {ConfigType} from "../../../framework/types/ConfigType";
-import NumberInput from "../../../lib/NumberInput";
-import ConfigItem from "../../../lib/config/item/ConfigItem";
-import ConfigCard from "../../../lib/config/card/ConfigCard";
+import NumberInput from "../../../lib/lc-input/NumberInput";
+import ConfigItem from "../../../lib/config-item/ConfigItem";
+import ConfigCard from "../../../lib/config-card/ConfigCard";
 
 const {Option} = Select;
 

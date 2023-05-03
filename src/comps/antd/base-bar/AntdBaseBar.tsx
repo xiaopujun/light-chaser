@@ -1,5 +1,5 @@
 import React from 'react';
-import CompBgContainer from "../../../lib/CompBgContainer";
+import CompBgContainer from "../../../lib/lc-bg-container/CompBgContainer";
 import {AbstractComp} from "../../../framework/abstract/AbstractComp";
 import {CompType} from "../../../framework/types/CompType";
 import {Bar} from "@ant-design/charts";

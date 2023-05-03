@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Modal} from "antd";
+import {observer} from "mobx-react";
 
 /**
  * 画布设置React组件实现
@@ -15,4 +16,4 @@ class CanvasHdConfigImpl extends Component {
     }
 }
 
-export default CanvasHdConfigImpl;
+export default observer(CanvasHdConfigImpl);
