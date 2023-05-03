@@ -1,17 +1,48 @@
 import React, {Component} from 'react';
-import {Modal} from "antd";
 import {observer} from "mobx-react";
+import Dialog from "../../../lib/lc-dialog/Dialog";
+import ConfigItem from "../../../lib/config-item/ConfigItem";
+import NumberInput from "../../../lib/lc-input/NumberInput";
+import headerStore from "../HeaderStore";
 
 /**
  * 画布设置React组件实现
  */
 class CanvasHdConfigImpl extends Component {
+
+    onClose = () => {
+        const {setCanvasVisible} = headerStore;
+        setCanvasVisible(false);
+    }
+
     render() {
-        console.log('CanvasHdConfigImpl render');
+        const {canvasVisible} = headerStore;
         return (
-            <Modal title="画布设置" visible={true}>
-                test
-            </Modal>
+            <Dialog title={'画布设置'} visible={canvasVisible} className={'lc-canvas-config'} onClose={this.onClose}>
+                <div style={{display: 'flex', flexWrap: 'wrap'}}>
+                    <ConfigItem title={'宽度'}>
+                        <NumberInput/>
+                    </ConfigItem>
+                    <ConfigItem title={'高度'}>
+                        <NumberInput/>
+                    </ConfigItem>
+                    <ConfigItem title={'列数'}>
+                        <NumberInput/>
+                    </ConfigItem>
+                    <ConfigItem title={'缩放比'}>
+                        <NumberInput/>
+                    </ConfigItem>
+                    <ConfigItem title={'基准高度'}>
+                        <NumberInput/>
+                    </ConfigItem>
+                </div>
+                <br/>
+                <p style={{
+                    color: '#7c7c7c',
+                    padding: '0 5px',
+                    fontSize: '12px'
+                }}>说明：修改画布设置，会对整体效果产生较大影响，建议先调试好画布设置后再进行大屏设计</p>
+            </Dialog>
         );
     }
 }
