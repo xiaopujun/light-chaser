@@ -2620,10 +2620,15 @@
   dependencies:
     lodash "^4.11.1"
 
-"@daybrush/utils@^1.1.1", "@daybrush/utils@^1.7.1":
+"@daybrush/utils@^1.1.1":
   version "1.10.0"
   resolved "https://registry.npmmirror.com/@daybrush/utils/-/utils-1.10.0.tgz#2a2235269b960b7ffaf05ca2e75379ea1fb58204"
   integrity sha512-IDT0DWAGcjxb2+WMr8pHrVTkHVKdilBumX1SubXJUlowN4rMSLphwDxvMNfv+vQOrdCPXSoPVZ3mhfrHsQ9Xow==
+
+"@daybrush/utils@^1.11.0", "@daybrush/utils@^1.7.1":
+  version "1.11.0"
+  resolved "https://registry.npmmirror.com/@daybrush/utils/-/utils-1.11.0.tgz#ad23a431fdb8f95ab4bb34fb6d080f2f7997a988"
+  integrity sha512-/T0Oe7KkfUoCusFj1cJ6N+Tu+jFZXVkaKqDBcDY3P0goJfcfaT+4+oG8aHi4LDgBErNjP6uvC3IEOSMe2ka/yQ==
 
 "@eslint/eslintrc@^0.4.3":
   version "0.4.3"
@@ -3117,12 +3122,12 @@
   dependencies:
     "@daybrush/utils" "^1.1.1"
 
-"@scena/react-ruler@^0.12.2":
-  version "0.12.2"
-  resolved "https://registry.npmmirror.com/@scena/react-ruler/-/react-ruler-0.12.2.tgz#4c0d8ce57b9865778195a44f8612489cee446ad9"
-  integrity sha512-5la/o0Qk5FoGczumcfCBHKjdTXBo5eLxlE/ayYgudIdkKFRw7eC4hGtZ2SsaM+X+urNJhCplwPY1jgJkk+PwAg==
+"@scena/react-ruler@^0.17.1":
+  version "0.17.1"
+  resolved "https://registry.npmmirror.com/@scena/react-ruler/-/react-ruler-0.17.1.tgz#ced7bb1d925ade80456d131fc0b88856dda70524"
+  integrity sha512-ZgLSlNByevYMH2G7QzId49eojyfqd0zUNASIRIJm89X8ub1ipaMqaTPsSXS+yJspgiYFeVSjL8KCC/Yc1SMzLg==
   dependencies:
-    "@daybrush/utils" "^1.7.1"
+    "@daybrush/utils" "^1.11.0"
     framework-utils "^1.1.0"
 
 "@sinonjs/commons@^1.7.0":
