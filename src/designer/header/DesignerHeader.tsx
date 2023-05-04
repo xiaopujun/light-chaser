@@ -7,6 +7,8 @@ import LCDesigner from "../index";
 import headerStore from "./HeaderStore";
 import CanvasHdConfigImpl from "./impl/CanvasHdConfigImpl";
 import {observer} from "mobx-react";
+import ProjectHdItemImpl from "./impl/ProjectHdItemImpl";
+import ThemeHdItemImpl from "./impl/ThemeHdItemImpl";
 
 interface LcDesignerHeaderProps extends RouteComponentProps {
     LCDesignerStore: LCDesigner;
@@ -70,7 +72,7 @@ class Header extends Component<LcDesignerHeaderProps | any> {
 
 
     render() {
-        const {canvasVisible} = headerStore;
+        const {canvasVisible, projectVisible, themeVisible} = headerStore;
         const items = this.buildHeaderList();
         return (
             <div className={'designer-header'}>
@@ -80,7 +82,10 @@ class Header extends Component<LcDesignerHeaderProps | any> {
                 <div className={'header-right'}>
                     {items}
                 </div>
+                {/*todo 想办法让这两个组件不要在这里写死*/}
                 {canvasVisible && <CanvasHdConfigImpl/>}
+                {projectVisible && <ProjectHdItemImpl/>}
+                {themeVisible && <ThemeHdItemImpl/>}
             </div>
         );
     }
