@@ -9,6 +9,7 @@ import lcRightMenuStore from "../store/LcRightMenuStore";
 import LcDesignerBackground from "./DesignerBackground";
 import rootStore from "../BootStore";
 import rightStore from "../right/RightStore";
+import DesignerRuler from "../../lib/lc-ruler/DesignerRuler";
 
 class DesignerContent extends PureComponent<DesignerStore | any> {
 
@@ -181,13 +182,15 @@ class DesignerContent extends PureComponent<DesignerStore | any> {
 
     render() {
         return (
-            <DragScaleProvider {...this.getDragScaleProviderProps()}>
-                <LcDesignerBackground onClick={this.updateActive} ref={obj => this.lcbg = obj}>
-                    <ReactGridLayout ref={obj => this.rgl = obj} className="layout" {...this.getRGLProps()}>
-                        {this.generateElement()}
-                    </ReactGridLayout>
-                </LcDesignerBackground>
-            </DragScaleProvider>
+            <DesignerRuler>
+                <DragScaleProvider {...this.getDragScaleProviderProps()}>
+                    <LcDesignerBackground onClick={this.updateActive} ref={obj => this.lcbg = obj}>
+                        <ReactGridLayout ref={obj => this.rgl = obj} className="layout" {...this.getRGLProps()}>
+                            {this.generateElement()}
+                        </ReactGridLayout>
+                    </LcDesignerBackground>
+                </DragScaleProvider>
+            </DesignerRuler>
         );
     }
 }

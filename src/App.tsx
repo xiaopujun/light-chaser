@@ -16,7 +16,6 @@ class App extends Component<any> {
             <>
                 <Suspense fallback={<Loading/>}>
                     <Switch>
-                        <Route path={'/header/canvas/config'} component={CanvasHdConfigImpl}/>
                         <Route path={'/list'} component={LightChaserList}/>
                         <Route path={'/designer'} component={LCDesigner}/>
                         <Route path={'/view'} component={Preview}/>

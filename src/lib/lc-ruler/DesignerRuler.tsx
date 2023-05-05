@@ -1,10 +1,20 @@
 import React, {Component} from 'react';
-import Ruler from "./Ruler";
+import Ruler, {RulerProps} from "@scena/react-ruler";
 
-class TestRuler extends Component {
+interface DesignerRulerProps {
+    offsetX?: number;
+    offsetY?: number;
+    scale?: number;
+    canScale?: boolean;
+    canDrag?: boolean;
+}
+
+class DesignerRuler extends Component<DesignerRulerProps & RulerProps> {
     state = {
         scale: 1,
     }
+
+    baseOffset = 30;
     _scrollPosX = 0;
     _scrollPosY = 0;
     compOffset = 30;
@@ -21,6 +31,17 @@ class TestRuler extends Component {
     mouseDown = false;
 
     componentDidMount() {
+        // let {scale} = this.props;
+        /**
+         * 缩放计算公式：
+         * 设现有条件：
+         * 1) 当前鼠标位置：P
+         * 2) 当前缩放倍数：S1
+         * 3) 最新缩放倍数：S2
+         * 4) 标尺起始位置：St
+         * 5) 标尺渲染起始位置：scrollPos
+         * 则：scrollPos = P-[(P-St)/(S2/S1)]
+         */
         document.addEventListener('wheel', (e) => {
             let {scale} = this.state;
             if (e.deltaY > 0)
@@ -33,6 +54,19 @@ class TestRuler extends Component {
             this.scrollPosY = this.startPosY;
             this.setState({scale: scale});
         });
+
+        /**
+         * 鼠标移动计算公式：
+         * 设现有条件：
+         * 1) 鼠标按下时在当前屏幕分辨路下的真实鼠标位置：mosP
+         * 2) 标尺当前的起始位置：startP
+         * 3) 鼠标本次移动的距离：mouOffset
+         * 4) 标尺当前的缩放系数：scale
+         * 5) 在当前缩放系数下，鼠标对应的标尺位置：rulerP
+         *
+         * 则鼠标指针在当前缩放系数下的位置为：rulerP = startP + (mouOffset / scale)
+         * 鼠标移动后的标尺起始位置为：scrollPos = startP + (mouOffset / scale)
+         */
         document.addEventListener('mousemove', (e) => {
             this.mousePosX = this.startPosX + ((e.clientX - this.compOffset) / this.state.scale);
             this.mousePosY = this.startPosY + ((e.clientY - this.compOffset) / this.state.scale);
@@ -65,13 +99,12 @@ class TestRuler extends Component {
 
     render() {
         return (
-            <div className={'lc-ruler'}>
+            <div className={'lc-ruler'} style={{position: 'relative'}}>
                 <div className={'lc-ruler-horizontal'}
                      style={{
                          height: this.compOffset,
                          width: `calc(100% - ${this.compOffset}px)`,
-                         backgroundColor: '#126447',
-                         position: 'absolute',
+                         position: 'relative',
                          left: this.compOffset
                      }}>
                     <Ruler ref={ref => this.rulerX = ref}
@@ -83,10 +116,8 @@ class TestRuler extends Component {
                 <div className={'lc-ruler-vertical'}
                      style={{
                          width: this.compOffset,
-                         height: `calc(100% - ${this.compOffset}px)`,
-                         backgroundColor: '#606da4',
-                         position: 'absolute',
-                         top: this.compOffset,
+                         height: window.innerHeight - this.compOffset - 50 - 40,
+                         position: 'relative',
                          overflow: 'hidden'
                      }}>
                     <Ruler ref={ref => this.rulerY = ref}
@@ -97,9 +128,16 @@ class TestRuler extends Component {
                            textOffset={[0, 20]}
                            unit={50}/>
                 </div>
+                <div className={'lc-ruler-content'} style={{
+                    position: 'absolute',
+                    top: this.compOffset,
+                    left: this.compOffset,
+                }}>
+                    {this.props.children}
+                </div>
             </div>
         );
     }
 }
 
-export default TestRuler;
+export default DesignerRuler;

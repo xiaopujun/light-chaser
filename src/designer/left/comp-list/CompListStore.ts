@@ -11,7 +11,7 @@ class CompListStore {
     comps: Array<any> = [];
     compKey: string = '';
     compLoaded: boolean = false;
-    visible: boolean = true;
+    visible: boolean = false;
 
     doInit = () => {
         const compCtx = require.context('../../../comps', true, /\.(tsx|ts)$/);
