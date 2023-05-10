@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            height: 100vh;
+            background: #000;
+            overflow: hidden;
+        }
+
+        #image {
+            touch-action: none;
+        }
+    </style>
+</head>
+<body>
+<div style="height: 50px;background-color: #155d66"></div>
+<div class="container">
+    <div style="width: 200px;height: 200px;background-color: #5a878c" id="image">手段解决的，塑料袋放进安科瑞，说了句佛为u燃烧的发
+        上了法界偶然。圣诞节卡夫卡收费我i软件无法
+        沙龙课法律纠纷
+    </div>
+</div>
+
+<script>
+    // 获取dom
+    const container = document.querySelector('.container');
+    const image = document.getElementById('image');
+    // 全局变量
+    let result,
+        x,
+        y,
+        scale = 1,
+        minScale = 0.5,
+        maxScale = 10,
+        isPointerdown = false, // 按下标识
+        diff = {x: 0, y: 0}, // 相对于上一次pointermove移动差值
+        lastPointermove = {x: 0, y: 0}; // 用于计算diff
+
+    // 图片加载完成后再绑定事件
+    result = {
+        width: parseInt(image.style.width.replace('px', '')),
+        height: parseInt(image.style.height.replace('px', ''))
+    };
+    image.style.width = result.width + 'px';
+    image.style.height = result.height + 'px';
+    x = 0;
+    y = 0;
+    image.style.transform = 'translate3d(' + x + 'px, ' + y + 'px, 0) scale(1)';
+    // 拖拽查看
+    drag();
+    // 滚轮缩放
+    wheelZoom();
+
+    // 拖拽查看
+    function drag() {
+        // 绑定 pointerdown
+        image.addEventListener('pointerdown', function (e) {
+            isPointerdown = true;
+            image.setPointerCapture(e.pointerId);
+            lastPointermove = {x: e.clientX, y: e.clientY};
+        });
+        // 绑定 pointermove
+        image.addEventListener('pointermove', function (e) {
+            if (isPointerdown) {
+                const current = {x: e.clientX, y: e.clientY};
+                diff.x = current.x - lastPointermove.x;
+                diff.y = current.y - lastPointermove.y;
+                lastPointermove = {x: current.x, y: current.y};
+                x += diff.x;
+                y += diff.y;
+                image.style.transform = 'translate3d(' + x + 'px, ' + y + 'px, 0) scale(' + scale + ')';
+            }
+            e.preventDefault();
+        });
+        // 绑定 pointerup
+        image.addEventListener('pointerup', function (e) {
+            if (isPointerdown) {
+                isPointerdown = false;
+            }
+        });
+        // 绑定 pointercancel
+        image.addEventListener('pointercancel', function (e) {
+            if (isPointerdown) {
+                isPointerdown = false;
+            }
+        });
+    }
+
+    // 滚轮缩放
+    function wheelZoom() {
+        container.addEventListener('wheel', function (e) {
+            let ratio = 1.5;
+            // 缩小
+            if (e.deltaY > 0)
+                ratio = 1 / 1.5;
+            const _scale = scale * ratio;
+            if (_scale > maxScale) {
+                ratio = maxScale / scale;
+                scale = maxScale;
+            } else if (_scale < minScale) {
+                ratio = minScale / scale;
+                scale = minScale;
+            } else {
+                scale = _scale;
+            }
+            const origin = {
+                x: (ratio - 1) * result.width * 0.5,
+                y: (ratio - 1) * result.height * 0.5
+            };
+            // 计算偏移量
+            x -= (ratio - 1) * (e.clientX - x) - origin.x;
+            y -= (ratio - 1) * (e.clientY - 50 - y) - origin.y;
+
+            image.style.transform = 'translate3d(' + x + 'px, ' + y + 'px, 0) scale(' + scale + ')';
+            e.preventDefault();
+        });
+    }
+</script>
+</body>
+</html>

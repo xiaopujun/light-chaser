@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Ruler, {RulerProps} from "@scena/react-ruler";
+import shortcutKey from "../../designer/event-operate/ShortcutKey";
 
 interface DesignerRulerProps {
     offsetX?: number;
@@ -13,11 +14,12 @@ class DesignerRuler extends Component<DesignerRulerProps & RulerProps> {
     state = {
         scale: 1,
     }
+    minScale: number = 0.1; //最小缩放倍数
+    maxScale: number = 10;  //最大缩放倍数
 
     baseOffset = 30;
     _scrollPosX = 0;
     _scrollPosY = 0;
-    compOffset = 30;
     rulerX: any = null;
     offsetX = 0;
     mousePosX = 0;
@@ -31,7 +33,6 @@ class DesignerRuler extends Component<DesignerRulerProps & RulerProps> {
     mouseDown = false;
 
     componentDidMount() {
-        // let {scale} = this.props;
         /**
          * 缩放计算公式：
          * 设现有条件：
@@ -44,10 +45,19 @@ class DesignerRuler extends Component<DesignerRulerProps & RulerProps> {
          */
         document.addEventListener('wheel', (e) => {
             let {scale} = this.state;
+            let ratio = 1.05;
+            // 缩小
             if (e.deltaY > 0)
-                scale += 0.1;
-            else
-                scale -= 0.1;
+                ratio = 1 / 1.05;
+            // 限制缩放倍数
+            const _scale = scale * ratio;
+            if (_scale > this.maxScale) {
+                scale = this.maxScale;
+            } else if (_scale < this.minScale) {
+                scale = this.minScale;
+            } else {
+                scale = _scale;
+            }
             this.startPosX = this.mousePosX - ((this.mousePosX - this.startPosX) / (scale / this.state.scale));
             this.scrollPosX = this.startPosX;
             this.startPosY = this.mousePosY - ((this.mousePosY - this.startPosY) / (scale / this.state.scale));
@@ -68,9 +78,9 @@ class DesignerRuler extends Component<DesignerRulerProps & RulerProps> {
          * 鼠标移动后的标尺起始位置为：scrollPos = startP + (mouOffset / scale)
          */
         document.addEventListener('mousemove', (e) => {
-            this.mousePosX = this.startPosX + ((e.clientX - this.compOffset) / this.state.scale);
-            this.mousePosY = this.startPosY + ((e.clientY - this.compOffset) / this.state.scale);
-            if (this.mouseDown) {
+            this.mousePosX = this.startPosX + ((e.clientX - this.baseOffset - 60) / this.state.scale);
+            this.mousePosY = this.startPosY + ((e.clientY - this.baseOffset - 50) / this.state.scale);
+            if (shortcutKey._space && this.mouseDown) {
                 this.offsetX = this.offsetX - e.movementX;
                 this.offsetY = this.offsetY - e.movementY;
                 this._scrollPosX = this.startPosX + (this.offsetX / this.state.scale)
@@ -102,10 +112,10 @@ class DesignerRuler extends Component<DesignerRulerProps & RulerProps> {
             <div className={'lc-ruler'} style={{position: 'relative'}}>
                 <div className={'lc-ruler-horizontal'}
                      style={{
-                         height: this.compOffset,
-                         width: `calc(100% - ${this.compOffset}px)`,
+                         height: this.baseOffset,
+                         width: `calc(100% - ${this.baseOffset}px)`,
                          position: 'relative',
-                         left: this.compOffset
+                         left: this.baseOffset
                      }}>
                     <Ruler ref={ref => this.rulerX = ref}
                            scrollPos={this.scrollPosX}
@@ -115,8 +125,8 @@ class DesignerRuler extends Component<DesignerRulerProps & RulerProps> {
                 </div>
                 <div className={'lc-ruler-vertical'}
                      style={{
-                         width: this.compOffset,
-                         height: window.innerHeight - this.compOffset - 50 - 40,
+                         width: this.baseOffset,
+                         height: window.innerHeight - this.baseOffset - 50 - 40,
                          position: 'relative',
                          overflow: 'hidden'
                      }}>
@@ -130,8 +140,8 @@ class DesignerRuler extends Component<DesignerRulerProps & RulerProps> {
                 </div>
                 <div className={'lc-ruler-content'} style={{
                     position: 'absolute',
-                    top: this.compOffset,
-                    left: this.compOffset,
+                    top: this.baseOffset,
+                    left: this.baseOffset,
                 }}>
                     {this.props.children}
                 </div>

@@ -5,11 +5,12 @@ import 'react-resizable/css/styles.css';
 import DragScaleProvider from "../tools/DragScaleProvider";
 import {observer} from "mobx-react";
 import designerStore, {DesignerStore} from "../store/DesignerStore";
-import lcRightMenuStore from "../store/LcRightMenuStore";
 import LcDesignerBackground from "./DesignerBackground";
 import rootStore from "../BootStore";
 import rightStore from "../right/RightStore";
 import DesignerRuler from "../../lib/lc-ruler/DesignerRuler";
+import EventContainer from "../event-operate/EventContainer";
+import eventOperateStore from "../event-operate/EventOperateStore";
 
 class DesignerContent extends PureComponent<DesignerStore | any> {
 
@@ -17,10 +18,6 @@ class DesignerContent extends PureComponent<DesignerStore | any> {
     lcbg: any = null;
     state: any = {
         scale: 1,
-    }
-
-    componentDidMount() {
-        this.registerRightMenu();
     }
 
     calculateChartConfig = (elemId: string | number) => {
@@ -137,7 +134,7 @@ class DesignerContent extends PureComponent<DesignerStore | any> {
 
     getRGLProps = () => {
         const {layoutConfigs, canvasConfig} = designerStore;
-        const {scale} = this.state;
+        const {scale} = eventOperateStore;
         let margin: [number, number] = [0, 0];
         return {
             layout: layoutConfigs,
@@ -159,38 +156,19 @@ class DesignerContent extends PureComponent<DesignerStore | any> {
         }
     }
 
-    registerRightMenu = () => {
-        const {updateVisible, setPosition, setTargetId} = lcRightMenuStore;
-        document.addEventListener("click", (event: any) => {
-                const {visible} = lcRightMenuStore;
-                if (visible && event.button === 0)
-                    updateVisible(false);
-            }
-        );
-        document.addEventListener("contextmenu", (event: any) => {
-            event.preventDefault();
-            if (event.target.className.indexOf('react-grid-item') > -1) {
-                updateVisible && updateVisible(true);
-                setPosition([event.clientX, event.clientY]);
-                setTargetId && setTargetId(parseInt(event.target.id));
-            } else {
-                updateVisible && updateVisible(false);
-            }
-        });
-
-    }
-
     render() {
         return (
-            <DesignerRuler>
-                <DragScaleProvider {...this.getDragScaleProviderProps()}>
-                    <LcDesignerBackground onClick={this.updateActive} ref={obj => this.lcbg = obj}>
-                        <ReactGridLayout ref={obj => this.rgl = obj} className="layout" {...this.getRGLProps()}>
-                            {this.generateElement()}
-                        </ReactGridLayout>
-                    </LcDesignerBackground>
-                </DragScaleProvider>
-            </DesignerRuler>
+            <EventContainer>
+                <DesignerRuler>
+                    <DragScaleProvider {...this.getDragScaleProviderProps()}>
+                        <LcDesignerBackground onClick={this.updateActive} ref={obj => this.lcbg = obj}>
+                            <ReactGridLayout ref={obj => this.rgl = obj} className="layout" {...this.getRGLProps()}>
+                                {this.generateElement()}
+                            </ReactGridLayout>
+                        </LcDesignerBackground>
+                    </DragScaleProvider>
+                </DesignerRuler>
+            </EventContainer>
         );
     }
 }
