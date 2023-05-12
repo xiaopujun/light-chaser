@@ -5,11 +5,11 @@ import 'react-resizable/css/styles.css';
 import DragScaleProvider from "../tools/DragScaleProvider";
 import {observer} from "mobx-react";
 import designerStore, {DesignerStore} from "../store/DesignerStore";
-import LcDesignerBackground from "./DesignerBackground";
+import DesignerBackground from "./DesignerBackground";
 import rootStore from "../BootStore";
 import rightStore from "../right/RightStore";
 import DesignerRuler from "../../lib/lc-ruler/DesignerRuler";
-import EventContainer from "../event-operate/EventContainer";
+import DesignerContainer from "../event-operate/DesignerContainer";
 import eventOperateStore from "../event-operate/EventOperateStore";
 
 class DesignerContent extends PureComponent<DesignerStore | any> {
@@ -158,17 +158,17 @@ class DesignerContent extends PureComponent<DesignerStore | any> {
 
     render() {
         return (
-            <EventContainer>
+            <DesignerContainer>
                 <DesignerRuler>
                     <DragScaleProvider {...this.getDragScaleProviderProps()}>
-                        <LcDesignerBackground onClick={this.updateActive} ref={obj => this.lcbg = obj}>
+                        <DesignerBackground onClick={this.updateActive} ref={obj => this.lcbg = obj}>
                             <ReactGridLayout ref={obj => this.rgl = obj} className="layout" {...this.getRGLProps()}>
                                 {this.generateElement()}
                             </ReactGridLayout>
-                        </LcDesignerBackground>
+                        </DesignerBackground>
                     </DragScaleProvider>
                 </DesignerRuler>
-            </EventContainer>
+            </DesignerContainer>
         );
     }
 }

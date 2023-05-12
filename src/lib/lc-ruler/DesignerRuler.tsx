@@ -1,16 +1,31 @@
 import React, {Component} from 'react';
 import Ruler, {RulerProps} from "@scena/react-ruler";
 import shortcutKey from "../../designer/event-operate/ShortcutKey";
+import eventManager from "../../framework/event/EventManager";
+import scaleCore from "../../framework/scale/ScaleCore";
 
-interface DesignerRulerProps {
-    offsetX?: number;
-    offsetY?: number;
-    scale?: number;
-    canScale?: boolean;
-    canDrag?: boolean;
-}
-
-class DesignerRuler extends Component<DesignerRulerProps & RulerProps> {
+/**
+ * 缩放计算公式：
+ * 设现有条件：
+ * 1) 当前鼠标位置：P
+ * 2) 当前缩放倍数：S1
+ * 3) 最新缩放倍数：S2
+ * 4) 标尺起始位置：St
+ * 5) 标尺渲染起始位置：scrollPos
+ * 则：scrollPos = P-[(P-St)/(S2/S1)]
+ *
+ * 鼠标移动计算公式：
+ * 设现有条件：
+ * 1) 鼠标按下时在当前屏幕分辨路下的真实鼠标位置：mosP
+ * 2) 标尺当前的起始位置：startP
+ * 3) 鼠标本次移动的距离：mouOffset
+ * 4) 标尺当前的缩放系数：scale
+ * 5) 在当前缩放系数下，鼠标对应的标尺位置：rulerP
+ *
+ * 则鼠标指针在当前缩放系数下的位置为：rulerP = startP + (mouOffset / scale)
+ * 鼠标移动后的标尺起始位置为：scrollPos = startP + (mouOffset / scale)
+ */
+class DesignerRuler extends Component<RulerProps> {
     state = {
         scale: 1,
     }
@@ -33,59 +48,25 @@ class DesignerRuler extends Component<DesignerRulerProps & RulerProps> {
     mouseDown = false;
 
     componentDidMount() {
-        /**
-         * 缩放计算公式：
-         * 设现有条件：
-         * 1) 当前鼠标位置：P
-         * 2) 当前缩放倍数：S1
-         * 3) 最新缩放倍数：S2
-         * 4) 标尺起始位置：St
-         * 5) 标尺渲染起始位置：scrollPos
-         * 则：scrollPos = P-[(P-St)/(S2/S1)]
-         */
-        document.addEventListener('wheel', (e) => {
-            let {scale} = this.state;
-            let ratio = 1.05;
-            // 缩小
-            if (e.deltaY > 0)
-                ratio = 1 / 1.05;
-            // 限制缩放倍数
-            const _scale = scale * ratio;
-            if (_scale > this.maxScale) {
-                scale = this.maxScale;
-            } else if (_scale < this.minScale) {
-                scale = this.minScale;
-            } else {
-                scale = _scale;
-            }
-            this.startPosX = this.mousePosX - ((this.mousePosX - this.startPosX) / (scale / this.state.scale));
+        eventManager.register('wheel', (e: any) => {
+            console.log(scaleCore.ratio)
+            this.startPosX = this.mousePosX - ((this.mousePosX - this.startPosX) / scaleCore.ratio);
             this.scrollPosX = this.startPosX;
-            this.startPosY = this.mousePosY - ((this.mousePosY - this.startPosY) / (scale / this.state.scale));
+            this.startPosY = this.mousePosY - ((this.mousePosY - this.startPosY) / scaleCore.ratio);
             this.scrollPosY = this.startPosY;
-            this.setState({scale: scale});
+            this.setState({scale: scaleCore.scale});
         });
 
-        /**
-         * 鼠标移动计算公式：
-         * 设现有条件：
-         * 1) 鼠标按下时在当前屏幕分辨路下的真实鼠标位置：mosP
-         * 2) 标尺当前的起始位置：startP
-         * 3) 鼠标本次移动的距离：mouOffset
-         * 4) 标尺当前的缩放系数：scale
-         * 5) 在当前缩放系数下，鼠标对应的标尺位置：rulerP
-         *
-         * 则鼠标指针在当前缩放系数下的位置为：rulerP = startP + (mouOffset / scale)
-         * 鼠标移动后的标尺起始位置为：scrollPos = startP + (mouOffset / scale)
-         */
         document.addEventListener('mousemove', (e) => {
             this.mousePosX = this.startPosX + ((e.clientX - this.baseOffset - 60) / this.state.scale);
             this.mousePosY = this.startPosY + ((e.clientY - this.baseOffset - 50) / this.state.scale);
             if (shortcutKey._space && this.mouseDown) {
                 this.offsetX = this.offsetX - e.movementX;
-                this.offsetY = this.offsetY - e.movementY;
                 this._scrollPosX = this.startPosX + (this.offsetX / this.state.scale)
-                this._scrollPosY = this.startPosY + (this.offsetY / this.state.scale)
                 this.rulerX && this.rulerX.scroll(this._scrollPosX);
+
+                this.offsetY = this.offsetY - e.movementY;
+                this._scrollPosY = this.startPosY + (this.offsetY / this.state.scale)
                 this.rulerY && this.rulerY.scroll(this._scrollPosY);
             }
 

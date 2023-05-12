@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
 import shortcutKey from "./ShortcutKey";
 import lcRightMenuStore from "../store/LcRightMenuStore";
+import scaleCore from "../../framework/scale/ScaleCore";
+import coordinate from "./Coordinate";
+import eventManager from "../../framework/event/EventManager";
 
-class EventContainer extends Component {
+class DesignerContainer extends Component {
 
     componentDidMount() {
         const {setPosition, setTargetId, updateVisible} = lcRightMenuStore;
@@ -33,6 +36,18 @@ class EventContainer extends Component {
             if (ev.keyCode === 32)
                 shortcutKey._space = true;
         })
+
+        document.addEventListener('wheel', e => {
+            if (shortcutKey._space) {
+                let type = 1;
+                if (e.deltaY > 0)
+                    type = 0;
+                scaleCore.compute(type);
+                eventManager.emit('wheel', e);
+                // e.preventDefault();
+            }
+        });
+
     }
 
     render() {
@@ -44,4 +59,4 @@ class EventContainer extends Component {
     }
 }
 
-export default EventContainer;
+export default DesignerContainer;

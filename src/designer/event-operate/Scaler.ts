@@ -4,6 +4,8 @@
 import shortcutKey from "./ShortcutKey";
 import eventOperateStore from "./EventOperateStore";
 import coordinate from "./Coordinate";
+import scaleCore from "../../framework/scale/ScaleCore";
+import eventManager from "../../framework/event/EventManager";
 
 class Scaler {
     container: any;
@@ -23,46 +25,50 @@ class Scaler {
         this.minScale = min;
         this.maxScale = max;
         this.callback = callback || this.callback;
-        //注册缩放元素缩放事件
-        this.registerScaleEvent();
     }
+
 
     registerScaleEvent = () => {
         if (!this.container || !this.content)
             return;
-        let {scale, setScale} = eventOperateStore;
+        let {setScale} = eventOperateStore;
         this.content.style.transform = 'translate3d(' + coordinate.x + 'px, ' + coordinate.y + 'px, 0) scale(1)';
-        this.container.addEventListener('wheel', (e: any) => {
+        //注册鼠标滚轮事件
+        eventManager.register('wheel', (e: any) => {
+            const origin = {
+                x: (scaleCore.ratio - 1) * this.contentW * 0.5,
+                y: (scaleCore.ratio - 1) * this.contentH * 0.5
+            };
+            // 计算偏移量
+            coordinate.x -= (scaleCore.ratio - 1) * (e.clientX - 90 - coordinate.x) - origin.x;
+            coordinate.y -= (scaleCore.ratio - 1) * (e.clientY - 80 - coordinate.y) - origin.y;
+            this.content.style.transform = 'translate3d(' + coordinate.x + 'px, ' + coordinate.y + 'px, 0) scale(' + scaleCore.scale + ')';
+
+            this.callback && this.callback();
+            setScale(scaleCore.scale);
+
+        });
+
+        /*this.container.addEventListener('wheel', (e: any) => {
                 if (shortcutKey._space) {
-                    let ratio = 1.05;
-                    // 缩小
+                    let type = 1;
                     if (e.deltaY > 0)
-                        ratio = 1 / 1.05;
-                    // 限制缩放倍数
-                    const _scale = scale * ratio;
-                    if (_scale > this.maxScale) {
-                        ratio = this.maxScale / scale;
-                        scale = this.maxScale;
-                    } else if (_scale < this.minScale) {
-                        ratio = this.minScale / scale;
-                        scale = this.minScale;
-                    } else {
-                        scale = _scale;
-                    }
+                        type = 0;
+                    scaleCore.compute(type);
                     const origin = {
-                        x: (ratio - 1) * this.contentW * 0.5,
-                        y: (ratio - 1) * this.contentH * 0.5
+                        x: (scaleCore.ratio - 1) * this.contentW * 0.5,
+                        y: (scaleCore.ratio - 1) * this.contentH * 0.5
                     };
                     // 计算偏移量
-                    coordinate.x -= (ratio - 1) * (e.clientX - 90 - coordinate.x) - origin.x;
-                    coordinate.y -= (ratio - 1) * (e.clientY - 80 - coordinate.y) - origin.y;
-                    this.content.style.transform = 'translate3d(' + coordinate.x + 'px, ' + coordinate.y + 'px, 0) scale(' + scale + ')';
+                    coordinate.x -= (scaleCore.ratio - 1) * (e.clientX - 90 - coordinate.x) - origin.x;
+                    coordinate.y -= (scaleCore.ratio - 1) * (e.clientY - 80 - coordinate.y) - origin.y;
+                    this.content.style.transform = 'translate3d(' + coordinate.x + 'px, ' + coordinate.y + 'px, 0) scale(' + scaleCore.scale + ')';
                     e.preventDefault();
                     this.callback && this.callback();
-                    setScale(scale);
+                    setScale(scaleCore.scale);
                 }
             }
-        );
+        );*/
     }
 }
 

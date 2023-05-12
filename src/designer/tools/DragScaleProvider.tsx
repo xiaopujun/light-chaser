@@ -7,45 +7,30 @@ interface DragScaleProviderProps {
     containerHeight?: number;
     contentWidth?: number;
     contentHeight?: number;
-    changeScale?: (scale: number) => void;
 }
 
 class DragScaleProvider extends Component<DragScaleProviderProps> {
 
-    config: any = {
-        contentWidth: 1920,
-        contentHeight: 1080,
-        x: 0,
-        y: 0,
-        scale: 1,
-    }
+    container: any = null;
+    content: any = null;
 
     componentDidMount() {
-        this.config.contentWidth = this.props.contentWidth || 1920;
-        this.config.contentHeight = this.props.contentHeight || 1080;
-        // 获取dom
-        const container: any = document.getElementById('lc-drag-scale-container');
-        const content: any = document.getElementById('lc-drag-scale-content');
-        new Scaler(container, content, this.config.contentWidth, this.config.contentHeight, 0.1, 10);
-        new Dragger(content);
-    }
-
-    changeScale = (scale: number) => {
-        const {changeScale} = this.props;
-        changeScale && changeScale(scale);
+        new Scaler(this.container, this.content, this.props.contentWidth || 1920, this.props.contentHeight || 1080, 0.1, 10).registerScaleEvent();
+        new Dragger(this.content).registerDragEvent();
     }
 
 
     render() {
         const {contentHeight, contentWidth, containerHeight, containerWidth} = this.props;
         return (
-            <div id={'lc-drag-scale-container'} style={{
-                overflow: "hidden",
-                height: containerHeight,
-                width: containerWidth,
-                backgroundColor: '#434343'
-            }}>
-                <div id={'lc-drag-scale-content'}
+            <div ref={ref => this.container = ref}
+                 style={{
+                     overflow: "hidden",
+                     height: containerHeight,
+                     width: containerWidth,
+                     backgroundColor: '#434343'
+                 }}>
+                <div ref={ref => this.content = ref}
                      style={{width: contentWidth, height: contentHeight}}>
                     {this.props.children}
                 </div>

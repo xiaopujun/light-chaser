@@ -18,14 +18,11 @@ class Dragger {
     constructor(dom: any, callback?: Function) {
         this.dom = dom;
         this.callback = callback || this.callback;
-        //注册缩放元素缩放事件
-        this.registerDragEvent();
     }
 
     registerDragEvent = () => {
         if (!this.dom)
             return;
-
         this.dom.addEventListener('pointerdown', (e: any) => {
             if (shortcutKey._space) {
                 shortcutKey._mouseLeft = true;
