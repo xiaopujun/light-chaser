@@ -29,8 +29,6 @@ class DesignerRuler extends Component<RulerProps> {
     state = {
         scale: 1,
     }
-    minScale: number = 0.1; //最小缩放倍数
-    maxScale: number = 10;  //最大缩放倍数
 
     baseOffset = 30;
     _scrollPosX = 0;
@@ -49,7 +47,6 @@ class DesignerRuler extends Component<RulerProps> {
 
     componentDidMount() {
         eventManager.register('wheel', (e: any) => {
-            console.log(scaleCore.ratio)
             this.startPosX = this.mousePosX - ((this.mousePosX - this.startPosX) / scaleCore.ratio);
             this.scrollPosX = this.startPosX;
             this.startPosY = this.mousePosY - ((this.mousePosY - this.startPosY) / scaleCore.ratio);
@@ -57,7 +54,7 @@ class DesignerRuler extends Component<RulerProps> {
             this.setState({scale: scaleCore.scale});
         });
 
-        document.addEventListener('mousemove', (e) => {
+        eventManager.register('mousemove', (e: any) => {
             this.mousePosX = this.startPosX + ((e.clientX - this.baseOffset - 60) / this.state.scale);
             this.mousePosY = this.startPosY + ((e.clientY - this.baseOffset - 50) / this.state.scale);
             if (shortcutKey._space && this.mouseDown) {
@@ -69,14 +66,15 @@ class DesignerRuler extends Component<RulerProps> {
                 this._scrollPosY = this.startPosY + (this.offsetY / this.state.scale)
                 this.rulerY && this.rulerY.scroll(this._scrollPosY);
             }
-
         });
-        document.addEventListener('mousedown', (e) => {
+
+        eventManager.register('mousedown', (e: any) => {
             this.mouseDown = true
             this.offsetX = 0;
             this.offsetY = 0;
         });
-        document.addEventListener('mouseup', (e) => {
+
+        eventManager.register('mouseup', (e: any) => {
             this.mouseDown = false
             this.offsetX = 0;
             this.offsetY = 0;

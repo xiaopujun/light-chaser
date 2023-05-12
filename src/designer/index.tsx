@@ -15,6 +15,9 @@ import DesignerFooter from "./footer/DesignerFooter";
 import lcDesignerContentStore from './store/DesignerStore';
 import designerStore from './BootStore';
 import {getProjectById} from "../utils/LocalStorageUtil";
+import lcRightMenuStore from "./store/LcRightMenuStore";
+import shortcutKey from "./event-operate/ShortcutKey";
+import eventManager from "../framework/event/EventManager";
 
 interface LCDesignerProps extends RouteComponentProps {
     LCDesignerStore: LCDesignerProps;
@@ -37,6 +40,31 @@ class LCDesigner extends Component<LCDesignerProps | any> {
     }
 
     componentDidMount() {
+        //todo 在设计器加载时，异步注册设计器中所有设计到的操作事件
+        const {setPosition, setTargetId, updateVisible} = lcRightMenuStore;
+        eventManager.register('click', (e: any) => {
+            const {visible, updateVisible} = lcRightMenuStore;
+            if (visible && e.button === 0)
+                updateVisible(false);
+        });
+        eventManager.register('contextmenu', (event: any) => {
+            event.preventDefault();
+            if (event.target.className.indexOf('react-grid-item') > -1) {
+                updateVisible && updateVisible(true);
+                setPosition([event.clientX, event.clientY]);
+                setTargetId && setTargetId(parseInt(event.target.id));
+            } else {
+                updateVisible && updateVisible(false);
+            }
+        });
+        eventManager.register('keyup', (e: any) => {
+            if (e.keyCode === 32)
+                shortcutKey._space = false;
+        });
+        eventManager.register('keydown', (e: any) => {
+            if (e.keyCode === 32)
+                shortcutKey._space = true;
+        });
         //初始化操作类型
         this.initOperateType();
     }
