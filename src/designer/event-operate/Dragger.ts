@@ -1,6 +1,7 @@
 import shortcutKey from "./ShortcutKey";
 import eventOperateStore from "./EventOperateStore";
 import coordinate from "./Coordinate";
+import eventManager from "../../framework/event/EventManager";
 
 /**
  * 缩放器
@@ -12,18 +13,15 @@ class Dragger {
     diff: { x: number, y: number } = {x: 0, y: 0}; // 相对于上一次pointermove移动差值
     lastPointermove: { x: number, y: number } = {x: 0, y: 0}; // 用于计算diff
     spaceDown: boolean = false;
-    callback: Function = () => {
-    };
 
     constructor(dom: any, callback?: Function) {
         this.dom = dom;
-        this.callback = callback || this.callback;
     }
 
     registerDragEvent = () => {
         if (!this.dom)
             return;
-        this.dom.addEventListener('pointerdown', (e: any) => {
+        eventManager.register('pointerdown', (e: any) => {
             if (shortcutKey._space) {
                 shortcutKey._mouseLeft = true;
                 this.dom.setPointerCapture(e.pointerId);
@@ -31,8 +29,7 @@ class Dragger {
                 this.lastPointermove = {x: e.clientX, y: e.clientY};
             }
         });
-
-        this.dom.addEventListener('pointermove', (e: any) => {
+        eventManager.register('pointermove', (e: any) => {
             if (shortcutKey._space) {
                 if (shortcutKey._mouseLeft) {
                     const {scale} = eventOperateStore;
@@ -47,16 +44,14 @@ class Dragger {
                 e.preventDefault();
             }
         });
-
-        this.dom.addEventListener('pointerup', () => {
+        eventManager.register('pointerup', (e: any) => {
             if (shortcutKey._space) {
                 if (shortcutKey._mouseLeft) {
                     shortcutKey._mouseLeft = false;
                 }
             }
         });
-
-        this.dom.addEventListener('pointercancel', () => {
+        eventManager.register('pointercancel', (e: any) => {
             if (shortcutKey._space) {
                 if (shortcutKey._mouseLeft) {
                     shortcutKey._mouseLeft = false;

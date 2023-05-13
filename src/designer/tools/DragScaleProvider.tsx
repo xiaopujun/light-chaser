@@ -15,7 +15,9 @@ class DragScaleProvider extends Component<DragScaleProviderProps> {
     content: any = null;
 
     componentDidMount() {
-        new Scaler(this.container, this.content, this.props.contentWidth || 1920, this.props.contentHeight || 1080, 0.1, 10).registerScaleEvent();
+        let contentWidth = this.props.contentWidth || 1920;
+        let contentHeight = this.props.contentHeight || 1080;
+        new Scaler(this.content, contentWidth, contentHeight).registerScaleEvent();
         new Dragger(this.content).registerDragEvent();
     }
 
