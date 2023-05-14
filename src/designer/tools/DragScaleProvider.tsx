@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Scaler from "../event-operate/Scaler";
-import Dragger from "../event-operate/Dragger";
+import Scaler from "../event/scale/Scaler";
+import Dragger from "../event/drag/Dragger";
 
 interface DragScaleProviderProps {
     containerWidth?: number;
@@ -11,27 +11,24 @@ interface DragScaleProviderProps {
 
 class DragScaleProvider extends Component<DragScaleProviderProps> {
 
-    container: any = null;
     content: any = null;
 
     componentDidMount() {
         let contentWidth = this.props.contentWidth || 1920;
         let contentHeight = this.props.contentHeight || 1080;
-        new Scaler(this.content, contentWidth, contentHeight).registerScaleEvent();
-        new Dragger(this.content).registerDragEvent();
+        new Scaler(this.content, contentWidth, contentHeight).init();
+        new Dragger(this.content).init();
     }
-
 
     render() {
         const {contentHeight, contentWidth, containerHeight, containerWidth} = this.props;
         return (
-            <div ref={ref => this.container = ref}
-                 style={{
-                     overflow: "hidden",
-                     height: containerHeight,
-                     width: containerWidth,
-                     backgroundColor: '#434343'
-                 }}>
+            <div style={{
+                overflow: "hidden",
+                height: containerHeight,
+                width: containerWidth,
+                backgroundColor: '#434343'
+            }}>
                 <div ref={ref => this.content = ref}
                      style={{width: contentWidth, height: contentHeight}}>
                     {this.props.children}

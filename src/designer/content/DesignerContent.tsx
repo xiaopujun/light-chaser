@@ -9,16 +9,13 @@ import DesignerBackground from "./DesignerBackground";
 import rootStore from "../BootStore";
 import rightStore from "../right/RightStore";
 import DesignerRuler from "../../lib/lc-ruler/DesignerRuler";
-import DesignerContainer from "../event-operate/DesignerContainer";
-import eventOperateStore from "../event-operate/EventOperateStore";
+import DesignerContainer from "../tools/DesignerContainer";
+import eventOperateStore from "../event/EventOperateStore";
 
 class DesignerContent extends PureComponent<DesignerStore | any> {
 
     rgl: any = null;
     lcbg: any = null;
-    state: any = {
-        scale: 1,
-    }
 
     calculateChartConfig = (elemId: string | number) => {
         const {elemConfigs} = designerStore;
@@ -119,8 +116,6 @@ class DesignerContent extends PureComponent<DesignerStore | any> {
         updateLayout && updateLayout(newItem);
     }
 
-    changeScale = (scale: number) => this.setState({scale: scale});
-
     getDragScaleProviderProps = () => {
         const {canvasConfig} = designerStore!;
         return {
@@ -128,7 +123,6 @@ class DesignerContent extends PureComponent<DesignerStore | any> {
             contentHeight: canvasConfig?.height,
             containerWidth: window.innerWidth - 95,
             containerHeight: window.innerHeight - 90,
-            changeScale: this.changeScale
         }
     }
 

@@ -16,8 +16,8 @@ import lcDesignerContentStore from './store/DesignerStore';
 import designerStore from './BootStore';
 import {getProjectById} from "../utils/LocalStorageUtil";
 import lcRightMenuStore from "./store/LcRightMenuStore";
-import shortcutKey from "./event-operate/ShortcutKey";
-import eventManager from "../framework/event/EventManager";
+import keyboardMouse from "./event/io/KeyboardMouse";
+import eventManager from "./event/core/EventManager";
 
 interface LCDesignerProps extends RouteComponentProps {
     LCDesignerStore: LCDesignerProps;
@@ -59,11 +59,11 @@ class LCDesigner extends Component<LCDesignerProps | any> {
         });
         eventManager.register('keyup', (e: any) => {
             if (e.keyCode === 32)
-                shortcutKey._space = false;
+                keyboardMouse.Space = false;
         });
         eventManager.register('keydown', (e: any) => {
             if (e.keyCode === 32)
-                shortcutKey._space = true;
+                keyboardMouse.Space = true;
         });
         //初始化操作类型
         this.initOperateType();

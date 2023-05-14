@@ -1,25 +1,24 @@
 /**
  * 缩放器
  */
-import eventOperateStore from "./EventOperateStore";
-import coordinate from "./Coordinate";
-import scaleCore from "../../framework/scale/ScaleCore";
-import eventManager from "../../framework/event/EventManager";
+import eventOperateStore from "../EventOperateStore";
+import coordinate from "../coordinate/Coordinate";
+import scaleCore from "../../../framework/scale/ScaleCore";
+import eventManager from "../core/EventManager";
 
 class Scaler {
-    container: any;
     content: any;
     contentW: number = 0;
     contentH: number = 0;
 
-    constructor(content: any, w: number, h: number) {
+    constructor(content: any, width: number, height: number) {
         this.content = content;
-        this.contentW = w;
-        this.contentH = h;
+        this.contentW = width;
+        this.contentH = height;
     }
 
 
-    registerScaleEvent = () => {
+    init = () => {
         if (!this.content)
             return;
         let {setScale} = eventOperateStore;

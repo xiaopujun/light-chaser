@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import shortcutKey from "./ShortcutKey";
+import keyboardMouse from "../event/io/KeyboardMouse";
 import scaleCore from "../../framework/scale/ScaleCore";
-import eventManager from "../../framework/event/EventManager";
+import eventManager from "../event/core/EventManager";
 
 class DesignerContainer extends Component {
 
@@ -33,7 +33,9 @@ class DesignerContainer extends Component {
     /**
      * 监听键盘抬起事件
      */
-    handleKeyUp = (event: any) => eventManager.emit('keyup', event);
+    handleKeyUp = (event: any) => {
+        eventManager.emit('keyup', event);
+    }
     /**
      * 监听键盘按下事件
      */
@@ -42,7 +44,7 @@ class DesignerContainer extends Component {
      * 监听鼠标滚轮事件
      */
     handleWheel = (event: any) => {
-        if (shortcutKey._space) {
+        if (keyboardMouse.Space) {
             let type = 1;
             if (event.deltaY > 0)
                 type = 0;

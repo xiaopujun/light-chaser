@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Ruler, {RulerProps} from "@scena/react-ruler";
-import shortcutKey from "../../designer/event-operate/ShortcutKey";
-import eventManager from "../../framework/event/EventManager";
+import keyboardMouse from "../../designer/event/io/KeyboardMouse";
+import eventManager from "../../designer/event/core/EventManager";
 import scaleCore from "../../framework/scale/ScaleCore";
 
 /**
@@ -57,7 +57,7 @@ class DesignerRuler extends Component<RulerProps> {
         eventManager.register('mousemove', (e: any) => {
             this.mousePosX = this.startPosX + ((e.clientX - this.baseOffset - 60) / this.state.scale);
             this.mousePosY = this.startPosY + ((e.clientY - this.baseOffset - 50) / this.state.scale);
-            if (shortcutKey._space && this.mouseDown) {
+            if (keyboardMouse.Space && this.mouseDown) {
                 this.offsetX = this.offsetX - e.movementX;
                 this._scrollPosX = this.startPosX + (this.offsetX / this.state.scale)
                 this.rulerX && this.rulerX.scroll(this._scrollPosX);
