@@ -26,19 +26,7 @@ class LcShow extends Component<LcShowProps | any> {
     }
 
     generateElement = () => {
-        const {LCDesignerStore} = this.state;
-        const {layoutConfigs = []} = LCDesignerStore!;
-        return layoutConfigs.map((item: any) => {
-            // let Chart: any = getChartsTemplate(item.name);
-            // const chartConfig = this.calculateChartConfig(item.id);
-            // return (
-            //     <div key={item?.id + ''} style={{width: '100%', height: '100%'}}>
-            //         <Suspense fallback={<Loading width={'100%'} height={'100%'}/>}>
-            //             <Chart elemId={item?.id} chartConfig={chartConfig}/>
-            //         </Suspense>
-            //     </div>
-            // );
-        })
+        return <></>
     }
 
     render() {

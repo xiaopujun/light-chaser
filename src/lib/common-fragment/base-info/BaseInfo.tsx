@@ -26,7 +26,7 @@ class BaseInfo extends Component<LcEmBaseInfoProps> {
 
     render() {
         const {baseInfo = {}} = this.props;
-        const {id = -1, name = '', desc = '', type = ''} = baseInfo;
+        const {id = -1, type = ''} = baseInfo;
         return (
             <div className={'lc-base-info'}>
                 <ConfigCard title={'基础信息'}>

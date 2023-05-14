@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import keyboardMouse from "./keyboard-mouse/KeyboardMouse";
 import scaleCore from "../../framework/scale/ScaleCore";
 import eventManager from "./core/EventManager";
+import eventOperateStore from "./EventOperateStore";
 
 class DesignerContainer extends Component {
 
@@ -45,11 +46,13 @@ class DesignerContainer extends Component {
      */
     handleWheel = (event: any) => {
         if (keyboardMouse.Space) {
+            const {setScale} = eventOperateStore;
             let type = 1;
             if (event.deltaY > 0)
                 type = 0;
             scaleCore.compute(type);
             eventManager.emit('wheel', event);
+            setScale(scaleCore.scale);
         }
     };
     /**

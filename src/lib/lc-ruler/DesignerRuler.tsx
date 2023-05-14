@@ -3,6 +3,13 @@ import Ruler, {RulerProps} from "@scena/react-ruler";
 import keyboardMouse from "../../designer/operate-provider/keyboard-mouse/KeyboardMouse";
 import eventManager from "../../designer/operate-provider/core/EventManager";
 import scaleCore from "../../framework/scale/ScaleCore";
+import {observer} from "mobx-react";
+import eventOperateStore from "../../designer/operate-provider/EventOperateStore";
+
+interface DesignerRulerProps {
+    offsetX?: number;
+    offsetY?: number;
+}
 
 /**
  * 缩放计算公式：
@@ -25,12 +32,9 @@ import scaleCore from "../../framework/scale/ScaleCore";
  * 则鼠标指针在当前缩放系数下的位置为：rulerP = startP + (mouOffset / scale)
  * 鼠标移动后的标尺起始位置为：scrollPos = startP + (mouOffset / scale)
  */
-class DesignerRuler extends Component<RulerProps> {
-    state = {
-        scale: 1,
-    }
+class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
 
-    baseOffset = 30;
+    baseOffset = 20;
     _scrollPosX = 0;
     _scrollPosY = 0;
     rulerX: any = null;
@@ -45,45 +49,52 @@ class DesignerRuler extends Component<RulerProps> {
     startPosY = 0;
 
     componentDidMount() {
+        const {offsetX = 0, offsetY = 0} = this.props;
+
         eventManager.register('wheel', () => {
             this.startPosX = this.mousePosX - ((this.mousePosX - this.startPosX) / scaleCore.ratio);
             this.scrollPosX = this.startPosX;
             this.startPosY = this.mousePosY - ((this.mousePosY - this.startPosY) / scaleCore.ratio);
             this.scrollPosY = this.startPosY;
-            this.setState({scale: scaleCore.scale});
         });
 
         eventManager.register('pointermove', (e: any) => {
-            this.mousePosX = this.startPosX + ((e.clientX - this.baseOffset - 60) / this.state.scale);
-            this.mousePosY = this.startPosY + ((e.clientY - this.baseOffset - 50) / this.state.scale);
+            const {scale} = eventOperateStore;
+            this.mousePosX = this.startPosX + ((e.clientX - this.baseOffset - offsetX) / scale);
+            this.mousePosY = this.startPosY + ((e.clientY - this.baseOffset - offsetY) / scale);
             if (keyboardMouse.RightClick) {
                 this.offsetX = this.offsetX - e.movementX;
-                this._scrollPosX = this.startPosX + (this.offsetX / this.state.scale)
+                this._scrollPosX = this.startPosX + (this.offsetX / scale)
                 this.rulerX && this.rulerX.scroll(this._scrollPosX);
 
                 this.offsetY = this.offsetY - e.movementY;
-                this._scrollPosY = this.startPosY + (this.offsetY / this.state.scale)
+                this._scrollPosY = this.startPosY + (this.offsetY / scale)
                 this.rulerY && this.rulerY.scroll(this._scrollPosY);
             }
         });
 
-        eventManager.register('pointerdown', () => {
-            this.offsetX = 0;
-            this.offsetY = 0;
+        eventManager.register('pointerdown', (e: PointerEvent) => {
+            if (e.button === 2) {
+                this.offsetX = 0;
+                this.offsetY = 0;
+            }
         });
 
-        eventManager.register('pointerup', () => {
-            this.offsetX = 0;
-            this.offsetY = 0;
-            this.scrollPosX = this._scrollPosX;
-            this.startPosX = this._scrollPosX;
-            this.scrollPosY = this._scrollPosY;
-            this.startPosY = this._scrollPosY;
+        eventManager.register('pointerup', (e: PointerEvent) => {
+            if (e.button === 2) {
+                this.offsetX = 0;
+                this.offsetY = 0;
+                this.scrollPosX = this._scrollPosX;
+                this.startPosX = this._scrollPosX;
+                this.scrollPosY = this._scrollPosY;
+                this.startPosY = this._scrollPosY;
+            }
         });
     }
 
 
     render() {
+        const {scale} = eventOperateStore;
         return (
             <div className={'lc-ruler'} style={{position: 'relative'}}>
                 <div className={'lc-ruler-horizontal'}
@@ -95,23 +106,26 @@ class DesignerRuler extends Component<RulerProps> {
                      }}>
                     <Ruler ref={ref => this.rulerX = ref}
                            scrollPos={this.scrollPosX}
-                           zoom={this.state.scale}
+                           zoom={scale}
                            negativeRuler={true}
+                           textOffset={[0, 10]}
+                           backgroundColor={'#090f1d'}
                            unit={50}/>
                 </div>
                 <div className={'lc-ruler-vertical'}
                      style={{
                          width: this.baseOffset,
-                         height: window.innerHeight - this.baseOffset - 50 - 40,
+                         height: window.innerHeight - this.baseOffset - 90,
                          position: 'relative',
                          overflow: 'hidden'
                      }}>
                     <Ruler ref={ref => this.rulerY = ref}
                            type={'vertical'}
                            scrollPos={this.scrollPosY}
-                           zoom={this.state.scale}
+                           zoom={scale}
                            negativeRuler={true}
-                           textOffset={[0, 20]}
+                           textOffset={[10, 0]}
+                           backgroundColor={'#090f1d'}
                            unit={50}/>
                 </div>
                 <div className={'lc-ruler-content'} style={{
@@ -126,4 +140,4 @@ class DesignerRuler extends Component<RulerProps> {
     }
 }
 
-export default DesignerRuler;
+export default observer(DesignerRuler);

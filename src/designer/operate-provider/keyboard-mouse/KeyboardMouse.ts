@@ -91,15 +91,15 @@ class KeyboardMouse {
 
     constructor() {
         eventManager.register('pointerdown', (e: PointerEvent) => {
-            if (e.button == 0)
+            if (e.button === 0)
                 this.keys.LeftClick = true;
-            else if (e.button == 2)
+            else if (e.button === 2)
                 this.keys.RightClick = true;
         });
         eventManager.register('pointerup', (e: PointerEvent) => {
-            if (e.button == 0)
+            if (e.button === 0)
                 this.keys.LeftClick = false;
-            else if (e.button == 2)
+            else if (e.button === 2)
                 this.keys.RightClick = false;
         });
         eventManager.register('keydown', (e: KeyboardEvent) => {

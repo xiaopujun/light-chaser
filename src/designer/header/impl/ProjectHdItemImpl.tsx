@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import ConfigItem from "../../../lib/config-item/ConfigItem";
-import NumberInput from "../../../lib/lc-input/NumberInput";
 import Dialog from "../../../lib/lc-dialog/Dialog";
 import headerStore from "../HeaderStore";
 import LcUnderLineInput from "../../../lib/lc-input/LcUnderLineInput";

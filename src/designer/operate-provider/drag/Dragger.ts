@@ -20,7 +20,7 @@ class Dragger {
         if (!this.dom)
             return;
         eventManager.register('pointerdown', (e: any) => {
-            if (e.button == 2) {
+            if (e.button === 2) {
                 this.dom.setPointerCapture(e.pointerId);
                 this.point = {x: e.clientX, y: e.clientY};
                 this.lastPointermove = {x: e.clientX, y: e.clientY};
