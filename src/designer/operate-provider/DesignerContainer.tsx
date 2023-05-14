@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import keyboardMouse from "../event/io/KeyboardMouse";
+import keyboardMouse from "./keyboard-mouse/KeyboardMouse";
 import scaleCore from "../../framework/scale/ScaleCore";
-import eventManager from "../event/core/EventManager";
+import eventManager from "./core/EventManager";
 
 class DesignerContainer extends Component {
 

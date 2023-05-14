@@ -1,4 +1,4 @@
-import keyboardMouse from "../io/KeyboardMouse";
+import keyboardMouse from "../keyboard-mouse/KeyboardMouse";
 import eventOperateStore from "../EventOperateStore";
 import coordinate from "../coordinate/Coordinate";
 import eventManager from "../core/EventManager";
@@ -20,15 +20,14 @@ class Dragger {
         if (!this.dom)
             return;
         eventManager.register('pointerdown', (e: any) => {
-            if (keyboardMouse.Space) {
-                keyboardMouse.LeftClick = true;
+            if (e.button == 2) {
                 this.dom.setPointerCapture(e.pointerId);
                 this.point = {x: e.clientX, y: e.clientY};
                 this.lastPointermove = {x: e.clientX, y: e.clientY};
             }
         });
         eventManager.register('pointermove', (e: any) => {
-            if (keyboardMouse.Space && keyboardMouse.LeftClick) {
+            if (keyboardMouse.RightClick) {
                 const {scale} = eventOperateStore;
                 const current1 = {x: e.clientX, y: e.clientY};
                 this.diff.x = current1.x - this.lastPointermove.x;
@@ -39,14 +38,6 @@ class Dragger {
                 this.dom.style.transform = 'translate3d(' + coordinate.x + 'px, ' + coordinate.y + 'px, 0) scale(' + scale + ')';
                 e.preventDefault();
             }
-        });
-        eventManager.register('pointerup', () => {
-            if (keyboardMouse.Space && keyboardMouse.LeftClick)
-                keyboardMouse.LeftClick = false;
-        });
-        eventManager.register('pointercancel', () => {
-            if (keyboardMouse.Space && keyboardMouse.LeftClick)
-                keyboardMouse.LeftClick = false;
         });
     }
 }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Scaler from "../event/scale/Scaler";
-import Dragger from "../event/drag/Dragger";
+import Scaler from "./scale/Scaler";
+import Dragger from "./drag/Dragger";
 
 interface DragScaleProviderProps {
     containerWidth?: number;

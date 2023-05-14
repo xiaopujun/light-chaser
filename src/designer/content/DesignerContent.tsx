@@ -2,15 +2,15 @@ import React, {PureComponent} from 'react';
 import ReactGridLayout, {Layout} from "react-grid-layout";
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-import DragScaleProvider from "../tools/DragScaleProvider";
+import DragScaleProvider from "../operate-provider/DragScaleProvider";
 import {observer} from "mobx-react";
 import designerStore, {DesignerStore} from "../store/DesignerStore";
 import DesignerBackground from "./DesignerBackground";
 import rootStore from "../BootStore";
 import rightStore from "../right/RightStore";
 import DesignerRuler from "../../lib/lc-ruler/DesignerRuler";
-import DesignerContainer from "../tools/DesignerContainer";
-import eventOperateStore from "../event/EventOperateStore";
+import DesignerContainer from "../operate-provider/DesignerContainer";
+import eventOperateStore from "../operate-provider/EventOperateStore";
 
 class DesignerContent extends PureComponent<DesignerStore | any> {
 
@@ -151,6 +151,7 @@ class DesignerContent extends PureComponent<DesignerStore | any> {
     }
 
     render() {
+        console.log('render')
         return (
             <DesignerContainer>
                 <DesignerRuler>

@@ -16,8 +16,8 @@ import lcDesignerContentStore from './store/DesignerStore';
 import designerStore from './BootStore';
 import {getProjectById} from "../utils/LocalStorageUtil";
 import lcRightMenuStore from "./store/LcRightMenuStore";
-import keyboardMouse from "./event/io/KeyboardMouse";
-import eventManager from "./event/core/EventManager";
+import keyboardMouse from "./operate-provider/keyboard-mouse/KeyboardMouse";
+import eventManager from "./operate-provider/core/EventManager";
 
 interface LCDesignerProps extends RouteComponentProps {
     LCDesignerStore: LCDesignerProps;
@@ -35,6 +35,8 @@ class LCDesigner extends Component<LCDesignerProps | any> {
 
     constructor(props: any) {
         super(props);
+        //初始化操作类型
+        this.initOperateType();
         const {doInit} = designerStore;
         doInit && doInit();
     }
@@ -65,8 +67,6 @@ class LCDesigner extends Component<LCDesignerProps | any> {
             if (e.keyCode === 32)
                 keyboardMouse.Space = true;
         });
-        //初始化操作类型
-        this.initOperateType();
     }
 
     componentWillUnmount() {

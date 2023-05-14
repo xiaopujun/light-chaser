@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {observer} from "mobx-react";
-import lcRightMenuStore from "../store/LcRightMenuStore";
-import lcDesignerContentStore from "../store/DesignerStore";
-import '../style/LcRightMenu.less';
+import lcRightMenuStore from "../../store/LcRightMenuStore";
+import lcDesignerContentStore from "../../store/DesignerStore";
+import '../../style/LcRightMenu.less';
 
 class OperateMenu extends Component {
 

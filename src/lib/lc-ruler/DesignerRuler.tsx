@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Ruler, {RulerProps} from "@scena/react-ruler";
-import keyboardMouse from "../../designer/event/io/KeyboardMouse";
-import eventManager from "../../designer/event/core/EventManager";
+import keyboardMouse from "../../designer/operate-provider/keyboard-mouse/KeyboardMouse";
+import eventManager from "../../designer/operate-provider/core/EventManager";
 import scaleCore from "../../framework/scale/ScaleCore";
 
 /**
@@ -43,10 +43,9 @@ class DesignerRuler extends Component<RulerProps> {
     mousePosY = 0;
     scrollPosY = 0;
     startPosY = 0;
-    mouseDown = false;
 
     componentDidMount() {
-        eventManager.register('wheel', (e: any) => {
+        eventManager.register('wheel', () => {
             this.startPosX = this.mousePosX - ((this.mousePosX - this.startPosX) / scaleCore.ratio);
             this.scrollPosX = this.startPosX;
             this.startPosY = this.mousePosY - ((this.mousePosY - this.startPosY) / scaleCore.ratio);
@@ -54,10 +53,10 @@ class DesignerRuler extends Component<RulerProps> {
             this.setState({scale: scaleCore.scale});
         });
 
-        eventManager.register('mousemove', (e: any) => {
+        eventManager.register('pointermove', (e: any) => {
             this.mousePosX = this.startPosX + ((e.clientX - this.baseOffset - 60) / this.state.scale);
             this.mousePosY = this.startPosY + ((e.clientY - this.baseOffset - 50) / this.state.scale);
-            if (keyboardMouse.Space && this.mouseDown) {
+            if (keyboardMouse.RightClick) {
                 this.offsetX = this.offsetX - e.movementX;
                 this._scrollPosX = this.startPosX + (this.offsetX / this.state.scale)
                 this.rulerX && this.rulerX.scroll(this._scrollPosX);
@@ -68,14 +67,12 @@ class DesignerRuler extends Component<RulerProps> {
             }
         });
 
-        eventManager.register('mousedown', (e: any) => {
-            this.mouseDown = true
+        eventManager.register('pointerdown', () => {
             this.offsetX = 0;
             this.offsetY = 0;
         });
 
-        eventManager.register('mouseup', (e: any) => {
-            this.mouseDown = false
+        eventManager.register('pointerup', () => {
             this.offsetX = 0;
             this.offsetY = 0;
             this.scrollPosX = this._scrollPosX;
