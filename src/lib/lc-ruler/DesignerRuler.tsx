@@ -34,6 +34,9 @@ interface DesignerRulerProps {
  */
 class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
 
+    unit = 50;
+    _scale = 1;
+
     baseOffset = 20;
     _scrollPosX = 0;
     _scrollPosY = 0;
@@ -56,6 +59,13 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
             this.scrollPosX = this.startPosX;
             this.startPosY = this.mousePosY - ((this.mousePosY - this.startPosY) / scaleCore.ratio);
             this.scrollPosY = this.startPosY;
+            if (Math.floor(scaleCore.scale / this._scale) === 2) {
+                this._scale = scaleCore.scale;
+                this.unit /= 2;
+            } else if (parseFloat((scaleCore.scale / this._scale).toFixed(1)) === 0.5) {
+                this._scale = scaleCore.scale;
+                this.unit *= 2;
+            }
         });
 
         eventManager.register('pointermove', (e: any) => {
@@ -107,10 +117,15 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
                     <Ruler ref={ref => this.rulerX = ref}
                            scrollPos={this.scrollPosX}
                            zoom={scale}
+                           lineColor={'#6e8590'}
+                           textColor={'#a6a6a6'}
+                           longLineSize={7}
+                           shortLineSize={7}
+                           mainLineSize={10}
                            negativeRuler={true}
                            textOffset={[0, 10]}
                            backgroundColor={'#090f1d'}
-                           unit={50}/>
+                           unit={this.unit}/>
                 </div>
                 <div className={'lc-ruler-vertical'}
                      style={{
@@ -122,11 +137,16 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
                     <Ruler ref={ref => this.rulerY = ref}
                            type={'vertical'}
                            scrollPos={this.scrollPosY}
+                           lineColor={'#6e8590'}
+                           textColor={'#a6a6a6'}
+                           longLineSize={7}
+                           shortLineSize={7}
+                           mainLineSize={10}
                            zoom={scale}
                            negativeRuler={true}
                            textOffset={[10, 0]}
                            backgroundColor={'#090f1d'}
-                           unit={50}/>
+                           unit={this.unit}/>
                 </div>
                 <div className={'lc-ruler-content'} style={{
                     position: 'absolute',
