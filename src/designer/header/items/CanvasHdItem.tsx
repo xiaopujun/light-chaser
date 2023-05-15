@@ -11,6 +11,7 @@ export default class CanvasHdItem extends AbstractHeaderItem {
         return {
             icon: SettingFilled,
             name: '画布设置',
+            order: 1,
             onClick: () => {
                 setCanvasVisible(true);
             }

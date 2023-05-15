@@ -11,6 +11,7 @@ export default class ThemeHdItem extends AbstractHeaderItem {
         return {
             icon: SkinFilled,
             name: '主题设置',
+            order: 2,
             onClick: () => {
                 setThemeVisible(true);
             }

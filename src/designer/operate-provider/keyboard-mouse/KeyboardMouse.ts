@@ -104,12 +104,20 @@ class KeyboardMouse {
         });
         eventManager.register('keydown', (e: KeyboardEvent) => {
             let key = e.key.toUpperCase()
+            if (key === ' ') {
+                this.keys.Space = true;
+                return;
+            }
             if (key in this.keys) {
                 this.keys[key as keyof KMMap] = true;
             }
         });
         eventManager.register('keyup', (e: KeyboardEvent) => {
             let key = e.key.toUpperCase()
+            if (key === ' ') {
+                this.keys.Space = false;
+                return;
+            }
             if (key in this.keys) {
                 this.keys[key as keyof KMMap] = false;
             }

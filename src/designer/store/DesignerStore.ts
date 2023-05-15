@@ -1,4 +1,4 @@
-import {makeAutoObservable, runInAction} from "mobx";
+import {makeAutoObservable, runInAction, toJS} from "mobx";
 import * as _ from "lodash";
 import {Layout} from "react-grid-layout";
 import {
@@ -19,8 +19,9 @@ import {
     Theme
 } from "../../framework/types/DesignerType";
 import bootStore from "../BootStore";
+import BaseStore from "../../framework/interface/BaseStore";
 
-class DesignerStore implements LCDesigner {
+class DesignerStore implements LCDesigner, BaseStore {
     constructor() {
         makeAutoObservable(this);
     }
@@ -35,7 +36,7 @@ class DesignerStore implements LCDesigner {
      */
     canvasConfig: CanvasConfig = {
         interval: 0,  //元素间距
-        columns: 16,  //画布列总数
+        columns: 192,  //画布列总数
         baseHeight: 0,  //元素单位高度
         scale: 1,  //画布缩放比例
         width: 1920,  //画布宽
@@ -146,25 +147,44 @@ class DesignerStore implements LCDesigner {
      */
     doInit = (store: LCDesigner) => {
         this.id = store.id ?? this.id;
-        this.canvasConfig = store.canvasConfig || this.canvasConfig;
-        this.activeElem = store.activeElem || this.activeElem;
+        this.canvasConfig = store.canvasConfig ? {...this.canvasConfig, ...store.canvasConfig} : this.canvasConfig;
+        this.activeElem = store.activeElem ? {...this.activeElem, ...store.activeElem} : this.activeElem;
         this.bgConfig = store.bgConfig ? {...this.bgConfig, ...store.bgConfig} : this.bgConfig;
-        this.projectConfig = store.projectConfig || this.projectConfig;
-        this.elemConfigs = store.elemConfigs || this.elemConfigs;
+        this.projectConfig = store.projectConfig ? {...this.projectConfig, ...store.projectConfig} : this.projectConfig;
+        this.elemConfigs = store.elemConfigs ? {...this.elemConfigs, ...store.elemConfigs} : this.elemConfigs;
         this.layoutConfigs = store.layoutConfigs || this.layoutConfigs;
-        this.statisticInfo = store.statisticInfo || this.statisticInfo;
+        this.statisticInfo = store.statisticInfo ? {...this.statisticInfo, ...store.statisticInfo} : this.statisticInfo;
         this.layers = store.layers || this.layers;
         this.theme = store.theme || this.theme;
         this.group = store.group || this.group;
         this.linkage = store.linkage || this.linkage;
         this.condition = store.condition || this.condition;
-        this.extendParams = store.extendParams || this.extendParams;
+        this.extendParams = store.extendParams ? {...this.extendParams, ...store.extendParams} : this.extendParams;
+    }
+
+    getData(): any {
+        return {
+            id: this.id,
+            canvasConfig: toJS(this.canvasConfig),
+            activeElem: toJS(this.activeElem),
+            bgConfig: toJS(this.bgConfig),
+            projectConfig: toJS(this.projectConfig),
+            elemConfigs: toJS(this.elemConfigs),
+            layoutConfigs: toJS(this.layoutConfigs),
+            statisticInfo: toJS(this.statisticInfo),
+            layers: toJS(this.layers),
+            theme: toJS(this.theme),
+            group: toJS(this.group),
+            linkage: toJS(this.linkage),
+            condition: toJS(this.condition),
+            extendParams: toJS(this.extendParams),
+        }
     }
 
     /**
      * 清空store
      */
-    doClear = () => {
+    doDestroy = () => {
         this.id = -1;
         this.canvasConfig = {};
         this.activeElem = {};

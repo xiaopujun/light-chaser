@@ -13,10 +13,9 @@ import DesignerLeft from "./left";
 import Right from "./right";
 import DesignerFooter from "./footer/DesignerFooter";
 import lcDesignerContentStore from './store/DesignerStore';
-import designerStore from './BootStore';
+import bootStore from './BootStore';
 import {getProjectById} from "../utils/LocalStorageUtil";
 import lcRightMenuStore from "./store/LcRightMenuStore";
-import keyboardMouse from "./operate-provider/keyboard-mouse/KeyboardMouse";
 import eventManager from "./operate-provider/core/EventManager";
 
 interface LCDesignerProps extends RouteComponentProps {
@@ -35,13 +34,19 @@ class LCDesigner extends Component<LCDesignerProps | any> {
 
     constructor(props: any) {
         super(props);
+        //启动组件自动化扫描
+        const {doInit} = bootStore;
+        doInit && doInit();
         //初始化操作类型
         this.initOperateType();
-        const {doInit} = designerStore;
-        doInit && doInit();
     }
 
     componentDidMount() {
+        //注册右键操作菜单事件
+        this.handleContextMenu();
+    }
+
+    handleContextMenu = () => {
         //todo 在设计器加载时，异步注册设计器中所有设计到的操作事件
         const {setPosition, setTargetId, updateVisible} = lcRightMenuStore;
         eventManager.register('click', (e: any) => {
@@ -58,14 +63,6 @@ class LCDesigner extends Component<LCDesignerProps | any> {
             } else {
                 updateVisible && updateVisible(false);
             }
-        });
-        eventManager.register('keyup', (e: any) => {
-            if (e.keyCode === 32)
-                keyboardMouse.Space = false;
-        });
-        eventManager.register('keydown', (e: any) => {
-            if (e.keyCode === 32)
-                keyboardMouse.Space = true;
         });
     }
 

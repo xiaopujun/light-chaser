@@ -7,6 +7,9 @@ import {AbstractClassifyItem} from "../framework/abstract/AbstractClassifyItem";
 import headerStore from "./header/HeaderStore";
 import rightStore from "./right/RightStore";
 
+/**
+ * 设计器启动器，通过该启动器自动化扫描加载组件
+ */
 class BootStore {
 
     headersClazz: { [key: string]: React.Component | React.FC | any } = {};

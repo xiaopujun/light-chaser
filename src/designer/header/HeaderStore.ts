@@ -34,7 +34,10 @@ class HeaderStore {
                 headerInfoArr.push(headerInfo);
             }
         }
-        this.headerInfoArr = headerInfoArr;
+        this.headerInfoArr = headerInfoArr.sort((a, b) => {
+            const aOrder = a.order || 0, bOrder = b.order || 0;
+            return aOrder - bOrder
+        });
         this.loaded = true;
     }
 

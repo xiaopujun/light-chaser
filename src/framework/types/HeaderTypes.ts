@@ -7,6 +7,7 @@ export interface HeaderItemProps {
     icon: React.Component | React.FC | any;
     name: string;
     onClick?: () => void;
+    order?: number;
 }
 
 /**

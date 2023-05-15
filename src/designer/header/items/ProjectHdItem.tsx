@@ -11,6 +11,7 @@ export default class ProjectHdItem extends AbstractHeaderItem {
         return {
             icon: SettingFilled,
             name: '项目设置',
+            order: 0,
             onClick: () => {
                 setProjectVisible(true);
             }

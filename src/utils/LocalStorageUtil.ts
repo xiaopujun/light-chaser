@@ -1,23 +1,5 @@
 import {DesignerStore} from "../designer/store/DesignerStore";
 import localforage from 'localforage';
-import {toJS} from "mobx";
-
-
-/**
- * 构建保存项目时的基础数据
- */
-const buildConfig = (designerStore: DesignerStore) => {
-    let {id = -1, canvasConfig, elemConfigs, layoutConfigs, projectConfig, bgConfig, extendParams} = designerStore;
-    return {
-        id,
-        canvasConfig: toJS(canvasConfig),
-        elemConfigs: toJS(elemConfigs),
-        layoutConfigs: toJS(layoutConfigs),
-        projectConfig: toJS(projectConfig),
-        bgConfig: toJS(bgConfig),
-        extendParams: toJS(extendParams)
-    };
-}
 
 /**
  * 保存项目到本地数据库
@@ -107,7 +89,7 @@ const delImgFormLocal = (blobKey: string) => {
 export const createProject = (designerStore: DesignerStore) => {
     return new Promise((resolve) => {
         //1.构建保存项目时的基础数据
-        let config = buildConfig(designerStore);
+        let config = designerStore.getData();
         //2.生成唯一id
         let id = Date.now();
         config.id = id;
@@ -135,7 +117,7 @@ export const createProject = (designerStore: DesignerStore) => {
 export const updateProject = (designerStore: DesignerStore) => {
     return new Promise((resolve) => {
         //1.构建更新项目时的基础数据
-        let config = buildConfig(designerStore);
+        let config = designerStore.getData();
         getAllProject().then((dataArr: any) => {
             if (dataArr && dataArr instanceof Array) {
                 //2.找到要更新的项目
