@@ -62,7 +62,7 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
             if (Math.floor(scaleCore.scale / this._scale) === 2) {
                 this._scale = scaleCore.scale;
                 this.unit /= 2;
-            } else if (parseFloat((scaleCore.scale / this._scale).toFixed(1)) === 0.5) {
+            } else if (parseFloat((Math.round((scaleCore.scale / this._scale) * 10) / 10).toFixed(1)) === 0.5) {
                 this._scale = scaleCore.scale;
                 this.unit *= 2;
             }
@@ -117,11 +117,8 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
                     <Ruler ref={ref => this.rulerX = ref}
                            scrollPos={this.scrollPosX}
                            zoom={scale}
-                           lineColor={'#6e8590'}
+                           lineColor={'#767676'}
                            textColor={'#a6a6a6'}
-                           longLineSize={7}
-                           shortLineSize={7}
-                           mainLineSize={10}
                            negativeRuler={true}
                            textOffset={[0, 10]}
                            backgroundColor={'#090f1d'}
@@ -137,11 +134,8 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
                     <Ruler ref={ref => this.rulerY = ref}
                            type={'vertical'}
                            scrollPos={this.scrollPosY}
-                           lineColor={'#6e8590'}
+                           lineColor={'#767676'}
                            textColor={'#a6a6a6'}
-                           longLineSize={7}
-                           shortLineSize={7}
-                           mainLineSize={10}
                            zoom={scale}
                            negativeRuler={true}
                            textOffset={[10, 0]}
