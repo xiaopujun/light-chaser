@@ -37,24 +37,21 @@ const saveProjectToLocal = (config: any) => {
  */
 const saveImgToLocal = (url: string, key: string) => {
     return new Promise((resolve) => {
-        fetch(url)
-            .then((response) => {
-                if (response.ok)
-                    return response.blob();
-                throw new Error("get bgImg error");
-            })
-            .then((blob) => {
-                localforage.setItem(key, blob).then(() => {
-                    resolve(true)
-                }).catch((error) => {
-                    console.log("save bgImg error", error);
-                    resolve(false);
-                });
-            })
-            .catch((error) => {
-                console.log("get bgImg error", error);
+        fetch(url).then((response) => {
+            if (response.ok)
+                return response.blob();
+            throw new Error("get bgImg error");
+        }).then((blob) => {
+            localforage.setItem(key, blob).then(() => {
+                resolve(true)
+            }).catch((error) => {
+                console.log("save bgImg error", error);
                 resolve(false);
             });
+        }).catch((error) => {
+            console.log("get bgImg error", error);
+            resolve(false);
+        });
     });
 }
 
@@ -83,6 +80,58 @@ const delImgFormLocal = (blobKey: string) => {
     });
 }
 
+const saveProject = (config: DesignerStore) => {
+    return new Promise((resolve) => {
+        //1.如果有背景图片则先处理背景图片
+        if (config?.bgConfig?.bgImgUrl !== '') {
+            let bgImgKey = 'bgImg' + config.id;
+            //1.1 保存背景图片到本地数据库
+            saveImgToLocal(config.bgConfig?.bgImgUrl!, bgImgKey).then((blobKey) => {
+                if (config.bgConfig && blobKey !== '')
+                    config.bgConfig.bgImgUrl = bgImgKey;
+                //2.2 保存项目到本地数据库
+                saveProjectToLocal(config).then(id => resolve(id));
+            });
+        } else {
+            //2.无背景图片则直接保存
+            saveProjectToLocal(config).then(id => resolve(id));
+        }
+    });
+}
+
+const saveProjectSimpleData = (config: DesignerStore) => {
+    return new Promise((resolve) => {
+        localforage.getItem('lc-project-list').then((dataArr: any) => {
+            let simpleData = {
+                id: config.id,
+                name: config.projectConfig.name,
+                des: config.projectConfig.des,
+                state: config.projectConfig.state,
+                updateTime: config.projectConfig.updateTime,
+            }
+            if (dataArr && dataArr instanceof Array) {
+                dataArr.push(simpleData);
+                localforage.setItem('lc-project-list', dataArr).then(() => {
+                    resolve(true);
+                }).catch((error) => {
+                    console.log("saveProjectToLocal error", error)
+                    resolve(false);
+                });
+            } else {
+                //没有没有保存过数据则初始化
+                let dataArr = [];
+                dataArr.push(simpleData);
+                localforage.setItem('lc-project-list', dataArr).then(() => {
+                    resolve(true);
+                }).catch((error) => {
+                    console.log("Save simple data error", error)
+                    resolve(false);
+                });
+            }
+        });
+    });
+}
+
 /**
  * 创建项目
  */
@@ -91,22 +140,14 @@ export const createProject = (designerStore: DesignerStore) => {
         //1.构建保存项目时的基础数据
         let config = designerStore.getData();
         //2.生成唯一id
-        let id = Date.now();
-        config.id = id;
-        let bgImgKey = 'bgImg' + id;
-        //2.如果有背景图片则先处理背景图片
-        if (config?.bgConfig?.bgImgUrl !== '') {
-            //2.1 保存背景图片到本地数据库
-            saveImgToLocal(config.bgConfig?.bgImgUrl!, bgImgKey).then((blobKey) => {
-                if (config.bgConfig && blobKey !== '')
-                    config.bgConfig.bgImgUrl = bgImgKey;
-                //2.2 保存项目到本地数据库
-                saveProjectToLocal(config).then(id => resolve(id));
+        config.id = Date.now();
+        //3.保存项目
+        saveProject(config).then(() => {
+            //4.维护项目列表（保存项目的轻量级描述信息，避免加载列表时内存占用过大）
+            saveProjectSimpleData(config).then(() => {
+                resolve(config.id as number);
             });
-        } else {
-            //3.无背景图片则直接保存
-            saveProjectToLocal(config).then(id => resolve(id));
-        }
+        });
     });
 }
 

@@ -12,8 +12,9 @@ interface LcConfigMenusProps {
 class MenuList extends Component<LcConfigMenusProps | any> {
 
     menuChange = (e: any) => {
-        const {setActiveMenu} = rightStore;
+        const {setActiveMenu, setContentVisible} = rightStore;
         setActiveMenu && setActiveMenu(e.currentTarget.id);
+        setContentVisible && setContentVisible(true);
     }
 
     buildMenuList = () => {

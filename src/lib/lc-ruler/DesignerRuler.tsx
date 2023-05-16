@@ -107,6 +107,16 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
         const {scale} = eventOperateStore;
         return (
             <div className={'lc-ruler'} style={{position: 'relative'}}>
+                <div style={{
+                    position: 'absolute',
+                    width: 20,
+                    height: 20,
+                    color: '#838383',
+                    textAlign: 'center',
+                    fontSize: 12,
+                    top: -1
+                }}>px
+                </div>
                 <div className={'lc-ruler-horizontal'}
                      style={{
                          height: this.baseOffset,

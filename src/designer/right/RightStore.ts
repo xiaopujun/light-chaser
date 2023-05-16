@@ -22,8 +22,6 @@ class RightStore {
 
     setActiveMenu = (menu: string) => {
         this.activeMenu = menu;
-        if (!this.contentVisible)
-            this.contentVisible = true;
     }
 
     setMenus = (menus: Array<MenuInfo>) => {
