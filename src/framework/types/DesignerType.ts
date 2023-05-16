@@ -216,8 +216,6 @@ export interface LCDesigner {
     canvasConfig?: CanvasConfig;
     //激活状态元素信息
     activeElem?: ActiveElem;
-    //背景设置
-    bgConfig?: BackgroundConfig;
     //项目设置
     projectConfig?: ProjectConfig;
     //元素样式

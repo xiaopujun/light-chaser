@@ -1,5 +1,6 @@
 import {DesignerStore} from "../designer/store/DesignerStore";
 import localforage from 'localforage';
+import {BackgroundConfig} from "../framework/types/DesignerType";
 
 /**
  * 保存项目到本地数据库
@@ -83,12 +84,13 @@ const delImgFormLocal = (blobKey: string) => {
 const saveProject = (config: DesignerStore) => {
     return new Promise((resolve) => {
         //1.如果有背景图片则先处理背景图片
-        if (config?.bgConfig?.bgImgUrl !== '') {
+        const bgConfig: BackgroundConfig = config.elemConfigs['-1']['background'];
+        if (bgConfig?.bgImgUrl !== '') {
             let bgImgKey = 'bgImg' + config.id;
             //1.1 保存背景图片到本地数据库
-            saveImgToLocal(config.bgConfig?.bgImgUrl!, bgImgKey).then((blobKey) => {
-                if (config.bgConfig && blobKey !== '')
-                    config.bgConfig.bgImgUrl = bgImgKey;
+            saveImgToLocal(bgConfig?.bgImgUrl!, bgImgKey).then((blobKey) => {
+                if (bgConfig && blobKey !== '')
+                    bgConfig.bgImgUrl = bgImgKey;
                 //2.2 保存项目到本地数据库
                 saveProjectToLocal(config).then(id => resolve(id));
             });

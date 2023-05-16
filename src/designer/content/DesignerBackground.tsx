@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
-import lcDesignerContentStore from '../store/DesignerStore';
+import designerStore from '../store/DesignerStore';
 import {observer} from "mobx-react";
-import {BackgroundColorMode, BackgroundMode} from "../../framework/types/DesignerType";
+import {BackgroundColorMode, BackgroundConfig, BackgroundMode} from "../../framework/types/DesignerType";
 
 interface LcDesignerBackgroundProps {
     onClick?: (e: any) => void;
@@ -17,7 +17,7 @@ class DesignerBackground extends PureComponent<LcDesignerBackgroundProps> {
     }
 
     getBgConfigProps = () => {
-        const {bgConfig} = lcDesignerContentStore!;
+        const bgConfig: BackgroundConfig = designerStore.elemConfigs['-1']['background'];
         let bgImgSize = '100% 100%';
         if (bgConfig.bgImgSize && bgConfig.bgImgSize.length === 2)
             bgImgSize = `${bgConfig.bgImgSize[0]}px ${bgConfig.bgImgSize[1]}px`;

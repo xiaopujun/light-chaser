@@ -101,11 +101,6 @@ class LCDesigner extends Component<LCDesignerProps | any> {
             projectConfig: {
                 name: screenName
             },
-            bgConfig: {
-                width: parseInt(screenWidth),
-                height: parseInt(screenHeight),
-                bgColor: '#031419',
-            }
         })
     }
 
@@ -121,7 +116,6 @@ class LCDesigner extends Component<LCDesignerProps | any> {
                     id: store.id,
                     canvasConfig: store.canvasConfig,
                     activeElem: store.activeElem,
-                    bgConfig: store.bgConfig,
                     projectConfig: store.projectConfig,
                     elemConfigs: store.elemConfigs,
                     layoutConfigs: store.layoutConfigs,

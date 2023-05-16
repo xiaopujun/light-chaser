@@ -5,11 +5,11 @@ import Dragger from "antd/es/upload/Dragger";
 import LcRadio from "../../../lib/lc-radio/LcRadio";
 import {Button, Radio, Select} from "antd";
 import CfgItemBorder from "../../../lib/config-item-border/CfgItemBorder";
-import lcDesignerContentStore from '../../../designer/store/DesignerStore';
+import designerStore from '../../../designer/store/DesignerStore';
 import {observer} from "mobx-react";
 import {toJS} from "mobx";
 import LcSelect from "../../../lib/lc-select/LCSelect";
-import {BackgroundColorMode, BackgroundMode} from "../../../framework/types/DesignerType";
+import {BackgroundColorMode, BackgroundConfig, BackgroundMode} from "../../../framework/types/DesignerType";
 import {ConfigType} from "../../../framework/types/ConfigType";
 import NumberInput from "../../../lib/lc-input/NumberInput";
 import ConfigItem from "../../../lib/config-item/ConfigItem";
@@ -25,14 +25,14 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
 
     beforeUpload = (file: any) => {
         const fileReader = new FileReader();
-        const {updateBgConfig} = lcDesignerContentStore;
+        const {updateBgConfig} = designerStore;
         //文件读取完毕后会的处理事件
         fileReader.onload = (event: any) => {
             const blob = new Blob([event.target.result], {type: file.type});
             const bgImgUrl = URL.createObjectURL(blob);
             updateBgConfig({bgImgUrl: bgImgUrl});
             //todo 更换图片的时候要释放链接和内存的关联，可以提高部分性能
-            // URL.revokeObjectURL(objectUrl);
+            // URL.revokeObjectURL(bgImgUrl);
         };
         //通过二进制流读取文件，读取完毕后会调用上方设置好的onload事件
         fileReader.readAsArrayBuffer(file);
@@ -40,12 +40,14 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
     }
 
     bgModeChange = (e: any) => {
-        const {updateBgConfig} = lcDesignerContentStore;
+        const {updateBgConfig} = designerStore;
         updateBgConfig({bgMode: e.target.value});
     }
 
     bgImgSizeChange = (e: any) => {
-        let {updateBgConfig, bgConfig: {bgImgSize}} = lcDesignerContentStore;
+        let {updateBgConfig, elemConfigs} = designerStore;
+        const bgConfig: BackgroundConfig = elemConfigs['-1']['background'];
+        let bgImgSize = bgConfig.bgImgSize;
         let tempBgImgSize = toJS(bgImgSize);
         const {target: {value, name}} = e;
         if (name === 'bgX' && tempBgImgSize) {
@@ -57,7 +59,9 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
     }
 
     bgImgPosChange = (e: any) => {
-        let {updateBgConfig, bgConfig: {bgImgPos}} = lcDesignerContentStore;
+        let {updateBgConfig, elemConfigs} = designerStore;
+        const bgConfig: BackgroundConfig = elemConfigs['-1']['background'];
+        let bgImgPos = bgConfig.bgImgPos;
         let tempBgImgPos = toJS(bgImgPos);
         const {target: {value, name}} = e;
         if (name === 'posX' && tempBgImgPos) {
@@ -69,29 +73,31 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
     }
 
     repeatTypeChange = (value: any) => {
-        const {updateBgConfig} = lcDesignerContentStore;
+        const {updateBgConfig} = designerStore;
         updateBgConfig({bgImgRepeat: value});
     }
 
     bgColorModeChange = (e: any) => {
-        const {updateBgConfig} = lcDesignerContentStore;
+        const {updateBgConfig} = designerStore;
         updateBgConfig({bgColorMode: e.target.value});
     }
 
     bgColorChange = (color: string) => {
-        const {updateBgConfig} = lcDesignerContentStore;
+        const {updateBgConfig} = designerStore;
         updateBgConfig({bgColor: color});
     }
 
     clearBgImg = () => {
-        const {updateBgConfig, bgConfig} = lcDesignerContentStore;
+        const {updateBgConfig, elemConfigs} = designerStore;
+        const bgConfig: BackgroundConfig = elemConfigs['-1']['background'];
         if (bgConfig?.bgImgUrl)
             URL.revokeObjectURL(bgConfig.bgImgUrl);
         updateBgConfig({bgImgUrl: ''});
     }
 
     bgGradientColorChanged = (color: string, e: any, id: any) => {
-        const {updateBgConfig, bgConfig} = lcDesignerContentStore;
+        const {updateBgConfig, elemConfigs} = designerStore;
+        const bgConfig: BackgroundConfig = elemConfigs['-1']['background'];
         if (id === 'startColor')
             this.lineGradientColor[0] = color;
         if (id === 'endColor')
@@ -107,7 +113,8 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
     }
 
     gradientAngleChanged = (e: any) => {
-        const {updateBgConfig, bgConfig} = lcDesignerContentStore;
+        const {updateBgConfig, elemConfigs} = designerStore;
+        const bgConfig: BackgroundConfig = elemConfigs['-1']['background'];
         this.gradientAngle = e.target.value;
         if (bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT)
             updateBgConfig({bgColor: `linear-gradient(${this.gradientAngle}deg, ${this.lineGradientColor[0]}, ${this.lineGradientColor[1]})`});
@@ -117,7 +124,7 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
 
 
     render() {
-        const {bgConfig} = lcDesignerContentStore;
+        const bgConfig: BackgroundConfig = designerStore.elemConfigs['-1']['background'];
         // const {bgImgSize = [1920, 1080]} = bgConfig;
         return (
             <div className={'lc-canvas-config'}>

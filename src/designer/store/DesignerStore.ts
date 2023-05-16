@@ -52,21 +52,6 @@ class DesignerStore implements LCDesigner, BaseStore {
     };
 
     /**
-     * 背景设置
-     */
-    bgConfig: BackgroundConfig = {
-        width: 1920,//背景宽
-        height: 1080,//背景高
-        bgMode: BackgroundMode.NONE,//背景模式
-        bgImgSize: [1920, 1080],//背景图片尺寸
-        bgImgPos: [0, 0],//背景图片位置
-        bgImgRepeat: BackgroundImgRepeat.NO_REPEAT,//背景图片重复方式
-        bgImgUrl: '',//背景图片url地址
-        bgColorMode: BackgroundColorMode.SINGLE,//背景图片颜色模式
-        bgColor: '#040d18',//背景颜色
-    };
-
-    /**
      * 项目设置
      */
     projectConfig: ProjectConfig = {
@@ -149,7 +134,6 @@ class DesignerStore implements LCDesigner, BaseStore {
         this.id = store.id ?? this.id;
         this.canvasConfig = store.canvasConfig ? {...this.canvasConfig, ...store.canvasConfig} : this.canvasConfig;
         this.activeElem = store.activeElem ? {...this.activeElem, ...store.activeElem} : this.activeElem;
-        this.bgConfig = store.bgConfig ? {...this.bgConfig, ...store.bgConfig} : this.bgConfig;
         this.projectConfig = store.projectConfig ? {...this.projectConfig, ...store.projectConfig} : this.projectConfig;
         this.elemConfigs = store.elemConfigs ? {...this.elemConfigs, ...store.elemConfigs} : this.elemConfigs;
         this.layoutConfigs = store.layoutConfigs || this.layoutConfigs;
@@ -167,7 +151,6 @@ class DesignerStore implements LCDesigner, BaseStore {
             id: this.id,
             canvasConfig: toJS(this.canvasConfig),
             activeElem: toJS(this.activeElem),
-            bgConfig: toJS(this.bgConfig),
             projectConfig: toJS(this.projectConfig),
             elemConfigs: toJS(this.elemConfigs),
             layoutConfigs: toJS(this.layoutConfigs),
@@ -188,7 +171,6 @@ class DesignerStore implements LCDesigner, BaseStore {
         this.id = -1;
         this.canvasConfig = {};
         this.activeElem = {};
-        this.bgConfig = {};
         this.projectConfig = {};
         this.elemConfigs = {};
         this.layoutConfigs = [];
@@ -226,15 +208,6 @@ class DesignerStore implements LCDesigner, BaseStore {
     setLayoutConfigs = (layoutConfigs: LcLayout[]) => {
         runInAction(() => {
             this.layoutConfigs = layoutConfigs;
-        })
-    }
-
-    /**
-     * 设置背景属性
-     */
-    setBgConfig = (bgConfig: BackgroundConfig) => {
-        runInAction(() => {
-            this.bgConfig = bgConfig;
         })
     }
 
@@ -353,10 +326,8 @@ class DesignerStore implements LCDesigner, BaseStore {
      * 更新背景配置
      */
     updateBgConfig = (data: BackgroundConfig) => {
-
-        runInAction(() => {
-            this.bgConfig = {...this.bgConfig, ...data};
-        })
+        let oldConfig = this.elemConfigs['-1']['background'];
+        this.elemConfigs['-1']['background'] = {...oldConfig, ...data};
     }
 
     /**
