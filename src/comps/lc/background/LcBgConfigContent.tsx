@@ -125,7 +125,6 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
 
     render() {
         const bgConfig: BackgroundConfig = designerStore.elemConfigs['-1']['background'];
-        // const {bgImgSize = [1920, 1080]} = bgConfig;
         return (
             <div className={'lc-canvas-config'}>
                 <ConfigItem title={'模式'} contentStyle={{width: '250px', paddingLeft: '20px'}}>
@@ -157,12 +156,16 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
                         </ConfigItem>
                     }
                     <ConfigCard title={'尺寸'}>
-                        <ConfigItem title={"宽度"}> <NumberInput size={'small'} defaultValue={100}/></ConfigItem>
-                        <ConfigItem title={"高度"}> <NumberInput size={'small'} defaultValue={100}/></ConfigItem>
+                        <ConfigItem title={"宽度"}>
+                            <NumberInput size={'small'} name={'bgX'} onChange={this.bgImgSizeChange}
+                                         defaultValue={bgConfig.width}/></ConfigItem>
+                        <ConfigItem title={"高度"}>
+                            <NumberInput size={'small'} name={'bgY'} onChange={this.bgImgSizeChange}
+                                         defaultValue={bgConfig.height}/></ConfigItem>
                     </ConfigCard>
                     <ConfigCard title={'位置'}>
-                        <ConfigItem title={"X轴"}> <NumberInput size={'small'} defaultValue={100}/></ConfigItem>
-                        <ConfigItem title={"Y轴"}> <NumberInput size={'small'} defaultValue={100}/></ConfigItem>
+                        <ConfigItem title={"X轴"}> <NumberInput size={'small'} defaultValue={0}/></ConfigItem>
+                        <ConfigItem title={"Y轴"}> <NumberInput size={'small'} defaultValue={0}/></ConfigItem>
                     </ConfigCard>
                     <ConfigItem title={'重复方式'} contentStyle={{paddingLeft: '20px'}}>
                         <LcSelect onChange={this.repeatTypeChange}

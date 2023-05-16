@@ -328,6 +328,7 @@ class DesignerStore implements LCDesigner, BaseStore {
     updateBgConfig = (data: BackgroundConfig) => {
         let oldConfig = this.elemConfigs['-1']['background'];
         this.elemConfigs['-1']['background'] = {...oldConfig, ...data};
+        console.log(toJS(this.elemConfigs))
     }
 
     /**

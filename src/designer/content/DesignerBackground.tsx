@@ -29,8 +29,10 @@ class DesignerBackground extends PureComponent<LcDesignerBackgroundProps> {
                 height: bgConfig.height,
                 width: bgConfig.width,
             }
-            if (bgConfig.bgImgUrl && bgConfig.bgImgUrl !== '')
+            if (bgConfig.bgImgUrl && bgConfig.bgImgUrl !== '' && bgConfig.bgMode === BackgroundMode.PICTURE)
                 bgConfigProps['backgroundImage'] = `url(${bgConfig.bgImgUrl})`;
+            if (bgConfig?.bgMode === BackgroundMode.NONE)
+                bgConfigProps['backgroundColor'] = '#000000';
             if (bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT || bgConfig?.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT)
                 bgConfigProps['background'] = bgConfig?.bgColor;
             if (bgConfig?.bgMode === BackgroundMode.PICTURE) {
