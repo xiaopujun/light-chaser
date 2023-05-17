@@ -16,18 +16,18 @@ interface ColorPickerProps extends BaseProps {
 
 class ColorPicker extends Component<ColorPickerProps> {
     state = {
-        color: '#353D35',
-        colorArea: '#353D35',
-        hex: '#353D35'
+        color: '#000000',
+        colorArea: '#000000',
+        hex: '#000000'
     };
 
     constructor(props: ColorPickerProps) {
         super(props);
-        const {value = '#353D35'} = props;
+        const {value = '#000000'} = props;
         this.state = {
             color: value,
             colorArea: value,
-            hex: '353D35'
+            hex: '000000'
         }
     }
 

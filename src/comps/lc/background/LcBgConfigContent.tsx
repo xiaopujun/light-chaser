@@ -20,7 +20,7 @@ const {Option} = Select;
 class LcBgConfigContent extends PureComponent<ConfigType> {
 
     //线性渐变颜色
-    lineGradientColor = ['#0b222b', '#104959'];
+    lineGradientColor = ['#000000', '#000000'];
     gradientAngle = 0;
 
     beforeUpload = (file: any) => {
@@ -44,12 +44,12 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
         updateBgConfig({bgMode: e.target.value});
     }
 
-    bgImgSizeChange = (e: any) => {
+    bgImgSizeChange = (data: any) => {
         let {updateBgConfig, elemConfigs} = designerStore;
         const bgConfig: BackgroundConfig = elemConfigs['-1']['background'];
         let bgImgSize = bgConfig.bgImgSize;
         let tempBgImgSize = toJS(bgImgSize);
-        const {target: {value, name}} = e;
+        const {value, name} = data;
         if (name === 'bgX' && tempBgImgSize) {
             tempBgImgSize[0] = parseInt(value);
         } else if (name === 'bgY' && tempBgImgSize) {
@@ -58,12 +58,12 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
         updateBgConfig({bgImgSize: tempBgImgSize});
     }
 
-    bgImgPosChange = (e: any) => {
+    bgImgPosChange = (data: any) => {
         let {updateBgConfig, elemConfigs} = designerStore;
         const bgConfig: BackgroundConfig = elemConfigs['-1']['background'];
         let bgImgPos = bgConfig.bgImgPos;
         let tempBgImgPos = toJS(bgImgPos);
-        const {target: {value, name}} = e;
+        const {value, name} = data;
         if (name === 'posX' && tempBgImgPos) {
             tempBgImgPos[0] = parseInt(value);
         } else if (name === 'posY' && tempBgImgPos) {
@@ -96,12 +96,15 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
     }
 
     bgGradientColorChanged = (color: string, e: any, id: any) => {
+        console.log(color, e, id)
         const {updateBgConfig, elemConfigs} = designerStore;
         const bgConfig: BackgroundConfig = elemConfigs['-1']['background'];
+        console.log(toJS(bgConfig))
         if (id === 'startColor')
             this.lineGradientColor[0] = color;
         if (id === 'endColor')
             this.lineGradientColor[1] = color;
+        console.log(this.lineGradientColor)
         //线性渐变
         if (bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT) {
             updateBgConfig({bgColor: `linear-gradient(${this.gradientAngle}deg, ${this.lineGradientColor[0]}, ${this.lineGradientColor[1]})`});
@@ -112,10 +115,10 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
         }
     }
 
-    gradientAngleChanged = (e: any) => {
+    gradientAngleChanged = (value: any) => {
         const {updateBgConfig, elemConfigs} = designerStore;
         const bgConfig: BackgroundConfig = elemConfigs['-1']['background'];
-        this.gradientAngle = e.target.value;
+        this.gradientAngle = value;
         if (bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT)
             updateBgConfig({bgColor: `linear-gradient(${this.gradientAngle}deg, ${this.lineGradientColor[0]}, ${this.lineGradientColor[1]})`});
         if (bgConfig?.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT)
@@ -157,15 +160,25 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
                     }
                     <ConfigCard title={'尺寸'}>
                         <ConfigItem title={"宽度"}>
-                            <NumberInput size={'small'} name={'bgX'} onChange={this.bgImgSizeChange}
-                                         defaultValue={bgConfig.width}/></ConfigItem>
+                            <NumberInput size={'small'} name={'bgX'}
+                                         onChange={(value: any) => this.bgImgSizeChange({name: 'bgX', value})}
+                                         defaultValue={bgConfig.width}/>
+                        </ConfigItem>
                         <ConfigItem title={"高度"}>
-                            <NumberInput size={'small'} name={'bgY'} onChange={this.bgImgSizeChange}
-                                         defaultValue={bgConfig.height}/></ConfigItem>
+                            <NumberInput size={'small'} name={'bgY'}
+                                         onChange={(value: any) => this.bgImgSizeChange({name: 'bgY', value})}
+                                         defaultValue={bgConfig.height}/>
+                        </ConfigItem>
                     </ConfigCard>
                     <ConfigCard title={'位置'}>
-                        <ConfigItem title={"X轴"}> <NumberInput size={'small'} defaultValue={0}/></ConfigItem>
-                        <ConfigItem title={"Y轴"}> <NumberInput size={'small'} defaultValue={0}/></ConfigItem>
+                        <ConfigItem title={"X轴"}>
+                            <NumberInput onChange={(value: any) => this.bgImgPosChange({name: 'posX', value})}
+                                         size={'small'}
+                                         defaultValue={0}/></ConfigItem>
+                        <ConfigItem title={"Y轴"}>
+                            <NumberInput onChange={(value: any) => this.bgImgPosChange({name: 'posY', value})}
+                                         size={'small'} defaultValue={0}/>
+                        </ConfigItem>
                     </ConfigCard>
                     <ConfigItem title={'重复方式'} contentStyle={{paddingLeft: '20px'}}>
                         <LcSelect onChange={this.repeatTypeChange}
@@ -217,8 +230,8 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
                             {
                                 bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT &&
                                 <ConfigItem title={'角度'} contentStyle={{paddingLeft: 18}}>
-                                    <NumberInput type={"number"} size={'small'} min={0} max={360}
-                                        /* onChange={this.gradientAngleChanged}*//>
+                                    <NumberInput type={"number"} size={'small'} defaultValue={0} min={0} max={360}
+                                                 onChange={this.gradientAngleChanged}/>
                                 </ConfigItem>
                             }
                         </>

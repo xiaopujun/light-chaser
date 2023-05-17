@@ -40,8 +40,11 @@ class DesignerBackground extends PureComponent<LcDesignerBackgroundProps> {
                 bgConfigProps['backgroundPosition'] = bgImgPosition;
                 bgConfigProps['backgroundRepeat'] = bgConfig?.bgImgRepeat;
             }
-            if (bgConfig?.bgColorMode === BackgroundColorMode.SINGLE)
-                bgConfigProps['backgroundColor'] = bgConfig.bgColor || '#131e26';
+            if (bgConfig?.bgColorMode === BackgroundColorMode.SINGLE) {
+                if (!bgConfig.bgColor || (bgConfig.bgColor && bgConfig.bgColor.indexOf('gradient') !== -1))
+                    bgConfig.bgColor = '#000000';
+                bgConfigProps['backgroundColor'] = bgConfig.bgColor;
+            }
             return bgConfigProps;
         }
     }
