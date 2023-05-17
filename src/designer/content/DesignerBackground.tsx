@@ -29,34 +29,33 @@ class DesignerBackground extends PureComponent<LcDesignerBackgroundProps> {
                 height: bgConfig.height,
                 width: bgConfig.width,
             }
-            if (bgConfig.bgImgUrl && bgConfig.bgImgUrl !== '' && bgConfig.bgMode === BackgroundMode.PICTURE)
-                bgConfigProps['backgroundImage'] = `url(${bgConfig.bgImgUrl})`;
             if (bgConfig?.bgMode === BackgroundMode.NONE)
                 bgConfigProps['backgroundColor'] = '#000000';
-            if (bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT || bgConfig?.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT)
-                bgConfigProps['background'] = bgConfig?.bgColor;
-            if (bgConfig?.bgMode === BackgroundMode.PICTURE) {
-                bgConfigProps['backgroundSize'] = bgImgSize;
-                bgConfigProps['backgroundPosition'] = bgImgPosition;
-                bgConfigProps['backgroundRepeat'] = bgConfig?.bgImgRepeat;
-            }
-            if (bgConfig?.bgColorMode === BackgroundColorMode.SINGLE) {
-                if (!bgConfig.bgColor || (bgConfig.bgColor && bgConfig.bgColor.indexOf('gradient') !== -1))
-                    bgConfig.bgColor = '#000000';
-                bgConfigProps['backgroundColor'] = bgConfig.bgColor;
-            }
-            if (bgConfig.bgMode === BackgroundMode.COLOR) {
-                if (bgConfig.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT)
+            else if (bgConfig?.bgMode === BackgroundMode.PICTURE) {
+                if (bgConfig.bgImgUrl && bgConfig.bgImgUrl !== '') {
+                    bgConfigProps['backgroundImage'] = `url(${bgConfig.bgImgUrl})`;
+                    bgConfigProps['backgroundSize'] = bgImgSize;
+                    bgConfigProps['backgroundPosition'] = bgImgPosition;
+                    bgConfigProps['backgroundRepeat'] = bgConfig?.bgImgRepeat;
+                } else
+                    bgConfigProps['backgroundColor'] = '#000000';
+            } else {
+                if (bgConfig?.bgColorMode === BackgroundColorMode.SINGLE) {
+                    if (!bgConfig.bgColor || (bgConfig.bgColor && bgConfig.bgColor.indexOf('gradient') !== -1))
+                        bgConfig.bgColor = '#000000';
+                    bgConfigProps['backgroundColor'] = bgConfig.bgColor;
+                } else if (bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT) {
                     bgConfigProps['background'] = `linear-gradient(${bgConfig.angle}deg, ${bgConfig.colors && bgConfig.colors[0]}, ${bgConfig.colors && bgConfig.colors[1]})`;
-                if (bgConfig.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT)
+                } else {
                     bgConfigProps['background'] = `radial-gradient(${bgConfig.colors && bgConfig.colors[0]}, ${bgConfig.colors && bgConfig.colors[1]})`;
+                }
             }
-
             return bgConfigProps;
         }
     }
 
     render() {
+        console.log('DesignerBackground render')
         return (
             <div className={'lc-canvas'}
                  id={'-1'}
