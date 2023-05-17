@@ -144,7 +144,7 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
         const bgConfig: BackgroundConfig = designerStore.elemConfigs['-1']['background'];
         console.log('bgConfig', bgConfig)
         return (
-            <div className={'lc-canvas-config'}>
+            <div className={'lc-background-config'}>
                 <ConfigItem title={'模式'} contentStyle={{width: '250px', paddingLeft: '20px'}}>
                     <LcRadio onChange={this.bgModeChange} defaultValue={bgConfig?.bgMode}>
                         <Radio value={0}>无</Radio>

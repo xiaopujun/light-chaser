@@ -57,7 +57,7 @@ class DesignerBackground extends PureComponent<LcDesignerBackgroundProps> {
     render() {
         console.log('DesignerBackground render')
         return (
-            <div className={'lc-canvas'}
+            <div className={'lc-background'}
                  id={'-1'}
                  data-type={'LcBg'}
                  onClick={this.onClick}
