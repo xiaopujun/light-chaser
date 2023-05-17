@@ -27,14 +27,14 @@ class ColorPicker extends Component<ColorPickerProps> {
         this.state = {
             color: value,
             colorArea: value,
-            hex: '000000'
+            hex: value
         }
     }
 
     onChangeComplete = (color: any, event: any) => {
         const {onChange, id} = this.props;
         const rgbColor = `rgb(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`;
-        onChange && onChange(rgbColor, event, id);
+        onChange && onChange(color.hex, event, id);
         this.setState({
             color: color.rgb,
             colorArea: rgbColor,

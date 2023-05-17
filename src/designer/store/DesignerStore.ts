@@ -79,6 +79,8 @@ class DesignerStore implements LCDesigner, BaseStore {
                 bgImgUrl: '',//背景图片url地址
                 bgColorMode: BackgroundColorMode.SINGLE,//背景图片颜色模式
                 bgColor: '#040d18',//背景颜色
+                colors: ['#000000', '#000000'],//颜色数组（用于处理渐变色配置的数据回显）
+                angle: 0,//渐变角度
             }
         }
     };

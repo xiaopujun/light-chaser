@@ -169,6 +169,10 @@ export interface BackgroundConfig {
     bgColorMode?: BackgroundColorMode | undefined;
     //背景颜色
     bgColor?: string;
+    //颜色数组（用于处理渐变色配置的数据回显）
+    colors?: string[];
+    //渐变角度
+    angle?: number;
 }
 
 /**

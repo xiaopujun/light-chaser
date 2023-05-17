@@ -20,8 +20,17 @@ const {Option} = Select;
 class LcBgConfigContent extends PureComponent<ConfigType> {
 
     //线性渐变颜色
-    lineGradientColor = ['#000000', '#000000'];
+    colors = ['#000000', '#000000'];
     gradientAngle = 0;
+
+    componentDidMount() {
+        const {elemConfigs} = designerStore;
+        const bgConfig: BackgroundConfig = elemConfigs['-1']['background'];
+        if (bgConfig.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT) {
+            this.colors = bgConfig.colors || ['#000000', '#000000']
+            this.gradientAngle = bgConfig.angle || 0;
+        }
+    }
 
     beforeUpload = (file: any) => {
         const fileReader = new FileReader();
@@ -96,22 +105,25 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
     }
 
     bgGradientColorChanged = (color: string, e: any, id: any) => {
-        console.log(color, e, id)
         const {updateBgConfig, elemConfigs} = designerStore;
         const bgConfig: BackgroundConfig = elemConfigs['-1']['background'];
-        console.log(toJS(bgConfig))
         if (id === 'startColor')
-            this.lineGradientColor[0] = color;
+            this.colors[0] = color;
         if (id === 'endColor')
-            this.lineGradientColor[1] = color;
-        console.log(this.lineGradientColor)
+            this.colors[1] = color;
         //线性渐变
         if (bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT) {
-            updateBgConfig({bgColor: `linear-gradient(${this.gradientAngle}deg, ${this.lineGradientColor[0]}, ${this.lineGradientColor[1]})`});
+            updateBgConfig({
+                bgColor: `linear-gradient(${this.gradientAngle}deg, ${this.colors[0]}, ${this.colors[1]})`,
+                colors: [this.colors[0], this.colors[1]]
+            });
         }
         //径向渐变
         if (bgConfig?.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT) {
-            updateBgConfig({bgColor: `radial-gradient(circle, ${this.lineGradientColor[0]}, ${this.lineGradientColor[1]})`});
+            updateBgConfig({
+                bgColor: `radial-gradient(circle, ${this.colors[0]}, ${this.colors[1]})`,
+                colors: [this.colors[0], this.colors[1]]
+            });
         }
     }
 
@@ -120,9 +132,9 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
         const bgConfig: BackgroundConfig = elemConfigs['-1']['background'];
         this.gradientAngle = value;
         if (bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT)
-            updateBgConfig({bgColor: `linear-gradient(${this.gradientAngle}deg, ${this.lineGradientColor[0]}, ${this.lineGradientColor[1]})`});
+            updateBgConfig({bgColor: `linear-gradient(${this.gradientAngle}deg, ${this.colors[0]}, ${this.colors[1]})`});
         if (bgConfig?.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT)
-            updateBgConfig({bgColor: `radial-gradient(${this.gradientAngle}deg, ${this.lineGradientColor[0]}, ${this.lineGradientColor[1]})`});
+            updateBgConfig({bgColor: `radial-gradient(${this.gradientAngle}deg, ${this.colors[0]}, ${this.colors[1]})`});
     }
 
 
@@ -216,14 +228,14 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
                                 <CfgItemBorder>
                                     <BaseColorPicker onChange={this.bgGradientColorChanged} id={'startColor'}
                                                      style={{width: '100%', height: '15px', borderRadius: 2}}
-                                                     value={bgConfig?.bgColor}
+                                                     value={bgConfig?.colors && bgConfig?.colors[0]}
                                                      showText={true}/>
                                 </CfgItemBorder>
                                 &nbsp;&nbsp;
                                 <CfgItemBorder>
                                     <BaseColorPicker onChange={this.bgGradientColorChanged} id={'endColor'}
                                                      style={{width: '100%', height: '15px', borderRadius: 2}}
-                                                     value={bgConfig?.bgColor}
+                                                     value={bgConfig?.colors && bgConfig?.colors[1]}
                                                      showText={true}/>
                                 </CfgItemBorder>
                             </ConfigItem>
