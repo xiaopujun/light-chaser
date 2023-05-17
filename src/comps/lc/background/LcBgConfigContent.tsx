@@ -134,7 +134,7 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
             });
         if (bgConfig?.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT)
             updateBgConfig({
-                bgColor: `radial-gradient(${value}deg, ${this.colors[0]}, ${this.colors[1]})`,
+                bgColor: `radial-gradient(${this.colors[0]}, ${this.colors[1]})`,
                 angle: value
             });
     }

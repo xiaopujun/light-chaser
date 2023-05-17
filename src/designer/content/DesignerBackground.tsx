@@ -45,6 +45,13 @@ class DesignerBackground extends PureComponent<LcDesignerBackgroundProps> {
                     bgConfig.bgColor = '#000000';
                 bgConfigProps['backgroundColor'] = bgConfig.bgColor;
             }
+            if (bgConfig.bgMode === BackgroundMode.COLOR) {
+                if (bgConfig.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT)
+                    bgConfigProps['background'] = `linear-gradient(${bgConfig.angle}deg, ${bgConfig.colors && bgConfig.colors[0]}, ${bgConfig.colors && bgConfig.colors[1]})`;
+                if (bgConfig.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT)
+                    bgConfigProps['background'] = `radial-gradient(${bgConfig.colors && bgConfig.colors[0]}, ${bgConfig.colors && bgConfig.colors[1]})`;
+            }
+
             return bgConfigProps;
         }
     }
