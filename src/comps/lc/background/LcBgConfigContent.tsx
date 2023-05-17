@@ -21,15 +21,12 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
 
     //线性渐变颜色
     colors = ['#000000', '#000000'];
-    gradientAngle = 0;
 
     componentDidMount() {
         const {elemConfigs} = designerStore;
         const bgConfig: BackgroundConfig = elemConfigs['-1']['background'];
-        if (bgConfig.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT) {
+        if (bgConfig.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT)
             this.colors = bgConfig.colors || ['#000000', '#000000']
-            this.gradientAngle = bgConfig.angle || 0;
-        }
     }
 
     beforeUpload = (file: any) => {
@@ -114,7 +111,7 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
         //线性渐变
         if (bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT) {
             updateBgConfig({
-                bgColor: `linear-gradient(${this.gradientAngle}deg, ${this.colors[0]}, ${this.colors[1]})`,
+                bgColor: `linear-gradient(${bgConfig.angle}deg, ${this.colors[0]}, ${this.colors[1]})`,
                 colors: [this.colors[0], this.colors[1]]
             });
         }
@@ -130,16 +127,22 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
     gradientAngleChanged = (value: any) => {
         const {updateBgConfig, elemConfigs} = designerStore;
         const bgConfig: BackgroundConfig = elemConfigs['-1']['background'];
-        this.gradientAngle = value;
         if (bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT)
-            updateBgConfig({bgColor: `linear-gradient(${this.gradientAngle}deg, ${this.colors[0]}, ${this.colors[1]})`});
+            updateBgConfig({
+                bgColor: `linear-gradient(${value}deg, ${this.colors[0]}, ${this.colors[1]})`,
+                angle: value
+            });
         if (bgConfig?.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT)
-            updateBgConfig({bgColor: `radial-gradient(${this.gradientAngle}deg, ${this.colors[0]}, ${this.colors[1]})`});
+            updateBgConfig({
+                bgColor: `radial-gradient(${value}deg, ${this.colors[0]}, ${this.colors[1]})`,
+                angle: value
+            });
     }
 
 
     render() {
         const bgConfig: BackgroundConfig = designerStore.elemConfigs['-1']['background'];
+        console.log('bgConfig', bgConfig)
         return (
             <div className={'lc-canvas-config'}>
                 <ConfigItem title={'模式'} contentStyle={{width: '250px', paddingLeft: '20px'}}>
@@ -242,7 +245,8 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
                             {
                                 bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT &&
                                 <ConfigItem title={'角度'} contentStyle={{paddingLeft: 18}}>
-                                    <NumberInput type={"number"} size={'small'} defaultValue={0} min={0} max={360}
+                                    <NumberInput type={"number"} size={'small'} defaultValue={bgConfig.angle} min={0}
+                                                 max={360}
                                                  onChange={this.gradientAngleChanged}/>
                                 </ConfigItem>
                             }
