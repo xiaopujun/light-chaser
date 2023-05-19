@@ -8,7 +8,7 @@ interface ColorPickerProps extends BaseProps {
     onChange?: (color: any, e: Event, id: number | string | undefined) => void;
     color?: string;
     value?: string;
-    style?: any;
+    style?: React.CSSProperties;
     showText?: boolean;
     id?: number | string;
 }

@@ -5,8 +5,8 @@ import BaseInfo from "../../../lib/common-fragment/base-info/BaseInfo";
 import {MenuInfo} from "../../../framework/types/MenuType";
 import AntdBaseBarConfigStyle from "./AntdBaseBarConfigStyle";
 import AntdBaseBarConfigAnimation from "./AntdBaseBarConfigAnimation";
-import AntdBaseBarConfigTheme from "./AntdBaseBarConfigTheme";
 import DataConfig from "../../../lib/common-fragment/data-config/DataConfig";
+import ThemeConfig from "../../../lib/common-fragment/theme-config/ThemeConfig";
 
 export default class AntdBaseBarConfig extends AbstractConfig {
     getMenuList(): Array<MenuInfo> {
@@ -19,7 +19,7 @@ export default class AntdBaseBarConfig extends AbstractConfig {
             'style': AntdBaseBarConfigStyle,
             'data': DataConfig,
             'animation': AntdBaseBarConfigAnimation,
-            'theme': AntdBaseBarConfigTheme
+            'theme': ThemeConfig
         };
     }
 }
