@@ -14,7 +14,7 @@ interface LcConfigContentProps {
     LCDesignerStore?: LCDesigner;
     updateActive?: (data?: any) => void;
     updateBaseStyle?: (data?: any) => void;
-    updateChartProps?: (data?: any) => void;
+    updateElemConfig?: (data?: any) => void;
     updateBaseInfo?: (data?: any) => void;
     updateCanvasConfig?: (data?: any) => void;
     updateBgConfig?: (data?: any) => void;
@@ -24,12 +24,12 @@ class ConfigContent extends Component<LcConfigContentProps> {
 
     buildConfigContent = () => {
         let {activeMenu, configObjs} = rightStore;
-        const {activeElem, elemConfigs} = designerStore!;
+        const {activeElem, elemConfigs, updateElemConfig} = designerStore!;
         const elemConfig = elemConfigs[activeElem.id!];
         let abstractConfigObj: any = configObjs[activeElem.type + 'Config'];
         let menuToConfigComp = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp = menuToConfigComp[activeMenu];
-        return <ConfigComp config={elemConfig[activeMenu]}/>;
+        return <ConfigComp config={elemConfig[activeMenu]} updateConfig={updateElemConfig}/>;
     }
 
     onClose = () => {

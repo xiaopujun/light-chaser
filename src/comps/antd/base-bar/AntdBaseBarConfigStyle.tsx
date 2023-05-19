@@ -56,10 +56,10 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
                     </Accordion>
                     <Legend {...calculateLegendConfig(chartStyle)}
                             chartProps={chartStyle}
-                            updateChartProps={updateConfig}/>
+                            updateElemConfig={updateConfig}/>
                     <RightAngleCoordinates {...calculateRightAngleCoordinates(chartStyle)}
                                            chartProps={chartStyle}
-                                           updateChartProps={updateConfig}/>
+                                           updateElemConfig={updateConfig}/>
                 </div>
             </>
         );

@@ -55,7 +55,6 @@ class DesignerBackground extends PureComponent<LcDesignerBackgroundProps> {
     }
 
     render() {
-        console.log('DesignerBackground render')
         return (
             <div className={'lc-background'}
                  id={'-1'}

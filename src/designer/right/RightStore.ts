@@ -10,7 +10,8 @@ class RightStore {
             loaded: observable,
             contentVisible: observable,
             setActiveMenu: action,
-            setMenus: action
+            setMenus: action,
+            setContentVisible: action,
         })
     }
 

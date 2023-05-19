@@ -26,7 +26,7 @@ interface LCDesignerProps extends RouteComponentProps {
     delItem?: (data?: any) => void;
     updateLayout?: (data?: any) => void;
     updateActive?: (data?: any) => void;
-    updateChartProps?: (data?: any) => void;
+    updateElemConfig?: (data?: any) => void;
     updateBaseStyle?: (data?: any) => void;
 }
 

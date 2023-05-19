@@ -59,7 +59,7 @@ const saveImgToLocal = (url: string, key: string) => {
 /**
  * 从本地数据库获取背景图片
  */
-const getImgFromLocal = (blobKey: string) => {
+const getImgFromLocal = (blobKey: string | any) => {
     return new Promise((resolve) => {
         localforage.getItem(blobKey).then((blob) => {
             if (blob) {
@@ -153,7 +153,6 @@ export const createProject = (designerStore: DesignerStore) => {
     });
 }
 
-
 /**
  * 更新项目
  */
@@ -166,12 +165,13 @@ export const updateProject = (designerStore: DesignerStore) => {
                 //2.找到要更新的项目
                 for (let i = 0; i < dataArr.length; i++) {
                     if (dataArr[i].id === config.id) {
-                        if (config.bgConfig?.bgImgUrl !== '') {
+                        const bgConfig: BackgroundConfig = config.elemConfigs['-1']['background'];
+                        if (bgConfig?.bgImgUrl !== '') {
                             let bgImgKey = 'bgImg' + config.id;
                             //2.1 如果有新背景图片数据，则保存新背景图片
-                            saveImgToLocal(config.bgConfig.bgImgUrl!, bgImgKey).then(() => {
-                                if (config.bgConfig)
-                                    config.bgConfig.bgImgUrl = bgImgKey;
+                            saveImgToLocal(bgConfig.bgImgUrl!, bgImgKey).then(() => {
+                                if (bgConfig)
+                                    config.elemConfigs['-1']['background'].bgImgUrl = bgImgKey;
                                 dataArr[i] = config;
                                 localforage.setItem('light-chaser', dataArr).then(() => {
                                     resolve(config.id as number);
@@ -206,11 +206,12 @@ export const getProjectById = (id: number | string) => {
             if (dataArr && dataArr instanceof Array) {
                 for (let i = 0; i < dataArr.length; i++) {
                     if (dataArr[i].id === id) {
-                        let target = dataArr[i];
-                        if (target.bgConfig?.bgImgUrl !== '') {
-                            getImgFromLocal(target.bgConfig?.bgImgUrl).then((url) => {
-                                if (target.bgConfig)
-                                    target.bgConfig.bgImgUrl = url;
+                        let target: DesignerStore | any = dataArr[i];
+                        let bgConfig: BackgroundConfig = target.elemConfigs['-1']['background'];
+                        if (bgConfig?.bgImgUrl !== '') {
+                            getImgFromLocal(bgConfig?.bgImgUrl).then((url) => {
+                                if (bgConfig)
+                                    target.elemConfigs['-1']['background'].bgImgUrl = url;
                                 resolve(target);
                             });
                         } else {
@@ -224,7 +225,6 @@ export const getProjectById = (id: number | string) => {
         })
     });
 }
-
 
 /**
  * 查询所有项目

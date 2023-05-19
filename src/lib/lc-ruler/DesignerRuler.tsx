@@ -62,7 +62,7 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
             if (Math.floor(scaleCore.scale / this._scale) === 2) {
                 this._scale = scaleCore.scale;
                 this.unit /= 2;
-            } else if (parseFloat((Math.round((scaleCore.scale / this._scale) * 10) / 10).toFixed(1)) === 0.5) {
+            } else if (Math.floor(this._scale / scaleCore.scale) === 2) {
                 this._scale = scaleCore.scale;
                 this.unit *= 2;
             }

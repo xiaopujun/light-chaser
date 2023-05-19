@@ -10,7 +10,7 @@ import ConfigItem from "../../config-item/ConfigItem";
 const {Option} = Select;
 
 interface LegendProps {
-    updateChartProps?: (data: any) => void;
+    updateElemConfig?: (data: any) => void;
     chartProps?: any;
     /**
      * 是否可见
@@ -45,16 +45,16 @@ class Legend extends Component<LegendProps> {
 
 
     showLegend = (data: boolean) => {
-        const {updateChartProps} = this.props;
-        updateChartProps && updateChartProps({legend: data});
+        const {updateElemConfig} = this.props;
+        updateElemConfig && updateElemConfig({legend: data});
         this.setState({
             visible: data
         })
     }
 
     legendPositionChanged = (data: string) => {
-        const {updateChartProps} = this.props;
-        updateChartProps && updateChartProps({
+        const {updateElemConfig} = this.props;
+        updateElemConfig && updateElemConfig({
             legend: {
                 position: data
             }
@@ -62,8 +62,8 @@ class Legend extends Component<LegendProps> {
     }
 
     legendLayoutChanged = (data: string) => {
-        const {updateChartProps} = this.props;
-        updateChartProps && updateChartProps({
+        const {updateElemConfig} = this.props;
+        updateElemConfig && updateElemConfig({
             legend: {
                 layout: data
             }
@@ -71,8 +71,8 @@ class Legend extends Component<LegendProps> {
     }
 
     legendTextColorChanged = (color: string | string[]) => {
-        const {updateChartProps} = this.props;
-        updateChartProps && updateChartProps({
+        const {updateElemConfig} = this.props;
+        updateElemConfig && updateElemConfig({
             legend: {
                 itemName: {
                     style: {

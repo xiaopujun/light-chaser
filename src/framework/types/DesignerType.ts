@@ -60,11 +60,46 @@ export interface BaseStyle {
     borderWidth?: string;
 }
 
+export interface APIConfig {
+    //地址
+    url?: string;
+    //请求方式
+    method?: 'get' | 'post' | 'put' | 'delete';
+    //请求头
+    headers?: any;
+    //请求参数
+    params?: any;
+}
+
+/**
+ * 静态数据配置
+ */
+export interface StaticConfig {
+    //数据
+    data?: any;
+}
+
+/**
+ * 数据配置项
+ */
+export interface DataConfig {
+    //数据来源方式
+    sourceType?: 'static' | 'api' | 'database' | 'excel';
+    //详细配置
+    config?: APIConfig | StaticConfig | any;
+}
+
 /**
  * 元素配置
  */
 export interface ElemConfig {
-    [key: string]: Object;
+    [key: string]: any;
+
+    info?: Object;
+    style?: Object;
+    data?: DataConfig;
+    animation?: Object;
+    theme?: Object;
 }
 
 /**

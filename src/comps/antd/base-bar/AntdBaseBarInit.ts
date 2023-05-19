@@ -1,9 +1,10 @@
 import {AbstractInit, BaseInfo} from "../../../framework/abstract/AbstractInit";
 import barImg from './bar.png';
+import {ElemConfig} from "../../../framework/types/DesignerType";
 
 export default class AntdBaseBarInit extends AbstractInit {
 
-    getInitConfig(): Object {
+    getInitConfig(): ElemConfig | Object {
         return {
             info: {
                 name: '基础条形图',
@@ -57,7 +58,12 @@ export default class AntdBaseBarInit extends AbstractInit {
                     maxBarWidth: 8
                 }
             },
-            data: {},
+            data: {
+                sourceType: 'static',
+                config: {
+                    data: []
+                }
+            },
             animation: {},
             theme: {},
         };

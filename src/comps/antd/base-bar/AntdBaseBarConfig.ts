@@ -4,9 +4,9 @@ import {ClassType} from "react";
 import BaseInfo from "../../../lib/common-fragment/base-info/BaseInfo";
 import {MenuInfo} from "../../../framework/types/MenuType";
 import AntdBaseBarConfigStyle from "./AntdBaseBarConfigStyle";
-import AntdBaseBarConfigData from "./AntdBaseBarConfigData";
 import AntdBaseBarConfigAnimation from "./AntdBaseBarConfigAnimation";
 import AntdBaseBarConfigTheme from "./AntdBaseBarConfigTheme";
+import DataConfig from "../../../lib/common-fragment/data-config/DataConfig";
 
 export default class AntdBaseBarConfig extends AbstractConfig {
     getMenuList(): Array<MenuInfo> {
@@ -17,7 +17,7 @@ export default class AntdBaseBarConfig extends AbstractConfig {
         return {
             'info': BaseInfo,
             'style': AntdBaseBarConfigStyle,
-            'data': AntdBaseBarConfigData,
+            'data': DataConfig,
             'animation': AntdBaseBarConfigAnimation,
             'theme': AntdBaseBarConfigTheme
         };
