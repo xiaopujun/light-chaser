@@ -3,6 +3,9 @@ import './ConfigCard.less';
 
 interface ConfigPanelProps {
     title: string;
+    cardStyle?: React.CSSProperties;
+    titleStyle?: React.CSSProperties;
+    bodyStyle?: React.CSSProperties;
 }
 
 /**
@@ -10,11 +13,11 @@ interface ConfigPanelProps {
  */
 class ConfigCard extends Component<ConfigPanelProps> {
     render() {
-        const {title = ''} = this.props;
+        const {title = '', cardStyle, titleStyle, bodyStyle} = this.props;
         return (
-            <div className={'lc-config-card'}>
-                <div className={'panel-title'}>{title}</div>
-                <div className={'panel-body'}>
+            <div className={'lc-config-card'} style={cardStyle}>
+                <div className={'panel-title'} style={titleStyle}>{title}</div>
+                <div className={'panel-body'} style={bodyStyle}>
                     {this.props.children}
                 </div>
             </div>
