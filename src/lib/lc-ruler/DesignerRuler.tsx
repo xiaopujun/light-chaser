@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Ruler, {RulerProps} from "@scena/react-ruler";
 import keyboardMouse from "../../designer/operate-provider/keyboard-mouse/KeyboardMouse";
 import eventManager from "../../designer/operate-provider/core/EventManager";
-import scaleCore from "../../framework/scale/ScaleCore";
+import scaleCore from "../../designer/operate-provider/scale/ScaleCore";
 import {observer} from "mobx-react";
 import eventOperateStore from "../../designer/operate-provider/EventOperateStore";
 

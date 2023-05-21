@@ -2,14 +2,15 @@ import React, {Component} from 'react';
 import {Popover} from 'antd';
 import {ChromePicker} from 'react-color';
 import './BaseColorPicker.less';
-import {BaseProps} from "../../framework/types/BaseType";
 
-interface ColorPickerProps extends BaseProps {
+interface ColorPickerProps {
     onChange?: (color: any, e: Event, id: number | string | undefined) => void;
     color?: string;
     value?: string;
     style?: React.CSSProperties;
     showText?: boolean;
+    className?: string;
+    name?: string;
     id?: number | string;
 }
 

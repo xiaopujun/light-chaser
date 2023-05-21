@@ -18,12 +18,10 @@ class LcUnderLineInput extends Component<LcUnderLineInputProps> {
     }
 
     render() {
-        const {type = 'text', containStyle, inputStyle, lineStyle, name, value} = this.props;
+        const {containStyle, inputStyle, lineStyle} = this.props;
         return (
             <div className={'lc-underline-input-container'} style={containStyle}>
-                <input name={name}
-                       type={type}
-                       value={value}
+                <input {...this.props}
                        onChange={this.onChange}
                        className={'lc-underline-input'}
                        style={inputStyle}/>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import keyboardMouse from "./keyboard-mouse/KeyboardMouse";
-import scaleCore from "../../framework/scale/ScaleCore";
+import scaleCore from "./scale/ScaleCore";
 import eventManager from "./core/EventManager";
 import eventOperateStore from "./EventOperateStore";
 

@@ -36,10 +36,10 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
     render() {
         // const colors = calculateFillColor(this.props.config);
         // const sorts = dataSort('type', this.props.config.data);
-        const {updateConfig, config: {chartStyle}} = this.props;
+        const {updateConfig, config} = this.props;
         return (
             <>
-                <BaseStyleSet/>
+                <BaseStyleSet config={config} updateConfig={updateConfig}/>
                 <div className={'elem-chart-config'}>
                     <Accordion title={'图形'}>
                         <ConfigCard title={'x轴'}>
@@ -54,12 +54,12 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
                             </ConfigItem>
                         </ConfigCard>
                     </Accordion>
-                    <Legend {...calculateLegendConfig(chartStyle)}
-                            chartProps={chartStyle}
-                            updateElemConfig={updateConfig}/>
-                    <RightAngleCoordinates {...calculateRightAngleCoordinates(chartStyle)}
-                                           chartProps={chartStyle}
-                                           updateElemConfig={updateConfig}/>
+                    {/*<Legend {...calculateLegendConfig(chartStyle)}*/}
+                    {/*        chartProps={chartStyle}*/}
+                    {/*        updateElemConfig={updateConfig}/>*/}
+                    {/*<RightAngleCoordinates {...calculateRightAngleCoordinates(chartStyle)}*/}
+                    {/*                       chartProps={chartStyle}*/}
+                    {/*                       updateElemConfig={updateConfig}/>*/}
                 </div>
             </>
         );

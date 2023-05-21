@@ -7,13 +7,16 @@ export default class AntdBaseBarInit extends AbstractInit {
     getInitConfig(): ElemConfig | Object {
         return {
             info: {
+                id: '',
                 name: '基础条形图',
-                type: 'AntdBaseBar'
+                type: 'AntdBaseBar',
+                des: '基于antd实现的基础条形图',
             },
             style: {
                 baseStyle: {
                     padding: '10px',
-                    backgroundColor: 'rgba(23,157,169,0.12)'
+                    backgroundColor: '#00000000',
+                    border: '0px solid #00000000',
                 },
                 chartStyle: {
                     data: [

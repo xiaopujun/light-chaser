@@ -2,7 +2,7 @@
  * 缩放器
  */
 import coordinate from "../coordinate/Coordinate";
-import scaleCore from "../../../framework/scale/ScaleCore";
+import scaleCore from "./ScaleCore";
 import eventManager from "../core/EventManager";
 
 class Scaler {
