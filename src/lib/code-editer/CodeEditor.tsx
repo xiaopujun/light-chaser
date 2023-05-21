@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import CodeMirror from 'codemirror';
 import 'codemirror/lib/codemirror.css';
-import 'codemirror/theme/material.css';
+import './lc-dark.css';
 import 'codemirror/mode/javascript/javascript.js';
 import 'codemirror/addon/edit/matchbrackets.js';
 import 'codemirror/addon/comment/comment.js';
@@ -9,6 +9,10 @@ import 'codemirror/addon/comment/comment.js';
 interface CodeEditorProps {
     value?: string;
     onChange?: (value: string) => void;
+    readonly?: boolean;
+    width?: string;
+    height?: string;
+    mode?: string;
 }
 
 class CodeEditor extends Component<CodeEditorProps> {
@@ -17,13 +21,14 @@ class CodeEditor extends Component<CodeEditorProps> {
     componentDidMount() {
         if (this.editorRef == null)
             return;
-        const {onChange, value} = this.props;
+        const {onChange, value, readonly, width, height, mode} = this.props;
         const editor = CodeMirror(this.editorRef, {
-            mode: 'javascript',
-            theme: 'material',
+            mode: mode || 'javascript',
+            theme: 'lc-dark',
             lineNumbers: true,
             matchBrackets: true,
             smartIndent: true,
+            readOnly: readonly || false,
             extraKeys: {
                 'Ctrl-/': 'toggleComment',
             },
@@ -32,12 +37,12 @@ class CodeEditor extends Component<CodeEditorProps> {
             onChange && onChange(editor.getValue());
         });
         editor.setValue(value || '');
-        editor.setSize('100%', '100px');
+        editor.setSize(width || '100%', height || '100%');
     }
 
     render() {
         return (
-            <div ref={dom => this.editorRef = dom}/>
+            <div className={'lc-code-editor'} ref={dom => this.editorRef = dom}/>
         );
     }
 }

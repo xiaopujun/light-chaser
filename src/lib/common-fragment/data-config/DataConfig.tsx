@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import ConfigItem from "../../config-item/ConfigItem";
 import LcSelect from "../../lc-select/LCSelect";
-import {Button, Select} from "antd";
+import {Select} from "antd";
 import CodeEditor from "../../code-editer/CodeEditor";
 import {ConfigType} from "../../../framework/types/ConfigType";
 import LcUnderLineInput from "../../lc-input/LcUnderLineInput";
-import ConfigCard from "../../config-card/ConfigCard";
 import ConfigItemTB from "../../config-item-tb/ConfigItemTB";
+import LcButton from "../../lc-button/LcButton";
 
 const {Option} = Select;
 
@@ -58,12 +58,10 @@ class DataConfig extends Component<ConfigType> {
                     <ConfigItemTB title={'请求参数'} contentStyle={{width: '95%'}}>
                         <CodeEditor onChange={this.editChange} value={'console.log("test")'}/>
                     </ConfigItemTB>
-                    <Button type={'primary'} size={'middle'}
-                            style={{width: 'calc(100% - 16px)', margin: '0 7px'}}>测试接口</Button>
-                    <br/>
-                    <div style={{margin: '15px 7px 0 7px'}}>
-                        <CodeEditor onChange={this.editChange} value={'测试接口的返回结果将在这里显示。'}/>
-                    </div>
+                    <ConfigItemTB title={'响应结果'} contentStyle={{width: '95%'}}>
+                        <CodeEditor readonly={true} onChange={this.editChange} value={'测试接口的返回结果将在这里显示。'}/>
+                    </ConfigItemTB>
+                    <LcButton style={{width: 'calc(100% - 16px)', margin: '0 7px'}}>测试接口</LcButton>
                 </>
                 }
 

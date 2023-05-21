@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import {Checkbox} from "antd";
 import BaseColorPicker from "../../../lc-color-picker/BaseColorPicker";
 import './ThemeItem.less';
-import LcSwitch from "../../../lc-switch/LcSwitch";
 import {Theme} from "../../../../framework/types/DesignerType";
 
 interface ThemeItemProps extends Theme {

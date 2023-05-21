@@ -1,0 +1,32 @@
+.lc-button {
+  width: 100px;
+  height: 35px;
+  font-size: 14px;
+  padding: 3px 10px;
+  background-color: #222;
+  color: #c3c3c3;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 3px;
+  border: 2px solid #484848;
+}
+
+.lc-button:not(:disabled):hover {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  background-color: #444;
+  border-color: #444;
+}
+
+.lc-button:not(:disabled):active {
+  box-shadow: none;
+  background-color: #111;
+  border-color: #111;
+}
+
+.lc-button:disabled {
+  /* 禁用状态下的样式 */
+  opacity: 0.5;
+  cursor: not-allowed;
+  /* 可以在禁用状态下修改背景颜色、文字颜色等来区分普通状态 */
+}

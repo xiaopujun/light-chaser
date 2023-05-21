@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import './ThemeEditor.less';
 import ConfigItem from "../../../config-item/ConfigItem";
 import LcUnderLineInput from "../../../lc-input/LcUnderLineInput";
-import {Button} from "antd";
 import BaseColorPicker from "../../../lc-color-picker/BaseColorPicker";
 import CfgItemBorder from "../../../config-item-border/CfgItemBorder";
 import ThemeItem from "../theme-item/ThemeItem";
 import ConfigCard from "../../../config-card/ConfigCard";
+import LcButton from "../../../lc-button/LcButton";
 
 /**
  * 主题编辑器
@@ -56,7 +56,10 @@ class ThemeEditor extends Component {
                             </CfgItemBorder>
                         </ConfigItem>
                     </ConfigCard>
-                    <Button type={'primary'} style={{width: '100%', marginTop: 10}}>保存</Button>
+                    <div className={'theme-operate-btn'}>
+                        <LcButton>保存</LcButton>
+                        <LcButton>取消</LcButton>
+                    </div>
                 </div>
                 <div className={'editor-right'}>
                     <ConfigCard title={'主题列表'}>

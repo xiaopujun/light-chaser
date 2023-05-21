@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
-import {Button} from "antd";
 import ConfigCard from "../../config-card/ConfigCard";
 import ConfigItem from "../../config-item/ConfigItem";
 import NumberInput from "../../lc-input/NumberInput";
 import LcSwitch from "../../lc-switch/LcSwitch";
 import 'animate.css';
 import './AnimationConfig.less';
+import LcButton from "../../lc-button/LcButton";
 
 class AnimationConfig extends Component {
     render() {
         return (
             <div className={'lc-animation-config'}>
-                <Button disabled={true} type="primary" style={{width: '100%'}}>清除动画</Button>
+                <LcButton style={{width: '100%'}}>清除动画</LcButton>
                 <ConfigCard title={'动画配置'}>
                     <ConfigItem title={'效果'}>
                         <div style={{color: '#b2b2b2', fontSize: 12}}>向上滑动</div>

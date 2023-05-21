@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Button} from "antd";
 import ThemeItem from "./theme-item/ThemeItem";
 import Dialog from "../../lc-dialog/Dialog";
 import ThemeEditor from "./theme-editor/ThemeEditor";
+import LcButton from "../../lc-button/LcButton";
 
 class ThemeConfig extends Component {
     state = {
@@ -18,8 +18,7 @@ class ThemeConfig extends Component {
             <>
                 <div className={'lc-theme-config'}>
                     <div className={'lc-theme-custom'}>
-                        <Button onClick={this.openThemeEditor} type={'primary'} size={'middle'} style={{width: '100%'}}>+
-                            新增自定义主题</Button>
+                        <LcButton onClick={this.openThemeEditor} style={{width: '100%'}}>+ 新增自定义主题</LcButton>
                     </div>
                     <br/>
                     <div className={'lc-theme-list'}>
