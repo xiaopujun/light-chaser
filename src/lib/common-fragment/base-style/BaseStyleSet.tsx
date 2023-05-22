@@ -10,6 +10,7 @@ import ConfigItem from "../../config-item/ConfigItem";
 import NumberInput from "../../lc-input/NumberInput";
 import {ConfigType} from "../../../framework/types/ConfigType";
 import {generateBorder, generatePaddingValue, parseBorder, parsePadding} from "../../../utils/CssStyleUtil";
+import {parseInt} from "lodash";
 
 const {Option} = Select;
 
@@ -27,7 +28,8 @@ export default class BaseStyleSet extends Component<ConfigType> {
 
     backgroundColorChanged = (color: string | string[]) => {
         const {updateConfig} = this.props;
-        updateConfig && updateConfig({backgroundColor: color});
+        console.log(color)
+        updateConfig && updateConfig({style: {baseStyle: {backgroundColor: color}}});
     }
 
     borderChanged = (key: string, value: string) => {
@@ -36,30 +38,16 @@ export default class BaseStyleSet extends Component<ConfigType> {
         updateConfig && updateConfig({style: {baseStyle: {border}}});
     }
 
-    borderStyleChanged = (style: string) => {
+    borderRadiusChanged = (radius: any) => {
         const {updateConfig} = this.props;
-        updateConfig && updateConfig({borderStyle: style});
-    }
-
-    borderWidthChanged = (width: number) => {
-        const {updateConfig} = this.props;
-        updateConfig && updateConfig({borderWidth: `${width}px`});
-    }
-
-    borderColorChanged = (color: any) => {
-        const {updateConfig} = this.props;
-        updateConfig && updateConfig({borderColor: color});
-    }
-
-    borderRadiusChanged = (radius: number) => {
-        const {updateConfig} = this.props;
-        updateConfig && updateConfig({borderRadius: `${radius}px`});
+        updateConfig && updateConfig({style: {baseStyle: {borderRadius: `${radius}px`}}})
     }
 
     render() {
-        const {config: {baseStyle: {padding, border}}} = this.props;
+        const {config: {baseStyle: {padding, border, borderRadius, backgroundColor}}} = this.props;
         const paddingValue = parsePadding(padding);
         const borderValue = parseBorder(border);
+        console.log(borderValue)
         return (
             <Accordion title="容器" showSwitch={false}>
                 <ConfigCard title={'内边距'}>
@@ -113,13 +101,16 @@ export default class BaseStyleSet extends Component<ConfigType> {
                                      onChange={(value: any) => this.borderChanged('width', value)} size={'small'}/>
                     </ConfigItem>
                     <ConfigItem title={'圆角'}>
-                        <NumberInput size={'small'}/>
+                        <NumberInput onChange={this.borderRadiusChanged} defaultValue={parseInt(borderRadius)}
+                                     size={'small'}/>
                     </ConfigItem>
                 </ConfigCard>
                 <ConfigCard title={'背景'}>
                     <ConfigItem title={'颜色'}>
                         <CfgItemBorder>
-                            <BaseColorPicker style={{width: '100%', height: '15px', borderRadius: 2}}
+                            <BaseColorPicker value={backgroundColor}
+                                             onChange={this.backgroundColorChanged}
+                                             style={{width: '100%', height: '15px', borderRadius: 2}}
                                              showText={true}/>
                         </CfgItemBorder>
                     </ConfigItem>

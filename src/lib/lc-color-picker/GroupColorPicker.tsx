@@ -41,7 +41,7 @@ class GroupColorPicker extends Component<GroupColorPickerProp> {
         return (
             <div className={'group-color-picker'} style={{display: "flex", flexDirection: "row"}}>
                 {colors.map((item: string, i: number) => {
-                    return <ColorPicker key={i + ''} id={i} color={item} onChange={this.onChange}/>
+                    return <ColorPicker key={i + ''} id={i} value={item} onChange={this.onChange}/>
                 })}
             </div>
         )

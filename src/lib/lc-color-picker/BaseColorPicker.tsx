@@ -2,58 +2,61 @@ import React, {Component} from 'react';
 import {Popover} from 'antd';
 import {ChromePicker} from 'react-color';
 import './BaseColorPicker.less';
+import {colorConversion, rgbaToHex} from "../../utils/ColorUtil";
 
-interface ColorPickerProps {
+interface BaseColorPickerProps {
     onChange?: (color: any, e: Event, id: number | string | undefined) => void;
-    color?: string;
+    type?: 'hex' | 'rgba';
     value?: string;
     style?: React.CSSProperties;
     showText?: boolean;
-    className?: string;
     name?: string;
     id?: number | string;
 }
 
 
-class ColorPicker extends Component<ColorPickerProps> {
+class BaseColorPicker extends Component<BaseColorPickerProps> {
     state = {
-        color: '#000000',
-        colorArea: '#000000',
+        rgba: 'rgba(0,0,0,1)',
         hex: '#000000'
     };
 
-    constructor(props: ColorPickerProps) {
+    constructor(props: BaseColorPickerProps) {
         super(props);
-        const {value = '#000000'} = props;
+        const {value = '#000000ff'} = props;
+        const color = colorConversion(value);
         this.state = {
-            color: value,
-            colorArea: value,
-            hex: value
+            rgba: color.rgba,
+            hex: color.hex
         }
     }
 
     onChangeComplete = (color: any, event: any) => {
-        const {onChange, id} = this.props;
-        const rgbColor = `rgb(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`;
-        onChange && onChange(color.hex, event, id);
+        const {onChange, id, type = 'hex'} = this.props;
+        const rgbColor = `rgba(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`;
+        const hex = rgbaToHex(rgbColor);
+        if (type === 'hex') {
+            onChange && onChange(hex, event, id);
+        } else {
+            onChange && onChange(rgbColor, event, id);
+        }
         this.setState({
-            color: color.rgb,
-            colorArea: rgbColor,
-            hex: color.hex
+            color: rgbColor,
+            hex: hex
         })
     }
 
     render() {
-        const {colorArea, color, hex} = this.state;
-        const {style, showText = false} = this.props;
-        const content = (<ChromePicker className={'color-picker'} color={color}
+        const {hex, rgba} = this.state;
+        const {style, showText = false, type = 'hex'} = this.props;
+        const content = (<ChromePicker className={'color-picker'} color={hex}
                                        onChange={this.onChangeComplete}/>)
-
+        const showContent = showText ? type === 'hex' ? hex : rgba : null;
         return (
             <Popover placement="topLeft" content={content} trigger={'click'}>
-                <div style={{backgroundColor: `${colorArea}`, ...style}}
+                <div style={{backgroundColor: `${hex}`, ...style}}
                      className={'color-area'}>
-                    {showText ? <span>{hex}</span> : null}
+                    {showText ? <span>{showContent}</span> : null}
                 </div>
             </Popover>
 
@@ -61,4 +64,4 @@ class ColorPicker extends Component<ColorPickerProps> {
     }
 }
 
-export default ColorPicker;
+export default BaseColorPicker;

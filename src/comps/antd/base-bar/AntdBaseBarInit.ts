@@ -17,6 +17,7 @@ export default class AntdBaseBarInit extends AbstractInit {
                     padding: '10px',
                     backgroundColor: '#00000000',
                     border: '0px solid #00000000',
+                    borderRadius: '0px',
                 },
                 chartStyle: {
                     data: [

@@ -94,7 +94,7 @@ export function generateBorder(key: string, value: string, oldValue = '0px solid
             }
             break;
         case 'color':
-            if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+            if (/^#(?:[0-9a-fA-F]{3}){1,2}(?:[0-9a-fA-F]{2})?$/.test(value)) {
                 oldValueArray[2] = value;
             } else {
                 console.warn('Invalid value for key "color"');
