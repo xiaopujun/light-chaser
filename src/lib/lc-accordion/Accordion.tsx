@@ -4,8 +4,14 @@ import LcSwitch from "../lc-switch/LcSwitch";
 import {RightOutlined} from "@ant-design/icons";
 
 interface AccordionProps {
-    showSwitch?: boolean;
+    // 标题
     title?: string;
+    // 是否显示开关
+    showSwitch?: boolean;
+    // 开关变化回调
+    onChange?: (data: boolean) => void;
+    // 开关状态值
+    visible?: boolean;
 }
 
 class Accordion extends Component<AccordionProps> {
@@ -13,41 +19,16 @@ class Accordion extends Component<AccordionProps> {
     accDom: any = null;
 
     componentDidMount() {
-        const {showSwitch = false} = this.props;
+        const {showSwitch = false, visible} = this.props;
         if (!showSwitch)
             this.titleClickMode();
+        if (showSwitch && visible)
+            this.unfold();
     }
 
-    /**
-     * 标题点击模式，点击标题，展开内容
-     */
-    titleClickMode = () => {
-        const accDomTemp = this.accDom;
-        accDomTemp.addEventListener("click", function () {
-            accDomTemp.classList.toggle("accordion-active");
-            let panel = accDomTemp.nextElementSibling;
-            if (panel.style.maxHeight) {
-                panel.style.maxHeight = null;
-            } else {
-                panel.style.maxHeight = panel.scrollHeight + "px";
-            }
-        });
-    }
-
-    /**
-     * 开关点击模式，点击开关，展示内容
-     */
-    switchClickMode = () => {
-
-    }
-
-    /**
-     * 手风琴标题开关变化
-     */
-    switchChange = (data: boolean) => {
-        let accDomTemp: any = this.accDom;
-        accDomTemp.classList.toggle("accordion-active");
-        let panel = accDomTemp.nextElementSibling;
+    unfold = () => {
+        this.accDom.classList.toggle("accordion-active");
+        let panel = this.accDom.nextElementSibling;
         if (panel.style.maxHeight) {
             panel.style.maxHeight = null;
         } else {
@@ -55,13 +36,30 @@ class Accordion extends Component<AccordionProps> {
         }
     }
 
+    /**
+     * 标题点击模式，点击标题，展开内容
+     */
+    titleClickMode = () => {
+        this.accDom.addEventListener("click", () => this.unfold());
+    }
+
+    /**
+     * 手风琴标题开关变化
+     */
+    switchChange = (data: boolean) => {
+        this.unfold();
+        const {onChange} = this.props;
+        onChange && onChange(data);
+    }
+
     render() {
-        const {showSwitch = false, title = ''} = this.props;
+        const {showSwitch = false, title = '', visible} = this.props;
         return (
             <div className={'lc-accordion'}>
                 <div className="accordion-header" ref={dom => this.accDom = dom}>
                     <div className={'title-content'}>{title}</div>
-                    <div className={'title-switch'}>{showSwitch ? <LcSwitch onChange={this.switchChange}/> :
+                    <div className={'title-switch'}>{showSwitch ?
+                        <LcSwitch value={visible} onChange={this.switchChange}/> :
                         <RightOutlined className={'accordion-icon'}/>}</div>
                 </div>
                 <div className="lc-accordion-body">

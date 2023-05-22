@@ -14,9 +14,9 @@ export const calculateFillColor = (chartProps: any) => {
 /**
  * 计算图例配置信息
  */
-export const calculateLegendConfig = (chartProps: any) => {
+export const calculateLegendConfig = (chartStyle: any) => {
     let res = {visible: false};
-    const {legend} = chartProps;
+    const {legend} = chartStyle;
     if (!legend)
         return res;
     else {
@@ -25,7 +25,7 @@ export const calculateLegendConfig = (chartProps: any) => {
                 visible: true,
                 position: legend?.position,
                 direction: legend?.layout,
-                textColor: legend?.itemName?.style?.fill
+                color: legend?.itemName?.style?.fill
             }
         };
     }

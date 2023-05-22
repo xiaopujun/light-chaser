@@ -6,28 +6,13 @@ import LcSelect from "../../lc-select/LCSelect";
 import {Select} from "antd";
 import CfgItemBorder from "../../config-item-border/CfgItemBorder";
 import ConfigItem from "../../config-item/ConfigItem";
+import {LegendType} from "../../../framework/types/LegendType";
 
 const {Option} = Select;
 
 interface LegendProps {
-    updateElemConfig?: (data: any) => void;
-    chartProps?: any;
-    /**
-     * 是否可见
-     */
-    visible?: boolean;
-    /**
-     * 图例位置
-     */
-    position?: string;
-    /**
-     * 图例方向
-     */
-    direction?: string;
-    /**
-     * 文本颜色
-     */
-    textColor?: string;
+    config?: LegendType;
+    onChange?: (key: string, data: any) => void;
 }
 
 /**
@@ -35,59 +20,28 @@ interface LegendProps {
  */
 class Legend extends Component<LegendProps> {
 
-    state: any = null;
+    state: any = {
+        visible: false
+    };
 
     constructor(props: any) {
         super(props);
-        const {visible = false} = this.props;
-        this.state = {visible}
+        const {config} = this.props;
+        this.state = {visible: config?.visible || false};
     }
 
-
-    showLegend = (data: boolean) => {
-        const {updateElemConfig} = this.props;
-        updateElemConfig && updateElemConfig({legend: data});
-        this.setState({
-            visible: data
-        })
-    }
-
-    legendPositionChanged = (data: string) => {
-        const {updateElemConfig} = this.props;
-        updateElemConfig && updateElemConfig({
-            legend: {
-                position: data
-            }
-        });
-    }
-
-    legendLayoutChanged = (data: string) => {
-        const {updateElemConfig} = this.props;
-        updateElemConfig && updateElemConfig({
-            legend: {
-                layout: data
-            }
-        });
-    }
-
-    legendTextColorChanged = (color: string | string[]) => {
-        const {updateElemConfig} = this.props;
-        updateElemConfig && updateElemConfig({
-            legend: {
-                itemName: {
-                    style: {
-                        fill: color
-                    }
-                },
-            }
-        });
+    onChange = (key: string, data: any) => {
+        const {onChange} = this.props;
+        onChange && onChange(key, data);
     }
 
     render() {
+        const {config} = this.props;
         return (
-            <Accordion title={'图例'} showSwitch={true}>
+            <Accordion title={'图例'} showSwitch={true} visible={config?.visible}
+                       onChange={value => this.onChange('enable', value)}>
                 <ConfigItem title={'位置'}>
-                    <LcSelect onChange={this.legendPositionChanged}>
+                    <LcSelect defaultValue={config?.position} onChange={(value => this.onChange('position', value))}>
                         <Option value={"left-top"}>左上</Option>
                         <Option value={"left"}>正左</Option>
                         <Option value={"left-bottom"}>左下</Option>
@@ -102,15 +56,16 @@ class Legend extends Component<LegendProps> {
                         <Option value={"bottom-right"}>下右</Option>
                     </LcSelect>
                 </ConfigItem>
-                <ConfigItem title={'布局'}>
-                    <LcSelect>
-                        <Option>横向</Option>
-                        <Option>纵向</Option>
+                <ConfigItem title={'方向'}>
+                    <LcSelect defaultValue={config?.direction} onChange={value => this.onChange('direction', value)}>
+                        <Option value={'horizontal'}>横向</Option>
+                        <Option value={'vertical'}>纵向</Option>
                     </LcSelect>
                 </ConfigItem>
                 <ConfigItem title={'颜色'}>
                     <CfgItemBorder width={'100%'}>
-                        <BaseColorPicker style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
+                        <BaseColorPicker value={config?.color} onChange={value => this.onChange('color', value)}
+                                         style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
                     </CfgItemBorder>
                 </ConfigItem>
             </Accordion>

@@ -2,11 +2,11 @@ export const colorConversion = (color: string) => {
     if (color.length >= 7 && color.length <= 9 && color[0] === '#') {
         const rgba = hexToRgba(color, 1);
         return {hex: color, rgba: rgba};
-    } else if (color.substring(0, 4) === 'rgba') {
+    } else if (color.includes('rgb')) {
         const hex = rgbaToHex(color);
         return {hex: hex, rgba: color};
     } else {
-        console.warn('color is not valid');
+        console.warn('color is not valid', color);
         return {hex: '#000000', rgba: 'rgba(0,0,0,1)'};
     }
 }
@@ -29,10 +29,10 @@ export const rgbaToHex = (rgba: string) => {
     let b = parseInt(parts[2].trim());
     let a = parseFloat(parts[3].substring(0, parts[3].length - 1).trim());
 
-    let rr = r.toString(16).length == 1 ? "0" + r.toString(16) : r.toString(16);
-    let gg = g.toString(16).length == 1 ? "0" + g.toString(16) : g.toString(16);
-    let bb = b.toString(16).length == 1 ? "0" + b.toString(16) : b.toString(16);
+    let rr = r.toString(16).length === 1 ? "0" + r.toString(16) : r.toString(16);
+    let gg = g.toString(16).length === 1 ? "0" + g.toString(16) : g.toString(16);
+    let bb = b.toString(16).length === 1 ? "0" + b.toString(16) : b.toString(16);
 
-    let aa = Math.round(a * 255).toString(16).length == 1 ? "0" + Math.round(a * 255).toString(16) : Math.round(a * 255).toString(16);
+    let aa = Math.round(a * 255).toString(16).length === 1 ? "0" + Math.round(a * 255).toString(16) : Math.round(a * 255).toString(16);
     return "#" + rr + gg + bb + aa;
 }

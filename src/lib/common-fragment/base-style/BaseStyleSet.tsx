@@ -47,7 +47,6 @@ export default class BaseStyleSet extends Component<ConfigType> {
         const {config: {baseStyle: {padding, border, borderRadius, backgroundColor}}} = this.props;
         const paddingValue = parsePadding(padding);
         const borderValue = parseBorder(border);
-        console.log(borderValue)
         return (
             <Accordion title="容器" showSwitch={false}>
                 <ConfigCard title={'内边距'}>
