@@ -290,9 +290,10 @@ class DesignerStore implements LCDesigner, BaseStore {
      * 更新图表组件配置
      */
     updateElemConfig = (data: any) => {
-        let activeConfig: ElemConfig = this.elemConfigs[this.activeElem?.id + ''];
-        if (activeConfig)
+        let activeConfig: ElemConfig | any = this.elemConfigs[this.activeElem?.id + ''];
+        if (activeConfig) {
             this.elemConfigs[this.activeElem?.id + ''] = _.merge({}, activeConfig, data);
+        }
     }
 
     /**

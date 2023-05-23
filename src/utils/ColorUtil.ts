@@ -1,5 +1,5 @@
 export const colorConversion = (color: string) => {
-    if (color.length >= 7 && color.length <= 9 && color[0] === '#') {
+    if (color.length >= 4 && color.length <= 9 && color[0] === '#') {
         const rgba = hexToRgba(color, 1);
         return {hex: color, rgba: rgba};
     } else if (color.includes('rgb')) {

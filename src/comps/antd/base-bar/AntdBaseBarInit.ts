@@ -45,7 +45,8 @@ export default class AntdBaseBarInit extends AbstractInit {
                             },
                         },
                         line: null,
-                        tickLine: null
+                        tickLine: null,
+                        subTickLine: null,
                     },
                     yAxis: {
                         grid: null,
@@ -59,7 +60,7 @@ export default class AntdBaseBarInit extends AbstractInit {
                     },
                     color: 'rgb(0,255,234,0.2)',
                     legend: false,
-                    maxBarWidth: 8
+                    maxBarWidth: 8,
                 }
             },
             data: {

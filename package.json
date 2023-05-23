@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@ant-design/charts": "^1.3.2",
+    "@ant-design/charts": "^1.4.2",
     "@ant-design/icons": "^4.7.0",
     "@scena/react-ruler": "^0.17.1",
     "@testing-library/jest-dom": "^5.14.1",
