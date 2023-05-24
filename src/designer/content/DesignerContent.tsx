@@ -151,6 +151,7 @@ class DesignerContent extends PureComponent<DesignerStore | any> {
     }
 
     render() {
+        console.log('designerContent render');
         return (
             <DesignerContainer>
                 <DesignerRuler offsetX={60} offsetY={50}>

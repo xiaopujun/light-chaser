@@ -10,7 +10,6 @@ import NumberInput from "../../../lib/lc-input/NumberInput";
 import {calculateLegendConfig} from "../../../utils/AntdChartConfigUtil";
 import Legend from "../../../lib/common-fragment/legend/Legned";
 import AxisConfig from "../../../lib/common-fragment/axis/AxisConfig";
-import {toJS} from "mobx";
 
 class AntdBaseBarConfigStyle extends Component<ConfigType> {
 
@@ -303,7 +302,7 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
         const {chartStyle} = config;
         return (
             <>
-                <BaseStyleSet config={config} updateConfig={updateConfig}/>
+                <BaseStyleSet config={config.baseStyle} updateConfig={updateConfig}/>
                 <div className={'elem-chart-config'}>
                     <Accordion title={'图形'}>
                         <ConfigCard title={'条状'}>

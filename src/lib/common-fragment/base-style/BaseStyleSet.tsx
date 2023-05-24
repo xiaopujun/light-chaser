@@ -11,30 +11,29 @@ import NumberInput from "../../lc-input/NumberInput";
 import {ConfigType} from "../../../framework/types/ConfigType";
 import {generateBorder, generatePaddingValue, parseBorder, parsePadding} from "../../../utils/CssStyleUtil";
 import {parseInt} from "lodash";
+import {toJS} from "mobx";
 
 const {Option} = Select;
 
 /**
  * lc组件基础样式
  */
-export default class BaseStyleSet extends Component<ConfigType> {
+class BaseStyleSet extends React.PureComponent<ConfigType> {
 
     paddingChanged = (pos: string, padding: number) => {
         const {updateConfig, config} = this.props;
-        let value = generatePaddingValue(pos, padding, config.baseStyle.padding);
-        console.log(value)
+        let value = generatePaddingValue(pos, padding, config.padding);
         updateConfig && updateConfig({style: {baseStyle: {padding: value}}});
     }
 
     backgroundColorChanged = (color: string | string[]) => {
         const {updateConfig} = this.props;
-        console.log(color)
         updateConfig && updateConfig({style: {baseStyle: {backgroundColor: color}}});
     }
 
     borderChanged = (key: string, value: string) => {
         const {updateConfig, config} = this.props;
-        const border = generateBorder(key, value, config.baseStyle.border || '0px solid #000');
+        const border = generateBorder(key, value, config.border || '0px solid #000');
         updateConfig && updateConfig({style: {baseStyle: {border}}});
     }
 
@@ -44,7 +43,8 @@ export default class BaseStyleSet extends Component<ConfigType> {
     }
 
     render() {
-        const {config: {baseStyle: {padding, border, borderRadius, backgroundColor}}} = this.props;
+        console.log('base style set render', toJS(this.props.config));
+        const {config: {padding, border, borderRadius, backgroundColor}} = this.props;
         const paddingValue = parsePadding(padding);
         const borderValue = parseBorder(border);
         return (

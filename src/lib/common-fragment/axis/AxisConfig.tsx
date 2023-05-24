@@ -11,7 +11,6 @@ import ConfigCard from "../../config-card/ConfigCard";
 import NumberInput from "../../lc-input/NumberInput";
 import Accordion from "../../lc-accordion/Accordion";
 import LcSelect from "../../lc-select/LCSelect";
-import {toJS} from "mobx";
 
 const {Option} = Select;
 
