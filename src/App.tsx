@@ -2,12 +2,13 @@ import React, {Component, lazy, Suspense} from 'react';
 import 'antd/dist/antd.min.css';
 import './App.less';
 import {Route, Switch} from "react-router-dom";
-import Loading from "./component/loading/Loading";
-import LcRightMenu from "./component/designer/LcRightMenu";
+import Loading from "./lib/loading/Loading";
+import LcRightMenu from "./designer/operate-provider/right-click-menu/OperateMenu";
+import Demo from "./test/Demo";
 
-const LightChaserList = lazy(() => import('./component/list/LightChaserList'));
-const LCDesigner = lazy(() => import('./component/designer'));
-const Preview = lazy(() => import('./component/show/LcShow'));
+const LightChaserList = lazy(() => import('./list/LightChaserList'));
+const LCDesigner = lazy(() => import('./designer'));
+const Preview = lazy(() => import('./designer/show/LcShow'));
 
 class App extends Component<any> {
     render() {
@@ -19,6 +20,7 @@ class App extends Component<any> {
                         <Route path={'/designer'} component={LCDesigner}/>
                         <Route path={'/view'} component={Preview}/>
                         <Route path={'/loading'} component={Loading}/>
+                        <Route path={'/test'} component={Demo}/>
                     </Switch>
                 </Suspense>
                 <LcRightMenu/>

@@ -1,0 +1,42 @@
+@import "../../designer/style/DesignerStyle.less";
+
+.lc-designer-structure {
+  height: 100%;
+
+  .structure-header {
+    height: @headerHeight;
+    background-color: @headBgColor;
+  }
+
+  .structure-body {
+    display: flex;
+    justify-content: space-between;
+    height: @contentHeight;
+    background-color: #001528;
+
+    .structure-body-left {
+      width: @leftWidth;
+      height: calc(100% + 40px);
+      background-color: @leftBgColor;
+    }
+
+    .structure-body-content {
+      width: @contentWidth;
+      background-color: #0c162d;
+    }
+
+    .structure-body-right {
+      width: @rightWidth;
+      background-color: @rightMenuListBgColor;
+      z-index: 1;
+    }
+  }
+
+  .structure-foot {
+    position: relative;
+    left: 60px;
+    width: calc(100% - 60px);
+    height: @footHeight;
+    background-color: @footer-bg-color;
+  }
+}

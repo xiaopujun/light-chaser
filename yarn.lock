@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@amap/amap-jsapi-loader@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.npmmirror.com/@amap/amap-jsapi-loader/-/amap-jsapi-loader-0.0.3.tgz#5d676f1670213de0927c74da77475723e5de2380"
-  integrity sha512-3Tz50UdmRY2BiONK/mafEQzshYGUinK2hmDlKjYtoJHC/aVydiMOolHENWmP98F603RcrWTM7aLxOFMgesFfug==
+"@amap/amap-jsapi-loader@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmmirror.com/@amap/amap-jsapi-loader/-/amap-jsapi-loader-1.0.1.tgz#9ec4b4d5d2467eac451f6c852e35db69e9f9f0c0"
+  integrity sha512-nPyLKt7Ow/ThHLkSvn2etQlUzqxmTVgK7bIgwdBRTg2HK5668oN7xVxkaiRe3YZEzGzfV2XgH5Jmu2T73ljejw==
 
 "@ampproject/remapping@^2.0.0":
   version "2.1.0"
@@ -22,14 +22,14 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@ant-design/charts@^1.3.2":
-  version "1.3.5"
-  resolved "https://registry.npmmirror.com/@ant-design/charts/-/charts-1.3.5.tgz#8f3efa68f2088863b69a30c3b86937c29db7dd8b"
-  integrity sha512-wXuN2ms49DCLLenxx2NmPuQDx0KwV3MpvW8rB5z5glsiRU6SoOQnVaXJstHd9xY2Pp54x8E6vl5gPvqYbzBKMw==
+"@ant-design/charts@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.npmmirror.com/@ant-design/charts/-/charts-1.4.2.tgz#409d9d2205390f46c9942dd2ba3152629d214700"
+  integrity sha512-BcVx6AAnwxSdzAVUZReSuvUVtnT5AkJivq3wmcYj17scll26HHficg35yimGskAj3Gu1upYjBQBz6Tk7GEMJsQ==
   dependencies:
     "@ant-design/flowchart" "^1.0.2"
     "@ant-design/graphs" "^1.0.1"
-    "@ant-design/maps" "^0.0.3"
+    "@ant-design/maps" "^1.0.1"
     "@ant-design/plots" "^1.0.2"
 
 "@ant-design/colors@^4.0.5":
@@ -84,12 +84,13 @@
     classnames "^2.2.6"
     rc-util "^5.9.4"
 
-"@ant-design/maps@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.npmmirror.com/@ant-design/maps/-/maps-0.0.3.tgz#4c3082ace87ee8b819f0db83173b78532cb7ce5a"
-  integrity sha512-XarzMFcmvLtwaIKgboHWoKkpdrSTGtZU898GmVUP1o3V3eWNfEE+Al3yEV2vauM1OxRbVLc1vAelKVf1nAHtuw==
+"@ant-design/maps@^1.0.1":
+  version "1.0.6"
+  resolved "https://registry.npmmirror.com/@ant-design/maps/-/maps-1.0.6.tgz#4647fe469b30f13899c492a51436e5057abbab61"
+  integrity sha512-Q14zOiwwPiZQ4wqp6L/N6DcnIIMAn6FQzlKmu0I3If+iGoeeDSkaNojg/LPR57ON37i/5nC/zOZrRK4wqH6Ecg==
   dependencies:
-    "@antv/l7plot" "^0.0.3-alpha.5"
+    "@antv/l7" "^2.9.37"
+    "@antv/l7plot" "^0.3.2"
     "@antv/util" "^2.0.9"
     react-content-loader "^5.0.4"
 
@@ -128,10 +129,10 @@
     "@antv/util" "^2.0.13"
     tslib "^2.0.0"
 
-"@antv/async-hook@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.npmmirror.com/@antv/async-hook/-/async-hook-2.1.0.tgz#17f57a6ae5e9c55adac3cdfac7d441258c3f9aeb"
-  integrity sha512-q7Rup5jTDAiWh77Xb2vgkCURJGczmU2iWTCkBDq28PuK5KUoenyeGGrFKAVkgqaL663wdpw0Vzn+sYriTfT9hA==
+"@antv/async-hook@^2.2.9":
+  version "2.2.9"
+  resolved "https://registry.npmmirror.com/@antv/async-hook/-/async-hook-2.2.9.tgz#4664c53d8a6af8107e7c07d6b1398572d54d3ffb"
+  integrity sha512-4BUp2ZUaTi2fYL67Ltkf6eV912rYJeSBokGhd5fhhnpUkMA1LEI1mg97Pqmx3yC50VEQ+LKXZxj9ePZs80ECfw==
   dependencies:
     async "^3.1.1"
 
@@ -392,19 +393,6 @@
   dependencies:
     "@antv/g6-pc" "0.5.4"
 
-"@antv/geo-coord@^1.0.8":
-  version "1.0.8"
-  resolved "https://registry.npmmirror.com/@antv/geo-coord/-/geo-coord-1.0.8.tgz#545a208535425349b21c78a2dfc2a9b240369667"
-  integrity sha512-4eLAVh9HDWNAuUAny6mI0U9CQ7NXlmVffR6LhZ7OYbDC5NeFV65gWfUTjzotQXK+6eXU5/8vDhHl8YestLkB5Q==
-  dependencies:
-    "@antv/gl-matrix" "^2.7.1"
-    "@antv/util" "~2.0.1"
-
-"@antv/gl-matrix@^2.7.1":
-  version "2.7.1"
-  resolved "https://registry.npmmirror.com/@antv/gl-matrix/-/gl-matrix-2.7.1.tgz#acb8e37f7ab3df01345aba4372d7942be42eba14"
-  integrity sha512-oOWcVNlpELIKi9x+Mm1Vwbz8pXfkbJKykoCIOJ/dNK79hSIANbpXJ5d3Rra9/wZqK6MC961B7sybFhPlLraT3Q==
-
 "@antv/hierarchy@^0.6.7":
   version "0.6.8"
   resolved "https://registry.npmmirror.com/@antv/hierarchy/-/hierarchy-0.6.8.tgz#b77c490a9c2dd6da186cbacee0e7887b8c1b3fa4"
@@ -412,52 +400,61 @@
   dependencies:
     "@antv/util" "^2.0.7"
 
-"@antv/l7-component@^2.7.8":
-  version "2.7.8"
-  resolved "https://registry.npmmirror.com/@antv/l7-component/-/l7-component-2.7.8.tgz#80c320de93c638441633aa61120980e07a4e3030"
-  integrity sha512-RN3YcX+o2CATMgN9FzwUX4SRYPf5PM+YvWCQ2DeDR9kROmGbhR2KASWZVVG0C2qJrrVk0oYkSHf9yTf/tpyAJg==
+"@antv/l7-component@2.15.4":
+  version "2.15.4"
+  resolved "https://registry.npmmirror.com/@antv/l7-component/-/l7-component-2.15.4.tgz#2fb0d4cd590e59cb74d674b326db0a5d3c00b00b"
+  integrity sha512-qvr3+KkH+8Ei7a6Ai8Nwkx8MbpOUeosm34YbWcg1QmZyfUljLtRH6gbkGrSR7eAKZ6kAe5uJFPSRpMv7A77MOw==
   dependencies:
-    "@antv/l7-core" "^2.7.8"
-    "@antv/l7-utils" "^2.7.8"
+    "@antv/l7-core" "2.15.4"
+    "@antv/l7-utils" "2.15.4"
     "@babel/runtime" "^7.7.7"
     eventemitter3 "^4.0.0"
     inversify "^5.0.1"
+    lodash "^4.17.15"
     reflect-metadata "^0.1.13"
+    supercluster "^7.0.0"
 
-"@antv/l7-core@^2.7.8":
-  version "2.7.8"
-  resolved "https://registry.npmmirror.com/@antv/l7-core/-/l7-core-2.7.8.tgz#896f052bbac98d3827363f0aa6e0b20305de36dd"
-  integrity sha512-n0KndsFCqD/ga9I9PKXgMbuBkOjHdKjusEm8XWbMKQTJLkUmMPYS8v1wK4xBH55a5JptVGsJY460a9rXGAF1ew==
+"@antv/l7-core@2.15.4":
+  version "2.15.4"
+  resolved "https://registry.npmmirror.com/@antv/l7-core/-/l7-core-2.15.4.tgz#eaf75bf7b2b4acf047265188e1f92cb30fc30e60"
+  integrity sha512-AVTx5K6DZZT2Iq3FOQfl8mZ39wuoEOKWWuiEzF9+46xLY/qdPdPXa4Ddy6MWg6O9Ozubs9q+233EZkWztmFdFw==
   dependencies:
-    "@antv/async-hook" "^2.1.0"
-    "@antv/l7-utils" "^2.7.8"
+    "@antv/async-hook" "^2.2.9"
+    "@antv/l7-utils" "2.15.4"
     "@babel/runtime" "^7.7.7"
+    "@turf/helpers" "^6.1.4"
     ajv "^6.10.2"
     element-resize-event "^3.0.3"
     eventemitter3 "^4.0.0"
     gl-matrix "^3.1.0"
     inversify "^5.0.1"
     inversify-inject-decorators "^3.1.0"
-    l7-tiny-sdf "^0.0.2"
-    l7hammerjs "^0.0.6"
+    l7-tiny-sdf "^0.0.4"
+    l7hammerjs "^0.0.7"
     lodash "^4.17.15"
     reflect-metadata "^0.1.13"
     viewport-mercator-project "^6.2.1"
 
-"@antv/l7-layers@^2.7.8":
-  version "2.7.8"
-  resolved "https://registry.npmmirror.com/@antv/l7-layers/-/l7-layers-2.7.8.tgz#0ffd78a46625bd1e6b0ff3fa4e854337c9fe9bef"
-  integrity sha512-CqUjDWguXSD4GwhQXeFoScG5Ifh7VIOzCex9oZpQUWK1GZRhchZYWEtmoxHimpQas7z1tROh8NqkjpKxdvu+Lw==
+"@antv/l7-layers@2.15.4":
+  version "2.15.4"
+  resolved "https://registry.npmmirror.com/@antv/l7-layers/-/l7-layers-2.15.4.tgz#38baccae30db8ab0020de185523eafe68c144114"
+  integrity sha512-hMHWbN59Ko9JaubgN3HQwfi1YsNhIX6k2VtIDRsEPm5WQwsEKHubkHpwJZcR+qjlu6n22u0B8/jKg3gMQp9HGw==
   dependencies:
-    "@antv/geo-coord" "^1.0.8"
-    "@antv/l7-core" "^2.7.8"
-    "@antv/l7-source" "^2.7.8"
-    "@antv/l7-utils" "^2.7.8"
+    "@antv/async-hook" "^2.2.9"
+    "@antv/l7-core" "2.15.4"
+    "@antv/l7-maps" "2.15.4"
+    "@antv/l7-source" "2.15.4"
+    "@antv/l7-utils" "2.15.4"
     "@babel/runtime" "^7.7.7"
     "@mapbox/martini" "^0.2.0"
+    "@turf/clone" "^6.5.0"
+    "@turf/helpers" "^6.1.4"
     "@turf/meta" "^6.0.2"
+    "@turf/polygon-to-line" "^6.5.0"
+    "@turf/union" "^6.5.0"
     d3-array "1"
     d3-color "^1.4.0"
+    d3-interpolate "1.4.0"
     d3-scale "2"
     earcut "^2.2.1"
     eventemitter3 "^4.0.0"
@@ -466,31 +463,31 @@
     gl-vec2 "^1.3.0"
     inversify "^5.0.1"
     lodash "^4.17.15"
-    merge-json-schemas "1.0.0"
     polyline-miter-util "^1.0.1"
     reflect-metadata "^0.1.13"
 
-"@antv/l7-map@^2.7.8":
-  version "2.7.8"
-  resolved "https://registry.npmmirror.com/@antv/l7-map/-/l7-map-2.7.8.tgz#9922d624923cbbe6a092c782db46dd83a5343e73"
-  integrity sha512-LCt+NmRn0x4/x4WBrPd0AAZ6ey68S6BWBc4MZq4nDv4W3HAY+F0ptWy4pYL8WPOXYfhgbBXG9CIpHRJ8CKcLrw==
+"@antv/l7-map@2.15.4":
+  version "2.15.4"
+  resolved "https://registry.npmmirror.com/@antv/l7-map/-/l7-map-2.15.4.tgz#4d43c56d00b7e2c55ed86e8c4edd2e42c0f6cd92"
+  integrity sha512-srEEOPWS592CZssuqRsWwTWygsDV+kIgEhyd/OHBLM/HAy87y0KgsZ78yYm8P2CkrS17BCNv8fZCIH09MT5b6w==
   dependencies:
-    "@antv/l7-utils" "^2.7.8"
+    "@antv/l7-utils" "2.15.4"
     "@babel/runtime" "^7.7.7"
     "@mapbox/point-geometry" "^0.1.0"
     "@mapbox/unitbezier" "^0.0.0"
     eventemitter3 "^4.0.4"
+    gl-matrix "^3.1.0"
     lodash "^4.17.15"
 
-"@antv/l7-maps@^2.7.8":
-  version "2.7.8"
-  resolved "https://registry.npmmirror.com/@antv/l7-maps/-/l7-maps-2.7.8.tgz#f60df91143fa4fd03bdbaca4074066e80f1ea60c"
-  integrity sha512-MP8BCFghuWdK8/xv63vbexi5JsNpo8FnL+Ox0aYrjIoF9G6yNzRALJ/QMatjljzUN/gIsT23mDHdEl1/TRusvQ==
+"@antv/l7-maps@2.15.4":
+  version "2.15.4"
+  resolved "https://registry.npmmirror.com/@antv/l7-maps/-/l7-maps-2.15.4.tgz#edd594c8e89b3c69cef9f2894858eecd885974c2"
+  integrity sha512-j11Np2U0D4CuJrJ2hj8xQTfe5EyTzyBNDr7r0yXowVD5M+QIPb3JP1jsAxlsHiQB+4kl9vG/OBNKfRzau1gCMw==
   dependencies:
-    "@amap/amap-jsapi-loader" "^0.0.3"
-    "@antv/l7-core" "^2.7.8"
-    "@antv/l7-map" "^2.7.8"
-    "@antv/l7-utils" "^2.7.8"
+    "@amap/amap-jsapi-loader" "^1.0.1"
+    "@antv/l7-core" "2.15.4"
+    "@antv/l7-map" "2.15.4"
+    "@antv/l7-utils" "2.15.4"
     "@babel/runtime" "^7.7.7"
     "@types/amap-js-api" "^1.4.6"
     "@types/mapbox-gl" "^1.11.2"
@@ -500,94 +497,105 @@
     reflect-metadata "^0.1.13"
     viewport-mercator-project "^6.2.1"
 
-"@antv/l7-renderer@^2.7.8":
-  version "2.7.8"
-  resolved "https://registry.npmmirror.com/@antv/l7-renderer/-/l7-renderer-2.7.8.tgz#39a24b25a241b915caf46faad5d12c5b2122aa31"
-  integrity sha512-jhsVIndGJlwKhpmGKucGwSc8K7Z5zGW06lyurzbANtNYym7rCG1KhvAzFiDnEVZYTJsvhSSJPpva1nqll8f8+A==
+"@antv/l7-renderer@2.15.4":
+  version "2.15.4"
+  resolved "https://registry.npmmirror.com/@antv/l7-renderer/-/l7-renderer-2.15.4.tgz#72217b457edb93c62c19016da7e5ac49b0704523"
+  integrity sha512-8Fzm9ocPDOSWNfQ+onmqXfOH9kGqWvBoQf9UWa8IYWcv+43MNKMY0xkK6OIV2PNVXlYDaqlegD8zgETxjg9K2Q==
   dependencies:
-    "@antv/l7-core" "^2.7.8"
+    "@antv/l7-core" "2.15.4"
+    "@antv/l7-utils" "2.15.4"
     "@babel/runtime" "^7.7.7"
     inversify "^5.0.1"
-    l7regl "^0.0.16"
+    l7regl "^0.0.20"
     lodash "^4.17.15"
     reflect-metadata "^0.1.13"
 
-"@antv/l7-scene@^2.7.8":
-  version "2.7.8"
-  resolved "https://registry.npmmirror.com/@antv/l7-scene/-/l7-scene-2.7.8.tgz#46cbf2e7f3c12f2cbcd84286bf60e38f94bbdd91"
-  integrity sha512-5XpWDJ3kAghlya8CnHkB5IAxz2ibCa6cOScEs22yPvLUVcr3fjvP+rTo8adCqetNqTzSIeEgigY0QAW2Gjygyg==
+"@antv/l7-scene@2.15.4":
+  version "2.15.4"
+  resolved "https://registry.npmmirror.com/@antv/l7-scene/-/l7-scene-2.15.4.tgz#b012a2edb24910afe903d0e7c66fa8134e0c2114"
+  integrity sha512-HJx7G58hoZKRF0yVYB+Ia6pvVkXp322TMO0p+R/3ClRtgh5XDJ/BZpMfe31FQsNpGetG5VEdE3WohGFH6fO/Ig==
   dependencies:
-    "@antv/l7-component" "^2.7.8"
-    "@antv/l7-core" "^2.7.8"
-    "@antv/l7-layers" "^2.7.8"
-    "@antv/l7-maps" "^2.7.8"
-    "@antv/l7-renderer" "^2.7.8"
-    "@antv/l7-utils" "^2.7.8"
+    "@antv/l7-component" "2.15.4"
+    "@antv/l7-core" "2.15.4"
+    "@antv/l7-layers" "2.15.4"
+    "@antv/l7-maps" "2.15.4"
+    "@antv/l7-renderer" "2.15.4"
+    "@antv/l7-utils" "2.15.4"
     "@babel/runtime" "^7.7.7"
+    eventemitter3 "^4.0.7"
     inversify "^5.0.1"
     mapbox-gl "^1.2.1"
     reflect-metadata "^0.1.13"
 
-"@antv/l7-source@^2.7.8":
-  version "2.7.8"
-  resolved "https://registry.npmmirror.com/@antv/l7-source/-/l7-source-2.7.8.tgz#a88769618734e554fbbc2bb442d0a9c5ee40982a"
-  integrity sha512-7yfgVfGmJDXc2tbTuwGRi4uCC2OTKRK7cgMcrONNjzWYYwvZwV6hU2slMs93YTGJZjVodbzIUeARQHcvj856iQ==
+"@antv/l7-source@2.15.4":
+  version "2.15.4"
+  resolved "https://registry.npmmirror.com/@antv/l7-source/-/l7-source-2.15.4.tgz#2ad2fd1e657642338fbce783487f7aebcd7445ff"
+  integrity sha512-ZW8AlzdzSeYn1EAL21qgZIlAFt+UTbPF0xx3QVLS7sFcRZ/TA/pHvM9sbf2eZI592yMprRpuzfyx1p9A3JSW7Q==
   dependencies:
-    "@antv/async-hook" "^2.1.0"
-    "@antv/l7-core" "^2.7.8"
-    "@antv/l7-utils" "^2.7.8"
+    "@antv/async-hook" "^2.2.9"
+    "@antv/l7-core" "2.15.4"
+    "@antv/l7-utils" "2.15.4"
     "@babel/runtime" "^7.7.7"
-    "@mapbox/geojson-rewind" "^0.4.0"
+    "@mapbox/geojson-rewind" "^0.5.2"
+    "@mapbox/vector-tile" "^1.3.1"
     "@turf/helpers" "^6.1.4"
     "@turf/invariant" "^6.1.2"
     "@turf/meta" "^6.0.2"
     d3-dsv "^1.1.1"
     d3-hexbin "^0.2.2"
     eventemitter3 "^4.0.0"
+    geojson-vt "^3.2.1"
     inversify "^5.0.1"
     lodash "^4.17.15"
+    pbf "^3.2.1"
     reflect-metadata "^0.1.13"
     supercluster "^7.0.0"
 
-"@antv/l7-utils@^2.7.8":
-  version "2.7.8"
-  resolved "https://registry.npmmirror.com/@antv/l7-utils/-/l7-utils-2.7.8.tgz#fa73ff76fff1685e98d1bdccc28625a1e8c31ff7"
-  integrity sha512-uHXrUPybPThcIKGHqG4Aet4KezdO27Jzd1JvOVHPk689Ewjw2xTznM+cLcXwnxYlh/zV96rmBYzxNNKMZ07mzA==
+"@antv/l7-utils@2.15.4":
+  version "2.15.4"
+  resolved "https://registry.npmmirror.com/@antv/l7-utils/-/l7-utils-2.15.4.tgz#9ba091ab6a016d0767ab2eefac92517d4d92f370"
+  integrity sha512-MxQmnT8IkXStAbUO3zXcpqS44FwN58ySPqlPFR+1Kh6sPT/tHvuQ8PMcLQ/gSccsJwu731gW7OVVNkOWSYxq2Q==
   dependencies:
     "@babel/runtime" "^7.7.7"
+    "@turf/bbox" "^6.5.0"
+    "@turf/bbox-polygon" "^6.5.0"
     "@turf/helpers" "^6.1.4"
     d3-color "^1.4.0"
+    earcut "^2.1.0"
+    eventemitter3 "^4.0.0"
+    gl-matrix "^3.1.0"
+    lodash "^4.17.15"
+    web-worker-helper "^0.0.3"
 
-"@antv/l7@^2.6.25":
-  version "2.7.8"
-  resolved "https://registry.npmmirror.com/@antv/l7/-/l7-2.7.8.tgz#b2b761528d1308ae57d2adc620b6d39837cb5ae2"
-  integrity sha512-/o8QjYTZBBF+CvZp2FZRHsTjBBXK9cCqQakYlZP4TwZveAOxBth0wW6la4XGFDDNUEd/HM6TJJxe0gzOEwKmbA==
+"@antv/l7@^2.9.37":
+  version "2.15.4"
+  resolved "https://registry.npmmirror.com/@antv/l7/-/l7-2.15.4.tgz#356c2dbd2cdd22cad6da44b1ceb3f753029d91cd"
+  integrity sha512-GCorTp1l8I3uJQ3Yllxn5ollZ0C2PFT8G1+BickIZZld+/g+oG8PDu9/QgXmGJlq0wcMwhx6IthCGeVgDqZ5KQ==
   dependencies:
-    "@antv/l7-component" "^2.7.8"
-    "@antv/l7-core" "^2.7.8"
-    "@antv/l7-layers" "^2.7.8"
-    "@antv/l7-maps" "^2.7.8"
-    "@antv/l7-scene" "^2.7.8"
-    "@antv/l7-source" "^2.7.8"
-    "@antv/l7-utils" "^2.7.8"
+    "@antv/l7-component" "2.15.4"
+    "@antv/l7-core" "2.15.4"
+    "@antv/l7-layers" "2.15.4"
+    "@antv/l7-maps" "2.15.4"
+    "@antv/l7-scene" "2.15.4"
+    "@antv/l7-source" "2.15.4"
+    "@antv/l7-utils" "2.15.4"
     "@babel/runtime" "^7.7.7"
 
-"@antv/l7plot-component@^0.0.3-alpha.5":
-  version "0.0.3-alpha.7"
-  resolved "https://registry.npmmirror.com/@antv/l7plot-component/-/l7plot-component-0.0.3-alpha.7.tgz#611c51261c6db72aefbbf14c6dfd6f0709792594"
-  integrity sha512-3HhmKo8Bx5CQq49L1hKPSIMzo1jSDUzmB67tVRoP7o0/R59XSS4x1xignR9j/+K/rFKcqc7xo+m3vMlkG9V/Qg==
+"@antv/l7plot-component@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.npmmirror.com/@antv/l7plot-component/-/l7plot-component-0.0.10.tgz#9604e3f56daee4a7c19b965d57aac30007c64c0e"
+  integrity sha512-jnlg2Qm4tcUUuei+7fVk/HwRqhgxWnfdawOdB3C2u7YJqhkpk2mb7FPY+KGeZd+pqEQcAJTFi/1NeKpnZcP8kg==
   dependencies:
     "@antv/dom-util" "^2.0.3"
     "@antv/util" "^2.0.14"
 
-"@antv/l7plot@^0.0.3-alpha.5":
-  version "0.0.3"
-  resolved "https://registry.npmmirror.com/@antv/l7plot/-/l7plot-0.0.3.tgz#e70096265c1359fbf76b821c053e47b093ff243e"
-  integrity sha512-OBu6j6x6tWCCQKebjSXZnwil8cbAjXNbDPSjj4Eo3WAOayIpP3SCiQjZfBR2TGBdXuoYnM1x3jCmSoqUv2rrUQ==
+"@antv/l7plot@^0.3.2":
+  version "0.3.3"
+  resolved "https://registry.npmmirror.com/@antv/l7plot/-/l7plot-0.3.3.tgz#16ef6f21b9f534f15fee57ebff44ed9e7d9aef35"
+  integrity sha512-abRLXb94tMEMd4nxYP2VgwNMhGsjJP5rCxuGGkG8xva9uC15wnRe2phnbIYoakuZk+OKknkiK4LdZLSMVHGt3Q==
   dependencies:
     "@antv/event-emitter" "^0.1.2"
-    "@antv/l7" "^2.6.25"
-    "@antv/l7plot-component" "^0.0.3-alpha.5"
+    "@antv/l7plot-component" "^0.0.10"
     "@antv/util" "^2.0.13"
     lodash-es "^4.17.21"
     topojson-client "^3.1.0"
@@ -638,7 +646,7 @@
     fecha "~4.2.0"
     tslib "^2.0.0"
 
-"@antv/util@^2.0.13", "@antv/util@^2.0.14", "@antv/util@^2.0.7", "@antv/util@^2.0.9", "@antv/util@~2.0.0", "@antv/util@~2.0.1", "@antv/util@~2.0.12", "@antv/util@~2.0.3", "@antv/util@~2.0.5":
+"@antv/util@^2.0.13", "@antv/util@^2.0.14", "@antv/util@^2.0.7", "@antv/util@^2.0.9", "@antv/util@~2.0.0", "@antv/util@~2.0.12", "@antv/util@~2.0.3", "@antv/util@~2.0.5":
   version "2.0.17"
   resolved "https://registry.npmmirror.com/@antv/util/-/util-2.0.17.tgz#e8ef42aca7892815b229269f3dd10c6b3c7597a9"
   integrity sha512-o6I9hi5CIUvLGDhth0RxNSFDRwXeywmt6ExR4+RmVAzIi48ps6HUy+svxOCayvrPBN37uE6TAc2KDofRo0nK9Q==
@@ -2620,10 +2628,15 @@
   dependencies:
     lodash "^4.11.1"
 
-"@daybrush/utils@^1.1.1", "@daybrush/utils@^1.7.1":
+"@daybrush/utils@^1.1.1":
   version "1.10.0"
   resolved "https://registry.npmmirror.com/@daybrush/utils/-/utils-1.10.0.tgz#2a2235269b960b7ffaf05ca2e75379ea1fb58204"
   integrity sha512-IDT0DWAGcjxb2+WMr8pHrVTkHVKdilBumX1SubXJUlowN4rMSLphwDxvMNfv+vQOrdCPXSoPVZ3mhfrHsQ9Xow==
+
+"@daybrush/utils@^1.11.0", "@daybrush/utils@^1.7.1":
+  version "1.11.0"
+  resolved "https://registry.npmmirror.com/@daybrush/utils/-/utils-1.11.0.tgz#ad23a431fdb8f95ab4bb34fb6d080f2f7997a988"
+  integrity sha512-/T0Oe7KkfUoCusFj1cJ6N+Tu+jFZXVkaKqDBcDY3P0goJfcfaT+4+oG8aHi4LDgBErNjP6uvC3IEOSMe2ka/yQ==
 
 "@eslint/eslintrc@^0.4.3":
   version "0.4.3"
@@ -2939,23 +2952,6 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@mapbox/geojson-area@0.2.2":
-  version "0.2.2"
-  resolved "https://registry.npmmirror.com/@mapbox/geojson-area/-/geojson-area-0.2.2.tgz#18d7814aa36bf23fbbcc379f8e26a22927debf10"
-  integrity sha512-bBqqFn1kIbLBfn7Yq1PzzwVkPYQr9lVUeT8Dhd0NL5n76PBuXzOcuLV7GOSbEB1ia8qWxH4COCvFpziEu/yReA==
-  dependencies:
-    wgs84 "0.0.0"
-
-"@mapbox/geojson-rewind@^0.4.0":
-  version "0.4.1"
-  resolved "https://registry.npmmirror.com/@mapbox/geojson-rewind/-/geojson-rewind-0.4.1.tgz#357d79300adb7fec7c1f091512988bca6458f068"
-  integrity sha512-mxo2MEr7izA1uOXcDsw99Kgg6xW3P4H2j4n1lmldsgviIelpssvP+jQDivFKOHrOVJDpTTi5oZJvRcHtU9Uufw==
-  dependencies:
-    "@mapbox/geojson-area" "0.2.2"
-    concat-stream "~1.6.0"
-    minimist "^1.2.5"
-    sharkdown "^0.1.0"
-
 "@mapbox/geojson-rewind@^0.5.0":
   version "0.5.1"
   resolved "https://registry.npmmirror.com/@mapbox/geojson-rewind/-/geojson-rewind-0.5.1.tgz#adbe16dc683eb40e90934c51a5e28c7bbf44f4e1"
@@ -2963,6 +2959,14 @@
   dependencies:
     get-stream "^6.0.1"
     minimist "^1.2.5"
+
+"@mapbox/geojson-rewind@^0.5.2":
+  version "0.5.2"
+  resolved "https://registry.npmmirror.com/@mapbox/geojson-rewind/-/geojson-rewind-0.5.2.tgz#591a5d71a9cd1da1a0bf3420b3bea31b0fc7946a"
+  integrity sha512-tJaT+RbYGJYStt7wI3cq4Nl4SXxG8W7JDG5DMJu97V25RnbNg3QtQtf+KD+VLjNpWKYsRvXDNmNrBgEETr1ifA==
+  dependencies:
+    get-stream "^6.0.1"
+    minimist "^1.2.6"
 
 "@mapbox/geojson-types@^1.0.2":
   version "1.0.2"
@@ -3117,12 +3121,12 @@
   dependencies:
     "@daybrush/utils" "^1.1.1"
 
-"@scena/react-ruler@^0.12.2":
-  version "0.12.2"
-  resolved "https://registry.npmmirror.com/@scena/react-ruler/-/react-ruler-0.12.2.tgz#4c0d8ce57b9865778195a44f8612489cee446ad9"
-  integrity sha512-5la/o0Qk5FoGczumcfCBHKjdTXBo5eLxlE/ayYgudIdkKFRw7eC4hGtZ2SsaM+X+urNJhCplwPY1jgJkk+PwAg==
+"@scena/react-ruler@^0.17.1":
+  version "0.17.1"
+  resolved "https://registry.npmmirror.com/@scena/react-ruler/-/react-ruler-0.17.1.tgz#ced7bb1d925ade80456d131fc0b88856dda70524"
+  integrity sha512-ZgLSlNByevYMH2G7QzId49eojyfqd0zUNASIRIJm89X8ub1ipaMqaTPsSXS+yJspgiYFeVSjL8KCC/Yc1SMzLg==
   dependencies:
-    "@daybrush/utils" "^1.7.1"
+    "@daybrush/utils" "^1.11.0"
     framework-utils "^1.1.0"
 
 "@sinonjs/commons@^1.7.0":
@@ -3299,24 +3303,63 @@
   resolved "https://registry.npmmirror.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
 
+"@turf/bbox-polygon@^6.5.0":
+  version "6.5.0"
+  resolved "https://registry.npmmirror.com/@turf/bbox-polygon/-/bbox-polygon-6.5.0.tgz#f18128b012eedfa860a521d8f2b3779cc0801032"
+  integrity sha512-+/r0NyL1lOG3zKZmmf6L8ommU07HliP4dgYToMoTxqzsWzyLjaj/OzgQ8rBmv703WJX+aS6yCmLuIhYqyufyuw==
+  dependencies:
+    "@turf/helpers" "^6.5.0"
+
+"@turf/bbox@^6.5.0":
+  version "6.5.0"
+  resolved "https://registry.npmmirror.com/@turf/bbox/-/bbox-6.5.0.tgz#bec30a744019eae420dac9ea46fb75caa44d8dc5"
+  integrity sha512-RBbLaao5hXTYyyg577iuMtDB8ehxMlUqHEJiMs8jT1GHkFhr6sYre3lmLsPeYEi/ZKj5TP5tt7fkzNdJ4GIVyw==
+  dependencies:
+    "@turf/helpers" "^6.5.0"
+    "@turf/meta" "^6.5.0"
+
+"@turf/clone@^6.5.0":
+  version "6.5.0"
+  resolved "https://registry.npmmirror.com/@turf/clone/-/clone-6.5.0.tgz#895860573881ae10a02dfff95f274388b1cda51a"
+  integrity sha512-mzVtTFj/QycXOn6ig+annKrM6ZlimreKYz6f/GSERytOpgzodbQyOgkfwru100O1KQhhjSudKK4DsQ0oyi9cTw==
+  dependencies:
+    "@turf/helpers" "^6.5.0"
+
 "@turf/helpers@^6.1.4", "@turf/helpers@^6.5.0":
   version "6.5.0"
   resolved "https://registry.npmmirror.com/@turf/helpers/-/helpers-6.5.0.tgz#f79af094bd6b8ce7ed2bd3e089a8493ee6cae82e"
   integrity sha512-VbI1dV5bLFzohYYdgqwikdMVpe7pJ9X3E+dlr425wa2/sMJqYDhTO++ec38/pcPvPE6oD9WEEeU3Xu3gza+VPw==
 
-"@turf/invariant@^6.1.2":
+"@turf/invariant@^6.1.2", "@turf/invariant@^6.5.0":
   version "6.5.0"
   resolved "https://registry.npmmirror.com/@turf/invariant/-/invariant-6.5.0.tgz#970afc988023e39c7ccab2341bd06979ddc7463f"
   integrity sha512-Wv8PRNCtPD31UVbdJE/KVAWKe7l6US+lJItRR/HOEW3eh+U/JwRCSUl/KZ7bmjM/C+zLNoreM2TU6OoLACs4eg==
   dependencies:
     "@turf/helpers" "^6.5.0"
 
-"@turf/meta@^6.0.2":
+"@turf/meta@^6.0.2", "@turf/meta@^6.5.0":
   version "6.5.0"
   resolved "https://registry.npmmirror.com/@turf/meta/-/meta-6.5.0.tgz#b725c3653c9f432133eaa04d3421f7e51e0418ca"
   integrity sha512-RrArvtsV0vdsCBegoBtOalgdSOfkBrTJ07VkpiCnq/491W67hnMWmDu7e6Ztw0C3WldRYTXkg3SumfdzZxLBHA==
   dependencies:
     "@turf/helpers" "^6.5.0"
+
+"@turf/polygon-to-line@^6.5.0":
+  version "6.5.0"
+  resolved "https://registry.npmmirror.com/@turf/polygon-to-line/-/polygon-to-line-6.5.0.tgz#4dc86db66168b32bb83ce448cf966208a447d952"
+  integrity sha512-5p4n/ij97EIttAq+ewSnKt0ruvuM+LIDzuczSzuHTpq4oS7Oq8yqg5TQ4nzMVuK41r/tALCk7nAoBuw3Su4Gcw==
+  dependencies:
+    "@turf/helpers" "^6.5.0"
+    "@turf/invariant" "^6.5.0"
+
+"@turf/union@^6.5.0":
+  version "6.5.0"
+  resolved "https://registry.npmmirror.com/@turf/union/-/union-6.5.0.tgz#82d28f55190608f9c7d39559b7f543393b03b82d"
+  integrity sha512-igYWCwP/f0RFHIlC2c0SKDuM/ObBaqSljI3IdV/x71805QbIvY/BYGcJdyNcgEA6cylIGl/0VSlIbpJHZ9ldhw==
+  dependencies:
+    "@turf/helpers" "^6.5.0"
+    "@turf/invariant" "^6.5.0"
+    polygon-clipping "^0.15.3"
 
 "@types/acorn@^4.0.5":
   version "4.0.6"
@@ -3378,6 +3421,13 @@
   integrity sha512-K2waXdXBi2302XUdcHcR1jCeU0LL4TD9HRs/gk0N2Xvrht+G/BfJa4QObBQZfhMdxiCpV3COl5Nfq4uKTeTnJA==
   dependencies:
     "@babel/types" "^7.3.0"
+
+"@types/codemirror@^5.60.7":
+  version "5.60.7"
+  resolved "https://registry.npmmirror.com/@types/codemirror/-/codemirror-5.60.7.tgz#efbb78e5e79f90c6762c2127c02096648e600808"
+  integrity sha512-QXIC+RPzt/1BGSuD6iFn6UMC9TDp+9hkOANYNPVsjjrDdzKphfRkwQDKGp2YaC54Yhz0g6P5uYTCCibZZEiMAA==
+  dependencies:
+    "@types/tern" "*"
 
 "@types/d3-timer@^2.0.0":
   version "2.0.1"
@@ -3629,6 +3679,13 @@
   version "1.0.8"
   resolved "https://registry.npmmirror.com/@types/tapable/-/tapable-1.0.8.tgz#b94a4391c85666c7b73299fd3ad79d4faa435310"
   integrity sha512-ipixuVrh2OdNmauvtT51o3d8z12p6LtFW9in7U79der/kwejjdNchQC5UMn5u/KxNoM7VHHOs/l8KS8uHxhODQ==
+
+"@types/tern@*":
+  version "0.23.4"
+  resolved "https://registry.npmmirror.com/@types/tern/-/tern-0.23.4.tgz#03926eb13dbeaf3ae0d390caf706b2643a0127fb"
+  integrity sha512-JAUw1iXGO1qaWwEOzxTKJZ/5JxVeON9kvGZ/osgZaJImBnyjyn0cjovPsf6FNLmyGY8Vw9DoXZCMlfMkMwHRWg==
+  dependencies:
+    "@types/estree" "*"
 
 "@types/testing-library__jest-dom@^5.9.1":
   version "5.14.2"
@@ -4094,6 +4151,11 @@ amdefine@>=0.0.4:
   resolved "https://registry.npmmirror.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha512-S2Hw0TtNkMJhIabBwIojKL9YHO5T0n5eNqWJ7Lrlel/zDbftQpxpapi8tZs3X1HWa+u+QeydGmzzNU0m09+Rcg==
 
+animate.css@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.npmmirror.com/animate.css/-/animate.css-4.1.1.tgz#614ec5a81131d7e4dc362a58143f7406abd68075"
+  integrity sha512-+mRmCTv6SbCmtYJCN4faJMNFVNN5EuCTTprDTAo7YzIGji2KADmakjVA3+8mVDkZ2Bf09vayB35lSQIex2+QaQ==
+
 ansi-colors@^3.0.0:
   version "3.2.4"
   resolved "https://registry.npmmirror.com/ansi-colors/-/ansi-colors-3.2.4.tgz#e3a3da4bfbae6c86a9c285625de124a234026fbf"
@@ -4154,11 +4216,6 @@ ansi-styles@^5.0.0:
   version "5.2.0"
   resolved "https://registry.npmmirror.com/ansi-styles/-/ansi-styles-5.2.0.tgz#07449690ad45777d1924ac2abb2fc8895dba836b"
   integrity sha512-Cxwpt2SfTzTtXcfOlzGEee8O+c+MmUgGrNiBcXnuWxuFJHe6a5Hz7qwhwe5OgaSYI0IJvkLqWX1ASG+cJOkEiA==
-
-ansicolors@~0.2.1:
-  version "0.2.1"
-  resolved "https://registry.npmmirror.com/ansicolors/-/ansicolors-0.2.1.tgz#be089599097b74a5c9c4a84a0cdbcdb62bd87aef"
-  integrity sha512-tOIuy1/SK/dr94ZA0ckDohKXNeBNqZ4us6PjMVLs5h1w2GBB6uPtOknp2+VF4F/zcy9LI70W+Z+pE2Soajky1w==
 
 antd@^4.17.3:
   version "4.18.6"
@@ -5125,14 +5182,6 @@ capture-exit@^2.0.0:
   dependencies:
     rsvp "^4.8.4"
 
-cardinal@~0.4.2:
-  version "0.4.4"
-  resolved "https://registry.npmmirror.com/cardinal/-/cardinal-0.4.4.tgz#ca5bb68a5b511b90fe93b9acea49bdee5c32bfe2"
-  integrity sha512-3MxV0o9wOpQcobrcSrRpaSxlYkohCcZu0ytOjJUww/Yo/223q4Ecloo7odT+M0SI5kPgb1JhvSaF4EEuVXOLAQ==
-  dependencies:
-    ansicolors "~0.2.1"
-    redeyed "~0.4.0"
-
 case-sensitive-paths-webpack-plugin@2.3.0:
   version "2.3.0"
   resolved "https://registry.npmmirror.com/case-sensitive-paths-webpack-plugin/-/case-sensitive-paths-webpack-plugin-2.3.0.tgz#23ac613cc9a856e4f88ff8bb73bbb5e989825cf7"
@@ -5347,6 +5396,11 @@ coa@^2.0.2:
     chalk "^2.4.1"
     q "^1.1.2"
 
+codemirror@^5.65.13:
+  version "5.65.13"
+  resolved "https://registry.npmmirror.com/codemirror/-/codemirror-5.65.13.tgz#c098a6f409db8b5a7c5722788bd9fa3bb2367f2e"
+  integrity sha512-SVWEzKXmbHmTQQWaz03Shrh4nybG0wXx2MEu3FO4ezbPW8IbnZEd5iGHGEffSUaitKYa3i+pHpBsSvw8sPHtzg==
+
 collect-v8-coverage@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npmmirror.com/collect-v8-coverage/-/collect-v8-coverage-1.0.1.tgz#cc2c8e94fc18bbdffe64d6534570c8a673b27f59"
@@ -5469,7 +5523,7 @@ concat-map@0.0.1:
   resolved "https://registry.npmmirror.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
 
-concat-stream@^1.5.0, concat-stream@~1.6.0:
+concat-stream@^1.5.0:
   version "1.6.2"
   resolved "https://registry.npmmirror.com/concat-stream/-/concat-stream-1.6.2.tgz#904bdf194cd3122fc675c77fc4ac3d4ff0fd1a34"
   integrity sha512-27HBghJxjiZtIk3Ycvn/4kbJk/1uZuJFfuPEns6LaEvpvG1f0hTea8lilrouyo9mVc2GWdcEZ8OLoGmSADlrCw==
@@ -6030,7 +6084,7 @@ d3-hierarchy@^2.0.0:
   resolved "https://registry.npmmirror.com/d3-hierarchy/-/d3-hierarchy-2.0.0.tgz#dab88a58ca3e7a1bc6cab390e89667fcc6d20218"
   integrity sha512-SwIdqM3HxQX2214EG9GTjgmCc/mbSx4mQBn+DuEETubhOw6/U3fmnji4uCVrmzOydMHSO1nZle5gh6HB/wdOzw==
 
-d3-interpolate@1, d3-interpolate@^1.3.2:
+d3-interpolate@1, d3-interpolate@1.4.0, d3-interpolate@^1.3.2:
   version "1.4.0"
   resolved "https://registry.npmmirror.com/d3-interpolate/-/d3-interpolate-1.4.0.tgz#526e79e2d80daa383f9e0c1c1c7dcc0f0583e987"
   integrity sha512-V9znK0zc3jOPV4VD2zZn0sDhZU3WAE2bmlxdIwwQPPzPjvyLkd8B3JUVdS1IDUFDkWZ72c9qnv1GK2ZagTZ8EA==
@@ -6486,6 +6540,11 @@ duplexify@^3.4.2, duplexify@^3.6.0:
     inherits "^2.0.1"
     readable-stream "^2.0.0"
     stream-shift "^1.0.0"
+
+earcut@^2.1.0:
+  version "2.2.4"
+  resolved "https://registry.npmmirror.com/earcut/-/earcut-2.2.4.tgz#6d02fd4d68160c114825d06890a92ecaae60343a"
+  integrity sha512-/pjZsA1b4RPHbeWZQn66SWS8nZZWLQQ23oE3Eam7aroEFGEvwKAsJfZ9ytiEMycfzXWpca4FA9QIOehf7PocBQ==
 
 earcut@^2.2.1, earcut@^2.2.2:
   version "2.2.3"
@@ -6972,11 +7031,6 @@ esprima@^4.0.0, esprima@^4.0.1:
   resolved "https://registry.npmmirror.com/esprima/-/esprima-4.0.1.tgz#13b04cdb3e6c5d19df91ab6987a8695619b0aa71"
   integrity sha512-eGuFFw7Upda+g4p+QHvnW0RyTX/SVeJBDM/gCtMARO0cLuT2HcEKnTPvhjV6aGeqrCB/sbNop0Kszm0jsaWU4A==
 
-esprima@~1.0.4:
-  version "1.0.4"
-  resolved "https://registry.npmmirror.com/esprima/-/esprima-1.0.4.tgz#9f557e08fc3b4d26ece9dd34f8fbf476b62585ad"
-  integrity sha512-rp5dMKN8zEs9dfi9g0X1ClLmV//WRyk/R15mppFNICIFRG5P92VP7Z04p8pk++gABo9W2tY+kHyu6P1mEHgmTA==
-
 esquery@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npmmirror.com/esquery/-/esquery-1.4.0.tgz#2148ffc38b82e8c7057dfed48425b3e61f0f24a5"
@@ -7021,7 +7075,7 @@ etag@~1.8.1:
   resolved "https://registry.npmmirror.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==
 
-eventemitter3@^4.0.0, eventemitter3@^4.0.4:
+eventemitter3@^4.0.0, eventemitter3@^4.0.4, eventemitter3@^4.0.7:
   version "4.0.7"
   resolved "https://registry.npmmirror.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
   integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
@@ -9459,10 +9513,10 @@ klona@^2.0.4:
   resolved "https://registry.npmmirror.com/klona/-/klona-2.0.5.tgz#d166574d90076395d9963aa7a928fabb8d76afbc"
   integrity sha512-pJiBpiXMbt7dkzXe8Ghj/u4FfXOOa98fPW+bihOJ4SjnoijweJrNThJfd3ifXpXhREjpoF2mZVH1GfS9LV3kHQ==
 
-l7-tiny-sdf@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.npmmirror.com/l7-tiny-sdf/-/l7-tiny-sdf-0.0.2.tgz#41a97a179279cbda094e5874c61ad88d10563479"
-  integrity sha512-Fde4Pq9jycqi3d11I1MfbTISimfCzmEyhq5FhrnbNu9y1BFyCJFxSHbzehmRaYgQPbL4kpI3ldkHGrrFHs10cA==
+l7-tiny-sdf@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.npmmirror.com/l7-tiny-sdf/-/l7-tiny-sdf-0.0.4.tgz#764cc672c2aa7dd9a3bfe8f33b61538a99f928d4"
+  integrity sha512-hMuA5jolQCyhK+QufHMy+qxZQlc9uD/S7jVWFDyVy5TKb3HxMOGc1RcqMwcvlgDXzmVqNWkxAN8LracSEwqYIw==
 
 l7eval5@^0.0.3:
   version "0.0.3"
@@ -9474,15 +9528,15 @@ l7eval5@^0.0.3:
     "@types/estree" "0.0.41"
     acorn "^7.1.0"
 
-l7hammerjs@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.npmmirror.com/l7hammerjs/-/l7hammerjs-0.0.6.tgz#cd75b52a8043019556ae3205e27478f6822e6f72"
-  integrity sha512-MwzZZibiwqHVq2AMJtXVGENvP03KAvhNtPwRUFszzSXe2Flt6mdrpv41TPHKOn5beYTcDL0iPQ+NvlSndkX6ag==
+l7hammerjs@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.npmmirror.com/l7hammerjs/-/l7hammerjs-0.0.7.tgz#f981d72c9cebf736d4139ffe7c58fdc93ab89ef8"
+  integrity sha512-IFa3c0sOHBI09uK03GlKnk3Var5LXrCqL1JbnDpy63CQz8urZTk0dynGad+WU2iErVJcumHQokrR5Zt57tePZw==
 
-l7regl@^0.0.16:
-  version "0.0.16"
-  resolved "https://registry.npmmirror.com/l7regl/-/l7regl-0.0.16.tgz#d4d7dccff553784d39f952e8cf2af2a0d321f83b"
-  integrity sha512-sQjRezX2SN168K+NoE6MrDzehLEomD4KhDT8XdpU3mms8s7L4oOuWX0TslSXDMUPSBNrJRf0vGMdrouGRqvQZQ==
+l7regl@^0.0.20:
+  version "0.0.20"
+  resolved "https://registry.npmmirror.com/l7regl/-/l7regl-0.0.20.tgz#f16e7018fb78271090d3c417095ba01a8ab9c6b8"
+  integrity sha512-r2vDjsCKp1bbcjTVGtKovpOxn7kdcx6cup9nd47/dIZ4+ujZAXz2C/HPx4yrxzuNig81TeXpHHWslNpLolSg8A==
   dependencies:
     falafel "^2.2.4"
     l7eval5 "^0.0.3"
@@ -9611,6 +9665,11 @@ loader-utils@^2.0.0:
     emojis-list "^3.0.0"
     json5 "^2.1.2"
 
+loadjs@^4.3.0-rc1:
+  version "4.3.0-rc1"
+  resolved "https://registry.npmmirror.com/loadjs/-/loadjs-4.3.0-rc1.tgz#c0c5f89bcbf52d5dc9e6f6d6d3b6499c61f47894"
+  integrity sha512-GvSFQ3YXbeUJAPYzYBjIYIWk6vKID4XYspMfZ0Nq4eJu0TFiD+SlhSUiQ0/gT7t3G/amHVPVrEVcbpda0lF2PA==
+
 localforage@^1.10.0:
   version "1.10.0"
   resolved "https://registry.npmmirror.com/localforage/-/localforage-1.10.0.tgz#5c465dc5f62b2807c3a84c0c6a1b1b3212781dd4"
@@ -9653,25 +9712,10 @@ lodash.flow@^3.5.0:
   resolved "https://registry.npmmirror.com/lodash.flow/-/lodash.flow-3.5.0.tgz#87bf40292b8cf83e4e8ce1a3ae4209e20071675a"
   integrity sha512-ff3BX/tSioo+XojX4MOsOMhJw0nZoUEF011LX8g8d3gvjVbxd89cCio4BCXronjxcTUIJUoqKEUA+n4CqvvRPw==
 
-lodash.isarray@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npmmirror.com/lodash.isarray/-/lodash.isarray-4.0.0.tgz#2aca496b28c4ca6d726715313590c02e6ea34403"
-  integrity sha512-V8ViWvoNlXpCrB6Ewaj3ScRXUpmCvqp4tJUxa3dlovuJj/8lp3SND5Kw4v5OeuHgoyw4qJN+gl36qZqp6WYQ6g==
-
 lodash.isequal@^4.0.0:
   version "4.5.0"
   resolved "https://registry.npmmirror.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
   integrity sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==
-
-lodash.isnil@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npmmirror.com/lodash.isnil/-/lodash.isnil-4.0.0.tgz#49e28cd559013458c814c5479d3c663a21bfaa6c"
-  integrity sha512-up2Mzq3545mwVnMhTDMdfoG1OurpA/s5t88JmQX809eH3C8491iu2sfKhTfhQtKY78oPNhiaHJUpT/dUDAAtng==
-
-lodash.isplainobject@^4.0.6:
-  version "4.0.6"
-  resolved "https://registry.npmmirror.com/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
-  integrity sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==
 
 lodash.memoize@^4.1.2:
   version "4.1.2"
@@ -9682,11 +9726,6 @@ lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.npmmirror.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
-
-lodash.mergewith@^4.6.0:
-  version "4.6.2"
-  resolved "https://registry.npmmirror.com/lodash.mergewith/-/lodash.mergewith-4.6.2.tgz#617121f89ac55f59047c7aec1ccd6654c6590f55"
-  integrity sha512-GK3g5RPZWTRSeLSpgP8Xhra+pnjBC56q9FZYe1d5RN3TJ35dbkGy3YqBSMbyCrlbi+CM9Z3Jk5yTL7RCsqboyQ==
 
 lodash.template@^4.5.0:
   version "4.5.0"
@@ -9900,17 +9939,6 @@ merge-descriptors@1.0.1:
   resolved "https://registry.npmmirror.com/merge-descriptors/-/merge-descriptors-1.0.1.tgz#b00aaa556dd8b44568150ec9d1b953f3f90cbb61"
   integrity sha512-cCi6g3/Zr1iqQi6ySbseM1Xvooa98N0w31jzUYrXPX2xqObmFGHJ0tQ5u74H3mVh7wLouTseZyYIq39g8cNp1w==
 
-merge-json-schemas@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmmirror.com/merge-json-schemas/-/merge-json-schemas-1.0.0.tgz#2d635eaa8401c5fa3d03f30f89349fc7cafee62f"
-  integrity sha512-eXh1Zlx2ptYvPhgNdm+2kPfT40b4jwCa/RVxpjBGj3cgmLvXQBr8H7GPAL/5vIAmwiTpHax0l/ChX7Dp6FoJIA==
-  dependencies:
-    lodash.isarray "^4.0.0"
-    lodash.isnil "^4.0.0"
-    lodash.isplainobject "^4.0.6"
-    lodash.mergewith "^4.6.0"
-    lodash.uniq "^4.5.0"
-
 merge-stream@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmmirror.com/merge-stream/-/merge-stream-2.0.0.tgz#52823629a14dd00c9770fb6ad47dc6310f2c1f60"
@@ -10046,11 +10074,6 @@ minimatch@^3.1.1, minimatch@^3.1.2:
   integrity sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==
   dependencies:
     brace-expansion "^1.1.7"
-
-minimist@0.0.5:
-  version "0.0.5"
-  resolved "https://registry.npmmirror.com/minimist/-/minimist-0.0.5.tgz#d7aa327bcecf518f9106ac6b8f003fa3bcea8566"
-  integrity sha512-rSJ0cdmCj3qmKdObcnMcWgPVOyaOWlazLhZAJW0s6G6lx1ZEuFkraWmEH5LTvX90btkfHPclQBjvjU7A/kYRFg==
 
 minimist@^1.1.1, minimist@^1.2.0, minimist@^1.2.5, minimist@~1.2.5:
   version "1.2.5"
@@ -10986,6 +11009,13 @@ pnp-webpack-plugin@1.6.4:
   integrity sha512-7Wjy+9E3WwLOEL30D+m8TSTF7qJJUJLONBnwQp0518siuMxUQUbgZwssaFX+QKlZkjHZcw/IpZCt/H0srrntSg==
   dependencies:
     ts-pnp "^1.1.6"
+
+polygon-clipping@^0.15.3:
+  version "0.15.3"
+  resolved "https://registry.npmmirror.com/polygon-clipping/-/polygon-clipping-0.15.3.tgz#0215840438470ba2e9e6593625e4ea5c1087b4b7"
+  integrity sha512-ho0Xx5DLkgxRx/+n4O74XyJ67DcyN3Tu9bGYKsnTukGAW6ssnuak6Mwcyb1wHy9MZc9xsUWqIoiazkZB5weECg==
+  dependencies:
+    splaytree "^3.1.0"
 
 polyline-miter-util@^1.0.1:
   version "1.0.1"
@@ -12710,13 +12740,6 @@ redent@^3.0.0:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
 
-redeyed@~0.4.0:
-  version "0.4.4"
-  resolved "https://registry.npmmirror.com/redeyed/-/redeyed-0.4.4.tgz#37e990a6f2b21b2a11c2e6a48fd4135698cba97f"
-  integrity sha512-pnk1vsaNLu1UAAClKsImKz9HjBvg9i8cbRqTRzJbiCjGF0fZSMqpdcA5W3juO3c4etFvTrabECkq9wjC45ZyxA==
-  dependencies:
-    esprima "~1.0.4"
-
 reflect-metadata@^0.1.13:
   version "0.1.13"
   resolved "https://registry.npmmirror.com/reflect-metadata/-/reflect-metadata-0.1.13.tgz#67ae3ca57c972a2aa1642b10fe363fe32d49dc08"
@@ -13404,15 +13427,6 @@ shallowequal@^1.1.0:
   resolved "https://registry.npmmirror.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
 
-sharkdown@^0.1.0:
-  version "0.1.1"
-  resolved "https://registry.npmmirror.com/sharkdown/-/sharkdown-0.1.1.tgz#64484bd0f08f347f8319e9ff947a670f6b48b1b2"
-  integrity sha512-exwooSpmo5s45lrexgz6Q0rFQM574wYIX3iDZ7RLLqOb7IAoQZu9nxlZODU972g19sR69OIpKP2cpHTzU+PHIg==
-  dependencies:
-    cardinal "~0.4.2"
-    minimist "0.0.5"
-    split "~0.2.10"
-
 shebang-command@^1.2.0:
   version "1.2.0"
   resolved "https://registry.npmmirror.com/shebang-command/-/shebang-command-1.2.0.tgz#44aac65b695b03398968c39f363fee5deafdf1ea"
@@ -13679,19 +13693,17 @@ spdy@^4.0.2:
     select-hose "^2.0.0"
     spdy-transport "^3.0.0"
 
+splaytree@^3.1.0:
+  version "3.1.2"
+  resolved "https://registry.npmmirror.com/splaytree/-/splaytree-3.1.2.tgz#d1db2691665a3c69d630de98d55145a6546dc166"
+  integrity sha512-4OM2BJgC5UzrhVnnJA4BkHKGtjXNzzUfpQjCO8I05xYPsfS/VuQDwjCGGMi8rYQilHEV4j8NBqTFbls/PZEE7A==
+
 split-string@^3.0.1, split-string@^3.0.2:
   version "3.1.0"
   resolved "https://registry.npmmirror.com/split-string/-/split-string-3.1.0.tgz#7cb09dda3a86585705c64b39a6466038682e8fe2"
   integrity sha512-NzNVhJDYpwceVVii8/Hu6DKfD2G+NrQHlS/V/qgv763EYudVwEcMQNxd2lh+0VrUByXN/oJkl5grOhYWvQUYiw==
   dependencies:
     extend-shallow "^3.0.0"
-
-split@~0.2.10:
-  version "0.2.10"
-  resolved "https://registry.npmmirror.com/split/-/split-0.2.10.tgz#67097c601d697ce1368f418f06cd201cf0521a57"
-  integrity sha512-e0pKq+UUH2Xq/sXbYpZBZc3BawsfDZ7dgv+JtRTUPNcvF5CMR4Y9cvJqkMY0MoxWzTHvZuz1beg6pNEKlszPiQ==
-  dependencies:
-    through "2"
 
 sprintf-js@~1.0.2:
   version "1.0.3"
@@ -14243,7 +14255,7 @@ through2@^2.0.0:
     readable-stream "~2.3.6"
     xtend "~4.0.1"
 
-through@2, through@~2.3.4, through@~2.3.8:
+through@~2.3.4, through@~2.3.8:
   version "2.3.8"
   resolved "https://registry.npmmirror.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==
@@ -14855,6 +14867,11 @@ web-vitals@^2.1.0:
   resolved "https://registry.npmmirror.com/web-vitals/-/web-vitals-2.1.4.tgz#76563175a475a5e835264d373704f9dde718290c"
   integrity sha512-sVWcwhU5mX6crfI5Vd2dC4qchyTqxV8URinzt25XqVh+bHEPGH4C3NPrNionCP7Obx59wrYEbNlw4Z8sjALzZg==
 
+web-worker-helper@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.npmmirror.com/web-worker-helper/-/web-worker-helper-0.0.3.tgz#9ef60b9c463970dc324c381b9aaf2a22c5d0b77a"
+  integrity sha512-/TllNPjGenDwjE67M16TD9ALwuY847/zIoH7r+e5rSeG4kEa3HiMTAsUDj80yzIzhtshkv215KfsnQ/RXR3nVA==
+
 webidl-conversions@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npmmirror.com/webidl-conversions/-/webidl-conversions-5.0.0.tgz#ae59c8a00b121543a2acc65c0434f57b0fc11aff"
@@ -14983,11 +15000,6 @@ websocket-extensions@>=0.1.1:
   version "0.1.4"
   resolved "https://registry.npmmirror.com/websocket-extensions/-/websocket-extensions-0.1.4.tgz#7f8473bc839dfd87608adb95d7eb075211578a42"
   integrity sha512-OqedPIGOfsDlo31UNwYbCFMSaO9m9G/0faIHj5/dZFDMFqPTcx6UwqyOy3COEaEOg/9VsGIpdqn62W5KhoKSpg==
-
-wgs84@0.0.0:
-  version "0.0.0"
-  resolved "https://registry.npmmirror.com/wgs84/-/wgs84-0.0.0.tgz#34fdc555917b6e57cf2a282ed043710c049cdc76"
-  integrity sha512-ANHlY4Rb5kHw40D0NJ6moaVfOCMrp9Gpd1R/AIQYg2ko4/jzcJ+TVXYYF6kXJqQwITvEZP4yEthjM7U6rYlljQ==
 
 whatwg-encoding@^1.0.5:
   version "1.0.5"
