@@ -130,7 +130,7 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
                         grid: null,
                         label: {
                             style: {
-                                fill: 'rgb(0,255,234)',
+                                fill: '#d5d5d5',
                             },
                         },
                     }
@@ -139,14 +139,24 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
                         label: null,
                         line: null,
                         tickLine: null,
+                        subTickLine: null,
                         title: null,
                     };
                 break;
             case 'position':
                 styleObj = {position: data};
                 break;
+            case 'text-color':
+                styleObj = {label: {style: {fill: data}}};
+                break;
+            case 'text-angle':
+                styleObj = {label: {rotate: data}};
+                break;
+            case 'text-offset':
+                styleObj = {label: {offset: data}};
+                break;
             case 'title-enable':
-                styleObj = data ? {title: {text: 'x轴'}} : {title: null};
+                styleObj = data ? {title: {text: '标题', style: {fill: '#d5d5d5'}}} : {title: null};
                 break;
             case 'title-position':
                 styleObj = {title: {position: data}};
@@ -161,7 +171,7 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
                 styleObj = {title: {offset: data}};
                 break;
             case 'axisLine-enable':
-                styleObj = data ? {line: {style: {stroke: '#fff'}}} : {line: null};
+                styleObj = data ? {line: {style: {stroke: '#d5d5d5', lineWidth: 2}}} : {line: null};
                 break;
             case 'axisLine-color':
                 styleObj = {line: {style: {stroke: data}}};
@@ -170,7 +180,12 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
                 styleObj = {line: {style: {lineWidth: data}}};
                 break;
             case 'gridLine-enable':
-                styleObj = data ? {grid: {line: {style: {stroke: '#fff'}}}} : {grid: null};
+                styleObj = data ? {
+                    grid: {
+                        line: {style: {stroke: '#d5d5d5', lineWidth: 2}},
+                        alignTick: true
+                    }
+                } : {grid: null};
                 break;
             case 'gridLine-alignTick':
                 styleObj = {grid: {alignTick: data}};
@@ -182,7 +197,9 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
                 styleObj = {grid: {line: {style: {stroke: data}}}};
                 break;
             case 'tickLine-enable':
-                styleObj = data ? {tickLine: {style: {stroke: '#fff'}}} : {tickLine: null};
+                styleObj = data ? {
+                    tickLine: {style: {stroke: '#d5d5d5', lineWidth: 2}, alignTick: true, length: 3},
+                } : {tickLine: null};
                 break;
             case 'tickLine-alignTick':
                 styleObj = {tickLine: {alignTick: data}};
@@ -198,7 +215,7 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
                 break;
             case 'subTickLine-enable':
                 styleObj = data ? {
-                    subTickLine: {style: {stroke: '#fff'}}
+                    subTickLine: {style: {stroke: '#d5d5d5', lineWidth: 3}, count: 5, length: 2}
                 } : {subTickLine: null};
                 break;
             case 'subTickLine-count':
@@ -221,51 +238,56 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
     };
 
     parseAxisConfig = (config: any) => {
+        console.log('config before', toJS(config));
         const result: any = {};
-        if (config.label)
-            result.enable = true;
-        else
-            result.enable = false;
+        result.enable = !!config.label;
         result.position = config.position;
+        if (config.label) {
+            result['textColor'] = config.label?.style?.fill;
+            result['textAngle'] = config.label?.rotate;
+            result['textOffset'] = config.label?.offset;
+        } else {
+            result['textColor'] = '#d7d7d7ff';
+        }
         if (config.title) {
             result['titleEnable'] = true;
-            result['titleContent'] = config.title.text;
-            result['titlePosition'] = config.title.position;
-            result['titleColor'] = config.title.style.fill;
-            result['titleOffset'] = config.title.offset;
+            result['titleContent'] = config.title?.text;
+            result['titlePosition'] = config.title?.position;
+            result['titleColor'] = config.title?.style?.fill;
+            result['titleOffset'] = config.title?.offset;
         } else {
             result['titleEnable'] = false;
         }
         if (config.line) {
             result['axisLineEnable'] = true;
-            result['axisLineColor'] = config.line.style.stroke;
-            result['axisLineWidth'] = config.line.style.lineWidth;
+            result['axisLineColor'] = config.line?.style?.stroke;
+            result['axisLineWidth'] = config.line?.style?.lineWidth;
         } else {
             result['axisLineEnable'] = false;
         }
         if (config.grid) {
             result['gridLineEnable'] = true;
-            result['gridLineAlignTick'] = config.grid.alignTick;
-            result['gridLineWidth'] = config.grid.line.style.lineWidth;
-            result['gridLineColor'] = config.grid.line.style.stroke;
+            result['gridLineAlignTick'] = config.grid?.alignTick;
+            result['gridLineWidth'] = config.grid?.line?.style?.lineWidth;
+            result['gridLineColor'] = config.grid?.line?.style?.stroke;
         } else {
             result['gridLineEnable'] = false;
         }
         if (config.tickLine) {
             result['tickLineEnable'] = true;
-            result['tickLineAlignTick'] = config.tickLine.alignTick;
-            result['tickLineLength'] = config.tickLine.length;
-            result['tickLineWidth'] = config.tickLine.style.lineWidth;
-            result['tickLineColor'] = config.tickLine.style.stroke;
+            result['tickLineAlignTick'] = config.tickLine?.alignTick;
+            result['tickLineLength'] = config.tickLine?.length;
+            result['tickLineWidth'] = config.tickLine?.style?.lineWidth;
+            result['tickLineColor'] = config.tickLine?.style?.stroke;
         } else {
             result['tickLineEnable'] = false;
         }
         if (config.subTickLine) {
             result['subTickLineEnable'] = true;
-            result['subTickLineCount'] = config.subTickLine.count;
-            result['subTickLineLength'] = config.subTickLine.length;
-            result['subTickLineWidth'] = config.subTickLine.style.lineWidth;
-            result['subTickLineColor'] = config.subTickLine.style.stroke;
+            result['subTickLineCount'] = config.subTickLine?.count;
+            result['subTickLineLength'] = config.subTickLine?.length;
+            result['subTickLineWidth'] = config.subTickLine?.style?.lineWidth;
+            result['subTickLineColor'] = config.subTickLine?.style?.stroke;
         } else {
             result['subTickLineEnable'] = false;
         }
@@ -301,9 +323,6 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
                     <Legend config={calculateLegendConfig(config.chartStyle)}
                             onChange={this.legendChanged}/>
                     <AxisConfig config={this.parseAxisConfig(config.chartStyle.xAxis)} onChange={this.axisChanged}/>
-                    {/*<RightAngleCoordinates {...calculateRightAngleCoordinates(chartStyle)}*/}
-                    {/*                       chartProps={chartStyle}*/}
-                    {/*                       updateElemConfig={updateConfig}/>*/}
                 </div>
             </>
         );

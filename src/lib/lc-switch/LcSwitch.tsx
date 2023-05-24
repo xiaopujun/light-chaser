@@ -1,5 +1,5 @@
-import React, {Component, CSSProperties} from 'react';
-import './LcSwitch.less';
+import React, {CSSProperties, useEffect, useState} from "react";
+import "./LcSwitch.less";
 
 interface LcSwitchProps {
     onChange?: (data: boolean) => void;
@@ -7,35 +7,34 @@ interface LcSwitchProps {
     value?: boolean;
 }
 
-class LcSwitch extends Component<LcSwitchProps> {
+const LcSwitch: React.FC<LcSwitchProps> = ({
+                                               onChange,
+                                               containerStyle = {top: 2.5},
+                                               value: valueProp,
+                                           }) => {
+    const [checked, setChecked] = useState<boolean>(valueProp || false);
+    const [prevPropsValue, setPrevPropsValue] = useState<boolean>();
 
-    state: any = {
-        value: false
-    }
+    useEffect(() => {
+        if (valueProp !== undefined && valueProp !== prevPropsValue) {
+            setChecked(valueProp);
+            setPrevPropsValue(valueProp);
+        }
+    }, [valueProp, prevPropsValue]);
 
-    constructor(props: LcSwitchProps) {
-        super(props);
-        const {value = false} = this.props;
-        this.state = {value};
-    }
-
-    onChange = (e: any) => {
-        const {onChange} = this.props;
-        onChange && onChange(e.target.checked);
-        this.setState({value: e.target.checked});
-    }
-
-    render() {
-        const {containerStyle = {top: 2.5}} = this.props;
-        const {value} = this.state;
-        return (
-            <div className="lc-switch" style={{...containerStyle}}>
-                <label className="lc-switch-label">
-                    <input checked={value} onChange={this.onChange} type="checkbox"/><span/>
-                </label>
-            </div>
-        );
-    }
-}
-
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {checked} = e.target;
+        setChecked(checked);
+        onChange && onChange(checked);
+    };
+    console.log('LcSwitch render')
+    return (
+        <div className="lc-switch" style={{...containerStyle}}>
+            <label className="lc-switch-label">
+                <input checked={checked} onChange={handleChange} type="checkbox"/>
+                <span/>
+            </label>
+        </div>
+    );
+};
 export default LcSwitch;

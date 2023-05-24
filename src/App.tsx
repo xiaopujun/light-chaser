@@ -4,6 +4,7 @@ import './App.less';
 import {Route, Switch} from "react-router-dom";
 import Loading from "./lib/loading/Loading";
 import LcRightMenu from "./designer/operate-provider/right-click-menu/OperateMenu";
+import Demo from "./test/Demo";
 
 const LightChaserList = lazy(() => import('./list/LightChaserList'));
 const LCDesigner = lazy(() => import('./designer'));
@@ -19,6 +20,7 @@ class App extends Component<any> {
                         <Route path={'/designer'} component={LCDesigner}/>
                         <Route path={'/view'} component={Preview}/>
                         <Route path={'/loading'} component={Loading}/>
+                        <Route path={'/test'} component={Demo}/>
                     </Switch>
                 </Suspense>
                 <LcRightMenu/>

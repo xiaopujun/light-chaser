@@ -27,7 +27,7 @@ export const rgbaToHex = (rgba: string) => {
     let r = parseInt(parts[0].substring(1).trim());
     let g = parseInt(parts[1].trim());
     let b = parseInt(parts[2].trim());
-    let a = parseFloat(parts[3].substring(0, parts[3].length - 1).trim());
+    let a = parseFloat(parts[3] ? parts[3].substring(0, parts[3].length - 1).trim() : '1');
 
     let rr = r.toString(16).length === 1 ? "0" + r.toString(16) : r.toString(16);
     let gg = g.toString(16).length === 1 ? "0" + g.toString(16) : g.toString(16);

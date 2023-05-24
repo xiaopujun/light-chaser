@@ -2,32 +2,51 @@ import React, {Component} from 'react';
 import {Popover} from 'antd';
 import {ChromePicker} from 'react-color';
 import './BaseColorPicker.less';
-import {colorConversion, rgbaToHex} from "../../utils/ColorUtil";
+import {colorConversion, rgbaToHex} from '../../utils/ColorUtil';
 
 interface BaseColorPickerProps {
     onChange?: (color: any, e: Event, id: number | string | undefined) => void;
     type?: 'hex' | 'rgba';
     value?: string;
+    defaultValue?: string;
     style?: React.CSSProperties;
     showText?: boolean;
     name?: string;
     id?: number | string;
 }
 
+interface BaseColorPickerState {
+    rgba: string;
+    hex: string;
+    color: string;
+}
 
-class BaseColorPicker extends Component<BaseColorPickerProps> {
-    state = {
-        rgba: 'rgba(0,0,0,1)',
-        hex: '#000000'
+class BaseColorPicker extends Component<BaseColorPickerProps, BaseColorPickerState> {
+    static defaultProps = {
+        defaultValue: '#000000ff',
     };
 
     constructor(props: BaseColorPickerProps) {
         super(props);
-        const {value = '#000000ff'} = props;
-        const color = colorConversion(value);
+        const {value, defaultValue} = props;
+        const colorValue = value !== undefined ? value : defaultValue;
+        const colorObj = colorConversion(colorValue || '');
         this.state = {
-            rgba: color.rgba,
-            hex: color.hex
+            rgba: colorObj.rgba,
+            hex: colorObj.hex,
+            color: colorValue || '#000000ff',
+        };
+    }
+
+    componentDidUpdate(prevProps: BaseColorPickerProps) {
+        const {value} = this.props;
+        if (value !== undefined && value !== prevProps.value) {
+            const color = colorConversion(value);
+            this.setState({
+                rgba: color.rgba,
+                hex: color.hex,
+                color: value,
+            });
         }
     }
 
@@ -42,25 +61,27 @@ class BaseColorPicker extends Component<BaseColorPickerProps> {
         }
         this.setState({
             color: rgbColor,
-            hex: hex
-        })
-    }
+            hex: hex,
+        });
+    };
 
     render() {
-        const {hex, rgba} = this.state;
+        const {hex, rgba, color} = this.state;
         const {style, showText = false, type = 'hex'} = this.props;
-        const content = (<ChromePicker className={'color-picker'} color={hex}
-                                       onChange={this.onChangeComplete}/>)
-        const showContent = showText ? type === 'hex' ? hex : rgba : null;
+        const content = (
+            <ChromePicker className={'color-picker'}
+                          color={hex}
+                          onChange={this.onChangeComplete}/>
+        );
+        const showContent = showText ? (type === 'hex' ? hex : rgba) : null;
         return (
             <Popover placement="topLeft" content={content} trigger={'click'}>
-                <div style={{backgroundColor: `${hex}`, ...style}}
+                <div style={{backgroundColor: `${color}`, ...style}}
                      className={'color-area'}>
                     {showText ? <span>{showContent}</span> : null}
                 </div>
             </Popover>
-
-        )
+        );
     }
 }
 
