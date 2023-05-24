@@ -306,7 +306,7 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
                 <BaseStyleSet config={config} updateConfig={updateConfig}/>
                 <div className={'elem-chart-config'}>
                     <Accordion title={'图形'}>
-                        <ConfigCard title={'x轴'}>
+                        <ConfigCard title={'条状'}>
                             <ConfigItem title={'宽度'}>
                                 <NumberInput min={1} onChange={this.barWidthChanged}
                                              defaultValue={chartStyle.maxBarWidth}

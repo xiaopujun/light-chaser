@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './ConfigCard.less';
 
 interface ConfigPanelProps {
@@ -11,7 +11,7 @@ interface ConfigPanelProps {
 /**
  * 配置项面板
  */
-class ConfigCard extends Component<ConfigPanelProps> {
+class ConfigCard extends React.PureComponent<ConfigPanelProps> {
     render() {
         const {title = '', cardStyle, titleStyle, bodyStyle} = this.props;
         return (

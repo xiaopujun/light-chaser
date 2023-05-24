@@ -1,5 +1,6 @@
 import React, {CSSProperties, useEffect, useState} from "react";
 import "./LcSwitch.less";
+import {extend} from "lodash";
 
 interface LcSwitchProps {
     onChange?: (data: boolean) => void;

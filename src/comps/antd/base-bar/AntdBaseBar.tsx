@@ -3,6 +3,7 @@ import CompBgContainer from "../../../lib/lc-bg-container/CompBgContainer";
 import {AbstractComp} from "../../../framework/abstract/AbstractComp";
 import {CompType} from "../../../framework/types/CompType";
 import {Bar} from "@ant-design/charts";
+import {toJS} from "mobx";
 
 /**
  * 基础条形图
