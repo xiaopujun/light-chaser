@@ -109,17 +109,20 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
         }
     }
 
-    buildAxisConfig = (styleObj: any) => {
+    buildAxisConfig = (styleObj: any, axis: string) => {
+        let axisObj;
+        if (axis === 'x')
+            axisObj = {xAxis: styleObj,};
+        else if (axis === 'y')
+            axisObj = {yAxis: styleObj,};
         return {
             style: {
-                chartStyle: {
-                    xAxis: styleObj,
-                },
+                chartStyle: axisObj
             },
         };
     }
 
-    axisChanged = (key: string, data: any) => {
+    axisChanged = (key: string, data: any, axis: string) => {
         const {updateConfig} = this.props;
         if (!updateConfig) return;
         let styleObj;
@@ -234,11 +237,10 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
                 console.warn('未知的坐标轴配置项');
                 return;
         }
-        updateConfig(this.buildAxisConfig(styleObj));
+        updateConfig(this.buildAxisConfig(styleObj, axis));
     };
 
     parseAxisConfig = (config: any) => {
-        console.log('config before', toJS(config));
         const result: any = {};
         result.enable = !!config.label;
         result.position = config.position;
@@ -322,7 +324,14 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
                     </Accordion>
                     <Legend config={calculateLegendConfig(config.chartStyle)}
                             onChange={this.legendChanged}/>
-                    <AxisConfig config={this.parseAxisConfig(config.chartStyle.xAxis)} onChange={this.axisChanged}/>
+                    <AxisConfig title={'X轴'} config={this.parseAxisConfig(config.chartStyle.xAxis)}
+                                onChange={(key: string, data: any) => {
+                                    this.axisChanged(key, data, 'x');
+                                }}/>
+                    <AxisConfig title={'Y轴'} config={this.parseAxisConfig(config.chartStyle.yAxis)}
+                                onChange={(key: string, data: any) => {
+                                    this.axisChanged(key, data, 'y');
+                                }}/>
                 </div>
             </>
         );

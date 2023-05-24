@@ -18,6 +18,7 @@ const {Option} = Select;
 interface AxisConfigProps {
     config?: any;
     onChange?: (key: string, data: any) => void;
+    title?: string;
 }
 
 /**
@@ -31,16 +32,17 @@ class AxisConfig extends Component<AxisConfigProps> {
     }
 
     render() {
-        const {config} = this.props;
-        console.log('config', config)
+        const {config, title = '坐标轴'} = this.props;
         return (
-            <Accordion title={'X轴'} showSwitch={true} visible={config.enable || false}
+            <Accordion title={title} showSwitch={true} visible={config.enable || false}
                        onChange={value => this.onChange('enable', value)}>
                 <ConfigItem title={'位置'} contentStyle={{width: '250px', paddingLeft: '20px'}}>
                     <LcRadio value={config.position || 'right'}
                              onChange={(e => this.onChange('position', e.target.value))}>
-                        <Radio value="left">上</Radio>
-                        <Radio value="right">下</Radio>
+                        <Radio value="top">上</Radio>
+                        <Radio value="bottom">下</Radio>
+                        <Radio value="left">左</Radio>
+                        <Radio value="right">右</Radio>
                     </LcRadio>
                 </ConfigItem>
                 <ConfigCard title={'文本'}>
