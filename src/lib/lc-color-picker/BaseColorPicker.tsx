@@ -66,6 +66,7 @@ class BaseColorPicker extends Component<BaseColorPickerProps, BaseColorPickerSta
     };
 
     render() {
+        console.log('BaseColorPicker render');
         const {hex, rgba, color} = this.state;
         const {style, showText = false, type = 'hex'} = this.props;
         const content = (

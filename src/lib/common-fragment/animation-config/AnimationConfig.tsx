@@ -26,7 +26,7 @@ class AnimationConfig extends Component {
                         <NumberInput defaultValue={1}/>
                     </ConfigItem>
                     <ConfigItem title={'循环'}>
-                        <LcSwitch/>
+                        <LcSwitch />
                     </ConfigItem>
                 </ConfigCard>
                 <ConfigCard title={'动画列表'}>

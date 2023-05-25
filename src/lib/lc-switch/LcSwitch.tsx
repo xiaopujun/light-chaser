@@ -1,5 +1,6 @@
-import React, {CSSProperties, useEffect, useState} from "react";
+import React, {Component, CSSProperties, PureComponent} from "react";
 import "./LcSwitch.less";
+import _ from "lodash";
 
 interface LcSwitchProps {
     onChange?: (data: boolean) => void;
@@ -7,34 +8,33 @@ interface LcSwitchProps {
     value?: boolean;
 }
 
-const LcSwitch: React.FC<LcSwitchProps> = ({
-                                               onChange,
-                                               containerStyle = {top: 2.5},
-                                               value: valueProp,
-                                           }) => {
-    const [checked, setChecked] = useState<boolean>(valueProp || false);
-    const [prevPropsValue, setPrevPropsValue] = useState<boolean>();
+class LcSwitch extends Component<LcSwitchProps> {
 
-    useEffect(() => {
-        if (valueProp !== undefined && valueProp !== prevPropsValue) {
-            setChecked(valueProp);
-            setPrevPropsValue(valueProp);
-        }
-    }, [valueProp, prevPropsValue]);
+    shouldComponentUpdate(nextProps: Readonly<LcSwitchProps>, nextState: Readonly<{}>, nextContext: any): boolean {
+        let res = !_.isEqual(this.props, nextProps);
+        console.log("LcSwitch shouldComponentUpdate", res);
+        console.log(this.props, nextProps);
+        return res;
+    }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {checked} = e.target;
-        setChecked(checked);
+        const {onChange} = this.props;
         onChange && onChange(checked);
     };
-    console.log('LcSwitch render')
-    return (
-        <div className="lc-switch" style={{...containerStyle}}>
-            <label className="lc-switch-label">
-                <input checked={checked} onChange={handleChange} type="checkbox"/>
-                <span/>
-            </label>
-        </div>
-    );
-};
+
+    render() {
+        const {containerStyle = {top: 2.5}, value} = this.props;
+        console.log("LcSwitch render");
+        return (
+            <div className="lc-switch" style={{...containerStyle}}>
+                <label className="lc-switch-label">
+                    <input checked={value} onChange={this.handleChange} type="checkbox"/>
+                    <span/>
+                </label>
+            </div>
+        );
+    }
+}
+
 export default LcSwitch;

@@ -38,6 +38,7 @@ class ConfigContent extends Component<LcConfigContentProps> {
     }
 
     render() {
+        console.log('ConfigContent render');
         const {contentVisible, activeMenu, menus} = rightStore;
         let activeMenuName = '';
         for (let i = 0; i < menus.length; i++) {

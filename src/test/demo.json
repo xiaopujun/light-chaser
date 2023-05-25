@@ -1,7 +1,9 @@
 {
-  "app_id": 2018,
-  "referer": "https://www.bing.com/",
-  "url": "https://juejin.cn/post/6844904086443720717#comment",
-  "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.42",
-  "user_unique_id": ""
+  "name": "zhangsan",
+  "age": 20,
+  "city": {
+    "name": "beijing",
+    "country": "china"
+
+  }
 }

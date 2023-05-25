@@ -12,6 +12,7 @@ export default class AntdBaseBar extends AbstractComp<CompType> {
     chart: any;
 
     render() {
+        console.log('AntdBaseBar render');
         const {config} = this.props;
         if (!config)
             return null;
