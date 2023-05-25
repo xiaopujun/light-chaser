@@ -13,7 +13,7 @@ import DesignerLeft from "./left";
 import Right from "./right";
 import DesignerFooter from "./footer/DesignerFooter";
 import lcDesignerContentStore from './store/DesignerStore';
-import bootStore from './BootStore';
+import bootStore from './BootCore';
 import {getProjectById} from "../utils/LocalStorageUtil";
 import lcRightMenuStore from "./store/LcRightMenuStore";
 import eventManager from "./operate-provider/core/EventManager";

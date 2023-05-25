@@ -6,10 +6,10 @@ class C extends Component {
 
     render() {
         console.log('C render');
-        const {student} = demoStore;
+        const {students} = demoStore;
         return (
             <>
-                <div>{JSON.stringify(student)}</div>
+                <div>{JSON.stringify(students)}</div>
             </>
         );
     }

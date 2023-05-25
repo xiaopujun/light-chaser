@@ -6,7 +6,7 @@ import classifyListStore from "../classify-list/ClassifyListStore";
 import './CompList.less';
 import {toJS} from "mobx";
 import {observer} from "mobx-react";
-import designerStore from "../../BootStore";
+import designerStore from "../../BootCore";
 
 class CompList extends Component {
 

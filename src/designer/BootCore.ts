@@ -10,7 +10,7 @@ import rightStore from "./right/RightStore";
 /**
  * 设计器启动器，通过该启动器自动化扫描加载组件
  */
-class BootStore {
+class BootCore {
 
     headersClazz: { [key: string]: React.Component | React.FC | any } = {};
     compsClazz: { [key: string]: React.Component | React.FC | any } = {};
@@ -77,5 +77,5 @@ class BootStore {
     }
 }
 
-const bootStore = new BootStore();
+const bootStore = new BootCore();
 export default bootStore;

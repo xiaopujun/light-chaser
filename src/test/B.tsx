@@ -6,10 +6,10 @@ class B extends Component {
 
     render() {
         console.log('B render');
-        const {student, setStudent} = demoStore;
+        const {students, setStudent} = demoStore;
         return (
             <>
-                <div>{student.name}</div>
+                <div>{students['0'].name}</div>
                 <button onClick={() => {
                     setStudent({
                         name: 'B'

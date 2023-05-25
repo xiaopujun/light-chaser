@@ -1,9 +1,35 @@
-import {AbstractInit} from "../../../framework/abstract/AbstractInit";
-import barImg from './bar.png';
+import {AbstractScannerCore, BaseInfoType} from "../../../framework/abstract/AbstractScannerCore";
 import {ElemConfig} from "../../../framework/types/DesignerType";
-import {BaseInfoType} from "../../../framework/abstract/AbstractScannerCore";
+import {MenuInfo} from "../../../framework/types/MenuType";
+import barImg from "./bar.png";
+import {getDefaultMenuList} from "../../../designer/right/util";
+import {ClassType} from "react";
+import AntdBaseBarConfigStyle from "./AntdBaseBarConfigStyle";
+import DataConfig from "../../../lib/common-fragment/data-config/DataConfig";
+import AnimationConfig from "../../../lib/common-fragment/animation-config/AnimationConfig";
+import ThemeConfig from "../../../lib/common-fragment/theme-config/ThemeConfig";
+import BaseInfo from "../../../lib/common-fragment/base-info/BaseInfo";
+import AntdBaseBar from "./AntdBaseBar";
 
-export default class AntdBaseBarInit extends AbstractInit {
+class AntdBaseBarCore extends AbstractScannerCore {
+    getBaseInfo(): BaseInfoType {
+        return {
+            name: "基础条形图",
+            key: 'AntdBaseBar',
+            typeName: "条形图",
+            typeKey: "bar",
+            sourceName: "Antd",
+            sourceKey: "antd",
+        };
+    }
+
+    getChartImg(): any {
+        return barImg;
+    }
+
+    getComponent(): any {
+        return AntdBaseBar;
+    }
 
     getInitConfig(): ElemConfig | Object {
         return {
@@ -78,19 +104,19 @@ export default class AntdBaseBarInit extends AbstractInit {
         };
     }
 
-    getBaseInfo(): BaseInfoType {
+    getMenuList(): Array<MenuInfo> {
+        return getDefaultMenuList();
+    }
+
+    getMenuToConfigContentMap(): { [key: string]: ClassType<any, any, any> } {
         return {
-            name: "基础条形图",
-            key: 'AntdBaseBar',
-            typeName: "条形图",
-            typeKey: "bar",
-            sourceName: "Antd",
-            sourceKey: "antd",
+            'info': BaseInfo,
+            'style': AntdBaseBarConfigStyle,
+            'data': DataConfig,
+            'animation': AnimationConfig,
+            'theme': ThemeConfig
         };
     }
-
-    getChartImg(): any {
-        return barImg;
-    }
-
 }
+
+export default AntdBaseBarCore;

@@ -6,7 +6,7 @@ import DragScaleProvider from "../operate-provider/DragScaleProvider";
 import {observer} from "mobx-react";
 import designerStore, {DesignerStore} from "../store/DesignerStore";
 import DesignerBackground from "./DesignerBackground";
-import rootStore from "../BootStore";
+import rootStore from "../BootCore";
 import rightStore from "../right/RightStore";
 import DesignerRuler from "../../lib/lc-ruler/DesignerRuler";
 import DesignerContainer from "../operate-provider/DesignerContainer";

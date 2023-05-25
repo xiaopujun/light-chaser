@@ -18,7 +18,7 @@ import {
     Statistic,
     Theme
 } from "../../framework/types/DesignerType";
-import bootStore from "../BootStore";
+import bootStore from "../BootCore";
 import BaseStore from "../../framework/interface/BaseStore";
 
 class DesignerStore implements LCDesigner, BaseStore {

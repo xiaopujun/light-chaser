@@ -1,10 +1,11 @@
 import {ElemConfig} from "../types/DesignerType";
+import {BaseInfoType} from "./AbstractScannerCore";
 
 export abstract class AbstractInit {
     /**
      * 获取基础信息
      */
-    abstract getBaseInfo(): BaseInfo;
+    abstract getBaseInfo(): BaseInfoType;
 
     /**
      * 获取组件初始化配置
@@ -17,29 +18,3 @@ export abstract class AbstractInit {
     abstract getChartImg(): any;
 }
 
-export interface BaseInfo {
-    /**
-     * 组件显示名称
-     */
-    name: string;
-    /**
-     * 组件标识
-     */
-    key: string;
-    /**
-     * 类型名称
-     */
-    typeName: string;
-    /**
-     * 类型标识
-     */
-    typeKey: string;
-    /**
-     * 来源名称
-     */
-    sourceName: string;
-    /**
-     * 来源标识
-     */
-    sourceKey: string;
-}

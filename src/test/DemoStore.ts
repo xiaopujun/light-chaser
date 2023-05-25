@@ -1,4 +1,4 @@
-import {makeAutoObservable, runInAction} from "mobx";
+import {makeAutoObservable} from "mobx";
 import _ from "lodash";
 
 class DemoStore {
@@ -6,16 +6,20 @@ class DemoStore {
         makeAutoObservable(this);
     }
 
-    student: any = {
-        name: "张三",
-        age: 18,
+    students: any = {
+        '0': {
+            name: "张三",
+            age: 18,
+        },
+        '1': {
+            name: "李四",
+            age: 19,
+        }
     }
 
     setStudent = (student: any) => {
-        runInAction(() => {
-            this.student = _.merge(this.student, student);
-        });
-        console.log(this.student);
+        let item = this.students['0'];
+        this.students['0'] = _.merge(item, student);
     }
 }
 

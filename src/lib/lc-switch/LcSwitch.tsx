@@ -1,4 +1,4 @@
-import React, {Component, CSSProperties, PureComponent} from "react";
+import React, {Component, CSSProperties} from "react";
 import "./LcSwitch.less";
 import _ from "lodash";
 
