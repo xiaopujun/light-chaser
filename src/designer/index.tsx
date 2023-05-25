@@ -13,7 +13,7 @@ import DesignerLeft from "./left";
 import Right from "./right";
 import DesignerFooter from "./footer/DesignerFooter";
 import lcDesignerContentStore from './store/DesignerStore';
-import bootStore from './BootCore';
+import bootCore from './BootCore';
 import {getProjectById} from "../utils/LocalStorageUtil";
 import lcRightMenuStore from "./store/LcRightMenuStore";
 import eventManager from "./operate-provider/core/EventManager";
@@ -35,7 +35,7 @@ class LCDesigner extends Component<LCDesignerProps | any> {
     constructor(props: any) {
         super(props);
         //启动组件自动化扫描
-        const {doInit} = bootStore;
+        const {doInit} = bootCore;
         doInit && doInit();
         //初始化操作类型
         this.initOperateType();

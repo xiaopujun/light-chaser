@@ -6,7 +6,7 @@ import DragScaleProvider from "../operate-provider/DragScaleProvider";
 import {observer} from "mobx-react";
 import designerStore, {DesignerStore} from "../store/DesignerStore";
 import DesignerBackground from "./DesignerBackground";
-import rootStore from "../BootCore";
+import bootCore from "../BootCore";
 import rightStore from "../right/RightStore";
 import DesignerRuler from "../../lib/lc-ruler/DesignerRuler";
 import DesignerContainer from "../operate-provider/DesignerContainer";
@@ -46,9 +46,9 @@ class DesignerContent extends PureComponent<DesignerStore | any> {
     generateElement = () => {
         const {layoutConfigs} = designerStore!;
         if (layoutConfigs && layoutConfigs.length > 0) {
-            const {compsClazz} = rootStore;
+            const {scannerCore}: any = bootCore;
             return layoutConfigs.map((item: any) => {
-                let Chart: any = compsClazz[item.compKey];
+                let Chart: any = scannerCore[item.compKey].getComponent();
                 const compConfig: any = this.calculateChartConfig(item.id);
                 return (
                     <div key={item?.id + ''} className={'lc-comp-item'}

@@ -1,13 +1,12 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import CompBgContainer from "../../../lib/lc-bg-container/CompBgContainer";
-import {AbstractComp} from "../../../framework/abstract/AbstractComp";
 import {CompType} from "../../../framework/types/CompType";
 import {Bar} from "@ant-design/charts";
 
 /**
  * 基础条形图
  */
-export default class AntdBaseBar extends AbstractComp<CompType> {
+export default class AntdBaseBar extends PureComponent<CompType> {
 
     chart: any;
 

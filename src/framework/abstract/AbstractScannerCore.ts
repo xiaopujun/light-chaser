@@ -3,6 +3,12 @@ import React from "react";
 import {ElemConfig} from "../types/DesignerType";
 
 export abstract class AbstractScannerCore {
+
+    /**
+     * 获取组件标识
+     */
+    abstract getKey(): string;
+
     /**
      * 获取右侧菜单列表
      */
@@ -16,12 +22,12 @@ export abstract class AbstractScannerCore {
     /**
      * 获取基础信息
      */
-    abstract getBaseInfo(): BaseInfoType;
+    abstract getBaseInfo(): BaseInfoType | null;
 
     /**
      * 获取组件初始化配置
      */
-    abstract getInitConfig(): ElemConfig | Object;
+    abstract getInitConfig(): ElemConfig | Object | null
 
     /**
      * 获取组件图片缩略图

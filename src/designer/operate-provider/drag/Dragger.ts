@@ -40,6 +40,11 @@ class Dragger {
             }
         });
     }
+
+    destroy = () => {
+        eventManager.unregister('pointerdown');
+        eventManager.unregister('pointermove');
+    }
 }
 
 export default Dragger;

@@ -11,6 +11,8 @@ import ConfigCard from "../../config-card/ConfigCard";
 import NumberInput from "../../lc-input/NumberInput";
 import Accordion from "../../lc-accordion/Accordion";
 import LcSelect from "../../lc-select/LCSelect";
+import {ConfigType} from "../../../framework/types/ConfigType";
+import _ from "lodash";
 
 const {Option} = Select;
 
@@ -25,12 +27,17 @@ interface AxisConfigProps {
  */
 class AxisConfig extends Component<AxisConfigProps> {
 
+    shouldComponentUpdate(nextProps: Readonly<ConfigType>, nextState: Readonly<{}>, nextContext: any): boolean {
+        return !_.isEqual(nextProps, this.props);
+    }
+
     onChange = (key: string, data: any) => {
         const {onChange} = this.props;
         onChange && onChange(key, data);
     }
 
     render() {
+        console.log('AxisConfig render');
         const {config, title = '坐标轴'} = this.props;
         return (
             <Accordion title={title} showSwitch={true} visible={config.enable || false}

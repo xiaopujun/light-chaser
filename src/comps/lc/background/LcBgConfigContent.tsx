@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import './LcBgConfig.less';
+import './LcBgConfigContent.less';
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import Dragger from "antd/es/upload/Dragger";
 import LcRadio from "../../../lib/lc-radio/LcRadio";

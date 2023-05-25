@@ -7,6 +7,8 @@ import {Select} from "antd";
 import CfgItemBorder from "../../config-item-border/CfgItemBorder";
 import ConfigItem from "../../config-item/ConfigItem";
 import {LegendType} from "../../../framework/types/LegendType";
+import {ConfigType} from "../../../framework/types/ConfigType";
+import _ from "lodash";
 
 const {Option} = Select;
 
@@ -28,6 +30,10 @@ class Legend extends Component<LegendProps> {
         super(props);
         const {config} = this.props;
         this.state = {visible: config?.visible || false};
+    }
+
+    shouldComponentUpdate(nextProps: Readonly<ConfigType>, nextState: Readonly<{}>, nextContext: any): boolean {
+        return !_.isEqual(nextProps, this.props);
     }
 
     onChange = (key: string, data: any) => {

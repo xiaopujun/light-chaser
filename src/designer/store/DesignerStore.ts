@@ -18,7 +18,7 @@ import {
     Statistic,
     Theme
 } from "../../framework/types/DesignerType";
-import bootStore from "../BootCore";
+import bootCore from "../BootCore";
 import BaseStore from "../../framework/interface/BaseStore";
 
 class DesignerStore implements LCDesigner, BaseStore {
@@ -223,9 +223,9 @@ class DesignerStore implements LCDesigner, BaseStore {
      */
     addItem = (item: LcLayout) => {
         this.layoutConfigs?.push(item);
-        const {loaded, compInitObj} = bootStore;
+        const {loaded, scannerCore} = bootCore;
         if (!loaded) return;
-        let initObj: any = compInitObj[item.compKey + "Init"];
+        let initObj: any = scannerCore[item.compKey];
         let initData: any = initObj.getInitConfig()
         initData.info = {...initData.info, ...{id: this.statisticInfo?.count}}
         if (this.elemConfigs && this.statisticInfo)

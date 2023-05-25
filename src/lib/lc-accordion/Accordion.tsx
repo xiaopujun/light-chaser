@@ -26,6 +26,10 @@ class Accordion extends Component<AccordionProps> {
             this.unfold();
     }
 
+    componentWillUnmount() {
+        this.accDom.removeEventListener("click");
+    }
+
     unfold = () => {
         this.accDom.classList.toggle("accordion-active");
         let panel = this.accDom.nextElementSibling;

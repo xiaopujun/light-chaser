@@ -3,7 +3,7 @@ import {ElemConfig} from "../../../framework/types/DesignerType";
 import {MenuInfo} from "../../../framework/types/MenuType";
 import barImg from "./bar.png";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import {ClassType} from "react";
+import React, {ClassType} from "react";
 import AntdBaseBarConfigStyle from "./AntdBaseBarConfigStyle";
 import DataConfig from "../../../lib/common-fragment/data-config/DataConfig";
 import AnimationConfig from "../../../lib/common-fragment/animation-config/AnimationConfig";
@@ -12,6 +12,11 @@ import BaseInfo from "../../../lib/common-fragment/base-info/BaseInfo";
 import AntdBaseBar from "./AntdBaseBar";
 
 class AntdBaseBarCore extends AbstractScannerCore {
+
+    getKey(): string {
+        return 'AntdBaseBar';
+    }
+
     getBaseInfo(): BaseInfoType {
         return {
             name: "基础条形图",
@@ -27,7 +32,7 @@ class AntdBaseBarCore extends AbstractScannerCore {
         return barImg;
     }
 
-    getComponent(): any {
+    getComponent(): React.Component | React.FC | any {
         return AntdBaseBar;
     }
 

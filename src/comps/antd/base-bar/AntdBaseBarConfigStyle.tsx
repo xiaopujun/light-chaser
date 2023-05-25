@@ -296,8 +296,6 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
     }
 
     render() {
-        // const colors = calculateFillColor(this.props.config);
-        // const sorts = dataSort('type', this.props.config.data);
         const {updateConfig, config} = this.props;
         const {chartStyle} = config;
         return (

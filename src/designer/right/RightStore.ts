@@ -1,5 +1,4 @@
 import {action, makeObservable, observable} from "mobx";
-import React from "react";
 import {MenuInfo} from "../../framework/types/MenuType";
 
 class RightStore {
@@ -33,13 +32,6 @@ class RightStore {
         this.contentVisible = visible;
     }
 
-    doInit = (configClazz: { [key: string]: React.Component | React.FC | any } = {}) => {
-        let configObjs: { [key: string]: Object } = {};
-        Object.keys(configClazz).forEach((key: string) => {
-            configObjs[key] = new configClazz[key]();
-        });
-        this.configObjs = configObjs;
-    }
 
 }
 

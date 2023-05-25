@@ -4,9 +4,8 @@ import {Input} from "antd";
 import compListStore from "./CompListStore";
 import classifyListStore from "../classify-list/ClassifyListStore";
 import './CompList.less';
-import {toJS} from "mobx";
 import {observer} from "mobx-react";
-import designerStore from "../../BootCore";
+import bootCore from "../../BootCore";
 
 class CompList extends Component {
 
@@ -18,8 +17,8 @@ class CompList extends Component {
 
     getChartDom = () => {
         let chartDom = [];
-        let {classifyKey} = toJS(classifyListStore)
-        let {comps, compKey} = toJS(compListStore);
+        let {classifyKey} = classifyListStore
+        let {comps, compKey} = compListStore;
         if (classifyKey !== 'all') {
             comps = comps.filter((item: any) => {
                 return item.typeKey === classifyKey;
@@ -33,9 +32,9 @@ class CompList extends Component {
         for (let i = 0; i < comps.length; i++) {
             let compInfo: any = comps[i];
             const {name, key} = compInfo;
-            const {compInitObj} = designerStore;
+            const {scannerCore} = bootCore;
             let compObj = JSON.stringify({compName: name, compKey: key});
-            let lcCompInit: any = compInitObj[key + "Init"];
+            let lcCompInit: any = scannerCore[key];
             let chartImg = lcCompInit.getChartImg();
             chartDom.push(
                 <div draggable={true} key={i + ''}
