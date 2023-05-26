@@ -27,7 +27,7 @@ class Accordion extends Component<AccordionProps> {
     }
 
     componentWillUnmount() {
-        this.accDom.removeEventListener("click");
+        this.accDom.removeEventListener("click", this.unfold);
     }
 
     unfold = () => {
@@ -44,7 +44,7 @@ class Accordion extends Component<AccordionProps> {
      * 标题点击模式，点击标题，展开内容
      */
     titleClickMode = () => {
-        this.accDom.addEventListener("click", () => this.unfold());
+        this.accDom.addEventListener("click", this.unfold);
     }
 
     /**
