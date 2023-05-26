@@ -2,14 +2,14 @@ import {AbstractHeaderItem} from "../framework/types/HeaderTypes";
 import React from "react";
 import {AbstractClassifyItem} from "../framework/abstract/AbstractClassifyItem";
 import headerStore from "./header/HeaderStore";
-import {AbstractScannerCore} from "../framework/abstract/AbstractScannerCore";
+import {AbstractAutoScannerCore} from "../framework/abstract/AbstractAutoScannerCore";
 
 /**
  * 设计器启动器，通过该启动器自动化扫描加载组件
  */
 class BootCore {
 
-    scannerCore: { [key: string]: Object } = {};
+    autoCompObjs: { [key: string]: Object } = {};
     headersClazz: { [key: string]: React.Component | React.FC | any } = {};
     compTypeClazz: { [key: string]: React.Component | React.FC | any } = {};
     classifyClazz: { [key: string]: React.Component | React.FC | any } = {};
@@ -45,9 +45,9 @@ class BootCore {
         const compCtx = require.context('../comps', true, /\.(tsx|ts)$/);
         compCtx.keys().forEach(key => {
             const Clazz = compCtx(key).default;
-            if (Clazz && AbstractScannerCore.isPrototypeOf(Clazz)) {
-                let scannerCore = new Clazz();
-                this.scannerCore[scannerCore.getKey()] = scannerCore;
+            if (Clazz && AbstractAutoScannerCore.isPrototypeOf(Clazz)) {
+                let autoCompObj = new Clazz();
+                this.autoCompObjs[autoCompObj.getKey()] = autoCompObj;
             }
         });
     }

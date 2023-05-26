@@ -39,7 +39,7 @@ class AxisConfig extends Component<AxisConfigProps> {
         console.log('AxisConfig render');
         const {config, title = '坐标轴'} = this.props;
         return (
-            <Accordion title={title} showSwitch={true} visible={config.enable || false}
+            <Accordion title={title} showSwitch={true} defaultValue={config.enable || false}
                        onChange={value => this.onChange('enable', value)}>
                 <ConfigItem title={'位置'} contentStyle={{width: '250px', paddingLeft: '20px'}}>
                     <LcRadio value={config.position || 'right'}

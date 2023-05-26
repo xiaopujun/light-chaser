@@ -45,7 +45,7 @@ class Legend extends Component<LegendProps> {
         console.log('Legend render');
         const {config} = this.props;
         return (
-            <Accordion title={'图例'} showSwitch={true} visible={config?.visible}
+            <Accordion title={'图例'} showSwitch={true} defaultValue={config?.visible}
                        onChange={value => this.onChange('enable', value)}>
                 <ConfigItem title={'位置'}>
                     <LcSelect defaultValue={config?.position} onChange={(value => this.onChange('position', value))}>

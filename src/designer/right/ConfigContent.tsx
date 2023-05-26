@@ -24,14 +24,13 @@ interface LcConfigContentProps {
 class ConfigContent extends Component<LcConfigContentProps> {
 
     buildConfigContent = () => {
-        let {activeMenu} = rightStore;
-        let {scannerCore} = bootCore;
-        const {activeElem, elemConfigs, updateElemConfig} = designerStore!;
-        const elemConfig = elemConfigs[activeElem.id!];
-        let abstractConfigObj: any = scannerCore[activeElem.type + ''];
+        let {activeMenu, activeElem, activeElemConfig} = rightStore;
+        let {autoCompObjs} = bootCore;
+        const {updateElemConfig} = designerStore!;
+        let abstractConfigObj: any = autoCompObjs[activeElem.type + ''];
         let menuToConfigComp = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp = menuToConfigComp[activeMenu];
-        return <ConfigComp config={elemConfig[activeMenu]} updateConfig={updateElemConfig}/>;
+        return <ConfigComp config={activeElemConfig[activeMenu]} updateConfig={updateElemConfig}/>;
     }
 
     onClose = () => {

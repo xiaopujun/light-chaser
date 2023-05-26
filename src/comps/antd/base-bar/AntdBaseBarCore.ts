@@ -1,4 +1,4 @@
-import {AbstractScannerCore, BaseInfoType} from "../../../framework/abstract/AbstractScannerCore";
+import {AbstractAutoScannerCore, BaseInfoType} from "../../../framework/abstract/AbstractAutoScannerCore";
 import {ElemConfig} from "../../../framework/types/DesignerType";
 import {MenuInfo} from "../../../framework/types/MenuType";
 import barImg from "./bar.png";
@@ -11,7 +11,7 @@ import ThemeConfig from "../../../lib/common-fragment/theme-config/ThemeConfig";
 import BaseInfo from "../../../lib/common-fragment/base-info/BaseInfo";
 import AntdBaseBar from "./AntdBaseBar";
 
-class AntdBaseBarCore extends AbstractScannerCore {
+class AntdBaseBarCore extends AbstractAutoScannerCore {
 
     getKey(): string {
         return 'AntdBaseBar';

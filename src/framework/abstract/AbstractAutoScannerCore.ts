@@ -2,7 +2,7 @@ import {MenuInfo} from "../types/MenuType";
 import React from "react";
 import {ElemConfig} from "../types/DesignerType";
 
-export abstract class AbstractScannerCore {
+export abstract class AbstractAutoScannerCore {
 
     /**
      * 获取组件标识

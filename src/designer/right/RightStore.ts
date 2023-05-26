@@ -1,37 +1,43 @@
 import {action, makeObservable, observable} from "mobx";
 import {MenuInfo} from "../../framework/types/MenuType";
+import bootCore from "../BootCore";
+import {AbstractAutoScannerCore} from "../../framework/abstract/AbstractAutoScannerCore";
+import {ActiveElem} from "../../framework/types/DesignerType";
+import designerStore from "../store/DesignerStore";
 
 class RightStore {
     constructor() {
         makeObservable(this, {
-            configObjs: observable,
+            menus: observable,
             activeMenu: observable,
-            loaded: observable,
             contentVisible: observable,
             setActiveMenu: action,
-            setMenus: action,
             setContentVisible: action,
         })
     }
 
+    activeElem: ActiveElem = {};
+    activeElemConfig: any = {};
     menus: Array<MenuInfo> = []
-    configObjs: { [key: string]: Object } = {};
     activeMenu: string = 'background';
-    loaded: boolean = false;
     contentVisible: boolean = false;
+
+    updateMenus = (activeElem: ActiveElem) => {
+        if (!activeElem)
+            return;
+        this.menus = (bootCore.autoCompObjs[activeElem.type + ''] as AbstractAutoScannerCore).getMenuList();
+        this.activeElem = activeElem;
+    }
 
     setActiveMenu = (menu: string) => {
         this.activeMenu = menu;
     }
 
-    setMenus = (menus: Array<MenuInfo>) => {
-        this.menus = menus;
-    }
-
     setContentVisible = (visible: boolean) => {
         this.contentVisible = visible;
+        if (visible)
+            this.activeElemConfig = designerStore.getActiveElemConfig(this.activeElem.id as number);
     }
-
 
 }
 

@@ -1,11 +1,11 @@
-import {AbstractScannerCore, BaseInfoType} from "../../../framework/abstract/AbstractScannerCore";
+import {AbstractAutoScannerCore, BaseInfoType} from "../../../framework/abstract/AbstractAutoScannerCore";
 import {ElemConfig} from "../../../framework/types/DesignerType";
 import {MenuInfo} from "../../../framework/types/MenuType";
 import {PictureFilled} from "@ant-design/icons";
 import React from "react";
 import LcBgConfigContent from "./LcBgConfigContent";
 
-class LcBgCore extends AbstractScannerCore {
+class LcBgCore extends AbstractAutoScannerCore {
     getBaseInfo(): BaseInfoType | null {
         return null;
     }

@@ -13,10 +13,10 @@ class CompListStore {
 
     doInit = () => {
         const comps: Array<any> = [];
-        const {scannerCore}: any = bootCore;
-        if (scannerCore) {
-            Object.keys(scannerCore).forEach(key => {
-                let baseInfo = scannerCore[key].getBaseInfo();
+        const {autoCompObjs}: any = bootCore;
+        if (autoCompObjs) {
+            Object.keys(autoCompObjs).forEach(key => {
+                let baseInfo = autoCompObjs[key].getBaseInfo();
                 console.log(baseInfo);
                 if (baseInfo != null)
                     comps.push(baseInfo);

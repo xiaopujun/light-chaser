@@ -46,9 +46,9 @@ class DesignerContent extends PureComponent<DesignerStore | any> {
     generateElement = () => {
         const {layoutConfigs} = designerStore!;
         if (layoutConfigs && layoutConfigs.length > 0) {
-            const {scannerCore}: any = bootCore;
+            const {autoCompObjs}: any = bootCore;
             return layoutConfigs.map((item: any) => {
-                let Chart: any = scannerCore[item.compKey].getComponent();
+                let Chart: any = autoCompObjs[item.compKey].getComponent();
                 const compConfig: any = this.calculateChartConfig(item.id);
                 return (
                     <div key={item?.id + ''} className={'lc-comp-item'}

@@ -20,6 +20,7 @@ import {
 } from "../../framework/types/DesignerType";
 import bootCore from "../BootCore";
 import BaseStore from "../../framework/interface/BaseStore";
+import rightStore from "../right/RightStore";
 
 class DesignerStore implements LCDesigner, BaseStore {
     constructor() {
@@ -47,8 +48,8 @@ class DesignerStore implements LCDesigner, BaseStore {
      * 激活状态属性
      */
     activeElem: ActiveElem = {
-        id: -1, //元素id
-        type: 'LcBg' //元素类型
+        id: -999, //元素id
+        type: '' //元素类型
     };
 
     /**
@@ -135,7 +136,6 @@ class DesignerStore implements LCDesigner, BaseStore {
     doInit = (store: LCDesigner) => {
         this.id = store.id ?? this.id;
         this.canvasConfig = store.canvasConfig ? {...this.canvasConfig, ...store.canvasConfig} : this.canvasConfig;
-        this.activeElem = store.activeElem ? {...this.activeElem, ...store.activeElem} : this.activeElem;
         this.projectConfig = store.projectConfig ? {...this.projectConfig, ...store.projectConfig} : this.projectConfig;
         this.elemConfigs = store.elemConfigs ? {...this.elemConfigs, ...store.elemConfigs} : this.elemConfigs;
         this.layoutConfigs = store.layoutConfigs || this.layoutConfigs;
@@ -146,6 +146,7 @@ class DesignerStore implements LCDesigner, BaseStore {
         this.linkage = store.linkage || this.linkage;
         this.condition = store.condition || this.condition;
         this.extendParams = store.extendParams ? {...this.extendParams, ...store.extendParams} : this.extendParams;
+        this.updateActive({id: -1, type: 'LcBg'});
     }
 
     getData(): any {
@@ -218,14 +219,19 @@ class DesignerStore implements LCDesigner, BaseStore {
      */
     setExtendParams = (extendParams: any) => this.extendParams = extendParams;
 
+    getActiveElemConfig = (activeId: number | string) => {
+        if (activeId)
+            return this.elemConfigs[activeId + ""];
+    }
+
     /**
      * 添加元素
      */
     addItem = (item: LcLayout) => {
         this.layoutConfigs?.push(item);
-        const {loaded, scannerCore} = bootCore;
+        const {loaded, autoCompObjs} = bootCore;
         if (!loaded) return;
-        let initObj: any = scannerCore[item.compKey];
+        let initObj: any = autoCompObjs[item.compKey];
         let initData: any = initObj.getInitConfig()
         initData.info = {...initData.info, ...{id: this.statisticInfo?.count}}
         if (this.elemConfigs && this.statisticInfo)
@@ -270,9 +276,9 @@ class DesignerStore implements LCDesigner, BaseStore {
     updateActive = (data: ActiveElem) => {
         if (data.id === this.activeElem.id)
             return;
-        runInAction(() => {
-            this.activeElem = {...this.activeElem, ...data};
-        })
+        this.activeElem = {...this.activeElem, ...data};
+        const {updateMenus} = rightStore;
+        updateMenus(this.activeElem);
     }
 
     /**
