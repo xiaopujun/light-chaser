@@ -11,7 +11,6 @@ import ConfigCard from "../../config-card/ConfigCard";
 import NumberInput from "../../lc-input/NumberInput";
 import Accordion from "../../lc-accordion/Accordion";
 import LcSelect from "../../lc-select/LCSelect";
-import {ConfigType} from "../../../framework/types/ConfigType";
 import _ from "lodash";
 
 const {Option} = Select;
@@ -27,8 +26,8 @@ interface AxisConfigProps {
  */
 class AxisConfig extends Component<AxisConfigProps> {
 
-    shouldComponentUpdate(nextProps: Readonly<ConfigType>, nextState: Readonly<{}>, nextContext: any): boolean {
-        return !_.isEqual(nextProps, this.props);
+    shouldComponentUpdate(nextProps: Readonly<AxisConfigProps>, nextState: Readonly<{}>, nextContext: any): boolean {
+        return !_.isEqual(nextProps.config, this.props.config);
     }
 
     onChange = (key: string, data: any) => {

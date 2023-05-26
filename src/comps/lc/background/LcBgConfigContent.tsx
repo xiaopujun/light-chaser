@@ -101,12 +101,12 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
         updateBgConfig({bgImgUrl: ''});
     }
 
-    bgGradientColorChanged = (color: string, e: any, id: any) => {
+    bgGradientColorChanged = (color: string, key: string) => {
         const {updateBgConfig, elemConfigs} = designerStore;
         const bgConfig: BackgroundConfig = elemConfigs['-1']['background'];
-        if (id === 'startColor')
+        if (key === 'startColor')
             this.colors[0] = color;
-        if (id === 'endColor')
+        if (key === 'endColor')
             this.colors[1] = color;
         //线性渐变
         if (bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT) {
@@ -142,11 +142,11 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
 
     render() {
         const bgConfig: BackgroundConfig = designerStore.elemConfigs['-1']['background'];
-        console.log('bgConfig', bgConfig)
+        console.log('bgConfig', toJS(bgConfig))
         return (
             <div className={'lc-background-config'}>
                 <ConfigItem title={'模式'} contentStyle={{width: '250px', paddingLeft: '20px'}}>
-                    <LcRadio onChange={this.bgModeChange} defaultValue={bgConfig?.bgMode}>
+                    <LcRadio onChange={this.bgModeChange} value={bgConfig?.bgMode}>
                         <Radio value={0}>无</Radio>
                         <Radio value={1}>图片</Radio>
                         <Radio value={2}>颜色</Radio>
@@ -197,7 +197,7 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
                     </ConfigCard>
                     <ConfigItem title={'重复方式'} contentStyle={{paddingLeft: '20px'}}>
                         <LcSelect onChange={this.repeatTypeChange}
-                                  defaultValue={bgConfig?.bgImgRepeat}>
+                                  value={bgConfig?.bgImgRepeat}>
                             <Option value={"no-repeat"}>不重复</Option>
                             <Option value={"repeat-x"}>x轴重复</Option>
                             <Option value={"repeat-y"}>y轴重复</Option>
@@ -208,7 +208,7 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
                 {bgConfig?.bgMode === BackgroundMode.COLOR &&
                 <>
                     <ConfigItem title={'类型'} contentStyle={{paddingLeft: '20px'}}>
-                        <LcRadio onChange={this.bgColorModeChange} defaultValue={bgConfig?.bgColorMode}>
+                        <LcRadio onChange={this.bgColorModeChange} value={bgConfig?.bgColorMode}>
                             <Radio value={0}>单色</Radio>
                             <Radio value={1}>线性</Radio>
                             <Radio value={2}>径向</Radio>
@@ -229,17 +229,19 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
                         (bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT || bgConfig?.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT) && <>
                             <ConfigItem title={'颜色'} contentStyle={{width: '250px', paddingLeft: 18, display: "flex"}}>
                                 <CfgItemBorder>
-                                    <BaseColorPicker onChange={this.bgGradientColorChanged} id={'startColor'}
-                                                     style={{width: '100%', height: '15px', borderRadius: 2}}
-                                                     value={bgConfig?.colors && bgConfig?.colors[0]}
-                                                     showText={true}/>
+                                    <BaseColorPicker
+                                        onChange={(value) => this.bgGradientColorChanged(value, 'startColor')}
+                                        style={{width: '100%', height: '15px', borderRadius: 2}}
+                                        value={bgConfig?.colors && bgConfig?.colors[0]}
+                                        showText={true}/>
                                 </CfgItemBorder>
                                 &nbsp;&nbsp;
                                 <CfgItemBorder>
-                                    <BaseColorPicker onChange={this.bgGradientColorChanged} id={'endColor'}
-                                                     style={{width: '100%', height: '15px', borderRadius: 2}}
-                                                     value={bgConfig?.colors && bgConfig?.colors[1]}
-                                                     showText={true}/>
+                                    <BaseColorPicker
+                                        onChange={(value) => this.bgGradientColorChanged(value, 'endColor')}
+                                        style={{width: '100%', height: '15px', borderRadius: 2}}
+                                        value={bgConfig?.colors && bgConfig?.colors[1]}
+                                        showText={true}/>
                                 </CfgItemBorder>
                             </ConfigItem>
                             {

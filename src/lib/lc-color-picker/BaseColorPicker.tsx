@@ -3,16 +3,15 @@ import {Popover} from 'antd';
 import {ChromePicker} from 'react-color';
 import './BaseColorPicker.less';
 import {colorConversion, rgbaToHex} from '../../utils/ColorUtil';
+import {isEqual, omit} from "lodash";
 
 interface BaseColorPickerProps {
-    onChange?: (color: any, e: Event, id: number | string | undefined) => void;
+    onChange?: (color: any) => void;
     type?: 'hex' | 'rgba';
     value?: string;
     defaultValue?: string;
     style?: React.CSSProperties;
     showText?: boolean;
-    name?: string;
-    id?: number | string;
 }
 
 interface BaseColorPickerState {
@@ -25,6 +24,10 @@ class BaseColorPicker extends Component<BaseColorPickerProps, BaseColorPickerSta
     static defaultProps = {
         defaultValue: '#000000ff',
     };
+
+    shouldComponentUpdate(nextProps: Readonly<BaseColorPickerProps>, nextState: Readonly<BaseColorPickerState>, nextContext: any): boolean {
+        return !isEqual(omit(this.props, ['onChange']), omit(nextProps, ['onChange']));
+    }
 
     constructor(props: BaseColorPickerProps) {
         super(props);
@@ -50,14 +53,14 @@ class BaseColorPicker extends Component<BaseColorPickerProps, BaseColorPickerSta
         }
     }
 
-    onChangeComplete = (color: any, event: any) => {
-        const {onChange, id, type = 'hex'} = this.props;
+    onChangeComplete = (color: any) => {
+        const {onChange, type = 'hex'} = this.props;
         const rgbColor = `rgba(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`;
         const hex = rgbaToHex(rgbColor);
         if (type === 'hex') {
-            onChange && onChange(hex, event, id);
+            onChange && onChange(hex);
         } else {
-            onChange && onChange(rgbColor, event, id);
+            onChange && onChange(rgbColor);
         }
         this.setState({
             color: rgbColor,
@@ -66,6 +69,7 @@ class BaseColorPicker extends Component<BaseColorPickerProps, BaseColorPickerSta
     };
 
     render() {
+        console.log('BaseColorPicker render');
         const {hex, rgba, color} = this.state;
         const {style, showText = false, type = 'hex'} = this.props;
         const content = (
