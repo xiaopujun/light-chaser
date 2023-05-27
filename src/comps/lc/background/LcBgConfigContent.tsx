@@ -3,19 +3,18 @@ import './LcBgConfigContent.less';
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import Dragger from "antd/es/upload/Dragger";
 import LcRadio from "../../../lib/lc-radio/LcRadio";
-import {Button, Radio, Select} from "antd";
+import {Button, Radio} from "antd";
 import CfgItemBorder from "../../../lib/config-item-border/CfgItemBorder";
 import designerStore from '../../../designer/store/DesignerStore';
 import {observer} from "mobx-react";
 import {toJS} from "mobx";
-import LcSelect from "../../../lib/lc-select/LCSelect";
 import {BackgroundColorMode, BackgroundConfig, BackgroundMode} from "../../../framework/types/DesignerType";
 import {ConfigType} from "../../../framework/types/ConfigType";
 import NumberInput from "../../../lib/lc-input/NumberInput";
 import ConfigItem from "../../../lib/config-item/ConfigItem";
 import ConfigCard from "../../../lib/config-card/ConfigCard";
+import Select from "../../../lib/lc-select/Select";
 
-const {Option} = Select;
 
 class LcBgConfigContent extends PureComponent<ConfigType> {
 
@@ -196,13 +195,11 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
                         </ConfigItem>
                     </ConfigCard>
                     <ConfigItem title={'重复方式'} contentStyle={{paddingLeft: '20px'}}>
-                        <LcSelect onChange={this.repeatTypeChange}
-                                  value={bgConfig?.bgImgRepeat}>
-                            <Option value={"no-repeat"}>不重复</Option>
-                            <Option value={"repeat-x"}>x轴重复</Option>
-                            <Option value={"repeat-y"}>y轴重复</Option>
-                            <Option value={"repeat"}>铺满</Option>
-                        </LcSelect>
+                        <Select options={[{label: '不重复', value: 'no-repeat'},
+                            {label: 'x轴重复', value: 'repeat-x'},
+                            {label: 'y轴重复', value: 'repeat-y'},
+                            {label: '铺满', value: 'repeat'},
+                        ]} defaultValue={bgConfig?.bgImgRepeat} onChange={this.repeatTypeChange}/>
                     </ConfigItem>
                 </>}
                 {bgConfig?.bgMode === BackgroundMode.COLOR &&

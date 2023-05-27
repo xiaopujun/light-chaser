@@ -1,4 +1,4 @@
-import {Radio, Select} from 'antd';
+import {Radio} from 'antd';
 import React, {Component} from 'react';
 import './AxisConfig.less';
 import LcUnderLineInput from "../../lc-input/LcUnderLineInput";
@@ -10,10 +10,9 @@ import ConfigItem from "../../config-item/ConfigItem";
 import ConfigCard from "../../config-card/ConfigCard";
 import NumberInput from "../../lc-input/NumberInput";
 import Accordion from "../../lc-accordion/Accordion";
-import LcSelect from "../../lc-select/LCSelect";
 import _ from "lodash";
+import Select from "../../lc-select/Select";
 
-const {Option} = Select;
 
 interface AxisConfigProps {
     config?: any;
@@ -73,13 +72,12 @@ class AxisConfig extends Component<AxisConfigProps> {
                                   onChange={(value) => this.onChange('title-enable', value)}/>
                     </ConfigItem>
                     <ConfigItem title={'位置'}>
-                        <LcSelect value={config.titlePosition || undefined}
-                                  placeholder={'请选择位置'}
-                                  onChange={value => this.onChange('title-position', value)}>
-                            <Option value="start">前</Option>
-                            <Option value="center">中</Option>
-                            <Option value="end">后</Option>
-                        </LcSelect>
+                        <Select options={[
+                            {value: 'start', label: '前'},
+                            {value: 'center', label: '中'},
+                            {value: 'end', label: '后'}]}
+                                defaultValue={config.titlePosition} placeholder={'请选择位置'}
+                                onChange={value => this.onChange('title-position', value)}/>
                     </ConfigItem>
                     <ConfigItem title={'内容'}>
                         <LcUnderLineInput value={config.titleContent || ''}
