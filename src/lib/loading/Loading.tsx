@@ -14,7 +14,7 @@ class Loading extends Component<LoadingProps> {
             height,
             backgroundColor: '#4b6cb7',
             background: 'linear-gradient(to right, #182848, #1a2848)',
-            color: 'rgb(106 202 255)',
+            color: '#1db3ff',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',

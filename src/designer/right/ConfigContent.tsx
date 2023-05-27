@@ -22,7 +22,6 @@ interface LcConfigContentProps {
 }
 
 class ConfigContent extends Component<LcConfigContentProps> {
-
     buildConfigContent = () => {
         let {activeMenu, activeElem, activeElemConfig} = rightStore;
         let {autoCompObjs} = bootCore;

@@ -26,18 +26,21 @@ interface AccordionProps {
 class Accordion extends Component<AccordionProps> {
 
     accDom: any = null;
+    valueControl: boolean = true;
 
     state: any = {
         value: undefined,
         title: '',
         showSwitch: false,
-        defaultValue: undefined
     }
 
     constructor(props: AccordionProps) {
         super(props);
-        const {value, title, showSwitch, defaultValue} = this.props;
-        this.state = {value, title, showSwitch, defaultValue};
+        let {value, title, showSwitch, defaultValue} = this.props;
+        if (defaultValue !== undefined && value === undefined)
+            this.valueControl = false;
+        value = value || defaultValue;
+        this.state = {value, title, showSwitch};
     }
 
     componentDidMount() {
@@ -74,24 +77,22 @@ class Accordion extends Component<AccordionProps> {
      */
     switchChange = (data: boolean) => {
         this.unfold();
-        const {onChange, defaultValue, value} = this.props;
+        const {onChange} = this.props;
         onChange && onChange(data);
-        if (defaultValue !== undefined && value === undefined) {
-            console.log('switchChange')
+        if (!this.valueControl)
             this.setState({value: data});
-        }
     }
 
     render() {
         console.log('Accordion render');
-        const {title, showSwitch, value, defaultValue} = this.state;
+        const {title, showSwitch} = this.state;
         return (
             <div className={'lc-accordion'}>
                 <div className="accordion-header" ref={dom => this.accDom = dom}>
                     <div className={'title-content'}>{title}</div>
                     <div className={'title-switch'}>{showSwitch ?
                         <LcSwitch
-                            value={defaultValue !== undefined && value === undefined ? this.state.value : this.props.value}
+                            value={this.valueControl ? this.props.value : this.state.value}
                             onChange={this.switchChange}/> :
                         <RightOutlined className={'accordion-icon'}/>}</div>
                 </div>

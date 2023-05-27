@@ -25,10 +25,12 @@ export const calculateLegendConfig = (chartStyle: any) => {
                 visible: true,
                 position: legend?.position,
                 direction: legend?.layout,
-                color: legend?.itemName?.style?.fill
+                color: legend?.itemName?.style?.fill,
+                fontSize: legend?.itemName?.style?.fontSize,
             }
         };
     }
+    console.log(res)
     return res;
 }
 

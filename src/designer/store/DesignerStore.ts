@@ -299,6 +299,8 @@ class DesignerStore implements LCDesigner, BaseStore {
         let activeConfig: ElemConfig | any = this.elemConfigs[this.activeElem?.id + ''];
         if (activeConfig) {
             this.elemConfigs[this.activeElem?.id + ''] = _.merge({}, activeConfig, data);
+            const {setActiveElemConfig} = rightStore;
+            setActiveElemConfig(this.elemConfigs[this.activeElem?.id + '']);
         }
     }
 

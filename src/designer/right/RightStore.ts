@@ -39,6 +39,10 @@ class RightStore {
             this.activeElemConfig = designerStore.getActiveElemConfig(this.activeElem.id as number);
     }
 
+    setActiveElemConfig = (config: any) => {
+        this.activeElemConfig = config;
+    }
+
 }
 
 const rightStore = new RightStore();

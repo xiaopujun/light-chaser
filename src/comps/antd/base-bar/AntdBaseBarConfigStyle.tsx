@@ -66,6 +66,21 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
                     }
                 });
                 break;
+            case 'fontSize':
+                updateConfig && updateConfig({
+                    style: {
+                        chartStyle: {
+                            legend: {
+                                itemName: {
+                                    style: {
+                                        fontSize: data
+                                    }
+                                },
+                            }
+                        }
+                    }
+                });
+                break;
             case 'color':
                 updateConfig && updateConfig({
                     style: {
@@ -90,7 +105,8 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
                                 layout: 'vertical',
                                 itemName: {
                                     style: {
-                                        fill: '#cecece'
+                                        fill: '#cecece',
+                                        fontSize: 12
                                     }
                                 },
                             }

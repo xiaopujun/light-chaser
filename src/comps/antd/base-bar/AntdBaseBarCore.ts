@@ -73,7 +73,7 @@ class AntdBaseBarCore extends AbstractAutoScannerCore {
                         grid: null,
                         label: {
                             style: {
-                                fill: 'rgb(0,255,234)'
+                                fill: '#00FFEAFF'
                             },
                         },
                         line: null,
@@ -85,7 +85,7 @@ class AntdBaseBarCore extends AbstractAutoScannerCore {
                         grid: null,
                         label: {
                             style: {
-                                fill: 'rgb(0,255,234)'
+                                fill: '#00FFEAFF'
                             },
                         },
                         line: null,
@@ -93,7 +93,7 @@ class AntdBaseBarCore extends AbstractAutoScannerCore {
                         subTickLine: null,
                         position: 'right',
                     },
-                    color: 'rgb(0,255,234,0.2)',
+                    color: '#00FFEA33',
                     legend: false,
                     maxBarWidth: 8,
                 }

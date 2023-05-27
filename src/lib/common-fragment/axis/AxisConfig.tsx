@@ -69,7 +69,7 @@ class AxisConfig extends Component<AxisConfigProps> {
                 </ConfigCard>
                 <ConfigCard title={'标题'}>
                     <ConfigItem title={'开启'}>
-                        <LcSwitch value={config.titleEnable || false}
+                        <LcSwitch defaultValue={config.titleEnable || false}
                                   onChange={(value) => this.onChange('title-enable', value)}/>
                     </ConfigItem>
                     <ConfigItem title={'位置'}>
@@ -100,7 +100,7 @@ class AxisConfig extends Component<AxisConfigProps> {
                 </ConfigCard>
                 <ConfigCard title={'轴线'}>
                     <ConfigItem title={'开启'}>
-                        <LcSwitch value={config.axisLineEnable || false}
+                        <LcSwitch defaultValue={config.axisLineEnable || false}
                                   onChange={value => this.onChange('axisLine-enable', value)}/>
                     </ConfigItem>
                     <ConfigItem title={'颜色'}>
@@ -119,11 +119,11 @@ class AxisConfig extends Component<AxisConfigProps> {
                 </ConfigCard>
                 <ConfigCard title={'网格线'}>
                     <ConfigItem title={'开启'}>
-                        <LcSwitch value={config.gridLineEnable || false}
+                        <LcSwitch defaultValue={config.gridLineEnable || false}
                                   onChange={value => this.onChange('gridLine-enable', value)}/>
                     </ConfigItem>
                     <ConfigItem title={'刻度对齐'}>
-                        <LcSwitch value={config.gridLineAlignTick || false}
+                        <LcSwitch defaultValue={config.gridLineAlignTick || false}
                                   onChange={value => this.onChange('gridLine-alignTick', value)}/>
                     </ConfigItem>
                     <ConfigItem title={'线宽'}>
@@ -141,11 +141,11 @@ class AxisConfig extends Component<AxisConfigProps> {
                 </ConfigCard>
                 <ConfigCard title={'刻度线'}>
                     <ConfigItem title={'开启'}>
-                        <LcSwitch value={config.tickLineEnable || false}
+                        <LcSwitch defaultValue={config.tickLineEnable || false}
                                   onChange={value => this.onChange('tickLine-enable', value)}/>
                     </ConfigItem>
                     <ConfigItem title={'对齐'}>
-                        <LcSwitch value={config.tickLineAlignTick || false}
+                        <LcSwitch defaultValue={config.tickLineAlignTick || false}
                                   onChange={value => this.onChange('tickLine-alignTick', value)}/>
                     </ConfigItem>
                     <ConfigItem title={'长度'}>
@@ -168,7 +168,7 @@ class AxisConfig extends Component<AxisConfigProps> {
                 </ConfigCard>
                 {config?.tickLineEnable && <ConfigCard title={'子刻度'}>
                     <ConfigItem title={'开启'}>
-                        <LcSwitch value={config.subTickLineEnable || false}
+                        <LcSwitch defaultValue={config.subTickLineEnable || false}
                                   onChange={value => this.onChange('subTickLine-enable', value)}/>
                     </ConfigItem>
                     <ConfigItem title={'数量'}>

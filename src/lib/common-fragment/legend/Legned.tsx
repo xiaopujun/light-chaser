@@ -9,6 +9,7 @@ import ConfigItem from "../../config-item/ConfigItem";
 import {LegendType} from "../../../framework/types/LegendType";
 import {ConfigType} from "../../../framework/types/ConfigType";
 import _ from "lodash";
+import NumberInput from "../../lc-input/NumberInput";
 
 const {Option} = Select;
 
@@ -69,9 +70,13 @@ class Legend extends Component<LegendProps> {
                         <Option value={'vertical'}>纵向</Option>
                     </LcSelect>
                 </ConfigItem>
+                <ConfigItem title={'字号'}>
+                    <NumberInput min={12} defaultValue={config?.fontSize || 12}
+                                 onChange={value => this.onChange('fontSize', value)}/>
+                </ConfigItem>
                 <ConfigItem title={'颜色'}>
                     <CfgItemBorder width={'100%'}>
-                        <BaseColorPicker value={config?.color} onChange={value => this.onChange('color', value)}
+                        <BaseColorPicker defaultValue={config?.color} onChange={value => this.onChange('color', value)}
                                          style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
                     </CfgItemBorder>
                 </ConfigItem>

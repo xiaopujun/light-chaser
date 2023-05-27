@@ -3,24 +3,48 @@ import "./LcSwitch.less";
 
 interface LcSwitchProps {
     onChange?: (data: boolean) => void;
+    // 容器样式(非受控)
     containerStyle?: CSSProperties;
+    // 开关状态值（受控）
     value?: boolean;
+    // 开关状态值（非受控）
+    defaultValue?: boolean;
 }
 
 class LcSwitch extends Component<LcSwitchProps> {
+
+    valueControl: boolean = true;
+
+    state: any = {
+        value: undefined,
+        defaultValue: undefined
+    }
+
+    constructor(props: LcSwitchProps) {
+        super(props);
+        const {value, defaultValue} = this.props;
+        if (defaultValue !== undefined && value === undefined)
+            this.valueControl = false;
+        this.state = {value, defaultValue};
+    }
 
     handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {checked} = e.target;
         const {onChange} = this.props;
         onChange && onChange(checked);
+        if (!this.valueControl)
+            this.setState({value: checked});
     };
 
     render() {
-        const {containerStyle = {top: 2.5}, value} = this.props;
+        console.log("LcSwitch render");
+        const {containerStyle = {top: 2.5}} = this.props;
         return (
             <div className="lc-switch" style={{...containerStyle}}>
                 <label className="lc-switch-label">
-                    <input checked={value} onChange={this.handleChange} type="checkbox"/>
+                    <input
+                        checked={this.valueControl ? this.props.value : this.state.value}
+                        onChange={this.handleChange} type="checkbox"/>
                     <span/>
                 </label>
             </div>

@@ -3,4 +3,5 @@ export interface LegendType {
     direction?: string;
     color?: string;
     visible?: boolean;
+    fontSize?: number;
 }
