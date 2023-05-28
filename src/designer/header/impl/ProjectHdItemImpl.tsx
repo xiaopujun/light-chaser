@@ -3,8 +3,7 @@ import ConfigItem from "../../../lib/config-item/ConfigItem";
 import Dialog from "../../../lib/lc-dialog/Dialog";
 import headerStore from "../HeaderStore";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
-import {Radio} from "antd";
-import LcRadio from "../../../lib/lc-radio/LcRadio";
+import Radio from "../../../lib/lc-radio/Radio";
 
 class ProjectHdItemImpl extends Component {
 
@@ -25,17 +24,18 @@ class ProjectHdItemImpl extends Component {
                         <UnderLineInput/>
                     </ConfigItem>
                     <ConfigItem title={'项目状态'} contentStyle={{width: 190}}>
-                        <LcRadio>
-                            <Radio value={0}>草稿</Radio>
-                            <Radio value={1}>发布</Radio>
-                            <Radio value={2}>封存</Radio>
-                        </LcRadio>
+                        <Radio options={[
+                            {label: '草稿', value: '0'},
+                            {label: '发布', value: '1'},
+                            {label: '封存', value: '2'}
+                        ]}/>
                     </ConfigItem>
                     <ConfigItem title={'存储类型'} contentStyle={{width: 190}}>
-                        <LcRadio>
-                            <Radio value={0}>本地</Radio>
-                            <Radio value={1}>服务端</Radio>
-                        </LcRadio>
+                        <Radio options={[
+                            {label: '本地', value: '0'},
+                            {label: '服务端', value: '1'},
+                            {label: '封存', value: '2'}
+                        ]}/>
                     </ConfigItem>
                 </div>
             </Dialog>

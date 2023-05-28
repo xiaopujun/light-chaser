@@ -1,16 +1,15 @@
-import {Radio} from 'antd';
 import React, {Component} from 'react';
 import './AxisConfig.less';
 import BaseColorPicker from "../../lc-color-picker/BaseColorPicker";
 import LcSwitch from "../../lc-switch/LcSwitch";
 import CfgItemBorder from "../../config-item/CfgItemBorder";
-import LcRadio from "../../lc-radio/LcRadio";
 import ConfigItem from "../../config-item/ConfigItem";
 import ConfigCard from "../../config-card/ConfigCard";
 import UnderLineInput from "../../lc-input/UnderLineInput";
 import Accordion from "../../lc-accordion/Accordion";
 import _ from "lodash";
 import Select from "../../lc-select/Select";
+import Radio from "../../lc-radio/Radio";
 
 
 interface AxisConfigProps {
@@ -40,13 +39,12 @@ class AxisConfig extends Component<AxisConfigProps> {
             <Accordion title={title} showSwitch={true} defaultValue={config.enable || false}
                        onChange={value => this.onChange('enable', value)}>
                 <ConfigItem title={'位置'} contentStyle={{width: '250px', paddingLeft: '20px'}}>
-                    <LcRadio value={config.position || 'right'}
-                             onChange={(e => this.onChange('position', e.target.value))}>
-                        <Radio value="top">上</Radio>
-                        <Radio value="bottom">下</Radio>
-                        <Radio value="left">左</Radio>
-                        <Radio value="right">右</Radio>
-                    </LcRadio>
+                    <Radio value={config.position || 'right'}
+                           onChange={(value => this.onChange('position', value))}
+                           options={[{label: '上', value: 'top'},
+                               {label: '下', value: 'bottom'},
+                               {label: '左', value: 'left'},
+                               {label: '右', value: 'right'}]}/>
                 </ConfigItem>
                 <ConfigCard title={'文本'}>
                     <ConfigItem title={'颜色'}>

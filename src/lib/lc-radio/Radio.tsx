@@ -1,0 +1,67 @@
+import React, {Component} from 'react';
+
+import './Radio.less';
+import {Option} from "../../framework/types/HtmlFormType";
+
+
+interface RadioProps {
+    options?: Option[];
+    value?: string | any
+    defaultValue?: string | any;
+    onChange?: (value: string) => void;
+}
+
+class Radio extends Component<RadioProps> {
+
+    valueControl: boolean = true;
+
+    state = {
+        value: ''
+    }
+
+    constructor(props: RadioProps) {
+        super(props);
+        this.valueControl = props.value !== undefined;
+        this.state = {
+            value: props.value || props.defaultValue || ''
+        }
+    }
+
+    onChange = (event: any) => {
+        const {onChange} = this.props;
+        onChange && onChange(event.target.value);
+        if (!this.valueControl) {
+            this.setState({
+                value: event.target.value
+            });
+        }
+    }
+
+    generateOptions = () => {
+        const {options = []} = this.props;
+        return options.map((option: Option, index: number) => {
+            const value = this.valueControl ? this.props.value : this.state.value;
+            let checked = false;
+            if (option.value === value)
+                checked = true;
+            return (
+                <label className="radio-button" key={index}>
+                    <input checked={checked} onChange={this.onChange} value={option.value} name="option" type="radio"/>
+                    <div className="radio-circle"/>
+                    <span className="radio-label">{option.label}</span>
+                </label>
+            );
+        });
+    }
+
+    render() {
+        console.log("radio render");
+        return (
+            <div className="radio-buttons">
+                {this.generateOptions()}
+            </div>
+        );
+    }
+}
+
+export default Radio;

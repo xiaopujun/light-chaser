@@ -1,10 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import "./Select.less";
-
-interface Option {
-    label: string;
-    value: string;
-}
+import {Option} from "../../framework/types/HtmlFormType";
 
 interface SelectProps {
     // 选项列表（非受控）

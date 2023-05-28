@@ -149,11 +149,11 @@ export interface ProjectConfig {
  */
 export enum BackgroundMode {
     //无背景
-    NONE,
+    NONE = '0',
     //图片背景
-    PICTURE,
+    PICTURE = '1',
     //颜色背景
-    COLOR
+    COLOR = '2'
 }
 
 /**

@@ -1,9 +1,0 @@
-{
-  "name": "zhangsan",
-  "age": 20,
-  "city": {
-    "name": "beijing",
-    "country": "china"
-
-  }
-}

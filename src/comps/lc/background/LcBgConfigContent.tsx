@@ -2,11 +2,9 @@ import React, {PureComponent} from 'react';
 import './LcBgConfigContent.less';
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import Dragger from "antd/es/upload/Dragger";
-import LcRadio from "../../../lib/lc-radio/LcRadio";
-import {Button, Radio} from "antd";
+import {Button} from "antd";
 import CfgItemBorder from "../../../lib/config-item/CfgItemBorder";
 import designerStore from '../../../designer/store/DesignerStore';
-import {observer} from "mobx-react";
 import {toJS} from "mobx";
 import {BackgroundColorMode, BackgroundConfig, BackgroundMode} from "../../../framework/types/DesignerType";
 import {ConfigType} from "../../../framework/types/ConfigType";
@@ -14,12 +12,14 @@ import ConfigItem from "../../../lib/config-item/ConfigItem";
 import ConfigCard from "../../../lib/config-card/ConfigCard";
 import Select from "../../../lib/lc-select/Select";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
+import Radio from "../../../lib/lc-radio/Radio";
 
 
 class LcBgConfigContent extends PureComponent<ConfigType> {
 
     //线性渐变颜色
     colors = ['#000000', '#000000'];
+
 
     componentDidMount() {
         const {elemConfigs} = designerStore;
@@ -44,9 +44,9 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
         return false;
     }
 
-    bgModeChange = (e: any) => {
+    bgModeChange = (value: any) => {
         const {updateBgConfig} = designerStore;
-        updateBgConfig({bgMode: e.target.value});
+        updateBgConfig({bgMode: value});
     }
 
     bgImgSizeChange = (data: any) => {
@@ -141,15 +141,16 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
 
     render() {
         const bgConfig: BackgroundConfig = designerStore.elemConfigs['-1']['background'];
-        console.log('bgConfig', toJS(bgConfig))
+        console.log('LCBackgroundConfig render')
         return (
             <div className={'lc-background-config'}>
                 <ConfigItem title={'模式'} contentStyle={{width: '250px', paddingLeft: '20px'}}>
-                    <LcRadio onChange={this.bgModeChange} value={bgConfig?.bgMode}>
-                        <Radio value={0}>无</Radio>
-                        <Radio value={1}>图片</Radio>
-                        <Radio value={2}>颜色</Radio>
-                    </LcRadio>
+                    <Radio defaultValue={bgConfig?.bgMode || BackgroundMode.NONE} onChange={this.bgModeChange}
+                           options={[
+                               {value: '0', label: '无'},
+                               {value: '1', label: '图片'},
+                               {value: '2', label: '颜色'}
+                           ]}/>
                 </ConfigItem>
                 {bgConfig?.bgMode === BackgroundMode.PICTURE &&
                 <>
@@ -207,11 +208,11 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
                 {bgConfig?.bgMode === BackgroundMode.COLOR &&
                 <>
                     <ConfigItem title={'类型'} contentStyle={{paddingLeft: '20px'}}>
-                        <LcRadio onChange={this.bgColorModeChange} value={bgConfig?.bgColorMode}>
-                            <Radio value={0}>单色</Radio>
-                            <Radio value={1}>线性</Radio>
-                            <Radio value={2}>径向</Radio>
-                        </LcRadio>
+                        <Radio options={[
+                            {value: '0', label: '单色'},
+                            {value: '1', label: '线性'},
+                            {value: '2', label: '径向'}
+                        ]} onChange={this.bgColorModeChange} value={bgConfig?.bgColorMode}/>
                     </ConfigItem>
                     {
                         bgConfig?.bgColorMode === BackgroundColorMode.SINGLE &&
@@ -259,4 +260,4 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
     }
 }
 
-export default observer(LcBgConfigContent)
+export default LcBgConfigContent;

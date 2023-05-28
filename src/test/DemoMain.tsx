@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Radio from "../lib/lc-radio/Radio";
 
 class DemoMain extends Component {
 
@@ -15,13 +16,12 @@ class DemoMain extends Component {
     }
 
     render() {
-        let obj = {name: 'hehe', age: 18};
-        let {name, ...rest} = obj;
-        console.log(rest);
+
         return (
-            <div style={{width: 100, height: 100, backgroundColor: '#8d8d8d'}}>
-                <div onClick={this.click2} style={{width: 50, height: 50, backgroundColor: '#646464'}}>heheheh</div>
-            </div>
+            <Radio options={[
+                {value: 'start', label: '前'},
+                {value: 'center', label: '中'},
+                {value: 'end', label: '后'}]} defaultValue={'center'}/>
         );
     }
 }

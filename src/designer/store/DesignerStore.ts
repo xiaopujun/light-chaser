@@ -297,11 +297,8 @@ class DesignerStore implements LCDesigner, BaseStore {
      */
     updateElemConfig = (data: any) => {
         let activeConfig: ElemConfig | any = this.elemConfigs[this.activeElem?.id + ''];
-        if (activeConfig) {
+        if (activeConfig)
             this.elemConfigs[this.activeElem?.id + ''] = _.merge({}, activeConfig, data);
-            const {setActiveElemConfig} = rightStore;
-            setActiveElemConfig(this.elemConfigs[this.activeElem?.id + '']);
-        }
     }
 
     /**
@@ -339,7 +336,6 @@ class DesignerStore implements LCDesigner, BaseStore {
     updateBgConfig = (data: BackgroundConfig) => {
         let oldConfig = this.elemConfigs['-1']['background'];
         this.elemConfigs['-1']['background'] = {...oldConfig, ...data};
-        console.log(toJS(this.elemConfigs))
     }
 
     /**

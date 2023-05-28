@@ -1,27 +1,11 @@
 import React, {Component} from 'react';
 import {LineOutlined} from "@ant-design/icons";
 import designerStore from "../store/DesignerStore";
-import {observer} from "mobx-react";
-import LCDesigner from "../index";
 import rightStore from "./RightStore";
 import bootCore from "../BootCore";
+import {observer} from "mobx-react";
 
-interface LcConfigContentProps {
-    title?: string;
-    icon?: any;
-    visible?: boolean;
-    onClose?: (visible: boolean) => void;
-    activeMenu?: string;
-    LCDesignerStore?: LCDesigner;
-    updateActive?: (data?: any) => void;
-    updateBaseStyle?: (data?: any) => void;
-    updateElemConfig?: (data?: any) => void;
-    updateBaseInfo?: (data?: any) => void;
-    updateCanvasConfig?: (data?: any) => void;
-    updateBgConfig?: (data?: any) => void;
-}
-
-class ConfigContent extends Component<LcConfigContentProps> {
+class ConfigContent extends Component {
     buildConfigContent = () => {
         let {activeMenu, activeElem, activeElemConfig} = rightStore;
         let {autoCompObjs} = bootCore;
