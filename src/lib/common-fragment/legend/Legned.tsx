@@ -7,8 +7,8 @@ import ConfigItem from "../../config-item/ConfigItem";
 import {LegendType} from "../../../framework/types/LegendType";
 import {ConfigType} from "../../../framework/types/ConfigType";
 import _ from "lodash";
-import NumberInput from "../../lc-input/NumberInput";
 import Select from "../../lc-select/Select";
+import UnderLineInput from "../../lc-input/UnderLineInput";
 
 
 interface LegendProps {
@@ -71,8 +71,8 @@ class Legend extends Component<LegendProps> {
                             ]}/>
                 </ConfigItem>
                 <ConfigItem title={'字号'}>
-                    <NumberInput min={12} defaultValue={config?.fontSize || 12}
-                                 onChange={value => this.onChange('fontSize', value)}/>
+                    <UnderLineInput type={'number'} min={12} defaultValue={config?.fontSize || 12}
+                                    onChange={value => this.onChange('fontSize', value)}/>
                 </ConfigItem>
                 <ConfigItem title={'颜色'}>
                     <CfgItemBorder width={'100%'}>

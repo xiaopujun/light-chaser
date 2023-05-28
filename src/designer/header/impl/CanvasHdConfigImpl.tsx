@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {observer} from "mobx-react";
 import Dialog from "../../../lib/lc-dialog/Dialog";
 import ConfigItem from "../../../lib/config-item/ConfigItem";
-import NumberInput from "../../../lib/lc-input/NumberInput";
 import headerStore from "../HeaderStore";
+import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 
 /**
  * 画布设置React组件实现
@@ -21,19 +21,19 @@ class CanvasHdConfigImpl extends Component {
             <Dialog title={'画布设置'} visible={canvasVisible} onClose={this.onClose}>
                 <div style={{display: 'flex', flexWrap: 'wrap'}}>
                     <ConfigItem title={'宽度'}>
-                        <NumberInput/>
+                        <UnderLineInput/>
                     </ConfigItem>
                     <ConfigItem title={'高度'}>
-                        <NumberInput/>
+                        <UnderLineInput/>
                     </ConfigItem>
                     <ConfigItem title={'列数'}>
-                        <NumberInput/>
+                        <UnderLineInput/>
                     </ConfigItem>
                     <ConfigItem title={'缩放比'}>
-                        <NumberInput/>
+                        <UnderLineInput/>
                     </ConfigItem>
                     <ConfigItem title={'基准高度'}>
-                        <NumberInput/>
+                        <UnderLineInput/>
                     </ConfigItem>
                 </div>
                 <br/>

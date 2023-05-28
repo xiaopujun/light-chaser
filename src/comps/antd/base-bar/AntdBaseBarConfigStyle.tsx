@@ -6,11 +6,11 @@ import {ConfigType} from "../../../framework/types/ConfigType";
 import ConfigItem from "../../../lib/config-item/ConfigItem";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import ConfigCard from "../../../lib/config-card/ConfigCard";
-import NumberInput from "../../../lib/lc-input/NumberInput";
 import {calculateLegendConfig} from "../../../utils/AntdChartConfigUtil";
 import Legend from "../../../lib/common-fragment/legend/Legned";
 import AxisConfig from "../../../lib/common-fragment/axis/AxisConfig";
 import {toJS} from "mobx";
+import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 
 class AntdBaseBarConfigStyle extends Component<ConfigType> {
 
@@ -323,9 +323,9 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
                     <Accordion title={'图形'}>
                         <ConfigCard title={'条状'}>
                             <ConfigItem title={'宽度'}>
-                                <NumberInput min={1} onChange={this.barWidthChanged}
-                                             defaultValue={chartStyle.maxBarWidth}
-                                             size={'small'}/>
+                                <UnderLineInput type={'number'} min={1} onChange={this.barWidthChanged}
+                                                defaultValue={chartStyle.maxBarWidth}
+                                />
                             </ConfigItem>
                             <ConfigItem title={'颜色'}>
                                 <CfgItemBorder>

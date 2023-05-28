@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './ThemeEditor.less';
 import ConfigItem from "../../../config-item/ConfigItem";
-import LcUnderLineInput from "../../../lc-input/LcUnderLineInput";
+import UnderLineInput from "../../../lc-input/UnderLineInput";
 import BaseColorPicker from "../../../lc-color-picker/BaseColorPicker";
 import CfgItemBorder from "../../../config-item-border/CfgItemBorder";
 import ThemeItem from "../theme-item/ThemeItem";
@@ -18,10 +18,10 @@ class ThemeEditor extends Component {
                 <div className={'editor-left'}>
                     <ConfigCard title={'主题信息'}>
                         <ConfigItem title={'名称'} contentStyle={{width: 80, marginRight: 10}}>
-                            <LcUnderLineInput/>
+                            <UnderLineInput/>
                         </ConfigItem>
                         <ConfigItem title={'描述'} contentStyle={{width: 110, marginRight: 10}}>
-                            <LcUnderLineInput/>
+                            <UnderLineInput/>
                         </ConfigItem>
                     </ConfigCard>
                     <ConfigCard title={'颜色定义'}>

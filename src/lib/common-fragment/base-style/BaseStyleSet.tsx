@@ -2,30 +2,42 @@ import React, {Component} from 'react';
 import './LCBaseConfig.less';
 import BaseColorPicker from "../../lc-color-picker/BaseColorPicker";
 import Accordion from "../../lc-accordion/Accordion";
-import LcSelect from "../../lc-select/LCSelect";
-import {Select} from "antd";
 import CfgItemBorder from "../../config-item-border/CfgItemBorder";
 import ConfigCard from "../../config-card/ConfigCard";
 import ConfigItem from "../../config-item/ConfigItem";
-import NumberInput from "../../lc-input/NumberInput";
 import {ConfigType} from "../../../framework/types/ConfigType";
 import {generateBorder, generatePaddingValue, parseBorder, parsePadding} from "../../../utils/CssStyleUtil";
 import _, {parseInt} from "lodash";
+import Select from "../../lc-select/Select";
+import UnderLineInput from "../../lc-input/UnderLineInput";
 
-const {Option} = Select;
 
 /**
  * lc组件基础样式
  */
 class BaseStyleSet extends Component<ConfigType> {
 
+    /**
+     * 由于边框和内边距。 是多个配置项组合成一个最终的CSS样式，因此。 需要一个变量来保存旧的值。
+     */
+    oldBorder: string = '0px solid #000000ff';
+    oldPadding: string = '10px';
+
+    constructor(props: ConfigType) {
+        super(props);
+        this.oldBorder = props.config.border || '0px solid #000000ff';
+        this.oldPadding = props.config.padding || '10px';
+    }
+
     shouldComponentUpdate(nextProps: Readonly<ConfigType>, nextState: Readonly<{}>, nextContext: any): boolean {
         return !_.isEqual(nextProps, this.props);
     }
 
     paddingChanged = (pos: string, padding: number) => {
-        const {updateConfig, config} = this.props;
-        let value = generatePaddingValue(pos, padding, config.padding);
+        const {updateConfig} = this.props;
+        let value = generatePaddingValue(pos, padding, this.oldPadding);
+        this.oldPadding = value;
+        console.log(value)
         updateConfig && updateConfig({style: {baseStyle: {padding: value}}});
     }
 
@@ -35,8 +47,9 @@ class BaseStyleSet extends Component<ConfigType> {
     }
 
     borderChanged = (key: string, value: string) => {
-        const {updateConfig, config} = this.props;
-        const border = generateBorder(key, value, config.border || '0px solid #000');
+        const {updateConfig} = this.props;
+        const border = generateBorder(key, value, this.oldBorder || '0px solid #000000ff');
+        this.oldBorder = border;
         updateConfig && updateConfig({style: {baseStyle: {border}}});
     }
 
@@ -47,9 +60,6 @@ class BaseStyleSet extends Component<ConfigType> {
 
     render() {
         console.log('base style set render');
-        // const {activeElem, elemConfigs} = designerStore!;
-        // const elemConfig: any = elemConfigs[activeElem.id!];
-        // console.log('base style set render', elemConfig?.style?.baseStyle?.padding);
         const {config: {padding, border, borderRadius, backgroundColor}} = this.props;
         const paddingValue = parsePadding(padding);
         const borderValue = parseBorder(border);
@@ -57,41 +67,41 @@ class BaseStyleSet extends Component<ConfigType> {
             <Accordion title="容器" showSwitch={false}>
                 <ConfigCard title={'内边距'}>
                     <ConfigItem title={'上边距'}>
-                        <NumberInput style={{textAlign: 'center'}}
-                                     defaultValue={paddingValue.paddingTop}
-                                     size={'small'}
-                                     onChange={(value: any) => this.paddingChanged('top', value)}/>
+                        <UnderLineInput type={'number'}
+                                        defaultValue={paddingValue.paddingTop}
+                                        onChange={(value: any) => this.paddingChanged('top', value)}/>
                     </ConfigItem>
                     <ConfigItem title={'下边距'}>
-                        <NumberInput style={{textAlign: 'center'}} size={'small'}
-                                     defaultValue={paddingValue.paddingBottom}
-                                     onChange={(value: any) => this.paddingChanged('bottom', value)}/>
+                        <UnderLineInput type={'number'}
+                                        defaultValue={paddingValue.paddingBottom}
+                                        onChange={(value: any) => this.paddingChanged('bottom', value)}/>
                     </ConfigItem>
                     <ConfigItem title={'左边距'}>
-                        <NumberInput style={{textAlign: 'center'}} size={'small'}
-                                     defaultValue={paddingValue.paddingLeft}
-                                     onChange={(value: any) => this.paddingChanged('left', value)}/>
+                        <UnderLineInput type={'number'}
+                                        defaultValue={paddingValue.paddingLeft}
+                                        onChange={(value: any) => this.paddingChanged('left', value)}/>
                     </ConfigItem>
                     <ConfigItem title={'右边距'}>
-                        <NumberInput style={{textAlign: 'center'}} size={'small'}
-                                     defaultValue={paddingValue.paddingRight}
-                                     onChange={(value: any) => this.paddingChanged('right', value)}/>
+                        <UnderLineInput type={'number'}
+                                        defaultValue={paddingValue.paddingRight}
+                                        onChange={(value: any) => this.paddingChanged('right', value)}/>
                     </ConfigItem>
                 </ConfigCard>
                 <ConfigCard title={'边框'}>
                     <ConfigItem title={'类型'}>
-                        <LcSelect value={borderValue.type}
-                                  onChange={(value) => this.borderChanged('type', value)}>
-                            <Option key='none'>无</Option>
-                            <Option key='dotted'>点</Option>
-                            <Option key='dashed'>虚线</Option>
-                            <Option key='solid'>实线</Option>
-                            <Option key='double'>双实线</Option>
-                            <Option key='groove'>凹槽</Option>
-                            <Option key='ridge'>垄状</Option>
-                            <Option key='inset'>内凹</Option>
-                            <Option key='outset'>外凸</Option>
-                        </LcSelect>
+                        <Select defaultValue={borderValue.type}
+                                onChange={(value) => this.borderChanged('type', value)}
+                                options={[
+                                    {value: 'none', label: '无'},
+                                    {value: 'dotted', label: '点'},
+                                    {value: 'dashed', label: '虚线'},
+                                    {value: 'solid', label: '实线'},
+                                    {value: 'double', label: '双实线'},
+                                    {value: 'groove', label: '凹槽'},
+                                    {value: 'ridge', label: '垄状'},
+                                    {value: 'inset', label: '内凹'},
+                                    {value: 'outset', label: '外凸'},
+                                ]}/>
                     </ConfigItem>
                     <ConfigItem title={'颜色'}>
                         <CfgItemBorder>
@@ -102,12 +112,12 @@ class BaseStyleSet extends Component<ConfigType> {
                         </CfgItemBorder>
                     </ConfigItem>
                     <ConfigItem title={'宽度'}>
-                        <NumberInput defaultValue={borderValue.width}
-                                     onChange={(value: any) => this.borderChanged('width', value)} size={'small'}/>
+                        <UnderLineInput type={'number'} defaultValue={borderValue.width}
+                                        onChange={(value: any) => this.borderChanged('width', value)}/>
                     </ConfigItem>
                     <ConfigItem title={'圆角'}>
-                        <NumberInput onChange={this.borderRadiusChanged} defaultValue={parseInt(borderRadius)}
-                                     size={'small'}/>
+                        <UnderLineInput type={'number'} onChange={this.borderRadiusChanged}
+                                        defaultValue={parseInt(borderRadius)}/>
                     </ConfigItem>
                 </ConfigCard>
                 <ConfigCard title={'背景'}>

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ConfigItem from "../../../lib/config-item/ConfigItem";
 import Dialog from "../../../lib/lc-dialog/Dialog";
 import headerStore from "../HeaderStore";
-import LcUnderLineInput from "../../../lib/lc-input/LcUnderLineInput";
+import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import {Radio} from "antd";
 import LcRadio from "../../../lib/lc-radio/LcRadio";
 
@@ -19,10 +19,10 @@ class ProjectHdItemImpl extends Component {
             <Dialog title={'项目设置'} visible={projectVisible} onClose={this.onClose}>
                 <div style={{display: 'flex', flexWrap: 'wrap'}}>
                     <ConfigItem title={'项目名称'} contentStyle={{width: 120}}>
-                        <LcUnderLineInput/>
+                        <UnderLineInput/>
                     </ConfigItem>
                     <ConfigItem title={'项目描述'} contentStyle={{width: 140}}>
-                        <LcUnderLineInput/>
+                        <UnderLineInput/>
                     </ConfigItem>
                     <ConfigItem title={'项目状态'} contentStyle={{width: 190}}>
                         <LcRadio>

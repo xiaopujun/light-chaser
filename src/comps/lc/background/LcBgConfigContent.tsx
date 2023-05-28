@@ -10,10 +10,10 @@ import {observer} from "mobx-react";
 import {toJS} from "mobx";
 import {BackgroundColorMode, BackgroundConfig, BackgroundMode} from "../../../framework/types/DesignerType";
 import {ConfigType} from "../../../framework/types/ConfigType";
-import NumberInput from "../../../lib/lc-input/NumberInput";
 import ConfigItem from "../../../lib/config-item/ConfigItem";
 import ConfigCard from "../../../lib/config-card/ConfigCard";
 import Select from "../../../lib/lc-select/Select";
+import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 
 
 class LcBgConfigContent extends PureComponent<ConfigType> {
@@ -174,24 +174,26 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
                     }
                     <ConfigCard title={'尺寸'}>
                         <ConfigItem title={"宽度"}>
-                            <NumberInput size={'small'} name={'bgX'}
-                                         onChange={(value: any) => this.bgImgSizeChange({name: 'bgX', value})}
-                                         defaultValue={bgConfig.width}/>
+                            <UnderLineInput name={'bgX'} type={'number'}
+                                            onChange={(value: any) => this.bgImgSizeChange({name: 'bgX', value})}
+                                            defaultValue={bgConfig.width}/>
                         </ConfigItem>
                         <ConfigItem title={"高度"}>
-                            <NumberInput size={'small'} name={'bgY'}
-                                         onChange={(value: any) => this.bgImgSizeChange({name: 'bgY', value})}
-                                         defaultValue={bgConfig.height}/>
+                            <UnderLineInput name={'bgY'} type={'number'}
+                                            onChange={(value: any) => this.bgImgSizeChange({name: 'bgY', value})}
+                                            defaultValue={bgConfig.height}/>
                         </ConfigItem>
                     </ConfigCard>
                     <ConfigCard title={'位置'}>
                         <ConfigItem title={"X轴"}>
-                            <NumberInput onChange={(value: any) => this.bgImgPosChange({name: 'posX', value})}
-                                         size={'small'}
-                                         defaultValue={0}/></ConfigItem>
+                            <UnderLineInput type={'number'}
+                                            onChange={(value: any) => this.bgImgPosChange({name: 'posX', value})}
+                                            defaultValue={0}/>
+                        </ConfigItem>
                         <ConfigItem title={"Y轴"}>
-                            <NumberInput onChange={(value: any) => this.bgImgPosChange({name: 'posY', value})}
-                                         size={'small'} defaultValue={0}/>
+                            <UnderLineInput type={'number'}
+                                            onChange={(value: any) => this.bgImgPosChange({name: 'posY', value})}
+                                            defaultValue={0}/>
                         </ConfigItem>
                     </ConfigCard>
                     <ConfigItem title={'重复方式'} contentStyle={{paddingLeft: '20px'}}>
@@ -244,9 +246,8 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
                             {
                                 bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT &&
                                 <ConfigItem title={'角度'} contentStyle={{paddingLeft: 18}}>
-                                    <NumberInput type={"number"} size={'small'} defaultValue={bgConfig.angle} min={0}
-                                                 max={360}
-                                                 onChange={this.gradientAngleChanged}/>
+                                    <UnderLineInput type={"number"} defaultValue={bgConfig.angle} min={0} max={360}
+                                                    onChange={this.gradientAngleChanged}/>
                                 </ConfigItem>
                             }
                         </>

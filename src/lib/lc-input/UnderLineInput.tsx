@@ -1,27 +1,30 @@
 import React, {Component, InputHTMLAttributes} from 'react';
-import './LcUnderLineInput.less';
+import './UnderLineInput.less';
 
-interface LcUnderLineInputProps extends React.InputHTMLAttributes<HTMLInputElement & InputHTMLAttributes<any>> {
+interface UnderLineInputProps extends InputHTMLAttributes<HTMLInputElement> {
     containStyle?: React.CSSProperties;
     inputStyle?: React.CSSProperties;
     lineStyle?: React.CSSProperties;
+    //值改变时的回调
+    onChange?: (value: any) => void;
 }
 
 /**
  * 下滑线输入框
  */
-class LcUnderLineInput extends Component<LcUnderLineInputProps> {
+class UnderLineInput extends Component<UnderLineInputProps> {
 
     onChange = (e: any) => {
         const {onChange} = this.props;
-        onChange && onChange(e);
+        onChange && onChange(e.target.value);
     }
 
     render() {
-        const {containStyle, inputStyle, lineStyle} = this.props;
+        const {containStyle, inputStyle, lineStyle, onChange, ...rest} = this.props;
+
         return (
             <div className={'lc-underline-input-container'} style={containStyle}>
-                <input {...this.props}
+                <input {...rest}
                        onChange={this.onChange}
                        className={'lc-underline-input'}
                        style={inputStyle}/>
@@ -31,4 +34,4 @@ class LcUnderLineInput extends Component<LcUnderLineInputProps> {
     }
 }
 
-export default LcUnderLineInput;
+export default UnderLineInput;

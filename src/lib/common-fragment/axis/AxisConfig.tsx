@@ -1,14 +1,13 @@
 import {Radio} from 'antd';
 import React, {Component} from 'react';
 import './AxisConfig.less';
-import LcUnderLineInput from "../../lc-input/LcUnderLineInput";
 import BaseColorPicker from "../../lc-color-picker/BaseColorPicker";
 import LcSwitch from "../../lc-switch/LcSwitch";
 import CfgItemBorder from "../../config-item-border/CfgItemBorder";
 import LcRadio from "../../lc-radio/LcRadio";
 import ConfigItem from "../../config-item/ConfigItem";
 import ConfigCard from "../../config-card/ConfigCard";
-import NumberInput from "../../lc-input/NumberInput";
+import UnderLineInput from "../../lc-input/UnderLineInput";
 import Accordion from "../../lc-accordion/Accordion";
 import _ from "lodash";
 import Select from "../../lc-select/Select";
@@ -58,12 +57,12 @@ class AxisConfig extends Component<AxisConfigProps> {
                         </CfgItemBorder>
                     </ConfigItem>
                     <ConfigItem title={'角度'}>
-                        <NumberInput value={config.textAngle || 0} step={0.1}
-                                     onChange={value => this.onChange('text-angle', value)}/>
+                        <UnderLineInput value={config.textAngle || 0} step={0.1}
+                                        onChange={value => this.onChange('text-angle', value)}/>
                     </ConfigItem>
                     <ConfigItem title={'偏移量'}>
-                        <NumberInput value={config.textOffset || 0}
-                                     onChange={value => this.onChange('text-offset', value)}/>
+                        <UnderLineInput value={config.textOffset || 0}
+                                        onChange={value => this.onChange('text-offset', value)}/>
                     </ConfigItem>
                 </ConfigCard>
                 <ConfigCard title={'标题'}>
@@ -80,9 +79,9 @@ class AxisConfig extends Component<AxisConfigProps> {
                                 onChange={value => this.onChange('title-position', value)}/>
                     </ConfigItem>
                     <ConfigItem title={'内容'}>
-                        <LcUnderLineInput value={config.titleContent || ''}
-                                          onChange={(e: any) => this.onChange('title-content', e.target.value)}
-                                          type={'text'}/>
+                        <UnderLineInput value={config.titleContent || ''}
+                                        onChange={(e: any) => this.onChange('title-content', e.target.value)}
+                                        type={'text'}/>
                     </ConfigItem>
                     <ConfigItem title={'颜色'}>
                         <CfgItemBorder>
@@ -92,8 +91,8 @@ class AxisConfig extends Component<AxisConfigProps> {
                         </CfgItemBorder>
                     </ConfigItem>
                     <ConfigItem title={'偏移量'}>
-                        <NumberInput value={config.titleOffset || 0} min={0}
-                                     onChange={value => this.onChange('title-offset', value)}/>
+                        <UnderLineInput defaultValue={config.titleOffset || 0} min={0} type={'number'}
+                                        onChange={value => this.onChange('title-offset', value)}/>
                     </ConfigItem>
                 </ConfigCard>
                 <ConfigCard title={'轴线'}>
@@ -109,10 +108,9 @@ class AxisConfig extends Component<AxisConfigProps> {
                         </CfgItemBorder>
                     </ConfigItem>
                     <ConfigItem title={'线宽'}>
-                        <NumberInput value={config.axisLineWidth || 0} min={0} max={10}
-                                     onChange={value => this.onChange('axisLine-width', value)}
-                                     size={'small'}
-                                     type={'number'}/>
+                        <UnderLineInput defaultValue={config.axisLineWidth || 0} min={0} max={10}
+                                        onChange={value => this.onChange('axisLine-width', value)}
+                                        type={'number'}/>
                     </ConfigItem>
                 </ConfigCard>
                 <ConfigCard title={'网格线'}>
@@ -125,9 +123,9 @@ class AxisConfig extends Component<AxisConfigProps> {
                                   onChange={value => this.onChange('gridLine-alignTick', value)}/>
                     </ConfigItem>
                     <ConfigItem title={'线宽'}>
-                        <NumberInput value={config.gridLineWidth || 0}
-                                     onChange={value => this.onChange('gridLine-width', value)} size={'small'}
-                                     type={'number'}/>
+                        <UnderLineInput defaultValue={config.gridLineWidth || 0}
+                                        onChange={value => this.onChange('gridLine-width', value)}
+                                        type={'number'}/>
                     </ConfigItem>
                     <ConfigItem title={'颜色'}>
                         <CfgItemBorder>
@@ -147,14 +145,14 @@ class AxisConfig extends Component<AxisConfigProps> {
                                   onChange={value => this.onChange('tickLine-alignTick', value)}/>
                     </ConfigItem>
                     <ConfigItem title={'长度'}>
-                        <NumberInput value={config.tickLineLength || 0}
-                                     onChange={value => this.onChange('tickLine-length', value)} size={'small'}
-                                     type={'number'}/>
+                        <UnderLineInput defaultValue={config.tickLineLength || 0}
+                                        onChange={value => this.onChange('tickLine-length', value)}
+                                        type={'number'}/>
                     </ConfigItem>
                     <ConfigItem title={'宽度'}>
-                        <NumberInput value={config.tickLineWidth || 0}
-                                     onChange={value => this.onChange('tickLine-width', value)} size={'small'}
-                                     type={'number'}/>
+                        <UnderLineInput defaultValue={config.tickLineWidth || 0}
+                                        onChange={value => this.onChange('tickLine-width', value)}
+                                        type={'number'}/>
                     </ConfigItem>
                     <ConfigItem title={'颜色'}>
                         <CfgItemBorder>
@@ -170,19 +168,19 @@ class AxisConfig extends Component<AxisConfigProps> {
                                   onChange={value => this.onChange('subTickLine-enable', value)}/>
                     </ConfigItem>
                     <ConfigItem title={'数量'}>
-                        <NumberInput value={config.subTickLineCount || 0}
-                                     onChange={value => this.onChange('subTickLine-count', value)} size={'small'}
-                                     type={'number'}/>
+                        <UnderLineInput defaultValue={config.subTickLineCount || 0}
+                                        onChange={value => this.onChange('subTickLine-count', value)}
+                                        type={'number'}/>
                     </ConfigItem>
                     <ConfigItem title={'长度'}>
-                        <NumberInput value={config.subTickLineLength || 0}
-                                     onChange={value => this.onChange('subTickLine-length', value)} size={'small'}
-                                     type={'number'}/>
+                        <UnderLineInput defaultValue={config.subTickLineLength || 0}
+                                        onChange={value => this.onChange('subTickLine-length', value)}
+                                        type={'number'}/>
                     </ConfigItem>
                     <ConfigItem title={'宽度'}>
-                        <NumberInput value={config.subTickLineWidth || 0}
-                                     onChange={value => this.onChange('subTickLine-width', value)} size={'small'}
-                                     type={'number'}/>
+                        <UnderLineInput defaultValue={config.subTickLineWidth || 0}
+                                        onChange={value => this.onChange('subTickLine-width', value)}
+                                        type={'number'}/>
                     </ConfigItem>
                     <ConfigItem title={'颜色'}>
                         <CfgItemBorder>

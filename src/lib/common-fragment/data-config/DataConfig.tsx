@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
 import ConfigItem from "../../config-item/ConfigItem";
-import LcSelect from "../../lc-select/LCSelect";
-import {Select} from "antd";
 import CodeEditor from "../../code-editer/CodeEditor";
 import {ConfigType} from "../../../framework/types/ConfigType";
-import LcUnderLineInput from "../../lc-input/LcUnderLineInput";
+import UnderLineInput from "../../lc-input/UnderLineInput";
 import ConfigItemTB from "../../config-item-tb/ConfigItemTB";
 import LcButton from "../../lc-button/LcButton";
+import Select from "../../lc-select/Select";
 
-const {Option} = Select;
 
 class DataConfig extends Component<ConfigType> {
 
@@ -30,27 +28,28 @@ class DataConfig extends Component<ConfigType> {
         return (
             <div className={'lc-data-config'}>
                 <ConfigItem title={'数据源'} contentStyle={{width: 100}}>
-                    <LcSelect onChange={this.dataSourcesChange} defaultValue={config?.sourceType}>
-                        <Option value={'static'}>静态数据</Option>
-                        <Option value={'api'}>接口(API)</Option>
-                        <Option value={'database'}>数据库</Option>
-                        <Option value={'excel'}>EXCEL导入</Option>
-                    </LcSelect>
+
+                    <Select onChange={this.dataSourcesChange} defaultValue={config?.sourceType} options={[
+                        {value: 'static', label: '静态数据'},
+                        {value: 'api', label: '接口(API)'},
+                        {value: 'database', label: '数据库'},
+                        {value: 'excel', label: 'EXCEL导入'},
+                    ]}/>
                 </ConfigItem>
                 {config?.sourceType === 'static' &&
                 <CodeEditor onChange={this.editChange} value={'console.log("test")'}/>}
                 {config?.sourceType === 'api' &&
                 <>
                     <ConfigItem title={'接口地址'} contentStyle={{width: 240}}>
-                        <LcUnderLineInput/>
+                        <UnderLineInput/>
                     </ConfigItem>
                     <ConfigItem title={'请求方式'} contentStyle={{width: 100}}>
-                        <LcSelect>
-                            <Option value={'get'}>GET</Option>
-                            <Option value={'post'}>POST</Option>
-                            <Option value={'put'}>PUT</Option>
-                            <Option value={'delete'}>DELETE</Option>
-                        </LcSelect>
+                        <Select options={[
+                            {value: 'get', label: 'GET'},
+                            {value: 'post', label: 'POST'},
+                            {value: 'put', label: 'PUT'},
+                            {value: 'delete', label: 'DELETE'},
+                        ]}/>
                     </ConfigItem>
                     <ConfigItemTB title={'请求头(JSON)'} contentStyle={{width: '95%'}}>
                         <CodeEditor onChange={this.editChange} value={'console.log("test")'}/>

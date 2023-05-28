@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import DemoSelect from "../lib/lc-select/Select";
 
 class DemoMain extends Component {
 
@@ -16,7 +15,9 @@ class DemoMain extends Component {
     }
 
     render() {
-
+        let obj = {name: 'hehe', age: 18};
+        let {name, ...rest} = obj;
+        console.log(rest);
         return (
             <div style={{width: 100, height: 100, backgroundColor: '#8d8d8d'}}>
                 <div onClick={this.click2} style={{width: 50, height: 50, backgroundColor: '#646464'}}>heheheh</div>
