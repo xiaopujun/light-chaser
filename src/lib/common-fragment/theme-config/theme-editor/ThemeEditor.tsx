@@ -3,7 +3,7 @@ import './ThemeEditor.less';
 import ConfigItem from "../../../config-item/ConfigItem";
 import UnderLineInput from "../../../lc-input/UnderLineInput";
 import BaseColorPicker from "../../../lc-color-picker/BaseColorPicker";
-import CfgItemBorder from "../../../config-item-border/CfgItemBorder";
+import CfgItemBorder from "../../../config-item/CfgItemBorder";
 import ThemeItem from "../theme-item/ThemeItem";
 import ConfigCard from "../../../config-card/ConfigCard";
 import LcButton from "../../../lc-button/LcButton";

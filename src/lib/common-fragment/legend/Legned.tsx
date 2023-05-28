@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './Legend.less';
 import Accordion from "../../lc-accordion/Accordion";
 import BaseColorPicker from "../../lc-color-picker/BaseColorPicker";
-import CfgItemBorder from "../../config-item-border/CfgItemBorder";
+import CfgItemBorder from "../../config-item/CfgItemBorder";
 import ConfigItem from "../../config-item/ConfigItem";
 import {LegendType} from "../../../framework/types/LegendType";
 import {ConfigType} from "../../../framework/types/ConfigType";

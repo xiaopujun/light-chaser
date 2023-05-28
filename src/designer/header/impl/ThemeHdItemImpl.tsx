@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ConfigItem from "../../../lib/config-item/ConfigItem";
 import Dialog from "../../../lib/lc-dialog/Dialog";
 import headerStore from "../HeaderStore";
-import CfgItemBorder from "../../../lib/config-item-border/CfgItemBorder";
+import CfgItemBorder from "../../../lib/config-item/CfgItemBorder";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import LcSwitch from "../../../lib/lc-switch/LcSwitch";
 import ConfigCard from "../../../lib/config-card/ConfigCard";

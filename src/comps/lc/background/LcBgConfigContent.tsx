@@ -4,7 +4,7 @@ import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import Dragger from "antd/es/upload/Dragger";
 import LcRadio from "../../../lib/lc-radio/LcRadio";
 import {Button, Radio} from "antd";
-import CfgItemBorder from "../../../lib/config-item-border/CfgItemBorder";
+import CfgItemBorder from "../../../lib/config-item/CfgItemBorder";
 import designerStore from '../../../designer/store/DesignerStore';
 import {observer} from "mobx-react";
 import {toJS} from "mobx";

@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import './AxisConfig.less';
 import BaseColorPicker from "../../lc-color-picker/BaseColorPicker";
 import LcSwitch from "../../lc-switch/LcSwitch";
-import CfgItemBorder from "../../config-item-border/CfgItemBorder";
+import CfgItemBorder from "../../config-item/CfgItemBorder";
 import LcRadio from "../../lc-radio/LcRadio";
 import ConfigItem from "../../config-item/ConfigItem";
 import ConfigCard from "../../config-card/ConfigCard";

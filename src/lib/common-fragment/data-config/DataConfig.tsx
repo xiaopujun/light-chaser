@@ -3,7 +3,7 @@ import ConfigItem from "../../config-item/ConfigItem";
 import CodeEditor from "../../code-editer/CodeEditor";
 import {ConfigType} from "../../../framework/types/ConfigType";
 import UnderLineInput from "../../lc-input/UnderLineInput";
-import ConfigItemTB from "../../config-item-tb/ConfigItemTB";
+import ConfigItemTB from "../../config-item/ConfigItemTB";
 import LcButton from "../../lc-button/LcButton";
 import Select from "../../lc-select/Select";
 
