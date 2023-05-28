@@ -1,19 +1,17 @@
 import React, {Component} from 'react';
 import {LineOutlined} from "@ant-design/icons";
-import designerStore from "../store/DesignerStore";
 import rightStore from "./RightStore";
 import bootCore from "../BootCore";
 import {observer} from "mobx-react";
 
 class ConfigContent extends Component {
     buildConfigContent = () => {
-        let {activeMenu, activeElem, activeElemConfig} = rightStore;
+        let {activeMenu, activeElem, activeElemConfig, updateConfig} = rightStore;
         let {autoCompObjs} = bootCore;
-        const {updateElemConfig} = designerStore!;
         let abstractConfigObj: any = autoCompObjs[activeElem.type + ''];
         let menuToConfigComp = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp = menuToConfigComp[activeMenu];
-        return <ConfigComp config={activeElemConfig[activeMenu]} updateConfig={updateElemConfig}/>;
+        return <ConfigComp config={activeElemConfig[activeMenu]} updateConfig={updateConfig}/>;
     }
 
     onClose = () => {

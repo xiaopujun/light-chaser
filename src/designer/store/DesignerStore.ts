@@ -147,6 +147,8 @@ class DesignerStore implements LCDesigner, BaseStore {
         this.condition = store.condition || this.condition;
         this.extendParams = store.extendParams ? {...this.extendParams, ...store.extendParams} : this.extendParams;
         this.updateActive({id: -1, type: 'LcBg'});
+        const {setUpdateConfig} = rightStore;
+        setUpdateConfig(this.updateElemConfig);
     }
 
     getData(): any {
@@ -299,6 +301,8 @@ class DesignerStore implements LCDesigner, BaseStore {
         let activeConfig: ElemConfig | any = this.elemConfigs[this.activeElem?.id + ''];
         if (activeConfig)
             this.elemConfigs[this.activeElem?.id + ''] = _.merge({}, activeConfig, data);
+        const {setActiveElemConfig} = rightStore;
+        setActiveElemConfig(this.elemConfigs[this.activeElem?.id + '']);
     }
 
     /**

@@ -21,6 +21,12 @@ class RightStore {
     menus: Array<MenuInfo> = []
     activeMenu: string = 'background';
     contentVisible: boolean = false;
+    updateConfig: Function | undefined = undefined;
+
+    setUpdateConfig = (updateConfig: Function) => {
+        this.updateConfig = updateConfig;
+    }
+
 
     updateMenus = (activeElem: ActiveElem) => {
         if (!activeElem)
