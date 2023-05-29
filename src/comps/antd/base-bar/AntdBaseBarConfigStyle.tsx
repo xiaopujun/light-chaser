@@ -328,7 +328,7 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
                             <ConfigItem title={'颜色'}>
                                 <CfgItemBorder>
                                     <BaseColorPicker onChange={this.fillColorChanged}
-                                                     value={chartStyle.color}
+                                                     defaultValue={chartStyle.color}
                                                      style={{width: '100%', height: '15px', borderRadius: 2}}
                                                      showText={true}/>
                                 </CfgItemBorder>

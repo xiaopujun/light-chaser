@@ -278,8 +278,9 @@ class DesignerStore implements LCDesigner, BaseStore {
         if (data.id === this.activeElem.id)
             return;
         this.activeElem = {...this.activeElem, ...data};
-        const {updateMenus} = rightStore;
-        updateMenus(this.activeElem);
+        const {setActiveElem, setActiveElemConfig} = rightStore;
+        setActiveElem(this.activeElem);
+        setActiveElemConfig(this.elemConfigs[this.activeElem?.id + '']);
     }
 
     /**

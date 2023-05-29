@@ -3,8 +3,10 @@ import {LineOutlined} from "@ant-design/icons";
 import rightStore from "./RightStore";
 import bootCore from "../BootCore";
 import {observer} from "mobx-react";
+import './ConfigContent.less';
 
 class ConfigContent extends Component {
+
     buildConfigContent = () => {
         let {activeMenu, activeElem, activeElemConfig, updateConfig} = rightStore;
         let {autoCompObjs} = bootCore;
@@ -30,16 +32,17 @@ class ConfigContent extends Component {
         }
         return (
             <>
-                {contentVisible ? <div className={'lc-config-panel'}>
-                    <div className={'lc-panel-top'}>
-                        <div className={'panel-title'}>
-                            <span>{activeMenuName}</span></div>
-                        <div className={'panel-operate'} onClick={this.onClose}><LineOutlined/></div>
-                    </div>
-                    <div className={'lc-panel-content'}>
-                        {this.buildConfigContent()}
-                    </div>
-                </div> : <></>}
+                {contentVisible ?
+                    <div className={'lc-config-panel'}>
+                        <div className={'lc-panel-top'}>
+                            <div className={'panel-title'}>
+                                <span>{activeMenuName}</span></div>
+                            <div className={'panel-operate'} onClick={this.onClose}><LineOutlined/></div>
+                        </div>
+                        <div className={'lc-panel-content'}>
+                            {this.buildConfigContent()}
+                        </div>
+                    </div> : <></>}
             </>
         );
     }

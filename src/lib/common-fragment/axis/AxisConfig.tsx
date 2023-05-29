@@ -48,7 +48,7 @@ class AxisConfig extends Component<AxisConfigProps> {
                 <ConfigCard title={'文本'}>
                     <ConfigItem title={'颜色'}>
                         <CfgItemBorder>
-                            <BaseColorPicker value={config.textColor || '#d5d5d5'}
+                            <BaseColorPicker defaultValue={config.textColor || '#d5d5d5'}
                                              onChange={value => this.onChange('text-color', value)}
                                              style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
                         </CfgItemBorder>

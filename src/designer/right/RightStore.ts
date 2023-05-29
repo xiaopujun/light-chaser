@@ -27,15 +27,22 @@ class RightStore {
         this.updateConfig = updateConfig;
     }
 
-
-    updateMenus = (activeElem: ActiveElem) => {
+    setActiveElem = (activeElem: ActiveElem) => {
         if (!activeElem)
             return;
         this.menus = (bootCore.autoCompObjs[activeElem.type + ''] as AbstractAutoScannerCore).getMenuList();
         this.activeElem = activeElem;
+        if (this.contentVisible) {
+            this.contentVisible = false;
+            setTimeout(() => {
+                this.contentVisible = true;
+            }, 0);
+        }
     }
 
-    setActiveMenu = (menu: string) => {
+    setActiveMenu = (menu: string, newMenus?: string[]) => {
+        if (newMenus && newMenus.includes(this.activeMenu))
+            return;
         this.activeMenu = menu;
     }
 

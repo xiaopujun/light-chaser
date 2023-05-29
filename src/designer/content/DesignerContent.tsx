@@ -36,8 +36,8 @@ class DesignerContent extends PureComponent<DesignerStore | any> {
         updateActive && updateActive({id: parseInt(elemId), type: dataset.type});
         const {setActiveMenu} = rightStore;
         const elemConfig = elemConfigs[elemId];
-        const activeMenu = Object.keys(elemConfig)[0];
-        setActiveMenu(activeMenu);
+        const newMenus = Object.keys(elemConfig);
+        setActiveMenu(newMenus[0], newMenus);
     }
 
     /**
