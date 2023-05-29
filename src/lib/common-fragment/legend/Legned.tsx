@@ -41,7 +41,6 @@ class Legend extends Component<LegendProps> {
     }
 
     render() {
-        console.log('Legend render');
         const {config} = this.props;
         return (
             <Accordion title={'图例'} showSwitch={true} defaultValue={config?.visible}

@@ -84,7 +84,6 @@ class Accordion extends Component<AccordionProps> {
     }
 
     render() {
-        console.log('Accordion render');
         const {title, showSwitch} = this.state;
         return (
             <div className={'lc-accordion'}>

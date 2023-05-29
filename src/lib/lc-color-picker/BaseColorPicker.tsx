@@ -80,7 +80,6 @@ class BaseColorPicker extends Component<BaseColorPickerProps> {
     };
 
     render() {
-        console.log('BaseColorPicker render');
         let colorObj = colorConversion(this.valueControl ? this.props.value || '#000000ff' : this.state.value);
         const {showText = false, type, style} = this.state;
         const content = (

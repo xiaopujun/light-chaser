@@ -36,7 +36,6 @@ const Select: React.FC<SelectProps> = ({
     const [selectedOption, setSelectedOption] = useState<Option | null>(getTargetOption(value || defaultValue));
     const toggleDropdown = (): void => setDropdownOpen(!dropdownOpen);
     const handleOptionClick = (option: Option): void => {
-        console.log("handleOptionClick", dropdownOpen)
         if (!valueControl)
             setSelectedOption(option);
         onChange && onChange(option.value || '');
@@ -45,7 +44,6 @@ const Select: React.FC<SelectProps> = ({
 
     //todo 此处需要继续优化。 避免鼠标点击事件的重复绑定。
     const handleClickOutside = (event: MouseEvent) => {
-        console.log("handleClickOutside", dropdownOpen)
         if (dom.current && !dom.current.contains(event.target)) {
             setDropdownOpen(false);
         }

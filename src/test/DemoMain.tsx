@@ -8,11 +8,9 @@ class DemoMain extends Component {
     }
 
     click1 = () => {
-        console.log('click1');
     }
 
     click2 = () => {
-        console.log('click2');
     }
 
     render() {

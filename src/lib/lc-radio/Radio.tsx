@@ -14,6 +14,7 @@ interface RadioProps {
 class Radio extends Component<RadioProps> {
 
     valueControl: boolean = true;
+    timestamp: string = 'radio_' + Math.random().toString(36).substr(2, 9);
 
     state = {
         value: ''
@@ -45,8 +46,9 @@ class Radio extends Component<RadioProps> {
             if (option.value === value)
                 checked = true;
             return (
-                <label className="radio-button" key={index}>
-                    <input checked={checked} onChange={this.onChange} value={option.value} name="option" type="radio"/>
+                <label className="radio-button" key={index + ''}>
+                    <input checked={checked} onChange={this.onChange} value={option.value} name={this.timestamp}
+                           type="radio"/>
                     <div className="radio-circle"/>
                     <span className="radio-label">{option.label}</span>
                 </label>
@@ -55,7 +57,6 @@ class Radio extends Component<RadioProps> {
     }
 
     render() {
-        console.log("radio render");
         return (
             <div className="radio-buttons">
                 {this.generateOptions()}

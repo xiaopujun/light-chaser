@@ -6,7 +6,6 @@ import E from "./E";
 class D extends Component {
 
     render() {
-        console.log('D render');
         const {students} = demoStore;
 
         return (

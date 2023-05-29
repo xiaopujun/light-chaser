@@ -33,7 +33,6 @@ class AxisConfig extends Component<AxisConfigProps> {
     }
 
     render() {
-        console.log('AxisConfig render');
         const {config, title = '坐标轴'} = this.props;
         return (
             <Accordion title={title} showSwitch={true} defaultValue={config.enable || false}

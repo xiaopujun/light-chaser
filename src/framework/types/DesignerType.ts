@@ -175,11 +175,11 @@ export enum BackgroundImgRepeat {
  */
 export enum BackgroundColorMode {
     //单色
-    SINGLE,
+    SINGLE = '0',
     //线性渐变
-    LINEAR_GRADIENT,
+    LINEAR_GRADIENT = '1',
     //径向渐变
-    RADIAL_GRADIENT,
+    RADIAL_GRADIENT = '2',
 }
 
 /**

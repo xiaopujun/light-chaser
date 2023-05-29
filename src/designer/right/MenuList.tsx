@@ -30,7 +30,6 @@ class MenuList extends Component<LcConfigMenusProps | any> {
     }
 
     render() {
-        console.log('ConfigMenus render');
         return (
             <div className={'lc-config-menu'}>
                 <div className={'menu-list'}>

@@ -16,23 +16,14 @@ import Radio from "../../../lib/lc-radio/Radio";
 
 class LcBgConfigContent extends PureComponent<ConfigType> {
 
-    //线性渐变颜色
-    colors = ['#000000', '#000000'];
-
-    state = {
-        config: null
+    state: any = {
+        config: null,
     }
 
     constructor(props: ConfigType) {
         super(props);
         const {config} = props;
         this.state = {config}
-    }
-
-    componentDidMount() {
-        const {config: {bgColorMode, bgColor}} = this.props;
-        if (bgColorMode === BackgroundColorMode.LINEAR_GRADIENT)
-            this.colors = bgColor || ['#000000', '#000000']
     }
 
     beforeUpload = (file: any) => {
@@ -94,11 +85,11 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
         updateConfig && updateConfig({background: {bgImgRepeat: value}});
     }
 
-    bgColorModeChange = (e: any) => {
+    bgColorModeChange = (value: any) => {
         const {updateConfig} = this.props;
         const {config}: any = this.state;
-        updateConfig && updateConfig({background: {bgColorMode: e.target.value}});
-        this.setState({config: {...config, ...{bgColorMode: e.target.value}}});
+        updateConfig && updateConfig({background: {bgColorMode: value}});
+        this.setState({config: {...config, ...{bgColorMode: value}}});
     }
 
     bgColorChange = (color: string) => {
@@ -117,28 +108,30 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
 
     bgGradientColorChanged = (color: string, key: string) => {
         const {updateConfig} = this.props;
-        const {config}: any = this.state;
+        let {config}: any = this.state;
         if (key === 'startColor')
-            this.colors[0] = color;
+            config.colors[0] = color;
         if (key === 'endColor')
-            this.colors[1] = color;
+            config.colors[1] = color;
         //线性渐变
         if (config?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT) {
             updateConfig && updateConfig({
                 background: {
-                    bgColor: `linear-gradient(${config.angle}deg, ${this.colors[0]}, ${this.colors[1]})`,
-                    colors: [this.colors[0], this.colors[1]]
+                    bgColor: `linear-gradient(${config.angle}deg, ${config.colors[0]}, ${config.colors[1]})`,
+                    colors: [config.colors[0], config.colors[1]]
                 }
             });
+            this.setState({config: {...config, ...{colors: config.colors}}});
         }
         //径向渐变
         if (config?.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT) {
             updateConfig && updateConfig({
                 background: {
-                    bgColor: `radial-gradient(circle, ${this.colors[0]}, ${this.colors[1]})`,
-                    colors: [this.colors[0], this.colors[1]]
+                    bgColor: `radial-gradient(circle, ${config.colors[0]}, ${config.colors[1]})`,
+                    colors: [config.colors[0], config.colors[1]]
                 }
             });
+            this.setState({config: {...config, ...{colors: config.colors}}});
         }
     }
 
@@ -148,22 +141,20 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
         if (config?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT)
             updateConfig && updateConfig({
                 background: {
-                    bgColor: `linear-gradient(${value}deg, ${this.colors[0]}, ${this.colors[1]})`,
+                    bgColor: `linear-gradient(${value}deg, ${config.colors[0]}, ${config.colors[1]})`,
                     angle: value
                 }
             });
         if (config?.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT)
             updateConfig && updateConfig({
                 background: {
-                    bgColor: `radial-gradient(${this.colors[0]}, ${this.colors[1]})`,
+                    bgColor: `radial-gradient(${config.colors[0]}, ${config.colors[1]})`,
                     angle: value
                 }
             });
     }
 
     render() {
-        console.log('LCBackgroundConfig render', toJS(this.props));
-        console.log(this.state.config);
         const {config}: any = this.state;
         return (
             <div className={'lc-background-config'}>
@@ -235,27 +226,27 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
                             {value: '0', label: '单色'},
                             {value: '1', label: '线性'},
                             {value: '2', label: '径向'}
-                        ]} onChange={this.bgColorModeChange} value={config?.bgColorMode}/>
+                        ]} onChange={this.bgColorModeChange} defaultValue={config?.bgColorMode + ''}/>
                     </ConfigItem>
                     {
-                        config?.bgColorMode === BackgroundColorMode.SINGLE &&
+                        config?.bgColorMode + '' === BackgroundColorMode.SINGLE &&
                         <ConfigItem title={'颜色'} contentStyle={{width: 130, paddingLeft: 18}}>
                             <CfgItemBorder>
                                 <BaseColorPicker onChange={this.bgColorChange}
                                                  style={{width: '100%', height: '15px', borderRadius: 2}}
-                                                 value={config?.bgColor}
+                                                 defaultValue={config?.bgColor}
                                                  showText={true}/>
                             </CfgItemBorder>
                         </ConfigItem>
                     }
                     {
-                        (config?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT || config?.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT) && <>
+                        (config?.bgColorMode + '' === BackgroundColorMode.LINEAR_GRADIENT || config?.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT) && <>
                             <ConfigItem title={'颜色'} contentStyle={{width: '250px', paddingLeft: 18, display: "flex"}}>
                                 <CfgItemBorder>
                                     <BaseColorPicker
                                         onChange={(value) => this.bgGradientColorChanged(value, 'startColor')}
                                         style={{width: '100%', height: '15px', borderRadius: 2}}
-                                        value={config?.colors && config?.colors[0]}
+                                        defaultValue={config?.colors && config?.colors[0]}
                                         showText={true}/>
                                 </CfgItemBorder>
                                 &nbsp;&nbsp;
@@ -263,12 +254,12 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
                                     <BaseColorPicker
                                         onChange={(value) => this.bgGradientColorChanged(value, 'endColor')}
                                         style={{width: '100%', height: '15px', borderRadius: 2}}
-                                        value={config?.colors && config?.colors[1]}
+                                        defaultValue={config?.colors && config?.colors[1]}
                                         showText={true}/>
                                 </CfgItemBorder>
                             </ConfigItem>
                             {
-                                config?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT &&
+                                config?.bgColorMode + '' === BackgroundColorMode.LINEAR_GRADIENT &&
                                 <ConfigItem title={'角度'} contentStyle={{paddingLeft: 18}}>
                                     <UnderLineInput type={"number"} defaultValue={config.angle} min={0} max={360}
                                                     onChange={this.gradientAngleChanged}/>

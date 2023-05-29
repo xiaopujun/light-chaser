@@ -29,9 +29,9 @@ class DesignerBackground extends PureComponent<LcDesignerBackgroundProps> {
                 height: bgConfig.height,
                 width: bgConfig.width,
             }
-            if (bgConfig?.bgMode === BackgroundMode.NONE)
+            if (bgConfig?.bgMode + '' === BackgroundMode.NONE)
                 bgConfigProps['backgroundColor'] = '#000000';
-            else if (bgConfig?.bgMode === BackgroundMode.PICTURE) {
+            else if (bgConfig?.bgMode + '' === BackgroundMode.PICTURE) {
                 if (bgConfig.bgImgUrl && bgConfig.bgImgUrl !== '') {
                     bgConfigProps['backgroundImage'] = `url(${bgConfig.bgImgUrl})`;
                     bgConfigProps['backgroundSize'] = bgImgSize;
@@ -40,7 +40,7 @@ class DesignerBackground extends PureComponent<LcDesignerBackgroundProps> {
                 } else
                     bgConfigProps['backgroundColor'] = '#000000';
             } else {
-                if (bgConfig?.bgColorMode === BackgroundColorMode.SINGLE) {
+                if (bgConfig?.bgColorMode + '' === BackgroundColorMode.SINGLE) {
                     if (!bgConfig.bgColor || (bgConfig.bgColor && bgConfig.bgColor.indexOf('gradient') !== -1))
                         bgConfig.bgColor = '#000000';
                     bgConfigProps['backgroundColor'] = bgConfig.bgColor;

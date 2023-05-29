@@ -37,7 +37,6 @@ class BaseStyleSet extends Component<ConfigType> {
         const {updateConfig} = this.props;
         let value = generatePaddingValue(pos, padding, this.oldPadding);
         this.oldPadding = value;
-        console.log(value)
         updateConfig && updateConfig({style: {baseStyle: {padding: value}}});
     }
 
@@ -59,7 +58,6 @@ class BaseStyleSet extends Component<ConfigType> {
     }
 
     render() {
-        console.log('base style set render');
         const {config: {padding, border, borderRadius, backgroundColor}} = this.props;
         const paddingValue = parsePadding(padding);
         const borderValue = parseBorder(border);

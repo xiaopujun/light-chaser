@@ -8,7 +8,6 @@ interface ConfigItemProps {
 
 class ConfigItem extends React.PureComponent<ConfigItemProps> {
     render() {
-        console.log('ConfigItem render')
         const {title = '', contentStyle = {width: 90}} = this.props;
         return (
             <div className={'lc-config-item'}>

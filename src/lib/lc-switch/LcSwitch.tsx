@@ -37,7 +37,6 @@ class LcSwitch extends Component<LcSwitchProps> {
     };
 
     render() {
-        console.log("LcSwitch render");
         const {containerStyle = {top: 2.5}} = this.props;
         return (
             <div className="lc-switch" style={{...containerStyle}}>

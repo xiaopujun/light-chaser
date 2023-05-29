@@ -20,7 +20,6 @@ class DataConfig extends Component<ConfigType> {
     }
 
     editChange = (value: any) => {
-        console.log(value);
     }
 
     render() {

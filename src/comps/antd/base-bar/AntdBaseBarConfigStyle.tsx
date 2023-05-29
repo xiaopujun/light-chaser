@@ -9,7 +9,6 @@ import ConfigCard from "../../../lib/config-card/ConfigCard";
 import {calculateLegendConfig} from "../../../utils/AntdChartConfigUtil";
 import Legend from "../../../lib/common-fragment/legend/Legned";
 import AxisConfig from "../../../lib/common-fragment/axis/AxisConfig";
-import {toJS} from "mobx";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 
 class AntdBaseBarConfigStyle extends Component<ConfigType> {
@@ -315,7 +314,6 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
     render() {
         const {updateConfig, config} = this.props;
         const {chartStyle} = config;
-        console.log('config', toJS(config))
         return (
             <>
                 <BaseStyleSet config={config.baseStyle} updateConfig={updateConfig}/>

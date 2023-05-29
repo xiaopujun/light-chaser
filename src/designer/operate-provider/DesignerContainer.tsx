@@ -9,7 +9,6 @@ class DesignerContainer extends Component {
     dom: any;
 
     componentDidMount() {
-        console.log('DesignerContainer componentDidMount');
         this.dom.addEventListener("click", this.handleClick);
         this.dom.addEventListener("contextmenu", this.handleContextMenu);
         this.dom.addEventListener("keyup", this.handleKeyUp);
@@ -25,7 +24,6 @@ class DesignerContainer extends Component {
     }
 
     componentWillUnmount() {
-        console.log('DesignerContainer componentWillUnmount');
         this.dom.removeEventListener("click", this.handleClick);
         this.dom.removeEventListener("contextmenu", this.handleContextMenu);
         this.dom.removeEventListener("keyup", this.handleKeyUp);
@@ -102,7 +100,6 @@ class DesignerContainer extends Component {
     handlePointerCancel = (event: any) => eventManager.emit('pointercancel', event);
 
     render() {
-        console.log('DesignerContainer render');
         return (
             <div ref={dom => this.dom = dom} tabIndex={0} style={{outline: 'none'}} className={'lc-event-container'}>
                 {this.props.children}
