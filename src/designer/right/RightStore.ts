@@ -43,6 +43,7 @@ class RightStore {
         this.contentVisible = visible;
         if (visible)
             this.activeElemConfig = designerStore.getActiveElemConfig(this.activeElem.id as number);
+        console.log(this.activeElemConfig)
     }
 
     setActiveElemConfig = (config: any) => {

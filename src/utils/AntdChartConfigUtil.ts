@@ -30,7 +30,6 @@ export const calculateLegendConfig = (chartStyle: any) => {
             }
         };
     }
-    console.log(res)
     return res;
 }
 

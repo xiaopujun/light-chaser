@@ -38,7 +38,7 @@ class AxisConfig extends Component<AxisConfigProps> {
             <Accordion title={title} showSwitch={true} defaultValue={config.enable || false}
                        onChange={value => this.onChange('enable', value)}>
                 <ConfigItem title={'位置'} contentStyle={{width: '250px', paddingLeft: '20px'}}>
-                    <Radio value={config.position || 'right'}
+                    <Radio defaultValue={config.position || 'right'}
                            onChange={(value => this.onChange('position', value))}
                            options={[{label: '上', value: 'top'},
                                {label: '下', value: 'bottom'},

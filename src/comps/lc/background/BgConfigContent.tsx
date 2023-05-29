@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import './LcBgConfigContent.less';
+import './BgConfigContent.less';
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import Dragger from "antd/es/upload/Dragger";
 import {Button} from "antd";
@@ -14,7 +14,7 @@ import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import Radio from "../../../lib/lc-radio/Radio";
 
 
-class LcBgConfigContent extends PureComponent<ConfigType> {
+class BgConfigContent extends PureComponent<ConfigType> {
 
     state: any = {
         config: null,
@@ -89,7 +89,10 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
         const {updateConfig} = this.props;
         const {config}: any = this.state;
         updateConfig && updateConfig({background: {bgColorMode: value}});
-        this.setState({config: {...config, ...{bgColorMode: value}}});
+        if (value === BackgroundColorMode.SINGLE)
+            this.setState({config: {...config, ...{bgColorMode: value, bgColor: '#000000ff'}}});
+        else
+            this.setState({config: {...config, ...{bgColorMode: value}}});
     }
 
     bgColorChange = (color: string) => {
@@ -274,4 +277,4 @@ class LcBgConfigContent extends PureComponent<ConfigType> {
     }
 }
 
-export default LcBgConfigContent;
+export default BgConfigContent;

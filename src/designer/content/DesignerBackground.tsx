@@ -1,16 +1,17 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import designerStore from '../store/DesignerStore';
-import {observer} from "mobx-react";
 import {BackgroundColorMode, BackgroundConfig, BackgroundMode} from "../../framework/types/DesignerType";
 
 interface LcDesignerBackgroundProps {
     onClick?: (e: any) => void;
+    config?: BackgroundConfig;
 }
+
 
 /**
  * 设计器画布背景
  */
-class DesignerBackground extends PureComponent<LcDesignerBackgroundProps> {
+class DesignerBackground extends Component<LcDesignerBackgroundProps> {
 
     onClick = (e: any) => {
         this.props.onClick && this.props.onClick(e);
@@ -55,6 +56,7 @@ class DesignerBackground extends PureComponent<LcDesignerBackgroundProps> {
     }
 
     render() {
+        console.log('render background')
         return (
             <div className={'lc-background'}
                  id={'-1'}
@@ -67,4 +69,4 @@ class DesignerBackground extends PureComponent<LcDesignerBackgroundProps> {
     }
 }
 
-export default observer(DesignerBackground);
+export default DesignerBackground;

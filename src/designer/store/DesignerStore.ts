@@ -4,7 +4,6 @@ import {Layout} from "react-grid-layout";
 import {
     ActiveElem,
     BackgroundColorMode,
-    BackgroundConfig,
     BackgroundImgRepeat,
     BackgroundMode,
     CanvasConfig,
@@ -222,7 +221,7 @@ class DesignerStore implements LCDesigner, BaseStore {
     setExtendParams = (extendParams: any) => this.extendParams = extendParams;
 
     getActiveElemConfig = (activeId: number | string) => {
-        if (activeId)
+        if (activeId >= -1)
             return this.elemConfigs[activeId + ""];
     }
 
@@ -306,16 +305,6 @@ class DesignerStore implements LCDesigner, BaseStore {
     }
 
     /**
-     * 更新基础信息
-     */
-    updateBaseInfo = (data: any) => {
-        let {id = -1} = this.activeElem;
-        let chartConfig: ElemConfig = this.elemConfigs[id];
-        if (chartConfig)
-            chartConfig.baseInfo = {...chartConfig.baseInfo, ...data};
-    }
-
-    /**
      * 更新画布设置
      */
     updateCanvasConfig = (data: CanvasConfig) => {
@@ -332,14 +321,6 @@ class DesignerStore implements LCDesigner, BaseStore {
         runInAction(() => {
             this.projectConfig = {...this.projectConfig, ...data};
         })
-    }
-
-    /**
-     * 更新背景配置
-     */
-    updateBgConfig = (data: BackgroundConfig) => {
-        let oldConfig = this.elemConfigs['-1']['background'];
-        this.elemConfigs['-1']['background'] = {...oldConfig, ...data};
     }
 
     /**

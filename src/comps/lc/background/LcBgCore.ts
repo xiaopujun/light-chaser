@@ -3,7 +3,7 @@ import {ElemConfig} from "../../../framework/types/DesignerType";
 import {MenuInfo} from "../../../framework/types/MenuType";
 import {PictureFilled} from "@ant-design/icons";
 import React from "react";
-import LcBgConfigContent from "./LcBgConfigContent";
+import BgConfigContent from "./BgConfigContent";
 
 class LcBgCore extends AbstractAutoScannerCore {
     getBaseInfo(): BaseInfoType | null {
@@ -38,7 +38,7 @@ class LcBgCore extends AbstractAutoScannerCore {
 
     getMenuToConfigContentMap(): { [p: string]: React.Component | React.FC | any } {
         return {
-            'background': LcBgConfigContent,
+            'background': BgConfigContent,
         };
     }
 
