@@ -151,11 +151,13 @@ class DesignerContent extends PureComponent<DesignerStore | any> {
     }
 
     render() {
+        const {elemConfigs} = designerStore;
         return (
             <DesignerContainer>
                 <DesignerRuler offsetX={60} offsetY={50}>
                     <DragScaleProvider {...this.getDragScaleProviderProps()}>
-                        <DesignerBackground onClick={this.updateActive} ref={obj => this.lcbg = obj}>
+                        <DesignerBackground config={elemConfigs['-1']['background']} onClick={this.updateActive}
+                                            ref={obj => this.lcbg = obj}>
                             <ReactGridLayout ref={obj => this.rgl = obj} className="layout" {...this.getRGLProps()}>
                                 {this.generateElement()}
                             </ReactGridLayout>
