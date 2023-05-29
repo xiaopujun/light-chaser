@@ -104,7 +104,7 @@ class BaseStyleSet extends Component<ConfigType> {
                     <ConfigItem title={'颜色'}>
                         <CfgItemBorder>
                             <BaseColorPicker onChange={(value) => this.borderChanged('color', value)}
-                                             value={borderValue.color}
+                                             defaultValue={borderValue.color}
                                              style={{width: '100%', height: '15px', borderRadius: 2}}
                                              showText={true}/>
                         </CfgItemBorder>
@@ -121,7 +121,7 @@ class BaseStyleSet extends Component<ConfigType> {
                 <ConfigCard title={'背景'}>
                     <ConfigItem title={'颜色'}>
                         <CfgItemBorder>
-                            <BaseColorPicker value={backgroundColor}
+                            <BaseColorPicker defaultValue={backgroundColor}
                                              onChange={this.backgroundColorChanged}
                                              style={{width: '100%', height: '15px', borderRadius: 2}}
                                              showText={true}/>

@@ -9,6 +9,7 @@ interface RadioProps {
     value?: string | any
     defaultValue?: string | any;
     onChange?: (value: string) => void;
+    disabled?: boolean;
 }
 
 class Radio extends Component<RadioProps> {
@@ -39,15 +40,17 @@ class Radio extends Component<RadioProps> {
     }
 
     generateOptions = () => {
-        const {options = []} = this.props;
+        const {options = [], disabled = false} = this.props;
         return options.map((option: Option, index: number) => {
             const value = this.valueControl ? this.props.value : this.state.value;
             let checked = false;
             if (option.value === value)
                 checked = true;
             return (
-                <label className="radio-button" key={index + ''}>
-                    <input checked={checked} onChange={this.onChange} value={option.value} name={this.timestamp}
+                <label className="radio-button" key={index + ''}
+                       style={{cursor: `${disabled ? 'not-allowed' : 'pointer'}`}}>
+                    <input checked={checked} disabled={disabled} onChange={this.onChange} value={option.value}
+                           name={this.timestamp}
                            type="radio"/>
                     <div className="radio-circle"/>
                     <span className="radio-label">{option.label}</span>

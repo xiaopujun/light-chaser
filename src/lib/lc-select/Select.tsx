@@ -13,13 +13,15 @@ interface SelectProps {
     defaultValue?: string;
     // 选中值改变时的回调
     onChange?: (value: string) => void;
+    disabled?: boolean;
 }
 
 const Select: React.FC<SelectProps> = ({
                                            options,
                                            placeholder = "请选择",
                                            value, defaultValue,
-                                           onChange
+                                           onChange,
+                                           disabled = false
                                        }) => {
     const dom: any = useRef(null);
     const valueControl: boolean = value !== undefined;
@@ -60,7 +62,8 @@ const Select: React.FC<SelectProps> = ({
 
     return (
         <div className="lc-select-container" ref={dom}>
-            <div className={`lc-select-header`} onClick={toggleDropdown}>
+            <div className={`lc-select-header`} style={{cursor: `${disabled ? 'not-allowed' : 'pointer'}`}}
+                 onClick={disabled ? undefined : toggleDropdown}>
                 {showContent}
             </div>
             {dropdownOpen && (

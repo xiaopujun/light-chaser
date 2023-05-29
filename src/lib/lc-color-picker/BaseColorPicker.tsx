@@ -16,6 +16,7 @@ interface BaseColorPickerProps {
     style?: React.CSSProperties;
     //是否显示色值文本（非受控）
     showText?: boolean;
+    disabled?: boolean;
 }
 
 class BaseColorPicker extends Component<BaseColorPickerProps> {
@@ -47,23 +48,6 @@ class BaseColorPicker extends Component<BaseColorPickerProps> {
         };
     }
 
-    // shouldComponentUpdate(nextProps: Readonly<BaseColorPickerProps>, nextState: Readonly<BaseColorPickerState>, nextContext: any): boolean {
-    //     return !isEqual(omit(this.props, ['onChange']), omit(nextProps, ['onChange']));
-    // }
-
-
-    // componentDidUpdate(prevProps: BaseColorPickerProps) {
-    //     const {value} = this.props;
-    //     if (value !== undefined && value !== prevProps.value) {
-    //         const color = colorConversion(value);
-    //         this.setState({
-    //             rgba: color.rgba,
-    //             hex: color.hex,
-    //             color: value,
-    //         });
-    //     }
-    // }
-
     onChangeComplete = (color: any) => {
         const {onChange} = this.props;
         const {type} = this.state;
@@ -82,15 +66,17 @@ class BaseColorPicker extends Component<BaseColorPickerProps> {
     render() {
         let colorObj = colorConversion(this.valueControl ? this.props.value || '#000000ff' : this.state.value);
         const {showText = false, type, style} = this.state;
-        const content = (
-            <ChromePicker className={'color-picker'}
-                          color={colorObj.hex}
-                          onChange={this.onChangeComplete}/>
+        const {disabled} = this.props;
+        const content = (disabled ? null :
+                <ChromePicker className={'color-picker'}
+                              color={colorObj.hex}
+                              onChange={this.onChangeComplete}/>
         );
         const showContent = showText ? (type === 'hex' ? colorObj.hex : colorObj.rgba) : null;
+        let _style = disabled ? {...style, ...{cursor: 'not-allowed'}} : {...style, ...{cursor: 'pointer'}};
         return (
             <Popover placement="topLeft" content={content} trigger={'click'}>
-                <div style={{backgroundColor: `${colorObj.hex}`, ...style}} className={'color-area'}>
+                <div style={{backgroundColor: `${colorObj.hex}`, ..._style}} className={'color-area'}>
                     {showText ? <span>{showContent}</span> : null}
                 </div>
             </Popover>
