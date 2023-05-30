@@ -57,7 +57,7 @@ class DesignerBackground extends Component<LcDesignerBackgroundProps> {
             <div className={'lc-background'}
                  id={'-1'}
                  data-type={'LcBg'}
-                 onClick={this.onClick}
+                 onDoubleClick={this.onClick}
                  style={this.getBgConfigProps()}>
                 {this.props.children}
             </div>
