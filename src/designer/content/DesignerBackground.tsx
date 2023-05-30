@@ -7,49 +7,45 @@ interface LcDesignerBackgroundProps {
     config?: BackgroundConfig;
 }
 
-
 /**
  * 设计器画布背景
  */
 class DesignerBackground extends Component<LcDesignerBackgroundProps> {
 
     onClick = (e: any) => {
-        this.props.onClick && this.props.onClick(e);
+        const {onClick} = this.props;
+        onClick && onClick(e);
     }
 
     getBgConfigProps = () => {
         const bgConfig: BackgroundConfig = designerStore.elemConfigs['-1']['background'];
+        const {width, height, bgMode, bgColor, bgImg} = bgConfig;
         let bgImgSize = '100% 100%';
-        if (bgConfig.bgImgSize && bgConfig.bgImgSize.length === 2)
-            bgImgSize = `${bgConfig.bgImgSize[0]}px ${bgConfig.bgImgSize[1]}px`;
+        if (bgImg.bgImgSize && bgImg.bgImgSize.length === 2)
+            bgImgSize = `${bgConfig.bgImg.bgImgSize[0]}px ${bgImg.bgImgSize[1]}px`;
         let bgImgPosition = '0 0';
-        if (bgConfig.bgImgPos && bgConfig.bgImgPos.length === 2)
-            bgImgPosition = `${bgConfig.bgImgPos[0]}px ${bgConfig.bgImgPos[1]}px`;
+        if (bgImg.bgImgPos && bgImg.bgImgPos.length === 2)
+            bgImgPosition = `${bgImg.bgImgPos[0]}px ${bgImg.bgImgPos[1]}px`;
         if (bgConfig) {
-            let bgConfigProps: any = {
-                height: bgConfig.height,
-                width: bgConfig.width,
-            }
-            if (bgConfig?.bgMode + '' === BackgroundMode.NONE)
+            let bgConfigProps: any = {height: height, width: width}
+            if (bgMode + '' === BackgroundMode.NONE)
                 bgConfigProps['backgroundColor'] = '#000000';
-            else if (bgConfig?.bgMode + '' === BackgroundMode.PICTURE) {
-                if (bgConfig.bgImgUrl && bgConfig.bgImgUrl !== '') {
-                    bgConfigProps['backgroundImage'] = `url(${bgConfig.bgImgUrl})`;
+            else if (bgMode + '' === BackgroundMode.PICTURE) {
+                if (bgImg.bgImgUrl && bgImg.bgImgUrl !== '') {
+                    bgConfigProps['backgroundImage'] = `url(${bgImg.bgImgUrl})`;
                     bgConfigProps['backgroundSize'] = bgImgSize;
                     bgConfigProps['backgroundPosition'] = bgImgPosition;
-                    bgConfigProps['backgroundRepeat'] = bgConfig?.bgImgRepeat;
+                    bgConfigProps['backgroundRepeat'] = bgImg?.bgImgRepeat;
                 } else
                     bgConfigProps['backgroundColor'] = '#000000';
             } else {
-                if (bgConfig?.bgColorMode + '' === BackgroundColorMode.SINGLE) {
-                    if (!bgConfig.bgColor || (bgConfig.bgColor && bgConfig.bgColor.indexOf('gradient') !== -1))
-                        bgConfig.bgColor = '#000000';
-                    bgConfigProps['backgroundColor'] = bgConfig.bgColor;
-                } else if (bgConfig?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT) {
-                    bgConfigProps['background'] = `linear-gradient(${bgConfig.angle}deg, ${bgConfig.colors && bgConfig.colors[0]}, ${bgConfig.colors && bgConfig.colors[1]})`;
-                } else {
-                    bgConfigProps['background'] = `radial-gradient(${bgConfig.colors && bgConfig.colors[0]}, ${bgConfig.colors && bgConfig.colors[1]})`;
-                }
+                const {single, radialGradient, linearGradient, bgColorMode} = bgColor;
+                if (bgConfig?.bgColor.bgColorMode + '' === BackgroundColorMode.SINGLE)
+                    bgConfigProps['backgroundColor'] = single.color;
+                else if (bgColorMode === BackgroundColorMode.LINEAR_GRADIENT)
+                    bgConfigProps['background'] = linearGradient.color;
+                else
+                    bgConfigProps['background'] = radialGradient.color;
             }
             return bgConfigProps;
         }

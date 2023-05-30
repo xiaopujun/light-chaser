@@ -73,16 +73,27 @@ class DesignerStore implements LCDesigner, BaseStore {
                 width: 1920,//背景宽
                 height: 1080,//背景高
                 bgMode: BackgroundMode.NONE,//背景模式
-                bgImgSize: [1920, 1080],//背景图片尺寸
-                bgImgPos: [0, 0],//背景图片位置
-                bgImgRepeat: BackgroundImgRepeat.NO_REPEAT,//背景图片重复方式
-                bgImgUrl: '',//背景图片url地址
-                bgColorMode: BackgroundColorMode.SINGLE,//背景图片颜色模式
-                bgColor: '#040d18',//背景颜色
-                colors: ['#000000', '#000000'],//颜色数组（用于处理渐变色配置的数据回显）
-                angle: 0,//渐变角度
-            }
-        },
+                bgImg: {
+                    bgImgSize: [1920, 1080],//背景图片尺寸
+                    bgImgPos: [0, 0],//背景图片位置
+                    bgImgRepeat: BackgroundImgRepeat.NO_REPEAT,//背景图片重复方式
+                    bgImgUrl: '',//背景图片url地址
+                },
+                bgColor: {
+                    bgColorMode: BackgroundColorMode.SINGLE,//背景图片颜色模式
+                    single: {color: '#000000'},
+                    linearGradient: {
+                        color: 'linear-gradient(0deg, #000000, #000000)',
+                        angle: 0,
+                        colorArr: ['#000000', '#000000']
+                    },
+                    radialGradient: {
+                        color: 'radial-gradient(circle, #000000, #000000)',
+                        colorArr: ['#000000', '#000000']
+                    },
+                }
+            },
+        }
     };
 
     /**
@@ -288,6 +299,8 @@ class DesignerStore implements LCDesigner, BaseStore {
         let activeConfig: ElemConfig | any = this.elemConfigs[this.activeElem?.id + ''];
         if (activeConfig)
             this.elemConfigs[this.activeElem?.id + ''] = _.merge({}, activeConfig, data);
+        if (this.activeElem.id == -1)
+            console.log(toJS(this.elemConfigs[-1 + '']));
         const {setActiveElemConfig} = rightStore;
         setActiveElemConfig(this.elemConfigs[this.activeElem?.id + '']);
     }

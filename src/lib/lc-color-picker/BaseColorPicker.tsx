@@ -53,7 +53,7 @@ class BaseColorPicker extends Component<BaseColorPickerProps> {
         const {type} = this.state;
         const rgbColor = `rgba(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`;
         const hex = rgbaToHex(rgbColor);
-        onChange && onChange(type === 'hex' ? color.hex : rgbColor);
+        onChange && onChange(type === 'hex' ? hex : rgbColor);
         if (!this.valueControl) {
             this.setState({
                 color: rgbColor,

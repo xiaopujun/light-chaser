@@ -4,14 +4,14 @@ import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import Dragger from "antd/es/upload/Dragger";
 import {Button} from "antd";
 import CfgItemBorder from "../../../lib/config-item/CfgItemBorder";
-import {toJS} from "mobx";
-import {BackgroundColorMode, BackgroundMode} from "../../../framework/types/DesignerType";
+import {BackgroundColorMode, BackgroundConfig, BackgroundMode} from "../../../framework/types/DesignerType";
 import {ConfigType} from "../../../framework/types/ConfigType";
 import ConfigItem from "../../../lib/config-item/ConfigItem";
 import ConfigCard from "../../../lib/config-card/ConfigCard";
 import Select from "../../../lib/lc-select/Select";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import Radio from "../../../lib/lc-radio/Radio";
+import {merge} from "lodash";
 
 
 class BgConfigContent extends PureComponent<ConfigType> {
@@ -33,9 +33,9 @@ class BgConfigContent extends PureComponent<ConfigType> {
         fileReader.onload = (event: any) => {
             const blob = new Blob([event.target.result], {type: file.type});
             const bgImgUrl = URL.createObjectURL(blob);
-            updateConfig && updateConfig({background: {bgImgUrl: bgImgUrl}});
+            updateConfig && updateConfig({background: {bgImg: {bgImgUrl: bgImgUrl}}});
             const {config}: any = this.state;
-            this.setState({config: {...config, ...{bgImgUrl: bgImgUrl}}});
+            this.setState({config: merge({}, config, {bgImg: {bgImgUrl: bgImgUrl}})});
             //todo 更换图片的时候要释放链接和内存的关联，可以提高部分性能
             // URL.revokeObjectURL(bgImgUrl);
         };
@@ -53,51 +53,51 @@ class BgConfigContent extends PureComponent<ConfigType> {
 
     bgImgSizeChange = (data: any) => {
         const {updateConfig} = this.props;
-        const {config}: any = this.state;
-        let bgImgSize = config.bgImgSize;
-        let tempBgImgSize = toJS(bgImgSize);
+        const config: BackgroundConfig = this.state.config;
+        let bgImgSize = config.bgImg.bgImgSize;
         const {value, name} = data;
-        if (name === 'bgX' && tempBgImgSize) {
-            tempBgImgSize[0] = parseInt(value);
-        } else if (name === 'bgY' && tempBgImgSize) {
-            tempBgImgSize[1] = parseInt(value);
+        if (name === 'bgX' && bgImgSize) {
+            bgImgSize[0] = parseInt(value);
+        } else if (name === 'bgY' && bgImgSize) {
+            bgImgSize[1] = parseInt(value);
         }
-        updateConfig && updateConfig({background: {bgImgSize: tempBgImgSize}});
-        this.setState({config: {...config, ...{bgImgSize: tempBgImgSize}}})
+        updateConfig && updateConfig({background: {bgImg: {bgImgSize: bgImgSize}}});
+        //此处直接对state的数据进行修改，不要触发重新渲染。
+        this.state.config.bgImg.bgImgSize = bgImgSize;
     }
 
     bgImgPosChange = (data: any) => {
         const {updateConfig} = this.props;
-        const {config}: any = this.state;
-        let bgImgPos = config.bgImgPos;
-        let tempBgImgPos = toJS(bgImgPos);
+        const config: BackgroundConfig = this.state.config;
+        let bgImgPos = config.bgImg.bgImgPos;
         const {value, name} = data;
-        if (name === 'posX' && tempBgImgPos) {
-            tempBgImgPos[0] = parseInt(value);
-        } else if (name === 'posY' && tempBgImgPos) {
-            tempBgImgPos[1] = parseInt(value);
+        if (name === 'posX' && bgImgPos) {
+            bgImgPos[0] = parseInt(value);
+        } else if (name === 'posY' && bgImgPos) {
+            bgImgPos[1] = parseInt(value);
         }
-        updateConfig && updateConfig({background: {bgImgPos: tempBgImgPos}});
+        updateConfig && updateConfig({background: {bgImg: {bgImgPos: bgImgPos}}});
+        //此处直接对state的数据进行修改，不要触发重新渲染。
+        this.state.config.bgImg.bgImgPos = bgImgPos;
     }
 
     repeatTypeChange = (value: any) => {
         const {updateConfig} = this.props;
-        updateConfig && updateConfig({background: {bgImgRepeat: value}});
+        updateConfig && updateConfig({background: {bgImg: {bgImgRepeat: value}}});
     }
 
     bgColorModeChange = (value: any) => {
         const {updateConfig} = this.props;
-        const {config}: any = this.state;
-        updateConfig && updateConfig({background: {bgColorMode: value}});
-        if (value === BackgroundColorMode.SINGLE)
-            this.setState({config: {...config, ...{bgColorMode: value, bgColor: '#000000ff'}}});
-        else
-            this.setState({config: {...config, ...{bgColorMode: value}}});
+        const config: BackgroundConfig = this.state.config;
+        updateConfig && updateConfig({background: {bgColor: {bgColorMode: value}}});
+        this.setState({config: merge({}, config, {bgColor: {bgColorMode: value}})});
     }
 
-    bgColorChange = (color: string) => {
+    singleColorChanged = (color: string) => {
         const {updateConfig} = this.props;
-        updateConfig && updateConfig({background: {bgColor: color}});
+        updateConfig && updateConfig({background: {bgColor: {single: {color}}}});
+        //此处直接对state的数据进行修改，不要触发重新渲染。
+        this.state.config.bgColor.single.color = color;
     }
 
     clearBgImg = () => {
@@ -105,76 +105,90 @@ class BgConfigContent extends PureComponent<ConfigType> {
         const {updateConfig} = this.props;
         if (config?.bgImgUrl)
             URL.revokeObjectURL(config.bgImgUrl);
-        updateConfig && updateConfig({background: {bgImgUrl: ''}});
-        this.setState({config: {...config, ...{bgImgUrl: ''}}});
+        updateConfig && updateConfig({background: {bgImg: {bgImgUrl: ''}}});
+        this.setState({config: merge({}, config, {bgImg: {bgImgUrl: ''}})});
     }
 
-    bgGradientColorChanged = (color: string, key: string) => {
+    linearGradientChanged = (color: string, key: string) => {
         const {updateConfig} = this.props;
-        let {config}: any = this.state;
+        const config: BackgroundConfig = this.state.config;
+        let {colorArr, angle} = config.bgColor.linearGradient;
         if (key === 'startColor')
-            config.colors[0] = color;
+            colorArr[0] = color;
         if (key === 'endColor')
-            config.colors[1] = color;
+            colorArr[1] = color;
         //线性渐变
-        if (config?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT) {
-            updateConfig && updateConfig({
-                background: {
-                    bgColor: `linear-gradient(${config.angle}deg, ${config.colors[0]}, ${config.colors[1]})`,
-                    colors: [config.colors[0], config.colors[1]]
-                }
-            });
-            this.setState({config: {...config, ...{colors: config.colors}}});
-        }
+        updateConfig && updateConfig({
+            background: {
+                bgColor: {
+                    linearGradient: {
+                        color: `linear-gradient(${angle}deg, ${colorArr[0]}, ${colorArr[1]})`,
+                        colorArr: colorArr,
+                    }
+                },
+            }
+        });
+    }
+
+    radialGradientChanged = (color: string, key: string) => {
+        const {updateConfig} = this.props;
+        const config: BackgroundConfig = this.state.config;
+        let {colorArr} = config.bgColor.radialGradient;
+        if (key === 'startColor')
+            colorArr[0] = color;
+        if (key === 'endColor')
+            colorArr[1] = color;
         //径向渐变
-        if (config?.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT) {
-            updateConfig && updateConfig({
-                background: {
-                    bgColor: `radial-gradient(circle, ${config.colors[0]}, ${config.colors[1]})`,
-                    colors: [config.colors[0], config.colors[1]]
-                }
-            });
-            this.setState({config: {...config, ...{colors: config.colors}}});
-        }
+        updateConfig && updateConfig({
+            background: {
+                bgColor: {
+                    radialGradient: {
+                        color: `radial-gradient(circle, ${colorArr[0]}, ${colorArr[1]})`,
+                        colorArr: colorArr,
+                    }
+                },
+            }
+        });
     }
 
     gradientAngleChanged = (value: any) => {
         const {updateConfig} = this.props;
-        const {config}: any = this.state;
-        if (config?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT)
-            updateConfig && updateConfig({
-                background: {
-                    bgColor: `linear-gradient(${value}deg, ${config.colors[0]}, ${config.colors[1]})`,
-                    angle: value
-                }
-            });
-        if (config?.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT)
-            updateConfig && updateConfig({
-                background: {
-                    bgColor: `radial-gradient(${config.colors[0]}, ${config.colors[1]})`,
-                    angle: value
-                }
-            });
+        const config: BackgroundConfig = this.state.config;
+        const {colorArr} = config.bgColor.linearGradient;
+        updateConfig && updateConfig({
+            background: {
+                bgColor: {
+                    linearGradient: {
+                        color: `linear-gradient(${value}deg, ${colorArr[0]}, ${colorArr[1]})`,
+                        angle: value
+                    }
+                },
+            }
+        });
+        //此处直接对state的数据进行修改，不要触发重新渲染。
+        this.state.config.bgColor.linearGradient.angle = value;
     }
 
     render() {
-        const {config}: any = this.state;
+        const config: BackgroundConfig = this.state.config;
+        const {bgMode, bgImg, bgColor} = config;
+        console.log('BackgroundConfig render', bgColor)
         return (
             <div className={'lc-background-config'}>
                 <ConfigItem title={'模式'} contentStyle={{width: '250px', paddingLeft: '20px'}}>
-                    <Radio defaultValue={config?.bgMode || BackgroundMode.NONE} onChange={this.bgModeChange}
+                    <Radio defaultValue={bgMode || BackgroundMode.NONE} onChange={this.bgModeChange}
                            options={[
                                {value: '0', label: '无'},
                                {value: '1', label: '图片'},
                                {value: '2', label: '颜色'}
                            ]}/>
                 </ConfigItem>
-                {config?.bgMode === BackgroundMode.PICTURE &&
+                {bgMode === BackgroundMode.PICTURE &&
                 <>
                     <div className={'lc-bg-upload'}>
                         <div className={'lc-upload-content'}>
-                            {config?.bgImgUrl ?
-                                <img alt={"bg"} width={'100%'} height={187} src={config.bgImgUrl}/> :
+                            {bgImg?.bgImgUrl ?
+                                <img alt={"bg"} width={'100%'} height={187} src={bgImg?.bgImgUrl}/> :
                                 <Dragger listType={'picture-card'}
                                          showUploadList={false}
                                          beforeUpload={this.beforeUpload}>
@@ -184,7 +198,7 @@ class BgConfigContent extends PureComponent<ConfigType> {
                     </div>
                     <br/>
                     {
-                        config?.bgImgUrl === '' ? null : <ConfigItem title={'背景控制'} contentStyle={{paddingLeft: 10}}>
+                        bgImg?.bgImgUrl === '' ? null : <ConfigItem title={'背景控制'} contentStyle={{paddingLeft: 10}}>
                             <Button danger={true} ghost={true}
                                     onClick={this.clearBgImg}
                                     size={'small'}>清除背景图</Button>
@@ -194,24 +208,24 @@ class BgConfigContent extends PureComponent<ConfigType> {
                         <ConfigItem title={"宽度"}>
                             <UnderLineInput name={'bgX'} type={'number'}
                                             onChange={(value: any) => this.bgImgSizeChange({name: 'bgX', value})}
-                                            defaultValue={config.bgImgSize[0]}/>
+                                            defaultValue={bgImg.bgImgSize[0]}/>
                         </ConfigItem>
                         <ConfigItem title={"高度"}>
                             <UnderLineInput name={'bgY'} type={'number'}
                                             onChange={(value: any) => this.bgImgSizeChange({name: 'bgY', value})}
-                                            defaultValue={config.bgImgSize[1]}/>
+                                            defaultValue={bgImg.bgImgSize[1]}/>
                         </ConfigItem>
                     </ConfigCard>
                     <ConfigCard title={'位置'}>
                         <ConfigItem title={"X轴"}>
                             <UnderLineInput type={'number'}
                                             onChange={(value: any) => this.bgImgPosChange({name: 'posX', value})}
-                                            defaultValue={config.bgImgPos[0]}/>
+                                            defaultValue={bgImg.bgImgPos[0]}/>
                         </ConfigItem>
                         <ConfigItem title={"Y轴"}>
                             <UnderLineInput type={'number'}
                                             onChange={(value: any) => this.bgImgPosChange({name: 'posY', value})}
-                                            defaultValue={config.bgImgPos[1]}/>
+                                            defaultValue={bgImg.bgImgPos[1]}/>
                         </ConfigItem>
                     </ConfigCard>
                     <ConfigItem title={'重复方式'} contentStyle={{paddingLeft: '20px', width: 120}}>
@@ -219,55 +233,73 @@ class BgConfigContent extends PureComponent<ConfigType> {
                             {label: 'x轴重复', value: 'repeat-x'},
                             {label: 'y轴重复', value: 'repeat-y'},
                             {label: '铺满', value: 'repeat'},
-                        ]} defaultValue={config?.bgImgRepeat} onChange={this.repeatTypeChange}/>
+                        ]} defaultValue={bgImg?.bgImgRepeat} onChange={this.repeatTypeChange}/>
                     </ConfigItem>
                 </>}
-                {config?.bgMode === BackgroundMode.COLOR &&
+                {bgMode === BackgroundMode.COLOR &&
                 <>
                     <ConfigItem title={'类型'} contentStyle={{paddingLeft: '20px'}}>
                         <Radio options={[
                             {value: '0', label: '单色'},
                             {value: '1', label: '线性'},
                             {value: '2', label: '径向'}
-                        ]} onChange={this.bgColorModeChange} defaultValue={config?.bgColorMode + ''}/>
+                        ]} onChange={this.bgColorModeChange} defaultValue={bgColor?.bgColorMode + ''}/>
                     </ConfigItem>
                     {
-                        config?.bgColorMode + '' === BackgroundColorMode.SINGLE &&
+                        bgColor?.bgColorMode + '' === BackgroundColorMode.SINGLE &&
                         <ConfigItem title={'颜色'} contentStyle={{width: 130, paddingLeft: 18}}>
                             <CfgItemBorder>
-                                <BaseColorPicker onChange={this.bgColorChange}
+                                <BaseColorPicker onChange={this.singleColorChanged}
                                                  style={{width: '100%', height: '15px', borderRadius: 2}}
-                                                 defaultValue={config?.bgColor}
+                                                 defaultValue={bgColor?.single.color}
                                                  showText={true}/>
                             </CfgItemBorder>
                         </ConfigItem>
                     }
                     {
-                        (config?.bgColorMode + '' === BackgroundColorMode.LINEAR_GRADIENT || config?.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT) && <>
+                        (bgColor?.bgColorMode === BackgroundColorMode.LINEAR_GRADIENT) && <>
                             <ConfigItem title={'颜色'} contentStyle={{width: '250px', paddingLeft: 18, display: "flex"}}>
                                 <CfgItemBorder>
                                     <BaseColorPicker
-                                        onChange={(value) => this.bgGradientColorChanged(value, 'startColor')}
+                                        onChange={(value) => this.linearGradientChanged(value, 'startColor')}
                                         style={{width: '100%', height: '15px', borderRadius: 2}}
-                                        defaultValue={config?.colors && config?.colors[0]}
+                                        defaultValue={bgColor.linearGradient?.colorArr[0]}
                                         showText={true}/>
                                 </CfgItemBorder>
                                 &nbsp;&nbsp;
                                 <CfgItemBorder>
                                     <BaseColorPicker
-                                        onChange={(value) => this.bgGradientColorChanged(value, 'endColor')}
+                                        onChange={(value) => this.linearGradientChanged(value, 'endColor')}
                                         style={{width: '100%', height: '15px', borderRadius: 2}}
-                                        defaultValue={config?.colors && config?.colors[1]}
+                                        defaultValue={bgColor.linearGradient?.colorArr[1]}
                                         showText={true}/>
                                 </CfgItemBorder>
                             </ConfigItem>
-                            {
-                                config?.bgColorMode + '' === BackgroundColorMode.LINEAR_GRADIENT &&
-                                <ConfigItem title={'角度'} contentStyle={{paddingLeft: 18}}>
-                                    <UnderLineInput type={"number"} defaultValue={config.angle} min={0} max={360}
-                                                    onChange={this.gradientAngleChanged}/>
-                                </ConfigItem>
-                            }
+                            <ConfigItem title={'角度'} contentStyle={{paddingLeft: 18}}>
+                                <UnderLineInput type={"number"} defaultValue={bgColor.linearGradient.angle} min={0}
+                                                max={360} onChange={this.gradientAngleChanged}/>
+                            </ConfigItem>
+                        </>
+                    }
+                    {
+                        (bgColor?.bgColorMode === BackgroundColorMode.RADIAL_GRADIENT) && <>
+                            <ConfigItem title={'颜色'} contentStyle={{width: '250px', paddingLeft: 18, display: "flex"}}>
+                                <CfgItemBorder>
+                                    <BaseColorPicker
+                                        onChange={(value) => this.radialGradientChanged(value, 'startColor')}
+                                        style={{width: '100%', height: '15px', borderRadius: 2}}
+                                        defaultValue={bgColor.radialGradient?.colorArr[0]}
+                                        showText={true}/>
+                                </CfgItemBorder>
+                                &nbsp;&nbsp;
+                                <CfgItemBorder>
+                                    <BaseColorPicker
+                                        onChange={(value) => this.radialGradientChanged(value, 'endColor')}
+                                        style={{width: '100%', height: '15px', borderRadius: 2}}
+                                        defaultValue={bgColor.radialGradient?.colorArr[1]}
+                                        showText={true}/>
+                                </CfgItemBorder>
+                            </ConfigItem>
                         </>
                     }
                 </>

@@ -187,27 +187,37 @@ export enum BackgroundColorMode {
  */
 export interface BackgroundConfig {
     //背景宽
-    width?: number;
+    width: number;
     //背景高
-    height?: number;
+    height: number;
     //背景模式
-    bgMode?: BackgroundMode;
-    //背景图片尺寸
-    bgImgSize?: [number, number];
-    //背景图片位置
-    bgImgPos?: [number, number];
-    //背景图片重复方式
-    bgImgRepeat?: BackgroundImgRepeat;
-    //背景图片url地址
-    bgImgUrl?: string;
-    //背景图片颜色模式
-    bgColorMode?: BackgroundColorMode | undefined;
-    //背景颜色
-    bgColor?: string;
-    //颜色数组（用于处理渐变色配置的数据回显）
-    colors?: string[];
-    //渐变角度
-    angle?: number;
+    bgMode: BackgroundMode;
+    bgImg: {
+        //背景图片尺寸
+        bgImgSize: [number, number];
+        //背景图片位置
+        bgImgPos: [number, number];
+        //背景图片重复方式
+        bgImgRepeat: BackgroundImgRepeat;
+        //背景图片url地址
+        bgImgUrl: string;
+    },
+    bgColor: {
+        //背景图片颜色模式
+        bgColorMode: BackgroundColorMode;
+        single: {
+            color: string,//单色背景颜色},
+        },
+        linearGradient: {
+            color: string,
+            angle: number,
+            colorArr: string[]
+        },
+        radialGradient: {
+            color: string,
+            colorArr: string[]
+        },
+    }
 }
 
 /**
