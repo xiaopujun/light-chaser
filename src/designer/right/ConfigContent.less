@@ -1,14 +1,28 @@
 .lc-config-panel {
-  animation: lcFadeInUp 0.8s forwards;
+  z-index: 1;
+  animation: lcFadeInUp 0.7s forwards;
 }
 
 @keyframes lcFadeInUp {
   0% {
+    z-index: -1;
     opacity: 0;
     transform: translateX(35px);
   }
+  40% {
+    z-index: -1;
+    opacity: 1;
+    transform: translateX(35px);
+  }
+  60% {
+    z-index: -1;
+    opacity: 1;
+    transform: translateX(35px);
+  }
   100% {
+    z-index: -1;
     opacity: 1;
     transform: translateX(0);
   }
+
 }

@@ -128,7 +128,6 @@ class DesignerStore implements LCDesigner, BaseStore {
      */
     extendParams: any = undefined;
 
-
     /**
      * 初始化store
      */
@@ -186,7 +185,6 @@ class DesignerStore implements LCDesigner, BaseStore {
         this.condition = {};
         this.extendParams = {};
     }
-
 
     /**
      * 设置布局id
@@ -284,17 +282,6 @@ class DesignerStore implements LCDesigner, BaseStore {
     }
 
     /**
-     * 更新组件基础样式
-     */
-    updateBaseStyle = (data: any) => {
-        const {id} = this.activeElem!;
-        let charConfig = this.elemConfigs[id + ''];
-        let baseConfig = charConfig?.baseStyle;
-        if (charConfig && baseConfig)
-            charConfig.baseStyle = {...baseConfig, ...data};
-    }
-
-    /**
      * 更新图表组件配置
      */
     updateElemConfig = (data: any) => {
@@ -318,18 +305,11 @@ class DesignerStore implements LCDesigner, BaseStore {
      * 更新项目配置
      */
     updateProjectConfig = (data: ProjectConfig) => {
-
         runInAction(() => {
             this.projectConfig = {...this.projectConfig, ...data};
         })
     }
 
-    /**
-     * 更新系统配置
-     */
-    updateSystemConfig = () => {
-
-    }
 }
 
 const designerStore = new DesignerStore();

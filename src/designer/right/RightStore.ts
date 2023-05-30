@@ -1,4 +1,4 @@
-import {action, makeObservable, observable} from "mobx";
+import {action, makeObservable, observable, runInAction} from "mobx";
 import {MenuInfo} from "../../framework/types/MenuType";
 import bootCore from "../BootCore";
 import {AbstractAutoScannerCore} from "../../framework/abstract/AbstractAutoScannerCore";
@@ -35,7 +35,7 @@ class RightStore {
         if (this.contentVisible) {
             this.contentVisible = false;
             setTimeout(() => {
-                this.contentVisible = true;
+                runInAction(() => this.contentVisible = true);
             }, 0);
         }
     }
