@@ -15,13 +15,13 @@ interface UnderLineInputProps extends InputHTMLAttributes<HTMLInputElement> {
 class UnderLineInput extends Component<UnderLineInputProps> {
 
     onChange = (e: any) => {
-        const {onChange} = this.props;
-        onChange && onChange(e.target.value);
+        const {onChange, type} = this.props;
+        const {value} = e.target;
+        onChange && onChange(type === 'number' ? Number(value) : value);
     }
 
     render() {
         const {containStyle, inputStyle, lineStyle, onChange, ...rest} = this.props;
-
         return (
             <div className={'lc-underline-input-container'} style={containStyle}>
                 <input {...rest}

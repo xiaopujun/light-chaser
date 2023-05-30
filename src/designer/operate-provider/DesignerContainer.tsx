@@ -60,7 +60,7 @@ class DesignerContainer extends Component {
      * 监听鼠标滚轮事件
      */
     handleWheel = (event: any) => {
-        if (keyboardMouse.Space) {
+        if (keyboardMouse.Space && !keyboardMouse.RightClick) {
             const {setScale} = eventOperateStore;
             let type = 1;
             if (event.deltaY > 0)

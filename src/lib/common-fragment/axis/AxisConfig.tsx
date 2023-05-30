@@ -21,25 +21,15 @@ interface AxisConfigProps {
  */
 class AxisConfig extends Component<AxisConfigProps> {
 
-    state = {
-        tickLineEnable: false,
-    }
-
-    constructor(props: AxisConfigProps) {
-        super(props);
-        this.state.tickLineEnable = props.config.tickLineEnable || false;
-    }
-
     onChange = (key: string, data: any) => {
         const {onChange} = this.props;
         onChange && onChange(key, data);
-        if (key == 'tickLine-enable' && data)
+        if (key === 'tickLine-enable' && data)
             this.setState({tickLineEnable: true});
     }
 
     render() {
         const {config, title = '坐标轴'} = this.props;
-        const {tickLineEnable} = this.state;
         return (
             <Accordion title={title} showSwitch={true} defaultValue={config.enable || false}
                        onChange={value => this.onChange('enable', value)}>
@@ -64,7 +54,7 @@ class AxisConfig extends Component<AxisConfigProps> {
                     </ConfigItem>
                     <ConfigItem title={'数量'}>
                         <UnderLineInput defaultValue={config.subTickLineCount || 0}
-                                        onChange={value => this.onChange('subTickLine-count', parseInt(value))}
+                                        onChange={value => this.onChange('subTickLine-count', value)}
                                         type={'number'}/>
                     </ConfigItem>
                     <ConfigItem title={'长度'}>
@@ -74,7 +64,7 @@ class AxisConfig extends Component<AxisConfigProps> {
                     </ConfigItem>
                     <ConfigItem title={'宽度'}>
                         <UnderLineInput defaultValue={config.subTickLineWidth || 0}
-                                        onChange={value => this.onChange('subTickLine-width', parseInt(value))}
+                                        onChange={value => this.onChange('subTickLine-width', value)}
                                         type={'number'}/>
                     </ConfigItem>
                     <ConfigItem title={'颜色'}>
@@ -271,6 +261,7 @@ export const AxisLine: React.FC<{ config: any, onChange: Function }> = ({config,
 
     const [axisLineDisable, setAxisLineDisable] = useState(config.axisLineEnable || false);
     const [lineWidth, setLineWidth] = useState(config.axisLineWidth || 0);
+    const [lineColor, setLineColor] = useState(config.axisLineColor);
 
     return (
         <ConfigCard title={'轴线'}>
@@ -282,22 +273,29 @@ export const AxisLine: React.FC<{ config: any, onChange: Function }> = ({config,
                               else {
                                   setAxisLineDisable(false);
                                   setLineWidth(2);
+                                  setLineColor('#FFFFFF');
                               }
                               onChange('axisLine-enable', value)
                           }}/>
             </ConfigItem>
             <ConfigItem title={'颜色'}>
                 <CfgItemBorder>
-                    <BaseColorPicker value={config.axisLineColor}
+                    <BaseColorPicker value={lineColor}
                                      disabled={axisLineDisable}
-                                     onChange={value => onChange('axisLine-color', value)}
+                                     onChange={value => {
+                                         onChange('axisLine-color', value);
+                                         setLineColor(value);
+                                     }}
                                      style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
                 </CfgItemBorder>
             </ConfigItem>
             <ConfigItem title={'线宽'}>
                 <UnderLineInput value={lineWidth} min={0} max={10}
                                 disabled={axisLineDisable}
-                                onChange={value => onChange('axisLine-width', value)}
+                                onChange={value => {
+                                    onChange('axisLine-width', value);
+                                    setLineWidth(value);
+                                }}
                                 type={'number'}/>
             </ConfigItem>
         </ConfigCard>
