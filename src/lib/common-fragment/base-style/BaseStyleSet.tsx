@@ -7,7 +7,7 @@ import ConfigCard from "../../config-card/ConfigCard";
 import ConfigItem from "../../config-item/ConfigItem";
 import {ConfigType} from "../../../framework/types/ConfigType";
 import {generateBorder, generatePaddingValue, parseBorder, parsePadding} from "../../../utils/CssStyleUtil";
-import _, {parseInt} from "lodash";
+import {parseInt} from "lodash";
 import Select from "../../lc-select/Select";
 import UnderLineInput from "../../lc-input/UnderLineInput";
 
@@ -23,14 +23,16 @@ class BaseStyleSet extends Component<ConfigType> {
     oldBorder: string = '0px solid #000000ff';
     oldPadding: string = '10px';
 
+    state: any = {
+        borderDisable: false
+    }
+
     constructor(props: ConfigType) {
         super(props);
         this.oldBorder = props.config.border || '0px solid #000000ff';
         this.oldPadding = props.config.padding || '10px';
-    }
-
-    shouldComponentUpdate(nextProps: Readonly<ConfigType>, nextState: Readonly<{}>, nextContext: any): boolean {
-        return !_.isEqual(nextProps, this.props);
+        if (this.oldPadding.indexOf('none') !== -1)
+            this.state = {borderDisable: true};
     }
 
     paddingChanged = (pos: string, padding: number) => {
@@ -50,6 +52,8 @@ class BaseStyleSet extends Component<ConfigType> {
         const border = generateBorder(key, value, this.oldBorder || '0px solid #000000ff');
         this.oldBorder = border;
         updateConfig && updateConfig({style: {baseStyle: {border}}});
+        if (key === 'type' && value === 'none')
+            this.setState({borderDisable: true});
     }
 
     borderRadiusChanged = (radius: any) => {
@@ -59,6 +63,7 @@ class BaseStyleSet extends Component<ConfigType> {
 
     render() {
         const {config: {padding, border, borderRadius, backgroundColor}} = this.props;
+        const {borderDisable} = this.state;
         const paddingValue = parsePadding(padding);
         const borderValue = parseBorder(border);
         return (
@@ -104,6 +109,7 @@ class BaseStyleSet extends Component<ConfigType> {
                     <ConfigItem title={'颜色'}>
                         <CfgItemBorder>
                             <BaseColorPicker onChange={(value) => this.borderChanged('color', value)}
+                                             disabled={borderDisable}
                                              defaultValue={borderValue.color}
                                              style={{width: '100%', height: '15px', borderRadius: 2}}
                                              showText={true}/>
@@ -111,10 +117,11 @@ class BaseStyleSet extends Component<ConfigType> {
                     </ConfigItem>
                     <ConfigItem title={'宽度'}>
                         <UnderLineInput type={'number'} defaultValue={borderValue.width}
+                                        disabled={borderDisable}
                                         onChange={(value: any) => this.borderChanged('width', value)}/>
                     </ConfigItem>
                     <ConfigItem title={'圆角'}>
-                        <UnderLineInput type={'number'} onChange={this.borderRadiusChanged}
+                        <UnderLineInput type={'number'} disabled={borderDisable} onChange={this.borderRadiusChanged}
                                         defaultValue={parseInt(borderRadius)}/>
                     </ConfigItem>
                 </ConfigCard>

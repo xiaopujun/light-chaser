@@ -10,17 +10,18 @@ import {ConfigType} from "../../../framework/types/ConfigType";
  */
 class BaseInfo extends Component<ConfigType> {
 
-    changeName = (e: any) => {
+    changeName = (value: any) => {
         const {updateConfig} = this.props;
-        updateConfig && updateConfig({info: {name: e.target.value}});
+        updateConfig && updateConfig({info: {name: value}});
     }
 
-    changeDesc = (e: any) => {
+    changeDesc = (value: any) => {
         const {updateConfig} = this.props;
-        updateConfig && updateConfig({info: {des: e.target.value}});
+        updateConfig && updateConfig({info: {des: value}});
     }
 
     render() {
+        console.log('base-info render');
         const {config = {}} = this.props;
         const {id, type, name, des} = config;
         return (

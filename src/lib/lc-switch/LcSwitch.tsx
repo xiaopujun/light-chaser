@@ -39,11 +39,12 @@ class LcSwitch extends Component<LcSwitchProps> {
 
     render() {
         const {containerStyle = {top: 2.5}, disabled = false} = this.props;
+        console.log(this.props.value, this.state.value)
         return (
             <div className="lc-switch" style={{...containerStyle}}>
                 <label className="lc-switch-label" style={{cursor: `${disabled ? 'not-allowed' : 'pointer'}`}}>
                     <input disabled={disabled}
-                           checked={this.valueControl ? this.props.value : this.state.value}
+                           checked={this.valueControl ? this.props.value || false : this.state.value || false}
                            onChange={this.handleChange} type="checkbox"/>
                     <span/>
                 </label>

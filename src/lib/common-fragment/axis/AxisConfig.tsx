@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import './AxisConfig.less';
 import BaseColorPicker from "../../lc-color-picker/BaseColorPicker";
 import LcSwitch from "../../lc-switch/LcSwitch";
@@ -45,120 +45,12 @@ class AxisConfig extends Component<AxisConfigProps> {
                                {label: '左', value: 'left'},
                                {label: '右', value: 'right'}]}/>
                 </ConfigItem>
-                <ConfigCard title={'文本'}>
-                    <ConfigItem title={'颜色'}>
-                        <CfgItemBorder>
-                            <BaseColorPicker defaultValue={config.textColor || '#d5d5d5'}
-                                             onChange={value => this.onChange('text-color', value)}
-                                             style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                        </CfgItemBorder>
-                    </ConfigItem>
-                    <ConfigItem title={'角度'}>
-                        <UnderLineInput value={config.textAngle || 0} step={0.1}
-                                        onChange={value => this.onChange('text-angle', value)}/>
-                    </ConfigItem>
-                    <ConfigItem title={'偏移量'}>
-                        <UnderLineInput value={config.textOffset || 0}
-                                        onChange={value => this.onChange('text-offset', value)}/>
-                    </ConfigItem>
-                </ConfigCard>
-                <ConfigCard title={'标题'}>
-                    <ConfigItem title={'开启'}>
-                        <LcSwitch defaultValue={config.titleEnable || false}
-                                  onChange={(value) => this.onChange('title-enable', value)}/>
-                    </ConfigItem>
-                    <ConfigItem title={'位置'}>
-                        <Select options={[
-                            {value: 'start', label: '前'},
-                            {value: 'center', label: '中'},
-                            {value: 'end', label: '后'}]}
-                                defaultValue={config.titlePosition} placeholder={'请选择位置'}
-                                onChange={value => this.onChange('title-position', value)}/>
-                    </ConfigItem>
-                    <ConfigItem title={'内容'}>
-                        <UnderLineInput value={config.titleContent || ''}
-                                        onChange={(e: any) => this.onChange('title-content', e.target.value)}
-                                        type={'text'}/>
-                    </ConfigItem>
-                    <ConfigItem title={'颜色'}>
-                        <CfgItemBorder>
-                            <BaseColorPicker value={config.titleColor}
-                                             onChange={value => this.onChange('title-color', value)}
-                                             style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                        </CfgItemBorder>
-                    </ConfigItem>
-                    <ConfigItem title={'偏移量'}>
-                        <UnderLineInput defaultValue={config.titleOffset || 0} min={0} type={'number'}
-                                        onChange={value => this.onChange('title-offset', value)}/>
-                    </ConfigItem>
-                </ConfigCard>
-                <ConfigCard title={'轴线'}>
-                    <ConfigItem title={'开启'}>
-                        <LcSwitch defaultValue={config.axisLineEnable || false}
-                                  onChange={value => this.onChange('axisLine-enable', value)}/>
-                    </ConfigItem>
-                    <ConfigItem title={'颜色'}>
-                        <CfgItemBorder>
-                            <BaseColorPicker value={config.axisLineColor}
-                                             onChange={value => this.onChange('axisLine-color', value)}
-                                             style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                        </CfgItemBorder>
-                    </ConfigItem>
-                    <ConfigItem title={'线宽'}>
-                        <UnderLineInput defaultValue={config.axisLineWidth || 0} min={0} max={10}
-                                        onChange={value => this.onChange('axisLine-width', value)}
-                                        type={'number'}/>
-                    </ConfigItem>
-                </ConfigCard>
-                <ConfigCard title={'网格线'}>
-                    <ConfigItem title={'开启'}>
-                        <LcSwitch defaultValue={config.gridLineEnable || false}
-                                  onChange={value => this.onChange('gridLine-enable', value)}/>
-                    </ConfigItem>
-                    <ConfigItem title={'刻度对齐'}>
-                        <LcSwitch defaultValue={config.gridLineAlignTick || false}
-                                  onChange={value => this.onChange('gridLine-alignTick', value)}/>
-                    </ConfigItem>
-                    <ConfigItem title={'线宽'}>
-                        <UnderLineInput defaultValue={config.gridLineWidth || 0}
-                                        onChange={value => this.onChange('gridLine-width', value)}
-                                        type={'number'}/>
-                    </ConfigItem>
-                    <ConfigItem title={'颜色'}>
-                        <CfgItemBorder>
-                            <BaseColorPicker value={config.gridLineColor}
-                                             onChange={value => this.onChange('gridLine-color', value)}
-                                             style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                        </CfgItemBorder>
-                    </ConfigItem>
-                </ConfigCard>
-                <ConfigCard title={'刻度线'}>
-                    <ConfigItem title={'开启'}>
-                        <LcSwitch defaultValue={config.tickLineEnable || false}
-                                  onChange={value => this.onChange('tickLine-enable', value)}/>
-                    </ConfigItem>
-                    <ConfigItem title={'对齐'}>
-                        <LcSwitch defaultValue={config.tickLineAlignTick || false}
-                                  onChange={value => this.onChange('tickLine-alignTick', value)}/>
-                    </ConfigItem>
-                    <ConfigItem title={'长度'}>
-                        <UnderLineInput defaultValue={config.tickLineLength || 0}
-                                        onChange={value => this.onChange('tickLine-length', value)}
-                                        type={'number'}/>
-                    </ConfigItem>
-                    <ConfigItem title={'宽度'}>
-                        <UnderLineInput defaultValue={config.tickLineWidth || 0}
-                                        onChange={value => this.onChange('tickLine-width', value)}
-                                        type={'number'}/>
-                    </ConfigItem>
-                    <ConfigItem title={'颜色'}>
-                        <CfgItemBorder>
-                            <BaseColorPicker value={config.tickLineColor}
-                                             onChange={value => this.onChange('tickLine-color', value)}
-                                             style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                        </CfgItemBorder>
-                    </ConfigItem>
-                </ConfigCard>
+                <AxisText config={config} onChange={this.onChange}/>
+                <AxisTitle config={config} onChange={this.onChange}/>
+                <AxisLine config={config} onChange={this.onChange}/>
+                <AxisGridLine config={config} onChange={this.onChange}/>
+                <AxisTickLine config={config} onChange={this.onChange}/>
+
                 {config?.tickLineEnable && <ConfigCard title={'子刻度'}>
                     <ConfigItem title={'开启'}>
                         <LcSwitch defaultValue={config.subTickLineEnable || false}
@@ -190,6 +82,220 @@ class AxisConfig extends Component<AxisConfigProps> {
             </Accordion>
         );
     }
+}
+
+export const AxisTickLine: React.FC<{ config: any, onChange: Function }> = ({config, onChange}) => {
+
+    const [tickLineDisable, setTickLineDisable] = useState(!config.tickLineEnable);
+    const [alignTick, setAlignTick] = useState(config.gridLineAlignTick || false);
+
+    return (
+        <ConfigCard title={'刻度线'}>
+            <ConfigItem title={'开启'}>
+                <LcSwitch defaultValue={config.tickLineEnable || false}
+                          onChange={value => {
+                              if (!value) {
+                                  setTickLineDisable(true);
+                              } else {
+                                  setTickLineDisable(false);
+                                  setAlignTick(true);
+                              }
+                          }}/>
+            </ConfigItem>
+            <ConfigItem title={'对齐'}>
+                <LcSwitch value={alignTick}
+                          disabled={tickLineDisable}
+                          onChange={value => {
+                              onChange('tickLine-alignTick', value);
+                              setAlignTick(value);
+                          }}/>
+            </ConfigItem>
+            <ConfigItem title={'长度'}>
+                <UnderLineInput defaultValue={config.tickLineLength || 0}
+                                disabled={tickLineDisable}
+                                onChange={value => onChange('tickLine-length', value)}
+                                type={'number'}/>
+            </ConfigItem>
+            <ConfigItem title={'宽度'}>
+                <UnderLineInput defaultValue={config.tickLineWidth || 0}
+                                disabled={tickLineDisable}
+                                onChange={value => onChange('tickLine-width', value)}
+                                type={'number'}/>
+            </ConfigItem>
+            <ConfigItem title={'颜色'}>
+                <CfgItemBorder>
+                    <BaseColorPicker value={config.tickLineColor}
+                                     disabled={tickLineDisable}
+                                     onChange={value => onChange('tickLine-color', value)}
+                                     style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
+                </CfgItemBorder>
+            </ConfigItem>
+        </ConfigCard>
+    )
+}
+
+
+export const AxisGridLine: React.FC<{ config: any, onChange: Function }> = ({config, onChange}) => {
+
+    const [axisTitleDisable, setAxisTitleDisable] = useState(!config.gridLineEnable);
+    const [alignTick, setAlignTick] = useState(config.gridLineAlignTick || false);
+
+    return (
+        <ConfigCard title={'网格线'}>
+            <ConfigItem title={'开启'}>
+                <LcSwitch defaultValue={config.gridLineEnable || false}
+                          onChange={value => {
+                              if (!value) {
+                                  setAxisTitleDisable(true);
+                                  setAlignTick(false);
+                              } else {
+                                  setAlignTick(true);
+                                  setAxisTitleDisable(false);
+                              }
+                              onChange('gridLine-enable', value)
+                          }}/>
+            </ConfigItem>
+            <ConfigItem title={'刻度对齐'}>
+                <LcSwitch value={alignTick} disabled={axisTitleDisable}
+                          onChange={value => {
+                              setAlignTick(value);
+                              onChange('gridLine-alignTick', value)
+                          }}/>
+            </ConfigItem>
+            <ConfigItem title={'线宽'}>
+                <UnderLineInput defaultValue={config.gridLineWidth || 0}
+                                disabled={axisTitleDisable}
+                                min={0} max={10}
+                                onChange={value => onChange('gridLine-width', value)}
+                                type={'number'}/>
+            </ConfigItem>
+            <ConfigItem title={'颜色'}>
+                <CfgItemBorder>
+                    <BaseColorPicker value={config.gridLineColor}
+                                     disabled={axisTitleDisable}
+                                     onChange={value => onChange('gridLine-color', value)}
+                                     style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
+                </CfgItemBorder>
+            </ConfigItem>
+        </ConfigCard>
+    )
+}
+
+
+export const AxisLine: React.FC<{ config: any, onChange: Function }> = ({config, onChange}) => {
+
+    const [axisLineDisable, setAxisLineDisable] = useState(config.axisLineEnable || false);
+    const [lineWidth, setLineWidth] = useState(config.axisLineWidth || 0);
+
+    return (
+        <ConfigCard title={'轴线'}>
+            <ConfigItem title={'开启'}>
+                <LcSwitch defaultValue={config.axisLineEnable || false}
+                          onChange={value => {
+                              if (!value)
+                                  setAxisLineDisable(true);
+                              else {
+                                  setAxisLineDisable(false);
+                                  setLineWidth(2);
+                              }
+                              onChange('axisLine-enable', value)
+                          }}/>
+            </ConfigItem>
+            <ConfigItem title={'颜色'}>
+                <CfgItemBorder>
+                    <BaseColorPicker value={config.axisLineColor}
+                                     disabled={axisLineDisable}
+                                     onChange={value => onChange('axisLine-color', value)}
+                                     style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
+                </CfgItemBorder>
+            </ConfigItem>
+            <ConfigItem title={'线宽'}>
+                <UnderLineInput value={lineWidth} min={0} max={10}
+                                disabled={axisLineDisable}
+                                onChange={value => onChange('axisLine-width', value)}
+                                type={'number'}/>
+            </ConfigItem>
+        </ConfigCard>
+    )
+}
+
+
+export const AxisTitle: React.FC<{ config: any, onChange: Function }> = ({config, onChange}) => {
+
+    const [axisTitleDisable, setAxisTitleDisable] = useState(!config.titleEnable || false);
+    const [titlePos, setTitlePos] = useState(config.titlePosition);
+    const [title, setTitle] = useState(config.titleContent || '');
+    const [titleColor, setTitleColor] = useState(config.titleColor);
+
+
+    return (
+        <ConfigCard title={'标题'}>
+            <ConfigItem title={'开启'}>
+                <LcSwitch defaultValue={config.titleEnable || false}
+                          onChange={(value) => {
+                              if (!value)
+                                  setAxisTitleDisable(true)
+                              else {
+                                  setAxisTitleDisable(false);
+                                  setTitlePos('center');
+                                  setTitle('标题');
+                                  setTitleColor('#ffffff');
+                              }
+                              onChange('title-enable', value)
+                          }}/>
+            </ConfigItem>
+            <ConfigItem title={'位置'}>
+                <Select options={[
+                    {value: 'start', label: '前'},
+                    {value: 'center', label: '中'},
+                    {value: 'end', label: '后'}]}
+                        value={titlePos} placeholder={'请选择位置'}
+                        disabled={axisTitleDisable}
+                        onChange={value => onChange('title-position', value)}/>
+            </ConfigItem>
+            <ConfigItem title={'内容'}>
+                <UnderLineInput value={title || ''} disabled={axisTitleDisable}
+                                onChange={(e: any) => onChange('title-content', e.target.value)}
+                                type={'text'}/>
+            </ConfigItem>
+            <ConfigItem title={'颜色'}>
+                <CfgItemBorder>
+                    <BaseColorPicker value={titleColor}
+                                     disabled={axisTitleDisable}
+                                     onChange={value => onChange('title-color', value)}
+                                     style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
+                </CfgItemBorder>
+            </ConfigItem>
+            <ConfigItem title={'偏移量'}>
+                <UnderLineInput defaultValue={config.titleOffset || 0} min={0} type={'number'}
+                                disabled={axisTitleDisable}
+                                onChange={value => onChange('title-offset', value)}/>
+            </ConfigItem>
+        </ConfigCard>
+    )
+}
+
+export const AxisText: React.FC<{ config: any, onChange: Function }> = ({config, onChange}) => {
+
+    return (
+        <ConfigCard title={'文本'}>
+            <ConfigItem title={'颜色'}>
+                <CfgItemBorder>
+                    <BaseColorPicker defaultValue={config.textColor || '#d5d5d5'}
+                                     onChange={value => onChange('text-color', value)}
+                                     style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
+                </CfgItemBorder>
+            </ConfigItem>
+            <ConfigItem title={'角度'}>
+                <UnderLineInput defaultValue={config.textAngle || 0} step={0.1} type={'number'}
+                                onChange={value => onChange('text-angle', value)}/>
+            </ConfigItem>
+            <ConfigItem title={'偏移量'}>
+                <UnderLineInput defaultValue={config.textOffset || 0} type={'number'}
+                                onChange={value => onChange('text-offset', value)}/>
+            </ConfigItem>
+        </ConfigCard>
+    )
 }
 
 export default AxisConfig;
