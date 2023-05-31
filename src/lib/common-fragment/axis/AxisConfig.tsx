@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import './AxisConfig.less';
 import BaseColorPicker from "../../lc-color-picker/BaseColorPicker";
 import LcSwitch from "../../lc-switch/LcSwitch";
@@ -46,35 +46,7 @@ class AxisConfig extends Component<AxisConfigProps> {
                 <AxisLine config={config} onChange={this.onChange}/>
                 <AxisGridLine config={config} onChange={this.onChange}/>
                 <AxisTickLine config={config} onChange={this.onChange}/>
-
-                <ConfigCard title={'子刻度'}>
-                    <ConfigItem title={'开启'}>
-                        <LcSwitch defaultValue={config.subTickLineEnable || false}
-                                  onChange={value => this.onChange('subTickLine-enable', value)}/>
-                    </ConfigItem>
-                    <ConfigItem title={'数量'}>
-                        <UnderLineInput defaultValue={config.subTickLineCount || 0}
-                                        onChange={value => this.onChange('subTickLine-count', value)}
-                                        type={'number'}/>
-                    </ConfigItem>
-                    <ConfigItem title={'长度'}>
-                        <UnderLineInput defaultValue={config.subTickLineLength || 0}
-                                        onChange={value => this.onChange('subTickLine-length', value)}
-                                        type={'number'}/>
-                    </ConfigItem>
-                    <ConfigItem title={'宽度'}>
-                        <UnderLineInput defaultValue={config.subTickLineWidth || 0}
-                                        onChange={value => this.onChange('subTickLine-width', value)}
-                                        type={'number'}/>
-                    </ConfigItem>
-                    <ConfigItem title={'颜色'}>
-                        <CfgItemBorder>
-                            <BaseColorPicker value={config.subTickLineColor}
-                                             onChange={value => this.onChange('subTickLine-color', value)}
-                                             style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                        </CfgItemBorder>
-                    </ConfigItem>
-                </ConfigCard>
+                <AxisSubTickLine config={config} onChange={this.onChange}/>
             </Accordion>
         );
     }
@@ -99,6 +71,7 @@ export const AxisSubTickLine: React.FC<{ config: any, onChange: Function }> = ({
                                   setSubTickLineCount(5);
                                   setSubTickLineLength(2);
                                   setSubTickLineWidth(2);
+                                  setSubTickLineColor('#ffffff')
                               }
 
                           }}/>
@@ -215,6 +188,7 @@ export const AxisGridLine: React.FC<{ config: any, onChange: Function }> = ({con
 
     const [axisTitleDisable, setAxisTitleDisable] = useState(!config.gridLineEnable);
     const [alignTick, setAlignTick] = useState(config.gridLineAlignTick || false);
+    const [color, setColor] = useState(config.gridLineColor);
 
     return (
         <ConfigCard title={'网格线'}>
@@ -247,9 +221,12 @@ export const AxisGridLine: React.FC<{ config: any, onChange: Function }> = ({con
             </ConfigItem>
             <ConfigItem title={'颜色'}>
                 <CfgItemBorder>
-                    <BaseColorPicker value={config.gridLineColor}
+                    <BaseColorPicker value={color}
                                      disabled={axisTitleDisable}
-                                     onChange={value => onChange('gridLine-color', value)}
+                                     onChange={value => {
+                                         onChange('gridLine-color', value);
+                                         setColor(value);
+                                     }}
                                      style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
                 </CfgItemBorder>
             </ConfigItem>
@@ -259,7 +236,7 @@ export const AxisGridLine: React.FC<{ config: any, onChange: Function }> = ({con
 
 export const AxisLine: React.FC<{ config: any, onChange: Function }> = ({config, onChange}) => {
 
-    const [axisLineDisable, setAxisLineDisable] = useState(config.axisLineEnable || false);
+    const [axisLineDisable, setAxisLineDisable] = useState(!config.axisLineEnable || false);
     const [lineWidth, setLineWidth] = useState(config.axisLineWidth || 0);
     const [lineColor, setLineColor] = useState(config.axisLineColor);
 
@@ -309,6 +286,10 @@ export const AxisTitle: React.FC<{ config: any, onChange: Function }> = ({config
     const [title, setTitle] = useState(config.titleContent || '');
     const [titleColor, setTitleColor] = useState(config.titleColor);
 
+    useEffect(() => {
+        console.log('重新渲染了')
+
+    }, []);
 
     return (
         <ConfigCard title={'标题'}>
@@ -333,18 +314,27 @@ export const AxisTitle: React.FC<{ config: any, onChange: Function }> = ({config
                     {value: 'end', label: '后'}]}
                         value={titlePos} placeholder={'请选择位置'}
                         disabled={axisTitleDisable}
-                        onChange={value => onChange('title-position', value)}/>
+                        onChange={value => {
+                            onChange('title-position', value);
+                            setTitlePos(value);
+                        }}/>
             </ConfigItem>
             <ConfigItem title={'内容'}>
                 <UnderLineInput value={title || ''} disabled={axisTitleDisable}
-                                onChange={(e: any) => onChange('title-content', e.target.value)}
+                                onChange={(value: any) => {
+                                    onChange('title-content', value);
+                                    setTitle(value);
+                                }}
                                 type={'text'}/>
             </ConfigItem>
             <ConfigItem title={'颜色'}>
                 <CfgItemBorder>
                     <BaseColorPicker value={titleColor}
                                      disabled={axisTitleDisable}
-                                     onChange={value => onChange('title-color', value)}
+                                     onChange={value => {
+                                         onChange('title-color', value);
+                                         setTitleColor(value);
+                                     }}
                                      style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
                 </CfgItemBorder>
             </ConfigItem>

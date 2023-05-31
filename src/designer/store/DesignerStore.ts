@@ -20,6 +20,7 @@ import {
 import bootCore from "../BootCore";
 import BaseStore from "../../framework/interface/BaseStore";
 import rightStore from "../right/RightStore";
+import {merge} from "../../utils/ObjectUtil";
 
 class DesignerStore implements LCDesigner, BaseStore {
     constructor() {
@@ -298,7 +299,7 @@ class DesignerStore implements LCDesigner, BaseStore {
     updateElemConfig = (data: any) => {
         let activeConfig: ElemConfig | any = this.elemConfigs[this.activeElem?.id + ''];
         if (activeConfig)
-            this.elemConfigs[this.activeElem?.id + ''] = _.merge({}, activeConfig, data);
+            this.elemConfigs[this.activeElem?.id + ''] = {...merge(activeConfig, data)};
         const {setActiveElemConfig} = rightStore;
         setActiveElemConfig(this.elemConfigs[this.activeElem?.id + '']);
     }

@@ -1,4 +1,5 @@
 import {Layout} from "react-grid-layout";
+import DataConfig from "../../lib/common-fragment/data-config/DataConfig";
 
 /**
  * 主题
@@ -69,6 +70,8 @@ export interface APIConfig {
     headers?: any;
     //请求参数
     params?: any;
+    //刷新频率
+    flashFrequency?: number;
 }
 
 /**
@@ -82,11 +85,13 @@ export interface StaticConfig {
 /**
  * 数据配置项
  */
-export interface DataConfig {
+export interface DataConfigType {
     //数据来源方式
-    sourceType?: 'static' | 'api' | 'database' | 'excel';
-    //详细配置
-    config?: APIConfig | StaticConfig | any;
+    dataSource?: 'static' | 'api' | 'database' | 'excel';
+    staticData?: StaticConfig;
+    apiData?: APIConfig;
+    databaseData?: any;
+    excelData?: any;
 }
 
 /**
@@ -97,7 +102,7 @@ export interface ElemConfig {
 
     info?: Object;
     style?: Object;
-    data?: DataConfig;
+    data?: DataConfigType;
     animation?: Object;
     theme?: Object;
 }

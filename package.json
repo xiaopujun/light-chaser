@@ -23,6 +23,7 @@
     "antd": "^4.17.3",
     "codemirror": "^5.65.13",
     "http-proxy-middleware": "^2.0.1",
+    "js-beautify": "^1.14.7",
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
     "mobx": "^6.7.0",
@@ -60,6 +61,7 @@
     ]
   },
   "devDependencies": {
+    "@types/js-beautify": "^1.13.3",
     "customize-cra": "^1.0.0",
     "less": "^3.11.1",
     "less-loader": "5.0.0",

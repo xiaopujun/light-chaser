@@ -17,8 +17,7 @@ class LcSwitch extends Component<LcSwitchProps> {
     valueControl: boolean = true;
 
     state: any = {
-        value: undefined,
-        defaultValue: undefined
+        value: false,
     }
 
     constructor(props: LcSwitchProps) {
@@ -26,7 +25,7 @@ class LcSwitch extends Component<LcSwitchProps> {
         const {value, defaultValue} = this.props;
         if (defaultValue !== undefined && value === undefined)
             this.valueControl = false;
-        this.state = {value, defaultValue};
+        this.state = {value: value || defaultValue || false};
     }
 
     handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
