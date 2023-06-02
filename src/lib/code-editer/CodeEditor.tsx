@@ -9,6 +9,7 @@ import js_beautify from 'js-beautify';
 
 interface CodeEditorProps {
     value?: string;
+    defaultValue?: string;
     onChange?: (value: string) => void;
     readonly?: boolean;
     width?: string;
@@ -17,14 +18,23 @@ interface CodeEditorProps {
 }
 
 class CodeEditor extends Component<CodeEditorProps> {
-    editorRef: any = null;
+    editorDom: any = null;
     editor: any = null;
+    valueControl: boolean = true;
+    value: string = '';
+
+    constructor(props: CodeEditorProps) {
+        super(props);
+        const {value, defaultValue} = props;
+        this.valueControl = value !== undefined;
+        this.value = value || defaultValue || '';
+    }
 
     componentDidMount() {
-        if (this.editorRef == null)
+        if (this.editorDom == null)
             return;
-        const {onChange, value, readonly, width, height, mode} = this.props;
-        this.editor = CodeMirror(this.editorRef, {
+        const {onChange, readonly, width, height, mode} = this.props;
+        this.editor = CodeMirror(this.editorDom, {
             mode: mode || 'javascript',
             theme: 'lc-dark',
             lineNumbers: true,
@@ -33,18 +43,20 @@ class CodeEditor extends Component<CodeEditorProps> {
             readOnly: readonly || false,
             extraKeys: {
                 'Ctrl-/': 'toggleComment',
-                'Ctrl-Alt-L': this.formatCode,
+                'Ctrl-Alt-L': this.formatCodeShortKey,
             },
         });
         this.editor.on('change', () => {
             onChange && onChange(this.editor.getValue());
         });
-        this.editor.setValue(value || '');
+        this.editor.setValue((this.value && js_beautify(this.value, {
+            indent_size: 2,
+            space_in_empty_paren: true,
+        })) || '');
         this.editor.setSize(width || '100%', height || '100%');
-        this.formatCode();
     }
 
-    formatCode = () => {
+    formatCodeShortKey = () => {
         if (!this.editor) return;
         const code = this.editor.getValue();
         const formatted = js_beautify(code, {
@@ -54,9 +66,18 @@ class CodeEditor extends Component<CodeEditorProps> {
         this.editor.setValue(formatted);
     };
 
+    formatCode = (code: string) => {
+        return js_beautify(code, {
+            indent_size: 2,
+            space_in_empty_paren: true,
+        });
+    }
+
     render() {
+        if (this.valueControl && this.editor)
+            this.editor.setValue(this.formatCode(this.props.value || ''));
         return (
-            <div className={'lc-code-editor'} style={{border: '1px solid #373738'}} ref={dom => this.editorRef = dom}/>
+            <div className={'lc-code-editor'} style={{border: '1px solid #373738'}} ref={dom => this.editorDom = dom}/>
         );
     }
 }

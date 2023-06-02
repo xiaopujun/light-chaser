@@ -58,3 +58,8 @@ let res = replaceObjectProps({
         }
     }
 })
+
+let a = {
+    domain: 'qq.com',
+    ssl: 0
+}

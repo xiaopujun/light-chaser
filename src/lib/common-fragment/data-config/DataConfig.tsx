@@ -1,16 +1,19 @@
-import React, {Component} from 'react';
+import React, {Component, useRef, useState} from 'react';
 import ConfigItem from "../../config-item/ConfigItem";
 import CodeEditor from "../../code-editer/CodeEditor";
 import UnderLineInput from "../../lc-input/UnderLineInput";
 import ConfigItemTB from "../../config-item/ConfigItemTB";
 import LcButton from "../../lc-button/LcButton";
 import Select from "../../lc-select/Select";
-import {DataConfigType} from "../../../framework/types/DesignerType";
+import {DataConfigType, DataConfigVerifyCallback} from "../../../framework/types/DesignerType";
 import './DataConfig.less';
+import {sendHttpRequest} from "../../../utils/HttpUtil";
+import {stringToJsObj} from "../../../utils/ObjectUtil";
 
 interface DataConfigProps {
     config: DataConfigType,
-    onChange: Function,
+    onSave: Function,
+    verifyCallback: DataConfigVerifyCallback,
 }
 
 class DataConfig extends Component<DataConfigProps> {
@@ -33,39 +36,67 @@ class DataConfig extends Component<DataConfigProps> {
         });
     }
 
+    doSave = (dataConfig: any) => {
+        const {onSave} = this.props;
+        onSave && onSave({dataSource: this.state.dataSource, ...dataConfig});
+    }
 
     render() {
-        const {config, onChange} = this.props;
+        const {config} = this.props;
         const {dataSource} = this.state;
         return (
             <div className={'lc-data-config'}>
                 <ConfigItem title={'数据源'} contentStyle={{width: 100}}>
-                    <Select onChange={(value) => {
-                        this.dataSourcesChange(value);
-                        onChange('dataSource', value);
-                    }} defaultValue={dataSource} options={[
+                    <Select onChange={(value) => this.dataSourcesChange(value)} defaultValue={dataSource} options={[
                         {value: 'static', label: '静态数据'},
                         {value: 'api', label: '接口(API)'},
-                        {value: 'database', label: '数据库'},
-                        {value: 'excel', label: 'EXCEL导入'},
+                        // {value: 'database', label: '数据库'},
+                        // {value: 'excel', label: 'EXCEL导入'},
                     ]}/>
                 </ConfigItem>
-                {dataSource === 'static' && <StaticDataConfig {...this.props}/>}
-                {dataSource === 'api' && <ApiDataConfig {...this.props}/>}
+                {dataSource === 'static' &&
+                <StaticDataConfig config={config} onSave={this.doSave} verifyCallback={{}}/>}
+                {dataSource === 'api' &&
+                <ApiDataConfig config={config} onSave={this.doSave} verifyCallback={{}}/>}
             </div>
         );
     }
 }
 
-const ApiDataConfig: React.FC<DataConfigProps> = (props) => {
+const ApiDataConfig: React.FC<DataConfigProps> = ({config, onSave}) => {
+    console.log('ApiDataConfig')
+    const {apiData} = config;
+    const urlRef = useRef(apiData?.url || '');
+    const methodRef = useRef(apiData?.method || '');
+    const headerRef = useRef(apiData?.header || '');
+    const paramsRef = useRef(apiData?.params || '');
+    const flashFrequencyRef = useRef(apiData?.flashFrequency || 5);
+    const [testResult, setTestResult] = useState<any>('');
 
-    const editChange = (value: any) => {
+    const testApi = () => {
+        sendHttpRequest(urlRef.current, methodRef.current, stringToJsObj(headerRef.current), stringToJsObj(paramsRef.current)).then(res => {
+            setTestResult(JSON.stringify(res));
+        }).catch(err => {
+            setTestResult(JSON.stringify(err));
+        });
+    }
+
+    const doSave = () => {
+        onSave({
+            apiData: {
+                url: urlRef.current,
+                method: methodRef.current,
+                header: headerRef.current,
+                params: paramsRef.current,
+                flashFrequency: flashFrequencyRef.current
+            }
+        });
     }
 
     return (
         <>
             <ConfigItem title={'接口地址'} contentStyle={{width: 240}}>
-                <UnderLineInput/>
+                <UnderLineInput defaultValue={urlRef.current} onChange={value => urlRef.current = value}/>
             </ConfigItem>
             <ConfigItem title={'请求方式'} contentStyle={{width: 100}}>
                 <Select options={[
@@ -73,40 +104,66 @@ const ApiDataConfig: React.FC<DataConfigProps> = (props) => {
                     {value: 'post', label: 'POST'},
                     {value: 'put', label: 'PUT'},
                     {value: 'delete', label: 'DELETE'},
-                ]}/>
+                ]} defaultValue={methodRef.current} onChange={value => methodRef.current = value}/>
+            </ConfigItem>
+            <ConfigItem title={'刷新频率'} contentStyle={{
+                color: '#c6c9cd',
+                display: 'flex',
+                width: 40,
+                alignItems: 'center',
+            }}>
+                <UnderLineInput type={'number'} defaultValue={flashFrequencyRef.current}
+                                onChange={value => flashFrequencyRef.current = value}/>
+                <div>秒</div>
             </ConfigItem>
             <ConfigItemTB title={'请求头(JSON)'} contentStyle={{width: '95%'}}>
-                <CodeEditor onChange={editChange} value={'console.log("test")'}/>
+                <CodeEditor onChange={value => {
+                    headerRef.current = value;
+                }} value={headerRef.current}/>
             </ConfigItemTB>
             <ConfigItemTB title={'请求参数'} contentStyle={{width: '95%'}}>
-                <CodeEditor onChange={editChange} value={'console.log("test")'}/>
+                <CodeEditor onChange={value => {
+                    paramsRef.current = value;
+                }} value={paramsRef.current}/>
             </ConfigItemTB>
             <ConfigItemTB title={'响应结果'} contentStyle={{width: '95%'}}>
-                <CodeEditor readonly={true} onChange={editChange} value={'测试接口的返回结果将在这里显示。'}/>
+                <CodeEditor readonly={true} value={testResult}/>
             </ConfigItemTB>
-            <LcButton style={{width: 'calc(100% - 16px)', margin: '0 7px'}}>测试接口</LcButton>
+            <LcButton style={{width: 'calc(50% - 16px)', margin: '0 7px'}} onClick={testApi}>测试接口</LcButton>
+            <LcButton style={{width: 'calc(50% - 16px)', margin: '0 7px'}} onClick={doSave}>保存</LcButton>
         </>
     );
 }
 
-const StaticDataConfig: React.FC<DataConfigProps> = ({config, onChange}) => {
+const StaticDataConfig: React.FC<DataConfigProps> = ({config, onSave, verifyCallback}) => {
 
-    let dataCode = JSON.stringify(config.staticData?.data);
+    let dataCode = JSON.stringify(config.staticData?.data)
+        .replace(/"/g, '\''); // 将双引号替换为单引号
+
+
+    console.log(dataCode);
 
     const flashData = () => {
         try {
+            //校验数据合法性
+            if (verifyCallback && verifyCallback.staticDataVerify) {
+                let verifyRes = verifyCallback.staticDataVerify(dataCode);
+                if (verifyRes !== true) {
+                    console.error('数据校验失败', res);
+                    return;
+                }
+            }
             //todo 考虑下安全问题如何处理
-            let tempCode = `(function(){return ${dataCode};})()`;
-            onChange('static-data', eval(tempCode));
+            onSave({staticData: {data: stringToJsObj(dataCode)}});
         } catch (e: any) {
-            console.error('代码解析异常', e.message);
+            console.error('代码解析异常', e);
         }
     }
 
     return (
         <>
-            <CodeEditor onChange={(value) => dataCode = value} height={'400'} value={dataCode || ''}/>
-            <div className={'static-data-btn-arr'}><LcButton onClick={flashData}>刷新数据</LcButton></div>
+            <CodeEditor onChange={(value) => dataCode = value} height={'400'} defaultValue={dataCode || ''}/>
+            <div className={'static-data-btn-arr'}><LcButton onClick={flashData}>保存并刷新数据</LcButton></div>
         </>
     );
 }

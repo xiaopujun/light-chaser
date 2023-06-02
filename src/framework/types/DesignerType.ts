@@ -1,5 +1,4 @@
 import {Layout} from "react-grid-layout";
-import DataConfig from "../../lib/common-fragment/data-config/DataConfig";
 
 /**
  * 主题
@@ -67,7 +66,7 @@ export interface APIConfig {
     //请求方式
     method?: 'get' | 'post' | 'put' | 'delete';
     //请求头
-    headers?: any;
+    header?: any;
     //请求参数
     params?: any;
     //刷新频率
@@ -92,6 +91,13 @@ export interface DataConfigType {
     apiData?: APIConfig;
     databaseData?: any;
     excelData?: any;
+}
+
+/**
+ * 数据配置验证回调
+ */
+export interface DataConfigVerifyCallback {
+    staticDataVerify?: (data: any) => string | boolean;
 }
 
 /**

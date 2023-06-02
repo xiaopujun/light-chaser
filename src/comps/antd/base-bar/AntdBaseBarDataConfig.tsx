@@ -4,29 +4,22 @@ import {ConfigType} from "../../../framework/types/ConfigType";
 
 class AntdBaseBarDataConfig extends Component<ConfigType> {
 
-    onChange = (key: string, value: any) => {
+    onSave = (dataConfig: any) => {
         const {updateConfig} = this.props;
-        switch (key) {
-            case 'static-data':
-                updateConfig && updateConfig({
-                    data: {
-                        staticData: {
-                            data: [...value],
-                        }
-                    },
-                    style: {
-                        chartStyle: {
-                            data: value
-                        }
-                    }
-                })
-        }
-    }
+        let config: any = {data: dataConfig};
+        if ('staticData' in dataConfig)
+            config['style'] = {
+                chartStyle: {
+                    data: dataConfig.staticData.data
+                }
+            }
+        updateConfig && updateConfig(config);
+    };
 
     render() {
         const {config} = this.props;
         return (
-            <DataConfig config={config} onChange={this.onChange}/>
+            <DataConfig config={config} onSave={this.onSave} verifyCallback={{}}/>
         );
     }
 }
