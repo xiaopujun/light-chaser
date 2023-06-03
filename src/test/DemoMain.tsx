@@ -21,6 +21,6 @@ const HookComp: React.FC = () => {
 
     return (
         //这里的ref的作用是什么？
-        <button ref={'test'}>click me </button>
+        <button onClick={() => setState(Date.now)} onChange={() => console.log('ddddd')}>click me </button>
     );
 }

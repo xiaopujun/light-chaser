@@ -172,11 +172,11 @@ class AntdBaseBarCore extends AbstractAutoScannerCore {
                             }
                         }
                     },
-                    maxBarWidth: 14
+                    maxBarWidth: 14,
                 }
             },
             data: {
-                sourceType: 'static',
+                dataSource: 'static',
                 staticData: {
                     data: [
                         {

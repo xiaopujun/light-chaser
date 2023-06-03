@@ -33,7 +33,7 @@ class CodeEditor extends Component<CodeEditorProps> {
     componentDidMount() {
         if (this.editorDom == null)
             return;
-        const {onChange, readonly, width, height, mode} = this.props;
+        const {readonly, width, height, mode} = this.props;
         this.editor = CodeMirror(this.editorDom, {
             mode: mode || 'javascript',
             theme: 'lc-dark',
@@ -46,14 +46,17 @@ class CodeEditor extends Component<CodeEditorProps> {
                 'Ctrl-Alt-L': this.formatCodeShortKey,
             },
         });
-        this.editor.on('change', () => {
-            onChange && onChange(this.editor.getValue());
-        });
         this.editor.setValue((this.value && js_beautify(this.value, {
             indent_size: 2,
             space_in_empty_paren: true,
         })) || '');
+        this.editor.on('change', this.onChange);
         this.editor.setSize(width || '100%', height || '100%');
+    }
+
+    onChange = () => {
+        const {onChange} = this.props;
+        onChange && onChange(this.editor.getValue());
     }
 
     formatCodeShortKey = () => {
@@ -74,8 +77,11 @@ class CodeEditor extends Component<CodeEditorProps> {
     }
 
     render() {
-        if (this.valueControl && this.editor)
-            this.editor.setValue(this.formatCode(this.props.value || ''));
+        if (this.valueControl && this.editor) {
+            this.editor.off('change', this.onChange);
+            this.editor.setValue(this.formatCode(this.props.value || ''), 0);
+            this.editor.on('change', this.onChange);
+        }
         return (
             <div className={'lc-code-editor'} style={{border: '1px solid #373738'}} ref={dom => this.editorDom = dom}/>
         );

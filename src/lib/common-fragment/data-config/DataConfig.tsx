@@ -74,7 +74,7 @@ const ApiDataConfig: React.FC<DataConfigProps> = ({config, onSave}) => {
     const [testResult, setTestResult] = useState<any>('');
 
     const testApi = () => {
-        sendHttpRequest(urlRef.current, methodRef.current, stringToJsObj(headerRef.current), stringToJsObj(paramsRef.current)).then(res => {
+        sendHttpRequest(urlRef.current, methodRef.current, headerRef.current, paramsRef.current).then(res => {
             setTestResult(JSON.stringify(res));
         }).catch(err => {
             setTestResult(JSON.stringify(err));
@@ -86,11 +86,20 @@ const ApiDataConfig: React.FC<DataConfigProps> = ({config, onSave}) => {
             apiData: {
                 url: urlRef.current,
                 method: methodRef.current,
-                header: headerRef.current,
-                params: paramsRef.current,
+                header: stringToJsObj(headerRef.current),
+                params: stringToJsObj(paramsRef.current),
                 flashFrequency: flashFrequencyRef.current
             }
         });
+    }
+
+    const headerOnChange = (value: any) => {
+        console.log('headerOnChange', value)
+        headerRef.current = stringToJsObj(value);
+    }
+
+    const paramsOnChange = (value: any) => {
+        paramsRef.current = stringToJsObj(value);
     }
 
     return (
@@ -110,21 +119,17 @@ const ApiDataConfig: React.FC<DataConfigProps> = ({config, onSave}) => {
                 color: '#c6c9cd',
                 display: 'flex',
                 width: 40,
-                alignItems: 'center',
+                alignItems: 'center'
             }}>
                 <UnderLineInput type={'number'} defaultValue={flashFrequencyRef.current}
                                 onChange={value => flashFrequencyRef.current = value}/>
                 <div>秒</div>
             </ConfigItem>
             <ConfigItemTB title={'请求头(JSON)'} contentStyle={{width: '95%'}}>
-                <CodeEditor onChange={value => {
-                    headerRef.current = value;
-                }} value={headerRef.current}/>
+                <CodeEditor onChange={headerOnChange} defaultValue={JSON.stringify(headerRef.current)}/>
             </ConfigItemTB>
             <ConfigItemTB title={'请求参数'} contentStyle={{width: '95%'}}>
-                <CodeEditor onChange={value => {
-                    paramsRef.current = value;
-                }} value={paramsRef.current}/>
+                <CodeEditor onChange={paramsOnChange} defaultValue={JSON.stringify(paramsRef.current)}/>
             </ConfigItemTB>
             <ConfigItemTB title={'响应结果'} contentStyle={{width: '95%'}}>
                 <CodeEditor readonly={true} value={testResult}/>
@@ -149,7 +154,7 @@ const StaticDataConfig: React.FC<DataConfigProps> = ({config, onSave, verifyCall
             if (verifyCallback && verifyCallback.staticDataVerify) {
                 let verifyRes = verifyCallback.staticDataVerify(dataCode);
                 if (verifyRes !== true) {
-                    console.error('数据校验失败', res);
+                    console.error('数据校验失败', verifyRes);
                     return;
                 }
             }

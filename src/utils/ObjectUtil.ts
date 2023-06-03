@@ -20,5 +20,9 @@ export const merge = (originalData: any, newData: any) => {
 export const stringToJsObj = (code: string) => {
     code = code.replaceAll(/[\n\s]/g, "");
     let template = `(function(){return ${code};})()`;
-    return eval(template);
+    try {
+        return eval(template);
+    } catch (e) {
+        console.error('javascript code error: ', e);
+    }
 }
