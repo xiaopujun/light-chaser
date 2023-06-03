@@ -35,7 +35,7 @@ class ThemeConfig extends Component<ConfigType> {
                     <ThemeList onChange={this.themeChange}/>
                 </div>
                 <Dialog onClose={this.closeEditor} title={'编辑主题'} visible={this.state.editTheme} width={860}>
-                    <ThemeEditor/>
+                    <ThemeEditor />
                 </Dialog>
             </>
         );

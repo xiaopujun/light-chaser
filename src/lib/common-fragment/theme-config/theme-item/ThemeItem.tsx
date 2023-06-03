@@ -10,19 +10,22 @@ interface ThemeItemProps extends ThemeColors {
     colors: ThemeColors;
     id?: string;
     itemStyle?: React.CSSProperties;
+    customRender?: React.ReactNode;
 }
 
 class ThemeItem extends Component<ThemeItemProps> {
     render() {
         const {
             colors: {main, text, background, auxiliary, emphasize, supplementary},
-            selected = false, itemStyle, name = '主题名称', id
+            selected = false, itemStyle, name = '主题名称', id, customRender
         } = this.props;
         return (
             <div id={id} className={`lc-theme-item ${selected ? 'lc-theme-item-active' : ''}`} style={itemStyle}>
                 <div className={'lc-theme-item-header'}>
                     <div className={'lc-theme-item-title'}>{name}</div>
-                    <div className={'lc-theme-item-switch'}>编辑</div>
+                    <div className={'lc-theme-item-operator'}>
+                        {customRender}
+                    </div>
                 </div>
                 <div className={'lc-theme-item-body'} onClick={() => {
                 }}>
