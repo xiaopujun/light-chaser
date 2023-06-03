@@ -1,6 +1,6 @@
 import {MenuInfo} from "../types/MenuType";
 import React from "react";
-import {ElemConfig} from "../types/DesignerType";
+import {ElemConfig, ThemeItemType} from "../types/DesignerType";
 
 export abstract class AbstractAutoScannerCore {
 
@@ -38,6 +38,14 @@ export abstract class AbstractAutoScannerCore {
      * 获取组件
      */
     abstract getComponent(): React.Component | React.FC | any;
+
+    /**
+     * 更新组件主题样式
+     * @param newTheme 新主题
+     * @param sourceStyle 组件原样式
+     */
+        // abstract updateTheme(newTheme: ThemeItem, sourceStyle: any): any;
+    abstract updateTheme: (newTheme: ThemeItemType, sourceStyle: any) => any;
 }
 
 export interface BaseInfoType {

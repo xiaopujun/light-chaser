@@ -3,7 +3,7 @@ import {Layout} from "react-grid-layout";
 /**
  * 主题
  */
-export interface Theme {
+export interface ThemeColors {
     //主体色
     main?: string;
     //文字色
@@ -16,6 +16,18 @@ export interface Theme {
     emphasize?: string;
     //补充色
     supplementary?: string;
+}
+
+export interface ThemeItemType {
+    colors: ThemeColors;
+    name: string;
+    id: string;
+}
+
+export interface ThemeConfigType {
+    enable: boolean;
+    active: any;
+    list: Array<ThemeItemType>;
 }
 
 /**
@@ -287,7 +299,7 @@ export interface LCDesigner {
     //图层信息
     layers?: Layer[];
     //主题
-    theme?: Theme;
+    themeConfig?: ThemeConfigType;
     //编组
     group?: any;
     //联动配置

@@ -1,11 +1,15 @@
 import {AbstractAutoScannerCore, BaseInfoType} from "../../../framework/abstract/AbstractAutoScannerCore";
-import {ElemConfig} from "../../../framework/types/DesignerType";
+import {ElemConfig, ThemeItemType} from "../../../framework/types/DesignerType";
 import {MenuInfo} from "../../../framework/types/MenuType";
 import {PictureFilled} from "@ant-design/icons";
 import React from "react";
 import BgConfigContent from "./BgConfigContent";
+import ThemeItem from "../../../lib/common-fragment/theme-config/theme-item/ThemeItem";
 
 class LcBgCore extends AbstractAutoScannerCore {
+    updateTheme = (newTheme: ThemeItemType, sourceStyle: any) => {
+    };
+
     getBaseInfo(): BaseInfoType | null {
         return null;
     }

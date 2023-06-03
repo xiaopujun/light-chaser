@@ -121,7 +121,7 @@ class LCDesigner extends Component<LCDesignerProps | any> {
                     layoutConfigs: store.layoutConfigs,
                     statisticInfo: store.statisticInfo,
                     layers: store.layers,
-                    theme: store.theme,
+                    themeConfig: store.theme,
                     group: store.group,
                     linkage: store.linkage,
                     condition: store.condition,

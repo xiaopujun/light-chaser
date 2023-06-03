@@ -15,7 +15,7 @@ import {
     ProjectState,
     SaveType,
     Statistic,
-    Theme
+    ThemeConfigType
 } from "../../framework/types/DesignerType";
 import bootCore from "../BootCore";
 import BaseStore from "../../framework/interface/BaseStore";
@@ -118,7 +118,7 @@ class DesignerStore implements LCDesigner, BaseStore {
     /**
      * 主题
      */
-    theme: Theme = {};
+    themeConfig: ThemeConfigType | any = {};
 
     /**
      * 编组
@@ -151,7 +151,7 @@ class DesignerStore implements LCDesigner, BaseStore {
         this.layoutConfigs = store.layoutConfigs || this.layoutConfigs;
         this.statisticInfo = store.statisticInfo ? {...this.statisticInfo, ...store.statisticInfo} : this.statisticInfo;
         this.layers = store.layers || this.layers;
-        this.theme = store.theme || this.theme;
+        this.themeConfig = store.themeConfig || this.themeConfig;
         this.group = store.group || this.group;
         this.linkage = store.linkage || this.linkage;
         this.condition = store.condition || this.condition;
@@ -171,7 +171,7 @@ class DesignerStore implements LCDesigner, BaseStore {
             layoutConfigs: toJS(this.layoutConfigs),
             statisticInfo: toJS(this.statisticInfo),
             layers: toJS(this.layers),
-            theme: toJS(this.theme),
+            theme: toJS(this.themeConfig),
             group: toJS(this.group),
             linkage: toJS(this.linkage),
             condition: toJS(this.condition),
@@ -191,7 +191,7 @@ class DesignerStore implements LCDesigner, BaseStore {
         this.layoutConfigs = [];
         this.statisticInfo = {};
         this.layers = [];
-        this.theme = {};
+        this.themeConfig = {};
         this.group = {};
         this.linkage = {};
         this.condition = {};
@@ -300,7 +300,7 @@ class DesignerStore implements LCDesigner, BaseStore {
         let activeConfig: ElemConfig | any = this.elemConfigs[this.activeElem?.id + ''];
         if (activeConfig)
             this.elemConfigs[this.activeElem?.id + ''] = {...merge(activeConfig, data)};
-        console.log(toJS(activeConfig.data))
+        console.log(toJS(activeConfig))
         const {setActiveElemConfig} = rightStore;
         setActiveElemConfig(this.elemConfigs[this.activeElem?.id + '']);
     }
