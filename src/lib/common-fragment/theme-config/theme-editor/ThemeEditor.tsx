@@ -8,24 +8,21 @@ import ThemeItem from "../theme-item/ThemeItem";
 import ConfigCard from "../../../config-card/ConfigCard";
 import LcButton from "../../../lc-button/LcButton";
 import {ThemeItemType} from "../../../../framework/types/DesignerType";
-
-interface ThemeEditorProps {
-    themeList?: ThemeItemType[];
-}
+import designerStore from "../../../../designer/store/DesignerStore";
 
 /**
  * 主题编辑器
  */
-class ThemeEditor extends Component<ThemeEditorProps> {
+class ThemeEditor extends Component {
 
     state: any = {
         data: []
     }
 
-    constructor(props: ThemeEditorProps) {
+    constructor(props: any) {
         super(props);
-        const {themeList} = props;
-        this.state.data = themeList || [];
+        const {list} = designerStore.themeConfig;
+        this.state.data = list || [];
     }
 
     themeConfig: ThemeItemType = {
@@ -72,11 +69,12 @@ class ThemeEditor extends Component<ThemeEditorProps> {
                 return;
             }
         }
+        this.themeConfig.id = this.state.data.length + 1;
         data.push({...this.themeConfig});
-        this.themeConfig.name = '';
-        this.themeConfig.des = '';
         this.setState({data});
         //保存到数据库
+        const {updateThemeConfig} = designerStore;
+        updateThemeConfig({list: data});
     }
 
     render() {

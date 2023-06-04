@@ -21,6 +21,7 @@ import bootCore from "../BootCore";
 import BaseStore from "../../framework/interface/BaseStore";
 import rightStore from "../right/RightStore";
 import {merge} from "../../utils/ObjectUtil";
+import ThemeConfig from "../../lib/common-fragment/theme-config/ThemeConfig";
 
 class DesignerStore implements LCDesigner, BaseStore {
     constructor() {
@@ -300,9 +301,13 @@ class DesignerStore implements LCDesigner, BaseStore {
         let activeConfig: ElemConfig | any = this.elemConfigs[this.activeElem?.id + ''];
         if (activeConfig)
             this.elemConfigs[this.activeElem?.id + ''] = {...merge(activeConfig, data)};
-        console.log(toJS(activeConfig))
         const {setActiveElemConfig} = rightStore;
         setActiveElemConfig(this.elemConfigs[this.activeElem?.id + '']);
+    }
+
+    updateThemeConfig = (data: any) => {
+        this.themeConfig = merge(this.themeConfig, data);
+        console.log(toJS(this.themeConfig));
     }
 
     /**

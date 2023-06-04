@@ -14,16 +14,15 @@ export default class AntdBaseBar extends PureComponent<CompType> {
     }
 
     componentDidMount() {
-        this.polling();
+        // this.polling();
     }
 
     polling = () => {
-        this.getData().then((data: any) => {
-            this.setState({data});
-            setTimeout(() => {
-                this.polling();
-            }, parseInt(Math.random() * 3 + 3 + '') * 1000)
-        })
+        setInterval(() => {
+            this.getData().then((data: any) => {
+                this.setState({data});
+            })
+        }, parseInt(Math.random() * 3 + 3 + '') * 1000)
     }
 
     getData = () => {
