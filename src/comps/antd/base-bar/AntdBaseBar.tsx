@@ -14,7 +14,7 @@ export default class AntdBaseBar extends PureComponent<CompType> {
     }
 
     componentDidMount() {
-        // this.polling();
+        this.polling();
     }
 
     polling = () => {
@@ -22,7 +22,7 @@ export default class AntdBaseBar extends PureComponent<CompType> {
             this.getData().then((data: any) => {
                 this.setState({data});
             })
-        }, parseInt(Math.random() * 3 + 3 + '') * 1000)
+        }, parseInt(Math.random() * 18 + 3 + '') * 1000)
     }
 
     getData = () => {
