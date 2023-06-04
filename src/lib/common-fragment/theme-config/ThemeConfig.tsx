@@ -6,7 +6,6 @@ import ThemeList from "./theme-list/ThemeList";
 import {ConfigType} from "../../../framework/types/ConfigType";
 import {ThemeItemType} from "../../../framework/types/DesignerType";
 import rightStore from "../../../designer/right/RightStore";
-import {toJS} from "mobx";
 import {updateTheme} from "../../../comps/antd/base-bar/AntdBaseBarCore";
 
 class ThemeConfig extends Component<ConfigType> {

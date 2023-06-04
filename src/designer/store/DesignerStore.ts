@@ -15,13 +15,13 @@ import {
     ProjectState,
     SaveType,
     Statistic,
-    ThemeConfigType
+    ThemeConfigType,
+    ThemeItemType
 } from "../../framework/types/DesignerType";
 import bootCore from "../BootCore";
 import BaseStore from "../../framework/interface/BaseStore";
 import rightStore from "../right/RightStore";
 import {merge} from "../../utils/ObjectUtil";
-import ThemeConfig from "../../lib/common-fragment/theme-config/ThemeConfig";
 
 class DesignerStore implements LCDesigner, BaseStore {
     constructor() {
@@ -308,6 +308,19 @@ class DesignerStore implements LCDesigner, BaseStore {
     updateThemeConfig = (data: any) => {
         this.themeConfig = merge(this.themeConfig, data);
         console.log(toJS(this.themeConfig));
+    }
+
+    flashGlobalTheme = (newTheme: ThemeItemType) => {
+        const {themeRefresher} = bootCore;
+        this.elemConfigs && Object.keys(this.elemConfigs).forEach((key: string) => {
+            let elemConfig: any = this.elemConfigs[key];
+            let {info} = elemConfig;
+            if (info) {
+                const themeFreshFun = themeRefresher[info.type];
+                themeFreshFun && themeFreshFun(newTheme, elemConfig);
+                this.elemConfigs[key] = {...elemConfig};
+            }
+        });
     }
 
     /**

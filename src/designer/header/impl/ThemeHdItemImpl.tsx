@@ -1,17 +1,14 @@
 import React, {Component} from 'react';
-import ConfigItem from "../../../lib/config-item/ConfigItem";
 import Dialog from "../../../lib/lc-dialog/Dialog";
 import headerStore from "../HeaderStore";
-import CfgItemBorder from "../../../lib/config-item/CfgItemBorder";
-import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
-import LcSwitch from "../../../lib/lc-switch/LcSwitch";
-import ConfigCard from "../../../lib/config-card/ConfigCard";
+import ThemeList from "../../../lib/common-fragment/theme-config/theme-list/ThemeList";
+import LcButton from "../../../lib/lc-button/LcButton";
+import {ThemeItemType} from "../../../framework/types/DesignerType";
+import designerStore from "../../store/DesignerStore";
 
 class ThemeHdItemImpl extends Component {
 
-    state = {
-        open: false
-    }
+    selectedTheme: ThemeItemType | undefined;
 
     onClose = () => {
         const {setThemeVisible} = headerStore;
@@ -22,62 +19,22 @@ class ThemeHdItemImpl extends Component {
         this.setState({open});
     }
 
+    updateGlobalTheme = () => {
+        const {flashGlobalTheme} = designerStore;
+        if (this.selectedTheme) {
+            flashGlobalTheme(this.selectedTheme);
+            this.onClose();
+        }
+    }
+
     render() {
         const {themeVisible} = headerStore;
-        const {open} = this.state;
         return (
             <Dialog title={'主题设置'} visible={themeVisible} onClose={this.onClose}>
-                <ConfigItem title={'开启'}>
-                    <LcSwitch onChange={this.openTheme}/>
-                </ConfigItem>
-                {open && <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                    <ConfigCard title={'颜色划分'}>
-                        <ConfigItem title={'主体色'} contentStyle={{width: 90, marginRight: 20}}>
-                            <CfgItemBorder>
-                                <BaseColorPicker style={{width: '100%', height: '15px', borderRadius: 2}}
-                                                 showText={true}/>
-                            </CfgItemBorder>
-                        </ConfigItem>
-                        <ConfigItem title={'文字色'} contentStyle={{width: 90, marginRight: 20}}>
-                            <CfgItemBorder>
-                                <BaseColorPicker style={{width: '100%', height: '15px', borderRadius: 2}}
-                                                 showText={true}/>
-                            </CfgItemBorder>
-                        </ConfigItem>
-                        <ConfigItem title={'副文字色'} contentStyle={{width: 90, marginRight: 20}}>
-                            <CfgItemBorder>
-                                <BaseColorPicker style={{width: '100%', height: '15px', borderRadius: 2}}
-                                                 showText={true}/>
-                            </CfgItemBorder>
-                        </ConfigItem>
-                        <ConfigItem title={'背景色'} contentStyle={{width: 90, marginRight: 20}}>
-                            <CfgItemBorder>
-                                <BaseColorPicker style={{width: '100%', height: '15px', borderRadius: 2}}
-                                                 showText={true}/>
-                            </CfgItemBorder>
-                        </ConfigItem>
-                        <ConfigItem title={'辅助色'} contentStyle={{width: 90, marginRight: 20}}>
-                            <CfgItemBorder>
-                                <BaseColorPicker style={{width: '100%', height: '15px', borderRadius: 2}}
-                                                 showText={true}/>
-                            </CfgItemBorder>
-                        </ConfigItem>
-                        <ConfigItem title={'强调色'} contentStyle={{width: 90, marginRight: 20}}>
-                            <CfgItemBorder>
-                                <BaseColorPicker style={{width: '100%', height: '15px', borderRadius: 2}}
-                                                 showText={true}/>
-                            </CfgItemBorder>
-                        </ConfigItem>
-                        <ConfigItem title={'补充色'} contentStyle={{width: 90, marginRight: 20}}>
-                            <CfgItemBorder>
-                                <BaseColorPicker style={{width: '100%', height: '15px', borderRadius: 2}}
-                                                 showText={true}/>
-                            </CfgItemBorder>
-                        </ConfigItem>
-                    </ConfigCard>
-                </div>}
+                <ThemeList onChange={(value) => this.selectedTheme = value}/>
                 <br/>
-                <p style={{padding: '0 10px', color: '#b0b0b0', fontSize: 12}}>说明：全局主题设置后，将会对所有实现了主题系统的组件生效</p>
+                <LcButton style={{width: '100%'}} onClick={this.updateGlobalTheme}>更新主题</LcButton>
+                <br/>
             </Dialog>
         );
     }

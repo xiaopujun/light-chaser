@@ -13,6 +13,7 @@ class BootCore {
     headersClazz: { [key: string]: React.Component | React.FC | any } = {};
     compTypeClazz: { [key: string]: React.Component | React.FC | any } = {};
     classifyClazz: { [key: string]: React.Component | React.FC | any } = {};
+    themeRefresher: { [key: string]: Function } = {};
 
     compInitObj: { [key: string]: Object } = {};
 
@@ -48,8 +49,10 @@ class BootCore {
             if (Clazz && AbstractAutoScannerCore.isPrototypeOf(Clazz)) {
                 let autoCompObj = new Clazz();
                 this.autoCompObjs[autoCompObj.getKey()] = autoCompObj;
+                this.themeRefresher[autoCompObj.getKey()] = autoCompObj.updateTheme;
             }
         });
+        console.log(this.themeRefresher)
     }
 
     scannerClassify = () => {
