@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import Dialog from "../../../lib/lc-dialog/Dialog";
-import headerStore from "../HeaderStore";
-import ThemeList from "../../../lib/common-fragment/theme-config/theme-list/ThemeList";
-import LcButton from "../../../lib/lc-button/LcButton";
-import {ThemeItemType} from "../../../framework/types/DesignerType";
-import designerStore from "../../store/DesignerStore";
+import Dialog from "../../../../lib/lc-dialog/Dialog";
+import headerStore from "../../HeaderStore";
+import ThemeList from "../../../../lib/common-fragment/theme-config/theme-list/ThemeList";
+import LcButton from "../../../../lib/lc-button/LcButton";
+import {ThemeItemType} from "../../../../framework/types/DesignerType";
+import designerStore from "../../../store/DesignerStore";
 
 class ThemeHdItemImpl extends Component {
 

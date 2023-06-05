@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {observer} from "mobx-react";
 import lcRightMenuStore from "../../store/LcRightMenuStore";
-import lcDesignerContentStore from "../../store/DesignerStore";
+import designerStore from "../../store/DesignerStore";
 import '../../style/LcRightMenu.less';
+import rightStore from "../../right/RightStore";
 
 class OperateMenu extends Component {
 
@@ -10,8 +11,16 @@ class OperateMenu extends Component {
         {
             name: '删除',
             onClick: (e: any) => {
+                const {updateActive} = designerStore;
                 const {targetId} = lcRightMenuStore;
-                targetId > -1 && lcDesignerContentStore.delItem(targetId)
+                const {setContentVisible} = rightStore;
+                setContentVisible(false);
+                updateActive && updateActive({
+                    id: -1,
+                    type: 'LcBg'
+                });
+                targetId > -1 && designerStore.delItem(targetId)
+
             }
         },
         {

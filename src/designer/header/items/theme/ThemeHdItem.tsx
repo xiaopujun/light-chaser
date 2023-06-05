@@ -1,6 +1,6 @@
-import {AbstractHeaderItem, HeaderItemProps} from "../../../framework/types/HeaderTypes";
+import {AbstractHeaderItem, HeaderItemProps} from "../../../../framework/types/HeaderTypes";
 import {SkinFilled} from "@ant-design/icons";
-import headerStore from "../HeaderStore";
+import headerStore from "../../HeaderStore";
 
 /**
  * header-主题设置

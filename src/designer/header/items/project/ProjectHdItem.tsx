@@ -1,6 +1,6 @@
-import {AbstractHeaderItem, HeaderItemProps} from "../../../framework/types/HeaderTypes";
+import {AbstractHeaderItem, HeaderItemProps} from "../../../../framework/types/HeaderTypes";
 import {SettingFilled} from "@ant-design/icons";
-import headerStore from "../HeaderStore";
+import headerStore from "../../HeaderStore";
 
 /**
  * header-项目设置

@@ -1,7 +1,7 @@
-import {AbstractHeaderItem, HeaderItemProps} from "../../../framework/types/HeaderTypes";
+import {AbstractHeaderItem, HeaderItemProps} from "../../../../framework/types/HeaderTypes";
 import {EyeFilled} from "@ant-design/icons";
-import designerStore from "../../store/DesignerStore";
-import {designerRouter} from "../../../index";
+import designerStore from "../../../store/DesignerStore";
+import {designerRouter} from "../../../../index";
 
 /**
  * header-预览

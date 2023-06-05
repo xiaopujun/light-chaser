@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
-import ConfigItem from "../../../lib/config-item/ConfigItem";
-import Dialog from "../../../lib/lc-dialog/Dialog";
-import headerStore from "../HeaderStore";
-import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
-import Radio from "../../../lib/lc-radio/Radio";
+import ConfigItem from "../../../../lib/config-item/ConfigItem";
+import Dialog from "../../../../lib/lc-dialog/Dialog";
+import headerStore from "../../HeaderStore";
+import UnderLineInput from "../../../../lib/lc-input/UnderLineInput";
+import Radio from "../../../../lib/lc-radio/Radio";
+import LcButton from "../../../../lib/lc-button/LcButton";
+import './ProjectHdItemImpl.less';
 
 class ProjectHdItemImpl extends Component {
 
@@ -15,7 +17,7 @@ class ProjectHdItemImpl extends Component {
     render() {
         const {projectVisible} = headerStore;
         return (
-            <Dialog title={'项目设置'} visible={projectVisible} onClose={this.onClose}>
+            <Dialog title={'项目设置'} className={'lc-header-project-set'} visible={projectVisible} onClose={this.onClose}>
                 <div style={{display: 'flex', flexWrap: 'wrap'}}>
                     <ConfigItem title={'项目名称'} contentStyle={{width: 120}}>
                         <UnderLineInput/>
@@ -37,6 +39,10 @@ class ProjectHdItemImpl extends Component {
                             {label: '封存', value: '2'}
                         ]}/>
                     </ConfigItem>
+                </div>
+                <div className={'lc-header-project-footer'}>
+                    <LcButton>保存</LcButton>
+                    <LcButton>取消</LcButton>
                 </div>
             </Dialog>
         );

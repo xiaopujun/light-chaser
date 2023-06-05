@@ -3,10 +3,10 @@ import './DesignerHeader.less';
 import {RouteComponentProps} from "react-router-dom";
 import LCDesigner from "../index";
 import headerStore from "./HeaderStore";
-import CanvasHdConfigImpl from "./impl/CanvasHdConfigImpl";
+import CanvasHdConfigImpl from "./items/canvas/CanvasHdConfigImpl";
 import {observer} from "mobx-react";
-import ProjectHdItemImpl from "./impl/ProjectHdItemImpl";
-import ThemeHdItemImpl from "./impl/ThemeHdItemImpl";
+import ProjectHdItemImpl from "./items/project/ProjectHdItemImpl";
+import ThemeHdItemImpl from "./items/theme/ThemeHdItemImpl";
 
 interface LcDesignerHeaderProps extends RouteComponentProps {
     LCDesignerStore: LCDesigner;
