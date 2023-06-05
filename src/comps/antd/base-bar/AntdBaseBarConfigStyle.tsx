@@ -6,7 +6,6 @@ import {ConfigType} from "../../../framework/types/ConfigType";
 import ConfigItem from "../../../lib/config-item/ConfigItem";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import ConfigCard from "../../../lib/config-card/ConfigCard";
-import {calculateLegendConfig} from "../../../utils/AntdChartConfigUtil";
 import Legend from "../../../lib/common-fragment/legend/Legned";
 import AxisConfig from "../../../lib/common-fragment/axis/AxisConfig";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
@@ -311,6 +310,25 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
         return result;
     }
 
+    calculateLegendConfig = (chartStyle: any) => {
+        let res = {visible: false};
+        const {legend} = chartStyle;
+        if (!legend)
+            return res;
+        else {
+            res = {
+                ...res, ...{
+                    visible: true,
+                    position: legend?.position,
+                    direction: legend?.layout,
+                    color: legend?.itemName?.style?.fill,
+                    fontSize: legend?.itemName?.style?.fontSize,
+                }
+            };
+        }
+        return res;
+    }
+
     render() {
         const {updateConfig, config} = this.props;
         const {chartStyle} = config;
@@ -335,7 +353,7 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
                             </ConfigItem>
                         </ConfigCard>
                     </Accordion>
-                    <Legend config={calculateLegendConfig(config.chartStyle)}
+                    <Legend config={this.calculateLegendConfig(config.chartStyle)}
                             onChange={this.legendChanged}/>
                     <AxisConfig title={'X轴'} config={this.parseAxisConfig(config.chartStyle.xAxis)}
                                 onChange={(key: string, data: any) => {

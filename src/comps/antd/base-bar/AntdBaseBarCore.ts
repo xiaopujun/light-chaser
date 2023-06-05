@@ -1,5 +1,5 @@
-import {AbstractAutoScannerCore, BaseInfoType} from "../../../framework/abstract/AbstractAutoScannerCore";
-import {ElemConfig, ThemeItemType} from "../../../framework/types/DesignerType";
+import {AbstractComponentDefinitionCore} from "../../../framework/abstract/AbstractComponentDefinitionCore";
+import {BaseInfoType, ElemConfig, ThemeItemType} from "../../../framework/types/DesignerType";
 import {MenuInfo} from "../../../framework/types/MenuType";
 import barImg from "./bar.png";
 import {getDefaultMenuList} from "../../../designer/right/util";
@@ -63,7 +63,7 @@ export const updateTheme = (newTheme: ThemeItemType, sourceStyle: any) => {
         sourceStyle.style.chartStyle.yAxis.subTickLine.style.stroke = auxiliary;
 }
 
-class AntdBaseBarCore extends AbstractAutoScannerCore {
+class AntdBaseBarCore extends AbstractComponentDefinitionCore {
 
     getKey(): string {
         return 'AntdBaseBar';

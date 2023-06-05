@@ -280,6 +280,36 @@ export interface LcLayout extends Layout {
 }
 
 /**
+ * 组件基础信息
+ */
+export interface BaseInfoType {
+    /**
+     * 组件显示名称
+     */
+    name: string;
+    /**
+     * 组件标识
+     */
+    key: string;
+    /**
+     * 类型名称
+     */
+    typeName: string;
+    /**
+     * 类型标识
+     */
+    typeKey: string;
+    /**
+     * 来源名称
+     */
+    sourceName: string;
+    /**
+     * 来源标识
+     */
+    sourceKey: string;
+}
+
+/**
  * lc设计器配置
  */
 export interface LCDesigner {

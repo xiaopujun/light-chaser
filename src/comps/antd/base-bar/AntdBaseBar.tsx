@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import CompBgContainer from "../../../lib/lc-bg-container/CompBgContainer";
+import CompBgContainer from "../../lc/background/CompBgContainer";
 import {CompType} from "../../../framework/types/CompType";
 import {Bar} from "@ant-design/charts";
 

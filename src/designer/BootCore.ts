@@ -1,8 +1,8 @@
-import {AbstractHeaderItem} from "../framework/types/HeaderTypes";
 import React from "react";
 import {AbstractClassifyItem} from "../framework/abstract/AbstractClassifyItem";
 import headerStore from "./header/HeaderStore";
-import {AbstractAutoScannerCore} from "../framework/abstract/AbstractAutoScannerCore";
+import {AbstractComponentDefinitionCore} from "../framework/abstract/AbstractComponentDefinitionCore";
+import {AbstractHeaderItem} from "../framework/types/HeaderTypes";
 
 /**
  * 设计器启动器，通过该启动器自动化扫描加载组件
@@ -46,7 +46,7 @@ class BootCore {
         const compCtx = require.context('../comps', true, /\.(tsx|ts)$/);
         compCtx.keys().forEach(key => {
             const Clazz = compCtx(key).default;
-            if (Clazz && AbstractAutoScannerCore.isPrototypeOf(Clazz)) {
+            if (Clazz && AbstractComponentDefinitionCore.isPrototypeOf(Clazz)) {
                 let autoCompObj = new Clazz();
                 this.autoCompObjs[autoCompObj.getKey()] = autoCompObj;
                 this.themeRefresher[autoCompObj.getKey()] = autoCompObj.updateTheme;

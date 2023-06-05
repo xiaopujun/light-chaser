@@ -1,7 +1,7 @@
 import {action, makeObservable, observable, runInAction} from "mobx";
 import {MenuInfo} from "../../framework/types/MenuType";
 import bootCore from "../BootCore";
-import {AbstractAutoScannerCore} from "../../framework/abstract/AbstractAutoScannerCore";
+import {AbstractComponentDefinitionCore} from "../../framework/abstract/AbstractComponentDefinitionCore";
 import {ActiveElem} from "../../framework/types/DesignerType";
 import designerStore from "../store/DesignerStore";
 
@@ -30,7 +30,7 @@ class RightStore {
     setActiveElem = (activeElem: ActiveElem) => {
         if (!activeElem)
             return;
-        this.menus = (bootCore.autoCompObjs[activeElem.type + ''] as AbstractAutoScannerCore).getMenuList();
+        this.menus = (bootCore.autoCompObjs[activeElem.type + ''] as AbstractComponentDefinitionCore).getMenuList();
         this.activeElem = activeElem;
         if (this.contentVisible) {
             this.contentVisible = false;

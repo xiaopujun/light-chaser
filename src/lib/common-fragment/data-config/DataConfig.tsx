@@ -1,6 +1,6 @@
 import React, {Component, useRef, useState} from 'react';
 import ConfigItem from "../../config-item/ConfigItem";
-import CodeEditor from "../../code-editer/CodeEditor";
+import CodeEditor from "../../lc-code-editer/CodeEditor";
 import UnderLineInput from "../../lc-input/UnderLineInput";
 import ConfigItemTB from "../../config-item/ConfigItemTB";
 import LcButton from "../../lc-button/LcButton";
