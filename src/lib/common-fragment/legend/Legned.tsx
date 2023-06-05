@@ -4,7 +4,7 @@ import Accordion from "../../lc-accordion/Accordion";
 import BaseColorPicker from "../../lc-color-picker/BaseColorPicker";
 import CfgItemBorder from "../../config-item/CfgItemBorder";
 import ConfigItem from "../../config-item/ConfigItem";
-import {LegendType} from "../../../framework/types/LegendType";
+import {LegendType} from "./LegendType";
 import {ConfigType} from "../../../framework/types/ConfigType";
 import _ from "lodash";
 import Select from "../../lc-select/Select";

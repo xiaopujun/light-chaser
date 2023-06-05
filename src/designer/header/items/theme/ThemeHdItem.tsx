@@ -1,4 +1,4 @@
-import {AbstractHeaderItem, HeaderItemProps} from "../../../../framework/types/HeaderTypes";
+import {AbstractHeaderItem, HeaderItemProps} from "../../HeaderTypes";
 import {SkinFilled} from "@ant-design/icons";
 import headerStore from "../../HeaderStore";
 

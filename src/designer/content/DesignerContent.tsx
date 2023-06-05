@@ -5,7 +5,7 @@ import 'react-resizable/css/styles.css';
 import DragScaleProvider from "../operate-provider/DragScaleProvider";
 import {observer} from "mobx-react";
 import designerStore, {DesignerStore} from "../store/DesignerStore";
-import DesignerBackground from "./DesignerBackground";
+import DesignerBackground from "../../comps/lc/background/DesignerBackground";
 import bootCore from "../BootCore";
 import rightStore from "../right/RightStore";
 import DesignerRuler from "../../lib/lc-ruler/DesignerRuler";

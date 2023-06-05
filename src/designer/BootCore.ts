@@ -2,7 +2,7 @@ import React from "react";
 import {AbstractClassifyItem} from "../framework/abstract/AbstractClassifyItem";
 import headerStore from "./header/HeaderStore";
 import {AbstractComponentDefinitionCore} from "../framework/abstract/AbstractComponentDefinitionCore";
-import {AbstractHeaderItem} from "../framework/types/HeaderTypes";
+import {AbstractHeaderItem} from "./header/HeaderTypes";
 
 /**
  * 设计器启动器，通过该启动器自动化扫描加载组件

@@ -1,5 +1,5 @@
 import {action, makeObservable, observable, runInAction} from "mobx";
-import {MenuInfo} from "../../framework/types/MenuType";
+import {MenuInfo} from "./MenuType";
 import bootCore from "../BootCore";
 import {AbstractComponentDefinitionCore} from "../../framework/abstract/AbstractComponentDefinitionCore";
 import {ActiveElem} from "../../framework/types/DesignerType";

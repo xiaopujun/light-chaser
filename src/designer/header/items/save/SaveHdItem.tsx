@@ -1,4 +1,4 @@
-import {AbstractHeaderItem, HeaderItemProps} from "../../../../framework/types/HeaderTypes";
+import {AbstractHeaderItem, HeaderItemProps} from "../../HeaderTypes";
 import {SaveFilled} from "@ant-design/icons";
 import {designerRouter} from "../../../../index";
 import designerStore from "../../../store/DesignerStore";

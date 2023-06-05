@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import './Radio.less';
-import {Option} from "../../framework/types/HtmlFormType";
+import {Option} from "./RadioType";
 
 
 interface RadioProps {

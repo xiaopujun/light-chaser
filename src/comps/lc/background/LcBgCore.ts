@@ -1,6 +1,6 @@
 import {AbstractComponentDefinitionCore,} from "../../../framework/abstract/AbstractComponentDefinitionCore";
 import {BaseInfoType, ElemConfig, ThemeItemType} from "../../../framework/types/DesignerType";
-import {MenuInfo} from "../../../framework/types/MenuType";
+import {MenuInfo} from "../../../designer/right/MenuType";
 import {PictureFilled} from "@ant-design/icons";
 import React from "react";
 import BgConfigContent from "./BgConfigContent";

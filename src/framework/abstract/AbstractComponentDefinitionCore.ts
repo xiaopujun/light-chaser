@@ -1,4 +1,4 @@
-import {MenuInfo} from "../types/MenuType";
+import {MenuInfo} from "../../designer/right/MenuType";
 import React from "react";
 import {BaseInfoType, ElemConfig, ThemeItemType} from "../types/DesignerType";
 

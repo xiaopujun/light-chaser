@@ -1,6 +1,6 @@
 import {AbstractComponentDefinitionCore} from "../../../framework/abstract/AbstractComponentDefinitionCore";
 import {BaseInfoType, ElemConfig, ThemeItemType} from "../../../framework/types/DesignerType";
-import {MenuInfo} from "../../../framework/types/MenuType";
+import {MenuInfo} from "../../../designer/right/MenuType";
 import barImg from "./bar.png";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import React, {ClassType} from "react";

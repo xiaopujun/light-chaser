@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactGridLayout from 'react-grid-layout';
 import {RouteComponentProps} from "react-router-dom";
-import LcDesignerBackground from "../content/DesignerBackground";
+import LcDesignerBackground from "../../comps/lc/background/DesignerBackground";
 import {getProjectById} from "../../utils/LocalStorageUtil";
 
 interface LcShowProps extends RouteComponentProps {

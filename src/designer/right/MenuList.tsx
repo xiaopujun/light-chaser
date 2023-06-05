@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './MenuList.less';
-import {MenuInfo} from "../../framework/types/MenuType";
+import {MenuInfo} from "./MenuType";
 import rightStore from "./RightStore";
 import {observer} from "mobx-react";
 
