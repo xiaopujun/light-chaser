@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import '../style/LcDesignerFooter.less';
+import './DesignerFooter.less';
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {observer} from "mobx-react";
 import designerStore from "../store/DesignerStore";

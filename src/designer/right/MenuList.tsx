@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import '../style/LcConfigMenus.less';
+import './MenuList.less';
 import {MenuInfo} from "../../framework/types/MenuType";
 import rightStore from "./RightStore";
 import {observer} from "mobx-react";
