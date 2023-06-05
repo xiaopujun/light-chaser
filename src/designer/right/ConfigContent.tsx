@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {LineOutlined} from "@ant-design/icons";
 import rightStore from "./RightStore";
-import bootCore from "../BootCore";
+import designerStarter from "../DesignerStarter";
 import {observer} from "mobx-react";
 import './ConfigContent.less';
 
@@ -9,7 +9,7 @@ class ConfigContent extends Component {
 
     buildConfigContent = () => {
         let {activeMenu, activeElem, activeElemConfig, updateConfig} = rightStore;
-        let {autoCompObjs} = bootCore;
+        let {autoCompObjs} = designerStarter;
         let abstractConfigObj: any = autoCompObjs[activeElem.type + ''];
         let menuToConfigComp = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp = menuToConfigComp[activeMenu];

@@ -11,7 +11,6 @@ class HeaderStore {
     canvasVisible: boolean = false;
     projectVisible: boolean = false;
     themeVisible: boolean = false;
-    loaded: boolean = false;
 
     setCanvasVisible = (visible: boolean) => {
         this.canvasVisible = visible;
@@ -38,7 +37,6 @@ class HeaderStore {
             const aOrder = a.order || 0, bOrder = b.order || 0;
             return aOrder - bOrder
         });
-        this.loaded = true;
     }
 
 }

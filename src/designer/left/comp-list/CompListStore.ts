@@ -1,5 +1,5 @@
 import {makeAutoObservable} from "mobx";
-import bootCore from "../../BootCore";
+import designerStarter from "../../DesignerStarter";
 
 class CompListStore {
     constructor() {
@@ -13,7 +13,7 @@ class CompListStore {
 
     doInit = () => {
         const comps: Array<any> = [];
-        const {autoCompObjs}: any = bootCore;
+        const {autoCompObjs}: any = designerStarter;
         if (autoCompObjs) {
             Object.keys(autoCompObjs).forEach(key => {
                 let baseInfo = autoCompObjs[key].getBaseInfo();

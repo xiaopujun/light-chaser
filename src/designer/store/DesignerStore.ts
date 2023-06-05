@@ -18,7 +18,7 @@ import {
     ThemeConfigType,
     ThemeItemType
 } from "../../framework/types/DesignerType";
-import bootCore from "../BootCore";
+import designerStarter from "../DesignerStarter";
 import BaseStore from "../../framework/interface/BaseStore";
 import rightStore from "../right/RightStore";
 import {merge} from "../../utils/ObjectUtil";
@@ -241,7 +241,7 @@ class DesignerStore implements LCDesigner, BaseStore {
      */
     addItem = (item: LcLayout) => {
         this.layoutConfigs?.push(item);
-        const {loaded, autoCompObjs} = bootCore;
+        const {loaded, autoCompObjs} = designerStarter;
         if (!loaded) return;
         let initObj: any = autoCompObjs[item.compKey];
         let initData: any = initObj.getInitConfig()
@@ -311,7 +311,7 @@ class DesignerStore implements LCDesigner, BaseStore {
     }
 
     flashGlobalTheme = (newTheme: ThemeItemType) => {
-        const {themeRefresher} = bootCore;
+        const {themeRefresher} = designerStarter;
         this.elemConfigs && Object.keys(this.elemConfigs).forEach((key: string) => {
             let elemConfig: any = this.elemConfigs[key];
             let {info} = elemConfig;

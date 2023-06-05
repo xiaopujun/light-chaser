@@ -8,7 +8,7 @@ interface LcShowProps extends RouteComponentProps {
 
 }
 
-class LcShow extends Component<LcShowProps | any> {
+class Preview extends Component<LcShowProps | any> {
 
     state: any = {};
 
@@ -57,4 +57,4 @@ class LcShow extends Component<LcShowProps | any> {
     }
 }
 
-export default LcShow;
+export default Preview;

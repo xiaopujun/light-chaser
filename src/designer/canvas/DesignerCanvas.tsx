@@ -6,13 +6,13 @@ import DragScaleProvider from "../operate-provider/DragScaleProvider";
 import {observer} from "mobx-react";
 import designerStore, {DesignerStore} from "../store/DesignerStore";
 import DesignerBackground from "../../comps/lc/background/DesignerBackground";
-import bootCore from "../BootCore";
+import designerStarter from "../DesignerStarter";
 import rightStore from "../right/RightStore";
 import DesignerRuler from "../../lib/lc-ruler/DesignerRuler";
 import DesignerContainer from "../operate-provider/DesignerContainer";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 
-class DesignerContent extends PureComponent<DesignerStore | any> {
+class DesignerCanvas extends PureComponent<DesignerStore | any> {
 
     rgl: any = null;
     lcbg: any = null;
@@ -46,7 +46,7 @@ class DesignerContent extends PureComponent<DesignerStore | any> {
     generateElement = () => {
         const {layoutConfigs} = designerStore!;
         if (layoutConfigs && layoutConfigs.length > 0) {
-            const {autoCompObjs}: any = bootCore;
+            const {autoCompObjs}: any = designerStarter;
             return layoutConfigs.map((item: any) => {
                 let Chart: any = autoCompObjs[item.compKey].getComponent();
                 const compConfig: any = this.calculateChartConfig(item.id);
@@ -169,5 +169,5 @@ class DesignerContent extends PureComponent<DesignerStore | any> {
     }
 }
 
-export default observer(DesignerContent);
+export default observer(DesignerCanvas);
 

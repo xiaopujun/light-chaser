@@ -1,7 +1,7 @@
 import React, {Component, ReactElement} from 'react';
 import './DesignerHeader.less';
 import {RouteComponentProps} from "react-router-dom";
-import LCDesigner from "../index";
+import Designer from "../Designer";
 import headerStore from "./HeaderStore";
 import CanvasHdConfigImpl from "./items/canvas/CanvasHdConfigImpl";
 import {observer} from "mobx-react";
@@ -9,7 +9,7 @@ import ProjectHdItemImpl from "./items/project/ProjectHdItemImpl";
 import ThemeHdItemImpl from "./items/theme/ThemeHdItemImpl";
 
 interface LcDesignerHeaderProps extends RouteComponentProps {
-    LCDesignerStore: LCDesigner;
+    LCDesignerStore: Designer;
     updateDesignerStore?: (data: any) => void;
 }
 

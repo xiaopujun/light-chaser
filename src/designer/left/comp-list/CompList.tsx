@@ -5,7 +5,7 @@ import compListStore from "./CompListStore";
 import classifyListStore from "../classify-list/ClassifyListStore";
 import './CompList.less';
 import {observer} from "mobx-react";
-import bootCore from "../../BootCore";
+import designerStarter from "../../DesignerStarter";
 
 class CompList extends Component {
 
@@ -32,7 +32,7 @@ class CompList extends Component {
         for (let i = 0; i < comps.length; i++) {
             let compInfo: any = comps[i];
             const {name, key} = compInfo;
-            const {autoCompObjs} = bootCore;
+            const {autoCompObjs} = designerStarter;
             let compObj = JSON.stringify({compName: name, compKey: key});
             let lcCompInit: any = autoCompObjs[key];
             let chartImg = lcCompInit.getChartImg();

@@ -7,8 +7,8 @@ import LcRightMenu from "./designer/operate-provider/right-click-menu/OperateMen
 import DemoMain from "./test/DemoMain";
 
 const LightChaserList = lazy(() => import('./list/LightChaserList'));
-const LCDesigner = lazy(() => import('./designer'));
-const Preview = lazy(() => import('./designer/show/LcShow'));
+const LCDesigner = lazy(() => import('./designer/Designer'));
+const Preview = lazy(() => import('./designer/preview/Preview'));
 
 class App extends Component<any> {
     render() {

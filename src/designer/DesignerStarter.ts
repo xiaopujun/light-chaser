@@ -1,5 +1,4 @@
 import React from "react";
-import {AbstractClassifyItem} from "../framework/abstract/AbstractClassifyItem";
 import headerStore from "./header/HeaderStore";
 import {AbstractComponentDefinitionCore} from "../framework/abstract/AbstractComponentDefinitionCore";
 import {AbstractHeaderItem} from "./header/HeaderTypes";
@@ -7,16 +6,14 @@ import {AbstractHeaderItem} from "./header/HeaderTypes";
 /**
  * 设计器启动器，通过该启动器自动化扫描加载组件
  */
-class BootCore {
-
+class DesignerStarter {
+    //自定义组件
     autoCompObjs: { [key: string]: Object } = {};
+    //头部操作菜单组件
     headersClazz: { [key: string]: React.Component | React.FC | any } = {};
-    compTypeClazz: { [key: string]: React.Component | React.FC | any } = {};
-    classifyClazz: { [key: string]: React.Component | React.FC | any } = {};
+    //主题刷新器
     themeRefresher: { [key: string]: Function } = {};
-
-    compInitObj: { [key: string]: Object } = {};
-
+    //是否已经加载完毕
     loaded: boolean = false;
 
 
@@ -24,10 +21,10 @@ class BootCore {
     doInit = () => {
         this.scannerHeader();
         this.scannerCompsData();
-        this.scannerClassify();
         this.loaded = true;
     }
 
+    //扫描头部组件
     scannerHeader = () => {
         const headerCtx = require.context('./header/items', true, /\.(tsx|ts)$/);
         let headersClazz: { [key: string]: React.Component | React.FC | any } = {};
@@ -42,6 +39,7 @@ class BootCore {
         doInit(headersClazz);
     }
 
+    //扫描自定义组件
     scannerCompsData = () => {
         const compCtx = require.context('../comps', true, /\.(tsx|ts)$/);
         compCtx.keys().forEach(key => {
@@ -52,20 +50,8 @@ class BootCore {
                 this.themeRefresher[autoCompObj.getKey()] = autoCompObj.updateTheme;
             }
         });
-        console.log(this.themeRefresher)
-    }
-
-    scannerClassify = () => {
-        const classifyCtx = require.context('./left/classify-list/items', true, /\.(tsx|ts)$/);
-        classifyCtx.keys().forEach(key => {
-            const keyName = key.replace(/^\.\/([\w|-]+\/)*(\w+)\.(tsx|ts)$/, '$2');
-            const comp = classifyCtx(key).default;
-            if (comp && AbstractClassifyItem.isPrototypeOf(comp)) {
-                this.classifyClazz[keyName] = comp;
-            }
-        })
     }
 }
 
-const bootCore = new BootCore();
-export default bootCore;
+const designerStarter = new DesignerStarter();
+export default designerStarter;

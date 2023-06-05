@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import LCLayoutContent from "./content/DesignerContent";
+import LCLayoutContent from "./canvas/DesignerCanvas";
 import DesignerHeader from "./header/DesignerHeader";
 import {RouteComponentProps} from "react-router-dom";
 import LcHeader from "./structure/LcHeader";
@@ -13,9 +13,9 @@ import DesignerLeft from "./left";
 import Right from "./right";
 import DesignerFooter from "./footer/DesignerFooter";
 import lcDesignerContentStore from './store/DesignerStore';
-import bootCore from './BootCore';
+import designerStarter from './DesignerStarter';
 import {getProjectById} from "../utils/LocalStorageUtil";
-import lcRightMenuStore from "./store/LcRightMenuStore";
+import lcRightMenuStore from "./operate-provider/right-click-menu/LcRightMenuStore";
 import eventManager from "./operate-provider/core/EventManager";
 
 interface LCDesignerProps extends RouteComponentProps {
@@ -30,12 +30,12 @@ interface LCDesignerProps extends RouteComponentProps {
     updateBaseStyle?: (data?: any) => void;
 }
 
-class LCDesigner extends Component<LCDesignerProps | any> {
+class Designer extends Component<LCDesignerProps | any> {
 
     constructor(props: any) {
         super(props);
         //启动组件自动化扫描
-        const {doInit} = bootCore;
+        const {doInit} = designerStarter;
         doInit && doInit();
         //初始化操作类型
         this.initOperateType();
@@ -150,4 +150,4 @@ class LCDesigner extends Component<LCDesignerProps | any> {
     }
 }
 
-export default LCDesigner;
+export default Designer;
