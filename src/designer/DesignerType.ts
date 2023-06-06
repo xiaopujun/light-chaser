@@ -131,9 +131,9 @@ export interface ElemConfig {
  */
 export enum SaveType {
     //本地存储(indexedDB)
-    LOCAL = 'local',
+    LOCAL = '0',
     //服务器存储
-    SERVER = 'server'
+    SERVER = '1'
 }
 
 /**
@@ -141,11 +141,11 @@ export enum SaveType {
  */
 export enum ProjectState {
     //草稿
-    DRAFT = 'draft',
+    DRAFT = '0',
     //发布
-    PUBLISH = 'publish',
+    PUBLISH = '1',
     //封存
-    SEALED = 'sealed'
+    SEALED = '2'
 }
 
 /**
@@ -162,8 +162,6 @@ export interface ProjectConfig {
     createTime?: string;
     //更新时间
     updateTime?: string;
-    //元素个数
-    elemCount?: number;
     //存储类型
     saveType?: SaveType;
 }

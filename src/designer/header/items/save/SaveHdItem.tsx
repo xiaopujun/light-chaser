@@ -3,6 +3,7 @@ import {SaveFilled} from "@ant-design/icons";
 import {designerRouter} from "../../../../index";
 import designerStore from "../../../store/DesignerStore";
 import {createProject, updateProject} from "../../../../utils/LocalStorageUtil";
+import {SaveType} from "../../../DesignerType";
 
 /**
  * header-保存
@@ -44,9 +45,9 @@ export default class SaveHdItem extends AbstractHeaderItem {
             order: 3,
             onClick: () => {
                 let {projectConfig: {saveType}} = designerStore;
-                if (saveType === 'local') {
+                if (saveType === SaveType.LOCAL) {
                     this.localSave();
-                } else if (saveType === 'server') {
+                } else if (saveType === SaveType.SERVER) {
                     alert("server save");
                 }
             }

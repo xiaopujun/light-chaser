@@ -49,7 +49,6 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
         state: ProjectState.DRAFT,//项目状态
         createTime: '',//创建时间
         updateTime: '',//更新时间
-        elemCount: 0,//元素个数
         saveType: SaveType.LOCAL,//存储类型
     };
 
@@ -317,18 +316,16 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
      * 更新画布设置
      */
     updateCanvasConfig = (data: CanvasConfig) => {
-        runInAction(() => {
-            this.canvasConfig = {...this.canvasConfig, ...data};
-        })
+        this.canvasConfig = {...this.canvasConfig, ...data};
+        this.elemConfigs['-1']['background']['width'] = data.width;
+        this.elemConfigs['-1']['background']['height'] = data.height;
     }
 
     /**
      * 更新项目配置
      */
     updateProjectConfig = (data: ProjectConfig) => {
-        runInAction(() => {
-            this.projectConfig = {...this.projectConfig, ...data};
-        })
+        this.projectConfig = {...this.projectConfig, ...data};
     }
 
 }

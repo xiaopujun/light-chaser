@@ -6,34 +6,62 @@ import UnderLineInput from "../../../../lib/lc-input/UnderLineInput";
 import Radio from "../../../../lib/lc-radio/Radio";
 import LcButton from "../../../../lib/lc-button/LcButton";
 import './ProjectHdItemImpl.less';
+import designerStore from "../../../store/DesignerStore";
+import {ProjectConfig} from "../../../DesignerType";
 
 class ProjectHdItemImpl extends Component {
+
+    config: ProjectConfig | any = {}
+
+    constructor(props: any) {
+        super(props);
+        const {projectConfig} = designerStore;
+        this.config = projectConfig;
+    }
+
+    componentWillUnmount() {
+        this.config = {};
+    }
 
     onClose = () => {
         const {setProjectVisible} = headerStore;
         setProjectVisible(false);
     }
 
+    doSave = () => {
+        const {name, state, saveType} = this.config;
+        if (name === '')
+            alert('项目名称不能为空');
+        if (state === '')
+            alert('项目状态不能为空');
+        if (saveType === '')
+            alert('存储类型不能为空');
+        const {updateProjectConfig} = designerStore;
+        updateProjectConfig(this.config);
+        this.onClose();
+    }
+
     render() {
         const {projectVisible} = headerStore;
+        const {projectConfig: {name, des, state, saveType}} = designerStore;
         return (
             <Dialog title={'项目设置'} className={'lc-header-project-set'} visible={projectVisible} onClose={this.onClose}>
                 <div style={{display: 'flex', flexWrap: 'wrap'}}>
                     <ConfigItem title={'项目名称'} contentStyle={{width: 120}}>
-                        <UnderLineInput/>
+                        <UnderLineInput defaultValue={name} onChange={(value) => this.config.name = value}/>
                     </ConfigItem>
                     <ConfigItem title={'项目描述'} contentStyle={{width: 140}}>
-                        <UnderLineInput/>
+                        <UnderLineInput defaultValue={des} onChange={(value) => this.config.des = value}/>
                     </ConfigItem>
                     <ConfigItem title={'项目状态'} contentStyle={{width: 190}}>
-                        <Radio options={[
+                        <Radio onChange={value => this.config.state = value} defaultValue={state} options={[
                             {label: '草稿', value: '0'},
                             {label: '发布', value: '1'},
                             {label: '封存', value: '2'}
                         ]}/>
                     </ConfigItem>
                     <ConfigItem title={'存储类型'} contentStyle={{width: 190}}>
-                        <Radio options={[
+                        <Radio onChange={value => this.config.saveType = value} defaultValue={saveType} options={[
                             {label: '本地', value: '0'},
                             {label: '服务端', value: '1'},
                             {label: '封存', value: '2'}
@@ -41,8 +69,8 @@ class ProjectHdItemImpl extends Component {
                     </ConfigItem>
                 </div>
                 <div className={'lc-header-project-footer'}>
-                    <LcButton>保存</LcButton>
-                    <LcButton>取消</LcButton>
+                    <LcButton onClick={this.doSave}>保存</LcButton>
+                    <LcButton onClick={this.onClose}>取消</LcButton>
                 </div>
             </Dialog>
         );
