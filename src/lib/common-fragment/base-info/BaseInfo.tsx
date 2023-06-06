@@ -3,7 +3,7 @@ import './BaseInfo.less';
 import ConfigCard from "../../config-card/ConfigCard";
 import ConfigItem from "../../config-item/ConfigItem";
 import UnderLineInput from "../../lc-input/UnderLineInput";
-import {ConfigType} from "../../../framework/types/ConfigType";
+import {ConfigType} from "../../../designer/right/ConfigType";
 
 /**
  * lc组件基础信息

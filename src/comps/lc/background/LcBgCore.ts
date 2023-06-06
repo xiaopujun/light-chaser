@@ -1,5 +1,5 @@
-import {AbstractCustomComponentDefinition,} from "../../../framework/abstract/AbstractCustomComponentDefinition";
-import {BaseInfoType, ElemConfig, ThemeItemType} from "../../../framework/types/DesignerType";
+import {AbstractCustomComponentDefinition,} from "../../../framework/core/AbstractCustomComponentDefinition";
+import {BaseInfoType, ElemConfig, ThemeItemType} from "../../../designer/DesignerType";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {PictureFilled} from "@ant-design/icons";
 import React from "react";

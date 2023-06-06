@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import designerStore from '../../../designer/store/DesignerStore';
-import {BackgroundColorMode, BackgroundConfig, BackgroundMode} from "../../../framework/types/DesignerType";
+import {BackgroundColorMode, BackgroundConfig, BackgroundMode} from "../../../designer/DesignerType";
 
 interface LcDesignerBackgroundProps {
     onClick?: (e: any) => void;

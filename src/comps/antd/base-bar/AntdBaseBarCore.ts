@@ -1,5 +1,5 @@
-import {AbstractCustomComponentDefinition} from "../../../framework/abstract/AbstractCustomComponentDefinition";
-import {BaseInfoType, ElemConfig, ThemeItemType} from "../../../framework/types/DesignerType";
+import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
+import {BaseInfoType, ElemConfig, ThemeItemType} from "../../../designer/DesignerType";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import barImg from "./bar.png";
 import {getDefaultMenuList} from "../../../designer/right/util";

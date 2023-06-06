@@ -1,6 +1,6 @@
 import {makeAutoObservable} from "mobx";
 import {AlignLeftOutlined, AppstoreFilled} from "@ant-design/icons";
-import {ClassifyEnum} from "../../../framework/types/ClassifyType";
+import {ClassifyEnum} from "./ClassifyType";
 
 const getClassifyItemInfo = () => {
     return [

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import BaseColorPicker from "../../../lc-color-picker/BaseColorPicker";
 import './ThemeItem.less';
-import {ThemeColors} from "../../../../framework/types/DesignerType";
+import {ThemeColors} from "../../../../designer/DesignerType";
 
 interface ThemeItemProps extends ThemeColors {
     //用于标识。 该主题是否被选中被选中的主题边框颜色与其他主题不同。

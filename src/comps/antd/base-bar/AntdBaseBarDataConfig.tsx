@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import DataConfig from "../../../lib/common-fragment/data-config/DataConfig";
-import {ConfigType} from "../../../framework/types/ConfigType";
+import {ConfigType} from "../../../designer/right/ConfigType";
 
 class AntdBaseBarDataConfig extends Component<ConfigType> {
 

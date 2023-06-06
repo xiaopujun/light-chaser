@@ -3,8 +3,8 @@ import Dialog from "../../lc-dialog/Dialog";
 import ThemeEditor from "./theme-editor/ThemeEditor";
 import LcButton from "../../lc-button/LcButton";
 import ThemeList from "./theme-list/ThemeList";
-import {ConfigType} from "../../../framework/types/ConfigType";
-import {ThemeItemType} from "../../../framework/types/DesignerType";
+import {ConfigType} from "../../../designer/right/ConfigType";
+import {ThemeItemType} from "../../../designer/DesignerType";
 import rightStore from "../../../designer/right/RightStore";
 import {updateTheme} from "../../../comps/antd/base-bar/AntdBaseBarCore";
 

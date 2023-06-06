@@ -5,7 +5,7 @@ import UnderLineInput from "../../lc-input/UnderLineInput";
 import ConfigItemTB from "../../config-item/ConfigItemTB";
 import LcButton from "../../lc-button/LcButton";
 import Select from "../../lc-select/Select";
-import {DataConfigType, DataConfigVerifyCallback} from "../../../framework/types/DesignerType";
+import {DataConfigType, DataConfigVerifyCallback} from "../../../designer/DesignerType";
 import './DataConfig.less';
 import {sendHttpRequest} from "../../../utils/HttpUtil";
 import {stringToJsObj} from "../../../utils/ObjectUtil";

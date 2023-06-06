@@ -1,4 +1,4 @@
-export default interface BaseStore {
+export default interface AbstractBaseStore {
     /**
      * 初始化
      */

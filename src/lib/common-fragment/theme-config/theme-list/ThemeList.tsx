@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ThemeItemType} from "../../../../framework/types/DesignerType";
+import {ThemeItemType} from "../../../../designer/DesignerType";
 import ThemeItem from "../theme-item/ThemeItem";
 import designerStore from "../../../../designer/store/DesignerStore";
 

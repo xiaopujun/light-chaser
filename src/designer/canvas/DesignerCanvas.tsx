@@ -12,6 +12,9 @@ import DesignerRuler from "../../lib/lc-ruler/DesignerRuler";
 import DesignerContainer from "../operate-provider/DesignerContainer";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 
+/**
+ * 设计器画布
+ */
 class DesignerCanvas extends PureComponent<DesignerStore | any> {
 
     rgl: any = null;

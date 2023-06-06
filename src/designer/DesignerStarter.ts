@@ -1,4 +1,4 @@
-import {AbstractCustomComponentDefinition} from "../framework/abstract/AbstractCustomComponentDefinition";
+import {AbstractCustomComponentDefinition} from "../framework/core/AbstractCustomComponentDefinition";
 import {AbstractHeaderItem, HeaderItemProps} from "./header/HeaderTypes";
 
 /**

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Accordion from "../../../lib/lc-accordion/Accordion";
 import CfgItemBorder from "../../../lib/config-item/CfgItemBorder";
 import BaseStyleSet from "../../../lib/common-fragment/base-style/BaseStyleSet";
-import {ConfigType} from "../../../framework/types/ConfigType";
+import {ConfigType} from "../../../designer/right/ConfigType";
 import ConfigItem from "../../../lib/config-item/ConfigItem";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import ConfigCard from "../../../lib/config-card/ConfigCard";

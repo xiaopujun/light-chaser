@@ -1,6 +1,6 @@
 import {DesignerStore} from "../designer/store/DesignerStore";
 import localforage from 'localforage';
-import {BackgroundConfig} from "../framework/types/DesignerType";
+import {BackgroundConfig} from "../designer/DesignerType";
 
 /**
  * 保存项目到本地数据库

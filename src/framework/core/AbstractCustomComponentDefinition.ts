@@ -1,6 +1,6 @@
 import {MenuInfo} from "../../designer/right/MenuType";
 import React from "react";
-import {BaseInfoType, ElemConfig, ThemeItemType} from "../types/DesignerType";
+import {BaseInfoType, ElemConfig, ThemeItemType} from "../../designer/DesignerType";
 
 /**
  * 自动扫描抽象组件定义核心类。

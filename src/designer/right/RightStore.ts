@@ -1,8 +1,8 @@
 import {action, makeObservable, observable, runInAction} from "mobx";
 import {MenuInfo} from "./MenuType";
 import designerStarter from "../DesignerStarter";
-import {AbstractCustomComponentDefinition} from "../../framework/abstract/AbstractCustomComponentDefinition";
-import {ActiveElem} from "../../framework/types/DesignerType";
+import {AbstractCustomComponentDefinition} from "../../framework/core/AbstractCustomComponentDefinition";
+import {ActiveElem} from "../DesignerType";
 import designerStore from "../store/DesignerStore";
 
 class RightStore {

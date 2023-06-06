@@ -5,7 +5,7 @@ import Accordion from "../../lc-accordion/Accordion";
 import CfgItemBorder from "../../config-item/CfgItemBorder";
 import ConfigCard from "../../config-card/ConfigCard";
 import ConfigItem from "../../config-item/ConfigItem";
-import {ConfigType} from "../../../framework/types/ConfigType";
+import {ConfigType} from "../../../designer/right/ConfigType";
 import {generateBorder, generatePaddingValue, parseBorder, parsePadding} from "../../../utils/CssStyleUtil";
 import {parseInt} from "lodash";
 import Select from "../../lc-select/Select";

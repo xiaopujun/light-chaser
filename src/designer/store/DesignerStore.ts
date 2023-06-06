@@ -17,13 +17,13 @@ import {
     Statistic,
     ThemeConfigType,
     ThemeItemType
-} from "../../framework/types/DesignerType";
+} from "../DesignerType";
 import designerStarter from "../DesignerStarter";
-import BaseStore from "../../framework/interface/BaseStore";
+import AbstractBaseStore from "../../framework/core/AbstractBaseStore";
 import rightStore from "../right/RightStore";
 import {merge} from "../../utils/ObjectUtil";
 
-class DesignerStore implements LCDesigner, BaseStore {
+class DesignerStore implements LCDesigner, AbstractBaseStore {
     constructor() {
         makeAutoObservable(this);
     }

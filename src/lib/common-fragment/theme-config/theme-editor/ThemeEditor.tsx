@@ -7,7 +7,7 @@ import CfgItemBorder from "../../../config-item/CfgItemBorder";
 import ThemeItem from "../theme-item/ThemeItem";
 import ConfigCard from "../../../config-card/ConfigCard";
 import LcButton from "../../../lc-button/LcButton";
-import {ThemeItemType} from "../../../../framework/types/DesignerType";
+import {ThemeItemType} from "../../../../designer/DesignerType";
 import designerStore from "../../../../designer/store/DesignerStore";
 
 /**
