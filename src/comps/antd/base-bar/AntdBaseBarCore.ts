@@ -1,4 +1,4 @@
-import {AbstractComponentDefinitionCore} from "../../../framework/abstract/AbstractComponentDefinitionCore";
+import {AbstractCustomComponentDefinition} from "../../../framework/abstract/AbstractCustomComponentDefinition";
 import {BaseInfoType, ElemConfig, ThemeItemType} from "../../../framework/types/DesignerType";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import barImg from "./bar.png";
@@ -63,7 +63,7 @@ export const updateTheme = (newTheme: ThemeItemType, sourceStyle: any) => {
         sourceStyle.style.chartStyle.yAxis.subTickLine.style.stroke = auxiliary;
 }
 
-class AntdBaseBarCore extends AbstractComponentDefinitionCore {
+class AntdBaseBarCore extends AbstractCustomComponentDefinition {
 
     getKey(): string {
         return 'AntdBaseBar';

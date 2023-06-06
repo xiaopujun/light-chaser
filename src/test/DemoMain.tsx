@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import Radio from "../lib/lc-radio/Radio";
-import {merge} from "lodash";
 
 class DemoMain extends Component {
 

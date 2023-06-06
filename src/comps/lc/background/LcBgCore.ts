@@ -1,11 +1,11 @@
-import {AbstractComponentDefinitionCore,} from "../../../framework/abstract/AbstractComponentDefinitionCore";
+import {AbstractCustomComponentDefinition,} from "../../../framework/abstract/AbstractCustomComponentDefinition";
 import {BaseInfoType, ElemConfig, ThemeItemType} from "../../../framework/types/DesignerType";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {PictureFilled} from "@ant-design/icons";
 import React from "react";
 import BgConfigContent from "./BgConfigContent";
 
-class LcBgCore extends AbstractComponentDefinitionCore {
+class LcBgCore extends AbstractCustomComponentDefinition {
     updateTheme = (newTheme: ThemeItemType, sourceStyle: any) => {
     };
 

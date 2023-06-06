@@ -7,7 +7,7 @@ import {BaseInfoType, ElemConfig, ThemeItemType} from "../types/DesignerType";
  * 对于所有继承并实现了该抽象类的字类，都会被自动扫描到并注册到系统中。
  * 因此，所有要接入设计器的react组件都应该按照该类的约定实现所有的方法。
  */
-export abstract class AbstractComponentDefinitionCore {
+export abstract class AbstractCustomComponentDefinition {
 
     /**
      * 返回组件标识。不同的组件之间标识不能相同。
