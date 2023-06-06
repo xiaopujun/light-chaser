@@ -13,7 +13,7 @@ export default class AntdBaseBar extends PureComponent<any> {
     }
 
     componentDidMount() {
-        this.polling();
+        // this.polling();
     }
 
     polling = () => {

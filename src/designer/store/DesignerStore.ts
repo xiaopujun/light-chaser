@@ -2,21 +2,8 @@ import {makeAutoObservable, runInAction, toJS} from "mobx";
 import * as _ from "lodash";
 import {Layout} from "react-grid-layout";
 import {
-    ActiveElem,
-    BackgroundColorMode,
-    BackgroundImgRepeat,
-    BackgroundMode,
-    CanvasConfig,
-    ElemConfig,
-    Layer,
-    LCDesigner,
-    LcLayout,
-    ProjectConfig,
-    ProjectState,
-    SaveType,
-    Statistic,
-    ThemeConfigType,
-    ThemeItemType
+    ActiveElem, BackgroundColorMode, BackgroundImgRepeat, BackgroundMode, CanvasConfig, ElemConfig, Layer,
+    LCDesigner, LcLayout, ProjectConfig, ProjectState, SaveType, Statistic, ThemeConfigType, ThemeItemType
 } from "../DesignerType";
 import designerStarter from "../DesignerStarter";
 import AbstractBaseStore from "../../framework/core/AbstractBaseStore";
@@ -157,6 +144,10 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
         this.linkage = store.linkage || this.linkage;
         this.condition = store.condition || this.condition;
         this.extendParams = store.extendParams ? {...this.extendParams, ...store.extendParams} : this.extendParams;
+        if (this.elemConfigs['-1']) {
+            this.elemConfigs['-1']['background']['width'] = this.canvasConfig.width;
+            this.elemConfigs['-1']['background']['height'] = this.canvasConfig.height;
+        }
         this.updateActive({id: -1, type: 'LcBg'});
         const {setUpdateConfig} = rightStore;
         setUpdateConfig(this.updateElemConfig);
