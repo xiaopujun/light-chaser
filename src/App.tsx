@@ -8,7 +8,7 @@ import DemoMain from "./test/DemoMain";
 
 const LightChaserList = lazy(() => import('./list/LightChaserList'));
 const LCDesigner = lazy(() => import('./designer/Designer'));
-const Preview = lazy(() => import('./designer/preview/Preview'));
+const Preview = lazy(() => import('./designer/view/DesignerView'));
 
 class App extends Component<any> {
     render() {
