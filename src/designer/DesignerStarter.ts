@@ -5,11 +5,11 @@ import {AbstractHeaderItem, HeaderItemProps} from "./header/HeaderTypes";
  * 设计器启动器，通过该启动器自动化扫描加载组件
  */
 class DesignerStarter {
-    //自定义组件
-    autoCompObjs: { [key: string]: Object } = {};
+    //自定义组件信息映射
+    customComponentInfoMap: { [key: string]: Object } = {};
     //头部操作菜单实例
     headerItemInstances: HeaderItemProps[] = [];
-    //主题刷新器
+    //自定义组件主题刷新器
     themeRefresher: { [key: string]: Function } = {};
 
 
@@ -42,9 +42,9 @@ class DesignerStarter {
         compCtx.keys().forEach(key => {
             const Clazz = compCtx(key).default;
             if (Clazz && AbstractCustomComponentDefinition.isPrototypeOf(Clazz)) {
-                let autoCompObj = new Clazz();
-                this.autoCompObjs[autoCompObj.getKey()] = autoCompObj;
-                this.themeRefresher[autoCompObj.getKey()] = autoCompObj.updateTheme;
+                let customComponentInfo = new Clazz();
+                this.customComponentInfoMap[customComponentInfo.getKey()] = customComponentInfo;
+                this.themeRefresher[customComponentInfo.getKey()] = customComponentInfo.updateTheme;
             }
         });
     }

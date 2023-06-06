@@ -241,8 +241,8 @@ class DesignerStore implements LCDesigner, BaseStore {
      */
     addItem = (item: LcLayout) => {
         this.layoutConfigs?.push(item);
-        const {autoCompObjs} = designerStarter;
-        let initObj: any = autoCompObjs[item.compKey];
+        const {customComponentInfoMap} = designerStarter;
+        let initObj: any = customComponentInfoMap[item.compKey];
         let initData: any = initObj.getInitConfig()
         initData.info = {...initData.info, ...{id: this.statisticInfo?.count}}
         if (this.elemConfigs && this.statisticInfo)

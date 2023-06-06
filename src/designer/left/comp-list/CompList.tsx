@@ -32,9 +32,9 @@ class CompList extends Component {
         for (let i = 0; i < comps.length; i++) {
             let compInfo: any = comps[i];
             const {name, key} = compInfo;
-            const {autoCompObjs} = designerStarter;
+            const {customComponentInfoMap} = designerStarter;
             let compObj = JSON.stringify({compName: name, compKey: key});
-            let lcCompInit: any = autoCompObjs[key];
+            let lcCompInit: any = customComponentInfoMap[key];
             let chartImg = lcCompInit.getChartImg();
             chartDom.push(
                 <div draggable={true} key={i + ''}

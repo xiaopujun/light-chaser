@@ -13,10 +13,10 @@ class CompListStore {
 
     doInit = () => {
         const comps: Array<any> = [];
-        const {autoCompObjs}: any = designerStarter;
-        if (autoCompObjs) {
-            Object.keys(autoCompObjs).forEach(key => {
-                let baseInfo = autoCompObjs[key].getBaseInfo();
+        const {customComponentInfoMap}: any = designerStarter;
+        if (customComponentInfoMap) {
+            Object.keys(customComponentInfoMap).forEach(key => {
+                let baseInfo = customComponentInfoMap[key].getBaseInfo();
                 if (baseInfo != null)
                     comps.push(baseInfo);
             });

@@ -46,9 +46,9 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
     generateElement = () => {
         const {layoutConfigs} = designerStore!;
         if (layoutConfigs && layoutConfigs.length > 0) {
-            const {autoCompObjs}: any = designerStarter;
+            const {customComponentInfoMap}: any = designerStarter;
             return layoutConfigs.map((item: any) => {
-                let Chart: any = autoCompObjs[item.compKey].getComponent();
+                let Chart: any = customComponentInfoMap[item.compKey].getComponent();
                 const compConfig: any = this.calculateChartConfig(item.id);
                 return (
                     <div key={item?.id + ''} className={'lc-comp-item'}

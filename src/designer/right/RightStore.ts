@@ -30,7 +30,7 @@ class RightStore {
     setActiveElem = (activeElem: ActiveElem) => {
         if (!activeElem)
             return;
-        this.menus = (designerStarter.autoCompObjs[activeElem.type + ''] as AbstractCustomComponentDefinition).getMenuList();
+        this.menus = (designerStarter.customComponentInfoMap[activeElem.type + ''] as AbstractCustomComponentDefinition).getMenuList();
         this.activeElem = activeElem;
         if (this.contentVisible) {
             this.contentVisible = false;

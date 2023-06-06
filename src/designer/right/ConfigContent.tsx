@@ -9,8 +9,8 @@ class ConfigContent extends Component {
 
     buildConfigContent = () => {
         let {activeMenu, activeElem, activeElemConfig, updateConfig} = rightStore;
-        let {autoCompObjs} = designerStarter;
-        let abstractConfigObj: any = autoCompObjs[activeElem.type + ''];
+        let {customComponentInfoMap} = designerStarter;
+        let abstractConfigObj: any = customComponentInfoMap[activeElem.type + ''];
         let menuToConfigComp = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp = menuToConfigComp[activeMenu];
         return <ConfigComp config={activeElemConfig[activeMenu]} updateConfig={updateConfig}/>;
