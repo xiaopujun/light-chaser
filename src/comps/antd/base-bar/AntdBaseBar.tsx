@@ -48,7 +48,7 @@ export default class AntdBaseBar extends PureComponent<any> {
         const {config} = this.props;
         if (!config) return null;
         let {style} = config;
-        this.calculateData(style);
+        // this.calculateData(style);
         console.log('AntdBaseBar')
         return (
             <CompBgContainer style={style?.baseStyle}>

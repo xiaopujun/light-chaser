@@ -11,7 +11,7 @@ class CompBgContainer extends Component<CompBgContainerProps> {
                 width: '100%',
                 height: '100%',
                 pointerEvents: 'none',
-                position: 'absolute'
+                position: 'relative'
             }, ...this.props.style
         };
         return (
