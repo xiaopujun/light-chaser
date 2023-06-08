@@ -6,6 +6,9 @@ import classifyListStore from "../classify-list/ClassifyListStore";
 import './CompList.less';
 import {observer} from "mobx-react";
 import designerStarter from "../../DesignerStarter";
+import designerStore from "../../store/DesignerStore";
+import {snowflake} from "../../../utils/IdGenerate";
+import {MovableItemData} from "../../../test/MovableItem";
 
 class CompList extends Component {
 
@@ -13,6 +16,18 @@ class CompList extends Component {
         super(props);
         const {doInit} = compListStore;
         doInit && doInit();
+    }
+
+    addItem = (compKey: string) => {
+        const {addItem} = designerStore;
+        let movableItem: MovableItemData = {
+            type: compKey,
+            width: 384,
+            height: 216,
+            position: [0, 0],
+            id: snowflake.generateId() + ''
+        }
+        addItem && addItem(movableItem);
     }
 
     getChartDom = () => {
@@ -33,19 +48,15 @@ class CompList extends Component {
             let compInfo: any = comps[i];
             const {name, key} = compInfo;
             const {customComponentInfoMap} = designerStarter;
-            let compObj = JSON.stringify({compName: name, compKey: key});
             let lcCompInit: any = customComponentInfoMap[key];
             let chartImg = lcCompInit.getChartImg();
             chartDom.push(
-                <div draggable={true} key={i + ''}
-                     onDragStart={(e) => {
-                         e.dataTransfer.setData('compObj', compObj);
-                     }} className={'list-item droppable-element'}>
+                <div key={i + ''} className={'list-item droppable-element'}>
                     <div className={'item-header'}>
                         <div className={'item-name'}>{name}</div>
                         <div className={'item-type'}>Antd</div>
                     </div>
-                    <div className={'item-content'}>
+                    <div className={'item-content'} onDoubleClick={() => this.addItem(key)}>
                         <div className={'item-img'} style={{backgroundImage: `url(${chartImg})`}}/>
                     </div>
                 </div>

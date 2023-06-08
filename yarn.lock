@@ -3645,13 +3645,6 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-grid-layout@^1.3.0":
-  version "1.3.1"
-  resolved "https://registry.npmmirror.com/@types/react-grid-layout/-/react-grid-layout-1.3.1.tgz#9c84011fceaf6054e405a920fdeea8fb00daa3dd"
-  integrity sha512-Y0YluwhEs/MsRWgyY+2DtNPCMaDdL9IkynS+b5EQcCK9ozBlQED7qQe2RCMSfwLoDwZXvcRtx+0Jyzs47geQ9g==
-  dependencies:
-    "@types/react" "*"
-
 "@types/react-router-dom@5.3.3":
   version "5.3.3"
   resolved "https://registry.npmmirror.com/@types/react-router-dom/-/react-router-dom-5.3.3.tgz#e9d6b4a66fcdbd651a5f106c2656a30088cc1e83"
@@ -5418,11 +5411,6 @@ clone@^2.1.1:
   version "2.1.2"
   resolved "https://registry.npmmirror.com/clone/-/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
   integrity sha512-3Pe/CF1Nn94hyhIYpjtiLhdCoEoz0DqQ+988E9gmeEdQZlojxnOb74wctFyuwWQHzqyf9X7C7MG8juUpqBJT8w==
-
-clsx@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.npmmirror.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
-  integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
 
 co@^4.6.0:
   version "4.6.0"
@@ -9803,11 +9791,6 @@ lodash.flow@^3.5.0:
   resolved "https://registry.npmmirror.com/lodash.flow/-/lodash.flow-3.5.0.tgz#87bf40292b8cf83e4e8ce1a3ae4209e20071675a"
   integrity sha512-ff3BX/tSioo+XojX4MOsOMhJw0nZoUEF011LX8g8d3gvjVbxd89cCio4BCXronjxcTUIJUoqKEUA+n4CqvvRPw==
 
-lodash.isequal@^4.0.0:
-  version "4.5.0"
-  resolved "https://registry.npmmirror.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
-  integrity sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==
-
 lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.npmmirror.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
@@ -11944,7 +11927,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@15.x, prop-types@^15.0.0, prop-types@^15.5.10, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.8.1:
+prop-types@^15.5.10, prop-types@^15.6.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.npmmirror.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -12611,29 +12594,10 @@ react-dom@^17.0.2:
     object-assign "^4.1.1"
     scheduler "^0.20.2"
 
-react-draggable@^4.0.0, react-draggable@^4.0.3:
-  version "4.4.4"
-  resolved "https://registry.npmmirror.com/react-draggable/-/react-draggable-4.4.4.tgz#5b26d9996be63d32d285a426f41055de87e59b2f"
-  integrity sha512-6e0WdcNLwpBx/YIDpoyd2Xb04PB0elrDrulKUgdrIlwuYvxh5Ok9M+F8cljm8kPXXs43PmMzek9RrB1b7mLMqA==
-  dependencies:
-    clsx "^1.1.1"
-    prop-types "^15.6.0"
-
 react-error-overlay@^6.0.9:
   version "6.0.11"
   resolved "https://registry.npmmirror.com/react-error-overlay/-/react-error-overlay-6.0.11.tgz#92835de5841c5cf08ba00ddd2d677b6d17ff9adb"
   integrity sha512-/6UZ2qgEyH2aqzYZgQPxEnz33NJ2gNsnHA2o5+o4wW9bLM/JYQitNP9xPhsXwC08hMMovfGe/8retsdDsczPRg==
-
-react-grid-layout@^1.3.0:
-  version "1.3.3"
-  resolved "https://registry.npmmirror.com/react-grid-layout/-/react-grid-layout-1.3.3.tgz#6d255ae036bb2371a46effd494ca4dd6f7224311"
-  integrity sha512-qxSU0IVzlneoIH0eGohJK80zmyTv6iWOEn5t6rUTx8XGf7btkmp64YbDaVtUgULDwV40YIO6wdqkVtx/X2bWAQ==
-  dependencies:
-    clsx "^1.1.1"
-    lodash.isequal "^4.0.0"
-    prop-types "^15.0.0"
-    react-draggable "^4.0.0"
-    react-resizable "^3.0.4"
 
 react-is@^16.12.0, react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0:
   version "16.13.1"
@@ -12672,14 +12636,6 @@ react-refresh@^0.8.3:
   version "0.8.3"
   resolved "https://registry.npmmirror.com/react-refresh/-/react-refresh-0.8.3.tgz#721d4657672d400c5e3c75d063c4a85fb2d5d68f"
   integrity sha512-X8jZHc7nCMjaCqoU+V2I0cOhNW+QMBwSUkeXnTi8IPe6zaRWfn60ZzvFDZqWPfmSJfjub7dDW1SP0jaHWLu/hg==
-
-react-resizable@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.npmmirror.com/react-resizable/-/react-resizable-3.0.4.tgz#aa20108eff28c52c6fddaa49abfbef8abf5e581b"
-  integrity sha512-StnwmiESiamNzdRHbSSvA65b0ZQJ7eVQpPusrSmcpyGKzC0gojhtO62xxH6YOBmepk9dQTBi9yxidL3W4s3EBA==
-  dependencies:
-    prop-types "15.x"
-    react-draggable "^4.0.3"
 
 react-resize-detector@^6.6.4:
   version "6.7.8"

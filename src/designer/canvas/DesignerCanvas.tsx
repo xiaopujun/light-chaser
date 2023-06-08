@@ -1,7 +1,4 @@
 import React, {PureComponent} from 'react';
-import ReactGridLayout, {Layout} from "react-grid-layout";
-import 'react-grid-layout/css/styles.css';
-import 'react-resizable/css/styles.css';
 import DragScaleProvider from "../operate-provider/DragScaleProvider";
 import {observer} from "mobx-react";
 import designerStore, {DesignerStore} from "../store/DesignerStore";
@@ -10,7 +7,7 @@ import designerStarter from "../DesignerStarter";
 import rightStore from "../right/RightStore";
 import DesignerRuler from "../../lib/lc-ruler/DesignerRuler";
 import DesignerContainer from "../operate-provider/DesignerContainer";
-import eventOperateStore from "../operate-provider/EventOperateStore";
+import MovableItem, {MovableItemData} from "../../test/MovableItem";
 
 /**
  * 设计器画布
@@ -29,10 +26,6 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
     updateActive = (e: any) => {
         //todo 优化,事件处理时目前元素参数可能会存在偏差
         let {id: elemId, dataset} = e.target;
-        if (!elemId) {
-            elemId = e.currentTarget.id;
-            dataset = e.currentTarget.dataset;
-        }
         const {updateActive, activeElem, elemConfigs} = designerStore;
         if (elemId === activeElem?.id)
             return;
@@ -43,6 +36,16 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
         setActiveMenu(newMenus[0], newMenus);
     }
 
+    onDragEnd = (data: MovableItemData) => {
+        const {updateLayout} = designerStore;
+        updateLayout && updateLayout(data);
+    }
+
+    onResizeEnd = (data: MovableItemData) => {
+        const {updateLayout} = designerStore;
+        updateLayout && updateLayout(data);
+    }
+
     /**
      * 元素生成方法
      */
@@ -50,16 +53,22 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
         const {layoutConfigs} = designerStore!;
         if (layoutConfigs && layoutConfigs.length > 0) {
             const {customComponentInfoMap}: any = designerStarter;
-            return layoutConfigs.map((item: any) => {
-                let Chart: any = customComponentInfoMap[item.compKey].getComponent();
-                const compConfig: any = this.calculateChartConfig(item.id);
+            return layoutConfigs.map((item: MovableItemData) => {
+                let Chart: any = customComponentInfoMap[item.type + ''].getComponent();
+                const compConfig: any = this.calculateChartConfig(item.id + '');
                 return (
-                    <div key={item?.id + ''} className={'lc-comp-item'}
-                         id={item.id} data-type={compConfig?.info?.type}
-                        // onClick={this.updateActive}
-                         style={{width: '100%', height: '100%'}}>
+                    <MovableItem key={item.id + ''}
+                                 onDragEnd={this.onDragEnd}
+                                 onResizeEnd={this.onResizeEnd}
+                                 data={{
+                                     width: item.width,
+                                     height: item.height,
+                                     position: item.position,
+                                     id: item.id,
+                                     type: item.type
+                                 }}>
                         <Chart config={compConfig}/>
-                    </div>
+                    </MovableItem>
                 );
             })
         }
@@ -75,50 +84,6 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
             this.rgl.setState({layout: layoutConfigs})
     }
 
-    /**
-     *  元素拖动方法
-     */
-    onDrop = (layout: any, layoutItem: any, _event: any) => {
-        const {addItem, layoutConfigs, statisticInfo} = designerStore;
-        let compObj = JSON.parse(_event.dataTransfer.getData('compObj'));
-        const item = {
-            ...layoutItem, ...{
-                i: statisticInfo?.count + "",
-                id: statisticInfo?.count,
-                compName: compObj?.compName,
-                compKey: compObj?.compKey
-            }
-        }
-        addItem && addItem(item);
-        if (this.rgl != null)
-            this.rgl.setState({layout: layoutConfigs})
-    };
-
-    /**
-     * 元素被拖动时限定目标元素大小
-     */
-    onDropDragOver = () => {
-        return {w: 32, h: 18}
-    }
-
-    /**
-     * 组件拖拽变化回调
-     */
-    onDragStop = (layout: Layout[], oldItem: Layout, newItem: Layout) => {
-        if (JSON.stringify(oldItem) === JSON.stringify(newItem))
-            return;
-        const {updateLayout} = designerStore;
-        updateLayout && updateLayout(newItem);
-    }
-
-    /**
-     * 组件大小变化回调
-     */
-    onResizeStop = (layout: Layout[], oldItem: Layout, newItem: Layout) => {
-        const {updateLayout} = designerStore;
-        updateLayout && updateLayout(newItem);
-    }
-
     getDragScaleProviderProps = () => {
         const {canvasConfig} = designerStore!;
         return {
@@ -126,30 +91,6 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
             contentHeight: canvasConfig?.height,
             containerWidth: window.innerWidth - 95,
             containerHeight: window.innerHeight - 90,
-        }
-    }
-
-    getRGLProps = () => {
-        const {layoutConfigs, canvasConfig} = designerStore;
-        const {scale} = eventOperateStore;
-        let margin: [number, number] = [0, 0];
-        return {
-            layout: layoutConfigs,
-            cols: canvasConfig?.columns || 1920 / 5,
-            rowHeight: 5,
-            margin: margin,
-            useCSSTransforms: true,
-            preventCollision: true,
-            allowOverlap: true,
-            isBounded: true,
-            isDroppable: true,
-            style: {height: canvasConfig?.height},
-            transformScale: scale,
-            width: canvasConfig?.width,
-            onDrop: this.onDrop,
-            onDropDragOver: this.onDropDragOver,
-            onDragStop: this.onDragStop,
-            onResizeStop: this.onResizeStop,
         }
     }
 
@@ -161,9 +102,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                     <DragScaleProvider {...this.getDragScaleProviderProps()}>
                         <DesignerBackground config={elemConfigs['-1']['background']} onClick={this.updateActive}
                                             ref={obj => this.lcbg = obj}>
-                            <ReactGridLayout ref={obj => this.rgl = obj} className="layout" {...this.getRGLProps()}>
-                                {this.generateElement()}
-                            </ReactGridLayout>
+                            {this.generateElement()}
                         </DesignerBackground>
                     </DragScaleProvider>
                 </DesignerRuler>

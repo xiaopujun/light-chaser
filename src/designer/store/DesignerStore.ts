@@ -1,14 +1,26 @@
 import {makeAutoObservable, runInAction, toJS} from "mobx";
 import * as _ from "lodash";
-import {Layout} from "react-grid-layout";
 import {
-    ActiveElem, BackgroundColorMode, BackgroundImgRepeat, BackgroundMode, CanvasConfig, ElemConfig, Layer,
-    LCDesigner, LcLayout, ProjectConfig, ProjectState, SaveType, Statistic, ThemeConfigType, ThemeItemType
+    ActiveElem,
+    BackgroundColorMode,
+    BackgroundImgRepeat,
+    BackgroundMode,
+    CanvasConfig,
+    ElemConfig,
+    Layer,
+    LCDesigner,
+    ProjectConfig,
+    ProjectState,
+    SaveType,
+    Statistic,
+    ThemeConfigType,
+    ThemeItemType
 } from "../DesignerType";
 import designerStarter from "../DesignerStarter";
 import AbstractBaseStore from "../../framework/core/AbstractBaseStore";
 import rightStore from "../right/RightStore";
 import {merge} from "../../utils/ObjectUtil";
+import {MovableItemData} from "../../test/MovableItem";
 
 class DesignerStore implements LCDesigner, AbstractBaseStore {
     constructor() {
@@ -87,7 +99,7 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
     /**
      * 布局配置
      */
-    layoutConfigs: any = [];
+    layoutConfigs: MovableItemData[] = [];
 
     /**
      * 统计信息
@@ -208,15 +220,6 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
     }
 
     /**
-     * 设置布局配置
-     */
-    setLayoutConfigs = (layoutConfigs: LcLayout[]) => {
-        runInAction(() => {
-            this.layoutConfigs = layoutConfigs;
-        })
-    }
-
-    /**
      * 设置扩展临时属性
      */
     setExtendParams = (extendParams: any) => this.extendParams = extendParams;
@@ -229,19 +232,16 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
     /**
      * 添加元素
      */
-    addItem = (item: LcLayout) => {
-        this.layoutConfigs?.push(item);
+    addItem = (item: MovableItemData) => {
+        this.layoutConfigs.push(item);
         const {customComponentInfoMap} = designerStarter;
-        let initObj: any = customComponentInfoMap[item.compKey];
+        let initObj: any = customComponentInfoMap[item.type + ''];
         let initData: any = initObj.getInitConfig()
-        initData.info = {...initData.info, ...{id: this.statisticInfo?.count}}
+        initData.info = {...initData.info, ...{id: item.id}}
         if (this.elemConfigs && this.statisticInfo)
-            this.elemConfigs[this.statisticInfo.count + ""] = initData;
-        let {count = 0} = this.statisticInfo!;
-        if (this.statisticInfo) {
-            count++;
-            this.statisticInfo.count = count;
-        }
+            this.elemConfigs[item.id + ''] = initData;
+        if (this.statisticInfo)
+            this.statisticInfo.count = this.layoutConfigs.length;
     }
 
     /**
@@ -261,11 +261,10 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
     /**
      * 更新布局
      */
-    updateLayout = (item: Layout) => {
-        const {i, x, y, w, h} = item;
+    updateLayout = (item: MovableItemData) => {
         for (let index = 0; index < this.layoutConfigs.length; index++) {
-            if (this.layoutConfigs[index].i === i) {
-                this.layoutConfigs[index] = {...this.layoutConfigs[index], ...{x, y, w, h}}
+            if (this.layoutConfigs[index].id === item.id) {
+                this.layoutConfigs[index] = {...this.layoutConfigs[index], ...item};
                 break;
             }
         }

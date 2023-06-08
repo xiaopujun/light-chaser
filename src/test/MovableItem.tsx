@@ -3,14 +3,16 @@ import Moveable from "react-moveable";
 
 interface MovableItemProps {
     data?: MovableItemData;
-    //可拖拽元素的位置、尺寸等信息，当元素的。相关信息。数据发生变更时。 会触发onChange事件。
-    onChange?: (data: MovableItemData) => void;
+    onDragEnd?: (data: MovableItemData) => void;
+    onResizeEnd?: (data: MovableItemData) => void;
 }
 
-interface MovableItemData {
+export interface MovableItemData {
     width: number;
     height: number;
     position: [number, number];
+    id: string | undefined;
+    type: string | undefined;
 }
 
 class MovableItem extends Component<MovableItemProps> {
@@ -18,9 +20,11 @@ class MovableItem extends Component<MovableItemProps> {
     //可拖拽的目标元素
     target: any;
     data: MovableItemData = {
-        width: 192,
-        height: 108,
-        position: [0, 0]
+        width: 384,
+        height: 216,
+        position: [0, 0],
+        id: undefined,
+        type: undefined
     }
     state: any = {
         //是否加载完成,用于在目标元素加载完成后再加载挂载Moveable组件
@@ -29,13 +33,8 @@ class MovableItem extends Component<MovableItemProps> {
 
     constructor(props: MovableItemProps) {
         super(props);
-        const {data} = props;
+        const {data,} = props;
         if (data) this.data = data;
-    }
-
-    onChange = () => {
-        const {onChange} = this.props;
-        onChange && onChange(this.data);
     }
 
     componentDidMount() {
@@ -45,13 +44,15 @@ class MovableItem extends Component<MovableItemProps> {
 
 
     render() {
+        const {onDragEnd, onResizeEnd} = this.props;
         return (
             <>
-                <div ref={ref => this.target = ref}
+                <div ref={ref => this.target = ref} id={this.data.id} data-type={this.data.type}
                      style={{
                          width: this.data.width,
                          height: this.data.height,
-                         transform: `translate(${this.data.position[0]}px, ${this.data.position[1]}px)`
+                         transform: `translate(${this.data.position[0]}px, ${this.data.position[1]}px)`,
+                         position: 'absolute'
                      }}>
                     {this.props.children}
                 </div>
@@ -60,19 +61,18 @@ class MovableItem extends Component<MovableItemProps> {
                     draggable={true}
                     resizable={true}
                     snappable={true}
-                    dragArea={true}
-                    originDraggable={true}
-                    originRelative={true}
-                    zoom={1}
                     isDisplayGridGuidelines={true}
+                    snapGap={true}
+                    snapThreshold={10}
                     throttleDrag={10}
                     throttleResize={10}
+                    onDragEnd={() => onDragEnd && onDragEnd(this.data)}
                     onDrag={({target, beforeTranslate}) => {
                         target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
                         this.data.position[0] = beforeTranslate[0];
                         this.data.position[1] = beforeTranslate[1];
-                        this.onChange();
                     }}
+                    onResizeEnd={() => onResizeEnd && onResizeEnd(this.data)}
                     onResize={({target, width, height, drag}) => {
                         target.style.width = `${width}px`;
                         target.style.height = `${height}px`;
@@ -81,7 +81,6 @@ class MovableItem extends Component<MovableItemProps> {
                         this.data.height = height;
                         this.data.position[0] = drag.beforeTranslate[0];
                         this.data.position[1] = drag.beforeTranslate[1];
-                        this.onChange();
                     }}
                 />}
             </>

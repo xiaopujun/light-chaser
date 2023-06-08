@@ -1,6 +1,8 @@
 import React from 'react';
 import MovableItem from "./MovableItem";
 import AntdBaseBar from "../comps/antd/base-bar/AntdBaseBar";
+import LcButton from "../lib/lc-button/LcButton";
+import {snowflake} from "../utils/IdGenerate";
 
 const DemoMain: React.FC = () => {
     return (
@@ -12,8 +14,8 @@ const Example: React.FC = () => {
 
 
     return (
-        <div>
-            <MovableItem onChange={(data) => console.log(data.position)}>
+        <div style={{width: 700, height: 700, backgroundColor: '#3d5489', margin: 50}}>
+            <MovableItem>
                 <AntdBaseBar config={{
                     style: {
                         baseStyle: {
@@ -148,7 +150,7 @@ const Example: React.FC = () => {
                     }
                 }}/>
             </MovableItem>
-
+            <LcButton onClick={() => console.log(snowflake.generateId())}>惦记我</LcButton>
         </div>
     );
 };

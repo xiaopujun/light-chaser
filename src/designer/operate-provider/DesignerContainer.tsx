@@ -21,6 +21,7 @@ class DesignerContainer extends Component {
         this.dom.addEventListener("pointermove", this.handlePointerMove);
         this.dom.addEventListener("pointerup", this.handlePointerUp);
         this.dom.addEventListener("pointercancel", this.handlePointerCancel);
+
     }
 
     componentWillUnmount() {

@@ -1,4 +1,4 @@
-import {Layout} from "react-grid-layout";
+import {MovableItemData} from "../test/MovableItem";
 
 /**
  * 主题
@@ -271,13 +271,6 @@ export interface CanvasConfig {
 }
 
 /**
- * 布局item
- */
-export interface LcLayout extends Layout {
-    [key: string]: any;
-}
-
-/**
  * 组件基础信息
  */
 export interface BaseInfoType {
@@ -322,7 +315,7 @@ export interface LCDesigner {
     //元素样式
     elemConfigs?: { [key: string]: ElemConfig };
     //布局信息
-    layoutConfigs?: any[];
+    layoutConfigs?: MovableItemData[];
     //统计信息
     statisticInfo?: Statistic;
     //图层信息
