@@ -7,7 +7,9 @@ import designerStarter from "../DesignerStarter";
 import rightStore from "../right/RightStore";
 import DesignerRuler from "../../lib/lc-ruler/DesignerRuler";
 import DesignerContainer from "../operate-provider/DesignerContainer";
-import MovableItem, {MovableItemData} from "../../test/MovableItem";
+import {MovableItemData} from "../../lib/lc-movable/MovableItem";
+import GroupMovable from "../../lib/lc-movable/GroupMovable";
+import GroupSelectable from "../../lib/lc-movable/GroupSelectable";
 
 /**
  * 设计器画布
@@ -36,16 +38,6 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
         setActiveMenu(newMenus[0], newMenus);
     }
 
-    onDragEnd = (data: MovableItemData) => {
-        const {updateLayout} = designerStore;
-        updateLayout && updateLayout(data);
-    }
-
-    onResizeEnd = (data: MovableItemData) => {
-        const {updateLayout} = designerStore;
-        updateLayout && updateLayout(data);
-    }
-
     /**
      * 元素生成方法
      */
@@ -57,18 +49,15 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                 let Chart: any = customComponentInfoMap[item.type + ''].getComponent();
                 const compConfig: any = this.calculateChartConfig(item.id + '');
                 return (
-                    <MovableItem key={item.id + ''}
-                                 onDragEnd={this.onDragEnd}
-                                 onResizeEnd={this.onResizeEnd}
-                                 data={{
-                                     width: item.width,
-                                     height: item.height,
-                                     position: item.position,
-                                     id: item.id,
-                                     type: item.type
-                                 }}>
+                    <div id={item.id} data-type={item.type} key={item.id + ''}
+                         style={{
+                             width: item.width,
+                             height: item.height,
+                             transform: `translate(${item.position[0]}px, ${item.position[1]}px)`,
+                             position: 'absolute'
+                         }} className={'cube'}>
                         <Chart config={compConfig}/>
-                    </MovableItem>
+                    </div>
                 );
             })
         }
@@ -98,14 +87,18 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
         const {elemConfigs} = designerStore;
         return (
             <DesignerContainer>
-                <DesignerRuler offsetX={60} offsetY={50}>
-                    <DragScaleProvider {...this.getDragScaleProviderProps()}>
-                        <DesignerBackground config={elemConfigs['-1']['background']} onClick={this.updateActive}
-                                            ref={obj => this.lcbg = obj}>
-                            {this.generateElement()}
-                        </DesignerBackground>
-                    </DragScaleProvider>
-                </DesignerRuler>
+                <GroupSelectable>
+                    <DesignerRuler offsetX={60} offsetY={50}>
+                        <DragScaleProvider {...this.getDragScaleProviderProps()}>
+                            <GroupMovable>
+                                <DesignerBackground config={elemConfigs['-1']['background']} onClick={this.updateActive}
+                                                    ref={obj => this.lcbg = obj}>
+                                    {this.generateElement()}
+                                </DesignerBackground>
+                            </GroupMovable>
+                        </DragScaleProvider>
+                    </DesignerRuler>
+                </GroupSelectable>
             </DesignerContainer>
         );
     }

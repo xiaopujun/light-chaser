@@ -20,7 +20,8 @@ import designerStarter from "../DesignerStarter";
 import AbstractBaseStore from "../../framework/core/AbstractBaseStore";
 import rightStore from "../right/RightStore";
 import {merge} from "../../utils/ObjectUtil";
-import {MovableItemData} from "../../test/MovableItem";
+import {MovableItemData} from "../../lib/lc-movable/MovableItem";
+import {isEqual} from "lodash";
 
 class DesignerStore implements LCDesigner, AbstractBaseStore {
     constructor() {
@@ -261,13 +262,16 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
     /**
      * 更新布局
      */
-    updateLayout = (item: MovableItemData) => {
-        for (let index = 0; index < this.layoutConfigs.length; index++) {
-            if (this.layoutConfigs[index].id === item.id) {
-                this.layoutConfigs[index] = {...this.layoutConfigs[index], ...item};
-                break;
+    updateLayout = (items: MovableItemData[]) => {
+        for (const item of items) {
+            for (let layoutCfg of this.layoutConfigs) {
+                if (layoutCfg.id === item.id && !isEqual(layoutCfg, item)) {
+                    layoutCfg = merge(layoutCfg, item);
+                    break;
+                }
             }
         }
+        console.log(toJS(this.layoutConfigs));
     }
 
     /**

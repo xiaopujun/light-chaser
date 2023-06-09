@@ -17,6 +17,7 @@ import designerStarter from './DesignerStarter';
 import {getProjectById} from "../utils/LocalStorageUtil";
 import lcRightMenuStore from "./operate-provider/right-click-menu/LcRightMenuStore";
 import eventManager from "./operate-provider/core/EventManager";
+import movableStore from "../lib/lc-movable/MovableStore";
 
 interface LCDesignerProps extends RouteComponentProps {
     LCDesignerStore: LCDesignerProps;
@@ -44,6 +45,13 @@ class Designer extends Component<LCDesignerProps | any> {
     componentDidMount() {
         //注册右键操作菜单事件
         this.handleContextMenu();
+
+        eventManager.register('mousedown', (e: any) => {
+            let id = e.target.id;
+            const {setActiveMovableItemId, activeMovableItemId} = movableStore;
+            if (activeMovableItemId !== id)
+                setActiveMovableItemId && setActiveMovableItemId(id || '');
+        });
     }
 
     handleContextMenu = () => {

@@ -2598,6 +2598,13 @@
   resolved "https://registry.npmmirror.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@cfcs/core@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.npmmirror.com/@cfcs/core/-/core-0.0.6.tgz#9f8499dcd2ad29fd96d8fa72055411cd4a249121"
+  integrity sha512-FxfJMwoLB8MEMConeXUCqtMGqxdtePQxRBOiGip9ULcYYam3WfCgoY6xdnMaSkYvRvmosp5iuG+TiPofm65+Pw==
+  dependencies:
+    "@egjs/component" "^3.0.2"
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.npmmirror.com/@cnakazawa/watch/-/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"
@@ -2649,6 +2656,11 @@
   integrity sha512-DRvyqMf+CPCOzAopQKHtW+X8iN6Hy6SFol+/7zCUiE5y4P/OB8JP8FtU4NxtZwtafvSL4faD5KoQYPj3JHzPFQ==
   dependencies:
     "@egjs/list-differ" "^1.0.0"
+
+"@egjs/component@^3.0.2":
+  version "3.0.4"
+  resolved "https://registry.npmmirror.com/@egjs/component/-/component-3.0.4.tgz#ad7b53794b2a612806179a188ad828acb9525f61"
+  integrity sha512-sXA7bGbIeLF2OAw/vpka66c6QBBUPcA4UUhR4WGJfnp2XWdiI8QrnJGJMr/UxpE/xnevX9tN3jvNPlW8WkHl3g==
 
 "@egjs/list-differ@^1.0.0":
   version "1.0.1"
@@ -5885,7 +5897,7 @@ css-select@^4.1.3:
     domutils "^2.8.0"
     nth-check "^2.0.1"
 
-css-styled@~1.0.8:
+css-styled@^1.0.8, css-styled@~1.0.8:
   version "1.0.8"
   resolved "https://registry.npmmirror.com/css-styled/-/css-styled-1.0.8.tgz#c9c05dc4abdef5571033090bfb8cfc5e19429974"
   integrity sha512-tCpP7kLRI8dI95rCh3Syl7I+v7PP+2JYOzWkl0bUEoSbJM+u8ITbutjlQVf0NC2/g4ULROJPi16sfwDIO8/84g==
@@ -7679,7 +7691,7 @@ geojson-vt@^3.2.1:
   resolved "https://registry.npmmirror.com/geojson-vt/-/geojson-vt-3.2.1.tgz#f8adb614d2c1d3f6ee7c4265cad4bbf3ad60c8b7"
   integrity sha512-EvGQQi/zPrDA6zr6BnJD/YhwAkBP8nnJ9emh3EnHQKVMfg/MRVtPbMYdgVy/IaEmn4UfagD2a6fafPDL5hbtwg==
 
-gesto@^1.19.0:
+gesto@^1.19.0, gesto@^1.19.1:
   version "1.19.1"
   resolved "https://registry.npmmirror.com/gesto/-/gesto-1.19.1.tgz#b2a29730663eecf77b248982bbff929e79d4a461"
   integrity sha512-ofWVEdqmnpFm3AFf7aoclhoayseb3OkwSiXbXusKYu/99iN5HgeWP+SWqdghQ5TFlOgP5Zlz+6SY8mP2V0kFaQ==
@@ -9557,6 +9569,21 @@ kdbush@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmmirror.com/kdbush/-/kdbush-3.0.0.tgz#f8484794d47004cc2d85ed3a79353dbe0abc2bf0"
   integrity sha512-hRkd6/XW4HTsA9vjVpY9tuXJYLSlelnkTmVFu4M9/7MIYQtFcHpbugAU7UbOfjOiVSVYl2fqgBuJ32JUmRo5Ew==
+
+keycode@^2.2.0:
+  version "2.2.1"
+  resolved "https://registry.npmmirror.com/keycode/-/keycode-2.2.1.tgz#09c23b2be0611d26117ea2501c2c391a01f39eff"
+  integrity sha512-Rdgz9Hl9Iv4QKi8b0OlCRQEzp4AgVxyCtz5S/+VIHezDmrDhkp2N2TqBWOLz0/gbeREXOOiI9/4b8BY9uw2vFg==
+
+keycon@^1.2.0:
+  version "1.4.0"
+  resolved "https://registry.npmmirror.com/keycon/-/keycon-1.4.0.tgz#bf2a633f3c3b659ea564045938cff33e584cebd5"
+  integrity sha512-p1NAIxiRMH3jYfTeXRs2uWbVJ1WpEjpi8ktzUyBJsX7/wn2qu2VRXktneBLNtKNxJmlUYxRi9gOJt1DuthXR7A==
+  dependencies:
+    "@cfcs/core" "^0.0.6"
+    "@daybrush/utils" "^1.7.1"
+    "@scena/event-emitter" "^1.0.2"
+    keycode "^2.2.0"
 
 killable@^1.0.1:
   version "1.0.1"
@@ -12740,6 +12767,13 @@ react-scripts@^4.0.3:
   optionalDependencies:
     fsevents "^2.1.3"
 
+react-selecto@^1.22.6:
+  version "1.22.6"
+  resolved "https://registry.npmmirror.com/react-selecto/-/react-selecto-1.22.6.tgz#8aa0980eab03215b2ee53c578e17aa5b10151ce7"
+  integrity sha512-6Dg3qxHyh8fPA81CIyBkSFEmrtgqUpa+cHt2P/Eus69vpLD+4PBixp7OolbypHBYCuLIwwW29evViflagq5k2g==
+  dependencies:
+    selecto "~1.22.6"
+
 react-universal-interface@^0.6.2:
   version "0.6.2"
   resolved "https://registry.npmmirror.com/react-universal-interface/-/react-universal-interface-0.6.2.tgz#5e8d438a01729a4dbbcbeeceb0b86be146fe2b3b"
@@ -13393,6 +13427,22 @@ select-hose@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmmirror.com/select-hose/-/select-hose-2.0.0.tgz#625d8658f865af43ec962bfc376a37359a4994ca"
   integrity sha512-mEugaLK+YfkijB4fx0e6kImuJdCIt2LxCRcbEYPqRGCs4F2ogyfZU5IAZRdjCP8JPq2AtdNoC/Dux63d9Kiryg==
+
+selecto@~1.22.6:
+  version "1.22.6"
+  resolved "https://registry.npmmirror.com/selecto/-/selecto-1.22.6.tgz#088bd34b743dc76549adb0a50643cf7704ec78d9"
+  integrity sha512-9LqyQWmT032JZe3Rtg/urvXbkZJV/EFLGo115KQCv7wL9nuqindmJuzFQBRTB1xUcglWavGgnFZRp7EknFZh9Q==
+  dependencies:
+    "@daybrush/utils" "^1.13.0"
+    "@egjs/children-differ" "^1.0.1"
+    "@scena/dragscroll" "^1.4.0"
+    "@scena/event-emitter" "^1.0.5"
+    css-styled "^1.0.8"
+    css-to-mat "^1.0.3"
+    framework-utils "^1.1.0"
+    gesto "^1.19.1"
+    keycon "^1.2.0"
+    overlap-area "^1.1.0"
 
 selfsigned@^1.10.8:
   version "1.10.14"

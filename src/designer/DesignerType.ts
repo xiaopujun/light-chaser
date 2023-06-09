@@ -1,4 +1,4 @@
-import {MovableItemData} from "../test/MovableItem";
+import {MovableItemData} from "../lib/lc-movable/MovableItem";
 
 /**
  * 主题

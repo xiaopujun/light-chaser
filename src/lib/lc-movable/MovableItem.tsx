@@ -1,5 +1,7 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import Moveable from "react-moveable";
+import {observer} from "mobx-react";
+import movableStore from "./MovableStore";
 
 interface MovableItemProps {
     data?: MovableItemData;
@@ -15,7 +17,7 @@ export interface MovableItemData {
     type: string | undefined;
 }
 
-class MovableItem extends Component<MovableItemProps> {
+class MovableItem extends PureComponent<MovableItemProps> {
 
     //可拖拽的目标元素
     target: any;
@@ -26,15 +28,11 @@ class MovableItem extends Component<MovableItemProps> {
         id: undefined,
         type: undefined
     }
-    state: any = {
-        //是否加载完成,用于在目标元素加载完成后再加载挂载Moveable组件
-        load: false
-    };
 
     constructor(props: MovableItemProps) {
         super(props);
-        const {data,} = props;
-        if (data) this.data = data;
+        const {data} = props;
+        if (data) this.data = {...data};
     }
 
     componentDidMount() {
@@ -42,12 +40,14 @@ class MovableItem extends Component<MovableItemProps> {
             this.setState({load: true})
     }
 
-
     render() {
         const {onDragEnd, onResizeEnd} = this.props;
+        const {activeMovableItemId} = movableStore;
+        console.log('MovableItem render', activeMovableItemId);
         return (
             <>
                 <div ref={ref => this.target = ref} id={this.data.id} data-type={this.data.type}
+                     className="lc-movable-item"
                      style={{
                          width: this.data.width,
                          height: this.data.height,
@@ -56,14 +56,15 @@ class MovableItem extends Component<MovableItemProps> {
                      }}>
                     {this.props.children}
                 </div>
-                {this.state.load && <Moveable
+                {activeMovableItemId === this.data.id && <Moveable
                     target={this.target}
+                    pinchable={true}
                     draggable={true}
                     resizable={true}
                     snappable={true}
                     isDisplayGridGuidelines={true}
                     snapGap={true}
-                    snapThreshold={10}
+                    snapGridWidth={10}
                     throttleDrag={10}
                     throttleResize={10}
                     onDragEnd={() => onDragEnd && onDragEnd(this.data)}
@@ -74,6 +75,7 @@ class MovableItem extends Component<MovableItemProps> {
                     }}
                     onResizeEnd={() => onResizeEnd && onResizeEnd(this.data)}
                     onResize={({target, width, height, drag}) => {
+                        console.log('onResize', width, height, drag.beforeTranslate)
                         target.style.width = `${width}px`;
                         target.style.height = `${height}px`;
                         target.style.transform = `translate(${drag.beforeTranslate[0]}px, ${drag.beforeTranslate[1]}px)`;
@@ -88,4 +90,4 @@ class MovableItem extends Component<MovableItemProps> {
     }
 }
 
-export default MovableItem;
+export default observer(MovableItem);
