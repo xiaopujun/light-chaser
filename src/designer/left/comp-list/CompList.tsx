@@ -8,7 +8,7 @@ import {observer} from "mobx-react";
 import designerStarter from "../../DesignerStarter";
 import designerStore from "../../store/DesignerStore";
 import {snowflake} from "../../../utils/IdGenerate";
-import {MovableItemData} from "../../../lib/lc-movable/MovableItem";
+import {MovableItemData} from "../../../lib/lc-movable/types";
 
 class CompList extends Component {
 

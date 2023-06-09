@@ -1,8 +1,8 @@
-import {MovableItemData} from "../lib/lc-movable/MovableItem";
-
 /**
  * 主题
  */
+import {MovableItemData} from "../lib/lc-movable/types";
+
 export interface ThemeColors {
     //主体色
     main?: string;

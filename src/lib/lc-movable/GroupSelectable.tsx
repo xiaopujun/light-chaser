@@ -18,7 +18,7 @@ class GroupSelectable extends Component {
                 {this.props.children}
                 <Selecto ref={this.selectorRef}
                          dragContainer={".lc-event-container"}
-                         selectableTargets={[".cube"]}
+                         selectableTargets={[".lc-comp-item"]}
                          hitRate={0}
                          selectByClick={true}
                          selectFromInside={false}

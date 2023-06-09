@@ -7,9 +7,9 @@ import designerStarter from "../DesignerStarter";
 import rightStore from "../right/RightStore";
 import DesignerRuler from "../../lib/lc-ruler/DesignerRuler";
 import DesignerContainer from "../operate-provider/DesignerContainer";
-import {MovableItemData} from "../../lib/lc-movable/MovableItem";
 import GroupMovable from "../../lib/lc-movable/GroupMovable";
 import GroupSelectable from "../../lib/lc-movable/GroupSelectable";
+import {MovableItemData} from "../../lib/lc-movable/types";
 
 /**
  * 设计器画布
@@ -55,7 +55,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                              height: item.height,
                              transform: `translate(${item.position[0]}px, ${item.position[1]}px)`,
                              position: 'absolute'
-                         }} className={'cube'}>
+                         }} className={'lc-comp-item'}>
                         <Chart config={compConfig}/>
                     </div>
                 );

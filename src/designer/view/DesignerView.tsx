@@ -3,7 +3,7 @@ import DesignerBackground from "../../comps/lc/background/DesignerBackground";
 import designerStore from "../store/DesignerStore";
 import designerStarter from "../DesignerStarter";
 import './DesignerView.less';
-import MovableItem, {MovableItemData} from "../../lib/lc-movable/MovableItem";
+import {MovableItemData} from "../../lib/lc-movable/types";
 
 interface LcShowProps {
 
@@ -35,16 +35,15 @@ class DesignerView extends Component<LcShowProps | any> {
                 let Chart: any = customComponentInfoMap[item.type + ''].getComponent();
                 const compConfig: any = this.calculateChartConfig(item.id + '');
                 return (
-                    <MovableItem key={item.id + ''}
-                                 data={{
-                                     width: item.width,
-                                     height: item.height,
-                                     position: item.position,
-                                     id: item.id,
-                                     type: item.type
-                                 }}>
+                    <div id={item.id} data-type={item.type} key={item.id + ''}
+                         style={{
+                             width: item.width,
+                             height: item.height,
+                             transform: `translate(${item.position[0]}px, ${item.position[1]}px)`,
+                             position: 'absolute'
+                         }} className={'lc-comp-item'}>
                         <Chart config={compConfig}/>
-                    </MovableItem>
+                    </div>
                 );
             })
         }

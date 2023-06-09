@@ -20,8 +20,8 @@ import designerStarter from "../DesignerStarter";
 import AbstractBaseStore from "../../framework/core/AbstractBaseStore";
 import rightStore from "../right/RightStore";
 import {merge} from "../../utils/ObjectUtil";
-import {MovableItemData} from "../../lib/lc-movable/MovableItem";
 import {isEqual} from "lodash";
+import {MovableItemData} from "../../lib/lc-movable/types";
 
 class DesignerStore implements LCDesigner, AbstractBaseStore {
     constructor() {
