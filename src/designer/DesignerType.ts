@@ -313,7 +313,7 @@ export interface LCDesigner {
     //元素样式
     elemConfigs?: { [key: string]: ElemConfig };
     //布局信息
-    layoutConfigs?: MovableItemType[];
+    layoutConfigs?: { [key: string]: MovableItemType };
     //统计信息
     statisticInfo?: Statistic;
     //图层信息

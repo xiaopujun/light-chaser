@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {observer} from "mobx-react";
-import lcRightMenuStore from "./ContextMenuStore";
+import contextMenuStore from "./ContextMenuStore";
 import designerStore from "../../store/DesignerStore";
 import './OperateMenu.less';
 import rightStore from "../../right/RightStore";
@@ -22,6 +22,11 @@ class ContextMenu extends Component {
             name: '锁定',
             icon: LockOutlined,
             onClick: (e: any) => alert('锁定')
+        },
+        {
+            name: '解锁',
+            icon: LockOutlined,
+            onClick: (e: any) => alert('解锁')
         },
         {
             name: '隐藏',
@@ -58,7 +63,7 @@ class ContextMenu extends Component {
             icon: DeleteOutlined,
             onClick: (e: any) => {
                 const {updateActive} = designerStore;
-                const {targetId} = lcRightMenuStore;
+                const {targetId} = contextMenuStore;
                 const {setContentVisible} = rightStore;
                 setContentVisible(false);
                 updateActive && updateActive({
@@ -72,7 +77,7 @@ class ContextMenu extends Component {
     ]
 
     render() {
-        const {visible, position = [0, 0]} = lcRightMenuStore;
+        const {visible, position = [0, 0], targetId} = contextMenuStore;
         let menuListDom = [];
         for (let i = 0; i < this.menuList.length; i++) {
             let menuItem = this.menuList[i];

@@ -1,4 +1,4 @@
-import {action, makeAutoObservable, makeObservable, observable} from "mobx";
+import {action, makeObservable, observable} from "mobx";
 
 class ContextMenuStore {
     constructor() {
@@ -36,6 +36,7 @@ class ContextMenuStore {
     }
 
     setTargetId = (targetId: number) => {
+        console.log(targetId)
         this.targetId = targetId;
     }
 
@@ -48,5 +49,5 @@ class ContextMenuStore {
 
 }
 
-const lcRightMenu = new ContextMenuStore();
-export default lcRightMenu;
+const contextMenuStore = new ContextMenuStore();
+export default contextMenuStore;

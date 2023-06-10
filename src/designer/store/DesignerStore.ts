@@ -1,5 +1,5 @@
 import {makeAutoObservable, runInAction, toJS} from "mobx";
-import * as _ from "lodash";
+import {isEqual} from "lodash";
 import {
     ActiveElem,
     BackgroundColorMode,
@@ -20,7 +20,6 @@ import designerStarter from "../DesignerStarter";
 import AbstractBaseStore from "../../framework/core/AbstractBaseStore";
 import rightStore from "../right/RightStore";
 import {merge} from "../../utils/ObjectUtil";
-import {isEqual} from "lodash";
 import {MovableItemType} from "../../lib/lc-movable/types";
 
 class DesignerStore implements LCDesigner, AbstractBaseStore {
@@ -99,7 +98,7 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
     /**
      * 布局配置
      */
-    layoutConfigs: MovableItemType[] = [];
+    layoutConfigs: { [key: string]: MovableItemType } = {};
 
     /**
      * 统计信息
@@ -191,7 +190,7 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
         this.activeElem = {};
         this.projectConfig = {};
         this.elemConfigs = {};
-        this.layoutConfigs = [];
+        this.layoutConfigs = {};
         this.statisticInfo = {};
         this.layers = [];
         this.themeConfig = {};
@@ -233,7 +232,7 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
      * 添加元素
      */
     addItem = (item: MovableItemType) => {
-        this.layoutConfigs.push(item);
+        this.layoutConfigs[item.id + ''] = item;
         const {customComponentInfoMap} = designerStarter;
         let initObj: any = customComponentInfoMap[item.type + ''];
         let initData: any = initObj.getInitConfig()
@@ -241,22 +240,19 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
         if (this.elemConfigs && this.statisticInfo)
             this.elemConfigs[item.id + ''] = initData;
         if (this.statisticInfo)
-            this.statisticInfo.count = this.layoutConfigs.length;
+            this.statisticInfo.count = Object.keys(this.elemConfigs).length;
     }
 
     /**
      * 删除元素
      */
     delItem = (id: string | number) => {
-        _.remove(this.layoutConfigs, function (item: any) {
-            return item?.id === (id + '');
-        })
+        delete this.layoutConfigs[id + ''];
         delete this.elemConfigs[id + ''];
         if (this.activeElem && id === this.activeElem.id) {
             this.activeElem.id = -1;
             this.activeElem.type = "";
         }
-        console.log(toJS(this.layoutConfigs));
     }
 
     /**
@@ -264,14 +260,11 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
      */
     updateLayout = (items: MovableItemType[]) => {
         for (const item of items) {
-            for (let layoutCfg of this.layoutConfigs) {
-                if (layoutCfg.id === item.id && !isEqual(layoutCfg, item)) {
-                    layoutCfg = merge(layoutCfg, item);
-                    break;
-                }
+            let oldItem = this.layoutConfigs[item.id + ''];
+            if (!isEqual(oldItem, item)) {
+                this.layoutConfigs[item.id + ''] = merge(oldItem, item);
             }
         }
-        console.log(toJS(this.layoutConfigs));
     }
 
     /**

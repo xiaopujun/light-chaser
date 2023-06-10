@@ -31,22 +31,22 @@ class DesignerView extends Component<LcShowProps | any> {
         const {layoutConfigs} = designerStore!;
         if (layoutConfigs && layoutConfigs.length > 0) {
             const {customComponentInfoMap}: any = designerStarter;
-            return layoutConfigs.map((item: MovableItemType) => {
-                let Chart: any = customComponentInfoMap[item.type + ''].getComponent();
-                const compConfig: any = this.calculateChartConfig(item.id + '');
-                let position = item.position || [0, 0];
-                return (
-                    <div id={item.id} data-type={item.type} key={item.id + ''}
-                         style={{
-                             width: item.width,
-                             height: item.height,
-                             transform: `translate(${position[0]}px, ${position[1]}px)`,
-                             position: 'absolute'
-                         }} className={'lc-comp-item'}>
-                        <Chart config={compConfig}/>
-                    </div>
-                );
-            })
+            // return layoutConfigs.map((item: MovableItemType) => {
+            //     let Chart: any = customComponentInfoMap[item.type + ''].getComponent();
+            //     const compConfig: any = this.calculateChartConfig(item.id + '');
+            //     let position = item.position || [0, 0];
+            //     return (
+            //         <div id={item.id} data-type={item.type} key={item.id + ''}
+            //              style={{
+            //                  width: item.width,
+            //                  height: item.height,
+            //                  transform: `translate(${position[0]}px, ${position[1]}px)`,
+            //                  position: 'absolute'
+            //              }} className={'lc-comp-item'}>
+            //             <Chart config={compConfig}/>
+            //         </div>
+            //     );
+            // })
         }
     }
 
@@ -54,7 +54,7 @@ class DesignerView extends Component<LcShowProps | any> {
         const {elemConfigs = {}} = designerStore;
         return (
             <DesignerBackground config={elemConfigs['-1']['background'] || {}}>
-                {this.generateElement()}
+                {/*{this.generateElement()}*/}
             </DesignerBackground>
         );
     }

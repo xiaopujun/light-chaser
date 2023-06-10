@@ -25,7 +25,10 @@ class CompList extends Component {
             width: 384,
             height: 216,
             position: [0, 0],
-            id: snowflake.generateId() + ''
+            id: snowflake.generateId() + '',
+            locked: false,
+            hide: false,
+            zIndex: 1,
         }
         addItem && addItem(movableItem);
     }
