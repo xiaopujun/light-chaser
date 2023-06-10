@@ -1,22 +1,33 @@
-import * as React from "react";
-import GroupMovable from "../lib/lc-movable/GroupMovable";
+import React, {Component} from 'react';
 
+const MENU_TYPE = 'SIMPLE';
 
-export default function App() {
-    const cubes = [];
+export default class SimpleMenu extends Component<any, any> {
 
-    for (let i = 0; i < 30; ++i) {
-        cubes.push(i);
+    state: any = {
+        logs: []
     }
 
-    return <div className="moveable app">
-        <div className="container">
-            <GroupMovable>
-                <div className="elements selecto-area">
-                    {cubes.map(i => <div className="cube target" key={i}/>)}
-                </div>
-                <div className="empty elements"/>
-            </GroupMovable>
-        </div>
-    </div>;
+
+    constructor(props: any) {
+        super(props);
+
+        this.state = {logs: []};
+    }
+
+    handleClick = (e: any, data: any) => {
+        const {logs} = this.state;
+        this.setState(() => ({
+            logs: [`Clicked on menu ${data.item}`, ...logs]
+        }));
+    }
+
+    render() {
+        const {logs} = this.state;
+        return (
+            <div>
+
+            </div>
+        );
+    }
 }

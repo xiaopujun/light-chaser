@@ -1,8 +1,13 @@
-import {makeAutoObservable} from "mobx";
+import {action, makeAutoObservable, makeObservable, observable} from "mobx";
 
 class LcRightMenuStore {
     constructor() {
-        makeAutoObservable(this);
+        makeObservable(this, {
+            visible: observable,
+            position: observable,
+            updateVisible: action,
+            setPosition: action,
+        })
     }
 
     /**
@@ -18,6 +23,10 @@ class LcRightMenuStore {
      */
     position = [0, 0];
 
+    mouseDownTime = 0;
+
+    mouseUpTime = 0;
+
     updateVisible = (visible: boolean) => {
         this.visible = visible;
     }
@@ -29,6 +38,13 @@ class LcRightMenuStore {
     setTargetId = (targetId: number) => {
         this.targetId = targetId;
     }
+
+    setMouseDownTime = (time: any) => this.mouseDownTime = time;
+
+    setMouseUpTime = (time: any) => {
+        this.mouseUpTime = time;
+        console.log(this.mouseUpTime - this.mouseDownTime)
+    };
 
 }
 

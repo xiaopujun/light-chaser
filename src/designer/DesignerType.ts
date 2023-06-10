@@ -256,14 +256,12 @@ export interface ActiveElem {
  * 画布配置
  */
 export interface CanvasConfig {
-    //元素间距
-    interval?: number;
-    //画布列总数
-    columns?: number;
-    //元素单位高度
-    baseHeight?: number;
-    //画布缩放比例
-    scale?: number;
+    //开启栅格化
+    rasterize?: boolean;
+    //栅格化拖拽步长
+    dragStep?: number;
+    //栅格化缩放步长
+    resizeStep?: number;
     //画布宽
     width?: number;
     //画布高

@@ -5,7 +5,11 @@ import eventOperateStore from "../../designer/operate-provider/EventOperateStore
 import designerStore from "../../designer/store/DesignerStore";
 import {MovableItemData} from "./types";
 
-class GroupMovable extends React.Component {
+interface GroupMovableProps {
+    readonly?: boolean;
+}
+
+class GroupMovable extends React.Component<GroupMovableProps> {
     movableRef = React.createRef<Moveable>();
 
     constructor(props: any) {
@@ -96,23 +100,19 @@ class GroupMovable extends React.Component {
 
 
     render() {
-        const {scale, selectorRef, targets} = eventOperateStore;
+        const {readonly = false} = this.props;
+        const {selectorRef, targets} = eventOperateStore;
+        const {canvasConfig: {rasterize, dragStep, resizeStep}} = designerStore;
         return (
             <>
                 {this.props.children}
                 <Moveable ref={this.movableRef}
                           target={targets}
-                          zoom={scale}
-                          scalable={true}
+                          draggable={!readonly}
+                          resizable={!readonly}
                           keepRatio={false}
-                          throttleScale={0}
-                          renderDirections={["nw", "n", "ne", "w", "e", "sw", "s", "se"]}
-                          onScale={e => {
-                              e.target.style.transform = e.drag.transform;
-                          }}
-                          draggable={true}
-                          resizable={true}
-                          throttleDrag={50}
+                          throttleDrag={rasterize ? dragStep : 0}
+                          throttleResize={rasterize ? resizeStep : 1}
                           onClickGroup={e => {
                               (selectorRef.current as any)?.clickTarget(e.inputEvent, e.inputTarget);
                           }}

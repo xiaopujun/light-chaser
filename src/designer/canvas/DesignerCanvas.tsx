@@ -10,6 +10,7 @@ import DesignerContainer from "../operate-provider/DesignerContainer";
 import GroupMovable from "../../lib/lc-movable/GroupMovable";
 import GroupSelectable from "../../lib/lc-movable/GroupSelectable";
 import {MovableItemData} from "../../lib/lc-movable/types";
+import LcRightMenu from "../operate-provider/right-click-menu/OperateMenu";
 
 /**
  * 设计器画布
@@ -91,12 +92,14 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                     <DesignerRuler offsetX={60} offsetY={50}>
                         <DragScaleProvider {...this.getDragScaleProviderProps()}>
                             <GroupMovable>
-                                <DesignerBackground config={elemConfigs['-1']['background']} onClick={this.updateActive}
+                                <DesignerBackground config={elemConfigs['-1']['background']}
+                                                    onClick={this.updateActive}
                                                     ref={obj => this.lcbg = obj}>
                                     {this.generateElement()}
                                 </DesignerBackground>
                             </GroupMovable>
                         </DragScaleProvider>
+                        <LcRightMenu/>
                     </DesignerRuler>
                 </GroupSelectable>
             </DesignerContainer>

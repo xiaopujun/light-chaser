@@ -8,6 +8,7 @@ import './CanvasHdConfigImpl.less';
 import LcButton from "../../../../lib/lc-button/LcButton";
 import {CanvasConfig} from "../../../DesignerType";
 import designerStore from "../../../store/DesignerStore";
+import LcSwitch from "../../../../lib/lc-switch/LcSwitch";
 
 /**
  * 画布设置React组件实现
@@ -16,10 +17,17 @@ class CanvasHdConfigImpl extends Component {
 
     config: CanvasConfig | any = {};
 
+    state = {
+        _rasterize: false,
+    }
+
     constructor(props: any) {
         super(props);
         const {canvasConfig} = designerStore;
         this.config = {...canvasConfig};
+        this.state = {
+            _rasterize: canvasConfig.rasterize || false
+        }
     }
 
     onClose = () => {
@@ -34,27 +42,37 @@ class CanvasHdConfigImpl extends Component {
     }
 
     render() {
+        const {_rasterize} = this.state;
         const {canvasVisible} = headerStore;
-        const {width, height, columns, baseHeight} = this.config;
+        const {width, height, rasterize, dragStep, resizeStep} = this.config as CanvasConfig;
         return (
             <Dialog className={'lc-header-canvas'} title={'画布设置'} visible={canvasVisible} onClose={this.onClose}>
                 <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                    <ConfigItem title={'宽度'} contentStyle={{width: 120}}>
+                    <ConfigItem title={'宽度'} contentStyle={{width: 110}}>
                         <UnderLineInput type={'number'} defaultValue={width}
                                         onChange={value => this.config.width = value}/>
                     </ConfigItem>
-                    <ConfigItem title={'高度'} contentStyle={{width: 120}}>
+                    <ConfigItem title={'高度'} contentStyle={{width: 110}}>
                         <UnderLineInput type={'number'} defaultValue={height}
                                         onChange={value => this.config.height = value}/>
                     </ConfigItem>
-                    <ConfigItem title={'列数'} contentStyle={{width: 120}}>
-                        <UnderLineInput type={'number'} defaultValue={columns}
-                                        onChange={value => this.config.columns = value}/>
+                    <ConfigItem title={'栅格化'} contentStyle={{width: 60}}>
+                        <LcSwitch defaultValue={rasterize} onChange={value => {
+                            this.config.rasterize = value;
+                            this.setState({_rasterize: value});
+                        }}/>
                     </ConfigItem>
-                    <ConfigItem title={'基准高度'} contentStyle={{width: 120}}>
-                        <UnderLineInput type={'number'} defaultValue={baseHeight}
-                                        onChange={value => this.config.baseHeight = value}/>
-                    </ConfigItem>
+                    {_rasterize && <>
+                        <ConfigItem title={'拖拽步长'} contentStyle={{width: 60}}>
+                            <UnderLineInput type={'number'} defaultValue={dragStep}
+                                            onChange={value => this.config.dragStep = value}/>
+                        </ConfigItem>
+                        <ConfigItem title={'缩放步长'} contentStyle={{width: 60}}>
+                            <UnderLineInput type={'number'} defaultValue={resizeStep}
+                                            onChange={value => this.config.resizeStep = value}/>
+                        </ConfigItem></>
+                    }
+
                 </div>
                 <p style={{
                     color: '#7c7c7c',

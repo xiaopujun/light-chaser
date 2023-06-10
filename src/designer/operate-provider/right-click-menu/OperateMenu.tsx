@@ -4,12 +4,58 @@ import lcRightMenuStore from "./LcRightMenuStore";
 import designerStore from "../../store/DesignerStore";
 import './OperateMenu.less';
 import rightStore from "../../right/RightStore";
+import {
+    CopyOutlined,
+    DeleteOutlined,
+    DownOutlined,
+    EyeInvisibleOutlined,
+    LockOutlined,
+    UpOutlined,
+    VerticalAlignBottomOutlined,
+    VerticalAlignTopOutlined
+} from "@ant-design/icons";
 
 class OperateMenu extends Component {
 
     menuList = [
         {
+            name: '锁定',
+            icon: LockOutlined,
+            onClick: (e: any) => alert('锁定')
+        },
+        {
+            name: '隐藏',
+            icon: EyeInvisibleOutlined,
+            onClick: (e: any) => alert('隐藏')
+        },
+        {
+            name: '复制',
+            icon: CopyOutlined,
+            onClick: (e: any) => alert('复制')
+        },
+        {
+            name: '上移',
+            icon: UpOutlined,
+            onClick: (e: any) => alert('上移')
+        },
+        {
+            "name": '下移',
+            "icon": DownOutlined,
+            "onClick": (e: any) => alert('下移')
+        },
+        {
+            name: '置顶',
+            icon: VerticalAlignTopOutlined,
+            onClick: (e: any) => alert('置顶')
+        },
+        {
+            name: '置底',
+            icon: VerticalAlignBottomOutlined,
+            onClick: (e: any) => alert('置底')
+        },
+        {
             name: '删除',
+            icon: DeleteOutlined,
             onClick: (e: any) => {
                 const {updateActive} = designerStore;
                 const {targetId} = lcRightMenuStore;
@@ -23,22 +69,6 @@ class OperateMenu extends Component {
 
             }
         },
-        {
-            name: '上移一层',
-            onClick: (e: any) => alert('上移一层')
-        },
-        {
-            name: '下移一层',
-            onClick: (e: any) => alert('下移一层')
-        },
-        {
-            name: '移至最前',
-            onClick: (e: any) => alert('移至最前')
-        },
-        {
-            name: '移至最后',
-            onClick: (e: any) => alert('移至最后')
-        },
     ]
 
     render() {
@@ -46,8 +76,12 @@ class OperateMenu extends Component {
         let menuListDom = [];
         for (let i = 0; i < this.menuList.length; i++) {
             let menuItem = this.menuList[i];
+            let Icon = menuItem.icon;
             menuListDom.push(
-                <div key={i + ''} className={'menu-item'} onClick={menuItem.onClick}>{menuItem.name}</div>
+                <div key={i + ''} className={'menu-item'} onClick={menuItem.onClick}>
+                    <label><Icon/></label>
+                    <span>{menuItem.name}</span>
+                </div>
             )
         }
         return (

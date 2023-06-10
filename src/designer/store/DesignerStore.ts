@@ -37,10 +37,9 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
      * 画布设置
      */
     canvasConfig: CanvasConfig = {
-        interval: 0,  //元素间距
-        columns: 192,  //画布列总数
-        baseHeight: 0,  //元素单位高度
-        scale: 1,  //画布缩放比例
+        rasterize: false, //是否栅格化
+        dragStep: 1, //栅格化拖拽步长
+        resizeStep: 1, //栅格化缩放步长
         width: 1920,  //画布宽
         height: 1080,  //画布高
     };

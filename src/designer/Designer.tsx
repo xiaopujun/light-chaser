@@ -47,10 +47,17 @@ class Designer extends Component<LCDesignerProps | any> {
         this.handleContextMenu();
 
         eventManager.register('mousedown', (e: any) => {
+            const {setMouseDownTime} = lcRightMenuStore;
+            setMouseDownTime(Date.now());
             let id = e.target.id;
             const {setActiveMovableItemId, activeMovableItemId} = movableStore;
             if (activeMovableItemId !== id)
                 setActiveMovableItemId && setActiveMovableItemId(id || '');
+        });
+
+        eventManager.register('mouseup', (e: any) => {
+            const {setMouseUpTime} = lcRightMenuStore;
+            setMouseUpTime(Date.now());
         });
     }
 
@@ -58,13 +65,20 @@ class Designer extends Component<LCDesignerProps | any> {
         //todo 在设计器加载时，异步注册设计器中所有设计到的操作事件
         const {setPosition, setTargetId, updateVisible} = lcRightMenuStore;
         eventManager.register('click', (e: any) => {
+            console.log(e)
             const {visible, updateVisible} = lcRightMenuStore;
-            if (visible && e.button === 0)
-                updateVisible(false);
+            if (visible && e.button === 0) {
+                //这里添加异步处理的原因：必须要在操作菜单执行点击事件执行之后才能卸载dom元素，不然操作菜单的点击事件会失效。
+                setTimeout(() => {
+                    updateVisible(false);
+                });
+            }
         });
         eventManager.register('contextmenu', (event: any) => {
+            console.log(event)
             event.preventDefault();
-            if (event.target.className.indexOf('react-grid-item') > -1) {
+            const {mouseDownTime, mouseUpTime} = lcRightMenuStore;
+            if (event.target.className.indexOf('lc-comp-item') > -1 && mouseUpTime - mouseDownTime < 200) {
                 updateVisible && updateVisible(true);
                 setPosition([event.clientX, event.clientY]);
                 setTargetId && setTargetId(parseInt(event.target.id));

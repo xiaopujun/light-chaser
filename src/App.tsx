@@ -23,7 +23,6 @@ class App extends Component<any> {
                         <Route path={'/test'} component={DemoMain}/>
                     </Switch>
                 </Suspense>
-                <LcRightMenu/>
             </>
         );
     }
