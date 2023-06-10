@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {observer} from "mobx-react";
-import lcRightMenuStore from "./LcRightMenuStore";
+import lcRightMenuStore from "./ContextMenuStore";
 import designerStore from "../../store/DesignerStore";
 import './OperateMenu.less';
 import rightStore from "../../right/RightStore";
@@ -15,7 +15,7 @@ import {
     VerticalAlignTopOutlined
 } from "@ant-design/icons";
 
-class OperateMenu extends Component {
+class ContextMenu extends Component {
 
     menuList = [
         {
@@ -99,4 +99,4 @@ class OperateMenu extends Component {
     }
 }
 
-export default observer(OperateMenu);
+export default observer(ContextMenu);

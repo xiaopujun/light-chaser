@@ -8,7 +8,7 @@ import {observer} from "mobx-react";
 import designerStarter from "../../DesignerStarter";
 import designerStore from "../../store/DesignerStore";
 import {snowflake} from "../../../utils/IdGenerate";
-import {MovableItemData} from "../../../lib/lc-movable/types";
+import {MovableItemType} from "../../../lib/lc-movable/types";
 
 class CompList extends Component {
 
@@ -20,7 +20,7 @@ class CompList extends Component {
 
     addItem = (compKey: string) => {
         const {addItem} = designerStore;
-        let movableItem: MovableItemData = {
+        let movableItem: MovableItemType = {
             type: compKey,
             width: 384,
             height: 216,

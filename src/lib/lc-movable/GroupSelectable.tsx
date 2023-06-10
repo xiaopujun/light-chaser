@@ -34,8 +34,10 @@ class GroupSelectable extends Component {
                              }
                          }}
                          onSelect={(e: any) => {
-                             setTargets(e.selected);
-                             console.log('e.selected', e.selected);
+                             let selected = e.selected.filter((item: any) => {
+                                 return item.dataset.locked !== 'true';
+                             });
+                             setTargets(selected);
                          }}
                          onSelectEnd={e => {
                              const movable: any = movableRef.current;

@@ -3,7 +3,7 @@ import 'antd/dist/antd.min.css';
 import './App.less';
 import {Route, Switch} from "react-router-dom";
 import Loading from "./lib/loading/Loading";
-import LcRightMenu from "./designer/operate-provider/right-click-menu/OperateMenu";
+import LcRightMenu from "./designer/operate-provider/right-click-menu/ContextMenu";
 import DemoMain from "./test/DemoMain";
 
 const LightChaserList = lazy(() => import('./list/LightChaserList'));

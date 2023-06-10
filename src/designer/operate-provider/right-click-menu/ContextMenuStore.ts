@@ -1,6 +1,6 @@
 import {action, makeAutoObservable, makeObservable, observable} from "mobx";
 
-class LcRightMenuStore {
+class ContextMenuStore {
     constructor() {
         makeObservable(this, {
             visible: observable,
@@ -48,5 +48,5 @@ class LcRightMenuStore {
 
 }
 
-const lcRightMenu = new LcRightMenuStore();
+const lcRightMenu = new ContextMenuStore();
 export default lcRightMenu;

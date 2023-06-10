@@ -15,7 +15,7 @@ import DesignerFooter from "./footer/DesignerFooter";
 import lcDesignerContentStore from './store/DesignerStore';
 import designerStarter from './DesignerStarter';
 import {getProjectById} from "../utils/LocalStorageUtil";
-import lcRightMenuStore from "./operate-provider/right-click-menu/LcRightMenuStore";
+import lcRightMenuStore from "./operate-provider/right-click-menu/ContextMenuStore";
 import eventManager from "./operate-provider/core/EventManager";
 import movableStore from "../lib/lc-movable/MovableStore";
 

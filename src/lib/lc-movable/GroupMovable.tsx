@@ -3,7 +3,7 @@ import Moveable from "react-moveable";
 import {observer} from "mobx-react";
 import eventOperateStore from "../../designer/operate-provider/EventOperateStore";
 import designerStore from "../../designer/store/DesignerStore";
-import {MovableItemData} from "./types";
+import {MovableItemType} from "./types";
 
 interface GroupMovableProps {
     readonly?: boolean;
@@ -43,7 +43,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
 
     onDragGroupEnd = (e: any) => {
         const {updateLayout} = designerStore;
-        let data: MovableItemData[] = [];
+        let data: MovableItemType[] = [];
         e.events.forEach((ev: any) => {
             const {target, lastEvent} = ev;
             if (lastEvent) {
@@ -80,7 +80,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
 
     onResizeGroupEnd = (e: any) => {
         const {updateLayout} = designerStore;
-        let data: MovableItemData[] = [];
+        let data: MovableItemType[] = [];
         e.events.forEach((ev: any) => {
             const {target, lastEvent} = ev;
             if (lastEvent) {

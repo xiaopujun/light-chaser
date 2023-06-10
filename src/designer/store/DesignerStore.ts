@@ -21,7 +21,7 @@ import AbstractBaseStore from "../../framework/core/AbstractBaseStore";
 import rightStore from "../right/RightStore";
 import {merge} from "../../utils/ObjectUtil";
 import {isEqual} from "lodash";
-import {MovableItemData} from "../../lib/lc-movable/types";
+import {MovableItemType} from "../../lib/lc-movable/types";
 
 class DesignerStore implements LCDesigner, AbstractBaseStore {
     constructor() {
@@ -99,7 +99,7 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
     /**
      * 布局配置
      */
-    layoutConfigs: MovableItemData[] = [];
+    layoutConfigs: MovableItemType[] = [];
 
     /**
      * 统计信息
@@ -232,7 +232,7 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
     /**
      * 添加元素
      */
-    addItem = (item: MovableItemData) => {
+    addItem = (item: MovableItemType) => {
         this.layoutConfigs.push(item);
         const {customComponentInfoMap} = designerStarter;
         let initObj: any = customComponentInfoMap[item.type + ''];
@@ -249,19 +249,20 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
      */
     delItem = (id: string | number) => {
         _.remove(this.layoutConfigs, function (item: any) {
-            return item?.id === id;
+            return item?.id === (id + '');
         })
         delete this.elemConfigs[id + ''];
         if (this.activeElem && id === this.activeElem.id) {
             this.activeElem.id = -1;
             this.activeElem.type = "";
         }
+        console.log(toJS(this.layoutConfigs));
     }
 
     /**
      * 更新布局
      */
-    updateLayout = (items: MovableItemData[]) => {
+    updateLayout = (items: MovableItemType[]) => {
         for (const item of items) {
             for (let layoutCfg of this.layoutConfigs) {
                 if (layoutCfg.id === item.id && !isEqual(layoutCfg, item)) {

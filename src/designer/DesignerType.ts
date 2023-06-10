@@ -1,7 +1,7 @@
 /**
  * 主题
  */
-import {MovableItemData} from "../lib/lc-movable/types";
+import {MovableItemType} from "../lib/lc-movable/types";
 
 export interface ThemeColors {
     //主体色
@@ -313,7 +313,7 @@ export interface LCDesigner {
     //元素样式
     elemConfigs?: { [key: string]: ElemConfig };
     //布局信息
-    layoutConfigs?: MovableItemData[];
+    layoutConfigs?: MovableItemType[];
     //统计信息
     statisticInfo?: Statistic;
     //图层信息
