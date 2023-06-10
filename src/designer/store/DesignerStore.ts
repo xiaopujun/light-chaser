@@ -1,5 +1,5 @@
 import {makeAutoObservable, runInAction, toJS} from "mobx";
-import {isEqual} from "lodash";
+import {cloneDeep, isEqual} from "lodash";
 import {
     ActiveElem,
     BackgroundColorMode,
@@ -21,6 +21,8 @@ import AbstractBaseStore from "../../framework/core/AbstractBaseStore";
 import rightStore from "../right/RightStore";
 import {merge} from "../../utils/ObjectUtil";
 import {MovableItemType} from "../../lib/lc-movable/types";
+import {snowflake} from "../../utils/IdGenerate";
+import contextMenuStore from "../operate-provider/right-click-menu/ContextMenuStore";
 
 class DesignerStore implements LCDesigner, AbstractBaseStore {
     constructor() {
@@ -262,7 +264,7 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
         for (const item of items) {
             let oldItem = this.layoutConfigs[item.id + ''];
             if (!isEqual(oldItem, item)) {
-                this.layoutConfigs[item.id + ''] = merge(oldItem, item);
+                this.layoutConfigs[item.id + ''] = {...merge(oldItem, item)};
             }
         }
     }
@@ -288,6 +290,7 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
             this.elemConfigs[this.activeElem?.id + ''] = {...merge(activeConfig, data)};
         const {setActiveElemConfig} = rightStore;
         setActiveElemConfig(this.elemConfigs[this.activeElem?.id + '']);
+        console.log(toJS(this.elemConfigs));
     }
 
     updateThemeConfig = (data: any) => {
@@ -322,6 +325,25 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
      */
     updateProjectConfig = (data: ProjectConfig) => {
         this.projectConfig = {...this.projectConfig, ...data};
+    }
+
+    copyItem = (id: string) => {
+        const {[id]: item} = this.elemConfigs;
+        const {[id]: layout} = this.layoutConfigs;
+        let {maxLevel, setMaxLevel} = contextMenuStore;
+        if (item) {
+            const newItem = cloneDeep(item);
+            const newLayout = cloneDeep(layout);
+            const newId = snowflake.generateId() + '';
+            newItem.id = newId;
+            newLayout.id = newId;
+            newLayout.zIndex = ++maxLevel;
+            setMaxLevel(maxLevel);
+            const [x = 10, y = 10] = (newLayout.position || []).map(p => p + 10);
+            newLayout.position = [x, y];
+            this.elemConfigs[newId] = newItem;
+            this.layoutConfigs[newId] = newLayout;
+        }
     }
 
 }

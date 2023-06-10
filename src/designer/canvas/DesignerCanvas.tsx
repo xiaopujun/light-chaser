@@ -54,7 +54,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
             elements.push(
                 <div id={item.id}
                      data-type={item.type}
-                     data-locked={false}
+                     data-locked={item.locked}
                      data-hide={false}
                      key={item.id + ''}
                      style={{
@@ -62,7 +62,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                          height: item.height,
                          transform: `translate(${position[0]}px, ${position[1]}px)`,
                          position: 'absolute',
-                         zIndex: 1
+                         zIndex: item.zIndex
                      }} className={'lc-comp-item'}>
                     <Chart config={compConfig}/>
                 </div>

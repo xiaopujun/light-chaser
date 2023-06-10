@@ -4,16 +4,7 @@ import contextMenuStore from "./ContextMenuStore";
 import designerStore from "../../store/DesignerStore";
 import './OperateMenu.less';
 import rightStore from "../../right/RightStore";
-import {
-    CopyOutlined,
-    DeleteOutlined,
-    DownOutlined,
-    EyeInvisibleOutlined,
-    LockOutlined,
-    UpOutlined,
-    VerticalAlignBottomOutlined,
-    VerticalAlignTopOutlined
-} from "@ant-design/icons";
+import {CopyOutlined, DeleteOutlined, LockOutlined, VerticalAlignTopOutlined} from "@ant-design/icons";
 
 class ContextMenu extends Component {
 
@@ -21,42 +12,47 @@ class ContextMenu extends Component {
         {
             name: '锁定',
             icon: LockOutlined,
-            onClick: (e: any) => alert('锁定')
+            onClick: () => {
+                const {targetId} = contextMenuStore;
+                const {updateLayout, layoutConfigs} = designerStore;
+                let item = layoutConfigs[targetId];
+                updateLayout([{...item, locked: true}])
+            }
         },
         {
             name: '解锁',
             icon: LockOutlined,
-            onClick: (e: any) => alert('解锁')
+            onClick: () => {
+                const {targetId} = contextMenuStore;
+                const {updateLayout, layoutConfigs} = designerStore;
+                let item = layoutConfigs[targetId];
+                updateLayout([{...item, locked: false}])
+            }
         },
-        {
-            name: '隐藏',
-            icon: EyeInvisibleOutlined,
-            onClick: (e: any) => alert('隐藏')
-        },
+        // {
+        //     name: '隐藏',
+        //     icon: EyeInvisibleOutlined,
+        //     onClick: (e: any) => alert('隐藏')
+        // },
         {
             name: '复制',
             icon: CopyOutlined,
-            onClick: (e: any) => alert('复制')
-        },
-        {
-            name: '上移',
-            icon: UpOutlined,
-            onClick: (e: any) => alert('上移')
-        },
-        {
-            "name": '下移',
-            "icon": DownOutlined,
-            "onClick": (e: any) => alert('下移')
+            onClick: (e: any) => {
+                const {targetId} = contextMenuStore;
+                const {copyItem} = designerStore;
+                copyItem(targetId + '');
+            }
         },
         {
             name: '置顶',
             icon: VerticalAlignTopOutlined,
-            onClick: (e: any) => alert('置顶')
-        },
-        {
-            name: '置底',
-            icon: VerticalAlignBottomOutlined,
-            onClick: (e: any) => alert('置底')
+            onClick: (e: any) => {
+                let {targetId, maxLevel, setMaxLevel} = contextMenuStore;
+                const {updateLayout, layoutConfigs} = designerStore;
+                let item = layoutConfigs[targetId];
+                updateLayout([{...item, zIndex: ++maxLevel}]);
+                setMaxLevel(maxLevel);
+            }
         },
         {
             name: '删除',
