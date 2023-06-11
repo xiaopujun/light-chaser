@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {ThemeItemType} from "../../../../designer/DesignerType";
 import ThemeItem from "../theme-item/ThemeItem";
 import designerStore from "../../../../designer/store/DesignerStore";
+import {toJS} from "mobx";
+import {cloneDeep} from "lodash";
 
 interface ThemeListProps {
     data?: ThemeItemType[];
@@ -13,13 +15,13 @@ class ThemeList extends Component<ThemeListProps> {
     data: any = []
 
     state: any = {
-        activeId: '0',
+        activeId: '',
     }
 
     constructor(props: ThemeListProps) {
         super(props);
         const {list} = designerStore.themeConfig;
-        this.data = list || [];
+        this.data = cloneDeep(list) || [];
     }
 
     onClick = (data: any) => {

@@ -18,6 +18,7 @@ import {getProjectById} from "../utils/LocalStorageUtil";
 import lcRightMenuStore from "./operate-provider/right-click-menu/ContextMenuStore";
 import eventManager from "./operate-provider/core/EventManager";
 import movableStore from "../lib/lc-movable/MovableStore";
+import eventOperateStore from "./operate-provider/EventOperateStore";
 
 interface LCDesignerProps extends RouteComponentProps {
     LCDesignerStore: LCDesignerProps;
@@ -149,6 +150,9 @@ class Designer extends Component<LCDesignerProps | any> {
                     condition: store.condition,
                     extendParams: store.extendParams,
                 })
+                const {setMinOrder, setMaxOrder} = eventOperateStore;
+                setMinOrder(store.extendParams['minOrder']);
+                setMaxOrder(store.extendParams['maxOrder']);
             }
         })
     }

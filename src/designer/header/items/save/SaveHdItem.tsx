@@ -4,6 +4,7 @@ import {designerRouter} from "../../../../index";
 import designerStore from "../../../store/DesignerStore";
 import {createProject, updateProject} from "../../../../utils/LocalStorageUtil";
 import {SaveType} from "../../../DesignerType";
+import eventOperateStore from "../../../operate-provider/EventOperateStore";
 
 /**
  * header-保存
@@ -12,6 +13,9 @@ export default class SaveHdItem extends AbstractHeaderItem {
 
     localSave = () => {
         let {id = -1, setId} = designerStore;
+        const {maxOrder, minOrder} = eventOperateStore;
+        designerStore.extendParams['maxOrder'] = maxOrder;
+        designerStore.extendParams['minOrder'] = minOrder;
         if (id === -1) {
             createProject(designerStore).then((id: number | any) => {
                 if (id > -1) {
