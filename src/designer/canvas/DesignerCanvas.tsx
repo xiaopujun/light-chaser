@@ -45,7 +45,6 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
     generateElement = () => {
         const {layoutConfigs} = designerStore!;
         const {customComponentInfoMap}: any = designerStarter;
-        let time1 = Date.now();
         const sortLayout = Object.values(layoutConfigs).sort((a: any, b: any) => a.order - b.order);
         return sortLayout.map((item: MovableItemType) => {
             let Chart: any = customComponentInfoMap[item.type + ''].getComponent();

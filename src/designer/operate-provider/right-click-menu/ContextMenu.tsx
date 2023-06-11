@@ -93,7 +93,7 @@ class ContextMenu extends Component {
     ]
 
     render() {
-        const {visible, position = [0, 0], targetId} = contextMenuStore;
+        const {visible, position = [0, 0]} = contextMenuStore;
         let menuListDom = [];
         for (let i = 0; i < this.menuList.length; i++) {
             let menuItem = this.menuList[i];

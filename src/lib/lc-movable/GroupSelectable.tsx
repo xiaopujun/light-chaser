@@ -27,7 +27,7 @@ class GroupSelectable extends Component {
                          onDragStart={e => {
                              const movable: any = movableRef.current;
                              const target = e.inputEvent.target;
-                             if (movable && movable.isMoveableElement(target)
+                             if ((movable && movable.isMoveableElement(target))
                                  || targets.some((t: any) => t === target || t.contains(target))
                              ) {
                                  e.stop();

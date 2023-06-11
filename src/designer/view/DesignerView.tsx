@@ -3,7 +3,6 @@ import DesignerBackground from "../../comps/lc/background/DesignerBackground";
 import designerStore from "../store/DesignerStore";
 import designerStarter from "../DesignerStarter";
 import './DesignerView.less';
-import {MovableItemType} from "../../lib/lc-movable/types";
 
 interface LcShowProps {
 
