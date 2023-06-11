@@ -12,6 +12,8 @@ import AntdBaseBar from "./AntdBaseBar";
 import AntdBaseBarDataConfig from "./AntdBaseBarDataConfig";
 
 export const updateTheme = (newTheme: ThemeItemType, sourceStyle: any) => {
+    if (!newTheme)
+        return;
     const {colors: {main, text, supplementary, emphasize, background, auxiliary}} = newTheme;
     //边框
     if (sourceStyle?.style?.baseStyle?.border)

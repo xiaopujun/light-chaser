@@ -88,8 +88,8 @@ const saveProject = (config: DesignerStore) => {
         if (bgConfig?.bgImg.bgImgUrl !== '') {
             let bgImgKey = 'bgImg' + config.id;
             //1.1 保存背景图片到本地数据库
-            saveImgToLocal(bgConfig?.bgImg.bgImgUrl!, bgImgKey).then((blobKey) => {
-                if (bgConfig && blobKey !== '')
+            saveImgToLocal(bgConfig?.bgImg.bgImgUrl!, bgImgKey).then((res) => {
+                if (bgConfig && res)
                     bgConfig.bgImg.bgImgUrl = bgImgKey;
                 //2.2 保存项目到本地数据库
                 saveProjectToLocal(config).then(id => resolve(id));
@@ -171,7 +171,7 @@ export const updateProject = (designerStore: DesignerStore) => {
                             //2.1 如果有新背景图片数据，则保存新背景图片
                             saveImgToLocal(bgConfig.bgImg.bgImgUrl!, bgImgKey).then(() => {
                                 if (bgConfig)
-                                    config.elemConfigs['-1']['background'].bgImgUrl = bgImgKey;
+                                    config.elemConfigs['-1']['background'].bgImg.bgImgUrl = bgImgKey;
                                 dataArr[i] = config;
                                 localforage.setItem('light-chaser', dataArr).then(() => {
                                     resolve(config.id as number);
@@ -211,7 +211,7 @@ export const getProjectById = (id: number | string) => {
                         if (bgConfig?.bgImg.bgImgUrl !== '') {
                             getImgFromLocal(bgConfig?.bgImg.bgImgUrl).then((url) => {
                                 if (bgConfig)
-                                    target.elemConfigs['-1']['background'].bgImgUrl = url;
+                                    target.elemConfigs['-1']['background'].bgImg.bgImgUrl = url;
                                 resolve(target);
                             });
                         } else {
