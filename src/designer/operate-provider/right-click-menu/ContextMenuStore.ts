@@ -27,10 +27,6 @@ class ContextMenuStore {
 
     mouseUpTime = 0;
 
-    maxLevel = 1;
-
-    setMaxLevel = (level: number) => this.maxLevel = level;
-
     updateVisible = (visible: boolean) => {
         this.visible = visible;
     }

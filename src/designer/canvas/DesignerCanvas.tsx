@@ -10,6 +10,7 @@ import DesignerContainer from "../operate-provider/DesignerContainer";
 import GroupMovable from "../../lib/lc-movable/GroupMovable";
 import GroupSelectable from "../../lib/lc-movable/GroupSelectable";
 import LcRightMenu from "../operate-provider/right-click-menu/ContextMenu";
+import {MovableItemType} from "../../lib/lc-movable/types";
 
 /**
  * 设计器画布
@@ -42,34 +43,28 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
      * 元素生成方法
      */
     generateElement = () => {
-        let elements: any = [];
         const {layoutConfigs} = designerStore!;
         const {customComponentInfoMap}: any = designerStarter;
         let time1 = Date.now();
-        Object.keys(layoutConfigs).forEach((key: string) => {
-            let item = layoutConfigs[key];
+        const sortLayout = Object.values(layoutConfigs).sort((a: any, b: any) => a.order - b.order);
+        return sortLayout.map((item: MovableItemType) => {
             let Chart: any = customComponentInfoMap[item.type + ''].getComponent();
             const compConfig: any = this.calculateChartConfig(item.id + '');
             let position = item.position || [0, 0];
-            elements.push(
-                <div id={item.id}
-                     data-type={item.type}
-                     data-locked={item.locked}
-                     data-hide={false}
-                     key={item.id + ''}
-                     style={{
-                         width: item.width,
-                         height: item.height,
-                         transform: `translate(${position[0]}px, ${position[1]}px)`,
-                         position: 'absolute',
-                         zIndex: item.zIndex
-                     }} className={'lc-comp-item'}>
-                    <Chart config={compConfig}/>
-                </div>
-            )
+            return <div id={item.id}
+                        data-type={item.type}
+                        data-locked={item.locked}
+                        data-hide={false}
+                        key={item.id + ''}
+                        style={{
+                            width: item.width,
+                            height: item.height,
+                            transform: `translate(${position[0]}px, ${position[1]}px)`,
+                            position: 'absolute',
+                        }} className={'lc-comp-item'}>
+                <Chart config={compConfig}/>
+            </div>
         });
-        console.log('生成元素耗时:' + (Date.now() - time1) + 'ms');
-        return elements;
     }
 
     /**

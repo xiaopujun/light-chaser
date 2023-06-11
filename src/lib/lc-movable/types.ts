@@ -14,5 +14,5 @@ export interface MovableItemType {
     //是否锁定
     locked?: boolean;
     //层级
-    zIndex?: number;
+    order?: number;
 }

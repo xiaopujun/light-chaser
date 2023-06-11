@@ -4,7 +4,14 @@ import contextMenuStore from "./ContextMenuStore";
 import designerStore from "../../store/DesignerStore";
 import './OperateMenu.less';
 import rightStore from "../../right/RightStore";
-import {CopyOutlined, DeleteOutlined, LockOutlined, VerticalAlignTopOutlined} from "@ant-design/icons";
+import {
+    CopyOutlined,
+    DeleteOutlined,
+    LockOutlined,
+    VerticalAlignBottomOutlined,
+    VerticalAlignTopOutlined
+} from "@ant-design/icons";
+import eventOperateStore from "../EventOperateStore";
 
 class ContextMenu extends Component {
 
@@ -46,12 +53,25 @@ class ContextMenu extends Component {
         {
             name: '置顶',
             icon: VerticalAlignTopOutlined,
-            onClick: (e: any) => {
-                let {targetId, maxLevel, setMaxLevel} = contextMenuStore;
+            onClick: () => {
+                let {maxOrder, setMaxOrder} = eventOperateStore;
+                let {targetId} = contextMenuStore;
                 const {updateLayout, layoutConfigs} = designerStore;
                 let item = layoutConfigs[targetId];
-                updateLayout([{...item, zIndex: ++maxLevel}]);
-                setMaxLevel(maxLevel);
+                updateLayout([{...item, order: ++maxOrder}])
+                setMaxOrder(maxOrder)
+            }
+        },
+        {
+            name: '置底',
+            icon: VerticalAlignBottomOutlined,
+            onClick: () => {
+                let {minOrder, setMinOrder} = eventOperateStore;
+                let {targetId} = contextMenuStore;
+                const {updateLayout, layoutConfigs} = designerStore;
+                let item = layoutConfigs[targetId];
+                updateLayout([{...item, order: --minOrder}])
+                setMinOrder(minOrder)
             }
         },
         {

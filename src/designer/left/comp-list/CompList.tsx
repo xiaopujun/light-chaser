@@ -9,6 +9,7 @@ import designerStarter from "../../DesignerStarter";
 import designerStore from "../../store/DesignerStore";
 import {snowflake} from "../../../utils/IdGenerate";
 import {MovableItemType} from "../../../lib/lc-movable/types";
+import eventOperateStore from "../../operate-provider/EventOperateStore";
 
 class CompList extends Component {
 
@@ -20,6 +21,7 @@ class CompList extends Component {
 
     addItem = (compKey: string) => {
         const {addItem} = designerStore;
+        let {maxOrder, setMaxOrder} = eventOperateStore;
         let movableItem: MovableItemType = {
             type: compKey,
             width: 384,
@@ -28,8 +30,9 @@ class CompList extends Component {
             id: snowflake.generateId() + '',
             locked: false,
             hide: false,
-            zIndex: 1,
+            order: ++maxOrder,
         }
+        setMaxOrder && setMaxOrder(maxOrder);
         addItem && addItem(movableItem);
     }
 

@@ -22,7 +22,7 @@ import rightStore from "../right/RightStore";
 import {merge} from "../../utils/ObjectUtil";
 import {MovableItemType} from "../../lib/lc-movable/types";
 import {snowflake} from "../../utils/IdGenerate";
-import contextMenuStore from "../operate-provider/right-click-menu/ContextMenuStore";
+import eventOperateStore from "../operate-provider/EventOperateStore";
 
 class DesignerStore implements LCDesigner, AbstractBaseStore {
     constructor() {
@@ -243,6 +243,7 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
             this.elemConfigs[item.id + ''] = initData;
         if (this.statisticInfo)
             this.statisticInfo.count = Object.keys(this.elemConfigs).length;
+        console.log(toJS(this.layoutConfigs))
     }
 
     /**
@@ -329,18 +330,18 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
 
     copyItem = (id: string) => {
         const {[id]: item} = this.elemConfigs;
-        const {[id]: layout} = this.layoutConfigs;
-        let {maxLevel, setMaxLevel} = contextMenuStore;
         if (item) {
+            const {[id]: layout} = this.layoutConfigs;
             const newItem = cloneDeep(item);
             const newLayout = cloneDeep(layout);
             const newId = snowflake.generateId() + '';
             newItem.id = newId;
             newLayout.id = newId;
-            newLayout.zIndex = ++maxLevel;
-            setMaxLevel(maxLevel);
             const [x = 10, y = 10] = (newLayout.position || []).map(p => p + 10);
             newLayout.position = [x, y];
+            let {maxOrder, setMaxOrder} = eventOperateStore;
+            newLayout.order = ++maxOrder;
+            setMaxOrder(maxOrder);
             this.elemConfigs[newId] = newItem;
             this.layoutConfigs[newId] = newLayout;
         }

@@ -1,32 +1,27 @@
 import React, {Component} from 'react';
 
-const MENU_TYPE = 'SIMPLE';
 
 export default class SimpleMenu extends Component<any, any> {
 
-    state: any = {
-        logs: []
-    }
+    ref: any = null;
 
-
-    constructor(props: any) {
-        super(props);
-
-        this.state = {logs: []};
-    }
-
-    handleClick = (e: any, data: any) => {
-        const {logs} = this.state;
-        this.setState(() => ({
-            logs: [`Clicked on menu ${data.item}`, ...logs]
-        }));
+    componentDidMount() {
+        if (this.ref) {
+            this.ref.addEventListener('keydown', () => {
+                console.log('sssssdkkkkdkdj')
+            });
+            this.ref.addEventListener('click', () => {
+                console.log('click')
+            });
+        }
     }
 
     render() {
-        const {logs} = this.state;
-        return (
-            <div>
 
+        return (
+            <div tabIndex={0} ref={dom => this.ref = dom}
+                 style={{width: 900, height: 900, backgroundColor: '#24726a'}}>
+                <div style={{width: 500, height: 500, backgroundColor: '#724f24'}}/>
             </div>
         );
     }

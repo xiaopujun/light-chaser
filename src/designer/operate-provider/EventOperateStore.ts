@@ -29,6 +29,12 @@ class EventOperateStore {
      */
     targets: any[] = [];
 
+    maxOrder = 0;
+    minOrder = 0;
+
+    setMaxOrder = (order: number) => this.maxOrder = order;
+    setMinOrder = (order: number) => this.minOrder = order;
+
     setScale = (scale: number) => this.scale = scale;
 
     setMovableRef = (ref: any) => this.movableRef = ref;
