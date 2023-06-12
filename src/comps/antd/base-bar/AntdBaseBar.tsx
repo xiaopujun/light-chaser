@@ -10,7 +10,8 @@ export default class AntdBaseBar extends PureComponent<any> {
 
     chart: any;
     state = {
-        data: null
+        data: null,
+        connect: true
     }
 
     componentDidMount() {
@@ -26,10 +27,13 @@ export default class AntdBaseBar extends PureComponent<any> {
                 const {realTimeRefresh} = this.props;
                 if (realTimeRefresh) {
                     sendHttpRequest(url, method, params, header).then((data: any) => {
-                        this.setState({data});
+                        if (data) {
+                            this.setState({data, connect: true});
+                        } else
+                            this.setState({connect: false});
                     });
                 }
-            }, flashFrequency * 1000);
+            }, parseInt(Math.random() * 7 + 3 + '') * 1000);
         }
     }
 
@@ -41,16 +45,32 @@ export default class AntdBaseBar extends PureComponent<any> {
     }
 
     render() {
+        const {connect} = this.state;
         const {config} = this.props;
         if (!config) return null;
         let {style} = config;
         this.calculateData(style);
         return (
             <CompBgContainer style={style?.baseStyle}>
-                <Bar supportCSSTransform={true} onGetG2Instance={(chart: any) => {
-                    this.chart = chart;
-                }}
-                     className={'grid-chart-item'} {...style?.chartStyle}/>
+                {
+                    connect ? <Bar supportCSSTransform={true} onGetG2Instance={(chart: any) => {
+                            this.chart = chart;
+                        }} className={'grid-chart-item'} {...style?.chartStyle}/> :
+                        <div style={{
+                            width: '100%',
+                            height: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            textAlign: 'center'
+                        }}>
+                            <p style={{
+                                backgroundColor: 'rgb(174,0,0)',
+                                color: '#dcdcdc',
+                                fontSize: 12,
+                                width: '100%',
+                            }}>链接丢失...</p>
+                        </div>
+                }
             </CompBgContainer>
         );
     }

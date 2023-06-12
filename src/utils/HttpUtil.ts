@@ -14,7 +14,6 @@ export const sendHttpRequest = async (url: string, method: string, headers: any,
         const response = await fetch(url, requestOptions);
         return await response.json();
     } catch (error) {
-        console.error('Error:', error);
-        throw error;
+        return null;
     }
 };

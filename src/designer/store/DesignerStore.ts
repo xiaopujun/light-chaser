@@ -124,12 +124,97 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
             name: '科技风格(默认主题)',
             des: '科技风格(默认主题)',
             colors: {
-                main: '#00b7ff',
-                text: '#00cfff',
-                background: 'rgba(0,137,183,0.24)',
-                auxiliary: '#0077a3',
-                emphasize: '#00a7e6',
-                supplementary: '#005e7a',
+                main: '#00dfff',
+                text: '#62edff',
+                background: 'rgba(0,223,255,0.2)',
+                auxiliary: '#4ca4b1',
+                emphasize: '#38929f',
+                supplementary: '#1790a2',
+            }
+        },
+        {
+            id: '1',
+            name: '红色主题',
+            des: '红色主题',
+            colors: {
+                main: '#ff4d4f',
+                text: '#ff7875',
+                background: 'rgba(255,77,79,0.2)',
+                auxiliary: '#d4380d',
+                emphasize: '#cf1322',
+                supplementary: '#a8071a',
+            }
+        }, {
+            id: '2',
+            name: '绿色主题',
+            des: '绿色主题',
+            colors: {
+                main: '#52c41a',
+                text: '#87d068',
+                background: 'rgba(82,196,26,0.2)',
+                auxiliary: '#389e0d',
+                emphasize: '#237804',
+                supplementary: '#135200',
+            }
+        }, {
+            id: '3',
+            name: '蓝色主题',
+            des: '蓝色主题',
+            colors: {
+                main: '#1890ff',
+                text: '#40a9ff',
+                background: 'rgba(24,144,255,0.2)',
+                auxiliary: '#096dd9',
+                emphasize: '#0050b3',
+                supplementary: '#003a8c',
+            }
+        }, {
+            id: '4',
+            name: '黄色主题',
+            des: '黄色主题',
+            colors: {
+                main: '#faad14',
+                text: '#ffc53d',
+                background: 'rgba(250,173,20,0.2)',
+                auxiliary: '#d48806',
+                emphasize: '#fa8c16',
+                supplementary: '#ad6800',
+            }
+        }, {
+            id: '5',
+            name: '紫色主题',
+            des: '紫色主题',
+            colors: {
+                main: '#722ed1',
+                text: '#9254de',
+                background: 'rgba(114,46,209,0.2)',
+                auxiliary: '#531dab',
+                emphasize: '#391085',
+                supplementary: '#22075e',
+            }
+        }, {
+            id: '6',
+            name: '粉色主题',
+            des: '粉色主题',
+            colors: {
+                main: '#eb2f96',
+                text: '#ff85c0',
+                background: 'rgba(235,47,150,0.2)',
+                auxiliary: '#c41d7f',
+                emphasize: '#f5222d',
+                supplementary: '#a8071a',
+            }
+        }, {
+            id: '7',
+            name: '橙色主题',
+            des: '橙色主题',
+            colors: {
+                main: '#fa8c16',
+                text: '#ffa940',
+                background: 'rgba(250,140,22,0.2)',
+                auxiliary: '#d46b08',
+                emphasize: '#fa541c',
+                supplementary: '#ad4e00',
             }
         }
     ];
