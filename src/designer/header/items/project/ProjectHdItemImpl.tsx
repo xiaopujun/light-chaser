@@ -63,8 +63,7 @@ class ProjectHdItemImpl extends Component {
                     <ConfigItem title={'存储类型'} contentStyle={{width: 190}}>
                         <Radio onChange={value => this.config.saveType = value} defaultValue={saveType} options={[
                             {label: '本地', value: '0'},
-                            {label: '服务端', value: '1'},
-                            {label: '封存', value: '2'}
+                            // {label: '服务端', value: '1'},
                         ]}/>
                     </ConfigItem>
                 </div>

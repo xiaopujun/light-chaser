@@ -13,7 +13,6 @@ import {
     ProjectState,
     SaveType,
     Statistic,
-    ThemeConfigType,
     ThemeItemType
 } from "../DesignerType";
 import designerStarter from "../DesignerStarter";
@@ -118,23 +117,21 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
     /**
      * 主题
      */
-    themeConfig: ThemeConfigType | any = {
-        list: [
-            {
-                id: '0',
-                name: '科技风格(默认主题)',
-                des: '科技风格(默认主题)',
-                colors: {
-                    main: '#00b7ff',
-                    text: '#00cfff',
-                    background: 'rgba(0,137,183,0.24)',
-                    auxiliary: '#0077a3',
-                    emphasize: '#00a7e6',
-                    supplementary: '#005e7a',
-                }
+    themeConfig: Array<ThemeItemType> | any = [
+        {
+            id: '0',
+            name: '科技风格(默认主题)',
+            des: '科技风格(默认主题)',
+            colors: {
+                main: '#00b7ff',
+                text: '#00cfff',
+                background: 'rgba(0,137,183,0.24)',
+                auxiliary: '#0077a3',
+                emphasize: '#00a7e6',
+                supplementary: '#005e7a',
             }
-        ]
-    };
+        }
+    ];
 
     /**
      * 编组
@@ -308,13 +305,12 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
         let activeConfig: ElemConfig | any = this.elemConfigs[this.activeElem?.id + ''];
         if (activeConfig)
             this.elemConfigs[this.activeElem?.id + ''] = {...merge(activeConfig, data)};
-        console.log(toJS(this.themeConfig.list))
         const {setActiveElemConfig} = rightStore;
         setActiveElemConfig(this.elemConfigs[this.activeElem?.id + '']);
     }
 
     updateThemeConfig = (data: any) => {
-        this.themeConfig = merge(this.themeConfig, data);
+        this.themeConfig = data;
     }
 
     flashGlobalTheme = (newTheme: ThemeItemType) => {

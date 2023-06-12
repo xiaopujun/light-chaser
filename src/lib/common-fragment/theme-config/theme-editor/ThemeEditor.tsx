@@ -9,6 +9,8 @@ import ConfigCard from "../../../config-card/ConfigCard";
 import LcButton from "../../../lc-button/LcButton";
 import {ThemeItemType} from "../../../../designer/DesignerType";
 import designerStore from "../../../../designer/store/DesignerStore";
+import ThemeList from "../theme-list/ThemeList";
+import {cloneDeep} from "lodash";
 
 /**
  * 主题编辑器
@@ -21,8 +23,8 @@ class ThemeEditor extends Component {
 
     constructor(props: any) {
         super(props);
-        const {list} = designerStore.themeConfig;
-        this.state.data = list || [];
+        const themeList = designerStore.themeConfig;
+        this.state.data = cloneDeep(themeList) || [];
     }
 
     themeConfig: ThemeItemType = {
@@ -74,7 +76,7 @@ class ThemeEditor extends Component {
         this.setState({data});
         //保存到数据库
         const {updateThemeConfig} = designerStore;
-        updateThemeConfig({list: data});
+        updateThemeConfig(data);
     }
 
     render() {
@@ -145,7 +147,7 @@ class ThemeEditor extends Component {
                 </div>
                 <div className={'editor-right'}>
                     <ConfigCard title={'主题列表'}>
-                        {themeList}
+                        <ThemeList/>
                     </ConfigCard>
                 </div>
             </div>

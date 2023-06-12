@@ -44,7 +44,6 @@ class ContextMenuStore {
 
     setMouseUpTime = (time: any) => {
         this.mouseUpTime = time;
-        console.log(this.mouseUpTime - this.mouseDownTime)
     };
 
 }

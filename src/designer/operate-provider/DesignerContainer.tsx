@@ -59,14 +59,12 @@ class DesignerContainer extends Component {
      * 监听键盘按下事件
      */
     handleKeyDown = (event: any) => {
-        console.log('sssssssssssssskkkkkkkkkkkkkkkkkkkkkkk')
         eventManager.emit('keydown', event)
     };
     /**
      * 监听鼠标滚轮事件
      */
     handleWheel = (event: any) => {
-        console.log(keyboardMouse.Space, keyboardMouse.RightClick);
         if (keyboardMouse.Space && !keyboardMouse.RightClick) {
             const {setScale} = eventOperateStore;
             let type = 1;

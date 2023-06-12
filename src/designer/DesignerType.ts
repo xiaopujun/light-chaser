@@ -25,12 +25,6 @@ export interface ThemeItemType {
     id: string;
 }
 
-export interface ThemeConfigType {
-    enable: boolean;
-    active: any;
-    list: Array<ThemeItemType>;
-}
-
 /**
  * 图层
  */
@@ -319,7 +313,7 @@ export interface LCDesigner {
     //图层信息
     layers?: Layer[];
     //主题
-    themeConfig?: ThemeConfigType;
+    themeConfig?: Array<ThemeItemType>;
     //编组
     group?: any;
     //联动配置

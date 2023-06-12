@@ -8,10 +8,8 @@ export default class SimpleMenu extends Component<any, any> {
     componentDidMount() {
         if (this.ref) {
             this.ref.addEventListener('keydown', () => {
-                console.log('sssssdkkkkdkdj')
             });
             this.ref.addEventListener('click', () => {
-                console.log('click')
             });
         }
     }

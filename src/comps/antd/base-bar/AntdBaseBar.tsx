@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
 import CompBgContainer from "../../../lib/lc-background-container/CompBgContainer";
 import {Bar} from "@ant-design/charts";
+import {sendHttpRequest} from "../../../utils/HttpUtil";
 
 /**
  * 基础条形图
@@ -13,28 +14,22 @@ export default class AntdBaseBar extends PureComponent<any> {
     }
 
     componentDidMount() {
-        // this.polling();
-    }
-
-    polling = () => {
-        setInterval(() => {
-            this.getData().then((data: any) => {
-                this.setState({data});
-            })
-        }, parseInt(Math.random() * 18 + 3 + '') * 1000)
+        console.log("AntdBaseBar componentDidMount");
+        this.getData();
     }
 
     getData = () => {
-        return new Promise((resolve: any, reject: any) => {
-            fetch('http://www.lcdev.com/lc/test/postDemo', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({range: 23,})
-            })
-                .then(response => response.json())
-                .then(data => resolve(data))
-                .catch((error: any) => reject(error));
-        })
+        const {config: {data}} = this.props;
+        const {dataSource, apiData} = data;
+        if (dataSource === 'api') {
+            const {url, method, params, header, flashFrequency} = apiData;
+            setInterval(() => {
+                sendHttpRequest(url, method, params, header).then((data: any) => {
+                    this.setState({data});
+                });
+            }, flashFrequency * 1000);
+
+        }
     }
 
     calculateData = (style: any) => {
@@ -48,8 +43,7 @@ export default class AntdBaseBar extends PureComponent<any> {
         const {config} = this.props;
         if (!config) return null;
         let {style} = config;
-        // this.calculateData(style);
-        console.log('AntdBaseBar')
+        this.calculateData(style);
         return (
             <CompBgContainer style={style?.baseStyle}>
                 <Bar supportCSSTransform={true} onGetG2Instance={(chart: any) => {

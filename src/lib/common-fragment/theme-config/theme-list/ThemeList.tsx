@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import {ThemeItemType} from "../../../../designer/DesignerType";
 import ThemeItem from "../theme-item/ThemeItem";
 import designerStore from "../../../../designer/store/DesignerStore";
-import {toJS} from "mobx";
-import {cloneDeep} from "lodash";
+import {observer} from "mobx-react";
 
 interface ThemeListProps {
     data?: ThemeItemType[];
@@ -12,38 +11,33 @@ interface ThemeListProps {
 
 class ThemeList extends Component<ThemeListProps> {
 
-    data: any = []
-
     state: any = {
         activeId: '',
     }
 
-    constructor(props: ThemeListProps) {
-        super(props);
-        const {list} = designerStore.themeConfig;
-        this.data = cloneDeep(list) || [];
-    }
 
     onClick = (data: any) => {
         const {onChange} = this.props;
+        const themeConfig = designerStore.themeConfig;
         this.setState({activeId: data.target.id})
-        onChange && onChange(this.data.find((item: any) => parseInt(item.id) === parseInt(data.target.id)));
+        onChange && onChange(themeConfig.find((item: any) => parseInt(item.id) === parseInt(data.target.id)));
     }
 
     render() {
         const {activeId} = this.state;
+        const themeConfig = designerStore.themeConfig;
         let themeList = [];
-        for (let i = 0; i < this.data.length; i++) {
-            themeList.push(<ThemeItem key={i} id={this.data[i].id} selected={this.data[i].id == activeId}
-                                      name={this.data[i].name}
-                                      colors={this.data[i].colors}/>)
+        for (let i = 0; i < themeConfig.length; i++) {
+            themeList.push(<ThemeItem key={i} id={themeConfig[i].id} selected={themeConfig[i].id == activeId}
+                                      name={themeConfig[i].name}
+                                      colors={themeConfig[i].colors}/>)
         }
         return (
-            <div className={'lc-theme-list'} onClick={this.onClick}>
+            <div className={'lc-theme-list'} style={{width: '100%'}} onClick={this.onClick}>
                 {themeList}
             </div>
         );
     }
 }
 
-export default ThemeList;
+export default observer(ThemeList);

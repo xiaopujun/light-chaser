@@ -20,7 +20,7 @@ class ThemeConfig extends Component<ConfigType> {
     themeChange = (theme: ThemeItemType) => {
         const {updateConfig} = this.props;
         updateTheme(theme, rightStore.activeElemConfig);
-        updateConfig && updateConfig({theme: theme});
+        updateConfig && updateConfig({themeId: theme.id});
     }
 
     render() {

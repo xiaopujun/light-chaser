@@ -66,7 +66,6 @@ class Designer extends Component<LCDesignerProps | any> {
         //todo 在设计器加载时，异步注册设计器中所有设计到的操作事件
         const {setPosition, setTargetId, updateVisible} = lcRightMenuStore;
         eventManager.register('click', (e: any) => {
-            console.log(e)
             const {visible, updateVisible} = lcRightMenuStore;
             if (visible && e.button === 0) {
                 //这里添加异步处理的原因：必须要在操作菜单执行点击事件执行之后才能卸载dom元素，不然操作菜单的点击事件会失效。
@@ -76,7 +75,6 @@ class Designer extends Component<LCDesignerProps | any> {
             }
         });
         eventManager.register('contextmenu', (event: any) => {
-            console.log(event)
             event.preventDefault();
             const {mouseDownTime, mouseUpTime} = lcRightMenuStore;
             if (event.target.className.indexOf('lc-comp-item') > -1 && mouseUpTime - mouseDownTime < 200) {

@@ -25,9 +25,10 @@ class GroupSelectable extends Component {
                          toggleContinueSelect={["shift"]}
                          ratio={0}
                          onDragStart={e => {
+                             if (!movableRef) return;
                              const movable: any = movableRef.current;
                              const target = e.inputEvent.target;
-                             if ((movable && movable.isMoveableElement(target))
+                             if ((movable.isMoveableElement(target))
                                  || targets.some((t: any) => t === target || t.contains(target))
                              ) {
                                  e.stop();
@@ -40,8 +41,9 @@ class GroupSelectable extends Component {
                              setTargets(selected);
                          }}
                          onSelectEnd={e => {
+                             if (!movableRef) return;
                              const movable: any = movableRef.current;
-                             if (movable && e.isDragStart) {
+                             if (e.isDragStart) {
                                  e.inputEvent.preventDefault();
                                  setTimeout(() => {
                                      movable.dragStart(e.inputEvent);

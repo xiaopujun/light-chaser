@@ -249,7 +249,9 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
                 },
             },
             animation: {},
-            theme: {},
+            theme: {
+                themeId: '',
+            },
         };
     }
 

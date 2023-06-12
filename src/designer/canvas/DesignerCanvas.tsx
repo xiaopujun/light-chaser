@@ -20,12 +20,6 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
     rgl: any = null;
     lcbg: any = null;
 
-    calculateChartConfig = (elemId: string | number) => {
-        const {elemConfigs} = designerStore;
-        if (elemConfigs)
-            return elemConfigs[elemId];
-    }
-
     updateActive = (e: any) => {
         //todo 优化,事件处理时目前元素参数可能会存在偏差
         let {id: elemId, dataset} = e.target;
@@ -43,12 +37,12 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
      * 元素生成方法
      */
     generateElement = () => {
-        const {layoutConfigs} = designerStore!;
+        const {layoutConfigs, elemConfigs, projectConfig} = designerStore!;
         const {customComponentInfoMap}: any = designerStarter;
         const sortLayout = Object.values(layoutConfigs).sort((a: any, b: any) => a.order - b.order);
         return sortLayout.map((item: MovableItemType) => {
             let Chart: any = customComponentInfoMap[item.type + ''].getComponent();
-            const compConfig: any = this.calculateChartConfig(item.id + '');
+            const compConfig: any = elemConfigs[item.id + ''];
             let position = item.position || [0, 0];
             return <div id={item.id}
                         data-type={item.type}
@@ -61,7 +55,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                             transform: `translate(${position[0]}px, ${position[1]}px)`,
                             position: 'absolute',
                         }} className={'lc-comp-item'}>
-                <Chart config={compConfig}/>
+                <Chart config={compConfig} globalConfg={projectConfig}/>
             </div>
         });
     }
