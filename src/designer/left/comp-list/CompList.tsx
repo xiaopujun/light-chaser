@@ -4,9 +4,12 @@ import {Input} from "antd";
 import compListStore from "./CompListStore";
 import classifyListStore from "../classify-list/ClassifyListStore";
 import './CompList.less';
-import {toJS} from "mobx";
 import {observer} from "mobx-react";
-import designerStore from "../../BootStore";
+import designerStarter from "../../DesignerStarter";
+import designerStore from "../../store/DesignerStore";
+import {snowflake} from "../../../utils/IdGenerate";
+import {MovableItemType} from "../../../lib/lc-movable/types";
+import eventOperateStore from "../../operate-provider/EventOperateStore";
 
 class CompList extends Component {
 
@@ -16,10 +19,27 @@ class CompList extends Component {
         doInit && doInit();
     }
 
+    addItem = (compKey: string) => {
+        const {addItem} = designerStore;
+        let {maxOrder, setMaxOrder} = eventOperateStore;
+        let movableItem: MovableItemType = {
+            type: compKey,
+            width: 384,
+            height: 216,
+            position: [0, 0],
+            id: snowflake.generateId() + '',
+            locked: false,
+            hide: false,
+            order: ++maxOrder,
+        }
+        setMaxOrder && setMaxOrder(maxOrder);
+        addItem && addItem(movableItem);
+    }
+
     getChartDom = () => {
         let chartDom = [];
-        let {classifyKey} = toJS(classifyListStore)
-        let {comps, compKey} = toJS(compListStore);
+        let {classifyKey} = classifyListStore
+        let {comps, compKey} = compListStore;
         if (classifyKey !== 'all') {
             comps = comps.filter((item: any) => {
                 return item.typeKey === classifyKey;
@@ -33,20 +53,16 @@ class CompList extends Component {
         for (let i = 0; i < comps.length; i++) {
             let compInfo: any = comps[i];
             const {name, key} = compInfo;
-            const {compInitObj} = designerStore;
-            let compObj = JSON.stringify({compName: name, compKey: key});
-            let lcCompInit: any = compInitObj[key + "Init"];
+            const {customComponentInfoMap} = designerStarter;
+            let lcCompInit: any = customComponentInfoMap[key];
             let chartImg = lcCompInit.getChartImg();
             chartDom.push(
-                <div draggable={true} key={i + ''}
-                     onDragStart={(e) => {
-                         e.dataTransfer.setData('compObj', compObj);
-                     }} className={'list-item droppable-element'}>
+                <div key={i + ''} className={'list-item droppable-element'}>
                     <div className={'item-header'}>
                         <div className={'item-name'}>{name}</div>
                         <div className={'item-type'}>Antd</div>
                     </div>
-                    <div className={'item-content'}>
+                    <div className={'item-content'} onDoubleClick={() => this.addItem(key)}>
                         <div className={'item-img'} style={{backgroundImage: `url(${chartImg})`}}/>
                     </div>
                 </div>

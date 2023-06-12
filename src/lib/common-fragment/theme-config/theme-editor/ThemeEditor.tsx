@@ -1,87 +1,153 @@
 import React, {Component} from 'react';
 import './ThemeEditor.less';
 import ConfigItem from "../../../config-item/ConfigItem";
-import LcUnderLineInput from "../../../lc-input/LcUnderLineInput";
+import UnderLineInput from "../../../lc-input/UnderLineInput";
 import BaseColorPicker from "../../../lc-color-picker/BaseColorPicker";
-import CfgItemBorder from "../../../config-item-border/CfgItemBorder";
+import CfgItemBorder from "../../../config-item/CfgItemBorder";
 import ThemeItem from "../theme-item/ThemeItem";
 import ConfigCard from "../../../config-card/ConfigCard";
 import LcButton from "../../../lc-button/LcButton";
+import {ThemeItemType} from "../../../../designer/DesignerType";
+import designerStore from "../../../../designer/store/DesignerStore";
+import ThemeList from "../theme-list/ThemeList";
+import {cloneDeep} from "lodash";
 
 /**
  * 主题编辑器
  */
 class ThemeEditor extends Component {
+
+    state: any = {
+        data: []
+    }
+
+    constructor(props: any) {
+        super(props);
+        const themeList = designerStore.themeConfig;
+        this.state.data = cloneDeep(themeList) || [];
+    }
+
+    themeConfig: ThemeItemType = {
+        id: '-1',
+        name: '',
+        des: '',
+        colors: {
+            main: '#000000',
+            text: '#000000',
+            background: '#000000',
+            auxiliary: '#000000',
+            emphasize: '#000000',
+            supplementary: '#000000'
+        }
+    }
+
+    nameChanged = (name: string) => this.themeConfig.name = name;
+
+    desChanged = (des: string) => this.themeConfig.des = des;
+
+    mainColorChanged = (color: string) => this.themeConfig.colors.main = color;
+
+    textColorChanged = (color: string) => this.themeConfig.colors.text = color;
+
+    backgroundColorChanged = (color: string) => this.themeConfig.colors.background = color;
+
+    auxiliaryColorChanged = (color: string) => this.themeConfig.colors.auxiliary = color;
+
+    emphasizeColorChanged = (color: string) => this.themeConfig.colors.emphasize = color;
+
+    supplementaryColorChanged = (color: string) => this.themeConfig.colors.supplementary = color;
+
+    doSave = () => {
+        if (!this.themeConfig.name) {
+            alert('请输入主题名称');
+            return;
+        }
+        const {data} = this.state;
+        if (data.length > 20)
+            alert('主题数量已达上限');
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].name === this.themeConfig.name) {
+                alert('主题名称重复');
+                return;
+            }
+        }
+        this.themeConfig.id = this.state.data.length + 1;
+        data.push({...this.themeConfig});
+        this.setState({data});
+        //保存到数据库
+        const {updateThemeConfig} = designerStore;
+        updateThemeConfig(data);
+    }
+
     render() {
+        const {data} = this.state;
+        let themeList = [];
+        for (let i = 0; i < data.length; i++)
+            themeList.push(<ThemeItem key={i} id={data[i].id} name={data[i].name} colors={data[i].colors}
+                                      itemStyle={{width: '100%'}}/>);
         return (
             <div className={'lc-theme-editor'}>
                 <div className={'editor-left'}>
                     <ConfigCard title={'主题信息'}>
                         <ConfigItem title={'名称'} contentStyle={{width: 80, marginRight: 10}}>
-                            <LcUnderLineInput/>
+                            <UnderLineInput onChange={this.nameChanged}/>
                         </ConfigItem>
                         <ConfigItem title={'描述'} contentStyle={{width: 110, marginRight: 10}}>
-                            <LcUnderLineInput/>
+                            <UnderLineInput onChange={this.desChanged}/>
                         </ConfigItem>
                     </ConfigCard>
                     <ConfigCard title={'颜色定义'}>
                         <ConfigItem title={'主题色'} contentStyle={{width: 80, marginRight: 10}}>
-                            <CfgItemBorder><BaseColorPicker showText={true} style={{width: '100%', borderRadius: 2}}
-                                                            value={'#8cffc9'}/>
+                            <CfgItemBorder>
+                                <BaseColorPicker onChange={this.mainColorChanged} showText={true}
+                                                 style={{width: '100%', borderRadius: 2}}
+                                                 defaultValue={this.themeConfig.colors.main}/>
                             </CfgItemBorder>
                         </ConfigItem>
                         <ConfigItem title={'文字色'} contentStyle={{width: 80, marginRight: 10}}>
-                            <CfgItemBorder><BaseColorPicker showText={true} style={{width: '100%', borderRadius: 2}}
-                                                            value={'#19ffa8'}/>
+                            <CfgItemBorder>
+                                <BaseColorPicker onChange={this.textColorChanged} showText={true}
+                                                 style={{width: '100%', borderRadius: 2}}
+                                                 defaultValue={this.themeConfig.colors.text}/>
                             </CfgItemBorder>
                         </ConfigItem>
                         <ConfigItem title={'背景色'} contentStyle={{width: 80, marginRight: 10}}>
-                            <CfgItemBorder><BaseColorPicker showText={true} style={{width: '100%', borderRadius: 2}}
-                                                            value={'#00e08e'}/>
+                            <CfgItemBorder>
+                                <BaseColorPicker onChange={this.backgroundColorChanged} showText={true}
+                                                 style={{width: '100%', borderRadius: 2}}
+                                                 defaultValue={this.themeConfig.colors.background}/>
                             </CfgItemBorder>
                         </ConfigItem>
                         <ConfigItem title={'辅助色'} contentStyle={{width: 80, marginRight: 10}}>
-                            <CfgItemBorder><BaseColorPicker showText={true} style={{width: '100%', borderRadius: 2}}
-                                                            value={'#00a66c'}/>
+                            <CfgItemBorder>
+                                <BaseColorPicker onChange={this.auxiliaryColorChanged} showText={true}
+                                                 style={{width: '100%', borderRadius: 2}}
+                                                 defaultValue={this.themeConfig.colors.auxiliary}/>
                             </CfgItemBorder>
                         </ConfigItem>
                         <ConfigItem title={'强调色'} contentStyle={{width: 80, marginRight: 10}}>
-                            <CfgItemBorder><BaseColorPicker showText={true} style={{width: '100%', borderRadius: 2}}
-                                                            value={'#006e4b'}/>
+                            <CfgItemBorder>
+                                <BaseColorPicker onChange={this.emphasizeColorChanged} showText={true}
+                                                 style={{width: '100%', borderRadius: 2}}
+                                                 defaultValue={this.themeConfig.colors.emphasize}/>
                             </CfgItemBorder>
                         </ConfigItem>
                         <ConfigItem title={'补充色'} contentStyle={{width: 80, marginRight: 10}}>
-                            <CfgItemBorder><BaseColorPicker showText={true} style={{width: '100%', borderRadius: 2}}
-                                                            value={'#0d4e39'}/>
+                            <CfgItemBorder>
+                                <BaseColorPicker onChange={this.supplementaryColorChanged} showText={true}
+                                                 style={{width: '100%', borderRadius: 2}}
+                                                 defaultValue={this.themeConfig.colors.supplementary}/>
                             </CfgItemBorder>
                         </ConfigItem>
                     </ConfigCard>
+                    <p style={{color: '#cd9b9b'}}>说明：自定义主题色的色值应该保持在同一色系。以确保整体统一的风格。主题色占据主要面积</p>
                     <div className={'theme-operate-btn'}>
-                        <LcButton>保存</LcButton>
-                        <LcButton>取消</LcButton>
+                        <LcButton onClick={this.doSave}>保存</LcButton>
                     </div>
                 </div>
                 <div className={'editor-right'}>
                     <ConfigCard title={'主题列表'}>
-                        <ThemeItem itemStyle={{width: '100%'}} active={true} main={'#ffdac0'} text={'#ffbf7c'}
-                                   background={'#ffaa59'}
-                                   auxiliary={'#ff8d3b'}
-                                   emphasize={'#ff6e00'} supplementary={'#c35a00'}/>
-                        <ThemeItem itemStyle={{width: '100%'}} main={'#c0e5ff'} text={'#7cbaff'} background={'#59aaff'}
-                                   auxiliary={'#3b8dff'}
-                                   emphasize={'#0072ff'} supplementary={'#005ac3'}/>
-                        <ThemeItem itemStyle={{width: '100%'}} main={'#ffeac0'} text={'#ffdf7c'} background={'#ffc659'}
-                                   auxiliary={'#ffb23b'}
-                                   emphasize={'#ffa000'} supplementary={'#c37900'}/>
-                        <ThemeItem itemStyle={{width: '100%'}} main={'#e7c0ff'} text={'#b17cff'} background={'#9959ff'}
-                                   auxiliary={'#7b3bff'}
-                                   emphasize={'#5800ff'} supplementary={'#4f00c3'}/>
-                        <ThemeItem itemStyle={{width: '100%'}} main={'#c6c6c6'} text={'#969696'} background={'#6f6f6f'}
-                                   auxiliary={'#4c4c4c'}
-                                   emphasize={'#292929'} supplementary={'#1f1f1f'}/>
-                        <ThemeItem itemStyle={{width: '100%'}} main={'#c0a978'} text={'#7c5d3d'} background={'#a97542'}
-                                   auxiliary={'#8d5c3b'}
-                                   emphasize={'#724028'} supplementary={'#5a3200'}/>
+                        <ThemeList/>
                     </ConfigCard>
                 </div>
             </div>

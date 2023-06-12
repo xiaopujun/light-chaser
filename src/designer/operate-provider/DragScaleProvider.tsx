@@ -12,12 +12,21 @@ interface DragScaleProviderProps {
 class DragScaleProvider extends Component<DragScaleProviderProps> {
 
     content: any = null;
+    scaler: any = null;
+    dragger: any = null;
 
     componentDidMount() {
         let contentWidth = this.props.contentWidth || 1920;
         let contentHeight = this.props.contentHeight || 1080;
-        new Scaler(this.content, contentWidth, contentHeight, 80, 70).init();
-        new Dragger(this.content).init();
+        this.scaler = new Scaler(this.content, contentWidth, contentHeight, 80, 70);
+        this.dragger = new Dragger(this.content);
+        this.scaler.init();
+        this.dragger.init();
+    }
+
+    componentWillUnmount() {
+        this.scaler.destroy();
+        this.dragger.destroy();
     }
 
     render() {

@@ -1,21 +1,28 @@
-@import "../../../../designer/style/DesignerStyle.less";
+@import "../../../../designer/common/DesignerStyle.less";
 
 .lc-theme-item {
   padding: 5px 0;
   margin-bottom: 10px;
   background-color: rgba(49, 49, 49, 0.32);
   border-radius: 5px;
+  border: 2px solid transparent;
 
   .lc-theme-item-header {
+    pointer-events: none;
     padding: 5px 7px;
     font-size: @lc-font-sm;
-    color: @lc-config-value;
+    color: #aeaeae;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .lc-theme-item-operator:hover {
+      color: #47f1ff;
+    }
   }
 
   .lc-theme-item-body {
+    pointer-events: none;
     padding: 8px 7px;
     display: flex;
     justify-content: space-between;
@@ -25,10 +32,11 @@
 .lc-theme-item:hover {
   background-color: rgba(105, 105, 105, 0.32);
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .lc-theme-item-active {
-  border: 1px solid transparent;
+  border: 2px solid transparent;
   border-radius: 5px;
   background-color: rgba(49, 49, 49, 0.32);
   background-clip: padding-box, border-box;

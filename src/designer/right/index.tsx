@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import '../style/LcDesignerRight.less';
 import MenuList from "./MenuList";
 import LcConfigContent from "./ConfigContent";
 

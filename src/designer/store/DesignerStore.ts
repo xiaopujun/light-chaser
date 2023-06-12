@@ -1,27 +1,29 @@
 import {makeAutoObservable, runInAction, toJS} from "mobx";
-import * as _ from "lodash";
-import {Layout} from "react-grid-layout";
+import {cloneDeep, isEqual} from "lodash";
 import {
     ActiveElem,
     BackgroundColorMode,
-    BackgroundConfig,
     BackgroundImgRepeat,
     BackgroundMode,
     CanvasConfig,
     ElemConfig,
     Layer,
     LCDesigner,
-    LcLayout,
     ProjectConfig,
     ProjectState,
     SaveType,
     Statistic,
-    Theme
-} from "../../framework/types/DesignerType";
-import bootStore from "../BootStore";
-import BaseStore from "../../framework/interface/BaseStore";
+    ThemeItemType
+} from "../DesignerType";
+import designerStarter from "../DesignerStarter";
+import AbstractBaseStore from "../../framework/core/AbstractBaseStore";
+import rightStore from "../right/RightStore";
+import {merge} from "../../utils/ObjectUtil";
+import {MovableItemType} from "../../lib/lc-movable/types";
+import {snowflake} from "../../utils/IdGenerate";
+import eventOperateStore from "../operate-provider/EventOperateStore";
 
-class DesignerStore implements LCDesigner, BaseStore {
+class DesignerStore implements LCDesigner, AbstractBaseStore {
     constructor() {
         makeAutoObservable(this);
     }
@@ -35,10 +37,9 @@ class DesignerStore implements LCDesigner, BaseStore {
      * 画布设置
      */
     canvasConfig: CanvasConfig = {
-        interval: 0,  //元素间距
-        columns: 192,  //画布列总数
-        baseHeight: 0,  //元素单位高度
-        scale: 1,  //画布缩放比例
+        rasterize: false, //是否栅格化
+        dragStep: 1, //栅格化拖拽步长
+        resizeStep: 1, //栅格化缩放步长
         width: 1920,  //画布宽
         height: 1080,  //画布高
     };
@@ -47,8 +48,8 @@ class DesignerStore implements LCDesigner, BaseStore {
      * 激活状态属性
      */
     activeElem: ActiveElem = {
-        id: -1, //元素id
-        type: 'LcBg' //元素类型
+        id: -999, //元素id
+        type: '' //元素类型
     };
 
     /**
@@ -60,8 +61,8 @@ class DesignerStore implements LCDesigner, BaseStore {
         state: ProjectState.DRAFT,//项目状态
         createTime: '',//创建时间
         updateTime: '',//更新时间
-        elemCount: 0,//元素个数
         saveType: SaveType.LOCAL,//存储类型
+        realTimeRefresh: false,//编辑模式下实时刷新
     };
 
     /**
@@ -73,22 +74,33 @@ class DesignerStore implements LCDesigner, BaseStore {
                 width: 1920,//背景宽
                 height: 1080,//背景高
                 bgMode: BackgroundMode.NONE,//背景模式
-                bgImgSize: [1920, 1080],//背景图片尺寸
-                bgImgPos: [0, 0],//背景图片位置
-                bgImgRepeat: BackgroundImgRepeat.NO_REPEAT,//背景图片重复方式
-                bgImgUrl: '',//背景图片url地址
-                bgColorMode: BackgroundColorMode.SINGLE,//背景图片颜色模式
-                bgColor: '#040d18',//背景颜色
-                colors: ['#000000', '#000000'],//颜色数组（用于处理渐变色配置的数据回显）
-                angle: 0,//渐变角度
-            }
-        },
+                bgImg: {
+                    bgImgSize: [1920, 1080],//背景图片尺寸
+                    bgImgPos: [0, 0],//背景图片位置
+                    bgImgRepeat: BackgroundImgRepeat.NO_REPEAT,//背景图片重复方式
+                    bgImgUrl: '',//背景图片url地址
+                },
+                bgColor: {
+                    bgColorMode: BackgroundColorMode.SINGLE,//背景图片颜色模式
+                    single: {color: '#000000'},
+                    linearGradient: {
+                        color: 'linear-gradient(0deg, #000000, #000000)',
+                        angle: 0,
+                        colorArr: ['#000000', '#000000']
+                    },
+                    radialGradient: {
+                        color: 'radial-gradient(circle, #000000, #000000)',
+                        colorArr: ['#000000', '#000000']
+                    },
+                }
+            },
+        }
     };
 
     /**
      * 布局配置
      */
-    layoutConfigs: any = [];
+    layoutConfigs: { [key: string]: MovableItemType } = {};
 
     /**
      * 统计信息
@@ -106,7 +118,106 @@ class DesignerStore implements LCDesigner, BaseStore {
     /**
      * 主题
      */
-    theme: Theme = {};
+    themeConfig: Array<ThemeItemType> | any = [
+        {
+            id: '0',
+            name: '科技风格(默认主题)',
+            des: '科技风格(默认主题)',
+            colors: {
+                main: '#00dfff',
+                text: '#62edff',
+                background: 'rgba(0,223,255,0.2)',
+                auxiliary: '#4ca4b1',
+                emphasize: '#38929f',
+                supplementary: '#1790a2',
+            }
+        },
+        {
+            id: '1',
+            name: '红色主题',
+            des: '红色主题',
+            colors: {
+                main: '#ff4d4f',
+                text: '#ff7875',
+                background: 'rgba(255,77,79,0.2)',
+                auxiliary: '#d4380d',
+                emphasize: '#cf1322',
+                supplementary: '#a8071a',
+            }
+        }, {
+            id: '2',
+            name: '绿色主题',
+            des: '绿色主题',
+            colors: {
+                main: '#52c41a',
+                text: '#87d068',
+                background: 'rgba(82,196,26,0.2)',
+                auxiliary: '#389e0d',
+                emphasize: '#237804',
+                supplementary: '#135200',
+            }
+        }, {
+            id: '3',
+            name: '蓝色主题',
+            des: '蓝色主题',
+            colors: {
+                main: '#1890ff',
+                text: '#40a9ff',
+                background: 'rgba(24,144,255,0.2)',
+                auxiliary: '#096dd9',
+                emphasize: '#0050b3',
+                supplementary: '#003a8c',
+            }
+        }, {
+            id: '4',
+            name: '黄色主题',
+            des: '黄色主题',
+            colors: {
+                main: '#faad14',
+                text: '#ffc53d',
+                background: 'rgba(250,173,20,0.2)',
+                auxiliary: '#d48806',
+                emphasize: '#fa8c16',
+                supplementary: '#ad6800',
+            }
+        }, {
+            id: '5',
+            name: '紫色主题',
+            des: '紫色主题',
+            colors: {
+                main: '#722ed1',
+                text: '#9254de',
+                background: 'rgba(114,46,209,0.2)',
+                auxiliary: '#531dab',
+                emphasize: '#391085',
+                supplementary: '#22075e',
+            }
+        }, {
+            id: '6',
+            name: '粉色主题',
+            des: '粉色主题',
+            colors: {
+                main: '#eb2f96',
+                text: '#ff85c0',
+                background: 'rgba(235,47,150,0.2)',
+                auxiliary: '#c41d7f',
+                emphasize: '#f5222d',
+                supplementary: '#a8071a',
+            }
+        }, {
+            id: '7',
+            name: '橙色主题',
+            des: '橙色主题',
+            colors: {
+                main: '#fa8c16',
+                text: '#ffa940',
+                background: 'rgba(250,140,22,0.2)',
+                auxiliary: '#d46b08',
+                emphasize: '#fa541c',
+                supplementary: '#ad4e00',
+            }
+        }
+    ];
 
     /**
      * 编组
@@ -126,8 +237,10 @@ class DesignerStore implements LCDesigner, BaseStore {
     /**
      * 扩展参数
      */
-    extendParams: any = undefined;
-
+    extendParams: any = {
+        maxOrder: 0,
+        minOrder: 0,
+    };
 
     /**
      * 初始化store
@@ -135,17 +248,23 @@ class DesignerStore implements LCDesigner, BaseStore {
     doInit = (store: LCDesigner) => {
         this.id = store.id ?? this.id;
         this.canvasConfig = store.canvasConfig ? {...this.canvasConfig, ...store.canvasConfig} : this.canvasConfig;
-        this.activeElem = store.activeElem ? {...this.activeElem, ...store.activeElem} : this.activeElem;
         this.projectConfig = store.projectConfig ? {...this.projectConfig, ...store.projectConfig} : this.projectConfig;
         this.elemConfigs = store.elemConfigs ? {...this.elemConfigs, ...store.elemConfigs} : this.elemConfigs;
         this.layoutConfigs = store.layoutConfigs || this.layoutConfigs;
         this.statisticInfo = store.statisticInfo ? {...this.statisticInfo, ...store.statisticInfo} : this.statisticInfo;
         this.layers = store.layers || this.layers;
-        this.theme = store.theme || this.theme;
+        this.themeConfig = store.themeConfig || this.themeConfig;
         this.group = store.group || this.group;
         this.linkage = store.linkage || this.linkage;
         this.condition = store.condition || this.condition;
         this.extendParams = store.extendParams ? {...this.extendParams, ...store.extendParams} : this.extendParams;
+        if (this.elemConfigs['-1']) {
+            this.elemConfigs['-1']['background']['width'] = this.canvasConfig.width;
+            this.elemConfigs['-1']['background']['height'] = this.canvasConfig.height;
+        }
+        this.updateActive({id: -1, type: 'LcBg'});
+        const {setUpdateConfig} = rightStore;
+        setUpdateConfig(this.updateElemConfig);
     }
 
     getData(): any {
@@ -158,7 +277,7 @@ class DesignerStore implements LCDesigner, BaseStore {
             layoutConfigs: toJS(this.layoutConfigs),
             statisticInfo: toJS(this.statisticInfo),
             layers: toJS(this.layers),
-            theme: toJS(this.theme),
+            theme: toJS(this.themeConfig),
             group: toJS(this.group),
             linkage: toJS(this.linkage),
             condition: toJS(this.condition),
@@ -175,16 +294,15 @@ class DesignerStore implements LCDesigner, BaseStore {
         this.activeElem = {};
         this.projectConfig = {};
         this.elemConfigs = {};
-        this.layoutConfigs = [];
+        this.layoutConfigs = {};
         this.statisticInfo = {};
         this.layers = [];
-        this.theme = {};
+        this.themeConfig = {};
         this.group = {};
         this.linkage = {};
         this.condition = {};
         this.extendParams = {};
     }
-
 
     /**
      * 设置布局id
@@ -205,45 +323,36 @@ class DesignerStore implements LCDesigner, BaseStore {
     }
 
     /**
-     * 设置布局配置
-     */
-    setLayoutConfigs = (layoutConfigs: LcLayout[]) => {
-        runInAction(() => {
-            this.layoutConfigs = layoutConfigs;
-        })
-    }
-
-    /**
      * 设置扩展临时属性
      */
     setExtendParams = (extendParams: any) => this.extendParams = extendParams;
 
+    getActiveElemConfig = (activeId: number | string) => {
+        if (activeId >= -1)
+            return this.elemConfigs[activeId + ""];
+    }
+
     /**
      * 添加元素
      */
-    addItem = (item: LcLayout) => {
-        this.layoutConfigs?.push(item);
-        const {loaded, compInitObj} = bootStore;
-        if (!loaded) return;
-        let initObj: any = compInitObj[item.compKey + "Init"];
+    addItem = (item: MovableItemType) => {
+        this.layoutConfigs[item.id + ''] = item;
+        const {customComponentInfoMap} = designerStarter;
+        let initObj: any = customComponentInfoMap[item.type + ''];
         let initData: any = initObj.getInitConfig()
-        initData.info = {...initData.info, ...{id: this.statisticInfo?.count}}
+        initData.info = {...initData.info, ...{id: item.id}}
         if (this.elemConfigs && this.statisticInfo)
-            this.elemConfigs[this.statisticInfo.count + ""] = initData;
-        let {count = 0} = this.statisticInfo!;
-        if (this.statisticInfo) {
-            count++;
-            this.statisticInfo.count = count;
-        }
+            this.elemConfigs[item.id + ''] = initData;
+        if (this.statisticInfo)
+            this.statisticInfo.count = Object.keys(this.elemConfigs).length;
+        console.log(toJS(this.layoutConfigs))
     }
 
     /**
      * 删除元素
      */
     delItem = (id: string | number) => {
-        _.remove(this.layoutConfigs, function (item: any) {
-            return item?.id === id;
-        })
+        delete this.layoutConfigs[id + ''];
         delete this.elemConfigs[id + ''];
         if (this.activeElem && id === this.activeElem.id) {
             this.activeElem.id = -1;
@@ -254,12 +363,11 @@ class DesignerStore implements LCDesigner, BaseStore {
     /**
      * 更新布局
      */
-    updateLayout = (item: Layout) => {
-        const {i, x, y, w, h} = item;
-        for (let index = 0; index < this.layoutConfigs.length; index++) {
-            if (this.layoutConfigs[index].i === i) {
-                this.layoutConfigs[index] = {...this.layoutConfigs[index], ...{x, y, w, h}}
-                break;
+    updateLayout = (items: MovableItemType[]) => {
+        for (const item of items) {
+            let oldItem = this.layoutConfigs[item.id + ''];
+            if (!isEqual(oldItem, item)) {
+                this.layoutConfigs[item.id + ''] = {...merge(oldItem, item)};
             }
         }
     }
@@ -270,76 +378,77 @@ class DesignerStore implements LCDesigner, BaseStore {
     updateActive = (data: ActiveElem) => {
         if (data.id === this.activeElem.id)
             return;
-        runInAction(() => {
-            this.activeElem = {...this.activeElem, ...data};
-        })
-    }
-
-    /**
-     * 更新组件基础样式
-     */
-    updateBaseStyle = (data: any) => {
-        const {id} = this.activeElem!;
-        let charConfig = this.elemConfigs[id + ''];
-        let baseConfig = charConfig?.baseStyle;
-        if (charConfig && baseConfig)
-            charConfig.baseStyle = {...baseConfig, ...data};
+        this.activeElem = {...this.activeElem, ...data};
+        const {setActiveElem, setActiveElemConfig} = rightStore;
+        setActiveElem(this.activeElem);
+        setActiveElemConfig(this.elemConfigs[this.activeElem?.id + '']);
     }
 
     /**
      * 更新图表组件配置
      */
     updateElemConfig = (data: any) => {
+        console.log(toJS(data))
         let activeConfig: ElemConfig | any = this.elemConfigs[this.activeElem?.id + ''];
-        if (activeConfig) {
-            this.elemConfigs[this.activeElem?.id + ''] = _.merge({}, activeConfig, data);
-        }
+        if (activeConfig)
+            this.elemConfigs[this.activeElem?.id + ''] = {...merge(activeConfig, data)};
+        console.log(toJS(activeConfig))
+        const {setActiveElemConfig} = rightStore;
+        setActiveElemConfig(this.elemConfigs[this.activeElem?.id + '']);
     }
 
-    /**
-     * 更新基础信息
-     */
-    updateBaseInfo = (data: any) => {
-        let {id = -1} = this.activeElem;
-        let chartConfig: ElemConfig = this.elemConfigs[id];
-        if (chartConfig)
-            chartConfig.baseInfo = {...chartConfig.baseInfo, ...data};
+    updateThemeConfig = (data: any) => {
+        this.themeConfig = data;
+    }
+
+    flashGlobalTheme = (newTheme: ThemeItemType) => {
+        const {themeRefresher} = designerStarter;
+        this.elemConfigs && Object.keys(this.elemConfigs).forEach((key: string) => {
+            let elemConfig: any = this.elemConfigs[key];
+            let {info} = elemConfig;
+            if (info) {
+                const themeFreshFun = themeRefresher[info.type];
+                themeFreshFun && themeFreshFun(newTheme, elemConfig);
+                this.elemConfigs[key] = {...elemConfig};
+            }
+        });
     }
 
     /**
      * 更新画布设置
      */
     updateCanvasConfig = (data: CanvasConfig) => {
-        runInAction(() => {
-            this.canvasConfig = {...this.canvasConfig, ...data};
-        })
+        this.canvasConfig = {...this.canvasConfig, ...data};
+        this.elemConfigs['-1']['background']['width'] = data.width;
+        this.elemConfigs['-1']['background']['height'] = data.height;
     }
 
     /**
      * 更新项目配置
      */
     updateProjectConfig = (data: ProjectConfig) => {
-
-        runInAction(() => {
-            this.projectConfig = {...this.projectConfig, ...data};
-        })
+        this.projectConfig = {...this.projectConfig, ...data};
     }
 
-    /**
-     * 更新背景配置
-     */
-    updateBgConfig = (data: BackgroundConfig) => {
-        let oldConfig = this.elemConfigs['-1']['background'];
-        this.elemConfigs['-1']['background'] = {...oldConfig, ...data};
-        console.log(toJS(this.elemConfigs))
+    copyItem = (id: string) => {
+        const {[id]: item} = this.elemConfigs;
+        if (item) {
+            const {[id]: layout} = this.layoutConfigs;
+            const newItem = cloneDeep(item);
+            const newLayout = cloneDeep(layout);
+            const newId = snowflake.generateId() + '';
+            newItem.id = newId;
+            newLayout.id = newId;
+            const [x = 10, y = 10] = (newLayout.position || []).map(p => p + 10);
+            newLayout.position = [x, y];
+            let {maxOrder, setMaxOrder} = eventOperateStore;
+            newLayout.order = ++maxOrder;
+            setMaxOrder(maxOrder);
+            this.elemConfigs[newId] = newItem;
+            this.layoutConfigs[newId] = newLayout;
+        }
     }
 
-    /**
-     * 更新系统配置
-     */
-    updateSystemConfig = () => {
-
-    }
 }
 
 const designerStore = new DesignerStore();

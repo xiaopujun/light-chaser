@@ -37,6 +37,10 @@ class Scaler {
             this.content.style.transform = 'translate3d(' + coordinate.x + 'px, ' + coordinate.y + 'px, 0) scale(' + scaleCore.scale + ')';
         });
     }
+
+    destroy = () => {
+        eventManager.unregister('wheel');
+    }
 }
 
 export default Scaler;

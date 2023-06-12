@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import '../style/LcDesignerLeft.less';
+import './classify-list/ClassifyList.less';
 import SortList from "./classify-list/ClassifyList";
 import CompList from "./comp-list/CompList";
 

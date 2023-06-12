@@ -102,6 +102,13 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
         });
     }
 
+    componentWillUnmount() {
+        eventManager.unregister('wheel');
+        eventManager.unregister('pointermove');
+        eventManager.unregister('pointerdown');
+        eventManager.unregister('pointerup');
+    }
+
 
     render() {
         const {scale} = eventOperateStore;

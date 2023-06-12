@@ -1,4 +1,4 @@
-@import "../../designer/style/DesignerStyle.less";
+@import "../../designer/common/DesignerStyle.less";
 
 .lc-dialog {
   position: absolute;
@@ -11,6 +11,7 @@
   align-items: center;
   justify-content: space-around;
   border-radius: 3px;
+  animation: dialogFadeInUp 0.7s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
   .dialog-body {
     .dialog-header {
@@ -28,4 +29,25 @@
       padding: 5px;
     }
   }
+}
+
+
+@keyframes dialogFadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(35px);
+  }
+  55% {
+    opacity: 1;
+    transform: translateY(35px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
 }

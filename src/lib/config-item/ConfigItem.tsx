@@ -1,4 +1,4 @@
-import React, {Component, CSSProperties} from 'react';
+import React, {CSSProperties} from 'react';
 import './ConfigItem.less';
 
 interface ConfigItemProps {
@@ -6,7 +6,7 @@ interface ConfigItemProps {
     contentStyle?: CSSProperties;
 }
 
-class ConfigItem extends Component<ConfigItemProps> {
+class ConfigItem extends React.PureComponent<ConfigItemProps> {
     render() {
         const {title = '', contentStyle = {width: 90}} = this.props;
         return (

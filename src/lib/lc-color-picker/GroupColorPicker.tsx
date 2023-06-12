@@ -28,12 +28,12 @@ class GroupColorPicker extends Component<GroupColorPickerProp> {
     }
 
 
-    onChange = (color: any, e: any, id: any) => {
-        let {colors} = this.state;
-        const {onChange} = this.props;
-        colors[id] = color;
-        onChange && onChange(colors);
-        this.setState({colors})
+    onChange = (color: any) => {
+        // let {colors} = this.state;
+        // const {onChange} = this.props;
+        // colors[id] = color;
+        // onChange && onChange(colors);
+        // this.setState({colors})
     }
 
     render() {
@@ -41,7 +41,7 @@ class GroupColorPicker extends Component<GroupColorPickerProp> {
         return (
             <div className={'group-color-picker'} style={{display: "flex", flexDirection: "row"}}>
                 {colors.map((item: string, i: number) => {
-                    return <ColorPicker key={i + ''} id={i} value={item} onChange={this.onChange}/>
+                    return <ColorPicker key={i + ''} value={item} onChange={this.onChange}/>
                 })}
             </div>
         )

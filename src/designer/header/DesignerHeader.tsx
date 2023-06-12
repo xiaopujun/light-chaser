@@ -1,25 +1,19 @@
 import React, {Component, ReactElement} from 'react';
 import './DesignerHeader.less';
-import {RouteComponentProps} from "react-router-dom";
-import LCDesigner from "../index";
 import headerStore from "./HeaderStore";
-import CanvasHdConfigImpl from "./impl/CanvasHdConfigImpl";
+import CanvasHdConfigImpl from "./items/canvas/CanvasHdConfigImpl";
 import {observer} from "mobx-react";
-import ProjectHdItemImpl from "./impl/ProjectHdItemImpl";
-import ThemeHdItemImpl from "./impl/ThemeHdItemImpl";
+import ProjectHdItemImpl from "./items/project/ProjectHdItemImpl";
+import ThemeHdItemImpl from "./items/theme/ThemeHdItemImpl";
+import designerStarter from "../DesignerStarter";
 
-interface LcDesignerHeaderProps extends RouteComponentProps {
-    LCDesignerStore: LCDesigner;
-    updateDesignerStore?: (data: any) => void;
-}
-
-class Header extends Component<LcDesignerHeaderProps | any> {
+class Header extends Component<any> {
 
     buildHeaderList = (): Array<ReactElement> => {
-        const {headerInfoArr} = headerStore;
+        const {headerItemInstances} = designerStarter;
         let items: Array<ReactElement> = [];
-        for (let i = 0; i < headerInfoArr.length; i++) {
-            const {icon: Icon, name, onClick} = headerInfoArr[i];
+        for (let i = 0; i < headerItemInstances.length; i++) {
+            const {icon: Icon, name, onClick} = headerItemInstances[i];
             items.push(
                 <div key={i + ''} className={'right-item'} onClick={onClick}>
                     <span className={'item-span'}><Icon/>&nbsp;{name}</span>

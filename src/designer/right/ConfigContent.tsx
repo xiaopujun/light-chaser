@@ -1,35 +1,19 @@
 import React, {Component} from 'react';
 import {LineOutlined} from "@ant-design/icons";
-import designerStore from "../store/DesignerStore";
-import {observer} from "mobx-react";
-import LCDesigner from "../index";
 import rightStore from "./RightStore";
+import designerStarter from "../DesignerStarter";
+import {observer} from "mobx-react";
+import './ConfigContent.less';
 
-interface LcConfigContentProps {
-    title?: string;
-    icon?: any;
-    visible?: boolean;
-    onClose?: (visible: boolean) => void;
-    activeMenu?: string;
-    LCDesignerStore?: LCDesigner;
-    updateActive?: (data?: any) => void;
-    updateBaseStyle?: (data?: any) => void;
-    updateElemConfig?: (data?: any) => void;
-    updateBaseInfo?: (data?: any) => void;
-    updateCanvasConfig?: (data?: any) => void;
-    updateBgConfig?: (data?: any) => void;
-}
-
-class ConfigContent extends Component<LcConfigContentProps> {
+class ConfigContent extends Component {
 
     buildConfigContent = () => {
-        let {activeMenu, configObjs} = rightStore;
-        const {activeElem, elemConfigs, updateElemConfig} = designerStore!;
-        const elemConfig = elemConfigs[activeElem.id!];
-        let abstractConfigObj: any = configObjs[activeElem.type + 'Config'];
+        let {activeMenu, activeElem, activeElemConfig, updateConfig} = rightStore;
+        let {customComponentInfoMap} = designerStarter;
+        let abstractConfigObj: any = customComponentInfoMap[activeElem.type + ''];
         let menuToConfigComp = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp = menuToConfigComp[activeMenu];
-        return <ConfigComp config={elemConfig[activeMenu]} updateConfig={updateElemConfig}/>;
+        return <ConfigComp config={activeElemConfig[activeMenu]} updateConfig={updateConfig}/>;
     }
 
     onClose = () => {
@@ -48,16 +32,17 @@ class ConfigContent extends Component<LcConfigContentProps> {
         }
         return (
             <>
-                {contentVisible ? <div className={'lc-config-panel'}>
-                    <div className={'lc-panel-top'}>
-                        <div className={'panel-title'}>
-                            <span>{activeMenuName}</span></div>
-                        <div className={'panel-operate'} onClick={this.onClose}><LineOutlined/></div>
-                    </div>
-                    <div className={'lc-panel-content'}>
-                        {this.buildConfigContent()}
-                    </div>
-                </div> : <></>}
+                {contentVisible ?
+                    <div className={'lc-config-panel'}>
+                        <div className={'lc-panel-top'}>
+                            <div className={'panel-title'}>
+                                <span>{activeMenuName}</span></div>
+                            <div className={'panel-operate'} onClick={this.onClose}><LineOutlined/></div>
+                        </div>
+                        <div className={'lc-panel-content'}>
+                            {this.buildConfigContent()}
+                        </div>
+                    </div> : <></>}
             </>
         );
     }

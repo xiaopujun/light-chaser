@@ -11,8 +11,9 @@ class DesignerContainer extends Component {
     componentDidMount() {
         this.dom.addEventListener("click", this.handleClick);
         this.dom.addEventListener("contextmenu", this.handleContextMenu);
-        this.dom.addEventListener("keyup", this.handleKeyUp);
-        this.dom.addEventListener("keydown", this.handleKeyDown);
+        //键盘事件绑定到document元素。 避免键盘事件无法命中特定的dom导致键盘事件失效。
+        document.addEventListener("keyup", this.handleKeyUp);
+        document.addEventListener("keydown", this.handleKeyDown);
         this.dom.addEventListener("wheel", this.handleWheel);
         this.dom.addEventListener("mousemove", this.handleMouseMove);
         this.dom.addEventListener("mousedown", this.handleMouseDown);
@@ -21,6 +22,23 @@ class DesignerContainer extends Component {
         this.dom.addEventListener("pointermove", this.handlePointerMove);
         this.dom.addEventListener("pointerup", this.handlePointerUp);
         this.dom.addEventListener("pointercancel", this.handlePointerCancel);
+
+    }
+
+    componentWillUnmount() {
+        this.dom.removeEventListener("click", this.handleClick);
+        this.dom.removeEventListener("contextmenu", this.handleContextMenu);
+        //键盘事件绑定到document元素。 避免键盘事件无法命中特定的dom导致键盘事件失效。
+        document.removeEventListener("keyup", this.handleKeyUp);
+        document.removeEventListener("keydown", this.handleKeyDown);
+        this.dom.removeEventListener("wheel", this.handleWheel);
+        this.dom.removeEventListener("mousemove", this.handleMouseMove);
+        this.dom.removeEventListener("mousedown", this.handleMouseDown);
+        this.dom.removeEventListener("mouseup", this.handleMouseUp);
+        this.dom.removeEventListener("pointerdown", this.handlePointerDown);
+        this.dom.removeEventListener("pointermove", this.handlePointerMove);
+        this.dom.removeEventListener("pointerup", this.handlePointerUp);
+        this.dom.removeEventListener("pointercancel", this.handlePointerCancel);
     }
 
     /**
@@ -40,12 +58,14 @@ class DesignerContainer extends Component {
     /**
      * 监听键盘按下事件
      */
-    handleKeyDown = (event: any) => eventManager.emit('keydown', event);
+    handleKeyDown = (event: any) => {
+        eventManager.emit('keydown', event)
+    };
     /**
      * 监听鼠标滚轮事件
      */
     handleWheel = (event: any) => {
-        if (keyboardMouse.Space) {
+        if (keyboardMouse.Space && !keyboardMouse.RightClick) {
             const {setScale} = eventOperateStore;
             let type = 1;
             if (event.deltaY > 0)

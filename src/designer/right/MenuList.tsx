@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import '../style/LcConfigMenus.less';
-import {MenuInfo} from "../../framework/types/MenuType";
+import './MenuList.less';
+import {MenuInfo} from "./MenuType";
 import rightStore from "./RightStore";
 import {observer} from "mobx-react";
-import lcDesignerContentStore from "../store/DesignerStore";
 
 interface LcConfigMenusProps {
     onChange?: (menu: string) => void;
@@ -18,14 +17,7 @@ class MenuList extends Component<LcConfigMenusProps | any> {
     }
 
     buildMenuList = () => {
-        const {activeElem: {id, type}} = lcDesignerContentStore;
-        const {configObjs, setMenus}: any = rightStore;
-        let menus;
-        if (id === -1)
-            menus = configObjs['LcBgConfig'].getMenuList();
-        else
-            menus = configObjs[`${type}Config`].getMenuList();
-        setMenus && setMenus(menus);
+        const {menus} = rightStore;
         return menus.map((item: MenuInfo) => {
             const Icon: any = item.icon;
             return (

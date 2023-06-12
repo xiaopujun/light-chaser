@@ -1,6 +1,6 @@
 import {DesignerStore} from "../designer/store/DesignerStore";
 import localforage from 'localforage';
-import {BackgroundConfig} from "../framework/types/DesignerType";
+import {BackgroundConfig} from "../designer/DesignerType";
 
 /**
  * 保存项目到本地数据库
@@ -85,12 +85,12 @@ const saveProject = (config: DesignerStore) => {
     return new Promise((resolve) => {
         //1.如果有背景图片则先处理背景图片
         const bgConfig: BackgroundConfig = config.elemConfigs['-1']['background'];
-        if (bgConfig?.bgImgUrl !== '') {
+        if (bgConfig?.bgImg.bgImgUrl !== '') {
             let bgImgKey = 'bgImg' + config.id;
             //1.1 保存背景图片到本地数据库
-            saveImgToLocal(bgConfig?.bgImgUrl!, bgImgKey).then((blobKey) => {
-                if (bgConfig && blobKey !== '')
-                    bgConfig.bgImgUrl = bgImgKey;
+            saveImgToLocal(bgConfig?.bgImg.bgImgUrl!, bgImgKey).then((res) => {
+                if (bgConfig && res)
+                    bgConfig.bgImg.bgImgUrl = bgImgKey;
                 //2.2 保存项目到本地数据库
                 saveProjectToLocal(config).then(id => resolve(id));
             });
@@ -166,12 +166,12 @@ export const updateProject = (designerStore: DesignerStore) => {
                 for (let i = 0; i < dataArr.length; i++) {
                     if (dataArr[i].id === config.id) {
                         const bgConfig: BackgroundConfig = config.elemConfigs['-1']['background'];
-                        if (bgConfig?.bgImgUrl !== '') {
+                        if (bgConfig?.bgImg.bgImgUrl !== '') {
                             let bgImgKey = 'bgImg' + config.id;
                             //2.1 如果有新背景图片数据，则保存新背景图片
-                            saveImgToLocal(bgConfig.bgImgUrl!, bgImgKey).then(() => {
+                            saveImgToLocal(bgConfig.bgImg.bgImgUrl!, bgImgKey).then(() => {
                                 if (bgConfig)
-                                    config.elemConfigs['-1']['background'].bgImgUrl = bgImgKey;
+                                    config.elemConfigs['-1']['background'].bgImg.bgImgUrl = bgImgKey;
                                 dataArr[i] = config;
                                 localforage.setItem('light-chaser', dataArr).then(() => {
                                     resolve(config.id as number);
@@ -208,10 +208,10 @@ export const getProjectById = (id: number | string) => {
                     if (dataArr[i].id === id) {
                         let target: DesignerStore | any = dataArr[i];
                         let bgConfig: BackgroundConfig = target.elemConfigs['-1']['background'];
-                        if (bgConfig?.bgImgUrl !== '') {
-                            getImgFromLocal(bgConfig?.bgImgUrl).then((url) => {
+                        if (bgConfig?.bgImg.bgImgUrl !== '') {
+                            getImgFromLocal(bgConfig?.bgImg.bgImgUrl).then((url) => {
                                 if (bgConfig)
-                                    target.elemConfigs['-1']['background'].bgImgUrl = url;
+                                    target.elemConfigs['-1']['background'].bgImg.bgImgUrl = url;
                                 resolve(target);
                             });
                         } else {

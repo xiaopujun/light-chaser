@@ -7,7 +7,7 @@ class EventManager {
         this.events[type].push(handler);
     }
 
-    unregister(type: string, handler: Function) {
+    unregister(type: string, handler?: Function) {
         if (!this.events[type])
             return;
 

@@ -1,12 +1,13 @@
-@import '../../../designer/style/DesignerStyle.less';
+@import '../../../designer/common/DesignerStyle.less';
 
 .lc-comp-list {
+  z-index: 1;
+  animation: lcFadeInUp1 0.7s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
   top: 50px;
   left: 60px;
   width: 180px;
   position: absolute;
   background-color: @compListBgColor;
-  z-index: 1;
   height: calc(100% - (@headerHeight + @footHeight));
 
   .list-title {
@@ -71,6 +72,30 @@
         }
       }
     }
+  }
+}
+
+
+@keyframes lcFadeInUp1 {
+  0% {
+    z-index: 1;
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  50% {
+    z-index: 1;
+    opacity: 1;
+    transform: translateX(20px);
+  }
+  55% {
+    z-index: 1;
+    opacity: 1;
+    transform: translateX(20px);
+  }
+  100% {
+    z-index: 1;
+    opacity: 1;
+    transform: translateX(0);
   }
 
 }
