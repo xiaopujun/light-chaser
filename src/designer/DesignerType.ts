@@ -158,6 +158,8 @@ export interface ProjectConfig {
     updateTime?: string;
     //存储类型
     saveType?: SaveType;
+    //编辑模式下实时刷新数据
+    realTimeRefresh?: boolean;
 }
 
 /**

@@ -8,6 +8,7 @@ import LcButton from "../../../../lib/lc-button/LcButton";
 import './ProjectHdItemImpl.less';
 import designerStore from "../../../store/DesignerStore";
 import {ProjectConfig} from "../../../DesignerType";
+import LcSwitch from "../../../../lib/lc-switch/LcSwitch";
 
 class ProjectHdItemImpl extends Component {
 
@@ -43,7 +44,7 @@ class ProjectHdItemImpl extends Component {
 
     render() {
         const {projectVisible} = headerStore;
-        const {projectConfig: {name, des, state, saveType}} = designerStore;
+        const {projectConfig: {name, des, state, saveType, realTimeRefresh}} = designerStore;
         return (
             <Dialog title={'项目设置'} className={'lc-header-project-set'} visible={projectVisible} onClose={this.onClose}>
                 <div style={{display: 'flex', flexWrap: 'wrap'}}>
@@ -66,7 +67,12 @@ class ProjectHdItemImpl extends Component {
                             // {label: '服务端', value: '1'},
                         ]}/>
                     </ConfigItem>
+                    <ConfigItem title={'草稿状态数据实时刷新'} contentStyle={{width: 190}}>
+                        <LcSwitch defaultValue={realTimeRefresh}
+                                  onChange={value => this.config.realTimeRefresh = value}/>
+                    </ConfigItem>
                 </div>
+                <p style={{padding: '5px 7px', color: '#989898'}}>说明：数据实时刷新开启后，草稿状态下组件数据也会根据配置实时更新</p>
                 <div className={'lc-header-project-footer'}>
                     <LcButton onClick={this.doSave}>保存</LcButton>
                     <LcButton onClick={this.onClose}>取消</LcButton>

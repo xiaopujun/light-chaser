@@ -55,7 +55,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                             transform: `translate(${position[0]}px, ${position[1]}px)`,
                             position: 'absolute',
                         }} className={'lc-comp-item'}>
-                <Chart config={compConfig} globalConfg={projectConfig}/>
+                <Chart config={compConfig} globalConfg={projectConfig} realTimeRefresh={projectConfig.realTimeRefresh}/>
             </div>
         });
     }

@@ -14,7 +14,6 @@ export default class AntdBaseBar extends PureComponent<any> {
     }
 
     componentDidMount() {
-        console.log("AntdBaseBar componentDidMount");
         this.getData();
     }
 
@@ -24,11 +23,13 @@ export default class AntdBaseBar extends PureComponent<any> {
         if (dataSource === 'api') {
             const {url, method, params, header, flashFrequency} = apiData;
             setInterval(() => {
-                sendHttpRequest(url, method, params, header).then((data: any) => {
-                    this.setState({data});
-                });
+                const {realTimeRefresh} = this.props;
+                if (realTimeRefresh) {
+                    sendHttpRequest(url, method, params, header).then((data: any) => {
+                        this.setState({data});
+                    });
+                }
             }, flashFrequency * 1000);
-
         }
     }
 
