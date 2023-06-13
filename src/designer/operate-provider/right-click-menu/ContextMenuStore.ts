@@ -9,11 +9,7 @@ class ContextMenuStore {
             setPosition: action,
         })
     }
-
-    /**
-     * 右键菜单操作目标id
-     */
-    targetId = -1;
+    
     /**
      * 右键菜单显示状态
      */
@@ -33,10 +29,6 @@ class ContextMenuStore {
 
     setPosition = (position: number[]) => {
         this.position = position;
-    }
-
-    setTargetId = (targetId: number) => {
-        this.targetId = targetId;
     }
 
     setMouseDownTime = (time: any) => this.mouseDownTime = time;

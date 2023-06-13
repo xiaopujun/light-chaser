@@ -64,7 +64,8 @@ class Designer extends Component<LCDesignerProps | any> {
 
     handleContextMenu = () => {
         //todo 在设计器加载时，异步注册设计器中所有设计到的操作事件
-        const {setPosition, setTargetId, updateVisible} = lcRightMenuStore;
+        const {setPosition, updateVisible} = lcRightMenuStore;
+        const {setUnLockedId} = eventOperateStore;
         eventManager.register('click', (e: any) => {
             const {visible, updateVisible} = lcRightMenuStore;
             if (visible && e.button === 0) {
@@ -81,7 +82,7 @@ class Designer extends Component<LCDesignerProps | any> {
             if (targetArr.some((item: string) => event.target.classList.contains(item)) && mouseUpTime - mouseDownTime < 200) {
                 updateVisible && updateVisible(true);
                 setPosition([event.clientX, event.clientY]);
-                setTargetId && setTargetId(parseInt(event.target.id));
+                setUnLockedId(event.target.id);
             } else {
                 updateVisible && updateVisible(false);
             }

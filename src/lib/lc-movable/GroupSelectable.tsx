@@ -34,18 +34,6 @@ class GroupSelectable extends Component {
                                  e.stop();
                              }
                          }}
-                         onSelect={(e: any) => {
-                             let selected = e.selected.filter((item: any) => {
-                                 return item.dataset.locked !== 'true';
-                             });
-                             console.log('e.inputEvent.target.className：', e.inputEvent.target.className, selected, e.inputEvent.target);
-                             if (e.inputEvent.target.className.indexOf('menu-item') === -1) {
-                                 let targetIds: string[] = [];
-                                 selected.forEach((item: any) => targetIds.push(item.id));
-                                 setTargetIds(targetIds);
-                             }
-                             setTargets(selected);
-                         }}
                          onSelectEnd={e => {
                              if (!movableRef) return;
                              const movable: any = movableRef.current;
@@ -55,6 +43,15 @@ class GroupSelectable extends Component {
                                      movable.dragStart(e.inputEvent);
                                  });
                              }
+                             let selected = e.selected.filter((item: any) => {
+                                 return item.dataset.locked !== 'true';
+                             });
+                             if (e.inputEvent.target.className.indexOf('menu-item') === -1) {
+                                 let targetIds: string[] = [];
+                                 selected.forEach((item: any) => targetIds.push(item.id));
+                                 setTargetIds(targetIds);
+                             }
+                             setTargets(selected);
                          }}
                 />
             </>

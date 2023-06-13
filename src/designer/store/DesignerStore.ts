@@ -345,7 +345,6 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
             this.elemConfigs[item.id + ''] = initData;
         if (this.statisticInfo)
             this.statisticInfo.count = Object.keys(this.elemConfigs).length;
-        console.log(toJS(this.layoutConfigs))
     }
 
     /**
@@ -372,7 +371,6 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
                 this.layoutConfigs[item.id + ''] = {...merge(oldItem, item)};
             }
         }
-        console.log(toJS(this.layoutConfigs))
     }
 
     /**
@@ -434,6 +432,7 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
     }
 
     copyItem = (ids: string[]) => {
+        let newIds = [];
         let {maxOrder, setMaxOrder} = eventOperateStore;
         for (const id of ids) {
             const {[id]: item} = this.elemConfigs;
@@ -442,6 +441,7 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
                 const newItem = cloneDeep(item);
                 const newLayout = cloneDeep(layout);
                 const newId = snowflake.generateId() + '';
+                newIds.push(newId);
                 newItem.id = newId;
                 newLayout.id = newId;
                 const [x = 10, y = 10] = (newLayout.position || []).map(p => p + 10);
@@ -452,6 +452,7 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
             }
         }
         setMaxOrder(maxOrder);
+        return newIds;
     }
 
 }

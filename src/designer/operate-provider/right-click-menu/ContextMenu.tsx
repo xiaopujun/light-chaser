@@ -13,7 +13,6 @@ import {
 } from "@ant-design/icons";
 import eventOperateStore from "../EventOperateStore";
 import {MovableItemType} from "../../../lib/lc-movable/types";
-import {toJS} from "mobx";
 
 class ContextMenu extends Component {
 
@@ -38,9 +37,9 @@ class ContextMenu extends Component {
             name: '解锁',
             icon: LockOutlined,
             onClick: () => {
-                const {targetId} = contextMenuStore;
+                const {unLockedId} = eventOperateStore;
                 const {updateLayout, layoutConfigs} = designerStore;
-                let item = layoutConfigs[targetId];
+                let item = layoutConfigs[unLockedId];
                 updateLayout([{...item, locked: false}])
             }
         },
@@ -53,10 +52,19 @@ class ContextMenu extends Component {
             name: '复制',
             icon: CopyOutlined,
             onClick: () => {
-                const {targetIds, setTargetIds} = eventOperateStore;
+                const {targetIds, setTargetIds, setTargets} = eventOperateStore;
                 const {copyItem} = designerStore;
-                copyItem(targetIds);
-                setTargetIds([]);
+                let newIds = copyItem(targetIds);
+                let targets: any = [];
+                //延迟10毫秒，等待dom元素渲染完毕后再获取。
+                setTimeout(() => {
+                    for (const newId of newIds) {
+                        targets.push(document.getElementById(newId));
+                    }
+                    targets.filter((item: any) => item !== null);
+                    setTargets(targets);
+                    setTargetIds(newIds);
+                }, 10);
             }
         },
         {
