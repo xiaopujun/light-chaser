@@ -18,6 +18,7 @@ class ThemeConfig extends Component<ConfigType> {
     closeEditor = () => this.setState({editTheme: false});
 
     themeChange = (theme: ThemeItemType) => {
+        if (!theme) return;
         const {updateConfig} = this.props;
         updateTheme(theme, rightStore.activeElemConfig);
         updateConfig && updateConfig({themeId: theme.id});

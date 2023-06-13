@@ -13,14 +13,6 @@ class DesignerView extends Component<LcShowProps | any> {
 
     state: any = {};
 
-    constructor(props: any) {
-        super(props);
-        // const {location: {state}} = this.props;
-        // getProjectById(state.id).then((project: any) => {
-        //     this.state = {projectData: project};
-        // });
-    }
-
     calculateChartConfig = (elemId: string | number) => {
         const {elemConfigs} = designerStore;
         if (elemConfigs)

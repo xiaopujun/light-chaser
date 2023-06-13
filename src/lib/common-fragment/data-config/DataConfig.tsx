@@ -68,13 +68,17 @@ const ApiDataConfig: React.FC<DataConfigProps> = ({config, onSave}) => {
     const {apiData} = config;
     const urlRef = useRef(apiData?.url || '');
     const methodRef = useRef(apiData?.method || '');
-    const headerRef = useRef(apiData?.header || {});
-    const paramsRef = useRef(apiData?.params || {});
+    const headerRef = useRef(apiData?.header || '{}');
+    const paramsRef = useRef(apiData?.params || '{}');
     const flashFrequencyRef = useRef(apiData?.flashFrequency || 5);
     const [testResult, setTestResult] = useState<any>('');
 
     const testApi = () => {
-        sendHttpRequest(urlRef.current, methodRef.current, headerRef.current, paramsRef.current).then(res => {
+        let header = stringToJsObj(headerRef.current);
+        if (!header) alert('请求头不符合json格式');
+        let params = stringToJsObj(paramsRef.current);
+        if (!params) alert('请求参数不符合json格式');
+        sendHttpRequest(urlRef.current, methodRef.current, header, params).then(res => {
             setTestResult(JSON.stringify(res));
         }).catch(err => {
             setTestResult(JSON.stringify(err));
@@ -82,23 +86,27 @@ const ApiDataConfig: React.FC<DataConfigProps> = ({config, onSave}) => {
     }
 
     const doSave = () => {
+        let header = stringToJsObj(headerRef.current);
+        if (!header) alert('请求头不符合json格式');
+        let params = stringToJsObj(paramsRef.current);
+        if (!params) alert('请求参数不符合json格式');
         onSave({
             apiData: {
                 url: urlRef.current,
                 method: methodRef.current,
-                header: headerRef.current,
-                params: paramsRef.current,
+                header: header,
+                params: params,
                 flashFrequency: flashFrequencyRef.current
             }
         });
     }
 
-    const headerOnChange = (value: any) => {
-        headerRef.current = stringToJsObj(value);
+    const headerOnChange = (value: string) => {
+        headerRef.current = value;
     }
 
-    const paramsOnChange = (value: any) => {
-        paramsRef.current = stringToJsObj(value);
+    const paramsOnChange = (value: string) => {
+        paramsRef.current = value;
     }
 
     return (
@@ -125,10 +133,10 @@ const ApiDataConfig: React.FC<DataConfigProps> = ({config, onSave}) => {
                 <div>秒</div>
             </ConfigItem>
             <ConfigItemTB title={'请求头(JSON)'} contentStyle={{width: '95%'}}>
-                <CodeEditor onChange={headerOnChange} defaultValue={JSON.stringify(headerRef.current)}/>
+                <CodeEditor onChange={headerOnChange} defaultValue={headerRef.current}/>
             </ConfigItemTB>
-            <ConfigItemTB title={'请求参数'} contentStyle={{width: '95%'}}>
-                <CodeEditor onChange={paramsOnChange} defaultValue={JSON.stringify(paramsRef.current)}/>
+            <ConfigItemTB title={'请求参数(JSON)'} contentStyle={{width: '95%'}}>
+                <CodeEditor onChange={paramsOnChange} defaultValue={paramsRef.current}/>
             </ConfigItemTB>
             <ConfigItemTB title={'响应结果'} contentStyle={{width: '95%'}}>
                 <CodeEditor readonly={true} value={testResult}/>
@@ -155,7 +163,7 @@ const StaticDataConfig: React.FC<DataConfigProps> = ({config, onSave, verifyCall
                 }
             }
             //todo 考虑下安全问题如何处理
-            onSave({staticData: {data: stringToJsObj(dataCode)}});
+            onSave({staticData: {data: JSON.parse(dataCode)}});
         } catch (e: any) {
             console.error('代码解析异常', e);
         }

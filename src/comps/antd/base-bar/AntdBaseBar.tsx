@@ -22,7 +22,7 @@ export default class AntdBaseBar extends PureComponent<any> {
         const {config: {data}} = this.props;
         const {dataSource, apiData} = data;
         if (dataSource === 'api') {
-            const {url, method, params, header, flashFrequency} = apiData;
+            const {url, method, params, header} = apiData;
             setInterval(() => {
                 const {realTimeRefresh} = this.props;
                 if (realTimeRefresh) {
