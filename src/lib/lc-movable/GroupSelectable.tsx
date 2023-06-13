@@ -12,7 +12,7 @@ class GroupSelectable extends Component {
     }
 
     render() {
-        const {movableRef, targets, setTargets} = eventOperateStore;
+        const {movableRef, targets, setTargets, setTargetIds} = eventOperateStore;
         return (
             <>
                 {this.props.children}
@@ -38,6 +38,12 @@ class GroupSelectable extends Component {
                              let selected = e.selected.filter((item: any) => {
                                  return item.dataset.locked !== 'true';
                              });
+                             console.log('e.inputEvent.target.className：', e.inputEvent.target.className, selected, e.inputEvent.target);
+                             if (e.inputEvent.target.className.indexOf('menu-item') === -1) {
+                                 let targetIds: string[] = [];
+                                 selected.forEach((item: any) => targetIds.push(item.id));
+                                 setTargetIds(targetIds);
+                             }
                              setTargets(selected);
                          }}
                          onSelectEnd={e => {

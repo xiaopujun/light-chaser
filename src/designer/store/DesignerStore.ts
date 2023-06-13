@@ -351,12 +351,14 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
     /**
      * 删除元素
      */
-    delItem = (id: string | number) => {
-        delete this.layoutConfigs[id + ''];
-        delete this.elemConfigs[id + ''];
-        if (this.activeElem && id === this.activeElem.id) {
-            this.activeElem.id = -1;
-            this.activeElem.type = "";
+    delItem = (ids: string[]) => {
+        for (const id of ids) {
+            delete this.layoutConfigs[id];
+            delete this.elemConfigs[id];
+            if (this.activeElem && id as any === this.activeElem.id) {
+                this.activeElem.id = -1;
+                this.activeElem.type = "";
+            }
         }
     }
 
@@ -370,6 +372,7 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
                 this.layoutConfigs[item.id + ''] = {...merge(oldItem, item)};
             }
         }
+        console.log(toJS(this.layoutConfigs))
     }
 
     /**
@@ -430,23 +433,25 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
         this.projectConfig = {...this.projectConfig, ...data};
     }
 
-    copyItem = (id: string) => {
-        const {[id]: item} = this.elemConfigs;
-        if (item) {
-            const {[id]: layout} = this.layoutConfigs;
-            const newItem = cloneDeep(item);
-            const newLayout = cloneDeep(layout);
-            const newId = snowflake.generateId() + '';
-            newItem.id = newId;
-            newLayout.id = newId;
-            const [x = 10, y = 10] = (newLayout.position || []).map(p => p + 10);
-            newLayout.position = [x, y];
-            let {maxOrder, setMaxOrder} = eventOperateStore;
-            newLayout.order = ++maxOrder;
-            setMaxOrder(maxOrder);
-            this.elemConfigs[newId] = newItem;
-            this.layoutConfigs[newId] = newLayout;
+    copyItem = (ids: string[]) => {
+        let {maxOrder, setMaxOrder} = eventOperateStore;
+        for (const id of ids) {
+            const {[id]: item} = this.elemConfigs;
+            if (item) {
+                const {[id]: layout} = this.layoutConfigs;
+                const newItem = cloneDeep(item);
+                const newLayout = cloneDeep(layout);
+                const newId = snowflake.generateId() + '';
+                newItem.id = newId;
+                newLayout.id = newId;
+                const [x = 10, y = 10] = (newLayout.position || []).map(p => p + 10);
+                newLayout.position = [x, y];
+                newLayout.order = ++maxOrder;
+                this.elemConfigs[newId] = newItem;
+                this.layoutConfigs[newId] = newLayout;
+            }
         }
+        setMaxOrder(maxOrder);
     }
 
 }

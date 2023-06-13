@@ -36,7 +36,6 @@ class ContextMenuStore {
     }
 
     setTargetId = (targetId: number) => {
-        console.log(targetId)
         this.targetId = targetId;
     }
 

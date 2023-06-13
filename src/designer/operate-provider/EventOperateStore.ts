@@ -28,6 +28,7 @@ class EventOperateStore {
      * 被框选中的目标元素
      */
     targets: any[] = [];
+    targetIds: string[] = [];
 
     maxOrder = 0;
     minOrder = 0;
@@ -43,6 +44,7 @@ class EventOperateStore {
 
     setTargets = (targets: any[]) => this.targets = targets;
 
+    setTargetIds = (targetIds: string[]) => this.targetIds = targetIds;
 }
 
 const eventOperateStore = new EventOperateStore();

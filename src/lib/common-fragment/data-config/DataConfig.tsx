@@ -68,8 +68,8 @@ const ApiDataConfig: React.FC<DataConfigProps> = ({config, onSave}) => {
     const {apiData} = config;
     const urlRef = useRef(apiData?.url || '');
     const methodRef = useRef(apiData?.method || '');
-    const headerRef = useRef(apiData?.header || '{}');
-    const paramsRef = useRef(apiData?.params || '{}');
+    const headerRef = useRef(JSON.stringify(apiData?.header || {}));
+    const paramsRef = useRef(JSON.stringify(apiData?.params || {}));
     const flashFrequencyRef = useRef(apiData?.flashFrequency || 5);
     const [testResult, setTestResult] = useState<any>('');
 

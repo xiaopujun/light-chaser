@@ -77,7 +77,8 @@ class Designer extends Component<LCDesignerProps | any> {
         eventManager.register('contextmenu', (event: any) => {
             event.preventDefault();
             const {mouseDownTime, mouseUpTime} = lcRightMenuStore;
-            if (event.target.className.indexOf('lc-comp-item') > -1 && mouseUpTime - mouseDownTime < 200) {
+            let targetArr = ['lc-comp-item', 'moveable-area'];
+            if (targetArr.some((item: string) => event.target.classList.contains(item)) && mouseUpTime - mouseDownTime < 200) {
                 updateVisible && updateVisible(true);
                 setPosition([event.clientX, event.clientY]);
                 setTargetId && setTargetId(parseInt(event.target.id));

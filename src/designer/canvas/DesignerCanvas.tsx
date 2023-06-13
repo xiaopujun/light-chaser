@@ -60,16 +60,6 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
         });
     }
 
-    /**
-     * 删除目标组件
-     */
-    delItem = (elemId: string) => {
-        const {delItem, layoutConfigs} = designerStore;
-        delItem && delItem(elemId);
-        if (this.rgl != null)
-            this.rgl.setState({layout: layoutConfigs})
-    }
-
     getDragScaleProviderProps = () => {
         const {canvasConfig} = designerStore!;
         return {
