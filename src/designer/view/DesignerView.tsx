@@ -38,7 +38,7 @@ class DesignerView extends Component<LcShowProps | any> {
                             transform: `translate(${position[0]}px, ${position[1]}px)`,
                             position: 'absolute',
                         }} className={'lc-comp-item'}>
-                <Chart config={compConfig}/>
+                <Chart config={compConfig} realTimeRefresh={true}/>
             </div>
         });
     }

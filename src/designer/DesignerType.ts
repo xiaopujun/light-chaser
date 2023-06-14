@@ -297,7 +297,7 @@ export interface BaseInfoType {
 /**
  * lc设计器配置
  */
-export interface LCDesigner {
+export interface DesignerType {
     //项目id
     id?: number;
     //画布设置

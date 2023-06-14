@@ -8,7 +8,7 @@ import {
     CanvasConfig,
     ElemConfig,
     Layer,
-    LCDesigner,
+    DesignerType,
     ProjectConfig,
     ProjectState,
     SaveType,
@@ -23,7 +23,7 @@ import {MovableItemType} from "../../lib/lc-movable/types";
 import {snowflake} from "../../utils/IdGenerate";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 
-class DesignerStore implements LCDesigner, AbstractBaseStore {
+class DesignerStore implements DesignerType, AbstractBaseStore {
     constructor() {
         makeAutoObservable(this);
     }
@@ -180,57 +180,21 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
                 emphasize: '#fa8c16',
                 supplementary: '#ad6800',
             }
-        }, {
-            id: '5',
-            name: '紫色主题',
-            des: '紫色主题',
-            colors: {
-                main: '#722ed1',
-                text: '#9254de',
-                background: 'rgba(114,46,209,0.2)',
-                auxiliary: '#531dab',
-                emphasize: '#391085',
-                supplementary: '#22075e',
-            }
-        }, {
-            id: '6',
-            name: '粉色主题',
-            des: '粉色主题',
-            colors: {
-                main: '#eb2f96',
-                text: '#ff85c0',
-                background: 'rgba(235,47,150,0.2)',
-                auxiliary: '#c41d7f',
-                emphasize: '#f5222d',
-                supplementary: '#a8071a',
-            }
-        }, {
-            id: '7',
-            name: '橙色主题',
-            des: '橙色主题',
-            colors: {
-                main: '#fa8c16',
-                text: '#ffa940',
-                background: 'rgba(250,140,22,0.2)',
-                auxiliary: '#d46b08',
-                emphasize: '#fa541c',
-                supplementary: '#ad4e00',
-            }
         }
     ];
 
     /**
-     * 编组
+     * 组合
      */
     group: any = undefined;
 
     /**
-     * 联动配置
+     * 联动器配置
      */
     linkage: any = undefined;
 
     /**
-     * 条件配置
+     * 条件器配置
      */
     condition: any = undefined;
 
@@ -245,7 +209,7 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
     /**
      * 初始化store
      */
-    doInit = (store: LCDesigner) => {
+    doInit = (store: DesignerType) => {
         this.id = store.id ?? this.id;
         this.canvasConfig = store.canvasConfig ? {...this.canvasConfig, ...store.canvasConfig} : this.canvasConfig;
         this.projectConfig = store.projectConfig ? {...this.projectConfig, ...store.projectConfig} : this.projectConfig;
@@ -312,20 +276,6 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
             this.id = id;
         })
     }
-
-    /**
-     * 设置图表配置
-     */
-    setChartConfigs = (elemConfigs: { [key: string]: ElemConfig }) => {
-        runInAction(() => {
-            this.elemConfigs = elemConfigs;
-        });
-    }
-
-    /**
-     * 设置扩展临时属性
-     */
-    setExtendParams = (extendParams: any) => this.extendParams = extendParams;
 
     getActiveElemConfig = (activeId: number | string) => {
         if (activeId >= -1)

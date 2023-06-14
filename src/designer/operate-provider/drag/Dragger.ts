@@ -26,6 +26,10 @@ class Dragger {
                 this.lastPointermove = {x: e.clientX, y: e.clientY};
             }
         });
+        eventManager.register('pointerup', (e: any) => {
+            if (e.button === 2)
+                this.dom.releasePointerCapture(e.pointerId);
+        });
         eventManager.register('pointermove', (e: any) => {
             if (keyboardMouse.RightClick) {
                 const {scale} = eventOperateStore;
@@ -44,6 +48,7 @@ class Dragger {
     destroy = () => {
         eventManager.unregister('pointerdown');
         eventManager.unregister('pointermove');
+        eventManager.unregister('pointerup');
     }
 }
 

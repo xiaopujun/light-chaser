@@ -1,6 +1,6 @@
-import {DesignerStore} from "../designer/store/DesignerStore";
 import localforage from 'localforage';
-import {BackgroundConfig} from "../designer/DesignerType";
+import {BackgroundConfig, DesignerType} from "../designer/DesignerType";
+import {DesignerStore} from "../designer/store/DesignerStore";
 
 /**
  * 保存项目到本地数据库
@@ -81,10 +81,10 @@ const delImgFormLocal = (blobKey: string) => {
     });
 }
 
-const saveProject = (config: DesignerStore) => {
+const saveProject = (config: DesignerType) => {
     return new Promise((resolve) => {
         //1.如果有背景图片则先处理背景图片
-        const bgConfig: BackgroundConfig = config.elemConfigs['-1']['background'];
+        const bgConfig: BackgroundConfig = (config.elemConfigs ?? {})['-1']['background'];
         if (bgConfig?.bgImg.bgImgUrl !== '') {
             let bgImgKey = 'bgImg' + config.id;
             //1.1 保存背景图片到本地数据库
@@ -101,7 +101,7 @@ const saveProject = (config: DesignerStore) => {
     });
 }
 
-const saveProjectSimpleData = (config: DesignerStore) => {
+const saveProjectSimpleData = (config: DesignerType | any) => {
     return new Promise((resolve) => {
         localforage.getItem('lc-project-list').then((dataArr: any) => {
             let simpleData = {
