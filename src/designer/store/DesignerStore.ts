@@ -23,6 +23,9 @@ import {MovableItemType} from "../../lib/lc-movable/types";
 import {snowflake} from "../../utils/IdGenerate";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 
+/**
+ * 设计器核心状态管理类，记录了设计器中的核心数据。包括组件配置，组件布局。 全局设置等。
+ */
 class DesignerStore implements DesignerType, AbstractBaseStore {
     constructor() {
         makeAutoObservable(this);

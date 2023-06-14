@@ -17,7 +17,6 @@ import designerStarter from './DesignerStarter';
 import {getProjectById} from "../utils/LocalStorageUtil";
 import lcRightMenuStore from "./operate-provider/right-click-menu/ContextMenuStore";
 import eventManager from "./operate-provider/core/EventManager";
-import movableStore from "../lib/lc-movable/MovableStore";
 import eventOperateStore from "./operate-provider/EventOperateStore";
 
 interface LCDesignerProps extends RouteComponentProps {
@@ -50,10 +49,6 @@ class Designer extends Component<LCDesignerProps | any> {
         eventManager.register('mousedown', (e: any) => {
             const {setMouseDownTime} = lcRightMenuStore;
             setMouseDownTime(Date.now());
-            let id = e.target.id;
-            const {setActiveMovableItemId, activeMovableItemId} = movableStore;
-            if (activeMovableItemId !== id)
-                setActiveMovableItemId && setActiveMovableItemId(id || '');
         });
 
         eventManager.register('mouseup', (e: any) => {

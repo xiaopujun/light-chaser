@@ -1,6 +1,6 @@
 {
-  "name": "datax",
-  "version": "0.1.0",
+  "name": "light-chaser",
+  "version": "0.0.1",
   "private": true,
   "dependencies": {
     "@ant-design/charts": "^1.4.2",

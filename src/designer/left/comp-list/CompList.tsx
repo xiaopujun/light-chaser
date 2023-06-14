@@ -39,19 +39,19 @@ class CompList extends Component {
     getChartDom = () => {
         let chartDom = [];
         let {classifyKey} = classifyListStore
-        let {comps, compKey} = compListStore;
+        let {compInfoArr, compKey} = compListStore;
         if (classifyKey !== 'all') {
-            comps = comps.filter((item: any) => {
+            compInfoArr = compInfoArr.filter((item: any) => {
                 return item.typeKey === classifyKey;
             })
         }
         if (compKey !== '') {
-            comps = comps.filter((item: any) => {
+            compInfoArr = compInfoArr.filter((item: any) => {
                 return item.name.indexOf(compKey) >= 0;
             })
         }
-        for (let i = 0; i < comps.length; i++) {
-            let compInfo: any = comps[i];
+        for (let i = 0; i < compInfoArr.length; i++) {
+            let compInfo: any = compInfoArr[i];
             const {name, key} = compInfo;
             const {customComponentInfoMap} = designerStarter;
             let lcCompInit: any = customComponentInfoMap[key];
