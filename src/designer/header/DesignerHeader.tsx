@@ -3,9 +3,10 @@ import './DesignerHeader.less';
 import headerStore from "./HeaderStore";
 import CanvasHdConfigImpl from "./items/canvas/CanvasHdConfigImpl";
 import {observer} from "mobx-react";
-import ProjectHdItemImpl from "./items/project/ProjectHdItemImpl";
-import ThemeHdItemImpl from "./items/theme/ThemeHdItemImpl";
 import designerStarter from "../DesignerStarter";
+
+const ProjectHdItemImpl = React.lazy(() => import('./items/project/ProjectHdItemImpl'));
+const ThemeHdItemImpl = React.lazy(() => import('./items/theme/ThemeHdItemImpl'));
 
 class Header extends Component<any> {
 

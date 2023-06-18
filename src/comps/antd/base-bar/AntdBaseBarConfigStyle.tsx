@@ -6,7 +6,7 @@ import {ConfigType} from "../../../designer/right/ConfigType";
 import ConfigItem from "../../../lib/config-item/ConfigItem";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import ConfigCard from "../../../lib/config-card/ConfigCard";
-import Legend from "../../../lib/common-fragment/legend/Legned";
+import Legend from "../../../lib/common-fragment/legend/Legend";
 import AxisConfig from "../../../lib/common-fragment/axis/AxisConfig";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 

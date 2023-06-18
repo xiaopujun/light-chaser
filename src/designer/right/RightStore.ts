@@ -22,7 +22,7 @@ class RightStore {
     /**
      * 当前选中的组件
      */
-    activeElem: ActiveElem = {};
+    activeElem: ActiveElem = {id: -1, type: 'LcBg'};
     /**
      * 当前选中组件的配置
      */
@@ -47,8 +47,7 @@ class RightStore {
     setUpdateConfig = (updateConfig: Function) => this.updateConfig = updateConfig;
 
     setActiveElem = (activeElem: ActiveElem) => {
-        if (!activeElem)
-            return;
+        if (!activeElem) return;
         this.menus = (designerStarter.customComponentInfoMap[activeElem.type + ''] as AbstractCustomComponentDefinition).getMenuList();
         this.activeElem = activeElem;
         if (this.contentVisible) {

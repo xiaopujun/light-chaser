@@ -8,7 +8,7 @@ interface LoadingProps {
 
 class Loading extends Component<LoadingProps> {
     render() {
-        const {width = window.innerWidth, height = window.innerHeight} = this.props;
+        const {width = '100%', height = '100%'} = this.props;
         const style = {
             width,
             height,

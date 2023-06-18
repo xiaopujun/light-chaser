@@ -6,8 +6,8 @@ import Loading from "./lib/loading/Loading";
 import DemoMain from "./test/DemoMain";
 
 const LightChaserList = lazy(() => import('./list/LightChaserList'));
-const LCDesigner = lazy(() => import('./designer/Designer'));
-const Preview = lazy(() => import('./designer/view/DesignerView'));
+const Designer = lazy(() => import('./designer/Designer'));
+const DesignerView = lazy(() => import('./designer/view/DesignerView'));
 
 class App extends Component<any> {
     render() {
@@ -16,8 +16,8 @@ class App extends Component<any> {
                 <Suspense fallback={<Loading/>}>
                     <Switch>
                         <Route path={'/list'} component={LightChaserList}/>
-                        <Route path={'/designer'} component={LCDesigner}/>
-                        <Route path={'/view'} component={Preview}/>
+                        <Route path={'/designer'} component={Designer}/>
+                        <Route path={'/view'} component={DesignerView}/>
                         <Route path={'/loading'} component={Loading}/>
                         <Route path={'/test'} component={DemoMain}/>
                     </Switch>
