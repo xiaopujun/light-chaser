@@ -13,7 +13,7 @@ import LcRightMenu from "../operate-provider/right-click-menu/ContextMenu";
 import {MovableItemType} from "../../lib/lc-movable/types";
 import Loading from "../../lib/loading/Loading";
 import HotKey from "../operate-provider/keyboard-mouse/HotKey";
-import {operateEventMapping} from "../operate-provider/keyboard-mouse/HotKeyCore";
+import {operateEventMapping} from "../operate-provider/keyboard-mouse/HotKeyConfig";
 
 /**
  * 设计器画布

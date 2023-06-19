@@ -3,8 +3,6 @@ import Ruler, {RulerProps} from "@scena/react-ruler";
 import {KMMap} from "../../designer/operate-provider/keyboard-mouse/KeyboardMouse";
 import eventManager from "../../designer/operate-provider/core/EventManager";
 import scaleCore from "../../designer/operate-provider/scale/ScaleCore";
-import {observer} from "mobx-react";
-import eventOperateStore from "../../designer/operate-provider/EventOperateStore";
 
 interface DesignerRulerProps {
     offsetX?: number;
@@ -34,6 +32,12 @@ interface DesignerRulerProps {
  */
 class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
 
+    timerId: any = null;
+
+    state = {
+        render: 0
+    }
+
     unit = 50;
     _scale = 1;
 
@@ -53,35 +57,39 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
     scrollPosY = 0;
     startPosY = 0;
 
+    antiShakeRender = () => {
+        clearTimeout(this.timerId);
+        this.timerId = setTimeout(() => {
+            this.setState({render: this.state.render + 1})
+        }, 300);
+    }
+
     componentDidMount() {
         const {offsetX: ofX = 0, offsetY: ofY = 0} = this.props;
-
-        eventManager.register('wheel', (e: any) => {
+        eventManager.register('wheel', () => {
             this.startPosX = this.mousePosX - ((this.mousePosX - this.startPosX) / scaleCore.ratio);
             this.scrollPosX = this.startPosX;
             this.startPosY = this.mousePosY - ((this.mousePosY - this.startPosY) / scaleCore.ratio);
             this.scrollPosY = this.startPosY;
-            if (Math.floor(scaleCore.scale / this._scale) === 2) {
-                this._scale = scaleCore.scale;
-                this.unit /= 2;
-            } else if (Math.floor(this._scale / scaleCore.scale) === 2) {
-                this._scale = scaleCore.scale;
-                this.unit *= 2;
-            }
+            this.unit = Math.floor(50 / scaleCore.scale);
+            this.antiShakeRender();
         });
 
         eventManager.register('pointermove', (e: any) => {
-            const {scale} = eventOperateStore;
+            const {scale} = scaleCore;
             this.mousePosX = this.startPosX + ((e.clientX - this.baseOffset - ofX) / scale);
             this.mousePosY = this.startPosY + ((e.clientY - this.baseOffset - ofY) / scale);
             if (KMMap.rightClick) {
                 this.offsetX = this.offsetX - e.movementX;
                 this._scrollPosX = this.startPosX + (this.offsetX / scale)
-                this.rulerX && this.rulerX.scroll(this._scrollPosX);
-
                 this.offsetY = this.offsetY - e.movementY;
                 this._scrollPosY = this.startPosY + (this.offsetY / scale)
-                this.rulerY && this.rulerY.scroll(this._scrollPosY);
+
+                clearTimeout(this.timerId);
+                this.timerId = setTimeout(() => {
+                    this.rulerX && this.rulerX.scroll(this._scrollPosX);
+                    this.rulerY && this.rulerY.scroll(this._scrollPosY);
+                }, 300);
             }
         });
 
@@ -109,11 +117,12 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
         eventManager.unregister('pointermove');
         eventManager.unregister('pointerdown');
         eventManager.unregister('pointerup');
+        clearTimeout(this.timerId);
     }
 
 
     render() {
-        const {scale} = eventOperateStore;
+        const {scale} = scaleCore;
         return (
             <div className={'lc-ruler'} style={{position: 'relative'}}>
                 <div style={{
@@ -136,8 +145,9 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
                     <Ruler ref={ref => this.rulerX = ref}
                            scrollPos={this.scrollPosX}
                            zoom={scale}
-                           lineColor={'#767676'}
+                           lineColor={'#444b4d'}
                            textColor={'#a6a6a6'}
+                           segment={2}
                            negativeRuler={true}
                            textOffset={[0, 10]}
                            backgroundColor={'#090f1d'}
@@ -153,9 +163,10 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
                     <Ruler ref={ref => this.rulerY = ref}
                            type={'vertical'}
                            scrollPos={this.scrollPosY}
-                           lineColor={'#767676'}
+                           lineColor={'#444b4d'}
                            textColor={'#a6a6a6'}
                            zoom={scale}
+                           segment={2}
                            negativeRuler={true}
                            textOffset={[10, 0]}
                            backgroundColor={'#090f1d'}
@@ -173,4 +184,4 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
     }
 }
 
-export default observer(DesignerRuler);
+export default DesignerRuler;

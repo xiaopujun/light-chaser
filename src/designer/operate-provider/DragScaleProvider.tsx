@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import Dragger from "./drag/Dragger";
 import coordinate from "./coordinate/Coordinate";
-import {scaleConfig} from "./scale/Scale";
+import {scaleConfig} from "./scale/Scaler";
+import designerStore from "../store/DesignerStore";
+import {observer} from "mobx-react";
 
 interface DragScaleProviderProps {
     containerWidth?: number;
@@ -30,16 +32,16 @@ class DragScaleProvider extends Component<DragScaleProviderProps> {
     }
 
     render() {
-        const {contentHeight, contentWidth, containerHeight, containerWidth} = this.props;
+        const {canvasConfig} = designerStore!;
         return (
             <div style={{
                 overflow: "hidden",
-                height: containerHeight,
-                width: containerWidth,
+                height: window.innerHeight - 90,
+                width: window.innerWidth - 95,
                 backgroundColor: '#434343'
             }}>
                 <div ref={ref => this.content = ref}
-                     style={{width: contentWidth, height: contentHeight}}>
+                     style={{width: canvasConfig?.width, height: canvasConfig?.height}}>
                     {this.props.children}
                 </div>
             </div>
@@ -47,4 +49,4 @@ class DragScaleProvider extends Component<DragScaleProviderProps> {
     }
 }
 
-export default DragScaleProvider;
+export default observer(DragScaleProvider);

@@ -1,7 +1,7 @@
 import {KMMap} from "../keyboard-mouse/KeyboardMouse";
-import eventOperateStore from "../EventOperateStore";
 import coordinate from "../coordinate/Coordinate";
 import eventManager from "../core/EventManager";
+import scaleCore from "../scale/ScaleCore";
 
 /**
  * 缩放器
@@ -32,7 +32,7 @@ class Dragger {
         });
         eventManager.register('pointermove', (e: any) => {
             if (KMMap.rightClick) {
-                const {scale} = eventOperateStore;
+                const {scale} = scaleCore;
                 const current1 = {x: e.clientX, y: e.clientY};
                 this.diff.x = current1.x - this.lastPointermove.x;
                 this.diff.y = current1.y - this.lastPointermove.y;

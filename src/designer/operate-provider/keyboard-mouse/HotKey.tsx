@@ -42,11 +42,14 @@ class HotKey extends Component<HotKeyProps> {
     }
 
     keyDown = (e: any) => {
-        e.preventDefault();
+        console.log(e.key)
         const key = e.key.toLowerCase();
         if (!this.currHotKey.some(item => item === key))
             this.currHotKey.push(key);
         let hotKey = this.currHotKey.join(' + ');
+        if (hotKey === 'alt' || hotKey === 'control + s')
+            e.preventDefault();
+        console.log(hotKey);
         this.doHandler(e, hotKey);
     };
 

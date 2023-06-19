@@ -61,7 +61,9 @@ class EventOperateStore {
 
     setUnLockedId = (id: string) => this.unLockedId = id;
 
-    setScale = (scale: number) => this.scale = scale;
+    setScale = (scale: number) => {
+        this.scale = scale;
+    };
 
     setMovableRef = (ref: any) => this.movableRef = ref;
 

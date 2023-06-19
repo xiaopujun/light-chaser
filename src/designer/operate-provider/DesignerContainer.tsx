@@ -56,7 +56,7 @@ class DesignerContainer extends Component {
 
     render() {
         return (
-            <div ref={dom => this.dom = dom} tabIndex={0} style={{outline: 'none'}} className={'lc-event-container'}>
+            <div ref={dom => this.dom = dom} style={{outline: 'none'}} className={'lc-event-container'}>
                 {this.props.children}
             </div>
         );
