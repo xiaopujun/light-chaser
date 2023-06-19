@@ -15,6 +15,7 @@ import contextMenuStore from "./operate-provider/right-click-menu/ContextMenuSto
 import eventManager from "./operate-provider/core/EventManager";
 import eventOperateStore from "./operate-provider/EventOperateStore";
 import {loadDesigner} from "./LoadDesigner";
+import {KMMap} from "./operate-provider/keyboard-mouse/KeyboardMouse";
 
 class Designer extends Component<any> {
 
@@ -54,6 +55,18 @@ class Designer extends Component<any> {
         eventManager.register('mouseup', () => {
             const {setMouseUpTime} = contextMenuStore;
             setMouseUpTime(Date.now());
+        });
+        eventManager.register('pointerdown', (e: PointerEvent) => {
+            if (e.button === 0)
+                KMMap.leftClick = true;
+            else if (e.button === 2)
+                KMMap.rightClick = true;
+        });
+        eventManager.register('pointerup', (e: PointerEvent) => {
+            if (e.button === 0)
+                KMMap.leftClick = false;
+            else if (e.button === 2)
+                KMMap.rightClick = false;
         });
     }
 

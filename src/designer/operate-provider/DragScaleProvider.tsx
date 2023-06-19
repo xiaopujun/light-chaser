@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import Scaler from "./scale/Scaler";
 import Dragger from "./drag/Dragger";
+import coordinate from "./coordinate/Coordinate";
+import {scaleConfig} from "./scale/Scale";
 
 interface DragScaleProviderProps {
     containerWidth?: number;
@@ -12,18 +13,19 @@ interface DragScaleProviderProps {
 class DragScaleProvider extends Component<DragScaleProviderProps> {
 
     content: any = null;
-    scaler: any = null;
     dragger: any = null;
 
     componentDidMount() {
-        this.scaler = new Scaler(this.content, 80, 70);
+        //配置缩放
+        this.content.style.transform = 'translate3d(' + coordinate.x + 'px, ' + coordinate.y + 'px, 0) scale(1)';
+        scaleConfig.content = this.content;
+        scaleConfig.offsetX = 80;
+        scaleConfig.offsetY = 70;
         this.dragger = new Dragger(this.content);
-        this.scaler.init();
         this.dragger.init();
     }
 
     componentWillUnmount() {
-        this.scaler.destroy();
         this.dragger.destroy();
     }
 

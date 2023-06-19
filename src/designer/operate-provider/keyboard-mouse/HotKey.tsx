@@ -28,12 +28,7 @@ class HotKey extends Component<HotKeyProps> {
         this.handlerMapping = props.handlerMapping;
     }
 
-    keyDown = (e: any) => {
-        e.preventDefault();
-        const key = e.key.toLowerCase();
-        if (!this.currHotKey.some(item => item === key))
-            this.currHotKey.push(key);
-        let hotKey = this.currHotKey.join(' + ');
+    doHandler = (e: any, hotKey: string) => {
         const {handler, target, triggerType = TriggerType.SINGLE} = this.handlerMapping[hotKey] || {};
         if (handler) {
             if ((triggerType === TriggerType.SINGLE && this.existHandlerKey !== hotKey) || triggerType === TriggerType.COILED) {
@@ -44,6 +39,15 @@ class HotKey extends Component<HotKeyProps> {
                 this.existHandlerKey = hotKey;
             }
         }
+    }
+
+    keyDown = (e: any) => {
+        e.preventDefault();
+        const key = e.key.toLowerCase();
+        if (!this.currHotKey.some(item => item === key))
+            this.currHotKey.push(key);
+        let hotKey = this.currHotKey.join(' + ');
+        this.doHandler(e, hotKey);
     };
 
     keyUp = (e: any) => {

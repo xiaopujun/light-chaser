@@ -13,6 +13,7 @@ import LcRightMenu from "../operate-provider/right-click-menu/ContextMenu";
 import {MovableItemType} from "../../lib/lc-movable/types";
 import Loading from "../../lib/loading/Loading";
 import HotKey from "../operate-provider/keyboard-mouse/HotKey";
+import {operateEventMapping} from "../operate-provider/keyboard-mouse/HotKeyCore";
 
 /**
  * 设计器画布
@@ -78,7 +79,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
         const {elemConfigs} = designerStore;
         return (
             <>
-                <HotKey handlerMapping={{}}/>
+                <HotKey handlerMapping={operateEventMapping}/>
                 <DesignerContainer>
                     <GroupSelectable>
                         <DesignerRuler offsetX={60} offsetY={50}>

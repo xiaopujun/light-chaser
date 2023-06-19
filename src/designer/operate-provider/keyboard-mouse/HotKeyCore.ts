@@ -1,9 +1,9 @@
-import {HandlerMapping} from "./HotKey";
+import {HandlerMapping, TriggerType} from "./HotKey";
+import {doScale} from "../scale/Scale";
 
 export const operateEventMapping: HandlerMapping = {
-    '  + wheel': {
-        handler: (e: any) => {
-
-        }
+    'alt + wheel': {
+        handler: doScale,
+        triggerType: TriggerType.COILED
     },
 }

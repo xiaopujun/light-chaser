@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Ruler, {RulerProps} from "@scena/react-ruler";
-import keyboardMouse from "../../designer/operate-provider/keyboard-mouse/KeyboardMouse";
+import {KMMap} from "../../designer/operate-provider/keyboard-mouse/KeyboardMouse";
 import eventManager from "../../designer/operate-provider/core/EventManager";
 import scaleCore from "../../designer/operate-provider/scale/ScaleCore";
 import {observer} from "mobx-react";
@@ -40,11 +40,13 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
     baseOffset = 20;
     _scrollPosX = 0;
     _scrollPosY = 0;
+
     rulerX: any = null;
     offsetX = 0;
     mousePosX = 0;
     scrollPosX = 0;
     startPosX = 0;
+
     rulerY: any = null;
     offsetY = 0;
     mousePosY = 0;
@@ -52,9 +54,9 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
     startPosY = 0;
 
     componentDidMount() {
-        const {offsetX = 0, offsetY = 0} = this.props;
+        const {offsetX: ofX = 0, offsetY: ofY = 0} = this.props;
 
-        eventManager.register('wheel', () => {
+        eventManager.register('wheel', (e: any) => {
             this.startPosX = this.mousePosX - ((this.mousePosX - this.startPosX) / scaleCore.ratio);
             this.scrollPosX = this.startPosX;
             this.startPosY = this.mousePosY - ((this.mousePosY - this.startPosY) / scaleCore.ratio);
@@ -70,9 +72,9 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
 
         eventManager.register('pointermove', (e: any) => {
             const {scale} = eventOperateStore;
-            this.mousePosX = this.startPosX + ((e.clientX - this.baseOffset - offsetX) / scale);
-            this.mousePosY = this.startPosY + ((e.clientY - this.baseOffset - offsetY) / scale);
-            if (keyboardMouse.RightClick) {
+            this.mousePosX = this.startPosX + ((e.clientX - this.baseOffset - ofX) / scale);
+            this.mousePosY = this.startPosY + ((e.clientY - this.baseOffset - ofY) / scale);
+            if (KMMap.rightClick) {
                 this.offsetX = this.offsetX - e.movementX;
                 this._scrollPosX = this.startPosX + (this.offsetX / scale)
                 this.rulerX && this.rulerX.scroll(this._scrollPosX);
