@@ -23,6 +23,7 @@ class Scaler {
         this.content.style.transform = 'translate3d(' + coordinate.x + 'px, ' + coordinate.y + 'px, 0) scale(1)';
         //注册鼠标滚轮事件
         eventManager.register('wheel', (e: any) => {
+            console.log('wheel', e);
             let {canvasConfig: {width = 1920, height = 1080}} = designerStore;
             const origin = {
                 x: (scaleCore.ratio - 1) * width * 0.5,

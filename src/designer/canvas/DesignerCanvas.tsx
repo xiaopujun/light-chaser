@@ -12,6 +12,7 @@ import GroupSelectable from "../../lib/lc-movable/GroupSelectable";
 import LcRightMenu from "../operate-provider/right-click-menu/ContextMenu";
 import {MovableItemType} from "../../lib/lc-movable/types";
 import Loading from "../../lib/loading/Loading";
+import HotKey from "../operate-provider/keyboard-mouse/HotKey";
 
 /**
  * 设计器画布
@@ -76,22 +77,25 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
     render() {
         const {elemConfigs} = designerStore;
         return (
-            <DesignerContainer>
-                <GroupSelectable>
-                    <DesignerRuler offsetX={60} offsetY={50}>
-                        <DragScaleProvider {...this.getDragScaleProviderProps()}>
-                            <GroupMovable>
-                                <DesignerBackground config={elemConfigs['-1']['background']}
-                                                    onClick={this.updateActive}
-                                                    ref={obj => this.lcbg = obj}>
-                                    {this.generateElement()}
-                                </DesignerBackground>
-                            </GroupMovable>
-                        </DragScaleProvider>
-                        <LcRightMenu/>
-                    </DesignerRuler>
-                </GroupSelectable>
-            </DesignerContainer>
+            <>
+                <HotKey handlerMapping={{}}/>
+                <DesignerContainer>
+                    <GroupSelectable>
+                        <DesignerRuler offsetX={60} offsetY={50}>
+                            <DragScaleProvider {...this.getDragScaleProviderProps()}>
+                                <GroupMovable>
+                                    <DesignerBackground config={elemConfigs['-1']['background']}
+                                                        onClick={this.updateActive}
+                                                        ref={obj => this.lcbg = obj}>
+                                        {this.generateElement()}
+                                    </DesignerBackground>
+                                </GroupMovable>
+                            </DragScaleProvider>
+                            <LcRightMenu/>
+                        </DesignerRuler>
+                    </GroupSelectable>
+                </DesignerContainer>
+            </>
         );
     }
 }

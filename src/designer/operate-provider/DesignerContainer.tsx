@@ -15,14 +15,11 @@ class DesignerContainer extends Component {
         document.addEventListener("keyup", this.handleKeyUp);
         document.addEventListener("keydown", this.handleKeyDown);
         this.dom.addEventListener("wheel", this.handleWheel);
-        this.dom.addEventListener("mousemove", this.handleMouseMove);
         this.dom.addEventListener("mousedown", this.handleMouseDown);
         this.dom.addEventListener("mouseup", this.handleMouseUp);
         this.dom.addEventListener("pointerdown", this.handlePointerDown);
         this.dom.addEventListener("pointermove", this.handlePointerMove);
         this.dom.addEventListener("pointerup", this.handlePointerUp);
-        this.dom.addEventListener("pointercancel", this.handlePointerCancel);
-
     }
 
     componentWillUnmount() {
@@ -32,13 +29,11 @@ class DesignerContainer extends Component {
         document.removeEventListener("keyup", this.handleKeyUp);
         document.removeEventListener("keydown", this.handleKeyDown);
         this.dom.removeEventListener("wheel", this.handleWheel);
-        this.dom.removeEventListener("mousemove", this.handleMouseMove);
         this.dom.removeEventListener("mousedown", this.handleMouseDown);
         this.dom.removeEventListener("mouseup", this.handleMouseUp);
         this.dom.removeEventListener("pointerdown", this.handlePointerDown);
         this.dom.removeEventListener("pointermove", this.handlePointerMove);
         this.dom.removeEventListener("pointerup", this.handlePointerUp);
-        this.dom.removeEventListener("pointercancel", this.handlePointerCancel);
     }
 
     /**
@@ -76,10 +71,6 @@ class DesignerContainer extends Component {
         }
     };
     /**
-     * 监听鼠标移动事件
-     */
-    handleMouseMove = (event: any) => eventManager.emit('mousemove', event);
-    /**
      * 监听鼠标按下事件
      */
     handleMouseDown = (event: any) => eventManager.emit('mousedown', event);
@@ -99,10 +90,6 @@ class DesignerContainer extends Component {
      * 监听指针抬起事件
      */
     handlePointerUp = (event: any) => eventManager.emit('pointerup', event);
-    /**
-     * 监听指针取消事件
-     */
-    handlePointerCancel = (event: any) => eventManager.emit('pointercancel', event);
 
     render() {
         return (
