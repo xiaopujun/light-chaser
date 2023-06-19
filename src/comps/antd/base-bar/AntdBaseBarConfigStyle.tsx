@@ -1,17 +1,14 @@
-import React, {Component, lazy} from 'react';
-import {ConfigType} from "../../../designer/right/ConfigType";
-
+import React, {Component} from 'react';
 import Accordion from "../../../lib/lc-accordion/Accordion";
 import CfgItemBorder from "../../../lib/config-item/CfgItemBorder";
+import BaseStyleSet from "../../../lib/common-fragment/base-style/BaseStyleSet";
+import {ConfigType} from "../../../designer/right/ConfigType";
 import ConfigItem from "../../../lib/config-item/ConfigItem";
+import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import ConfigCard from "../../../lib/config-card/ConfigCard";
-
-const BaseStyleSet = lazy(() => import('../../../lib/common-fragment/base-style/BaseStyleSet'));
-const BaseColorPicker = lazy(() => import('../../../lib/lc-color-picker/BaseColorPicker'));
-const Legend = lazy(() => import('../../../lib/common-fragment/legend/Legend'));
-const AxisConfig = lazy(() => import('../../../lib/common-fragment/axis/AxisConfig'));
-const UnderLineInput = lazy(() => import('../../../lib/lc-input/UnderLineInput'));
-
+import Legend from "../../../lib/common-fragment/legend/Legend";
+import AxisConfig from "../../../lib/common-fragment/axis/AxisConfig";
+import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 
 class AntdBaseBarConfigStyle extends Component<ConfigType> {
 
@@ -343,7 +340,8 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
                         <ConfigCard title={'条状'}>
                             <ConfigItem title={'宽度'}>
                                 <UnderLineInput type={'number'} min={1} onChange={this.barWidthChanged}
-                                                defaultValue={chartStyle.maxBarWidth}/>
+                                                defaultValue={chartStyle.maxBarWidth}
+                                />
                             </ConfigItem>
                             <ConfigItem title={'颜色'}>
                                 <CfgItemBorder>

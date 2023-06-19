@@ -14,7 +14,7 @@ class DesignerStarter {
 
 
     //todo 扫描组件，要优化为异步扫描
-    doInit = () => {
+    doScan = () => {
         this.scannerHeader();
         this.scannerCustomComponents();
     }

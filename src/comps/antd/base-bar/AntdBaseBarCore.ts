@@ -3,14 +3,21 @@ import {BaseInfoType, ElemConfig, ThemeItemType} from "../../../designer/Designe
 import {MenuInfo} from "../../../designer/right/MenuType";
 import barImg from "./bar.png";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import React, {ClassType} from "react";
+import React from "react";
 
-const AntdBaseBar = React.lazy(() => import('./AntdBaseBar'));
-const AntdBaseBarDataConfig = React.lazy(() => import('./AntdBaseBarDataConfig'));
-const BaseInfo = React.lazy(() => import('../../../lib/common-fragment/base-info/BaseInfo'));
-const ThemeConfig = React.lazy(() => import('../../../lib/common-fragment/theme-config/ThemeConfig'));
-const AnimationConfig = React.lazy(() => import('../../../lib/common-fragment/animation-config/AnimationConfig'));
-const AntdBaseBarConfigStyle = React.lazy(() => import('./AntdBaseBarConfigStyle'));
+// import AntdBaseBarConfigStyle from "./AntdBaseBarConfigStyle";
+// import AnimationConfig from "../../../lib/common-fragment/animation-config/AnimationConfig";
+// import ThemeConfig from "../../../lib/common-fragment/theme-config/ThemeConfig";
+// import BaseInfo from "../../../lib/common-fragment/base-info/BaseInfo";
+// import AntdBaseBar from "./AntdBaseBar";
+// import AntdBaseBarDataConfig from "./AntdBaseBarDataConfig";
+
+const AntdBaseBarConfigStyle = React.lazy(() => import("./AntdBaseBarConfigStyle"));
+const AnimationConfig = React.lazy(() => import("../../../lib/common-fragment/animation-config/AnimationConfig"));
+const ThemeConfig = React.lazy(() => import("../../../lib/common-fragment/theme-config/ThemeConfig"));
+const BaseInfo = React.lazy(() => import("../../../lib/common-fragment/base-info/BaseInfo"));
+const AntdBaseBar = React.lazy(() => import("./AntdBaseBar"));
+const AntdBaseBarDataConfig = React.lazy(() => import("./AntdBaseBarDataConfig"));
 
 
 export const updateTheme = (newTheme: ThemeItemType, sourceStyle: any) => {
@@ -261,7 +268,7 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
         return getDefaultMenuList();
     }
 
-    getMenuToConfigContentMap(): { [key: string]: ClassType<any, any, any> } {
+    getMenuToConfigContentMap(): { [key: string]: React.Component | React.FC | any } {
         return {
             'info': BaseInfo,
             'style': AntdBaseBarConfigStyle,

@@ -1,42 +1,37 @@
-import designerStore from "./store/DesignerStore";
+import lcDesignerContentStore from "./store/DesignerStore";
 import {getProjectById} from "../utils/LocalStorageUtil";
 import eventOperateStore from "./operate-provider/EventOperateStore";
-import {designerRouter} from "../index";
 import designerStarter from "./DesignerStarter";
+import {designerRouter} from "../index";
+
+const {doScan} = designerStarter;
 
 export const loadDesigner = () => {
-    console.log("load designer")
-    // const {doInit} = designerStarter;
-    // Promise.all([doInit(), loadProject()]).then((res) => {
-    //     const [scanRes, loadProRes] = res;
-    //     // if (scanRes && loadProRes) {
-    //     //     const {setLoadComplete} = designerStore;
-    //     //     setLoadComplete(true);
-    //     //     console.log('designer load complete');
-    //     // }
-    // });
+    doScan();
+    loadProjectData();
 }
 
-const loadProject = async () => {
-    console.log("load project")
+
+/**
+ * 初始化项目操作类型。新增 / 更新
+ */
+const loadProjectData = () => {
     const {history: {location: {state: {action}}}} = designerRouter;
     switch (action) {
         case 'create':
-            doCreateProject();
+            initNewProject();
             break;
         case 'edit':
-            await loadExistProject();
+            initExistProject();
             break;
     }
-    return true;
 }
 
 /**
- * 初始化一个新的项目。
+ * 初始化以创建方式打开时项目信息
  */
-const doCreateProject = () => {
-    console.log("do create project")
-    const {doInit} = designerStore;
+const initNewProject = () => {
+    const {doInit} = lcDesignerContentStore;
     const {history: {location: {state}}} = designerRouter;
     const {screenName, screenWidth, screenHeight} = state;
     doInit({
@@ -51,11 +46,10 @@ const doCreateProject = () => {
 }
 
 /**
- * 加载已经存在的项目。
+ * 初始化以更新方式打开时项目信息
  */
-const loadExistProject = () => {
-    console.log("load exist project")
-    const {doInit} = designerStore;
+const initExistProject = () => {
+    const {doInit} = lcDesignerContentStore;
     const {history: {location: {state: {id}}}} = designerRouter;
     getProjectById(id).then((store: any) => {
         if (store) {
@@ -66,6 +60,7 @@ const loadExistProject = () => {
                 projectConfig: store.projectConfig,
                 elemConfigs: store.elemConfigs,
                 layoutConfigs: store.layoutConfigs,
+                statisticInfo: store.statisticInfo,
                 layers: store.layers,
                 themeConfig: store.theme,
                 group: store.group,

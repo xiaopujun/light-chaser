@@ -1,17 +1,20 @@
 import React, {Component} from 'react';
 import MenuList from "./MenuList";
-import LcConfigContent from "./ConfigContent";
+import ConfigContent from "./ConfigContent";
+import rightStore from "./RightStore";
+import {observer} from "mobx-react";
 
 class Right extends Component {
 
     render() {
+        const {contentVisible} = rightStore;
         return (
             <>
                 <MenuList/>
-                <LcConfigContent/>
+                {contentVisible && <ConfigContent/>}
             </>
         );
     }
 }
 
-export default Right;
+export default observer(Right);

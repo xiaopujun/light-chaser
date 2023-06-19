@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import LCLayoutContent from "./canvas/DesignerCanvas";
+import DesignerCanvas from "./canvas/DesignerCanvas";
 import DesignerHeader from "./header/DesignerHeader";
-import {RouteComponentProps} from "react-router-dom";
 import LcHeader from "./structure/LcHeader";
 import LcBody from "./structure/LcBody";
 import LcLeft from "./structure/LcLeft";
@@ -12,57 +11,23 @@ import LcFoot from "./structure/LcFoot";
 import DesignerLeft from "./left";
 import Right from "./right";
 import DesignerFooter from "./footer/DesignerFooter";
-import lcDesignerContentStore from './store/DesignerStore';
-import designerStarter from './DesignerStarter';
-import {getProjectById} from "../utils/LocalStorageUtil";
-import lcRightMenuStore from "./operate-provider/right-click-menu/ContextMenuStore";
+import contextMenuStore from "./operate-provider/right-click-menu/ContextMenuStore";
 import eventManager from "./operate-provider/core/EventManager";
 import eventOperateStore from "./operate-provider/EventOperateStore";
+import {loadDesigner} from "./LoadDesigner";
 
-interface LCDesignerProps extends RouteComponentProps {
-    LCDesignerStore: LCDesignerProps;
-    clearDesignerStore?: (data?: any) => void;
-    updateDesignerStore?: (data?: any) => void;
-    addItem?: (data?: any) => void;
-    delItem?: (data?: any) => void;
-    updateLayout?: (data?: any) => void;
-    updateActive?: (data?: any) => void;
-    updateElemConfig?: (data?: any) => void;
-    updateBaseStyle?: (data?: any) => void;
-}
-
-class Designer extends Component<LCDesignerProps | any> {
+class Designer extends Component<any> {
 
     constructor(props: any) {
         super(props);
-        //启动组件自动化扫描
-        const {doInit} = designerStarter;
-        doInit && doInit();
-        //初始化操作类型
-        this.initOperateType();
+        loadDesigner();
     }
 
     componentDidMount() {
-        //注册右键操作菜单事件
-        this.handleContextMenu();
-
-        eventManager.register('mousedown', (e: any) => {
-            const {setMouseDownTime} = lcRightMenuStore;
-            setMouseDownTime(Date.now());
-        });
-
-        eventManager.register('mouseup', (e: any) => {
-            const {setMouseUpTime} = lcRightMenuStore;
-            setMouseUpTime(Date.now());
-        });
-    }
-
-    handleContextMenu = () => {
-        //todo 在设计器加载时，异步注册设计器中所有设计到的操作事件
-        const {setPosition, updateVisible} = lcRightMenuStore;
+        const {setPosition, updateVisible} = contextMenuStore;
         const {setUnLockedId} = eventOperateStore;
         eventManager.register('click', (e: any) => {
-            const {visible, updateVisible} = lcRightMenuStore;
+            const {visible, updateVisible} = contextMenuStore;
             if (visible && e.button === 0) {
                 //这里添加异步处理的原因：必须要在操作菜单执行点击事件执行之后才能卸载dom元素，不然操作菜单的点击事件会失效。
                 setTimeout(() => {
@@ -72,7 +37,7 @@ class Designer extends Component<LCDesignerProps | any> {
         });
         eventManager.register('contextmenu', (event: any) => {
             event.preventDefault();
-            const {mouseDownTime, mouseUpTime} = lcRightMenuStore;
+            const {mouseDownTime, mouseUpTime} = contextMenuStore;
             let targetArr = ['lc-comp-item', 'moveable-area'];
             if (targetArr.some((item: string) => event.target.classList.contains(item)) && mouseUpTime - mouseDownTime < 200) {
                 updateVisible && updateVisible(true);
@@ -82,89 +47,29 @@ class Designer extends Component<LCDesignerProps | any> {
                 updateVisible && updateVisible(false);
             }
         });
-    }
-
-    componentWillUnmount() {
-        //清空状态
-        const {clearDesignerStore} = this.props;
-        clearDesignerStore && clearDesignerStore();
-    }
-
-    /**
-     * 初始化项目操作类型。新增 / 更新
-     */
-    initOperateType = () => {
-        const {action} = this.props.location.state;
-        switch (action) {
-            case 'create':
-                this.initCreateInfo();
-                break;
-            case 'edit':
-                this.initEditInfo();
-                break;
-        }
-    }
-
-    /**
-     * 初始化以创建方式打开时项目信息
-     */
-    initCreateInfo = () => {
-        const {doInit} = lcDesignerContentStore;
-        const {screenName, screenWidth, screenHeight} = this.props.location.state;
-        doInit({
-            canvasConfig: {
-                width: parseInt(screenWidth),
-                height: parseInt(screenHeight),
-            },
-            projectConfig: {
-                name: screenName
-            },
-        })
-    }
-
-    /**
-     * 初始化以更新方式打开时项目信息
-     */
-    initEditInfo = () => {
-        const {doInit} = lcDesignerContentStore;
-        const {id} = this.props.location.state;
-        getProjectById(id).then((store: any) => {
-            if (store) {
-                doInit({
-                    id: store.id,
-                    canvasConfig: store.canvasConfig,
-                    activeElem: store.activeElem,
-                    projectConfig: store.projectConfig,
-                    elemConfigs: store.elemConfigs,
-                    layoutConfigs: store.layoutConfigs,
-                    statisticInfo: store.statisticInfo,
-                    layers: store.layers,
-                    themeConfig: store.theme,
-                    group: store.group,
-                    linkage: store.linkage,
-                    condition: store.condition,
-                    extendParams: store.extendParams,
-                })
-                const {setMinOrder, setMaxOrder} = eventOperateStore;
-                setMinOrder(store.extendParams['minOrder']);
-                setMaxOrder(store.extendParams['maxOrder']);
-            }
-        })
+        eventManager.register('mousedown', () => {
+            const {setMouseDownTime} = contextMenuStore;
+            setMouseDownTime(Date.now());
+        });
+        eventManager.register('mouseup', () => {
+            const {setMouseUpTime} = contextMenuStore;
+            setMouseUpTime(Date.now());
+        });
     }
 
     render() {
         return (
             <LcStructure>
                 <LcHeader>
-                    <DesignerHeader {...this.props}/>
+                    <DesignerHeader/>
                 </LcHeader>
                 <LcBody>
                     <LcLeft><DesignerLeft/></LcLeft>
-                    <LcContent><LCLayoutContent/></LcContent>
-                    <LcRight><Right {...this.props}/></LcRight>
+                    <LcContent><DesignerCanvas/></LcContent>
+                    <LcRight><Right/></LcRight>
                 </LcBody>
                 <LcFoot>
-                    <DesignerFooter {...this.props}/>
+                    <DesignerFooter/>
                 </LcFoot>
             </LcStructure>
         );

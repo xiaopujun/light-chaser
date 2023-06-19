@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
+import React, {Component, Suspense} from 'react';
 import {LineOutlined} from "@ant-design/icons";
 import rightStore from "./RightStore";
 import designerStarter from "../DesignerStarter";
 import {observer} from "mobx-react";
 import './ConfigContent.less';
+import Loading from "../../lib/loading/Loading";
 
 class ConfigContent extends Component {
 
@@ -13,7 +14,12 @@ class ConfigContent extends Component {
         let abstractConfigObj: any = customComponentInfoMap[activeElem.type + ''];
         let menuToConfigComp = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp = menuToConfigComp[activeMenu];
-        return <ConfigComp config={activeElemConfig[activeMenu]} updateConfig={updateConfig}/>;
+        return (
+            <Suspense fallback={<Loading/>}>
+                <ConfigComp config={activeElemConfig[activeMenu]} updateConfig={updateConfig}/>
+            </Suspense>
+        )
+
     }
 
     onClose = () => {
@@ -22,7 +28,7 @@ class ConfigContent extends Component {
     }
 
     render() {
-        const {contentVisible, activeMenu, menus} = rightStore;
+        const {activeMenu, menus} = rightStore;
         let activeMenuName = '';
         for (let i = 0; i < menus.length; i++) {
             if (menus[i].key === activeMenu) {
@@ -31,19 +37,16 @@ class ConfigContent extends Component {
             }
         }
         return (
-            <>
-                {contentVisible ?
-                    <div className={'lc-config-panel'}>
-                        <div className={'lc-panel-top'}>
-                            <div className={'panel-title'}>
-                                <span>{activeMenuName}</span></div>
-                            <div className={'panel-operate'} onClick={this.onClose}><LineOutlined/></div>
-                        </div>
-                        <div className={'lc-panel-content'}>
-                            {this.buildConfigContent()}
-                        </div>
-                    </div> : <></>}
-            </>
+            <div className={'lc-config-panel'}>
+                <div className={'lc-panel-top'}>
+                    <div className={'panel-title'}>
+                        <span>{activeMenuName}</span></div>
+                    <div className={'panel-operate'} onClick={this.onClose}><LineOutlined/></div>
+                </div>
+                <div className={'lc-panel-content'}>
+                    {this.buildConfigContent()}
+                </div>
+            </div>
         );
     }
 }

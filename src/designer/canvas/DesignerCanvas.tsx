@@ -1,22 +1,24 @@
-import React, {PureComponent} from 'react';
+import React, {PureComponent, Suspense} from 'react';
 import DragScaleProvider from "../operate-provider/DragScaleProvider";
 import {observer} from "mobx-react";
 import designerStore, {DesignerStore} from "../store/DesignerStore";
+import DesignerBackground from "../../comps/lc/background/DesignerBackground";
 import designerStarter from "../DesignerStarter";
 import rightStore from "../right/RightStore";
-import {MovableItemType} from "../../lib/lc-movable/types";
-import DesignerBackground from "../../comps/lc/background/DesignerBackground";
 import DesignerRuler from "../../lib/lc-ruler/DesignerRuler";
 import DesignerContainer from "../operate-provider/DesignerContainer";
 import GroupMovable from "../../lib/lc-movable/GroupMovable";
 import GroupSelectable from "../../lib/lc-movable/GroupSelectable";
 import LcRightMenu from "../operate-provider/right-click-menu/ContextMenu";
+import {MovableItemType} from "../../lib/lc-movable/types";
+import Loading from "../../lib/loading/Loading";
 
 /**
  * 设计器画布
  */
 class DesignerCanvas extends PureComponent<DesignerStore | any> {
 
+    rgl: any = null;
     lcbg: any = null;
 
     updateActive = (e: any) => {
@@ -36,8 +38,8 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
      * 元素生成方法
      */
     generateElement = () => {
-        const {customComponentInfoMap}: any = designerStarter;
         const {layoutConfigs, elemConfigs, projectConfig} = designerStore!;
+        const {customComponentInfoMap}: any = designerStarter;
         const sortLayout = Object.values(layoutConfigs).sort((a: any, b: any) => a.order - b.order);
         return sortLayout.map((item: MovableItemType) => {
             let Chart: any = customComponentInfoMap[item.type + ''].getComponent();
@@ -54,7 +56,9 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                             transform: `translate(${position[0]}px, ${position[1]}px)`,
                             position: 'absolute',
                         }} className={'lc-comp-item'}>
-                <Chart config={compConfig} realTimeRefresh={projectConfig.realTimeRefresh}/>
+                <Suspense fallback={<Loading/>}>
+                    <Chart config={compConfig} realTimeRefresh={projectConfig.realTimeRefresh}/>
+                </Suspense>
             </div>
         });
     }
