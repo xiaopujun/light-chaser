@@ -8,7 +8,7 @@ import {SaveType} from "../../DesignerType";
 import {localSave} from "../../header/items/save/SaveHdItem";
 
 
-const selectAll = () => {
+export const selectAll = () => {
     let comps = document.getElementsByClassName('lc-comp-item');
     let compIds: string[] = [];
     let compArr: any[] = [];
@@ -23,7 +23,7 @@ const selectAll = () => {
     setTargetIds(compIds);
 }
 
-const doCopy = () => {
+export const doCopy = () => {
     const {targetIds, setTargetIds, setTargets} = eventOperateStore;
     const {copyItem} = designerStore;
     let newIds = copyItem(targetIds);
@@ -39,7 +39,7 @@ const doCopy = () => {
     }, 10);
 }
 
-const doLock = () => {
+export const doLock = () => {
     const {targetIds, setTargets} = eventOperateStore;
     const {updateLayout, layoutConfigs} = designerStore;
     let toBeUpdate = [];
@@ -52,7 +52,7 @@ const doLock = () => {
     setTargets([]);
 }
 
-const toTop = () => {
+export const toTop = () => {
     let {maxOrder, setMaxOrder, targetIds, setTargetIds} = eventOperateStore;
     const {updateLayout, layoutConfigs} = designerStore;
     let toBeUpdate: MovableItemType[] = [];
@@ -65,7 +65,7 @@ const toTop = () => {
     updateLayout(toBeUpdate);
 }
 
-const toBottom = () => {
+export const toBottom = () => {
     let {minOrder, setMinOrder, targetIds, setTargetIds} = eventOperateStore;
     const {updateLayout, layoutConfigs} = designerStore;
     let toBeUpdate: MovableItemType[] = [];
@@ -78,7 +78,7 @@ const toBottom = () => {
     updateLayout(toBeUpdate);
 }
 
-const doDelete = () => {
+export const doDelete = () => {
     const {targetIds, setTargetIds, setTargets} = eventOperateStore;
     const {updateActive} = designerStore;
     const {setContentVisible} = rightStore;
@@ -92,13 +92,20 @@ const doDelete = () => {
     setTargets([])
 }
 
-const doSave = () => {
+export const doSave = () => {
     let {projectConfig: {saveType}} = designerStore;
     if (saveType === SaveType.LOCAL) {
         localSave();
     } else if (saveType === SaveType.SERVER) {
         alert("server save");
     }
+}
+
+export const doUnLock = () => {
+    const {unLockedId} = eventOperateStore;
+    const {updateLayout, layoutConfigs} = designerStore;
+    let item = layoutConfigs[unLockedId];
+    updateLayout([{...item, locked: false}])
 }
 
 export const operateEventMapping: HandlerMapping = {
