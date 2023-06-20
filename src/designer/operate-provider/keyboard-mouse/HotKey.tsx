@@ -17,6 +17,8 @@ interface HotKeyProps {
     handlerMapping: HandlerMapping;
 }
 
+const shieldKeyList = ['control + s', 'alt']
+
 class HotKey extends Component<HotKeyProps> {
 
     handlerMapping: HandlerMapping = {}
@@ -46,7 +48,7 @@ class HotKey extends Component<HotKeyProps> {
         if (!this.currHotKey.some(item => item === key))
             this.currHotKey.push(key);
         let hotKey = this.currHotKey.join(' + ');
-        if (hotKey === 'alt' || hotKey === 'control + s' || hotKey === 'control + tab')
+        if (shieldKeyList.some(item => item === hotKey))
             e.preventDefault();
         console.log(hotKey);
         this.doHandler(e, hotKey);
@@ -74,7 +76,7 @@ class HotKey extends Component<HotKeyProps> {
     /**
      * 失去焦点时清空当前热键（一般是切换屏幕）
      */
-    onBlur = (e: any) => {
+    onBlur = () => {
         this.currHotKey = [];
         this.existHandlerKey = '';
     }
