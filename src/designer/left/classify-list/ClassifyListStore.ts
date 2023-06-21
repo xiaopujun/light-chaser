@@ -28,7 +28,7 @@ const getClassifyItemInfo = () => {
         {
             icon: icon_points,
             name: "基础",
-            classify: ClassifyEnum.ALL,
+            classify: ClassifyEnum.BASE,
         },
         {
             icon: icon_optimize,
