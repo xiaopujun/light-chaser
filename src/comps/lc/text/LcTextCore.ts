@@ -45,23 +45,21 @@ class LcTextCore extends AbstractCustomComponentDefinition {
             },
             style: {
                 baseStyle: {
-                    padding: "10px",
+                    padding: "0px",
                     backgroundColor: "#0f273db5",
                     border: "2px solid #00deffff",
                     borderRadius: "3px"
                 },
-                chartStyle: {}
+                chartStyle: {
+                    fontSize: 40,
+                    fontWeight: 500,
+                    color: "#ffffff",
+                }
             },
             data: {
-                dataSource: 'static',
-                staticData: {
-                    data: "基础文本"
-                },
+                content: '文本',
             },
             animation: {},
-            theme: {
-                themeId: '',
-            },
         };
     }
 
@@ -70,7 +68,7 @@ class LcTextCore extends AbstractCustomComponentDefinition {
     }
 
     getMenuList(): Array<MenuInfo> {
-        return getDefaultMenuList();
+        return getDefaultMenuList().filter((item: MenuInfo) => item.key !== 'theme');
     }
 
     getMenuToConfigContentMap(): { [p: string]: any } {
@@ -79,7 +77,6 @@ class LcTextCore extends AbstractCustomComponentDefinition {
             'style': LcTextStyleConfig,
             'data': LcTextDataConfig,
             'animation': AnimationConfig,
-            'theme': ThemeConfig
         };
     }
 

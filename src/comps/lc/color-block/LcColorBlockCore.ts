@@ -67,7 +67,7 @@ class LcColorBlockCore extends AbstractCustomComponentDefinition {
     }
 
     getMenuList(): Array<MenuInfo> {
-        return getDefaultMenuList().filter((item: MenuInfo) => item.name !== '数据');
+        return getDefaultMenuList().filter((item: MenuInfo) => (item.name !== '数据' && item.name !== '主题'));
     }
 
     getMenuToConfigContentMap(): { [p: string]: any } {
@@ -75,7 +75,6 @@ class LcColorBlockCore extends AbstractCustomComponentDefinition {
             'info': BaseInfo,
             'style': LcColorBlockConfig,
             'animation': AnimationConfig,
-            'theme': ThemeConfig
         };
     }
 

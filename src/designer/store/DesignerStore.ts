@@ -342,11 +342,9 @@ class DesignerStore implements DesignerType, AbstractBaseStore {
      * 更新图表组件配置
      */
     updateElemConfig = (data: any) => {
-        console.log(toJS(data))
         let activeConfig: ElemConfig | any = this.elemConfigs[this.activeElem?.id + ''];
         if (activeConfig)
             this.elemConfigs[this.activeElem?.id + ''] = {...merge(activeConfig, data)};
-        console.log(toJS(activeConfig))
         const {setActiveElemConfig} = rightStore;
         setActiveElemConfig(this.elemConfigs[this.activeElem?.id + '']);
     }

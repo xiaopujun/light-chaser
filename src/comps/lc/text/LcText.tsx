@@ -5,20 +5,17 @@ class LcText extends Component<any> {
     render() {
         const {config} = this.props;
         if (!config) return null;
-        let {style} = config;
+        let {style: {baseStyle, chartStyle}, data} = config;
+        let _chartStyle = {
+            ...{
+                height: '100%', display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-around',
+            }, ...chartStyle
+        }
         return (
-            <CompBgContainer style={style?.baseStyle}>
-                <div style={{
-                    color: "white",
-                    textAlign: 'center',
-                    height: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-around',
-                    fontSize: 80
-                }}>
-                    文本
-                </div>
+            <CompBgContainer style={baseStyle}>
+                <div style={_chartStyle}>{data?.content}</div>
             </CompBgContainer>
         );
     }
