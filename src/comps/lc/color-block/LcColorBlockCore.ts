@@ -5,7 +5,6 @@ import LcColorBlock from "./LcColorBlock";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import BaseInfo from "../../../lib/common-fragment/base-info/BaseInfo";
 import AnimationConfig from "../../../lib/common-fragment/animation-config/AnimationConfig";
-import ThemeConfig from "../../../lib/common-fragment/theme-config/ThemeConfig";
 import {LcColorBlockConfig} from "./LcColorBlockConfig";
 import ColorBlockImg from './color-block.png';
 
@@ -62,9 +61,6 @@ class LcColorBlockCore extends AbstractCustomComponentDefinition {
         };
     }
 
-    getKey(): string {
-        return "LcColorBlock";
-    }
 
     getMenuList(): Array<MenuInfo> {
         return getDefaultMenuList().filter((item: MenuInfo) => (item.name !== '数据' && item.name !== '主题'));

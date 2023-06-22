@@ -10,11 +10,6 @@ import {BaseInfoType, ElemConfig, ThemeItemType} from "../../designer/DesignerTy
 export abstract class AbstractCustomComponentDefinition {
 
     /**
-     * 返回组件标识。不同的组件之间标识不能相同。
-     */
-    abstract getKey(): string;
-
-    /**
      * 返回组件基础信息，用于在组件列表中展示
      */
     abstract getBaseInfo(): BaseInfoType | null;
@@ -49,6 +44,6 @@ export abstract class AbstractCustomComponentDefinition {
      * @param newTheme 新主题
      * @param sourceStyle 组件原样式
      */
-    abstract updateTheme: (newTheme: ThemeItemType, sourceStyle: any) => any;
+    abstract updateTheme(newTheme: ThemeItemType, sourceStyle: any): void;
 }
 

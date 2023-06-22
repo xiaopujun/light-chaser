@@ -55,6 +55,8 @@ class EventOperateStore {
      */
     minOrder = 0;
 
+    pointerTarget: any = null;
+
     setMaxOrder = (order: number) => this.maxOrder = order;
 
     setMinOrder = (order: number) => this.minOrder = order;
@@ -72,6 +74,9 @@ class EventOperateStore {
     setTargets = (targets: any[]) => this.targets = targets;
 
     setTargetIds = (targetIds: string[]) => this.targetIds = targetIds;
+
+    setPointerTarget = (target: any) => this.pointerTarget = target;
+
 }
 
 const eventOperateStore = new EventOperateStore();

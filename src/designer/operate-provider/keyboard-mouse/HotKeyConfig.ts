@@ -1,4 +1,4 @@
-import {HandlerMapping, TriggerType} from "./HotKey";
+import {TriggerType} from "./HotKey";
 import {doScale} from "../scale/Scaler";
 import eventOperateStore from "../EventOperateStore";
 import designerStore from "../../store/DesignerStore";
@@ -108,31 +108,39 @@ export const doUnLock = () => {
     updateLayout([{...item, locked: false}])
 }
 
-export const operateEventMapping: HandlerMapping = {
-    'alt + wheel': {
-        handler: doScale,
-        triggerType: TriggerType.COILED
-    },
-    'control + a': {
-        handler: selectAll,
-    },
-    'control + v': {
-        handler: doCopy,
-    },
-    'control + l': {
-        handler: doLock,
-    },
-    'control + arrowup': {
-        handler: toTop,
-    },
-    'control + arrowdown': {
-        handler: toBottom,
-    },
-    'control + s': {
-        handler: doSave,
-    },
-    'delete': {
-        handler: doDelete,
+export const getOperateEventMapping: any = (target: any) => {
+    return {
+        'alt + wheel': {
+            handler: doScale,
+            triggerType: TriggerType.COILED,
+            target
+        },
+        'control + a': {
+            handler: selectAll,
+            target
+        },
+        'control + v': {
+            handler: doCopy,
+            target
+        },
+        'control + l': {
+            handler: doLock,
+            target
+        },
+        'control + arrowup': {
+            handler: toTop,
+            target
+        },
+        'control + arrowdown': {
+            handler: toBottom,
+            target
+        },
+        'control + s': {
+            handler: doSave,
+        },
+        'delete': {
+            handler: doDelete,
+            target
+        }
     }
-
 }

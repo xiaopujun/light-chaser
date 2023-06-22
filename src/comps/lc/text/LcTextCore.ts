@@ -6,7 +6,6 @@ import React from "react";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import BaseInfo from "../../../lib/common-fragment/base-info/BaseInfo";
 import AnimationConfig from "../../../lib/common-fragment/animation-config/AnimationConfig";
-import ThemeConfig from "../../../lib/common-fragment/theme-config/ThemeConfig";
 import {LcTextDataConfig, LcTextStyleConfig} from "./LcTextConfig";
 
 const LcText = React.lazy(() => import('./LcText'));
@@ -61,10 +60,6 @@ class LcTextCore extends AbstractCustomComponentDefinition {
             },
             animation: {},
         };
-    }
-
-    getKey(): string {
-        return "LcText";
     }
 
     getMenuList(): Array<MenuInfo> {

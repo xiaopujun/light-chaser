@@ -48,25 +48,21 @@ class Designer extends Component<any> {
                 updateVisible && updateVisible(false);
             }
         });
-        eventManager.register('mousedown', () => {
-            const {setMouseDownTime} = contextMenuStore;
-            setMouseDownTime(Date.now());
-        });
-        eventManager.register('mouseup', () => {
-            const {setMouseUpTime} = contextMenuStore;
-            setMouseUpTime(Date.now());
-        });
         eventManager.register('pointerdown', (e: PointerEvent) => {
             if (e.button === 0)
                 KMMap.leftClick = true;
             else if (e.button === 2)
                 KMMap.rightClick = true;
+            const {setMouseDownTime} = contextMenuStore;
+            setMouseDownTime(Date.now());
         });
         eventManager.register('pointerup', (e: PointerEvent) => {
             if (e.button === 0)
                 KMMap.leftClick = false;
             else if (e.button === 2)
                 KMMap.rightClick = false;
+            const {setMouseUpTime} = contextMenuStore;
+            setMouseUpTime(Date.now());
         });
     }
 

@@ -1,46 +1,46 @@
 import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
 import {BaseInfoType, ElemConfig} from "../../../designer/DesignerType";
 import {MenuInfo} from "../../../designer/right/MenuType";
-import barImg from "./bar.png";
+import columnImg from "./column.png";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import React from "react";
 import {updateTheme} from "../../common-util/ThemeUtil";
 
-const AntdBaseBarConfigStyle = React.lazy(() => import("./AntdBaseBarConfigStyle"));
+const AntdBaseColumnConfigStyle = React.lazy(() => import("./AntdBaseColumnConfigStyle"));
 const AnimationConfig = React.lazy(() => import("../../../lib/common-fragment/animation-config/AnimationConfig"));
 const ThemeConfig = React.lazy(() => import("../../../lib/common-fragment/theme-config/ThemeConfig"));
 const BaseInfo = React.lazy(() => import("../../../lib/common-fragment/base-info/BaseInfo"));
-const AntdBaseBar = React.lazy(() => import("./AntdBaseBar"));
+const AntdBaseColumn = React.lazy(() => import("./AntdBaseColumn"));
 const DataConfig = React.lazy(() => import("../../../lib/common-fragment/data-config/DataConfig"));
 
-class AntdBaseBarCore extends AbstractCustomComponentDefinition {
+class AntdBaseColumnCore extends AbstractCustomComponentDefinition {
 
     getBaseInfo(): BaseInfoType {
         return {
-            name: "基础条形图",
-            key: 'AntdBaseBar',
-            typeName: "条形图",
-            typeKey: "bar",
+            name: "基础柱状图",
+            key: 'AntdBaseColumn',
+            typeName: "柱状图",
+            typeKey: "column",
             sourceName: "Antd",
             sourceKey: "antd",
         };
     }
 
     getChartImg(): any {
-        return barImg;
+        return columnImg;
     }
 
     getComponent(): React.Component | React.FC | any {
-        return AntdBaseBar;
+        return AntdBaseColumn;
     }
 
     getInitConfig(): ElemConfig | Object {
         return {
             info: {
                 id: '',
-                name: '基础条形图',
-                type: 'AntdBaseBar',
-                des: '基于antd实现的基础条形图',
+                name: '基础柱状图',
+                type: 'AntdBaseColumn',
+                des: '基于antd实现的基础柱状图',
             },
             style: {
                 baseStyle: {
@@ -53,7 +53,7 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
                     data: [
                         {
                             name: "1951 年",
-                            value: 48
+                            value: 45
                         },
                         {
                             name: "1952 年",
@@ -61,11 +61,11 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
                         },
                         {
                             name: "1956 年",
-                            value: 22
+                            value: 61
                         }
                     ],
-                    xField: "value",
-                    yField: "name",
+                    xField: "name",
+                    yField: "value",
                     seriesField: "name",
                     xAxis: {
                         grid: {
@@ -104,14 +104,8 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
                             count: 5,
                             length: 3
                         },
-                        position: "right",
-                        title: {
-                            text: "标题",
-                            style: {
-                                fill: "#00fff2ff"
-                            },
-                            position: "end"
-                        }
+                        position: "bottom",
+                        title: null
                     },
                     yAxis: {
                         grid: {
@@ -150,19 +144,13 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
                             count: 5,
                             length: 2
                         },
-                        position: "bottom",
-                        title: {
-                            text: "y轴",
-                            style: {
-                                fill: "#00ddffff"
-                            },
-                            position: "start"
-                        }
+                        position: "left",
+                        title: null
                     },
-                    color: "#00ffea",
+                    color: "#00ffe6",
                     legend: {
-                        position: "right-top",
-                        layout: "vertical",
+                        position: "top",
+                        layout: "horizontal",
                         itemName: {
                             style: {
                                 fill: "#00f0ffff",
@@ -170,7 +158,7 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
                             }
                         }
                     },
-                    maxBarWidth: 14,
+                    maxColumnWidth: 14,
                 }
             },
             data: {
@@ -206,7 +194,7 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
     getMenuToConfigContentMap(): { [key: string]: React.Component | React.FC | any } {
         return {
             'info': BaseInfo,
-            'style': AntdBaseBarConfigStyle,
+            'style': AntdBaseColumnConfigStyle,
             'data': DataConfig,
             'animation': AnimationConfig,
             'theme': ThemeConfig
@@ -216,4 +204,4 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
     updateTheme = updateTheme;
 }
 
-export default AntdBaseBarCore;
+export default AntdBaseColumnCore;

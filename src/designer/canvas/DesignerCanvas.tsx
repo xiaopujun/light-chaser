@@ -13,15 +13,22 @@ import LcRightMenu from "../operate-provider/right-click-menu/ContextMenu";
 import {MovableItemType} from "../../lib/lc-movable/types";
 import Loading from "../../lib/loading/Loading";
 import HotKey from "../operate-provider/keyboard-mouse/HotKey";
-import {operateEventMapping} from "../operate-provider/keyboard-mouse/HotKeyConfig";
+import {getOperateEventMapping} from "../operate-provider/keyboard-mouse/HotKeyConfig";
 
 /**
  * 设计器画布
  */
 class DesignerCanvas extends PureComponent<DesignerStore | any> {
 
-    rgl: any = null;
     lcbg: any = null;
+
+    state = {
+        designerRef: null
+    }
+
+    componentDidMount() {
+        this.setState({designerRef: document.querySelector('.lc-ruler-content')});
+    }
 
     updateActive = (e: any) => {
         //todo 优化,事件处理时目前元素参数可能会存在偏差
@@ -76,10 +83,10 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
     }
 
     render() {
+        console.log('render DesignerCanvas')
         const {elemConfigs} = designerStore;
         return (
             <>
-                <HotKey handlerMapping={operateEventMapping}/>
                 <DesignerContainer>
                     <GroupSelectable>
                         <DesignerRuler offsetX={60} offsetY={50}>
@@ -96,6 +103,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                         </DesignerRuler>
                     </GroupSelectable>
                 </DesignerContainer>
+                {this.state.designerRef && <HotKey handlerMapping={getOperateEventMapping(this.state.designerRef)}/>}
             </>
         );
     }

@@ -38,13 +38,16 @@ class DesignerStarter {
 
     //扫描自定义组件
     scannerCustomComponents = () => {
-        const compCtx = require.context('../comps', true, /\.(tsx|ts)$/);
+        const compCtx = require.context('../comps', true, /\.(ts)$/);
         compCtx.keys().forEach(key => {
             const Clazz = compCtx(key).default;
             if (Clazz && AbstractCustomComponentDefinition.isPrototypeOf(Clazz)) {
                 let customComponentInfo = new Clazz();
-                this.customComponentInfoMap[customComponentInfo.getKey()] = customComponentInfo;
-                this.themeRefresher[customComponentInfo.getKey()] = customComponentInfo.updateTheme;
+                let compKey = customComponentInfo.getBaseInfo().key;
+                if (compKey) {
+                    this.customComponentInfoMap[compKey] = customComponentInfo;
+                    this.themeRefresher[compKey] = customComponentInfo.updateTheme;
+                }
             }
         });
     }

@@ -19,7 +19,7 @@ class AntdBaseBarDataConfig extends Component<ConfigType> {
     render() {
         const {config} = this.props;
         return (
-            <DataConfig config={config} onSave={this.onSave} verifyCallback={{}}/>
+            <DataConfig config={config} updateConfig={this.onSave}/>
         );
     }
 }

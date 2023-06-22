@@ -2,6 +2,7 @@ import {KMMap} from "../keyboard-mouse/KeyboardMouse";
 import coordinate from "../coordinate/Coordinate";
 import eventManager from "../core/EventManager";
 import scaleCore from "../scale/ScaleCore";
+import eventOperateStore from "../EventOperateStore";
 
 /**
  * 缩放器
@@ -31,6 +32,8 @@ class Dragger {
                 this.dom.releasePointerCapture(e.pointerId);
         });
         eventManager.register('pointermove', (e: any) => {
+            const {setPointerTarget} = eventOperateStore;
+            setPointerTarget(e.target)
             if (KMMap.rightClick) {
                 const {scale} = scaleCore;
                 const current1 = {x: e.clientX, y: e.clientY};

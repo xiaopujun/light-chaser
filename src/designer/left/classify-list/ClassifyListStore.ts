@@ -43,7 +43,7 @@ const getClassifyItemInfo = () => {
         {
             icon: icon_column,
             name: "柱状图",
-            classify: ClassifyEnum.BAR,
+            classify: ClassifyEnum.COLUMN,
         },
         {
             icon: icon_area,

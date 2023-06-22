@@ -5,24 +5,18 @@ import UnderLineInput from "../../lc-input/UnderLineInput";
 import ConfigItemTB from "../../config-item/ConfigItemTB";
 import LcButton from "../../lc-button/LcButton";
 import Select from "../../lc-select/Select";
-import {DataConfigType, DataConfigVerifyCallback} from "../../../designer/DesignerType";
 import './DataConfig.less';
 import {sendHttpRequest} from "../../../utils/HttpUtil";
 import {stringToJsObj} from "../../../utils/ObjectUtil";
+import {ConfigType} from "../../../designer/right/ConfigType";
 
-interface DataConfigProps {
-    config: DataConfigType,
-    onSave: Function,
-    verifyCallback: DataConfigVerifyCallback,
-}
-
-class DataConfig extends Component<DataConfigProps> {
+class DataConfig extends Component<ConfigType> {
 
     state = {
         dataSource: 'static',
     }
 
-    constructor(props: DataConfigProps) {
+    constructor(props: ConfigType) {
         super(props);
         const {config} = props;
         this.state = {
@@ -37,8 +31,15 @@ class DataConfig extends Component<DataConfigProps> {
     }
 
     doSave = (dataConfig: any) => {
-        const {onSave} = this.props;
-        onSave && onSave({dataSource: this.state.dataSource, ...dataConfig});
+        const {updateConfig} = this.props;
+        let config: any = {data: dataConfig};
+        if ('staticData' in dataConfig)
+            config['style'] = {
+                chartStyle: {
+                    data: dataConfig.staticData.data
+                }
+            }
+        updateConfig && updateConfig(config);
     }
 
     render() {
@@ -55,15 +56,15 @@ class DataConfig extends Component<DataConfigProps> {
                     ]}/>
                 </ConfigItem>
                 {dataSource === 'static' &&
-                <StaticDataConfig config={config} onSave={this.doSave} verifyCallback={{}}/>}
+                <StaticDataConfig config={config} updateConfig={this.doSave}/>}
                 {dataSource === 'api' &&
-                <ApiDataConfig config={config} onSave={this.doSave} verifyCallback={{}}/>}
+                <ApiDataConfig config={config} updateConfig={this.doSave}/>}
             </div>
         );
     }
 }
 
-const ApiDataConfig: React.FC<DataConfigProps> = ({config, onSave}) => {
+const ApiDataConfig: React.FC<ConfigType> = ({config, updateConfig}) => {
     console.log('ApiDataConfig')
     const {apiData} = config;
     const urlRef = useRef(apiData?.url || '');
@@ -90,7 +91,7 @@ const ApiDataConfig: React.FC<DataConfigProps> = ({config, onSave}) => {
         if (!header) alert('请求头不符合json格式');
         let params = stringToJsObj(paramsRef.current);
         if (!params) alert('请求参数不符合json格式');
-        onSave({
+        updateConfig && updateConfig({
             apiData: {
                 url: urlRef.current,
                 method: methodRef.current,
@@ -147,23 +148,16 @@ const ApiDataConfig: React.FC<DataConfigProps> = ({config, onSave}) => {
     );
 }
 
-const StaticDataConfig: React.FC<DataConfigProps> = ({config, onSave, verifyCallback}) => {
+const StaticDataConfig: React.FC<ConfigType> = ({config, updateConfig}) => {
 
     let dataCode = JSON.stringify(config.staticData?.data)
         .replace(/"/g, '\''); // 将双引号替换为单引号
 
     const flashData = () => {
         try {
-            //校验数据合法性
-            if (verifyCallback && verifyCallback.staticDataVerify) {
-                let verifyRes = verifyCallback.staticDataVerify(dataCode);
-                if (verifyRes !== true) {
-                    console.error('数据校验失败', verifyRes);
-                    return;
-                }
-            }
             //todo 考虑下安全问题如何处理
-            onSave({staticData: {data: JSON.parse(dataCode)}});
+            console.log(dataCode)
+            updateConfig && updateConfig({staticData: {data: JSON.parse(dataCode)}});
         } catch (e: any) {
             console.error('代码解析异常', e);
         }

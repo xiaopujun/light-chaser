@@ -1,4 +1,5 @@
 import {Component} from 'react';
+import eventOperateStore from "../EventOperateStore";
 
 export enum TriggerType {
     SINGLE,
@@ -34,10 +35,10 @@ class HotKey extends Component<HotKeyProps> {
         const {handler, target, triggerType = TriggerType.SINGLE} = this.handlerMapping[hotKey] || {};
         if (handler) {
             if ((triggerType === TriggerType.SINGLE && this.existHandlerKey !== hotKey) || triggerType === TriggerType.COILED) {
-                if (target && target.contains(e.target))
-                    handler(e);
-                else
-                    handler(e);
+                const {pointerTarget} = eventOperateStore;
+                if (target && !target.contains(pointerTarget))
+                    return;
+                handler(e);
                 this.existHandlerKey = hotKey;
             }
         }
@@ -50,7 +51,6 @@ class HotKey extends Component<HotKeyProps> {
         let hotKey = this.currHotKey.join(' + ');
         if (shieldKeyList.some(item => item === hotKey))
             e.preventDefault();
-        console.log(hotKey);
         this.doHandler(e, hotKey);
     };
 
@@ -66,10 +66,9 @@ class HotKey extends Component<HotKeyProps> {
         let hotKey = this.currHotKey.join(' + ') + ' + wheel';
         const {handler, target} = this.handlerMapping[hotKey] || {};
         if (handler) {
-            if (target && target.contains(e.target))
-                handler(e);
-            else
-                handler(e);
+            if (target && !target.contains(e.target))
+                return;
+            handler(e);
         }
     }
 
