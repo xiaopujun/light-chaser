@@ -25,6 +25,8 @@ class DataConfig extends Component<ConfigType> {
     }
 
     dataSourcesChange = (value: any) => {
+        const {updateConfig} = this.props;
+        updateConfig && updateConfig({data: {dataSource: value}});
         this.setState({
             dataSource: value,
         });
@@ -65,7 +67,6 @@ class DataConfig extends Component<ConfigType> {
 }
 
 const ApiDataConfig: React.FC<ConfigType> = ({config, updateConfig}) => {
-    console.log('ApiDataConfig')
     const {apiData} = config;
     const urlRef = useRef(apiData?.url || '');
     const methodRef = useRef(apiData?.method || '');
@@ -75,6 +76,8 @@ const ApiDataConfig: React.FC<ConfigType> = ({config, updateConfig}) => {
     const [testResult, setTestResult] = useState<any>('');
 
     const testApi = () => {
+        if (urlRef.current === '') alert('接口地址不能为空');
+        if (methodRef.current === '') alert('请求方式不能为空');
         let header = stringToJsObj(headerRef.current);
         if (!header) alert('请求头不符合json格式');
         let params = stringToJsObj(paramsRef.current);
@@ -87,6 +90,15 @@ const ApiDataConfig: React.FC<ConfigType> = ({config, updateConfig}) => {
     }
 
     const doSave = () => {
+        if (urlRef.current === '') {
+            alert('接口地址不能为空');
+            return;
+        }
+        if (methodRef.current === '') {
+            alert('请求方式不能为空');
+            return;
+        }
+        ;
         let header = stringToJsObj(headerRef.current);
         if (!header) alert('请求头不符合json格式');
         let params = stringToJsObj(paramsRef.current);
@@ -150,16 +162,14 @@ const ApiDataConfig: React.FC<ConfigType> = ({config, updateConfig}) => {
 
 const StaticDataConfig: React.FC<ConfigType> = ({config, updateConfig}) => {
 
-    let dataCode = JSON.stringify(config.staticData?.data)
-        .replace(/"/g, '\''); // 将双引号替换为单引号
+    let dataCode = JSON.stringify(config.staticData?.data);
 
     const flashData = () => {
         try {
-            //todo 考虑下安全问题如何处理
-            console.log(dataCode)
-            updateConfig && updateConfig({staticData: {data: JSON.parse(dataCode)}});
+            const data = dataCode.replace(/'/g, '"').replace(/\s/g, '');
+            updateConfig && updateConfig({staticData: {data: JSON.parse(data)}});
         } catch (e: any) {
-            console.error('代码解析异常', e);
+            console.error('代码解析异常', e, dataCode);
         }
     }
 

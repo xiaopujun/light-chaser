@@ -4,7 +4,7 @@ import {MenuInfo} from "../../../designer/right/MenuType";
 import columnImg from "./column.png";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import React from "react";
-import {updateTheme} from "../../common-util/ThemeUtil";
+import {updateTheme} from "../../common-fragment/ThemeFragment";
 
 const AntdBaseColumnConfigStyle = React.lazy(() => import("./AntdBaseColumnConfigStyle"));
 const AnimationConfig = React.lazy(() => import("../../../lib/common-fragment/animation-config/AnimationConfig"));

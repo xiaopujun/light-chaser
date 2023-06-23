@@ -1,5 +1,6 @@
 import React from 'react';
 import HotKey, {TriggerType} from "../designer/operate-provider/keyboard-mouse/HotKey";
+import {nanoid} from "nanoid";
 
 class MyComponent extends React.Component {
 
@@ -10,6 +11,7 @@ class MyComponent extends React.Component {
     }
 
     render() {
+        console.log(nanoid(10))
         let handlerMapping = {
             'control + s': {
                 handler: () => {

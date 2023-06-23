@@ -1,35 +1,14 @@
 import React, {Component} from 'react';
-import Accordion from "../../../lib/lc-accordion/Accordion";
-import CfgItemBorder from "../../../lib/config-item/CfgItemBorder";
 import BaseStyleSet from "../../../lib/common-fragment/base-style/BaseStyleSet";
 import {ConfigType} from "../../../designer/right/ConfigType";
-import ConfigItem from "../../../lib/config-item/ConfigItem";
-import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
-import ConfigCard from "../../../lib/config-card/ConfigCard";
 import Legend from "../../../lib/common-fragment/legend/Legend";
 import AxisConfig from "../../../lib/common-fragment/axis/AxisConfig";
-import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
+import {AntdGraphics} from "../../common-fragment/AntdFragment";
 
 class AntdBaseBarConfigStyle extends Component<ConfigType> {
 
     state: any = {
         colors: []
-    }
-
-    barWidthChanged = (value: any) => {
-        const {updateConfig} = this.props;
-        updateConfig && updateConfig({
-            style: {
-                chartStyle: {
-                    maxBarWidth: value
-                }
-            }
-        })
-    }
-
-    fillColorChanged = (color: string) => {
-        const {updateConfig} = this.props;
-        updateConfig && updateConfig({style: {chartStyle: {color: color}}});
     }
 
     groupColorChanged = (value: any) => {
@@ -331,39 +310,21 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
 
     render() {
         const {updateConfig, config} = this.props;
-        const {chartStyle} = config;
+        // const {chartStyle} = config;
         return (
             <>
                 <BaseStyleSet config={config.baseStyle} updateConfig={updateConfig}/>
-                <div className={'elem-chart-config'}>
-                    <Accordion title={'图形'}>
-                        <ConfigCard title={'条状'}>
-                            <ConfigItem title={'宽度'}>
-                                <UnderLineInput type={'number'} min={1} onChange={this.barWidthChanged}
-                                                defaultValue={chartStyle.maxBarWidth}
-                                />
-                            </ConfigItem>
-                            <ConfigItem title={'颜色'}>
-                                <CfgItemBorder>
-                                    <BaseColorPicker onChange={this.fillColorChanged}
-                                                     defaultValue={chartStyle.color}
-                                                     style={{width: '100%', height: '15px', borderRadius: 2}}
-                                                     showText={true}/>
-                                </CfgItemBorder>
-                            </ConfigItem>
-                        </ConfigCard>
-                    </Accordion>
-                    <Legend config={this.calculateLegendConfig(config.chartStyle)}
-                            onChange={this.legendChanged}/>
-                    <AxisConfig title={'X轴'} config={this.parseAxisConfig(config.chartStyle.xAxis)}
-                                onChange={(key: string, data: any) => {
-                                    this.axisChanged(key, data, 'x');
-                                }}/>
-                    <AxisConfig title={'Y轴'} config={this.parseAxisConfig(config.chartStyle.yAxis)}
-                                onChange={(key: string, data: any) => {
-                                    this.axisChanged(key, data, 'y');
-                                }}/>
-                </div>
+                <AntdGraphics config={config.chartStyle} updateConfig={updateConfig}/>
+                <Legend config={this.calculateLegendConfig(config.chartStyle)}
+                        onChange={this.legendChanged}/>
+                <AxisConfig title={'X轴'} config={this.parseAxisConfig(config.chartStyle.xAxis)}
+                            onChange={(key: string, data: any) => {
+                                this.axisChanged(key, data, 'x');
+                            }}/>
+                <AxisConfig title={'Y轴'} config={this.parseAxisConfig(config.chartStyle.yAxis)}
+                            onChange={(key: string, data: any) => {
+                                this.axisChanged(key, data, 'y');
+                            }}/>
             </>
         );
     }

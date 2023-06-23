@@ -36,7 +36,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
         const {updateActive, activeElem, elemConfigs} = designerStore;
         if (elemId === activeElem?.id)
             return;
-        updateActive && updateActive({id: parseInt(elemId), type: dataset.type});
+        updateActive && updateActive({id: elemId, type: dataset.type});
         const {setActiveMenu} = rightStore;
         const elemConfig = elemConfigs[elemId];
         const newMenus = Object.keys(elemConfig);
@@ -83,7 +83,6 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
     }
 
     render() {
-        console.log('render DesignerCanvas')
         const {elemConfigs} = designerStore;
         return (
             <>

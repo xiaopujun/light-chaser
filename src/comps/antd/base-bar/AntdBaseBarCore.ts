@@ -4,7 +4,7 @@ import {MenuInfo} from "../../../designer/right/MenuType";
 import barImg from "./bar.png";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import React from "react";
-import {updateTheme} from "../../common-util/ThemeUtil";
+import {updateTheme} from "../../common-fragment/ThemeFragment";
 
 const AntdBaseBarConfigStyle = React.lazy(() => import("./AntdBaseBarConfigStyle"));
 const AnimationConfig = React.lazy(() => import("../../../lib/common-fragment/animation-config/AnimationConfig"));

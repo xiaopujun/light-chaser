@@ -7,7 +7,7 @@ import './CompList.less';
 import {observer} from "mobx-react";
 import designerStarter from "../../DesignerStarter";
 import designerStore from "../../store/DesignerStore";
-import {snowflake} from "../../../utils/IdGenerate";
+import {idGenerate} from "../../../utils/IdGenerate";
 import {MovableItemType} from "../../../lib/lc-movable/types";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 
@@ -27,7 +27,7 @@ class CompList extends Component {
             width: 384,
             height: 216,
             position: [0, 0],
-            id: snowflake.generateId() + '',
+            id: idGenerate.generateId() + '',
             locked: false,
             hide: false,
             order: ++maxOrder,

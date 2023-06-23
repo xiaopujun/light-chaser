@@ -20,7 +20,7 @@ import AbstractBaseStore from "../../framework/core/AbstractBaseStore";
 import rightStore from "../right/RightStore";
 import {merge} from "../../utils/ObjectUtil";
 import {MovableItemType} from "../../lib/lc-movable/types";
-import {snowflake} from "../../utils/IdGenerate";
+import {idGenerate} from "../../utils/IdGenerate";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 
 /**
@@ -281,8 +281,7 @@ class DesignerStore implements DesignerType, AbstractBaseStore {
     }
 
     getActiveElemConfig = (activeId: number | string) => {
-        if (activeId >= -1)
-            return this.elemConfigs[activeId + ""];
+        return this.elemConfigs[activeId + ""];
     }
 
     /**
@@ -391,7 +390,8 @@ class DesignerStore implements DesignerType, AbstractBaseStore {
                 const {[id]: layout} = this.layoutConfigs;
                 const newItem = cloneDeep(item);
                 const newLayout = cloneDeep(layout);
-                const newId = snowflake.generateId() + '';
+                const newId = idGenerate.generateId();
+                console.log(newId)
                 newIds.push(newId);
                 newItem.id = newId;
                 newLayout.id = newId;
