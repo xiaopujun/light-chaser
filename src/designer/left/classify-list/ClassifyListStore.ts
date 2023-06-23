@@ -46,18 +46,18 @@ const getClassifyItemInfo = () => {
             classify: ClassifyEnum.COLUMN,
         },
         {
+            icon: icon_line,
+            name: "折线图",
+            classify: ClassifyEnum.LINE,
+        },
+        {
             icon: icon_area,
             name: "面积图",
-            classify: ClassifyEnum.BAR,
+            classify: ClassifyEnum.AREA,
         },
         {
             icon: icon_pie,
             name: "饼图",
-            classify: ClassifyEnum.BAR,
-        },
-        {
-            icon: icon_line,
-            name: "折线图",
             classify: ClassifyEnum.BAR,
         },
         {

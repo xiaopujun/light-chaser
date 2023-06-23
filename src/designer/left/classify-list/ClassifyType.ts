@@ -3,4 +3,6 @@ export enum ClassifyEnum {
     BAR = 'bar',
     COLUMN = 'column',
     BASE = 'base',
+    LINE = 'line',
+    AREA = 'area',
 }
