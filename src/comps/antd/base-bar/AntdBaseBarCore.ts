@@ -1,12 +1,12 @@
+import React from "react";
 import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
 import {BaseInfoType, ElemConfig} from "../../../designer/DesignerType";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import barImg from "./bar.png";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import React from "react";
 import {updateTheme} from "../../common-fragment/ThemeFragment";
 
-const AntdBaseBarConfigStyle = React.lazy(() => import("./AntdBaseBarConfigStyle"));
+const AntdBaseBarStyleConfig = React.lazy(() => import('./AntdBaseBarConfig').then(module => ({default: module.AntdBaseBarStyleConfig})));
 const AnimationConfig = React.lazy(() => import("../../../lib/common-fragment/animation-config/AnimationConfig"));
 const ThemeConfig = React.lazy(() => import("../../../lib/common-fragment/theme-config/ThemeConfig"));
 const BaseInfo = React.lazy(() => import("../../../lib/common-fragment/base-info/BaseInfo"));
@@ -206,7 +206,7 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
     getMenuToConfigContentMap(): { [key: string]: React.Component | React.FC | any } {
         return {
             'info': BaseInfo,
-            'style': AntdBaseBarConfigStyle,
+            'style': AntdBaseBarStyleConfig,
             'data': DataConfig,
             'animation': AnimationConfig,
             'theme': ThemeConfig

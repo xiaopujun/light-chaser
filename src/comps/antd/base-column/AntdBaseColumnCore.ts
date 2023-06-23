@@ -6,7 +6,7 @@ import {getDefaultMenuList} from "../../../designer/right/util";
 import React from "react";
 import {updateTheme} from "../../common-fragment/ThemeFragment";
 
-const AntdBaseColumnConfigStyle = React.lazy(() => import("./AntdBaseColumnConfigStyle"));
+const AntdBaseColumnConfigStyle = React.lazy(() => import("./AntdBaseColumnConfig").then(module => ({default: module.AntdBaseColumnStyleConfig})));
 const AnimationConfig = React.lazy(() => import("../../../lib/common-fragment/animation-config/AnimationConfig"));
 const ThemeConfig = React.lazy(() => import("../../../lib/common-fragment/theme-config/ThemeConfig"));
 const BaseInfo = React.lazy(() => import("../../../lib/common-fragment/base-info/BaseInfo"));

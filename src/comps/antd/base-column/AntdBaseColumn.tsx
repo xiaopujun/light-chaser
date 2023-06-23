@@ -2,7 +2,6 @@ import React, {PureComponent} from 'react';
 import CompBgContainer from "../../../lib/lc-background-container/CompBgContainer";
 import {Column} from "@ant-design/charts";
 import {sendHttpRequest} from "../../../utils/HttpUtil";
-import {toJS} from "mobx";
 
 /**
  * 基础条形图
@@ -57,7 +56,6 @@ export default class AntdBaseColumn extends PureComponent<any> {
         if (!config) return null;
         let {style} = config;
         this.calculateData(style);
-        console.log(toJS(style?.chartStyle))
         return (
             <CompBgContainer style={style?.baseStyle}>
                 {
