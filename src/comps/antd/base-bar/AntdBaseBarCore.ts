@@ -45,7 +45,7 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
             style: {
                 baseStyle: {
                     padding: "10px",
-                    backgroundColor: "#0f273db5",
+                    backgroundColor: "#0e1014",
                     border: "2px solid #00deffff",
                     borderRadius: "3px"
                 },
@@ -68,15 +68,7 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
                     yField: "name",
                     seriesField: "name",
                     xAxis: {
-                        grid: {
-                            line: {
-                                style: {
-                                    stroke: "#00fffaff",
-                                    lineWidth: 1
-                                }
-                            },
-                            alignTick: true
-                        },
+                        grid: null,
                         label: {
                             style: {
                                 fill: "#00FFEAFF"
@@ -105,24 +97,10 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
                             length: 3
                         },
                         position: "right",
-                        title: {
-                            text: "标题",
-                            style: {
-                                fill: "#00fff2ff"
-                            },
-                            position: "end"
-                        }
+                        title: null
                     },
                     yAxis: {
-                        grid: {
-                            line: {
-                                style: {
-                                    stroke: "#16a0b5ff",
-                                    lineWidth: 2
-                                }
-                            },
-                            alignTick: true
-                        },
+                        grid: null,
                         label: {
                             style: {
                                 fill: "#00FFEAFF"
@@ -151,13 +129,7 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
                             length: 2
                         },
                         position: "bottom",
-                        title: {
-                            text: "y轴",
-                            style: {
-                                fill: "#00ddffff"
-                            },
-                            position: "start"
-                        }
+                        title: null
                     },
                     color: "#00ffea",
                     legend: {

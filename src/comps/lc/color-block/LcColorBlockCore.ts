@@ -42,7 +42,7 @@ class LcColorBlockCore extends AbstractCustomComponentDefinition {
             style: {
                 baseStyle: {
                     padding: "10px",
-                    backgroundColor: "#0f273db5",
+                    backgroundColor: "#0e1014",
                     border: "2px solid #00deffff",
                     borderRadius: "3px"
                 },
