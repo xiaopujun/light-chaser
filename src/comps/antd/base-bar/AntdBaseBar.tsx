@@ -9,6 +9,7 @@ import {sendHttpRequest} from "../../../utils/HttpUtil";
 export default class AntdBaseBar extends PureComponent<any> {
 
     chart: any;
+    interval: any;
     state = {
         data: null,
         connect: true
@@ -18,12 +19,17 @@ export default class AntdBaseBar extends PureComponent<any> {
         this.getData();
     }
 
+    componentWillUnmount() {
+        //销毁定时器,避免组件卸载后，定时器还在执行。
+        clearInterval(this.interval);
+    }
+
     getData = () => {
         const {config: {data}} = this.props;
         const {dataSource, apiData} = data;
         if (dataSource === 'api') {
-            const {url, method, params, header, flashFrequency} = apiData;
-            setInterval(() => {
+            const {url, method, params, header} = apiData;
+            this.interval = setInterval(() => {
                 const {realTimeRefresh} = this.props;
                 if (realTimeRefresh) {
                     sendHttpRequest(url, method, params, header).then((data: any) => {

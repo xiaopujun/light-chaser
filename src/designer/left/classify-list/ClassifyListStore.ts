@@ -1,19 +1,110 @@
 import {makeAutoObservable} from "mobx";
-import {AlignLeftOutlined, AppstoreFilled} from "@ant-design/icons";
 import {ClassifyEnum} from "./ClassifyType";
+import icon_all from '../../../icon/icon-all.svg';
+import icon_bar from '../../../icon/icon-bar.svg';
+import icon_column from '../../../icon/icon-column.svg';
+import icon_area from '../../../icon/icon-area.svg';
+import icon_pie from '../../../icon/icon-pie.svg';
+import icon_scatter from '../../../icon/icon-scatter.svg';
+import icon_histogram from '../../../icon/icon-histogram.svg';
+import icon_line from '../../../icon/icon-line.svg';
+import icon_loading from '../../../icon/icon-loading.svg';
+import icon_flowers from '../../../icon/icon-flowers.svg';
+import icon_radar from '../../../icon/icon-radar.svg';
+import icon_ring from '../../../icon/icon-ring.svg';
+import icon_word_cloud from '../../../icon/icon-wordcloud.svg';
+import icon_sun from '../../../icon/icon-sun.svg';
+import icon_rectangle from '../../../icon/icon-rectangle.svg';
+import icon_optimize from '../../../icon/icon-optimize.svg';
+import icon_points from '../../../icon/icon-points.svg';
 
 const getClassifyItemInfo = () => {
     return [
         {
-            icon: AppstoreFilled,
+            icon: icon_all,
             name: "全部",
             classify: ClassifyEnum.ALL,
         },
         {
-            icon: AlignLeftOutlined,
+            icon: icon_points,
+            name: "基础",
+            classify: ClassifyEnum.BASE,
+        },
+        {
+            icon: icon_optimize,
+            name: "装饰",
+            classify: ClassifyEnum.ALL,
+        },
+        {
+            icon: icon_bar,
             name: "条形图",
             classify: ClassifyEnum.BAR,
-        }
+        },
+        {
+            icon: icon_column,
+            name: "柱状图",
+            classify: ClassifyEnum.COLUMN,
+        },
+        {
+            icon: icon_line,
+            name: "折线图",
+            classify: ClassifyEnum.LINE,
+        },
+        {
+            icon: icon_area,
+            name: "面积图",
+            classify: ClassifyEnum.AREA,
+        },
+        {
+            icon: icon_pie,
+            name: "饼图",
+            classify: ClassifyEnum.BAR,
+        },
+        {
+            icon: icon_loading,
+            name: "进度图",
+            classify: ClassifyEnum.BAR,
+        },
+        {
+            icon: icon_scatter,
+            name: "散点图",
+            classify: ClassifyEnum.BAR,
+        },
+        {
+            icon: icon_flowers,
+            name: "玫瑰图",
+            classify: ClassifyEnum.BAR,
+        },
+        {
+            icon: icon_radar,
+            name: "雷达图",
+            classify: ClassifyEnum.BAR,
+        },
+        {
+            icon: icon_word_cloud,
+            name: "词云图",
+            classify: ClassifyEnum.BAR,
+        },
+        {
+            icon: icon_ring,
+            name: "玉珏图",
+            classify: ClassifyEnum.BAR,
+        },
+        {
+            icon: icon_histogram,
+            name: "直方图",
+            classify: ClassifyEnum.BAR,
+        },
+        {
+            icon: icon_sun,
+            name: "旭日图",
+            classify: ClassifyEnum.BAR,
+        },
+        {
+            icon: icon_rectangle,
+            name: "矩形树图",
+            classify: ClassifyEnum.BAR,
+        },
     ]
 }
 

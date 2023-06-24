@@ -6,7 +6,7 @@ import ThemeList from "./theme-list/ThemeList";
 import {ConfigType} from "../../../designer/right/ConfigType";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import rightStore from "../../../designer/right/RightStore";
-import {updateTheme} from "../../../comps/antd/base-bar/AntdBaseBarCore";
+import designerStarter from "../../../designer/DesignerStarter";
 
 class ThemeConfig extends Component<ConfigType> {
     state = {
@@ -18,8 +18,12 @@ class ThemeConfig extends Component<ConfigType> {
     closeEditor = () => this.setState({editTheme: false});
 
     themeChange = (theme: ThemeItemType) => {
+        if (!theme) return;
         const {updateConfig} = this.props;
-        updateTheme(theme, rightStore.activeElemConfig);
+        const {activeElemConfig, activeElem} = rightStore;
+        const {themeRefresher} = designerStarter;
+        const updateTheme = themeRefresher && themeRefresher[activeElem.type + '']
+        updateTheme && typeof updateTheme === 'function' && updateTheme(theme, activeElemConfig);
         updateConfig && updateConfig({themeId: theme.id});
     }
 

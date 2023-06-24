@@ -8,7 +8,7 @@ import {
     CanvasConfig,
     ElemConfig,
     Layer,
-    LCDesigner,
+    DesignerType,
     ProjectConfig,
     ProjectState,
     SaveType,
@@ -20,10 +20,13 @@ import AbstractBaseStore from "../../framework/core/AbstractBaseStore";
 import rightStore from "../right/RightStore";
 import {merge} from "../../utils/ObjectUtil";
 import {MovableItemType} from "../../lib/lc-movable/types";
-import {snowflake} from "../../utils/IdGenerate";
+import {idGenerate} from "../../utils/IdGenerate";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 
-class DesignerStore implements LCDesigner, AbstractBaseStore {
+/**
+ * 设计器核心状态管理类，记录了设计器中的核心数据。包括组件配置，组件布局。 全局设置等。
+ */
+class DesignerStore implements DesignerType, AbstractBaseStore {
     constructor() {
         makeAutoObservable(this);
     }
@@ -180,57 +183,21 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
                 emphasize: '#fa8c16',
                 supplementary: '#ad6800',
             }
-        }, {
-            id: '5',
-            name: '紫色主题',
-            des: '紫色主题',
-            colors: {
-                main: '#722ed1',
-                text: '#9254de',
-                background: 'rgba(114,46,209,0.2)',
-                auxiliary: '#531dab',
-                emphasize: '#391085',
-                supplementary: '#22075e',
-            }
-        }, {
-            id: '6',
-            name: '粉色主题',
-            des: '粉色主题',
-            colors: {
-                main: '#eb2f96',
-                text: '#ff85c0',
-                background: 'rgba(235,47,150,0.2)',
-                auxiliary: '#c41d7f',
-                emphasize: '#f5222d',
-                supplementary: '#a8071a',
-            }
-        }, {
-            id: '7',
-            name: '橙色主题',
-            des: '橙色主题',
-            colors: {
-                main: '#fa8c16',
-                text: '#ffa940',
-                background: 'rgba(250,140,22,0.2)',
-                auxiliary: '#d46b08',
-                emphasize: '#fa541c',
-                supplementary: '#ad4e00',
-            }
         }
     ];
 
     /**
-     * 编组
+     * 组合
      */
     group: any = undefined;
 
     /**
-     * 联动配置
+     * 联动器配置
      */
     linkage: any = undefined;
 
     /**
-     * 条件配置
+     * 条件器配置
      */
     condition: any = undefined;
 
@@ -245,7 +212,7 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
     /**
      * 初始化store
      */
-    doInit = (store: LCDesigner) => {
+    doInit = (store: DesignerType) => {
         this.id = store.id ?? this.id;
         this.canvasConfig = store.canvasConfig ? {...this.canvasConfig, ...store.canvasConfig} : this.canvasConfig;
         this.projectConfig = store.projectConfig ? {...this.projectConfig, ...store.projectConfig} : this.projectConfig;
@@ -313,23 +280,8 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
         })
     }
 
-    /**
-     * 设置图表配置
-     */
-    setChartConfigs = (elemConfigs: { [key: string]: ElemConfig }) => {
-        runInAction(() => {
-            this.elemConfigs = elemConfigs;
-        });
-    }
-
-    /**
-     * 设置扩展临时属性
-     */
-    setExtendParams = (extendParams: any) => this.extendParams = extendParams;
-
     getActiveElemConfig = (activeId: number | string) => {
-        if (activeId >= -1)
-            return this.elemConfigs[activeId + ""];
+        return this.elemConfigs[activeId + ""];
     }
 
     /**
@@ -345,18 +297,19 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
             this.elemConfigs[item.id + ''] = initData;
         if (this.statisticInfo)
             this.statisticInfo.count = Object.keys(this.elemConfigs).length;
-        console.log(toJS(this.layoutConfigs))
     }
 
     /**
      * 删除元素
      */
-    delItem = (id: string | number) => {
-        delete this.layoutConfigs[id + ''];
-        delete this.elemConfigs[id + ''];
-        if (this.activeElem && id === this.activeElem.id) {
-            this.activeElem.id = -1;
-            this.activeElem.type = "";
+    delItem = (ids: string[]) => {
+        for (const id of ids) {
+            delete this.layoutConfigs[id];
+            delete this.elemConfigs[id];
+            if (this.activeElem && id as any === this.activeElem.id) {
+                this.activeElem.id = -1;
+                this.activeElem.type = "";
+            }
         }
     }
 
@@ -388,11 +341,9 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
      * 更新图表组件配置
      */
     updateElemConfig = (data: any) => {
-        console.log(toJS(data))
         let activeConfig: ElemConfig | any = this.elemConfigs[this.activeElem?.id + ''];
         if (activeConfig)
             this.elemConfigs[this.activeElem?.id + ''] = {...merge(activeConfig, data)};
-        console.log(toJS(activeConfig))
         const {setActiveElemConfig} = rightStore;
         setActiveElemConfig(this.elemConfigs[this.activeElem?.id + '']);
     }
@@ -430,23 +381,29 @@ class DesignerStore implements LCDesigner, AbstractBaseStore {
         this.projectConfig = {...this.projectConfig, ...data};
     }
 
-    copyItem = (id: string) => {
-        const {[id]: item} = this.elemConfigs;
-        if (item) {
-            const {[id]: layout} = this.layoutConfigs;
-            const newItem = cloneDeep(item);
-            const newLayout = cloneDeep(layout);
-            const newId = snowflake.generateId() + '';
-            newItem.id = newId;
-            newLayout.id = newId;
-            const [x = 10, y = 10] = (newLayout.position || []).map(p => p + 10);
-            newLayout.position = [x, y];
-            let {maxOrder, setMaxOrder} = eventOperateStore;
-            newLayout.order = ++maxOrder;
-            setMaxOrder(maxOrder);
-            this.elemConfigs[newId] = newItem;
-            this.layoutConfigs[newId] = newLayout;
+    copyItem = (ids: string[]) => {
+        let newIds = [];
+        let {maxOrder, setMaxOrder} = eventOperateStore;
+        for (const id of ids) {
+            const {[id]: item} = this.elemConfigs;
+            if (item) {
+                const {[id]: layout} = this.layoutConfigs;
+                const newItem = cloneDeep(item);
+                const newLayout = cloneDeep(layout);
+                const newId = idGenerate.generateId();
+                console.log(newId)
+                newIds.push(newId);
+                newItem.id = newId;
+                newLayout.id = newId;
+                const [x = 10, y = 10] = (newLayout.position || []).map(p => p + 10);
+                newLayout.position = [x, y];
+                newLayout.order = ++maxOrder;
+                this.elemConfigs[newId] = newItem;
+                this.layoutConfigs[newId] = newLayout;
+            }
         }
+        setMaxOrder(maxOrder);
+        return newIds;
     }
 
 }

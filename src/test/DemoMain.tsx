@@ -1,26 +1,38 @@
-import React, {Component} from 'react';
+import React from 'react';
+import HotKey, {TriggerType} from "../designer/operate-provider/keyboard-mouse/HotKey";
+import {nanoid} from "nanoid";
 
-
-export default class SimpleMenu extends Component<any, any> {
-
-    ref: any = null;
+class MyComponent extends React.Component {
 
     componentDidMount() {
-        if (this.ref) {
-            this.ref.addEventListener('keydown', () => {
-            });
-            this.ref.addEventListener('click', () => {
-            });
-        }
+        document.addEventListener('mousedown', (e) => {
+            console.log(e.button);
+        });
     }
 
     render() {
+        console.log(nanoid(10))
+        let handlerMapping = {
+            'control + s': {
+                handler: () => {
 
-        return (
-            <div tabIndex={0} ref={dom => this.ref = dom}
-                 style={{width: 900, height: 900, backgroundColor: '#24726a'}}>
-                <div style={{width: 500, height: 500, backgroundColor: '#724f24'}}/>
-            </div>
-        );
+                },
+                triggerType: TriggerType.SINGLE
+            },
+            '  + wheel': {
+                handler: (e: any) => {
+                    let dom: any = document.getElementById('hotkey-test');
+                    console.log(dom.contains(e.target));
+                    console.log('wheel执行了' + Date.now(), e)
+                }
+            }
+        }
+        return <div id={'hotkey-test'} style={{width: 500, height: 200, backgroundColor: '#0d3d52'}}>
+            <HotKey handlerMapping={handlerMapping}/>
+            <div style={{width: 300, height: 100, backgroundColor: '#295e75'}}>ssss</div>
+        </div>
     }
+
 }
+
+export default MyComponent;

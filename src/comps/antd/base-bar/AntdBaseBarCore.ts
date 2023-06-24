@@ -1,75 +1,19 @@
+import React from "react";
 import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
-import {BaseInfoType, ElemConfig, ThemeItemType} from "../../../designer/DesignerType";
+import {BaseInfoType, ElemConfig} from "../../../designer/DesignerType";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import barImg from "./bar.png";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import React, {ClassType} from "react";
-import AntdBaseBarConfigStyle from "./AntdBaseBarConfigStyle";
-import AnimationConfig from "../../../lib/common-fragment/animation-config/AnimationConfig";
-import ThemeConfig from "../../../lib/common-fragment/theme-config/ThemeConfig";
-import BaseInfo from "../../../lib/common-fragment/base-info/BaseInfo";
-import AntdBaseBar from "./AntdBaseBar";
-import AntdBaseBarDataConfig from "./AntdBaseBarDataConfig";
+import {updateTheme} from "../../common-fragment/ThemeFragment";
 
-export const updateTheme = (newTheme: ThemeItemType, sourceStyle: any) => {
-    if (!newTheme)
-        return;
-    const {colors: {main, text, supplementary, emphasize, background, auxiliary}} = newTheme;
-    //边框
-    if (sourceStyle?.style?.baseStyle?.border)
-        sourceStyle.style.baseStyle.border = `2px solid ${emphasize}`;
-    //背景
-    if (sourceStyle?.style?.baseStyle?.backgroundColor)
-        sourceStyle.style.baseStyle.backgroundColor = background;
-    //图形
-    if (sourceStyle?.style?.chartStyle?.color)
-        sourceStyle.style.chartStyle.color = main;
-    //图例
-    if (sourceStyle?.style?.chartStyle?.legend?.itemName?.style?.fill)
-        sourceStyle.style.chartStyle.legend.itemName.style.fill = text;
-    //x轴-文本
-    if (sourceStyle?.style?.chartStyle?.xAxis?.label?.style?.fill)
-        sourceStyle.style.chartStyle.xAxis.label.style.fill = text;
-    //x轴-标题
-    if (sourceStyle?.style?.chartStyle?.xAxis?.title?.style?.fill)
-        sourceStyle.style.chartStyle.xAxis.title.style.fill = text;
-    //x轴-轴线
-    if (sourceStyle?.style?.chartStyle?.xAxis?.line?.style?.stroke)
-        sourceStyle.style.chartStyle.xAxis.line.style.stroke = emphasize;
-    //x轴-网格线
-    if (sourceStyle?.style?.chartStyle?.xAxis?.grid?.line?.style?.stroke)
-        sourceStyle.style.chartStyle.xAxis.grid.line.style.stroke = auxiliary;
-    //x轴-刻度线
-    if (sourceStyle?.style?.chartStyle?.xAxis?.tickLine?.style?.stroke)
-        sourceStyle.style.chartStyle.xAxis.tickLine.style.stroke = supplementary;
-    //x轴-子刻度线
-    if (sourceStyle?.style?.chartStyle?.xAxis?.subTickLine?.style?.stroke)
-        sourceStyle.style.chartStyle.xAxis.subTickLine.style.stroke = auxiliary;
-    //y轴-文本
-    if (sourceStyle?.style?.chartStyle?.yAxis?.label?.style?.fill)
-        sourceStyle.style.chartStyle.yAxis.label.style.fill = text;
-    //y轴-标题
-    if (sourceStyle?.style?.chartStyle?.yAxis?.title?.style?.fill)
-        sourceStyle.style.chartStyle.yAxis.title.style.fill = text;
-    //y轴-轴线
-    if (sourceStyle?.style?.chartStyle?.yAxis?.line?.style?.stroke)
-        sourceStyle.style.chartStyle.yAxis.line.style.stroke = emphasize;
-    //y轴-网格线
-    if (sourceStyle?.style?.chartStyle?.yAxis?.grid?.line?.style?.stroke)
-        sourceStyle.style.chartStyle.yAxis.grid.line.style.stroke = auxiliary;
-    //y轴-刻度线
-    if (sourceStyle?.style?.chartStyle?.yAxis?.tickLine?.style?.stroke)
-        sourceStyle.style.chartStyle.yAxis.tickLine.style.stroke = supplementary;
-    //y轴-子刻度线
-    if (sourceStyle?.style?.chartStyle?.yAxis?.subTickLine?.style?.stroke)
-        sourceStyle.style.chartStyle.yAxis.subTickLine.style.stroke = auxiliary;
-}
+const AntdBaseBarStyleConfig = React.lazy(() => import('./AntdBaseBarConfig').then(module => ({default: module.AntdBaseBarStyleConfig})));
+const AnimationConfig = React.lazy(() => import("../../../lib/common-fragment/animation-config/AnimationConfig"));
+const ThemeConfig = React.lazy(() => import("../../../lib/common-fragment/theme-config/ThemeConfig"));
+const BaseInfo = React.lazy(() => import("../../../lib/common-fragment/base-info/BaseInfo"));
+const AntdBaseBar = React.lazy(() => import("./AntdBaseBar"));
+const DataConfig = React.lazy(() => import("../../../lib/common-fragment/data-config/DataConfig"));
 
 class AntdBaseBarCore extends AbstractCustomComponentDefinition {
-
-    getKey(): string {
-        return 'AntdBaseBar';
-    }
 
     getBaseInfo(): BaseInfoType {
         return {
@@ -101,7 +45,7 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
             style: {
                 baseStyle: {
                     padding: "10px",
-                    backgroundColor: "#0f273db5",
+                    backgroundColor: "#0e1014",
                     border: "2px solid #00deffff",
                     borderRadius: "3px"
                 },
@@ -109,7 +53,7 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
                     data: [
                         {
                             name: "1951 年",
-                            value: 38
+                            value: 48
                         },
                         {
                             name: "1952 年",
@@ -117,22 +61,14 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
                         },
                         {
                             name: "1956 年",
-                            value: 61
+                            value: 22
                         }
                     ],
                     xField: "value",
                     yField: "name",
                     seriesField: "name",
                     xAxis: {
-                        grid: {
-                            line: {
-                                style: {
-                                    stroke: "#00fffaff",
-                                    lineWidth: 1
-                                }
-                            },
-                            alignTick: true
-                        },
+                        grid: null,
                         label: {
                             style: {
                                 fill: "#00FFEAFF"
@@ -161,24 +97,10 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
                             length: 3
                         },
                         position: "right",
-                        title: {
-                            text: "标题",
-                            style: {
-                                fill: "#00fff2ff"
-                            },
-                            position: "end"
-                        }
+                        title: null
                     },
                     yAxis: {
-                        grid: {
-                            line: {
-                                style: {
-                                    stroke: "#16a0b5ff",
-                                    lineWidth: 2
-                                }
-                            },
-                            alignTick: true
-                        },
+                        grid: null,
                         label: {
                             style: {
                                 fill: "#00FFEAFF"
@@ -207,15 +129,9 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
                             length: 2
                         },
                         position: "bottom",
-                        title: {
-                            text: "y轴",
-                            style: {
-                                fill: "#00ddffff"
-                            },
-                            position: "start"
-                        }
+                        title: null
                     },
-                    color: "#00FFEA33",
+                    color: "#00ffea",
                     legend: {
                         position: "right-top",
                         layout: "vertical",
@@ -259,11 +175,11 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
         return getDefaultMenuList();
     }
 
-    getMenuToConfigContentMap(): { [key: string]: ClassType<any, any, any> } {
+    getMenuToConfigContentMap(): { [key: string]: React.Component | React.FC | any } {
         return {
             'info': BaseInfo,
-            'style': AntdBaseBarConfigStyle,
-            'data': AntdBaseBarDataConfig,
+            'style': AntdBaseBarStyleConfig,
+            'data': DataConfig,
             'animation': AnimationConfig,
             'theme': ThemeConfig
         };

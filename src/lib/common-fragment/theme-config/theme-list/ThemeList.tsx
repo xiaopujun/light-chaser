@@ -28,7 +28,7 @@ class ThemeList extends Component<ThemeListProps> {
         const themeConfig = designerStore.themeConfig;
         let themeList = [];
         for (let i = 0; i < themeConfig.length; i++) {
-            themeList.push(<ThemeItem key={i} id={themeConfig[i].id} selected={themeConfig[i].id == activeId}
+            themeList.push(<ThemeItem key={i} id={themeConfig[i].id} selected={themeConfig[i].id === activeId}
                                       name={themeConfig[i].name}
                                       colors={themeConfig[i].colors}/>)
         }

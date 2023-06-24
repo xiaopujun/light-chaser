@@ -5,24 +5,18 @@ import UnderLineInput from "../../lc-input/UnderLineInput";
 import ConfigItemTB from "../../config-item/ConfigItemTB";
 import LcButton from "../../lc-button/LcButton";
 import Select from "../../lc-select/Select";
-import {DataConfigType, DataConfigVerifyCallback} from "../../../designer/DesignerType";
 import './DataConfig.less';
 import {sendHttpRequest} from "../../../utils/HttpUtil";
 import {stringToJsObj} from "../../../utils/ObjectUtil";
+import {ConfigType} from "../../../designer/right/ConfigType";
 
-interface DataConfigProps {
-    config: DataConfigType,
-    onSave: Function,
-    verifyCallback: DataConfigVerifyCallback,
-}
-
-class DataConfig extends Component<DataConfigProps> {
+class DataConfig extends Component<ConfigType> {
 
     state = {
         dataSource: 'static',
     }
 
-    constructor(props: DataConfigProps) {
+    constructor(props: ConfigType) {
         super(props);
         const {config} = props;
         this.state = {
@@ -31,14 +25,23 @@ class DataConfig extends Component<DataConfigProps> {
     }
 
     dataSourcesChange = (value: any) => {
+        const {updateConfig} = this.props;
+        updateConfig && updateConfig({data: {dataSource: value}});
         this.setState({
             dataSource: value,
         });
     }
 
     doSave = (dataConfig: any) => {
-        const {onSave} = this.props;
-        onSave && onSave({dataSource: this.state.dataSource, ...dataConfig});
+        const {updateConfig} = this.props;
+        let config: any = {data: dataConfig};
+        if ('staticData' in dataConfig)
+            config['style'] = {
+                chartStyle: {
+                    data: dataConfig.staticData.data
+                }
+            }
+        updateConfig && updateConfig(config);
     }
 
     render() {
@@ -55,26 +58,31 @@ class DataConfig extends Component<DataConfigProps> {
                     ]}/>
                 </ConfigItem>
                 {dataSource === 'static' &&
-                <StaticDataConfig config={config} onSave={this.doSave} verifyCallback={{}}/>}
+                <StaticDataConfig config={config} updateConfig={this.doSave}/>}
                 {dataSource === 'api' &&
-                <ApiDataConfig config={config} onSave={this.doSave} verifyCallback={{}}/>}
+                <ApiDataConfig config={config} updateConfig={this.doSave}/>}
             </div>
         );
     }
 }
 
-const ApiDataConfig: React.FC<DataConfigProps> = ({config, onSave}) => {
-    console.log('ApiDataConfig')
+const ApiDataConfig: React.FC<ConfigType> = ({config, updateConfig}) => {
     const {apiData} = config;
     const urlRef = useRef(apiData?.url || '');
     const methodRef = useRef(apiData?.method || '');
-    const headerRef = useRef(apiData?.header || {});
-    const paramsRef = useRef(apiData?.params || {});
+    const headerRef = useRef(JSON.stringify(apiData?.header || {}));
+    const paramsRef = useRef(JSON.stringify(apiData?.params || {}));
     const flashFrequencyRef = useRef(apiData?.flashFrequency || 5);
     const [testResult, setTestResult] = useState<any>('');
 
     const testApi = () => {
-        sendHttpRequest(urlRef.current, methodRef.current, headerRef.current, paramsRef.current).then(res => {
+        if (urlRef.current === '') alert('接口地址不能为空');
+        if (methodRef.current === '') alert('请求方式不能为空');
+        let header = stringToJsObj(headerRef.current);
+        if (!header) alert('请求头不符合json格式');
+        let params = stringToJsObj(paramsRef.current);
+        if (!params) alert('请求参数不符合json格式');
+        sendHttpRequest(urlRef.current, methodRef.current, header, params).then(res => {
             setTestResult(JSON.stringify(res));
         }).catch(err => {
             setTestResult(JSON.stringify(err));
@@ -82,23 +90,36 @@ const ApiDataConfig: React.FC<DataConfigProps> = ({config, onSave}) => {
     }
 
     const doSave = () => {
-        onSave({
+        if (urlRef.current === '') {
+            alert('接口地址不能为空');
+            return;
+        }
+        if (methodRef.current === '') {
+            alert('请求方式不能为空');
+            return;
+        }
+        ;
+        let header = stringToJsObj(headerRef.current);
+        if (!header) alert('请求头不符合json格式');
+        let params = stringToJsObj(paramsRef.current);
+        if (!params) alert('请求参数不符合json格式');
+        updateConfig && updateConfig({
             apiData: {
                 url: urlRef.current,
                 method: methodRef.current,
-                header: headerRef.current,
-                params: paramsRef.current,
+                header: header,
+                params: params,
                 flashFrequency: flashFrequencyRef.current
             }
         });
     }
 
-    const headerOnChange = (value: any) => {
-        headerRef.current = stringToJsObj(value);
+    const headerOnChange = (value: string) => {
+        headerRef.current = value;
     }
 
-    const paramsOnChange = (value: any) => {
-        paramsRef.current = stringToJsObj(value);
+    const paramsOnChange = (value: string) => {
+        paramsRef.current = value;
     }
 
     return (
@@ -125,10 +146,10 @@ const ApiDataConfig: React.FC<DataConfigProps> = ({config, onSave}) => {
                 <div>秒</div>
             </ConfigItem>
             <ConfigItemTB title={'请求头(JSON)'} contentStyle={{width: '95%'}}>
-                <CodeEditor onChange={headerOnChange} defaultValue={JSON.stringify(headerRef.current)}/>
+                <CodeEditor onChange={headerOnChange} defaultValue={headerRef.current}/>
             </ConfigItemTB>
-            <ConfigItemTB title={'请求参数'} contentStyle={{width: '95%'}}>
-                <CodeEditor onChange={paramsOnChange} defaultValue={JSON.stringify(paramsRef.current)}/>
+            <ConfigItemTB title={'请求参数(JSON)'} contentStyle={{width: '95%'}}>
+                <CodeEditor onChange={paramsOnChange} defaultValue={paramsRef.current}/>
             </ConfigItemTB>
             <ConfigItemTB title={'响应结果'} contentStyle={{width: '95%'}}>
                 <CodeEditor readonly={true} value={testResult}/>
@@ -139,25 +160,16 @@ const ApiDataConfig: React.FC<DataConfigProps> = ({config, onSave}) => {
     );
 }
 
-const StaticDataConfig: React.FC<DataConfigProps> = ({config, onSave, verifyCallback}) => {
+const StaticDataConfig: React.FC<ConfigType> = ({config, updateConfig}) => {
 
-    let dataCode = JSON.stringify(config.staticData?.data)
-        .replace(/"/g, '\''); // 将双引号替换为单引号
+    let dataCode = JSON.stringify(config.staticData?.data);
 
     const flashData = () => {
         try {
-            //校验数据合法性
-            if (verifyCallback && verifyCallback.staticDataVerify) {
-                let verifyRes = verifyCallback.staticDataVerify(dataCode);
-                if (verifyRes !== true) {
-                    console.error('数据校验失败', verifyRes);
-                    return;
-                }
-            }
-            //todo 考虑下安全问题如何处理
-            onSave({staticData: {data: stringToJsObj(dataCode)}});
+            const data = dataCode.replace(/'/g, '"').replace(/\s/g, '');
+            updateConfig && updateConfig({staticData: {data: JSON.parse(data)}});
         } catch (e: any) {
-            console.error('代码解析异常', e);
+            console.error('代码解析异常', e, dataCode);
         }
     }
 

@@ -1,23 +1,68 @@
-import React, {Component} from 'react';
-import Accordion from "../../../lib/lc-accordion/Accordion";
-import CfgItemBorder from "../../../lib/config-item/CfgItemBorder";
-import BaseStyleSet from "../../../lib/common-fragment/base-style/BaseStyleSet";
-import {ConfigType} from "../../../designer/right/ConfigType";
-import ConfigItem from "../../../lib/config-item/ConfigItem";
-import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
-import ConfigCard from "../../../lib/config-card/ConfigCard";
-import Legend from "../../../lib/common-fragment/legend/Legned";
-import AxisConfig from "../../../lib/common-fragment/axis/AxisConfig";
-import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
+import React from "react";
+import ConfigCard from "../../lib/config-card/ConfigCard";
+import ConfigItem from "../../lib/config-item/ConfigItem";
+import UnderLineInput from "../../lib/lc-input/UnderLineInput";
+import CfgItemBorder from "../../lib/config-item/CfgItemBorder";
+import BaseColorPicker from "../../lib/lc-color-picker/BaseColorPicker";
+import Accordion from "../../lib/lc-accordion/Accordion";
+import {ConfigType} from "../../designer/right/ConfigType";
+import Legend from "../../lib/common-fragment/legend/Legend";
+import AxisConfig from "../../lib/common-fragment/axis/AxisConfig";
 
-class AntdBaseBarConfigStyle extends Component<ConfigType> {
+export const AntdLegend: React.FC<ConfigType> = ({config, updateConfig}) => {
+    const legendChanged = (key: string, data: any) => {
+        const chartStyleUpdate: any = {};
+        switch (key) {
+            case 'position':
+                chartStyleUpdate.legend = {position: data};
+                break;
+            case 'direction':
+                chartStyleUpdate.legend = {layout: data};
+                break;
+            case 'fontSize':
+                chartStyleUpdate.legend = {itemName: {style: {fontSize: data}}};
+                break;
+            case 'color':
+                chartStyleUpdate.legend = {itemName: {style: {fill: data}}};
+                break;
+            case 'enable':
+                chartStyleUpdate.legend = data
+                    ? {
+                        position: 'right-top',
+                        layout: 'vertical',
+                        itemName: {style: {fill: '#cecece', fontSize: 12}},
+                    }
+                    : data;
+                break;
+            default:
+                console.warn('未知的图例配置项');
+        }
+        updateConfig && updateConfig({
+            style: {
+                chartStyle: chartStyleUpdate,
+            },
+        });
+    };
+    const calculateLegendConfig = (chartStyle: any) => {
+        const {legend} = chartStyle;
+        if (!legend) return {visible: false};
+        return {
+            visible: true,
+            position: legend?.position,
+            direction: legend?.layout,
+            color: legend?.itemName?.style?.fill,
+            fontSize: legend?.itemName?.style?.fontSize,
+        };
+    };
+    return (
+        <Legend config={calculateLegendConfig(config)} onChange={legendChanged}/>
+    );
+};
 
-    state: any = {
-        colors: []
-    }
 
-    barWidthChanged = (value: any) => {
-        const {updateConfig} = this.props;
+export const AntdGraphics: React.FC<ConfigType> = ({config, updateConfig}) => {
+
+    const barWidthChanged = (value: any) => {
         updateConfig && updateConfig({
             style: {
                 chartStyle: {
@@ -27,117 +72,32 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
         })
     }
 
-    fillColorChanged = (color: string) => {
-        const {updateConfig} = this.props;
-        updateConfig && updateConfig({style: {chartStyle: {color: color}}});
-    }
+    const fillColorChanged = (color: string) => updateConfig && updateConfig({style: {chartStyle: {color: color}}});
 
-    groupColorChanged = (value: any) => {
-        const {updateConfig} = this.props;
-        updateConfig && updateConfig({
-            color: value
-        })
-    }
+    return (
+        <Accordion title={'图形'}>
+            <ConfigCard title={'条状'}>
+                <ConfigItem title={'宽度'}>
+                    <UnderLineInput type={'number'} min={1} onChange={barWidthChanged}
+                                    defaultValue={config.maxBarWidth}/>
+                </ConfigItem>
+                <ConfigItem title={'颜色'}>
+                    <CfgItemBorder>
+                        <BaseColorPicker onChange={fillColorChanged}
+                                         defaultValue={config.color}
+                                         style={{width: '100%', height: '15px', borderRadius: 2}}
+                                         showText={true}/>
+                    </CfgItemBorder>
+                </ConfigItem>
+            </ConfigCard>
+        </Accordion>
+    )
+}
 
-    legendChanged = (key: string, data: any) => {
-        const {updateConfig} = this.props;
-        switch (key) {
-            case 'position':
-                updateConfig && updateConfig({
-                    style: {
-                        chartStyle: {
-                            legend: {
-                                position: data
-                            }
-                        }
-                    }
-                });
-                break;
-            case 'direction':
-                updateConfig && updateConfig({
-                    style: {
-                        chartStyle: {
-                            legend: {
-                                layout: data
-                            }
-                        }
-                    }
-                });
-                break;
-            case 'fontSize':
-                updateConfig && updateConfig({
-                    style: {
-                        chartStyle: {
-                            legend: {
-                                itemName: {
-                                    style: {
-                                        fontSize: data
-                                    }
-                                },
-                            }
-                        }
-                    }
-                });
-                break;
-            case 'color':
-                updateConfig && updateConfig({
-                    style: {
-                        chartStyle: {
-                            legend: {
-                                itemName: {
-                                    style: {
-                                        fill: data
-                                    }
-                                },
-                            }
-                        }
-                    }
-                });
-                break;
-            case 'enable':
-                updateConfig && updateConfig(data ? {
-                    style: {
-                        chartStyle: {
-                            legend: {
-                                position: 'right-top',
-                                layout: 'vertical',
-                                itemName: {
-                                    style: {
-                                        fill: '#cecece',
-                                        fontSize: 12
-                                    }
-                                },
-                            }
-                        }
-                    }
-                } : {
-                    style: {
-                        chartStyle: {
-                            legend: data
-                        }
-                    }
-                });
-                break;
-            default:
-                console.warn('未知的图例配置项');
-        }
-    }
+export const AntdCartesianCoordinateSys: React.FC<ConfigType> = ({config, updateConfig}) => {
 
-    buildAxisConfig = (styleObj: any, axis: string) => {
-        let axisObj;
-        if (axis === 'x')
-            axisObj = {xAxis: styleObj,};
-        else if (axis === 'y')
-            axisObj = {yAxis: styleObj,};
-        return {
-            style: {
-                chartStyle: axisObj
-            },
-        };
-    }
 
-    axisChanged = (key: string, data: any, axis: string) => {
-        const {updateConfig} = this.props;
+    const axisChanged = (key: string, data: any, axis: string) => {
         if (!updateConfig) return;
         let styleObj;
         switch (key) {
@@ -251,10 +211,23 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
                 console.warn('未知的坐标轴配置项');
                 return;
         }
-        updateConfig(this.buildAxisConfig(styleObj, axis));
+        updateConfig(buildAxisConfig(styleObj, axis));
     };
 
-    parseAxisConfig = (config: any) => {
+    const buildAxisConfig = (styleObj: any, axis: string) => {
+        let axisObj;
+        if (axis === 'x')
+            axisObj = {xAxis: styleObj,};
+        else if (axis === 'y')
+            axisObj = {yAxis: styleObj,};
+        return {
+            style: {
+                chartStyle: axisObj
+            },
+        };
+    }
+
+    const parseAxisConfig = (config: any) => {
         const result: any = {};
         result.enable = !!config.label;
         result.position = config.position;
@@ -310,63 +283,16 @@ class AntdBaseBarConfigStyle extends Component<ConfigType> {
         return result;
     }
 
-    calculateLegendConfig = (chartStyle: any) => {
-        let res = {visible: false};
-        const {legend} = chartStyle;
-        if (!legend)
-            return res;
-        else {
-            res = {
-                ...res, ...{
-                    visible: true,
-                    position: legend?.position,
-                    direction: legend?.layout,
-                    color: legend?.itemName?.style?.fill,
-                    fontSize: legend?.itemName?.style?.fontSize,
-                }
-            };
-        }
-        return res;
-    }
-
-    render() {
-        const {updateConfig, config} = this.props;
-        const {chartStyle} = config;
-        return (
-            <>
-                <BaseStyleSet config={config.baseStyle} updateConfig={updateConfig}/>
-                <div className={'elem-chart-config'}>
-                    <Accordion title={'图形'}>
-                        <ConfigCard title={'条状'}>
-                            <ConfigItem title={'宽度'}>
-                                <UnderLineInput type={'number'} min={1} onChange={this.barWidthChanged}
-                                                defaultValue={chartStyle.maxBarWidth}
-                                />
-                            </ConfigItem>
-                            <ConfigItem title={'颜色'}>
-                                <CfgItemBorder>
-                                    <BaseColorPicker onChange={this.fillColorChanged}
-                                                     defaultValue={chartStyle.color}
-                                                     style={{width: '100%', height: '15px', borderRadius: 2}}
-                                                     showText={true}/>
-                                </CfgItemBorder>
-                            </ConfigItem>
-                        </ConfigCard>
-                    </Accordion>
-                    <Legend config={this.calculateLegendConfig(config.chartStyle)}
-                            onChange={this.legendChanged}/>
-                    <AxisConfig title={'X轴'} config={this.parseAxisConfig(config.chartStyle.xAxis)}
-                                onChange={(key: string, data: any) => {
-                                    this.axisChanged(key, data, 'x');
-                                }}/>
-                    <AxisConfig title={'Y轴'} config={this.parseAxisConfig(config.chartStyle.yAxis)}
-                                onChange={(key: string, data: any) => {
-                                    this.axisChanged(key, data, 'y');
-                                }}/>
-                </div>
-            </>
-        );
-    }
+    return (
+        <>
+            <AxisConfig title={'X轴'} config={parseAxisConfig(config.xAxis)}
+                        onChange={(key: string, data: any) => {
+                            axisChanged(key, data, 'x');
+                        }}/>
+            <AxisConfig title={'Y轴'} config={parseAxisConfig(config.yAxis)}
+                        onChange={(key: string, data: any) => {
+                            axisChanged(key, data, 'y');
+                        }}/>
+        </>
+    )
 }
-
-export default AntdBaseBarConfigStyle;

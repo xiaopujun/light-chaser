@@ -10,7 +10,14 @@ class LcBgCore extends AbstractCustomComponentDefinition {
     };
 
     getBaseInfo(): BaseInfoType | null {
-        return null;
+        return {
+            name: "背景（默认）",
+            key: 'LcBg',
+            typeName: "",
+            typeKey: "",
+            sourceName: "",
+            sourceKey: "",
+        };
     }
 
     getChartImg(): any {
@@ -23,10 +30,6 @@ class LcBgCore extends AbstractCustomComponentDefinition {
 
     getInitConfig(): ElemConfig | Object | null {
         return null;
-    }
-
-    getKey(): string {
-        return "LcBg";
     }
 
     getMenuList(): Array<MenuInfo> {

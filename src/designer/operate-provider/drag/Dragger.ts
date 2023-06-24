@@ -1,7 +1,8 @@
-import keyboardMouse from "../keyboard-mouse/KeyboardMouse";
-import eventOperateStore from "../EventOperateStore";
+import {KMMap} from "../keyboard-mouse/KeyboardMouse";
 import coordinate from "../coordinate/Coordinate";
 import eventManager from "../core/EventManager";
+import scaleCore from "../scale/ScaleCore";
+import eventOperateStore from "../EventOperateStore";
 
 /**
  * 缩放器
@@ -26,9 +27,15 @@ class Dragger {
                 this.lastPointermove = {x: e.clientX, y: e.clientY};
             }
         });
+        eventManager.register('pointerup', (e: any) => {
+            if (e.button === 2)
+                this.dom.releasePointerCapture(e.pointerId);
+        });
         eventManager.register('pointermove', (e: any) => {
-            if (keyboardMouse.RightClick) {
-                const {scale} = eventOperateStore;
+            const {setPointerTarget} = eventOperateStore;
+            setPointerTarget(e.target)
+            if (KMMap.rightClick) {
+                const {scale} = scaleCore;
                 const current1 = {x: e.clientX, y: e.clientY};
                 this.diff.x = current1.x - this.lastPointermove.x;
                 this.diff.y = current1.y - this.lastPointermove.y;
@@ -44,6 +51,7 @@ class Dragger {
     destroy = () => {
         eventManager.unregister('pointerdown');
         eventManager.unregister('pointermove');
+        eventManager.unregister('pointerup');
     }
 }
 

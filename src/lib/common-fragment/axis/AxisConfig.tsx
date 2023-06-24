@@ -1,14 +1,15 @@
 import React, {Component, useEffect, useState} from 'react';
 import './AxisConfig.less';
-import BaseColorPicker from "../../lc-color-picker/BaseColorPicker";
-import LcSwitch from "../../lc-switch/LcSwitch";
-import CfgItemBorder from "../../config-item/CfgItemBorder";
 import ConfigItem from "../../config-item/ConfigItem";
 import ConfigCard from "../../config-card/ConfigCard";
-import UnderLineInput from "../../lc-input/UnderLineInput";
 import Accordion from "../../lc-accordion/Accordion";
-import Select from "../../lc-select/Select";
-import Radio from "../../lc-radio/Radio";
+import CfgItemBorder from "../../config-item/CfgItemBorder";
+
+const BaseColorPicker = React.lazy(() => import('../../lc-color-picker/BaseColorPicker'));
+const LcSwitch = React.lazy(() => import('../../lc-switch/LcSwitch'));
+const UnderLineInput = React.lazy(() => import('../../lc-input/UnderLineInput'));
+const Select = React.lazy(() => import('../../lc-select/Select'));
+const Radio = React.lazy(() => import('../../lc-radio/Radio'));
 
 interface AxisConfigProps {
     config?: any;

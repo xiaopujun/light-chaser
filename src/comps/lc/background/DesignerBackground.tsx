@@ -52,7 +52,6 @@ class DesignerBackground extends Component<LcDesignerBackgroundProps> {
     }
 
     render() {
-        console.log('render background')
         return (
             <div className={'lc-background'}
                  id={'-1'}

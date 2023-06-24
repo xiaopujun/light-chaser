@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {PureComponent, Suspense} from 'react';
 import DragScaleProvider from "../operate-provider/DragScaleProvider";
 import {observer} from "mobx-react";
 import designerStore, {DesignerStore} from "../store/DesignerStore";
@@ -11,14 +11,24 @@ import GroupMovable from "../../lib/lc-movable/GroupMovable";
 import GroupSelectable from "../../lib/lc-movable/GroupSelectable";
 import LcRightMenu from "../operate-provider/right-click-menu/ContextMenu";
 import {MovableItemType} from "../../lib/lc-movable/types";
+import Loading from "../../lib/loading/Loading";
+import HotKey from "../operate-provider/keyboard-mouse/HotKey";
+import {getOperateEventMapping} from "../operate-provider/keyboard-mouse/HotKeyConfig";
 
 /**
  * 设计器画布
  */
 class DesignerCanvas extends PureComponent<DesignerStore | any> {
 
-    rgl: any = null;
     lcbg: any = null;
+
+    state = {
+        designerRef: null
+    }
+
+    componentDidMount() {
+        this.setState({designerRef: document.querySelector('.lc-ruler-content')});
+    }
 
     updateActive = (e: any) => {
         //todo 优化,事件处理时目前元素参数可能会存在偏差
@@ -26,7 +36,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
         const {updateActive, activeElem, elemConfigs} = designerStore;
         if (elemId === activeElem?.id)
             return;
-        updateActive && updateActive({id: parseInt(elemId), type: dataset.type});
+        updateActive && updateActive({id: elemId, type: dataset.type});
         const {setActiveMenu} = rightStore;
         const elemConfig = elemConfigs[elemId];
         const newMenus = Object.keys(elemConfig);
@@ -55,19 +65,11 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                             transform: `translate(${position[0]}px, ${position[1]}px)`,
                             position: 'absolute',
                         }} className={'lc-comp-item'}>
-                <Chart config={compConfig} globalConfg={projectConfig} realTimeRefresh={projectConfig.realTimeRefresh}/>
+                <Suspense fallback={<Loading/>}>
+                    <Chart config={compConfig} realTimeRefresh={projectConfig.realTimeRefresh}/>
+                </Suspense>
             </div>
         });
-    }
-
-    /**
-     * 删除目标组件
-     */
-    delItem = (elemId: string) => {
-        const {delItem, layoutConfigs} = designerStore;
-        delItem && delItem(elemId);
-        if (this.rgl != null)
-            this.rgl.setState({layout: layoutConfigs})
     }
 
     getDragScaleProviderProps = () => {
@@ -83,22 +85,25 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
     render() {
         const {elemConfigs} = designerStore;
         return (
-            <DesignerContainer>
-                <GroupSelectable>
-                    <DesignerRuler offsetX={60} offsetY={50}>
-                        <DragScaleProvider {...this.getDragScaleProviderProps()}>
-                            <GroupMovable>
-                                <DesignerBackground config={elemConfigs['-1']['background']}
-                                                    onClick={this.updateActive}
-                                                    ref={obj => this.lcbg = obj}>
-                                    {this.generateElement()}
-                                </DesignerBackground>
-                            </GroupMovable>
-                        </DragScaleProvider>
-                        <LcRightMenu/>
-                    </DesignerRuler>
-                </GroupSelectable>
-            </DesignerContainer>
+            <>
+                <DesignerContainer>
+                    <GroupSelectable>
+                        <DesignerRuler offsetX={60} offsetY={50}>
+                            <DragScaleProvider {...this.getDragScaleProviderProps()}>
+                                <GroupMovable>
+                                    <DesignerBackground config={elemConfigs['-1']['background']}
+                                                        onClick={this.updateActive}
+                                                        ref={obj => this.lcbg = obj}>
+                                        {this.generateElement()}
+                                    </DesignerBackground>
+                                </GroupMovable>
+                            </DragScaleProvider>
+                            <LcRightMenu/>
+                        </DesignerRuler>
+                    </GroupSelectable>
+                </DesignerContainer>
+                {this.state.designerRef && <HotKey handlerMapping={getOperateEventMapping(this.state.designerRef)}/>}
+            </>
         );
     }
 }

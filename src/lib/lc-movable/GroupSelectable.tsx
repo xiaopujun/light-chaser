@@ -12,7 +12,7 @@ class GroupSelectable extends Component {
     }
 
     render() {
-        const {movableRef, targets, setTargets} = eventOperateStore;
+        const {movableRef, targets, setTargets, setTargetIds} = eventOperateStore;
         return (
             <>
                 {this.props.children}
@@ -34,12 +34,6 @@ class GroupSelectable extends Component {
                                  e.stop();
                              }
                          }}
-                         onSelect={(e: any) => {
-                             let selected = e.selected.filter((item: any) => {
-                                 return item.dataset.locked !== 'true';
-                             });
-                             setTargets(selected);
-                         }}
                          onSelectEnd={e => {
                              if (!movableRef) return;
                              const movable: any = movableRef.current;
@@ -49,6 +43,15 @@ class GroupSelectable extends Component {
                                      movable.dragStart(e.inputEvent);
                                  });
                              }
+                             let selected = e.selected.filter((item: any) => {
+                                 return item.dataset.locked !== 'true';
+                             });
+                             if (e.inputEvent.target.className.indexOf('menu-item') === -1) {
+                                 let targetIds: string[] = [];
+                                 selected.forEach((item: any) => targetIds.push(item.id));
+                                 setTargetIds(targetIds);
+                             }
+                             setTargets(selected);
                          }}
                 />
             </>

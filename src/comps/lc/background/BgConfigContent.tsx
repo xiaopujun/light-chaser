@@ -16,6 +16,10 @@ import {merge} from "lodash";
 
 class BgConfigContent extends PureComponent<ConfigType> {
 
+    gradientAngle: number = 0;
+    bgImgSize: number[] = [0, 0];
+    bgImgPos: number[] = [0, 0];
+    singleColor: string = '#000000';
     state: any = {
         config: null,
     }
@@ -24,6 +28,11 @@ class BgConfigContent extends PureComponent<ConfigType> {
         super(props);
         const {config} = props;
         this.state = {config}
+        //以下数据不放在state中管理，避免修改时触发组件的重新渲染。
+        this.gradientAngle = config?.bgColor?.linearGradient?.angle || 0;
+        this.bgImgSize = config?.bgImg?.bgImgSize || [0, 0];
+        this.bgImgPos = config?.bgImg?.bgImgPos || [0, 0];
+        this.singleColor = config?.bgColor?.single?.color || '#000000';
     }
 
     beforeUpload = (file: any) => {
@@ -62,8 +71,7 @@ class BgConfigContent extends PureComponent<ConfigType> {
             bgImgSize[1] = parseInt(value);
         }
         updateConfig && updateConfig({background: {bgImg: {bgImgSize: bgImgSize}}});
-        //此处直接对state的数据进行修改，不要触发重新渲染。
-        this.state.config.bgImg.bgImgSize = bgImgSize;
+        this.bgImgSize = bgImgSize;
     }
 
     bgImgPosChange = (data: any) => {
@@ -77,8 +85,7 @@ class BgConfigContent extends PureComponent<ConfigType> {
             bgImgPos[1] = parseInt(value);
         }
         updateConfig && updateConfig({background: {bgImg: {bgImgPos: bgImgPos}}});
-        //此处直接对state的数据进行修改，不要触发重新渲染。
-        this.state.config.bgImg.bgImgPos = bgImgPos;
+        this.bgImgPos = bgImgPos;
     }
 
     repeatTypeChange = (value: any) => {
@@ -96,8 +103,7 @@ class BgConfigContent extends PureComponent<ConfigType> {
     singleColorChanged = (color: string) => {
         const {updateConfig} = this.props;
         updateConfig && updateConfig({background: {bgColor: {single: {color}}}});
-        //此处直接对state的数据进行修改，不要触发重新渲染。
-        this.state.config.bgColor.single.color = color;
+        this.singleColor = color;
     }
 
     clearBgImg = () => {
@@ -165,8 +171,7 @@ class BgConfigContent extends PureComponent<ConfigType> {
                 },
             }
         });
-        //此处直接对state的数据进行修改，不要触发重新渲染。
-        this.state.config.bgColor.linearGradient.angle = value;
+        this.gradientAngle = value;
     }
 
     render() {
@@ -208,24 +213,24 @@ class BgConfigContent extends PureComponent<ConfigType> {
                         <ConfigItem title={"宽度"}>
                             <UnderLineInput name={'bgX'} type={'number'}
                                             onChange={(value: any) => this.bgImgSizeChange({name: 'bgX', value})}
-                                            defaultValue={bgImg.bgImgSize[0]}/>
+                                            defaultValue={this.bgImgSize[0]}/>
                         </ConfigItem>
                         <ConfigItem title={"高度"}>
                             <UnderLineInput name={'bgY'} type={'number'}
                                             onChange={(value: any) => this.bgImgSizeChange({name: 'bgY', value})}
-                                            defaultValue={bgImg.bgImgSize[1]}/>
+                                            defaultValue={this.bgImgSize[1]}/>
                         </ConfigItem>
                     </ConfigCard>
                     <ConfigCard title={'位置'}>
                         <ConfigItem title={"X轴"}>
                             <UnderLineInput type={'number'}
                                             onChange={(value: any) => this.bgImgPosChange({name: 'posX', value})}
-                                            defaultValue={bgImg.bgImgPos[0]}/>
+                                            defaultValue={this.bgImgPos[0]}/>
                         </ConfigItem>
                         <ConfigItem title={"Y轴"}>
                             <UnderLineInput type={'number'}
                                             onChange={(value: any) => this.bgImgPosChange({name: 'posY', value})}
-                                            defaultValue={bgImg.bgImgPos[1]}/>
+                                            defaultValue={this.bgImgPos[1]}/>
                         </ConfigItem>
                     </ConfigCard>
                     <ConfigItem title={'重复方式'} contentStyle={{paddingLeft: '20px', width: 120}}>
@@ -251,7 +256,7 @@ class BgConfigContent extends PureComponent<ConfigType> {
                             <CfgItemBorder>
                                 <BaseColorPicker onChange={this.singleColorChanged}
                                                  style={{width: '100%', height: '15px', borderRadius: 2}}
-                                                 defaultValue={bgColor?.single.color}
+                                                 defaultValue={this.singleColor}
                                                  showText={true}/>
                             </CfgItemBorder>
                         </ConfigItem>
@@ -276,7 +281,7 @@ class BgConfigContent extends PureComponent<ConfigType> {
                                 </CfgItemBorder>
                             </ConfigItem>
                             <ConfigItem title={'角度'} contentStyle={{paddingLeft: 18}}>
-                                <UnderLineInput type={"number"} defaultValue={bgColor.linearGradient.angle} min={0}
+                                <UnderLineInput type={"number"} defaultValue={this.gradientAngle} min={0}
                                                 max={360} onChange={this.gradientAngleChanged}/>
                             </ConfigItem>
                         </>

@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
-import Scaler from "./scale/Scaler";
 import Dragger from "./drag/Dragger";
+import coordinate from "./coordinate/Coordinate";
+import {scaleConfig} from "./scale/Scaler";
+import designerStore from "../store/DesignerStore";
+import {observer} from "mobx-react";
 
 interface DragScaleProviderProps {
     containerWidth?: number;
@@ -12,34 +15,33 @@ interface DragScaleProviderProps {
 class DragScaleProvider extends Component<DragScaleProviderProps> {
 
     content: any = null;
-    scaler: any = null;
     dragger: any = null;
 
     componentDidMount() {
-        let contentWidth = this.props.contentWidth || 1920;
-        let contentHeight = this.props.contentHeight || 1080;
-        this.scaler = new Scaler(this.content, contentWidth, contentHeight, 80, 70);
+        //配置缩放
+        this.content.style.transform = 'translate3d(' + coordinate.x + 'px, ' + coordinate.y + 'px, 0) scale(1)';
+        scaleConfig.content = this.content;
+        scaleConfig.offsetX = 80;
+        scaleConfig.offsetY = 70;
         this.dragger = new Dragger(this.content);
-        this.scaler.init();
         this.dragger.init();
     }
 
     componentWillUnmount() {
-        this.scaler.destroy();
         this.dragger.destroy();
     }
 
     render() {
-        const {contentHeight, contentWidth, containerHeight, containerWidth} = this.props;
+        const {canvasConfig} = designerStore!;
         return (
             <div style={{
                 overflow: "hidden",
-                height: containerHeight,
-                width: containerWidth,
+                height: window.innerHeight - 90,
+                width: window.innerWidth - 95,
                 backgroundColor: '#434343'
             }}>
                 <div ref={ref => this.content = ref}
-                     style={{width: contentWidth, height: contentHeight}}>
+                     style={{width: canvasConfig?.width, height: canvasConfig?.height}}>
                     {this.props.children}
                 </div>
             </div>
@@ -47,4 +49,4 @@ class DragScaleProvider extends Component<DragScaleProviderProps> {
     }
 }
 
-export default DragScaleProvider;
+export default observer(DragScaleProvider);

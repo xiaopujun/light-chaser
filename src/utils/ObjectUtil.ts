@@ -21,12 +21,12 @@ export const merge = (originalData: any, newData: any) => {
     return originalData;
 }
 
+
 export const stringToJsObj = (code: string) => {
-    code = code.replaceAll(/[\n\s]/g, "");
-    let template = `(function(){return ${code};})()`;
+    code = code.replace(/[\s+\n]+/g, '').replace(/'/g, '"');
     try {
-        return eval(template);
+        return JSON.parse(code);
     } catch (e) {
-        console.error('javascript code error: ', e);
+        return false;
     }
 }

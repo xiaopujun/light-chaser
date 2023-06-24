@@ -12,5 +12,15 @@
 我使用mobx^6.7.0作为我react的状态管理工具。 我有2个组件A、B。他们使用同一个mobx的store。store中有两个属性F1，F2.
 正常将，只要修改这个store中任何一个属性，A、B都会重新渲染。但现在我希望，修改属性F1时，A、B都会重新渲染，修改属性F2时，只有B会重新渲染。我该如何实现呢？
 
+DesignerStarter
+DesignerStore
+HeaderStore
+CompListStore
+ClassifyListStore
+RightStore
+EventOperateStore
+ContextMenuStore
+
+
 
 

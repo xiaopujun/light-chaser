@@ -26,7 +26,7 @@ class ClassifyList extends Component {
             const {icon: Icon, name, classify} = classifies[i];
             classifyArr.push(
                 <div key={i + ''} className={'sort-item'} id={classify} onClick={this.changeClassifyKey}>
-                    <div className={'sort-item-icon'}><Icon/></div>
+                    <div className={'sort-item-icon'}><img style={{width: 20}} src={Icon} alt={'all'}/></div>
                     <span className={'sort-item-content'}>{name}</span>
                 </div>
             )
@@ -37,7 +37,7 @@ class ClassifyList extends Component {
     render() {
         const classifyListDom = this.buildClassifyList();
         return (
-            <div className={'lc-charts-sort'}>
+            <div className={'lc-charts-sort'} style={{overflowY: 'scroll'}}>
                 {classifyListDom}
             </div>
         );
