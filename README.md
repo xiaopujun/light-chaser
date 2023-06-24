@@ -59,6 +59,8 @@ yarn build
 
 ![image.png](https://s2.loli.net/2023/06/24/EYPFl8QaxZb2GsC.png)
 
+视频演示：https://v.douyin.com/y8g6VV3/
+
 # 结语
 
 如果觉得本项目不错，欢迎star
