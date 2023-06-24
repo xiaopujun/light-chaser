@@ -3,6 +3,10 @@ import './style/LightChaserList.less';
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import AddNewScreenDialog from "./AddNewScreenDialog";
 import {getAllProject} from "../utils/LocalStorageUtil";
+import listBottom from './icon/list-bottom.svg';
+import templateMarket from './icon/template-market.svg';
+import datasource from './icon/datasource.svg';
+import LcButton from "../lib/lc-button/LcButton";
 
 interface LightChaserListProps extends RouteComponentProps {
 
@@ -54,37 +58,46 @@ class LightChaserList extends Component<LightChaserListProps> {
 
     render() {
         const {addNewScreen, data} = this.state;
-        let width = (window.innerWidth - 105 - (5 * 20)) / 5;
+        let width = (window.innerWidth - 105 - (5 * 20)) / 6;
         let height = width * (9 / 16);
         return (
-            <div className={'light-chaser-list'}>
-                <div className={'lc-list-head'}>
-                    <div className={'lc-list-head-title'}>LIGHT CHASER 数据大屏设计器</div>
+            <div className={'lc-console'}>
+                <div className={'console-head'}>
+                    <div className={'console-head-title'}>LC 控制台</div>
                 </div>
-                <div className={'lc-list-statistics'}>
-                    <div className={'lc-list-statistics-title'} style={{color: '#00fffb'}}>数据统计：</div>
-                    <div className={'lc-list-statistics-items'}>
-                        <div className={'lc-statistics-item lc-statistics-current-time'}
-                             onClick={this.addNewDataSource}>
-                            <label className={'lc-statistics-label lc-statistics-data'}>5</label>
-                            <label className={'lc-statistics-label'}>数据源</label>
+                <div className={'console-body'}>
+                    <div className={'console-list'}>
+                        <div className={'console-list-item'}>
+                            <div className={'item-icon'}><img src={listBottom} alt={'项目列表'}/></div>
+                            <div className={'item-text'}>项目列表</div>
                         </div>
-                        <div className={'lc-statistics-item'} onClick={this.addNewBigScreen}>
-                            <label className={'lc-statistics-label lc-statistics-data'}>12</label>
-                            <label className={'lc-statistics-label'}>大屏数</label>
+                        <div className={'console-list-item'}>
+                            <div className={'item-icon'}><img src={datasource} alt={'数据源管理'}/></div>
+                            <div className={'item-text'}>数据源管理</div>
+                        </div>
+                        <div className={'console-list-item'}>
+                            <div className={'item-icon'}><img src={templateMarket} alt={'模板市场'}/></div>
+                            <div className={'item-text'}>模板市场</div>
                         </div>
                     </div>
-                </div>
-                <div className={'lc-list-content'}>
-                    <div className={'lc-list-content-title'} style={{color: '#00fffb'}}>数据大屏：</div>
-                    <div className={'lc-list-content-datas'}>
-                        {data && data.map((item: any) => {
-                            return (
-                                <div key={item.id + ''} style={{width: width, height: height}} onClick={this.openScreen}
-                                     id={item.id + ''}
-                                     className={'lc-list-content-data'}>{item.projectConfig?.screenName}</div>
-                            )
-                        })}
+                    <div className={'console-content'}>
+                        <div className={'content-body'}>
+                            <div className={'project-list'}>
+                                <div style={{width: width, height: height}}
+                                     className={'project-item'}>
+                                    <LcButton onClick={this.addNewBigScreen}
+                                              style={{width: width, height: height, fontSize: 20}}>+ 新建项目</LcButton>
+                                </div>
+                                {data && data.map((item: any) => {
+                                    return (
+                                        <div key={item.id + ''} style={{width: width, height: height}}
+                                             onClick={this.openScreen}
+                                             id={item.id + ''}
+                                             className={'project-item'}>{item.projectConfig?.name}</div>
+                                    )
+                                })}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <AddNewScreenDialog onOk={this.addNewBigScreenOk} onCancel={this.addNewBigScreenCancel}

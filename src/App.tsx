@@ -15,11 +15,11 @@ class App extends Component<any> {
             <>
                 <Suspense fallback={<Loading/>}>
                     <Switch>
-                        <Route path={'/list'} component={LightChaserList}/>
                         <Route path={'/designer'} component={Designer}/>
                         <Route path={'/view'} component={DesignerView}/>
                         <Route path={'/loading'} component={Loading}/>
                         <Route path={'/test'} component={DemoMain}/>
+                        <Route path={'/'} component={LightChaserList}/>
                     </Switch>
                 </Suspense>
             </>

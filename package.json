@@ -9,6 +9,7 @@
     "animate.css": "^4.1.1",
     "antd": "^4.17.3",
     "codemirror": "^5.65.13",
+    "html2canvas": "^1.4.1",
     "http-proxy-middleware": "^2.0.1",
     "js-beautify": "^1.14.7",
     "localforage": "^1.10.0",

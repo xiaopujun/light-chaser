@@ -1,80 +1,81 @@
-.light-chaser-list {
-  background-color: #2b2b2b;
+.lc-console {
 
-  .lc-list-head {
-    border-bottom: 1px solid #00e8ff4d;
+  .console-head {
+    border-bottom: 2px solid #2A2A2A96;
     display: flex;
     height: 64px;
-    padding: 0 50px;
+    padding: 0 20px;
     align-items: center;
+    background-color: #141414;
 
-    .lc-list-head-title {
+    .console-head-title {
       font-size: 21px;
-      font-weight: 900;
-      color: rgb(167, 255, 255);
+      font-weight: 600;
+      color: rgb(40, 255, 255);
     }
   }
 
-  .lc-list-statistics {
-    padding: 20px 50px;
+  .console-body {
+    display: flex;
 
-    .lc-list-statistics-title {
-      line-height: 45px;
-    }
+    .console-list {
+      width: 200px;
+      height: calc(100vh - 64px);
+      background-color: #141414;
+      border-right: 1px solid #2A2A2A96;
 
-
-    .lc-list-statistics-items {
-      display: flex;
-
-      .lc-statistics-item {
-        border-radius: 5px;
-        margin-right: 20px;
-        background: #086FA1;
-        width: 150px;
-        height: 100px;
-        text-align: center;
-
-        .lc-statistics-label {
-          display: block;
-          color: #99cfc1;
-        }
-
-        .lc-statistics-data {
-          font-size: 40px;
-          font-weight: 600;
-          color: rgba(25, 255, 255, 0.81);
-        }
+      .console-list-item:hover {
+        background-color: rgba(38, 56, 56, 0.84);
+        cursor: pointer;
       }
 
-    }
-
-
-  }
-
-  .lc-list-content {
-    padding: 20px 50px;
-
-    .lc-list-content-title {
-      color: #00fffb;
-      line-height: 45px;
-    }
-
-    .lc-list-content-datas {
-      display: flex;
-      flex-wrap: wrap;
-
-      .lc-list-content-data {
-        margin-right: 20px;
-        margin-bottom: 20px;
-        background-color: #1e696a;
-        border-radius: 5px;
-        align-items: center;
-        justify-content: center;
+      .console-list-item {
+        color: #c5c5c5;
         display: flex;
-        color: whitesmoke;
+        padding: 5px 10px;
+        font-size: 16px;
+        height: 50px;
+        line-height: 40px;
+        transition: background-color 0.5s ease;
+
+        .item-icon {
+          margin-right: 15px;
+          position: relative;
+          top: -1px;
+
+          img {
+            width: 18px;
+          }
+        }
+      }
+    }
+
+    .console-content {
+      width: calc(100vw - 200px);
+      height: calc(100vh - 64px);
+      background-color: #171717;
+      padding: 15px;
+
+      .content-body {
+        .project-list {
+          display: flex;
+          flex-wrap: wrap;
+
+          .project-item {
+            margin-right: 20px;
+            margin-bottom: 20px;
+            background-color: #1e696a;
+            border-radius: 5px;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            color: whitesmoke;
+          }
+        }
       }
     }
   }
+
 
   .lc-new-screen-dialog {
     .lc-new-screen-item {
