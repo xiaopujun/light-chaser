@@ -40,7 +40,7 @@ class DragScaleProvider extends Component<DragScaleProviderProps> {
                 width: window.innerWidth - 95,
                 backgroundColor: '#434343'
             }}>
-                <div ref={ref => this.content = ref}
+                <div ref={ref => this.content = ref} className={'lc-content-scale'}
                      style={{width: canvasConfig?.width, height: canvasConfig?.height}}>
                     {this.props.children}
                 </div>

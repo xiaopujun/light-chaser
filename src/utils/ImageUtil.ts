@@ -1,19 +1,27 @@
-export function captureScreen(domElement: HTMLElement | any): string {
-    // 创建一个空的Canvas元素
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
+import html2canvas from "html2canvas";
+import scaleCore from "../designer/operate-provider/scale/ScaleCore";
 
-    // 设置Canvas的尺寸与指定元素大小一致
-    const {width, height} = domElement.getBoundingClientRect();
-    canvas.width = width;
-    canvas.height = height;
-
-    // 使用Canvas的drawImage方法绘制指定元素内容
-    context?.drawImage(domElement, 0, 0, width, height);
-
-    // 将Canvas转换为图像数据URL
-    // 返回图像数据URL
-    return canvas.toDataURL('image/png');
+/**
+ * 将html转换为图片
+ * @param dom
+ */
+export function htmlToImg(dom: HTMLElement) {
+    return new Promise((resolve) => {
+        console.log(scaleCore.scale)
+        html2canvas(dom, {
+            useCORS: true,
+            allowTaint: true,
+            scale: scaleCore.scale,
+        }).then((canvas) => {
+            canvas.toBlob((blob) => {
+                //请在合适的时候释放该URL，避免内存泄漏。
+                const url = URL.createObjectURL(blob);
+                alert(url)
+                resolve(url);
+            })
+        }).catch((err) => {
+            console.error('生成截图失败', err);
+            resolve(null);
+        });
+    })
 }
-
-

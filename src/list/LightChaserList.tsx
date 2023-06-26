@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './style/LightChaserList.less';
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import AddNewScreenDialog from "./AddNewScreenDialog";
-import {getAllProject} from "../utils/LocalStorageUtil";
+import {getAllProject, getImageFromLocalWithKey} from "../utils/LocalStorageUtil";
 import listBottom from './icon/list-bottom.svg';
 import templateMarket from './icon/template-market.svg';
 import datasource from './icon/datasource.svg';
@@ -18,12 +18,30 @@ class LightChaserList extends Component<LightChaserListProps> {
         addNewScreen: false,
         addNewData: {},
         data: [],
+        imageIdToUrl: {}
     }
 
     componentDidMount() {
         getAllProject().then((data: any) => {
             if (data && data.length > 0) {
-                this.setState({data})
+                this.setState({data});
+                let imageIds: any = [];
+                data.forEach((item: any) => {
+                    let imageId = item.projectConfig.screenshot;
+                    if (imageId && imageId !== '') {
+                        imageIds.push(imageId);
+                    }
+                });
+                const promise = imageIds.map((imageId: any) => getImageFromLocalWithKey(imageId));
+                let imageIdToUrl: any = {};
+                Promise.all(promise).then((res: any) => {
+                    res.forEach((item: any) => {
+                        const key = Object.keys(item)[0];
+                        imageIdToUrl[key] = item[key];
+                    });
+                    this.setState({imageIdToUrl});
+                });
+
             }
         })
     }
@@ -57,7 +75,7 @@ class LightChaserList extends Component<LightChaserListProps> {
     }
 
     render() {
-        const {addNewScreen, data} = this.state;
+        const {addNewScreen, data, imageIdToUrl} = this.state;
         let width = (window.innerWidth - 105 - (5 * 20)) / 6;
         let height = width * (9 / 16);
         return (
@@ -83,14 +101,20 @@ class LightChaserList extends Component<LightChaserListProps> {
                     <div className={'console-content'}>
                         <div className={'content-body'}>
                             <div className={'project-list'}>
-                                <div style={{width: width, height: height}}
-                                     className={'project-item'}>
+                                <div style={{width: width, height: height, margin: '0 20px 20px 0'}}>
                                     <LcButton onClick={this.addNewBigScreen}
                                               style={{width: width, height: height, fontSize: 20}}>+ 新建项目</LcButton>
                                 </div>
                                 {data && data.map((item: any) => {
+                                    let bgImgUrl = imageIdToUrl[item.projectConfig?.screenshot];
                                     return (
-                                        <div key={item.id + ''} style={{width: width, height: height}}
+                                        <div key={item.id + ''}
+                                             style={{
+                                                 width: width,
+                                                 height: height,
+                                                 backgroundImage: bgImgUrl && `url(${bgImgUrl})`,
+                                                 backgroundSize: 'cover',
+                                             }}
                                              onClick={this.openScreen}
                                              id={item.id + ''}
                                              className={'project-item'}>{item.projectConfig?.name}</div>

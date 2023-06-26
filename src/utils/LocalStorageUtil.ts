@@ -36,7 +36,7 @@ const saveProjectToLocal = (config: any) => {
  * @param url 图片地址
  * @param key 图片存储后的key标识
  */
-const saveImgToLocal = (url: string, key: string) => {
+export const saveImgToLocal = (url: string, key: string) => {
     return new Promise((resolve) => {
         fetch(url).then((response) => {
             if (response.ok)
@@ -56,23 +56,25 @@ const saveImgToLocal = (url: string, key: string) => {
     });
 }
 
+export async function getImageFromLocalWithKey(key: string) {
+    try {
+        const blob = await localforage.getItem(key);
+        if (blob)
+            return {[key]: URL.createObjectURL(blob)};
+        else
+            return {[key]: ""};
+    } catch (error) {
+        console.log("get bgImg error", error);
+        return {[key]: ""};
+    }
+}
+
 /**
  * 从本地数据库获取背景图片
  */
-const getImgFromLocal = (blobKey: string | any) => {
-    return new Promise((resolve) => {
-        localforage.getItem(blobKey).then((blob) => {
-            if (blob) {
-                let url = URL.createObjectURL(blob);
-                resolve(url);
-            } else {
-                resolve("");
-            }
-        }).catch((error) => {
-            console.log("get bgImg error", error);
-            resolve("");
-        });
-    });
+export async function getImgFromLocal(key: string | any) {
+    const imageObj = await getImageFromLocalWithKey(key)
+    return imageObj[key];
 }
 
 const delImgFormLocal = (blobKey: string) => {
@@ -110,6 +112,7 @@ const saveProjectSimpleData = (config: DesignerType | any) => {
                 des: config.projectConfig.des,
                 state: config.projectConfig.state,
                 updateTime: config.projectConfig.updateTime,
+                screenshot: config.projectConfig.screenshot,
             }
             if (dataArr && dataArr instanceof Array) {
                 dataArr.push(simpleData);

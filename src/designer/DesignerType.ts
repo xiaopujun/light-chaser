@@ -160,6 +160,8 @@ export interface ProjectConfig {
     saveType?: SaveType;
     //编辑模式下实时刷新数据
     realTimeRefresh?: boolean;
+    //项目截图
+    screenshot?: string;
 }
 
 /**
