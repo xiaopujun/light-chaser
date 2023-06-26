@@ -76,7 +76,7 @@ class LightChaserList extends Component<LightChaserListProps> {
 
     render() {
         const {addNewScreen, data, imageIdToUrl} = this.state;
-        let width = (window.innerWidth - 105 - (5 * 20)) / 6;
+        let width = (window.innerWidth - 230 - (6 * 20)) / 6;
         let height = width * (9 / 16);
         return (
             <div className={'lc-console'}>

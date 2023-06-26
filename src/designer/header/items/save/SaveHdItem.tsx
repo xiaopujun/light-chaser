@@ -16,10 +16,10 @@ export const generateScreenshots = () => {
             htmlToImg(imgDom).then((url: any) => {
                 let imageId = idGenerate.generateId();
                 saveImgToLocal(url, imageId).then(() => {
-                    //释放内存
-                    // setTimeout(() => {
-                    //     URL.revokeObjectURL(url);
-                    // }, 3000);
+                    // 释放内存
+                    setTimeout(() => {
+                        URL.revokeObjectURL(url);
+                    }, 3000);
                     resolve(imageId);
                 });
             });
