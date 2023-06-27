@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './style/LightChaserList.less';
-import {RouteComponentProps, withRouter} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import AddNewScreenDialog from "./AddNewScreenDialog";
 import {getAllProject, getImageFromLocalWithKey} from "../utils/LocalStorageUtil";
 import listBottom from './icon/list-bottom.svg';
@@ -8,11 +8,11 @@ import templateMarket from './icon/template-market.svg';
 import datasource from './icon/datasource.svg';
 import LcButton from "../lib/lc-button/LcButton";
 
-interface LightChaserListProps extends RouteComponentProps {
+import listDelImg from './list-del.svg';
+import listDisplay from './list-display.svg';
+import listEdit from './list-edit.svg';
 
-}
-
-class LightChaserList extends Component<LightChaserListProps> {
+class LightChaserList extends Component<any> {
 
     state: any = {
         addNewScreen: false,
@@ -71,7 +71,10 @@ class LightChaserList extends Component<LightChaserListProps> {
     }
 
     openScreen = (e: any) => {
-        this.props.history.push('/designer', {id: parseInt(e.target.id), action: 'edit'});
+        console.log(e.target)
+        const {type} = e.target.dataset
+        if (type === 'edit')
+            this.props.history.push('/designer', {id: parseInt(e.currentTarget.id), action: 'edit'});
     }
 
     render() {
@@ -113,11 +116,25 @@ class LightChaserList extends Component<LightChaserListProps> {
                                                  width: width,
                                                  height: height,
                                                  backgroundImage: bgImgUrl && `url(${bgImgUrl})`,
-                                                 backgroundSize: 'cover',
                                              }}
                                              onClick={this.openScreen}
                                              id={item.id + ''}
-                                             className={'project-item'}>{item.projectConfig?.name}</div>
+                                             className={'project-item'}>
+                                            <div className={'pro-list-content'} style={{zIndex: 1}}>
+                                                <div className={'pro-content-title'}>{item.projectConfig?.name}</div>
+                                                <div className={'pro-content-operates'}>
+                                                    <div className={'operate-item'} data-type={'edit'}>
+                                                        <img src={listEdit} alt={'编辑'}/>
+                                                    </div>
+                                                    <div className={'operate-item'} data-type={'del'}>
+                                                        <img src={listDelImg} alt={'删除'}/>
+                                                    </div>
+                                                    <div className={'operate-item'} data-type={'show'}>
+                                                        <img src={listDisplay} alt={'展示'}/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     )
                                 })}
                             </div>
