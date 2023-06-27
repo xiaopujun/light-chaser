@@ -8,25 +8,25 @@ import eventOperateStore from "../../../operate-provider/EventOperateStore";
 import {htmlToImg} from "../../../../utils/ImageUtil";
 import {idGenerate} from "../../../../utils/IdGenerate";
 
-export const generateScreenshots = () => {
-    return new Promise((resolve, reject) => {
-        //生成截图
+export async function generateScreenshots() {
+    try {
+        // Generate screenshot
         let imgDom: any = document.querySelector('.lc-content-scale');
         if (imgDom) {
-            htmlToImg(imgDom).then((url: any) => {
-                let imageId = idGenerate.generateId();
-                saveImgToLocal(url, imageId).then(() => {
-                    // 释放内存
-                    setTimeout(() => {
-                        URL.revokeObjectURL(url);
-                    }, 3000);
-                    resolve(imageId);
-                });
-            });
+            const url: any = await htmlToImg(imgDom);
+            const imageId = idGenerate.generateId();
+            await saveImgToLocal(url, imageId);
+            // Free up memory
+            setTimeout(() => {
+                URL.revokeObjectURL(url);
+            }, 3000);
+            return imageId;
         } else {
-            resolve(null);
+            return null;
         }
-    });
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 export const localSave = () => {
