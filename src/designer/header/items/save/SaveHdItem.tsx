@@ -1,22 +1,20 @@
 import {AbstractHeaderItem, HeaderItemProps} from "../../HeaderTypes";
 import {SaveFilled} from "@ant-design/icons";
-import {designerRouter} from "../../../../index";
 import designerStore from "../../../store/DesignerStore";
 import {createProject, saveImgToLocal, updateProject} from "../../../../utils/LocalStorageUtil";
 import {SaveType} from "../../../DesignerType";
 import eventOperateStore from "../../../operate-provider/EventOperateStore";
 import {htmlToImg} from "../../../../utils/ImageUtil";
 import {idGenerate} from "../../../../utils/IdGenerate";
+import {buildUrlParams, parseUrlParams} from "../../../../utils/URLUtil";
 
 export async function generateScreenshots() {
     try {
-        // Generate screenshot
         let imgDom: any = document.querySelector('.lc-content-scale');
         if (imgDom) {
             const url: any = await htmlToImg(imgDom);
             const imageId = idGenerate.generateId();
             await saveImgToLocal(url, imageId);
-            // Free up memory
             setTimeout(() => {
                 URL.revokeObjectURL(url);
             }, 3000);
@@ -42,16 +40,9 @@ export const localSave = () => {
                     //更新id
                     setId && setId(id);
                     //修改路由参数，新增变为更新
-                    const {history} = designerRouter;
-                    const {action} = history.location.state;
-                    if (action === 'create') {
-                        designerRouter.history.replace("/designer", {
-                            ...history.location.state, ...{
-                                action: 'edit',
-                                id,
-                            }
-                        });
-                    }
+                    let urlParams = parseUrlParams();
+                    urlParams = {...urlParams, ...{id, action: 'edit'}};
+                    window.history.replaceState(null, '', '?' + buildUrlParams(urlParams));
                     alert("create success");
                 }
             });

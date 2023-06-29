@@ -11,6 +11,7 @@ import LcButton from "../lib/lc-button/LcButton";
 import listDelImg from './list-del.svg';
 import listDisplay from './list-display.svg';
 import listEdit from './list-edit.svg';
+import {buildUrlParams} from "../utils/URLUtil";
 
 class LightChaserList extends Component<any> {
 
@@ -52,17 +53,15 @@ class LightChaserList extends Component<any> {
     }
 
     addNewBigScreenOk = () => {
-        const {addNewData} = this.state;
-        this.props.history.push('/designer', {...addNewData, action: 'create'});
+        let {addNewData} = this.state;
+        addNewData['action'] = 'create';
+        let urlParams = buildUrlParams(addNewData);
+        window.open(`/designer?${urlParams}`, '_blank');
     }
 
     addNewBigScreenCancel = () => {
         const {addNewScreen} = this.state;
         this.setState({addNewScreen: !addNewScreen, addNewData: {}})
-    }
-
-    addNewDataSource = () => {
-        alert("add new data source")
     }
 
     addNewScreenDialogChanged = (data: { [k: string]: [v: any] }) => {
@@ -71,10 +70,17 @@ class LightChaserList extends Component<any> {
     }
 
     openScreen = (e: any) => {
-        console.log(e.target)
         const {type} = e.target.dataset
-        if (type === 'edit')
-            this.props.history.push('/designer', {id: parseInt(e.currentTarget.id), action: 'edit'});
+        let id = parseInt(e.currentTarget.id);
+        if (type === 'edit') {
+            let params = buildUrlParams({
+                id: id,
+                action: 'edit'
+            });
+            window.open(`/designer?${params}`, '_blank');
+        } else if (type === 'show') {
+            window.open(`/view?id=${id}`, '_blank');
+        }
     }
 
     render() {

@@ -5,14 +5,7 @@ import {scaleConfig} from "./scale/Scaler";
 import designerStore from "../store/DesignerStore";
 import {observer} from "mobx-react";
 
-interface DragScaleProviderProps {
-    containerWidth?: number;
-    containerHeight?: number;
-    contentWidth?: number;
-    contentHeight?: number;
-}
-
-class DragScaleProvider extends Component<DragScaleProviderProps> {
+class DragScaleProvider extends Component {
 
     content: any = null;
     dragger: any = null;

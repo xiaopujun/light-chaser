@@ -17,7 +17,6 @@ class App extends Component<any> {
                     <Switch>
                         <Route path={'/designer'} component={Designer}/>
                         <Route path={'/view'} component={DesignerView}/>
-                        <Route path={'/loading'} component={Loading}/>
                         <Route path={'/test'} component={DemoMain}/>
                         <Route path={'/'} component={LightChaserList}/>
                     </Switch>

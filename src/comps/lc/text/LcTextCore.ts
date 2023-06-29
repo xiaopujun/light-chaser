@@ -45,7 +45,7 @@ class LcTextCore extends AbstractCustomComponentDefinition {
             style: {
                 baseStyle: {
                     padding: "0px",
-                    backgroundColor: "#0e1014",
+                    backgroundColor: "rgba(14,16,20,0.11)",
                     border: "2px solid #00deffff",
                     borderRadius: "3px"
                 },
