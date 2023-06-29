@@ -2,38 +2,38 @@ import lcDesignerContentStore from "./store/DesignerStore";
 import {getProjectById} from "../utils/LocalStorageUtil";
 import eventOperateStore from "./operate-provider/EventOperateStore";
 import designerStarter from "./DesignerStarter";
-import {designerRouter} from "../index";
+import {parseUrlParams} from "../utils/URLUtil";
 
 const {doScan} = designerStarter;
 
 export const loadDesigner = () => {
+    //扫描组件
     doScan();
+    //初始化项目数据
     loadProjectData();
 }
-
 
 /**
  * 初始化项目操作类型。新增 / 更新
  */
 const loadProjectData = () => {
-    const {history: {location: {state: {action}}}} = designerRouter;
-    switch (action) {
-        case 'create':
-            initNewProject();
-            break;
-        case 'edit':
-            initExistProject();
-            break;
-    }
+    let urlParams = parseUrlParams();
+    const {action} = urlParams;
+    if (action === 'edit')
+        initExistProject();
+    else if (action === 'create')
+        initNewProject();
+    else
+        throw new Error('action is error')
 }
 
 /**
  * 初始化以创建方式打开时项目信息
  */
 const initNewProject = () => {
+    let urlParams = parseUrlParams();
+    const {screenWidth, screenHeight, screenName} = urlParams;
     const {doInit} = lcDesignerContentStore;
-    const {history: {location: {state}}} = designerRouter;
-    const {screenName, screenWidth, screenHeight} = state;
     doInit({
         canvasConfig: {
             width: parseInt(screenWidth),
@@ -49,9 +49,10 @@ const initNewProject = () => {
  * 初始化以更新方式打开时项目信息
  */
 const initExistProject = () => {
+    let urlParams = parseUrlParams();
+    const {id} = urlParams;
     const {doInit} = lcDesignerContentStore;
-    const {history: {location: {state: {id}}}} = designerRouter;
-    getProjectById(id).then((store: any) => {
+    getProjectById(parseInt(id)).then((store: any) => {
         if (store) {
             doInit({
                 id: store.id,

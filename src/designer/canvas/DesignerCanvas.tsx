@@ -72,16 +72,6 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
         });
     }
 
-    getDragScaleProviderProps = () => {
-        const {canvasConfig} = designerStore!;
-        return {
-            contentWidth: canvasConfig?.width,
-            contentHeight: canvasConfig?.height,
-            containerWidth: window.innerWidth - 95,
-            containerHeight: window.innerHeight - 90,
-        }
-    }
-
     render() {
         const {elemConfigs} = designerStore;
         return (
@@ -89,7 +79,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                 <DesignerContainer>
                     <GroupSelectable>
                         <DesignerRuler offsetX={60} offsetY={50}>
-                            <DragScaleProvider {...this.getDragScaleProviderProps()}>
+                            <DragScaleProvider>
                                 <GroupMovable>
                                     <DesignerBackground config={elemConfigs['-1']['background']}
                                                         onClick={this.updateActive}

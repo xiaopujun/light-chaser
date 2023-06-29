@@ -5,14 +5,7 @@ import {scaleConfig} from "./scale/Scaler";
 import designerStore from "../store/DesignerStore";
 import {observer} from "mobx-react";
 
-interface DragScaleProviderProps {
-    containerWidth?: number;
-    containerHeight?: number;
-    contentWidth?: number;
-    contentHeight?: number;
-}
-
-class DragScaleProvider extends Component<DragScaleProviderProps> {
+class DragScaleProvider extends Component {
 
     content: any = null;
     dragger: any = null;
@@ -40,7 +33,7 @@ class DragScaleProvider extends Component<DragScaleProviderProps> {
                 width: window.innerWidth - 95,
                 backgroundColor: '#434343'
             }}>
-                <div ref={ref => this.content = ref}
+                <div ref={ref => this.content = ref} className={'lc-content-scale'}
                      style={{width: canvasConfig?.width, height: canvasConfig?.height}}>
                     {this.props.children}
                 </div>

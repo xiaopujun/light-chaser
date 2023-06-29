@@ -39,7 +39,6 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
     }
 
     unit = 50;
-    _scale = 1;
 
     baseOffset = 20;
     _scrollPosX = 0;

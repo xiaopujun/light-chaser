@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import designerStore from '../../../designer/store/DesignerStore';
 import {BackgroundColorMode, BackgroundConfig, BackgroundMode} from "../../../designer/DesignerType";
 
 interface LcDesignerBackgroundProps {
@@ -18,7 +17,7 @@ class DesignerBackground extends Component<LcDesignerBackgroundProps> {
     }
 
     getBgConfigProps = () => {
-        const bgConfig: BackgroundConfig = designerStore.elemConfigs['-1']['background'];
+        const bgConfig: BackgroundConfig = this.props.config!!;
         const {width, height, bgMode, bgColor, bgImg} = bgConfig;
         let bgImgSize = '100% 100%';
         if (bgImg.bgImgSize && bgImg.bgImgSize.length === 2)
