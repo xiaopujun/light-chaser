@@ -1,39 +1,21 @@
 import {AbstractHeaderItem, HeaderItemProps} from "../../HeaderTypes";
 import {SaveFilled} from "@ant-design/icons";
 import designerStore from "../../../store/DesignerStore";
-import {createProject, saveImgToLocal, updateProject} from "../../../../utils/LocalStorageUtil";
+import {createProject, updateProject} from "../../../../utils/LocalStorageUtil";
 import {SaveType} from "../../../DesignerType";
 import eventOperateStore from "../../../operate-provider/EventOperateStore";
-import {htmlToImg} from "../../../../utils/ImageUtil";
-import {idGenerate} from "../../../../utils/IdGenerate";
+import {htmlToImgWithId} from "../../../../utils/ImageUtil";
 import {buildUrlParams, parseUrlParams} from "../../../../utils/URLUtil";
-
-export async function generateScreenshots() {
-    try {
-        let imgDom: any = document.querySelector('.lc-content-scale');
-        if (imgDom) {
-            const url: any = await htmlToImg(imgDom);
-            const imageId = idGenerate.generateId();
-            await saveImgToLocal(url, imageId);
-            setTimeout(() => {
-                URL.revokeObjectURL(url);
-            }, 3000);
-            return imageId;
-        } else {
-            return null;
-        }
-    } catch (error) {
-        console.error(error);
-    }
-}
+import scaleCore from "../../../operate-provider/scale/ScaleCore";
 
 export const localSave = () => {
     let {id = -1, setId} = designerStore;
     const {maxOrder, minOrder} = eventOperateStore;
     designerStore.extendParams['maxOrder'] = maxOrder;
     designerStore.extendParams['minOrder'] = minOrder;
-    generateScreenshots().then((imageId: any) => {
-        designerStore.projectConfig.screenshot = imageId;
+    let imgDom: any = document.querySelector('.lc-content-scale');
+    htmlToImgWithId(imgDom, {scale: scaleCore.scale}).then((imageId: any) => {
+        designerStore.projectConfig.screenshot = imageId || ''; //截图
         if (id === -1) {
             createProject(designerStore).then((id: number | any) => {
                 if (id > -1) {
@@ -44,11 +26,13 @@ export const localSave = () => {
                     urlParams = {...urlParams, ...{id, action: 'edit'}};
                     window.history.replaceState(null, '', '?' + buildUrlParams(urlParams));
                     alert("create success");
+                    return;
                 }
             });
         } else {
             updateProject(designerStore).then(() => {
                 alert("update success");
+                return;
             });
         }
     });

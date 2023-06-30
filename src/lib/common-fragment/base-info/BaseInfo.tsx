@@ -21,7 +21,6 @@ class BaseInfo extends Component<ConfigType> {
     }
 
     render() {
-        console.log('base-info render');
         const {config = {}} = this.props;
         const {id, type, name, des} = config;
         return (

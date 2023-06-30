@@ -5,13 +5,11 @@ import designerStarter from "../DesignerStarter";
 import {observer} from "mobx-react";
 import './ConfigContent.less';
 import Loading from "../../lib/loading/Loading";
-import {toJS} from "mobx";
 
 class ConfigContent extends Component {
 
     buildConfigContent = () => {
         let {activeMenu, activeElem, activeElemConfig, updateConfig} = rightStore;
-        console.log('activeElemConfig', toJS(activeElemConfig));
         let {customComponentInfoMap} = designerStarter;
         let abstractConfigObj: any = customComponentInfoMap[activeElem.type + ''];
         let menuToConfigComp = abstractConfigObj.getMenuToConfigContentMap();

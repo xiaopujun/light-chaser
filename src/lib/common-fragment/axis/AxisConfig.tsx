@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {Component, useState} from 'react';
 import './AxisConfig.less';
 import ConfigItem from "../../config-item/ConfigItem";
 import ConfigCard from "../../config-card/ConfigCard";
@@ -286,11 +286,6 @@ export const AxisTitle: React.FC<{ config: any, onChange: Function }> = ({config
     const [titlePos, setTitlePos] = useState(config.titlePosition);
     const [title, setTitle] = useState(config.titleContent || '');
     const [titleColor, setTitleColor] = useState(config.titleColor);
-
-    useEffect(() => {
-        console.log('重新渲染了')
-
-    }, []);
 
     return (
         <ConfigCard title={'标题'}>
