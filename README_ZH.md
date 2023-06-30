@@ -67,7 +67,20 @@ http://localhost:3000
 yarn build
 ```
 
-# 五、目录结构
+# 五、如何使用
+
+|操作方式/快捷键|说明|
+|--- | ---|
+|双击左侧组件| 添加组件到画布|
+|鼠标右键长按 | 拖拽画布|
+|alt + 滑轮 | 缩放画布|
+|ctrl + v| 复制组件|
+|ctrl + l| 锁定组件|
+|ctrl + 方向上键| 置顶组件|
+|ctrl + 方向下键| 置底组件|
+|delete| 删除组件|
+
+# 六、目录结构
 
 ```text
 src
@@ -94,7 +107,7 @@ src
 └─utils 工具类
 ```
 
-# 六、如何快速接入自己的组件
+# 七、如何快速接入自己的组件
 
 在LC中接入自己的组件非常简单。你仅需要做一件事！！！
 
@@ -148,7 +161,7 @@ export abstract class AbstractCustomComponentDefinition {
 }
 ```
 
-## 6.1 代码示例
+## 7.1 代码示例
 
 比如我要接入一个antd的条形图组件，那么我仅需提供如下实现即可。
 
@@ -346,7 +359,7 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
 export default AntdBaseBarCore;
 ```
 
-# 七、 结语
+# 8、 结语
 
 如果觉得本项目不错，欢迎star
 

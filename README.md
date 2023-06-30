@@ -4,24 +4,33 @@
 
 # 1. Introduction
 
-Light Chaser (LC) is a data visualization designer for large screens based on the React ecosystem. With simple drag-and-drop functionality, it allows users to generate beautiful and visually appealing data dashboards and boards.
+Light Chaser (LC) is a data visualization designer for large screens based on the React ecosystem. With simple
+drag-and-drop functionality, it allows users to generate beautiful and visually appealing data dashboards and boards.
 
 It has the following features:
 
-- High Performance: By combining the features of React, Mobx, and LC's own design philosophy, efforts have been made to avoid unnecessary rendering of components. This ensures that LC maintains a good overall performance even in scenarios with hundreds of complex components, achieving smooth rendering.
-- High Extensibility: LC provides a unified interface, allowing integration with any React ecosystem components in theory. This allows for limitless expansion of the component library in LC.
-- High Customization: Similar to the dependency on a unified interface, for components implemented by developers themselves, the configuration options can be fully customized. You can use the default configuration components provided by LC or completely use your own implementation.
-- Frontend-Backend Separation: This project is 100% separated between the frontend and backend. Even without a backend service, the LC designer can run perfectly like a local application (currently only supports local execution, with future support for deployment to servers).
-- Quick Theme Switching: LC provides a theme switching feature, allowing you to switch themes globally or at the component level. This enables you to quickly switch themes and generate screens with different styles.
+- High Performance: By combining the features of React, Mobx, and LC's own design philosophy, efforts have been made to
+  avoid unnecessary rendering of components. This ensures that LC maintains a good overall performance even in scenarios
+  with hundreds of complex components, achieving smooth rendering.
+- High Extensibility: LC provides a unified interface, allowing integration with any React ecosystem components in
+  theory. This allows for limitless expansion of the component library in LC.
+- High Customization: Similar to the dependency on a unified interface, for components implemented by developers
+  themselves, the configuration options can be fully customized. You can use the default configuration components
+  provided by LC or completely use your own implementation.
+- Frontend-Backend Separation: This project is 100% separated between the frontend and backend. Even without a backend
+  service, the LC designer can run perfectly like a local application (currently only supports local execution, with
+  future support for deployment to servers).
+- Quick Theme Switching: LC provides a theme switching feature, allowing you to switch themes globally or at the
+  component level. This enables you to quickly switch themes and generate screens with different styles.
 - Keyboard Shortcuts: LC provides a rich set of keyboard shortcuts for quick operations, enhancing your work efficiency.
-- Drag-and-Drop Grid Layout: LC offers drag-and-drop grid layout functionality, allowing you to quickly complete layouts by dragging components, thereby generating large screens efficiently.
+- Drag-and-Drop Grid Layout: LC offers drag-and-drop grid layout functionality, allowing you to quickly complete layouts
+  by dragging components, thereby generating large screens efficiently.
 
 # 2. Showcase
 
 ![2023-06-29 21-10-19 -original-horizontal.gif](https://s2.loli.net/2023/06/29/AweO65TG3nuNCLE.gif)
 
 ![3 -original-horizontal.gif](https://s2.loli.net/2023/06/29/o32EUgvwCuDPLzk.gif)
-
 
 Video Demo: [https://v.douyin.com/y8g6VV3/](https://v.douyin.com/y8g6VV3/)
 
@@ -72,7 +81,20 @@ http://localhost:3000
 yarn build
 ```
 
-# 5. Directory Structure
+# 5. How to Use
+
+|Operation/Shortcut|Description|
+|--- | ---|
+|Double-click on a component in the left panel| Add the component to the canvas|
+|Right-click and hold the mouse button| Drag the canvas|
+|Alt + scroll wheel| Zoom in/out of the canvas|
+|Ctrl + V| Copy the component|
+|Ctrl + L| Lock the component|
+|Ctrl + Up Arrow| Bring the component to the front|
+|Ctrl + Down Arrow| Send the component to the back|
+|Delete| Delete the component|
+
+# 6. Directory Structure
 
 ```text
 src
@@ -99,15 +121,17 @@ src
 └─utils Utility classes
 ```
 
-# 6. How to Quickly Integrate Your Own Components
+# 7. How to Quickly Integrate Your Own Components
 
 Integrating your own components into LC is very simple. You only need to do one thing!!!
 
 1. Find the `src/comps` directory and create a folder for your custom component.
 2. Suppose my custom component name is: `MyComp`.
-3. Create a new TypeScript file named `MyCompCore.ts` in the folder. In this file, create a class that extends `AbstractCustomComponentDefinition` and implement its methods.
+3. Create a new TypeScript file named `MyCompCore.ts` in the folder. In this file, create a class that
+   extends `AbstractCustomComponentDefinition` and implement its methods.
 
-That's it!!! The rest will be handled by the automatic scanner, which will automatically scan your component and register it in LC.
+That's it!!! The rest will be handled by the automatic scanner, which will automatically scan your component and
+register it in LC.
 
 > The definition of `AbstractCustomComponentDefinition` is as follows:
 
@@ -152,20 +176,21 @@ export abstract class AbstractCustomComponentDefinition {
 }
 ```
 
-## 6.1 Code Example
+## 7.1 Code Example
 
-For example, if I want to integrate an Ant Design bar chart component, I only need to provide the following implementation:
+For example, if I want to integrate an Ant Design bar chart component, I only need to provide the following
+implementation:
 
 ```typescript
 import React from "react";
-import { AbstractCustomComponentDefinition } from "../../../framework/core/AbstractCustomComponentDefinition";
-import { BaseInfoType, ElemConfig } from "../../../designer/DesignerType";
-import { MenuInfo } from "../../../designer/right/MenuType";
+import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
+import {BaseInfoType, ElemConfig} from "../../../designer/DesignerType";
+import {MenuInfo} from "../../../designer/right/MenuType";
 import barImg from "./bar.png";
-import { getDefaultMenuList } from "../../../designer/right/util";
-import { updateTheme } from "../../common-fragment/ThemeFragment";
+import {getDefaultMenuList} from "../../../designer/right/util";
+import {updateTheme} from "../../common-fragment/ThemeFragment";
 
-const AntdBaseBarStyleConfig = React.lazy(() => import('./AntdBaseBarConfig').then(module => ({ default: module.AntdBaseBarStyleConfig })));
+const AntdBaseBarStyleConfig = React.lazy(() => import('./AntdBaseBarConfig').then(module => ({default: module.AntdBaseBarStyleConfig})));
 const AnimationConfig = React.lazy(() => import("../../../lib/common-fragment/animation-config/AnimationConfig"));
 const ThemeConfig = React.lazy(() => import("../../../lib/common-fragment/theme-config/ThemeConfig"));
 const BaseInfo = React.lazy(() => import("../../../lib/common-fragment/base-info/BaseInfo"));
@@ -333,9 +358,11 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
         return getDefaultMenuList();
     }
 
-    getMenuToConfigContentMap(): { [
+    getMenuToConfigContentMap(): {
+        [
 
-key: string]: React.Component | React.FC | any } {
+            key: string]: React.Component | React.FC | any
+    } {
         return {
             'info': BaseInfo,
             'style': AntdBaseBarStyleConfig,
@@ -351,6 +378,6 @@ key: string]: React.Component | React.FC | any } {
 export default AntdBaseBarCore;
 ```
 
-# 7. Conclusion
+# 8. Conclusion
 
 If you find this project helpful, please consider giving it a star.
