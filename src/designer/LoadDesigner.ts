@@ -1,8 +1,8 @@
 import lcDesignerContentStore from "./store/DesignerStore";
-import {getProjectById} from "../utils/LocalStorageUtil";
 import eventOperateStore from "./operate-provider/EventOperateStore";
 import designerStarter from "./DesignerStarter";
 import {parseUrlParams} from "../utils/URLUtil";
+import LocalOperator from "../framework/operate/LocalOperator";
 
 const {doScan} = designerStarter;
 
@@ -50,9 +50,8 @@ const initNewProject = () => {
  */
 const initExistProject = () => {
     let urlParams = parseUrlParams();
-    const {id} = urlParams;
     const {doInit} = lcDesignerContentStore;
-    getProjectById(parseInt(id)).then((store: any) => {
+    new LocalOperator().getProject(urlParams.id).then((store: any) => {
         if (store) {
             doInit({
                 id: store.id,

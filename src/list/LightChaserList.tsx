@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import './style/LightChaserList.less';
 import {withRouter} from "react-router-dom";
 import AddNewScreenDialog from "./AddNewScreenDialog";
-import {getAllProject, getImageFromLocalWithKey} from "../utils/LocalStorageUtil";
 import listBottom from './icon/list-bottom.svg';
 import templateMarket from './icon/template-market.svg';
 import datasource from './icon/datasource.svg';
@@ -12,6 +11,8 @@ import listDelImg from './list-del.svg';
 import listDisplay from './list-display.svg';
 import listEdit from './list-edit.svg';
 import {buildUrlParams} from "../utils/URLUtil";
+import LocalOperator from "../framework/operate/LocalOperator";
+import {ImgUtil} from "../utils/ImgUtil";
 
 class LightChaserList extends Component<any> {
 
@@ -23,7 +24,8 @@ class LightChaserList extends Component<any> {
     }
 
     componentDidMount() {
-        getAllProject().then((data: any) => {
+        //todo new LocalOperator() 要使用策略模式替换。本地存储和远程存储
+        new LocalOperator().getAllProject().then((data: any) => {
             if (data && data.length > 0) {
                 this.setState({data});
                 let imageIds: any = [];
@@ -33,7 +35,7 @@ class LightChaserList extends Component<any> {
                         imageIds.push(imageId);
                     }
                 });
-                const promise = imageIds.map((imageId: any) => getImageFromLocalWithKey(imageId));
+                const promise = imageIds.map((imageId: any) => ImgUtil.getImageFromLocalWithKey(imageId));
                 let imageIdToUrl: any = {};
                 Promise.all(promise).then((res: any) => {
                     res.forEach((item: any) => {
@@ -71,7 +73,7 @@ class LightChaserList extends Component<any> {
 
     openScreen = (e: any) => {
         const {type} = e.target.dataset
-        let id = parseInt(e.currentTarget.id);
+        let id = e.currentTarget.id;
         if (type === 'edit') {
             let params = buildUrlParams({
                 id: id,

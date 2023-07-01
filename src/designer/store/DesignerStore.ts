@@ -34,7 +34,7 @@ class DesignerStore implements DesignerType, AbstractBaseStore {
     /**
      * 大屏id
      */
-    id: number = -1;
+    id: string = '';
 
     /**
      * 画布设置
@@ -256,7 +256,7 @@ class DesignerStore implements DesignerType, AbstractBaseStore {
      * 清空store
      */
     doDestroy = () => {
-        this.id = -1;
+        this.id = '';
         this.canvasConfig = {};
         this.activeElem = {};
         this.projectConfig = {};
@@ -274,7 +274,7 @@ class DesignerStore implements DesignerType, AbstractBaseStore {
     /**
      * 设置布局id
      */
-    setId = (id: number) => {
+    setId = (id: string) => {
         runInAction(() => {
             this.id = id;
         })

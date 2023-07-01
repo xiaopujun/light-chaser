@@ -1,24 +1,24 @@
 import {AbstractHeaderItem, HeaderItemProps} from "../../HeaderTypes";
 import {SaveFilled} from "@ant-design/icons";
 import designerStore from "../../../store/DesignerStore";
-import {createProject, updateProject} from "../../../../utils/LocalStorageUtil";
 import {SaveType} from "../../../DesignerType";
 import eventOperateStore from "../../../operate-provider/EventOperateStore";
-import {htmlToImgWithId} from "../../../../utils/ImageUtil";
 import {buildUrlParams, parseUrlParams} from "../../../../utils/URLUtil";
 import scaleCore from "../../../operate-provider/scale/ScaleCore";
+import LocalOperator from "../../../../framework/operate/LocalOperator";
+import {ImgUtil} from "../../../../utils/ImgUtil";
 
 export const localSave = () => {
-    let {id = -1, setId} = designerStore;
+    let {id = '', setId} = designerStore;
     const {maxOrder, minOrder} = eventOperateStore;
     designerStore.extendParams['maxOrder'] = maxOrder;
     designerStore.extendParams['minOrder'] = minOrder;
     let imgDom: any = document.querySelector('.lc-content-scale');
-    htmlToImgWithId(imgDom, {scale: scaleCore.scale}).then((imageId: any) => {
+    ImgUtil.htmlToImgWithId(imgDom, {scale: scaleCore.scale}).then((imageId: any) => {
         designerStore.projectConfig.screenshot = imageId || ''; //截图
-        if (id === -1) {
-            createProject(designerStore).then((id: number | any) => {
-                if (id > -1) {
+        if (id === '') {
+            new LocalOperator().createProject(designerStore).then((id: number | any) => {
+                if (id && id !== '') {
                     //更新id
                     setId && setId(id);
                     //修改路由参数，新增变为更新
@@ -26,13 +26,11 @@ export const localSave = () => {
                     urlParams = {...urlParams, ...{id, action: 'edit'}};
                     window.history.replaceState(null, '', '?' + buildUrlParams(urlParams));
                     alert("create success");
-                    return;
                 }
             });
         } else {
-            updateProject(designerStore).then(() => {
+            new LocalOperator().updateProject(designerStore).then(() => {
                 alert("update success");
-                return;
             });
         }
     });

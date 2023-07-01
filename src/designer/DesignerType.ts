@@ -301,7 +301,7 @@ export interface BaseInfoType {
  */
 export interface DesignerType {
     //项目id
-    id?: number;
+    id?: string;
     //画布设置
     canvasConfig?: CanvasConfig;
     //激活状态元素信息

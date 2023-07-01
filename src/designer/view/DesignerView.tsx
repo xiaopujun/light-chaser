@@ -3,9 +3,9 @@ import DesignerBackground from "../../comps/lc/background/DesignerBackground";
 import designerStarter from "../DesignerStarter";
 import './DesignerView.less';
 import {MovableItemType} from "../../lib/lc-movable/types";
-import {getProjectById} from "../../utils/LocalStorageUtil";
 import {parseUrlParams} from "../../utils/URLUtil";
 import Loading from "../../lib/loading/Loading";
+import LocalOperator from "../../framework/operate/LocalOperator";
 
 interface LcShowProps {
 
@@ -21,7 +21,8 @@ class DesignerView extends Component<LcShowProps | any> {
 
     componentDidMount() {
         let urlParams = parseUrlParams();
-        getProjectById(parseInt(urlParams.id)).then((project: any) => {
+        //todo 要使用策略模式替换。本地存储和远程存储
+        new LocalOperator().getProject(parseInt(urlParams.id)).then((project: any) => {
             if (project) {
                 const {scannerCustomComponents} = designerStarter;
                 scannerCustomComponents();
