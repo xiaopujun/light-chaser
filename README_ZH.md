@@ -18,7 +18,7 @@ Light Chaser(LC) 是一款基于React生态的大屏数据可视化设计器。�
 
 ![3 -original-horizontal.gif](https://s2.loli.net/2023/06/29/o32EUgvwCuDPLzk.gif)
 
-视频演示：[https://www.bilibili.com/video/BV1yu411b7bD/?share_source=copy_web&vd_source=ece0559aa5b8c4f5c0d7307cb2b06aac](https://www.bilibili.com/video/BV1yu411b7bD/?share_source=copy_web&vd_source=ece0559aa5b8c4f5c0d7307cb2b06aac)
+视频演示：[查看视频](https://www.bilibili.com/video/BV1yu411b7bD/?share_source=copy_web&vd_source=ece0559aa5b8c4f5c0d7307cb2b06aac)
 
 # 三、主要技术栈
 
