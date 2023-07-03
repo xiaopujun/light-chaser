@@ -61,16 +61,14 @@ const initExistProject = () => {
                 elemConfigs: store.elemConfigs,
                 layoutConfigs: store.layoutConfigs,
                 statisticInfo: store.statisticInfo,
-                layers: store.layers,
+                layerConfigs: store.layers,
                 themeConfig: store.theme,
-                group: store.group,
-                linkage: store.linkage,
-                condition: store.condition,
                 extendParams: store.extendParams,
             })
-            const {setMinOrder, setMaxOrder} = eventOperateStore;
-            setMinOrder(store.extendParams['minOrder']);
-            setMaxOrder(store.extendParams['maxOrder']);
+            //设置事件操作器的最大最小层级
+            const {setMinLevel, setMaxLevel} = eventOperateStore;
+            setMinLevel(store.layoutConfigs.minLevel);
+            setMaxLevel(store.layoutConfigs.maxLevel);
         }
     })
 }

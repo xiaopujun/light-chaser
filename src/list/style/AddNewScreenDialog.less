@@ -1,59 +1,37 @@
-.lc-new-screen-dialog {
-  color: #00c2d5;
-  background: rgba(29, 29, 31, 0.5);
-  backdrop-filter: saturate(180%) blur(20px);
-  border-radius: 10px;
+.add-new-screen-dialog {
 
-  .ant-modal-content {
-    background-color: #0000;
+  .lc-add-new-screen {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 
-    .ant-modal-header {
-      background-color: #0000;
-      border-bottom: 1px solid #24564e;
-
-      .ant-modal-title {
-        color: #00c2d5;
-      }
+    .item-content {
+      width: 150px !important;
     }
+  }
 
-    .ant-modal-body {
-      background-color: #0000;
+  .add-new-screen-explain {
+    color: #6e6e6e;
+    padding: 0 7px;
+    margin-bottom: 10px;
 
-      .lc-new-screen-item {
-        display: flex;
-        margin-bottom: 15px;
-        justify-content: space-between;
-        align-items: center;
-
-        div {
-          width: 15%;
-          text-align-last: justify;
-        }
-
-        input {
-          color: white;
-          width: 80%;
-          background-color: #1b2b3b;
-          display: block;
-          border: 1px solid #1094a4;
-          transition: border 0.7s;
-        }
-
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-          -webkit-appearance: none;
-        }
-
-
-        input:hover, input:active, input:checked {
-          border: 1px solid #14e6ff;
-        }
-
-      }
+    p {
+      margin-bottom: 2px;
     }
+  }
 
-    .ant-modal-footer {
-      border-top: 1px solid #24564e;
+  .add-new-screen-footer {
+    margin-top: 3px;
+    border-top: 2px solid #272b34;
+    display: flex;
+    flex-direction: row-reverse;
+
+    .lc-button {
+      font-size: 12px;
+      color: #a3a3a3;
+      width: 85px;
+      height: 30px;
+      margin: 6px 5px 10px 0;
     }
   }
 }

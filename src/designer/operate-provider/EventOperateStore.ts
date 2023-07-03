@@ -48,18 +48,18 @@ class EventOperateStore {
      * 拖拽框架的最大层级，用于操作菜单的置顶操作
      * The maximum level of the drag and drop framework, used for the top operation of the operation menu
      */
-    maxOrder = 0;
+    maxLevel = 0;
     /**
      * 拖拽框架的最小层级，用于操作菜单的置底操作
      * The minimum level of the drag and drop framework, used for the bottom operation of the operation menu
      */
-    minOrder = 0;
+    minLevel = 0;
 
     pointerTarget: any = null;
 
-    setMaxOrder = (order: number) => this.maxOrder = order;
+    setMaxLevel = (order: number) => this.maxLevel = order;
 
-    setMinOrder = (order: number) => this.minOrder = order;
+    setMinLevel = (order: number) => this.minLevel = order;
 
     setUnLockedId = (id: string) => this.unLockedId = id;
 

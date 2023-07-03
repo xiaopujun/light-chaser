@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
-import {Input, Modal} from "antd";
 import './style/AddNewScreenDialog.less';
+import Dialog from "../lib/lc-dialog/Dialog";
+import ConfigItem from "../lib/config-item/ConfigItem";
+import UnderLineInput from "../lib/lc-input/UnderLineInput";
+import LcButton from "../lib/lc-button/LcButton";
 
 interface AddNewScreenDialogProps {
     onOk?: () => void;
@@ -11,7 +14,8 @@ interface AddNewScreenDialogProps {
 
 class AddNewScreenDialog extends Component<AddNewScreenDialogProps> {
 
-    onOk = () => {
+    onOk = (e: any) => {
+        e.preventDefault();
         const {onOk} = this.props;
         onOk && onOk();
     }
@@ -27,25 +31,35 @@ class AddNewScreenDialog extends Component<AddNewScreenDialogProps> {
     }
 
     render() {
-        const {visible} = this.props;
+        const {visible = false} = this.props;
         return (
-            <Modal title="新建大屏" visible={visible} onOk={this.onOk} destroyOnClose={true}
-                   onCancel={this.onCancel} className={'lc-new-screen-dialog'}>
-                <div>
-                    <div className={'lc-new-screen-item'}>
-                        <div>名称</div>
-                        <Input required={true} name={'screenName'} onChange={this.inputOnChanged}/>
+            <Dialog title={'新建大屏'} visible={visible} className={'add-new-screen-dialog'} onClose={this.onCancel}>
+                <form onSubmit={this.onOk}>
+                    <div className={'lc-add-new-screen'}>
+                        <ConfigItem title={'名称'}>
+                            <UnderLineInput required={true} maxLength={20}/>
+                        </ConfigItem>
+                        <ConfigItem title={'描述'}>
+                            <UnderLineInput maxLength={60}/>
+                        </ConfigItem>
+                        <ConfigItem title={'宽度'}>
+                            <UnderLineInput type={'number'} min={500} required={true}/>
+                        </ConfigItem>
+                        <ConfigItem title={'高度'}>
+                            <UnderLineInput type={'number'} min={300} required={true}/>
+                        </ConfigItem>
                     </div>
-                    <div className={'lc-new-screen-item'}>
-                        <div>宽度</div>
-                        <Input required={true} type={"number"} name={'screenWidth'} onChange={this.inputOnChanged}/>
+                    <div className={'add-new-screen-explain'}>
+                        <p>说明：</p>
+                        <p>1、名称不超过20字，描述不超过60字</p>
+                        <p>2、宽度必须&ge;500，高度必须&ge;300</p>
                     </div>
-                    <div className={'lc-new-screen-item'}>
-                        <div>高度</div>
-                        <Input type={'number'} name={'screenHeight'} onChange={this.inputOnChanged}/>
+                    <div className={'add-new-screen-footer'}>
+                        <LcButton type={"submit"}>保存</LcButton>
+                        <LcButton onClick={this.onCancel}>取消</LcButton>
                     </div>
-                </div>
-            </Modal>
+                </form>
+            </Dialog>
         );
     }
 }

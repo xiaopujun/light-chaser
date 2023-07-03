@@ -22,13 +22,12 @@ class DesignerView extends Component<LcShowProps | any> {
     componentDidMount() {
         let urlParams = parseUrlParams();
         //todo 要使用策略模式替换。本地存储和远程存储
-        new LocalOperator().getProject(parseInt(urlParams.id)).then((project: any) => {
+        new LocalOperator().getProject(urlParams.id).then((project: any) => {
             if (project) {
                 const {scannerCustomComponents} = designerStarter;
                 scannerCustomComponents();
                 this.elemConfigs = project.elemConfigs;
                 this.layoutConfigs = project.layoutConfigs;
-                console.log(this.elemConfigs)
                 this.setState({loaded: true});
             }
         });

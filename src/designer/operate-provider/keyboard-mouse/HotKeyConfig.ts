@@ -53,27 +53,27 @@ export const doLock = () => {
 }
 
 export const toTop = () => {
-    let {maxOrder, setMaxOrder, targetIds, setTargetIds} = eventOperateStore;
+    let {maxLevel, setMaxLevel, targetIds, setTargetIds} = eventOperateStore;
     const {updateLayout, layoutConfigs} = designerStore;
     let toBeUpdate: MovableItemType[] = [];
     targetIds.forEach((id: string) => {
         let item = layoutConfigs[id];
-        toBeUpdate.push({...item, order: ++maxOrder});
+        toBeUpdate.push({...item, order: ++maxLevel});
     });
-    setMaxOrder(maxOrder)
+    setMaxLevel(maxLevel)
     setTargetIds([]);
     updateLayout(toBeUpdate);
 }
 
 export const toBottom = () => {
-    let {minOrder, setMinOrder, targetIds, setTargetIds} = eventOperateStore;
+    let {minLevel, setMinLevel, targetIds, setTargetIds} = eventOperateStore;
     const {updateLayout, layoutConfigs} = designerStore;
     let toBeUpdate: MovableItemType[] = [];
     targetIds.forEach((id: string) => {
         let item = layoutConfigs[id];
-        toBeUpdate.push({...item, order: --minOrder});
+        toBeUpdate.push({...item, order: --minLevel});
     });
-    setMinOrder(minOrder)
+    setMinLevel(minLevel)
     setTargetIds([]);
     updateLayout(toBeUpdate);
 }

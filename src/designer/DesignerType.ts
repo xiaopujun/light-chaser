@@ -28,13 +28,22 @@ export interface ThemeItemType {
 /**
  * 图层
  */
-export interface Layer {
+export interface LayerInfo {
     //id
     id?: number;
     //名称
     name?: string;
     //可见性
     visible?: boolean;
+}
+
+export interface LayerConfigType {
+    //图层信息
+    layers?: LayerInfo[];
+    //最大层级（用于置顶）
+    maxLevel?: number;
+    //最小层级（用于置底）
+    minLevel?: number;
 }
 
 /**
@@ -315,15 +324,9 @@ export interface DesignerType {
     //统计信息
     statisticInfo?: Statistic;
     //图层信息
-    layers?: Layer[];
-    //主题
+    layerConfigs?: LayerConfigType;
+    //全局主题
     themeConfig?: Array<ThemeItemType>;
-    //编组
-    group?: any;
-    //联动配置
-    linkage?: any;
-    //条件配置
-    condition?: any;
     //扩展参数
     extendParams?: any;
 }

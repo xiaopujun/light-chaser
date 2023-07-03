@@ -10,9 +10,9 @@ import {ImgUtil} from "../../../../utils/ImgUtil";
 
 export const localSave = () => {
     let {id = '', setId} = designerStore;
-    const {maxOrder, minOrder} = eventOperateStore;
-    designerStore.extendParams['maxOrder'] = maxOrder;
-    designerStore.extendParams['minOrder'] = minOrder;
+    const {maxLevel, minLevel} = eventOperateStore;
+    designerStore.layerConfigs.maxLevel = maxLevel;
+    designerStore.layerConfigs.minLevel = minLevel;
     let imgDom: any = document.querySelector('.lc-content-scale');
     ImgUtil.htmlToImgWithId(imgDom, {scale: scaleCore.scale}).then((imageId: any) => {
         designerStore.projectConfig.screenshot = imageId || ''; //截图

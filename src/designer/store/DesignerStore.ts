@@ -6,9 +6,9 @@ import {
     BackgroundImgRepeat,
     BackgroundMode,
     CanvasConfig,
-    ElemConfig,
-    Layer,
     DesignerType,
+    ElemConfig,
+    LayerConfigType,
     ProjectConfig,
     ProjectState,
     SaveType,
@@ -116,7 +116,7 @@ class DesignerStore implements DesignerType, AbstractBaseStore {
     /**
      * 图层信息
      */
-    layers: Layer[] = [];
+    layerConfigs: LayerConfigType = {};
 
     /**
      * 主题
@@ -134,72 +134,8 @@ class DesignerStore implements DesignerType, AbstractBaseStore {
                 emphasize: '#38929f',
                 supplementary: '#1790a2',
             }
-        },
-        {
-            id: '1',
-            name: '红色主题',
-            des: '红色主题',
-            colors: {
-                main: '#ff4d4f',
-                text: '#ff7875',
-                background: 'rgba(255,77,79,0.2)',
-                auxiliary: '#d4380d',
-                emphasize: '#cf1322',
-                supplementary: '#a8071a',
-            }
-        }, {
-            id: '2',
-            name: '绿色主题',
-            des: '绿色主题',
-            colors: {
-                main: '#52c41a',
-                text: '#87d068',
-                background: 'rgba(82,196,26,0.2)',
-                auxiliary: '#389e0d',
-                emphasize: '#237804',
-                supplementary: '#135200',
-            }
-        }, {
-            id: '3',
-            name: '蓝色主题',
-            des: '蓝色主题',
-            colors: {
-                main: '#1890ff',
-                text: '#40a9ff',
-                background: 'rgba(24,144,255,0.2)',
-                auxiliary: '#096dd9',
-                emphasize: '#0050b3',
-                supplementary: '#003a8c',
-            }
-        }, {
-            id: '4',
-            name: '黄色主题',
-            des: '黄色主题',
-            colors: {
-                main: '#faad14',
-                text: '#ffc53d',
-                background: 'rgba(250,173,20,0.2)',
-                auxiliary: '#d48806',
-                emphasize: '#fa8c16',
-                supplementary: '#ad6800',
-            }
         }
     ];
-
-    /**
-     * 组合
-     */
-    group: any = undefined;
-
-    /**
-     * 联动器配置
-     */
-    linkage: any = undefined;
-
-    /**
-     * 条件器配置
-     */
-    condition: any = undefined;
 
     /**
      * 扩展参数
@@ -219,11 +155,8 @@ class DesignerStore implements DesignerType, AbstractBaseStore {
         this.elemConfigs = store.elemConfigs ? {...this.elemConfigs, ...store.elemConfigs} : this.elemConfigs;
         this.layoutConfigs = store.layoutConfigs || this.layoutConfigs;
         this.statisticInfo = store.statisticInfo ? {...this.statisticInfo, ...store.statisticInfo} : this.statisticInfo;
-        this.layers = store.layers || this.layers;
+        this.layerConfigs = store.layerConfigs || this.layerConfigs;
         this.themeConfig = store.themeConfig || this.themeConfig;
-        this.group = store.group || this.group;
-        this.linkage = store.linkage || this.linkage;
-        this.condition = store.condition || this.condition;
         this.extendParams = store.extendParams ? {...this.extendParams, ...store.extendParams} : this.extendParams;
         if (this.elemConfigs['-1']) {
             this.elemConfigs['-1']['background']['width'] = this.canvasConfig.width;
@@ -243,11 +176,8 @@ class DesignerStore implements DesignerType, AbstractBaseStore {
             elemConfigs: toJS(this.elemConfigs),
             layoutConfigs: toJS(this.layoutConfigs),
             statisticInfo: toJS(this.statisticInfo),
-            layers: toJS(this.layers),
+            layers: toJS(this.layerConfigs),
             theme: toJS(this.themeConfig),
-            group: toJS(this.group),
-            linkage: toJS(this.linkage),
-            condition: toJS(this.condition),
             extendParams: toJS(this.extendParams),
         }
     }
@@ -263,11 +193,8 @@ class DesignerStore implements DesignerType, AbstractBaseStore {
         this.elemConfigs = {};
         this.layoutConfigs = {};
         this.statisticInfo = {};
-        this.layers = [];
+        this.layerConfigs = {};
         this.themeConfig = {};
-        this.group = {};
-        this.linkage = {};
-        this.condition = {};
         this.extendParams = {};
     }
 
@@ -383,7 +310,7 @@ class DesignerStore implements DesignerType, AbstractBaseStore {
 
     copyItem = (ids: string[]) => {
         let newIds = [];
-        let {maxOrder, setMaxOrder} = eventOperateStore;
+        let {maxLevel, setMaxLevel} = eventOperateStore;
         for (const id of ids) {
             const {[id]: item} = this.elemConfigs;
             if (item) {
@@ -397,12 +324,12 @@ class DesignerStore implements DesignerType, AbstractBaseStore {
                 newLayout.id = newId;
                 const [x = 10, y = 10] = (newLayout.position || []).map(p => p + 10);
                 newLayout.position = [x, y];
-                newLayout.order = ++maxOrder;
+                newLayout.order = ++maxLevel;
                 this.elemConfigs[newId] = newItem;
                 this.layoutConfigs[newId] = newLayout;
             }
         }
-        setMaxOrder(maxOrder);
+        setMaxLevel(maxLevel);
         return newIds;
     }
 

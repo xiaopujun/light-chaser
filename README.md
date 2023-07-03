@@ -32,7 +32,7 @@ It has the following features:
 
 ![3 -original-horizontal.gif](https://s2.loli.net/2023/06/29/o32EUgvwCuDPLzk.gif)
 
-Video Demo: [https://v.douyin.com/y8g6VV3/](https://v.douyin.com/y8g6VV3/)
+Video Demo: [https://www.bilibili.com/video/BV1yu411b7bD/?share_source=copy_web&vd_source=ece0559aa5b8c4f5c0d7307cb2b06aac](https://www.bilibili.com/video/BV1yu411b7bD/?share_source=copy_web&vd_source=ece0559aa5b8c4f5c0d7307cb2b06aac)
 
 # 3. Main Technology Stack
 

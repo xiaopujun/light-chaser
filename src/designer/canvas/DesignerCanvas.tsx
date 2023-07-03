@@ -31,7 +31,6 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
     }
 
     updateActive = (e: any) => {
-        //todo 优化,事件处理时目前元素参数可能会存在偏差
         let {id: elemId, dataset} = e.target;
         const {updateActive, activeElem, elemConfigs} = designerStore;
         if (elemId === activeElem?.id)
@@ -44,7 +43,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
     }
 
     /**
-     * 元素生成方法
+     * 元素生成
      */
     generateElement = () => {
         const {layoutConfigs, elemConfigs, projectConfig} = designerStore!;
