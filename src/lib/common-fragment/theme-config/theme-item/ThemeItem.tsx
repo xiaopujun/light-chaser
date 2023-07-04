@@ -16,6 +16,7 @@ interface ThemeItemProps extends ThemeColors {
     showOperator?: boolean;
     onDel?: (id: string) => void;
     onUpd?: (data: ThemeItemType) => void;
+    onSelected?: (id: string) => void;
 }
 
 class ThemeItem extends Component<ThemeItemProps> {
@@ -28,10 +29,11 @@ class ThemeItem extends Component<ThemeItemProps> {
     render() {
         const {
             colors: {main, text, background, auxiliary, emphasize, supplementary},
-            selected = false, itemStyle, name, id, showOperator = false, onDel
+            selected = false, itemStyle, name, id, showOperator = false, onDel, onSelected
         } = this.props;
         return (
-            <div id={id} className={`lc-theme-item ${selected ? 'lc-theme-item-active' : ''}`} style={itemStyle}>
+            <div id={id} className={`lc-theme-item ${selected ? 'lc-theme-item-active' : ''}`} style={itemStyle}
+                 onClick={(() => onSelected && onSelected(id || ''))}>
                 <div className={'lc-theme-item-header'}>
                     <div className={'lc-theme-item-title'}>{name}</div>
                     {showOperator && <div className={'lc-theme-item-operators'}>

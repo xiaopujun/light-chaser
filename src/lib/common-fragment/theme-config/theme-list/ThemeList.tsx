@@ -27,11 +27,12 @@ class ThemeList extends Component<ThemeListProps> {
     }
 
 
-    onClick = (data: any) => {
+    onSelected = (id: string) => {
+        console.log(id)
         const {onChange} = this.props;
         const themeConfig = designerStore.themeConfig;
-        this.setState({activeId: data.target.id})
-        onChange && onChange(themeConfig.find((item: any) => parseInt(item.id) === parseInt(data.target.id)));
+        this.setState({activeId: id})
+        onChange && onChange(themeConfig.find((item: any) => parseInt(item.id) === parseInt(id)));
     }
 
     render() {
@@ -45,10 +46,11 @@ class ThemeList extends Component<ThemeListProps> {
                                       showOperator={showOperator}
                                       onDel={this.onDel}
                                       onUpd={onUpd}
+                                      onSelected={this.onSelected}
                                       colors={themeConfig[i].colors}/>)
         }
         return (
-            <div className={'lc-theme-list'} style={{width: '100%'}} onClick={this.onClick}>
+            <div className={'lc-theme-list'} style={{width: '100%'}}>
                 {themeList}
             </div>
         );

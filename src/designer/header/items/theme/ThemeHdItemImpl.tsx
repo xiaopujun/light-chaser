@@ -52,7 +52,7 @@ class ThemeHdItemImpl extends Component {
                     <div style={{height: 500, overflowY: "scroll", padding: '3px 0 6px 0'}}>
                         <ThemeList onChange={(value) => this.selectedTheme = value}/>
                     </div>
-                    <p style={{color: '#a98366'}}>警告：全局主题设置在更新后，会影响到当前项目的所有组件。请谨慎操作！</p>
+                    <p style={{color: '#6e6e6e'}}>警告：全局主题设置在更新后，会影响到当前项目的所有组件。请谨慎操作！</p>
                     <LcButton style={{width: '100%', margin: '10px 0 5px 0'}}
                               onClick={this.updateGlobalTheme}>更新主题</LcButton>
                 </Dialog>
