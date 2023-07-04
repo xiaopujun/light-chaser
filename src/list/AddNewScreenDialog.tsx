@@ -16,7 +16,6 @@ interface AddNewScreenDialogProps {
     onOk?: (data: NewProjectInfoType) => void;
     onCancel?: () => void;
     visible?: boolean;
-    onChange?: (data: { [k: string]: [v: any] }) => void;
 }
 
 class AddNewScreenDialog extends Component<AddNewScreenDialogProps> {
@@ -37,11 +36,6 @@ class AddNewScreenDialog extends Component<AddNewScreenDialogProps> {
     onCancel = () => {
         const {onCancel} = this.props;
         onCancel && onCancel();
-    }
-
-    inputOnChanged = (e: any) => {
-        const {onChange} = this.props;
-        onChange && onChange({[e.target.name]: e.target.value});
     }
 
     render() {

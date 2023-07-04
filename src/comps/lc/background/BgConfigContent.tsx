@@ -177,7 +177,6 @@ class BgConfigContent extends PureComponent<ConfigType> {
     render() {
         const config: BackgroundConfig = this.state.config;
         const {bgMode, bgImg, bgColor} = config;
-        console.log('BackgroundConfig render', bgColor)
         return (
             <div className={'lc-background-config'}>
                 <ConfigItem title={'模式'} contentStyle={{width: '250px', paddingLeft: '20px'}}>
@@ -243,7 +242,7 @@ class BgConfigContent extends PureComponent<ConfigType> {
                 </>}
                 {bgMode === BackgroundMode.COLOR &&
                 <>
-                    <ConfigItem title={'类型'} contentStyle={{paddingLeft: '20px'}}>
+                    <ConfigItem title={'类型'} contentStyle={{paddingLeft: '20px', width: '80%'}}>
                         <Radio options={[
                             {value: '0', label: '单色'},
                             {value: '1', label: '线性'},

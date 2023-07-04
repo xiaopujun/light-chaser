@@ -17,7 +17,7 @@ import {ImgUtil} from "../utils/ImgUtil";
 class LightChaserList extends Component<any> {
 
     state: any = {
-        addNewScreen: false,
+        showAddDialog: false,
         addNewData: {},
         data: [],
         imageIdToUrl: {}
@@ -49,26 +49,18 @@ class LightChaserList extends Component<any> {
         })
     }
 
-    addNewBigScreen = () => {
+    toggleNewProVisible = () => {
         const {addNewScreen} = this.state;
         this.setState({addNewScreen: !addNewScreen})
     }
 
-    addNewBigScreenOk = (data: NewProjectInfoType) => {
-        let params = {...data, ...{action: 'create'}};
-        let urlParams = buildUrlParams(params);
+    onOk = (data: NewProjectInfoType) => {
+        let urlParams = buildUrlParams({...data, ...{action: 'create'}});
+        this.setState({addNewScreen: false});
         window.open(`/designer?${urlParams}`, '_blank');
     }
 
-    addNewBigScreenCancel = () => {
-        const {addNewScreen} = this.state;
-        this.setState({addNewScreen: !addNewScreen, addNewData: {}})
-    }
-
-    addNewScreenDialogChanged = (data: { [k: string]: [v: any] }) => {
-        const {addNewData} = this.state;
-        this.setState({addNewData: {...addNewData, ...data}});
-    }
+    onCancel = () => this.setState({addNewScreen: false});
 
     openScreen = (e: any) => {
         const {type} = e.target.dataset
@@ -112,7 +104,7 @@ class LightChaserList extends Component<any> {
                         <div className={'content-body'}>
                             <div className={'project-list'}>
                                 <div style={{width: width, height: height, margin: '0 20px 20px 0'}}>
-                                    <LcButton onClick={this.addNewBigScreen}
+                                    <LcButton onClick={this.toggleNewProVisible}
                                               style={{width: width, height: height, fontSize: 20}}>+ 新建项目</LcButton>
                                 </div>
                                 {data && data.map((item: any) => {
@@ -148,8 +140,7 @@ class LightChaserList extends Component<any> {
                         </div>
                     </div>
                 </div>
-                <AddNewScreenDialog onOk={this.addNewBigScreenOk} onCancel={this.addNewBigScreenCancel}
-                                    visible={addNewScreen} onChange={this.addNewScreenDialogChanged}/>
+                <AddNewScreenDialog onOk={this.onOk} onCancel={this.onCancel} visible={addNewScreen}/>
             </div>
         );
     }
