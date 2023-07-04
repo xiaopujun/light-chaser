@@ -5,8 +5,15 @@ import ConfigItem from "../lib/config-item/ConfigItem";
 import UnderLineInput from "../lib/lc-input/UnderLineInput";
 import LcButton from "../lib/lc-button/LcButton";
 
+export interface NewProjectInfoType {
+    name: string;
+    description?: string;
+    width: number;
+    height: number;
+}
+
 interface AddNewScreenDialogProps {
-    onOk?: () => void;
+    onOk?: (data: NewProjectInfoType) => void;
     onCancel?: () => void;
     visible?: boolean;
     onChange?: (data: { [k: string]: [v: any] }) => void;
@@ -14,10 +21,17 @@ interface AddNewScreenDialogProps {
 
 class AddNewScreenDialog extends Component<AddNewScreenDialogProps> {
 
+    projectInfo: NewProjectInfoType = {
+        name: '',
+        description: '',
+        width: 500,
+        height: 300
+    }
+
     onOk = (e: any) => {
         e.preventDefault();
         const {onOk} = this.props;
-        onOk && onOk();
+        onOk && onOk(this.projectInfo);
     }
 
     onCancel = () => {
@@ -37,16 +51,20 @@ class AddNewScreenDialog extends Component<AddNewScreenDialogProps> {
                 <form onSubmit={this.onOk}>
                     <div className={'lc-add-new-screen'}>
                         <ConfigItem title={'名称'}>
-                            <UnderLineInput required={true} maxLength={20}/>
+                            <UnderLineInput required={true} maxLength={20}
+                                            onChange={(name: string) => this.projectInfo.name = name}/>
                         </ConfigItem>
                         <ConfigItem title={'描述'}>
-                            <UnderLineInput maxLength={60}/>
+                            <UnderLineInput maxLength={60}
+                                            onChange={(description: string) => this.projectInfo.description = description}/>
                         </ConfigItem>
                         <ConfigItem title={'宽度'}>
-                            <UnderLineInput type={'number'} min={500} required={true}/>
+                            <UnderLineInput type={'number'} min={500} required={true}
+                                            onChange={(width: number) => this.projectInfo.width = width}/>
                         </ConfigItem>
                         <ConfigItem title={'高度'}>
-                            <UnderLineInput type={'number'} min={300} required={true}/>
+                            <UnderLineInput type={'number'} min={300} required={true}
+                                            onChange={(height: number) => this.projectInfo.height = height}/>
                         </ConfigItem>
                     </div>
                     <div className={'add-new-screen-explain'}>

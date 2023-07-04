@@ -32,15 +32,15 @@ const loadProjectData = () => {
  */
 const initNewProject = () => {
     let urlParams = parseUrlParams();
-    const {screenWidth, screenHeight, screenName} = urlParams;
+    const {width, height, name} = urlParams;
     const {doInit} = lcDesignerContentStore;
     doInit({
         canvasConfig: {
-            width: parseInt(screenWidth),
-            height: parseInt(screenHeight),
+            width: parseInt(width),
+            height: parseInt(height),
         },
         projectConfig: {
-            name: screenName
+            name: name
         },
     })
 }

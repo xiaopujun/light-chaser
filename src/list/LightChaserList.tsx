@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './style/LightChaserList.less';
 import {withRouter} from "react-router-dom";
-import AddNewScreenDialog from "./AddNewScreenDialog";
+import AddNewScreenDialog, {NewProjectInfoType} from "./AddNewScreenDialog";
 import listBottom from './icon/list-bottom.svg';
 import templateMarket from './icon/template-market.svg';
 import datasource from './icon/datasource.svg';
@@ -54,10 +54,9 @@ class LightChaserList extends Component<any> {
         this.setState({addNewScreen: !addNewScreen})
     }
 
-    addNewBigScreenOk = () => {
-        let {addNewData} = this.state;
-        addNewData['action'] = 'create';
-        let urlParams = buildUrlParams(addNewData);
+    addNewBigScreenOk = (data: NewProjectInfoType) => {
+        let params = {...data, ...{action: 'create'}};
+        let urlParams = buildUrlParams(params);
         window.open(`/designer?${urlParams}`, '_blank');
     }
 
