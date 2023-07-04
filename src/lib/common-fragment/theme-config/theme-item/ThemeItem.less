@@ -8,7 +8,6 @@
   border: 2px solid transparent;
 
   .lc-theme-item-header {
-    pointer-events: none;
     padding: 5px 7px;
     font-size: @lc-font-sm;
     color: #aeaeae;
@@ -16,7 +15,19 @@
     align-items: center;
     justify-content: space-between;
 
-    .lc-theme-item-operator:hover {
+    .lc-theme-item-operators {
+      display: flex;
+
+      .operator-item {
+        margin-left: 5px;
+
+        img {
+          width: 15px;
+        }
+      }
+    }
+
+    .lc-theme-item-operators:hover {
       color: #47f1ff;
     }
   }

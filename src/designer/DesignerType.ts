@@ -21,7 +21,6 @@ export interface ThemeColors {
 export interface ThemeItemType {
     colors: ThemeColors;
     name: string;
-    des: string;
     id: string;
 }
 
