@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Dialog from "../../../../lib/lc-dialog/Dialog";
+import './ThemeHdItem.less';
 import headerStore from "../../HeaderStore";
 import ThemeList from "../../../../lib/common-fragment/theme-config/theme-list/ThemeList";
 import LcButton from "../../../../lib/lc-button/LcButton";
@@ -45,16 +46,17 @@ class ThemeHdItemImpl extends Component {
         const {openEditor} = this.state;
         return (
             <>
-                <Dialog title={'主题设置(全局)'} visible={themeVisible} onClose={this.onClose} width={450}>
+                <Dialog title={'主题设置(全局)'} className={'lc-theme-config-global'} visible={themeVisible}
+                        onClose={this.onClose} width={450}>
                     <LcButton style={{width: '100%', height: 50, margin: '5px 0 10px 0'}}
                               onClick={this.openEditor}>
                         + 自定义主题</LcButton>
-                    <div style={{height: 500, overflowY: "scroll", padding: '3px 0 6px 0'}}>
-                        <ThemeList onChange={(value) => this.selectedTheme = value}/>
+                    <div style={{maxHeight: 360, overflowY: "scroll", padding: '3px 0 6px 0'}}>
+                        <ThemeList onSelected={(value) => this.selectedTheme = value}/>
                     </div>
                     <p style={{color: '#6e6e6e'}}>警告：全局主题设置在更新后，会影响到当前项目的所有组件。请谨慎操作！</p>
                     <LcButton style={{width: '100%', margin: '10px 0 5px 0'}}
-                              onClick={this.updateGlobalTheme}>更新主题</LcButton>
+                              onClick={this.updateGlobalTheme}>更新全局主题</LcButton>
                 </Dialog>
                 <Dialog onClose={this.closeEditor} title={'编辑主题'} visible={openEditor} width={860}>
                     <ThemeEditor/>

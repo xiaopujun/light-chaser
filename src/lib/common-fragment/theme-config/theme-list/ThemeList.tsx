@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
-import {ThemeItemType} from "../../../../designer/DesignerType";
+import {ThemeColors, ThemeItemType} from "../../../../designer/DesignerType";
 import ThemeItem from "../theme-item/ThemeItem";
 import designerStore from "../../../../designer/store/DesignerStore";
 import {observer} from "mobx-react";
 
 interface ThemeListProps {
     data?: ThemeItemType[];
-    onChange?: (data: ThemeItemType) => void;
+    onSelected?: (data: ThemeItemType) => void;
     showOperator?: boolean;
-    onUpd?: (data: ThemeItemType) => void;
     onDel?: (id: string) => void;
 }
 
@@ -27,17 +26,15 @@ class ThemeList extends Component<ThemeListProps> {
     }
 
 
-    onSelected = (id: string) => {
-        console.log(id)
-        const {onChange} = this.props;
-        const themeConfig = designerStore.themeConfig;
-        this.setState({activeId: id})
-        onChange && onChange(themeConfig.find((item: any) => parseInt(item.id) === parseInt(id)));
+    onSelected = (data: ThemeItemType) => {
+        this.setState({activeId: data.id})
+        const {onSelected} = this.props;
+        onSelected && onSelected(data);
     }
 
     render() {
         const {activeId} = this.state;
-        const {showOperator, onUpd} = this.props;
+        const {showOperator} = this.props;
         const themeConfig = designerStore.themeConfig;
         let themeList = [];
         for (let i = 0; i < themeConfig.length; i++) {
@@ -45,9 +42,8 @@ class ThemeList extends Component<ThemeListProps> {
                                       name={themeConfig[i].name}
                                       showOperator={showOperator}
                                       onDel={this.onDel}
-                                      onUpd={onUpd}
                                       onSelected={this.onSelected}
-                                      colors={themeConfig[i].colors}/>)
+                                      colors={themeConfig[i].colors as ThemeColors}/>)
         }
         return (
             <div className={'lc-theme-list'} style={{width: '100%'}}>

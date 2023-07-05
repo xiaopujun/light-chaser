@@ -134,8 +134,12 @@ class ThemeEditor extends Component {
         this.setState({data: newData});
     }
 
-    onUdp = (data: ThemeItemType) => {
-        this.setState({themeConfig: data});
+    onSelected = (data: ThemeItemType) => {
+        const {themeConfig} = this.state;
+        if (themeConfig.id === data.id)
+            this.setState({themeConfig: this.initThemeConfig});
+        else
+            this.setState({themeConfig: data});
     }
 
     render() {
@@ -197,14 +201,13 @@ class ThemeEditor extends Component {
                         <p style={{color: '#6e6e6e'}}>说明：自定义主题色的色值应该保持在同一色系。以确保整体统一的风格。主题色占据主要面积</p>
                         <br/>
                         <div className={'theme-operate-btn'}>
-                            {/*<LcButton type={'button'}>取消</LcButton>*/}
                             <LcButton type={"submit"}>添加 / 更新</LcButton>
                         </div>
                     </form>
                 </div>
                 <div className={'editor-right'}>
                     <ConfigCard title={'主题列表'}>
-                        <ThemeList showOperator={true} onUpd={this.onUdp} onDel={this.onDel}/>
+                        <ThemeList showOperator={true} onSelected={this.onSelected} onDel={this.onDel}/>
                     </ConfigCard>
                 </div>
             </div>

@@ -35,7 +35,7 @@ class ThemeConfig extends Component<ConfigType> {
                         <LcButton onClick={this.openThemeEditor} style={{width: '100%'}}>+ 自定义主题</LcButton>
                     </div>
                     <br/>
-                    <ThemeList onChange={this.themeChange}/>
+                    <ThemeList onSelected={this.themeChange}/>
                 </div>
                 <Dialog onClose={this.closeEditor} title={'编辑主题'} visible={this.state.editTheme} width={860}>
                     <ThemeEditor/>
