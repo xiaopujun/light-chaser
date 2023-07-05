@@ -67,8 +67,8 @@ const initExistProject = () => {
             })
             //设置事件操作器的最大最小层级
             const {setMinLevel, setMaxLevel} = eventOperateStore;
-            setMinLevel(store.layoutConfigs.minLevel);
-            setMaxLevel(store.layoutConfigs.maxLevel);
+            setMinLevel(store.layoutConfigs.minLevel || 0);
+            setMaxLevel(store.layoutConfigs.maxLevel || 0);
         }
     })
 }

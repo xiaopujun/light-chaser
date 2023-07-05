@@ -5,7 +5,7 @@ import designerStore from "../../store/DesignerStore";
 import {MovableItemType} from "../../../lib/lc-movable/types";
 import rightStore from "../../right/RightStore";
 import {SaveType} from "../../DesignerType";
-import {localSave} from "../../header/items/save/SaveHdItem";
+import LocalOperator from "../../../framework/operate/LocalOperator";
 
 
 export const selectAll = () => {
@@ -95,7 +95,9 @@ export const doDelete = () => {
 export const doSave = () => {
     let {projectConfig: {saveType}} = designerStore;
     if (saveType === SaveType.LOCAL) {
-        localSave();
+        //todo 策略模式优化
+        new LocalOperator().doCreateOrUpdate(designerStore).then(() => {
+        });
     } else if (saveType === SaveType.SERVER) {
         alert("server save");
     }
