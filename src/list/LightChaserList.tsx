@@ -13,6 +13,7 @@ import listEdit from './list-edit.svg';
 import {buildUrlParams} from "../utils/URLUtil";
 import LocalOperator from "../framework/operate/LocalOperator";
 import {ImgUtil} from "../utils/ImgUtil";
+import {ProjectState} from "../designer/DesignerType";
 
 class LightChaserList extends Component<any> {
 
@@ -25,15 +26,14 @@ class LightChaserList extends Component<any> {
 
     componentDidMount() {
         //todo new LocalOperator() 要使用策略模式替换。本地存储和远程存储
-        new LocalOperator().getAllProject().then((data: any) => {
+        new LocalOperator().getProjectSimpleInfoList().then((data: any) => {
             if (data && data.length > 0) {
                 this.setState({data});
                 let imageIds: any = [];
                 data.forEach((item: any) => {
-                    let imageId = item.projectConfig.screenshot;
-                    if (imageId && imageId !== '') {
+                    let imageId = item.screenshot;
+                    if (imageId && imageId !== '')
                         imageIds.push(imageId);
-                    }
                 });
                 const promise = imageIds.map((imageId: any) => ImgUtil.getImageFromLocalWithKey(imageId));
                 let imageIdToUrl: any = {};
@@ -44,7 +44,6 @@ class LightChaserList extends Component<any> {
                     });
                     this.setState({imageIdToUrl});
                 });
-
             }
         })
     }
@@ -108,7 +107,15 @@ class LightChaserList extends Component<any> {
                                               style={{width: width, height: height, fontSize: 20}}>+ 新建项目</LcButton>
                                 </div>
                                 {data && data.map((item: any) => {
-                                    let bgImgUrl = imageIdToUrl[item.projectConfig?.screenshot];
+                                    let bgImgUrl = imageIdToUrl[item?.screenshot];
+                                    let stateText, stateColor;
+                                    if (item.state === ProjectState.DRAFT) {
+                                        stateText = '草稿';
+                                        stateColor = '#FFB800';
+                                    } else if (item.state === ProjectState.PUBLISH) {
+                                        stateText = '已发布';
+                                        stateColor = '#00CC66';
+                                    }
                                     return (
                                         <div key={item.id + ''}
                                              style={{
@@ -120,7 +127,7 @@ class LightChaserList extends Component<any> {
                                              id={item.id + ''}
                                              className={'project-item'}>
                                             <div className={'pro-list-content'} style={{zIndex: 1}}>
-                                                <div className={'pro-content-title'}>{item.projectConfig?.name}</div>
+                                                <div className={'pro-content-title'}>{item?.name}</div>
                                                 <div className={'pro-content-operates'}>
                                                     <div className={'operate-item'} data-type={'edit'}>
                                                         <img src={listEdit} alt={'编辑'}/>
@@ -132,6 +139,11 @@ class LightChaserList extends Component<any> {
                                                         <img src={listDisplay} alt={'展示'}/>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div className={'pro-content-footer'}>
+                                                <div className={'state-point'} style={{backgroundColor: stateColor}}/>
+                                                <div className={'state-text'}
+                                                     style={{color: stateColor}}>{stateText}</div>
                                             </div>
                                         </div>
                                     )

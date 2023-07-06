@@ -1,9 +1,8 @@
-import ProjectDataOperator from "./ProjectDataOperator";
 import {DesignerStore} from "../../designer/store/DesignerStore";
 import {BackgroundConfig} from "../../designer/DesignerType";
 import localforage from "localforage";
 import {ImgUtil} from "../../utils/ImgUtil";
-import {LocalOperatorTemplate} from "./LocalOperatorTemplate";
+import {AbstractLocalOperator} from "./AbstractLocalOperator";
 import eventOperateStore from "../../designer/operate-provider/EventOperateStore";
 import scaleCore from "../../designer/operate-provider/scale/ScaleCore";
 import {buildUrlParams, parseUrlParams} from "../../utils/URLUtil";
@@ -11,7 +10,7 @@ import {buildUrlParams, parseUrlParams} from "../../utils/URLUtil";
 /**
  * 本地项目数据操作实现
  */
-export default class LocalOperator extends LocalOperatorTemplate implements ProjectDataOperator {
+export default class LocalOperator extends AbstractLocalOperator {
 
     deleteProject(id: number): boolean {
         return false;
@@ -65,5 +64,13 @@ export default class LocalOperator extends LocalOperatorTemplate implements Proj
         let imgDom: any = document.querySelector('.lc-content-scale');
         const imageId = await ImgUtil.htmlToImgWithId(imgDom, {scale: scaleCore.scale});
         designerStore.projectConfig.screenshot = imageId || ''; //截图
+    }
+
+    async getProjectSimpleInfoList(): Promise<any[]> {
+        let simpleDataList = await localforage.getItem('lc_project_list');
+        if (simpleDataList && simpleDataList instanceof Array)
+            return simpleDataList;
+        else
+            return [];
     }
 }

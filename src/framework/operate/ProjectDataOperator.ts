@@ -24,6 +24,11 @@ export default interface ProjectDataOperator {
     getAllProject(): Promise<any[]>;
 
     /**
+     * 获取项目简单信息列表（用于列表展示)
+     */
+    getProjectSimpleInfoList(): Promise<any[]>;
+
+    /**
      * 获取项目
      */
     getProject(id: number): Promise<DesignerStore | null>;

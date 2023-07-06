@@ -3,11 +3,12 @@ import {idGenerate} from "../../utils/IdGenerate";
 import {BackgroundConfig} from "../../designer/DesignerType";
 import {ImgUtil} from "../../utils/ImgUtil";
 import localforage from "localforage";
+import ProjectDataOperator from "./ProjectDataOperator";
 
 /**
  * 使用模板方法模式，抽象化创建和更新项目的过程。
  */
-export abstract class LocalOperatorTemplate {
+export abstract class AbstractLocalOperator implements ProjectDataOperator {
 
     public async doCreateOrUpdate(designerStore: DesignerStore): Promise<void> {
         if (designerStore.id === '')
@@ -19,9 +20,24 @@ export abstract class LocalOperatorTemplate {
 
     public async createProject(designerStore: DesignerStore): Promise<string> {
         await this.createProjectBefore(designerStore);
-        await LocalOperatorTemplate.doCreate(designerStore);
+        await AbstractLocalOperator.doCreate(designerStore);
         this.createProjectAfter(designerStore);
         return designerStore.id;
+    }
+
+    private static async doSaveProjectSimpleInfo(projectData: any): Promise<void> {
+        // 8. 维护项目列表（保存项目的轻量级描述信息，避免加载列表时内存占用过大）
+        const simpleInfoList = await localforage.getItem('lc_project_list');
+        const {id, projectConfig: {name, des, state, updateTime, screenshot}} = projectData;
+        const simpleData = {id, name, des, state, updateTime, screenshot};
+        if (simpleInfoList && Array.isArray(simpleInfoList)) {
+            simpleInfoList.push(simpleData);
+            await localforage.setItem('lc_project_list', simpleInfoList);
+        } else {
+            // 如果没有保存过数据则初始化
+            const newDataArr = [simpleData];
+            await localforage.setItem('lc_project_list', newDataArr);
+        }
     }
 
     private static async doCreate(designerStore: DesignerStore): Promise<void> {
@@ -39,8 +55,7 @@ export abstract class LocalOperatorTemplate {
                 //5. 保存背景图片到本地数据库
                 const res = await ImgUtil.saveImgToLocal(bgConfig.bgImg.bgImgUrl!, bgImgKey);
                 //6. 将背景图片的可访问地址替换为唯一标识。
-                if (res)
-                    bgConfig.bgImg.bgImgUrl = bgImgKey;
+                if (res) bgConfig.bgImg.bgImgUrl = bgImgKey;
             }
             // 7. 保存项目到本地数据库
             let dataArr: any = await localforage.getItem('light-chaser');
@@ -49,23 +64,7 @@ export abstract class LocalOperatorTemplate {
             dataArr.push(config);
             await localforage.setItem('light-chaser', dataArr);
             // 8. 维护项目列表（保存项目的轻量级描述信息，避免加载列表时内存占用过大）
-            const projectListInfo = await localforage.getItem('lc-project-list');
-            const simpleData = {
-                id: config.id,
-                name: config.projectConfig.name,
-                des: config.projectConfig.des,
-                state: config.projectConfig.state,
-                updateTime: config.projectConfig.updateTime,
-                screenshot: config.projectConfig.screenshot,
-            };
-            if (projectListInfo && Array.isArray(projectListInfo)) {
-                projectListInfo.push(simpleData);
-                await localforage.setItem('lc-project-list', projectListInfo);
-            } else {
-                // 如果没有保存过数据则初始化
-                const newDataArr = [simpleData];
-                await localforage.setItem('lc-project-list', newDataArr);
-            }
+            await AbstractLocalOperator.doSaveProjectSimpleInfo(config);
         } catch (error) {
             console.log("createProject error", error);
         }
@@ -115,6 +114,12 @@ export abstract class LocalOperatorTemplate {
                 await localforage.setItem('light-chaser', dataArr);
             }
         }
+        //更新项目列表信息
+        let simpleInfoList = await this.getProjectSimpleInfoList();
+        let index = simpleInfoList.findIndex((project) => project.id === config.id);
+        const {id, projectConfig: {name, des, state, updateTime, screenshot}} = config;
+        simpleInfoList[index] = {id, name, des, state, updateTime, screenshot};
+        await localforage.setItem('lc_project_list', simpleInfoList);
     }
 
     public updateProjectBefore(designerStore: DesignerStore): void {
@@ -123,4 +128,10 @@ export abstract class LocalOperatorTemplate {
 
     public updateProjectAfter(designerStore: DesignerStore): void {
     }
+
+    abstract deleteProject(id: number): boolean;
+
+    abstract getProject(id: number): Promise<DesignerStore | null>;
+
+    abstract getProjectSimpleInfoList(): Promise<any[]>;
 }
