@@ -5,13 +5,8 @@ import './DesignerView.less';
 import {MovableItemType} from "../../lib/lc-movable/types";
 import {parseUrlParams} from "../../utils/URLUtil";
 import Loading from "../../lib/loading/Loading";
-import {SaveType} from "../DesignerType";
 
-interface LcShowProps {
-
-}
-
-class DesignerView extends Component<LcShowProps | any> {
+class DesignerView extends Component {
 
     elemConfigs: any = {};
     layoutConfigs: any = {};
@@ -23,7 +18,7 @@ class DesignerView extends Component<LcShowProps | any> {
         let urlParams = parseUrlParams();
         const {scannerProjectOperators, abstractOperatorMap} = designerStarter;
         scannerProjectOperators();
-        abstractOperatorMap[SaveType.LOCAL].getProject(urlParams.id).then((project: any) => {
+        abstractOperatorMap[urlParams.saveType].getProject(urlParams.id).then((project: any) => {
             if (project) {
                 const {scannerCustomComponents} = designerStarter;
                 scannerCustomComponents();

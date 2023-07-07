@@ -109,16 +109,16 @@ class LocalOperator extends AbstractOperator {
         //更新项目列表信息
         let simpleInfoList = await this.getProjectSimpleInfoList();
         let index = simpleInfoList.findIndex((project) => project.id === config.id);
-        const {id, projectConfig: {name, des, state, updateTime, screenshot}} = config;
-        simpleInfoList[index] = {id, name, des, state, updateTime, screenshot};
+        const {id, projectConfig: {name, des, state, updateTime, screenshot, saveType}} = config;
+        simpleInfoList[index] = {id, name, des, state, updateTime, screenshot, saveType};
         await localforage.setItem('lc_project_list', simpleInfoList);
     }
 
     private static async doSaveProjectSimpleInfo(projectData: any): Promise<void> {
         // 8. 维护项目列表（保存项目的轻量级描述信息，避免加载列表时内存占用过大）
         const simpleInfoList = await localforage.getItem('lc_project_list');
-        const {id, projectConfig: {name, des, state, updateTime, screenshot}} = projectData;
-        const simpleData = {id, name, des, state, updateTime, screenshot};
+        const {id, projectConfig: {name, des, state, updateTime, screenshot, saveType}} = projectData;
+        const simpleData = {id, name, des, state, updateTime, screenshot, saveType};
         if (simpleInfoList && Array.isArray(simpleInfoList)) {
             simpleInfoList.push(simpleData);
             await localforage.setItem('lc_project_list', simpleInfoList);

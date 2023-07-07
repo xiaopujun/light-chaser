@@ -65,7 +65,7 @@ class LightChaserList extends Component<any> {
     onCancel = () => this.setState({addNewScreen: false});
 
     openScreen = (e: any) => {
-        const {type} = e.target.dataset
+        const {type, savetype} = e.target.dataset
         let id = e.currentTarget.id;
         if (type === 'edit') {
             let params = buildUrlParams({
@@ -74,7 +74,7 @@ class LightChaserList extends Component<any> {
             });
             window.open(`/designer?${params}`, '_blank');
         } else if (type === 'show') {
-            window.open(`/view?id=${id}`, '_blank');
+            window.open(`/view?id=${id}&saveType=${savetype}`, '_blank');
         }
     }
 
@@ -138,7 +138,8 @@ class LightChaserList extends Component<any> {
                                                     <div className={'operate-item'} data-type={'del'}>
                                                         <img src={listDelImg} alt={'删除'}/>
                                                     </div>
-                                                    <div className={'operate-item'} data-type={'show'}>
+                                                    <div className={'operate-item'} data-type={'show'}
+                                                         data-savetype={item.saveType}>
                                                         <img src={listDisplay} alt={'展示'}/>
                                                     </div>
                                                 </div>
