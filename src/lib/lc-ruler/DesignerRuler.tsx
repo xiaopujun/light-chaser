@@ -32,7 +32,8 @@ interface DesignerRulerProps {
  */
 class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
 
-    timerId: any = null;
+    wheelTimerId: any = null;
+    pointerMoveTimerId: any = null;
 
     state = {
         render: 0
@@ -56,13 +57,6 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
     scrollPosY = 0;
     startPosY = 0;
 
-    antiShakeRender = () => {
-        clearTimeout(this.timerId);
-        this.timerId = setTimeout(() => {
-            this.setState({render: this.state.render + 1})
-        }, 300);
-    }
-
     componentDidMount() {
         const {offsetX: ofX = 0, offsetY: ofY = 0} = this.props;
         eventManager.register('wheel', () => {
@@ -71,7 +65,10 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
             this.startPosY = this.mousePosY - ((this.mousePosY - this.startPosY) / scaleCore.ratio);
             this.scrollPosY = this.startPosY;
             this.unit = Math.floor(50 / scaleCore.scale);
-            this.antiShakeRender();
+            clearTimeout(this.wheelTimerId);
+            this.wheelTimerId = setTimeout(() => {
+                this.setState({render: this.state.render + 1})
+            }, 300);
         });
 
         eventManager.register('pointermove', (e: any) => {
@@ -84,8 +81,8 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
                 this.offsetY = this.offsetY - e.movementY;
                 this._scrollPosY = this.startPosY + (this.offsetY / scale)
 
-                clearTimeout(this.timerId);
-                this.timerId = setTimeout(() => {
+                clearTimeout(this.pointerMoveTimerId);
+                this.pointerMoveTimerId = setTimeout(() => {
                     this.rulerX && this.rulerX.scroll(this._scrollPosX);
                     this.rulerY && this.rulerY.scroll(this._scrollPosY);
                 }, 300);
@@ -116,7 +113,8 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
         eventManager.unregister('pointermove');
         eventManager.unregister('pointerdown');
         eventManager.unregister('pointerup');
-        clearTimeout(this.timerId);
+        clearTimeout(this.wheelTimerId);
+        clearTimeout(this.pointerMoveTimerId);
     }
 
 
