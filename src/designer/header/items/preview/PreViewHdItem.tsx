@@ -11,7 +11,7 @@ export default class PreViewHdItem extends AbstractHeaderItem {
             icon: EyeFilled,
             name: '预览',
             order: 4,
-            onClick: () => window.open('/view?id=' + designerStore.id)
+            onClick: () => window.open(`/view?id=${designerStore.id}&saveType=${designerStore.projectConfig.saveType}`)
         };
     }
 }
