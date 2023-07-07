@@ -1,18 +1,14 @@
 import React, {Component} from 'react';
-import './classify-list/ClassifyList.less';
 import SortList from "./classify-list/ClassifyList";
-import CompList from "./comp-list/CompList";
+import {observer} from "mobx-react";
 
 class DesignerLeft extends Component {
 
     render() {
         return (
-            <>
-                <SortList/>
-                <CompList/>
-            </>
+            <SortList/>
         );
     }
 }
 
-export default DesignerLeft;
+export default observer(DesignerLeft);

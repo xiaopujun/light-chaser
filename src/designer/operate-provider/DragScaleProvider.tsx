@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
-import Dragger from "./drag/Dragger";
 import coordinate from "./coordinate/Coordinate";
 import {scaleConfig} from "./scale/Scaler";
 import designerStore from "../store/DesignerStore";
 import {observer} from "mobx-react";
+import CanvasDragger from "./drag/CanvasDragger";
 
 class DragScaleProvider extends Component {
 
     content: any = null;
-    dragger: any = null;
+    dragger: CanvasDragger | null = null;
 
     componentDidMount() {
         //配置缩放
@@ -16,12 +16,12 @@ class DragScaleProvider extends Component {
         scaleConfig.content = this.content;
         scaleConfig.offsetX = 80;
         scaleConfig.offsetY = 70;
-        this.dragger = new Dragger(this.content);
-        this.dragger.init();
+        this.dragger = new CanvasDragger(this.content);
     }
 
     componentWillUnmount() {
-        this.dragger.destroy();
+        if (this.dragger)
+            this.dragger.destroy();
     }
 
     render() {

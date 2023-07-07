@@ -10,13 +10,23 @@ import designerStore from "../../store/DesignerStore";
 import {idGenerate} from "../../../utils/IdGenerate";
 import {MovableItemType} from "../../../lib/lc-movable/types";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
+import CommonDragger from "../../operate-provider/drag/CommonDragger";
 
 class CompList extends Component {
+
+    compListRef: any = null;
+    dragTargetRef: any = null;
 
     constructor(props: any) {
         super(props);
         const {doInit} = compListStore;
         doInit && doInit();
+    }
+
+    componentDidMount() {
+        if (this.compListRef && this.dragTargetRef) {
+            new CommonDragger(this.compListRef, this.dragTargetRef);
+        }
     }
 
     addItem = (compKey: string) => {
@@ -58,7 +68,7 @@ class CompList extends Component {
             let chartImg = lcCompInit.getChartImg();
             chartDom.push(
                 <div key={i + ''} className={'list-item droppable-element'}>
-                    <div className={'item-header'}>
+                    <div className={'item-header'} ref={'drag-target'}>
                         <div className={'item-name'}>{name}</div>
                         <div className={'item-type'}>Antd</div>
                     </div>
@@ -82,11 +92,10 @@ class CompList extends Component {
     }
 
     render() {
-        const {visible} = compListStore;
         return (
             <>
-                {visible ? <div className={'lc-comp-list'}>
-                    <div className={'list-title'}>
+                <div ref={ref => this.compListRef = ref} className={'lc-comp-list'}>
+                    <div className={'list-title'} ref={ref => this.dragTargetRef = ref}>
                         <div className={'title-content'}>组件列表</div>
                         <div onClick={this.onClose}><span><LineOutlined/></span></div>
                     </div>
@@ -97,7 +106,7 @@ class CompList extends Component {
                     <div className={'list-items'}>
                         {this.getChartDom()}
                     </div>
-                </div> : <></>}
+                </div>
             </>
         );
     }
