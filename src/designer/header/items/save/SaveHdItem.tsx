@@ -2,7 +2,7 @@ import {AbstractHeaderItem, HeaderItemProps} from "../../HeaderTypes";
 import {SaveFilled} from "@ant-design/icons";
 import designerStore from "../../../store/DesignerStore";
 import {SaveType} from "../../../DesignerType";
-import LocalOperator from "../../../../framework/operate/LocalOperator";
+import designerStarter from "../../../DesignerStarter";
 
 /**
  * header-保存
@@ -15,15 +15,11 @@ export default class SaveHdItem extends AbstractHeaderItem {
             name: '保存',
             order: 3,
             onClick: () => {
-                let {projectConfig: {saveType}} = designerStore;
-                //todo 使用策略模式优化
-                if (saveType === SaveType.LOCAL) {
-                    new LocalOperator().doCreateOrUpdate(designerStore).then(() => {
-
-                    });
-                } else if (saveType === SaveType.SERVER) {
-                    alert("server save");
-                }
+                const {abstractOperatorMap} = designerStarter;
+                const {projectConfig: {saveType = SaveType.LOCAL}} = designerStore;
+                abstractOperatorMap[saveType].doCreateOrUpdate(designerStore).then(() => {
+                    console.log('update or create success');
+                });
             }
         }
     }

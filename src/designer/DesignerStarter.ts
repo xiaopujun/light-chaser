@@ -1,5 +1,6 @@
 import {AbstractCustomComponentDefinition} from "../framework/core/AbstractCustomComponentDefinition";
 import {AbstractHeaderItem, HeaderItemProps} from "./header/HeaderTypes";
+import {AbstractOperator} from "../framework/operate/AbstractOperator";
 
 /**
  * 设计器启动器，通过该启动器自动化扫描加载组件
@@ -11,12 +12,15 @@ class DesignerStarter {
     headerItemInstances: HeaderItemProps[] = [];
     //自定义组件主题刷新器
     themeRefresher: { [key: string]: Function } = {};
+    //项目数据操作实现映射
+    abstractOperatorMap: { [key: string]: AbstractOperator } = {};
 
 
     //todo 扫描组件，要优化为异步扫描
     doScan = () => {
         this.scannerHeader();
         this.scannerCustomComponents();
+        this.scannerProjectOperators();
     }
 
     //扫描头部组件
@@ -48,6 +52,18 @@ class DesignerStarter {
                     this.customComponentInfoMap[compKey] = customComponentInfo;
                     this.themeRefresher[compKey] = customComponentInfo.updateTheme;
                 }
+            }
+        });
+    }
+
+    scannerProjectOperators = () => {
+        const compCtx = require.context('../framework', true, /\.(ts)$/);
+        compCtx.keys().forEach(key => {
+            const Clazz = compCtx(key).default;
+            if (Clazz && AbstractOperator.isPrototypeOf(Clazz)) {
+                let operatorInstance: AbstractOperator = new Clazz();
+                let operateEnv = operatorInstance.getKey();
+                this.abstractOperatorMap[operateEnv] = operatorInstance;
             }
         });
     }

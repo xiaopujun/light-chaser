@@ -5,7 +5,7 @@ import './DesignerView.less';
 import {MovableItemType} from "../../lib/lc-movable/types";
 import {parseUrlParams} from "../../utils/URLUtil";
 import Loading from "../../lib/loading/Loading";
-import LocalOperator from "../../framework/operate/LocalOperator";
+import {SaveType} from "../DesignerType";
 
 interface LcShowProps {
 
@@ -21,8 +21,9 @@ class DesignerView extends Component<LcShowProps | any> {
 
     componentDidMount() {
         let urlParams = parseUrlParams();
-        //todo 要使用策略模式替换。本地存储和远程存储
-        new LocalOperator().getProject(urlParams.id).then((project: any) => {
+        const {scannerProjectOperators, abstractOperatorMap} = designerStarter;
+        scannerProjectOperators();
+        abstractOperatorMap[SaveType.LOCAL].getProject(urlParams.id).then((project: any) => {
             if (project) {
                 const {scannerCustomComponents} = designerStarter;
                 scannerCustomComponents();

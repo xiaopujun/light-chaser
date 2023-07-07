@@ -11,9 +11,10 @@ import listDelImg from './list-del.svg';
 import listDisplay from './list-display.svg';
 import listEdit from './list-edit.svg';
 import {buildUrlParams} from "../utils/URLUtil";
-import LocalOperator from "../framework/operate/LocalOperator";
 import {ImgUtil} from "../utils/ImgUtil";
-import {ProjectState} from "../designer/DesignerType";
+import {ProjectState, SaveType} from "../designer/DesignerType";
+import designerStarter from "../designer/DesignerStarter";
+import designerStore from "../designer/store/DesignerStore";
 
 class LightChaserList extends Component<any> {
 
@@ -25,8 +26,10 @@ class LightChaserList extends Component<any> {
     }
 
     componentDidMount() {
-        //todo new LocalOperator() 要使用策略模式替换。本地存储和远程存储
-        new LocalOperator().getProjectSimpleInfoList().then((data: any) => {
+        const {scannerProjectOperators, abstractOperatorMap} = designerStarter;
+        scannerProjectOperators();
+        const {projectConfig: {saveType = SaveType.LOCAL}} = designerStore;
+        abstractOperatorMap[saveType].getProjectSimpleInfoList().then((data: any) => {
             if (data && data.length > 0) {
                 this.setState({data});
                 let imageIds: any = [];
