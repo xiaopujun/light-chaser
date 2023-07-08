@@ -2,16 +2,19 @@ import AbstractDrag from "./AbstractDrag";
 import eventManager from "../core/EventManager";
 import eventOperateStore from "../EventOperateStore";
 import {KMMap} from "../keyboard-mouse/KeyboardMouse";
-import coordinate from "../coordinate/Coordinate";
 import scaleCore from "../scale/ScaleCore";
 
 class CanvasDragger extends AbstractDrag {
 
-    constructor(target: any) {
+    //设置为静态属性，以供画布的拖拽和缩放信息共用
+    public static position: { x: number, y: number } = {x: 0, y: 0};
+
+    constructor(target: any, initPosition?: { x: number, y: number }) {
         super();
         if (!target)
             throw new Error("target is null, cannot drag");
         this.target = target;
+        CanvasDragger.position = initPosition || CanvasDragger.position;
         this.registerDragger();
     }
 
@@ -28,10 +31,10 @@ class CanvasDragger extends AbstractDrag {
         const {setPointerTarget} = eventOperateStore;
         setPointerTarget(e.target)
         if (KMMap.rightClick) {
-            coordinate.x += e.movementX;
-            coordinate.y += e.movementY;
+            CanvasDragger.position.x += e.movementX;
+            CanvasDragger.position.y += e.movementY;
             const {scale} = scaleCore;
-            this.target.style.transform = 'translate3d(' + coordinate.x + 'px, ' + coordinate.y + 'px, 0) scale(' + scale + ')';
+            this.target.style.transform = 'translate3d(' + CanvasDragger.position.x + 'px, ' + CanvasDragger.position.y + 'px, 0) scale(' + scale + ')';
         }
     }
 

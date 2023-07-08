@@ -5,7 +5,6 @@ abstract class AbstractDrag {
 
     public registerDragger(): void {
         this.onDragStart(this.target);
-        // this.onDragMove(this.target);
         this.onDragEnd(this.target);
     }
 

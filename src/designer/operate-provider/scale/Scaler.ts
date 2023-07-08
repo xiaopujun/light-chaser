@@ -1,9 +1,9 @@
 import designerStore from "../../store/DesignerStore";
 import scaleCore from "./ScaleCore";
-import coordinate from "../coordinate/Coordinate";
 import eventOperateStore from "../EventOperateStore";
 import eventManager from "../core/EventManager";
 import {KMMap} from "../keyboard-mouse/KeyboardMouse";
+import CanvasDragger from "../drag/CanvasDragger";
 
 export const scaleConfig = {
     content: {},
@@ -33,7 +33,7 @@ export const scaleCanvas = (e: any) => {
         y: (scaleCore.ratio - 1) * height * 0.5
     };
     // 计算偏移量
-    coordinate.x -= (scaleCore.ratio - 1) * (e.clientX - scaleConfig.offsetX - coordinate.x) - origin.x;
-    coordinate.y -= (scaleCore.ratio - 1) * (e.clientY - scaleConfig.offsetY - coordinate.y) - origin.y;
-    (scaleConfig.content as any).style.transform = 'translate3d(' + coordinate.x + 'px, ' + coordinate.y + 'px, 0) scale(' + scaleCore.scale + ')';
+    CanvasDragger.position.x -= (scaleCore.ratio - 1) * (e.clientX - scaleConfig.offsetX - CanvasDragger.position.x) - origin.x;
+    CanvasDragger.position.y -= (scaleCore.ratio - 1) * (e.clientY - scaleConfig.offsetY - CanvasDragger.position.y) - origin.y;
+    (scaleConfig.content as any).style.transform = 'translate3d(' + CanvasDragger.position.x + 'px, ' + CanvasDragger.position.y + 'px, 0) scale(' + scaleCore.scale + ')';
 }
