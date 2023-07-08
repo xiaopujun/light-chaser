@@ -1,7 +1,10 @@
 abstract class AbstractDrag {
+    //被拖拽的目标
     protected target: any = null;
+    //触发拖拽的目标元素
     protected dragTarget: any = null;
-    protected position: { x: number, y: number } = {x: 0, y: 0}; // 第一个点坐标
+    //拖拽的起始位置
+    protected position: { x: number, y: number } = {x: 0, y: 0};
 
     public registerDragger(): void {
         this.onDragStart(this.target);
