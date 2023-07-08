@@ -28,8 +28,6 @@ class CanvasDragger extends AbstractDrag {
     }
 
     protected onDragMove = (e: any): void => {
-        const {setPointerTarget} = eventOperateStore;
-        setPointerTarget(e.target)
         if (KMMap.rightClick) {
             CanvasDragger.position.x += e.movementX;
             CanvasDragger.position.y += e.movementY;

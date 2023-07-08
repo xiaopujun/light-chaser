@@ -18,6 +18,7 @@ interface HotKeyProps {
     handlerMapping: HandlerMapping;
 }
 
+//需要屏蔽浏览器默认快捷键效果的快捷键列表
 const shieldKeyList = ['control + s', 'alt']
 
 class HotKey extends Component<HotKeyProps> {
@@ -31,6 +32,11 @@ class HotKey extends Component<HotKeyProps> {
         this.handlerMapping = props.handlerMapping;
     }
 
+    /**
+     * 从快捷键配置管理映射表中匹配对应的快捷键处理函数并执行。
+     * @param e 鼠标事件对象
+     * @param hotKey 当前按下的快捷键
+     */
     doHandler = (e: any, hotKey: string) => {
         const {handler, target, triggerType = TriggerType.SINGLE} = this.handlerMapping[hotKey] || {};
         if (handler) {
