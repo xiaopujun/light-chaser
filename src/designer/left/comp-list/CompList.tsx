@@ -81,7 +81,8 @@ class CompList extends Component {
         return chartDom;
     }
 
-    onClose = () => {
+    onClose = (e: any) => {
+        console.log('要关闭了')
         const {setVisible} = compListStore;
         setVisible && setVisible(false);
     }
@@ -95,9 +96,12 @@ class CompList extends Component {
         return (
             <>
                 <div ref={ref => this.compListRef = ref} className={'lc-comp-list'}>
-                    <div className={'list-title'} ref={ref => this.dragTargetRef = ref}>
+                    <div className={'list-title'}>
                         <div className={'title-content'}>组件列表</div>
-                        <div onClick={this.onClose}><span><LineOutlined/></span></div>
+                        <div ref={ref => this.dragTargetRef = ref} className={'title-drag-target'}
+                             style={{width: '50%', height: '100%'}}>
+                        </div>
+                        <div className={'title-close-btn'} onClick={this.onClose}><span><LineOutlined/></span></div>
                     </div>
                     <div className={'list-search'}>
                         <Input placeholder="搜索组件" onPressEnter={this.searchChart}

@@ -4,33 +4,32 @@ import {nanoid} from "nanoid";
 
 class MyComponent extends React.Component {
 
+    fakeRef: any = null;
+
     componentDidMount() {
-        document.addEventListener('mousedown', (e) => {
-            console.log(e.button);
+        this.fakeRef.addEventListener('pointerdown', (e: any) => {
+            console.log('pointerdown');
+            this.fakeRef.addEventListener('pointermove', this.move);
+        });
+        this.fakeRef.addEventListener('pointerup', (e: any) => {
+            console.log('pointerup');
+            this.fakeRef.removeEventListener('pointermove', this.move);
         });
     }
 
-    render() {
-        console.log(nanoid(10))
-        let handlerMapping = {
-            'control + s': {
-                handler: () => {
+    move = () => {
+        console.log('move');
+    }
 
-                },
-                triggerType: TriggerType.SINGLE
-            },
-            '  + wheel': {
-                handler: (e: any) => {
-                    let dom: any = document.getElementById('hotkey-test');
-                    console.log(dom.contains(e.target));
-                    console.log('wheel执行了' + Date.now(), e)
-                }
-            }
-        }
-        return <div id={'hotkey-test'} style={{width: 500, height: 200, backgroundColor: '#0d3d52'}}>
-            <HotKey handlerMapping={handlerMapping}/>
-            <div style={{width: 300, height: 100, backgroundColor: '#295e75'}}>ssss</div>
-        </div>
+    render() {
+
+        return (
+            <div ref={ref => this.fakeRef = ref}>
+                <div onClick={() => console.log('dsajfd')}>
+                    niubi
+                </div>
+            </div>
+        )
     }
 
 }

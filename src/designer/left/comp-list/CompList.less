@@ -4,8 +4,6 @@
   z-index: 1;
   transform: translate(60px, calc(-100vh + 50px));
   //animation: lcFadeInUp1 0.7s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  //top: 50px;
-  //left: 60px;
   width: 180px;
   position: relative;
   background-color: @compListBgColor;
@@ -15,13 +13,19 @@
     height: 30px;
     display: flex;
     color: #daf4fb;
-    cursor: pointer;
     border-radius: 0;
     padding: 3px 5px;
     align-items: center;
     justify-content: space-between;
     background-color: @compListTitleBgColor;
 
+    .title-drag-target:hover {
+      cursor: move;
+    }
+
+    .title-close-btn:hover {
+      cursor: pointer;
+    }
   }
 
   .list-search {
