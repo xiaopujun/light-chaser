@@ -25,6 +25,7 @@ export const selectAll = () => {
 
 export const doCopy = () => {
     const {targetIds, setTargetIds, setTargets} = eventOperateStore;
+    if (!targetIds || targetIds.length === 0) return;
     const {copyItem} = designerStore;
     let newIds = copyItem(targetIds);
     let targets: any = [];
@@ -41,6 +42,7 @@ export const doCopy = () => {
 
 export const doLock = () => {
     const {targetIds, setTargets} = eventOperateStore;
+    if (!targetIds || targetIds.length === 0) return;
     const {updateLayout, layoutConfigs} = designerStore;
     let toBeUpdate = [];
     for (const targetId of targetIds) {
@@ -54,6 +56,7 @@ export const doLock = () => {
 
 export const toTop = () => {
     let {maxLevel, setMaxLevel, targetIds, setTargetIds} = eventOperateStore;
+    if (!targetIds || targetIds.length === 0) return;
     const {updateLayout, layoutConfigs} = designerStore;
     let toBeUpdate: MovableItemType[] = [];
     targetIds.forEach((id: string) => {
@@ -67,6 +70,7 @@ export const toTop = () => {
 
 export const toBottom = () => {
     let {minLevel, setMinLevel, targetIds, setTargetIds} = eventOperateStore;
+    if (!targetIds || targetIds.length === 0) return;
     const {updateLayout, layoutConfigs} = designerStore;
     let toBeUpdate: MovableItemType[] = [];
     targetIds.forEach((id: string) => {
@@ -80,6 +84,7 @@ export const toBottom = () => {
 
 export const doDelete = () => {
     const {targetIds, setTargetIds, setTargets} = eventOperateStore;
+    if (!targetIds || targetIds.length === 0) return;
     const {updateActive} = designerStore;
     const {setContentVisible} = rightStore;
     setContentVisible(false);
@@ -106,44 +111,38 @@ export const doSave = () => {
 
 export const doUnLock = () => {
     const {unLockedId} = eventOperateStore;
+    if (!unLockedId || unLockedId === '') return;
     const {updateLayout, layoutConfigs} = designerStore;
     let item = layoutConfigs[unLockedId];
     updateLayout([{...item, locked: false}])
 }
 
-export const getOperateEventMapping: any = (target: any) => {
+export const getOperateEventMapping: any = () => {
     return {
         'alt + wheel': {
             handler: doScale,
             triggerType: TriggerType.COILED,
-            target
         },
         'control + a': {
             handler: selectAll,
-            target
         },
         'control + v': {
             handler: doCopy,
-            target
         },
         'control + l': {
             handler: doLock,
-            target
         },
         'control + arrowup': {
             handler: toTop,
-            target
         },
         'control + arrowdown': {
             handler: toBottom,
-            target
         },
         'control + s': {
             handler: doSave,
         },
         'delete': {
             handler: doDelete,
-            target
         }
     }
 }

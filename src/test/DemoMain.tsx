@@ -22,10 +22,13 @@ class MyComponent extends React.Component {
     render() {
 
         return (
-            <div ref={ref => this.fakeRef = ref}>
-                <div onClick={() => console.log('dsajfd')}>
-                    niubi
+            <div className={'container'}>
+                <div className={'A'}>
+                    <div className={'A1'}></div>
+                    <div className={'A2'}></div>
+                    <div className={'A3'}></div>
                 </div>
+                <div className={'B'}></div>
             </div>
         )
     }

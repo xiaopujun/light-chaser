@@ -1,6 +1,5 @@
 import AbstractDrag from "./AbstractDrag";
 import eventManager from "../core/EventManager";
-import eventOperateStore from "../EventOperateStore";
 import {KMMap} from "../keyboard-mouse/KeyboardMouse";
 import scaleCore from "../scale/ScaleCore";
 

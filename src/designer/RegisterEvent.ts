@@ -30,10 +30,6 @@ export function registerEventOnDesignerLoaded() {
     eventManager.register('pointerdown', (e: PointerEvent) => {
         if (e.button === 0) {
             KMMap.leftClick = true;
-            if ((e.target as HTMLElement).classList?.contains('lc-comp-item')) {
-                const {setPointerTarget} = eventOperateStore;
-                setPointerTarget(e.target)
-            }
         } else if (e.button === 2)
             KMMap.rightClick = true;
         const {setMouseDownTime} = contextMenuStore;

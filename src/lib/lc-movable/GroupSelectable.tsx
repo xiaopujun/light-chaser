@@ -51,6 +51,7 @@ class GroupSelectable extends Component {
                                  selected.forEach((item: any) => targetIds.push(item.id));
                                  setTargetIds(targetIds);
                              }
+                             console.log('selected', selected)
                              setTargets(selected);
                          }}
                 />

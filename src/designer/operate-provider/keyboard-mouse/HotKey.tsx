@@ -1,5 +1,4 @@
 import {Component} from 'react';
-import eventOperateStore from "../EventOperateStore";
 
 export enum TriggerType {
     SINGLE,
@@ -19,7 +18,7 @@ interface HotKeyProps {
 }
 
 //需要屏蔽浏览器默认快捷键效果的快捷键列表
-const shieldKeyList = ['control + s', 'alt']
+const shieldKeyList = ['control + s', 'alt', 'control + l']
 
 class HotKey extends Component<HotKeyProps> {
 
@@ -38,12 +37,9 @@ class HotKey extends Component<HotKeyProps> {
      * @param hotKey 当前按下的快捷键
      */
     doHandler = (e: any, hotKey: string) => {
-        const {handler, target, triggerType = TriggerType.SINGLE} = this.handlerMapping[hotKey] || {};
+        const {handler, triggerType = TriggerType.SINGLE} = this.handlerMapping[hotKey] || {};
         if (handler) {
             if ((triggerType === TriggerType.SINGLE && this.existHandlerKey !== hotKey) || triggerType === TriggerType.COILED) {
-                const {pointerTarget} = eventOperateStore;
-                if (target && !target.contains(pointerTarget))
-                    return;
                 handler(e);
                 this.existHandlerKey = hotKey;
             }

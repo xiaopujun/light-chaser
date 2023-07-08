@@ -91,7 +91,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                         </DesignerRuler>
                     </GroupSelectable>
                 </DesignerContainer>
-                {this.state.designerRef && <HotKey handlerMapping={getOperateEventMapping(this.state.designerRef)}/>}
+                <HotKey handlerMapping={getOperateEventMapping()}/>
             </>
         );
     }
