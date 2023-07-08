@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {observer} from "mobx-react";
 import '../classify-list/ClassifyList.less';
 import classifyListStore from "./ClassifyListStore";
-import compListStore from "../comp-list/CompListStore";
+import compListStore from "../../float-configs/comp-list/CompListStore";
 
 class ClassifyList extends Component {
 

@@ -13,9 +13,7 @@ import Right from "./right";
 import DesignerFooter from "./footer/DesignerFooter";
 import {loadDesigner} from "./LoadDesigner";
 import {registerEventOnDesignerLoaded} from "./RegisterEvent";
-import CompList from "./left/comp-list/CompList";
-import compListStore from "./left/comp-list/CompListStore";
-import {observer} from "mobx-react";
+import FloatConfigs from "./float-configs/FloatConfigs";
 
 class Designer extends Component<any> {
 
@@ -31,7 +29,6 @@ class Designer extends Component<any> {
     }
 
     render() {
-        const {visible} = compListStore;
         return (
             <LcStructure>
                 <LcHeader>
@@ -45,10 +42,10 @@ class Designer extends Component<any> {
                 <LcFoot>
                     <DesignerFooter/>
                 </LcFoot>
-                {visible && <CompList/>}
+                <FloatConfigs/>
             </LcStructure>
         );
     }
 }
 
-export default observer(Designer);
+export default Designer;

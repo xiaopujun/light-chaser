@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {LineOutlined} from "@ant-design/icons";
 import {Input} from "antd";
 import compListStore from "./CompListStore";
-import classifyListStore from "../classify-list/ClassifyListStore";
+import classifyListStore from "../../left/classify-list/ClassifyListStore";
 import './CompList.less';
 import {observer} from "mobx-react";
 import designerStarter from "../../DesignerStarter";
