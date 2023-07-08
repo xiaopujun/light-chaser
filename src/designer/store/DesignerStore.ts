@@ -318,7 +318,6 @@ class DesignerStore implements DesignerType, AbstractBaseStore {
                 const newItem = cloneDeep(item);
                 const newLayout = cloneDeep(layout);
                 const newId = idGenerate.generateId();
-                console.log(newId)
                 newIds.push(newId);
                 newItem.id = newId;
                 newLayout.id = newId;

@@ -40,10 +40,7 @@ class CompListStore {
         this.compInfoArr = comps;
     }
 
-    setVisible = (visible: boolean) => {
-        console.log('setVisible', visible)
-        this.visible = visible;
-    }
+    setVisible = (visible: boolean) => this.visible = visible;
 
     setCompKey = (key: string) => this.compKey = key;
 }
