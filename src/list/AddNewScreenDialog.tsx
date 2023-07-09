@@ -4,6 +4,7 @@ import Dialog from "../lib/lc-dialog/Dialog";
 import ConfigItem from "../lib/config-item/ConfigItem";
 import UnderLineInput from "../lib/lc-input/UnderLineInput";
 import LcButton from "../lib/lc-button/LcButton";
+import Select from "../lib/lc-select/Select";
 
 export interface NewProjectInfoType {
     name: string;
@@ -59,6 +60,9 @@ class AddNewScreenDialog extends Component<AddNewScreenDialogProps> {
                         <ConfigItem title={'高度'}>
                             <UnderLineInput type={'number'} min={300} required={true}
                                             onChange={(height: number) => this.projectInfo.height = height}/>
+                        </ConfigItem>
+                        <ConfigItem title={'存储'}>
+                            <Select defaultValue={'1'} options={[{value: '1', label: '本地存储'}]}/>
                         </ConfigItem>
                     </div>
                     <div className={'add-new-screen-explain'}>

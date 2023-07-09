@@ -66,10 +66,7 @@ class ProjectHdItemImpl extends Component {
                             ]}/>
                         </ConfigItem>
                         <ConfigItem title={'存储类型'} contentStyle={{width: 190}}>
-                            <Radio onChange={value => this.config.saveType = value} defaultValue={saveType} options={[
-                                {label: '本地', value: '0'},
-                                // {label: '服务端', value: '1'},
-                            ]}/>
+                            <div style={{color: '#c6c9cd'}}>{saveType==='0'?'本地(local)':'服务端(server)'}</div>
                         </ConfigItem>
                         <ConfigItem title={'草稿状态数据实时刷新'} contentStyle={{width: 190}}>
                             <LcSwitch defaultValue={realTimeRefresh}
