@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import BaseStyleSet from "../../../lib/common-fragment/base-style/BaseStyleSet";
 import {ConfigType} from "../../../designer/right/ConfigType";
-import {AntdCartesianCoordinateSys, AntdGraphics} from "../../common-fragment/AntdFragment";
 
 class AntdBaseRoseStyleConfig extends Component<ConfigType> {
 

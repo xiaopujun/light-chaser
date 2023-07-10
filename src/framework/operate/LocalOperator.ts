@@ -7,6 +7,7 @@ import scaleCore from "../../designer/operate-provider/scale/ScaleCore";
 import {buildUrlParams, parseUrlParams} from "../../utils/URLUtil";
 import {AbstractOperator} from "./AbstractOperator";
 import {idGenerate} from "../../utils/IdGenerate";
+import SerializeUtil from "../../utils/SerializeUtil";
 
 /**
  * 本地项目数据操作实现
@@ -58,6 +59,8 @@ class LocalOperator extends AbstractOperator {
             if (!Array.isArray(dataArr))
                 dataArr = [];
             dataArr.push(config);
+            console.log(JSON.stringify(config))
+            console.log(JSON.parse(JSON.stringify(config)))
             await localforage.setItem('light-chaser', dataArr);
             // 8. 维护项目列表（保存项目的轻量级描述信息，避免加载列表时内存占用过大）
             await LocalOperator.doSaveProjectSimpleInfo(config);
@@ -102,6 +105,8 @@ class LocalOperator extends AbstractOperator {
                 } else {
                     await ImgUtil.delImgFormLocal('bgImg' + config.id);
                 }
+                console.log(SerializeUtil.serialize(config))
+                console.log(SerializeUtil.deserialize((SerializeUtil.serialize(config))))
                 dataArr[projectIndex] = config;
                 await localforage.setItem('light-chaser', dataArr);
             }

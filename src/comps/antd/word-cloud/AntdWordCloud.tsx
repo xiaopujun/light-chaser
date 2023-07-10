@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import CompBgContainer from "../../../lib/lc-background-container/CompBgContainer";
 import {sendHttpRequest} from "../../../utils/HttpUtil";
-import {Venn, WordCloud} from "@ant-design/charts";
+import {WordCloud} from "@ant-design/charts";
 
 /**
  * 基础条形图
