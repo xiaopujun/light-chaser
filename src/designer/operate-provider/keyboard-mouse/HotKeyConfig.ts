@@ -102,8 +102,7 @@ export const doSave = () => {
     if (saveType === SaveType.LOCAL) {
         const {abstractOperatorMap} = designerStarter;
         const {projectConfig: {saveType = SaveType.LOCAL}} = designerStore;
-        abstractOperatorMap[saveType].doCreateOrUpdate(designerStore.getData()).then(() => {
-        });
+        abstractOperatorMap[saveType].doCreateOrUpdate(designerStore.getData());
     } else if (saveType === SaveType.SERVER) {
         alert("server save");
     }

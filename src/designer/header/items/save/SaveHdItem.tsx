@@ -17,9 +17,7 @@ export default class SaveHdItem extends AbstractHeaderItem {
             onClick: () => {
                 const {abstractOperatorMap} = designerStarter;
                 const {projectConfig: {saveType = SaveType.LOCAL}} = designerStore;
-                abstractOperatorMap[saveType].doCreateOrUpdate(designerStore.getData()).then(() => {
-                    console.log('update or create success');
-                });
+                abstractOperatorMap[saveType].doCreateOrUpdate(designerStore.getData());
             }
         }
     }
