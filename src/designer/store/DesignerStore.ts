@@ -1,19 +1,8 @@
 import {makeAutoObservable, runInAction, toJS} from "mobx";
 import {cloneDeep, isEqual} from "lodash";
 import {
-    ActiveElem,
-    BackgroundColorMode,
-    BackgroundImgRepeat,
-    BackgroundMode,
-    CanvasConfig,
-    DesignerType,
-    ElemConfig,
-    LayerConfigType,
-    ProjectConfig,
-    ProjectState,
-    SaveType,
-    Statistic,
-    ThemeItemType
+    ActiveElem, BackgroundColorMode, BackgroundImgRepeat, BackgroundMode, CanvasConfig, ProjectDataType, ElemConfig,
+    LayerConfigType, ProjectConfig, ProjectState, SaveType, Statistic, ThemeItemType
 } from "../DesignerType";
 import designerStarter from "../DesignerStarter";
 import AbstractBaseStore from "../../framework/core/AbstractBaseStore";
@@ -26,7 +15,7 @@ import eventOperateStore from "../operate-provider/EventOperateStore";
 /**
  * 设计器核心状态管理类，记录了设计器中的核心数据。包括组件配置，组件布局。 全局设置等。
  */
-class DesignerStore implements DesignerType, AbstractBaseStore {
+class DesignerStore implements AbstractBaseStore {
     constructor() {
         makeAutoObservable(this);
     }
@@ -148,7 +137,7 @@ class DesignerStore implements DesignerType, AbstractBaseStore {
     /**
      * 初始化store
      */
-    doInit = (store: DesignerType) => {
+    doInit = (store: ProjectDataType) => {
         this.id = store.id ?? this.id;
         this.canvasConfig = store.canvasConfig ? {...this.canvasConfig, ...store.canvasConfig} : this.canvasConfig;
         this.projectConfig = store.projectConfig ? {...this.projectConfig, ...store.projectConfig} : this.projectConfig;
@@ -167,7 +156,7 @@ class DesignerStore implements DesignerType, AbstractBaseStore {
         setUpdateConfig(this.updateElemConfig);
     }
 
-    getData(): any {
+    getData(): ProjectDataType {
         return {
             id: this.id,
             canvasConfig: toJS(this.canvasConfig),
@@ -176,8 +165,8 @@ class DesignerStore implements DesignerType, AbstractBaseStore {
             elemConfigs: toJS(this.elemConfigs),
             layoutConfigs: toJS(this.layoutConfigs),
             statisticInfo: toJS(this.statisticInfo),
-            layers: toJS(this.layerConfigs),
-            theme: toJS(this.themeConfig),
+            layerConfigs: toJS(this.layerConfigs),
+            themeConfig: toJS(this.themeConfig),
             extendParams: toJS(this.extendParams),
         }
     }

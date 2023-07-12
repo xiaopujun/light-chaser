@@ -2,9 +2,8 @@ class SerializeUtil {
 
     public static serialize(obj: any): string {
         return JSON.stringify(obj, (key, value) => {
-            if (typeof value === 'function') {
+            if (typeof value === 'function')
                 return value.toString();
-            }
             return value;
         });
     }

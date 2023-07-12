@@ -1,5 +1,4 @@
 import html2canvas from "html2canvas";
-import {idGenerate} from "./IdGenerate";
 import localforage from "localforage";
 
 export class ImgUtil {
@@ -18,19 +17,18 @@ export class ImgUtil {
         }
     }
 
-    static async htmlToImgWithId(dom: HTMLElement, options?: any): Promise<string> {
+    static async htmlToImgWithId(dom: HTMLElement, key: string, options?: any): Promise<boolean> {
         try {
-            const canvas = await html2canvas(dom, {...options});
-            return await new Promise<string>((resolve) => {
+            const canvas = await html2canvas(dom, {...options, willReadFrequently: true});
+            return await new Promise<boolean>((resolve) => {
                 canvas.toBlob((blob) => {
-                    const key = idGenerate.generateId();
                     localforage.setItem(key, blob);
-                    resolve(key);
+                    resolve(true);
                 })
             });
         } catch (error) {
             console.error('保存截图到本地存储异常', error);
-            return '';
+            return false;
         }
     }
 

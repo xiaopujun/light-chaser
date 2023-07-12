@@ -1,5 +1,5 @@
-import {DesignerStore} from "../../designer/store/DesignerStore";
-import {BackgroundConfig, SaveType} from "../../designer/DesignerType";
+import designerStore from "../../designer/store/DesignerStore";
+import {BackgroundConfig, ProjectDataType, SaveType} from "../../designer/DesignerType";
 import localforage from "localforage";
 import {ImgUtil} from "../../utils/ImgUtil";
 import eventOperateStore from "../../designer/operate-provider/EventOperateStore";
@@ -7,7 +7,7 @@ import scaleCore from "../../designer/operate-provider/scale/ScaleCore";
 import {buildUrlParams, parseUrlParams} from "../../utils/URLUtil";
 import {AbstractOperator} from "./AbstractOperator";
 import {idGenerate} from "../../utils/IdGenerate";
-import SerializeUtil from "../../utils/SerializeUtil";
+import {LocalConstant} from "../LocalConstant";
 
 /**
  * 本地项目数据操作实现
@@ -18,61 +18,54 @@ class LocalOperator extends AbstractOperator {
         return SaveType.LOCAL;
     }
 
-    public async doCreateOrUpdate(designerStore: DesignerStore): Promise<void> {
-        if (designerStore.id === '')
-            await LocalOperator.createProject(designerStore);
+    public async doCreateOrUpdate(projectData: ProjectDataType): Promise<void> {
+        if (projectData.id === '')
+            await LocalOperator.createProject(projectData);
         else {
-            await this.updateProject(designerStore);
+            await this.updateProject(projectData);
         }
     }
 
-    private static async createProject(designerStore: DesignerStore): Promise<string> {
-        await LocalOperator.createProjectBefore(designerStore);
-        await LocalOperator.doCreate(designerStore);
-        LocalOperator.createProjectAfter(designerStore);
-        return designerStore.id;
+    private static async createProject(projectData: ProjectDataType): Promise<string> {
+        await LocalOperator.createProjectBefore(projectData);
+        await LocalOperator.doCreate(projectData);
+        LocalOperator.createProjectAfter(projectData);
+        return projectData!.id || '';
     }
 
-    private static async createProjectBefore(designerStore: DesignerStore): Promise<void> {
-        await LocalOperator.doScreenshot(designerStore);
+    private static async createProjectBefore(projectData: ProjectDataType): Promise<void> {
+        projectData.id = idGenerate.generateId();
+        // 2. 对项目画面截图
+        await LocalOperator.doScreenshot(projectData);
+        // 3. 如果有背景图片则处理背景图片
+        const bgConfig: BackgroundConfig = (projectData.elemConfigs ?? {})['-1']['background'];
+        if (bgConfig?.bgImg.bgImgUrl !== '') {
+            //4. 生成背景图片的key
+            const bgImgKey = LocalConstant.LOCAL_BACKGROUND_IMG + projectData.id;
+            //5. 保存背景图片到本地数据库
+            const res = await ImgUtil.saveImgToLocal(bgConfig.bgImg.bgImgUrl!, bgImgKey);
+            //6. 将背景图片的可访问地址替换为唯一标识。
+            if (res) bgConfig.bgImg.bgImgUrl = bgImgKey;
+        }
     }
 
-    private static async doCreate(designerStore: DesignerStore): Promise<void> {
+    private static async doCreate(projectData: ProjectDataType): Promise<void> {
         try {
-            // 1. 构建保存项目时的基础数据
-            const config = designerStore.getData();
-            // 2. 生成唯一id
-            config.id = idGenerate.generateId();
-            designerStore.id = config.id;
-            // 3.如果有背景图片则先处理背景图片
-            const bgConfig: BackgroundConfig = (config.elemConfigs ?? {})['-1']['background'];
-            if (bgConfig?.bgImg.bgImgUrl !== '') {
-                //4. 生成背景图片的key
-                const bgImgKey = 'bgImg_' + config.id;
-                //5. 保存背景图片到本地数据库
-                const res = await ImgUtil.saveImgToLocal(bgConfig.bgImg.bgImgUrl!, bgImgKey);
-                //6. 将背景图片的可访问地址替换为唯一标识。
-                if (res) bgConfig.bgImg.bgImgUrl = bgImgKey;
-            }
-            // 7. 保存项目到本地数据库
-            let dataArr: any = await localforage.getItem('light-chaser');
-            if (!Array.isArray(dataArr))
-                dataArr = [];
-            dataArr.push(config);
-            console.log(JSON.stringify(config))
-            console.log(JSON.parse(JSON.stringify(config)))
-            await localforage.setItem('light-chaser', dataArr);
+            if (!projectData.id)
+                throw new Error('project id is null');
+            await localforage.setItem(projectData.id, projectData);
             // 8. 维护项目列表（保存项目的轻量级描述信息，避免加载列表时内存占用过大）
-            await LocalOperator.doSaveProjectSimpleInfo(config);
+            await LocalOperator.doSaveProjectSimpleInfo(projectData);
         } catch (error) {
             console.log("createProject error", error);
         }
     }
 
-    private static createProjectAfter(designerStore: DesignerStore): void {
-        let {id = '', setId} = designerStore;
+    private static createProjectAfter(projectData: ProjectDataType): void {
+        const {setId} = designerStore;
+        let {id} = projectData;
         //更新id
-        setId && setId(id);
+        id && id !== '' && setId && setId(id);
         //修改路由参数，新增变为更新
         let urlParams = parseUrlParams();
         urlParams = {...urlParams, ...{id, action: 'edit'}};
@@ -80,43 +73,40 @@ class LocalOperator extends AbstractOperator {
         alert("create success");
     }
 
-    private async updateProject(designerStore: DesignerStore): Promise<boolean> {
-        await LocalOperator.updateProjectBefore(designerStore);
-        await this.doUpdate(designerStore);
+    private async updateProject(projectData: ProjectDataType): Promise<boolean> {
+        await LocalOperator.updateProjectBefore(projectData);
+        await this.doUpdate(projectData);
         alert('update success');
         return true;
     }
 
-    private static async updateProjectBefore(designerStore: DesignerStore): Promise<void> {
-        await LocalOperator.doScreenshot(designerStore);
+    private static async updateProjectBefore(projectData: ProjectDataType): Promise<void> {
+        //屏幕截图
+        await LocalOperator.doScreenshot(projectData);
+        //处理背景图片
+        const bgConfig: BackgroundConfig = projectData.elemConfigs?.['-1']['background'];
+        if (bgConfig?.bgImg.bgImgUrl !== '') {
+            const bgImgKey = LocalConstant.LOCAL_BACKGROUND_IMG + projectData.id;
+            await ImgUtil.saveImgToLocal(bgConfig.bgImg.bgImgUrl!, bgImgKey);
+            if (bgConfig) projectData!.elemConfigs!['-1'].background!.bgImg!.bgImgUrl = bgImgKey;
+        } else {
+            await ImgUtil.delImgFormLocal(LocalConstant.LOCAL_BACKGROUND_IMG + projectData.id);
+        }
     }
 
-    private async doUpdate(designerStore: DesignerStore): Promise<void> {
-        const config = designerStore.getData();
-        const dataArr = await this.getAllProject();
-        if (dataArr) {
-            const projectIndex = dataArr.findIndex((project) => project.id === config.id);
-            if (projectIndex !== -1) {
-                const bgConfig: BackgroundConfig = config.elemConfigs['-1']['background'];
-                if (bgConfig?.bgImg.bgImgUrl !== '') {
-                    const bgImgKey = 'bgImg' + config.id;
-                    await ImgUtil.saveImgToLocal(bgConfig.bgImg.bgImgUrl!, bgImgKey);
-                    if (bgConfig) config.elemConfigs['-1']['background'].bgImg.bgImgUrl = bgImgKey;
-                } else {
-                    await ImgUtil.delImgFormLocal('bgImg' + config.id);
-                }
-                console.log(SerializeUtil.serialize(config))
-                console.log(SerializeUtil.deserialize((SerializeUtil.serialize(config))))
-                dataArr[projectIndex] = config;
-                await localforage.setItem('light-chaser', dataArr);
-            }
+    private async doUpdate(projectData: ProjectDataType): Promise<void> {
+        if (!projectData.id) {
+            console.log('更新数据id异常', projectData);
+            return;
         }
+        await localforage.setItem(projectData.id, projectData);
         //更新项目列表信息
         let simpleInfoList = await this.getProjectSimpleInfoList();
-        let index = simpleInfoList.findIndex((project) => project.id === config.id);
-        const {id, projectConfig: {name, des, state, updateTime, screenshot, saveType}} = config;
+        let index = simpleInfoList.findIndex((project) => project.id === projectData.id);
+        const {id, projectConfig} = projectData;
+        const {name, des, state, updateTime, screenshot, saveType} = projectConfig!;
         simpleInfoList[index] = {id, name, des, state, updateTime, screenshot, saveType};
-        await localforage.setItem('lc_project_list', simpleInfoList);
+        await localforage.setItem(LocalConstant.LOCAL_SIMPLE_PROJECT_LIST, simpleInfoList);
     }
 
     private static async doSaveProjectSimpleInfo(projectData: any): Promise<void> {
@@ -126,63 +116,49 @@ class LocalOperator extends AbstractOperator {
         const simpleData = {id, name, des, state, updateTime, screenshot, saveType};
         if (simpleInfoList && Array.isArray(simpleInfoList)) {
             simpleInfoList.push(simpleData);
-            await localforage.setItem('lc_project_list', simpleInfoList);
+            await localforage.setItem(LocalConstant.LOCAL_SIMPLE_PROJECT_LIST, simpleInfoList);
         } else {
             // 如果没有保存过数据则初始化
             const newDataArr = [simpleData];
-            await localforage.setItem('lc_project_list', newDataArr);
+            await localforage.setItem(LocalConstant.LOCAL_SIMPLE_PROJECT_LIST, newDataArr);
         }
     }
 
-    public deleteProject(id: number): boolean {
+    public deleteProject(id: string): boolean {
         return false;
     }
 
-    public async getProject(id: number): Promise<DesignerStore | null> {
-        const dataArr = await localforage.getItem('light-chaser');
-        if (dataArr && dataArr instanceof Array) {
-            for (let i = 0; i < dataArr.length; i++) {
-                if (dataArr[i].id === id) {
-                    let target: DesignerStore | any = dataArr[i];
-                    let bgConfig: BackgroundConfig = target.elemConfigs['-1']['background'];
-                    if (bgConfig?.bgImg.bgImgUrl !== '') {
-                        const url = await ImgUtil.getImgFromLocal(bgConfig?.bgImg.bgImgUrl);
-                        if (bgConfig)
-                            target.elemConfigs['-1']['background'].bgImg.bgImgUrl = url;
-                    }
-                    return target;
-                }
-            }
+    public async getProject(id: string): Promise<ProjectDataType | null> {
+        const projectData = await localforage.getItem(id);
+        if (!projectData) return null;
+        let bgConfig: BackgroundConfig = (projectData as ProjectDataType)!.elemConfigs!['-1']['background'];
+        if (bgConfig?.bgImg.bgImgUrl !== '') {
+            const url = await ImgUtil.getImgFromLocal(bgConfig?.bgImg.bgImgUrl);
+            if (bgConfig)
+                (projectData as ProjectDataType)!.elemConfigs!['-1']['background'].bgImg.bgImgUrl = url;
         }
-        return null;
+        return projectData as ProjectDataType;
     }
 
-    private static async doScreenshot(designerStore: DesignerStore): Promise<void> {
+    private static async doScreenshot(projectData: ProjectDataType): Promise<void> {
         const {maxLevel, minLevel} = eventOperateStore;
-        designerStore.layerConfigs.maxLevel = maxLevel;
-        designerStore.layerConfigs.minLevel = minLevel;
+        projectData.layerConfigs!.maxLevel = maxLevel;
+        projectData.layerConfigs!.minLevel = minLevel;
         let imgDom: any = document.querySelector('.lc-content-scale');
-        const imageId = await ImgUtil.htmlToImgWithId(imgDom, {scale: scaleCore.scale});
-        designerStore.projectConfig.screenshot = imageId || ''; //截图
+        const screenShotId = LocalConstant.LOCAL_PROJECT_SCREENSHOT + projectData.id;
+        const res = await ImgUtil.htmlToImgWithId(imgDom, screenShotId, {scale: scaleCore.scale});
+        if (res)
+            projectData!.projectConfig!.screenshot = screenShotId; //截图
     }
 
     public async getProjectSimpleInfoList(): Promise<any[]> {
-        let simpleDataList = await localforage.getItem('lc_project_list');
+        let simpleDataList = await localforage.getItem(LocalConstant.LOCAL_SIMPLE_PROJECT_LIST);
         if (simpleDataList && simpleDataList instanceof Array)
             return simpleDataList;
         else
             return [];
     }
 
-    public async getAllProject(): Promise<any[]> {
-        try {
-            const dataArr = await localforage.getItem('light-chaser');
-            return dataArr && dataArr instanceof Array ? dataArr : [];
-        } catch (error) {
-            console.log("getAllProject error", error);
-            return [];
-        }
-    }
 }
 
 export default LocalOperator;

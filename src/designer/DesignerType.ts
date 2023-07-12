@@ -307,7 +307,7 @@ export interface BaseInfoType {
 /**
  * lc设计器配置
  */
-export interface DesignerType {
+export interface ProjectDataType {
     //项目id
     id?: string;
     //画布设置
