@@ -1,0 +1,39 @@
+@import '../../common/DesignerStyle.less';
+
+.lc-layer-list {
+  z-index: 1;
+  transform: translate(60px, calc(-100vh + 50px));
+  width: 180px;
+  height: calc(100% - (@headerHeight + @footHeight));
+  position: relative;
+  background-color: @compListBgColor;
+
+  .list-title {
+    height: 30px;
+    display: flex;
+    color: #daf4fb;
+    border-radius: 0;
+    padding: 3px 5px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: @compListTitleBgColor;
+
+    .title-drag-target:hover {
+      cursor: move;
+    }
+
+    .title-close-btn:hover {
+      cursor: pointer;
+    }
+  }
+
+  .list-search {
+    .ant-input {
+      margin: 0;
+      color: #c9c9c9;
+      border-radius: 0;
+      background-color: rgba(0, 0, 0, 0);
+      border: 2px solid rgb(54, 54, 54);
+    }
+  }
+}

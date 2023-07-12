@@ -5,6 +5,7 @@ import {observer} from "mobx-react";
 import designerStore from "../store/DesignerStore";
 import Dialog from "../../lib/lc-dialog/Dialog";
 import HotKeyDes from "./HotKeyDes";
+import layerListStore from "../float-configs/layer-list/LayerListStore";
 
 class DesignerFooter extends Component {
 
@@ -17,6 +18,11 @@ class DesignerFooter extends Component {
         this.setState({
             showHotKeyDes: !showHotKeyDes
         })
+    }
+
+    toggleLayerList = () => {
+        const {setVisible, visible} = layerListStore;
+        setVisible && setVisible(!visible);
     }
 
     render() {
@@ -38,6 +44,7 @@ class DesignerFooter extends Component {
             <div className={'lc-designer-footer'}>
                 <div className={'footer-left'}>
                     <div className={'footer-item'} onClick={this.toggleHotKeyDes}>快捷键</div>
+                    <div className={'footer-item'} onClick={this.toggleLayerList}>图层</div>
                 </div>
                 <div className={'footer-right'}>
                     <div className={'right-info-item'}>缩放 : {(scale * 100).toFixed(0)}%</div>

@@ -2,13 +2,17 @@ import React, {Component} from 'react';
 import {observer} from "mobx-react";
 import CompList from "./comp-list/CompList";
 import compListStore from "./comp-list/CompListStore";
+import layerListStore from "./layer-list/LayerListStore";
+import LayerList from "./layer-list/LayerList";
 
 class FloatConfigs extends Component {
     render() {
-        const {visible} = compListStore;
+        const {visible: compListVisible} = compListStore;
+        const {visible: layerListVisible} = layerListStore;
         return (
             <>
-                {visible && <CompList/>}
+                {compListVisible && <CompList/>}
+                {layerListVisible && <LayerList/>}
             </>
         );
     }
