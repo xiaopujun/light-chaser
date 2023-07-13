@@ -1,14 +1,20 @@
 import AbstractDrag from "./AbstractDrag";
 
+export interface DragCoordinate {
+    x: number,
+    y: number
+}
+
 export default class CommonDragger extends AbstractDrag {
 
-    protected position: { x: number, y: number } = {x: 50, y: -window.innerHeight + 50}; // 第一个点坐标
+    protected position: { x: number, y: number } = {x: 0, y: 0}; // 第一个点坐标
 
-    constructor(target: any, dragTarget: any) {
+    constructor(target: any, dragTarget: any, initPos?: DragCoordinate) {
         super();
         this.target = target;
         this.dragTarget = dragTarget;
         this.registerDragger();
+        if (initPos) this.position = initPos;
     }
 
     protected onDragEnd = (): void => {

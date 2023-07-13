@@ -25,7 +25,7 @@ class CompList extends Component {
 
     componentDidMount() {
         if (this.compListRef && this.dragTargetRef) {
-            new CommonDragger(this.compListRef, this.dragTargetRef);
+            new CommonDragger(this.compListRef, this.dragTargetRef, {x: 50, y: -window.innerHeight + 50});
         }
     }
 
@@ -82,7 +82,6 @@ class CompList extends Component {
     }
 
     onClose = (e: any) => {
-        console.log('要关闭了')
         const {setVisible} = compListStore;
         setVisible && setVisible(false);
     }
@@ -95,7 +94,8 @@ class CompList extends Component {
     render() {
         return (
             <>
-                <div ref={ref => this.compListRef = ref} className={'lc-comp-list'}>
+                <div ref={ref => this.compListRef = ref} className={'lc-comp-list'}
+                     style={{transform: 'translate(60px, calc(-100vh + 50px))'}}>
                     <div className={'list-title'}>
                         <div className={'title-content'}>组件列表</div>
                         <div ref={ref => this.dragTargetRef = ref} className={'title-drag-target'}

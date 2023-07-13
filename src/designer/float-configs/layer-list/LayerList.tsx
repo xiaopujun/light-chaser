@@ -12,7 +12,7 @@ class LayerList extends Component {
 
     componentDidMount() {
         if (this.dragTargetRef && this.layerListRef) {
-            new CommonDragger(this.layerListRef, this.dragTargetRef);
+            new CommonDragger(this.layerListRef, this.dragTargetRef, {x: 250, y: -window.innerHeight + 50});
         }
     }
 
@@ -28,7 +28,8 @@ class LayerList extends Component {
 
     render() {
         return (
-            <div className={'lc-layer-list'} ref={ref => this.layerListRef = ref}>
+            <div className={'lc-layer-list'} style={{transform: 'translate(250px, calc(-100vh + 50px))'}}
+                 ref={ref => this.layerListRef = ref}>
                 <div className={'list-title'}>
                     <div className={'title-content'}>图层</div>
                     <div ref={ref => this.dragTargetRef = ref} className={'title-drag-target'}
