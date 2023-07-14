@@ -42,7 +42,23 @@ class LayerList extends Component {
                            style={{width: '100%'}}/>
                 </div>
                 <div className={'list-items'}>
-
+                    <div className={'list-item layer-item'} style={{
+                        color: 'rgb(255, 255, 255)',
+                        padding: '3px 10px',
+                        fontSize: 12,
+                        height: 40,
+                        background: '#363636',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: 5
+                    }}>
+                        <div className={'layer-item-name'}>图层1</div>
+                        <div className={'layer-item-operators'} style={{display: 'flex'}}>
+                            <div className={'layer-item-operator'}><span>可见</span></div>
+                            <div className={'layer-item-operator'}><span>锁定</span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
