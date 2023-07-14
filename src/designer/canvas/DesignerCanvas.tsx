@@ -14,6 +14,7 @@ import {MovableItemType} from "../../lib/lc-movable/types";
 import Loading from "../../lib/loading/Loading";
 import HotKey from "../operate-provider/keyboard-mouse/HotKey";
 import {getOperateEventMapping} from "../operate-provider/keyboard-mouse/HotKeyConfig";
+import {toJS} from "mobx";
 
 /**
  * 设计器画布
@@ -53,16 +54,18 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
             let Chart: any = customComponentInfoMap[item.type + ''].getComponent();
             const compConfig: any = elemConfigs[item.id + ''];
             let position = item.position || [0, 0];
+            console.log(toJS(item))
             return <div id={item.id}
                         data-type={item.type}
                         data-locked={item.locked}
-                        data-hide={false}
+                        data-hide={item.hide}
                         key={item.id + ''}
                         style={{
                             width: item.width,
                             height: item.height,
                             transform: `translate(${position[0]}px, ${position[1]}px)`,
                             position: 'absolute',
+                            display: item.hide ? 'none' : 'block',
                         }} className={'lc-comp-item'}>
                 <Suspense fallback={<Loading/>}>
                     <Chart config={compConfig} realTimeRefresh={projectConfig.realTimeRefresh}/>

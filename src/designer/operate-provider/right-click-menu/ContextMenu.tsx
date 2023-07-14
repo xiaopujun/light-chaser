@@ -5,11 +5,12 @@ import './OperateMenu.less';
 import {
     CopyOutlined,
     DeleteOutlined,
+    EyeInvisibleOutlined,
     LockOutlined,
     VerticalAlignBottomOutlined,
     VerticalAlignTopOutlined
 } from "@ant-design/icons";
-import {doCopy, doDelete, doLock, doUnLock, toBottom, toTop} from "../keyboard-mouse/HotKeyConfig";
+import {doCopy, doDelete, doHide, doLock, doUnLock, toBottom, toTop} from "../keyboard-mouse/HotKeyConfig";
 
 class ContextMenu extends Component {
 
@@ -24,11 +25,11 @@ class ContextMenu extends Component {
             icon: LockOutlined,
             onClick: doUnLock,
         },
-        // {
-        //     name: '隐藏',
-        //     icon: EyeInvisibleOutlined,
-        //     onClick: (e: any) => alert('隐藏')
-        // },
+        {
+            name: '隐藏',
+            icon: EyeInvisibleOutlined,
+            onClick: doHide,
+        },
         {
             name: '复制',
             icon: CopyOutlined,

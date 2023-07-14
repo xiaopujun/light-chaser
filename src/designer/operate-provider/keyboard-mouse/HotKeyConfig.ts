@@ -116,6 +116,18 @@ export const doUnLock = () => {
     updateLayout([{...item, locked: false}])
 }
 
+export const doHide = () => {
+    const {targetIds} = eventOperateStore;
+    if (!targetIds || targetIds.length === 0) return;
+    const {updateLayout, layoutConfigs} = designerStore;
+    let toBeUpdate: MovableItemType[] = [];
+    targetIds.forEach((id: string) => {
+        let item = layoutConfigs[id];
+        toBeUpdate.push({...item, hide: true});
+    });
+    updateLayout(toBeUpdate)
+}
+
 export const getOperateEventMapping: any = () => {
     return {
         'alt + wheel': {

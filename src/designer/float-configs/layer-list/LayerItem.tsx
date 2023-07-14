@@ -6,39 +6,43 @@ import previewClose from './icon/preview-close.svg';
 import lockImg from './icon/lock.svg';
 
 export interface LayerItemProps {
-    name?: string;
-    lock?: boolean;
-    hide?: boolean;
-    lockChange?: (data: boolean) => void;
-    showChange?: (data: boolean) => void;
+    data?: {
+        compId?: string;
+        name?: string;
+        lock?: boolean;
+        hide?: boolean;
+    }
+    lockChange?: (compId: string, data: boolean) => void;
+    hideChange?: (compId: string, data: boolean) => void;
 }
 
 class LayerItem extends Component<LayerItemProps> {
 
-    toggleLock = () => {
-        const {lockChange, lock} = this.props;
-        lockChange && lockChange(!lock);
+    toggleLock = (compId: string) => {
+        const {lockChange, data} = this.props;
+        lockChange && lockChange(compId, !data!.lock);
     }
 
-    toggleShow = () => {
-        const {showChange, hide} = this.props;
-        showChange && showChange(!hide);
+    toggleHide = (compId: string) => {
+        console.log('图层执行了')
+        const {hideChange, data} = this.props;
+        hideChange && hideChange(compId, !data!.hide);
     }
 
     render() {
-        const {name, lock, hide} = this.props;
+        const {name, lock, hide, compId = ''} = this.props.data || {};
         return (
             <div className={'layer-item'}>
                 <div className={'layer-item-name'}>{name}</div>
                 <div className={'layer-item-operators'}>
                     <div className={'layer-item-operator'}>
-                        <span onClick={this.toggleShow}>
+                        <span onClick={() => this.toggleHide(compId)}>
                             <img src={hide ? previewClose : previewOpen} alt={hide ? '显示' : '隐藏'}
                                  style={{width: 14}}/>
                         </span>
                     </div>
                     <div className={'layer-item-operator'}>
-                        <span onClick={this.toggleLock}>
+                        <span onClick={() => this.toggleLock(compId)}>
                             <img src={lock ? lockImg : unlockImg} alt={lock ? '锁定' : '解锁'}/>
                         </span>
                     </div>
