@@ -4,6 +4,9 @@ import {LineOutlined} from "@ant-design/icons";
 import {Input} from "antd";
 import layerListStore from "./LayerListStore";
 import CommonDragger from "../../operate-provider/drag/CommonDragger";
+import designerStore from "../../store/DesignerStore";
+import LayerItem from "./LayerItem";
+import {observer} from "mobx-react";
 
 class LayerList extends Component {
 
@@ -16,7 +19,6 @@ class LayerList extends Component {
         }
     }
 
-
     onClose = () => {
         const {setVisible} = layerListStore;
         setVisible && setVisible(false);
@@ -24,6 +26,14 @@ class LayerList extends Component {
 
     searchLayer = (e: any) => {
         console.log(e.target.value);
+
+    }
+
+    buildLayerList = () => {
+        const {layoutConfigs} = designerStore;
+        return Object.values(layoutConfigs).sort((a: any, b: any) => a.order - b.order).map((item: any, index) => {
+            return <LayerItem key={index + ''} name={item.name} lock={item.locked} show={item.hide}/>
+        });
     }
 
     render() {
@@ -42,27 +52,11 @@ class LayerList extends Component {
                            style={{width: '100%'}}/>
                 </div>
                 <div className={'list-items'}>
-                    <div className={'list-item layer-item'} style={{
-                        color: 'rgb(255, 255, 255)',
-                        padding: '3px 10px',
-                        fontSize: 12,
-                        height: 40,
-                        background: '#363636',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        marginBottom: 5
-                    }}>
-                        <div className={'layer-item-name'}>图层1</div>
-                        <div className={'layer-item-operators'} style={{display: 'flex'}}>
-                            <div className={'layer-item-operator'}><span>可见</span></div>
-                            <div className={'layer-item-operator'}><span>锁定</span></div>
-                        </div>
-                    </div>
+                    {this.buildLayerList()}
                 </div>
             </div>
         );
     }
 }
 
-export default LayerList;
+export default observer(LayerList);

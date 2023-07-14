@@ -29,10 +29,11 @@ class CompList extends Component {
         }
     }
 
-    addItem = (compKey: string) => {
+    addItem = (compKey: string, name: string) => {
         const {addItem} = designerStore;
         let {maxLevel, setMaxLevel} = eventOperateStore;
         let movableItem: MovableItemType = {
+            name: name,
             type: compKey,
             width: 384,
             height: 216,
@@ -72,7 +73,7 @@ class CompList extends Component {
                         <div className={'item-name'}>{name}</div>
                         <div className={'item-type'}>Antd</div>
                     </div>
-                    <div className={'item-content'} onDoubleClick={() => this.addItem(key)}>
+                    <div className={'item-content'} onDoubleClick={() => this.addItem(key, name)}>
                         <div className={'item-img'} style={{backgroundImage: `url(${chartImg})`}}/>
                     </div>
                 </div>

@@ -1,6 +1,8 @@
 export interface MovableItemType {
     //唯一标识
     id?: string | undefined;
+    //组件名称
+    name?: string | undefined;
     //组件类型
     type?: string | undefined;
     //宽度
