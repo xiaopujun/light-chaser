@@ -1,31 +1,6 @@
 @import '../../common/DesignerStyle.less';
 
-.lc-comp-list {
-  z-index: 1;
-  //animation: lcFadeInUp1 0.7s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  width: 180px;
-  position: absolute;
-  background-color: @compListBgColor;
-  height: calc(100% - (@headerHeight + @footHeight));
-
-  .list-title {
-    height: 30px;
-    display: flex;
-    color: #daf4fb;
-    border-radius: 0;
-    padding: 3px 5px;
-    align-items: center;
-    justify-content: space-between;
-    background-color: @compListTitleBgColor;
-
-    .title-drag-target:hover {
-      cursor: move;
-    }
-
-    .title-close-btn:hover {
-      cursor: pointer;
-    }
-  }
+.comp-list {
 
   .list-search {
     .ant-input {

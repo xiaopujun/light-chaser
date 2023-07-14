@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {LineOutlined} from "@ant-design/icons";
 import {Input} from "antd";
 import compListStore from "./CompListStore";
 import classifyListStore from "../../left/classify-list/ClassifyListStore";
@@ -10,23 +9,14 @@ import designerStore from "../../store/DesignerStore";
 import {idGenerate} from "../../../utils/IdGenerate";
 import {MovableItemType} from "../../../lib/lc-movable/types";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
-import CommonDragger from "../../operate-provider/drag/CommonDragger";
+import FloatPanel from "../common/FloatPanel";
 
 class CompList extends Component {
-
-    compListRef: any = null;
-    dragTargetRef: any = null;
 
     constructor(props: any) {
         super(props);
         const {doInit} = compListStore;
         doInit && doInit();
-    }
-
-    componentDidMount() {
-        if (this.compListRef && this.dragTargetRef) {
-            new CommonDragger(this.compListRef, this.dragTargetRef, {x: 50, y: -window.innerHeight + 50});
-        }
     }
 
     addItem = (compKey: string, name: string) => {
@@ -82,7 +72,7 @@ class CompList extends Component {
         return chartDom;
     }
 
-    onClose = (e: any) => {
+    onClose = () => {
         const {setVisible} = compListStore;
         setVisible && setVisible(false);
     }
@@ -94,25 +84,16 @@ class CompList extends Component {
 
     render() {
         return (
-            <>
-                <div ref={ref => this.compListRef = ref} className={'lc-comp-list'}
-                     style={{transform: 'translate(60px, calc(-100vh + 50px))'}}>
-                    <div className={'list-title'}>
-                        <div className={'title-content'}>组件列表</div>
-                        <div ref={ref => this.dragTargetRef = ref} className={'title-drag-target'}
-                             style={{width: '50%', height: '100%'}}>
-                        </div>
-                        <div className={'title-close-btn'} onClick={this.onClose}><span><LineOutlined/></span></div>
-                    </div>
-                    <div className={'list-search'}>
-                        <Input placeholder="搜索组件" onPressEnter={this.searchChart}
-                               style={{width: '100%'}}/>
-                    </div>
-                    <div className={'list-items'}>
-                        {this.getChartDom()}
-                    </div>
+            <FloatPanel className={'comp-list'} title={'组件列表'} onClose={this.onClose}
+                        initPosition={{x: 60, y: -window.innerHeight + 50}}>
+                <div className={'list-search'}>
+                    <Input placeholder="搜索组件" onPressEnter={this.searchChart}
+                           style={{width: '100%'}}/>
                 </div>
-            </>
+                <div className={'list-items'}>
+                    {this.getChartDom()}
+                </div>
+            </FloatPanel>
         );
     }
 }

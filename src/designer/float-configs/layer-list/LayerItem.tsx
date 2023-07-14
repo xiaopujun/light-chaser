@@ -8,7 +8,7 @@ import lockImg from './icon/lock.svg';
 export interface LayerItemProps {
     name?: string;
     lock?: boolean;
-    show?: boolean;
+    hide?: boolean;
     lockChange?: (data: boolean) => void;
     showChange?: (data: boolean) => void;
 }
@@ -21,19 +21,19 @@ class LayerItem extends Component<LayerItemProps> {
     }
 
     toggleShow = () => {
-        const {showChange, show} = this.props;
-        showChange && showChange(!show);
+        const {showChange, hide} = this.props;
+        showChange && showChange(!hide);
     }
 
     render() {
-        const {name, lock, show} = this.props;
+        const {name, lock, hide} = this.props;
         return (
             <div className={'layer-item'}>
                 <div className={'layer-item-name'}>{name}</div>
                 <div className={'layer-item-operators'}>
                     <div className={'layer-item-operator'}>
                         <span onClick={this.toggleShow}>
-                            <img src={show ? previewOpen : previewClose} alt={show ? '显示' : '隐藏'}
+                            <img src={hide ? previewClose : previewOpen} alt={hide ? '显示' : '隐藏'}
                                  style={{width: 14}}/>
                         </span>
                     </div>

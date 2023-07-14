@@ -1,31 +1,4 @@
-@import '../../common/DesignerStyle.less';
-
-.lc-layer-list {
-  z-index: 1;
-  width: 180px;
-  height: calc(100% - (@headerHeight + @footHeight));
-  position: absolute;
-  background-color: @compListBgColor;
-
-  .list-title {
-    height: 30px;
-    display: flex;
-    color: #daf4fb;
-    border-radius: 0;
-    padding: 3px 5px;
-    align-items: center;
-    justify-content: space-between;
-    background-color: @compListTitleBgColor;
-
-    .title-drag-target:hover {
-      cursor: move;
-    }
-
-    .title-close-btn:hover {
-      cursor: pointer;
-    }
-  }
-
+.layer-list {
   .list-search {
     .ant-input {
       margin: 0;
