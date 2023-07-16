@@ -14,7 +14,7 @@ class DesignerContainer extends Component {
     }
 
     componentWillUnmount() {
-        this.designerContainerRef.removeEventListener("click", this.handleClick);
+        document.removeEventListener("click", this.handleClick);
         this.designerContainerRef.removeEventListener("contextmenu", this.handleContextMenu);
         this.designerContainerRef.removeEventListener("pointerdown", this.handlePointerDown);
         document.removeEventListener("pointermove", this.handlePointerMove);
