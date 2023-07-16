@@ -7,6 +7,8 @@ export function registerEventOnDesignerLoaded() {
     const {setPosition, updateVisible} = contextMenuStore;
     const {setUnLockedId} = eventOperateStore;
     eventManager.register('click', (e: any) => {
+        const {setPointerTarget} = eventOperateStore;
+        setPointerTarget(e.target);
         const {visible, updateVisible} = contextMenuStore;
         if (visible && e.button === 0) {
             //这里添加异步处理的原因：必须要在操作菜单执行点击事件执行之后才能卸载dom元素，不然操作菜单的点击事件会失效。

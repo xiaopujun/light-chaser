@@ -1,4 +1,5 @@
 import {Component} from 'react';
+import eventOperateStore from "../EventOperateStore";
 
 export enum TriggerType {
     SINGLE,
@@ -40,8 +41,13 @@ class HotKey extends Component<HotKeyProps> {
         const {handler, triggerType = TriggerType.SINGLE} = this.handlerMapping[hotKey] || {};
         if (handler) {
             if ((triggerType === TriggerType.SINGLE && this.existHandlerKey !== hotKey) || triggerType === TriggerType.COILED) {
-                handler(e);
-                this.existHandlerKey = hotKey;
+                const {pointerTarget} = eventOperateStore;
+                //todo 需要优化快捷键的执行范围
+                const enforcementCap = document.querySelector('.lc-ruler-content');
+                if (enforcementCap && enforcementCap.contains(pointerTarget)) {
+                    handler(e);
+                    this.existHandlerKey = hotKey;
+                }
             }
         }
     }

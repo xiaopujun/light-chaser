@@ -6,7 +6,7 @@ class DesignerContainer extends Component {
     designerContainerRef: any;
 
     componentDidMount() {
-        this.designerContainerRef.addEventListener("click", this.handleClick);
+        document.addEventListener("click", this.handleClick);
         this.designerContainerRef.addEventListener("contextmenu", this.handleContextMenu);
         this.designerContainerRef.addEventListener("pointerdown", this.handlePointerDown);
         document.addEventListener("pointermove", this.handlePointerMove);

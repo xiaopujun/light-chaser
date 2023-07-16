@@ -57,6 +57,9 @@ class EventOperateStore {
      */
     minLevel = 0;
 
+    // 用于记录鼠标右键点击时的目标元素，用于快捷键操作时的目标元素的范围筛选
+    pointerTarget: any = null;
+
     setMaxLevel = (order: number) => this.maxLevel = order;
 
     setMinLevel = (order: number) => this.minLevel = order;
@@ -74,6 +77,8 @@ class EventOperateStore {
     setTargets = (targets: any[]) => this.targets = targets;
 
     setTargetIds = (targetIds: string[]) => this.targetIds = targetIds;
+
+    setPointerTarget = (target: any) => this.pointerTarget = target;
 
 }
 
