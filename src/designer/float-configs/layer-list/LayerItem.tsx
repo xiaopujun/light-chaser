@@ -15,7 +15,7 @@ export interface LayerItemProps {
     }
     lockChange?: (compId: string, data: boolean) => void;
     hideChange?: (compId: string, data: boolean) => void;
-    selectedChange?: (compId: string) => void;
+    selectedChange?: (compId: string, e: any) => void;
 }
 
 class LayerItem extends Component<LayerItemProps> {
@@ -30,16 +30,16 @@ class LayerItem extends Component<LayerItemProps> {
         hideChange && hideChange(compId, !data!.hide);
     }
 
-    onSelected = (compId: string) => {
+    onSelected = (compId: string, e: any) => {
         const {selectedChange} = this.props;
-        selectedChange && selectedChange(compId);
+        selectedChange && selectedChange(compId, e);
     }
 
     render() {
         const {name, lock, hide, compId = '', selected = false} = this.props.data || {};
         return (
             <div className={`layer-item ${selected ? "layer-item-selected" : ""}`}
-                 onClick={() => this.onSelected(compId)}>
+                 onClick={(e) => this.onSelected(compId, e)}>
                 <div className={'layer-item-name'}>{name}</div>
                 <div className={'layer-item-operators'}>
                     <div className={'layer-item-operator'}>

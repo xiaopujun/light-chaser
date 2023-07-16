@@ -55,12 +55,26 @@ class LayerList extends Component {
         updateLayout && updateLayout([{id: compId, locked: data}]);
     }
 
-    selectedChange = (compId: string) => {
-        const {setTargets, setTargetIds} = eventOperateStore;
+    selectedChange = (compId: string, e: any) => {
+        let {setTargets, setTargetIds, targetIds, targets} = eventOperateStore;
         const targetDom = document.getElementById(compId);
         if (!targetDom) return;
-        setTargetIds([compId]);
-        setTargets([targetDom]);
+        if (e.ctrlKey) {
+            if (targetIds.includes(compId)) {
+                const newTargetIds = targetIds.filter(id => id !== compId);
+                setTargetIds(newTargetIds);
+                const newTargets = targets.filter(target => target.id !== compId);
+                setTargets(newTargets);
+            } else {
+                targetIds = [...targetIds, compId];
+                targets = [...targets, targetDom];
+                setTargetIds(targetIds);
+                setTargets(targets);
+            }
+        } else {
+            setTargetIds([compId]);
+            setTargets([targetDom]);
+        }
     }
 
     hideChange = (compId: string, data: boolean) => {

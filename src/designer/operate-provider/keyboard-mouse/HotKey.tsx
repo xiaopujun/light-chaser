@@ -42,7 +42,6 @@ class HotKey extends Component<HotKeyProps> {
         if (handler) {
             if ((triggerType === TriggerType.SINGLE && this.existHandlerKey !== hotKey) || triggerType === TriggerType.COILED) {
                 const {pointerTarget} = eventOperateStore;
-                console.log('快捷键', pointerTarget)
                 //todo 需要优化快捷键的执行范围
                 const enforcementCap = document.querySelector('.lc-ruler-content');
                 if (enforcementCap && enforcementCap.contains(pointerTarget)) {

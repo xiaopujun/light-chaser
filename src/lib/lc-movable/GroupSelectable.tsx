@@ -22,7 +22,7 @@ class GroupSelectable extends Component {
                          hitRate={0}
                          selectByClick={true}
                          selectFromInside={false}
-                         toggleContinueSelect={["shift"]}
+                         toggleContinueSelect={["ctrl"]}
                          ratio={0}
                          onDragStart={e => {
                              if (!movableRef) return;
