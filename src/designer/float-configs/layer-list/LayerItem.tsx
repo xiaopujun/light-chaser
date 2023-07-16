@@ -11,9 +11,11 @@ export interface LayerItemProps {
         name?: string;
         lock?: boolean;
         hide?: boolean;
+        selected?: boolean;
     }
     lockChange?: (compId: string, data: boolean) => void;
     hideChange?: (compId: string, data: boolean) => void;
+    selectedChange?: (compId: string) => void;
 }
 
 class LayerItem extends Component<LayerItemProps> {
@@ -24,15 +26,20 @@ class LayerItem extends Component<LayerItemProps> {
     }
 
     toggleHide = (compId: string) => {
-        console.log('图层执行了')
         const {hideChange, data} = this.props;
         hideChange && hideChange(compId, !data!.hide);
     }
 
+    onSelected = (compId: string) => {
+        const {selectedChange} = this.props;
+        selectedChange && selectedChange(compId);
+    }
+
     render() {
-        const {name, lock, hide, compId = ''} = this.props.data || {};
+        const {name, lock, hide, compId = '', selected = false} = this.props.data || {};
         return (
-            <div className={'layer-item'}>
+            <div className={`layer-item ${selected ? "layer-item-selected" : ""}`}
+                 onClick={() => this.onSelected(compId)}>
                 <div className={'layer-item-name'}>{name}</div>
                 <div className={'layer-item-operators'}>
                     <div className={'layer-item-operator'}>

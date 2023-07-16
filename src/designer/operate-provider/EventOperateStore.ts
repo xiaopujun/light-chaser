@@ -9,8 +9,10 @@ class EventOperateStore {
         makeObservable(this, {
             scale: observable,
             targets: observable,
+            targetIds: observable,
             setScale: action,
             setTargets: action,
+            setTargetIds: action,
         })
     }
 

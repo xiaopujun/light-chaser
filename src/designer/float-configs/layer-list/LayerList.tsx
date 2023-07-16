@@ -34,6 +34,15 @@ class LayerList extends Component {
         }
         updateLayout && updateLayout([{id: compId, locked: data}]);
     }
+
+    selectedChange = (compId: string) => {
+        const {setTargets, setTargetIds} = eventOperateStore;
+        const targetDom = document.getElementById(compId);
+        if (!targetDom) return;
+        setTargetIds([compId]);
+        setTargets([targetDom]);
+    }
+
     hideChange = (compId: string, data: boolean) => {
         const {updateLayout} = designerStore;
         updateLayout && updateLayout([{id: compId, hide: data}]);
@@ -41,10 +50,18 @@ class LayerList extends Component {
 
     buildLayerList = () => {
         const {layoutConfigs} = designerStore;
+        const {targetIds} = eventOperateStore;
         return Object.values(layoutConfigs).sort((a: any, b: any) => b.order - a.order).map((item: any, index) => {
             return <LayerItem key={index + ''}
-                              data={{name: item.name, lock: item.locked, hide: item.hide, compId: item.id}}
+                              data={{
+                                  name: item.name,
+                                  lock: item.locked,
+                                  hide: item.hide,
+                                  compId: item.id,
+                                  selected: targetIds.includes(item.id)
+                              }}
                               lockChange={this.lockChange}
+                              selectedChange={this.selectedChange}
                               hideChange={this.hideChange}/>
         });
     }
