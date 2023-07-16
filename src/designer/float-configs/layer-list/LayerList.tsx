@@ -7,8 +7,28 @@ import LayerItem from "./LayerItem";
 import {observer} from "mobx-react";
 import FloatPanel from "../common/FloatPanel";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
+import eventManager from "../../operate-provider/core/EventManager";
 
 class LayerList extends Component {
+
+    componentDidMount() {
+        eventManager.register("click", this.cancelSelected);
+    }
+
+    componentWillUnmount() {
+        eventManager.unregister("click", this.cancelSelected);
+    }
+
+    //todo: 想想怎么优化
+    cancelSelected = (e: PointerEvent) => {
+        const layerListDom = document.querySelector(".layer-list");
+        if (!layerListDom || !e.target) return;
+        if (layerListDom.contains(e.target as Node) && !(e.target as HTMLElement).classList.contains("layer-item")) {
+            const {setTargetIds, setTargets} = eventOperateStore;
+            setTargetIds([]);
+            setTargets([]);
+        }
+    }
 
     onClose = () => {
         const {setVisible} = layerListStore;

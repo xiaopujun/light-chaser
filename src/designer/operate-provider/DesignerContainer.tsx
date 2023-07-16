@@ -8,17 +8,17 @@ class DesignerContainer extends Component {
     componentDidMount() {
         document.addEventListener("click", this.handleClick);
         this.designerContainerRef.addEventListener("contextmenu", this.handleContextMenu);
-        this.designerContainerRef.addEventListener("pointerdown", this.handlePointerDown);
+        document.addEventListener("pointerdown", this.handlePointerDown);
         document.addEventListener("pointermove", this.handlePointerMove);
-        this.designerContainerRef.addEventListener("pointerup", this.handlePointerUp);
+        document.addEventListener("pointerup", this.handlePointerUp);
     }
 
     componentWillUnmount() {
         document.removeEventListener("click", this.handleClick);
         this.designerContainerRef.removeEventListener("contextmenu", this.handleContextMenu);
-        this.designerContainerRef.removeEventListener("pointerdown", this.handlePointerDown);
+        document.removeEventListener("pointerdown", this.handlePointerDown);
         document.removeEventListener("pointermove", this.handlePointerMove);
-        this.designerContainerRef.removeEventListener("pointerup", this.handlePointerUp);
+        document.removeEventListener("pointerup", this.handlePointerUp);
     }
 
     /**
