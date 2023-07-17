@@ -1,5 +1,5 @@
 import React from "react";
-import BaseStyleSet from "../../../lib/common-fragment/base-style/BaseStyleSet";
+import BaseStyleSet from "../../common-fragment/base-style/BaseStyleSet";
 import {ConfigType} from "../../../designer/right/ConfigType";
 
 export const LcColorBlockConfig: React.FC<ConfigType> = ({config, updateConfig}) => {

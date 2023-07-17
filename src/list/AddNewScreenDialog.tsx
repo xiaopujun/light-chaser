@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './style/AddNewScreenDialog.less';
 import Dialog from "../lib/lc-dialog/Dialog";
-import ConfigItem from "../lib/config-item/ConfigItem";
+import ConfigItem from "../lib/lc-config-item/ConfigItem";
 import UnderLineInput from "../lib/lc-input/UnderLineInput";
 import LcButton from "../lib/lc-button/LcButton";
 import Select from "../lib/lc-select/Select";

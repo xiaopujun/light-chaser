@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 import CompBgContainer from "../../../lib/lc-background-container/CompBgContainer";
 import {Bar} from "@ant-design/charts";
 import {sendHttpRequest} from "../../../utils/HttpUtil";
+import {LoadError} from "../../../lib/lc-loaderr/LoadError";
 
 /**
  * 基础条形图
@@ -51,33 +52,22 @@ export default class AntdBaseBar extends PureComponent<any> {
     }
 
     render() {
-        const {connect} = this.state;
+        let {connect} = this.state;
         const {config} = this.props;
         if (!config) return null;
         let {style} = config;
         this.calculateData(style);
         return (
-            <CompBgContainer style={style?.baseStyle}>
+            <>
                 {
-                    connect ? <Bar supportCSSTransform={true} onGetG2Instance={(chart: any) => {
-                            this.chart = chart;
-                        }} className={'grid-chart-item'} {...style?.chartStyle}/> :
-                        <div style={{
-                            width: '100%',
-                            height: '100%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            textAlign: 'center'
-                        }}>
-                            <p style={{
-                                backgroundColor: 'rgb(174,0,0)',
-                                color: '#dcdcdc',
-                                fontSize: 12,
-                                width: '100%',
-                            }}>链接丢失...</p>
-                        </div>
+                    connect ? <CompBgContainer style={style?.baseStyle}>
+                            <Bar supportCSSTransform={true}
+                                 onGetG2Instance={(chart: any) => this.chart = chart}
+                                 className={'grid-chart-item'} {...style?.chartStyle}/>
+                        </CompBgContainer> :
+                        <LoadError/>
                 }
-            </CompBgContainer>
+            </>
         );
     }
 }

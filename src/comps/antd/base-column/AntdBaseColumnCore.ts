@@ -7,11 +7,11 @@ import React from "react";
 import {updateTheme} from "../../common-fragment/ThemeFragment";
 
 const AntdBaseColumnConfigStyle = React.lazy(() => import("./AntdBaseColumnConfig").then(module => ({default: module.AntdBaseColumnStyleConfig})));
-const AnimationConfig = React.lazy(() => import("../../../lib/common-fragment/animation-config/AnimationConfig"));
-const ThemeConfig = React.lazy(() => import("../../../lib/common-fragment/theme-config/ThemeConfig"));
-const BaseInfo = React.lazy(() => import("../../../lib/common-fragment/base-info/BaseInfo"));
+const AnimationConfig = React.lazy(() => import("../../common-fragment/animation-config/AnimationConfig"));
+const ThemeConfig = React.lazy(() => import("../../common-fragment/theme-config/ThemeConfig"));
+const BaseInfo = React.lazy(() => import("../../common-fragment/base-info/BaseInfo"));
 const AntdBaseColumn = React.lazy(() => import("./AntdBaseColumn"));
-const DataConfig = React.lazy(() => import("../../../lib/common-fragment/data-config/DataConfig"));
+const DataConfig = React.lazy(() => import("../../common-fragment/data-config/DataConfig"));
 
 class AntdBaseColumnCore extends AbstractCustomComponentDefinition {
 

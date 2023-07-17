@@ -44,7 +44,7 @@ class HotKey extends Component<HotKeyProps> {
                 const {pointerTarget} = eventOperateStore;
                 //todo 需要优化快捷键的执行范围
                 const enforcementCap = document.querySelector('.lc-ruler-content');
-                if (enforcementCap && (enforcementCap.contains(pointerTarget) || pointerTarget.classList.contains('layer-item'))) {
+                if (enforcementCap && (enforcementCap.contains(pointerTarget) || (pointerTarget && pointerTarget.classList.contains('layer-item')))) {
                     handler(e);
                     this.existHandlerKey = hotKey;
                 }

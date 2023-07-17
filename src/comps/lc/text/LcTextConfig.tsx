@@ -1,13 +1,13 @@
 import React from "react";
-import BaseStyleSet from "../../../lib/common-fragment/base-style/BaseStyleSet";
+import BaseStyleSet from "../../common-fragment/base-style/BaseStyleSet";
 import {ConfigType} from "../../../designer/right/ConfigType";
 import Accordion from "../../../lib/lc-accordion/Accordion";
-import ConfigItem from "../../../lib/config-item/ConfigItem";
+import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
-import ConfigCard from "../../../lib/config-card/ConfigCard";
+import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
 import Radio from "../../../lib/lc-radio/Radio";
-import CfgItemBorder from "../../../lib/config-item/CfgItemBorder";
+import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 
 export const LcTextDataConfig: React.FC<ConfigType> = ({config, updateConfig}) => {
 

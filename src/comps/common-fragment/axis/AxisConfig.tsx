@@ -1,15 +1,16 @@
 import React, {Component, useState} from 'react';
 import './AxisConfig.less';
-import ConfigItem from "../../config-item/ConfigItem";
-import ConfigCard from "../../config-card/ConfigCard";
-import Accordion from "../../lc-accordion/Accordion";
-import CfgItemBorder from "../../config-item/CfgItemBorder";
+import Accordion from '../../../lib/lc-accordion/Accordion';
+import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
+import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
+import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 
-const BaseColorPicker = React.lazy(() => import('../../lc-color-picker/BaseColorPicker'));
-const LcSwitch = React.lazy(() => import('../../lc-switch/LcSwitch'));
-const UnderLineInput = React.lazy(() => import('../../lc-input/UnderLineInput'));
-const Select = React.lazy(() => import('../../lc-select/Select'));
-const Radio = React.lazy(() => import('../../lc-radio/Radio'));
+
+const BaseColorPicker = React.lazy(() => import('../../../lib/lc-color-picker/BaseColorPicker'));
+const LcSwitch = React.lazy(() => import('../../../lib/lc-switch/LcSwitch'));
+const UnderLineInput = React.lazy(() => import('../../../lib/lc-input/UnderLineInput'));
+const Select = React.lazy(() => import('../../../lib/lc-select/Select'));
+const Radio = React.lazy(() => import('../../../lib/lc-radio/Radio'));
 
 interface AxisConfigProps {
     config?: any;

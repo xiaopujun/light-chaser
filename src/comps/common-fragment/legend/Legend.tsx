@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import './Legend.less';
-import Accordion from "../../lc-accordion/Accordion";
-import BaseColorPicker from "../../lc-color-picker/BaseColorPicker";
-import CfgItemBorder from "../../config-item/CfgItemBorder";
-import ConfigItem from "../../config-item/ConfigItem";
+import Accordion from "../../../lib/lc-accordion/Accordion";
+import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
+import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
+import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import {LegendType} from "./LegendType";
 import {ConfigType} from "../../../designer/right/ConfigType";
 import _ from "lodash";
-import Select from "../../lc-select/Select";
-import UnderLineInput from "../../lc-input/UnderLineInput";
+import Select from "../../../lib/lc-select/Select";
+import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 
 
 interface LegendProps {

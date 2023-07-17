@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import ConfigCard from "../../config-card/ConfigCard";
-import ConfigItem from "../../config-item/ConfigItem";
-import LcSwitch from "../../lc-switch/LcSwitch";
+import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
+import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
+import LcSwitch from "../../../lib/lc-switch/LcSwitch";
 import 'animate.css';
 import './AnimationConfig.less';
-import LcButton from "../../lc-button/LcButton";
-import UnderLineInput from "../../lc-input/UnderLineInput";
+import LcButton from "../../../lib/lc-button/LcButton";
+import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 
 class AnimationConfig extends Component {
     render() {

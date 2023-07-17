@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import BaseColorPicker from "../../../lc-color-picker/BaseColorPicker";
+import BaseColorPicker from "../../../../lib/lc-color-picker/BaseColorPicker";
 import './ThemeItem.less';
 import {ThemeColors, ThemeItemType} from "../../../../designer/DesignerType";
 import closeIcon from './close.svg';

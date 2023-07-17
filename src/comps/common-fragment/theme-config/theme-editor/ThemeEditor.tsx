@@ -1,11 +1,11 @@
 import React, {Component, FormEvent} from 'react';
 import './ThemeEditor.less';
-import ConfigItem from "../../../config-item/ConfigItem";
-import UnderLineInput from "../../../lc-input/UnderLineInput";
-import BaseColorPicker from "../../../lc-color-picker/BaseColorPicker";
-import CfgItemBorder from "../../../config-item/CfgItemBorder";
-import ConfigCard from "../../../config-card/ConfigCard";
-import LcButton from "../../../lc-button/LcButton";
+import ConfigItem from "../../../../lib/lc-config-item/ConfigItem";
+import UnderLineInput from "../../../../lib/lc-input/UnderLineInput";
+import BaseColorPicker from "../../../../lib/lc-color-picker/BaseColorPicker";
+import CfgItemBorder from "../../../../lib/lc-config-item/CfgItemBorder";
+import ConfigCard from "../../../../lib/lc-config-card/ConfigCard";
+import LcButton from "../../../../lib/lc-button/LcButton";
 import {ThemeItemType} from "../../../../designer/DesignerType";
 import designerStore from "../../../../designer/store/DesignerStore";
 import ThemeList from "../theme-list/ThemeList";

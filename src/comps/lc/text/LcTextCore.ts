@@ -4,8 +4,8 @@ import {MenuInfo} from "../../../designer/right/MenuType";
 import textImg from './lc-text.png';
 import React from "react";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import BaseInfo from "../../../lib/common-fragment/base-info/BaseInfo";
-import AnimationConfig from "../../../lib/common-fragment/animation-config/AnimationConfig";
+import BaseInfo from "../../common-fragment/base-info/BaseInfo";
+import AnimationConfig from "../../common-fragment/animation-config/AnimationConfig";
 import {LcTextDataConfig, LcTextStyleConfig} from "./LcTextConfig";
 
 const LcText = React.lazy(() => import('./LcText'));

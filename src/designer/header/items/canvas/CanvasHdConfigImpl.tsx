@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {observer} from "mobx-react";
 import Dialog from "../../../../lib/lc-dialog/Dialog";
-import ConfigItem from "../../../../lib/config-item/ConfigItem";
+import ConfigItem from "../../../../lib/lc-config-item/ConfigItem";
 import headerStore from "../../HeaderStore";
 import UnderLineInput from "../../../../lib/lc-input/UnderLineInput";
 import './CanvasHdConfigImpl.less';

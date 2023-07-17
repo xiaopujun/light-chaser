@@ -1,13 +1,13 @@
 import React from "react";
-import ConfigCard from "../../lib/config-card/ConfigCard";
-import ConfigItem from "../../lib/config-item/ConfigItem";
+import ConfigCard from "../../lib/lc-config-card/ConfigCard";
+import ConfigItem from "../../lib/lc-config-item/ConfigItem";
 import UnderLineInput from "../../lib/lc-input/UnderLineInput";
-import CfgItemBorder from "../../lib/config-item/CfgItemBorder";
+import CfgItemBorder from "../../lib/lc-config-item/CfgItemBorder";
 import BaseColorPicker from "../../lib/lc-color-picker/BaseColorPicker";
 import Accordion from "../../lib/lc-accordion/Accordion";
 import {ConfigType} from "../../designer/right/ConfigType";
-import Legend from "../../lib/common-fragment/legend/Legend";
-import AxisConfig from "../../lib/common-fragment/axis/AxisConfig";
+import Legend from "../common-fragment/legend/Legend";
+import AxisConfig from "../common-fragment/axis/AxisConfig";
 
 export const AntdLegend: React.FC<ConfigType> = ({config, updateConfig}) => {
     const legendChanged = (key: string, data: any) => {

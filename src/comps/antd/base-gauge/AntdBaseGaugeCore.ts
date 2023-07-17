@@ -7,11 +7,11 @@ import React from "react";
 import {updateTheme} from "../../common-fragment/ThemeFragment";
 
 const AntdBaseGaugeStyleConfig = React.lazy(() => import("./AntdBaseGaugeConfig").then(module => ({default: module.AntdBaseGaugeStyleConfig})));
-const AnimationConfig = React.lazy(() => import("../../../lib/common-fragment/animation-config/AnimationConfig"));
-const ThemeConfig = React.lazy(() => import("../../../lib/common-fragment/theme-config/ThemeConfig"));
-const BaseInfo = React.lazy(() => import("../../../lib/common-fragment/base-info/BaseInfo"));
+const AnimationConfig = React.lazy(() => import("../../common-fragment/animation-config/AnimationConfig"));
+const ThemeConfig = React.lazy(() => import("../../common-fragment/theme-config/ThemeConfig"));
+const BaseInfo = React.lazy(() => import("../../common-fragment/base-info/BaseInfo"));
 const AntdBaseGauge = React.lazy(() => import("./AntdBaseGauge"));
-const DataConfig = React.lazy(() => import("../../../lib/common-fragment/data-config/DataConfig"));
+const DataConfig = React.lazy(() => import("../../common-fragment/data-config/DataConfig"));
 
 class AntdBaseGaugeCore extends AbstractCustomComponentDefinition {
 

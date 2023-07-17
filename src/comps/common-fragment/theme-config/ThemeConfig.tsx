@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import Dialog from "../../lc-dialog/Dialog";
+import Dialog from "../../../lib/lc-dialog/Dialog";
 import ThemeEditor from "./theme-editor/ThemeEditor";
-import LcButton from "../../lc-button/LcButton";
+import LcButton from "../../../lib/lc-button/LcButton";
 import ThemeList from "./theme-list/ThemeList";
 import {ConfigType} from "../../../designer/right/ConfigType";
 import {ThemeItemType} from "../../../designer/DesignerType";

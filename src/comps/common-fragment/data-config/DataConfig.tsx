@@ -1,10 +1,10 @@
 import React, {Component, useRef, useState} from 'react';
-import ConfigItem from "../../config-item/ConfigItem";
-import CodeEditor from "../../lc-code-editer/CodeEditor";
-import UnderLineInput from "../../lc-input/UnderLineInput";
-import ConfigItemTB from "../../config-item/ConfigItemTB";
-import LcButton from "../../lc-button/LcButton";
-import Select from "../../lc-select/Select";
+import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
+import CodeEditor from "../../../lib/lc-code-editer/CodeEditor";
+import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
+import ConfigItemTB from "../../../lib/lc-config-item/ConfigItemTB";
+import LcButton from "../../../lib/lc-button/LcButton";
+import Select from "../../../lib/lc-select/Select";
 import './DataConfig.less';
 import {sendHttpRequest} from "../../../utils/HttpUtil";
 import {stringToJsObj} from "../../../utils/ObjectUtil";

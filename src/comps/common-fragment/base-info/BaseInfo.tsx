@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import './BaseInfo.less';
-import ConfigCard from "../../config-card/ConfigCard";
-import ConfigItem from "../../config-item/ConfigItem";
-import UnderLineInput from "../../lc-input/UnderLineInput";
+import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
+import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
+import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import {ConfigType} from "../../../designer/right/ConfigType";
 
 /**

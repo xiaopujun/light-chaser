@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import BaseStyleSet from "../../../lib/common-fragment/base-style/BaseStyleSet";
+import BaseStyleSet from "../../common-fragment/base-style/BaseStyleSet";
 import {ConfigType} from "../../../designer/right/ConfigType";
 import {AntdCartesianCoordinateSys, AntdGraphics, AntdLegend} from "../../common-fragment/AntdFragment";
 
