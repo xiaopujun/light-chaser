@@ -6,6 +6,8 @@ import designerStore from "../store/DesignerStore";
 import Dialog from "../../lib/lc-dialog/Dialog";
 import HotKeyDes from "./HotKeyDes";
 import layerListStore from "../float-configs/layer-list/LayerListStore";
+import keyboardIcon from './keyboard-icon.svg';
+import layerIcon from './layers-icon.svg';
 
 class DesignerFooter extends Component {
 
@@ -43,8 +45,17 @@ class DesignerFooter extends Component {
         return (
             <div className={'lc-designer-footer'}>
                 <div className={'footer-left'}>
-                    <div className={'footer-item'} onClick={this.toggleHotKeyDes}>快捷键</div>
-                    <div className={'footer-item'} onClick={this.toggleLayerList}>图层</div>
+                    <div className={'footer-item'} onClick={this.toggleHotKeyDes}>
+                        <img width={16} alt={'快捷键'}
+                             src={keyboardIcon}/>
+                        &nbsp;
+                        <span style={{position: 'relative', top: 2}}>快捷键</span>
+                    </div>
+                    <div className={'footer-item'} onClick={this.toggleLayerList}>
+                        <img width={16} alt={'图层'} src={layerIcon}/>
+                        &nbsp;
+                        <span style={{position: 'relative', top: 2}}>图层</span>
+                    </div>
                 </div>
                 <div className={'footer-right'}>
                     <div className={'right-info-item'}>缩放 : {(scale * 100).toFixed(0)}%</div>
