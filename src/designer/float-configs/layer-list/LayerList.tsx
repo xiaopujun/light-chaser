@@ -40,46 +40,47 @@ class LayerList extends Component {
 
     }
 
-    lockChange = (compId: string, data: boolean) => {
+    lockChange = (data: any) => {
+        console.log('lockChange', data);
         const {updateLayout} = designerStore;
         const {targetIds, targets, setTargetIds, setTargets} = eventOperateStore;
-        if (targetIds.includes(compId)) {
-            const newTargetIds = targetIds.filter(id => id !== compId);
+        if (targetIds.includes(data.compId)) {
+            const newTargetIds = targetIds.filter(id => id !== data.compId);
             setTargetIds(newTargetIds);
         }
         if (targets && targets.length > 0) {
-            const newTargets = targets.filter(target => target.id !== compId);
+            const newTargets = targets.filter(target => target.id !== data.compId);
             if (newTargets.length !== targets.length)
                 setTargets(newTargets);
         }
-        updateLayout && updateLayout([{id: compId, locked: data}]);
+        updateLayout && updateLayout([{id: data.compId, locked: data.lock}]);
     }
 
-    selectedChange = (compId: string, e: any) => {
+    selectedChange = (data: any, e: any) => {
         let {setTargets, setTargetIds, targetIds, targets} = eventOperateStore;
-        const targetDom = document.getElementById(compId);
-        if (!targetDom) return;
+        const targetDom = document.getElementById(data.compId);
+        if (!targetDom || data.lock || data.hide) return;
         if (e.ctrlKey) {
-            if (targetIds.includes(compId)) {
-                const newTargetIds = targetIds.filter(id => id !== compId);
+            if (targetIds.includes(data.compId)) {
+                const newTargetIds = targetIds.filter(id => id !== data.compId);
                 setTargetIds(newTargetIds);
-                const newTargets = targets.filter(target => target.id !== compId);
+                const newTargets = targets.filter(target => target.id !== data.compId);
                 setTargets(newTargets);
             } else {
-                targetIds = [...targetIds, compId];
+                targetIds = [...targetIds, data.compId];
                 targets = [...targets, targetDom];
                 setTargetIds(targetIds);
                 setTargets(targets);
             }
         } else {
-            setTargetIds([compId]);
+            setTargetIds([data.compId]);
             setTargets([targetDom]);
         }
     }
 
-    hideChange = (compId: string, data: boolean) => {
+    hideChange = (data: any) => {
         const {updateLayout} = designerStore;
-        updateLayout && updateLayout([{id: compId, hide: data}]);
+        updateLayout && updateLayout([{id: data.compId, hide: data.hide}]);
     }
 
     buildLayerList = () => {

@@ -13,43 +13,43 @@ export interface LayerItemProps {
         hide?: boolean;
         selected?: boolean;
     }
-    lockChange?: (compId: string, data: boolean) => void;
-    hideChange?: (compId: string, data: boolean) => void;
-    selectedChange?: (compId: string, e: any) => void;
+    lockChange?: (data: any) => void;
+    hideChange?: (data: any) => void;
+    selectedChange?: (data: any, e: any) => void;
 }
 
-class LayerItem extends Component<LayerItemProps> {
+class LayerItem extends React.PureComponent<LayerItemProps> {
 
-    toggleLock = (compId: string) => {
+    toggleLock = () => {
         const {lockChange, data} = this.props;
-        lockChange && lockChange(compId, !data!.lock);
+        lockChange && lockChange({...data, lock: !data!.lock});
     }
 
-    toggleHide = (compId: string) => {
+    toggleHide = () => {
         const {hideChange, data} = this.props;
-        hideChange && hideChange(compId, !data!.hide);
+        hideChange && hideChange({...data, hide: !data!.hide});
     }
 
-    onSelected = (compId: string, e: any) => {
-        const {selectedChange} = this.props;
-        selectedChange && selectedChange(compId, e);
+    onSelected = (e: any) => {
+        const {selectedChange, data} = this.props;
+        selectedChange && selectedChange(data, e);
     }
 
     render() {
-        const {name, lock, hide, compId = '', selected = false} = this.props.data || {};
+        const {name, lock, hide, selected = false} = this.props.data || {};
         return (
             <div className={`layer-item ${selected ? "layer-item-selected" : ""}`}
-                 onClick={(e) => this.onSelected(compId, e)}>
+                 onClick={(e) => this.onSelected(e)}>
                 <div className={'layer-item-name'}>{name}</div>
                 <div className={'layer-item-operators'}>
                     <div className={'layer-item-operator'}>
-                        <span onClick={() => this.toggleHide(compId)}>
+                        <span onClick={this.toggleHide}>
                             <img src={hide ? previewClose : previewOpen} alt={hide ? '显示' : '隐藏'}
                                  style={{width: 14}}/>
                         </span>
                     </div>
                     <div className={'layer-item-operator'}>
-                        <span onClick={() => this.toggleLock(compId)}>
+                        <span onClick={this.toggleLock}>
                             <img src={lock ? lockImg : unlockImg} alt={lock ? '锁定' : '解锁'}/>
                         </span>
                     </div>
