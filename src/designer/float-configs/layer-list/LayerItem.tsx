@@ -36,6 +36,7 @@ class LayerItem extends React.PureComponent<LayerItemProps> {
     }
 
     render() {
+        console.log('LayerItem render');
         const {name, lock, hide, selected = false} = this.props.data || {};
         return (
             <div className={`layer-item ${selected ? "layer-item-selected" : ""}`}

@@ -9,6 +9,7 @@ import FloatPanel from "../common/FloatPanel";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 import eventManager from "../../operate-provider/core/EventManager";
 
+//todo 该组件的重新渲染逻辑要重点优化
 class LayerList extends Component {
 
     componentDidMount() {
