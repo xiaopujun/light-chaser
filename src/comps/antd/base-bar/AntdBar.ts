@@ -1,42 +1,11 @@
-import React from "react";
-import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
-import {BaseInfoType, ElemConfig} from "../../../designer/DesignerType";
-import {MenuInfo} from "../../../designer/right/MenuType";
-import previewImg from "./bar.png";
-import {getDefaultMenuList} from "../../../designer/right/util";
-import {updateTheme} from "../../common-fragment/ThemeFragment";
-import AntdBar from "./AntdBar";
+import AbstractComponent from "../../../framework/core/AbstractComponent";
+import {Bar} from "@antv/g2plot";
 
-const AntdBaseBarStyleConfig = React.lazy(() => import('./AntdBaseBarConfig').then(module => ({default: module.AntdBaseBarStyleConfig})));
-const AnimationConfig = React.lazy(() => import("../../common-fragment/animation-config/AnimationConfig"));
-const ThemeConfig = React.lazy(() => import("../../common-fragment/theme-config/ThemeConfig"));
-const BaseInfo = React.lazy(() => import("../../common-fragment/base-info/BaseInfo"));
-const AntdBaseBar = React.lazy(() => import("./AntdBaseBar"));
-const DataConfig = React.lazy(() => import("../../common-fragment/data-config/DataConfig"));
+export default class AntdBar extends AbstractComponent<Bar, any> {
 
-class AntdBaseBarCore extends AbstractCustomComponentDefinition {
-
-    getBaseInfo(): BaseInfoType {
-        return {
-            name: "基础条形图",
-            key: 'AntdBaseBar',
-            typeName: "条形图",
-            typeKey: "bar",
-            sourceName: "Antd",
-            sourceKey: "antd",
-        };
-    }
-
-    getChartImg(): any {
-        return previewImg;
-    }
-
-    getComponent(): any {
-        return AntdBar;
-    }
-
-    getInitConfig(): ElemConfig | Object {
-        return {
+    constructor() {
+        super();
+        this.config = {
             info: {
                 id: '',
                 name: '基础条形图',
@@ -144,6 +113,7 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
                         }
                     },
                     maxBarWidth: 14,
+                    supportCSSTransform: true,
                 }
             },
             data: {
@@ -165,30 +135,31 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition {
                     ]
                 },
             },
-            animation: {},
-            theme: {
-                themeId: '',
-            },
-        };
+        }
     }
 
-    getMenuList(): Array<MenuInfo> {
-        return getDefaultMenuList();
+    async create(container: HTMLElement, props: any): Promise<any> {
+        if (!this.instance) {
+            this.instance = new Bar(container, this.config.style.chartStyle);
+
+        }
+        this.instance.render();
+        return this;
     }
 
-    getMenuToConfigContentMap(): { [key: string]: React.Component | React.FC | any } {
-        return {
-            'info': BaseInfo,
-            'style': AntdBaseBarStyleConfig,
-            'data': DataConfig,
-            'animation': AnimationConfig,
-            'theme': ThemeConfig
-        };
+    destroy(): void {
+        this.instance!.destroy();
+        this.instance = null;
+        this.config = null;
     }
 
-    updateTheme = updateTheme;
+    getConfig(): any {
+    }
 
+    update(props: any, operateType: any): void {
+    }
+
+    updateConfig(config: any): void {
+    }
 
 }
-
-export default AntdBaseBarCore;

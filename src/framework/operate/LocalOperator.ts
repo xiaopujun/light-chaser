@@ -38,20 +38,20 @@ class LocalOperator extends AbstractOperator {
         projectData.id = idGenerate.generateId();
         // 2. 处理元素层级
         const {maxLevel, minLevel} = eventOperateStore;
-        projectData.layerConfigs!.maxLevel = maxLevel;
-        projectData.layerConfigs!.minLevel = minLevel;
+        // projectData.layerConfigs!.maxLevel = maxLevel;
+        // projectData.layerConfigs!.minLevel = minLevel;
         // 3. 异步生成工作区截图
         let imgDom: any = document.querySelector('.lc-content-scale');
         const screenShotId = LocalConstant.LOCAL_PROJECT_SCREENSHOT + projectData.id;
         projectData!.projectConfig!.screenshot = screenShotId; //截图
         ImgUtil.htmlToImgWithId(imgDom, screenShotId, {scale: scaleCore.scale}).then(() => console.log('异步生成截图成功'));
         // 4. 异步保存背景图片（如果有）
-        const bgConfig: BackgroundConfig = (projectData.elemConfigs ?? {})['-1']['background'];
-        if (bgConfig?.bgImg.bgImgUrl !== '') {
-            const bgImgKey = LocalConstant.LOCAL_BACKGROUND_IMG + projectData.id;
-            bgConfig.bgImg.bgImgUrl = bgImgKey;
-            ImgUtil.saveImgToLocal(bgConfig.bgImg.bgImgUrl!, bgImgKey).then(() => console.log('异步生成背景图片成功'));
-        }
+        // const bgConfig: BackgroundConfig = (projectData.elemConfigs ?? {})['-1']['background'];
+        // if (bgConfig?.bgImg.bgImgUrl !== '') {
+        //     const bgImgKey = LocalConstant.LOCAL_BACKGROUND_IMG + projectData.id;
+        //     bgConfig.bgImg.bgImgUrl = bgImgKey;
+        //     ImgUtil.saveImgToLocal(bgConfig.bgImg.bgImgUrl!, bgImgKey).then(() => console.log('异步生成背景图片成功'));
+        // }
     }
 
     private static async doCreate(projectData: ProjectDataType): Promise<void> {
@@ -87,21 +87,21 @@ class LocalOperator extends AbstractOperator {
     private static updateProjectBefore(projectData: ProjectDataType): void {
         //1. 处理元素层级
         const {maxLevel, minLevel} = eventOperateStore;
-        projectData.layerConfigs!.maxLevel = maxLevel;
-        projectData.layerConfigs!.minLevel = minLevel;
+        // projectData.layerConfigs!.maxLevel = maxLevel;
+        // projectData.layerConfigs!.minLevel = minLevel;
         //2. 异步生成工作区截图
         let imgDom: any = document.querySelector('.lc-content-scale');
         const screenShotId = LocalConstant.LOCAL_PROJECT_SCREENSHOT + projectData.id;
         projectData!.projectConfig!.screenshot = screenShotId; //截图
         ImgUtil.htmlToImgWithId(imgDom, screenShotId, {scale: scaleCore.scale}).then(() => console.log('异步更新截图成功'));
         //3. 异步处理背景图片
-        const bgConfig: BackgroundConfig = projectData.elemConfigs?.['-1']['background'];
-        const bgImgKey = LocalConstant.LOCAL_BACKGROUND_IMG + projectData.id;
-        projectData!.elemConfigs!['-1'].background!.bgImg!.bgImgUrl = bgImgKey;
-        if (bgConfig?.bgImg.bgImgUrl !== '')
-            ImgUtil.saveImgToLocal(bgConfig.bgImg.bgImgUrl!, bgImgKey).then(() => console.log('异步更新背景图片成功'));
-        else
-            ImgUtil.delImgFormLocal(bgImgKey);
+        // const bgConfig: BackgroundConfig = projectData.elemConfigs?.['-1']['background'];
+        // const bgImgKey = LocalConstant.LOCAL_BACKGROUND_IMG + projectData.id;
+        // projectData!.elemConfigs!['-1'].background!.bgImg!.bgImgUrl = bgImgKey;
+        // if (bgConfig?.bgImg.bgImgUrl !== '')
+        //     ImgUtil.saveImgToLocal(bgConfig.bgImg.bgImgUrl!, bgImgKey).then(() => console.log('异步更新背景图片成功'));
+        // else
+        //     ImgUtil.delImgFormLocal(bgImgKey);
     }
 
     private async doUpdate(projectData: ProjectDataType): Promise<void> {
@@ -143,12 +143,12 @@ class LocalOperator extends AbstractOperator {
     public async getProject(id: string): Promise<ProjectDataType | null> {
         const projectData = await localforage.getItem(id);
         if (!projectData) return null;
-        let bgConfig: BackgroundConfig = (projectData as ProjectDataType)!.elemConfigs!['-1']['background'];
-        if (bgConfig?.bgImg.bgImgUrl !== '') {
-            const url = await ImgUtil.getImgFromLocal(bgConfig?.bgImg.bgImgUrl);
-            if (bgConfig)
-                (projectData as ProjectDataType)!.elemConfigs!['-1']['background'].bgImg.bgImgUrl = url;
-        }
+        // let bgConfig: BackgroundConfig = (projectData as ProjectDataType)!.elemConfigs!['-1']['background'];
+        // if (bgConfig?.bgImg.bgImgUrl !== '') {
+        //     const url = await ImgUtil.getImgFromLocal(bgConfig?.bgImg.bgImgUrl);
+        //     if (bgConfig)
+        //         (projectData as ProjectDataType)!.elemConfigs!['-1']['background'].bgImg.bgImgUrl = url;
+        // }
         return projectData as ProjectDataType;
     }
 

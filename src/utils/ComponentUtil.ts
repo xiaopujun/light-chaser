@@ -3,7 +3,7 @@ import React, {ClassType} from "react";
 
 class ComponentUtil {
 
-    public static async createAndRender<T extends React.Component>(container: HTMLElement, clazzTemp: ClassType<T, any, any>, props?: any): Promise<T | null> {
+    public static async createAndRender<T>(container: HTMLElement, clazzTemp: ClassType<T, any, any>, props?: any): Promise<T | null> {
         if (!container)
             throw new Error("create react node failed, container is null");
         return await new Promise<T | null>((resolve) => {

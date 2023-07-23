@@ -2,6 +2,8 @@
  * 主题
  */
 import {MovableItemType} from "../lib/lc-movable/types";
+import LayoutItem from "../framework/core/LayoutItem";
+import AbstractComponent from "../framework/core/AbstractComponent";
 
 export interface ThemeColors {
     //主体色
@@ -317,13 +319,11 @@ export interface ProjectDataType {
     //项目设置
     projectConfig?: ProjectConfig;
     //元素样式
-    elemConfigs?: { [key: string]: ElemConfig };
+    elemConfigs?: { [key: string]: ElemConfig | AbstractComponent<any, any> };
     //布局信息
     layoutConfigs?: { [key: string]: MovableItemType };
     //统计信息
     statisticInfo?: Statistic;
-    //图层信息
-    layerConfigs?: LayerConfigType;
     //全局主题
     themeConfig?: Array<ThemeItemType>;
     //扩展参数

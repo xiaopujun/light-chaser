@@ -15,6 +15,6 @@ export interface MovableItemType {
     hide?: boolean;
     //是否锁定
     locked?: boolean;
-    //层级
+    //顺序
     order?: number;
 }

@@ -1,4 +1,3 @@
-import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
 import {BaseInfoType, ElemConfig, ThemeItemType} from "../../../designer/DesignerType";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import textImg from './lc-text.png';
@@ -10,7 +9,7 @@ import {LcTextDataConfig, LcTextStyleConfig} from "./LcTextConfig";
 
 const LcText = React.lazy(() => import('./LcText'));
 
-class LcTextCore extends AbstractCustomComponentDefinition {
+class LcTextCore {
     updateTheme = (newTheme: ThemeItemType, sourceStyle: any) => {
 
     };

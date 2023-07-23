@@ -1,5 +1,4 @@
 import React from 'react';
-import ComponentContainer from './DemoContainer';
 
 class MyComponent extends React.Component {
 
@@ -7,7 +6,7 @@ class MyComponent extends React.Component {
     render() {
         return (
             <div>
-                <ComponentContainer/>
+                {/*<ComponentContainer/>*/}
             </div>
         )
     }

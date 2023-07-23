@@ -1,4 +1,3 @@
-import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
 import {BaseInfoType, ElemConfig, ThemeItemType} from "../../../designer/DesignerType";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import LcColorBlock from "./LcColorBlock";
@@ -8,7 +7,7 @@ import AnimationConfig from "../../common-fragment/animation-config/AnimationCon
 import {LcColorBlockConfig} from "./LcColorBlockConfig";
 import ColorBlockImg from './color-block.png';
 
-class LcColorBlockCore extends AbstractCustomComponentDefinition {
+class LcColorBlockCore {
     updateTheme = (newTheme: ThemeItemType, sourceStyle: any) => {
     }
 

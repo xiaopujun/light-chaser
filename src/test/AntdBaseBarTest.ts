@@ -1,11 +1,22 @@
 import {Bar} from "@antv/g2plot";
 import AbstractComponent from "../framework/core/AbstractComponent";
+import {MovableItemType} from "../lib/lc-movable/types";
 
-export default class AntdBaseBarTest extends AbstractComponent<any> {
+export default class AntdBaseBarTest extends AbstractComponent<any, any> {
+    public getConfig() {
+        throw new Error("Method not implemented.");
+    }
 
-    public async create(container: HTMLElement, props?: any): Promise<AbstractComponent<any> | null> {
-        if (this.instance)
-            return this.instance;
+
+    public updateConfig(config: any): void {
+        throw new Error("Method not implemented.");
+    }
+
+    public updateLayout(layout: any): void {
+        throw new Error("Method not implemented.");
+    }
+
+    public async create(container: HTMLElement, props?: any): Promise<void> {
         this.instance = new Bar(container, {
             data: [
                 {year: "1951 年", value: 38},
@@ -40,5 +51,9 @@ export default class AntdBaseBarTest extends AbstractComponent<any> {
 
     public getData(): void {
         throw new Error("Method not implemented.");
+    }
+
+    getLayout(): MovableItemType | null {
+        return null;
     }
 }

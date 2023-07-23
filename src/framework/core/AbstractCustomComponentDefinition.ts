@@ -1,6 +1,7 @@
 import {MenuInfo} from "../../designer/right/MenuType";
 import React from "react";
-import {BaseInfoType, ElemConfig, ThemeItemType} from "../../designer/DesignerType";
+import {BaseInfoType, ThemeItemType} from "../../designer/DesignerType";
+import AbstractComponent from "./AbstractComponent";
 
 /**
  * 自动扫描抽象组件定义核心类。
@@ -17,13 +18,7 @@ export abstract class AbstractCustomComponentDefinition {
     /**
      * 返回React组件的类模板，在设计器拖拽创建组件实例时会使用到
      */
-    abstract getComponent(): React.Component | React.FC | any;
-
-    /**
-     * todo 去除，改为由组件内部自己管理
-     * 返回对应组件的默认配置，在拖拽生成组件实例后需要展示默认效果
-     */
-    abstract getInitConfig(): ElemConfig | Object | null
+    abstract getComponent(): any;
 
     /**
      * 返回组件图片缩略图，在组件列表中展示时使用。图片不要超过300kb,否则会影响设计器的加载速度

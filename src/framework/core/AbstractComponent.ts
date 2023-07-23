@@ -1,16 +1,52 @@
-abstract class AbstractComponent<P> {
+import {MovableItemType} from "../../lib/lc-movable/types";
 
-    protected instance: any = null;
+abstract class AbstractComponent<I, C> {
 
-    public abstract create(container: HTMLElement, props?: P): Promise<AbstractComponent<P> | null>;
+    /**
+     * 组件实例引用
+     * @protected
+     */
+    protected instance: I | null = null;
+    /**
+     * 组件配置(包括组件数据)
+     * @protected
+     */
+    protected config: C | null = null;
 
-    public abstract changeData(data: any): void;
+    /******************声明周期******************/
 
-    public abstract update(data: any): void;
+    /**
+     * 创建组件并将组件挂载到指定的容器中
+     * @param container 容器
+     * @param props 组件属性（参数）
+     */
+    public abstract create(container: HTMLElement, props?: I): Promise<any>;
 
+    /**
+     * 更新组件配置，并触发组件重新渲染
+     * @param props 组件属性（参数）
+     * @param operateType 操作类型
+     */
+    public abstract update(props: any, operateType?: any): void;
+
+    /**
+     * 销毁组件
+     */
     public abstract destroy(): void;
 
-    public abstract getData(): void;
+
+    /******************普通方法******************/
+    /**
+     * 获取组件配置数据
+     */
+    public abstract getConfig(): C | null;
+
+    /**
+     * 更新组件配置
+     * @param config
+     */
+    public abstract updateConfig(config: any): void;
+
 }
 
 export default AbstractComponent;
