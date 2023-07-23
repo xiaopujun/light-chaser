@@ -5,6 +5,7 @@
   "dependencies": {
     "@ant-design/charts": "^1.4.2",
     "@ant-design/icons": "^4.7.0",
+    "@antv/g2plot": "^2.4.31",
     "@scena/react-ruler": "^0.17.1",
     "animate.css": "^4.1.1",
     "antd": "^4.17.3",
