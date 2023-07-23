@@ -20,6 +20,7 @@ export abstract class AbstractCustomComponentDefinition {
     abstract getComponent(): React.Component | React.FC | any;
 
     /**
+     * todo 去除，改为由组件内部自己管理
      * 返回对应组件的默认配置，在拖拽生成组件实例后需要展示默认效果
      */
     abstract getInitConfig(): ElemConfig | Object | null

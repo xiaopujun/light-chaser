@@ -1,25 +1,13 @@
-import React from "react";
-import ReactDOM from "react-dom";
 import AbstractComponent from "../framework/core/AbstractComponent";
 import A from "./A";
+import ComponentUtil from "../utils/ComponentUtil";
 
 class DemoA extends AbstractComponent<any> {
-
-    public async create(container: any, props: any): Promise<AbstractComponent<any> | null> {
-        if (this.instance) return this.instance;
-        return await new Promise((resolve) => {
-            try {
-                ReactDOM.render(
-                    React.createElement(A, {
-                        ref: (instance: any) => resolve(instance),
-                        ...props
-                    }),
-                    container
-                );
-            } catch (e: any) {
-                resolve(null);
-            }
-        });
+    public async create(container: any, props?: any): Promise<AbstractComponent<any> | null> {
+        if (this.instance)
+            return this.instance;
+        this.instance = await ComponentUtil.createAndRender(container, A, props);
+        return this.instance;
     }
 
     public changeData(data: any): void {
@@ -27,10 +15,12 @@ class DemoA extends AbstractComponent<any> {
     }
 
     public update(data: any): void {
-        throw new Error("Method not implemented.");
+        if (!this.instance)
+            return;
+        this.instance.setState({count: data});
     }
 
-    public destory(): void {
+    public destroy(): void {
         throw new Error("Method not implemented.");
     }
 
