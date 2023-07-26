@@ -47,7 +47,6 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
      */
     generateElement = () => {
         const {layoutConfigs, compInstanceMap} = designerStore!;
-        console.log('compInstanceMap', toJS(compInstanceMap));
         const sortLayout = Object.values(layoutConfigs).sort((a: any, b: any) => a.order - b.order);
         return sortLayout.map((item: MovableItemType) => {
             return <ComponentContainer layout={item} key={item.id}/>

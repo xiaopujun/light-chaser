@@ -6,8 +6,9 @@ import 'animate.css';
 import './AnimationConfig.less';
 import LcButton from "../../../lib/lc-button/LcButton";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
+import { ConfigType } from '../../../designer/right/ConfigType';
 
-class AnimationConfig extends Component {
+class AnimationConfig extends Component<ConfigType> {
     render() {
         return (
             <div className={'lc-animation-config'}>

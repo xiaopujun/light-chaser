@@ -9,13 +9,12 @@ export default class LayoutItem extends AbstractComponent<LayoutItem, MovableIte
         this.config = config;
     }
 
-    async create(container: HTMLElement, props: any): Promise<void> {
+    async create(container: HTMLElement, params: Record<string, unknown>): Promise<this> {
         if (!this.instance)
-            ComponentUtil.createAndRender<LayoutItem>(container, props).then((instance) => {
+            ComponentUtil.createAndRender<LayoutItem>(container, params).then((instance) => {
                 this.instance = instance;
             })
-        else
-            this.update(props);
+        return this;
     }
 
     destroy(): void {

@@ -3,12 +3,16 @@ import './BaseInfo.less';
 import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
-import {ConfigType} from "../../../designer/right/ConfigType";
+
+export interface BaseInfoProps<C> {
+    config: C;
+    updateConfig: (config: C) => void;
+}
 
 /**
  * lc组件基础信息
  */
-class BaseInfo extends Component<ConfigType> {
+class BaseInfo extends Component<BaseInfoProps<any>> {
 
     changeName = (value: any) => {
         const {updateConfig} = this.props;

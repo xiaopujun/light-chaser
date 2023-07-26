@@ -5,7 +5,7 @@ import {PictureFilled} from "@ant-design/icons";
 import React from "react";
 import BgConfigContent from "./BgConfigContent";
 
-class LcBgCore extends AbstractCustomComponentDefinition {
+class LcBgCore extends AbstractCustomComponentDefinition<any, any> {
     updateTheme = (newTheme: ThemeItemType, sourceStyle: any) => {
     };
 

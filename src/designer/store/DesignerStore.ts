@@ -241,12 +241,6 @@ class DesignerStore implements AbstractBaseStore {
      */
     addItem = (item: MovableItemType) => {
         this.layoutConfigs[item.id + ""] = item;
-        const {customComponentInfoMap} = designerStarter;
-        let initObj: any = customComponentInfoMap[item.type + ""];
-        let initData: any = initObj.getInitConfig();
-        initData.info = {...initData.info, ...{id: item.id}};
-        if (this.elemConfigs && this.statisticInfo)
-            this.elemConfigs[item.id + ""] = initData;
         if (this.statisticInfo)
             this.statisticInfo.count = Object.keys(this.elemConfigs).length;
     };

@@ -1,13 +1,14 @@
 import {AbstractCustomComponentDefinition} from "../framework/core/AbstractCustomComponentDefinition";
 import {AbstractHeaderItem, HeaderItemProps} from "./header/HeaderTypes";
 import {AbstractOperator} from "../framework/operate/AbstractOperator";
+import AbstractComponent from "../framework/core/AbstractComponent";
 
 /**
  * 设计器启动器，通过该启动器自动化扫描加载组件
  */
 class DesignerStarter {
     //自定义组件信息映射
-    customComponentInfoMap: { [key: string]: Object } = {};
+    customComponentInfoMap: { [key: string]: AbstractCustomComponentDefinition<AbstractComponent<unknown, unknown>, unknown> } = {};
     //头部操作菜单实例
     headerItemInstances: HeaderItemProps[] = [];
     //自定义组件主题刷新器

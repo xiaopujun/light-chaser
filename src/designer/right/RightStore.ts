@@ -4,6 +4,7 @@ import designerStarter from "../DesignerStarter";
 import {AbstractCustomComponentDefinition} from "../../framework/core/AbstractCustomComponentDefinition";
 import {ActiveElem} from "../DesignerType";
 import designerStore from "../store/DesignerStore";
+import AbstractComponent from "../../framework/core/AbstractComponent";
 
 /**
  * 设计器。右侧组件配置状态管理类
@@ -48,7 +49,7 @@ class RightStore {
 
     setActiveElem = (activeElem: ActiveElem) => {
         if (!activeElem) return;
-        this.menus = (designerStarter.customComponentInfoMap[activeElem.type + ''] as AbstractCustomComponentDefinition).getMenuList();
+        this.menus = (designerStarter.customComponentInfoMap[activeElem.type + ''] as AbstractCustomComponentDefinition<AbstractComponent<unknown, unknown>, unknown>).getMenuList() || [];
         this.activeElem = activeElem;
         if (this.contentVisible) {
             this.contentVisible = false;

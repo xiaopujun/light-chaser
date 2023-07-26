@@ -1,4 +1,7 @@
-import {MovableItemType} from "../../lib/lc-movable/types";
+export enum OperateType {
+    CONFIG,
+    DATA,
+}
 
 abstract class AbstractComponent<I, C> {
 
@@ -13,21 +16,21 @@ abstract class AbstractComponent<I, C> {
      */
     protected config: C | null = null;
 
-    /******************声明周期******************/
+    /******************生命周期******************/
 
     /**
      * 创建组件并将组件挂载到指定的容器中
      * @param container 容器
-     * @param props 组件属性（参数）
+     * @param params 组件属性（参数）
      */
-    public abstract create(container: HTMLElement, props?: I): Promise<any>;
+    public abstract create(container: HTMLElement, params?: Record<string, unknown>): Promise<this>;
 
     /**
      * 更新组件配置，并触发组件重新渲染
      * @param props 组件属性（参数）
-     * @param operateType 操作类型
+     * @param op 操作类型
      */
-    public abstract update(props: any, operateType?: any): void;
+    public abstract update(props: C, op?: OperateType): void;
 
     /**
      * 销毁组件
@@ -45,7 +48,7 @@ abstract class AbstractComponent<I, C> {
      * 更新组件配置
      * @param config
      */
-    public abstract updateConfig(config: any): void;
+    public abstract updateConfig(config: C): void;
 
 }
 
