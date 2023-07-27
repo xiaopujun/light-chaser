@@ -9,10 +9,10 @@ class AntdBaseBarStyleConfig extends Component<ConfigType> {
         const {updateConfig, config} = this.props;
         return (
             <>
-                <BaseStyleSet config={config.baseStyle} updateConfig={updateConfig}/>
-                <AntdGraphics config={config.chartStyle} updateConfig={updateConfig}/>
-                <AntdLegend config={config.chartStyle} updateConfig={updateConfig}/>
-                <AntdCartesianCoordinateSys config={config.chartStyle} updateConfig={updateConfig}/>
+                {/*<BaseStyleSet config={config.baseStyle} updateConfig={updateConfig}/>*/}
+                <AntdGraphics config={config} updateConfig={updateConfig}/>
+                <AntdLegend config={config} updateConfig={updateConfig}/>
+                <AntdCartesianCoordinateSys config={config} updateConfig={updateConfig}/>
             </>
         );
     }

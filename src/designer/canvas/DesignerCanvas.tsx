@@ -13,7 +13,6 @@ import {MovableItemType} from "../../lib/lc-movable/types";
 import HotKey from "../operate-provider/keyboard-mouse/HotKey";
 import {getOperateEventMapping} from "../operate-provider/keyboard-mouse/HotKeyConfig";
 import ComponentContainer from "../../framework/core/ComponentContainer";
-import {toJS} from "mobx";
 
 /**
  * 设计器画布
@@ -31,15 +30,27 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
     }
 
     updateActive = (e: any) => {
-        let {id: elemId, dataset} = e.target;
-        const {updateActive, activeElem, elemConfigs} = designerStore;
-        if (elemId === activeElem?.id)
-            return;
-        updateActive && updateActive({id: elemId, type: dataset.type});
-        const {setActiveMenu} = rightStore;
-        const elemConfig = elemConfigs[elemId];
-        const newMenus = Object.keys(elemConfig);
-        setActiveMenu(newMenus[0], newMenus);
+        let {id, dataset: {type}} = e.target;
+        const {activeConfig} = rightStore;
+        activeConfig(id, type);
+        // const {setActiveMenu} = rightStore;
+        // const {updateActive, activeElem, elemConfigs} = designerStore;
+        // if (elemId === activeElem?.id)
+        //     return;
+        // updateActive && updateActive({id: elemId, type: dataset.type});
+        // if (type === 'LcBg') {
+        //     //激活背景设置
+        //     setActiveMenu('background', ['background']);
+        // } else {
+        //     //激活组件设置
+        //     const {customComponentInfoMap} = designerStarter;
+        //
+        //     const {compInstanceMap} = designerStore;
+        //     const instance = compInstanceMap[elemId];
+        //     const elemConfig = instance.getConfig();
+        //     const newMenus = Object.keys(elemConfig);
+        //     setActiveMenu(newMenus[0], newMenus);
+        // }
     }
 
     /**
@@ -54,7 +65,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
     }
 
     render() {
-        const {elemConfigs} = designerStore;
+        const {backgroundConfig} = designerStore;
         return (
             <>
                 <DesignerContainer>
@@ -62,7 +73,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                         <DesignerRuler offsetX={60} offsetY={50}>
                             <DragScaleProvider>
                                 <GroupMovable>
-                                    <DesignerBackground config={elemConfigs['-1']['background']}
+                                    <DesignerBackground config={backgroundConfig}
                                                         onClick={this.updateActive}
                                                         ref={obj => this.lcbg = obj}>
                                         {this.generateElement()}

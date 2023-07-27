@@ -27,7 +27,5 @@ export default class LayoutItem extends AbstractComponent<LayoutItem, MovableIte
     update(props: any, operateType?: any): void {
     }
 
-    updateConfig(config: any): void {
-    }
 
 }

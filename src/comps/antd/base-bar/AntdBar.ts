@@ -1,9 +1,8 @@
-import AbstractComponent from "../../../framework/core/AbstractComponent";
-import {Bar} from "@antv/g2plot";
-import {BarOptions} from "@antv/g2plot/src/plots/bar/types";
+import AbstractComponent, {OperateType} from "../../../framework/core/AbstractComponent";
+import {Bar, BarOptions} from "@antv/g2plot";
+import {merge} from "../../../utils/ObjectUtil";
 
 export interface ComponentInfoType {
-    id: string;
     name: string;
     type: string;
     desc: string;
@@ -11,7 +10,7 @@ export interface ComponentInfoType {
 
 export interface AntdBarProps {
     info: ComponentInfoType;
-    style: any;
+    style: BarOptions;
     data: any;
 }
 
@@ -21,7 +20,6 @@ export default class AntdBar extends AbstractComponent<Bar, AntdBarProps> {
         super();
         this.config = {
             info: {
-                id: '',
                 name: '基础条形图',
                 type: 'AntdBaseBar',
                 desc: '基于antd实现的基础条形图',
@@ -157,13 +155,13 @@ export default class AntdBar extends AbstractComponent<Bar, AntdBarProps> {
         this.config = null;
     }
 
-    getConfig(): any {
+    getConfig(): AntdBarProps | null {
+        return this.config;
     }
 
-    update(props: any, operateType: any): void {
-    }
-
-    updateConfig(config: any): void {
+    update(config: any, op?: OperateType): void {
+        this.config = merge(this.config, config);
+        this.instance?.update(this.config!.style);
     }
 
 }

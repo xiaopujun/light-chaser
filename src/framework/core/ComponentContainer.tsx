@@ -31,19 +31,26 @@ class ComponentContainer extends React.Component<ComponentContainerProps> {
         const {layout} = this.props;
         return (
             <Suspense fallback={<Loading/>}>
-                <div ref={(ref) => this.ref = ref}
-                     id={layout.id}
-                     data-type={layout.type}
-                     data-locked={layout.locked}
-                     data-hide={layout.hide}
-                     key={layout.id + ''}
-                     style={{
-                         width: layout.width,
-                         height: layout.height,
-                         transform: `translate(${layout.position![0]}px, ${layout.position![1]}px)`,
-                         position: 'absolute',
-                         display: layout.hide ? 'none' : 'block',
-                     }} className={'lc-comp-item'}/>
+                <div
+                    id={layout.id}
+                    data-type={layout.type}
+                    data-locked={layout.locked}
+                    data-hide={layout.hide}
+                    key={layout.id + ''}
+                    style={{
+                        width: layout.width,
+                        height: layout.height,
+                        transform: `translate(${layout.position![0]}px, ${layout.position![1]}px)`,
+                        position: 'absolute',
+                        display: layout.hide ? 'none' : 'block',
+                    }} className={'lc-comp-item'}>
+                    <div ref={(ref) => this.ref = ref} style={{
+                        width: '100%',
+                        height: '100%',
+                        pointerEvents: 'none',
+                        position: 'relative'
+                    }}/>
+                </div>
             </Suspense>
         )
     }

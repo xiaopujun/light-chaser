@@ -5,18 +5,23 @@ import designerStarter from "../DesignerStarter";
 import {observer} from "mobx-react";
 import './ConfigContent.less';
 import Loading from "../../lib/loading/Loading";
+import designerStore from "../store/DesignerStore";
 
 class ConfigContent extends Component {
 
     buildConfigContent = () => {
-        let {activeMenu, activeElem, activeElemConfig, updateConfig} = rightStore;
+        const {backgroundConfig, compInstanceMap, setBackgroundConfig} = designerStore;
+        let {activeMenu, activeElem} = rightStore;
         let {customComponentInfoMap} = designerStarter;
         let abstractConfigObj: any = customComponentInfoMap[activeElem.type + ''];
         let menuToConfigComp = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp = menuToConfigComp[activeMenu];
+        const instance = compInstanceMap[activeElem.id + ''];
+        const config = activeElem.type === 'LcBg' ? backgroundConfig : instance.getConfig();
+        const updateConfig = activeElem.type === 'LcBg' ? setBackgroundConfig : instance.update;
         return (
             <Suspense fallback={<Loading/>}>
-                <ConfigComp config={activeElemConfig[activeMenu]} updateConfig={updateConfig}/>
+                <ConfigComp config={config[activeMenu]} updateConfig={updateConfig}/>
             </Suspense>
         )
 

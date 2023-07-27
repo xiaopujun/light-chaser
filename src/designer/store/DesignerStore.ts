@@ -1,12 +1,11 @@
 import {action, makeObservable, observable, runInAction, toJS} from "mobx";
 import {cloneDeep, isEqual} from "lodash";
 import {
-    ActiveElem,
     BackgroundColorMode,
+    BackgroundConfig,
     BackgroundImgRepeat,
     BackgroundMode,
     CanvasConfig,
-    ElemConfig,
     ProjectConfig,
     ProjectDataType,
     ProjectState,
@@ -20,7 +19,6 @@ import rightStore from "../right/RightStore";
 import {merge} from "../../utils/ObjectUtil";
 import {MovableItemType} from "../../lib/lc-movable/types";
 import eventOperateStore from "../operate-provider/EventOperateStore";
-import LayoutItem from "../../framework/core/LayoutItem";
 import {idGenerate} from "../../utils/IdGenerate";
 import AbstractComponent from "../../framework/core/AbstractComponent";
 
@@ -31,18 +29,19 @@ class DesignerStore implements AbstractBaseStore {
     constructor() {
         makeObservable(this, {
             canvasConfig: observable,
-            activeElem: observable,
+            // activeElem: observable,
             projectConfig: observable,
-            elemConfigs: observable,
             layoutConfigs: observable,
             statisticInfo: observable,
             themeConfig: observable,
             extendParams: observable,
+            backgroundConfig: observable,
             doInit: action,
             addItem: action,
             delItem: action,
+            setBackgroundConfig: action,
             updateLayout: action,
-            updateActive: action,
+            // updateActive: action,
             updateElemConfig: action,
             updateThemeConfig: action,
             flashGlobalTheme: action,
@@ -71,10 +70,10 @@ class DesignerStore implements AbstractBaseStore {
     /**
      * 激活状态属性
      */
-    activeElem: ActiveElem = {
-        id: -999, //元素id
-        type: "", //元素类型
-    };
+    // activeElem: ActiveElem = {
+    //     id: -999, //元素id
+    //     type: "", //元素类型
+    // };
 
     /**
      * 项目设置
@@ -89,37 +88,30 @@ class DesignerStore implements AbstractBaseStore {
         realTimeRefresh: false, //编辑模式下实时刷新
     };
 
-    /**
-     * 组件配置
-     */
-    elemConfigs: { [key: string]: ElemConfig } = {
-        "-1": {
-            background: {
-                width: 1920, //背景宽
-                height: 1080, //背景高
-                bgMode: BackgroundMode.NONE, //背景模式
-                bgImg: {
-                    bgImgSize: [1920, 1080], //背景图片尺寸
-                    bgImgPos: [0, 0], //背景图片位置
-                    bgImgRepeat: BackgroundImgRepeat.NO_REPEAT, //背景图片重复方式
-                    bgImgUrl: "", //背景图片url地址
-                },
-                bgColor: {
-                    bgColorMode: BackgroundColorMode.SINGLE, //背景图片颜色模式
-                    single: {color: "#000000"},
-                    linearGradient: {
-                        color: "linear-gradient(0deg, #000000, #000000)",
-                        angle: 0,
-                        colorArr: ["#000000", "#000000"],
-                    },
-                    radialGradient: {
-                        color: "radial-gradient(circle, #000000, #000000)",
-                        colorArr: ["#000000", "#000000"],
-                    },
-                },
+    backgroundConfig: BackgroundConfig = {
+        width: 1920, //背景宽
+        height: 1080, //背景高
+        bgMode: BackgroundMode.NONE, //背景模式
+        bgImg: {
+            bgImgSize: [1920, 1080], //背景图片尺寸
+            bgImgPos: [0, 0], //背景图片位置
+            bgImgRepeat: BackgroundImgRepeat.NO_REPEAT, //背景图片重复方式
+            bgImgUrl: "", //背景图片url地址
+        },
+        bgColor: {
+            bgColorMode: BackgroundColorMode.SINGLE, //背景图片颜色模式
+            single: {color: "#000000"},
+            linearGradient: {
+                color: "linear-gradient(0deg, #000000, #000000)",
+                angle: 0,
+                colorArr: ["#000000", "#000000"],
+            },
+            radialGradient: {
+                color: "radial-gradient(circle, #000000, #000000)",
+                colorArr: ["#000000", "#000000"],
             },
         },
-    };
+    }
 
     compInstanceMap: { [key: string]: AbstractComponent<any, any> } = {};
 
@@ -174,9 +166,9 @@ class DesignerStore implements AbstractBaseStore {
         this.projectConfig = store.projectConfig
             ? {...this.projectConfig, ...store.projectConfig}
             : this.projectConfig;
-        this.elemConfigs = store.elemConfigs
-            ? {...this.elemConfigs, ...store.elemConfigs}
-            : this.elemConfigs;
+        // this.elemConfigs = store.elemConfigs
+        //     ? {...this.elemConfigs, ...store.elemConfigs}
+        //     : this.elemConfigs;
         this.layoutConfigs = store.layoutConfigs || this.layoutConfigs;
         this.statisticInfo = store.statisticInfo
             ? {...this.statisticInfo, ...store.statisticInfo}
@@ -185,11 +177,11 @@ class DesignerStore implements AbstractBaseStore {
         this.extendParams = store.extendParams
             ? {...this.extendParams, ...store.extendParams}
             : this.extendParams;
-        if (this.elemConfigs["-1"]) {
-            this.elemConfigs["-1"]["background"]["width"] = this.canvasConfig.width;
-            this.elemConfigs["-1"]["background"]["height"] = this.canvasConfig.height;
-        }
-        this.updateActive({id: -1, type: "LcBg"});
+        // if (this.elemConfigs["-1"]) {
+        //     this.elemConfigs["-1"]["background"]["width"] = this.canvasConfig.width;
+        //     this.elemConfigs["-1"]["background"]["height"] = this.canvasConfig.height;
+        // }
+        // this.updateActive({id: -1, type: "LcBg"});
         const {setUpdateConfig} = rightStore;
         setUpdateConfig(this.updateElemConfig);
     };
@@ -198,9 +190,9 @@ class DesignerStore implements AbstractBaseStore {
         return {
             id: this.id,
             canvasConfig: toJS(this.canvasConfig),
-            activeElem: toJS(this.activeElem),
+            // activeElem: toJS(this.activeElem),
             projectConfig: toJS(this.projectConfig),
-            elemConfigs: toJS(this.elemConfigs),
+            // elemConfigs: toJS(this.elemConfigs),
             layoutConfigs: toJS(this.layoutConfigs),
             statisticInfo: toJS(this.statisticInfo),
             themeConfig: toJS(this.themeConfig),
@@ -214,9 +206,9 @@ class DesignerStore implements AbstractBaseStore {
     doDestroy = () => {
         this.id = "";
         this.canvasConfig = {};
-        this.activeElem = {};
+        // this.activeElem = {};
         this.projectConfig = {};
-        this.elemConfigs = {};
+        // this.elemConfigs = {};
         this.layoutConfigs = {};
         this.statisticInfo = {};
         this.themeConfig = {};
@@ -232,8 +224,12 @@ class DesignerStore implements AbstractBaseStore {
         });
     };
 
+    setBackgroundConfig = (config: BackgroundConfig) => {
+        this.backgroundConfig = {...merge(this.backgroundConfig, config)};
+    }
+
     getActiveElemConfig = (activeId: number | string) => {
-        return this.elemConfigs[activeId + ""];
+        // return this.elemConfigs[activeId + ""];
     };
 
     /**
@@ -241,8 +237,8 @@ class DesignerStore implements AbstractBaseStore {
      */
     addItem = (item: MovableItemType) => {
         this.layoutConfigs[item.id + ""] = item;
-        if (this.statisticInfo)
-            this.statisticInfo.count = Object.keys(this.elemConfigs).length;
+        // if (this.statisticInfo)
+        //     this.statisticInfo.count = Object.keys(this.elemConfigs).length;
     };
 
     /**
@@ -251,11 +247,11 @@ class DesignerStore implements AbstractBaseStore {
     delItem = (ids: string[]) => {
         for (const id of ids) {
             delete this.layoutConfigs[id];
-            delete this.elemConfigs[id];
-            if (this.activeElem && (id as any) === this.activeElem.id) {
-                this.activeElem.id = -1;
-                this.activeElem.type = "";
-            }
+            // delete this.elemConfigs[id];
+            // if (this.activeElem && (id as any) === this.activeElem.id) {
+            //     this.activeElem.id = -1;
+            //     this.activeElem.type = "";
+            // }
         }
     };
 
@@ -274,26 +270,26 @@ class DesignerStore implements AbstractBaseStore {
     /**
      * 更新激活状态元素
      */
-    updateActive = (data: ActiveElem) => {
-        if (data.id === this.activeElem.id) return;
-        this.activeElem = {...this.activeElem, ...data};
-        const {setActiveElem, setActiveElemConfig} = rightStore;
-        setActiveElem(this.activeElem);
-        setActiveElemConfig(this.elemConfigs[this.activeElem?.id + ""]);
-    };
+    // updateActive = (data: ActiveElem) => {
+    //     if (data.id === this.activeElem.id) return;
+    //     this.activeElem = {...this.activeElem, ...data};
+    //     const {setActiveElem, setActiveElemConfig} = rightStore;
+    //     setActiveElem(this.activeElem);
+    //     setActiveElemConfig(this.elemConfigs[this.activeElem?.id + ""]);
+    // };
 
     /**
      * 更新图表组件配置
      */
     updateElemConfig = (data: any) => {
-        let activeConfig: ElemConfig | any =
-            this.elemConfigs[this.activeElem?.id + ""];
-        if (activeConfig)
-            this.elemConfigs[this.activeElem?.id + ""] = {
-                ...merge(activeConfig, data),
-            };
+        // let activeConfig: ElemConfig | any =
+        //     this.elemConfigs[this.activeElem?.id + ""];
+        // if (activeConfig)
+        //     this.elemConfigs[this.activeElem?.id + ""] = {
+        //         ...merge(activeConfig, data),
+        //     };
         const {setActiveElemConfig} = rightStore;
-        setActiveElemConfig(this.elemConfigs[this.activeElem?.id + ""]);
+        // setActiveElemConfig(this.elemConfigs[this.activeElem?.id + ""]);
     };
 
     updateThemeConfig = (data: any) => {
@@ -302,16 +298,16 @@ class DesignerStore implements AbstractBaseStore {
 
     flashGlobalTheme = (newTheme: ThemeItemType) => {
         const {themeRefresher} = designerStarter;
-        this.elemConfigs &&
-        Object.keys(this.elemConfigs).forEach((key: string) => {
-            let elemConfig: any = this.elemConfigs[key];
-            let {info} = elemConfig;
-            if (info) {
-                const themeFreshFun = themeRefresher[info.type];
-                themeFreshFun && themeFreshFun(newTheme, elemConfig);
-                this.elemConfigs[key] = {...elemConfig};
-            }
-        });
+        // this.elemConfigs &&
+        // Object.keys(this.elemConfigs).forEach((key: string) => {
+        //     let elemConfig: any = this.elemConfigs[key];
+        //     let {info} = elemConfig;
+        //     if (info) {
+        //         const themeFreshFun = themeRefresher[info.type];
+        //         themeFreshFun && themeFreshFun(newTheme, elemConfig);
+        //         this.elemConfigs[key] = {...elemConfig};
+        //     }
+        // });
     };
 
     /**
@@ -319,8 +315,8 @@ class DesignerStore implements AbstractBaseStore {
      */
     updateCanvasConfig = (data: CanvasConfig) => {
         this.canvasConfig = {...this.canvasConfig, ...data};
-        this.elemConfigs["-1"]["background"]["width"] = data.width;
-        this.elemConfigs["-1"]["background"]["height"] = data.height;
+        // this.elemConfigs["-1"]["background"]["width"] = data.width;
+        // this.elemConfigs["-1"]["background"]["height"] = data.height;
     };
 
     /**

@@ -44,12 +44,6 @@ abstract class AbstractComponent<I, C> {
      */
     public abstract getConfig(): C | null;
 
-    /**
-     * 更新组件配置
-     * @param config
-     */
-    public abstract updateConfig(config: C): void;
-
 }
 
 export default AbstractComponent;

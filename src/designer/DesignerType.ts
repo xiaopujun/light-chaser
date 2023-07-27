@@ -255,7 +255,7 @@ export interface BackgroundConfig {
  */
 export interface ActiveElem {
     //元素id
-    id?: number;
+    id?: string;
     //元素类型
     type?: string;
 }

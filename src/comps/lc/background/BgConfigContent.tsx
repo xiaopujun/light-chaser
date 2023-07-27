@@ -42,7 +42,7 @@ class BgConfigContent extends PureComponent<ConfigType> {
         fileReader.onload = (event: any) => {
             const blob = new Blob([event.target.result], {type: file.type});
             const bgImgUrl = URL.createObjectURL(blob);
-            updateConfig && updateConfig({background: {bgImg: {bgImgUrl: bgImgUrl}}});
+            updateConfig && updateConfig({bgImg: {bgImgUrl: bgImgUrl}});
             const {config}: any = this.state;
             this.setState({config: merge({}, config, {bgImg: {bgImgUrl: bgImgUrl}})});
             //todo 更换图片的时候要释放链接和内存的关联，可以提高部分性能
@@ -56,7 +56,7 @@ class BgConfigContent extends PureComponent<ConfigType> {
     bgModeChange = (value: any) => {
         const {updateConfig} = this.props;
         const {config}: any = this.state;
-        updateConfig && updateConfig({background: {bgMode: value}});
+        updateConfig && updateConfig({bgMode: value});
         this.setState({config: {...config, ...{bgMode: value}}});
     }
 
@@ -70,7 +70,7 @@ class BgConfigContent extends PureComponent<ConfigType> {
         } else if (name === 'bgY' && bgImgSize) {
             bgImgSize[1] = parseInt(value);
         }
-        updateConfig && updateConfig({background: {bgImg: {bgImgSize: bgImgSize}}});
+        updateConfig && updateConfig({bgImg: {bgImgSize: bgImgSize}});
         this.bgImgSize = bgImgSize;
     }
 
@@ -84,25 +84,25 @@ class BgConfigContent extends PureComponent<ConfigType> {
         } else if (name === 'posY' && bgImgPos) {
             bgImgPos[1] = parseInt(value);
         }
-        updateConfig && updateConfig({background: {bgImg: {bgImgPos: bgImgPos}}});
+        updateConfig && updateConfig({bgImg: {bgImgPos: bgImgPos}});
         this.bgImgPos = bgImgPos;
     }
 
     repeatTypeChange = (value: any) => {
         const {updateConfig} = this.props;
-        updateConfig && updateConfig({background: {bgImg: {bgImgRepeat: value}}});
+        updateConfig && updateConfig({bgImg: {bgImgRepeat: value}});
     }
 
     bgColorModeChange = (value: any) => {
         const {updateConfig} = this.props;
         const config: BackgroundConfig = this.state.config;
-        updateConfig && updateConfig({background: {bgColor: {bgColorMode: value}}});
+        updateConfig && updateConfig({bgColor: {bgColorMode: value}});
         this.setState({config: merge({}, config, {bgColor: {bgColorMode: value}})});
     }
 
     singleColorChanged = (color: string) => {
         const {updateConfig} = this.props;
-        updateConfig && updateConfig({background: {bgColor: {single: {color}}}});
+        updateConfig && updateConfig({bgColor: {single: {color}}});
         this.singleColor = color;
     }
 
@@ -111,7 +111,7 @@ class BgConfigContent extends PureComponent<ConfigType> {
         const {updateConfig} = this.props;
         if (config?.bgImgUrl)
             URL.revokeObjectURL(config.bgImgUrl);
-        updateConfig && updateConfig({background: {bgImg: {bgImgUrl: ''}}});
+        updateConfig && updateConfig({bgImg: {bgImgUrl: ''}});
         this.setState({config: merge({}, config, {bgImg: {bgImgUrl: ''}})});
     }
 
@@ -125,14 +125,12 @@ class BgConfigContent extends PureComponent<ConfigType> {
             colorArr[1] = color;
         //线性渐变
         updateConfig && updateConfig({
-            background: {
-                bgColor: {
-                    linearGradient: {
-                        color: `linear-gradient(${angle}deg, ${colorArr[0]}, ${colorArr[1]})`,
-                        colorArr: colorArr,
-                    }
-                },
-            }
+            bgColor: {
+                linearGradient: {
+                    color: `linear-gradient(${angle}deg, ${colorArr[0]}, ${colorArr[1]})`,
+                    colorArr: colorArr,
+                }
+            },
         });
     }
 
@@ -146,14 +144,12 @@ class BgConfigContent extends PureComponent<ConfigType> {
             colorArr[1] = color;
         //径向渐变
         updateConfig && updateConfig({
-            background: {
-                bgColor: {
-                    radialGradient: {
-                        color: `radial-gradient(circle, ${colorArr[0]}, ${colorArr[1]})`,
-                        colorArr: colorArr,
-                    }
-                },
-            }
+            bgColor: {
+                radialGradient: {
+                    color: `radial-gradient(circle, ${colorArr[0]}, ${colorArr[1]})`,
+                    colorArr: colorArr,
+                }
+            },
         });
     }
 
@@ -162,14 +158,12 @@ class BgConfigContent extends PureComponent<ConfigType> {
         const config: BackgroundConfig = this.state.config;
         const {colorArr} = config.bgColor.linearGradient;
         updateConfig && updateConfig({
-            background: {
-                bgColor: {
-                    linearGradient: {
-                        color: `linear-gradient(${value}deg, ${colorArr[0]}, ${colorArr[1]})`,
-                        angle: value
-                    }
-                },
-            }
+            bgColor: {
+                linearGradient: {
+                    color: `linear-gradient(${value}deg, ${colorArr[0]}, ${colorArr[1]})`,
+                    angle: value
+                }
+            },
         });
         this.gradientAngle = value;
     }

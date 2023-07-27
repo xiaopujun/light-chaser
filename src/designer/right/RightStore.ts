@@ -5,6 +5,14 @@ import {AbstractCustomComponentDefinition} from "../../framework/core/AbstractCu
 import {ActiveElem} from "../DesignerType";
 import designerStore from "../store/DesignerStore";
 import AbstractComponent from "../../framework/core/AbstractComponent";
+import {PictureFilled} from "@ant-design/icons";
+
+
+export const bgMenu: MenuInfo[] = [{
+    icon: PictureFilled,
+    name: '背景',
+    key: 'background',
+}];
 
 /**
  * 设计器。右侧组件配置状态管理类
@@ -17,13 +25,14 @@ class RightStore {
             contentVisible: observable,
             setActiveMenu: action,
             setContentVisible: action,
+            activeConfig: action,
         })
     }
 
     /**
      * 当前选中的组件
      */
-    activeElem: ActiveElem = {id: -1, type: 'LcBg'};
+    activeElem: ActiveElem = {id: '-1', type: 'LcBg'};
     /**
      * 当前选中组件的配置
      */
@@ -31,7 +40,7 @@ class RightStore {
     /**
      * 当前选中组件的操作菜单列表
      */
-    menus: Array<MenuInfo> = []
+    menus: Array<MenuInfo> = bgMenu;
     /**
      * 当前选中组件的操作菜单列表中处于激活状态的菜单
      */
@@ -73,6 +82,35 @@ class RightStore {
 
     setActiveElemConfig = (config: any) => this.activeElemConfig = config;
 
+
+    activeConfig = (id: string, type: string) => {
+        if (type === 'LcBg') {
+            //激活背景设置
+            //更新菜单列表
+            this.menus = bgMenu;
+            this.activeMenu = 'background';
+            this.activeElem = {id: '-1', type: 'LcBg'};
+            //如果配置面板处于开启状态，则同时更新菜单和配置面板
+            if (this.contentVisible) {
+                const {backgroundConfig} = designerStore;
+                this.activeElemConfig = backgroundConfig;
+            }
+        } else {
+            //更新菜单列表
+            this.menus = (designerStarter.customComponentInfoMap[type] as AbstractCustomComponentDefinition<AbstractComponent<unknown, unknown>, unknown>).getMenuList() || [];
+            this.activeMenu = this.menus[0].key;
+            this.activeElem = {id, type};
+            //如果配置面板处于开启状态，则同时更新菜单和配置面板
+            if (this.contentVisible) {
+                const {backgroundConfig} = designerStore;
+                this.activeElemConfig = backgroundConfig;
+            }
+            //激活组件设置
+            const {compInstanceMap} = designerStore;
+            const instance = compInstanceMap[id];
+            this.activeElemConfig = instance.getConfig();
+        }
+    }
 }
 
 const rightStore = new RightStore();
