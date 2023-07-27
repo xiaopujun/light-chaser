@@ -13,12 +13,11 @@ class LcColorBlockCore {
 
     getBaseInfo(): BaseInfoType | null {
         return {
-            name: "颜色块",
-            key: 'LcColorBlock',
-            typeName: "颜色块",
+            compName: "颜色块",
+            compKey: 'LcColorBlock',
+            type: "颜色块",
             typeKey: "base",
-            sourceName: "Lc",
-            sourceKey: "lc",
+            desc: "基于Lc Designer实现的颜色块组件",
         };
     }
 

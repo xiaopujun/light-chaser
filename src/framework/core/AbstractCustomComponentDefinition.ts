@@ -7,13 +7,18 @@ import AbstractComponent from "./AbstractComponent";
  * 自动扫描抽象组件定义核心类。
  * 对于所有继承并实现了该抽象类的字类，都会被自动扫描到并注册到系统中。
  * 因此，所有要接入设计器的react组件都应该按照该类的约定实现所有的方法。
+ *
+ * 泛型说明：
+ * C: 组件类，用于指定当前组件定义对应的实际组件类
+ * M: 菜单配置映射，用于指定当前组件配置菜单对应的配置组件的映射关系
+ * S: 组件样式类型，用于在切换主题时，明确更新那个组件类型的样式
  */
-export abstract class AbstractCustomComponentDefinition<C extends AbstractComponent<unknown, unknown>, M> {
+export abstract class AbstractCustomComponentDefinition<C extends AbstractComponent = AbstractComponent, M = {}, S = {}> {
 
     /**
      * 返回组件基础信息，用于在组件列表中展示
      */
-    abstract getBaseInfo(): BaseInfoType | null;
+    abstract getBaseInfo(): BaseInfoType ;
 
     /**
      * 返回React组件的类模板，在设计器拖拽创建组件实例时会使用到
@@ -38,8 +43,8 @@ export abstract class AbstractCustomComponentDefinition<C extends AbstractCompon
     /**
      * 更新本组件的主题样式方法，用于在全局切换主题时使用
      * @param newTheme 新主题
-     * @param sourceStyle 组件原样式
+     * @param oldStyle 组件原样式
      */
-    abstract updateTheme(newTheme: ThemeItemType, sourceStyle: any): void;
+    abstract updateTheme(newTheme: ThemeItemType, oldStyle: S): void;
 }
 

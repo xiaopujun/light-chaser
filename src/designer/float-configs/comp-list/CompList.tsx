@@ -53,17 +53,17 @@ class CompList extends Component {
         }
         for (let i = 0; i < compInfoArr.length; i++) {
             let compInfo: any = compInfoArr[i];
-            const {name, key} = compInfo;
+            const {compName, compKey} = compInfo;
             const {customComponentInfoMap} = designerStarter;
-            let lcCompInit: any = customComponentInfoMap[key];
+            let lcCompInit: any = customComponentInfoMap[compKey];
             let chartImg = lcCompInit.getChartImg();
             chartDom.push(
                 <div key={i + ''} className={'list-item droppable-element'}>
                     <div className={'item-header'} ref={'drag-target'}>
-                        <div className={'item-name'}>{name}</div>
+                        <div className={'item-name'}>{compName}</div>
                         <div className={'item-type'}>Antd</div>
                     </div>
-                    <div className={'item-content'} onDoubleClick={() => this.addItem(key, name)}>
+                    <div className={'item-content'} onDoubleClick={() => this.addItem(compKey, compName)}>
                         <div className={'item-img'} style={{backgroundImage: `url(${chartImg})`}}/>
                     </div>
                 </div>

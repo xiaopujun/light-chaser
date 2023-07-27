@@ -3,7 +3,7 @@ export enum OperateType {
     DATA,
 }
 
-abstract class AbstractComponent<I, C> {
+abstract class AbstractComponent<I = {}, C = {}> {
 
     /**
      * 组件实例引用

@@ -16,12 +16,11 @@ class LcTextCore {
 
     getBaseInfo(): BaseInfoType | null {
         return {
-            name: "基础文本",
-            key: 'LcText',
-            typeName: "基础",
+            compName: "基础文本",
+            compKey: 'LcText',
+            type: "基础",
             typeKey: "base",
-            sourceName: "Lc",
-            sourceKey: "lc",
+            desc: "基础文本组件",
         };
     }
 

@@ -283,27 +283,23 @@ export interface BaseInfoType {
     /**
      * 组件显示名称
      */
-    name: string;
+    compName: string;
     /**
      * 组件标识
      */
-    key: string;
+    compKey: string;
     /**
      * 类型名称
      */
-    typeName: string;
+    type: string;
     /**
      * 类型标识
      */
     typeKey: string;
     /**
-     * 来源名称
+     * 组件描述
      */
-    sourceName: string;
-    /**
-     * 来源标识
-     */
-    sourceKey: string;
+    desc: string;
 }
 
 /**

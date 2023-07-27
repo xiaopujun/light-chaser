@@ -8,7 +8,7 @@ import AbstractComponent from "../framework/core/AbstractComponent";
  */
 class DesignerStarter {
     //自定义组件信息映射
-    customComponentInfoMap: { [key: string]: AbstractCustomComponentDefinition<AbstractComponent<unknown, unknown>, unknown> } = {};
+    customComponentInfoMap: Record<string, AbstractCustomComponentDefinition> = {};
     //头部操作菜单实例
     headerItemInstances: HeaderItemProps[] = [];
     //自定义组件主题刷新器
@@ -47,8 +47,8 @@ class DesignerStarter {
         compCtx.keys().forEach(key => {
             const Clazz = compCtx(key).default;
             if (Clazz && AbstractCustomComponentDefinition.isPrototypeOf(Clazz)) {
-                let customComponentInfo = new Clazz();
-                let compKey = customComponentInfo.getBaseInfo().key;
+                let customComponentInfo: AbstractCustomComponentDefinition = new Clazz();
+                let compKey = customComponentInfo.getBaseInfo().compKey;
                 if (compKey) {
                     this.customComponentInfoMap[compKey] = customComponentInfo;
                     this.themeRefresher[compKey] = customComponentInfo.updateTheme;

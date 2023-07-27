@@ -4,7 +4,6 @@ import designerStarter from "../DesignerStarter";
 import {AbstractCustomComponentDefinition} from "../../framework/core/AbstractCustomComponentDefinition";
 import {ActiveElem} from "../DesignerType";
 import designerStore from "../store/DesignerStore";
-import AbstractComponent from "../../framework/core/AbstractComponent";
 import {PictureFilled} from "@ant-design/icons";
 
 
@@ -58,7 +57,7 @@ class RightStore {
 
     setActiveElem = (activeElem: ActiveElem) => {
         if (!activeElem) return;
-        this.menus = (designerStarter.customComponentInfoMap[activeElem.type + ''] as AbstractCustomComponentDefinition<AbstractComponent<unknown, unknown>, unknown>).getMenuList() || [];
+        this.menus = (designerStarter.customComponentInfoMap[activeElem.type + ''] as AbstractCustomComponentDefinition).getMenuList() || [];
         this.activeElem = activeElem;
         if (this.contentVisible) {
             this.contentVisible = false;
@@ -97,7 +96,7 @@ class RightStore {
             }
         } else {
             //更新菜单列表
-            this.menus = (designerStarter.customComponentInfoMap[type] as AbstractCustomComponentDefinition<AbstractComponent<unknown, unknown>, unknown>).getMenuList() || [];
+            this.menus = (designerStarter.customComponentInfoMap[type] as AbstractCustomComponentDefinition).getMenuList() || [];
             this.activeMenu = this.menus[0].key;
             this.activeElem = {id, type};
             //如果配置面板处于开启状态，则同时更新菜单和配置面板
