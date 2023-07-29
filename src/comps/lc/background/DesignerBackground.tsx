@@ -27,7 +27,8 @@ class DesignerBackground extends Component<LcDesignerBackgroundProps> {
     }
 
     getBgConfigProps = () => {
-        const bgConfig: BackgroundConfigType = this.props.config!!;
+        // const bgConfig: BackgroundConfigType = this.props.config!!;
+        const {config: bgConfig} = this.state as any;
         const {background: {width, height, bgMode, bgColor, bgImg}} = bgConfig;
         let bgImgSize = '100% 100%';
         if (bgImg.bgImgSize && bgImg.bgImgSize.length === 2)
