@@ -4,7 +4,7 @@ import {BaseInfoType, ThemeItemType} from "../../../designer/DesignerType";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import previewImg from "./bar.png";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import AntdBar from "./AntdBar";
+import AntdBaseBar from "./AntdBaseBar";
 import {ConfigType} from "../../../designer/right/ConfigType";
 import {BaseInfoProps} from "../../common-fragment/base-info/BaseInfo";
 import {BarOptions} from "@antv/g2plot";
@@ -31,7 +31,7 @@ const BaseInfo = React.lazy(() => import("../../common-fragment/base-info/BaseIn
 const DataConfig = React.lazy(() => import("../../common-fragment/data-config/DataConfig"));
 
 
-class AntdBaseBarCore extends AbstractCustomComponentDefinition<AntdBar, AntdBaseBarMenuMapping, BarOptions> {
+class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBar, AntdBaseBarMenuMapping, BarOptions> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "Antd条形图",
@@ -46,8 +46,8 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition<AntdBar, AntdBas
         return previewImg;
     }
 
-    getComponent(): ClazzTemplate<AntdBar> | null {
-        return AntdBar;
+    getComponent(): ClazzTemplate<AntdBaseBar> | null {
+        return AntdBaseBar;
     }
 
     getMenuList(): Array<MenuInfo> {
@@ -112,49 +112,6 @@ class AntdBaseBarCore extends AbstractCustomComponentDefinition<AntdBar, AntdBas
         if ((oldStyle?.yAxis) && (oldStyle?.yAxis?.subTickLine?.style as ShapeAttrs)?.stroke)
             (oldStyle!.yAxis!.subTickLine!.style as ShapeAttrs).stroke = auxiliary;
     }
-
-
-    // updateTheme(newTheme: ThemeItemType, oldStyle: BarOptions): void {
-    //     if (!newTheme || !oldStyle) return;
-    //
-    //     const {colors: {main, text, supplementary, emphasize, auxiliary}} = newTheme;
-    //
-    //     // Helper function to update the style property if it exists and has a 'fill' or 'stroke' property
-    //     function updateStyleFillOrStroke(style: ShapeAttrs | undefined, color: string): void {
-    //         if (style?.fill) style.fill = color;
-    //         if (style?.stroke) style.stroke = color;
-    //     }
-    //
-    //     // Update graph color
-    //     if (oldStyle.color) oldStyle.color = main;
-    //
-    //     // Update legend item name style
-    //     updateStyleFillOrStroke((oldStyle.legend) && (oldStyle.legend.itemName as ShapeAttrs)?.style, text);
-    //
-    //     // Update x-axis properties
-    //     const {xAxis} = oldStyle;
-    //     if (xAxis) {
-    //         updateStyleFillOrStroke(xAxis.label?.style, text!);
-    //         updateStyleFillOrStroke(xAxis.title?.style, text!);
-    //         updateStyleFillOrStroke(xAxis.line?.style, emphasize!);
-    //         updateStyleFillOrStroke(xAxis.grid?.line?.style, auxiliary!);
-    //         updateStyleFillOrStroke(xAxis.tickLine?.style, supplementary!);
-    //         updateStyleFillOrStroke(xAxis.subTickLine?.style, auxiliary!);
-    //     }
-    //
-    //     // Update y-axis properties
-    //     const {yAxis} = oldStyle;
-    //     if (yAxis) {
-    //         updateStyleFillOrStroke(yAxis.label?.style, text!);
-    //         updateStyleFillOrStroke(yAxis.title?.style, text!);
-    //         updateStyleFillOrStroke(yAxis.line?.style, emphasize!);
-    //         updateStyleFillOrStroke(yAxis.grid?.line?.style, auxiliary!);
-    //         updateStyleFillOrStroke(yAxis.tickLine?.style, supplementary!);
-    //         updateStyleFillOrStroke(yAxis.subTickLine?.style, auxiliary!);
-    //     }
-    // }
-
-
 }
 
-export default AntdBaseBarCore;
+export default AntdBaseBarDefinition;

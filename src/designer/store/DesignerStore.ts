@@ -2,7 +2,7 @@ import {action, makeObservable, observable, runInAction, toJS} from "mobx";
 import {cloneDeep, isEqual} from "lodash";
 import {
     BackgroundColorMode,
-    BackgroundConfig,
+    BackgroundConfigType,
     BackgroundImgRepeat,
     BackgroundMode,
     CanvasConfig,
@@ -20,7 +20,7 @@ import {merge} from "../../utils/ObjectUtil";
 import {MovableItemType} from "../../lib/lc-movable/types";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {idGenerate} from "../../utils/IdGenerate";
-import AbstractComponent from "../../framework/core/AbstractComponent";
+import AbstractComponent, {UpdateOptions} from "../../framework/core/AbstractComponent";
 
 /**
  * 设计器核心状态管理类，记录了设计器中的核心数据。包括组件配置，组件布局。 全局设置等。
@@ -88,7 +88,10 @@ class DesignerStore implements AbstractBaseStore {
         realTimeRefresh: false, //编辑模式下实时刷新
     };
 
-    backgroundConfig: BackgroundConfig = {
+    /**
+     * 背景设置
+     */
+    backgroundConfig: BackgroundConfigType = {
         width: 1920, //背景宽
         height: 1080, //背景高
         bgMode: BackgroundMode.NONE, //背景模式
@@ -113,7 +116,10 @@ class DesignerStore implements AbstractBaseStore {
         },
     }
 
-    compInstanceMap: { [key: string]: AbstractComponent<any, any> } = {};
+    /**
+     * 画布上组件id与其实例对象的映射
+     */
+    compInstances: { [key: string]: AbstractComponent } = {};
 
     /**
      * 布局配置
@@ -182,10 +188,13 @@ class DesignerStore implements AbstractBaseStore {
         //     this.elemConfigs["-1"]["background"]["height"] = this.canvasConfig.height;
         // }
         // this.updateActive({id: -1, type: "LcBg"});
-        const {setUpdateConfig} = rightStore;
-        setUpdateConfig(this.updateElemConfig);
+        // const {setUpdateConfig} = rightStore;
+        // setUpdateConfig(this.updateElemConfig);
     };
 
+    /**
+     * 获取store数据
+     */
     getData(): ProjectDataType {
         return {
             id: this.id,
@@ -224,7 +233,7 @@ class DesignerStore implements AbstractBaseStore {
         });
     };
 
-    setBackgroundConfig = (config: BackgroundConfig) => {
+    setBackgroundConfig = (config: BackgroundConfigType, upOp?: UpdateOptions) => {
         this.backgroundConfig = {...merge(this.backgroundConfig, config)};
     }
 
@@ -288,7 +297,7 @@ class DesignerStore implements AbstractBaseStore {
         //     this.elemConfigs[this.activeElem?.id + ""] = {
         //         ...merge(activeConfig, data),
         //     };
-        const {setActiveElemConfig} = rightStore;
+        // const {setActiveElemConfig} = rightStore;
         // setActiveElemConfig(this.elemConfigs[this.activeElem?.id + ""]);
     };
 

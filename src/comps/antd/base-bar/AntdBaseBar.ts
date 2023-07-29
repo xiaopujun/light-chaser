@@ -1,4 +1,4 @@
-import AbstractComponent, {OperateType} from "../../../framework/core/AbstractComponent";
+import AbstractComponent, {OperateType, UpdateOptions} from "../../../framework/core/AbstractComponent";
 import {Bar, BarOptions} from "@antv/g2plot";
 import {merge} from "../../../utils/ObjectUtil";
 
@@ -14,7 +14,7 @@ export interface AntdBarProps {
     data: any;
 }
 
-export default class AntdBar extends AbstractComponent<Bar, AntdBarProps> {
+export default class AntdBaseBar extends AbstractComponent<Bar, AntdBarProps> {
 
     constructor() {
         super();
@@ -159,9 +159,15 @@ export default class AntdBar extends AbstractComponent<Bar, AntdBarProps> {
         return this.config;
     }
 
-    update(config: any, op?: OperateType): void {
+    update(config: AntdBarProps, upOp?: UpdateOptions): void {
         this.config = merge(this.config, config);
-        this.instance?.update(this.config!.style);
+        upOp = upOp || {reRender: true, operateType: OperateType.OPTIONS};
+        if (upOp.reRender) {
+            if (upOp.operateType === OperateType.OPTIONS)
+                this.instance?.update(this.config!.style);
+            if (upOp.operateType === OperateType.DATA)
+                this.instance?.changeData(this.config!.style.data);
+        }
     }
 
 }

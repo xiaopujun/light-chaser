@@ -4,6 +4,8 @@ import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 
+
+
 export interface BaseInfoProps<C> {
     config: C;
     updateConfig: (config: C) => void;
@@ -26,11 +28,10 @@ class BaseInfo extends Component<BaseInfoProps<any>> {
 
     render() {
         const {config = {}} = this.props;
-        const {id, type, name, des} = config;
+        const {type, name, des} = config;
         return (
             <div className={'lc-base-info'}>
                 <ConfigCard title={'基础信息'}>
-                    <ConfigItem title={'ID号'}>{id}</ConfigItem>
                     <ConfigItem title={'名称'}>
                         <UnderLineInput type={'text'} onChange={this.changeName} defaultValue={name}/>
                     </ConfigItem>

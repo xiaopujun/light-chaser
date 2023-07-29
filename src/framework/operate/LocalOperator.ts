@@ -1,5 +1,5 @@
 import designerStore from "../../designer/store/DesignerStore";
-import {BackgroundConfig, ProjectDataType, SaveType} from "../../designer/DesignerType";
+import {BackgroundConfigType, ProjectDataType, SaveType} from "../../designer/DesignerType";
 import localforage from "localforage";
 import {ImgUtil} from "../../utils/ImgUtil";
 import eventOperateStore from "../../designer/operate-provider/EventOperateStore";

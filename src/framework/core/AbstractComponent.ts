@@ -1,9 +1,14 @@
 export enum OperateType {
-    CONFIG,
+    OPTIONS,
     DATA,
 }
 
-abstract class AbstractComponent<I = {}, C = {}> {
+export interface UpdateOptions {
+    operateType?: OperateType;
+    reRender?: boolean;
+}
+
+abstract class AbstractComponent<I = any, C = Record<string, any>> {
 
     /**
      * 组件实例引用
@@ -27,10 +32,10 @@ abstract class AbstractComponent<I = {}, C = {}> {
 
     /**
      * 更新组件配置，并触发组件重新渲染
-     * @param props 组件属性（参数）
-     * @param op 操作类型
+     * @param config 组件属性（参数）
+     * @param upOp 操作类型
      */
-    public abstract update(props: C, op?: OperateType): void;
+    public abstract update(config: C, upOp?: UpdateOptions): void;
 
     /**
      * 销毁组件

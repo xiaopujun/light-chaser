@@ -7,11 +7,11 @@ import {observer} from "mobx-react";
 class Right extends Component {
 
     render() {
-        const {contentVisible} = rightStore;
+        const {visible} = rightStore;
         return (
             <>
                 <MenuList/>
-                {contentVisible && <ConfigContent/>}
+                {visible && <ConfigContent/>}
             </>
         );
     }

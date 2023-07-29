@@ -34,7 +34,7 @@ class CompListStore {
         if (customComponentInfoMap) {
             Object.keys(customComponentInfoMap).forEach(key => {
                 let baseInfo = customComponentInfoMap[key].getBaseInfo();
-                if (baseInfo.key !== 'LcBg') comps.push(baseInfo);
+                if (baseInfo.compKey !== 'LcBg') comps.push(baseInfo);
             });
         }
         this.compInfoArr = comps;

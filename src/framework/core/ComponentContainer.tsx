@@ -10,7 +10,7 @@ export interface ComponentContainerProps {
 
 class ComponentContainer extends React.Component<ComponentContainerProps> {
 
-    private ref: any;
+    private ref: HTMLDivElement | null = null;
 
     componentDidMount(): void {
         //通过ref创建组件，并将组件实例方法Map中。后续通过Map匹配到具体实例，
@@ -21,14 +21,15 @@ class ComponentContainer extends React.Component<ComponentContainerProps> {
         if (componentDefine) {
             const AbsCompImpl = componentDefine.getComponent();
             new AbsCompImpl().create(this.ref).then((instance: any) => {
-                const {compInstanceMap} = designerStore;
-                compInstanceMap[layout.id + ''] = instance;
+                const {compInstances} = designerStore;
+                compInstances[layout.id + ''] = instance;
             });
         }
     }
 
     render() {
         const {layout} = this.props;
+        console.log('ComponentContainer render')
         return (
             <Suspense fallback={<Loading/>}>
                 <div

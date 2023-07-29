@@ -1,4 +1,4 @@
-import AbstractComponent from "./AbstractComponent";
+import AbstractComponent, {UpdateOptions} from "./AbstractComponent";
 import ComponentUtil from "../../utils/ComponentUtil";
 import {MovableItemType} from "../../lib/lc-movable/types";
 
@@ -24,7 +24,7 @@ export default class LayoutItem extends AbstractComponent<LayoutItem, MovableIte
         return this.config;
     }
 
-    update(props: any, operateType?: any): void {
+    update(props: any, upOp?: UpdateOptions): void {
     }
 
 

@@ -6,22 +6,24 @@ import {observer} from "mobx-react";
 import './ConfigContent.less';
 import Loading from "../../lib/loading/Loading";
 import designerStore from "../store/DesignerStore";
+import {AbstractCustomComponentDefinition} from "../../framework/core/AbstractCustomComponentDefinition";
+import {ConfigType} from "./ConfigType";
 
 class ConfigContent extends Component {
 
     buildConfigContent = () => {
-        const {backgroundConfig, compInstanceMap, setBackgroundConfig} = designerStore;
+        const {backgroundConfig, compInstances, setBackgroundConfig} = designerStore;
         let {activeMenu, activeElem} = rightStore;
         let {customComponentInfoMap} = designerStarter;
-        let abstractConfigObj: any = customComponentInfoMap[activeElem.type + ''];
-        let menuToConfigComp = abstractConfigObj.getMenuToConfigContentMap();
-        const ConfigComp = menuToConfigComp[activeMenu];
-        const instance = compInstanceMap[activeElem.id + ''];
-        const config = activeElem.type === 'LcBg' ? backgroundConfig : instance.getConfig();
+        let abstractConfigObj: AbstractCustomComponentDefinition = customComponentInfoMap[activeElem.type + '']
+        let configMapping = abstractConfigObj.getMenuToConfigContentMap();
+        const ConfigComp: React.ComponentType<ConfigType> = configMapping![activeMenu];
+        const instance = compInstances[activeElem.id + ''];
+        const config = activeElem.type === 'LcBg' ? backgroundConfig : instance.getConfig() && instance.getConfig()![activeMenu];
         const updateConfig = activeElem.type === 'LcBg' ? setBackgroundConfig : instance.update;
         return (
             <Suspense fallback={<Loading/>}>
-                <ConfigComp config={config[activeMenu]} updateConfig={updateConfig}/>
+                <ConfigComp config={config} updateConfig={updateConfig}/>
             </Suspense>
         )
 

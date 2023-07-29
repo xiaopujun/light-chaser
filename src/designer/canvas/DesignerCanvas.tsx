@@ -31,6 +31,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
 
     updateActive = (e: any) => {
         let {id, dataset: {type}} = e.target;
+        console.log(id, type)
         const {activeConfig} = rightStore;
         activeConfig(id, type);
         // const {setActiveMenu} = rightStore;
@@ -57,7 +58,8 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
      * 元素生成
      */
     generateElement = () => {
-        const {layoutConfigs, compInstanceMap} = designerStore!;
+        console.log('generateElement')
+        const {layoutConfigs, compInstances} = designerStore!;
         const sortLayout = Object.values(layoutConfigs).sort((a: any, b: any) => a.order - b.order);
         return sortLayout.map((item: MovableItemType) => {
             return <ComponentContainer layout={item} key={item.id}/>

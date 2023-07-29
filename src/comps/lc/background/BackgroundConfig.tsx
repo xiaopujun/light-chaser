@@ -1,10 +1,10 @@
 import React, {PureComponent} from 'react';
-import './BgConfigContent.less';
+import './BackgroundConfig.less';
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import Dragger from "antd/es/upload/Dragger";
 import {Button} from "antd";
 import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
-import {BackgroundColorMode, BackgroundConfig, BackgroundMode} from "../../../designer/DesignerType";
+import {BackgroundColorMode, BackgroundConfigType, BackgroundMode} from "../../../designer/DesignerType";
 import {ConfigType} from "../../../designer/right/ConfigType";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
@@ -14,7 +14,7 @@ import Radio from "../../../lib/lc-radio/Radio";
 import {merge} from "lodash";
 
 
-class BgConfigContent extends PureComponent<ConfigType> {
+class BackgroundConfig extends PureComponent<ConfigType> {
 
     gradientAngle: number = 0;
     bgImgSize: number[] = [0, 0];
@@ -62,7 +62,7 @@ class BgConfigContent extends PureComponent<ConfigType> {
 
     bgImgSizeChange = (data: any) => {
         const {updateConfig} = this.props;
-        const config: BackgroundConfig = this.state.config;
+        const config: BackgroundConfigType = this.state.config;
         let bgImgSize = config.bgImg.bgImgSize;
         const {value, name} = data;
         if (name === 'bgX' && bgImgSize) {
@@ -76,7 +76,7 @@ class BgConfigContent extends PureComponent<ConfigType> {
 
     bgImgPosChange = (data: any) => {
         const {updateConfig} = this.props;
-        const config: BackgroundConfig = this.state.config;
+        const config: BackgroundConfigType = this.state.config;
         let bgImgPos = config.bgImg.bgImgPos;
         const {value, name} = data;
         if (name === 'posX' && bgImgPos) {
@@ -117,7 +117,7 @@ class BgConfigContent extends PureComponent<ConfigType> {
 
     linearGradientChanged = (color: string, key: string) => {
         const {updateConfig} = this.props;
-        const config: BackgroundConfig = this.state.config;
+        const config: BackgroundConfigType = this.state.config;
         let {colorArr, angle} = config.bgColor.linearGradient;
         if (key === 'startColor')
             colorArr[0] = color;
@@ -136,7 +136,7 @@ class BgConfigContent extends PureComponent<ConfigType> {
 
     radialGradientChanged = (color: string, key: string) => {
         const {updateConfig} = this.props;
-        const config: BackgroundConfig = this.state.config;
+        const config: BackgroundConfigType = this.state.config;
         let {colorArr} = config.bgColor.radialGradient;
         if (key === 'startColor')
             colorArr[0] = color;
@@ -155,7 +155,7 @@ class BgConfigContent extends PureComponent<ConfigType> {
 
     gradientAngleChanged = (value: any) => {
         const {updateConfig} = this.props;
-        const config: BackgroundConfig = this.state.config;
+        const config: BackgroundConfigType = this.state.config;
         const {colorArr} = config.bgColor.linearGradient;
         updateConfig && updateConfig({
             bgColor: {
@@ -169,7 +169,7 @@ class BgConfigContent extends PureComponent<ConfigType> {
     }
 
     render() {
-        const config: BackgroundConfig = this.state.config;
+        const config: BackgroundConfigType = this.state.config;
         const {bgMode, bgImg, bgColor} = config;
         return (
             <div className={'lc-background-config'}>
@@ -307,4 +307,4 @@ class BgConfigContent extends PureComponent<ConfigType> {
     }
 }
 
-export default BgConfigContent;
+export default BackgroundConfig;

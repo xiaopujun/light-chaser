@@ -1,7 +1,8 @@
 import {MenuInfo} from "../../designer/right/MenuType";
 import {BaseInfoType, ThemeItemType} from "../../designer/DesignerType";
-import {ClazzTemplate} from "../../comps/antd/base-bar/AntdBaseBarCore";
 import AbstractComponent from "./AbstractComponent";
+import React from "react";
+import {ClazzTemplate} from "../../comps/antd/base-bar/AntdBaseBarDefinition";
 
 /**
  * 自动扫描抽象组件定义核心类。
@@ -13,7 +14,7 @@ import AbstractComponent from "./AbstractComponent";
  * M: 菜单配置映射，用于指定当前组件配置菜单对应的配置组件的映射关系
  * S: 组件样式类型，用于在切换主题时，明确更新那个组件类型的样式
  */
-export abstract class AbstractCustomComponentDefinition<C extends AbstractComponent = AbstractComponent, M = {}, S = {}> {
+export abstract class AbstractCustomComponentDefinition<C extends AbstractComponent = AbstractComponent, M = { [key: string]: React.ComponentType }, S = any> {
 
     /**
      * 返回组件基础信息，用于在组件列表中展示

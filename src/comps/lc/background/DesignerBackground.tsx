@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
-import {BackgroundColorMode, BackgroundConfig, BackgroundMode} from "../../../designer/DesignerType";
+import {BackgroundColorMode, BackgroundConfigType, BackgroundMode} from "../../../designer/DesignerType";
+import AbstractBackgroundImpl from "./AbstractBackgroundImpl";
+import designerStore from "../../../designer/store/DesignerStore";
 
 interface LcDesignerBackgroundProps {
     onClick?: (e: any) => void;
-    config?: BackgroundConfig;
+    config?: BackgroundConfigType;
 }
 
 /**
@@ -11,13 +13,21 @@ interface LcDesignerBackgroundProps {
  */
 class DesignerBackground extends Component<LcDesignerBackgroundProps> {
 
+    constructor(props: LcDesignerBackgroundProps) {
+        super(props);
+        const instance = new AbstractBackgroundImpl(this);
+        const {compInstances} = designerStore;
+        compInstances['80cc666f'] = instance;
+        this.state = {config: instance.getConfig()}
+    }
+
     onClick = (e: any) => {
         const {onClick} = this.props;
         onClick && onClick(e);
     }
 
     getBgConfigProps = () => {
-        const bgConfig: BackgroundConfig = this.props.config!!;
+        const bgConfig: BackgroundConfigType = this.props.config!!;
         const {width, height, bgMode, bgColor, bgImg} = bgConfig;
         let bgImgSize = '100% 100%';
         if (bgImg.bgImgSize && bgImg.bgImgSize.length === 2)
@@ -53,7 +63,7 @@ class DesignerBackground extends Component<LcDesignerBackgroundProps> {
     render() {
         return (
             <div className={'lc-background'}
-                 id={'-1'}
+                 id={'80cc666f'}
                  data-type={'LcBg'}
                  onDoubleClick={this.onClick}
                  style={this.getBgConfigProps()}>

@@ -21,7 +21,7 @@ class RightStore {
         makeObservable(this, {
             menus: observable,
             activeMenu: observable,
-            contentVisible: observable,
+            visible: observable,
             setActiveMenu: action,
             setContentVisible: action,
             activeConfig: action,
@@ -31,11 +31,11 @@ class RightStore {
     /**
      * 当前选中的组件
      */
-    activeElem: ActiveElem = {id: '-1', type: 'LcBg'};
+    activeElem: ActiveElem = {id: '80cc666f', type: 'LcBg'};
     /**
      * 当前选中组件的配置
      */
-    activeElemConfig: any = {};
+    // activeElemConfig: any = {};
     /**
      * 当前选中组件的操作菜单列表
      */
@@ -47,22 +47,22 @@ class RightStore {
     /**
      * 右侧组件配置区域是否可见
      */
-    contentVisible: boolean = false;
+    visible: boolean = false;
     /**
      * 更新组件配置的方法
      */
-    updateConfig: Function | undefined = undefined;
+        // updateConfig: Function | undefined = undefined;
 
-    setUpdateConfig = (updateConfig: Function) => this.updateConfig = updateConfig;
+        // setUpdateConfig = (updateConfig: Function) => this.updateConfig = updateConfig;
 
     setActiveElem = (activeElem: ActiveElem) => {
         if (!activeElem) return;
         this.menus = (designerStarter.customComponentInfoMap[activeElem.type + ''] as AbstractCustomComponentDefinition).getMenuList() || [];
         this.activeElem = activeElem;
-        if (this.contentVisible) {
-            this.contentVisible = false;
+        if (this.visible) {
+            this.visible = false;
             setTimeout(() => {
-                runInAction(() => this.contentVisible = true);
+                runInAction(() => this.visible = true);
             }, 0);
         }
     }
@@ -74,12 +74,12 @@ class RightStore {
     }
 
     setContentVisible = (visible: boolean) => {
-        this.contentVisible = visible;
-        if (visible)
-            this.activeElemConfig = designerStore.getActiveElemConfig(this.activeElem.id + '');
+        this.visible = visible;
+        // if (visible)
+        //     this.activeElemConfig = designerStore.getActiveElemConfig(this.activeElem.id + '');
     }
 
-    setActiveElemConfig = (config: any) => this.activeElemConfig = config;
+    // setActiveElemConfig = (config: any) => this.activeElemConfig = config;
 
 
     activeConfig = (id: string, type: string) => {
@@ -90,9 +90,9 @@ class RightStore {
             this.activeMenu = 'background';
             this.activeElem = {id: '-1', type: 'LcBg'};
             //如果配置面板处于开启状态，则同时更新菜单和配置面板
-            if (this.contentVisible) {
+            if (this.visible) {
                 const {backgroundConfig} = designerStore;
-                this.activeElemConfig = backgroundConfig;
+                // this.activeElemConfig = backgroundConfig;
             }
         } else {
             //更新菜单列表
@@ -100,14 +100,14 @@ class RightStore {
             this.activeMenu = this.menus[0].key;
             this.activeElem = {id, type};
             //如果配置面板处于开启状态，则同时更新菜单和配置面板
-            if (this.contentVisible) {
+            if (this.visible) {
                 const {backgroundConfig} = designerStore;
-                this.activeElemConfig = backgroundConfig;
+                // this.activeElemConfig = backgroundConfig;
             }
             //激活组件设置
-            const {compInstanceMap} = designerStore;
-            const instance = compInstanceMap[id];
-            this.activeElemConfig = instance.getConfig();
+            const {compInstances} = designerStore;
+            const instance = compInstances[id];
+            // this.activeElemConfig = instance.getConfig();
         }
     }
 }

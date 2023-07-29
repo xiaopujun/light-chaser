@@ -215,7 +215,7 @@ export enum BackgroundColorMode {
 /**
  * 背景设置
  */
-export interface BackgroundConfig {
+export interface BackgroundConfigType {
     //背景宽
     width: number;
     //背景高
