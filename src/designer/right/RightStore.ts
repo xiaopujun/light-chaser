@@ -90,10 +90,10 @@ class RightStore {
             this.activeMenu = 'background';
             this.activeElem = {id: '-1', type: 'LcBg'};
             //如果配置面板处于开启状态，则同时更新菜单和配置面板
-            if (this.visible) {
-                const {backgroundConfig} = designerStore;
-                // this.activeElemConfig = backgroundConfig;
-            }
+            // if (this.visible) {
+            //     const {backgroundConfig} = designerStore;
+            // this.activeElemConfig = backgroundConfig;
+            // }
         } else {
             //更新菜单列表
             this.menus = (designerStarter.customComponentInfoMap[type] as AbstractCustomComponentDefinition).getMenuList() || [];
@@ -101,7 +101,7 @@ class RightStore {
             this.activeElem = {id, type};
             //如果配置面板处于开启状态，则同时更新菜单和配置面板
             if (this.visible) {
-                const {backgroundConfig} = designerStore;
+                // const {backgroundConfig} = designerStore;
                 // this.activeElemConfig = backgroundConfig;
             }
             //激活组件设置

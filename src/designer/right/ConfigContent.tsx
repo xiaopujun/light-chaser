@@ -12,15 +12,17 @@ import {ConfigType} from "./ConfigType";
 class ConfigContent extends Component {
 
     buildConfigContent = () => {
-        const {backgroundConfig, compInstances, setBackgroundConfig} = designerStore;
+        const {compInstances,} = designerStore;
         let {activeMenu, activeElem} = rightStore;
         let {customComponentInfoMap} = designerStarter;
         let abstractConfigObj: AbstractCustomComponentDefinition = customComponentInfoMap[activeElem.type + '']
         let configMapping = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp: React.ComponentType<ConfigType> = configMapping![activeMenu];
         const instance = compInstances[activeElem.id + ''];
-        const config = activeElem.type === 'LcBg' ? backgroundConfig : instance.getConfig() && instance.getConfig()![activeMenu];
-        const updateConfig = activeElem.type === 'LcBg' ? setBackgroundConfig : instance.update;
+        // const config = activeElem.type === 'LcBg' ? backgroundConfig : instance.getConfig() && instance.getConfig()![activeMenu];
+        // const updateConfig = activeElem.type === 'LcBg' ? setBackgroundConfig : instance.update;
+        const config = instance.getConfig()![activeMenu];
+        const updateConfig = instance.update;
         return (
             <Suspense fallback={<Loading/>}>
                 <ConfigComp config={config} updateConfig={updateConfig}/>

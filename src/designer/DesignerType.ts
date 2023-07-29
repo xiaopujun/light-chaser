@@ -2,7 +2,6 @@
  * 主题
  */
 import {MovableItemType} from "../lib/lc-movable/types";
-import LayoutItem from "../framework/core/LayoutItem";
 import AbstractComponent from "../framework/core/AbstractComponent";
 
 export interface ThemeColors {
@@ -216,37 +215,39 @@ export enum BackgroundColorMode {
  * 背景设置
  */
 export interface BackgroundConfigType {
-    //背景宽
-    width: number;
-    //背景高
-    height: number;
-    //背景模式
-    bgMode: BackgroundMode;
-    bgImg: {
-        //背景图片尺寸
-        bgImgSize: [number, number];
-        //背景图片位置
-        bgImgPos: [number, number];
-        //背景图片重复方式
-        bgImgRepeat: BackgroundImgRepeat;
-        //背景图片url地址
-        bgImgUrl: string;
-    },
-    bgColor: {
-        //背景图片颜色模式
-        bgColorMode: BackgroundColorMode;
-        single: {
-            color: string,//单色背景颜色},
+    background: {
+        //背景宽
+        width: number;
+        //背景高
+        height: number;
+        //背景模式
+        bgMode: BackgroundMode;
+        bgImg: {
+            //背景图片尺寸
+            bgImgSize: [number, number];
+            //背景图片位置
+            bgImgPos: [number, number];
+            //背景图片重复方式
+            bgImgRepeat: BackgroundImgRepeat;
+            //背景图片url地址
+            bgImgUrl: string;
         },
-        linearGradient: {
-            color: string,
-            angle: number,
-            colorArr: string[]
-        },
-        radialGradient: {
-            color: string,
-            colorArr: string[]
-        },
+        bgColor: {
+            //背景图片颜色模式
+            bgColorMode: BackgroundColorMode;
+            single: {
+                color: string,//单色背景颜色},
+            },
+            linearGradient: {
+                color: string,
+                angle: number,
+                colorArr: string[]
+            },
+            radialGradient: {
+                color: string,
+                colorArr: string[]
+            },
+        }
     }
 }
 

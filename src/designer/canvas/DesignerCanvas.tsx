@@ -67,7 +67,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
     }
 
     render() {
-        const {backgroundConfig} = designerStore;
+        // const {backgroundConfig} = designerStore;
         return (
             <>
                 <DesignerContainer>
@@ -75,8 +75,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                         <DesignerRuler offsetX={60} offsetY={50}>
                             <DragScaleProvider>
                                 <GroupMovable>
-                                    <DesignerBackground config={backgroundConfig}
-                                                        onClick={this.updateActive}
+                                    <DesignerBackground onClick={this.updateActive}
                                                         ref={obj => this.lcbg = obj}>
                                         {this.generateElement()}
                                     </DesignerBackground>

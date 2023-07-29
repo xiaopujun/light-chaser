@@ -79,12 +79,12 @@ export const AntdGraphics: React.FC<ConfigType> = ({config, updateConfig}) => {
             <ConfigCard title={'条状'}>
                 <ConfigItem title={'宽度'}>
                     <UnderLineInput type={'number'} min={1} onChange={barWidthChanged}
-                                    defaultValue={config.maxBarWidth}/>
+                                    defaultValue={config!.maxBarWidth}/>
                 </ConfigItem>
                 <ConfigItem title={'颜色'}>
                     <CfgItemBorder>
                         <BaseColorPicker onChange={fillColorChanged}
-                                         defaultValue={config.color}
+                                         defaultValue={config!.color}
                                          style={{width: '100%', height: '15px', borderRadius: 2}}
                                          showText={true}/>
                     </CfgItemBorder>
@@ -285,11 +285,11 @@ export const AntdCartesianCoordinateSys: React.FC<ConfigType> = ({config, update
 
     return (
         <>
-            <AxisConfig title={'X轴'} config={parseAxisConfig(config.xAxis)}
+            <AxisConfig title={'X轴'} config={parseAxisConfig(config!.xAxis)}
                         onChange={(key: string, data: any) => {
                             axisChanged(key, data, 'x');
                         }}/>
-            <AxisConfig title={'Y轴'} config={parseAxisConfig(config.yAxis)}
+            <AxisConfig title={'Y轴'} config={parseAxisConfig(config!.yAxis)}
                         onChange={(key: string, data: any) => {
                             axisChanged(key, data, 'y');
                         }}/>

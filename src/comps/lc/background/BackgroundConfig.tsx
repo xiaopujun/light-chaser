@@ -63,7 +63,7 @@ class BackgroundConfig extends PureComponent<ConfigType> {
     bgImgSizeChange = (data: any) => {
         const {updateConfig} = this.props;
         const config: BackgroundConfigType = this.state.config;
-        let bgImgSize = config.bgImg.bgImgSize;
+        let bgImgSize = config.background.bgImg.bgImgSize;
         const {value, name} = data;
         if (name === 'bgX' && bgImgSize) {
             bgImgSize[0] = parseInt(value);
@@ -77,7 +77,7 @@ class BackgroundConfig extends PureComponent<ConfigType> {
     bgImgPosChange = (data: any) => {
         const {updateConfig} = this.props;
         const config: BackgroundConfigType = this.state.config;
-        let bgImgPos = config.bgImg.bgImgPos;
+        let bgImgPos = config.background.bgImg.bgImgPos;
         const {value, name} = data;
         if (name === 'posX' && bgImgPos) {
             bgImgPos[0] = parseInt(value);
@@ -110,7 +110,7 @@ class BackgroundConfig extends PureComponent<ConfigType> {
         const {config}: any = this.state;
         const {updateConfig} = this.props;
         if (config?.bgImgUrl)
-            URL.revokeObjectURL(config.bgImgUrl);
+            URL.revokeObjectURL(config.background.bgImgUrl);
         updateConfig && updateConfig({bgImg: {bgImgUrl: ''}});
         this.setState({config: merge({}, config, {bgImg: {bgImgUrl: ''}})});
     }
@@ -118,7 +118,7 @@ class BackgroundConfig extends PureComponent<ConfigType> {
     linearGradientChanged = (color: string, key: string) => {
         const {updateConfig} = this.props;
         const config: BackgroundConfigType = this.state.config;
-        let {colorArr, angle} = config.bgColor.linearGradient;
+        let {colorArr, angle} = config.background.bgColor.linearGradient;
         if (key === 'startColor')
             colorArr[0] = color;
         if (key === 'endColor')
@@ -137,7 +137,7 @@ class BackgroundConfig extends PureComponent<ConfigType> {
     radialGradientChanged = (color: string, key: string) => {
         const {updateConfig} = this.props;
         const config: BackgroundConfigType = this.state.config;
-        let {colorArr} = config.bgColor.radialGradient;
+        let {colorArr} = config.background.bgColor.radialGradient;
         if (key === 'startColor')
             colorArr[0] = color;
         if (key === 'endColor')
@@ -156,7 +156,7 @@ class BackgroundConfig extends PureComponent<ConfigType> {
     gradientAngleChanged = (value: any) => {
         const {updateConfig} = this.props;
         const config: BackgroundConfigType = this.state.config;
-        const {colorArr} = config.bgColor.linearGradient;
+        const {colorArr} = config.background.bgColor.linearGradient;
         updateConfig && updateConfig({
             bgColor: {
                 linearGradient: {
@@ -170,7 +170,7 @@ class BackgroundConfig extends PureComponent<ConfigType> {
 
     render() {
         const config: BackgroundConfigType = this.state.config;
-        const {bgMode, bgImg, bgColor} = config;
+        const {background: {bgMode, bgImg, bgColor}} = config;
         return (
             <div className={'lc-background-config'}>
                 <ConfigItem title={'模式'} contentStyle={{width: '250px', paddingLeft: '20px'}}>
