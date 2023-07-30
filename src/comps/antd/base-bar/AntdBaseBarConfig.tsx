@@ -1,18 +1,29 @@
 import React, {Component} from 'react';
-import BaseStyleSet from "../../common-fragment/base-style/BaseStyleSet";
 import {ConfigType} from "../../../designer/right/ConfigType";
-import {AntdCartesianCoordinateSys, AntdGraphics, AntdLegend} from "../../common-fragment/AntdFragment";
+import {AntdCartesianCoordinateSys, AntdBarGraphics, AntdLegend} from "../../common-fragment/AntdFragment";
+import {BarOptions} from "@antv/g2plot";
+import {Legend} from "@antv/g2plot/lib/types/legend";
 
 class AntdBaseBarStyleConfig extends Component<ConfigType> {
 
+
+    legendChange = (legend: Legend) => {
+        console.log(legend);
+    }
+
+    barGraphicsChange = (config: BarOptions) => {
+        console.log(config);
+    }
+
     render() {
-        const {updateConfig, config} = this.props;
+        const {instance} = this.props;
+        const config: BarOptions = instance.getConfig()
         return (
             <>
                 {/*<BaseStyleSet config={config.baseStyle} updateConfig={updateConfig}/>*/}
-                <AntdGraphics config={config} updateConfig={updateConfig}/>
-                <AntdLegend config={config} updateConfig={updateConfig}/>
-                <AntdCartesianCoordinateSys config={config} updateConfig={updateConfig}/>
+                <AntdBarGraphics onChange={this.barGraphicsChange} config={config}/>
+                <AntdLegend onChange={this.legendChange} config={config.legend}/>
+                <AntdCartesianCoordinateSys instance={instance}/>
             </>
         );
     }

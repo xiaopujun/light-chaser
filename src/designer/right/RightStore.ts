@@ -88,7 +88,7 @@ class RightStore {
             //更新菜单列表
             this.menus = bgMenu;
             this.activeMenu = 'background';
-            this.activeElem = {id: '-1', type: 'LcBg'};
+            this.activeElem = {id: '80cc666f', type: 'LcBg'};
             //如果配置面板处于开启状态，则同时更新菜单和配置面板
             // if (this.visible) {
             //     const {backgroundConfig} = designerStore;

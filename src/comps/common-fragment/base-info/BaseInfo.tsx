@@ -3,32 +3,27 @@ import './BaseInfo.less';
 import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
-
-
-
-export interface BaseInfoProps<C> {
-    config: C;
-    updateConfig: (config: C) => void;
-}
+import {ConfigType} from "../../../designer/right/ConfigType";
+import {AntdBarProps} from "../../antd/base-bar/AntdBaseBar";
 
 /**
  * lc组件基础信息
  */
-class BaseInfo extends Component<BaseInfoProps<any>> {
+class BaseInfo extends Component<ConfigType> {
 
     changeName = (value: any) => {
-        const {updateConfig} = this.props;
-        updateConfig && updateConfig({info: {name: value}});
+        const {instance} = this.props;
+        instance.update({info: {name: value}}, {reRender: false});
     }
 
     changeDesc = (value: any) => {
-        const {updateConfig} = this.props;
-        updateConfig && updateConfig({info: {des: value}});
+        const {instance} = this.props;
+        instance.update({info: {desc: value}}, {reRender: false});
     }
 
     render() {
-        const {config = {}} = this.props;
-        const {type, name, des} = config;
+        const {instance} = this.props;
+        const {type, name, desc} = (instance.getConfig() as AntdBarProps).info;
         return (
             <div className={'lc-base-info'}>
                 <ConfigCard title={'基础信息'}>
@@ -39,7 +34,7 @@ class BaseInfo extends Component<BaseInfoProps<any>> {
                         <div className={'item-value'}>{type}</div>
                     </ConfigItem>
                     <ConfigItem title={'描述'}>
-                        <UnderLineInput type={'text'} onChange={this.changeDesc} defaultValue={des}/>
+                        <UnderLineInput type={'text'} onChange={this.changeDesc} defaultValue={desc}/>
                     </ConfigItem>
                 </ConfigCard>
             </div>

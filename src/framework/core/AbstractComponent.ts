@@ -5,10 +5,10 @@ export enum OperateType {
 
 export interface UpdateOptions {
     operateType?: OperateType;
-    reRender?: boolean;
+    reRender: boolean;
 }
 
-abstract class AbstractComponent<I = any, C = Record<string, any>> {
+abstract class AbstractComponent<I = any, C = any> {
 
     /**
      * 组件实例引用

@@ -6,85 +6,86 @@ import CfgItemBorder from "../../lib/lc-config-item/CfgItemBorder";
 import BaseColorPicker from "../../lib/lc-color-picker/BaseColorPicker";
 import Accordion from "../../lib/lc-accordion/Accordion";
 import {ConfigType} from "../../designer/right/ConfigType";
-import Legend from "../common-fragment/legend/Legend";
 import AxisConfig from "../common-fragment/axis/AxisConfig";
+import Select from "../../lib/lc-select/Select";
+import {Legend} from "@antv/g2plot/lib/types/legend";
 
-export const AntdLegend: React.FC<ConfigType> = ({config, updateConfig}) => {
-    const legendChanged = (key: string, data: any) => {
-        const chartStyleUpdate: any = {};
-        switch (key) {
-            case 'position':
-                chartStyleUpdate.legend = {position: data};
-                break;
-            case 'direction':
-                chartStyleUpdate.legend = {layout: data};
-                break;
-            case 'fontSize':
-                chartStyleUpdate.legend = {itemName: {style: {fontSize: data}}};
-                break;
-            case 'color':
-                chartStyleUpdate.legend = {itemName: {style: {fill: data}}};
-                break;
-            case 'enable':
-                chartStyleUpdate.legend = data
-                    ? {
-                        position: 'right-top',
-                        layout: 'vertical',
-                        itemName: {style: {fill: '#cecece', fontSize: 12}},
-                    }
-                    : data;
-                break;
-            default:
-                console.warn('未知的图例配置项');
-        }
-        updateConfig && updateConfig({
-            style: {
-                chartStyle: chartStyleUpdate,
-            },
-        });
-    };
-    const calculateLegendConfig = (chartStyle: any) => {
-        const {legend} = chartStyle;
-        if (!legend) return {visible: false};
-        return {
-            visible: true,
-            position: legend?.position,
-            direction: legend?.layout,
-            color: legend?.itemName?.style?.fill,
-            fontSize: legend?.itemName?.style?.fontSize,
-        };
-    };
+import {ShapeAttrs} from "@antv/g-base";
+import {WritableBarOptions} from "../antd/base-bar/AntdBaseBarDefinition";
+import {Types} from "@antv/g2";
+
+export interface AntdLegendProps {
+    config?: Legend;
+
+    onChange(config: Legend): void;
+}
+
+export const AntdLegend = (props: AntdLegendProps) => {
+    const {onChange, config} = props;
     return (
-        <Legend config={calculateLegendConfig(config)} onChange={legendChanged}/>
+        <Accordion title={'图例'} showSwitch={true} defaultValue={!!config}
+                   onChange={value => onChange(value && config!)}>
+            <ConfigItem title={'位置'}>
+                <Select defaultValue={(config as Types.LegendCfg)?.position}
+                        onChange={(value => onChange({position: value as Types.LegendCfg['position']}))}
+                        options={[
+                            {value: 'left-top', label: '左上'},
+                            {value: 'left', label: '正左'},
+                            {value: 'left-bottom', label: '左下'},
+                            {value: 'top-left', label: '上左'},
+                            {value: 'top', label: '正上'},
+                            {value: 'top-right', label: '上右'},
+                            {value: 'right-top', label: '右上'},
+                            {value: 'right', label: '正右'},
+                            {value: 'right-bottom', label: '右下'},
+                            {value: 'bottom-left', label: '下左'},
+                            {value: 'bottom', label: '正下'},
+                            {value: 'bottom-right', label: '下右'},
+                        ]}/>
+            </ConfigItem>
+            <ConfigItem title={'方向'}>
+                <Select defaultValue={(config as Types.LegendCfg)?.direction}
+                        onChange={(value => onChange({direction: value as Types.LegendCfg['direction']}))}
+                        options={[
+                            {value: 'horizontal', label: '横向'},
+                            {value: 'vertical', label: '纵向'},
+                        ]}/>
+            </ConfigItem>
+            <ConfigItem title={'字号'}>
+                <UnderLineInput type={'number'} min={12}
+                                defaultValue={((config as Types.LegendCfg)?.itemName?.style as ShapeAttrs).fontSize || 12}
+                                onChange={value => onChange({itemName: {style: {fontSize: value}}})}/>
+            </ConfigItem>
+            <ConfigItem title={'颜色'}>
+                <CfgItemBorder width={'100%'}>
+                    <BaseColorPicker defaultValue={((config as Types.LegendCfg)?.itemName?.style as ShapeAttrs).fill!}
+                                     onChange={value => onChange({itemName: {style: {fill: value}}})}
+                                     style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
+                </CfgItemBorder>
+            </ConfigItem>
+        </Accordion>
     );
 };
 
+export interface AntdBarGraphicsProps {
+    config?: WritableBarOptions;
 
-export const AntdGraphics: React.FC<ConfigType> = ({config, updateConfig}) => {
+    onChange(config: WritableBarOptions): void;
+}
 
-    const barWidthChanged = (value: any) => {
-        updateConfig && updateConfig({
-            style: {
-                chartStyle: {
-                    maxBarWidth: value
-                }
-            }
-        })
-    }
-
-    const fillColorChanged = (color: string) => updateConfig && updateConfig({style: {chartStyle: {color: color}}});
+export const AntdBarGraphics: React.FC<AntdBarGraphicsProps> = ({config, onChange}) => {
 
     return (
         <Accordion title={'图形'}>
             <ConfigCard title={'条状'}>
                 <ConfigItem title={'宽度'}>
-                    <UnderLineInput type={'number'} min={1} onChange={barWidthChanged}
+                    <UnderLineInput type={'number'} min={1} onChange={(value) => onChange({maxBarWidth: value})}
                                     defaultValue={config!.maxBarWidth}/>
                 </ConfigItem>
                 <ConfigItem title={'颜色'}>
                     <CfgItemBorder>
-                        <BaseColorPicker onChange={fillColorChanged}
-                                         defaultValue={config!.color}
+                        <BaseColorPicker onChange={(value) => onChange({color: value})}
+                                         defaultValue={config!.color as string}
                                          style={{width: '100%', height: '15px', borderRadius: 2}}
                                          showText={true}/>
                     </CfgItemBorder>
@@ -94,11 +95,11 @@ export const AntdGraphics: React.FC<ConfigType> = ({config, updateConfig}) => {
     )
 }
 
-export const AntdCartesianCoordinateSys: React.FC<ConfigType> = ({config, updateConfig}) => {
+export const AntdCartesianCoordinateSys: React.FC<ConfigType> = ({instance}) => {
 
+    const config: any = instance.getConfig();
 
     const axisChanged = (key: string, data: any, axis: string) => {
-        if (!updateConfig) return;
         let styleObj;
         switch (key) {
             case 'enable':
@@ -211,7 +212,7 @@ export const AntdCartesianCoordinateSys: React.FC<ConfigType> = ({config, update
                 console.warn('未知的坐标轴配置项');
                 return;
         }
-        updateConfig(buildAxisConfig(styleObj, axis));
+        instance.update(buildAxisConfig(styleObj, axis));
     };
 
     const buildAxisConfig = (styleObj: any, axis: string) => {
@@ -227,69 +228,13 @@ export const AntdCartesianCoordinateSys: React.FC<ConfigType> = ({config, update
         };
     }
 
-    const parseAxisConfig = (config: any) => {
-        const result: any = {};
-        result.enable = !!config.label;
-        result.position = config.position;
-        if (config.label) {
-            result['textColor'] = config.label?.style?.fill;
-            result['textAngle'] = config.label?.rotate;
-            result['textOffset'] = config.label?.offset;
-        } else {
-            result['textColor'] = '#d7d7d7ff';
-        }
-        if (config.title) {
-            result['titleEnable'] = true;
-            result['titleContent'] = config.title?.text;
-            result['titlePosition'] = config.title?.position;
-            result['titleColor'] = config.title?.style?.fill;
-            result['titleOffset'] = config.title?.offset;
-        } else {
-            result['titleEnable'] = false;
-        }
-        if (config.line) {
-            result['axisLineEnable'] = true;
-            result['axisLineColor'] = config.line?.style?.stroke;
-            result['axisLineWidth'] = config.line?.style?.lineWidth;
-        } else {
-            result['axisLineEnable'] = false;
-        }
-        if (config.grid) {
-            result['gridLineEnable'] = true;
-            result['gridLineAlignTick'] = config.grid?.alignTick;
-            result['gridLineWidth'] = config.grid?.line?.style?.lineWidth;
-            result['gridLineColor'] = config.grid?.line?.style?.stroke;
-        } else {
-            result['gridLineEnable'] = false;
-        }
-        if (config.tickLine) {
-            result['tickLineEnable'] = true;
-            result['tickLineAlignTick'] = config.tickLine?.alignTick;
-            result['tickLineLength'] = config.tickLine?.length;
-            result['tickLineWidth'] = config.tickLine?.style?.lineWidth;
-            result['tickLineColor'] = config.tickLine?.style?.stroke;
-        } else {
-            result['tickLineEnable'] = false;
-        }
-        if (config.subTickLine) {
-            result['subTickLineEnable'] = true;
-            result['subTickLineCount'] = config.subTickLine?.count;
-            result['subTickLineLength'] = config.subTickLine?.length;
-            result['subTickLineWidth'] = config.subTickLine?.style?.lineWidth;
-            result['subTickLineColor'] = config.subTickLine?.style?.stroke;
-        } else {
-            result['subTickLineEnable'] = false;
-        }
-        return result;
-    }
-
     return (
         <>
-            <AxisConfig title={'X轴'} config={parseAxisConfig(config!.xAxis)}
+            <AxisConfig title={'X轴'} config={config!.xAxis}
                         onChange={(key: string, data: any) => {
                             axisChanged(key, data, 'x');
                         }}/>
-            <AxisConfig title={'Y轴'} config={parseAxisConfig(config!.yAxis)}
+            <AxisConfig title={'Y轴'} config={config!.yAxis}
                         onChange={(key: string, data: any) => {
                             axisChanged(key, data, 'y');
                         }}/>

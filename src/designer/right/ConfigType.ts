@@ -1,6 +1,7 @@
-import {UpdateOptions} from "../../framework/core/AbstractComponent";
+import AbstractComponent, {UpdateOptions} from "../../framework/core/AbstractComponent";
 
 export interface ConfigType<P = any> {
-    config?: P;
-    updateConfig?: (config: P, upOp?: UpdateOptions) => void
+    // config?: P;
+    instance: AbstractComponent;
+    // updateConfig?: (config: P, upOp?: UpdateOptions) => void
 }

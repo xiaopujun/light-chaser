@@ -6,12 +6,11 @@ import previewImg from "./bar.png";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import AntdBaseBar from "./AntdBaseBar";
 import {ConfigType} from "../../../designer/right/ConfigType";
-import {BaseInfoProps} from "../../common-fragment/base-info/BaseInfo";
 import {BarOptions} from "@antv/g2plot";
 import {ShapeAttrs} from "@antv/g-base";
 
 export interface AntdBaseBarMenuMapping {
-    info: React.ComponentType<BaseInfoProps<BaseInfoType>>;
+    info: React.ComponentType<ConfigType>;
     style: React.ComponentType<ConfigType>;
     data: React.ComponentType<ConfigType>;
     animation: React.ComponentType<ConfigType>;
@@ -19,7 +18,7 @@ export interface AntdBaseBarMenuMapping {
 }
 
 export type WritableBarOptions = {
-    -readonly [K in keyof BarOptions]: BarOptions[K];
+    -readonly [K in keyof BarOptions]?: BarOptions[K];
 };
 
 export type ClazzTemplate<C> = new () => C | null;

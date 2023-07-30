@@ -1,10 +1,6 @@
 import {action, makeObservable, observable, runInAction, toJS} from "mobx";
 import {cloneDeep, isEqual} from "lodash";
 import {
-    BackgroundColorMode,
-    BackgroundConfigType,
-    BackgroundImgRepeat,
-    BackgroundMode,
     CanvasConfig,
     ProjectConfig,
     ProjectDataType,
@@ -15,12 +11,11 @@ import {
 } from "../DesignerType";
 import designerStarter from "../DesignerStarter";
 import AbstractBaseStore from "../../framework/core/AbstractBaseStore";
-import rightStore from "../right/RightStore";
 import {merge} from "../../utils/ObjectUtil";
 import {MovableItemType} from "../../lib/lc-movable/types";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {idGenerate} from "../../utils/IdGenerate";
-import AbstractComponent, {UpdateOptions} from "../../framework/core/AbstractComponent";
+import AbstractComponent from "../../framework/core/AbstractComponent";
 
 /**
  * 设计器核心状态管理类，记录了设计器中的核心数据。包括组件配置，组件布局。 全局设置等。

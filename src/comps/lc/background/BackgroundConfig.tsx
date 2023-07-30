@@ -4,7 +4,7 @@ import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import Dragger from "antd/es/upload/Dragger";
 import {Button} from "antd";
 import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
-import {BackgroundColorMode, BackgroundConfigType, BackgroundMode} from "../../../designer/DesignerType";
+import {BackgroundColorMode, BackgroundMode} from "../../../designer/DesignerType";
 import {ConfigType} from "../../../designer/right/ConfigType";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
@@ -12,9 +12,14 @@ import Select from "../../../lib/lc-select/Select";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import Radio from "../../../lib/lc-radio/Radio";
 import {merge} from "lodash";
+import {AbstractBackgroundImplProps, BackgroundConfigType} from './AbstractBackgroundImpl';
+import AbstractComponent from "../../../framework/core/AbstractComponent";
+import DesignerBackground from "./DesignerBackground";
 
 
 class BackgroundConfig extends PureComponent<ConfigType> {
+
+    instance: AbstractComponent<DesignerBackground, AbstractBackgroundImplProps> | null = null;
 
     gradientAngle: number = 0;
     bgImgSize: number[] = [0, 0];
@@ -26,10 +31,11 @@ class BackgroundConfig extends PureComponent<ConfigType> {
 
     constructor(props: ConfigType) {
         super(props);
-        const {config} = props;
-        this.state = {config}
+        this.instance = props.instance;
+        const config = this.instance.getConfig()?.background;
+        this.state = {config};
         //以下数据不放在state中管理，避免修改时触发组件的重新渲染。
-        this.gradientAngle = config?.bgColor?.linearGradient?.angle || 0;
+        this.gradientAngle = config!.bgColor!.linearGradient?.angle || 0;
         this.bgImgSize = config?.bgImg?.bgImgSize || [0, 0];
         this.bgImgPos = config?.bgImg?.bgImgPos || [0, 0];
         this.singleColor = config?.bgColor?.single?.color || '#000000';
@@ -37,12 +43,12 @@ class BackgroundConfig extends PureComponent<ConfigType> {
 
     beforeUpload = (file: any) => {
         const fileReader = new FileReader();
-        const {updateConfig} = this.props;
+        const {instance} = this.props;
         //文件读取完毕后会的处理事件
         fileReader.onload = (event: any) => {
             const blob = new Blob([event.target.result], {type: file.type});
             const bgImgUrl = URL.createObjectURL(blob);
-            updateConfig && updateConfig({bgImg: {bgImgUrl: bgImgUrl}});
+            instance.update({background: {bgImg: {bgImgUrl: bgImgUrl}}});
             const {config}: any = this.state;
             this.setState({config: merge({}, config, {bgImg: {bgImgUrl: bgImgUrl}})});
             //todo 更换图片的时候要释放链接和内存的关联，可以提高部分性能
@@ -54,123 +60,129 @@ class BackgroundConfig extends PureComponent<ConfigType> {
     }
 
     bgModeChange = (value: any) => {
-        const {updateConfig} = this.props;
+        const {instance} = this.props;
         const {config}: any = this.state;
-        updateConfig && updateConfig({bgMode: value});
+        instance.update({background: {bgMode: value}});
         this.setState({config: {...config, ...{bgMode: value}}});
     }
 
     bgImgSizeChange = (data: any) => {
-        const {updateConfig} = this.props;
+        const {instance} = this.props;
         const config: BackgroundConfigType = this.state.config;
-        let bgImgSize = config.background.bgImg.bgImgSize;
+        let bgImgSize = config.bgImg.bgImgSize;
         const {value, name} = data;
         if (name === 'bgX' && bgImgSize) {
             bgImgSize[0] = parseInt(value);
         } else if (name === 'bgY' && bgImgSize) {
             bgImgSize[1] = parseInt(value);
         }
-        updateConfig && updateConfig({bgImg: {bgImgSize: bgImgSize}});
+        instance.update({background: {bgImg: {bgImgSize: bgImgSize}}});
         this.bgImgSize = bgImgSize;
     }
 
     bgImgPosChange = (data: any) => {
-        const {updateConfig} = this.props;
+        const {instance} = this.props;
         const config: BackgroundConfigType = this.state.config;
-        let bgImgPos = config.background.bgImg.bgImgPos;
+        let bgImgPos = config.bgImg.bgImgPos;
         const {value, name} = data;
         if (name === 'posX' && bgImgPos) {
             bgImgPos[0] = parseInt(value);
         } else if (name === 'posY' && bgImgPos) {
             bgImgPos[1] = parseInt(value);
         }
-        updateConfig && updateConfig({bgImg: {bgImgPos: bgImgPos}});
+        instance.update({background: {bgImg: {bgImgPos: bgImgPos}}});
         this.bgImgPos = bgImgPos;
     }
 
     repeatTypeChange = (value: any) => {
-        const {updateConfig} = this.props;
-        updateConfig && updateConfig({bgImg: {bgImgRepeat: value}});
+        const {instance} = this.props;
+        instance.update({background: {bgImg: {repeatType: value}}});
     }
 
     bgColorModeChange = (value: any) => {
-        const {updateConfig} = this.props;
+        const {instance} = this.props;
         const config: BackgroundConfig = this.state.config;
-        updateConfig && updateConfig({bgColor: {bgColorMode: value}});
+        instance.update({background: {bgColor: {bgColorMode: value}}});
         this.setState({config: merge({}, config, {bgColor: {bgColorMode: value}})});
     }
 
     singleColorChanged = (color: string) => {
-        const {updateConfig} = this.props;
-        updateConfig && updateConfig({bgColor: {single: {color}}});
+        const {instance} = this.props;
+        instance.update({background: {bgColor: {single: {color: color}}}});
         this.singleColor = color;
     }
 
     clearBgImg = () => {
         const {config}: any = this.state;
-        const {updateConfig} = this.props;
+        const {instance} = this.props;
         if (config?.bgImgUrl)
-            URL.revokeObjectURL(config.background.bgImgUrl);
-        updateConfig && updateConfig({bgImg: {bgImgUrl: ''}});
+            URL.revokeObjectURL(config.bgImgUrl);
+        instance.update({background: {bgImg: {bgImgUrl: ''}}});
         this.setState({config: merge({}, config, {bgImg: {bgImgUrl: ''}})});
     }
 
     linearGradientChanged = (color: string, key: string) => {
-        const {updateConfig} = this.props;
+        const {instance} = this.props;
         const config: BackgroundConfigType = this.state.config;
-        let {colorArr, angle} = config.background.bgColor.linearGradient;
+        let {colorArr, angle} = config.bgColor.linearGradient;
         if (key === 'startColor')
             colorArr[0] = color;
         if (key === 'endColor')
             colorArr[1] = color;
         //线性渐变
-        updateConfig && updateConfig({
-            bgColor: {
-                linearGradient: {
-                    color: `linear-gradient(${angle}deg, ${colorArr[0]}, ${colorArr[1]})`,
-                    colorArr: colorArr,
-                }
-            },
+        instance.update({
+            background: {
+                bgColor: {
+                    linearGradient: {
+                        color: `linear-gradient(${angle}deg, ${colorArr[0]}, ${colorArr[1]})`,
+                        colorArr: colorArr,
+                    }
+                },
+            }
         });
     }
 
     radialGradientChanged = (color: string, key: string) => {
-        const {updateConfig} = this.props;
+        const {instance} = this.props;
         const config: BackgroundConfigType = this.state.config;
-        let {colorArr} = config.background.bgColor.radialGradient;
+        let {colorArr} = config.bgColor.radialGradient;
         if (key === 'startColor')
             colorArr[0] = color;
         if (key === 'endColor')
             colorArr[1] = color;
         //径向渐变
-        updateConfig && updateConfig({
-            bgColor: {
-                radialGradient: {
-                    color: `radial-gradient(circle, ${colorArr[0]}, ${colorArr[1]})`,
-                    colorArr: colorArr,
-                }
-            },
+        instance.update({
+            background: {
+                bgColor: {
+                    radialGradient: {
+                        color: `radial-gradient(circle, ${colorArr[0]}, ${colorArr[1]})`,
+                        colorArr: colorArr,
+                    }
+                },
+            }
         });
     }
 
     gradientAngleChanged = (value: any) => {
-        const {updateConfig} = this.props;
+        const {instance} = this.props;
         const config: BackgroundConfigType = this.state.config;
-        const {colorArr} = config.background.bgColor.linearGradient;
-        updateConfig && updateConfig({
-            bgColor: {
-                linearGradient: {
-                    color: `linear-gradient(${value}deg, ${colorArr[0]}, ${colorArr[1]})`,
-                    angle: value
-                }
-            },
+        const {colorArr} = config.bgColor.linearGradient;
+        instance.update({
+            background: {
+                bgColor: {
+                    linearGradient: {
+                        color: `linear-gradient(${value}deg, ${colorArr[0]}, ${colorArr[1]})`,
+                        angle: value
+                    }
+                },
+            }
         });
         this.gradientAngle = value;
     }
 
     render() {
         const config: BackgroundConfigType = this.state.config;
-        const {background: {bgMode, bgImg, bgColor}} = config;
+        const {bgMode, bgImg, bgColor} = config;
         return (
             <div className={'lc-background-config'}>
                 <ConfigItem title={'模式'} contentStyle={{width: '250px', paddingLeft: '20px'}}>

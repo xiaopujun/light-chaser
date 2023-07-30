@@ -5,8 +5,6 @@ import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import {LegendType} from "./LegendType";
-import {ConfigType} from "../../../designer/right/ConfigType";
-import _ from "lodash";
 import Select from "../../../lib/lc-select/Select";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 
@@ -19,7 +17,7 @@ interface LegendProps {
 /**
  * 原子图标组件-图例
  */
-class Legend extends Component<LegendProps> {
+class AntdLegend extends Component<LegendProps> {
 
     state: any = {
         visible: false
@@ -31,9 +29,9 @@ class Legend extends Component<LegendProps> {
         this.state = {visible: config?.visible || false};
     }
 
-    shouldComponentUpdate(nextProps: Readonly<ConfigType>, nextState: Readonly<{}>, nextContext: any): boolean {
-        return !_.isEqual(nextProps, this.props);
-    }
+    // shouldComponentUpdate(nextProps: Readonly<ConfigType>, nextState: Readonly<{}>, nextContext: any): boolean {
+    //     return !_.isEqual(nextProps, this.props);
+    // }
 
     onChange = (key: string, data: any) => {
         const {onChange} = this.props;
@@ -84,4 +82,4 @@ class Legend extends Component<LegendProps> {
     }
 }
 
-export default Legend;
+export default AntdLegend;

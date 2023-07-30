@@ -1,6 +1,5 @@
 import React, {Component, useState} from 'react';
 import './AxisConfig.less';
-import Accordion from '../../../lib/lc-accordion/Accordion';
 import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
@@ -33,23 +32,24 @@ class AxisConfig extends Component<AxisConfigProps> {
     render() {
         const {config, title = '坐标轴'} = this.props;
         return (
-            <Accordion title={title} showSwitch={true} defaultValue={config.enable || false}
-                       onChange={value => this.onChange('enable', value)}>
-                <ConfigItem title={'位置'} contentStyle={{width: '250px', paddingLeft: '20px'}}>
-                    <Radio defaultValue={config.position || 'right'}
-                           onChange={(value => this.onChange('position', value))}
-                           options={[{label: '上', value: 'top'},
-                               {label: '下', value: 'bottom'},
-                               {label: '左', value: 'left'},
-                               {label: '右', value: 'right'}]}/>
-                </ConfigItem>
-                <AxisText config={config} onChange={this.onChange}/>
-                <AxisTitle config={config} onChange={this.onChange}/>
-                <AxisLine config={config} onChange={this.onChange}/>
-                <AxisGridLine config={config} onChange={this.onChange}/>
-                <AxisTickLine config={config} onChange={this.onChange}/>
-                <AxisSubTickLine config={config} onChange={this.onChange}/>
-            </Accordion>
+            <></>
+            // <Accordion title={title} showSwitch={true} defaultValue={!!config}
+            //            onChange={value => this.onChange('enable', value)}>
+            //     <ConfigItem title={'位置'} contentStyle={{width: '250px', paddingLeft: '20px'}}>
+            //         <Radio defaultValue={(config as Types.AxisCfg).position || 'right'}
+            //                onChange={(value => this.onChange('position', value))}
+            //                options={[{label: '上', value: 'top'},
+            //                    {label: '下', value: 'bottom'},
+            //                    {label: '左', value: 'left'},
+            //                    {label: '右', value: 'right'}]}/>
+            //     </ConfigItem>
+            //     <AxisText config={config} onChange={this.onChange}/>
+            //     <AxisTitle config={config} onChange={this.onChange}/>
+            //     <AxisLine config={config} onChange={this.onChange}/>
+            //     <AxisGridLine config={config} onChange={this.onChange}/>
+            //     <AxisTickLine config={config} onChange={this.onChange}/>
+            //     <AxisSubTickLine config={config} onChange={this.onChange}/>
+            // </Accordion>
         );
     }
 }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {BackgroundColorMode, BackgroundConfigType, BackgroundMode} from "../../../designer/DesignerType";
-import AbstractBackgroundImpl from "./AbstractBackgroundImpl";
+import {BackgroundColorMode, BackgroundMode} from "../../../designer/DesignerType";
+import AbstractBackgroundImpl, {BackgroundConfigType} from "./AbstractBackgroundImpl";
 import designerStore from "../../../designer/store/DesignerStore";
 
 interface LcDesignerBackgroundProps {
@@ -18,7 +18,7 @@ class DesignerBackground extends Component<LcDesignerBackgroundProps> {
         const instance = new AbstractBackgroundImpl(this);
         const {compInstances} = designerStore;
         compInstances['80cc666f'] = instance;
-        this.state = {config: instance.getConfig()}
+        this.state = {config: instance.getConfig()?.background}
     }
 
     onClick = (e: any) => {
@@ -29,10 +29,10 @@ class DesignerBackground extends Component<LcDesignerBackgroundProps> {
     getBgConfigProps = () => {
         // const bgConfig: BackgroundConfigType = this.props.config!!;
         const {config: bgConfig} = this.state as any;
-        const {background: {width, height, bgMode, bgColor, bgImg}} = bgConfig;
+        const {width, height, bgMode, bgColor, bgImg} = bgConfig;
         let bgImgSize = '100% 100%';
         if (bgImg.bgImgSize && bgImg.bgImgSize.length === 2)
-            bgImgSize = `${bgConfig.background.bgImg.bgImgSize[0]}px ${bgImg.bgImgSize[1]}px`;
+            bgImgSize = `${bgConfig.bgImg.bgImgSize[0]}px ${bgImg.bgImgSize[1]}px`;
         let bgImgPosition = '0 0';
         if (bgImg.bgImgPos && bgImg.bgImgPos.length === 2)
             bgImgPosition = `${bgImg.bgImgPos[0]}px ${bgImg.bgImgPos[1]}px`;
@@ -50,7 +50,7 @@ class DesignerBackground extends Component<LcDesignerBackgroundProps> {
                     bgConfigProps['backgroundColor'] = '#000000';
             } else {
                 const {single, radialGradient, linearGradient, bgColorMode} = bgColor;
-                if (bgConfig?.background.bgColor.bgColorMode + '' === BackgroundColorMode.SINGLE)
+                if (bgConfig?.bgColor.bgColorMode + '' === BackgroundColorMode.SINGLE)
                     bgConfigProps['backgroundColor'] = single.color;
                 else if (bgColorMode === BackgroundColorMode.LINEAR_GRADIENT)
                     bgConfigProps['background'] = linearGradient.color;

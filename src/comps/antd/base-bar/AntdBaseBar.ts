@@ -143,6 +143,7 @@ export default class AntdBaseBar extends AbstractComponent<Bar, AntdBarProps> {
     }
 
     async create(container: HTMLElement, props: any): Promise<this> {
+        console.log('AntdBaseBar create');
         if (!this.instance)
             this.instance = new Bar(container, this.config!.style);
         this.instance.render();
@@ -163,10 +164,10 @@ export default class AntdBaseBar extends AbstractComponent<Bar, AntdBarProps> {
         this.config = merge(this.config, config);
         upOp = upOp || {reRender: true, operateType: OperateType.OPTIONS};
         if (upOp.reRender) {
-            if (upOp.operateType === OperateType.OPTIONS)
-                this.instance?.update(this.config!.style);
             if (upOp.operateType === OperateType.DATA)
                 this.instance?.changeData(this.config!.style.data);
+            else
+                this.instance?.update(this.config!.style);
         }
     }
 
