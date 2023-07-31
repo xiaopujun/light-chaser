@@ -3,6 +3,10 @@ import './AxisConfig.less';
 import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
+import {Axis} from "@antv/g2plot";
+import Accordion from "../../../lib/lc-accordion/Accordion";
+import {Types} from "@antv/g2";
+import {AxisLabelCfg} from "@antv/component/esm";
 
 
 const BaseColorPicker = React.lazy(() => import('../../../lib/lc-color-picker/BaseColorPicker'));
@@ -12,8 +16,8 @@ const Select = React.lazy(() => import('../../../lib/lc-select/Select'));
 const Radio = React.lazy(() => import('../../../lib/lc-radio/Radio'));
 
 interface AxisConfigProps {
-    config?: any;
-    onChange?: (key: string, data: any) => void;
+    config?: Axis;
+    onChange: (data: Axis) => void;
     title?: string;
 }
 
@@ -21,35 +25,34 @@ interface AxisConfigProps {
  * 轴线配置项
  */
 class AxisConfig extends Component<AxisConfigProps> {
-
-    onChange = (key: string, data: any) => {
-        const {onChange} = this.props;
-        onChange && onChange(key, data);
-        if (key === 'tickLine-enable' && data)
-            this.setState({tickLineEnable: true});
-    }
+    //
+    // onChange = (key: string, data: any) => {
+    //     const {onChange} = this.props;
+    //     onChange && onChange(key, data);
+    //     if (key === 'tickLine-enable' && data)
+    //         this.setState({tickLineEnable: true});
+    // }
 
     render() {
-        const {config, title = '坐标轴'} = this.props;
+        const {config, title = '坐标轴', onChange} = this.props;
         return (
-            <></>
-            // <Accordion title={title} showSwitch={true} defaultValue={!!config}
-            //            onChange={value => this.onChange('enable', value)}>
-            //     <ConfigItem title={'位置'} contentStyle={{width: '250px', paddingLeft: '20px'}}>
-            //         <Radio defaultValue={(config as Types.AxisCfg).position || 'right'}
-            //                onChange={(value => this.onChange('position', value))}
-            //                options={[{label: '上', value: 'top'},
-            //                    {label: '下', value: 'bottom'},
-            //                    {label: '左', value: 'left'},
-            //                    {label: '右', value: 'right'}]}/>
-            //     </ConfigItem>
-            //     <AxisText config={config} onChange={this.onChange}/>
-            //     <AxisTitle config={config} onChange={this.onChange}/>
-            //     <AxisLine config={config} onChange={this.onChange}/>
-            //     <AxisGridLine config={config} onChange={this.onChange}/>
-            //     <AxisTickLine config={config} onChange={this.onChange}/>
-            //     <AxisSubTickLine config={config} onChange={this.onChange}/>
-            // </Accordion>
+            <Accordion title={title} showSwitch={true} defaultValue={!!config}
+                       onChange={value => onChange(value && config!)}>
+                <ConfigItem title={'位置'} contentStyle={{width: '250px', paddingLeft: '20px'}}>
+                    <Radio defaultValue={(config as Types.AxisCfg).position || 'right'}
+                           onChange={(value => onChange({position: value as Types.AxisCfg["position"]}))}
+                           options={[{label: '上', value: 'top'},
+                               {label: '下', value: 'bottom'},
+                               {label: '左', value: 'left'},
+                               {label: '右', value: 'right'}]}/>
+                </ConfigItem>
+                <AxisText config={(config as Types.AxisCfg).label!}/>
+                {/*<AxisTitle config={config} onChange={this.onChange}/>*/}
+                {/*<AxisLine config={config} onChange={this.onChange}/>*/}
+                {/*<AxisGridLine config={config} onChange={this.onChange}/>*/}
+                {/*<AxisTickLine config={config} onChange={this.onChange}/>*/}
+                {/*<AxisSubTickLine config={config} onChange={this.onChange}/>*/}
+            </Accordion>
         );
     }
 }
@@ -344,25 +347,29 @@ export const AxisTitle: React.FC<{ config: any, onChange: Function }> = ({config
     )
 }
 
-export const AxisText: React.FC<{ config: any, onChange: Function }> = ({config, onChange}) => {
+export interface AxisTextProps {
+    config: AxisLabelCfg;
+}
+
+export const AxisText: React.FC<AxisTextProps> = ({config}) => {
 
     return (
         <ConfigCard title={'文本'}>
-            <ConfigItem title={'颜色'}>
-                <CfgItemBorder>
-                    <BaseColorPicker defaultValue={config.textColor || '#d5d5d5'}
-                                     onChange={value => onChange('text-color', value)}
-                                     style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                </CfgItemBorder>
-            </ConfigItem>
-            <ConfigItem title={'角度'}>
-                <UnderLineInput defaultValue={config.textAngle || 0} step={0.1} type={'number'}
-                                onChange={value => onChange('text-angle', value)}/>
-            </ConfigItem>
-            <ConfigItem title={'偏移量'}>
-                <UnderLineInput defaultValue={config.textOffset || 0} type={'number'}
-                                onChange={value => onChange('text-offset', value)}/>
-            </ConfigItem>
+            {/*<ConfigItem title={'颜色'}>*/}
+            {/*    <CfgItemBorder>*/}
+            {/*        <BaseColorPicker defaultValue={config.textColor || '#d5d5d5'}*/}
+            {/*                         onChange={value => onChange('text-color', value)}*/}
+            {/*                         style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>*/}
+            {/*    </CfgItemBorder>*/}
+            {/*</ConfigItem>*/}
+            {/*<ConfigItem title={'角度'}>*/}
+            {/*    <UnderLineInput defaultValue={config.textAngle || 0} step={0.1} type={'number'}*/}
+            {/*                    onChange={value => onChange('text-angle', value)}/>*/}
+            {/*</ConfigItem>*/}
+            {/*<ConfigItem title={'偏移量'}>*/}
+            {/*    <UnderLineInput defaultValue={config.textOffset || 0} type={'number'}*/}
+            {/*                    onChange={value => onChange('text-offset', value)}/>*/}
+            {/*</ConfigItem>*/}
         </ConfigCard>
     )
 }

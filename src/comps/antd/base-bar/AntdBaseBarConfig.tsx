@@ -17,13 +17,13 @@ class AntdBaseBarStyleConfig extends Component<ConfigType> {
 
     render() {
         const {instance} = this.props;
-        const config: BarOptions = instance.getConfig()
+        const config: BarOptions = instance.getConfig().style;
         return (
             <>
                 {/*<BaseStyleSet config={config.baseStyle} updateConfig={updateConfig}/>*/}
-                <AntdBarGraphics onChange={this.barGraphicsChange} config={config}/>
-                <AntdLegend onChange={this.legendChange} config={config.legend}/>
-                <AntdCartesianCoordinateSys instance={instance}/>
+                {/*<AntdBarGraphics onChange={this.barGraphicsChange} config={config}/>*/}
+                {/*<AntdLegend onChange={this.legendChange} config={config.legend}/>*/}
+                <AntdCartesianCoordinateSys config={config}/>
             </>
         );
     }

@@ -13,6 +13,7 @@ import {Legend} from "@antv/g2plot/lib/types/legend";
 import {ShapeAttrs} from "@antv/g-base";
 import {WritableBarOptions} from "../antd/base-bar/AntdBaseBarDefinition";
 import {Types} from "@antv/g2";
+import {Axis, Options} from "@antv/g2plot";
 
 export interface AntdLegendProps {
     config?: Legend;
@@ -95,149 +96,156 @@ export const AntdBarGraphics: React.FC<AntdBarGraphicsProps> = ({config, onChang
     )
 }
 
-export const AntdCartesianCoordinateSys: React.FC<ConfigType> = ({instance}) => {
+export interface AntdCartesianCoordinateSysProps {
+    config?: Options;
 
-    const config: any = instance.getConfig();
+    onChange?(config: any): void;
+}
 
-    const axisChanged = (key: string, data: any, axis: string) => {
-        let styleObj;
-        switch (key) {
-            case 'enable':
-                styleObj = data
-                    ? {
-                        grid: null,
-                        label: {
-                            style: {
-                                fill: '#d5d5d5',
-                            },
-                        },
-                    }
-                    : {
-                        grid: null,
-                        label: null,
-                        line: null,
-                        tickLine: null,
-                        subTickLine: null,
-                        title: null,
-                    };
-                break;
-            case 'position':
-                styleObj = {position: data};
-                break;
-            case 'text-color':
-                styleObj = {label: {style: {fill: data}}};
-                break;
-            case 'text-angle':
-                styleObj = {label: {rotate: data}};
-                break;
-            case 'text-offset':
-                styleObj = {label: {offset: data}};
-                break;
-            case 'title-enable':
-                styleObj = data ? {title: {text: '标题', style: {fill: '#d5d5d5'}}} : {title: null};
-                break;
-            case 'title-position':
-                styleObj = {title: {position: data}};
-                break;
-            case 'title-content':
-                styleObj = {title: {text: data}};
-                break;
-            case 'title-color':
-                styleObj = {title: {style: {fill: data}}};
-                break;
-            case 'title-offset':
-                styleObj = {title: {offset: data}};
-                break;
-            case 'axisLine-enable':
-                styleObj = data ? {line: {style: {stroke: '#d5d5d5', lineWidth: 2}}} : {line: null};
-                break;
-            case 'axisLine-color':
-                styleObj = {line: {style: {stroke: data}}};
-                break;
-            case 'axisLine-width':
-                styleObj = {line: {style: {lineWidth: data}}};
-                break;
-            case 'gridLine-enable':
-                styleObj = data ? {
-                    grid: {
-                        line: {style: {stroke: '#d5d5d5', lineWidth: 2}},
-                        alignTick: true
-                    }
-                } : {grid: null};
-                break;
-            case 'gridLine-alignTick':
-                styleObj = {grid: {alignTick: data}};
-                break;
-            case 'gridLine-width':
-                styleObj = {grid: {line: {style: {lineWidth: data}}}};
-                break;
-            case 'gridLine-color':
-                styleObj = {grid: {line: {style: {stroke: data}}}};
-                break;
-            case 'tickLine-enable':
-                styleObj = data ? {
-                    tickLine: {style: {stroke: '#d5d5d5', lineWidth: 2}, alignTick: true, length: 3},
-                } : {tickLine: null};
-                break;
-            case 'tickLine-alignTick':
-                styleObj = {tickLine: {alignTick: data}};
-                break;
-            case 'tickLine-length':
-                styleObj = {tickLine: {length: data}};
-                break;
-            case 'tickLine-width':
-                styleObj = {tickLine: {style: {lineWidth: data}}};
-                break;
-            case 'tickLine-color':
-                styleObj = {tickLine: {style: {stroke: data}}};
-                break;
-            case 'subTickLine-enable':
-                styleObj = data ? {
-                    subTickLine: {style: {stroke: '#d5d5d5', lineWidth: 3}, count: 5, length: 2}
-                } : {subTickLine: null};
-                break;
-            case 'subTickLine-count':
-                styleObj = {subTickLine: {count: data}};
-                break;
-            case 'subTickLine-length':
-                styleObj = {subTickLine: {length: data}};
-                break;
-            case 'subTickLine-width':
-                styleObj = {subTickLine: {style: {lineWidth: data}}};
-                break;
-            case 'subTickLine-color':
-                styleObj = {subTickLine: {style: {stroke: data}}};
-                break;
-            default:
-                console.warn('未知的坐标轴配置项');
-                return;
-        }
-        instance.update(buildAxisConfig(styleObj, axis));
-    };
+export const AntdCartesianCoordinateSys: React.FC<AntdCartesianCoordinateSysProps> = ({config}) => {
 
-    const buildAxisConfig = (styleObj: any, axis: string) => {
-        let axisObj;
-        if (axis === 'x')
-            axisObj = {xAxis: styleObj,};
-        else if (axis === 'y')
-            axisObj = {yAxis: styleObj,};
-        return {
-            style: {
-                chartStyle: axisObj
-            },
-        };
+    // const axisChanged = (key: string, data: any, axis: string) => {
+    //     let styleObj;
+    //     switch (key) {
+    //         case 'enable':
+    //             styleObj = data
+    //                 ? {
+    //                     grid: null,
+    //                     label: {
+    //                         style: {
+    //                             fill: '#d5d5d5',
+    //                         },
+    //                     },
+    //                 }
+    //                 : {
+    //                     grid: null,
+    //                     label: null,
+    //                     line: null,
+    //                     tickLine: null,
+    //                     subTickLine: null,
+    //                     title: null,
+    //                 };
+    //             break;
+    //         case 'position':
+    //             styleObj = {position: data};
+    //             break;
+    //         case 'text-color':
+    //             styleObj = {label: {style: {fill: data}}};
+    //             break;
+    //         case 'text-angle':
+    //             styleObj = {label: {rotate: data}};
+    //             break;
+    //         case 'text-offset':
+    //             styleObj = {label: {offset: data}};
+    //             break;
+    //         case 'title-enable':
+    //             styleObj = data ? {title: {text: '标题', style: {fill: '#d5d5d5'}}} : {title: null};
+    //             break;
+    //         case 'title-position':
+    //             styleObj = {title: {position: data}};
+    //             break;
+    //         case 'title-content':
+    //             styleObj = {title: {text: data}};
+    //             break;
+    //         case 'title-color':
+    //             styleObj = {title: {style: {fill: data}}};
+    //             break;
+    //         case 'title-offset':
+    //             styleObj = {title: {offset: data}};
+    //             break;
+    //         case 'axisLine-enable':
+    //             styleObj = data ? {line: {style: {stroke: '#d5d5d5', lineWidth: 2}}} : {line: null};
+    //             break;
+    //         case 'axisLine-color':
+    //             styleObj = {line: {style: {stroke: data}}};
+    //             break;
+    //         case 'axisLine-width':
+    //             styleObj = {line: {style: {lineWidth: data}}};
+    //             break;
+    //         case 'gridLine-enable':
+    //             styleObj = data ? {
+    //                 grid: {
+    //                     line: {style: {stroke: '#d5d5d5', lineWidth: 2}},
+    //                     alignTick: true
+    //                 }
+    //             } : {grid: null};
+    //             break;
+    //         case 'gridLine-alignTick':
+    //             styleObj = {grid: {alignTick: data}};
+    //             break;
+    //         case 'gridLine-width':
+    //             styleObj = {grid: {line: {style: {lineWidth: data}}}};
+    //             break;
+    //         case 'gridLine-color':
+    //             styleObj = {grid: {line: {style: {stroke: data}}}};
+    //             break;
+    //         case 'tickLine-enable':
+    //             styleObj = data ? {
+    //                 tickLine: {style: {stroke: '#d5d5d5', lineWidth: 2}, alignTick: true, length: 3},
+    //             } : {tickLine: null};
+    //             break;
+    //         case 'tickLine-alignTick':
+    //             styleObj = {tickLine: {alignTick: data}};
+    //             break;
+    //         case 'tickLine-length':
+    //             styleObj = {tickLine: {length: data}};
+    //             break;
+    //         case 'tickLine-width':
+    //             styleObj = {tickLine: {style: {lineWidth: data}}};
+    //             break;
+    //         case 'tickLine-color':
+    //             styleObj = {tickLine: {style: {stroke: data}}};
+    //             break;
+    //         case 'subTickLine-enable':
+    //             styleObj = data ? {
+    //                 subTickLine: {style: {stroke: '#d5d5d5', lineWidth: 3}, count: 5, length: 2}
+    //             } : {subTickLine: null};
+    //             break;
+    //         case 'subTickLine-count':
+    //             styleObj = {subTickLine: {count: data}};
+    //             break;
+    //         case 'subTickLine-length':
+    //             styleObj = {subTickLine: {length: data}};
+    //             break;
+    //         case 'subTickLine-width':
+    //             styleObj = {subTickLine: {style: {lineWidth: data}}};
+    //             break;
+    //         case 'subTickLine-color':
+    //             styleObj = {subTickLine: {style: {stroke: data}}};
+    //             break;
+    //         default:
+    //             console.warn('未知的坐标轴配置项');
+    //             return;
+    //     }
+    //     // instance.update(buildAxisConfig(styleObj, axis));
+    // };
+
+    // const buildAxisConfig = (styleObj: any, axis: string) => {
+    //     let axisObj;
+    //     if (axis === 'x')
+    //         axisObj = {xAxis: styleObj,};
+    //     else if (axis === 'y')
+    //         axisObj = {yAxis: styleObj,};
+    //     return {
+    //         style: {
+    //             chartStyle: axisObj
+    //         },
+    //     };
+    // }
+
+    const xAxisChange = (data: Axis) => {
+        console.log(data);
+    }
+    const yAxisChange = (data: Axis) => {
+        console.log(data);
     }
 
     return (
         <>
             <AxisConfig title={'X轴'} config={config!.xAxis}
-                        onChange={(key: string, data: any) => {
-                            axisChanged(key, data, 'x');
-                        }}/>
+                        onChange={xAxisChange}/>
             <AxisConfig title={'Y轴'} config={config!.yAxis}
-                        onChange={(key: string, data: any) => {
-                            axisChanged(key, data, 'y');
-                        }}/>
+                        onChange={yAxisChange}/>
         </>
     )
 }

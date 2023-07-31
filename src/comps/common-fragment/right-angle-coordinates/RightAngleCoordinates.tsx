@@ -196,12 +196,12 @@ class RightAngleCoordinates extends Component<RightAngleCoordinatesProp> {
     render() {
         return (
             <>
-                <Accordion title={'X轴'} showSwitch={true}>
-                    <AxisConfig/>
-                </Accordion>
-                <Accordion title={'Y轴'} showSwitch={true}>
-                    <AxisConfig/>
-                </Accordion>
+                {/*<Accordion title={'X轴'} showSwitch={true}>*/}
+                {/*    <AxisConfig />*/}
+                {/*</Accordion>*/}
+                {/*<Accordion title={'Y轴'} showSwitch={true}>*/}
+                {/*    <AxisConfig/>*/}
+                {/*</Accordion>*/}
             </>
         );
     }
