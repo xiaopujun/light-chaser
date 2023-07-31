@@ -26,9 +26,9 @@ abstract class AbstractComponent<I = any, C = any> {
     /**
      * 创建组件并将组件挂载到指定的容器中
      * @param container 容器
-     * @param params 组件属性（参数）
+     * @param config 组件配置
      */
-    public abstract create(container: HTMLElement, params?: Record<string, unknown>): Promise<this>;
+    public abstract create(container: HTMLElement, config: C): Promise<this>;
 
     /**
      * 更新组件配置，并触发组件重新渲染

@@ -13,6 +13,8 @@ import {MovableItemType} from "../../lib/lc-movable/types";
 import HotKey from "../operate-provider/keyboard-mouse/HotKey";
 import {getOperateEventMapping} from "../operate-provider/keyboard-mouse/HotKeyConfig";
 import ComponentContainer from "../../framework/core/ComponentContainer";
+import {toJS} from "mobx";
+import Loading from "../../lib/loading/Loading";
 
 /**
  * 设计器画布
@@ -67,7 +69,9 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
     }
 
     render() {
-        // const {backgroundConfig} = designerStore;
+        const {loaded} = designerStore;
+        if (!loaded)
+            return <Loading/>;
         return (
             <>
                 <DesignerContainer>

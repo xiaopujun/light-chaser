@@ -3,12 +3,13 @@ import designerStarter from "../../designer/DesignerStarter";
 import {MovableItemType} from "../../lib/lc-movable/types";
 import Loading from "../../lib/loading/Loading";
 import designerStore from "../../designer/store/DesignerStore";
+import {AbstractCustomComponentDefinition} from "./AbstractCustomComponentDefinition";
 
 export interface ComponentContainerProps {
     layout: MovableItemType;
 }
 
-class ComponentContainer extends React.Component<ComponentContainerProps> {
+class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
 
     private ref: HTMLDivElement | null = null;
 
@@ -17,19 +18,23 @@ class ComponentContainer extends React.Component<ComponentContainerProps> {
         //调用实例的对象方法进行组件的更新操作
         const {layout} = this.props;
         const {customComponentInfoMap} = designerStarter;
-        let componentDefine: any = customComponentInfoMap[layout!.type + ''];
+        const {elemConfigs} = designerStore;
+        let componentDefine: AbstractCustomComponentDefinition = customComponentInfoMap[layout!.type + ''];
         if (componentDefine) {
             const AbsCompImpl = componentDefine.getComponent();
-            new AbsCompImpl().create(this.ref).then((instance: any) => {
-                const {compInstances} = designerStore;
-                compInstances[layout.id + ''] = instance;
-            });
+            if (AbsCompImpl) {
+                const config = layout.id! in elemConfigs ? elemConfigs[layout.id!] : componentDefine.getInitConfig();
+                new AbsCompImpl()!.create(this.ref!, config).then((instance: any) => {
+                    const {compInstances} = designerStore;
+                    compInstances[layout.id + ''] = instance;
+                });
+            }
         }
     }
 
     render() {
-        const {layout} = this.props;
         console.log('ComponentContainer render')
+        const {layout} = this.props;
         return (
             <Suspense fallback={<Loading/>}>
                 <div

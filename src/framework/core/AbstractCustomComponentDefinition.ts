@@ -13,13 +13,22 @@ import {ClazzTemplate} from "../../comps/antd/base-bar/AntdBaseBarDefinition";
  * C: 组件类，用于指定当前组件定义对应的实际组件类
  * M: 菜单配置映射，用于指定当前组件配置菜单对应的配置组件的映射关系
  * S: 组件样式类型，用于在切换主题时，明确更新那个组件类型的样式
+ * P: 组件配置类型，用于指定当前组件的配置数据(config属性的类型)
  */
-export abstract class AbstractCustomComponentDefinition<C extends AbstractComponent = AbstractComponent, M = { [key: string]: React.ComponentType<any> }, S = any> {
+export abstract class AbstractCustomComponentDefinition<C extends AbstractComponent = AbstractComponent,
+    M = { [key: string]: React.ComponentType<any> },
+    S = any,
+    P = any> {
 
     /**
      * 返回组件基础信息，用于在组件列表中展示
      */
     abstract getBaseInfo(): BaseInfoType ;
+
+    /**
+     * 返回组件的初始配置，用于在设计器拖拽创建组件实例时使用
+     */
+    abstract getInitConfig(): P;
 
     /**
      * 返回React组件的类模板，在设计器拖拽创建组件实例时会使用到

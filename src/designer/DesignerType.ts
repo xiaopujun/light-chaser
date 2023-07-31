@@ -271,12 +271,10 @@ export interface ProjectDataType {
     id?: string;
     //画布设置
     canvasConfig?: CanvasConfig;
-    //激活状态元素信息
-    activeElem?: ActiveElem;
     //项目设置
     projectConfig?: ProjectConfig;
     //元素样式
-    elemConfigs?: { [key: string]: ElemConfig | AbstractComponent<any, any> };
+    elemConfigs?: { [key: string]: Record<string, any> };
     //布局信息
     layoutConfigs?: { [key: string]: MovableItemType };
     //统计信息

@@ -12,7 +12,6 @@ class GroupSelectable extends Component {
     }
 
     render() {
-        const {movableRef, targets, setTargets, setTargetIds} = eventOperateStore;
         return (
             <>
                 {this.props.children}
@@ -25,6 +24,7 @@ class GroupSelectable extends Component {
                          toggleContinueSelect={["ctrl"]}
                          ratio={0}
                          onDragStart={e => {
+                             const {movableRef, targets} = eventOperateStore;
                              if (!movableRef) return;
                              const movable: any = movableRef.current;
                              const target = e.inputEvent.target;
@@ -35,6 +35,7 @@ class GroupSelectable extends Component {
                              }
                          }}
                          onSelectEnd={e => {
+                             const {movableRef, setTargets, setTargetIds} = eventOperateStore;
                              if (!movableRef) return;
                              const movable: any = movableRef.current;
                              if (e.isDragStart) {

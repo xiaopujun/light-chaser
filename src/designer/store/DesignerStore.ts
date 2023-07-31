@@ -30,10 +30,12 @@ class DesignerStore implements AbstractBaseStore {
             statisticInfo: observable,
             themeConfig: observable,
             extendParams: observable,
+            loaded: observable,
             // backgroundConfig: observable,
             doInit: action,
             addItem: action,
             delItem: action,
+            setLoaded: action,
             // setBackgroundConfig: action,
             updateLayout: action,
             // updateActive: action,
@@ -50,6 +52,8 @@ class DesignerStore implements AbstractBaseStore {
      * 大屏id
      */
     id: string = "";
+
+    loaded: boolean = false;
 
     /**
      * 画布设置
@@ -82,6 +86,8 @@ class DesignerStore implements AbstractBaseStore {
         saveType: SaveType.LOCAL, //存储类型
         realTimeRefresh: false, //编辑模式下实时刷新
     };
+
+    elemConfigs: { [key: string]: any } = {};
 
     /**
      * 背景设置
@@ -160,6 +166,7 @@ class DesignerStore implements AbstractBaseStore {
      * 初始化store
      */
     doInit = (store: ProjectDataType) => {
+        console.log('init store')
         this.id = store.id ?? this.id;
         this.canvasConfig = store.canvasConfig
             ? {...this.canvasConfig, ...store.canvasConfig}
@@ -167,9 +174,9 @@ class DesignerStore implements AbstractBaseStore {
         this.projectConfig = store.projectConfig
             ? {...this.projectConfig, ...store.projectConfig}
             : this.projectConfig;
-        // this.elemConfigs = store.elemConfigs
-        //     ? {...this.elemConfigs, ...store.elemConfigs}
-        //     : this.elemConfigs;
+        this.elemConfigs = store.elemConfigs
+            ? {...this.elemConfigs, ...store.elemConfigs}
+            : this.elemConfigs;
         this.layoutConfigs = store.layoutConfigs || this.layoutConfigs;
         this.statisticInfo = store.statisticInfo
             ? {...this.statisticInfo, ...store.statisticInfo}
@@ -191,12 +198,15 @@ class DesignerStore implements AbstractBaseStore {
      * 获取store数据
      */
     getData(): ProjectDataType {
+        let elemConfigs: { [key: string]: any } = {};
+        Object.keys(this.compInstances).forEach((key) => {
+            elemConfigs[key] = this.compInstances[key].getConfig();
+        });
         return {
             id: this.id,
             canvasConfig: toJS(this.canvasConfig),
-            // activeElem: toJS(this.activeElem),
             projectConfig: toJS(this.projectConfig),
-            // elemConfigs: toJS(this.elemConfigs),
+            elemConfigs: elemConfigs,
             layoutConfigs: toJS(this.layoutConfigs),
             statisticInfo: toJS(this.statisticInfo),
             themeConfig: toJS(this.themeConfig),
@@ -227,6 +237,10 @@ class DesignerStore implements AbstractBaseStore {
             this.id = id;
         });
     };
+
+    setLoaded = (loaded: boolean) => {
+        this.loaded = loaded;
+    }
 
     // setBackgroundConfig = (config: BackgroundConfigType, upOp?: UpdateOptions) => {
     //     this.backgroundConfig = {...merge(this.backgroundConfig, config)};

@@ -4,7 +4,7 @@ import {BaseInfoType, ThemeItemType} from "../../../designer/DesignerType";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import previewImg from "./bar.png";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import AntdBaseBar from "./AntdBaseBar";
+import AntdBaseBar, {AntdBarProps} from "./AntdBaseBar";
 import {ConfigType} from "../../../designer/right/ConfigType";
 import {BarOptions} from "@antv/g2plot";
 import {ShapeAttrs} from "@antv/g-base";
@@ -30,7 +30,8 @@ const BaseInfo = React.lazy(() => import("../../common-fragment/base-info/BaseIn
 const DataConfig = React.lazy(() => import("../../common-fragment/data-config/DataConfig"));
 
 
-class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBar, AntdBaseBarMenuMapping, BarOptions> {
+class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBar, AntdBaseBarMenuMapping, BarOptions, AntdBarProps> {
+
     getBaseInfo(): BaseInfoType {
         return {
             compName: "Antd条形图",
@@ -110,6 +111,132 @@ class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBa
         //y轴-子刻度线
         if ((oldStyle?.yAxis) && (oldStyle?.yAxis?.subTickLine?.style as ShapeAttrs)?.stroke)
             (oldStyle!.yAxis!.subTickLine!.style as ShapeAttrs).stroke = auxiliary;
+    }
+
+    getInitConfig(): AntdBarProps {
+        console.log("getInitConfig base bar")
+        return {
+            info: {
+                name: '基础条形图',
+                type: 'AntdBaseBar',
+                desc: '基于antd实现的基础条形图',
+            },
+            style: {
+                data: [
+                    {
+                        name: "1951 年",
+                        value: 48
+                    },
+                    {
+                        name: "1952 年",
+                        value: 52
+                    },
+                    {
+                        name: "1956 年",
+                        value: 22
+                    }
+                ],
+                xField: "value",
+                yField: "name",
+                seriesField: "name",
+                xAxis: {
+                    grid: null,
+                    label: {
+                        style: {
+                            fill: "#00FFEAFF"
+                        }
+                    },
+                    line: {
+                        style: {
+                            stroke: "#00ffbbff",
+                            lineWidth: 1
+                        }
+                    },
+                    tickLine: {
+                        style: {
+                            stroke: "#00baffff",
+                            lineWidth: 2
+                        },
+                        alignTick: true,
+                        length: 3
+                    },
+                    subTickLine: {
+                        style: {
+                            stroke: "#1a98b5ff",
+                            lineWidth: 3
+                        },
+                        count: 5,
+                        length: 3
+                    },
+                    position: "right",
+                    title: null
+                },
+                yAxis: {
+                    grid: null,
+                    label: {
+                        style: {
+                            fill: "#00FFEAFF"
+                        }
+                    },
+                    line: {
+                        style: {
+                            stroke: "#00dbffff",
+                            lineWidth: 1
+                        }
+                    },
+                    tickLine: {
+                        style: {
+                            stroke: "#21f2f5ff",
+                            lineWidth: 2
+                        },
+                        alignTick: true,
+                        length: 3
+                    },
+                    subTickLine: {
+                        style: {
+                            stroke: "#03b7a3ff",
+                            lineWidth: 3
+                        },
+                        count: 5,
+                        length: 2
+                    },
+                    position: "bottom",
+                    title: null
+                },
+                color: "#00ffea",
+                legend: {
+                    position: "right-top",
+                    layout: "vertical",
+                    itemName: {
+                        style: {
+                            fill: "#00f0ffff",
+                            fontSize: 12
+                        }
+                    }
+                },
+                maxBarWidth: 14,
+                supportCSSTransform: true,
+            },
+            data: {
+                dataSource: 'static',
+                staticData: {
+                    data: [
+                        {
+                            name: "1951 年",
+                            value: 38
+                        },
+                        {
+                            name: "1952 年",
+                            value: 52
+                        },
+                        {
+                            name: "1956 年",
+                            value: 61
+                        }
+                    ]
+                },
+            },
+        };
     }
 }
 

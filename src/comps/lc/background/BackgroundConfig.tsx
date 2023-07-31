@@ -96,7 +96,7 @@ class BackgroundConfig extends PureComponent<ConfigType> {
 
     repeatTypeChange = (value: any) => {
         const {instance} = this.props;
-        instance.update({background: {bgImg: {repeatType: value}}});
+        instance.update({background: {bgImg: {bgImgRepeat: value}}});
     }
 
     bgColorModeChange = (value: any) => {

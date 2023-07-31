@@ -51,17 +51,17 @@ const initNewProject = () => {
  */
 const initExistProject = () => {
     let urlParams = parseUrlParams();
-    const {doInit} = lcDesignerContentStore;
+    const {doInit, setLoaded} = lcDesignerContentStore;
     const {abstractOperatorMap} = designerStarter;
     const {projectConfig: {saveType = SaveType.LOCAL}} = designerStore;
     abstractOperatorMap[saveType].getProject(urlParams.id).then((store: any) => {
+        console.log('store', store)
         if (store) {
             doInit({
                 id: store.id,
                 canvasConfig: store.canvasConfig,
-                activeElem: store.activeElem,
                 projectConfig: store.projectConfig,
-                // elemConfigs: store.elemConfigs,
+                elemConfigs: store.elemConfigs,
                 layoutConfigs: store.layoutConfigs,
                 statisticInfo: store.statisticInfo,
                 // layerConfigs: store.layers,
@@ -73,5 +73,6 @@ const initExistProject = () => {
             setMinLevel(store.layoutConfigs.minLevel || 0);
             setMaxLevel(store.layoutConfigs.maxLevel || 0);
         }
+        setLoaded(true);
     })
 }

@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {BackgroundColorMode, BackgroundMode} from "../../../designer/DesignerType";
-import AbstractBackgroundImpl, {BackgroundConfigType} from "./AbstractBackgroundImpl";
+import AbstractBackgroundImpl, {AbstractBackgroundImplProps, BackgroundConfigType} from "./AbstractBackgroundImpl";
 import designerStore from "../../../designer/store/DesignerStore";
+import designerStarter from "../../../designer/DesignerStarter";
 
 interface LcDesignerBackgroundProps {
     onClick?: (e: any) => void;
@@ -15,10 +16,24 @@ class DesignerBackground extends Component<LcDesignerBackgroundProps> {
 
     constructor(props: LcDesignerBackgroundProps) {
         super(props);
-        const instance = new AbstractBackgroundImpl(this);
-        const {compInstances} = designerStore;
-        compInstances['80cc666f'] = instance;
-        this.state = {config: instance.getConfig()?.background}
+        const {compInstances, elemConfigs} = designerStore;
+        console.log('DesignerBackground constructor', elemConfigs)
+        const {customComponentInfoMap} = designerStarter;
+        let config: AbstractBackgroundImplProps | null = null;
+        if ('80cc666f' in elemConfigs)
+            config = elemConfigs['80cc666f'];
+        else {
+            const componentDefine = customComponentInfoMap['LcBg'];
+            if (componentDefine)
+                config = componentDefine.getInitConfig();
+        }
+        compInstances['80cc666f'] = new AbstractBackgroundImpl(this, config!);
+        this.state = {config: config?.background}
+    }
+
+    componentDidMount(): void {
+        const {compInstances, elemConfigs} = designerStore;
+        console.log('DesignerBackground constructor', elemConfigs)
     }
 
     onClick = (e: any) => {
