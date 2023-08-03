@@ -19,7 +19,7 @@ const Radio = React.lazy(() => import('../../../lib/lc-radio/Radio'));
 
 interface AxisConfigProps {
     config?: Axis;
-    onChange: (data: Axis) => void;
+    onChange: (data?: Axis) => void;
     title?: string;
 }
 
@@ -27,19 +27,27 @@ interface AxisConfigProps {
  * 轴线配置项
  */
 class AxisConfig extends Component<AxisConfigProps> {
-    //
-    // onChange = (key: string, data: any) => {
-    //     const {onChange} = this.props;
-    //     onChange && onChange(key, data);
-    //     if (key === 'tickLine-enable' && data)
-    //         this.setState({tickLineEnable: true});
-    // }
+
+    oldData: Axis | undefined = undefined;
+    emptyData: Axis = {
+        grid: null,
+        line: null,
+        title: null,
+        label: null,
+        tickLine: null,
+        subTickLine: null,
+    }
+
+    constructor(props: AxisConfigProps) {
+        super(props);
+        this.oldData = {...props?.config} || null;
+    }
 
     render() {
         const {config, title = '坐标轴', onChange} = this.props;
         return (
             <Accordion title={title} showSwitch={true} defaultValue={!!config}
-                       onChange={value => onChange(value && config!)}>
+                       onChange={value => onChange(value ? this.oldData : this.emptyData)}>
                 <ConfigItem title={'位置'} contentStyle={{width: '250px', paddingLeft: '20px'}}>
                     <Radio defaultValue={(config as Types.AxisCfg).position || 'right'}
                            onChange={(value => onChange({position: value as Types.AxisCfg["position"]}))}
@@ -312,7 +320,7 @@ export const AxisLine: React.FC<AxisLIneProps> = ({config, onChange}) => {
 
 export interface AxisTitleProps {
     config: AxisTitleCfg;
-    onChange: (data: AxisTitleCfg | null) => void;
+    onChange: (data?: AxisTitleCfg | null) => void;
 }
 
 export const AxisTitle: React.FC<AxisTitleProps> = ({config, onChange}) => {
@@ -335,7 +343,7 @@ export const AxisTitle: React.FC<AxisTitleProps> = ({config, onChange}) => {
                                   setTitle('标题');
                                   setTitleColor('#ffffff');
                               }
-                              onChange(!value ? null : config);
+                              onChange(value ? config : null);
                           }}/>
             </ConfigItem>
             <ConfigItem title={'位置'}>

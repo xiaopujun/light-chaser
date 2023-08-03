@@ -23,7 +23,7 @@ class BaseInfo extends Component<ConfigType> {
 
     render() {
         const {instance} = this.props;
-        const {type, name, desc} = (instance.getConfig() as AntdBarProps).info;
+        const {type, name, desc} = (instance.getConfig() as AntdBarProps).info!;
         return (
             <div className={'lc-base-info'}>
                 <ConfigCard title={'基础信息'}>

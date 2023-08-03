@@ -6,7 +6,7 @@ import previewImg from "./bar.png";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import AntdBaseBar, {AntdBarProps} from "./AntdBaseBar";
 import {ConfigType} from "../../../designer/right/ConfigType";
-import {BarOptions} from "@antv/g2plot";
+import {BarOptions, Options} from "@antv/g2plot";
 import {ShapeAttrs} from "@antv/g-base";
 
 export interface AntdBaseBarMenuMapping {
@@ -19,6 +19,9 @@ export interface AntdBaseBarMenuMapping {
 
 export type WritableBarOptions = {
     -readonly [K in keyof BarOptions]?: BarOptions[K];
+};
+export type WritableOptions = {
+    -readonly [K in keyof Options]?: Options[K];
 };
 
 export type ClazzTemplate<C> = new () => C | null;

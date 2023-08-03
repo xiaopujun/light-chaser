@@ -1,18 +1,27 @@
 import React, {Component} from 'react';
 import {ConfigType} from "../../../designer/right/ConfigType";
-import {AntdCartesianCoordinateSys, AntdBarGraphics, AntdLegend} from "../../common-fragment/AntdFragment";
-import {BarOptions} from "@antv/g2plot";
+import {AntdBarGraphics, AntdCartesianCoordinateSys, AntdLegend} from "../../common-fragment/AntdFragment";
+import {Bar, BarOptions} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
+import AbstractComponent from "../../../framework/core/AbstractComponent";
+import {AntdBarProps} from "./AntdBaseBar";
 
 class AntdBaseBarStyleConfig extends Component<ConfigType> {
 
-
     legendChange = (legend: Legend) => {
-        console.log(legend);
+        const instance: AbstractComponent<Bar, AntdBarProps> = this.props.instance;
+        instance.update({style: {legend}});
     }
 
     barGraphicsChange = (config: BarOptions) => {
-        console.log(config);
+        const instance: AbstractComponent<Bar, AntdBarProps> = this.props.instance;
+        instance.update({style: config});
+    }
+
+    barCoordinateSysChange = (config: BarOptions) => {
+        const instance: AbstractComponent<Bar, AntdBarProps> = this.props.instance;
+        console.log(config)
+        instance.update({style: config});
     }
 
     render() {
@@ -21,9 +30,9 @@ class AntdBaseBarStyleConfig extends Component<ConfigType> {
         return (
             <>
                 {/*<BaseStyleSet config={config.baseStyle} updateConfig={updateConfig}/>*/}
-                {/*<AntdBarGraphics onChange={this.barGraphicsChange} config={config}/>*/}
-                {/*<AntdLegend onChange={this.legendChange} config={config.legend}/>*/}
-                <AntdCartesianCoordinateSys config={config}/>
+                <AntdBarGraphics onChange={this.barGraphicsChange} config={config}/>
+                <AntdLegend onChange={this.legendChange} config={config.legend}/>
+                <AntdCartesianCoordinateSys onChange={this.barCoordinateSysChange} config={config}/>
             </>
         );
     }
