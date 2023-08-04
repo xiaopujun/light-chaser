@@ -23,11 +23,12 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
         if (componentDefine) {
             const AbsCompImpl = componentDefine.getComponent();
             if (AbsCompImpl) {
-                const config = layout.id! in elemConfigs ? elemConfigs[layout.id!] : componentDefine.getInitConfig();
+                const config = layout.id! in elemConfigs! ? elemConfigs![layout.id!] : componentDefine.getInitConfig();
                 new AbsCompImpl()!.create(this.ref!, config).then((instance: any) => {
                     const {compInstances} = designerStore;
                     compInstances[layout.id + ''] = instance;
                 });
+                delete elemConfigs![layout.id!];
             }
         }
     }

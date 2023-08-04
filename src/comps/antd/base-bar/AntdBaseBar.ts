@@ -2,6 +2,7 @@ import AbstractComponent, {OperateType, UpdateOptions} from "../../../framework/
 import {Bar, BarOptions} from "@antv/g2plot";
 import {merge} from "../../../utils/ObjectUtil";
 import {WritableBarOptions} from "./AntdBaseBarDefinition";
+import {DataConfigType} from "../../../designer/DesignerType";
 
 export interface ComponentInfoType {
     name: string;
@@ -12,7 +13,7 @@ export interface ComponentInfoType {
 export interface AntdBarProps {
     info?: ComponentInfoType;
     style?: WritableBarOptions;
-    data?: any;
+    data?: DataConfigType;
 }
 
 export default class AntdBaseBar extends AbstractComponent<Bar, AntdBarProps> {

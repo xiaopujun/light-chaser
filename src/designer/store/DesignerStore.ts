@@ -87,35 +87,7 @@ class DesignerStore implements AbstractBaseStore {
         realTimeRefresh: false, //编辑模式下实时刷新
     };
 
-    elemConfigs: { [key: string]: any } = {};
-
-    /**
-     * 背景设置
-     */
-    // backgroundConfig: BackgroundConfigType = {
-    //     width: 1920, //背景宽
-    //     height: 1080, //背景高
-    //     bgMode: BackgroundMode.NONE, //背景模式
-    //     bgImg: {
-    //         bgImgSize: [1920, 1080], //背景图片尺寸
-    //         bgImgPos: [0, 0], //背景图片位置
-    //         bgImgRepeat: BackgroundImgRepeat.NO_REPEAT, //背景图片重复方式
-    //         bgImgUrl: "", //背景图片url地址
-    //     },
-    //     bgColor: {
-    //         bgColorMode: BackgroundColorMode.SINGLE, //背景图片颜色模式
-    //         single: {color: "#000000"},
-    //         linearGradient: {
-    //             color: "linear-gradient(0deg, #000000, #000000)",
-    //             angle: 0,
-    //             colorArr: ["#000000", "#000000"],
-    //         },
-    //         radialGradient: {
-    //             color: "radial-gradient(circle, #000000, #000000)",
-    //             colorArr: ["#000000", "#000000"],
-    //         },
-    //     },
-    // }
+    elemConfigs: { [key: string]: any } | null = {};
 
     /**
      * 画布上组件id与其实例对象的映射
@@ -241,10 +213,6 @@ class DesignerStore implements AbstractBaseStore {
     setLoaded = (loaded: boolean) => {
         this.loaded = loaded;
     }
-
-    // setBackgroundConfig = (config: BackgroundConfigType, upOp?: UpdateOptions) => {
-    //     this.backgroundConfig = {...merge(this.backgroundConfig, config)};
-    // }
 
     getActiveElemConfig = (activeId: number | string) => {
         // return this.elemConfigs[activeId + ""];

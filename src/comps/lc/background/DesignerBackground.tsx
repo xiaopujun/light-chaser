@@ -20,7 +20,7 @@ class DesignerBackground extends Component<LcDesignerBackgroundProps> {
         console.log('DesignerBackground constructor', elemConfigs)
         const {customComponentInfoMap} = designerStarter;
         let config: AbstractBackgroundImplProps | null = null;
-        if ('80cc666f' in elemConfigs)
+        if ('80cc666f' in elemConfigs!)
             config = elemConfigs['80cc666f'];
         else {
             const componentDefine = customComponentInfoMap['LcBg'];
@@ -29,6 +29,7 @@ class DesignerBackground extends Component<LcDesignerBackgroundProps> {
         }
         compInstances['80cc666f'] = new AbstractBackgroundImpl(this, config!);
         this.state = {config: config?.background}
+        delete elemConfigs!['80cc666f'];
     }
 
     componentDidMount(): void {

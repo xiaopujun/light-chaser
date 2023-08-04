@@ -13,7 +13,6 @@ import {MovableItemType} from "../../lib/lc-movable/types";
 import HotKey from "../operate-provider/keyboard-mouse/HotKey";
 import {getOperateEventMapping} from "../operate-provider/keyboard-mouse/HotKeyConfig";
 import ComponentContainer from "../../framework/core/ComponentContainer";
-import {toJS} from "mobx";
 import Loading from "../../lib/loading/Loading";
 
 /**
@@ -60,9 +59,8 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
      * 元素生成
      */
     generateElement = () => {
-        console.log('generateElement')
-        const {layoutConfigs, compInstances} = designerStore!;
-        const sortLayout = Object.values(layoutConfigs).sort((a: any, b: any) => a.order - b.order);
+        let {layoutConfigs} = designerStore!;
+        const sortLayout = Object.values(layoutConfigs).sort((a: MovableItemType, b: MovableItemType) => a.order! - b.order!);
         return sortLayout.map((item: MovableItemType) => {
             return <ComponentContainer layout={item} key={item.id}/>
         });
@@ -70,6 +68,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
 
     render() {
         const {loaded} = designerStore;
+        console.log('designerStore.elemConfigs', designerStore.elemConfigs)
         if (!loaded)
             return <Loading/>;
         return (
