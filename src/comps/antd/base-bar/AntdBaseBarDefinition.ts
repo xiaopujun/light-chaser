@@ -117,7 +117,20 @@ class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBa
     }
 
     getInitConfig(): AntdBarProps {
-        console.log("getInitConfig base bar")
+        const data = [
+            {
+                name: "1951 年",
+                value: 48
+            },
+            {
+                name: "1952 年",
+                value: 52
+            },
+            {
+                name: "1956 年",
+                value: 22
+            }
+        ]
         return {
             info: {
                 name: '基础条形图',
@@ -125,20 +138,7 @@ class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBa
                 desc: '基于antd实现的基础条形图',
             },
             style: {
-                data: [
-                    {
-                        name: "1951 年",
-                        value: 48
-                    },
-                    {
-                        name: "1952 年",
-                        value: 52
-                    },
-                    {
-                        name: "1956 年",
-                        value: 22
-                    }
-                ],
+                data: data,
                 xField: "value",
                 yField: "name",
                 seriesField: "name",
@@ -223,20 +223,7 @@ class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBa
             data: {
                 dataSource: 'static',
                 staticData: {
-                    data: [
-                        {
-                            name: "1951 年",
-                            value: 38
-                        },
-                        {
-                            name: "1952 年",
-                            value: 52
-                        },
-                        {
-                            name: "1956 年",
-                            value: 61
-                        }
-                    ]
+                    data: data
                 },
             },
         };

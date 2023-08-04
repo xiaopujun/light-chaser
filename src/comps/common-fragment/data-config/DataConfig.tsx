@@ -11,6 +11,7 @@ import {stringToJsObj} from "../../../utils/ObjectUtil";
 import {sendHttpRequest} from "../../../utils/HttpUtil";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import ConfigItemTB from "../../../lib/lc-config-item/ConfigItemTB";
+import {message} from "antd";
 
 class DataConfig extends Component<ConfigType> {
 
@@ -69,12 +70,24 @@ const ApiDataConfig: React.FC<ConfigType> = ({instance}) => {
     const [testResult, setTestResult] = useState<any>('');
 
     const testApi = () => {
-        if (urlRef.current === '') alert('接口地址不能为空');
-        if (methodRef.current === '') alert('请求方式不能为空');
+        if (urlRef.current === '') {
+            message.error('接口地址不能为空');
+            return;
+        }
+        if (methodRef.current === '') {
+            message.error('请求方式不能为空');
+            return;
+        }
         let header = stringToJsObj(headerRef.current);
-        if (!header) alert('请求头不符合json格式');
+        if (!header) {
+            message.error('请求头不符合json格式');
+            return;
+        }
         let params = stringToJsObj(paramsRef.current);
-        if (!params) alert('请求参数不符合json格式');
+        if (!params) {
+            message.error('请求参数不符合json格式');
+            return;
+        }
         sendHttpRequest(urlRef.current, methodRef.current, header, params).then(res => {
             setTestResult(JSON.stringify(res));
         }).catch(err => {
@@ -84,18 +97,18 @@ const ApiDataConfig: React.FC<ConfigType> = ({instance}) => {
 
     const doSave = () => {
         if (urlRef.current === '') {
-            alert('接口地址不能为空');
+            message.warning('接口地址不能为空');
             return;
         }
         if (methodRef.current === '') {
-            alert('请求方式不能为空');
+            message.warning('请求方式不能为空');
             return;
         }
 
         let header = stringToJsObj(headerRef.current);
-        if (!header) alert('请求头不符合json格式');
+        if (!header) message.error('请求头不符合json格式');
         let params = stringToJsObj(paramsRef.current);
-        if (!params) alert('请求参数不符合json格式');
+        if (!params) message.error('请求参数不符合json格式');
         instance.update({
             data: {
                 apiData: {
@@ -168,7 +181,7 @@ const StaticDataConfig: React.FC<ConfigType> = ({instance}) => {
             instance.update({data: {staticData: {data}}, style: {data}},
                 {reRender: true, operateType: OperateType.DATA});
         } catch (e: any) {
-            console.error('代码解析异常', e, dataCode);
+            message.error('数据格式错误');
         }
     }
 
