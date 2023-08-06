@@ -80,7 +80,7 @@ export default class AntdBaseBar extends AbstractDesignerComponent<Bar, AntdBarP
         if (!newTheme)
             return;
         const styleConfig = this.config?.style!;
-        const {colors: {main, text, supplementary, emphasize, background, auxiliary}} = newTheme;
+        const {colors: {main, text, supplementary, emphasize, /*background,*/ auxiliary}} = newTheme;
         //图形
         if (styleConfig?.color)
             styleConfig.color = main;

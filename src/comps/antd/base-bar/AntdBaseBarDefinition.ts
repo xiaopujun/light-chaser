@@ -1,13 +1,12 @@
 import React from "react";
 import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
-import {BaseInfoType, ThemeItemType} from "../../../designer/DesignerType";
+import {BaseInfoType} from "../../../designer/DesignerType";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import previewImg from "./bar.png";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import AntdBaseBar, {AntdBarProps} from "./AntdBaseBar";
 import {ConfigType} from "../../../designer/right/ConfigType";
 import {BarOptions, Options} from "@antv/g2plot";
-import {ShapeAttrs} from "@antv/g-base";
 
 export interface AntdBaseBarMenuMapping {
     info: React.ComponentType<ConfigType>;
@@ -33,7 +32,7 @@ const BaseInfo = React.lazy(() => import("../../common-fragment/base-info/BaseIn
 const DataConfig = React.lazy(() => import("../../common-fragment/data-config/DataConfig"));
 
 
-class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBar, AntdBaseBarMenuMapping, BarOptions, AntdBarProps> {
+class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBar, AntdBaseBarMenuMapping, AntdBarProps> {
 
     getBaseInfo(): BaseInfoType {
         return {

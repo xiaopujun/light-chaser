@@ -1,9 +1,5 @@
-import AbstractComponent, {OperateType, UpdateOptions} from "../../../framework/core/AbstractComponent";
-import {
-    BackgroundColorMode,
-    BackgroundImgRepeat,
-    BackgroundMode, ThemeItemType
-} from "../../../designer/DesignerType";
+import {OperateType, UpdateOptions} from "../../../framework/core/AbstractComponent";
+import {BackgroundColorMode, BackgroundImgRepeat, BackgroundMode, ThemeItemType} from "../../../designer/DesignerType";
 import DesignerBackground from "./DesignerBackground";
 import {merge} from "../../../utils/ObjectUtil";
 import AbstractDesignerComponent from "../../../framework/core/AbstractDesignerComponent";

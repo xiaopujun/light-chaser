@@ -2,7 +2,6 @@
  * 主题
  */
 import {MovableItemType} from "../lib/lc-movable/types";
-import AbstractComponent from "../framework/core/AbstractComponent";
 
 export interface ThemeColors {
     //主体色
@@ -95,6 +94,14 @@ export interface APIConfig {
 export interface StaticConfig {
     //数据
     data?: any;
+}
+
+/**
+ * 扩展参数
+ */
+export interface extendParams {
+    maxLevel?: number;
+    minLevel?: number;
 }
 
 /**
@@ -282,5 +289,5 @@ export interface ProjectDataType {
     //全局主题
     themeConfig?: Array<ThemeItemType>;
     //扩展参数
-    extendParams?: any;
+    extendParams?: extendParams;
 }

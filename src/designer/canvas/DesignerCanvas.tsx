@@ -35,24 +35,6 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
         console.log(id, type)
         const {activeConfig} = rightStore;
         activeConfig(id, type);
-        // const {setActiveMenu} = rightStore;
-        // const {updateActive, activeElem, elemConfigs} = designerStore;
-        // if (elemId === activeElem?.id)
-        //     return;
-        // updateActive && updateActive({id: elemId, type: dataset.type});
-        // if (type === 'LcBg') {
-        //     //激活背景设置
-        //     setActiveMenu('background', ['background']);
-        // } else {
-        //     //激活组件设置
-        //     const {customComponentInfoMap} = designerStarter;
-        //
-        //     const {compInstanceMap} = designerStore;
-        //     const instance = compInstanceMap[elemId];
-        //     const elemConfig = instance.getConfig();
-        //     const newMenus = Object.keys(elemConfig);
-        //     setActiveMenu(newMenus[0], newMenus);
-        // }
     }
 
     /**

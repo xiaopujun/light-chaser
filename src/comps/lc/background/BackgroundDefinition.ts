@@ -1,11 +1,5 @@
 import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
-import {
-    BackgroundColorMode,
-    BackgroundImgRepeat,
-    BackgroundMode,
-    BaseInfoType,
-    ThemeItemType,
-} from "../../../designer/DesignerType";
+import {BackgroundColorMode, BackgroundImgRepeat, BackgroundMode, BaseInfoType,} from "../../../designer/DesignerType";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {PictureFilled} from "@ant-design/icons";
 import React from "react";

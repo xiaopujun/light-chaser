@@ -1,19 +1,12 @@
 import React from "react";
-import BaseStyleSet from "../../common-fragment/base-style/BaseStyleSet";
 import {ConfigType} from "../../../designer/right/ConfigType";
-import Accordion from "../../../lib/lc-accordion/Accordion";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
-import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
-import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
-import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
-import Radio from "../../../lib/lc-radio/Radio";
-import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 
 export const LcTextDataConfig: React.FC<ConfigType> = ({instance}) => {
 
-    const updateConfig = instance.update;
+    // const updateConfig = instance.update;
 
-    const contentChanged = (content: string) => updateConfig && updateConfig({data: {content}});
+    // const contentChanged = (content: string) => updateConfig && updateConfig({data: {content}});
 
     return (
         <ConfigItem title={'内容'} contentStyle={{width: '80%'}}>
@@ -24,22 +17,21 @@ export const LcTextDataConfig: React.FC<ConfigType> = ({instance}) => {
 
 export const LcTextStyleConfig: React.FC<ConfigType> = ({instance}) => {
 
-    const updateConfig = instance.update;
+    // const updateConfig = instance.update;
 
-    const fontSizeChanged = (fontSize: number) => updateConfig && updateConfig({style: {chartStyle: {fontSize}}});
-
-    const fontWeightChanged = (fontWeight: number) => updateConfig && updateConfig({style: {chartStyle: {fontWeight}}});
-
-    const colorChanged = (color: string | string[]) => updateConfig && updateConfig({style: {chartStyle: {color}}});
-
-    const horizontalChanged = (horizontal: string) => updateConfig && updateConfig({style: {chartStyle: {justifyContent: horizontal}}});
-
-    const verticalChanged = (vertical: string) => updateConfig && updateConfig({style: {chartStyle: {alignItems: vertical}}});
+    // const fontSizeChanged = (fontSize: number) => updateConfig && updateConfig({style: {chartStyle: {fontSize}}});
+    //
+    // const fontWeightChanged = (fontWeight: number) => updateConfig && updateConfig({style: {chartStyle: {fontWeight}}});
+    //
+    // const colorChanged = (color: string | string[]) => updateConfig && updateConfig({style: {chartStyle: {color}}});
+    //
+    // const horizontalChanged = (horizontal: string) => updateConfig && updateConfig({style: {chartStyle: {justifyContent: horizontal}}});
+    //
+    // const verticalChanged = (vertical: string) => updateConfig && updateConfig({style: {chartStyle: {alignItems: vertical}}});
 
     // const {baseStyle, chartStyle} = config;
     return (
         <>
-            {/*<BaseStyleSet config={baseStyle} updateConfig={updateConfig}/>*/}
             {/*<Accordion title={'文本'}>*/}
             {/*    <ConfigCard title={'基础'}>*/}
             {/*        <ConfigItem title={'大小'}>*/}

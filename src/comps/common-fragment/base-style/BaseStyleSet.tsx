@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 import './LCBaseConfig.less';
 import Accordion from "../../../lib/lc-accordion/Accordion";
-import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
-import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
-import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
+// import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
+// import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
+// import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import {ConfigType} from "../../../designer/right/ConfigType";
-import {generateBorder, generatePaddingValue, parseBorder, parsePadding} from "../../../utils/CssStyleUtil";
-import {parseInt} from "lodash";
+// import {generateBorder, generatePaddingValue, parseBorder, parsePadding} from "../../../utils/CssStyleUtil";
+// import {parseInt} from "lodash";
 
-const Select = React.lazy(() => import('../../../lib/lc-select/Select'));
-const UnderLineInput = React.lazy(() => import('../../../lib/lc-input/UnderLineInput'));
-const BaseColorPicker = React.lazy(() => import('../../../lib/lc-color-picker/BaseColorPicker'));
+// const Select = React.lazy(() => import('../../../lib/lc-select/Select'));
+// const UnderLineInput = React.lazy(() => import('../../../lib/lc-input/UnderLineInput'));
+// const BaseColorPicker = React.lazy(() => import('../../../lib/lc-color-picker/BaseColorPicker'));
 
 /**
  * lc组件基础样式
@@ -27,13 +27,13 @@ class BaseStyleSet extends Component<ConfigType> {
         borderDisable: false
     }
 
-    constructor(props: ConfigType) {
-        super(props);
-        // this.oldBorder = props.config.border || '0px solid #000000ff';
-        // this.oldPadding = props.config.padding || '10px';
-        // if (this.oldPadding.indexOf('none') !== -1)
-        //     this.state = {borderDisable: true};
-    }
+    // constructor(props: ConfigType) {
+    //     super(props);
+    //     // this.oldBorder = props.config.border || '0px solid #000000ff';
+    //     // this.oldPadding = props.config.padding || '10px';
+    //     // if (this.oldPadding.indexOf('none') !== -1)
+    //     //     this.state = {borderDisable: true};
+    // }
 
     paddingChanged = (pos: string, padding: number) => {
         // const {updateConfig} = this.props;
@@ -62,7 +62,7 @@ class BaseStyleSet extends Component<ConfigType> {
     }
 
     render() {
-        const {instance} = this.props;
+        // const {instance} = this.props;
         // const {padding, border, borderRadius, backgroundColor} = instance.getConfig()
         // const {borderDisable} = this.state;
         // const paddingValue = parsePadding(padding);

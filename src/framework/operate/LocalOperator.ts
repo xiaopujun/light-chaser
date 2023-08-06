@@ -39,8 +39,8 @@ class LocalOperator extends AbstractOperator {
         projectData.id = idGenerate.generateId();
         // 2. 处理元素层级
         const {maxLevel, minLevel} = eventOperateStore;
-        // projectData.layerConfigs!.maxLevel = maxLevel;
-        // projectData.layerConfigs!.minLevel = minLevel;
+        projectData.extendParams!.maxLevel = maxLevel;
+        projectData.extendParams!.minLevel = minLevel;
         // 3. 异步生成工作区截图
         let imgDom: any = document.querySelector('.lc-content-scale');
         const screenShotId = LocalConstant.LOCAL_PROJECT_SCREENSHOT + projectData.id;
@@ -88,8 +88,8 @@ class LocalOperator extends AbstractOperator {
     private static updateProjectBefore(projectData: ProjectDataType): void {
         //1. 处理元素层级
         const {maxLevel, minLevel} = eventOperateStore;
-        // projectData.layerConfigs!.maxLevel = maxLevel;
-        // projectData.layerConfigs!.minLevel = minLevel;
+        projectData.extendParams!.maxLevel = maxLevel;
+        projectData.extendParams!.minLevel = minLevel;
         //2. 异步生成工作区截图
         let imgDom: any = document.querySelector('.lc-content-scale');
         const screenShotId = LocalConstant.LOCAL_PROJECT_SCREENSHOT + projectData.id;

@@ -1,5 +1,3 @@
-import {ThemeItemType} from "../../designer/DesignerType";
-
 export enum OperateType {
     OPTIONS,
     DATA,

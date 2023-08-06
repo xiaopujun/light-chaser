@@ -64,7 +64,6 @@ const initExistProject = () => {
                 elemConfigs: store.elemConfigs,
                 layoutConfigs: store.layoutConfigs,
                 statisticInfo: store.statisticInfo,
-                // layerConfigs: store.layers,
                 themeConfig: store.theme,
                 extendParams: store.extendParams,
             })

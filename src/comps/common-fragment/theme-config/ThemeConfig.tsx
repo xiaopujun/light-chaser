@@ -6,7 +6,6 @@ import ThemeList from "./theme-list/ThemeList";
 import {ConfigType} from "../../../designer/right/ConfigType";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import rightStore from "../../../designer/right/RightStore";
-import designerStarter from "../../../designer/DesignerStarter";
 import designerStore from "../../../designer/store/DesignerStore";
 
 class ThemeConfig extends Component<ConfigType> {

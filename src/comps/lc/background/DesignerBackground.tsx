@@ -32,11 +32,6 @@ class DesignerBackground extends Component<LcDesignerBackgroundProps> {
         delete elemConfigs!['80cc666f'];
     }
 
-    componentDidMount(): void {
-        const {compInstances, elemConfigs} = designerStore;
-        console.log('DesignerBackground constructor', elemConfigs)
-    }
-
     onClick = (e: any) => {
         const {onClick} = this.props;
         onClick && onClick(e);
