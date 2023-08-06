@@ -47,6 +47,7 @@ export default class AntdBaseBar extends AbstractComponent<Bar, AntdBarProps> {
         this.config = config;
         if (!this.instance)
             this.instance = new Bar(container, config?.style! as BarOptions);
+        this.loadData();
         this.instance.render();
         return this;
     }

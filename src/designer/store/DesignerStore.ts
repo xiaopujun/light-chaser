@@ -233,11 +233,7 @@ class DesignerStore implements AbstractBaseStore {
     delItem = (ids: string[]) => {
         for (const id of ids) {
             delete this.layoutConfigs[id];
-            // delete this.elemConfigs[id];
-            // if (this.activeElem && (id as any) === this.activeElem.id) {
-            //     this.activeElem.id = -1;
-            //     this.activeElem.type = "";
-            // }
+            delete this.compInstances[id];
         }
     };
 
@@ -319,14 +315,19 @@ class DesignerStore implements AbstractBaseStore {
             //获取被复制元素布局
             const {[id]: layout} = this.layoutConfigs;
             if (layout) {
-                const newLayout = cloneDeep(layout);
+                //生成新id
                 const newId = idGenerate.generateId();
                 newIds.push(newId);
+                //生成新布局
+                const newLayout = cloneDeep(layout);
                 newLayout.id = newId;
                 const [x = 10, y = 10] = (newLayout.position || []).map((p) => p + 10);
                 newLayout.position = [x, y];
                 newLayout.order = ++maxLevel;
                 this.layoutConfigs[newId] = newLayout;
+                //生成新数据
+                const copiedInstance = this.compInstances[id];
+                this.elemConfigs![newId] = cloneDeep(copiedInstance.getConfig());
             }
         }
         setMaxLevel(maxLevel);

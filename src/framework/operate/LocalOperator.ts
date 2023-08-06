@@ -143,6 +143,7 @@ class LocalOperator extends AbstractOperator {
 
     public async getProject(id: string): Promise<ProjectDataType | null> {
         const projectData = await localforage.getItem(id);
+        console.log('getProject', projectData);
         if (!projectData) return null;
         let bgConfig: BackgroundConfigType = (projectData as ProjectDataType)!.elemConfigs!['80cc666f']['background'];
         if (bgConfig?.bgImg.bgImgUrl !== '') {
