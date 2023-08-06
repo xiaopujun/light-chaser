@@ -1,4 +1,4 @@
-import React, {Component, ReactElement} from 'react';
+import React, {Component} from 'react';
 import './LayerList.less';
 import {Input} from "antd";
 import layerListStore from "./LayerListStore";
@@ -107,9 +107,6 @@ class LayerList extends Component {
     }
 
     render() {
-        console.log('layer-list render')
-        const layerList = this.buildLayerList();
-        console.log('layerList', layerList);
         return (
             <FloatPanel title={'图层'} onClose={this.onClose} initPosition={{x: 250, y: -window.innerHeight + 50}}
                         className={'layer-list'}>
@@ -118,7 +115,7 @@ class LayerList extends Component {
                            style={{width: '100%'}}/>
                 </div>
                 <div className={'layer-items'}>
-                    {layerList}
+                    {this.buildLayerList()}
                 </div>
             </FloatPanel>
         );

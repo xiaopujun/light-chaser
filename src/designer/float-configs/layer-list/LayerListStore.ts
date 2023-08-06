@@ -1,5 +1,4 @@
 import {action, makeObservable, observable} from "mobx";
-import LayerItem from "./LayerItem";
 import LayerComponent from "./LayerComponent";
 
 class LayerListStore {
