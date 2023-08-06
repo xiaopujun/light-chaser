@@ -17,7 +17,6 @@ class DesignerBackground extends Component<LcDesignerBackgroundProps> {
     constructor(props: LcDesignerBackgroundProps) {
         super(props);
         const {compInstances, elemConfigs} = designerStore;
-        console.log('DesignerBackground constructor', elemConfigs)
         const {customComponentInfoMap} = designerStarter;
         let config: AbstractBackgroundImplProps | null = null;
         if ('80cc666f' in elemConfigs!)

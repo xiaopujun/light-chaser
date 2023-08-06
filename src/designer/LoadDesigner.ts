@@ -55,7 +55,6 @@ const initExistProject = () => {
     const {abstractOperatorMap} = designerStarter;
     const {projectConfig: {saveType = SaveType.LOCAL}} = designerStore;
     abstractOperatorMap[saveType].getProject(urlParams.id).then((store: any) => {
-        console.log('store', store)
         if (store) {
             doInit({
                 id: store.id,

@@ -23,7 +23,11 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
         if (componentDefine) {
             const AbsCompImpl = componentDefine.getComponent();
             if (AbsCompImpl) {
-                const config = layout.id! in elemConfigs! ? elemConfigs![layout.id!] : componentDefine.getInitConfig();
+                const config = layout.id! in elemConfigs! ? elemConfigs![layout.id!] : (function () {
+                    let initConfig = componentDefine.getInitConfig();
+                    initConfig.info.id = layout.id!;
+                    return initConfig;
+                })() as any;
                 new AbsCompImpl()!.create(this.ref!, config).then((instance: any) => {
                     const {compInstances} = designerStore;
                     compInstances[layout.id + ''] = instance;
@@ -34,7 +38,6 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
     }
 
     render() {
-        console.log('ComponentContainer render')
         const {layout} = this.props;
         return (
             <Suspense fallback={<Loading/>}>

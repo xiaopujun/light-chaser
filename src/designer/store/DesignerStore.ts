@@ -133,7 +133,6 @@ class DesignerStore implements AbstractBaseStore {
      * 初始化store
      */
     doInit = (store: ProjectDataType) => {
-        console.log('init store')
         this.id = store.id ?? this.id;
         this.canvasConfig = store.canvasConfig
             ? {...this.canvasConfig, ...store.canvasConfig}

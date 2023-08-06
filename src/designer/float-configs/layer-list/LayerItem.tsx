@@ -21,37 +21,36 @@ export interface LayerItemProps {
 class LayerItem extends React.PureComponent<LayerItemProps> {
 
     toggleLock = () => {
-        const { lockChange, data } = this.props;
-        lockChange && lockChange({ ...data, lock: !data!.lock });
+        const {lockChange, data} = this.props;
+        lockChange && lockChange({...data, lock: !data!.lock});
     }
 
     toggleHide = () => {
-        const { hideChange, data } = this.props;
-        hideChange && hideChange({ ...data, hide: !data!.hide });
+        const {hideChange, data} = this.props;
+        hideChange && hideChange({...data, hide: !data!.hide});
     }
 
     onSelected = (e: any) => {
-        const { selectedChange, data } = this.props;
+        const {selectedChange, data} = this.props;
         selectedChange && selectedChange(data, e);
     }
 
     render() {
-        console.log('LayerItem render');
-        const { name, lock, hide, selected = false } = this.props.data || {};
+        const {name, lock, hide, selected = false} = this.props.data || {};
         return (
             <div className={`layer-item ${selected ? "layer-item-selected" : ""}`}
-                onClick={(e) => this.onSelected(e)}>
+                 onClick={(e) => this.onSelected(e)}>
                 <div className={'layer-item-name'}>{name}</div>
                 <div className={'layer-item-operators'}>
                     <div className={'layer-item-operator'}>
                         <span onClick={this.toggleHide}>
                             <img src={hide ? previewClose : previewOpen} alt={hide ? '显示' : '隐藏'}
-                                style={{ width: 14 }} />
+                                 style={{width: 14}}/>
                         </span>
                     </div>
                     <div className={'layer-item-operator'}>
                         <span onClick={this.toggleLock}>
-                            <img src={lock ? lockImg : unlockImg} alt={lock ? '锁定' : '解锁'} />
+                            <img src={lock ? lockImg : unlockImg} alt={lock ? '锁定' : '解锁'}/>
                         </span>
                     </div>
                 </div>

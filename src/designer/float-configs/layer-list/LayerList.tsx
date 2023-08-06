@@ -1,13 +1,15 @@
-import React, {Component} from 'react';
+import React, {Component, ReactElement} from 'react';
 import './LayerList.less';
 import {Input} from "antd";
 import layerListStore from "./LayerListStore";
 import designerStore from "../../store/DesignerStore";
-import LayerItem from "./LayerItem";
+import {LayerItemProps} from "./LayerItem";
 import {observer} from "mobx-react";
 import FloatPanel from "../common/FloatPanel";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 import eventManager from "../../operate-provider/core/EventManager";
+import LayerContainer from "./LayerContainer";
+import {MovableItemType} from "../../../lib/lc-movable/types";
 
 //todo 该组件的重新渲染逻辑要重点优化
 class LayerList extends Component {
@@ -87,22 +89,27 @@ class LayerList extends Component {
     buildLayerList = () => {
         const {layoutConfigs} = designerStore;
         const {targetIds} = eventOperateStore;
-        return Object.values(layoutConfigs).sort((a: any, b: any) => b.order - a.order).map((item: any, index) => {
-            return <LayerItem key={index + ''}
-                              data={{
-                                  name: item.name,
-                                  lock: item.locked,
-                                  hide: item.hide,
-                                  compId: item.id,
-                                  selected: targetIds.includes(item.id)
-                              }}
-                              lockChange={this.lockChange}
-                              selectedChange={this.selectedChange}
-                              hideChange={this.hideChange}/>
+        return Object.values(layoutConfigs).sort((a: any, b: any) => b.order - a.order).map((item: MovableItemType, index) => {
+            let _props: LayerItemProps = {
+                data: {
+                    name: item.name,
+                    lock: item.locked,
+                    hide: item.hide,
+                    compId: item.id,
+                    selected: targetIds.includes(item.id!)
+                },
+                lockChange: this.lockChange,
+                selectedChange: this.selectedChange,
+                hideChange: this.hideChange,
+            }
+            return <LayerContainer key={item.id} item={_props}/>
         });
     }
 
     render() {
+        console.log('layer-list render')
+        const layerList = this.buildLayerList();
+        console.log('layerList', layerList);
         return (
             <FloatPanel title={'图层'} onClose={this.onClose} initPosition={{x: 250, y: -window.innerHeight + 50}}
                         className={'layer-list'}>
@@ -111,7 +118,7 @@ class LayerList extends Component {
                            style={{width: '100%'}}/>
                 </div>
                 <div className={'layer-items'}>
-                    {this.buildLayerList()}
+                    {layerList}
                 </div>
             </FloatPanel>
         );

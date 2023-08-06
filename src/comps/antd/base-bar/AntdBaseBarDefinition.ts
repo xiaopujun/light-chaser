@@ -83,6 +83,7 @@ class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBa
         ]
         return {
             info: {
+                id: "",
                 name: '基础条形图',
                 type: 'AntdBaseBar',
                 desc: '基于antd实现的基础条形图',

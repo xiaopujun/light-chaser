@@ -1,4 +1,6 @@
 import {action, makeObservable, observable} from "mobx";
+import LayerItem from "./LayerItem";
+import LayerComponent from "./LayerComponent";
 
 class LayerListStore {
     constructor() {
@@ -9,6 +11,8 @@ class LayerListStore {
     }
 
     visible = false;
+
+    layerInstanceMap: { [key: string]: LayerComponent } = {};
 
     setVisible = (visible: boolean) => this.visible = visible;
 }

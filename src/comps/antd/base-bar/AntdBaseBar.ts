@@ -8,6 +8,7 @@ import AbstractDesignerComponent from "../../../framework/core/AbstractDesignerC
 import {ShapeAttrs} from "@antv/g-base";
 
 export interface ComponentInfoType {
+    id: string;
     name: string;
     type: string;
     desc: string;
