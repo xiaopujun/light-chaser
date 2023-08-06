@@ -50,11 +50,5 @@ export abstract class AbstractCustomComponentDefinition<C extends AbstractCompon
      */
     abstract getMenuToConfigContentMap(): M | null;
 
-    /**
-     * 更新本组件的主题样式方法，用于在全局切换主题时使用
-     * @param newTheme 新主题
-     * @param oldStyle 组件原样式
-     */
-    abstract updateTheme(newTheme: ThemeItemType, oldStyle: S): void;
 }
 

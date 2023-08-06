@@ -41,9 +41,6 @@ class BackgroundDefinition extends AbstractCustomComponentDefinition {
         };
     }
 
-    updateTheme = (newTheme: ThemeItemType, sourceStyle: any) => {
-    };
-
     getBaseInfo(): BaseInfoType {
         return {
             compName: "",

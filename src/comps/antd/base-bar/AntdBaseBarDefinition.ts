@@ -67,55 +67,6 @@ class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBa
         };
     }
 
-    updateTheme(newTheme: ThemeItemType, oldStyle: BarOptions): void {
-        if (!newTheme)
-            return;
-        let newStyle: WritableBarOptions = oldStyle
-        const {colors: {main, text, supplementary, emphasize, background, auxiliary}} = newTheme;
-        //图形
-        if (oldStyle?.color)
-            newStyle.color = main;
-        //图例
-        if ((oldStyle.legend) && (oldStyle.legend.itemName?.style as ShapeAttrs)?.fill)
-            (oldStyle!.legend!.itemName!.style as ShapeAttrs).fill = text;
-        //x轴-文本
-        if ((oldStyle?.xAxis) && (oldStyle?.xAxis?.label?.style as ShapeAttrs).fill)
-            (oldStyle!.xAxis!.label!.style as ShapeAttrs).fill = text;
-        //x轴-标题
-        if ((oldStyle?.xAxis) && (oldStyle?.xAxis?.title as ShapeAttrs)?.fill)
-            (oldStyle!.xAxis!.title!.style as ShapeAttrs).fill = text;
-        //x轴-轴线
-        if ((oldStyle?.xAxis) && (oldStyle?.xAxis?.line?.style as ShapeAttrs).stroke)
-            (oldStyle!.xAxis!.line!.style as ShapeAttrs).stroke = emphasize;
-        //x轴-网格线
-        if ((oldStyle?.xAxis) && (oldStyle?.xAxis?.grid?.line?.style as ShapeAttrs).stroke)
-            (oldStyle!.xAxis!.grid!.line!.style as ShapeAttrs).stroke = auxiliary;
-        //x轴-刻度线
-        if ((oldStyle?.xAxis) && (oldStyle?.xAxis?.tickLine?.style as ShapeAttrs)?.stroke)
-            (oldStyle!.xAxis!.tickLine!.style as ShapeAttrs).stroke = supplementary;
-        //x轴-子刻度线
-        if ((oldStyle?.xAxis) && (oldStyle?.xAxis?.subTickLine?.style as ShapeAttrs)?.stroke)
-            (oldStyle!.xAxis!.subTickLine!.style as ShapeAttrs).stroke = auxiliary;
-        //y轴-文本
-        if ((oldStyle?.yAxis) && (oldStyle?.yAxis?.label?.style as ShapeAttrs).fill)
-            (oldStyle!.yAxis!.label!.style as ShapeAttrs).fill = text;
-        //y轴-标题
-        if ((oldStyle?.yAxis) && (oldStyle?.yAxis?.title as ShapeAttrs)?.fill)
-            (oldStyle!.yAxis!.title!.style as ShapeAttrs).fill = text;
-        //y轴-轴线
-        if ((oldStyle?.yAxis) && (oldStyle?.yAxis?.line?.style as ShapeAttrs).stroke)
-            (oldStyle!.yAxis!.line!.style as ShapeAttrs).stroke = emphasize;
-        //y轴-网格线
-        if ((oldStyle?.yAxis) && (oldStyle?.yAxis?.grid?.line?.style as ShapeAttrs).stroke)
-            (oldStyle!.yAxis!.grid!.line!.style as ShapeAttrs).stroke = auxiliary;
-        //y轴-刻度线
-        if ((oldStyle?.yAxis) && (oldStyle?.yAxis?.tickLine?.style as ShapeAttrs)?.stroke)
-            (oldStyle!.yAxis!.tickLine!.style as ShapeAttrs).stroke = supplementary;
-        //y轴-子刻度线
-        if ((oldStyle?.yAxis) && (oldStyle?.yAxis?.subTickLine?.style as ShapeAttrs)?.stroke)
-            (oldStyle!.yAxis!.subTickLine!.style as ShapeAttrs).stroke = auxiliary;
-    }
-
     getInitConfig(): AntdBarProps {
         const data = [
             {

@@ -51,7 +51,7 @@ class DesignerStarter {
                 let compKey = customComponentInfo.getBaseInfo().compKey;
                 if (compKey) {
                     this.customComponentInfoMap[compKey] = customComponentInfo;
-                    this.themeRefresher[compKey] = customComponentInfo.updateTheme;
+                    // this.themeRefresher[compKey] = customComponentInfo.updateTheme;
                 }
             }
         });

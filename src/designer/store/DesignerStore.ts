@@ -15,7 +15,7 @@ import {merge} from "../../utils/ObjectUtil";
 import {MovableItemType} from "../../lib/lc-movable/types";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {idGenerate} from "../../utils/IdGenerate";
-import AbstractComponent from "../../framework/core/AbstractComponent";
+import AbstractDesignerComponent from "../../framework/core/AbstractDesignerComponent";
 
 /**
  * 设计器核心状态管理类，记录了设计器中的核心数据。包括组件配置，组件布局。 全局设置等。
@@ -92,7 +92,7 @@ class DesignerStore implements AbstractBaseStore {
     /**
      * 画布上组件id与其实例对象的映射
      */
-    compInstances: { [key: string]: AbstractComponent } = {};
+    compInstances: { [key: string]: AbstractDesignerComponent } = {};
 
     /**
      * 布局配置
@@ -280,16 +280,11 @@ class DesignerStore implements AbstractBaseStore {
 
     flashGlobalTheme = (newTheme: ThemeItemType) => {
         const {themeRefresher} = designerStarter;
-        // this.elemConfigs &&
-        // Object.keys(this.elemConfigs).forEach((key: string) => {
-        //     let elemConfig: any = this.elemConfigs[key];
-        //     let {info} = elemConfig;
-        //     if (info) {
-        //         const themeFreshFun = themeRefresher[info.type];
-        //         themeFreshFun && themeFreshFun(newTheme, elemConfig);
-        //         this.elemConfigs[key] = {...elemConfig};
-        //     }
-        // });
+        this.compInstances && Object.keys(this.compInstances).forEach((key: string) => {
+            let instance = this.compInstances[key];
+            if (instance)
+                instance.updateTheme(newTheme);
+        });
     };
 
     /**

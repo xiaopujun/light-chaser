@@ -2,10 +2,11 @@ import AbstractComponent, {OperateType, UpdateOptions} from "../../../framework/
 import {
     BackgroundColorMode,
     BackgroundImgRepeat,
-    BackgroundMode
+    BackgroundMode, ThemeItemType
 } from "../../../designer/DesignerType";
 import DesignerBackground from "./DesignerBackground";
 import {merge} from "../../../utils/ObjectUtil";
+import AbstractDesignerComponent from "../../../framework/core/AbstractDesignerComponent";
 
 /**
  * 背景设置
@@ -49,7 +50,7 @@ export interface AbstractBackgroundImplProps {
     background: BackgroundConfigType;
 }
 
-export default class AbstractBackgroundImpl extends AbstractComponent<DesignerBackground, AbstractBackgroundImplProps> {
+export default class AbstractBackgroundImpl extends AbstractDesignerComponent<DesignerBackground, AbstractBackgroundImplProps> {
 
     constructor(instanceRef: DesignerBackground, config: AbstractBackgroundImplProps) {
         super();
@@ -77,6 +78,9 @@ export default class AbstractBackgroundImpl extends AbstractComponent<DesignerBa
         if (upOp.reRender) {
             this.instance?.setState({config: this.config?.background});
         }
+    }
+
+    updateTheme(newTheme: ThemeItemType): void {
     }
 
 }

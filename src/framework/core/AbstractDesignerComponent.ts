@@ -1,7 +1,6 @@
 import {ThemeItemType} from "../../designer/DesignerType";
 import AbstractComponent from "./AbstractComponent";
 
-
 abstract class AbstractDesignerComponent<I = any, C = any> extends AbstractComponent<I, C> {
 
     /**

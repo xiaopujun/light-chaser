@@ -20,17 +20,10 @@ class ThemeConfig extends Component<ConfigType> {
 
     themeChange = (theme: ThemeItemType) => {
         if (!theme) return;
-        console.log('themeChange', theme)
         const {activeElem: {id}} = rightStore;
         const {compInstances} = designerStore;
         const instance = compInstances[id + ''];
-
-        // const {updateConfig} = this.props;
-        // const {activeElemConfig, activeElem} = rightStore;
-        // const {themeRefresher} = designerStarter;
-        // const updateTheme = themeRefresher && themeRefresher[activeElem.type + '']
-        // updateTheme && typeof updateTheme === 'function' && updateTheme(theme, activeElemConfig);
-        // updateConfig && updateConfig({themeId: theme.id});
+        instance && instance.updateTheme(theme);
     }
 
     render() {
