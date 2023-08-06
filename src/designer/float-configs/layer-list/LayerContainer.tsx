@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import LayerComponent from "./LayerComponent";
 import layerListStore from "./LayerListStore";
-import {LayerItemProps} from "./LayerItem";
+import {LayerItemDataProps} from "./LayerItem";
 
 export interface LayerContainerProps {
-    item: LayerItemProps;
+    item: LayerItemDataProps;
 }
 
 class LayerContainer extends Component<LayerContainerProps> {
@@ -15,14 +15,14 @@ class LayerContainer extends Component<LayerContainerProps> {
         const {layerInstanceMap} = layerListStore;
         const {item} = this.props as LayerContainerProps;
         new LayerComponent().create(this.layerContainerRef!, item).then(r => {
-            layerInstanceMap[item.data?.compId!] = r;
+            layerInstanceMap[item.compId!] = r;
         });
     }
 
     render() {
         const {item} = this.props as LayerContainerProps;
         return (
-            <div id={item.data?.compId + ''} className={'layer-item-container'}
+            <div id={item.compId + ''} className={'layer-item-container'}
                  ref={ref => this.layerContainerRef = ref}/>
         );
     }

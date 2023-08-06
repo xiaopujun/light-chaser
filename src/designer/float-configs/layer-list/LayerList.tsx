@@ -3,7 +3,7 @@ import './LayerList.less';
 import {Input} from "antd";
 import layerListStore from "./LayerListStore";
 import designerStore from "../../store/DesignerStore";
-import {LayerItemProps} from "./LayerItem";
+import {LayerItemDataProps} from "./LayerItem";
 import {observer} from "mobx-react";
 import FloatPanel from "../common/FloatPanel";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
@@ -40,67 +40,20 @@ class LayerList extends Component {
 
     searchLayer = (e: any) => {
         console.log(e.target.value);
-
     }
 
-    lockChange = (data: any) => {
-        console.log('lockChange', data);
-        const {updateLayout} = designerStore;
-        const {targetIds, targets, setTargetIds, setTargets} = eventOperateStore;
-        if (targetIds.includes(data.compId)) {
-            const newTargetIds = targetIds.filter(id => id !== data.compId);
-            setTargetIds(newTargetIds);
-        }
-        if (targets && targets.length > 0) {
-            const newTargets = targets.filter(target => target.id !== data.compId);
-            if (newTargets.length !== targets.length)
-                setTargets(newTargets);
-        }
-        updateLayout && updateLayout([{id: data.compId, locked: data.lock}]);
-    }
 
-    selectedChange = (data: any, e: any) => {
-        let {setTargets, setTargetIds, targetIds, targets} = eventOperateStore;
-        const targetDom = document.getElementById(data.compId);
-        if (!targetDom || data.lock || data.hide) return;
-        if (e.ctrlKey) {
-            if (targetIds.includes(data.compId)) {
-                const newTargetIds = targetIds.filter(id => id !== data.compId);
-                setTargetIds(newTargetIds);
-                const newTargets = targets.filter(target => target.id !== data.compId);
-                setTargets(newTargets);
-            } else {
-                targetIds = [...targetIds, data.compId];
-                targets = [...targets, targetDom];
-                setTargetIds(targetIds);
-                setTargets(targets);
-            }
-        } else {
-            setTargetIds([data.compId]);
-            setTargets([targetDom]);
-        }
-    }
-
-    hideChange = (data: any) => {
-        const {updateLayout} = designerStore;
-        updateLayout && updateLayout([{id: data.compId, hide: data.hide}]);
-    }
 
     buildLayerList = () => {
         const {layoutConfigs} = designerStore;
         const {targetIds} = eventOperateStore;
         return Object.values(layoutConfigs).sort((a: any, b: any) => b.order - a.order).map((item: MovableItemType, index) => {
-            let _props: LayerItemProps = {
-                data: {
-                    name: item.name,
-                    lock: item.locked,
-                    hide: item.hide,
-                    compId: item.id,
-                    selected: targetIds.includes(item.id!)
-                },
-                lockChange: this.lockChange,
-                selectedChange: this.selectedChange,
-                hideChange: this.hideChange,
+            let _props: LayerItemDataProps = {
+                name: item.name,
+                lock: item.locked,
+                hide: item.hide,
+                compId: item.id,
+                selected: targetIds.includes(item.id!)
             }
             return <LayerContainer key={item.id} item={_props}/>
         });
