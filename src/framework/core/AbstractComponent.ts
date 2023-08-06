@@ -1,3 +1,5 @@
+import {ThemeItemType} from "../../designer/DesignerType";
+
 export enum OperateType {
     OPTIONS,
     DATA,
@@ -48,6 +50,12 @@ abstract class AbstractComponent<I = any, C = any> {
      * 获取组件配置数据
      */
     public abstract getConfig(): C | null;
+
+    /**
+     * 更新本组件的主题样式方法，用于在全局切换主题时使用
+     * @param newTheme 新主题
+     */
+    abstract updateTheme(newTheme: ThemeItemType): void;
 
 }
 

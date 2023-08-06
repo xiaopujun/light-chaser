@@ -7,6 +7,7 @@ import {ConfigType} from "../../../designer/right/ConfigType";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import rightStore from "../../../designer/right/RightStore";
 import designerStarter from "../../../designer/DesignerStarter";
+import designerStore from "../../../designer/store/DesignerStore";
 
 class ThemeConfig extends Component<ConfigType> {
     state = {
@@ -19,6 +20,11 @@ class ThemeConfig extends Component<ConfigType> {
 
     themeChange = (theme: ThemeItemType) => {
         if (!theme) return;
+        console.log('themeChange', theme)
+        const {activeElem: {id}} = rightStore;
+        const {compInstances} = designerStore;
+        const instance = compInstances[id + ''];
+
         // const {updateConfig} = this.props;
         // const {activeElemConfig, activeElem} = rightStore;
         // const {themeRefresher} = designerStarter;
