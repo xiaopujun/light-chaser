@@ -1,4 +1,4 @@
-import React, {Component, FormEvent} from 'react';
+import React, {ChangeEvent, Component, FormEvent} from 'react';
 import './ThemeEditor.less';
 import ConfigItem from "../../../../lib/lc-config-item/ConfigItem";
 import UnderLineInput from "../../../../lib/lc-input/UnderLineInput";
@@ -41,8 +41,8 @@ class ThemeEditor extends Component {
     }
 
 
-    nameChanged = (name: string) => {
-        this.setState({themeConfig: {...this.state.themeConfig, name}})
+    nameChanged = (e: ChangeEvent<HTMLInputElement>) => {
+        this.setState({themeConfig: {...this.state.themeConfig, name: e.target.value}})
     }
 
     mainColorChanged = (color: string) => {

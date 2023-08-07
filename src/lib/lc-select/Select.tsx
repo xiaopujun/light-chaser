@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {MutableRefObject, useEffect, useRef, useState} from "react";
 import "./Select.less";
 import {Option} from "./SelectType";
 
@@ -23,7 +23,7 @@ const Select: React.FC<SelectProps> = ({
                                            onChange,
                                            disabled = false
                                        }) => {
-    const dom: any = useRef(null);
+    const dom: MutableRefObject<HTMLDivElement | null> = useRef(null);
     const valueControl: boolean = value !== undefined;
     const _options = options || [];
     const getTargetOption = (value: string = ''): Option | null => {
@@ -46,7 +46,7 @@ const Select: React.FC<SelectProps> = ({
 
     //todo 此处需要继续优化。 避免鼠标点击事件的重复绑定。
     const handleClickOutside = (event: MouseEvent) => {
-        if (dom.current && !dom.current.contains(event.target)) {
+        if (dom.current && !dom.current.contains(event.target as HTMLElement)) {
             setDropdownOpen(false);
         }
     };
@@ -67,7 +67,7 @@ const Select: React.FC<SelectProps> = ({
                 {showContent}
             </div>
             {dropdownOpen && (
-                <ul className={"lc-select-options"} style={{width: dom?.current.offsetWidth || 90}}>
+                <ul className={"lc-select-options"} style={{width: dom?.current?.offsetWidth || 90}}>
                     {options.map((option: Option, index: number) => (
                         <li className={`lc-select-option`} key={index + ''}
                             onClick={() => handleOptionClick(option)}>

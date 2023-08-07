@@ -54,7 +54,7 @@ export const AntdLegend = (props: AntdLegendProps) => {
             <ConfigItem title={'字号'}>
                 <UnderLineInput type={'number'} min={12}
                                 defaultValue={((config as Types.LegendCfg)?.itemName?.style as ShapeAttrs).fontSize || 12}
-                                onChange={value => onChange({itemName: {style: {fontSize: value}}})}/>
+                                onChange={e => onChange({itemName: {style: {fontSize: parseInt(e.target.value)}}})}/>
             </ConfigItem>
             <ConfigItem title={'颜色'}>
                 <CfgItemBorder width={'100%'}>
@@ -79,7 +79,8 @@ export const AntdBarGraphics: React.FC<AntdBarGraphicsProps> = ({config, onChang
         <Accordion title={'图形'}>
             <ConfigCard title={'条状'}>
                 <ConfigItem title={'宽度'}>
-                    <UnderLineInput type={'number'} min={1} onChange={(value) => onChange({maxBarWidth: value})}
+                    <UnderLineInput type={'number'} min={1}
+                                    onChange={(e) => onChange({maxBarWidth: parseInt(e.target.value)})}
                                     defaultValue={config!.maxBarWidth}/>
                 </ConfigItem>
                 <ConfigItem title={'颜色'}>

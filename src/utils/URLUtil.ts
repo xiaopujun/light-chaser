@@ -1,6 +1,11 @@
-export function parseUrlParams() {
-    const urlParams: any = new URLSearchParams(window.location.search);
-    const params: any = {};
+export interface UrlParams {
+    [key: string]: string;
+}
+
+
+export function parseUrlParams(): UrlParams {
+    const urlParams: URLSearchParams = new URLSearchParams(window.location.search);
+    const params: UrlParams = {};
     for (const [key, value] of urlParams) {
         params[key] = value;
     }

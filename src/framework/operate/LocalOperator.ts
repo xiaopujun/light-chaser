@@ -76,7 +76,7 @@ class LocalOperator extends AbstractOperator {
         id && id !== '' && setId && setId(id);
         //修改路由参数，新增变为更新
         let urlParams = parseUrlParams();
-        urlParams = {...urlParams, ...{id, action: 'edit'}};
+        urlParams = {...urlParams, ...{id: id!, action: 'edit'}};
         window.history.replaceState(null, '', '?' + buildUrlParams(urlParams));
     }
 

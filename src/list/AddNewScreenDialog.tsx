@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {ChangeEvent, Component} from 'react';
 import './style/AddNewScreenDialog.less';
 import Dialog from "../lib/lc-dialog/Dialog";
 import ConfigItem from "../lib/lc-config-item/ConfigItem";
@@ -47,19 +47,19 @@ class AddNewScreenDialog extends Component<AddNewScreenDialogProps> {
                     <div className={'lc-add-new-screen'}>
                         <ConfigItem title={'名称'}>
                             <UnderLineInput required={true} maxLength={20}
-                                            onChange={(name: string) => this.projectInfo.name = name}/>
+                                            onChange={(e: ChangeEvent<HTMLInputElement>) => this.projectInfo.name = e.target.value}/>
                         </ConfigItem>
                         <ConfigItem title={'描述'}>
                             <UnderLineInput maxLength={60}
-                                            onChange={(description: string) => this.projectInfo.description = description}/>
+                                            onChange={(e: ChangeEvent<HTMLInputElement>) => this.projectInfo.description = e.target.value}/>
                         </ConfigItem>
                         <ConfigItem title={'宽度'}>
                             <UnderLineInput type={'number'} min={500} required={true}
-                                            onChange={(width: number) => this.projectInfo.width = width}/>
+                                            onChange={(e: ChangeEvent<HTMLInputElement>) => this.projectInfo.width = parseInt(e.target.value)}/>
                         </ConfigItem>
                         <ConfigItem title={'高度'}>
                             <UnderLineInput type={'number'} min={300} required={true}
-                                            onChange={(height: number) => this.projectInfo.height = height}/>
+                                            onChange={(e: ChangeEvent<HTMLInputElement>) => this.projectInfo.height = parseInt(e.target.value)}/>
                         </ConfigItem>
                         <ConfigItem title={'存储'}>
                             <Select defaultValue={'1'} options={[{value: '1', label: '本地存储'}]}/>

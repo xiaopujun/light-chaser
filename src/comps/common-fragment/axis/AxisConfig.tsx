@@ -101,7 +101,8 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
             <ConfigItem title={'数量'}>
                 <UnderLineInput value={subTickLineCount}
                                 disabled={subTickLineDisable}
-                                onChange={value => {
+                                onChange={e => {
+                                    const value = parseInt(e.target.value);
                                     onChange({count: value});
                                     setSubTickLineCount(value);
                                 }}
@@ -110,7 +111,8 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
             <ConfigItem title={'长度'}>
                 <UnderLineInput value={subTickLineLength}
                                 disabled={subTickLineDisable}
-                                onChange={value => {
+                                onChange={e => {
+                                    const value = parseInt(e.target.value);
                                     onChange({length: value});
                                     setSubTickLineLength(value);
                                 }}
@@ -119,7 +121,8 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
             <ConfigItem title={'宽度'}>
                 <UnderLineInput value={subTickLineWidth}
                                 disabled={subTickLineDisable}
-                                onChange={value => {
+                                onChange={e => {
+                                    const value = parseInt(e.target.value);
                                     onChange({style: {lineWidth: value}});
                                     setSubTickLineWidth(value);
                                 }}
@@ -182,7 +185,8 @@ export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) =>
             <ConfigItem title={'长度'}>
                 <UnderLineInput value={length}
                                 disabled={tickLineDisable}
-                                onChange={value => {
+                                onChange={e => {
+                                    const value = parseInt(e.target.value);
                                     onChange({length: value});
                                     setLength(value);
                                 }}
@@ -191,7 +195,8 @@ export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) =>
             <ConfigItem title={'宽度'}>
                 <UnderLineInput value={width}
                                 disabled={tickLineDisable}
-                                onChange={value => {
+                                onChange={e => {
+                                    const value = parseInt(e.target.value);
                                     onChange({style: {lineWidth: value}});
                                     setWidth(value);
                                 }}
@@ -250,7 +255,7 @@ export const AxisGridLine: React.FC<AxisGridLineProps> = ({config, onChange}) =>
                 <UnderLineInput defaultValue={(config?.line?.style as ShapeAttrs)?.lineWidth || 0}
                                 disabled={axisTitleDisable}
                                 min={0} max={10}
-                                onChange={value => onChange({line: {style: {lineWidth: value}}})}
+                                onChange={e => onChange({line: {style: {lineWidth: parseInt(e.target.value)}}})}
                                 type={'number'}/>
             </ConfigItem>
             <ConfigItem title={'颜色'}>
@@ -308,7 +313,8 @@ export const AxisLine: React.FC<AxisLIneProps> = ({config, onChange}) => {
             <ConfigItem title={'线宽'}>
                 <UnderLineInput value={lineWidth} min={0} max={10}
                                 disabled={axisLineDisable}
-                                onChange={value => {
+                                onChange={e => {
+                                    const value = parseInt(e.target.value);
                                     onChange({style: {lineWidth: value}});
                                     setLineWidth(value);
                                 }}
@@ -380,7 +386,7 @@ export const AxisTitle: React.FC<AxisTitleProps> = ({config, onChange}) => {
             <ConfigItem title={'偏移量'}>
                 <UnderLineInput defaultValue={config?.offset || 0} min={0} type={'number'}
                                 disabled={axisTitleDisable}
-                                onChange={value => onChange({offset: value})}/>
+                                onChange={e => onChange({offset: parseInt(e.target.value)})}/>
             </ConfigItem>
         </ConfigCard>
     )
@@ -404,11 +410,11 @@ export const AxisText: React.FC<AxisTextProps> = ({config, onChange}) => {
             </ConfigItem>
             <ConfigItem title={'角度'}>
                 <UnderLineInput defaultValue={config.rotate || 0} step={0.1} type={'number'}
-                                onChange={value => onChange({rotate: value})}/>
+                                onChange={e => onChange({rotate: parseInt(e.target.value)})}/>
             </ConfigItem>
             <ConfigItem title={'偏移量'}>
                 <UnderLineInput defaultValue={config.offset || 0} type={'number'}
-                                onChange={value => onChange({offset: value})}/>
+                                onChange={e => onChange({offset: parseInt(e.target.value)})}/>
             </ConfigItem>
         </ConfigCard>
     )

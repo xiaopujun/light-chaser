@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, MouseEvent} from 'react';
 import {observer} from "mobx-react";
 import '../classify-list/ClassifyList.less';
 import classifyListStore from "./ClassifyListStore";
@@ -6,13 +6,13 @@ import compListStore from "../../float-configs/comp-list/CompListStore";
 
 class ClassifyList extends Component {
 
-    constructor(props: any) {
+    constructor(props: {}) {
         super(props);
         const {doInit} = classifyListStore;
         doInit && doInit();
     }
 
-    changeClassifyKey = (e: any) => {
+    changeClassifyKey = (e: MouseEvent<HTMLDivElement>) => {
         const {setClassifyKey} = classifyListStore;
         const {setVisible, visible} = compListStore;
         setClassifyKey(e.currentTarget.id);

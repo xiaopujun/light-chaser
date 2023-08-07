@@ -133,7 +133,7 @@ const ApiDataConfig: React.FC<ConfigType> = ({instance}) => {
     return (
         <>
             <ConfigItem title={'接口地址'} contentStyle={{width: 240}}>
-                <UnderLineInput defaultValue={urlRef.current} onChange={value => urlRef.current = value}/>
+                <UnderLineInput defaultValue={urlRef.current} onChange={e => urlRef.current = e.target.value}/>
             </ConfigItem>
             <ConfigItem title={'请求方式'} contentStyle={{width: 100}}>
                 <Select options={[
@@ -150,7 +150,7 @@ const ApiDataConfig: React.FC<ConfigType> = ({instance}) => {
                 alignItems: 'center'
             }}>
                 <UnderLineInput type={'number'} defaultValue={flashFrequencyRef.current}
-                                onChange={value => flashFrequencyRef.current = value}/>
+                                onChange={e => flashFrequencyRef.current = parseInt(e.target.value)}/>
                 <div>秒</div>
             </ConfigItem>
             <ConfigItemTB title={'请求头(JSON)'} contentStyle={{width: '95%'}}>

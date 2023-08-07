@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {MouseEvent, PureComponent} from 'react';
 import DragScaleProvider from "../operate-provider/DragScaleProvider";
 import {observer} from "mobx-react";
 import designerStore, {DesignerStore} from "../store/DesignerStore";
@@ -14,13 +14,14 @@ import HotKey from "../operate-provider/keyboard-mouse/HotKey";
 import {getOperateEventMapping} from "../operate-provider/keyboard-mouse/HotKeyConfig";
 import ComponentContainer from "../../framework/core/ComponentContainer";
 import Loading from "../../lib/loading/Loading";
+import {isEqual} from "lodash";
 
 /**
  * 设计器画布
  */
 class DesignerCanvas extends PureComponent<DesignerStore | any> {
 
-    lcbg: any = null;
+    backgroundRef: DesignerBackground | null = null;
 
     state = {
         designerRef: null
@@ -30,11 +31,11 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
         this.setState({designerRef: document.querySelector('.lc-ruler-content')});
     }
 
-    updateActive = (e: any) => {
-        let {id, dataset: {type}} = e.target;
-        console.log(id, type)
-        const {activeConfig} = rightStore;
-        activeConfig(id, type);
+    updateActive = (e: MouseEvent<HTMLDivElement>) => {
+        let {id, dataset: {type}} = e.target as HTMLDivElement;
+        const {activeConfig, activeElem} = rightStore;
+        if (isEqual(activeElem, {id, type})) return;
+        activeConfig(id, type!);
     }
 
     /**
@@ -60,7 +61,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                             <DragScaleProvider>
                                 <GroupMovable>
                                     <DesignerBackground onClick={this.updateActive}
-                                                        ref={obj => this.lcbg = obj}>
+                                                        ref={ref => this.backgroundRef = ref}>
                                         {this.generateElement()}
                                     </DesignerBackground>
                                 </GroupMovable>

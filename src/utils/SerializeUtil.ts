@@ -1,6 +1,6 @@
 class SerializeUtil {
 
-    public static serialize(obj: any): string {
+    public static serialize(obj: unknown): string {
         return JSON.stringify(obj, (key, value) => {
             if (typeof value === 'function')
                 return value.toString();
@@ -8,7 +8,7 @@ class SerializeUtil {
         });
     }
 
-    public static deserialize(str: string): any {
+    public static deserialize(str: string): unknown {
         return JSON.parse(str, (key, value) => {
             if (typeof value === 'string' &&
                 value.indexOf('function') === 0) {

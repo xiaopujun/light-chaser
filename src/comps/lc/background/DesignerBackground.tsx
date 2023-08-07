@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React, {Component, MouseEvent} from 'react';
 import {BackgroundColorMode, BackgroundMode} from "../../../designer/DesignerType";
 import AbstractBackgroundImpl, {AbstractBackgroundImplProps, BackgroundConfigType} from "./AbstractBackgroundImpl";
 import designerStore from "../../../designer/store/DesignerStore";
 import designerStarter from "../../../designer/DesignerStarter";
 
 interface LcDesignerBackgroundProps {
-    onClick?: (e: any) => void;
+    onClick?: (e: MouseEvent<HTMLDivElement>) => void;
     config?: BackgroundConfigType;
 }
 
@@ -31,7 +31,7 @@ class DesignerBackground extends Component<LcDesignerBackgroundProps> {
         delete elemConfigs!['80cc666f'];
     }
 
-    onClick = (e: any) => {
+    onClick = (e: MouseEvent<HTMLDivElement>) => {
         const {onClick} = this.props;
         onClick && onClick(e);
     }

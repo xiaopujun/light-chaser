@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Selecto from "react-selecto";
 import eventOperateStore from "../../designer/operate-provider/EventOperateStore";
 import {observer} from "mobx-react";
+import Moveable from 'react-moveable';
 
 class GroupSelectable extends Component {
     selectorRef = React.createRef<Selecto>();
@@ -25,8 +26,7 @@ class GroupSelectable extends Component {
                          ratio={0}
                          onDragStart={e => {
                              const {movableRef, targets} = eventOperateStore;
-                             if (!movableRef) return;
-                             const movable: any = movableRef.current;
+                             const movable: Moveable = movableRef.current;
                              const target = e.inputEvent.target;
                              if ((movable.isMoveableElement(target))
                                  || targets.some((t: any) => t === target || t.contains(target))
@@ -37,7 +37,7 @@ class GroupSelectable extends Component {
                          onSelectEnd={e => {
                              const {movableRef, setTargets, setTargetIds} = eventOperateStore;
                              if (!movableRef) return;
-                             const movable: any = movableRef.current;
+                             const movable: Moveable = movableRef.current;
                              if (e.isDragStart) {
                                  e.inputEvent.preventDefault();
                                  setTimeout(() => {

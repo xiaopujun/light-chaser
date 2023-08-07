@@ -1,4 +1,4 @@
-import React, {Component, InputHTMLAttributes} from 'react';
+import React, {ChangeEvent, Component, InputHTMLAttributes} from 'react';
 import './UnderLineInput.less';
 
 interface UnderLineInputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -6,7 +6,7 @@ interface UnderLineInputProps extends InputHTMLAttributes<HTMLInputElement> {
     inputStyle?: React.CSSProperties;
     lineStyle?: React.CSSProperties;
     //值改变时的回调
-    onChange?: (value: any) => void;
+    onChange?: (value: ChangeEvent<HTMLInputElement>) => void;
 }
 
 /**
@@ -14,10 +14,9 @@ interface UnderLineInputProps extends InputHTMLAttributes<HTMLInputElement> {
  */
 class UnderLineInput extends Component<UnderLineInputProps> {
 
-    onChange = (e: any) => {
-        const {onChange, type} = this.props;
-        const {value} = e.target;
-        onChange && onChange(type === 'number' ? Number(value) : value);
+    onChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const {onChange} = this.props;
+        onChange && onChange(e);
     }
 
     render() {
