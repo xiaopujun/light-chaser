@@ -1,4 +1,6 @@
 import {action, makeObservable, observable} from "mobx";
+import layerListStore from "../float-configs/layer-list/LayerListStore";
+import LayerComponent from "../float-configs/layer-list/LayerComponent";
 
 /**
  * 设计器画布及元素操作控制store，用于协调缩放、拖拽、选择，右键操作菜单操作之间的数据传递
@@ -76,7 +78,25 @@ class EventOperateStore {
 
     setTargets = (targets: any[]) => this.targets = targets;
 
-    setTargetIds = (targetIds: string[]) => this.targetIds = targetIds;
+    setTargetIds = (targetIds: string[]) => {
+        //清除之前的选中
+        const {layerInstanceMap} = layerListStore;
+        this.targetIds.length > 0 && this.targetIds.forEach(id => {
+            const instance: LayerComponent = layerInstanceMap[id];
+            if (!!instance)
+                instance.update({selected: false});
+        });
+        //设置本次选中的组件id
+        this.targetIds = targetIds;
+        //若显示了图层,则更新图层中被选中的组件
+        if (!!layerInstanceMap) {
+            targetIds.forEach(id => {
+                const instance: LayerComponent = layerInstanceMap[id];
+                if (!!instance)
+                    instance.update({selected: true});
+            });
+        }
+    };
 
     setPointerTarget = (target: any) => this.pointerTarget = target;
 

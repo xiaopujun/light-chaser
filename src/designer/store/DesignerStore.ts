@@ -274,7 +274,9 @@ class DesignerStore implements AbstractBaseStore {
                 this.layoutConfigs[newId] = newLayout;
                 //生成新数据
                 const copiedInstance = this.compInstances[id];
-                this.elemConfigs![newId] = cloneDeep(copiedInstance.getConfig());
+                let newConfig = cloneDeep(copiedInstance.getConfig());
+                newConfig.info.id = newId;
+                this.elemConfigs![newId] = newConfig;
             }
         }
         setMaxLevel(maxLevel);

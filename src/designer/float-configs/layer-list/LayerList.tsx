@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, KeyboardEvent} from 'react';
 import './LayerList.less';
 import {Input} from "antd";
 import layerListStore from "./LayerListStore";
@@ -38,25 +38,31 @@ class LayerList extends Component {
         setVisible && setVisible(false);
     }
 
-    searchLayer = (e: any) => {
-        console.log(e.target.value);
+    searchLayer = (e: KeyboardEvent<HTMLInputElement>) => {
+        const {setContent} = layerListStore;
+        const content = (e.target as HTMLInputElement).value;
+        // if (content === '') return;
+        setContent && setContent(content);
     }
-
 
 
     buildLayerList = () => {
         const {layoutConfigs} = designerStore;
         const {targetIds} = eventOperateStore;
-        return Object.values(layoutConfigs).sort((a: any, b: any) => b.order - a.order).map((item: MovableItemType, index) => {
-            let _props: LayerItemDataProps = {
-                name: item.name,
-                lock: item.locked,
-                hide: item.hide,
-                compId: item.id,
-                selected: targetIds.includes(item.id!)
-            }
-            return <LayerContainer key={item.id} item={_props}/>
-        });
+        const {searchContent} = layerListStore;
+        return Object.values(layoutConfigs)
+            .filter((item: MovableItemType) => item.name?.includes(searchContent))
+            .sort((a: MovableItemType, b: MovableItemType) => b.order! - a.order!)
+            .map((item: MovableItemType, index) => {
+                let _props: LayerItemDataProps = {
+                    name: item.name,
+                    lock: item.locked,
+                    hide: item.hide,
+                    compId: item.id,
+                    selected: targetIds.includes(item.id!)
+                }
+                return <LayerContainer key={item.id} item={_props}/>
+            });
     }
 
     render() {

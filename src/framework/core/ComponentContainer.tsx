@@ -28,6 +28,7 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
                     initConfig.info.id = layout.id!;
                     return initConfig;
                 })() as any;
+                console.log(config)
                 new AbsCompImpl()!.create(this.ref!, config).then((instance: any) => {
                     const {compInstances} = designerStore;
                     compInstances[layout.id + ''] = instance;

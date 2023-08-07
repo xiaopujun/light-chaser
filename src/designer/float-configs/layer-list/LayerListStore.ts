@@ -9,7 +9,9 @@ class LayerListStore {
     constructor() {
         makeObservable(this, {
             visible: observable,
+            searchContent: observable,
             setVisible: action,
+            setContent: action,
         });
     }
 
@@ -17,9 +19,11 @@ class LayerListStore {
 
     layerInstanceMap: { [key: string]: LayerComponent } = {};
 
-    selectedBefore: string[] = [];
-
     setVisible = (visible: boolean) => this.visible = visible;
+
+    searchContent = "";
+
+    setContent = (content: string) => this.searchContent = content;
 
     lockChange = (id: string, lock: boolean) => {
         const {updateLayout} = designerStore;
@@ -44,35 +48,33 @@ class LayerListStore {
         const targetDom = document.getElementById(data.compId!);
         if (!targetDom || data.lock || data.hide) return;
         //之前已经选中的取消选中
-        console.log(this.selectedBefore)
-        if (this.selectedBefore.length > 0) {
-            this.selectedBefore.forEach(id => {
+        if (targetIds.length > 0) {
+            targetIds.forEach(id => {
                 let instance = this.layerInstanceMap[id];
                 instance && instance.update({selected: false});
             });
         }
-        //计算本次选中的组件
+        //计算本次选中的组件id
+        let currentTargetIds: string[] = [];
         if (e.ctrlKey) {
             if (targetIds.includes(data.compId!)) {
-                const newTargetIds = targetIds.filter(id => id !== data.compId);
-                setTargetIds(newTargetIds);
+                currentTargetIds = targetIds.filter(id => id !== data.compId);
                 const newTargets = targets.filter(target => target.id !== data.compId);
                 setTargets(newTargets);
-                this.selectedBefore = newTargetIds;
             } else {
                 targetIds = [...targetIds, data.compId!];
                 targets = [...targets, targetDom];
-                setTargetIds(targetIds);
+                currentTargetIds = targetIds;
                 setTargets(targets);
-                this.selectedBefore = targetIds;
             }
         } else {
-            setTargetIds([data.compId!]);
+            currentTargetIds = [data.compId!];
             setTargets([targetDom]);
-            this.selectedBefore = [data.compId!];
         }
-        if (this.selectedBefore.length > 0) {
-            this.selectedBefore.forEach(id => {
+        //设置本次选中的图层和组件
+        setTargetIds(currentTargetIds);
+        if (currentTargetIds.length > 0) {
+            currentTargetIds.forEach(id => {
                 let instance = this.layerInstanceMap[id];
                 instance && instance.update({selected: true});
             });

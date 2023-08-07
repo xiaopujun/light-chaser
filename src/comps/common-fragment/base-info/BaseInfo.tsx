@@ -6,6 +6,7 @@ import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import {ConfigType} from "../../../designer/right/ConfigType";
 import {AntdBarProps} from "../../antd/base-bar/AntdBaseBar";
 import designerStore from "../../../designer/store/DesignerStore";
+import layerListStore from "../../../designer/float-configs/layer-list/LayerListStore";
 
 /**
  * lc组件基础信息
@@ -16,7 +17,12 @@ class BaseInfo extends Component<ConfigType> {
         const {instance} = this.props;
         instance.update({info: {name: value}}, {reRender: false});
         const {updateLayout} = designerStore;
-        updateLayout && updateLayout([{id: instance.getConfig().info.id, name: value}]);
+        const id = instance.getConfig().info.id;
+        updateLayout && updateLayout([{id, name: value}]);
+        //如果显示图层,则更新图层名称
+        const {layerInstanceMap} = layerListStore;
+        let layerInstance = layerInstanceMap[id];
+        layerInstance && layerInstance.update({name: value});
     }
 
     changeDesc = (value: any) => {
