@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {ChangeEvent, Component} from 'react';
 import './BaseInfo.less';
 import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
@@ -13,7 +13,8 @@ import layerListStore from "../../../designer/float-configs/layer-list/LayerList
  */
 class BaseInfo extends Component<ConfigType> {
 
-    changeName = (value: any) => {
+    changeName = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
         const {instance} = this.props;
         instance.update({info: {name: value}}, {reRender: false});
         const {updateLayout} = designerStore;
@@ -25,7 +26,8 @@ class BaseInfo extends Component<ConfigType> {
         layerInstance && layerInstance.update({name: value});
     }
 
-    changeDesc = (value: any) => {
+    changeDesc = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
         const {instance} = this.props;
         instance.update({info: {desc: value}}, {reRender: false});
     }
