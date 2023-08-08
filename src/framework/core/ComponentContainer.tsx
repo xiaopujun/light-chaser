@@ -63,7 +63,7 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
                         width: '100%',
                         height: '100%',
                         //todo 要优化
-                        pointerEvents: `${this.mode === 'view' ? 'none' : 'auto'}`,
+                        pointerEvents: `${this.mode === 'view' ? 'auto' : 'none'}`,
                         position: 'relative'
                     }}/>
                 </div>

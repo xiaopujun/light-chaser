@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {ChangeEvent, Component, useState} from 'react';
 import './AxisConfig.less';
 import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
@@ -6,7 +6,7 @@ import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 import {Axis} from "@antv/g2plot";
 import Accordion from "../../../lib/lc-accordion/Accordion";
 import {Types} from "@antv/g2";
-import {AxisLabelCfg, AxisTitleCfg, AxisLineCfg, AxisTickLineCfg, AxisSubTickLineCfg} from "@antv/component/esm";
+import {AxisLabelCfg, AxisLineCfg, AxisSubTickLineCfg, AxisTickLineCfg, AxisTitleCfg} from "@antv/component/esm";
 import {ShapeAttrs} from "@antv/g-base";
 import {AxisGridCfg} from "@antv/g2/esm/interface";
 
@@ -75,7 +75,15 @@ export interface AxisSubTickLineProps {
 }
 
 export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChange}) => {
-    const [subTickLineDisable, setSubTickLineDisable] = useState(!!config);
+
+    const initConfig: AxisSubTickLineCfg = config || {
+        count: 5,
+        length: 1,
+        style: {stroke: '#fff', lineWidth: 1} as ShapeAttrs
+    };
+
+    console.log('initConfig', !!config);
+    const [enable, setEnable] = useState(!!config);
     const [subTickLineCount, setSubTickLineCount] = useState(config?.count || 0);
     const [subTickLineLength, setSubTickLineLength] = useState(config?.length || 0);
     const [subTickLineWidth, setSubTickLineWidth] = useState((config?.style as ShapeAttrs).lineWidth || 0);
@@ -83,13 +91,13 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
     return (
         <ConfigCard title={'子刻度'}>
             <ConfigItem title={'开启'}>
-                <LcSwitch defaultValue={subTickLineDisable}
+                <LcSwitch defaultValue={enable}
                           onChange={value => {
-                              onChange(value ? null : config);
+                              onChange(value ? initConfig : null);
                               if (!value) {
-                                  setSubTickLineDisable(true);
+                                  setEnable(true);
                               } else {
-                                  setSubTickLineDisable(false);
+                                  setEnable(false);
                                   setSubTickLineCount(5);
                                   setSubTickLineLength(2);
                                   setSubTickLineWidth(2);
@@ -100,7 +108,7 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
             </ConfigItem>
             <ConfigItem title={'数量'}>
                 <UnderLineInput value={subTickLineCount}
-                                disabled={subTickLineDisable}
+                                disabled={!enable}
                                 onChange={e => {
                                     const value = parseInt(e.target.value);
                                     onChange({count: value});
@@ -110,7 +118,7 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
             </ConfigItem>
             <ConfigItem title={'长度'}>
                 <UnderLineInput value={subTickLineLength}
-                                disabled={subTickLineDisable}
+                                disabled={!enable}
                                 onChange={e => {
                                     const value = parseInt(e.target.value);
                                     onChange({length: value});
@@ -120,18 +128,20 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
             </ConfigItem>
             <ConfigItem title={'宽度'}>
                 <UnderLineInput value={subTickLineWidth}
-                                disabled={subTickLineDisable}
+                                disabled={!enable}
                                 onChange={e => {
                                     const value = parseInt(e.target.value);
                                     onChange({style: {lineWidth: value}});
                                     setSubTickLineWidth(value);
                                 }}
+                                min={0}
+                                max={5}
                                 type={'number'}/>
             </ConfigItem>
             <ConfigItem title={'颜色'}>
                 <CfgItemBorder>
                     <BaseColorPicker value={subTickLineColor}
-                                     disabled={subTickLineDisable}
+                                     disabled={!enable}
                                      onChange={value => {
                                          onChange({style: {stroke: value}});
                                          setSubTickLineColor(value);
@@ -151,7 +161,13 @@ export interface AxisTickLineProps {
 
 export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) => {
 
-    const [tickLineDisable, setTickLineDisable] = useState(!!config);
+    const initConfig: AxisGridCfg = config || {
+        alignTick: true,
+        length: 1,
+        style: {stroke: '#fff', lineWidth: 1} as ShapeAttrs
+    };
+
+    const [enable, setEnable] = useState(!!config);
     const [alignTick, setAlignTick] = useState(config?.alignTick || false);
     const [length, setLength] = useState(config?.length || 0);
     const [width, setWidth] = useState((config?.style as ShapeAttrs)?.lineWidth || 0);
@@ -160,13 +176,13 @@ export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) =>
     return (
         <ConfigCard title={'刻度线'}>
             <ConfigItem title={'开启'}>
-                <LcSwitch defaultValue={tickLineDisable}
+                <LcSwitch defaultValue={enable}
                           onChange={value => {
-                              onChange(value ? null : config);
+                              onChange(value ? initConfig : null);
                               if (!value) {
-                                  setTickLineDisable(true);
+                                  setEnable(true);
                               } else {
-                                  setTickLineDisable(false);
+                                  setEnable(false);
                                   setAlignTick(true);
                                   setLength(2);
                                   setWidth(2);
@@ -176,7 +192,7 @@ export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) =>
             </ConfigItem>
             <ConfigItem title={'对齐'}>
                 <LcSwitch value={alignTick}
-                          disabled={tickLineDisable}
+                          disabled={!enable}
                           onChange={value => {
                               onChange({alignTick: value});
                               setAlignTick(value);
@@ -184,7 +200,7 @@ export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) =>
             </ConfigItem>
             <ConfigItem title={'长度'}>
                 <UnderLineInput value={length}
-                                disabled={tickLineDisable}
+                                disabled={!enable}
                                 onChange={e => {
                                     const value = parseInt(e.target.value);
                                     onChange({length: value});
@@ -194,7 +210,7 @@ export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) =>
             </ConfigItem>
             <ConfigItem title={'宽度'}>
                 <UnderLineInput value={width}
-                                disabled={tickLineDisable}
+                                disabled={!enable}
                                 onChange={e => {
                                     const value = parseInt(e.target.value);
                                     onChange({style: {lineWidth: value}});
@@ -205,7 +221,7 @@ export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) =>
             <ConfigItem title={'颜色'}>
                 <CfgItemBorder>
                     <BaseColorPicker value={color}
-                                     disabled={tickLineDisable}
+                                     disabled={!enable}
                                      onChange={value => {
                                          onChange({style: {stroke: value}});
                                          setColor(value);
@@ -225,6 +241,8 @@ export interface AxisGridLineProps {
 
 export const AxisGridLine: React.FC<AxisGridLineProps> = ({config, onChange}) => {
 
+    const initConfig: AxisGridCfg = config || {alignTick: true, style: {stroke: '#fff', lineWidth: 1} as ShapeAttrs};
+
     const [axisTitleDisable, setAxisTitleDisable] = useState(!!config);
     const [alignTick, setAlignTick] = useState(config?.alignTick || false);
     const [color, setColor] = useState((config?.line?.style as ShapeAttrs)?.stroke || '#ffffff');
@@ -241,7 +259,7 @@ export const AxisGridLine: React.FC<AxisGridLineProps> = ({config, onChange}) =>
                                   setAlignTick(true);
                                   setAxisTitleDisable(false);
                               }
-                              onChange(value ? null : config)
+                              onChange(value ? initConfig : null)
                           }}/>
             </ConfigItem>
             <ConfigItem title={'刻度对齐'}>
@@ -280,6 +298,8 @@ export interface AxisLIneProps {
 
 export const AxisLine: React.FC<AxisLIneProps> = ({config, onChange}) => {
 
+    const initConfig: AxisLineCfg = config || {style: {stroke: '#fff', lineWidth: 1} as ShapeAttrs};
+
     const [axisLineDisable, setAxisLineDisable] = useState(!!config);
     const [lineWidth, setLineWidth] = useState(config?.style?.lineWidth || 0);
     const [lineColor, setLineColor] = useState(config?.style?.stroke || '#FFFFFF');
@@ -296,7 +316,7 @@ export const AxisLine: React.FC<AxisLIneProps> = ({config, onChange}) => {
                                   setLineWidth(2);
                                   setLineColor('#FFFFFF');
                               }
-                              onChange(value ? config : null)
+                              onChange(value ? initConfig : null)
                           }}/>
             </ConfigItem>
             <ConfigItem title={'颜色'}>
@@ -331,6 +351,8 @@ export interface AxisTitleProps {
 
 export const AxisTitle: React.FC<AxisTitleProps> = ({config, onChange}) => {
 
+    const initConfig = config || {text: '标题', position: 'center', style: {fill: '#fff'}};
+
     const [axisTitleDisable, setAxisTitleDisable] = useState(!!config);
     const [titlePos, setTitlePos] = useState(config?.position || 'center');
     const [title, setTitle] = useState(config?.text || '');
@@ -349,7 +371,7 @@ export const AxisTitle: React.FC<AxisTitleProps> = ({config, onChange}) => {
                                   setTitle('标题');
                                   setTitleColor('#ffffff');
                               }
-                              onChange(value ? config : null);
+                              onChange(value ? initConfig : null);
                           }}/>
             </ConfigItem>
             <ConfigItem title={'位置'}>
@@ -366,7 +388,8 @@ export const AxisTitle: React.FC<AxisTitleProps> = ({config, onChange}) => {
             </ConfigItem>
             <ConfigItem title={'内容'}>
                 <UnderLineInput value={title} disabled={axisTitleDisable}
-                                onChange={(value: any) => {
+                                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                    const value = e.target.value;
                                     onChange({text: value});
                                     setTitle(value);
                                 }}

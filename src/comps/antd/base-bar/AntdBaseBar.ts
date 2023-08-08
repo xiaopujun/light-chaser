@@ -22,7 +22,6 @@ export interface AntdBarProps {
 
 export default class AntdBaseBar extends AbstractDesignerComponent<Bar, AntdBarProps> {
 
-
     interval: NodeJS.Timer | null = null;
 
     private loadData(): void {
