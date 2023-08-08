@@ -20,6 +20,11 @@ abstract class AbstractComponent<I = any, C = any> {
      * @protected
      */
     protected config: C | null = null;
+    /**
+     * 组件所处容器的dom元素
+     * @protected
+     */
+    protected container: HTMLElement | null = null;
 
     /******************生命周期******************/
 

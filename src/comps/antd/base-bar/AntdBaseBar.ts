@@ -6,6 +6,9 @@ import {DataConfigType, ThemeItemType} from "../../../designer/DesignerType";
 import {sendHttpRequest} from "../../../utils/HttpUtil";
 import AbstractDesignerComponent from "../../../framework/core/AbstractDesignerComponent";
 import {ShapeAttrs} from "@antv/g-base";
+import ComponentUtil from "../../../utils/ComponentUtil";
+import {LoadError} from "../../../lib/lc-loaderr/LoadError";
+import ReactDOM from "react-dom";
 
 export interface ComponentInfoType {
     id: string;
@@ -14,15 +17,24 @@ export interface ComponentInfoType {
     desc: string;
 }
 
-export interface AntdBarProps {
+export interface ComponentBaseProps {
     info?: ComponentInfoType;
-    style?: WritableBarOptions;
+    style?: Record<string, any>;
     data?: DataConfigType;
+}
+
+export interface AntdBarProps extends ComponentBaseProps {
+    style?: WritableBarOptions;
 }
 
 export default class AntdBaseBar extends AbstractDesignerComponent<Bar, AntdBarProps> {
 
     interval: NodeJS.Timer | null = null;
+
+    //上一次数据连接状态 true：成功 false：失败
+    lastReqState: boolean = true;
+    //是否为断开后重新连接
+    reConnect: boolean = false;
 
     private loadData(): void {
         const {data} = this.config!;
@@ -37,9 +49,19 @@ export default class AntdBaseBar extends AbstractDesignerComponent<Bar, AntdBarP
                     sendHttpRequest(url!, method!, params!, header!).then((data: any) => {
                         if (data) {
                             this.update({style: {data}}, {reRender: true, operateType: OperateType.DATA});
+                            if (!this.lastReqState) {
+                                this.lastReqState = true;
+                                //如果上一次连接失败，则本次为断线重连
+                                this.reConnect = true;
+                            } else {
+                                //上一次连接成功，则本次为正常连接
+                                this.reConnect = false;
+                            }
                         } else
-                            //todo 提示错误
                             console.log('error')
+                    }).catch((e) => {
+                        this.lastReqState = false;
+                        this.update({})
                     });
                 }, flashFrequency * 1000);
                 break;
@@ -47,9 +69,13 @@ export default class AntdBaseBar extends AbstractDesignerComponent<Bar, AntdBarP
     }
 
     async create(container: HTMLElement, config: AntdBarProps): Promise<this> {
-        this.config = config;
-        if (!this.instance)
-            this.instance = new Bar(container, config?.style! as BarOptions);
+        if (!this.config)
+            this.config = config;
+        if (!this.container)
+            this.container = container;
+        if (!this.instance) {
+            this.instance = new Bar(container, this.config?.style! as BarOptions);
+        }
         this.loadData();
         this.instance.render();
         return this;
@@ -59,6 +85,7 @@ export default class AntdBaseBar extends AbstractDesignerComponent<Bar, AntdBarP
         this.instance!.destroy();
         this.instance = null;
         this.config = null;
+        this.interval && clearInterval(this.interval);
     }
 
     getConfig(): AntdBarProps | null {
@@ -66,13 +93,25 @@ export default class AntdBaseBar extends AbstractDesignerComponent<Bar, AntdBarP
     }
 
     update(config: AntdBarProps, upOp?: UpdateOptions): void {
-        this.config = merge(this.config, config) as AntdBarProps;
-        upOp = upOp || {reRender: true, operateType: OperateType.OPTIONS};
-        if (upOp.reRender) {
-            if (upOp.operateType === OperateType.DATA)
-                this.instance?.changeData(this.config!.style!.data!);
-            else
-                this.instance?.update(this.config?.style!);
+        if (!this.lastReqState) {
+            //如果上一次（最近一次)请求失败，则展示错误提示信息
+            ComponentUtil.createAndRender(this.container!, LoadError);
+        } else {
+            if (this.reConnect) {
+                //如果为短线重连，则重新挂载组件并渲染，渲染前先清空错误信息提示组件
+                ReactDOM.unmountComponentAtNode(this.container!);
+                this.instance = new Bar(this.container!, this.config?.style! as BarOptions);
+                this.instance.render();
+            } else {
+                this.config = merge(this.config, config) as AntdBarProps;
+                upOp = upOp || {reRender: true, operateType: OperateType.OPTIONS};
+                if (upOp.reRender) {
+                    if (upOp.operateType === OperateType.DATA)
+                        this.instance?.changeData(this.config!.style!.data!);
+                    else
+                        this.instance?.update(this.config?.style!);
+                }
+            }
         }
     }
 
@@ -126,5 +165,4 @@ export default class AntdBaseBar extends AbstractDesignerComponent<Bar, AntdBarP
         //重新渲染
         this.update({style: styleConfig}, {reRender: true, operateType: OperateType.OPTIONS});
     }
-
 }
