@@ -6,6 +6,9 @@ import {MovableItemType} from "../../../lib/lc-movable/types";
 import rightStore from "../../right/RightStore";
 import {SaveType} from "../../DesignerType";
 import designerStarter from "../../DesignerStarter";
+import RenderUtil from "../../../utils/RenderUtil";
+import {message} from "antd";
+import {cloneDeep} from "lodash";
 
 
 export const selectAll = () => {
@@ -98,14 +101,19 @@ export const doDelete = () => {
 }
 
 export const doSave = () => {
-    let {projectConfig: {saveType}} = designerStore;
-    if (saveType === SaveType.LOCAL) {
-        const {abstractOperatorMap} = designerStarter;
-        const {projectConfig: {saveType = SaveType.LOCAL}} = designerStore;
-        abstractOperatorMap[saveType].doCreateOrUpdate(designerStore.getData());
-    } else if (saveType === SaveType.SERVER) {
-        alert("server save");
-    }
+    RenderUtil.throttle(() => {
+        let {projectConfig: {saveType}} = designerStore;
+        if (saveType === SaveType.LOCAL) {
+            const {abstractOperatorMap} = designerStarter;
+            const {projectConfig: {saveType = SaveType.LOCAL}} = designerStore;
+            abstractOperatorMap[saveType].doCreateOrUpdate(cloneDeep(designerStore.getData()));
+        } else if (saveType === SaveType.SERVER) {
+            alert("server save");
+        }
+    }, 5000, () => {
+        message.warn('保存过于频繁，请稍后再试！')
+    })();
+
 }
 
 export const doUnLock = () => {

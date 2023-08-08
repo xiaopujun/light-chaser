@@ -20,7 +20,6 @@ class AntdBaseBarStyleConfig extends Component<ConfigType> {
 
     barCoordinateSysChange = (config: BarOptions) => {
         const instance: AbstractComponent<Bar, AntdBarProps> = this.props.instance;
-        console.log(config)
         instance.update({style: config});
     }
 

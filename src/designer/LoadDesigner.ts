@@ -20,7 +20,7 @@ export const loadDesigner = () => {
 const loadProjectData = () => {
     let urlParams = parseUrlParams();
     const {action} = urlParams;
-    if (action === 'edit')
+    if (['edit', 'view'].includes(action))
         initExistProject();
     else if (action === 'create')
         initNewProject();

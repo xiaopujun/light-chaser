@@ -4,6 +4,7 @@ import {MovableItemType} from "../../lib/lc-movable/types";
 import Loading from "../../lib/loading/Loading";
 import designerStore from "../../designer/store/DesignerStore";
 import {AbstractCustomComponentDefinition} from "./AbstractCustomComponentDefinition";
+import {parseUrlParams} from "../../utils/URLUtil";
 
 export interface ComponentContainerProps {
     layout: MovableItemType;
@@ -13,7 +14,11 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
 
     private ref: HTMLDivElement | null = null;
 
+    private mode: string = 'edit';
+
     componentDidMount(): void {
+        //设置当前所处的模式 创建|编辑|预览
+        this.mode = parseUrlParams()?.action || 'edit';
         //通过ref创建组件，并将组件实例方法Map中。后续通过Map匹配到具体实例，
         //调用实例的对象方法进行组件的更新操作
         const {layout} = this.props;
@@ -28,7 +33,6 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
                     initConfig.info.id = layout.id!;
                     return initConfig;
                 })() as any;
-                console.log(config)
                 new AbsCompImpl()!.create(this.ref!, config).then((instance: any) => {
                     const {compInstances} = designerStore;
                     compInstances[layout.id + ''] = instance;
@@ -58,7 +62,8 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
                     <div ref={(ref) => this.ref = ref} style={{
                         width: '100%',
                         height: '100%',
-                        pointerEvents: 'none',
+                        //todo 要优化
+                        pointerEvents: `${this.mode === 'view' ? 'none' : 'auto'}`,
                         position: 'relative'
                     }}/>
                 </div>
