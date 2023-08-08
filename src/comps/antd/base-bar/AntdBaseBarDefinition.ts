@@ -157,7 +157,10 @@ class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBa
                     position: "bottom",
                     title: null
                 },
-                color: "#00ffea",
+                barStyle: {
+                    fill: 'l(0) 0:#00000000 1:#00d7ff',
+                },
+                // color: '#00d7ff',
                 legend: {
                     position: "right-top",
                     layout: "vertical",

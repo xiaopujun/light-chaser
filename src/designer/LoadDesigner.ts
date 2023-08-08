@@ -1,4 +1,3 @@
-import lcDesignerContentStore from "./store/DesignerStore";
 import designerStore from "./store/DesignerStore";
 import eventOperateStore from "./operate-provider/EventOperateStore";
 import designerStarter from "./DesignerStarter";
@@ -34,7 +33,7 @@ const loadProjectData = () => {
 const initNewProject = () => {
     let urlParams = parseUrlParams();
     const {width, height, name} = urlParams;
-    const {doInit} = lcDesignerContentStore;
+    const {doInit, setLoaded} = designerStore;
     doInit({
         canvasConfig: {
             width: parseInt(width),
@@ -44,6 +43,7 @@ const initNewProject = () => {
             name: name
         },
     })
+    setLoaded(true);
 }
 
 /**
@@ -51,7 +51,7 @@ const initNewProject = () => {
  */
 const initExistProject = () => {
     let urlParams = parseUrlParams();
-    const {doInit, setLoaded} = lcDesignerContentStore;
+    const {doInit, setLoaded} = designerStore;
     const {abstractOperatorMap} = designerStarter;
     const {projectConfig: {saveType = SaveType.LOCAL}} = designerStore;
     abstractOperatorMap[saveType].getProject(urlParams.id).then((store: any) => {

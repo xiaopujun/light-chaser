@@ -14,11 +14,9 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
 
     private ref: HTMLDivElement | null = null;
 
-    private mode: string = 'edit';
+    private mode: string = parseUrlParams()?.action || 'edit';
 
     componentDidMount(): void {
-        //设置当前所处的模式 创建|编辑|预览
-        this.mode = parseUrlParams()?.action || 'edit';
         //通过ref创建组件，并将组件实例方法Map中。后续通过Map匹配到具体实例，
         //调用实例的对象方法进行组件的更新操作
         const {layout} = this.props;

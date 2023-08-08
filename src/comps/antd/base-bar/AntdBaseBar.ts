@@ -9,6 +9,7 @@ import {ShapeAttrs} from "@antv/g-base";
 import ComponentUtil from "../../../utils/ComponentUtil";
 import {LoadError} from "../../../lib/lc-loaderr/LoadError";
 import ReactDOM from "react-dom";
+import {getModeByUrl, Mode} from "../../../utils/URLUtil";
 
 export interface ComponentInfoType {
     id: string;
@@ -39,6 +40,11 @@ export default class AntdBaseBar extends AbstractDesignerComponent<Bar, AntdBarP
     private loadData(): void {
         const {data} = this.config!;
         const {dataSource} = data!;
+        let mode = getModeByUrl();
+        if (mode !== Mode.VIEW) {
+            this.config!.style!.data = this.config?.data?.staticData?.data;
+            return;
+        }
         switch (dataSource) {
             case "static":
                 this.config!.style!.data = this.config?.data?.staticData?.data;
