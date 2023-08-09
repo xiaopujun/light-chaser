@@ -5,7 +5,7 @@ import UnderLineInput from "../../lib/lc-input/UnderLineInput";
 import CfgItemBorder from "../../lib/lc-config-item/CfgItemBorder";
 import BaseColorPicker from "../../lib/lc-color-picker/BaseColorPicker";
 import Accordion from "../../lib/lc-accordion/Accordion";
-import AxisConfig from "../common-fragment/axis/AxisConfig";
+import AxisConfig from "./axis/AxisConfig";
 import Select from "../../lib/lc-select/Select";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 

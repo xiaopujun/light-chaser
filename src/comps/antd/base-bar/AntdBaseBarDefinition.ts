@@ -26,10 +26,10 @@ export type WritableOptions = {
 export type ClazzTemplate<C> = new () => C | null;
 
 const AntdBaseBarStyleConfig = React.lazy(() => import("./AntdBaseBarConfig").then((module) => ({default: module.AntdBaseBarStyleConfig,})));
-const AnimationConfig = React.lazy(() => import("../../common-fragment/animation-config/AnimationConfig"));
-const ThemeConfig = React.lazy(() => import("../../common-fragment/theme-config/ThemeConfig"));
-const BaseInfo = React.lazy(() => import("../../common-fragment/base-info/BaseInfo"));
-const DataConfig = React.lazy(() => import("../../common-fragment/data-config/DataConfig"));
+const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
+const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig"));
+const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
+const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
 
 class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBar, AntdBaseBarMenuMapping, AntdBarProps> {

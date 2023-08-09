@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import Dialog from "../../../../lib/lc-dialog/Dialog";
 import './ThemeHdItem.less';
 import headerStore from "../../HeaderStore";
-import ThemeList from "../../../../comps/common-fragment/theme-config/theme-list/ThemeList";
+import ThemeList from "../../../../comps/common-component/theme-config/theme-list/ThemeList";
 import LcButton from "../../../../lib/lc-button/LcButton";
 import {ThemeItemType} from "../../../DesignerType";
 import designerStore from "../../../store/DesignerStore";
-import ThemeEditor from "../../../../comps/common-fragment/theme-config/theme-editor/ThemeEditor";
+import ThemeEditor from "../../../../comps/common-component/theme-config/theme-editor/ThemeEditor";
 
 class ThemeHdItemImpl extends Component {
 

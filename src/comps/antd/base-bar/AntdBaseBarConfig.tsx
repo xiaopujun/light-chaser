@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ConfigType} from "../../../designer/right/ConfigType";
-import {AntdBarGraphics, AntdCartesianCoordinateSys, AntdLegend} from "../../common-fragment/AntdFragment";
+import {AntdBarGraphics, AntdCartesianCoordinateSys, AntdLegend} from "../../antd-common/AntdFragment";
 import {Bar, BarOptions} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import AbstractComponent from "../../../framework/core/AbstractComponent";

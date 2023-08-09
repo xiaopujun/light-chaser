@@ -2,8 +2,8 @@ import {BaseInfoType, ElemConfig, ThemeItemType} from "../../../designer/Designe
 import {MenuInfo} from "../../../designer/right/MenuType";
 import LcColorBlock from "./LcColorBlock";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import BaseInfo from "../../common-fragment/base-info/BaseInfo";
-import AnimationConfig from "../../common-fragment/animation-config/AnimationConfig";
+import BaseInfo from "../../common-component/base-info/BaseInfo";
+import AnimationConfig from "../../common-component/animation-config/AnimationConfig";
 import {LcColorBlockConfig} from "./LcColorBlockConfig";
 import ColorBlockImg from './color-block.png';
 
