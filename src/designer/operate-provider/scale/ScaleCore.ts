@@ -8,10 +8,10 @@ class ScaleCore {
     ratio: number = 1;
 
     compute = (type: number) => {
-        let _ratio = 1.1;
+        let _ratio = 1.3;
         // 缩小
         if (type === 0)
-            _ratio = 1 / 1.1;
+            _ratio = 1 / 1.3;
         // 限制缩放倍数
         let _scale = this.scale * _ratio;
         if (_scale > this.max) {

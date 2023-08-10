@@ -6,7 +6,7 @@ import {KMMap} from "../keyboard-mouse/KeyboardMouse";
 import CanvasDragger from "../drag/CanvasDragger";
 
 export const scaleConfig = {
-    content: {},
+    content: null,
     offsetX: 0,
     offsetY: 0,
 }

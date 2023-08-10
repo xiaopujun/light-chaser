@@ -1,18 +1,18 @@
 import React from "react";
-import ConfigCard from "../../lib/lc-config-card/ConfigCard";
-import ConfigItem from "../../lib/lc-config-item/ConfigItem";
-import UnderLineInput from "../../lib/lc-input/UnderLineInput";
-import CfgItemBorder from "../../lib/lc-config-item/CfgItemBorder";
-import BaseColorPicker from "../../lib/lc-color-picker/BaseColorPicker";
-import Accordion from "../../lib/lc-accordion/Accordion";
+import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
+import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
+import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
+import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
+import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
+import Accordion from "../../../lib/lc-accordion/Accordion";
 import AxisConfig from "./axis/AxisConfig";
-import Select from "../../lib/lc-select/Select";
+import Select from "../../../lib/lc-select/Select";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 
 import {ShapeAttrs} from "@antv/g-base";
 import {Types} from "@antv/g2";
 import {Axis} from "@antv/g2plot";
-import {WritableBarOptions, WritableOptions} from "./types";
+import {WritableBarOptions, WritableOptions} from "../types";
 
 export interface AntdLegendProps {
     config?: Legend;

@@ -6,7 +6,7 @@ import {Legend} from "@antv/g2plot/lib/types/legend";
 import AbstractComponent from "../../../framework/core/AbstractComponent";
 import {AntdBarProps} from "../../antd-common/bar/AntdCommonBar";
 
-class AntdStackBarStyleConfig extends Component<ConfigType> {
+class AntdGroupBarStyleConfig extends Component<ConfigType> {
 
     legendChange = (legend: Legend) => {
         const instance: AbstractComponent<Bar, AntdBarProps> = this.props.instance;
@@ -36,4 +36,4 @@ class AntdStackBarStyleConfig extends Component<ConfigType> {
     }
 }
 
-export {AntdStackBarStyleConfig};
+export {AntdGroupBarStyleConfig};

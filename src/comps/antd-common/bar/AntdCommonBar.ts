@@ -1,14 +1,14 @@
-import {ComponentBaseProps} from "../common-component/common-types";
-import {WritableBarOptions} from "./types";
-import AbstractDesignerComponent from "../../framework/core/AbstractDesignerComponent";
+import {ComponentBaseProps} from "../../common-component/common-types";
+import {WritableBarOptions} from "../types";
+import AbstractDesignerComponent from "../../../framework/core/AbstractDesignerComponent";
 import {Bar, BarOptions} from "@antv/g2plot";
-import {getModeByUrl, Mode} from "../../utils/URLUtil";
-import {sendHttpRequest} from "../../utils/HttpUtil";
-import ComponentUtil from "../../utils/ComponentUtil";
-import {ThemeItemType} from "../../designer/DesignerType";
-import {OperateType, UpdateOptions} from "../../framework/core/AbstractComponent";
-import {LoadError} from "../../lib/lc-loaderr/LoadError";
-import {merge} from "../../utils/ObjectUtil";
+import {getModeByUrl, Mode} from "../../../utils/URLUtil";
+import {sendHttpRequest} from "../../../utils/HttpUtil";
+import ComponentUtil from "../../../utils/ComponentUtil";
+import {ThemeItemType} from "../../../designer/DesignerType";
+import {OperateType, UpdateOptions} from "../../../framework/core/AbstractComponent";
+import {LoadError} from "../../../lib/lc-loaderr/LoadError";
+import {merge} from "../../../utils/ObjectUtil";
 import {ShapeAttrs} from "@antv/g-base";
 import ReactDOM from "react-dom";
 
@@ -53,7 +53,7 @@ export default class AntdCommonBar extends AbstractDesignerComponent<Bar, AntdBa
                             }
                         } else
                             console.log('error')
-                    }).catch((e) => {
+                    }).catch(() => {
                         this.lastReqState = false;
                         this.update({})
                     });

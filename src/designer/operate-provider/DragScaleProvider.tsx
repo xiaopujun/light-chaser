@@ -11,7 +11,7 @@ class DragScaleProvider extends Component {
 
     componentDidMount() {
         //配置缩放
-        this.content.style.transform = 'translate3d(' + CanvasDragger.position.x + 'px, ' + CanvasDragger.position.y + 'px, 0) scale(1)';
+        this.content!.style.transform = 'translate3d(' + CanvasDragger.position.x + 'px, ' + CanvasDragger.position.y + 'px, 0) scale(1)';
         scaleConfig.content = this.content;
         scaleConfig.offsetX = 80;
         scaleConfig.offsetY = 70;

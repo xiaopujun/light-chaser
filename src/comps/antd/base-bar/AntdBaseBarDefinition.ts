@@ -1,30 +1,9 @@
-import React from "react";
-import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
 import {BaseInfoType} from "../../../designer/DesignerType";
-import {MenuInfo} from "../../../designer/right/MenuType";
 import baseBarImg from "./base-bar.png";
-import {getDefaultMenuList} from "../../../designer/right/util";
-import AntdBaseBar from "./AntdBaseBar";
-import {ConfigType} from "../../../designer/right/ConfigType";
-import {ClazzTemplate} from "../../common-component/common-types";
-import {AntdBarProps} from "../../antd-common/AntdCommonBar";
+import {AntdBarProps} from "../../antd-common/bar/AntdCommonBar";
+import AbstractBarDefinition from "../../antd-common/bar/AbstractBarDefinition";
 
-export interface AntdBaseBarMenuMapping {
-    info: React.ComponentType<ConfigType>;
-    style: React.ComponentType<ConfigType>;
-    data: React.ComponentType<ConfigType>;
-    animation: React.ComponentType<ConfigType>;
-    theme: React.ComponentType<ConfigType>;
-}
-
-const AntdBaseBarStyleConfig = React.lazy(() => import("./AntdBaseBarConfig").then((module) => ({default: module.AntdBaseBarStyleConfig,})));
-const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
-const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig"));
-const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
-const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
-
-
-class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBar, AntdBaseBarMenuMapping, AntdBarProps> {
+class AntdBaseBarDefinition extends AbstractBarDefinition {
 
     getBaseInfo(): BaseInfoType {
         return {
@@ -38,24 +17,6 @@ class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBa
 
     getChartImg(): string {
         return baseBarImg;
-    }
-
-    getComponent(): ClazzTemplate<AntdBaseBar> | null {
-        return AntdBaseBar;
-    }
-
-    getMenuList(): Array<MenuInfo> {
-        return getDefaultMenuList();
-    }
-
-    getMenuToConfigContentMap(): AntdBaseBarMenuMapping | null {
-        return {
-            info: BaseInfo,
-            style: AntdBaseBarStyleConfig,
-            data: DataConfig,
-            animation: AnimationConfig,
-            theme: ThemeConfig
-        };
     }
 
     getInitConfig(): AntdBarProps {
@@ -120,10 +81,7 @@ class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBa
                     position: "bottom",
                     title: null
                 },
-                barStyle: {
-                    fill: 'l(0) 0:#00000000 1:#00d7ff',
-                },
-                // color: '#00d7ff',
+                color: '#00d7ff',
                 legend: {
                     position: "right-top",
                     layout: "vertical",

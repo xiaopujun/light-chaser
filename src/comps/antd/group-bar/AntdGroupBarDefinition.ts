@@ -1,68 +1,69 @@
 import {BaseInfoType} from "../../../designer/DesignerType";
-import stackBarImg from "./stack-bar.png";
+import groupBarImg from "./group-bar.png";
 import {AntdBarProps} from "../../antd-common/bar/AntdCommonBar";
 import AbstractBarDefinition from "../../antd-common/bar/AbstractBarDefinition";
 
-class AntdStackBarDefinition extends AbstractBarDefinition {
+class AntdGroupBarDefinition extends AbstractBarDefinition {
 
     getBaseInfo(): BaseInfoType {
         return {
-            compName: "Antd堆叠条形图",
-            compKey: "AntdStackBar",
+            compName: "Antd分组条形图",
+            compKey: "AntdGroupBar",
             type: "条形图",
             typeKey: "bar",
-            desc: "基于Antd Designer实现的堆叠条形图组件",
+            desc: "基于Antd Designer实现的分组条形图组件",
         };
     }
 
     getChartImg(): string {
-        return stackBarImg;
+        return groupBarImg;
     }
 
     getInitConfig(): AntdBarProps {
         const data = [
             {
-                year: '1991',
-                value: 3,
-                type: 'Lon',
+                label: 'Mon.',
+                type: 'series1',
+                value: 2800,
             },
             {
-                year: '1992',
-                value: 4,
-                type: 'Lon',
+                label: 'Mon.',
+                type: 'series2',
+                value: 2260,
             },
             {
-                year: '1993',
-                value: 3.5,
-                type: 'Lon',
+                label: 'Tues.',
+                type: 'series1',
+                value: 1800,
             },
             {
-                year: '1991',
-                value: 3,
-                type: 'Bor',
+                label: 'Tues.',
+                type: 'series2',
+                value: 1300,
             },
             {
-                year: '1992',
-                value: 4,
-                type: 'Bor',
+                label: 'Wed.',
+                type: 'series1',
+                value: 950,
             },
             {
-                year: '1993',
-                value: 3.5,
-                type: 'Bor',
-            },
+                label: 'Wed.',
+                type: 'series2',
+                value: 900,
+            }
         ];
         return {
             info: {
                 id: "",
-                name: 'Antd堆叠条形图',
-                type: 'AntdStackBar',
-                desc: '基于Antd Designer实现的堆叠条形图组件',
+                name: "Antd分组条形图",
+                type: "AntdGroupBar",
+                desc: '基于Antd Designer实现的分组条形图组件',
             },
             style: {
                 data: data,
+                isGroup: true,
                 xField: 'value',
-                yField: 'year',
+                yField: 'label',
                 seriesField: 'type',
                 isStack: true,
                 xAxis: {
@@ -101,7 +102,6 @@ class AntdStackBarDefinition extends AbstractBarDefinition {
                     position: "bottom",
                     title: null
                 },
-                // color: ['#00d7ff', '#0080b6'],
                 legend: {
                     position: "right-top",
                     layout: "vertical",
@@ -125,4 +125,4 @@ class AntdStackBarDefinition extends AbstractBarDefinition {
     }
 }
 
-export default AntdStackBarDefinition;
+export default AntdGroupBarDefinition;

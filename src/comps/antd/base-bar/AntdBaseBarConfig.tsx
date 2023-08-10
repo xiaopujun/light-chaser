@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {ConfigType} from "../../../designer/right/ConfigType";
-import {AntdBarGraphics, AntdCartesianCoordinateSys, AntdLegend} from "../../antd-common/AntdFragment";
+import {AntdBarGraphics, AntdCartesianCoordinateSys, AntdLegend} from "../../antd-common/config/AntdFragment";
 import {Bar, BarOptions} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import AbstractComponent from "../../../framework/core/AbstractComponent";
-import {AntdBarProps} from "../../antd-common/AntdCommonBar";
+import {AntdBarProps} from "../../antd-common/bar/AntdCommonBar";
 
 class AntdBaseBarStyleConfig extends Component<ConfigType> {
 

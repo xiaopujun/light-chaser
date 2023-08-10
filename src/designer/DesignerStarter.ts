@@ -44,10 +44,13 @@ class DesignerStarter {
         compCtx.keys().forEach(key => {
             const Clazz = compCtx(key).default;
             if (Clazz && AbstractCustomComponentDefinition.isPrototypeOf(Clazz)) {
+                console.log(Clazz.constructor.name);
                 let customComponentInfo: AbstractCustomComponentDefinition = new Clazz();
-                let compKey = customComponentInfo.getBaseInfo().compKey;
-                if (compKey)
-                    this.customComponentInfoMap[compKey] = customComponentInfo;
+                if (typeof customComponentInfo.getBaseInfo === "function") {
+                    let compKey = customComponentInfo.getBaseInfo().compKey;
+                    if (compKey)
+                        this.customComponentInfoMap[compKey] = customComponentInfo;
+                }
             }
         });
     }
