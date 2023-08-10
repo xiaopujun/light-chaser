@@ -1,70 +1,42 @@
 import {BaseInfoType} from "../../../designer/DesignerType";
-import groupBarImg from "./group-bar.png";
+import rangeBarImg from "./range-bar.png";
 import {AntdBarProps} from "../../antd-common/bar/AntdCommonBar";
 import AbstractBarDefinition from "../../antd-common/bar/AbstractBarDefinition";
 
-class AntdGroupBarDefinition extends AbstractBarDefinition {
+class AntdRangeBarDefinition extends AbstractBarDefinition {
 
     getBaseInfo(): BaseInfoType {
         return {
-            compName: "Antd分组条形图",
-            compKey: "AntdGroupBar",
+            compName: "Antd区间条形图",
+            compKey: "AntdRangeBar",
             type: "条形图",
             typeKey: "bar",
-            desc: "基于Antd Designer实现的分组条形图组件",
+            desc: "基于Antd Designer实现的区间条形图组件",
         };
     }
 
     getChartImg(): string {
-        return groupBarImg;
+        return rangeBarImg;
     }
 
     getInitConfig(): AntdBarProps {
         const data = [
-            {
-                label: 'Mon.',
-                type: 'series1',
-                value: 2800,
-            },
-            {
-                label: 'Mon.',
-                type: 'series2',
-                value: 2260,
-            },
-            {
-                label: 'Tues.',
-                type: 'series1',
-                value: 1800,
-            },
-            {
-                label: 'Tues.',
-                type: 'series2',
-                value: 1300,
-            },
-            {
-                label: 'Wed.',
-                type: 'series1',
-                value: 950,
-            },
-            {
-                label: 'Wed.',
-                type: 'series2',
-                value: 900,
-            }
+            {type: '分类一', values: [76, 100]},
+            {type: '分类二', values: [56, 108]},
+            {type: '分类三', values: [38, 129]},
         ];
         return {
             info: {
                 id: "",
-                name: "Antd分组条形图",
-                type: "AntdGroupBar",
-                desc: '基于Antd Designer实现的分组条形图组件',
+                name: 'Antd区间条形图',
+                type: 'AntdRangeBar',
+                desc: '基于Antd Designer实现的区间条形图组件',
             },
             style: {
                 data: data,
-                isGroup: true,
-                xField: 'value',
-                yField: 'label',
-                seriesField: 'type',
+                xField: 'values',
+                yField: 'type',
+                isRange: true,
                 xAxis: {
                     grid: null,
                     label: {
@@ -101,6 +73,7 @@ class AntdGroupBarDefinition extends AbstractBarDefinition {
                     position: "bottom",
                     title: null
                 },
+                color: '#00d7ff',
                 legend: {
                     position: "right-top",
                     layout: "vertical",
@@ -124,4 +97,4 @@ class AntdGroupBarDefinition extends AbstractBarDefinition {
     }
 }
 
-export default AntdGroupBarDefinition;
+export default AntdRangeBarDefinition;

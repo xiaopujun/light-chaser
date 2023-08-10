@@ -1,70 +1,86 @@
 import {BaseInfoType} from "../../../designer/DesignerType";
-import groupBarImg from "./group-bar.png";
+import percentBarImg from "./percent-bar.png";
 import {AntdBarProps} from "../../antd-common/bar/AntdCommonBar";
 import AbstractBarDefinition from "../../antd-common/bar/AbstractBarDefinition";
 
-class AntdGroupBarDefinition extends AbstractBarDefinition {
+class AntdPercentBarDefinition extends AbstractBarDefinition {
 
     getBaseInfo(): BaseInfoType {
         return {
-            compName: "Antd分组条形图",
-            compKey: "AntdGroupBar",
+            compName: "Antd百分比条形图",
+            compKey: "AntdPercentBar",
             type: "条形图",
             typeKey: "bar",
-            desc: "基于Antd Designer实现的分组条形图组件",
+            desc: "基于Antd Designer实现的百分比条形图组件",
         };
     }
 
     getChartImg(): string {
-        return groupBarImg;
+        return percentBarImg;
     }
 
     getInitConfig(): AntdBarProps {
         const data = [
             {
-                label: 'Mon.',
-                type: 'series1',
-                value: 2800,
+                country: 'Asia',
+                year: '1750',
+                value: 502,
             },
             {
-                label: 'Mon.',
-                type: 'series2',
-                value: 2260,
+                country: 'Asia',
+                year: '1800',
+                value: 635,
             },
             {
-                label: 'Tues.',
-                type: 'series1',
-                value: 1800,
+                country: 'Asia',
+                year: '1850',
+                value: 809,
             },
             {
-                label: 'Tues.',
-                type: 'series2',
-                value: 1300,
+                country: 'Africa',
+                year: '1750',
+                value: 106,
             },
             {
-                label: 'Wed.',
-                type: 'series1',
-                value: 950,
+                country: 'Africa',
+                year: '1800',
+                value: 107,
             },
             {
-                label: 'Wed.',
-                type: 'series2',
-                value: 900,
+                country: 'Africa',
+                year: '1850',
+                value: 111,
+            },
+            {
+                country: 'Europe',
+                year: '1750',
+                value: 163,
+            },
+            {
+                country: 'Europe',
+                year: '1800',
+                value: 203,
+            },
+            {
+                country: 'Europe',
+                year: '1850',
+                value: 276,
             }
         ];
         return {
             info: {
                 id: "",
-                name: "Antd分组条形图",
-                type: "AntdGroupBar",
-                desc: '基于Antd Designer实现的分组条形图组件',
+                name: 'Antd百分比条形图',
+                type: 'AntdPercentBar',
+                desc: '基于Antd Designer实现的百分比条形图组件',
             },
             style: {
                 data: data,
-                isGroup: true,
                 xField: 'value',
-                yField: 'label',
-                seriesField: 'type',
+                yField: 'year',
+                seriesField: 'country',
+                isPercent: true,
+                isStack: true,
                 xAxis: {
                     grid: null,
                     label: {
@@ -101,6 +117,7 @@ class AntdGroupBarDefinition extends AbstractBarDefinition {
                     position: "bottom",
                     title: null
                 },
+                // color: ['#00d7ff', '#0080b6'],
                 legend: {
                     position: "right-top",
                     layout: "vertical",
@@ -124,4 +141,4 @@ class AntdGroupBarDefinition extends AbstractBarDefinition {
     }
 }
 
-export default AntdGroupBarDefinition;
+export default AntdPercentBarDefinition;
