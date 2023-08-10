@@ -12,11 +12,11 @@ import {getModeByUrl, Mode} from "../../../utils/URLUtil";
 import {WritableBarOptions} from "../../antd-common/types";
 import {ComponentBaseProps} from "../../common-component/common-types";
 
-export interface AntdBaseBarProps extends ComponentBaseProps {
+export interface AntdStackBarProps extends ComponentBaseProps {
     style?: WritableBarOptions;
 }
 
-export default class AntdBaseBar extends AbstractDesignerComponent<Bar, AntdBaseBarProps> {
+export default class AntdStackBar extends AbstractDesignerComponent<Bar, AntdStackBarProps> {
 
     interval: NodeJS.Timer | null = null;
 
@@ -53,7 +53,7 @@ export default class AntdBaseBar extends AbstractDesignerComponent<Bar, AntdBase
                             }
                         } else
                             console.log('error')
-                    }).catch((e) => {
+                    }).catch(() => {
                         this.lastReqState = false;
                         this.update({})
                     });
@@ -62,7 +62,7 @@ export default class AntdBaseBar extends AbstractDesignerComponent<Bar, AntdBase
         }
     }
 
-    async create(container: HTMLElement, config: AntdBaseBarProps): Promise<this> {
+    async create(container: HTMLElement, config: AntdStackBarProps): Promise<this> {
         if (!this.config)
             this.config = config;
         if (!this.container)
@@ -82,11 +82,11 @@ export default class AntdBaseBar extends AbstractDesignerComponent<Bar, AntdBase
         this.interval && clearInterval(this.interval);
     }
 
-    getConfig(): AntdBaseBarProps | null {
+    getConfig(): AntdStackBarProps | null {
         return this.config;
     }
 
-    update(config: AntdBaseBarProps, upOp?: UpdateOptions): void {
+    update(config: AntdStackBarProps, upOp?: UpdateOptions): void {
         if (!this.lastReqState) {
             //如果上一次（最近一次)请求失败，则展示错误提示信息
             ComponentUtil.createAndRender(this.container!, LoadError);
@@ -97,7 +97,7 @@ export default class AntdBaseBar extends AbstractDesignerComponent<Bar, AntdBase
                 this.instance = new Bar(this.container!, this.config?.style! as BarOptions);
                 this.instance.render();
             } else {
-                this.config = merge(this.config, config) as AntdBaseBarProps;
+                this.config = merge(this.config, config) as AntdStackBarProps;
                 upOp = upOp || {reRender: true, operateType: OperateType.OPTIONS};
                 if (upOp.reRender) {
                     if (upOp.operateType === OperateType.DATA)

@@ -2,7 +2,7 @@ import {MenuInfo} from "../../designer/right/MenuType";
 import {BaseInfoType} from "../../designer/DesignerType";
 import AbstractComponent from "./AbstractComponent";
 import React from "react";
-import {ClazzTemplate} from "../../comps/antd/base-bar/AntdBaseBarDefinition";
+import {ClazzTemplate} from "../../comps/common-component/common-types";
 
 /**
  * 自动扫描抽象组件定义核心类。

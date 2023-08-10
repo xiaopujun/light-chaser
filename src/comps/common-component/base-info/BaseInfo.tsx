@@ -4,9 +4,9 @@ import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import {ConfigType} from "../../../designer/right/ConfigType";
-import {AntdBarProps} from "../../antd/base-bar/AntdBaseBar";
 import designerStore from "../../../designer/store/DesignerStore";
 import layerListStore from "../../../designer/float-configs/layer-list/LayerListStore";
+import {ComponentBaseProps} from "../common-types";
 
 /**
  * lc组件基础信息
@@ -34,7 +34,7 @@ class BaseInfo extends Component<ConfigType> {
 
     render() {
         const {instance} = this.props;
-        const {type, name, desc} = (instance.getConfig() as AntdBarProps).info!;
+        const {type, name, desc} = (instance.getConfig() as ComponentBaseProps).info!;
         return (
             <div className={'lc-base-info'}>
                 <ConfigCard title={'基础信息'}>

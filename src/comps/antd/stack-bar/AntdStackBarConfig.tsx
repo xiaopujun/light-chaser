@@ -4,22 +4,22 @@ import {AntdBarGraphics, AntdCartesianCoordinateSys, AntdLegend} from "../../ant
 import {Bar, BarOptions} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import AbstractComponent from "../../../framework/core/AbstractComponent";
-import {AntdBaseBarProps} from "./AntdBaseBar";
+import {AntdStackBarProps} from "./AntdStackBar";
 
-class AntdBaseBarStyleConfig extends Component<ConfigType> {
+class AntdStackBarStyleConfig extends Component<ConfigType> {
 
     legendChange = (legend: Legend) => {
-        const instance: AbstractComponent<Bar, AntdBaseBarProps> = this.props.instance;
+        const instance: AbstractComponent<Bar, AntdStackBarProps> = this.props.instance;
         instance.update({style: {legend}});
     }
 
     barGraphicsChange = (config: BarOptions) => {
-        const instance: AbstractComponent<Bar, AntdBaseBarProps> = this.props.instance;
+        const instance: AbstractComponent<Bar, AntdStackBarProps> = this.props.instance;
         instance.update({style: config});
     }
 
     barCoordinateSysChange = (config: BarOptions) => {
-        const instance: AbstractComponent<Bar, AntdBaseBarProps> = this.props.instance;
+        const instance: AbstractComponent<Bar, AntdStackBarProps> = this.props.instance;
         instance.update({style: config});
     }
 
@@ -36,4 +36,4 @@ class AntdBaseBarStyleConfig extends Component<ConfigType> {
     }
 }
 
-export {AntdBaseBarStyleConfig};
+export {AntdStackBarStyleConfig};

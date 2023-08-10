@@ -2,10 +2,10 @@ import React from "react";
 import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
 import {BaseInfoType} from "../../../designer/DesignerType";
 import {MenuInfo} from "../../../designer/right/MenuType";
-import baseBarImg from "./base-bar.png";
+import stackBarImg from "./stack-bar.png";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import AntdBaseBar, {AntdBaseBarProps} from "./AntdBaseBar";
 import {ConfigType} from "../../../designer/right/ConfigType";
+import AntdStackBar, {AntdStackBarProps} from "./AntdStackBar";
 import {ClazzTemplate} from "../../common-component/common-types";
 
 export interface AntdBaseBarMenuMapping {
@@ -16,31 +16,32 @@ export interface AntdBaseBarMenuMapping {
     theme: React.ComponentType<ConfigType>;
 }
 
-const AntdBaseBarStyleConfig = React.lazy(() => import("./AntdBaseBarConfig").then((module) => ({default: module.AntdBaseBarStyleConfig,})));
+
+const AntdStackBarStyleConfig = React.lazy(() => import("./AntdStackBarConfig").then((module) => ({default: module.AntdStackBarStyleConfig,})));
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig"));
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
 
-class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBar, AntdBaseBarMenuMapping, AntdBaseBarProps> {
+class AntdStackBarDefinition extends AbstractCustomComponentDefinition<AntdStackBar, AntdBaseBarMenuMapping, AntdStackBarProps> {
 
     getBaseInfo(): BaseInfoType {
         return {
-            compName: "Antd基础条形图",
-            compKey: "AntdBaseBar",
+            compName: "Antd堆叠条形图",
+            compKey: "AntdStackBar",
             type: "条形图",
             typeKey: "bar",
-            desc: "基于Antd Designer实现的基础条形图组件",
+            desc: "基于Antd Designer实现的堆叠条形图组件",
         };
     }
 
     getChartImg(): string {
-        return baseBarImg;
+        return stackBarImg;
     }
 
-    getComponent(): ClazzTemplate<AntdBaseBar> | null {
-        return AntdBaseBar;
+    getComponent(): ClazzTemplate<AntdStackBar> | null {
+        return AntdStackBar;
     }
 
     getMenuList(): Array<MenuInfo> {
@@ -50,39 +51,59 @@ class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBa
     getMenuToConfigContentMap(): AntdBaseBarMenuMapping | null {
         return {
             info: BaseInfo,
-            style: AntdBaseBarStyleConfig,
+            style: AntdStackBarStyleConfig,
             data: DataConfig,
             animation: AnimationConfig,
             theme: ThemeConfig
         };
     }
 
-    getInitConfig(): AntdBaseBarProps {
+    getInitConfig(): AntdStackBarProps {
         const data = [
             {
-                name: "1951 年",
-                value: 48
+                year: '1991',
+                value: 3,
+                type: 'Lon',
             },
             {
-                name: "1952 年",
-                value: 52
+                year: '1992',
+                value: 4,
+                type: 'Lon',
             },
             {
-                name: "1956 年",
-                value: 22
-            }
-        ]
+                year: '1993',
+                value: 3.5,
+                type: 'Lon',
+            },
+            {
+                year: '1991',
+                value: 3,
+                type: 'Bor',
+            },
+            {
+                year: '1992',
+                value: 4,
+                type: 'Bor',
+            },
+            {
+                year: '1993',
+                value: 3.5,
+                type: 'Bor',
+            },
+        ];
         return {
             info: {
                 id: "",
-                name: '基础条形图',
-                type: 'AntdBaseBar',
-                desc: '基于antd实现的基础条形图',
+                name: 'Antd堆叠条形图',
+                type: 'AntdStackBar',
+                desc: '基于Antd Designer实现的堆叠条形图组件',
             },
             style: {
                 data: data,
-                xField: "value",
-                yField: "name",
+                xField: 'value',
+                yField: 'year',
+                seriesField: 'type',
+                isStack: true,
                 xAxis: {
                     grid: null,
                     label: {
@@ -119,10 +140,7 @@ class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBa
                     position: "bottom",
                     title: null
                 },
-                barStyle: {
-                    fill: 'l(0) 0:#00000000 1:#00d7ff',
-                },
-                // color: '#00d7ff',
+                // color: ['#00d7ff', '#0080b6'],
                 legend: {
                     position: "right-top",
                     layout: "vertical",
@@ -146,4 +164,4 @@ class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBa
     }
 }
 
-export default AntdBaseBarDefinition;
+export default AntdStackBarDefinition;

@@ -10,9 +10,9 @@ import Select from "../../lib/lc-select/Select";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 
 import {ShapeAttrs} from "@antv/g-base";
-import {WritableBarOptions, WritableOptions} from "../antd/base-bar/AntdBaseBarDefinition";
 import {Types} from "@antv/g2";
 import {Axis} from "@antv/g2plot";
+import {WritableBarOptions, WritableOptions} from "./types";
 
 export interface AntdLegendProps {
     config?: Legend;
