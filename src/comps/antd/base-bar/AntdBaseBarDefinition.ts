@@ -4,9 +4,10 @@ import {BaseInfoType} from "../../../designer/DesignerType";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import baseBarImg from "./base-bar.png";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import AntdBaseBar, {AntdBaseBarProps} from "./AntdBaseBar";
+import AntdBaseBar from "./AntdBaseBar";
 import {ConfigType} from "../../../designer/right/ConfigType";
 import {ClazzTemplate} from "../../common-component/common-types";
+import {AntdBarProps} from "../../antd-common/AntdCommonBar";
 
 export interface AntdBaseBarMenuMapping {
     info: React.ComponentType<ConfigType>;
@@ -23,7 +24,7 @@ const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseI
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
 
-class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBar, AntdBaseBarMenuMapping, AntdBaseBarProps> {
+class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBar, AntdBaseBarMenuMapping, AntdBarProps> {
 
     getBaseInfo(): BaseInfoType {
         return {
@@ -57,7 +58,7 @@ class AntdBaseBarDefinition extends AbstractCustomComponentDefinition<AntdBaseBa
         };
     }
 
-    getInitConfig(): AntdBaseBarProps {
+    getInitConfig(): AntdBarProps {
         const data = [
             {
                 name: "1951 年",

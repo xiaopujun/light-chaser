@@ -86,8 +86,8 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
     const [enable, setEnable] = useState(!!config);
     const [subTickLineCount, setSubTickLineCount] = useState(config?.count || 0);
     const [subTickLineLength, setSubTickLineLength] = useState(config?.length || 0);
-    const [subTickLineWidth, setSubTickLineWidth] = useState((config?.style as ShapeAttrs).lineWidth || 0);
-    const [subTickLineColor, setSubTickLineColor] = useState((config?.style as ShapeAttrs).stroke || '#ffffff');
+    const [subTickLineWidth, setSubTickLineWidth] = useState((config?.style as ShapeAttrs)?.lineWidth || 0);
+    const [subTickLineColor, setSubTickLineColor] = useState((config?.style as ShapeAttrs)?.stroke || '#ffffff');
     return (
         <ConfigCard title={'子刻度'}>
             <ConfigItem title={'开启'}>

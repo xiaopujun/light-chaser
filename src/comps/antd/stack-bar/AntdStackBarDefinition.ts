@@ -5,8 +5,9 @@ import {MenuInfo} from "../../../designer/right/MenuType";
 import stackBarImg from "./stack-bar.png";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {ConfigType} from "../../../designer/right/ConfigType";
-import AntdStackBar, {AntdStackBarProps} from "./AntdStackBar";
+import AntdStackBar from "./AntdStackBar";
 import {ClazzTemplate} from "../../common-component/common-types";
+import {AntdBarProps} from "../../antd-common/AntdCommonBar";
 
 export interface AntdBaseBarMenuMapping {
     info: React.ComponentType<ConfigType>;
@@ -24,7 +25,7 @@ const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseI
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
 
-class AntdStackBarDefinition extends AbstractCustomComponentDefinition<AntdStackBar, AntdBaseBarMenuMapping, AntdStackBarProps> {
+class AntdStackBarDefinition extends AbstractCustomComponentDefinition<AntdStackBar, AntdBaseBarMenuMapping, AntdBarProps> {
 
     getBaseInfo(): BaseInfoType {
         return {
@@ -58,7 +59,7 @@ class AntdStackBarDefinition extends AbstractCustomComponentDefinition<AntdStack
         };
     }
 
-    getInitConfig(): AntdStackBarProps {
+    getInitConfig(): AntdBarProps {
         const data = [
             {
                 year: '1991',

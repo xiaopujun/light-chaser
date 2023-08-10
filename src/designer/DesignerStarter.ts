@@ -1,7 +1,6 @@
 import {AbstractCustomComponentDefinition} from "../framework/core/AbstractCustomComponentDefinition";
 import {AbstractHeaderItem, HeaderItemProps} from "./header/HeaderTypes";
 import {AbstractOperator} from "../framework/operate/AbstractOperator";
-import {ThemeItemType} from "./DesignerType";
 
 /**
  * 设计器启动器，通过该启动器自动化扫描加载组件
@@ -11,8 +10,6 @@ class DesignerStarter {
     customComponentInfoMap: Record<string, AbstractCustomComponentDefinition> = {};
     //头部操作菜单实例
     headerItemInstances: HeaderItemProps[] = [];
-    //自定义组件主题刷新器
-    themeRefresher: { [key: string]: (newTheme: ThemeItemType, oldStyle: {}) => void } = {};
     //项目数据操作映射
     abstractOperatorMap: { [key: string]: AbstractOperator } = {};
 
@@ -49,10 +46,8 @@ class DesignerStarter {
             if (Clazz && AbstractCustomComponentDefinition.isPrototypeOf(Clazz)) {
                 let customComponentInfo: AbstractCustomComponentDefinition = new Clazz();
                 let compKey = customComponentInfo.getBaseInfo().compKey;
-                if (compKey) {
+                if (compKey)
                     this.customComponentInfoMap[compKey] = customComponentInfo;
-                    // this.themeRefresher[compKey] = customComponentInfo.updateTheme;
-                }
             }
         });
     }
