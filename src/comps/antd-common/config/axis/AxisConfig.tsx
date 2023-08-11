@@ -82,7 +82,6 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
         style: {stroke: '#fff', lineWidth: 1} as ShapeAttrs
     };
 
-    console.log('initConfig', !!config);
     const [enable, setEnable] = useState(!!config);
     const [subTickLineCount, setSubTickLineCount] = useState(config?.count || 0);
     const [subTickLineLength, setSubTickLineLength] = useState(config?.length || 0);

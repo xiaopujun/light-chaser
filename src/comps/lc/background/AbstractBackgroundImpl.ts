@@ -70,7 +70,6 @@ export default class AbstractBackgroundImpl extends AbstractDesignerComponent<De
     public update(config: AbstractBackgroundImplProps, upOp?: UpdateOptions): void {
         this.config = merge(this.config, config);
         upOp = upOp || {reRender: true, operateType: OperateType.OPTIONS};
-        console.log('upOp', config)
         if (upOp.reRender) {
             this.instance?.setState({config: this.config?.background});
         }

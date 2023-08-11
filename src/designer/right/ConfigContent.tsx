@@ -12,7 +12,6 @@ import {ConfigType} from "./ConfigType";
 class ConfigContent extends Component {
 
     buildConfigContent = () => {
-        console.log('buildConfigContent')
         const {compInstances} = designerStore;
         let {activeMenu, activeElem} = rightStore;
         let {customComponentInfoMap} = designerStarter;

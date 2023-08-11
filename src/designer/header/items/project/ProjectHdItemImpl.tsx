@@ -8,7 +8,6 @@ import LcButton from "../../../../lib/lc-button/LcButton";
 import './ProjectHdItemImpl.less';
 import designerStore from "../../../store/DesignerStore";
 import {ProjectConfig} from "../../../DesignerType";
-import LcSwitch from "../../../../lib/lc-switch/LcSwitch";
 
 class ProjectHdItemImpl extends Component {
 
@@ -45,7 +44,7 @@ class ProjectHdItemImpl extends Component {
 
     render() {
         const {projectVisible} = headerStore;
-        const {projectConfig: {name, des, state, saveType, realTimeRefresh}} = designerStore;
+        const {projectConfig: {name, des, state, saveType}} = designerStore;
         return (
             <Dialog title={'项目设置'} className={'lc-header-project-set'} visible={projectVisible} onClose={this.onClose}>
                 <form onSubmit={this.doSave}>
@@ -66,11 +65,7 @@ class ProjectHdItemImpl extends Component {
                             ]}/>
                         </ConfigItem>
                         <ConfigItem title={'存储类型'} contentStyle={{width: 190}}>
-                            <div style={{color: '#c6c9cd'}}>{saveType==='0'?'本地(local)':'服务端(server)'}</div>
-                        </ConfigItem>
-                        <ConfigItem title={'草稿状态数据实时刷新'} contentStyle={{width: 190}}>
-                            <LcSwitch defaultValue={realTimeRefresh}
-                                      onChange={value => this.config.realTimeRefresh = value}/>
+                            <div style={{color: '#c6c9cd'}}>{saveType === '0' ? '本地(local)' : '服务端(server)'}</div>
                         </ConfigItem>
                     </div>
                     <p style={{padding: '5px 7px', color: '#989898'}}>说明：数据实时刷新开启后，草稿状态下组件数据也会根据配置实时更新</p>

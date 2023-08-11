@@ -37,7 +37,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                     type: target.dataset.type,
                     position: [beforeTranslate[0], beforeTranslate[1]]
                 }
-            ]);
+            ], false);
         }
     }
 
@@ -74,7 +74,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                     type: target.dataset.type,
                     position: [translate[0], translate[1]]
                 }
-            ])
+            ], false)
         }
     }
 
@@ -95,7 +95,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
             }
         })
         if (data.length > 0)
-            updateLayout(data);
+            updateLayout(data, false);
     }
 
 

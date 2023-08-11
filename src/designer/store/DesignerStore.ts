@@ -62,14 +62,6 @@ class DesignerStore implements AbstractBaseStore {
     };
 
     /**
-     * 激活状态属性
-     */
-    // activeElem: ActiveElem = {
-    //     id: -999, //元素id
-    //     type: "", //元素类型
-    // };
-
-    /**
      * 项目设置
      */
     projectConfig: ProjectConfig = {
@@ -79,7 +71,6 @@ class DesignerStore implements AbstractBaseStore {
         createTime: "", //创建时间
         updateTime: "", //更新时间
         saveType: SaveType.LOCAL, //存储类型
-        realTimeRefresh: false, //编辑模式下实时刷新
     };
 
     elemConfigs: { [key: string]: any } | null = {};
@@ -222,12 +213,11 @@ class DesignerStore implements AbstractBaseStore {
     /**
      * 更新布局
      */
-    updateLayout = (items: MovableItemType[]) => {
+    updateLayout = (items: MovableItemType[], reRender: boolean = true) => {
         for (const item of items) {
             let oldItem = this.layoutConfigs[item.id + ""];
-            if (!isEqual(oldItem, item)) {
-                this.layoutConfigs[item.id + ""] = {...merge(oldItem, item)};
-            }
+            if (!isEqual(oldItem, item))
+                this.layoutConfigs[item.id + ""] = reRender ? {...merge(oldItem, item)} : merge(oldItem, item);
         }
     };
 
