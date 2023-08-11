@@ -74,13 +74,13 @@ class LightChaserList extends Component<any> {
             });
             window.open(`/designer?${params}`, '_blank');
         } else if (type === 'show') {
-            window.open(`/view?id=${id}&saveType=${savetype}`, '_blank');
+            window.open(`/view?id=${id}&saveType=${savetype}&action=view`, '_blank');
         }
     }
 
     render() {
         const {addNewScreen, data, imageIdToUrl} = this.state;
-        let width = (window.innerWidth - 230 - (6 * 20)) / 6;
+        let width = (window.innerWidth - 230 - (5 * 20)) / 5;
         let height = width * (9 / 16);
         return (
             <div className={'lc-console'}>

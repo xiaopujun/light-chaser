@@ -25,7 +25,6 @@ class CanvasHdConfigImpl extends Component {
         super(props);
         const {canvasConfig} = designerStore;
         this.config = {...canvasConfig};
-        console.log('初始化', this.config)
         this.state = {
             _rasterize: canvasConfig.rasterize || false
         }
