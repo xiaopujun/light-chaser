@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://src/designer/view/DesignerView.less"],"names":[],"mappings":"AAAA,KACE,QAAS,CACT,SAAU,CACV,UAAW,CACX,WACF","file":"9.b4ac1df3.chunk.css","sourcesContent":["html {\n  margin: 0;\n  padding: 0;\n  width: 100%;\n  height: 100%;\n}\n"]}
