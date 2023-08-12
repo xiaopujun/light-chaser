@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import LcSwitch from "../../../lib/lc-switch/LcSwitch";
-import 'animate.css';
+// import 'animate.css';
 import './AnimationConfig.less';
 import LcButton from "../../../lib/lc-button/LcButton";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
