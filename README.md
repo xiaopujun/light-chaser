@@ -1,6 +1,8 @@
 # LIGHT CHASER
 
-[中文文档](README_ZH.md)
+[中文](README_ZH.md)
+
+[Demo experience](https://xiaopujun.github.io/light-chaser-app/#/)
 
 # 1. Introduction
 

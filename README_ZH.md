@@ -1,5 +1,7 @@
 # 一、简介
 
+[Demo体验](https://xiaopujun.github.io/light-chaser-app/#/)
+
 Light Chaser(LC) 是一款基于React生态的大屏数据可视化设计器。通过简单的拖拽，即可生成漂亮、美观的可视化数据大屏和看板。
 
 她具有以下特点：
