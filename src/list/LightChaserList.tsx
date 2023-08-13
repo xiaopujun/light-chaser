@@ -162,4 +162,4 @@ class LightChaserList extends Component<any> {
     }
 }
 
-export default withRouter(LightChaserList);
+export default LightChaserList;
