@@ -10,6 +10,7 @@ import {idGenerate} from "../../../utils/IdGenerate";
 import {MovableItemType} from "../../../lib/lc-movable/types";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 import FloatPanel from "../common/FloatPanel";
+import {BaseInfoType} from "../../DesignerType";
 
 class CompList extends Component {
 
@@ -42,13 +43,13 @@ class CompList extends Component {
         let {classifyKey} = classifyListStore
         let {compInfoArr, compKey} = compListStore;
         if (classifyKey !== 'all') {
-            compInfoArr = compInfoArr.filter((item: any) => {
+            compInfoArr = compInfoArr.filter((item: BaseInfoType) => {
                 return item.typeKey === classifyKey;
             })
         }
         if (compKey !== '') {
-            compInfoArr = compInfoArr.filter((item: any) => {
-                return item.name.indexOf(compKey) >= 0;
+            compInfoArr = compInfoArr.filter((item: BaseInfoType) => {
+                return item.compName.indexOf(compKey) >= 0;
             })
         }
         for (let i = 0; i < compInfoArr.length; i++) {

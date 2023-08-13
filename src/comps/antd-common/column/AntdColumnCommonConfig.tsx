@@ -1,31 +1,31 @@
 import React, {Component} from 'react';
 import {ConfigType} from "../../../designer/right/ConfigType";
 import {AntdBarGraphics, AntdCartesianCoordinateSys, AntdLegend} from "../config/AntdFragment";
-import {Bar, BarOptions} from "@antv/g2plot";
+import {Column, ColumnOptions} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import AbstractComponent from "../../../framework/core/AbstractComponent";
-import {AntdBarProps} from "./AntdCommonBar";
+import {AntdColumnProps} from "./AntdCommonColumn";
 
-class AntdBarCommonStyleConfig extends Component<ConfigType> {
+class AntdColumnCommonStyleConfig extends Component<ConfigType> {
 
     legendChange = (legend: Legend) => {
-        const instance: AbstractComponent<Bar, AntdBarProps> = this.props.instance;
+        const instance: AbstractComponent<Column, AntdColumnProps> = this.props.instance;
         instance.update({style: {legend}});
     }
 
-    barGraphicsChange = (config: BarOptions) => {
-        const instance: AbstractComponent<Bar, AntdBarProps> = this.props.instance;
+    barGraphicsChange = (config: ColumnOptions) => {
+        const instance: AbstractComponent<Column, AntdColumnProps> = this.props.instance;
         instance.update({style: config});
     }
 
-    barCoordinateSysChange = (config: BarOptions) => {
-        const instance: AbstractComponent<Bar, AntdBarProps> = this.props.instance;
+    barCoordinateSysChange = (config: ColumnOptions) => {
+        const instance: AbstractComponent<Column, AntdColumnProps> = this.props.instance;
         instance.update({style: config});
     }
 
     render() {
         const {instance} = this.props;
-        const config: BarOptions = instance.getConfig().style;
+        const config: ColumnOptions = instance.getConfig().style;
         return (
             <>
                 <AntdBarGraphics onChange={this.barGraphicsChange} config={config}/>
@@ -36,4 +36,4 @@ class AntdBarCommonStyleConfig extends Component<ConfigType> {
     }
 }
 
-export {AntdBarCommonStyleConfig};
+export {AntdColumnCommonStyleConfig};

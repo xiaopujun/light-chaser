@@ -1,25 +1,26 @@
 import {ComponentBaseProps} from "../../common-component/common-types";
-import {WritableBarOptions} from "../types";
-import {Bar} from "@antv/g2plot";
-import {OperateType, UpdateOptions} from "../../../framework/core/AbstractComponent";
-import {AntdBaseDesignerComponent} from "../AntdBaseDesignerComponent";
+import {WritableColumnOptions} from "../types";
+import {Column} from "@antv/g2plot";
 import {ThemeItemType} from "../../../designer/DesignerType";
+import {OperateType, UpdateOptions} from "../../../framework/core/AbstractComponent";
 import {ShapeAttrs} from "@antv/g-base";
+import {AntdBaseDesignerComponent} from "../AntdBaseDesignerComponent";
 
-export interface AntdBarProps extends ComponentBaseProps {
-    style?: WritableBarOptions;
+export interface AntdColumnProps extends ComponentBaseProps {
+    style?: WritableColumnOptions;
 }
 
-export default class AntdCommonBar extends AntdBaseDesignerComponent<Bar, AntdBarProps> {
+export default class AntdCommonColumn extends AntdBaseDesignerComponent<Column, AntdColumnProps> {
 
     interval: NodeJS.Timer | null = null;
+
     //上一次数据连接状态 true：成功 false：失败
     lastReqState: boolean = true;
     //是否为断开后重新连接
     reConnect: boolean = false;
 
-    async create(container: HTMLElement, config: AntdBarProps): Promise<this> {
-        return super.commonCreate(container, Bar, config);
+    async create(container: HTMLElement, config: AntdColumnProps): Promise<this> {
+        return super.commonCreate(container, Column, config);
     }
 
     destroy(): void {
@@ -29,12 +30,12 @@ export default class AntdCommonBar extends AntdBaseDesignerComponent<Bar, AntdBa
         this.interval && clearInterval(this.interval);
     }
 
-    getConfig(): AntdBarProps | null {
+    getConfig(): AntdColumnProps | null {
         return this.config;
     }
 
-    update(config: AntdBarProps, upOp?: UpdateOptions): void {
-        super.commonUpdate(config, Bar, upOp);
+    update(config: AntdColumnProps, upOp?: UpdateOptions): void {
+        super.commonUpdate(config, Column, upOp);
     }
 
     updateTheme(newTheme: ThemeItemType): void {
@@ -85,6 +86,6 @@ export default class AntdCommonBar extends AntdBaseDesignerComponent<Bar, AntdBa
         if ((styleConfig?.yAxis) && (styleConfig?.yAxis?.subTickLine?.style as ShapeAttrs)?.stroke)
             (styleConfig!.yAxis!.subTickLine!.style as ShapeAttrs).stroke = auxiliary;
         //重新渲染
-        this.update({style: styleConfig} as any, {reRender: true, operateType: OperateType.OPTIONS});
+        this.update({style: styleConfig}, {reRender: true, operateType: OperateType.OPTIONS});
     }
 }
