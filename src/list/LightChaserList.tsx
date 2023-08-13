@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './style/LightChaserList.less';
-import {withRouter} from "react-router-dom";
 import AddNewScreenDialog, {NewProjectInfoType} from "./AddNewScreenDialog";
 import listBottom from './icon/list-bottom.svg';
 import templateMarket from './icon/template-market.svg';
