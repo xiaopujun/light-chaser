@@ -20,7 +20,11 @@ class CanvasDragger extends AbstractDrag {
     protected onDragEnd = (): void => {
         eventManager.register('pointerup', (e: any) => {
             if (e.button === 2) {
-                this.target.releasePointerCapture(e.pointerId);
+                try {
+                    this.target.releasePointerCapture(e.pointerId);
+                } catch (e) {
+                    console.log(e);
+                }
                 eventManager.unregister('pointermove', this.onDragMove);
             }
         });
@@ -38,7 +42,11 @@ class CanvasDragger extends AbstractDrag {
     protected onDragStart = (): void => {
         eventManager.register('pointerdown', (e: any) => {
             if (e.button === 2) {
-                this.target.setPointerCapture(e.pointerId);
+                try {
+                    this.target.setPointerCapture(e.pointerId);
+                } catch (error) {
+                    this.target.releasePointerCapture(e.pointerId);
+                }
                 this.position = {x: e.clientX, y: e.clientY};
                 eventManager.register('pointermove', this.onDragMove);
             }
