@@ -93,14 +93,14 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
                 <LcSwitch defaultValue={enable}
                           onChange={value => {
                               onChange(value ? initConfig : null);
-                              if (!value) {
+                              if (value) {
                                   setEnable(true);
-                              } else {
-                                  setEnable(false);
                                   setSubTickLineCount(5);
                                   setSubTickLineLength(2);
                                   setSubTickLineWidth(2);
                                   setSubTickLineColor('#ffffff')
+                              } else {
+                                  setEnable(false);
                               }
 
                           }}/>
