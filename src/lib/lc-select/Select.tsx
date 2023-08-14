@@ -66,16 +66,18 @@ const Select: React.FC<SelectProps> = ({
                  onClick={disabled ? undefined : toggleDropdown}>
                 {showContent}
             </div>
-            {dropdownOpen && (
-                <ul className={"lc-select-options"} style={{width: dom?.current?.offsetWidth || 90}}>
-                    {options.map((option: Option, index: number) => (
-                        <li className={`lc-select-option`} key={index + ''}
-                            onClick={() => handleOptionClick(option)}>
-                            {option.label}
-                        </li>
-                    ))}
-                </ul>
-            )}
+            <div style={{position: 'relative'}}>
+                {dropdownOpen && (
+                    <ul className={"lc-select-options"} style={{width: dom?.current?.offsetWidth || 90}}>
+                        {options.map((option: Option, index: number) => (
+                            <li className={`lc-select-option`} key={index + ''}
+                                onClick={() => handleOptionClick(option)}>
+                                {option.label}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
         </div>
     );
 };

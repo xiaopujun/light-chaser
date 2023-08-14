@@ -27,9 +27,10 @@ class Accordion extends Component<AccordionProps> {
 
     accDom: any = null;
     valueControl: boolean = true;
+    pendingTimer: NodeJS.Timer | null = null;
 
     state: any = {
-        value: undefined,
+        value: false,
         title: '',
         showSwitch: false,
     }
@@ -39,48 +40,68 @@ class Accordion extends Component<AccordionProps> {
         let {value, title, showSwitch, defaultValue} = this.props;
         if (defaultValue !== undefined && value === undefined)
             this.valueControl = false;
-        value = value || defaultValue;
+        value = !!(value || defaultValue);
         this.state = {value, title, showSwitch};
     }
 
     componentDidMount() {
         const {showSwitch = false, value} = this.state;
         if (!showSwitch)
-            this.titleClickMode();
-        if (showSwitch && value)
-            this.unfold();
+            this.accDom.addEventListener("click", this.titleClickMode);
+        if (showSwitch && value) {
+            this.accDom.classList.toggle("accordion-active");
+            let panel = this.accDom.nextElementSibling;
+            if (panel?.style.maxHeight)
+                panel.style.maxHeight = null;
+            else
+                panel.style.maxHeight = (panel.scrollHeight || 2000) + "px";
+        }
     }
 
     componentWillUnmount() {
-        this.accDom.removeEventListener("click", this.unfold);
+        this.accDom.removeEventListener("click", this.titleClickMode);
     }
 
-    unfold = () => {
+    calculateFold = (value: boolean) => {
         this.accDom.classList.toggle("accordion-active");
         let panel = this.accDom.nextElementSibling;
-        if (panel?.style.maxHeight) {
-            panel.style.maxHeight = null;
+        if (value) {
+            this.pendingTimer = setTimeout(() => {
+                panel.style.overflow = 'visible';
+                this.pendingTimer = null;
+            }, 200);
         } else {
-            panel.style.maxHeight = (panel.scrollHeight || 2000) + "px";
+            panel.style.overflow = 'hidden';
+            if (this.pendingTimer) {
+                clearTimeout(this.pendingTimer);
+                this.pendingTimer = null;
+            }
         }
+        if (panel?.style.maxHeight)
+            panel.style.maxHeight = null;
+        else
+            panel.style.maxHeight = (panel.scrollHeight || 2000) + "px";
     }
+
 
     /**
      * 标题点击模式，点击标题，展开内容
      */
     titleClickMode = () => {
-        this.accDom.addEventListener("click", this.unfold);
+        const value = !this.state.value;
+        this.setState({value});
+        this.calculateFold(value);
     }
 
     /**
      * 手风琴标题开关变化
      */
-    switchChange = (data: boolean) => {
-        this.unfold();
+    switchChange = (value: boolean) => {
+        this.calculateFold(value);
         const {onChange} = this.props;
-        onChange && onChange(data);
+        onChange && onChange(value);
         if (!this.valueControl)
-            this.setState({value: data});
+            this.setState({value});
     }
 
     render() {
