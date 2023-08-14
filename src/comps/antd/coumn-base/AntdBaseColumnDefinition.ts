@@ -94,6 +94,12 @@ class AntdBaseColumnDefinition extends AbstractColumnDefinition {
                 },
                 maxColumnWidth: 8,
                 supportCSSTransform: true,
+                animation: {
+                    appear: {
+                        animation: 'scale-in-y',
+                        duration: 3000,
+                    },
+                }
             },
             data: {
                 dataSource: 'static',

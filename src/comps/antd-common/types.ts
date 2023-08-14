@@ -1,4 +1,4 @@
-import {AreaOptions, BarOptions, ColumnOptions, LineOptions, Options} from "@antv/g2plot";
+import {AreaOptions, BarOptions, ColumnOptions, LineOptions, Options, ScatterOptions} from "@antv/g2plot";
 import React from "react";
 import {ConfigType} from "../../designer/right/ConfigType";
 
@@ -16,6 +16,10 @@ export type WritableLineOptions = {
 
 export type WritableAreaOptions = {
     -readonly [K in keyof AreaOptions]?: AreaOptions[K];
+};
+
+export type WritableScatterOptions = {
+    -readonly [K in keyof ScatterOptions]?: ScatterOptions[K];
 };
 
 export type WritableOptions = {

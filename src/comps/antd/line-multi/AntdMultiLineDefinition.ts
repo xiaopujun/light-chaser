@@ -273,6 +273,12 @@ class AntdMultiLineDefinition extends AbstractLineDefinition {
                     }
                 },
                 supportCSSTransform: true,
+                animation: {
+                    appear: {
+                        animation: 'wave-in',
+                        duration: 3000,
+                    },
+                }
             },
             data: {
                 dataSource: 'static',

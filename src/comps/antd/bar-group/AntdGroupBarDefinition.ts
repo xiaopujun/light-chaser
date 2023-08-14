@@ -113,6 +113,12 @@ class AntdGroupBarDefinition extends AbstractBarDefinition {
                 },
                 maxBarWidth: 8,
                 supportCSSTransform: true,
+                animation: {
+                    appear: {
+                        animation: 'scale-in-x',
+                        duration: 3000,
+                    },
+                }
             },
             data: {
                 dataSource: 'static',
