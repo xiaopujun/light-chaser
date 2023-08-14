@@ -178,14 +178,14 @@ export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) =>
                 <LcSwitch defaultValue={enable}
                           onChange={value => {
                               onChange(value ? initConfig : null);
-                              if (!value) {
+                              if (value) {
                                   setEnable(true);
-                              } else {
-                                  setEnable(false);
                                   setAlignTick(true);
                                   setLength(2);
                                   setWidth(2);
                                   setColor("#FFFFFF");
+                              } else {
+                                  setEnable(false);
                               }
                           }}/>
             </ConfigItem>
