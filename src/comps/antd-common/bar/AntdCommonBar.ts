@@ -12,12 +12,6 @@ export interface AntdBarProps extends ComponentBaseProps {
 
 export default class AntdCommonBar extends AntdBaseDesignerComponent<Bar, AntdBarProps> {
 
-    interval: NodeJS.Timer | null = null;
-    //上一次数据连接状态 true：成功 false：失败
-    lastReqState: boolean = true;
-    //是否为断开后重新连接
-    reConnect: boolean = false;
-
     async create(container: HTMLElement, config: AntdBarProps): Promise<this> {
         return super.commonCreate(container, Bar, config);
     }

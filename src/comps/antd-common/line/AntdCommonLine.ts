@@ -1,19 +1,19 @@
 import {ComponentBaseProps} from "../../common-component/common-types";
-import {WritableColumnOptions} from "../types";
-import {Column} from "@antv/g2plot";
-import {ThemeItemType} from "../../../designer/DesignerType";
+import {WritableLineOptions} from "../types";
+import {Line} from "@antv/g2plot";
 import {OperateType, UpdateOptions} from "../../../framework/core/AbstractComponent";
-import {ShapeAttrs} from "@antv/g-base";
 import {AntdBaseDesignerComponent} from "../AntdBaseDesignerComponent";
+import {ThemeItemType} from "../../../designer/DesignerType";
+import {ShapeAttrs} from "@antv/g-base";
 
-export interface AntdColumnProps extends ComponentBaseProps {
-    style?: WritableColumnOptions;
+export interface AntdLineProps extends ComponentBaseProps {
+    style?: WritableLineOptions;
 }
 
-export default class AntdCommonColumn extends AntdBaseDesignerComponent<Column, AntdColumnProps> {
+export default class AntdCommonLine extends AntdBaseDesignerComponent<Line, AntdLineProps> {
 
-    async create(container: HTMLElement, config: AntdColumnProps): Promise<this> {
-        return super.commonCreate(container, Column, config);
+    async create(container: HTMLElement, config: AntdLineProps): Promise<this> {
+        return super.commonCreate(container, Line, config);
     }
 
     destroy(): void {
@@ -23,12 +23,12 @@ export default class AntdCommonColumn extends AntdBaseDesignerComponent<Column, 
         this.interval && clearInterval(this.interval);
     }
 
-    getConfig(): AntdColumnProps | null {
+    getConfig(): AntdLineProps | null {
         return this.config;
     }
 
-    update(config: AntdColumnProps, upOp?: UpdateOptions): void {
-        super.commonUpdate(config, Column, upOp);
+    update(config: AntdLineProps, upOp?: UpdateOptions): void {
+        super.commonUpdate(config, Line, upOp);
     }
 
     updateTheme(newTheme: ThemeItemType): void {
@@ -79,6 +79,6 @@ export default class AntdCommonColumn extends AntdBaseDesignerComponent<Column, 
         if ((styleConfig?.yAxis) && (styleConfig?.yAxis?.subTickLine?.style as ShapeAttrs)?.stroke)
             (styleConfig!.yAxis!.subTickLine!.style as ShapeAttrs).stroke = auxiliary;
         //重新渲染
-        this.update({style: styleConfig}, {reRender: true, operateType: OperateType.OPTIONS});
+        this.update({style: styleConfig} as any, {reRender: true, operateType: OperateType.OPTIONS});
     }
 }
