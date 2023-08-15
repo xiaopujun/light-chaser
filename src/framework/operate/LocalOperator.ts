@@ -15,6 +15,22 @@ import {BackgroundConfigType} from "../../comps/lc/background/AbstractBackground
  * 本地项目数据操作实现
  */
 class LocalOperator extends AbstractOperator {
+    public deleteProject(id: string): boolean {
+        LocalOperator.deleteProject(id).then((result) => {
+            if (result) {
+                message.success('删除成功');
+                // 删除成功后，如果删除的是当前项目，则跳转到列表页
+                // const {id: currentId} = designerStore.projectData;
+                // if (currentId === id) {
+                //     window.history.replaceState(null, '', '?action=list');
+                //     designerStore.setId('');
+                // }
+            } else {
+                message.error('删除失败');
+            }
+        });
+        return true;
+    }
 
     public getKey(): string {
         return SaveType.LOCAL;
@@ -137,9 +153,31 @@ class LocalOperator extends AbstractOperator {
         }
     }
 
-    public deleteProject(id: string): boolean {
-        return false;
-    }
+    // public deleteProject(id: string): boolean {
+    //     return false;
+    // }
+
+    private static async deleteProject(id: string): Promise<boolean> {
+        try {
+          await localforage.removeItem(id);
+          // 删除项目成功后，还需要从简要项目列表中删除该项目
+          const simpleInfoList = await localforage.getItem(LocalConstant.LOCAL_SIMPLE_PROJECT_LIST);
+          if (simpleInfoList && Array.isArray(simpleInfoList)) {
+            const index = simpleInfoList.findIndex((project) => project.id === id);
+            if (index !== -1) {
+              simpleInfoList.splice(index, 1);
+              await localforage.setItem(LocalConstant.LOCAL_SIMPLE_PROJECT_LIST, simpleInfoList);
+            }
+          }
+          return true;
+        } catch (error) {
+          console.log("deleteProject error", error);
+          return false;
+        }
+      }
+      
+
+
 
     public async getProject(id: string): Promise<ProjectDataType | null> {
         const projectData = await localforage.getItem(id);

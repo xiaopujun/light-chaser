@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: tanxiangze
+ * @Date: 2023-08-10 16:40:58
+ * @LastEditTime: 2023-08-10 17:13:39
+ */
 import html2canvas from "html2canvas";
 import localforage from "localforage";
 
@@ -10,7 +16,7 @@ export class ImgUtil {
                     resolve(blob);
                 });
             });
-            return URL.createObjectURL(blob);
+            return URL.createObjectURL(blob as Blob);
         } catch (error) {
             console.error('生成截图失败', error);
             return '';
@@ -59,7 +65,7 @@ export class ImgUtil {
         try {
             const blob = await localforage.getItem(key);
             if (blob)
-                return {[key]: URL.createObjectURL(blob)};
+                return {[key]: URL.createObjectURL(blob as Blob)};
             else
                 return {[key]: ""};
         } catch (error) {
