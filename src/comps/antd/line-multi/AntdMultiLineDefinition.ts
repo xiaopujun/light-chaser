@@ -260,7 +260,6 @@ class AntdMultiLineDefinition extends AbstractLineDefinition {
                     position: "bottom",
                     title: null
                 },
-                color: '#00d7ff',
                 smooth: true,
                 legend: {
                     position: "right-top",
