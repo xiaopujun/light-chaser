@@ -5,7 +5,7 @@ import {
     GaugeOptions,
     LineOptions,
     LiquidOptions,
-    Options,
+    Options, PieOptions, RoseOptions,
     ScatterOptions
 } from "@antv/g2plot";
 import React from "react";
@@ -33,6 +33,14 @@ export type WritableScatterOptions = {
 
 export type WritableGaugeOptions = {
     -readonly [K in keyof GaugeOptions]?: GaugeOptions[K];
+};
+
+export type WritablePieOptions = {
+    -readonly [K in keyof PieOptions]?: PieOptions[K];
+};
+
+export type WritableRoseOptions = {
+    -readonly [K in keyof RoseOptions]?: RoseOptions[K];
 };
 
 export type WritableLiquidOptions = {
