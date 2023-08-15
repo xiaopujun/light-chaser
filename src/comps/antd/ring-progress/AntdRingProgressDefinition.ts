@@ -2,8 +2,7 @@ import React from "react";
 import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import {ClazzTemplate} from "../../common-component/common-types";
-import {AntdBaseMenuMapping} from "../../antd-common/types";
+import {BaseMenuMapping, ClazzTemplate} from "../../common-component/common-types";
 import AntdRingProgress, {AntdRingProgressProps} from "./AntdRingProgress";
 import ringProgressImg from './ring-progress.png';
 import {BaseInfoType} from "../../../designer/DesignerType";
@@ -15,7 +14,7 @@ const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseI
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
 
-class AntdRingProgressDefinition extends AbstractCustomComponentDefinition<AntdRingProgress, AntdBaseMenuMapping, AntdRingProgressProps> {
+class AntdRingProgressDefinition extends AbstractCustomComponentDefinition<AntdRingProgress, BaseMenuMapping, AntdRingProgressProps> {
 
     getComponent(): ClazzTemplate<AntdRingProgress> | null {
         return AntdRingProgress;
@@ -25,7 +24,7 @@ class AntdRingProgressDefinition extends AbstractCustomComponentDefinition<AntdR
         return getDefaultMenuList();
     }
 
-    getMenuToConfigContentMap(): AntdBaseMenuMapping | null {
+    getMenuToConfigContentMap(): BaseMenuMapping | null {
         return {
             info: BaseInfo,
             data: DataConfig,

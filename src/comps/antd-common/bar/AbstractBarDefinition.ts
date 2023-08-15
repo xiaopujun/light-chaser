@@ -2,9 +2,8 @@ import React from "react";
 import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import {ClazzTemplate} from "../../common-component/common-types";
+import {BaseMenuMapping, ClazzTemplate} from "../../common-component/common-types";
 import AntdCommonBar, {AntdBarProps} from "../../antd-common/bar/AntdCommonBar";
-import {AntdBaseMenuMapping} from "../types";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const AntdBarCommonStyleConfig = React.lazy(() => import("./AntdBarCommonConfig").then((module) => ({default: module.AntdBarCommonStyleConfig})));
@@ -13,7 +12,7 @@ const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseI
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
 
-abstract class AbstractBarDefinition extends AbstractCustomComponentDefinition<AntdCommonBar, AntdBaseMenuMapping, AntdBarProps> {
+abstract class AbstractBarDefinition extends AbstractCustomComponentDefinition<AntdCommonBar, BaseMenuMapping, AntdBarProps> {
 
     getComponent(): ClazzTemplate<AntdCommonBar> | null {
         return AntdCommonBar;
@@ -23,7 +22,7 @@ abstract class AbstractBarDefinition extends AbstractCustomComponentDefinition<A
         return getDefaultMenuList();
     }
 
-    getMenuToConfigContentMap(): AntdBaseMenuMapping | null {
+    getMenuToConfigContentMap(): BaseMenuMapping | null {
         return {
             info: BaseInfo,
             data: DataConfig,

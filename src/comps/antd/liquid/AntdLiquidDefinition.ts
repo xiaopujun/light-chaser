@@ -2,8 +2,7 @@ import React from "react";
 import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import {ClazzTemplate} from "../../common-component/common-types";
-import {AntdBaseMenuMapping} from "../../antd-common/types";
+import {BaseMenuMapping, ClazzTemplate} from "../../common-component/common-types";
 import AntdLiquid, {AntdLiquidProps} from "./AntdLiquid";
 import liquidImg from './liquid.png';
 import {BaseInfoType} from "../../../designer/DesignerType";
@@ -15,7 +14,7 @@ const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseI
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
 
-class AntdLiquidDefinition extends AbstractCustomComponentDefinition<AntdLiquid, AntdBaseMenuMapping, AntdLiquidProps> {
+class AntdLiquidDefinition extends AbstractCustomComponentDefinition<AntdLiquid, BaseMenuMapping, AntdLiquidProps> {
 
     getComponent(): ClazzTemplate<AntdLiquid> | null {
         return AntdLiquid;
@@ -25,7 +24,7 @@ class AntdLiquidDefinition extends AbstractCustomComponentDefinition<AntdLiquid,
         return getDefaultMenuList();
     }
 
-    getMenuToConfigContentMap(): AntdBaseMenuMapping | null {
+    getMenuToConfigContentMap(): BaseMenuMapping | null {
         return {
             info: BaseInfo,
             data: DataConfig,

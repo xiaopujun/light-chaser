@@ -2,8 +2,7 @@ import React from "react";
 import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import {ClazzTemplate} from "../../common-component/common-types";
-import {AntdBaseMenuMapping} from "../types";
+import {BaseMenuMapping, ClazzTemplate} from "../../common-component/common-types";
 import AntdCommonLine, {AntdLineProps} from "./AntdCommonLine";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
@@ -13,7 +12,7 @@ const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseI
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
 
-abstract class AbstractLineDefinition extends AbstractCustomComponentDefinition<AntdCommonLine, AntdBaseMenuMapping, AntdLineProps> {
+abstract class AbstractLineDefinition extends AbstractCustomComponentDefinition<AntdCommonLine, BaseMenuMapping, AntdLineProps> {
 
     getComponent(): ClazzTemplate<AntdCommonLine> | null {
         return AntdCommonLine;
@@ -23,7 +22,7 @@ abstract class AbstractLineDefinition extends AbstractCustomComponentDefinition<
         return getDefaultMenuList();
     }
 
-    getMenuToConfigContentMap(): AntdBaseMenuMapping | null {
+    getMenuToConfigContentMap(): BaseMenuMapping | null {
         return {
             info: BaseInfo,
             data: DataConfig,
