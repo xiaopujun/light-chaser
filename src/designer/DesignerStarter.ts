@@ -13,7 +13,6 @@ class DesignerStarter {
     //项目数据操作映射
     abstractOperatorMap: { [key: string]: AbstractOperator } = {};
 
-
     //todo 扫描组件，要优化为异步扫描
     doScan = () => {
         this.scannerHeader();
