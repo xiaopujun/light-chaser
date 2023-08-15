@@ -5,7 +5,10 @@ import {
     GaugeOptions,
     LineOptions,
     LiquidOptions,
-    Options, PieOptions, RoseOptions,
+    Options,
+    PieOptions,
+    RingProgressOptions,
+    RoseOptions,
     ScatterOptions
 } from "@antv/g2plot";
 import React from "react";
@@ -45,6 +48,10 @@ export type WritableRoseOptions = {
 
 export type WritableLiquidOptions = {
     -readonly [K in keyof LiquidOptions]?: LiquidOptions[K];
+};
+
+export type WritableRingProgressOptions = {
+    -readonly [K in keyof RingProgressOptions]?: RingProgressOptions[K];
 };
 
 export type WritableOptions = {
