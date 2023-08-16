@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import {Popover} from 'antd';
-import {ChromePicker} from 'react-color';
 import './BaseColorPicker.less';
+import {ChromePicker} from 'react-color';
 import {colorConversion, rgbaToHex} from '../../utils/ColorUtil';
 
 interface BaseColorPickerProps {
-    onChange?: (color: any) => void;
     //颜色色值类型（非受控）
     type?: 'hex' | 'rgba';
     //颜色色值（受控）
@@ -17,6 +16,7 @@ interface BaseColorPickerProps {
     //是否显示色值文本（非受控）
     showText?: boolean;
     disabled?: boolean;
+    onChange?: (color: string, id?: string) => void;
 }
 
 class BaseColorPicker extends Component<BaseColorPickerProps> {

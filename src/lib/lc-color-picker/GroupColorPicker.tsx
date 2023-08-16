@@ -6,6 +6,7 @@ import ColorPicker from "./BaseColorPicker";
 interface GroupColorPickerProp {
     onChange?: (data: string[]) => void;
     value?: string[];
+    canAdd?: boolean;
 }
 
 /**
@@ -13,36 +14,68 @@ interface GroupColorPickerProp {
  */
 class GroupColorPicker extends Component<GroupColorPickerProp> {
 
+    max: number = 5;
+
     state: any = {
         colors: []
     }
 
-    constructor(props: any) {
+    constructor(props: GroupColorPickerProp) {
         super(props);
-        const {value = []} = props;
+        const {value = [], canAdd} = props;
         if (value.length === 0) {
             this.state = {colors: ['#00e9ff']};
             return;
         }
-        this.state = {colors: value};
+        this.state = {colors: value, canAdd};
     }
 
 
-    onChange = (color: any) => {
-        // let {colors} = this.state;
-        // const {onChange} = this.props;
-        // colors[id] = color;
-        // onChange && onChange(colors);
-        // this.setState({colors})
+    onChange = (color: string, id: number) => {
+        let {colors} = this.state;
+        colors[id] = color;
+        this.setState({colors})
+        const {onChange} = this.props;
+        onChange && onChange(colors);
+    }
+
+    addColor = () => {
+        let {colors} = this.state;
+        colors.push('#00e9ff');
+        if (colors.length === this.max)
+            this.setState({canAdd: false, colors});
+        else
+            this.setState({colors});
+        const {onChange} = this.props;
+        onChange && onChange(colors);
+    }
+
+    delColor = (id: number) => {
+        let {colors} = this.state;
+        colors.splice(id, 1);
+        if (colors.length < this.max)
+            this.setState({canAdd: true, colors});
+        else
+            this.setState({colors});
+        const {onChange} = this.props;
+        onChange && onChange(colors);
     }
 
     render() {
-        const {colors = []} = this.state;
+        const {colors = [], canAdd = false} = this.state;
         return (
             <div className={'group-color-picker'} style={{display: "flex", flexDirection: "row"}}>
                 {colors.map((item: string, i: number) => {
-                    return <ColorPicker key={i + ''} value={item} onChange={this.onChange}/>
+                    return (
+                        <div className={"group-color-item"} key={i + ''}>
+                            <ColorPicker defaultValue={item}
+                                         onChange={(color: string) => this.onChange(color, i)}/>
+                            <span onClick={() => this.delColor(i)}><label>×</label></span>
+                        </div>
+                    )
                 })}
+                {canAdd &&
+                <div onClick={this.addColor} className={'color-pick-add-btn'}><span>+</span></div>}
             </div>
         )
     }
