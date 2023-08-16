@@ -44,23 +44,24 @@ export const AntdLegend = (props: AntdLegendProps) => {
                         ]}/>
             </ConfigItem>
             <ConfigItem title={'方向'}>
-                <Select defaultValue={(config as Types.LegendCfg)?.direction}
-                        onChange={(value => onChange({direction: value as Types.LegendCfg['direction']}))}
+                <Select defaultValue={(config as Types.LegendCfg)?.layout}
+                        onChange={(value => onChange({layout: value as Types.LegendCfg['layout']}))}
                         options={[
-                            {value: 'horizontal', label: '横向'},
-                            {value: 'vertical', label: '纵向'},
+                            {value: 'horizontal', label: '水平'},
+                            {value: 'vertical', label: '垂直'},
                         ]}/>
             </ConfigItem>
             <ConfigItem title={'字号'}>
                 <UnderLineInput type={'number'} min={12}
-                                defaultValue={((config as Types.LegendCfg)?.itemName?.style as ShapeAttrs).fontSize || 12}
+                                defaultValue={((config as Types.LegendCfg)?.itemName?.style as ShapeAttrs)?.fontSize || 12}
                                 onChange={e => onChange({itemName: {style: {fontSize: parseInt(e.target.value)}}})}/>
             </ConfigItem>
             <ConfigItem title={'颜色'}>
                 <CfgItemBorder width={'100%'}>
-                    <BaseColorPicker defaultValue={((config as Types.LegendCfg)?.itemName?.style as ShapeAttrs).fill!}
-                                     onChange={value => onChange({itemName: {style: {fill: value}}})}
-                                     style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
+                    <BaseColorPicker
+                        defaultValue={((config as Types.LegendCfg)?.itemName?.style as ShapeAttrs)?.fill || '#fff'}
+                        onChange={value => onChange({itemName: {style: {fill: value}}})}
+                        style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
                 </CfgItemBorder>
             </ConfigItem>
         </Accordion>
@@ -139,9 +140,9 @@ export const AntdCartesianCoordinateSys: React.FC<AntdCartesianCoordinateSysProp
 
     return (
         <>
-            <AxisConfig title={'X轴'} config={config!.xAxis}
+            <AxisConfig title={'X轴'} config={config?.xAxis}
                         onChange={xAxisChange}/>
-            <AxisConfig title={'Y轴'} config={config!.yAxis}
+            <AxisConfig title={'Y轴'} config={config?.yAxis}
                         onChange={yAxisChange}/>
         </>
     )

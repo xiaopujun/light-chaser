@@ -58,6 +58,9 @@ class Accordion extends Component<AccordionProps> {
                 panel.style.maxHeight = null;
             else
                 panel.style.maxHeight = (panel.scrollHeight || 2000) + "px";
+        } else {
+            let panel = this.accDom.nextElementSibling;
+            panel.style.overflow = 'hidden';
         }
     }
 

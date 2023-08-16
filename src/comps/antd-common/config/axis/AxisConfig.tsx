@@ -9,6 +9,7 @@ import {Types} from "@antv/g2";
 import {AxisLabelCfg, AxisLineCfg, AxisSubTickLineCfg, AxisTickLineCfg, AxisTitleCfg} from "@antv/component/esm";
 import {ShapeAttrs} from "@antv/g-base";
 import {AxisGridCfg} from "@antv/g2/esm/interface";
+import {isEqual, isEqualWith} from "lodash";
 
 
 const BaseColorPicker = React.lazy(() => import('../../../../lib/lc-color-picker/BaseColorPicker'));
@@ -45,24 +46,28 @@ class AxisConfig extends Component<AxisConfigProps> {
 
     render() {
         const {config, title = '坐标轴', onChange} = this.props;
+        const enable = isEqualWith(config, this.emptyData, (value: any, other: any, indexOrKey: any | undefined, parent: any, otherParent: any, stack: any) => {
+            delete value['position'];
+            return !isEqual(value, other);
+        });
         return (
-            <Accordion title={title} showSwitch={true} defaultValue={!!config}
+            <Accordion title={title} showSwitch={true} defaultValue={enable}
                        onChange={value => onChange(value ? this.oldData : this.emptyData)}>
                 <ConfigItem title={'位置'} contentStyle={{width: '250px', paddingLeft: '20px'}}>
-                    <Radio defaultValue={(config as Types.AxisCfg).position || 'right'}
+                    <Radio defaultValue={(config as Types.AxisCfg)?.position || 'right'}
                            onChange={(value => onChange({position: value as Types.AxisCfg["position"]}))}
                            options={[{label: '上', value: 'top'},
                                {label: '下', value: 'bottom'},
                                {label: '左', value: 'left'},
                                {label: '右', value: 'right'}]}/>
                 </ConfigItem>
-                <AxisText config={(config as Types.AxisCfg).label!} onChange={(data => onChange({label: data}))}/>
-                <AxisTitle config={(config as Types.AxisCfg).title!} onChange={(data => onChange({title: data}))}/>
-                <AxisLine config={(config as Types.AxisCfg).line!} onChange={(data => onChange({line: data}))}/>
-                <AxisGridLine config={(config as Types.AxisCfg).grid!} onChange={(data => onChange({grid: data}))}/>
-                <AxisTickLine config={(config as Types.AxisCfg).tickLine!}
+                <AxisText config={(config as Types.AxisCfg)?.label!} onChange={(data => onChange({label: data}))}/>
+                <AxisTitle config={(config as Types.AxisCfg)?.title!} onChange={(data => onChange({title: data}))}/>
+                <AxisLine config={(config as Types.AxisCfg)?.line!} onChange={(data => onChange({line: data}))}/>
+                <AxisGridLine config={(config as Types.AxisCfg)?.grid!} onChange={(data => onChange({grid: data}))}/>
+                <AxisTickLine config={(config as Types.AxisCfg)?.tickLine!}
                               onChange={(data => onChange({tickLine: data}))}/>
-                <AxisSubTickLine config={(config as Types.AxisCfg).subTickLine!}
+                <AxisSubTickLine config={(config as Types.AxisCfg)?.subTickLine!}
                                  onChange={(data => onChange({subTickLine: data}))}/>
             </Accordion>
         );
@@ -425,17 +430,17 @@ export const AxisText: React.FC<AxisTextProps> = ({config, onChange}) => {
         <ConfigCard title={'文本'}>
             <ConfigItem title={'颜色'}>
                 <CfgItemBorder>
-                    <BaseColorPicker defaultValue={(config.style as ShapeAttrs).fill || '#d5d5d5'}
+                    <BaseColorPicker defaultValue={(config?.style as ShapeAttrs)?.fill || '#d5d5d5'}
                                      onChange={value => onChange({style: {fill: value}})}
                                      style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
                 </CfgItemBorder>
             </ConfigItem>
             <ConfigItem title={'角度'}>
-                <UnderLineInput defaultValue={config.rotate || 0} step={0.1} type={'number'}
+                <UnderLineInput defaultValue={config?.rotate || 0} step={0.1} type={'number'}
                                 onChange={e => onChange({rotate: parseInt(e.target.value)})}/>
             </ConfigItem>
             <ConfigItem title={'偏移量'}>
-                <UnderLineInput defaultValue={config.offset || 0} type={'number'}
+                <UnderLineInput defaultValue={config?.offset || 0} type={'number'}
                                 onChange={e => onChange({offset: parseInt(e.target.value)})}/>
             </ConfigItem>
         </ConfigCard>
