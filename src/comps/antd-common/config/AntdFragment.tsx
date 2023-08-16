@@ -13,6 +13,7 @@ import {ShapeAttrs} from "@antv/g-base";
 import {Types} from "@antv/g2";
 import {Axis} from "@antv/g2plot";
 import {WritableBarOptions, WritableOptions} from "../types";
+import ColorMode from "../../../lib/lc-color-mode/ColorMode";
 
 export interface AntdLegendProps {
     config?: Legend;
@@ -77,21 +78,24 @@ export const AntdBarGraphics: React.FC<AntdBarGraphicsProps> = ({config, onChang
 
     return (
         <Accordion title={'图形'}>
-            <ConfigCard title={'条状'}>
-                <ConfigItem title={'宽度'}>
-                    <UnderLineInput type={'number'} min={1}
-                                    onChange={(e) => onChange({maxBarWidth: parseInt(e.target.value)})}
-                                    defaultValue={config!.maxBarWidth}/>
-                </ConfigItem>
-                <ConfigItem title={'颜色'}>
-                    <CfgItemBorder>
-                        <BaseColorPicker onChange={(value) => onChange({color: value})}
-                                         defaultValue={config!.color as string}
-                                         style={{width: '100%', height: '15px', borderRadius: 2}}
-                                         showText={true}/>
-                    </CfgItemBorder>
-                </ConfigItem>
-            </ConfigCard>
+            <ConfigItem title={'宽度'} contentStyle={{width: '150px'}}>
+                <UnderLineInput type={'number'} min={1}
+                                onChange={(e) => onChange({maxBarWidth: parseInt(e.target.value)})}
+                                defaultValue={config!.maxBarWidth}/>
+            </ConfigItem>
+            <ConfigItem title={'颜色'} contentStyle={{width: '75%'}}>
+                <ColorMode/>
+            </ConfigItem>
+            {/*<ConfigCard title={'条状'} cardStyle={{width: '100%'}}>*/}
+            {/*    <ConfigItem title={'宽度'}>*/}
+            {/*        <UnderLineInput type={'number'} min={1}*/}
+            {/*                        onChange={(e) => onChange({maxBarWidth: parseInt(e.target.value)})}*/}
+            {/*                        defaultValue={config!.maxBarWidth}/>*/}
+            {/*    </ConfigItem>*/}
+            {/*</ConfigCard>*/}
+            {/*<ConfigCard title={'颜色'} bodyStyle={{display: 'flex'}}>*/}
+            {/*    <ColorMode/>*/}
+            {/*</ConfigCard>*/}
         </Accordion>
     )
 }

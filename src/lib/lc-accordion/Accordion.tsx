@@ -46,8 +46,11 @@ class Accordion extends Component<AccordionProps> {
 
     componentDidMount() {
         const {showSwitch = false, value} = this.state;
-        if (!showSwitch)
+        if (!showSwitch) {
             this.accDom.addEventListener("click", this.titleClickMode);
+            let panel = this.accDom.nextElementSibling;
+            panel.style.overflow = 'hidden';
+        }
         if (showSwitch && value) {
             this.accDom.classList.toggle("accordion-active");
             let panel = this.accDom.nextElementSibling;

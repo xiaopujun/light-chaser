@@ -45,6 +45,13 @@ class AntdBaseBarDefinition extends AbstractBarDefinition {
                 data: data,
                 xField: "value",
                 yField: "name",
+                seriesField: 'name',
+                maxBarWidth: 8,
+                color: ["#00dbffff", "#fff"],
+                barStyle: {
+                    fill: undefined,
+                },
+                supportCSSTransform: true,
                 xAxis: {
                     grid: null,
                     label: {
@@ -81,7 +88,6 @@ class AntdBaseBarDefinition extends AbstractBarDefinition {
                     position: "bottom",
                     title: null
                 },
-                color: '#00d7ff',
                 legend: {
                     position: "right-top",
                     layout: "vertical",
@@ -92,8 +98,6 @@ class AntdBaseBarDefinition extends AbstractBarDefinition {
                         }
                     }
                 },
-                maxBarWidth: 8,
-                supportCSSTransform: true,
                 animation: {
                     appear: {
                         animation: 'scale-in-x',
