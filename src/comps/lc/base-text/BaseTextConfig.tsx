@@ -1,6 +1,5 @@
 import React from 'react';
 import {ConfigType} from "../../../designer/right/ConfigType";
-import ConfigItemTB from "../../../lib/lc-config-item/ConfigItemTB";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import {BaseTextComponentProps} from "./BaseTextComponent";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
