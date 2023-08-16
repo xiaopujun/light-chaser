@@ -3,21 +3,21 @@ import {AbstractCustomComponentDefinition} from "../../../framework/core/Abstrac
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {BaseMenuMapping, ClazzTemplate} from "../../common-component/common-types";
-import AntdLiquid, {AntdLiquidProps} from "./AntdLiquid";
-import liquidImg from './liquid.png';
+import AntdRingProgress, {AntdRingProgressProps} from "./AntdRingProgress";
+import ringProgressImg from './ring-progress.png';
 import {BaseInfoType} from "../../../designer/DesignerType";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
-const AntdLiquidConfig = React.lazy(() => import("./AntdLiquidConfig").then((module) => ({default: module.AntdLiquidConfig})));
+const AntdRingProgressConfig = React.lazy(() => import("./AntdRingProgressConfig").then((module) => ({default: module.AntdRingProgressConfig})));
 const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig"));
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
 
-class AntdLiquidDefinition extends AbstractCustomComponentDefinition<AntdLiquid, BaseMenuMapping, AntdLiquidProps> {
+class AntdRingProgressDefinition extends AbstractCustomComponentDefinition<AntdRingProgress, BaseMenuMapping, AntdRingProgressProps> {
 
-    getComponent(): ClazzTemplate<AntdLiquid> | null {
-        return AntdLiquid;
+    getComponent(): ClazzTemplate<AntdRingProgress> | null {
+        return AntdRingProgress;
     }
 
     getMenuList(): Array<MenuInfo> {
@@ -28,7 +28,7 @@ class AntdLiquidDefinition extends AbstractCustomComponentDefinition<AntdLiquid,
         return {
             info: BaseInfo,
             data: DataConfig,
-            style: AntdLiquidConfig,
+            style: AntdRingProgressConfig,
             animation: AnimationConfig,
             theme: ThemeConfig
         };
@@ -36,43 +36,43 @@ class AntdLiquidDefinition extends AbstractCustomComponentDefinition<AntdLiquid,
 
     getBaseInfo(): BaseInfoType {
         return {
-            compName: "Antd水波图",
-            compKey: "AntdLiquid",
-            type: "水波图",
-            typeKey: "liquid",
-            desc: "基于Antd Designer实现的水波图组件",
+            compName: "Antd迷你环图",
+            compKey: "AntdRingProgress",
+            type: "进度图",
+            typeKey: "progress",
+            desc: "基于Antd Designer实现的迷你环图组件",
         };
     }
 
     getChartImg(): string | null {
-        return liquidImg;
+        return ringProgressImg;
     }
 
-    getInitConfig(): AntdLiquidProps {
+    getInitConfig(): AntdRingProgressProps {
         return {
             info: {
                 id: "",
-                name: 'Antd水波图',
-                type: 'AntdLiquid',
-                desc: '基于Antd Designer实现的水波图组件',
+                name: 'Antd迷你环图',
+                type: 'AntdRingProgress',
+                desc: '基于Antd Designer实现的迷你环图组件',
             },
             style: {
-                percent: 0.25,
-                outline: {
-                    border: 4,
-                },
-                wave: {
-                    length: 128,
-                },
+                autoFit: true,
+                percent: 0.7,
+                color: ['#008591', '#E8EDF3'],
                 statistic: {
                     content: {
                         style: {
-                            fill: '#7de0ff',
-                            fontSize: '16px'
+                            fill: '#fff',
                         }
                     }
+                },
+                animation: {
+                    appear: {
+                        animation: 'wave-in',
+                        duration: 3000,
+                    },
                 }
-
             },
             data: {
                 dataSource: 'static',
@@ -84,4 +84,4 @@ class AntdLiquidDefinition extends AbstractCustomComponentDefinition<AntdLiquid,
     }
 }
 
-export default AntdLiquidDefinition;
+export default AntdRingProgressDefinition;

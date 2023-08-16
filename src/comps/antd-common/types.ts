@@ -5,11 +5,12 @@ import {
     GaugeOptions,
     LineOptions,
     LiquidOptions,
-    Options, PieOptions, RoseOptions,
+    Options,
+    PieOptions,
+    RingProgressOptions,
+    RoseOptions,
     ScatterOptions
 } from "@antv/g2plot";
-import React from "react";
-import {ConfigType} from "../../designer/right/ConfigType";
 
 export type WritableBarOptions = {
     -readonly [K in keyof BarOptions]?: BarOptions[K];
@@ -47,14 +48,10 @@ export type WritableLiquidOptions = {
     -readonly [K in keyof LiquidOptions]?: LiquidOptions[K];
 };
 
+export type WritableRingProgressOptions = {
+    -readonly [K in keyof RingProgressOptions]?: RingProgressOptions[K];
+};
+
 export type WritableOptions = {
     -readonly [K in keyof Options]?: Options[K];
 };
-
-export interface AntdBaseMenuMapping {
-    info: React.ComponentType<ConfigType>;
-    style?: React.ComponentType<ConfigType>;
-    data: React.ComponentType<ConfigType>;
-    animation: React.ComponentType<ConfigType>;
-    theme: React.ComponentType<ConfigType>;
-}
