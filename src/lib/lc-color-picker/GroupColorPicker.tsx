@@ -68,7 +68,7 @@ class GroupColorPicker extends Component<GroupColorPickerProp> {
                 {colors.map((item: string, i: number) => {
                     return (
                         <div className={"group-color-item"} key={i + ''}>
-                            <ColorPicker defaultValue={item}
+                            <ColorPicker value={item}
                                          onChange={(color: string) => this.onChange(color, i)}/>
                             <span onClick={() => this.delColor(i)}><label>×</label></span>
                         </div>

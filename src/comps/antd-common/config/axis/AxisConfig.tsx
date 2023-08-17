@@ -28,7 +28,19 @@ interface AxisConfigProps {
  * 轴线配置项
  */
 class AxisConfig extends Component<AxisConfigProps> {
-
+    defaultData: Axis = {
+        label: {
+            style: {
+                fill: "#00FFEAFF"
+            }
+        },
+        line: {
+            style: {
+                stroke: "#00dbffff",
+                lineWidth: 1
+            }
+        },
+    }
     oldData: Axis | undefined = undefined;
     emptyData: Axis = {
         grid: null,
@@ -52,7 +64,13 @@ class AxisConfig extends Component<AxisConfigProps> {
         });
         return (
             <Accordion title={title} showSwitch={true} defaultValue={enable}
-                       onChange={value => onChange(value ? this.oldData : this.emptyData)}>
+                       onChange={value => {
+                           onChange(value ?
+                               (isEqual(this.oldData, this.emptyData) ?
+                                   this.defaultData :
+                                   this.oldData) :
+                               this.emptyData)
+                       }}>
                 <ConfigItem title={'位置'} contentStyle={{width: '250px', paddingLeft: '20px'}}>
                     <Radio defaultValue={(config as Types.AxisCfg)?.position || 'right'}
                            onChange={(value => onChange({position: value as Types.AxisCfg["position"]}))}
@@ -410,6 +428,12 @@ export const AxisTitle: React.FC<AxisTitleProps> = ({config, onChange}) => {
                                      style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
                 </CfgItemBorder>
             </ConfigItem>
+            <ConfigItem title={'字号'}>
+                <UnderLineInput defaultValue={(config?.style as ShapeAttrs)?.fontSize || 12}
+                                disabled={axisTitleDisable}
+                                min={0} type={'number'}
+                                onChange={e => onChange({style: {fontSize: parseInt(e.target.value)}})}/>
+            </ConfigItem>
             <ConfigItem title={'偏移量'}>
                 <UnderLineInput defaultValue={config?.offset || 0} min={0} type={'number'}
                                 disabled={axisTitleDisable}
@@ -435,9 +459,14 @@ export const AxisText: React.FC<AxisTextProps> = ({config, onChange}) => {
                                      style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
                 </CfgItemBorder>
             </ConfigItem>
+            <ConfigItem title={'字号'}>
+                <UnderLineInput defaultValue={(config?.style as ShapeAttrs)?.fontSize || 12}
+                                min={0} type={'number'}
+                                onChange={e => onChange({style: {fontSize: parseInt(e.target.value)}})}/>
+            </ConfigItem>
             <ConfigItem title={'角度'}>
-                <UnderLineInput defaultValue={config?.rotate || 0} step={0.1} type={'number'}
-                                onChange={e => onChange({rotate: parseInt(e.target.value)})}/>
+                <UnderLineInput defaultValue={config?.rotate || 0} step={0.1} min={0} max={2} type={'number'}
+                                onChange={e => onChange({rotate: parseFloat(e.target.value) * Math.PI})}/>
             </ConfigItem>
             <ConfigItem title={'偏移量'}>
                 <UnderLineInput defaultValue={config?.offset || 0} type={'number'}
