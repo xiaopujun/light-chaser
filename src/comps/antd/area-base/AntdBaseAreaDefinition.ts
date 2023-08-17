@@ -2,6 +2,8 @@ import {BaseInfoType} from "../../../designer/DesignerType";
 import baseAreaImg from "./base-area.png";
 import AbstractAreaDefinition from "../../antd-common/area/AbstractAreaDefinition";
 import {AntdAreaProps} from "../../antd-common/area/AntdCommonArea";
+import {BaseMenuMapping} from "../../common-component/common-types";
+import {AntdBaseAreaConfig} from "./AntdBaseAreaConfig";
 
 class AntdBaseAreaDefinition extends AbstractAreaDefinition {
 
@@ -19,23 +21,29 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
         return baseAreaImg;
     }
 
+    getMenuToConfigContentMap(): BaseMenuMapping | null {
+        let menuToConfigContentMap = super.getMenuToConfigContentMap();
+        menuToConfigContentMap!['style'] = AntdBaseAreaConfig;
+        return menuToConfigContentMap;
+    }
+
     getInitConfig(): AntdAreaProps {
         const data = [
             {
-                "name": "2006 Q3",
+                "name": "Q1",
                 "value": 1
             },
             {
-                "name": "2008 Q2",
+                "name": "Q2",
                 "value": 1.67
             },
             {
-                "name": "2009 Q1",
+                "name": "Q3",
                 "value": 2.39
             },
             {
-                "name": "2009 Q2",
-                "value": 0.71
+                "name": "Q4",
+                "value": 4.71
             }
         ]
         return {
@@ -49,6 +57,9 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
                 data: data,
                 xField: "name",
                 yField: "value",
+                color: '#00d7ff',
+                smooth: true,
+                supportCSSTransform: true,
                 xAxis: {
                     grid: null,
                     label: {
@@ -85,8 +96,6 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
                     position: "bottom",
                     title: null
                 },
-                color: '#00d7ff',
-                smooth: true,
                 legend: {
                     position: "right-top",
                     layout: "vertical",
@@ -97,7 +106,6 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
                         }
                     }
                 },
-                supportCSSTransform: true,
                 animation: {
                     appear: {
                         animation: 'wave-in',
