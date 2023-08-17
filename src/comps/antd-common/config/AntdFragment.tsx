@@ -20,10 +20,22 @@ export interface AntdLegendProps {
 }
 
 export const AntdLegend = (props: AntdLegendProps) => {
+
+    const defaultConfig: Legend = {
+        position: "right-top",
+        layout: "vertical",
+        itemName: {
+            style: {
+                fill: "#00f0ffff",
+                fontSize: 12
+            }
+        }
+    }
+
     const {onChange, config} = props;
     return (
         <Accordion title={'图例'} showSwitch={true} defaultValue={!!config}
-                   onChange={value => onChange(value && config!)}>
+                   onChange={value => onChange(value && (config || defaultConfig))}>
             <ConfigItem title={'位置'}>
                 <Select defaultValue={(config as Types.LegendCfg)?.position}
                         onChange={(value => onChange({position: value as Types.LegendCfg['position']}))}

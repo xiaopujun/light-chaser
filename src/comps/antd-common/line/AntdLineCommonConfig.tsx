@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import {ConfigType} from "../../../designer/right/ConfigType";
 import {AntdCartesianCoordinateSys, AntdLegend} from "../config/AntdFragment";
-import {Line, LineOptions, ShapeStyle} from "@antv/g2plot";
+import {LineOptions, ShapeStyle} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
-import AbstractComponent from "../../../framework/core/AbstractComponent";
-import AntdCommonLine, {AntdLineProps} from "./AntdCommonLine";
+import AntdCommonLine from "./AntdCommonLine";
 import {WritableLineOptions} from "../types";
 import ColorMode, {ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import {ShapeAttrs} from "@antv/g-base";
@@ -21,17 +20,17 @@ import Select from "../../../lib/lc-select/Select";
 class AntdLineCommonStyleConfig extends Component<ConfigType> {
 
     legendChange = (legend: Legend) => {
-        const instance: AbstractComponent<Line, AntdLineProps> = this.props.instance as AntdCommonLine;
+        const instance = this.props.instance as AntdCommonLine;
         instance.update({style: {legend}});
     }
 
     lineCoordinateSysChange = (config: LineOptions) => {
-        const instance: AbstractComponent<Line, AntdLineProps> = this.props.instance as AntdCommonLine;
+        const instance = this.props.instance as AntdCommonLine;
         instance.update({style: config});
     }
 
     lineGraphicsChange = (config: LineOptions) => {
-        const instance: AbstractComponent<Line, AntdLineProps> = this.props.instance as AntdCommonLine;
+        const instance = this.props.instance as AntdCommonLine;
         instance.update({style: config});
     }
 
@@ -65,6 +64,9 @@ export const AntdLineGraphics: React.FC<AntdLineGraphicsProps> = ({config, onCha
             case 'single':
                 onChange({lineStyle: {stroke: value as string}});
                 break;
+            case 'multi':
+                onChange({lineStyle: {stroke: undefined, color: value as string[]}});
+                break;
             case 'gradient':
                 onChange({lineStyle: {stroke: `l(0) 0:${value[0]} 1:${value[1]}`}});
                 break;
@@ -73,14 +75,14 @@ export const AntdLineGraphics: React.FC<AntdLineGraphicsProps> = ({config, onCha
 
     const buildColorModeData = (): ColorModeValue => {
         let mode = 'single', value: string | string[] = '#fff';
-        if ((config?.lineStyle as ShapeAttrs)?.fill) {
-            const fill = (config?.lineStyle as ShapeAttrs).fill as string;
-            if (fill.startsWith('l')) {
+        if ((config?.lineStyle as ShapeAttrs)?.stroke) {
+            const stroke = (config?.lineStyle as ShapeAttrs).stroke as string;
+            if (stroke.startsWith('l')) {
                 mode = 'gradient';
-                value = [fill.split(':')[1].split(' ')[0], fill.split(':')[2].split(' ')[0]];
+                value = [stroke.split(':')[1].split(' ')[0], stroke.split(':')[2].split(' ')[0]];
             } else {
                 mode = 'single';
-                value = fill;
+                value = stroke;
             }
         } else if (config?.color) {
             mode = 'multi';
@@ -103,7 +105,7 @@ export const AntdLineGraphics: React.FC<AntdLineGraphicsProps> = ({config, onCha
                                         onChange({lineStyle: {lineWidth: parseInt(event.target.value)}})}/>
                 </ConfigItem>
                 <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: '85%'}}>
-                    <ColorMode onChange={LineColorChange} data={buildColorModeData()} exclude={['multi']}/>
+                    <ColorMode onChange={LineColorChange} data={buildColorModeData()}/>
                 </ConfigItem>
             </ConfigCard>
             <ConfigCard title={'点'}>

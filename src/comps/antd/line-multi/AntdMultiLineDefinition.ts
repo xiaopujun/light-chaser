@@ -224,6 +224,11 @@ class AntdMultiLineDefinition extends AbstractLineDefinition {
                 xField: 'year',
                 yField: 'value',
                 seriesField: 'category',
+                supportCSSTransform: true,
+                color: ['#fff', '#ff0000'],
+                lineStyle: {
+                    stroke: undefined,
+                },
                 xAxis: {
                     grid: null,
                     label: {
@@ -271,7 +276,6 @@ class AntdMultiLineDefinition extends AbstractLineDefinition {
                         }
                     }
                 },
-                supportCSSTransform: true,
                 animation: {
                     appear: {
                         animation: 'wave-in',

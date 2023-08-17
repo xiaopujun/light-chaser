@@ -10,14 +10,13 @@ import {ShapeAttrs} from "@antv/g-base";
 import Accordion from "../../../lib/lc-accordion/Accordion";
 import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
-import LcSwitch from "../../../lib/lc-switch/LcSwitch";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import {MappingOptions} from "@antv/g2plot/lib/adaptor/geometries/base";
 import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import Select from "../../../lib/lc-select/Select";
 
-class AntdBaseLineConfig extends Component<ConfigType> {
+class AntdStepLineConfig extends Component<ConfigType> {
 
     lineCoordinateSysChange = (config: LineOptions) => {
         const instance = this.props.instance as AntdCommonLine;
@@ -34,22 +33,22 @@ class AntdBaseLineConfig extends Component<ConfigType> {
         const config: LineOptions = instance.getConfig().style;
         return (
             <>
-                <AntdBaseLineGraphics onChange={this.lineGraphicsChange} config={config}/>
+                <AntdStepLineGraphics onChange={this.lineGraphicsChange} config={config}/>
                 <AntdCartesianCoordinateSys onChange={this.lineCoordinateSysChange} config={config}/>
             </>
         );
     }
 }
 
-export {AntdBaseLineConfig};
+export {AntdStepLineConfig};
 
-export interface AntdBaseLineGraphicsProps {
+export interface AntdStepLineGraphicsProps {
     config?: WritableLineOptions;
 
     onChange(config: WritableLineOptions): void;
 }
 
-export const AntdBaseLineGraphics: React.FC<AntdBaseLineGraphicsProps> = ({config, onChange}) => {
+export const AntdStepLineGraphics: React.FC<AntdStepLineGraphicsProps> = ({config, onChange}) => {
 
     const LineColorChange = (data: ColorModeValue) => {
         const {mode, value} = data;
@@ -65,18 +64,15 @@ export const AntdBaseLineGraphics: React.FC<AntdBaseLineGraphicsProps> = ({confi
 
     const buildColorModeData = (): ColorModeValue => {
         let mode = 'single', value: string | string[] = '#fff';
-        if ((config?.lineStyle as ShapeAttrs)?.fill) {
-            const fill = (config?.lineStyle as ShapeAttrs).fill as string;
-            if (fill.startsWith('l')) {
+        if ((config?.lineStyle as ShapeAttrs)?.stroke) {
+            const stroke = (config?.lineStyle as ShapeAttrs).stroke as string;
+            if (stroke.startsWith('l')) {
                 mode = 'gradient';
-                value = [fill.split(':')[1].split(' ')[0], fill.split(':')[2].split(' ')[0]];
+                value = [stroke.split(':')[1].split(' ')[0], stroke.split(':')[2].split(' ')[0]];
             } else {
                 mode = 'single';
-                value = fill;
+                value = stroke;
             }
-        } else if (config?.color) {
-            mode = 'multi';
-            value = config?.color as string[];
         }
         return {mode, value};
     }
@@ -84,15 +80,20 @@ export const AntdBaseLineGraphics: React.FC<AntdBaseLineGraphicsProps> = ({confi
     return (
         <Accordion title={'图形'}>
             <ConfigCard title={'线条'}>
-                <ConfigItem title={'平滑'}>
-                    <LcSwitch defaultValue={!!config}
-                              onChange={(value) => onChange({smooth: value})}/>
-                </ConfigItem>
                 <ConfigItem title={'线宽'}>
                     <UnderLineInput defaultValue={(config?.lineStyle as ShapeStyle)?.lineWidth}
                                     type={'number'} min={0}
                                     onChange={(event) =>
                                         onChange({lineStyle: {lineWidth: parseInt(event.target.value)}})}/>
+                </ConfigItem>
+                <ConfigItem title={'类型'}>
+                    <Select options={[
+                        {value: 'hv', label: 'hv'},
+                        {value: 'vh', label: 'vh'},
+                        {value: 'hvh', label: 'hvh'},
+                        {value: 'vhv', label: 'vhv'}]}
+                            defaultValue={config?.stepType || 'vh'}
+                            onChange={(value) => onChange({stepType: value})}/>
                 </ConfigItem>
                 <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: '85%'}}>
                     <ColorMode onChange={LineColorChange} data={buildColorModeData()} exclude={['multi']}/>
