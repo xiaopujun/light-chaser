@@ -65,6 +65,12 @@ class AntdGroupColumnDefinition extends AbstractColumnDefinition {
                 xField: 'label',
                 yField: 'value',
                 seriesField: 'type',
+                maxColumnWidth: 8,
+                supportCSSTransform: true,
+                color: ["#00c0df", "#298aff"],
+                columnStyle: {
+                    fill: undefined,
+                },
                 xAxis: {
                     grid: null,
                     label: {
@@ -111,8 +117,6 @@ class AntdGroupColumnDefinition extends AbstractColumnDefinition {
                         }
                     }
                 },
-                maxColumnWidth: 8,
-                supportCSSTransform: true,
                 animation: {
                     appear: {
                         animation: 'scale-in-y',

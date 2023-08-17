@@ -81,6 +81,12 @@ class AntdPercentColumnDefinition extends AbstractColumnDefinition {
                 seriesField: 'country',
                 isPercent: true,
                 isStack: true,
+                maxColumnWidth: 8,
+                supportCSSTransform: true,
+                color: ["#59bfff", "#298aff", "#004294"],
+                columnStyle: {
+                    fill: undefined,
+                },
                 xAxis: {
                     grid: null,
                     label: {
@@ -127,8 +133,6 @@ class AntdPercentColumnDefinition extends AbstractColumnDefinition {
                         }
                     }
                 },
-                maxColumnWidth: 8,
-                supportCSSTransform: true,
                 animation: {
                     appear: {
                         animation: 'scale-in-y',

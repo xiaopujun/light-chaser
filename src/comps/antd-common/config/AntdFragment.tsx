@@ -11,8 +11,7 @@ import {Legend} from "@antv/g2plot/lib/types/legend";
 import {ShapeAttrs} from "@antv/g-base";
 import {Types} from "@antv/g2";
 import {Axis} from "@antv/g2plot";
-import {WritableBarOptions, WritableOptions} from "../types";
-import ColorMode, {ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
+import {WritableOptions} from "../types";
 
 export interface AntdLegendProps {
     config?: Legend;
@@ -68,60 +67,6 @@ export const AntdLegend = (props: AntdLegendProps) => {
     );
 };
 
-export interface AntdBarGraphicsProps {
-    config?: WritableBarOptions;
-
-    onChange(config: WritableBarOptions): void;
-}
-
-export const AntdBarGraphics: React.FC<AntdBarGraphicsProps> = ({config, onChange}) => {
-
-    const barColorChange = (data: ColorModeValue) => {
-        const {mode, value} = data;
-        switch (mode) {
-            case 'single':
-                onChange({barStyle: {fill: value as string}});
-                break;
-            case 'multi':
-                onChange({color: value, barStyle: {fill: undefined}});
-                break;
-            case 'gradient':
-                onChange({barStyle: {fill: `l(0) 0:${value[0]} 1:${value[1]}`}});
-                break;
-        }
-    }
-
-    const buildColorModeData = (): ColorModeValue => {
-        let mode = 'single', value: string | string[] = '#fff';
-        if ((config?.barStyle as ShapeAttrs)?.fill) {
-            const fill = (config?.barStyle as ShapeAttrs).fill as string;
-            if (fill.startsWith('l')) {
-                mode = 'gradient';
-                value = [fill.split(':')[1].split(' ')[0], fill.split(':')[2].split(' ')[0]];
-            } else {
-                mode = 'single';
-                value = fill;
-            }
-        } else if (config?.color) {
-            mode = 'multi';
-            value = config?.color as string[];
-        }
-        return {mode, value};
-    }
-
-    return (
-        <Accordion title={'图形'}>
-            <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: '85%'}}>
-                <ColorMode onChange={barColorChange} data={buildColorModeData()}/>
-            </ConfigItem>
-            <ConfigItem title={'宽度'}>
-                <UnderLineInput type={'number'} min={1}
-                                onChange={(e) => onChange({maxBarWidth: parseInt(e.target.value)})}
-                                defaultValue={config!.maxBarWidth}/>
-            </ConfigItem>
-        </Accordion>
-    )
-}
 
 export interface AntdCartesianCoordinateSysProps {
     config?: WritableOptions;

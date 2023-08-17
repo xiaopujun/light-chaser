@@ -47,7 +47,7 @@ class AntdBaseBarDefinition extends AbstractBarDefinition {
                 yField: "name",
                 seriesField: 'name',
                 maxBarWidth: 8,
-                color: ["#00dbffff", "#fff"],
+                color: ["#00dbffff"],
                 barStyle: {
                     fill: undefined,
                 },

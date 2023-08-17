@@ -81,6 +81,10 @@ class AntdPercentBarDefinition extends AbstractBarDefinition {
                 seriesField: 'country',
                 isPercent: true,
                 isStack: true,
+                color: ["#59bfff", "#298aff", "#004294"],
+                barStyle: {
+                    fill: undefined,
+                },
                 xAxis: {
                     grid: null,
                     label: {

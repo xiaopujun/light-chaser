@@ -65,6 +65,10 @@ class AntdGroupBarDefinition extends AbstractBarDefinition {
                 xField: 'value',
                 yField: 'label',
                 seriesField: 'type',
+                color: ["#00c0df", "#298aff"],
+                barStyle: {
+                    fill: undefined,
+                },
                 xAxis: {
                     grid: null,
                     label: {

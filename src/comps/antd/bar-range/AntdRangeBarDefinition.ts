@@ -36,7 +36,12 @@ class AntdRangeBarDefinition extends AbstractBarDefinition {
                 data: data,
                 xField: 'values',
                 yField: 'type',
+                seriesField: 'type',
                 isRange: true,
+                color: ["#00dbffff"],
+                barStyle: {
+                    fill: "#00c0df",
+                },
                 xAxis: {
                     grid: null,
                     label: {
@@ -73,7 +78,6 @@ class AntdRangeBarDefinition extends AbstractBarDefinition {
                     position: "bottom",
                     title: null
                 },
-                color: '#00d7ff',
                 legend: {
                     position: "right-top",
                     layout: "vertical",

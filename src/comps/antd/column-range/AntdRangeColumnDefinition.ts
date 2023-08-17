@@ -36,7 +36,14 @@ class AntdRangeColumnDefinition extends AbstractColumnDefinition {
                 data: data,
                 xField: 'type',
                 yField: 'values',
+                seriesField: 'type',
                 isRange: true,
+                maxColumnWidth: 8,
+                supportCSSTransform: true,
+                color: ["#00dbffff"],
+                columnStyle: {
+                    fill: "#00c0df",
+                },
                 xAxis: {
                     grid: null,
                     label: {
@@ -73,7 +80,6 @@ class AntdRangeColumnDefinition extends AbstractColumnDefinition {
                     position: "bottom",
                     title: null
                 },
-                color: '#00d7ff',
                 legend: {
                     position: "right-top",
                     layout: "vertical",
@@ -84,8 +90,6 @@ class AntdRangeColumnDefinition extends AbstractColumnDefinition {
                         }
                     }
                 },
-                maxColumnWidth: 8,
-                supportCSSTransform: true,
                 animation: {
                     appear: {
                         animation: 'scale-in-y',

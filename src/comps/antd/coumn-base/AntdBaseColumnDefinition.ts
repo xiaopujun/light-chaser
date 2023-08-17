@@ -45,6 +45,13 @@ class AntdBaseColumnDefinition extends AbstractColumnDefinition {
                 data: data,
                 xField: "name",
                 yField: "value",
+                seriesField: 'name',
+                maxColumnWidth: 8,
+                supportCSSTransform: true,
+                color: ["#00dbffff"],
+                columnStyle: {
+                    fill: "#00dbffff",
+                },
                 xAxis: {
                     grid: null,
                     label: {
@@ -81,7 +88,6 @@ class AntdBaseColumnDefinition extends AbstractColumnDefinition {
                     position: "bottom",
                     title: null
                 },
-                color: '#00d7ff',
                 legend: {
                     position: "right-top",
                     layout: "vertical",
@@ -92,8 +98,6 @@ class AntdBaseColumnDefinition extends AbstractColumnDefinition {
                         }
                     }
                 },
-                maxColumnWidth: 8,
-                supportCSSTransform: true,
                 animation: {
                     appear: {
                         animation: 'scale-in-y',

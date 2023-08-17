@@ -65,6 +65,12 @@ class AntdStackBarDefinition extends AbstractBarDefinition {
                 yField: 'year',
                 seriesField: 'type',
                 isStack: true,
+                maxBarWidth: 8,
+                supportCSSTransform: true,
+                color: ["#00c0df", "#298aff"],
+                barStyle: {
+                    fill: undefined,
+                },
                 xAxis: {
                     grid: null,
                     label: {
@@ -101,7 +107,6 @@ class AntdStackBarDefinition extends AbstractBarDefinition {
                     position: "bottom",
                     title: null
                 },
-                // color: ['#00d7ff', '#0080b6'],
                 legend: {
                     position: "right-top",
                     layout: "vertical",
@@ -112,8 +117,6 @@ class AntdStackBarDefinition extends AbstractBarDefinition {
                         }
                     }
                 },
-                maxBarWidth: 8,
-                supportCSSTransform: true,
                 animation: {
                     appear: {
                         animation: 'scale-in-x',

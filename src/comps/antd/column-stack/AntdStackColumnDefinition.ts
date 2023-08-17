@@ -65,6 +65,12 @@ class AntdStackColumnDefinition extends AbstractColumnDefinition {
                 yField: 'value',
                 seriesField: 'type',
                 isStack: true,
+                maxColumnWidth: 8,
+                supportCSSTransform: true,
+                color: ["#00c0df", "#298aff"],
+                columnStyle: {
+                    fill: undefined,
+                },
                 xAxis: {
                     grid: null,
                     label: {
@@ -101,7 +107,6 @@ class AntdStackColumnDefinition extends AbstractColumnDefinition {
                     position: "bottom",
                     title: null
                 },
-                // color: ['#00d7ff', '#0080b6'],
                 legend: {
                     position: "right-top",
                     layout: "vertical",
@@ -112,8 +117,6 @@ class AntdStackColumnDefinition extends AbstractColumnDefinition {
                         }
                     }
                 },
-                maxColumnWidth: 8,
-                supportCSSTransform: true,
                 animation: {
                     appear: {
                         animation: 'scale-in-y',
