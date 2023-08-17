@@ -88,13 +88,9 @@ export const toBottom = () => {
 export const doDelete = () => {
     const {targetIds, setTargetIds, setTargets} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
-    // const {updateActive} = designerStore;
-    const {setContentVisible} = rightStore;
+    const {setContentVisible, activeConfig} = rightStore;
     setContentVisible(false);
-    // updateActive && updateActive({
-    //     id: -1,
-    //     type: 'LcBg'
-    // });
+    activeConfig("80cc666f", "LcBg");
     targetIds.length > 0 && designerStore.delItem(targetIds);
     setTargetIds([]);
     setTargets([])

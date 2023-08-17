@@ -12,6 +12,7 @@ export interface ColorModeValue {
 
 export interface ColorModeProps {
     data?: ColorModeValue
+    exclude?: string[];
 
     onChange?(data: ColorModeValue): void;
 }
@@ -60,16 +61,18 @@ class ColorMode extends Component<ColorModeProps, ColorModeValue> {
 
     render() {
         const {mode, value} = this.state;
+        const {exclude} = this.props;
+        const modeOptions = [
+            {value: 'single', label: '单色'},
+            {value: 'multi', label: '多色'},
+            {value: 'gradient', label: '渐变'},
+        ].filter(item => !exclude?.includes(item.value));
         return (
             <div className={"lc-color-mode"}>
                 <div className={'mode-select'} style={{width: 70}}>
                     <Select defaultValue={mode || 'single'}
                             onChange={this.modeChange}
-                            options={[
-                                {value: 'single', label: '单色'},
-                                {value: 'multi', label: '多色'},
-                                {value: 'gradient', label: '渐变'},
-                            ]}/>
+                            options={modeOptions}/>
                 </div>
                 {
                     mode === 'single' && <CfgItemBorder width={'100px'}>
