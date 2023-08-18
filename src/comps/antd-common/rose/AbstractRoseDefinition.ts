@@ -6,7 +6,7 @@ import {BaseMenuMapping, ClazzTemplate} from "../../common-component/common-type
 import AntdCommonRose, {AntdRoseProps} from "./AntdCommonRose";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
-const AntdRoseCommonStyleConfig = React.lazy(() => import("./AntdRoseCommonConfig").then((module) => ({default: module.AntdRoseCommonStyleConfig})));
+const AntdRoseCommonStyleConfig = React.lazy(() => import("./AntdRoseCommonConfig"));
 const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig"));
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));

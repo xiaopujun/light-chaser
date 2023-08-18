@@ -81,17 +81,17 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                 </ConfigItem>
                 <ConfigItem title={"内径"}>
                     <UnderLineInput type={"number"} min={0} max={1} step={0.01}
-                                    defaultValue={config?.startAngle || 0}
+                                    defaultValue={config?.innerRadius || 0}
                                     onChange={(event) => onChange({innerRadius: parseFloat(event.target.value)})}/>
                 </ConfigItem>
                 <ConfigItem title={"起始角度"}>
                     <UnderLineInput type={"number"} min={0} max={2} step={0.01}
-                                    defaultValue={config?.innerRadius || 0}
+                                    defaultValue={config?.startAngle || 0}
                                     onChange={(event) => onChange({startAngle: parseFloat(event.target.value) * Math.PI})}/>
                 </ConfigItem>
                 <ConfigItem title={"结束角度"}>
                     <UnderLineInput type={"number"} min={0} max={2} step={0.01}
-                                    defaultValue={config?.innerRadius || 0}
+                                    defaultValue={config?.endAngle || 0}
                                     onChange={(event) => onChange({endAngle: parseFloat(event.target.value) * Math.PI})}/>
                 </ConfigItem>
                 <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: '85%'}}>

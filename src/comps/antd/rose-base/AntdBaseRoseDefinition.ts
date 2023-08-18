@@ -42,14 +42,19 @@ class AntdBaseRoseDefinition extends AbstractRoseDefinition {
                 seriesField: 'type',
                 radius: 0.8,
                 padding: [50, 0, 0, 0],
+                supportCSSTransform: true,
+                sectorStyle: {
+                    stroke: "#fff",
+                    lineWidth: 1
+                },
                 label: {
                     style: {
                         fill: "#fff",
                     }
                 },
                 legend: {
-                    position: "top",
-                    layout: "horizontal",
+                    position: "right-top",
+                    layout: "vertical",
                     itemName: {
                         style: {
                             fill: "#00f0ffff",
@@ -57,7 +62,6 @@ class AntdBaseRoseDefinition extends AbstractRoseDefinition {
                         }
                     }
                 },
-                supportCSSTransform: true,
                 animation: {
                     appear: {
                         animation: 'grow-in-xy',
