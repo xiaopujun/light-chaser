@@ -69,7 +69,6 @@ export abstract class AntdBaseDesignerComponent<I extends Plot<any> = Plot<Optio
     }
 
     public commonUpdate(config: C, Clazz: new (...args: any[]) => I, upOp?: UpdateOptions,): void {
-        console.log(config)
         if (!this.lastReqState) {
             //如果上一次（最近一次)请求失败，则展示错误提示信息
             ComponentUtil.createAndRender(this.container!, LoadError);

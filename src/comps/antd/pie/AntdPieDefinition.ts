@@ -105,7 +105,6 @@ class AntdPieDefinition extends AbstractCustomComponentDefinition<AntdPie, BaseM
                         },
                         content: '标题',
                     },
-                    content: false,
                 },
                 animation: {
                     appear: {
