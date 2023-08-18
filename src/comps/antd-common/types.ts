@@ -9,7 +9,8 @@ import {
     PieOptions,
     RingProgressOptions,
     RoseOptions,
-    ScatterOptions
+    ScatterOptions,
+    StatisticText
 } from "@antv/g2plot";
 
 export type WritableBarOptions = {
@@ -50,6 +51,10 @@ export type WritableLiquidOptions = {
 
 export type WritableRingProgressOptions = {
     -readonly [K in keyof RingProgressOptions]?: RingProgressOptions[K];
+};
+
+export type WritableStatisticText = {
+    -readonly [K in keyof StatisticText]?: StatisticText[K];
 };
 
 export type WritableOptions = {

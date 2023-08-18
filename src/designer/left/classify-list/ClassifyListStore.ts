@@ -6,14 +6,9 @@ import icon_column from '../../../icon/icon-column.svg';
 import icon_area from '../../../icon/icon-area.svg';
 import icon_pie from '../../../icon/icon-pie.svg';
 import icon_scatter from '../../../icon/icon-scatter.svg';
-import icon_histogram from '../../../icon/icon-histogram.svg';
 import icon_line from '../../../icon/icon-line.svg';
 import icon_loading from '../../../icon/icon-loading.svg';
 import icon_flowers from '../../../icon/icon-flowers.svg';
-import icon_radar from '../../../icon/icon-radar.svg';
-import icon_word_cloud from '../../../icon/icon-wordcloud.svg';
-import icon_sun from '../../../icon/icon-sun.svg';
-import icon_rectangle from '../../../icon/icon-rectangle.svg';
 import icon_optimize from '../../../icon/icon-optimize.svg';
 import icon_points from '../../../icon/icon-points.svg';
 
@@ -74,31 +69,31 @@ const getClassifyItemInfo = () => {
             name: "玫瑰图",
             classify: ClassifyEnum.ROSE,
         },
-        {
-            icon: icon_radar,
-            name: "雷达图",
-            classify: ClassifyEnum.RADAR,
-        },
-        {
-            icon: icon_word_cloud,
-            name: "词云图",
-            classify: ClassifyEnum.WORD_CLOUD,
-        },
-        {
-            icon: icon_histogram,
-            name: "直方图",
-            classify: ClassifyEnum.HISTOGRAM,
-        },
-        {
-            icon: icon_sun,
-            name: "旭日图",
-            classify: ClassifyEnum.SUNBURST,
-        },
-        {
-            icon: icon_rectangle,
-            name: "矩形树图",
-            classify: ClassifyEnum.TREEMAP,
-        },
+        // {
+        //     icon: icon_radar,
+        //     name: "雷达图",
+        //     classify: ClassifyEnum.RADAR,
+        // },
+        // {
+        //     icon: icon_word_cloud,
+        //     name: "词云图",
+        //     classify: ClassifyEnum.WORD_CLOUD,
+        // },
+        // {
+        //     icon: icon_histogram,
+        //     name: "直方图",
+        //     classify: ClassifyEnum.HISTOGRAM,
+        // },
+        // {
+        //     icon: icon_sun,
+        //     name: "旭日图",
+        //     classify: ClassifyEnum.SUNBURST,
+        // },
+        // {
+        //     icon: icon_rectangle,
+        //     name: "矩形树图",
+        //     classify: ClassifyEnum.TREEMAP,
+        // },
     ]
 }
 

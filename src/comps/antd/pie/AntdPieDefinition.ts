@@ -8,7 +8,7 @@ import {BaseInfoType} from "../../../designer/DesignerType";
 import AntdPie, {AntdPieProps} from "./AntdPie";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
-const AntdPieConfig = React.lazy(() => import("./AntdPieConfig").then((module) => ({default: module.AntdPieConfig})));
+const AntdPieConfig = React.lazy(() => import("./AntdPieStyleConfig"));
 const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig"));
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
@@ -67,36 +67,57 @@ class AntdPieDefinition extends AbstractCustomComponentDefinition<AntdPie, BaseM
                 data,
                 angleField: 'value',
                 colorField: 'type',
-                radius: 1,
+                radius: 0.7,
                 innerRadius: 0.6,
+                pieStyle: {
+                    stroke: "#fff",
+                    lineWidth: 1
+                },
                 label: {
-                    type: 'inner',
-                    offset: '-50%',
-                    content: '{value}',
+                    type: 'outer',
+                    offset: 10,
+                    content: '{name} {percentage}',
+                    autoRotate: true,
+                    rotate: 0,
                     style: {
                         textAlign: 'center',
-                        fontSize: 14,
+                        fontSize: 12,
+                        fontWeight: 500,
+                        fill: '#589abb',
                     },
+                },
+                legend: {
+                    position: "right-top",
+                    layout: "vertical",
+                    itemName: {
+                        style: {
+                            fill: "#00f0ffff",
+                            fontSize: 12
+                        }
+                    }
                 },
                 interactions: [{type: 'element-selected'}, {type: 'element-active'}],
                 statistic: {
-                    title: false,
-                    content: {
+                    title: {
                         style: {
-                            whiteSpace: 'pre-wrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
                             fontSize: '14px',
                             color: '#fff'
                         },
-                        content: 'AntV\nG2Plot',
+                        content: '标题',
                     },
+                    content: false,
                 },
+                animation: {
+                    appear: {
+                        animation: 'wave-in',
+                        duration: 3000,
+                    },
+                }
             },
             data: {
                 dataSource: 'static',
                 staticData: {
-                    data: []
+                    data
                 },
             },
         };
