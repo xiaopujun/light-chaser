@@ -11,7 +11,6 @@ import {PieOptions, ShapeStyle, StatisticText} from "@antv/g2plot";
 import LcSwitch from "../../../lib/lc-switch/LcSwitch";
 import Select from '../../../lib/lc-select/Select';
 import {Types} from "@antv/g2";
-import {LooseObject} from "@antv/g2/lib/interface";
 import {AntdLegend} from "../../antd-common/config/AntdFragment";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import Accordion from "../../../lib/lc-accordion/Accordion";
@@ -62,7 +61,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
     }
 
     const buildColorModeData = (): ColorModeValue => {
-        let mode = 'single', value: string | string[] = '#fff';
+        let mode = 'single', value: string | string[];
         let multi = Array.isArray(config.color) && config.color.length > 1;
         if (multi) {
             mode = 'multi';
@@ -149,12 +148,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                 </ConfigItem>
                 <ConfigItem title={"自动旋转"}>
                     <LcSwitch defaultValue={!!(config?.label as Types.GeometryLabelCfg)?.autoRotate}
-                              onChange={(value) => {
-                                  let titleConfig: StatisticText | boolean;
-                                  if (value) titleConfig = {style: {fontSize: '12px', color: '#fff'}, content: 'text'}
-                                  else titleConfig = false;
-                                  onChange({label: {autoRotate: value}})
-                              }}/>
+                              onChange={(value) => onChange({label: {autoRotate: value}})}/>
                 </ConfigItem>
                 <ConfigItem title={"旋转角度"}>
                     <UnderLineInput type={'number'} min={0} max={2} step={0.01}
@@ -240,39 +234,39 @@ export const StatisticTextConfig: React.FC<AntdStatisticTextConfigProps> = ({con
     )
 }
 
-
-export interface AntdFontProps {
-    config: LooseObject;
-    disabled?: boolean;
-
-    onChange(config: LooseObject): void;
-}
-
-export const AntdFontConfig: React.FC<AntdFontProps> = ({config, disabled, onChange}) => {
-
-    return (
-        <>
-            <ConfigItem title={"字号"}>
-                <UnderLineInput type={'number'} min={10}
-                                disabled={disabled}
-                                defaultValue={parseInt(config?.fontSize) || '12'}
-                                onChange={(event) => onChange({fontSize: event.target.value + 'px'})}/>
-            </ConfigItem>
-            <ConfigItem title={"加粗"}>
-                <UnderLineInput type={'number'} min={100} max={900} step={100}
-                                disabled={disabled}
-                                defaultValue={parseInt(config?.fontWeight) || '500'}
-                                onChange={(event) => onChange({fontWeight: parseInt(event.target.value)})}/>
-            </ConfigItem>
-            <ConfigItem title={'颜色'}>
-                <CfgItemBorder width={'100%'}>
-                    <BaseColorPicker
-                        disabled={disabled}
-                        defaultValue={config?.color || '#fff'}
-                        onChange={(value) => onChange({color: value})}
-                        style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                </CfgItemBorder>
-            </ConfigItem>
-        </>
-    )
-}
+//
+// export interface AntdFontProps {
+//     config: LooseObject;
+//     disabled?: boolean;
+//
+//     onChange(config: LooseObject): void;
+// }
+//
+// export const AntdFontConfig: React.FC<AntdFontProps> = ({config, disabled, onChange}) => {
+//
+//     return (
+//         <>
+//             <ConfigItem title={"字号"}>
+//                 <UnderLineInput type={'number'} min={10}
+//                                 disabled={disabled}
+//                                 defaultValue={parseInt(config?.fontSize) || '12'}
+//                                 onChange={(event) => onChange({fontSize: event.target.value + 'px'})}/>
+//             </ConfigItem>
+//             <ConfigItem title={"加粗"}>
+//                 <UnderLineInput type={'number'} min={100} max={900} step={100}
+//                                 disabled={disabled}
+//                                 defaultValue={parseInt(config?.fontWeight) || '500'}
+//                                 onChange={(event) => onChange({fontWeight: parseInt(event.target.value)})}/>
+//             </ConfigItem>
+//             <ConfigItem title={'颜色'}>
+//                 <CfgItemBorder width={'100%'}>
+//                     <BaseColorPicker
+//                         disabled={disabled}
+//                         defaultValue={config?.color || '#fff'}
+//                         onChange={(value) => onChange({color: value})}
+//                         style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
+//                 </CfgItemBorder>
+//             </ConfigItem>
+//         </>
+//     )
+// }
