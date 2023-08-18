@@ -45,6 +45,7 @@ class Accordion extends Component<AccordionProps> {
     }
 
     componentDidMount() {
+        if (!this.accDom) return;
         const {showSwitch = false, value} = this.state;
         if (!showSwitch) {
             this.accDom.addEventListener("click", this.titleClickMode);
@@ -69,6 +70,7 @@ class Accordion extends Component<AccordionProps> {
     }
 
     calculateFold = (value: boolean) => {
+        if (!this.accDom) return;
         this.accDom.classList.toggle("accordion-active");
         let panel = this.accDom.nextElementSibling;
         if (value) {

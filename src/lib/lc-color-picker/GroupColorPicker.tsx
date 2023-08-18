@@ -7,6 +7,7 @@ interface GroupColorPickerProp {
     onChange?: (data: string[]) => void;
     value?: string[];
     canAdd?: boolean;
+    containerStyle?: React.CSSProperties;
 }
 
 /**
@@ -63,8 +64,14 @@ class GroupColorPicker extends Component<GroupColorPickerProp> {
 
     render() {
         const {colors = [], canAdd = false} = this.state;
+        const {containerStyle} = this.props;
+        const _style: React.CSSProperties = {
+            display: "flex",
+            flexDirection: "row",
+            ...containerStyle
+        }
         return (
-            <div className={'group-color-picker'} style={{display: "flex", flexDirection: "row"}}>
+            <div className={'group-color-picker'} style={{..._style}}>
                 {colors.map((item: string, i: number) => {
                     return (
                         <div className={"group-color-item"} key={i + ''}>

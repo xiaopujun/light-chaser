@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ConfigType} from "../../../designer/right/ConfigType";
-import {AreaOptions, ShapeStyle} from "@antv/g2plot";
+import {AreaOptions} from "@antv/g2plot";
 import AntdCommonArea from "../../antd-common/area/AntdCommonArea";
 import {AntdCartesianCoordinateSys} from "../../antd-common/config/AntdFragment";
 import {WritableAreaOptions} from "../../antd-common/types";
@@ -24,11 +24,17 @@ class AntdBaseAreaConfig extends Component<ConfigType> {
         instance.update({style: config});
     }
 
+    baseAreaGraphicsChange = (config: AreaOptions) => {
+        const instance = this.props.instance as AntdCommonArea;
+        instance.update({style: config});
+    }
+
     render() {
         const {instance} = this.props;
         const config: AreaOptions = instance.getConfig().style;
         return (
             <>
+                <AntdBaseAreaGraphics config={config} onChange={this.AreaCoordinateSysChange}/>
                 <AntdCartesianCoordinateSys onChange={this.AreaCoordinateSysChange} config={config}/>
             </>
         );
@@ -46,14 +52,14 @@ export interface AntdBaseAreaGraphicsProps {
 
 export const AntdBaseAreaGraphics: React.FC<AntdBaseAreaGraphicsProps> = ({config, onChange}) => {
 
-    const AreaColorChange = (data: ColorModeValue) => {
-        const {mode, value} = data;
+    const areaColorChange = (data: ColorModeValue) => {
+        const {mode, value, angle = 0} = data;
         switch (mode) {
             case 'single':
-                onChange({areaStyle: {stroke: value as string}});
+                onChange({areaStyle: {fill: value as string}});
                 break;
             case 'gradient':
-                onChange({areaStyle: {stroke: `l(0) 0:${value[0]} 1:${value[1]}`}});
+                onChange({areaStyle: {fill: `l(${angle}) 0:${value[0]} 1:${value[1]}`}});
                 break;
         }
     }
@@ -69,31 +75,17 @@ export const AntdBaseAreaGraphics: React.FC<AntdBaseAreaGraphicsProps> = ({confi
                 mode = 'single';
                 value = fill;
             }
-        } else if (config?.color) {
-            mode = 'multi';
-            value = config?.color as string[];
         }
         return {mode, value};
     }
 
     return (
         <Accordion title={'图形'}>
-            <ConfigCard title={'线条'}>
-                <ConfigItem title={'平滑'}>
-                    <LcSwitch defaultValue={!!config}
-                              onChange={(value) => onChange({smooth: value})}/>
-                </ConfigItem>
-                <ConfigItem title={'线宽'}>
-                    <UnderLineInput defaultValue={(config?.areaStyle as ShapeStyle)?.AreaWidth}
-                                    type={'number'} min={0}
-                                    onChange={(event) =>
-                                        onChange({areaStyle: {areaWidth: parseInt(event.target.value)}})}/>
-                </ConfigItem>
-                <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: '85%'}}>
-                    <ColorMode onChange={AreaColorChange} data={buildColorModeData()} exclude={['multi']}/>
-                </ConfigItem>
-            </ConfigCard>
-            <ConfigCard title={'点'}>
+            <ConfigItem title={'基准填充'}>
+                <LcSwitch defaultValue={!!config?.startOnZero}
+                          onChange={(value) => onChange({startOnZero: value})}/>
+            </ConfigItem>
+            <ConfigCard title={'数据点'}>
                 <ConfigItem title={'尺寸'}>
                     <UnderLineInput defaultValue={(config?.point as MappingOptions)?.size as number || 0}
                                     type={'number'} min={0}
@@ -120,6 +112,31 @@ export const AntdBaseAreaGraphics: React.FC<AntdBaseAreaGraphicsProps> = ({confi
                             onChange={(value) => onChange({point: {shape: value}})}/>
                 </ConfigItem>
             </ConfigCard>
+            <ConfigCard title={'数据线'}>
+                <ConfigItem title={'平滑'}>
+                    <LcSwitch defaultValue={config?.smooth}
+                              onChange={(value) => onChange({smooth: value})}/>
+                </ConfigItem>
+                <ConfigItem title={'线宽'}>
+                    <UnderLineInput defaultValue={config?.line?.size as number}
+                                    type={'number'} min={0}
+                                    onChange={(event) =>
+                                        onChange({line: {size: parseInt(event.target.value)}})}/>
+                </ConfigItem>
+                <ConfigItem title={'颜色'}>
+                    <CfgItemBorder width={'100%'}>
+                        <BaseColorPicker onChange={(value) => onChange({line: {color: value}})}
+                                         defaultValue={config?.line?.color as string || '#fff'}
+                                         style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
+                    </CfgItemBorder>
+                </ConfigItem>
+            </ConfigCard>
+            <ConfigCard title={'数据面'}>
+                <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: '82%'}}>
+                    <ColorMode onChange={areaColorChange} data={buildColorModeData()} exclude={['multi']}/>
+                </ConfigItem>
+            </ConfigCard>
+
         </Accordion>
     )
 }

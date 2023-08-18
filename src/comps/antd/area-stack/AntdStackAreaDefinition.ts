@@ -49,7 +49,7 @@ class AntdStackAreaDefinition extends AbstractAreaDefinition {
             {
                 "country": "北美",
                 "date": 1970,
-                "value": 1767.8
+                "value": -1767.8
             },
             {
                 "country": "北美",
@@ -1889,6 +1889,9 @@ class AntdStackAreaDefinition extends AbstractAreaDefinition {
                 xField: 'date',
                 yField: 'value',
                 seriesField: 'country',
+                smooth: true,
+                supportCSSTransform: true,
+                color: ['#ff0000', '#ff5900', '#ffc400'],
                 xAxis: {
                     grid: null,
                     label: {
@@ -1925,7 +1928,6 @@ class AntdStackAreaDefinition extends AbstractAreaDefinition {
                     position: "bottom",
                     title: null
                 },
-                smooth: true,
                 legend: {
                     position: "right-top",
                     layout: "vertical",
@@ -1936,7 +1938,6 @@ class AntdStackAreaDefinition extends AbstractAreaDefinition {
                         }
                     }
                 },
-                supportCSSTransform: true,
                 animation: {
                     appear: {
                         animation: 'wave-in',

@@ -39,7 +39,7 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
             },
             {
                 "name": "Q3",
-                "value": 2.39
+                "value": -2.39
             },
             {
                 "name": "Q4",
@@ -60,6 +60,7 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
                 color: '#00d7ff',
                 smooth: true,
                 supportCSSTransform: true,
+                isStack: false,
                 xAxis: {
                     grid: null,
                     label: {
@@ -75,7 +76,7 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
                     },
                     tickLine: null,
                     subTickLine: null,
-                    position: "left",
+                    position: "bottom",
                     title: null
                 },
                 yAxis: {
@@ -93,7 +94,7 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
                     },
                     tickLine: null,
                     subTickLine: null,
-                    position: "bottom",
+                    position: "left",
                     title: null
                 },
                 legend: {

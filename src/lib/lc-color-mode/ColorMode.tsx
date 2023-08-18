@@ -4,10 +4,12 @@ import Select from "../lc-select/Select";
 import CfgItemBorder from "../lc-config-item/CfgItemBorder";
 import BaseColorPicker from "../lc-color-picker/BaseColorPicker";
 import GroupColorPicker from "../lc-color-picker/GroupColorPicker";
+import UnderLineInput from "../lc-input/UnderLineInput";
 
 export interface ColorModeValue {
     mode: string;
     value: string | string[];
+    angle?: number;
 }
 
 export interface ColorModeProps {
@@ -22,16 +24,18 @@ class ColorMode extends Component<ColorModeProps, ColorModeValue> {
     singleValue: string = '#fff';
     multiValue: string[] = ['#fff'];
     gradientValue: string[] = ['#fff', '#fff'];
+    angle: number = 0;
 
     state: ColorModeValue = {
         value: '',
-        mode: ''
+        mode: '',
     }
 
     constructor(props: ColorModeProps) {
         super(props);
         const {data} = props;
         this.state = {mode: data?.mode || 'single', value: data?.value || '#fff'};
+        this.angle = data?.angle || 0;
     }
 
     modeChange = (_mode: string) => {
@@ -56,7 +60,7 @@ class ColorMode extends Component<ColorModeProps, ColorModeValue> {
         const {mode} = this.state;
         this.setState({value: _value});
         const {onChange} = this.props;
-        onChange && onChange({mode, value: _value});
+        onChange && onChange({mode, value: _value, angle: this.angle});
     }
 
     render() {
@@ -84,6 +88,7 @@ class ColorMode extends Component<ColorModeProps, ColorModeValue> {
                     </CfgItemBorder>
                 }
                 {mode === 'multi' && <GroupColorPicker onChange={this.colorChange} canAdd={true}
+                                                       containerStyle={{width: 'calc(100% - 30px)'}}
                                                        value={(value as string[]) || ['#00bcff']}/>}
                 {mode === 'gradient' && <div style={{display: 'flex'}}>
                     <CfgItemBorder width={'100%'}>
@@ -92,17 +97,23 @@ class ColorMode extends Component<ColorModeProps, ColorModeValue> {
                                              this.gradientValue[0] = value;
                                              this.colorChange(this.gradientValue);
                                          }}
-                                         style={{width: '80px', height: '15px', borderRadius: 2}}
+                                         style={{width: '60px', height: '15px', borderRadius: 2}}
                                          defaultValue={(value as string[])[0]}/>
                     </CfgItemBorder>
+                    &nbsp;
                     <CfgItemBorder width={'100%'}>
-                        <BaseColorPicker showText={true} style={{width: '80px', height: '15px', borderRadius: 2}}
+                        <BaseColorPicker showText={true} style={{width: '60px', height: '15px', borderRadius: 2}}
                                          onChange={(value) => {
                                              this.gradientValue[1] = value;
                                              this.colorChange(this.gradientValue);
                                          }}
                                          defaultValue={(value as string[])[1]}/>
                     </CfgItemBorder>
+                    &nbsp;
+                    <UnderLineInput type={'number'} defaultValue={this.angle} onChange={(event) => {
+                        this.angle = parseInt(event.target.value || '0');
+                        this.colorChange(this.gradientValue);
+                    }}/>
                 </div>}
             </div>
         );
