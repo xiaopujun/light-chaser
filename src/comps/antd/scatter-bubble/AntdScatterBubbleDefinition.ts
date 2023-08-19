@@ -34,102 +34,6 @@ class AntdScatterBubbleDefinition extends AbstractScatterDefinition {
                 "genre": "female"
             },
             {
-                "x": 1,
-                "y": 93,
-                "size": 55,
-                "genre": "female"
-            },
-            {
-                "x": 57,
-                "y": 2,
-                "size": 90,
-                "genre": "female"
-            },
-            {
-                "x": 80,
-                "y": 76,
-                "size": 22,
-                "genre": "female"
-            },
-            {
-                "x": 11,
-                "y": 74,
-                "size": 96,
-                "genre": "female"
-            },
-            {
-                "x": 88,
-                "y": 56,
-                "size": 10,
-                "genre": "female"
-            },
-            {
-                "x": 30,
-                "y": 47,
-                "size": 49,
-                "genre": "female"
-            },
-            {
-                "x": 57,
-                "y": 62,
-                "size": 98,
-                "genre": "female"
-            },
-            {
-                "x": 4,
-                "y": 16,
-                "size": 16,
-                "genre": "female"
-            },
-            {
-                "x": 46,
-                "y": 10,
-                "size": 11,
-                "genre": "female"
-            },
-            {
-                "x": 22,
-                "y": 87,
-                "size": 89,
-                "genre": "female"
-            },
-            {
-                "x": 57,
-                "y": 91,
-                "size": 82,
-                "genre": "female"
-            },
-            {
-                "x": 45,
-                "y": 15,
-                "size": 98,
-                "genre": "female"
-            },
-            {
-                "x": 9,
-                "y": 81,
-                "size": 63,
-                "genre": "male"
-            },
-            {
-                "x": 98,
-                "y": 5,
-                "size": 89,
-                "genre": "male"
-            },
-            {
-                "x": 51,
-                "y": 50,
-                "size": 73,
-                "genre": "male"
-            },
-            {
-                "x": 41,
-                "y": 22,
-                "size": 14,
-                "genre": "male"
-            },
-            {
                 "x": 58,
                 "y": 24,
                 "size": 20,
@@ -199,65 +103,68 @@ class AntdScatterBubbleDefinition extends AbstractScatterDefinition {
             },
             style: {
                 data: data,
-                xField: 'x',
-                yField: 'y',
-                colorField: 'genre',
-                sizeField: 'size',
+                xField: "x",
+                yField: "y",
+                colorField: "genre",
+                sizeField: "size",
                 size: [5, 20],
-                shape: 'circle',
+                shape: "circle",
                 xAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#9a9a9aff",
+                            fontSize: 10,
+                        },
+                        offset: 16,
                     },
-                    line: {
-                        style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
-                    },
+                    line: null,
                     tickLine: null,
                     subTickLine: null,
                     position: "left",
-                    title: null
+                    title: null,
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#a0a0a0ff",
+                            fontSize: 10,
+                        },
+                        offset: 5,
                     },
                     line: {
                         style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
+                            stroke: "#a2a2a275",
+                            lineWidth: 1,
+                        },
                     },
                     tickLine: null,
                     subTickLine: null,
                     position: "bottom",
-                    title: null
+                    title: null,
                 },
                 legend: {
-                    position: "right-top",
-                    layout: "vertical",
+                    position: "top",
+                    layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#00f0ffff",
-                            fontSize: 12
-                        }
-                    }
+                            fill: "#a0a0a0ff",
+                            fontSize: 10,
+                        },
+                    },
                 },
                 supportCSSTransform: true,
                 animation: {
                     appear: {
-                        animation: 'fade-in',
+                        animation: "fade-in",
                         duration: 3000,
                     },
-                }
+                },
+                color: ["#116BA2", "#58c1ffff"],
+                pointStyle: {
+                    lineWidth: 0,
+                },
             },
             data: {
                 dataSource: 'static',

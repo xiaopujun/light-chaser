@@ -21,12 +21,10 @@ class AntdBaseRoseDefinition extends AbstractRoseDefinition {
 
     getInitConfig(): AntdRoseProps {
         const data = [
-            {type: '分类一', value: 27},
-            {type: '分类二', value: 25},
-            {type: '分类三', value: 18},
-            {type: '分类四', value: 15},
-            {type: '分类五', value: 10},
-            {type: '其他', value: 5},
+            {type: 'sort1', value: 27},
+            {type: 'sort2', value: 25},
+            {type: 'sort3', value: 18},
+            {type: 'sort4', value: 15}
         ];
         return {
             info: {
@@ -37,37 +35,40 @@ class AntdBaseRoseDefinition extends AbstractRoseDefinition {
             },
             style: {
                 data: data,
-                xField: 'type',
-                yField: 'value',
-                seriesField: 'type',
+                xField: "type",
+                yField: "value",
+                seriesField: "type",
                 radius: 0.8,
                 padding: [50, 0, 0, 0],
                 supportCSSTransform: true,
                 sectorStyle: {
                     stroke: "#fff",
-                    lineWidth: 1
+                    lineWidth: 0,
                 },
                 label: {
                     style: {
-                        fill: "#fff",
-                    }
+                        fill: "#b5b5b5ff",
+                        fontSize: 13,
+                    },
+                    autoRotate: true,
                 },
                 legend: {
-                    position: "right-top",
-                    layout: "vertical",
+                    position: "top",
+                    layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#00f0ffff",
-                            fontSize: 12
-                        }
-                    }
+                            fill: "#a6a6a6ff",
+                            fontSize: 12,
+                        },
+                    },
                 },
                 animation: {
                     appear: {
-                        animation: 'grow-in-xy',
+                        animation: "grow-in-xy",
                         duration: 3000,
                     },
-                }
+                },
+                color: ["#0091ffff", "#68beffff", "#b4e0ffff", "#408ec9ff"],
             },
             data: {
                 dataSource: 'static',

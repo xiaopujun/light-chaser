@@ -21,9 +21,10 @@ class AntdRangeBarDefinition extends AbstractBarDefinition {
 
     getInitConfig(): AntdBarProps {
         const data = [
-            {type: '分类一', values: [76, 100]},
-            {type: '分类二', values: [56, 108]},
-            {type: '分类三', values: [38, 129]},
+            {type: 'sort1', values: [36, 130]},
+            {type: 'sort2', values: [60, 95]},
+            {type: 'sort3', values: [50, 110]},
+            {type: 'sort4', values: [20, 135]},
         ];
         return {
             info: {
@@ -34,68 +35,63 @@ class AntdRangeBarDefinition extends AbstractBarDefinition {
             },
             style: {
                 data: data,
-                xField: 'values',
-                yField: 'type',
-                seriesField: 'type',
+                xField: "values",
+                yField: "type",
+                seriesField: "type",
                 isRange: true,
-                color: ["#00dbffff"],
-                barStyle: {
-                    fill: "#00c0df",
-                },
+                color: ["#2ea4ffff", "#7cdaffff", "#6cc2ffff"],
+                barStyle: {},
                 xAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#9c9c9cff",
+                            fontSize: 11,
+                        },
                     },
                     line: {
                         style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
+                            stroke: "#b9b9b975",
+                            lineWidth: 1,
+                        },
                     },
                     tickLine: null,
                     subTickLine: null,
                     position: "right",
-                    title: null
+                    title: null,
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#9c9c9cff",
+                            fontSize: 11,
+                        },
                     },
-                    line: {
-                        style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
-                    },
+                    line: null,
                     tickLine: null,
                     subTickLine: null,
                     position: "bottom",
-                    title: null
+                    title: null,
                 },
                 legend: {
-                    position: "right-top",
-                    layout: "vertical",
+                    position: "top",
+                    layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#00f0ffff",
-                            fontSize: 12
-                        }
-                    }
+                            fill: "#9e9e9eff",
+                            fontSize: 12,
+                        },
+                    },
                 },
                 maxBarWidth: 8,
                 supportCSSTransform: true,
                 animation: {
                     appear: {
-                        animation: 'scale-in-x',
+                        animation: "scale-in-x",
                         duration: 3000,
                     },
-                }
+                },
             },
             data: {
                 dataSource: 'static',

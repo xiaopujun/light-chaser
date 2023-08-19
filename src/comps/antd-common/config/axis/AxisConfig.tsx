@@ -9,7 +9,7 @@ import {Types} from "@antv/g2";
 import {AxisLabelCfg, AxisLineCfg, AxisSubTickLineCfg, AxisTickLineCfg, AxisTitleCfg} from "@antv/component/esm";
 import {ShapeAttrs} from "@antv/g-base";
 import {AxisGridCfg} from "@antv/g2/esm/interface";
-import {isEqual, isEqualWith} from "lodash";
+import {isEqual} from "lodash";
 
 
 const BaseColorPicker = React.lazy(() => import('../../../../lib/lc-color-picker/BaseColorPicker'));
@@ -58,10 +58,8 @@ class AxisConfig extends Component<AxisConfigProps> {
 
     render() {
         const {config, title = '坐标轴', onChange} = this.props;
-        const enable = isEqualWith(config, this.emptyData, (value: any, other: any, indexOrKey: any | undefined, parent: any, otherParent: any, stack: any) => {
-            delete value['position'];
-            return !isEqual(value, other);
-        });
+        const {grid, line, label, title: _title, tickLine, subTickLine} = config || {};
+        const enable = !!(grid || line || label || _title || tickLine || subTickLine);
         return (
             <Accordion title={title} showSwitch={true} defaultValue={enable}
                        onChange={value => {

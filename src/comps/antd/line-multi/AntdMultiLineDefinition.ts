@@ -22,196 +22,47 @@ class AntdMultiLineDefinition extends AbstractLineDefinition {
     getInitConfig(): AntdLineProps {
         const data = [
             {
-                "year": "2007",
-                "value": 1562,
-                "category": "Gas fuel"
+                year: "2007",
+                value: 1706,
+                category: "sort1",
             },
             {
-                "year": "2007",
-                "value": 382,
-                "category": "Cement production"
+                year: "2007",
+                value: 448,
+                category: "sort2",
             },
             {
-                "year": "2007",
-                "value": 66,
-                "category": "Gas flarinl"
+                year: "2008",
+                value: 1361,
+                category: "sort1",
             },
             {
-                "year": "2008",
-                "value": 3103,
-                "category": "Liquid fuel"
+                year: "2008",
+                value: 779,
+                category: "sort2",
             },
             {
-                "year": "2008",
-                "value": 3587,
-                "category": "Solid fuel"
+                year: "2009",
+                value: 1722,
+                category: "sort1",
             },
             {
-                "year": "2008",
-                "value": 1630,
-                "category": "Gas fuel"
+                year: "2009",
+                value: 430,
+                category: "sort2",
             },
             {
-                "year": "2008",
-                "value": 388,
-                "category": "Cement production"
+                year: "2010",
+                value: 1626,
+                category: "sort1",
             },
             {
-                "year": "2008",
-                "value": 69,
-                "category": "Gas flarinl"
+                year: "2010",
+                value: 555,
+                category: "sort2",
             },
-            {
-                "year": "2009",
-                "value": 3042,
-                "category": "Liquid fuel"
-            },
-            {
-                "year": "2009",
-                "value": 3590,
-                "category": "Solid fuel"
-            },
-            {
-                "year": "2009",
-                "value": 1584,
-                "category": "Gas fuel"
-            },
-            {
-                "year": "2009",
-                "value": 415,
-                "category": "Cement production"
-            },
-            {
-                "year": "2009",
-                "value": 66,
-                "category": "Gas flarinl"
-            },
-            {
-                "year": "2010",
-                "value": 3107,
-                "category": "Liquid fuel"
-            },
-            {
-                "year": "2010",
-                "value": 3812,
-                "category": "Solid fuel"
-            },
-            {
-                "year": "2010",
-                "value": 1696,
-                "category": "Gas fuel"
-            },
-            {
-                "year": "2010",
-                "value": 446,
-                "category": "Cement production"
-            },
-            {
-                "year": "2010",
-                "value": 67,
-                "category": "Gas flarinl"
-            },
-            {
-                "year": "2011",
-                "value": 3134,
-                "category": "Liquid fuel"
-            },
-            {
-                "year": "2011",
-                "value": 4055,
-                "category": "Solid fuel"
-            },
-            {
-                "year": "2011",
-                "value": 1756,
-                "category": "Gas fuel"
-            },
-            {
-                "year": "2011",
-                "value": 494,
-                "category": "Cement production"
-            },
-            {
-                "year": "2011",
-                "value": 64,
-                "category": "Gas flarinl"
-            },
-            {
-                "year": "2012",
-                "value": 3200,
-                "category": "Liquid fuel"
-            },
-            {
-                "year": "2012",
-                "value": 4106,
-                "category": "Solid fuel"
-            },
-            {
-                "year": "2012",
-                "value": 1783,
-                "category": "Gas fuel"
-            },
-            {
-                "year": "2012",
-                "value": 519,
-                "category": "Cement production"
-            },
-            {
-                "year": "2012",
-                "value": 65,
-                "category": "Gas flarinl"
-            },
-            {
-                "year": "2013",
-                "value": 3220,
-                "category": "Liquid fuel"
-            },
-            {
-                "year": "2013",
-                "value": 4126,
-                "category": "Solid fuel"
-            },
-            {
-                "year": "2013",
-                "value": 1806,
-                "category": "Gas fuel"
-            },
-            {
-                "year": "2013",
-                "value": 554,
-                "category": "Cement production"
-            },
-            {
-                "year": "2013",
-                "value": 68,
-                "category": "Gas flarinl"
-            },
-            {
-                "year": "2014",
-                "value": 3280,
-                "category": "Liquid fuel"
-            },
-            {
-                "year": "2014",
-                "value": 4117,
-                "category": "Solid fuel"
-            },
-            {
-                "year": "2014",
-                "value": 1823,
-                "category": "Gas fuel"
-            },
-            {
-                "year": "2014",
-                "value": 568,
-                "category": "Cement production"
-            },
-            {
-                "year": "2014",
-                "value": 68,
-                "category": "Gas flarinl"
-            }
         ]
+
         return {
             info: {
                 id: "",
@@ -221,67 +72,66 @@ class AntdMultiLineDefinition extends AbstractLineDefinition {
             },
             style: {
                 data: data,
-                xField: 'year',
-                yField: 'value',
-                seriesField: 'category',
+                xField: "year",
+                yField: "value",
+                seriesField: "category",
                 supportCSSTransform: true,
-                color: ['#fff', '#ff0000'],
-                lineStyle: {
-                    stroke: undefined,
-                },
+                color: ["#00a8ff", "#00ffc9"],
+                lineStyle: {},
                 xAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#969696ff",
+                            fontSize: 11,
+                        },
                     },
-                    line: {
-                        style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
-                    },
+                    line: null,
                     tickLine: null,
                     subTickLine: null,
                     position: "left",
-                    title: null
+                    title: null,
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#a0a0a0ff",
+                            fontSize: 10,
+                        },
                     },
                     line: {
                         style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
+                            stroke: "#adadad75",
+                            lineWidth: 1,
+                        },
                     },
                     tickLine: null,
                     subTickLine: null,
                     position: "bottom",
-                    title: null
+                    title: null,
                 },
-                smooth: true,
+                smooth: false,
                 legend: {
-                    position: "right-top",
-                    layout: "vertical",
+                    position: "top",
+                    layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#00f0ffff",
-                            fontSize: 12
-                        }
-                    }
+                            fill: "#a0a0a0ff",
+                            fontSize: 12,
+                        },
+                    },
                 },
                 animation: {
                     appear: {
-                        animation: 'wave-in',
+                        animation: "wave-in",
                         duration: 3000,
                     },
-                }
+                },
+                point: {
+                    size: 3,
+                    color: "#00dcffff",
+                },
             },
             data: {
                 dataSource: 'static',

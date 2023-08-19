@@ -24,6 +24,7 @@ export default class AntdCommonArea extends AntdBaseDesignerComponent<Area, Antd
     }
 
     getConfig(): AntdAreaProps | null {
+        console.log("AntdCommonArea getConfig", this.config)
         return this.config;
     }
 

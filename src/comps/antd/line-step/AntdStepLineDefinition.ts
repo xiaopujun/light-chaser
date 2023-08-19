@@ -50,51 +50,47 @@ class AntdStepLineDefinition extends AbstractLineDefinition {
             },
             style: {
                 data: data,
-                xField: 'year',
-                yField: 'value',
-                stepType: 'vh',
-                color: '#00d7ff',
+                xField: "year",
+                yField: "value",
+                stepType: "vh",
+                color: "#00d7ff",
                 smooth: true,
                 supportCSSTransform: true,
                 lineStyle: {
-                    stroke: "#00dbffff",
+                    stroke: "#4be6ffff",
                     lineWidth: 1,
                 },
                 xAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#989898ff",
+                            fontSize: 10,
+                        },
                     },
-                    line: {
-                        style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
-                    },
+                    line: null,
                     tickLine: null,
                     subTickLine: null,
                     position: "left",
-                    title: null
+                    title: null,
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#a6a6a6ff",
+                        },
                     },
                     line: {
                         style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
+                            stroke: "#9a9a9a8c",
+                            lineWidth: 1,
+                        },
                     },
                     tickLine: null,
                     subTickLine: null,
                     position: "bottom",
-                    title: null
+                    title: null,
                 },
                 legend: {
                     position: "right-top",
@@ -102,16 +98,21 @@ class AntdStepLineDefinition extends AbstractLineDefinition {
                     itemName: {
                         style: {
                             fill: "#00f0ffff",
-                            fontSize: 12
-                        }
-                    }
+                            fontSize: 12,
+                        },
+                    },
                 },
                 animation: {
                     appear: {
-                        animation: 'wave-in',
+                        animation: "wave-in",
                         duration: 3000,
                     },
-                }
+                },
+                point: {
+                    size: 3,
+                    color: "#00e6ffff",
+                    shape: "bowtie",
+                },
             },
             data: {
                 dataSource: 'static',

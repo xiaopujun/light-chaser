@@ -22,64 +22,34 @@ class AntdGroupRoseDefinition extends AbstractRoseDefinition {
     getInitConfig(): AntdRoseProps {
         const data = [
             {
-                "type": "分类一",
+                "type": "sort1",
                 "value": 27,
-                "user": "用户一"
+                "user": "user1"
             },
             {
-                "type": "分类二",
+                "type": "sort2",
                 "value": 25,
-                "user": "用户一"
+                "user": "user2"
             },
             {
-                "type": "分类三",
+                "type": "sort3",
                 "value": 18,
-                "user": "用户一"
+                "user": "user1"
             },
             {
-                "type": "分类四",
+                "type": "sort4",
                 "value": 15,
-                "user": "用户一"
+                "user": "user2"
             },
             {
-                "type": "分类五",
-                "value": 10,
-                "user": "用户一"
+                "type": "sort5",
+                "value": 18,
+                "user": "user1"
             },
             {
-                "type": "其它",
-                "value": 5,
-                "user": "用户一"
-            },
-            {
-                "type": "分类一",
-                "value": 7,
-                "user": "用户二"
-            },
-            {
-                "type": "分类二",
-                "value": 5,
-                "user": "用户二"
-            },
-            {
-                "type": "分类三",
-                "value": 38,
-                "user": "用户二"
-            },
-            {
-                "type": "分类四",
-                "value": 5,
-                "user": "用户二"
-            },
-            {
-                "type": "分类五",
+                "type": "sort6",
                 "value": 20,
-                "user": "用户二"
-            },
-            {
-                "type": "其它",
-                "value": 15,
-                "user": "用户二"
+                "user": "user2"
             }
         ];
         return {
@@ -91,33 +61,38 @@ class AntdGroupRoseDefinition extends AbstractRoseDefinition {
             },
             style: {
                 data: data,
-                xField: 'type',
-                yField: 'value',
+                xField: "type",
+                yField: "value",
                 isGroup: true,
-                seriesField: 'user',
+                seriesField: "user",
+                padding: [60, 0, 0, 0],
                 label: {
-                    offset: -15,
+                    offset: 14,
                     style: {
-                        fill: "#fff",
-                    }
+                        fill: "#aaaaaaff",
+                    },
                 },
                 legend: {
-                    position: "right-top",
-                    layout: "vertical",
+                    position: "top",
+                    layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#00f0ffff",
-                            fontSize: 12
-                        }
-                    }
+                            fill: "#a8a8a8ff",
+                            fontSize: 12,
+                        },
+                    },
                 },
                 supportCSSTransform: true,
                 animation: {
                     appear: {
-                        animation: 'grow-in-xy',
+                        animation: "grow-in-xy",
                         duration: 3000,
                     },
-                }
+                },
+                color: ["#00b7ffff", "#81dbffff"],
+                sectorStyle: {
+                    lineWidth: 0,
+                },
             },
             data: {
                 dataSource: 'static',

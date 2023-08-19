@@ -76,69 +76,64 @@ class AntdPercentColumnDefinition extends AbstractColumnDefinition {
             },
             style: {
                 data: data,
-                xField: 'year',
-                yField: 'value',
-                seriesField: 'country',
+                xField: "year",
+                yField: "value",
+                seriesField: "country",
                 isPercent: true,
                 isStack: true,
                 maxColumnWidth: 8,
                 supportCSSTransform: true,
                 color: ["#59bfff", "#298aff", "#004294"],
-                columnStyle: {
-                    fill: undefined,
-                },
+                columnStyle: {},
                 xAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#a2a2a2ff",
+                            fontSize: 10,
+                        },
                     },
-                    line: {
-                        style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
-                    },
+                    line: null,
                     tickLine: null,
                     subTickLine: null,
                     position: "left",
-                    title: null
+                    title: null,
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#b3b3b3ff",
+                            fontSize: 10,
+                        },
                     },
                     line: {
                         style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
+                            stroke: "#92929278",
+                            lineWidth: 1,
+                        },
                     },
                     tickLine: null,
                     subTickLine: null,
                     position: "bottom",
-                    title: null
+                    title: null,
                 },
                 legend: {
-                    position: "right-top",
-                    layout: "vertical",
+                    position: "top",
+                    layout: "horizontal",
                     itemName: {
                         style: {
                             fill: "#00f0ffff",
-                            fontSize: 12
-                        }
-                    }
+                            fontSize: 12,
+                        },
+                    },
                 },
                 animation: {
                     appear: {
-                        animation: 'scale-in-y',
+                        animation: "scale-in-y",
                         duration: 3000,
                     },
-                }
+                },
             },
             data: {
                 dataSource: 'static',

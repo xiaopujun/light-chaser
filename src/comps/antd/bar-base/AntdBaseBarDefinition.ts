@@ -45,65 +45,61 @@ class AntdBaseBarDefinition extends AbstractBarDefinition {
                 data: data,
                 xField: "value",
                 yField: "name",
-                seriesField: 'name',
+                seriesField: "name",
                 maxBarWidth: 8,
-                color: ["#00dbffff"],
-                barStyle: {
-                    fill: undefined,
-                },
+                color: ["#005d71ff", "#00d0e4ff", "#5bf0ffff"],
+                barStyle: {},
                 supportCSSTransform: true,
                 xAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#878787ff",
+                            fontSize: 10,
+                        },
                     },
                     line: {
                         style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
+                            stroke: "#6f6f6f91",
+                            lineWidth: 1,
+                        },
                     },
                     tickLine: null,
                     subTickLine: null,
                     position: "right",
-                    title: null
+                    title: null,
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#6b6b6bff",
+                            fontSize: 10,
+                        },
+                        offset: 9,
                     },
-                    line: {
-                        style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
-                    },
+                    line: null,
                     tickLine: null,
                     subTickLine: null,
                     position: "bottom",
-                    title: null
+                    title: null,
                 },
                 legend: {
-                    position: "right-top",
-                    layout: "vertical",
+                    position: "top",
+                    layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#00f0ffff",
-                            fontSize: 12
-                        }
-                    }
+                            fill: "#989898ff",
+                            fontSize: 10,
+                        },
+                    },
                 },
                 animation: {
                     appear: {
-                        animation: 'scale-in-x',
+                        animation: "scale-in-x",
                         duration: 3000,
                     },
-                }
+                },
             },
             data: {
                 dataSource: 'static',

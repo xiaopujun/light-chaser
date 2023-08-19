@@ -23,32 +23,32 @@ class AntdStackBarDefinition extends AbstractBarDefinition {
         const data = [
             {
                 year: '1991',
-                value: 3,
+                value: 300,
                 type: 'Lon',
             },
             {
                 year: '1992',
-                value: 4,
+                value: 400,
                 type: 'Lon',
             },
             {
                 year: '1993',
-                value: 3.5,
+                value: 350,
                 type: 'Lon',
             },
             {
                 year: '1991',
-                value: 3,
+                value: 300,
                 type: 'Bor',
             },
             {
                 year: '1992',
-                value: 4,
+                value: 400,
                 type: 'Bor',
             },
             {
                 year: '1993',
-                value: 3.5,
+                value: 350,
                 type: 'Bor',
             },
         ];
@@ -61,68 +61,63 @@ class AntdStackBarDefinition extends AbstractBarDefinition {
             },
             style: {
                 data: data,
-                xField: 'value',
-                yField: 'year',
-                seriesField: 'type',
+                xField: "value",
+                yField: "year",
+                seriesField: "type",
                 isStack: true,
                 maxBarWidth: 8,
                 supportCSSTransform: true,
                 color: ["#00c0df", "#298aff"],
-                barStyle: {
-                    fill: undefined,
-                },
+                barStyle: {},
                 xAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#b9b9b9ff",
+                            fontSize: 10,
+                        },
                     },
                     line: {
                         style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
+                            stroke: "#b9b9b980",
+                            lineWidth: 1,
+                        },
                     },
                     tickLine: null,
                     subTickLine: null,
                     position: "right",
-                    title: null
+                    title: null,
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#b3b3b3ff",
+                            fontSize: 10,
+                        },
                     },
-                    line: {
-                        style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
-                    },
+                    line: null,
                     tickLine: null,
                     subTickLine: null,
                     position: "bottom",
-                    title: null
+                    title: null,
                 },
                 legend: {
-                    position: "right-top",
-                    layout: "vertical",
+                    position: "top",
+                    layout: "horizontal",
                     itemName: {
                         style: {
                             fill: "#00f0ffff",
-                            fontSize: 12
-                        }
-                    }
+                            fontSize: 12,
+                        },
+                    },
                 },
                 animation: {
                     appear: {
-                        animation: 'scale-in-x',
+                        animation: "scale-in-x",
                         duration: 3000,
                     },
-                }
+                },
             },
             data: {
                 dataSource: 'static',

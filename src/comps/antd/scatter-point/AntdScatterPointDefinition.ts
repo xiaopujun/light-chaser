@@ -56,67 +56,66 @@ class AntdScatterPointDefinition extends AbstractScatterDefinition {
             },
             style: {
                 data: data,
-                xField: 'x',
-                yField: 'y',
-                colorField: 'type',
+                xField: "x",
+                yField: "y",
+                colorField: "type",
                 size: 6,
-                shape: 'circle',
+                shape: "circle",
                 pointStyle: {
                     fillOpacity: 1,
+                    lineWidth: 0,
                 },
                 xAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#a8a8a8ff",
+                            fontSize: 10,
+                        },
                     },
                     line: {
                         style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
+                            stroke: "#a4a4a470",
+                            lineWidth: 1,
+                        },
                     },
                     tickLine: null,
                     subTickLine: null,
                     position: "bottom",
-                    title: null
+                    title: null,
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#a0a0a0ff",
+                            fontSize: 10,
+                        },
                     },
-                    line: {
-                        style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
-                    },
+                    line: null,
                     tickLine: null,
                     subTickLine: null,
                     position: "left",
-                    title: null
+                    title: null,
                 },
                 legend: {
-                    position: "right-top",
-                    layout: "vertical",
+                    position: "top",
+                    layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#00f0ffff",
-                            fontSize: 12
-                        }
-                    }
+                            fill: "#969696ff",
+                            fontSize: 10,
+                        },
+                    },
                 },
                 supportCSSTransform: true,
                 animation: {
                     appear: {
-                        animation: 'fade-in',
+                        animation: "fade-in",
                         duration: 3000,
                     },
-                }
+                },
+                color: ["#00b7ffff", "#006d98ff"],
             },
             data: {
                 dataSource: 'static',

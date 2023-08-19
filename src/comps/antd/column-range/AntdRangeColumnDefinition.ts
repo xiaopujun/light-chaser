@@ -21,9 +21,10 @@ class AntdRangeColumnDefinition extends AbstractColumnDefinition {
 
     getInitConfig(): AntdColumnProps {
         const data = [
-            {type: '分类一', values: [76, 100]},
-            {type: '分类二', values: [56, 108]},
-            {type: '分类三', values: [38, 129]},
+            {type: 'sort1', values: [76, 100]},
+            {type: 'sort2', values: [56, 108]},
+            {type: 'sort3', values: [38, 129]},
+            {type: 'sort4', values: [38, 129]},
         ];
         return {
             info: {
@@ -34,9 +35,9 @@ class AntdRangeColumnDefinition extends AbstractColumnDefinition {
             },
             style: {
                 data: data,
-                xField: 'type',
-                yField: 'values',
-                seriesField: 'type',
+                xField: "type",
+                yField: "values",
+                seriesField: "type",
                 isRange: true,
                 maxColumnWidth: 8,
                 supportCSSTransform: true,
@@ -48,54 +49,51 @@ class AntdRangeColumnDefinition extends AbstractColumnDefinition {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#a6a6a6ff",
+                            fontSize: 11,
+                        },
                     },
-                    line: {
-                        style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
-                    },
+                    line: null,
                     tickLine: null,
                     subTickLine: null,
                     position: "left",
-                    title: null
+                    title: null,
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#d0d0d0ff",
+                            fontSize: 11,
+                        },
                     },
                     line: {
                         style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
+                            stroke: "#9e9e9e91",
+                            lineWidth: 1,
+                        },
                     },
                     tickLine: null,
                     subTickLine: null,
                     position: "bottom",
-                    title: null
+                    title: null,
                 },
                 legend: {
-                    position: "right-top",
-                    layout: "vertical",
+                    position: "top",
+                    layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#00f0ffff",
-                            fontSize: 12
-                        }
-                    }
+                            fill: "#969696ff",
+                            fontSize: 12,
+                        },
+                    },
                 },
                 animation: {
                     appear: {
-                        animation: 'scale-in-y',
+                        animation: "scale-in-y",
                         duration: 3000,
                     },
-                }
+                },
             },
             data: {
                 dataSource: 'static',

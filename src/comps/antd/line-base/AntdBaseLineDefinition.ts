@@ -30,11 +30,13 @@ class AntdBaseLineDefinition extends AbstractLineDefinition {
 
     getInitConfig(): AntdLineProps {
         const data = [
-            {"name": "1990", "value": 5421},
-            {"name": "1991", "value": 4423},
-            {"name": "1992", "value": 1425},
-            {"name": "1993", "value": 7458}
-        ];
+            {"name": "1990", "value": 525},
+            {"name": "1991", "value": 459},
+            {"name": "1992", "value": 357},
+            {"name": "1993", "value": 414},
+            {"name": "1994", "value": 234},
+            {"name": "1995", "value": 250},
+            {"name": "1996", "value": 156}];
         return {
             info: {
                 id: "",
@@ -44,9 +46,9 @@ class AntdBaseLineDefinition extends AbstractLineDefinition {
             },
             style: {
                 data: data,
-                xField: 'name',
-                yField: 'value',
-                smooth: true,
+                xField: "name",
+                yField: "value",
+                smooth: false,
                 supportCSSTransform: true,
                 lineStyle: {
                     stroke: "#00dbffff",
@@ -56,44 +58,45 @@ class AntdBaseLineDefinition extends AbstractLineDefinition {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#969696ff",
+                            fontSize: 10,
+                        },
                     },
-                    line: {
-                        style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
-                    },
+                    line: null,
                     tickLine: null,
                     subTickLine: null,
                     position: "left",
-                    title: null
+                    title: null,
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#b1b1b1ff",
+                            fontSize: 9,
+                        },
                     },
                     line: {
                         style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
+                            stroke: "#9e9e9e7d",
+                            lineWidth: 1,
+                        },
                     },
                     tickLine: null,
                     subTickLine: null,
                     position: "bottom",
-                    title: null
+                    title: null,
                 },
                 animation: {
                     appear: {
-                        animation: 'wave-in',
+                        animation: "wave-in",
                         duration: 3000,
                     },
-                }
+                },
+                point: {
+                    size: 4,
+                    color: "#35c6ff70",
+                },
             },
             data: {
                 dataSource: 'static',

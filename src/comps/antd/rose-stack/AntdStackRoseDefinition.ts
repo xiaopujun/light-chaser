@@ -22,64 +22,54 @@ class AntdStackRoseDefinition extends AbstractRoseDefinition {
     getInitConfig(): AntdRoseProps {
         const data = [
             {
-                type: '分类一',
+                type: 'sort1',
                 value: 27,
-                user: '用户一',
+                user: 'user1',
             },
             {
-                type: '分类二',
+                type: 'sort2',
                 value: 25,
-                user: '用户一',
+                user: 'user1',
             },
             {
-                type: '分类三',
+                type: 'sort3',
                 value: 18,
-                user: '用户一',
+                user: 'user1',
             },
             {
-                type: '分类四',
+                type: 'sort4',
                 value: 15,
-                user: '用户一',
+                user: 'user1',
             },
             {
-                type: '分类五',
+                type: 'sort5',
                 value: 10,
-                user: '用户一',
+                user: 'user1',
             },
             {
-                type: '其它',
-                value: 5,
-                user: '用户一',
-            },
-            {
-                type: '分类一',
+                type: 'sort1',
                 value: 7,
-                user: '用户二',
+                user: 'user2',
             },
             {
-                type: '分类二',
+                type: 'sort2',
                 value: 5,
-                user: '用户二',
+                user: 'user2',
             },
             {
-                type: '分类三',
-                value: 38,
-                user: '用户二',
+                type: 'sort3',
+                value: 28,
+                user: 'user2',
             },
             {
-                type: '分类四',
-                value: 5,
-                user: '用户二',
-            },
-            {
-                type: '分类五',
-                value: 20,
-                user: '用户二',
-            },
-            {
-                type: '其它',
+                type: 'sort4',
                 value: 15,
-                user: '用户二',
+                user: 'user2',
+            },
+            {
+                type: 'sort5',
+                value: 20,
+                user: 'user2',
             },
         ];
         return {
@@ -91,33 +81,37 @@ class AntdStackRoseDefinition extends AbstractRoseDefinition {
             },
             style: {
                 data: data,
-                xField: 'type',
-                yField: 'value',
+                xField: "type",
+                yField: "value",
                 isStack: true,
-                seriesField: 'user',
+                seriesField: "user",
                 label: {
-                    offset: -15,
+                    offset: -12,
                     style: {
-                        fill: "#fff",
-                    }
+                        fill: "#ffffffff",
+                        fontSize: 9,
+                        fontWeight: 700,
+                    },
                 },
                 legend: {
-                    position: "right-top",
-                    layout: "vertical",
+                    position: "top",
+                    layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#00f0ffff",
-                            fontSize: 12
-                        }
-                    }
+                            fill: "#b9b9b9ff",
+                            fontSize: 12,
+                        },
+                    },
                 },
                 supportCSSTransform: true,
                 animation: {
                     appear: {
-                        animation: 'grow-in-xy',
+                        animation: "wave-in",
                         duration: 3000,
                     },
-                }
+                },
+                color: ["#00b7ffff", "#8ed2ffff"],
+                radius: 1,
             },
             data: {
                 dataSource: 'static',

@@ -141,6 +141,7 @@ class AntdPercentAreaDefinition extends AbstractAreaDefinition {
                 seriesField: "country",
                 isPercent: true,
                 xAxis: {
+                    position: "bottom",
                     range: [0, 1],
                     grid: null,
                     label: {
@@ -155,6 +156,7 @@ class AntdPercentAreaDefinition extends AbstractAreaDefinition {
                     title: null,
                 },
                 yAxis: {
+                    position: "left",
                     grid: null,
                     label: {
                         style: {
@@ -171,7 +173,6 @@ class AntdPercentAreaDefinition extends AbstractAreaDefinition {
                     tickLine: null,
                     subTickLine: null,
                     title: null,
-                    position: "bottom",
                 },
                 smooth: true,
                 legend: {

@@ -56,7 +56,6 @@ export abstract class AntdBaseDesignerComponent<I extends Plot<any> = Plot<Optio
     }
 
     public async commonCreate(container: HTMLElement, Clazz: new (...args: any[]) => I, config: C): Promise<this> {
-        console.log('create', config)
         if (!this.config)
             this.config = config;
         if (!this.container)

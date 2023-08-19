@@ -61,68 +61,63 @@ class AntdStackColumnDefinition extends AbstractColumnDefinition {
             },
             style: {
                 data: data,
-                xField: 'year',
-                yField: 'value',
-                seriesField: 'type',
+
+                xField: "year",
+                yField: "value",
+                seriesField: "type",
                 isStack: true,
                 maxColumnWidth: 8,
                 supportCSSTransform: true,
                 color: ["#00c0df", "#298aff"],
-                columnStyle: {
-                    fill: undefined,
-                },
+                columnStyle: {},
                 xAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#c7c7c7ff",
+                            fontSize: 10,
+                        },
                     },
-                    line: {
-                        style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
-                    },
+                    line: null,
                     tickLine: null,
                     subTickLine: null,
                     position: "left",
-                    title: null
+                    title: null,
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#b7b7b7ff",
+                        },
                     },
                     line: {
                         style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
+                            stroke: "#9e9e9e75",
+                            lineWidth: 1,
+                        },
                     },
                     tickLine: null,
                     subTickLine: null,
                     position: "bottom",
-                    title: null
+                    title: null,
                 },
                 legend: {
-                    position: "right-top",
-                    layout: "vertical",
+                    position: "top",
+                    layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#00f0ffff",
-                            fontSize: 12
-                        }
-                    }
+                            fill: "#aaaaaaff",
+                            fontSize: 12,
+                        },
+                    },
                 },
                 animation: {
                     appear: {
-                        animation: 'scale-in-y',
+                        animation: "scale-in-y",
                         duration: 3000,
                     },
-                }
+                },
             },
             data: {
                 dataSource: 'static',

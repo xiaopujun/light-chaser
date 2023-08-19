@@ -57,22 +57,34 @@ class AntdRingProgressDefinition extends AbstractCustomComponentDefinition<AntdR
                 desc: '基于Antd Designer实现的迷你环图组件',
             },
             style: {
-                autoFit: true,
                 percent: 0.7,
-                color: ['#008591', '#E8EDF3'],
+                color: ["#00b5ffff", "#c5ebfbff"],
                 statistic: {
                     content: {
                         style: {
-                            fill: '#fff',
-                        }
-                    }
+                            fill: "#fff",
+                            fontSize: "24px",
+                            fontWeight: 400,
+                        },
+                        offsetY: -7,
+                    },
+                    title: {
+                        style: {
+                            fontSize: "14px",
+                            fontWeight: 400,
+                            color: "#fff",
+                        },
+                        content: "当前进度",
+                        offsetY: -11,
+                    },
                 },
                 animation: {
                     appear: {
-                        animation: 'wave-in',
+                        animation: "wave-in",
                         duration: 3000,
                     },
-                }
+                },
+                progressStyle: {},
             },
             data: {
                 dataSource: 'static',
