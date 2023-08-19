@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ConfigType} from "../../../designer/right/ConfigType";
-import {AreaOptions} from "@antv/g2plot";
+import {AreaOptions, ShapeStyle} from "@antv/g2plot";
 import AntdCommonArea from "../../antd-common/area/AntdCommonArea";
 import {AntdCartesianCoordinateSys} from "../../antd-common/config/AntdFragment";
 import {WritableAreaOptions} from "../../antd-common/types";
@@ -95,8 +95,8 @@ export const AntdBaseAreaGraphics: React.FC<AntdBaseAreaGraphicsProps> = ({confi
                 <ConfigItem title={'颜色'}>
                     <CfgItemBorder width={'100%'}>
                         <BaseColorPicker
-                            defaultValue={config?.point?.color as string || '#fff'}
-                            onChange={(value) => onChange({point: {color: value}})}
+                            defaultValue={(config?.point?.style as ShapeStyle)?.fill || '#fff'}
+                            onChange={(value) => onChange({point: {style: {fill: value}}})}
                             style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
                     </CfgItemBorder>
                 </ConfigItem>

@@ -5,9 +5,9 @@
   .list-search {
     .ant-input {
       margin: 0;
-      color: #c9c9c9;
+      color: #c3c3c3;
       border-radius: 0;
-      background-color: rgba(0, 0, 0, 0);
+      background-color: #1a1a1a;
       border: 2px solid rgb(54, 54, 54);
     }
   }
@@ -20,32 +20,30 @@
 
     .list-item {
       width: 100%;
-      height: 116px;
+      height: 140px;
       cursor: pointer;
       margin-bottom: 10px;
-      background-color: #111216;
+      background-color: #363636;
 
       .item-header {
-        height: 23px;
-        line-height: 23px;
-        background-color: #575a628c;
+        height: 25px;
+        line-height: 25px;
+        background-color: #363636;
         display: flex;
         justify-content: space-between;
         padding: 0 5px;
-        color: #e8f1ff;
+        color: #8d8d8d;
         font-size: 10px;
 
       }
 
       .item-content {
-        box-sizing: border-box;
+        box-sizing: content-box;
+        padding: 5px 10px 10px 10px;
 
-        .item-img {
-          color: #ffffff;
-          text-align: center;
-          height: 93px;
-          background-size: 100% calc(100% - 4px);
-          background-repeat: no-repeat;
+        img {
+          width: 160px;
+          height: 100px;
         }
       }
     }

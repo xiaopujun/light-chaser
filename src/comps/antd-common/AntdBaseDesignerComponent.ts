@@ -89,6 +89,7 @@ export abstract class AntdBaseDesignerComponent<I extends Plot<any> = Plot<Optio
                 }
             }
         }
+        console.log(this.config?.style)
     }
 
 

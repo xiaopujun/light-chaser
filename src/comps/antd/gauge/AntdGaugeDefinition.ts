@@ -14,7 +14,7 @@ const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseI
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
 
-class AntdGaugeDefinition extends AbstractCustomComponentDefinition<AntdGauge, BaseMenuMapping, AntdGaugeProps> {
+class AntdGaugeDefinition /*extends AbstractCustomComponentDefinition<AntdGauge, BaseMenuMapping, AntdGaugeProps>*/ {
 
     getComponent(): ClazzTemplate<AntdGauge> | null {
         return AntdGauge;

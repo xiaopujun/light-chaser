@@ -136,64 +136,74 @@ class AntdPercentAreaDefinition extends AbstractAreaDefinition {
             },
             style: {
                 data: data,
-                xField: 'year',
-                yField: 'value',
-                seriesField: 'country',
+                xField: "year",
+                yField: "value",
+                seriesField: "country",
                 isPercent: true,
                 xAxis: {
+                    range: [0, 1],
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#aaaaaaff",
+                            fontSize: 8,
+                        },
                     },
-                    line: {
-                        style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
-                    },
+                    line: null,
                     tickLine: null,
                     subTickLine: null,
-                    position: "left",
-                    title: null
+                    title: null,
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
-                        }
+                            fill: "#afafafff",
+                            fontSize: 8,
+                        },
                     },
                     line: {
                         style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
+                            stroke: "#545454c7",
+                            lineWidth: 1,
+                        },
                     },
                     tickLine: null,
                     subTickLine: null,
+                    title: null,
                     position: "bottom",
-                    title: null
                 },
                 smooth: true,
                 legend: {
-                    position: "right-top",
-                    layout: "vertical",
+                    position: "top",
+                    layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#00f0ffff",
-                            fontSize: 12
-                        }
-                    }
+                            fill: "#b1b1b1ff",
+                            fontSize: 12,
+                        },
+                    },
                 },
                 supportCSSTransform: true,
                 animation: {
                     appear: {
-                        animation: 'wave-in',
+                        animation: "wave-in",
                         duration: 3000,
                     },
-                }
+                },
+                line: {
+                    style: {
+                        lineWidth: 0,
+                    },
+                },
+                color: ["#4fa3ffff", "#009affff", "#006d7fff"],
+                areaStyle: {},
+                point: {
+                    size: 3,
+                    style: {
+                        fill: "#78edffad",
+                    },
+                },
             },
             data: {
                 dataSource: 'static',

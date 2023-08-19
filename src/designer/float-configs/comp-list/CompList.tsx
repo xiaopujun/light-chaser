@@ -26,8 +26,8 @@ class CompList extends Component {
         let movableItem: MovableItemType = {
             name: name,
             type: compKey,
-            width: 384,
-            height: 216,
+            width: 320,
+            height: 200,
             position: [0, 0],
             id: idGenerate.generateId() + '',
             locked: false,
@@ -65,7 +65,7 @@ class CompList extends Component {
                         <div className={'item-type'}>Antd</div>
                     </div>
                     <div className={'item-content'} onDoubleClick={() => this.addItem(compKey, compName)}>
-                        <div className={'item-img'} style={{backgroundImage: `url(${chartImg})`}}/>
+                        <img src={chartImg} alt={'组件预览图'}/>
                     </div>
                 </div>
             )

@@ -105,8 +105,8 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
                 <ConfigItem title={'颜色'}>
                     <CfgItemBorder width={'100%'}>
                         <BaseColorPicker
-                            defaultValue={config?.point?.color as string || '#fff'}
-                            onChange={(value) => onChange({point: {color: value}})}
+                            defaultValue={(config?.point?.style as ShapeStyle)?.fill || '#fff'}
+                            onChange={(value) => onChange({point: {style: {fill: value}}})}
                             style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
                     </CfgItemBorder>
                 </ConfigItem>

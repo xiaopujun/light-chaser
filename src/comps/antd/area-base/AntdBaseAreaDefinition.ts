@@ -29,23 +29,11 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
 
     getInitConfig(): AntdAreaProps {
         const data = [
-            {
-                "name": "Q1",
-                "value": 1
-            },
-            {
-                "name": "Q2",
-                "value": 1.67
-            },
-            {
-                "name": "Q3",
-                "value": -2.39
-            },
-            {
-                "name": "Q4",
-                "value": 4.71
-            }
-        ]
+            {"name": "Q1", "value": 140},
+            {"name": "Q2", "value": 205},
+            {"name": "Q3", "value": 186},
+            {"name": "Q4", "value": 220}
+        ];
         return {
             info: {
                 id: "",
@@ -57,44 +45,41 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
                 data: data,
                 xField: "name",
                 yField: "value",
-                color: '#00d7ff',
-                smooth: true,
+                color: "#00d7ff",
+                smooth: false,
                 supportCSSTransform: true,
                 isStack: false,
                 xAxis: {
+                    range: [0, 1],
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
+                            fill: "#adadadff",
+                            fontSize: 10
                         }
                     },
                     line: {
                         style: {
-                            stroke: "#00dbffff",
+                            stroke: "#c7c7c76e",
                             lineWidth: 1
                         }
                     },
                     tickLine: null,
                     subTickLine: null,
-                    position: "bottom",
-                    title: null
+                    title: null,
+                    position: "bottom"
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#00FFEAFF"
+                            fill: "#9a9a9aff",
+                            fontSize: 10
                         }
                     },
-                    line: {
-                        style: {
-                            stroke: "#00dbffff",
-                            lineWidth: 1
-                        }
-                    },
+                    line: null,
                     tickLine: null,
                     subTickLine: null,
-                    position: "left",
                     title: null
                 },
                 legend: {
@@ -109,9 +94,19 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
                 },
                 animation: {
                     appear: {
-                        animation: 'wave-in',
-                        duration: 3000,
-                    },
+                        animation: "wave-in",
+                        duration: 3000
+                    }
+                },
+                startOnZero: false,
+                point: {
+                    size: 4,
+                    style: {
+                        fill: "#00ddffff"
+                    }
+                },
+                line: {
+                    size: 0
                 }
             },
             data: {

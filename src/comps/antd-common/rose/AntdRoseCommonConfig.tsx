@@ -8,7 +8,6 @@ import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 import {RoseOptions, ShapeStyle, StatisticText} from "@antv/g2plot";
 import LcSwitch from "../../../lib/lc-switch/LcSwitch";
-import Select from '../../../lib/lc-select/Select';
 import {Types} from "@antv/g2";
 import {AntdLegend} from "../config/AntdFragment";
 import {Legend} from "@antv/g2plot/lib/types/legend";
