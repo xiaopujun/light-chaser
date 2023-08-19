@@ -4,6 +4,7 @@ import {ComponentBaseProps} from "../../common-component/common-types";
 export interface BaseTextComponentStyle {
     color?: string;
     fontSize?: number;
+    fontWeight?: number;
     alignItems?: string;
     justifyContent?: string;
 }

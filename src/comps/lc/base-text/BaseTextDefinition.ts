@@ -39,15 +39,15 @@ export default class BaseTextDefinition extends AbstractCustomComponentDefinitio
                 desc: '标准提供的基础文本',
             },
             style: {
-                color: '#fff',
-                fontSize: 32,
+                color: '#a7a7a7',
+                fontSize: 16,
                 alignItems: 'center',
                 justifyContent: 'space-around',
             },
             data: {
                 dataSource: 'static',
                 staticData: {
-                    data: "文本"
+                    data: "基础文本"
                 },
             },
         };
