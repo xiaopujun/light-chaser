@@ -10,7 +10,6 @@ import designerStore from "../../../store/DesignerStore";
 import headerStore from "../../HeaderStore";
 import './CanvasHdConfigImpl.less';
 import AbstractComponent from "../../../../framework/core/AbstractComponent";
-import {toJS} from "mobx";
 
 /**
  * 画布设置React组件实现
@@ -26,7 +25,6 @@ class CanvasHdConfigImpl extends Component {
     constructor(props: any) {
         super(props);
         const {canvasConfig} = designerStore;
-        console.log(toJS(canvasConfig));
         this.config = {...canvasConfig};
         this.state = {
             _rasterize: canvasConfig.rasterize || false
