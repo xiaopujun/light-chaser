@@ -10,9 +10,13 @@ import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import {StatisticTextConfig} from "../pie/AntdPieStyleConfig";
+import {DataConfigType} from "../../../designer/DesignerType";
+import Select from "../../../lib/lc-select/Select";
+import {ApiDataConfig} from "../../common-component/data-config/DataConfig";
+import AntdRingProgress from "./AntdRingProgress";
+import {OperateType} from "../../../framework/core/AbstractComponent";
 
-class AntdRingProgressConfig extends Component<ConfigType> {
-
+export class AntdRingProgressStyleConfig extends Component<ConfigType> {
 
     ringProgressGraphicsChange = (config: WritableRoseOptions) => {
         const instance = this.props.instance as AntdCommonRose;
@@ -31,8 +35,6 @@ class AntdRingProgressConfig extends Component<ConfigType> {
         );
     }
 }
-
-export {AntdRingProgressConfig};
 
 
 export interface AntdRingProgressGraphicsConfigProps {
@@ -129,6 +131,64 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                 </ConfigItem>
             </Accordion>
         </>
-
     );
+}
+
+
+export class AntdRingProgressDataConfig extends Component<ConfigType<AntdRingProgress>> {
+
+    state = {
+        dataSource: 'static',
+    }
+
+    constructor(props: ConfigType<AntdRingProgress>) {
+        super(props);
+        const {instance} = props;
+        const dataConfig: DataConfigType = instance.getConfig()!.data!;
+        this.state = {
+            dataSource: dataConfig?.dataSource || 'static',
+        }
+    }
+
+    dataSourcesChange = (value: any) => {
+        const {instance} = this.props;
+        instance.update({data: {dataSource: value}}, {reRender: false});
+        this.setState({
+            dataSource: value,
+        });
+    }
+
+    render() {
+        const {instance} = this.props;
+        const {dataSource} = this.state;
+        const dataConfig: DataConfigType = instance.getConfig()!.data!;
+        return (
+            <div className={'lc-data-config'}>
+                <ConfigItem title={'数据源'} contentStyle={{width: 100}}>
+                    <Select onChange={(value) => this.dataSourcesChange(value)} defaultValue={dataSource} options={[
+                        {value: 'static', label: '静态数据'},
+                        {value: 'api', label: '接口(API)'},
+                    ]}/>
+                </ConfigItem>
+                {dataSource === 'static' && <>
+                    <ConfigItem title={'百分比值'} contentStyle={{width: 240}}>
+                        <UnderLineInput defaultValue={dataConfig.staticData?.data || 0}
+                                        type={'number'} min={0} max={1} step={0.01}
+                                        onChange={e => {
+                                            const value = parseFloat(e.target.value);
+                                            instance.update({
+                                                data: {staticData: {data: value}},
+                                                style: {percent: value}
+                                            }, {
+                                                reRender: true,
+                                                operateType: OperateType.DATA,
+                                            });
+                                        }}/>
+                    </ConfigItem>
+                </>}
+                {dataSource === 'api' &&
+                <ApiDataConfig instance={instance}/>}
+            </div>
+        );
+    }
 }

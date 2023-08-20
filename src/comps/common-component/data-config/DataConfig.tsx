@@ -59,7 +59,7 @@ class DataConfig extends Component<ConfigType> {
     }
 }
 
-const ApiDataConfig: React.FC<ConfigType> = ({instance}) => {
+export const ApiDataConfig: React.FC<ConfigType> = ({instance}) => {
     const config: DataConfigType = instance.getConfig().data;
     const {apiData} = config;
     const urlRef = useRef(apiData?.url || '');
@@ -168,7 +168,7 @@ const ApiDataConfig: React.FC<ConfigType> = ({instance}) => {
     );
 }
 
-const StaticDataConfig: React.FC<ConfigType> = ({instance}) => {
+export const StaticDataConfig: React.FC<ConfigType> = ({instance}) => {
 
     const config: DataConfigType = instance.getConfig().data;
     let dataCode = JSON.stringify(config.staticData?.data);

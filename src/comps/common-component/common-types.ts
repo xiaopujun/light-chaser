@@ -17,10 +17,12 @@ export interface ComponentInfoType {
 
 export type ClazzTemplate<C> = new () => C | null;
 
+type MenuMappingType = React.ComponentType<ConfigType<any>>;
+
 export interface BaseMenuMapping {
-    info: React.ComponentType<ConfigType>;
-    style?: React.ComponentType<ConfigType>;
-    data: React.ComponentType<ConfigType>;
-    animation: React.ComponentType<ConfigType>;
-    theme: React.ComponentType<ConfigType>;
+    info: MenuMappingType;
+    style?: MenuMappingType;
+    data: MenuMappingType;
+    animation: MenuMappingType;
+    theme: MenuMappingType;
 }

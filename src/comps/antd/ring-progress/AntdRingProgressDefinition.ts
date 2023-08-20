@@ -8,10 +8,10 @@ import ringProgressImg from './ring-progress.png';
 import {BaseInfoType} from "../../../designer/DesignerType";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
-const AntdRingProgressConfig = React.lazy(() => import("./AntdRingProgressConfig").then((module) => ({default: module.AntdRingProgressConfig})));
+const AntdRingProgressStyleConfig = React.lazy(() => import("./AntdRingProgressConfig").then((module) => ({default: module.AntdRingProgressStyleConfig})));
+const AntdRingProgressDataConfig = React.lazy(() => import("./AntdRingProgressConfig").then((module) => ({default: module.AntdRingProgressDataConfig})));
 const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig"));
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
-const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
 
 class AntdRingProgressDefinition extends AbstractCustomComponentDefinition<AntdRingProgress, BaseMenuMapping, AntdRingProgressProps> {
@@ -27,8 +27,8 @@ class AntdRingProgressDefinition extends AbstractCustomComponentDefinition<AntdR
     getMenuToConfigContentMap(): BaseMenuMapping | null {
         return {
             info: BaseInfo,
-            data: DataConfig,
-            style: AntdRingProgressConfig,
+            data: AntdRingProgressDataConfig,
+            style: AntdRingProgressStyleConfig,
             animation: AnimationConfig,
             theme: ThemeConfig
         };
@@ -89,7 +89,7 @@ class AntdRingProgressDefinition extends AbstractCustomComponentDefinition<AntdR
             data: {
                 dataSource: 'static',
                 staticData: {
-                    data: []
+                    data: 0.7,
                 },
             },
         };
