@@ -2,7 +2,7 @@ import designerStore from "./store/DesignerStore";
 import eventOperateStore from "./operate-provider/EventOperateStore";
 import designerStarter from "./DesignerStarter";
 import {parseUrlParams} from "../utils/URLUtil";
-import {SaveType} from "./DesignerType";
+import {ProjectDataType, SaveType} from "./DesignerType";
 
 const {doScan} = designerStarter;
 
@@ -54,7 +54,7 @@ const initExistProject = () => {
     const {doInit, setLoaded} = designerStore;
     const {abstractOperatorMap} = designerStarter;
     const {projectConfig: {saveType = SaveType.LOCAL}} = designerStore;
-    abstractOperatorMap[saveType].getProject(urlParams.id).then((store: any) => {
+    abstractOperatorMap[saveType].getProject(urlParams.id).then((store: ProjectDataType | null) => {
         if (store) {
             doInit({
                 id: store.id,
@@ -63,13 +63,13 @@ const initExistProject = () => {
                 elemConfigs: store.elemConfigs,
                 layoutConfigs: store.layoutConfigs,
                 statisticInfo: store.statisticInfo,
-                themeConfig: store.theme,
+                themeConfig: store.themeConfig,
                 extendParams: store.extendParams,
             })
             //设置事件操作器的最大最小层级
             const {setMinLevel, setMaxLevel} = eventOperateStore;
-            setMinLevel(store.layoutConfigs.minLevel || 0);
-            setMaxLevel(store.layoutConfigs.maxLevel || 0);
+            setMinLevel(store.extendParams?.minLevel || 0);
+            setMaxLevel(store.extendParams?.maxLevel || 0);
         }
         setLoaded(true);
     })
