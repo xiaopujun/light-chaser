@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {ChangeEvent, PureComponent} from 'react';
 import './BackgroundConfig.less';
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import Dragger from "antd/es/upload/Dragger";
@@ -124,7 +124,7 @@ class BackgroundConfig extends PureComponent<ConfigType> {
     linearGradientChanged = (color: string, key: string) => {
         const {instance} = this.props;
         const config: BackgroundConfigType = this.state.config;
-        let {colorArr, angle} = config.bgColor.linearGradient;
+        let {colorArr} = config.bgColor.linearGradient;
         if (key === 'startColor')
             colorArr[0] = color;
         if (key === 'endColor')
@@ -134,7 +134,7 @@ class BackgroundConfig extends PureComponent<ConfigType> {
             background: {
                 bgColor: {
                     linearGradient: {
-                        color: `linear-gradient(${angle}deg, ${colorArr[0]}, ${colorArr[1]})`,
+                        color: `linear-gradient(${this.gradientAngle}deg, ${colorArr[0]}, ${colorArr[1]})`,
                         colorArr: colorArr,
                     }
                 },
@@ -163,21 +163,22 @@ class BackgroundConfig extends PureComponent<ConfigType> {
         });
     }
 
-    gradientAngleChanged = (value: any) => {
+    gradientAngleChanged = (event: ChangeEvent<HTMLInputElement>) => {
         const {instance} = this.props;
+        const angle = parseInt(event.target.value);
         const config: BackgroundConfigType = this.state.config;
         const {colorArr} = config.bgColor.linearGradient;
         instance.update({
             background: {
                 bgColor: {
                     linearGradient: {
-                        color: `linear-gradient(${value}deg, ${colorArr[0]}, ${colorArr[1]})`,
-                        angle: value
+                        color: `linear-gradient(${angle}deg, ${colorArr[0]}, ${colorArr[1]})`,
+                        angle
                     }
                 },
             }
         });
-        this.gradientAngle = value;
+        this.gradientAngle = angle;
     }
 
     render() {

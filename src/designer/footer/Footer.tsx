@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './DesignerFooter.less';
+import './Footer.less';
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {observer} from "mobx-react";
 import designerStore from "../store/DesignerStore";
@@ -9,7 +9,7 @@ import layerListStore from "../float-configs/layer-list/LayerListStore";
 import keyboardIcon from './keyboard-icon.svg';
 import layerIcon from './layers-icon.svg';
 
-class DesignerFooter extends Component {
+class Footer extends Component {
 
     state = {
         showHotKeyDes: false
@@ -71,4 +71,4 @@ class DesignerFooter extends Component {
     }
 }
 
-export default observer(DesignerFooter);
+export default observer(Footer);

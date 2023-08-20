@@ -10,7 +10,7 @@ import LcStructure from "./structure/LcStructure";
 import LcFoot from "./structure/LcFoot";
 import DesignerLeft from "./left";
 import Right from "./right";
-import DesignerFooter from "./footer/DesignerFooter";
+import Footer from "./footer/Footer";
 import {loadDesigner} from "./LoadDesigner";
 import {registerEventOnDesignerLoaded} from "./RegisterEvent";
 import FloatConfigs from "./float-configs/FloatConfigs";
@@ -40,7 +40,7 @@ class Designer extends Component<any> {
                     <LcRight><Right/></LcRight>
                 </LcBody>
                 <LcFoot>
-                    <DesignerFooter/>
+                    <Footer/>
                 </LcFoot>
                 <FloatConfigs/>
             </LcStructure>
