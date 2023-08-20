@@ -1,6 +1,10 @@
 import {action, makeObservable, observable} from "mobx";
 import layerListStore from "../float-configs/layer-list/LayerListStore";
 import LayerComponent from "../float-configs/layer-list/LayerComponent";
+import Moveable from "react-moveable";
+import {RefObject} from "react";
+import designerStore from "../store/DesignerStore";
+import {MovableItemType} from "../../lib/lc-movable/types";
 
 /**
  * 设计器画布及元素操作控制store，用于协调缩放、拖拽、选择，右键操作菜单操作之间的数据传递
@@ -27,7 +31,7 @@ class EventOperateStore {
      * 拖拽框架实例引用
      * Drag and drop framework instance reference
      */
-    movableRef: any = null;
+    movableRef: RefObject<Moveable> | null = null;
     /**
      * 选择器框架实例引用
      * Selector framework instance reference
@@ -61,6 +65,11 @@ class EventOperateStore {
 
     // 用于记录鼠标右键点击时的目标元素，用于快捷键操作时的目标元素的范围筛选
     pointerTarget: any = null;
+
+    /**
+     * 组合框选时的起始坐标
+     */
+    groupRootCoordinate: { x: number, y: number } = {x: Infinity, y: Infinity};
 
     setMaxLevel = (order: number) => this.maxLevel = order;
 
@@ -99,6 +108,28 @@ class EventOperateStore {
     };
 
     setPointerTarget = (target: any) => this.pointerTarget = target;
+
+    setGroupRootCoordinate = (coordinate: { x: number, y: number }) => this.groupRootCoordinate = coordinate;
+
+    /**
+     * 计算组件多选时的左上角坐标
+     * @param compArr
+     */
+    calculateGroupRootCoordinate = (compArr: any[]) => {
+        const {layoutConfigs} = designerStore;
+        let groupRootCoordinate = {x: Infinity, y: Infinity};
+        compArr.forEach((item: any) => {
+            const layoutConfig: MovableItemType = layoutConfigs[item.id];
+            let posArr = layoutConfig.position;
+            const x = posArr![0];
+            const y = posArr![1];
+            if (x < groupRootCoordinate.x)
+                groupRootCoordinate.x = x;
+            if (y < groupRootCoordinate.y)
+                groupRootCoordinate.y = y;
+        });
+        this.setGroupRootCoordinate(groupRootCoordinate);
+    }
 
 }
 

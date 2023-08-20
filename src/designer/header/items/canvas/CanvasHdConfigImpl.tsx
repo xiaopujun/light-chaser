@@ -9,6 +9,8 @@ import {CanvasConfig} from "../../../DesignerType";
 import designerStore from "../../../store/DesignerStore";
 import headerStore from "../../HeaderStore";
 import './CanvasHdConfigImpl.less';
+import AbstractComponent from "../../../../framework/core/AbstractComponent";
+import {toJS} from "mobx";
 
 /**
  * 画布设置React组件实现
@@ -24,6 +26,7 @@ class CanvasHdConfigImpl extends Component {
     constructor(props: any) {
         super(props);
         const {canvasConfig} = designerStore;
+        console.log(toJS(canvasConfig));
         this.config = {...canvasConfig};
         this.state = {
             _rasterize: canvasConfig.rasterize || false
@@ -36,16 +39,28 @@ class CanvasHdConfigImpl extends Component {
     }
 
     doSave = (e: FormEvent<HTMLFormElement>) => {
-        const {updateCanvasConfig} = designerStore;
+        const {updateCanvasConfig, canvasConfig} = designerStore;
         updateCanvasConfig(this.config!);
         e.preventDefault();
+        //是否开启辅助线框
+        if (!canvasConfig.wireframe && this.config!.wireframe) {
+            const {compInstances} = designerStore;
+            Object.values(compInstances).forEach((instance: AbstractComponent) => {
+                instance.container && instance.container.style.setProperty('border', '1px solid #44aaff');
+            })
+        } else if (canvasConfig.wireframe && !this.config!.wireframe) {
+            const {compInstances} = designerStore;
+            Object.values(compInstances).forEach((instance: AbstractComponent) => {
+                instance.container && instance.container.style.setProperty('border', 'none');
+            })
+        }
         this.onClose();
     }
 
     render() {
         const {_rasterize} = this.state;
         const {canvasVisible} = headerStore;
-        const {width, height, rasterize, dragStep, resizeStep} = this.config as CanvasConfig;
+        const {width, height, rasterize, dragStep, resizeStep, wireframe} = this.config as CanvasConfig;
         return (
             <Dialog className={'lc-header-canvas'} title={'画布设置'} visible={canvasVisible} onClose={this.onClose}>
                 <form onSubmit={this.doSave}>
@@ -59,6 +74,11 @@ class CanvasHdConfigImpl extends Component {
                             <UnderLineInput type={'number'} defaultValue={height}
                                             onChange={(event: ChangeEvent<HTMLInputElement>) => this.config!.height = parseInt(event.target.value)}
                                             required={true} min={300}/>
+                        </ConfigItem>
+                        <ConfigItem title={'辅助线框'} contentStyle={{width: 60}}>
+                            <LcSwitch defaultValue={wireframe} onChange={value => {
+                                this.config!.wireframe = value;
+                            }}/>
                         </ConfigItem>
                         <ConfigItem title={'栅格化'} contentStyle={{width: 60}}>
                             <LcSwitch defaultValue={rasterize} onChange={value => {

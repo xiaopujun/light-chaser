@@ -21,9 +21,13 @@ export const selectAll = () => {
             compIds.push(comp.id);
         }
     });
-    const {setTargets, setTargetIds} = eventOperateStore;
+    const {setTargets, setTargetIds, calculateGroupRootCoordinate} = eventOperateStore;
     setTargets(compArr);
     setTargetIds(compIds);
+
+    //计算组件多选时的左上角坐标
+    if (compArr.length > 1)
+        calculateGroupRootCoordinate(compArr);
 }
 
 export const doCopy = () => {
@@ -132,6 +136,67 @@ export const doHide = () => {
     updateLayout(toBeUpdate)
 }
 
+export const doMoveUp = () => {
+    const {targets, movableRef, groupRootCoordinate, setGroupRootCoordinate} = eventOperateStore;
+    const {layoutConfigs, canvasConfig: {dragStep = 1}} = designerStore;
+    if (!targets || targets.length === 0) return;
+    if (targets.length === 1) {
+        let id = targets[0].id;
+        let yPos = layoutConfigs[id].position![1] - dragStep;
+        movableRef?.current?.request("draggable", {y: yPos}, true);
+    } else {
+        const yPos = groupRootCoordinate.y - dragStep;
+        movableRef?.current?.request("draggable", {y: yPos}, true);
+        setGroupRootCoordinate({x: groupRootCoordinate.x, y: yPos});
+    }
+}
+
+export const doMoveDown = () => {
+    const {targets, movableRef, groupRootCoordinate, setGroupRootCoordinate} = eventOperateStore;
+    const {layoutConfigs, canvasConfig: {dragStep = 1}} = designerStore;
+    if (!targets || targets.length === 0) return;
+    if (targets.length === 1) {
+        let id = targets[0].id;
+        let yPos = layoutConfigs[id].position![1] + dragStep;
+        movableRef?.current?.request("draggable", {y: yPos}, true);
+    } else {
+        const yPos = groupRootCoordinate.y + dragStep;
+        movableRef?.current?.request("draggable", {y: yPos}, true);
+        setGroupRootCoordinate({x: groupRootCoordinate.x, y: yPos});
+
+    }
+}
+
+export const doMoveLeft = () => {
+    const {targets, movableRef, groupRootCoordinate, setGroupRootCoordinate} = eventOperateStore;
+    const {layoutConfigs, canvasConfig: {dragStep = 1}} = designerStore;
+    if (!targets || targets.length === 0) return;
+    if (targets.length === 1) {
+        let id = targets[0].id;
+        let xPos = layoutConfigs[id].position![0];
+        movableRef?.current?.request("draggable", {x: xPos - dragStep}, true);
+    } else {
+        const xPos = groupRootCoordinate.x - dragStep;
+        movableRef?.current?.request("draggable", {x: xPos}, true);
+        setGroupRootCoordinate({x: xPos, y: groupRootCoordinate.y});
+    }
+}
+
+export const doMoveRight = () => {
+    const {targets, movableRef, groupRootCoordinate, setGroupRootCoordinate} = eventOperateStore;
+    const {layoutConfigs, canvasConfig: {dragStep = 1}} = designerStore;
+    if (!targets || targets.length === 0) return;
+    if (targets.length === 1) {
+        let id = targets[0].id;
+        let xPos = layoutConfigs[id].position![0];
+        movableRef?.current?.request("draggable", {x: xPos + dragStep}, true);
+    } else {
+        const xPos = groupRootCoordinate.x + dragStep;
+        movableRef?.current?.request("draggable", {x: xPos}, true);
+        setGroupRootCoordinate({x: xPos, y: groupRootCoordinate.y});
+    }
+}
+
 export const getOperateEventMapping: any = () => {
     return {
         'alt + wheel': {
@@ -158,6 +223,22 @@ export const getOperateEventMapping: any = () => {
         },
         'delete': {
             handler: doDelete,
+        },
+        'arrowup': {
+            handler: doMoveUp,
+            triggerType: TriggerType.COILED,
+        },
+        'arrowdown': {
+            handler: doMoveDown,
+            triggerType: TriggerType.COILED,
+        },
+        'arrowleft': {
+            handler: doMoveLeft,
+            triggerType: TriggerType.COILED,
+        },
+        'arrowright': {
+            handler: doMoveRight,
+            triggerType: TriggerType.COILED,
         }
     }
 }
