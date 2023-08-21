@@ -11,7 +11,7 @@ import GroupSelectable from "../../lib/lc-movable/GroupSelectable";
 import LcRightMenu from "../operate-provider/right-click-menu/ContextMenu";
 import {MovableItemType} from "../../lib/lc-movable/types";
 import HotKey from "../operate-provider/keyboard-mouse/HotKey";
-import {getOperateEventMapping} from "../operate-provider/keyboard-mouse/HotKeyConfig";
+import {getHotKeyConfig} from "../operate-provider/keyboard-mouse/HotKeyConfig";
 import ComponentContainer from "../../framework/core/ComponentContainer";
 import Loading from "../../lib/loading/Loading";
 import {isEqual} from "lodash";
@@ -70,7 +70,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                         </DesignerRuler>
                     </GroupSelectable>
                 </DesignerContainer>
-                <HotKey handlerMapping={getOperateEventMapping()}/>
+                <HotKey handlerMapping={getHotKeyConfig}/>
             </>
         );
     }

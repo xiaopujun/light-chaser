@@ -6,7 +6,7 @@ export enum TriggerType {
     COILED
 }
 
-export interface HandlerMapping {
+export interface HotKeyConfigType {
     [key: string]: {
         handler: Function,
         target?: any,
@@ -15,7 +15,7 @@ export interface HandlerMapping {
 }
 
 interface HotKeyProps {
-    handlerMapping: HandlerMapping;
+    handlerMapping: HotKeyConfigType;
 }
 
 //需要屏蔽浏览器默认快捷键效果的快捷键列表
@@ -23,7 +23,7 @@ const shieldKeyList = ['control + s', 'alt', 'control + l']
 
 class HotKey extends Component<HotKeyProps> {
 
-    handlerMapping: HandlerMapping = {}
+    handlerMapping: HotKeyConfigType = {}
     currHotKey: string[] = [];
     existHandlerKey: string = "";
 
@@ -38,6 +38,7 @@ class HotKey extends Component<HotKeyProps> {
      * @param hotKey 当前按下的快捷键
      */
     doHandler = (e: any, hotKey: string) => {
+        console.log(hotKey)
         const {handler, triggerType = TriggerType.SINGLE} = this.handlerMapping[hotKey] || {};
         if (handler) {
             if ((triggerType === TriggerType.SINGLE && this.existHandlerKey !== hotKey) || triggerType === TriggerType.COILED) {

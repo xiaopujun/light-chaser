@@ -10,7 +10,7 @@ import {
     VerticalAlignBottomOutlined,
     VerticalAlignTopOutlined
 } from "@ant-design/icons";
-import {doCopy, doDelete, doHide, doLock, doUnLock, toBottom, toTop} from "../keyboard-mouse/HotKeyConfig";
+import {doCopy, doDelete, doHide, doLock, doUnLock, toBottom, toTop} from "../keyboard-mouse/HotKeyImpl";
 
 class ContextMenu extends Component {
 

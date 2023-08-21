@@ -39,6 +39,17 @@ class GroupSelectable extends Component {
         }
     }
 
+    onDragStart = (e: any) => {
+        const {movableRef, targets} = eventOperateStore;
+        const movable: Moveable = movableRef!.current!;
+        const target = e.inputEvent.target;
+        if ((movable.isMoveableElement(target))
+            || targets.some((t: any) => t === target || t.contains(target))
+        ) {
+            e.stop();
+        }
+    }
+
     render() {
         return (
             <>
@@ -51,16 +62,7 @@ class GroupSelectable extends Component {
                          selectFromInside={false}
                          toggleContinueSelect={["ctrl"]}
                          ratio={0}
-                         onDragStart={e => {
-                             const {movableRef, targets} = eventOperateStore;
-                             const movable: Moveable = movableRef!.current!;
-                             const target = e.inputEvent.target;
-                             if ((movable.isMoveableElement(target))
-                                 || targets.some((t: any) => t === target || t.contains(target))
-                             ) {
-                                 e.stop();
-                             }
-                         }}
+                         onDragStart={this.onDragStart}
                          onSelectEnd={this.onSelectEnd}
                 />
             </>

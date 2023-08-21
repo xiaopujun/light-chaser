@@ -62,6 +62,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
     }
 
     onResizeEnd = (e: any) => {
+        console.log(e)
         const {updateLayout} = designerStore;
         const {target, lastEvent} = e;
         if (lastEvent) {
