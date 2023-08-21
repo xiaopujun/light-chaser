@@ -11,6 +11,7 @@ class MyComponent extends React.Component {
             <div>
                 <button onClick={() => historyQueue.enqueue(++this.count)}>添加元素</button>
                 <button onClick={() => historyQueue.backoff()}>回退</button>
+                <button onClick={() => historyQueue.forward()}>前进</button>
             </div>
         )
     }
