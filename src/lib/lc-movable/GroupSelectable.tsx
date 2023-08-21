@@ -34,8 +34,8 @@ class GroupSelectable extends Component {
         setTargets(selected);
         if (selected.length > 1) {
             //计算组件多选时的左上角坐标
-            let {calculateGroupRootCoordinate} = eventOperateStore;
-            calculateGroupRootCoordinate(selected);
+            let {calculateGroupCoordinate} = eventOperateStore;
+            calculateGroupCoordinate(selected);
         }
     }
 

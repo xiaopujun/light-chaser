@@ -18,13 +18,13 @@ export const selectAll = () => {
             compIds.push(comp.id);
         }
     });
-    const {setTargets, setTargetIds, calculateGroupRootCoordinate} = eventOperateStore;
+    const {setTargets, setTargetIds, calculateGroupCoordinate} = eventOperateStore;
     setTargets(compArr);
     setTargetIds(compIds);
 
     //计算组件多选时的左上角坐标
     if (compArr.length > 1)
-        calculateGroupRootCoordinate(compArr);
+        calculateGroupCoordinate(compArr);
 }
 
 export const doCopy = () => {
@@ -134,7 +134,7 @@ export const doHide = () => {
 }
 
 export const doMoveUp = () => {
-    const {targets, movableRef, groupRootCoordinate, setGroupRootCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
     if (targets.length === 1) {
@@ -142,14 +142,14 @@ export const doMoveUp = () => {
         let yPos = layoutConfigs[id].position![1] - dragStep;
         movableRef?.current?.request("draggable", {y: yPos}, true);
     } else {
-        const yPos = groupRootCoordinate.y - dragStep;
+        const yPos = groupCoordinate?.minY! - dragStep;
         movableRef?.current?.request("draggable", {y: yPos}, true);
-        setGroupRootCoordinate({x: groupRootCoordinate.x, y: yPos});
+        setGroupCoordinate({minY: yPos});
     }
 }
 
 export const doMoveDown = () => {
-    const {targets, movableRef, groupRootCoordinate, setGroupRootCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
     if (targets.length === 1) {
@@ -157,15 +157,15 @@ export const doMoveDown = () => {
         let yPos = layoutConfigs[id].position![1] + dragStep;
         movableRef?.current?.request("draggable", {y: yPos}, true);
     } else {
-        const yPos = groupRootCoordinate.y + dragStep;
+        const yPos = groupCoordinate?.minY! + dragStep;
         movableRef?.current?.request("draggable", {y: yPos}, true);
-        setGroupRootCoordinate({x: groupRootCoordinate.x, y: yPos});
+        setGroupCoordinate({minY: yPos});
 
     }
 }
 
 export const doMoveLeft = () => {
-    const {targets, movableRef, groupRootCoordinate, setGroupRootCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
     if (targets.length === 1) {
@@ -173,14 +173,14 @@ export const doMoveLeft = () => {
         let xPos = layoutConfigs[id].position![0];
         movableRef?.current?.request("draggable", {x: xPos - dragStep}, true);
     } else {
-        const xPos = groupRootCoordinate.x - dragStep;
+        const xPos = groupCoordinate?.minX! - dragStep;
         movableRef?.current?.request("draggable", {x: xPos}, true);
-        setGroupRootCoordinate({x: xPos, y: groupRootCoordinate.y});
+        setGroupCoordinate({minX: xPos,});
     }
 }
 
 export const doMoveRight = () => {
-    const {targets, movableRef, groupRootCoordinate, setGroupRootCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
     if (targets.length === 1) {
@@ -188,9 +188,9 @@ export const doMoveRight = () => {
         let xPos = layoutConfigs[id].position![0];
         movableRef?.current?.request("draggable", {x: xPos + dragStep}, true);
     } else {
-        const xPos = groupRootCoordinate.x + dragStep;
+        const xPos = groupCoordinate?.minX! + dragStep;
         movableRef?.current?.request("draggable", {x: xPos}, true);
-        setGroupRootCoordinate({x: xPos, y: groupRootCoordinate.y});
+        setGroupCoordinate({minX: xPos});
     }
 }
 
@@ -198,36 +198,36 @@ export const doMoveRight = () => {
  * 以底部为基准向上扩大
  */
 export const doBaseBottomEnlargeUp = () => {
-    const {targets, movableRef, groupRootCoordinate, setGroupRootCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
+    let height;
     if (targets.length === 1) {
         let id = targets[0].id;
-        let height = layoutConfigs[id].height! + resizeStep;
-        movableRef?.current?.request("resizable", {offsetHeight: height, direction: [1, -1]}, true);
+        height = layoutConfigs[id].height! + resizeStep;
     } else {
-        // const offsetHeight = groupRootCoordinate.y - resizeStep;
-        // movableRef?.current?.request("resizable", {offsetHeight}, true);
-        // setGroupRootCoordinate({x: groupRootCoordinate.x, y: yPos});
+        height = groupCoordinate.groupHeight! + resizeStep;
+        setGroupCoordinate({groupHeight: height});
     }
+    movableRef?.current?.request("resizable", {offsetHeight: height, direction: [1, -1]}, true);
 }
 
 /**
  * 以顶部为基准向下扩大
  */
 export const doBaseUpEnlargeDown = () => {
-    const {targets, movableRef, groupRootCoordinate, setGroupRootCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
+    let height;
     if (targets.length === 1) {
         let id = targets[0].id;
-        let height = layoutConfigs[id].height! + resizeStep;
-        movableRef?.current?.request("resizable", {offsetHeight: height, direction: [1, 1]}, true);
+        height = layoutConfigs[id].height! + resizeStep;
     } else {
-        // const offsetHeight = groupRootCoordinate.y - resizeStep;
-        // movableRef?.current?.request("resizable", {offsetHeight}, true);
-        // setGroupRootCoordinate({x: groupRootCoordinate.x, y: yPos});
+        height = groupCoordinate.groupHeight! + resizeStep;
+        setGroupCoordinate({groupHeight: height});
     }
+    movableRef?.current?.request("resizable", {offsetHeight: height, direction: [1, 1]}, true);
 }
 
 
@@ -235,107 +235,105 @@ export const doBaseUpEnlargeDown = () => {
  * 以右边为基准向左扩大
  */
 export const doBaseRightEnlargeLeft = () => {
-    const {targets, movableRef, groupRootCoordinate, setGroupRootCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
+    let width;
     if (targets.length === 1) {
         let id = targets[0].id;
-        let width = layoutConfigs[id].width! + resizeStep;
-        movableRef?.current?.request("resizable", {offsetWidth: width, direction: [-1, 1]}, true);
+        width = layoutConfigs[id].width! + resizeStep;
     } else {
-        // const offsetHeight = groupRootCoordinate.y - resizeStep;
-        // movableRef?.current?.request("resizable", {offsetHeight}, true);
-        // setGroupRootCoordinate({x: groupRootCoordinate.x, y: yPos});
+        width = groupCoordinate.groupWidth! + resizeStep;
+        setGroupCoordinate({groupWidth: width});
     }
+    movableRef?.current?.request("resizable", {offsetWidth: width, direction: [-1, 1]}, true);
 }
 
 /**
  * 以左边为基准向右扩大
  */
 export const doBaseLeftEnlargeRight = () => {
-    const {targets, movableRef, groupRootCoordinate, setGroupRootCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
+    let width;
     if (targets.length === 1) {
         let id = targets[0].id;
-        let width = layoutConfigs[id].width! + resizeStep;
-        movableRef?.current?.request("resizable", {offsetWidth: width, direction: [1, 1]}, true);
+        width = layoutConfigs[id].width! + resizeStep;
     } else {
-        // const offsetHeight = groupRootCoordinate.y - resizeStep;
-        // movableRef?.current?.request("resizable", {offsetHeight}, true);
-        // setGroupRootCoordinate({x: groupRootCoordinate.x, y: yPos});
+        width = groupCoordinate.groupWidth! + resizeStep;
+        setGroupCoordinate({groupWidth: width});
     }
+    movableRef?.current?.request("resizable", {offsetWidth: width, direction: [1, 1]}, true);
 }
 
 /**
  * 以底部为基准向上缩小
  */
 export const doBaseBottomDecreaseUp = () => {
-    const {targets, movableRef, groupRootCoordinate, setGroupRootCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
+    let height;
     if (targets.length === 1) {
-        let id = targets[0].id;
-        let height = layoutConfigs[id].height! - resizeStep;
-        movableRef?.current?.request("resizable", {offsetHeight: height, direction: [1, -1]}, true);
+        height = layoutConfigs[targets[0].id].height! - resizeStep;
     } else {
-        // const offsetHeight = groupRootCoordinate.y - resizeStep;
-        // movableRef?.current?.request("resizable", {offsetHeight}, true);
-        // setGroupRootCoordinate({x: groupRootCoordinate.x, y: yPos});
+        height = groupCoordinate.groupHeight! - resizeStep;
+        setGroupCoordinate({groupHeight: height});
     }
+    movableRef?.current?.request("resizable", {offsetHeight: height, direction: [1, -1]}, true);
 }
 
 /**
  * 以顶部为基准向下缩小
  */
 export const doBaseUpDecreaseDown = () => {
-    const {targets, movableRef, groupRootCoordinate, setGroupRootCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
+    let height;
     if (targets.length === 1) {
         let id = targets[0].id;
-        let height = layoutConfigs[id].height! - resizeStep;
-        movableRef?.current?.request("resizable", {offsetHeight: height, direction: [1, 1]}, true);
+        height = layoutConfigs[id].height! - resizeStep;
     } else {
-        // const offsetHeight = groupRootCoordinate.y - resizeStep;
-        // movableRef?.current?.request("resizable", {offsetHeight}, true);
-        // setGroupRootCoordinate({x: groupRootCoordinate.x, y: yPos});
+        height = groupCoordinate.groupHeight! - resizeStep;
+        setGroupCoordinate({groupHeight: height});
     }
+    movableRef?.current?.request("resizable", {offsetHeight: height, direction: [1, 1]}, true);
 }
-
 
 /**
  * 以右边为基准向左缩小
  */
 export const doBaseRightDecreaseLeft = () => {
-    const {targets, movableRef, groupRootCoordinate, setGroupRootCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
+    let width;
     if (targets.length === 1) {
         let id = targets[0].id;
-        let width = layoutConfigs[id].width! - resizeStep;
-        movableRef?.current?.request("resizable", {offsetWidth: width, direction: [-1, 1]}, true);
+        width = layoutConfigs[id].width! - resizeStep;
     } else {
-        // const offsetHeight = groupRootCoordinate.y - resizeStep;
-        // movableRef?.current?.request("resizable", {offsetHeight}, true);
-        // setGroupRootCoordinate({x: groupRootCoordinate.x, y: yPos});
+        width = groupCoordinate.groupWidth! - resizeStep;
+        setGroupCoordinate({groupWidth: width});
     }
+    movableRef?.current?.request("resizable", {offsetWidth: width, direction: [-1, 1]}, true);
 }
 
 /**
  * 以左边为基准向右缩小
  */
 export const doBaseLeftDecreaseRight = () => {
-    const {targets, movableRef, groupRootCoordinate, setGroupRootCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
+    let width;
     if (targets.length === 1) {
         let id = targets[0].id;
-        let width = layoutConfigs[id].width! - resizeStep;
-        movableRef?.current?.request("resizable", {offsetWidth: width, direction: [1, 1]}, true);
+        width = layoutConfigs[id].width! - resizeStep;
     } else {
-        // const offsetHeight = groupRootCoordinate.y - resizeStep;
-        // movableRef?.current?.request("resizable", {offsetHeight}, true);
-        // setGroupRootCoordinate({x: groupRootCoordinate.x, y: yPos});
+        width = groupCoordinate.groupWidth! - resizeStep;
+        setGroupCoordinate({groupWidth: width});
     }
+    movableRef?.current?.request("resizable", {offsetWidth: width, direction: [1, 1]}, true);
 }
