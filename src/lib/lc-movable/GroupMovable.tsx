@@ -64,11 +64,15 @@ class GroupMovable extends React.Component<GroupMovableProps> {
             updateLayout(data);
         const posChange = e?.lastEvent?.beforeTranslate || [0, 0]
         const {setGroupCoordinate, groupCoordinate} = eventOperateStore;
-        setGroupCoordinate({minX: groupCoordinate.minX + posChange[0], minY: groupCoordinate.minY + posChange[1]})
+        const minX = groupCoordinate.minX + posChange[0];
+        const minY = groupCoordinate.minY + posChange[1];
+        setGroupCoordinate({minX, minY})
+        //更新footer组件中的最表信息
+        const {setCoordinate} = footerStore;
+        setCoordinate([minX, minY])
     }
 
     onResizeEnd = (e: any) => {
-
         const {updateLayout} = designerStore;
         const {target, lastEvent} = e;
         if (lastEvent) {
@@ -82,6 +86,9 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                     position: [translate[0], translate[1]]
                 }
             ], false)
+            const {setCoordinate, setSize} = footerStore;
+            setCoordinate([translate[0], translate[1]])
+            setSize([width, height])
         }
     }
 
@@ -105,6 +112,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
             updateLayout(data, false);
         const {dist, direction} = e.lastEvent;
         const {setGroupCoordinate, groupCoordinate} = eventOperateStore;
+        const {setCoordinate, setSize} = footerStore;
         if (direction[0] === -1 || direction[1] === -1) {
             //缩放元素左侧或上侧，此时需要同时改变坐标
             setGroupCoordinate({
@@ -113,13 +121,14 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                 groupWidth: groupCoordinate.groupWidth + dist[0],
                 groupHeight: groupCoordinate.groupHeight + dist[1],
             })
+            setCoordinate([groupCoordinate.minX!, groupCoordinate.minY!])
         } else {
             setGroupCoordinate({
                 groupWidth: groupCoordinate.groupWidth + dist[0],
                 groupHeight: groupCoordinate.groupHeight + dist[1],
             })
         }
-
+        setSize([groupCoordinate.groupWidth!, groupCoordinate.groupHeight!])
     }
 
 

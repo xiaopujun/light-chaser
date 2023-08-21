@@ -40,17 +40,17 @@ class GroupSelectable extends Component {
             calculateGroupCoordinate(selected);
         }
 
-        //统一更新多选组件的尺寸、位置信息
-
         //更新底部坐标信息
-        let {setCoordinate} = footerStore;
+        let {setCoordinate, setSize} = footerStore;
         const {layoutConfigs} = designerStore;
         if (selected.length === 1) {
-            const {position} = layoutConfigs[selected[0].id];
+            const {position, width, height} = layoutConfigs[selected[0].id];
             setCoordinate([position![0], position![1]]);
+            setSize([width!, height!])
         } else if (selected.length > 1) {
             let {groupCoordinate} = eventOperateStore;
             setCoordinate([groupCoordinate.minX!, groupCoordinate.minY!]);
+            setSize([groupCoordinate.groupWidth!, groupCoordinate.groupHeight!])
         }
     }
 
