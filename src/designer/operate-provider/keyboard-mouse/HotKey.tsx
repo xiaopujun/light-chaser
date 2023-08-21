@@ -38,7 +38,6 @@ class HotKey extends Component<HotKeyProps> {
      * @param hotKey 当前按下的快捷键
      */
     doHandler = (e: any, hotKey: string) => {
-        console.log(hotKey)
         const {handler, triggerType = TriggerType.SINGLE} = this.handlerMapping[hotKey] || {};
         if (handler) {
             if ((triggerType === TriggerType.SINGLE && this.existHandlerKey !== hotKey) || triggerType === TriggerType.COILED) {

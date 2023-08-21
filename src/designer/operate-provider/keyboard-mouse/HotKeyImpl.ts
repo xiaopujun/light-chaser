@@ -133,8 +133,10 @@ export const doHide = () => {
     updateLayout(toBeUpdate)
 }
 
+/*************************快捷键控制移动组件的位置*************************/
+
 export const doMoveUp = () => {
-    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
     if (targets.length === 1) {
@@ -144,12 +146,11 @@ export const doMoveUp = () => {
     } else {
         const yPos = groupCoordinate?.minY! - dragStep;
         movableRef?.current?.request("draggable", {y: yPos}, true);
-        setGroupCoordinate({minY: yPos});
     }
 }
 
 export const doMoveDown = () => {
-    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
     if (targets.length === 1) {
@@ -159,13 +160,11 @@ export const doMoveDown = () => {
     } else {
         const yPos = groupCoordinate?.minY! + dragStep;
         movableRef?.current?.request("draggable", {y: yPos}, true);
-        setGroupCoordinate({minY: yPos});
-
     }
 }
 
 export const doMoveLeft = () => {
-    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
     if (targets.length === 1) {
@@ -175,12 +174,11 @@ export const doMoveLeft = () => {
     } else {
         const xPos = groupCoordinate?.minX! - dragStep;
         movableRef?.current?.request("draggable", {x: xPos}, true);
-        setGroupCoordinate({minX: xPos,});
     }
 }
 
 export const doMoveRight = () => {
-    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
     if (targets.length === 1) {
@@ -190,15 +188,16 @@ export const doMoveRight = () => {
     } else {
         const xPos = groupCoordinate?.minX! + dragStep;
         movableRef?.current?.request("draggable", {x: xPos}, true);
-        setGroupCoordinate({minX: xPos});
     }
 }
+
+/*************************快捷键控制缩放组件尺寸*************************/
 
 /**
  * 以底部为基准向上扩大
  */
 export const doBaseBottomEnlargeUp = () => {
-    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
     let height;
@@ -207,7 +206,6 @@ export const doBaseBottomEnlargeUp = () => {
         height = layoutConfigs[id].height! + resizeStep;
     } else {
         height = groupCoordinate.groupHeight! + resizeStep;
-        setGroupCoordinate({groupHeight: height});
     }
     movableRef?.current?.request("resizable", {offsetHeight: height, direction: [1, -1]}, true);
 }
@@ -216,7 +214,7 @@ export const doBaseBottomEnlargeUp = () => {
  * 以顶部为基准向下扩大
  */
 export const doBaseUpEnlargeDown = () => {
-    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
     let height;
@@ -225,17 +223,15 @@ export const doBaseUpEnlargeDown = () => {
         height = layoutConfigs[id].height! + resizeStep;
     } else {
         height = groupCoordinate.groupHeight! + resizeStep;
-        setGroupCoordinate({groupHeight: height});
     }
     movableRef?.current?.request("resizable", {offsetHeight: height, direction: [1, 1]}, true);
 }
-
 
 /**
  * 以右边为基准向左扩大
  */
 export const doBaseRightEnlargeLeft = () => {
-    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
     let width;
@@ -244,7 +240,6 @@ export const doBaseRightEnlargeLeft = () => {
         width = layoutConfigs[id].width! + resizeStep;
     } else {
         width = groupCoordinate.groupWidth! + resizeStep;
-        setGroupCoordinate({groupWidth: width});
     }
     movableRef?.current?.request("resizable", {offsetWidth: width, direction: [-1, 1]}, true);
 }
@@ -253,7 +248,7 @@ export const doBaseRightEnlargeLeft = () => {
  * 以左边为基准向右扩大
  */
 export const doBaseLeftEnlargeRight = () => {
-    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
     let width;
@@ -262,16 +257,16 @@ export const doBaseLeftEnlargeRight = () => {
         width = layoutConfigs[id].width! + resizeStep;
     } else {
         width = groupCoordinate.groupWidth! + resizeStep;
-        setGroupCoordinate({groupWidth: width});
     }
     movableRef?.current?.request("resizable", {offsetWidth: width, direction: [1, 1]}, true);
 }
+
 
 /**
  * 以底部为基准向上缩小
  */
 export const doBaseBottomDecreaseUp = () => {
-    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
     let height;
@@ -279,7 +274,6 @@ export const doBaseBottomDecreaseUp = () => {
         height = layoutConfigs[targets[0].id].height! - resizeStep;
     } else {
         height = groupCoordinate.groupHeight! - resizeStep;
-        setGroupCoordinate({groupHeight: height});
     }
     movableRef?.current?.request("resizable", {offsetHeight: height, direction: [1, -1]}, true);
 }
@@ -288,7 +282,7 @@ export const doBaseBottomDecreaseUp = () => {
  * 以顶部为基准向下缩小
  */
 export const doBaseUpDecreaseDown = () => {
-    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
     let height;
@@ -297,7 +291,6 @@ export const doBaseUpDecreaseDown = () => {
         height = layoutConfigs[id].height! - resizeStep;
     } else {
         height = groupCoordinate.groupHeight! - resizeStep;
-        setGroupCoordinate({groupHeight: height});
     }
     movableRef?.current?.request("resizable", {offsetHeight: height, direction: [1, 1]}, true);
 }
@@ -306,7 +299,7 @@ export const doBaseUpDecreaseDown = () => {
  * 以右边为基准向左缩小
  */
 export const doBaseRightDecreaseLeft = () => {
-    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
     let width;
@@ -315,7 +308,6 @@ export const doBaseRightDecreaseLeft = () => {
         width = layoutConfigs[id].width! - resizeStep;
     } else {
         width = groupCoordinate.groupWidth! - resizeStep;
-        setGroupCoordinate({groupWidth: width});
     }
     movableRef?.current?.request("resizable", {offsetWidth: width, direction: [-1, 1]}, true);
 }
@@ -324,7 +316,7 @@ export const doBaseRightDecreaseLeft = () => {
  * 以左边为基准向右缩小
  */
 export const doBaseLeftDecreaseRight = () => {
-    const {targets, movableRef, groupCoordinate, setGroupCoordinate} = eventOperateStore;
+    const {targets, movableRef, groupCoordinate} = eventOperateStore;
     const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
     let width;
@@ -333,7 +325,6 @@ export const doBaseLeftDecreaseRight = () => {
         width = layoutConfigs[id].width! - resizeStep;
     } else {
         width = groupCoordinate.groupWidth! - resizeStep;
-        setGroupCoordinate({groupWidth: width});
     }
     movableRef?.current?.request("resizable", {offsetWidth: width, direction: [1, 1]}, true);
 }

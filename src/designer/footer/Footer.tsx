@@ -8,6 +8,7 @@ import HotKeyDes from "./HotKeyDes";
 import layerListStore from "../float-configs/layer-list/LayerListStore";
 import keyboardIcon from './keyboard-icon.svg';
 import layerIcon from './layers-icon.svg';
+import footerStore from "./FooterStore";
 
 class Footer extends Component {
 
@@ -30,6 +31,7 @@ class Footer extends Component {
     render() {
         const {scale} = eventOperateStore;
         const {layoutConfigs, projectConfig: {name, state}} = designerStore;
+        const {size, coordinate} = footerStore;
         let stateStr = '';
         switch (state) {
             case '0':
@@ -58,6 +60,8 @@ class Footer extends Component {
                     </div>
                 </div>
                 <div className={'footer-right'}>
+                    <div className={'right-info-item'}>{`尺寸 (${size[0]} , ${size[1]})`}</div>
+                    <div className={'right-info-item'}>{`坐标 (${coordinate[0]} , ${coordinate[1]})`}</div>
                     <div className={'right-info-item'}>缩放 : {(scale * 100).toFixed(0)}%</div>
                     <div className={'right-info-item'}>当前组件数 : {Object.keys(layoutConfigs).length}</div>
                     <div className={'right-info-item'}>项目 : {name}</div>

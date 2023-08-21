@@ -3,6 +3,8 @@ import Selecto from "react-selecto";
 import eventOperateStore from "../../designer/operate-provider/EventOperateStore";
 import {observer} from "mobx-react";
 import Moveable from 'react-moveable';
+import footerStore from "../../designer/footer/FooterStore";
+import designerStore from "../../designer/store/DesignerStore";
 
 class GroupSelectable extends Component {
     selectorRef = React.createRef<Selecto>();
@@ -36,6 +38,19 @@ class GroupSelectable extends Component {
             //计算组件多选时的左上角坐标
             let {calculateGroupCoordinate} = eventOperateStore;
             calculateGroupCoordinate(selected);
+        }
+
+        //统一更新多选组件的尺寸、位置信息
+
+        //更新底部坐标信息
+        let {setCoordinate} = footerStore;
+        const {layoutConfigs} = designerStore;
+        if (selected.length === 1) {
+            const {position} = layoutConfigs[selected[0].id];
+            setCoordinate([position![0], position![1]]);
+        } else if (selected.length > 1) {
+            let {groupCoordinate} = eventOperateStore;
+            setCoordinate([groupCoordinate.minX!, groupCoordinate.minY!]);
         }
     }
 
