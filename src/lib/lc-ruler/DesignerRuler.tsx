@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Ruler, {RulerProps} from "@scena/react-ruler";
-import {KMMap} from "../../designer/operate-provider/keyboard-mouse/KeyboardMouse";
+import {KMMap} from "../../designer/operate-provider/hot-key/KeyboardMouse";
 import eventManager from "../../designer/operate-provider/core/EventManager";
 import scaleCore from "../../designer/operate-provider/scale/ScaleCore";
 

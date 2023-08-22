@@ -10,8 +10,8 @@ import GroupMovable from "../../lib/lc-movable/GroupMovable";
 import GroupSelectable from "../../lib/lc-movable/GroupSelectable";
 import LcRightMenu from "../operate-provider/right-click-menu/ContextMenu";
 import {MovableItemType} from "../../lib/lc-movable/types";
-import HotKey from "../operate-provider/keyboard-mouse/HotKey";
-import {getHotKeyConfig} from "../operate-provider/keyboard-mouse/HotKeyConfig";
+import HotKey from "../operate-provider/hot-key/HotKey";
+import {getHotKeyConfig} from "../operate-provider/hot-key/HotKeyConfig";
 import ComponentContainer from "../../framework/core/ComponentContainer";
 import {isEqual} from "lodash";
 

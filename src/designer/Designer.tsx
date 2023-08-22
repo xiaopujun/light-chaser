@@ -13,7 +13,7 @@ import FloatConfigs from "./float-configs/FloatConfigs";
 import contextMenuStore from "./operate-provider/right-click-menu/ContextMenuStore";
 import eventOperateStore from "./operate-provider/EventOperateStore";
 import eventManager from "./operate-provider/core/EventManager";
-import {KMMap} from "./operate-provider/keyboard-mouse/KeyboardMouse";
+import {KMMap} from "./operate-provider/hot-key/KeyboardMouse";
 import EditorDesignerLoader from "./loader/EditorDesignerLoader";
 import designerStore from "./store/DesignerStore";
 import Loading from "../lib/loading/Loading";
