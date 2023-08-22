@@ -24,22 +24,23 @@ class GroupSelectable extends Component {
                 movable.dragStart(e.inputEvent);
             });
         }
+        //排除被锁定的元素
         let selected = e.selected.filter((item: any) => {
             return item.dataset.locked !== 'true';
         });
-        //如果展示了图层列表，则同步勾选图层列表中的元素
+        //图层若处于显示状态，则同步勾选图层列表中的元素
         if (e.inputEvent.target.className.indexOf('menu-item') === -1) {
             let targetIds: string[] = [];
             selected.forEach((item: any) => targetIds.push(item.id));
             setTargetIds(targetIds);
         }
+        //更新选中的组件
         setTargets(selected);
+        //若选中多个组件，计算更新组件多选时的左上角坐标
         if (selected.length > 1) {
-            //计算组件多选时的左上角坐标
             let {calculateGroupCoordinate} = eventOperateStore;
             calculateGroupCoordinate(selected);
         }
-
         //更新底部坐标信息
         let {setCoordinate, setSize} = footerStore;
         const {layoutConfigs} = designerStore;

@@ -1,5 +1,5 @@
 import * as React from "react";
-import Moveable from "react-moveable";
+import Moveable, {OnResizeGroup, OnResize} from "react-moveable";
 import {observer} from "mobx-react";
 import eventOperateStore from "../../designer/operate-provider/EventOperateStore";
 import designerStore from "../../designer/store/DesignerStore";
@@ -31,6 +31,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
         const {lastEvent, target} = e;
         if (lastEvent) {
             const {beforeTranslate} = lastEvent;
+            //更新组件位置信息
             updateLayout([
                 {
                     id: target.id,
@@ -40,6 +41,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                     position: [beforeTranslate[0], beforeTranslate[1]]
                 }
             ], false);
+            //更新footer组件中的坐标信息
             setCoordinate([beforeTranslate[0], beforeTranslate[1]])
         }
     }
@@ -60,8 +62,10 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                 })
             }
         })
+        //更新组件位置信息
         if (data.length > 0)
             updateLayout(data);
+        //计算多选组件时的坐标信息
         const posChange = e?.lastEvent?.beforeTranslate || [0, 0]
         const {setGroupCoordinate, groupCoordinate} = eventOperateStore;
         const minX = groupCoordinate.minX + posChange[0];
@@ -77,6 +81,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
         const {target, lastEvent} = e;
         if (lastEvent) {
             const {width, height, drag: {translate}} = lastEvent;
+            //更新组件尺寸信息
             updateLayout([
                 {
                     id: target.id,
@@ -86,6 +91,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                     position: [translate[0], translate[1]]
                 }
             ], false)
+            //更新footer组件中的尺寸和坐标信息
             const {setCoordinate, setSize} = footerStore;
             setCoordinate([translate[0], translate[1]])
             setSize([width, height])
@@ -108,8 +114,10 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                 })
             }
         })
+        //更新组件尺寸和坐标信息
         if (data.length > 0)
             updateLayout(data, false);
+        //组件多选情况下，重新计算多选组件的尺寸和坐标信息
         const {dist, direction} = e.lastEvent;
         const {setGroupCoordinate, groupCoordinate} = eventOperateStore;
         const {setCoordinate, setSize} = footerStore;
@@ -131,6 +139,21 @@ class GroupMovable extends React.Component<GroupMovableProps> {
         setSize([groupCoordinate.groupWidth!, groupCoordinate.groupHeight!])
     }
 
+    onResizeGroup = (e: OnResizeGroup) => {
+        e.events.forEach((ev: OnResize) => {
+            ev.target.style.width = `${ev.width}px`;
+            ev.target.style.height = `${ev.height}px`;
+            ev.target.style.transform = ev.drag.transform;
+        })
+    }
+
+    onResize = (e: OnResize) => {
+        const {target, width, height, drag} = e;
+        target.style.width = `${width}px`;
+        target.style.height = `${height}px`;
+        target.style.transform = `translate(${drag.beforeTranslate[0]}px, ${drag.beforeTranslate[1]}px)`;
+    }
+
 
     render() {
         const {readonly = false} = this.props;
@@ -144,7 +167,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                           draggable={!readonly}
                           resizable={!readonly}
                           keepRatio={false}
-                          throttleDrag={rasterize ? dragStep : 0}
+                          throttleDrag={rasterize ? dragStep : 1}
                           throttleResize={rasterize ? resizeStep : 1}
                           onClickGroup={e => {
                               (selectorRef.current as any)?.clickTarget(e.inputEvent, e.inputTarget);
@@ -153,26 +176,12 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                               target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
                           }}
                           onDragEnd={this.onDragEnd}
-                          onDragGroup={e => {
-                              e.events.forEach(ev => {
-                                  ev.target.style.transform = ev.transform;
-                              });
-                          }}
+                          onDragGroup={e => e.events.forEach(ev => ev.target.style.transform = ev.transform)}
                           onDragGroupEnd={this.onDragGroupEnd}
-                          onResize={({target, width, height, drag}) => {
-                              target.style.width = `${width}px`;
-                              target.style.height = `${height}px`;
-                              target.style.transform = `translate(${drag.beforeTranslate[0]}px, ${drag.beforeTranslate[1]}px)`;
-                          }}
+                          onResize={this.onResize}
                           onResizeEnd={this.onResizeEnd}
+                          onResizeGroup={this.onResizeGroup}
                           onResizeGroupEnd={this.onResizeGroupEnd}
-                          onResizeGroup={({events}) => {
-                              events.forEach(ev => {
-                                  ev.target.style.width = `${ev.width}px`;
-                                  ev.target.style.height = `${ev.height}px`;
-                                  ev.target.style.transform = ev.drag.transform;
-                              })
-                          }}
                 />
             </>
         );
