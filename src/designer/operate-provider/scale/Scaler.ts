@@ -1,9 +1,9 @@
 import designerStore from "../../store/DesignerStore";
 import scaleCore from "./ScaleCore";
-import eventOperateStore from "../EventOperateStore";
 import eventManager from "../core/EventManager";
 import {KMMap} from "../keyboard-mouse/KeyboardMouse";
 import CanvasDragger from "../drag/CanvasDragger";
+import footerStore from "../../footer/FooterStore";
 
 export const scaleConfig = {
     content: null,
@@ -20,7 +20,7 @@ export const doScale = (e: any) => {
     scaleCanvas(e);
     //缩放标尺
     eventManager.emit('wheel', e);
-    const {setScale} = eventOperateStore;
+    const {setScale} = footerStore;
     setScale(scaleCore.scale);
 }
 

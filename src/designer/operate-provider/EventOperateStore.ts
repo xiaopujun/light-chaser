@@ -45,19 +45,12 @@ export interface GroupCoordinateType {
 class EventOperateStore {
     constructor() {
         makeObservable(this, {
-            scale: observable,
             targets: observable,
             targetIds: observable,
-            setScale: action,
             setTargets: action,
             setTargetIds: action,
         })
     }
-
-    /**
-     * 缩放系数，所有接入缩放的组件都依赖该值
-     */
-    scale: number = 1;
 
     /**
      * 拖拽框架实例引用
@@ -95,7 +88,9 @@ class EventOperateStore {
      */
     minLevel = 0;
 
-    // 用于记录鼠标右键点击时的目标元素，用于快捷键操作时的目标元素的范围筛选
+    /**
+     * 用于记录鼠标右键点击时的目标元素，用于快捷键操作时的目标元素的范围筛选
+     */
     pointerTarget: any = null;
 
     /**
@@ -113,10 +108,6 @@ class EventOperateStore {
     setMinLevel = (order: number) => this.minLevel = order;
 
     setUnLockedId = (id: string) => this.unLockedId = id;
-
-    setScale = (scale: number) => {
-        this.scale = scale;
-    };
 
     setMovableRef = (ref: any) => this.movableRef = ref;
 

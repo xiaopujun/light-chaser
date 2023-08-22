@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './Footer.less';
-import eventOperateStore from "../operate-provider/EventOperateStore";
 import {observer} from "mobx-react";
 import designerStore from "../store/DesignerStore";
 import Dialog from "../../lib/lc-dialog/Dialog";
@@ -29,9 +28,8 @@ class Footer extends Component {
     }
 
     render() {
-        const {scale} = eventOperateStore;
         const {layoutConfigs, projectConfig: {name, state}} = designerStore;
-        const {size, coordinate} = footerStore;
+        const {size, coordinate, scale} = footerStore;
         let stateStr = '';
         switch (state) {
             case '0':
