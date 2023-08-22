@@ -2,16 +2,16 @@
  * 缩放参数计算核心类
  */
 class ScaleCore {
-    max: number = 10;
-    min: number = 0.1;
+    max: number = 8;
+    min: number = 0.25;
     scale: number = 1;
     ratio: number = 1;
 
     compute = (type: number) => {
-        let _ratio = 1.3;
+        let _ratio = 1.5;
         // 缩小
         if (type === 0)
-            _ratio = 1 / 1.3;
+            _ratio = 1 / 1.5;
         // 限制缩放倍数
         let _scale = this.scale * _ratio;
         if (_scale > this.max) {

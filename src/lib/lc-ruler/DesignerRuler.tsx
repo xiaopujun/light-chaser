@@ -68,7 +68,7 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
             clearTimeout(this.wheelTimerId);
             this.wheelTimerId = setTimeout(() => {
                 this.setState({render: this.state.render + 1})
-            }, 300);
+            }, 400);
         });
 
         eventManager.register('pointermove', (e: any) => {
@@ -85,7 +85,7 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
                 this.pointerMoveTimerId = setTimeout(() => {
                     this.rulerX && this.rulerX.scroll(this._scrollPosX);
                     this.rulerY && this.rulerY.scroll(this._scrollPosY);
-                }, 300);
+                }, 400);
             }
         });
 

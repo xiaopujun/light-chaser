@@ -12,22 +12,20 @@ export const scaleConfig = {
 }
 
 export const doScale = (e: any) => {
-    //缩放拖拽不能同时进行
+    //如果仍处于拖拽过程中，则不进行缩放
     if (KMMap.rightClick) return;
-    const {setScale} = eventOperateStore;
+    //计算缩放比例
+    scaleCore.compute(e.deltaY > 0 ? 0 : 1);
     //缩放画布
     scaleCanvas(e);
     //缩放标尺
     eventManager.emit('wheel', e);
+    const {setScale} = eventOperateStore;
     setScale(scaleCore.scale);
 }
 
 export const scaleCanvas = (e: any) => {
     let {canvasConfig: {width = 1920, height = 1080}} = designerStore;
-    let type = 1;
-    if (e.deltaY > 0)
-        type = 0;
-    scaleCore.compute(type);
     const origin = {
         x: (scaleCore.ratio - 1) * width * 0.5,
         y: (scaleCore.ratio - 1) * height * 0.5
