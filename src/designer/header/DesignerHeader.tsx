@@ -3,8 +3,8 @@ import './DesignerHeader.less';
 import headerStore from "./HeaderStore";
 import CanvasHdConfigImpl from "./items/canvas/CanvasHdConfigImpl";
 import {observer} from "mobx-react";
-import designerStarter from "../DesignerStarter";
 import Loading from "../../lib/loading/Loading";
+import {headerItemInstances} from "../loader/EditorDesignerLoader";
 
 const ProjectHdItemImpl = React.lazy(() => import('./items/project/ProjectHdItemImpl'));
 const ThemeHdItemImpl = React.lazy(() => import('./items/theme/ThemeHdItemImpl'));
@@ -12,7 +12,6 @@ const ThemeHdItemImpl = React.lazy(() => import('./items/theme/ThemeHdItemImpl')
 class Header extends Component<any> {
 
     buildHeaderList = (): Array<ReactElement> => {
-        const {headerItemInstances} = designerStarter;
         let items: Array<ReactElement> = [];
         for (let i = 0; i < headerItemInstances.length; i++) {
             const {icon: Icon, name, onClick} = headerItemInstances[i];

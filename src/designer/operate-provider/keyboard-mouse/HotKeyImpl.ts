@@ -4,9 +4,9 @@ import {MovableItemType} from "../../../lib/lc-movable/types";
 import rightStore from "../../right/RightStore";
 import RenderUtil from "../../../utils/RenderUtil";
 import {SaveType} from "../../DesignerType";
-import designerStarter from "../../DesignerStarter";
 import {cloneDeep} from "lodash";
 import {message} from "antd";
+import {abstractOperatorMap} from "../../loader/EditorDesignerLoader";
 
 export const selectAll = () => {
     let comps = document.getElementsByClassName('lc-comp-item');
@@ -101,7 +101,6 @@ export const doSave = () => {
     RenderUtil.throttle(() => {
         let {projectConfig: {saveType}} = designerStore;
         if (saveType === SaveType.LOCAL) {
-            const {abstractOperatorMap} = designerStarter;
             const {projectConfig: {saveType = SaveType.LOCAL}} = designerStore;
             abstractOperatorMap[saveType].doCreateOrUpdate(cloneDeep(designerStore.getData()));
         } else if (saveType === SaveType.SERVER) {

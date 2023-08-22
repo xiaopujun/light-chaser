@@ -4,13 +4,13 @@ import compListStore from "./CompListStore";
 import classifyListStore from "../../left/classify-list/ClassifyListStore";
 import './CompList.less';
 import {observer} from "mobx-react";
-import designerStarter from "../../DesignerStarter";
 import designerStore from "../../store/DesignerStore";
 import {idGenerate} from "../../../utils/IdGenerate";
 import {MovableItemType} from "../../../lib/lc-movable/types";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 import FloatPanel from "../common/FloatPanel";
 import {BaseInfoType} from "../../DesignerType";
+import {customComponentInfoMap} from "../../loader/EditorDesignerLoader";
 
 class CompList extends Component {
 
@@ -55,7 +55,6 @@ class CompList extends Component {
         for (let i = 0; i < compInfoArr.length; i++) {
             let compInfo: any = compInfoArr[i];
             const {compName, compKey} = compInfo;
-            const {customComponentInfoMap} = designerStarter;
             let lcCompInit: any = customComponentInfoMap[compKey];
             let chartImg = lcCompInit.getChartImg();
             chartDom.push(

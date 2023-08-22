@@ -1,10 +1,10 @@
 import React, {Suspense} from "react";
-import designerStarter from "../../designer/DesignerStarter";
 import {MovableItemType} from "../../lib/lc-movable/types";
 import Loading from "../../lib/loading/Loading";
 import designerStore from "../../designer/store/DesignerStore";
 import {AbstractCustomComponentDefinition} from "./AbstractCustomComponentDefinition";
 import {parseUrlParams} from "../../utils/URLUtil";
+import {customComponentInfoMap} from "../../designer/loader/EditorDesignerLoader";
 
 export interface ComponentContainerProps {
     layout: MovableItemType;
@@ -20,7 +20,6 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
         //通过ref创建组件，并将组件实例方法Map中。后续通过Map匹配到具体实例，
         //调用实例的对象方法进行组件的更新操作
         const {layout} = this.props;
-        const {customComponentInfoMap} = designerStarter;
         const {elemConfigs} = designerStore;
         let componentDefine: AbstractCustomComponentDefinition = customComponentInfoMap[layout!.type + ''];
         if (componentDefine) {

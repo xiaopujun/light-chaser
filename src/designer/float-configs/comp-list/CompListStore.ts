@@ -1,6 +1,6 @@
 import {action, makeObservable, observable} from "mobx";
-import designerStarter from "../../DesignerStarter";
 import {BaseInfoType} from "../../DesignerType";
+import {customComponentInfoMap} from "../../loader/EditorDesignerLoader";
 
 /**
  * 设计器左侧列表组件的状态管理类。
@@ -31,7 +31,6 @@ class CompListStore {
 
     doInit = () => {
         const comps: Array<any> = [];
-        const {customComponentInfoMap}: any = designerStarter;
         if (customComponentInfoMap) {
             Object.keys(customComponentInfoMap).forEach(key => {
                 let baseInfo = customComponentInfoMap[key].getBaseInfo();

@@ -5,14 +5,13 @@ import {MovableItemType} from "../../lib/lc-movable/types";
 import Loading from "../../lib/loading/Loading";
 import designerStore from "../store/DesignerStore";
 import ComponentContainer from "../../framework/core/ComponentContainer";
-import {loadDesigner} from "../LoadDesigner";
 import {observer} from "mobx-react";
+import EditorDesignerLoader from "../loader/EditorDesignerLoader";
 
 class DesignerView extends Component {
 
     componentDidMount() {
-        //加载项目
-        loadDesigner();
+        EditorDesignerLoader.getInstance().load();
     }
 
     generateElement = () => {
@@ -35,4 +34,4 @@ class DesignerView extends Component {
     }
 }
 
-export default observer(DesignerView);
+export default DesignerView;

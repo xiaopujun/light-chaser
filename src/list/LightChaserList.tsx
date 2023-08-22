@@ -12,8 +12,8 @@ import listEdit from './list-edit.svg';
 import {buildUrlParams} from "../utils/URLUtil";
 import {ImgUtil} from "../utils/ImgUtil";
 import {ProjectState, SaveType} from "../designer/DesignerType";
-import designerStarter from "../designer/DesignerStarter";
 import designerStore from "../designer/store/DesignerStore";
+import EditorDesignerLoader, {abstractOperatorMap} from "../designer/loader/EditorDesignerLoader";
 
 class LightChaserList extends Component<any> {
 
@@ -25,8 +25,7 @@ class LightChaserList extends Component<any> {
     }
 
     componentDidMount() {
-        const {scannerProjectOperators, abstractOperatorMap} = designerStarter;
-        scannerProjectOperators();
+        EditorDesignerLoader.getInstance().scannerProjectOperators();
         const {projectConfig: {saveType = SaveType.LOCAL}} = designerStore;
         abstractOperatorMap[saveType].getProjectSimpleInfoList().then((data: any) => {
             if (data && data.length > 0) {
