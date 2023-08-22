@@ -10,7 +10,8 @@ import EditorDesignerLoader from "../loader/EditorDesignerLoader";
 
 class DesignerView extends Component {
 
-    componentDidMount() {
+    constructor(props: any) {
+        super(props);
         EditorDesignerLoader.getInstance().load();
     }
 
@@ -24,14 +25,14 @@ class DesignerView extends Component {
 
     render() {
         let {loaded, elemConfigs} = designerStore!;
+        if (!loaded)
+            return <Loading/>;
         return (
-            <>
-                {loaded ? <DesignerBackground config={elemConfigs!['80cc666f']['background'] || {}}>
-                    {this.generateElement()}
-                </DesignerBackground> : <Loading/>}
-            </>
+            <DesignerBackground config={elemConfigs!['80cc666f']['background'] || {}}>
+                {this.generateElement()}
+            </DesignerBackground>
         );
     }
 }
 
-export default DesignerView;
+export default observer(DesignerView);

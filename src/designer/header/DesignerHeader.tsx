@@ -28,7 +28,6 @@ class Header extends Component<any> {
     render() {
         const {canvasVisible, projectVisible, themeVisible} = headerStore;
         const items = this.buildHeaderList();
-        console.log(canvasVisible)
         return (
             <div className={'designer-header'}>
                 <div className={'header-left'}>

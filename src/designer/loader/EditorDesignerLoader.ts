@@ -25,8 +25,6 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
         this.scannerHeader();
         this.scannerCustomComponents();
         this.scannerProjectOperators();
-        const {setLoaded} = designerStore;
-        setLoaded(true);
     }
 
     protected loadProjectData(): void {
@@ -101,6 +99,8 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
                 name: name
             },
         })
+        const {setLoaded} = designerStore;
+        setLoaded(true);
     }
 
     /**
@@ -109,8 +109,7 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
     private initExistProject(): void {
         let urlParams = parseUrlParams();
         const {doInit, setLoaded} = designerStore;
-        const {projectConfig: {saveType = SaveType.LOCAL}} = designerStore;
-        this.abstractOperatorMap[saveType].getProject(urlParams.id).then((store: ProjectDataType | null) => {
+        this.abstractOperatorMap[SaveType.LOCAL].getProject(urlParams.id).then((store: ProjectDataType | null) => {
             if (store) {
                 doInit({
                     id: store.id,

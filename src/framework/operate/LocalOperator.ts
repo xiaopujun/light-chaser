@@ -42,7 +42,7 @@ class LocalOperator extends AbstractOperator {
         projectData.extendParams!.maxLevel = maxLevel;
         projectData.extendParams!.minLevel = minLevel;
         // 3. 异步生成工作区截图
-        let imgDom: any = document.querySelector('.lc-content-scale');
+        let imgDom: any = document.querySelector('.lc-drag-scale-provider');
         const screenShotId = LocalConstant.LOCAL_PROJECT_SCREENSHOT + projectData.id;
         projectData!.projectConfig!.screenshot = screenShotId; //截图
         ImgUtil.htmlToImgWithId(imgDom, screenShotId, {scale: scaleCore.scale}).then(() => console.log('异步生成截图成功'));
@@ -91,7 +91,7 @@ class LocalOperator extends AbstractOperator {
         projectData.extendParams!.maxLevel = maxLevel;
         projectData.extendParams!.minLevel = minLevel;
         //2. 异步生成工作区截图
-        let imgDom: any = document.querySelector('.lc-content-scale');
+        let imgDom: any = document.querySelector('.lc-drag-scale-provider');
         const screenShotId = LocalConstant.LOCAL_PROJECT_SCREENSHOT + projectData.id;
         projectData!.projectConfig!.screenshot = screenShotId; //截图
         ImgUtil.htmlToImgWithId(imgDom, screenShotId, {scale: scaleCore.scale}).then(() => console.log('异步更新截图成功'));

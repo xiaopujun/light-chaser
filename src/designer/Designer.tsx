@@ -19,6 +19,7 @@ import designerStore from "./store/DesignerStore";
 import Loading from "../lib/loading/Loading";
 import DesignerHeader from "./header/DesignerHeader";
 import DesignerCanvas from "./canvas/DesignerCanvas";
+import {observer} from "mobx-react";
 
 class Designer extends Component {
 
@@ -65,7 +66,7 @@ class Designer extends Component {
     }
 }
 
-export default Designer;
+export default observer(Designer);
 
 /**
  * 注册事件到事件管理器
