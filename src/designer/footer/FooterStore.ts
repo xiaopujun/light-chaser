@@ -8,7 +8,8 @@ class FooterStore {
             scale: observable,
             size: observable,
             setCoordinate: action,
-            setSize: action
+            setSize: action,
+            setScale: action
         })
     }
 

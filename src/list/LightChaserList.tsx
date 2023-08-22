@@ -13,7 +13,7 @@ import {buildUrlParams} from "../utils/URLUtil";
 import {ImgUtil} from "../utils/ImgUtil";
 import {ProjectState, SaveType} from "../designer/DesignerType";
 import designerStore from "../designer/store/DesignerStore";
-import EditorDesignerLoader, {abstractOperatorMap} from "../designer/loader/EditorDesignerLoader";
+import EditorDesignerLoader from "../designer/loader/EditorDesignerLoader";
 
 class LightChaserList extends Component<any> {
 
@@ -27,7 +27,7 @@ class LightChaserList extends Component<any> {
     componentDidMount() {
         EditorDesignerLoader.getInstance().scannerProjectOperators();
         const {projectConfig: {saveType = SaveType.LOCAL}} = designerStore;
-        abstractOperatorMap[saveType].getProjectSimpleInfoList().then((data: any) => {
+        EditorDesignerLoader.getInstance().abstractOperatorMap[saveType].getProjectSimpleInfoList().then((data: any) => {
             if (data && data.length > 0) {
                 this.setState({data});
                 let imageIds: any = [];

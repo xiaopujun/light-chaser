@@ -9,6 +9,8 @@ import './ProjectHdItemImpl.less';
 import designerStore from "../../../store/DesignerStore";
 import {ProjectConfig, ProjectState} from "../../../DesignerType";
 
+console.log('ProjectHdItemImpl')
+
 class ProjectHdItemImpl extends Component {
 
     config: ProjectConfig | null = null;

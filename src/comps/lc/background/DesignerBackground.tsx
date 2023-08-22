@@ -2,7 +2,7 @@ import React, {Component, MouseEvent} from 'react';
 import {BackgroundColorMode, BackgroundMode} from "../../../designer/DesignerType";
 import AbstractBackgroundImpl, {AbstractBackgroundImplProps, BackgroundConfigType} from "./AbstractBackgroundImpl";
 import designerStore from "../../../designer/store/DesignerStore";
-import {customComponentInfoMap} from "../../../designer/loader/EditorDesignerLoader";
+import EditorDesignerLoader from "../../../designer/loader/EditorDesignerLoader";
 
 interface LcDesignerBackgroundProps {
     onClick?: (e: MouseEvent<HTMLDivElement>) => void;
@@ -22,7 +22,7 @@ class DesignerBackground extends Component<LcDesignerBackgroundProps> {
         if ('80cc666f' in elemConfigs!)
             config = elemConfigs['80cc666f'];
         else {
-            const componentDefine = customComponentInfoMap['LcBg'];
+            const componentDefine = EditorDesignerLoader.getInstance().customComponentInfoMap['LcBg'];
             if (componentDefine)
                 config = componentDefine.getInitConfig();
         }

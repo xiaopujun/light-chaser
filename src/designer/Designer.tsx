@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import DesignerCanvas from "./canvas/DesignerCanvas";
-import DesignerHeader from "./header/DesignerHeader";
 import LcHeader from "./structure/LcHeader";
 import LcBody from "./structure/LcBody";
 import LcLeft from "./structure/LcLeft";
@@ -17,6 +15,10 @@ import eventOperateStore from "./operate-provider/EventOperateStore";
 import eventManager from "./operate-provider/core/EventManager";
 import {KMMap} from "./operate-provider/keyboard-mouse/KeyboardMouse";
 import EditorDesignerLoader from "./loader/EditorDesignerLoader";
+import designerStore from "./store/DesignerStore";
+import Loading from "../lib/loading/Loading";
+import DesignerHeader from "./header/DesignerHeader";
+import DesignerCanvas from "./canvas/DesignerCanvas";
 
 class Designer extends Component {
 
@@ -41,6 +43,9 @@ class Designer extends Component {
     }
 
     render() {
+        const {loaded} = designerStore;
+        if (!loaded)
+            return <Loading/>;
         return (
             <LcStructure>
                 <LcHeader>

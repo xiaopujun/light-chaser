@@ -4,7 +4,7 @@ import Loading from "../../lib/loading/Loading";
 import designerStore from "../../designer/store/DesignerStore";
 import {AbstractCustomComponentDefinition} from "./AbstractCustomComponentDefinition";
 import {parseUrlParams} from "../../utils/URLUtil";
-import {customComponentInfoMap} from "../../designer/loader/EditorDesignerLoader";
+import EditorDesignerLoader from "../../designer/loader/EditorDesignerLoader";
 
 export interface ComponentContainerProps {
     layout: MovableItemType;
@@ -21,7 +21,7 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
         //调用实例的对象方法进行组件的更新操作
         const {layout} = this.props;
         const {elemConfigs} = designerStore;
-        let componentDefine: AbstractCustomComponentDefinition = customComponentInfoMap[layout!.type + ''];
+        let componentDefine: AbstractCustomComponentDefinition = EditorDesignerLoader.getInstance().customComponentInfoMap[layout!.type + ''];
         if (componentDefine) {
             const AbsCompImpl = componentDefine.getComponent();
             if (AbsCompImpl) {

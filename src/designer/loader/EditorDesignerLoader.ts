@@ -1,6 +1,5 @@
 import designerStore from "../store/DesignerStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
-// import designerStarter from "../DesignerStarter";
 import {parseUrlParams} from "../../utils/URLUtil";
 import {ProjectDataType, SaveType} from "../DesignerType";
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
@@ -26,6 +25,8 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
         this.scannerHeader();
         this.scannerCustomComponents();
         this.scannerProjectOperators();
+        const {setLoaded} = designerStore;
+        setLoaded(true);
     }
 
     protected loadProjectData(): void {
@@ -90,7 +91,7 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
     private initNewProject(): void {
         let urlParams = parseUrlParams();
         const {width, height, name} = urlParams;
-        const {doInit, setLoaded} = designerStore;
+        const {doInit} = designerStore;
         doInit({
             canvasConfig: {
                 width: parseInt(width),
@@ -100,7 +101,6 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
                 name: name
             },
         })
-        setLoaded(true);
     }
 
     /**
@@ -130,12 +130,4 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
             setLoaded(true);
         })
     }
-}
-
-const {customComponentInfoMap, headerItemInstances, abstractOperatorMap} = EditorDesignerLoader.getInstance();
-
-export {
-    customComponentInfoMap,
-    headerItemInstances,
-    abstractOperatorMap
 }

@@ -2,7 +2,7 @@ import {AbstractHeaderItem, HeaderItemProps} from "../../HeaderTypes";
 import {SaveFilled} from "@ant-design/icons";
 import designerStore from "../../../store/DesignerStore";
 import {SaveType} from "../../../DesignerType";
-import {abstractOperatorMap} from "../../../loader/EditorDesignerLoader";
+import EditorDesignerLoader from "../../../loader/EditorDesignerLoader";
 
 /**
  * header-保存
@@ -16,7 +16,7 @@ export default class SaveHdItem extends AbstractHeaderItem {
             order: 3,
             onClick: () => {
                 const {projectConfig: {saveType = SaveType.LOCAL}} = designerStore;
-                abstractOperatorMap[saveType].doCreateOrUpdate(designerStore.getData());
+                EditorDesignerLoader.getInstance().abstractOperatorMap[saveType].doCreateOrUpdate(designerStore.getData());
             }
         }
     }

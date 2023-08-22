@@ -6,7 +6,7 @@ import RenderUtil from "../../../utils/RenderUtil";
 import {SaveType} from "../../DesignerType";
 import {cloneDeep} from "lodash";
 import {message} from "antd";
-import {abstractOperatorMap} from "../../loader/EditorDesignerLoader";
+import EditorDesignerLoader from "../../loader/EditorDesignerLoader";
 
 export const selectAll = () => {
     let comps = document.getElementsByClassName('lc-comp-item');
@@ -102,7 +102,7 @@ export const doSave = () => {
         let {projectConfig: {saveType}} = designerStore;
         if (saveType === SaveType.LOCAL) {
             const {projectConfig: {saveType = SaveType.LOCAL}} = designerStore;
-            abstractOperatorMap[saveType].doCreateOrUpdate(cloneDeep(designerStore.getData()));
+            EditorDesignerLoader.getInstance().abstractOperatorMap[saveType].doCreateOrUpdate(cloneDeep(designerStore.getData()));
         } else if (saveType === SaveType.SERVER) {
             alert("server save");
         }
