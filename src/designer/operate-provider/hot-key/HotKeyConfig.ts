@@ -16,7 +16,7 @@ import {
     selectAll,
     toBottom,
     toTop,
-    doBaseBottomDecreaseUp, doBaseUpDecreaseDown, doBaseRightDecreaseLeft, doBaseLeftDecreaseRight
+    doBaseBottomDecreaseUp, doBaseUpDecreaseDown, doBaseRightDecreaseLeft, doBaseLeftDecreaseRight, undo, redo
 } from "./HotKeyImpl";
 
 export const getHotKeyConfig: HotKeyConfigType = {
@@ -44,6 +44,12 @@ export const getHotKeyConfig: HotKeyConfigType = {
     },
     'delete': {
         handler: doDelete,
+    },
+    'control + z': {
+        handler: undo,
+    },
+    'control + shift + z': {
+        handler: redo,
     },
     'arrowup': {
         handler: doMoveUp,

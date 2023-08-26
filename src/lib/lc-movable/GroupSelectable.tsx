@@ -15,6 +15,7 @@ class GroupSelectable extends Component {
     }
 
     onSelectEnd = (e: any) => {
+        console.log('onSelectEnd')
         const {movableRef, setTargets, setTargetIds} = eventOperateStore;
         if (!movableRef) return;
         const movable: Moveable = movableRef!.current!;

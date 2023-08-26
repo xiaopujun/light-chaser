@@ -34,7 +34,7 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
                     const {compInstances} = designerStore;
                     compInstances[layout.id + ''] = instance;
                 });
-                delete elemConfigs![layout.id!];
+                // delete elemConfigs![layout.id!];
             }
         }
     }

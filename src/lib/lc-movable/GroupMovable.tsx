@@ -1,10 +1,11 @@
 import * as React from "react";
-import Moveable, {OnResizeGroup, OnResize} from "react-moveable";
+import Moveable, {OnResize, OnResizeGroup} from "react-moveable";
 import {observer} from "mobx-react";
 import eventOperateStore from "../../designer/operate-provider/EventOperateStore";
 import designerStore from "../../designer/store/DesignerStore";
 import {MovableItemType} from "./types";
 import footerStore from "../../designer/footer/FooterStore";
+import designerStoreProxy from "../../designer/operate-provider/undo-redo/DesignerStoreProxy";
 
 interface GroupMovableProps {
     readonly?: boolean;
@@ -26,13 +27,14 @@ class GroupMovable extends React.Component<GroupMovableProps> {
     }
 
     onDragEnd = (e: any) => {
+        console.log('onDragEnd')
         const {updateLayout} = designerStore;
         const {setCoordinate} = footerStore;
+        let {backoff, setBackoff} = eventOperateStore;
         const {lastEvent, target} = e;
         if (lastEvent) {
             const {beforeTranslate} = lastEvent;
-            //更新组件位置信息
-            updateLayout([
+            const data: MovableItemType[] = [
                 {
                     id: target.id,
                     width: target.offsetWidth,
@@ -40,7 +42,13 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                     type: target.dataset.type,
                     position: [beforeTranslate[0], beforeTranslate[1]]
                 }
-            ], false);
+            ];
+            //更新组件位置信息
+            if (backoff) {
+                updateLayout(data, false);
+                setBackoff(false);
+            } else
+                designerStoreProxy.doDrag(data)
             //更新footer组件中的坐标信息
             setCoordinate([beforeTranslate[0], beforeTranslate[1]])
         }
@@ -48,6 +56,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
 
     onDragGroupEnd = (e: any) => {
         const {updateLayout} = designerStore;
+        let {backoff, setBackoff, setGroupCoordinate, groupCoordinate} = eventOperateStore;
         let data: MovableItemType[] = [];
         e.events.forEach((ev: any) => {
             const {target, lastEvent} = ev;
@@ -62,27 +71,33 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                 })
             }
         })
-        //更新组件位置信息
-        if (data.length > 0)
-            updateLayout(data);
         //计算多选组件时的坐标信息
         const posChange = e?.lastEvent?.beforeTranslate || [0, 0]
-        const {setGroupCoordinate, groupCoordinate} = eventOperateStore;
         const minX = groupCoordinate.minX + posChange[0];
         const minY = groupCoordinate.minY + posChange[1];
         setGroupCoordinate({minX, minY})
+        //更新组件位置信息并记录操作
+        if (data.length > 0) {
+            if (backoff) {
+                updateLayout(data, false);
+                setBackoff(false);
+            } else
+                designerStoreProxy.doDrag(data)
+        }
         //更新footer组件中的最表信息
         const {setCoordinate} = footerStore;
         setCoordinate([minX, minY])
     }
 
     onResizeEnd = (e: any) => {
+        console.log('onResizeEnd')
         const {updateLayout} = designerStore;
+        let {backoff, setBackoff} = eventOperateStore;
         const {target, lastEvent} = e;
+        console.log('lastEvent', lastEvent)
         if (lastEvent) {
-            const {width, height, drag: {translate}} = lastEvent;
-            //更新组件尺寸信息
-            updateLayout([
+            const {width, height, drag: {translate}, direction} = lastEvent;
+            const data: MovableItemType[] = [
                 {
                     id: target.id,
                     width: width,
@@ -90,7 +105,13 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                     type: target.dataset.type,
                     position: [translate[0], translate[1]]
                 }
-            ], false)
+            ];
+            //更新组件尺寸信息
+            if (backoff) {
+                updateLayout(data, false);
+                setBackoff(false);
+            } else
+                designerStoreProxy.doResize(data, direction)
             //更新footer组件中的尺寸和坐标信息
             const {setCoordinate, setSize} = footerStore;
             setCoordinate([translate[0], translate[1]])
@@ -100,6 +121,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
 
     onResizeGroupEnd = (e: any) => {
         const {updateLayout} = designerStore;
+        let {backoff, setBackoff} = eventOperateStore;
         let data: MovableItemType[] = [];
         e.events.forEach((ev: any) => {
             const {target, lastEvent} = ev;
@@ -115,9 +137,15 @@ class GroupMovable extends React.Component<GroupMovableProps> {
             }
         })
         //更新组件尺寸和坐标信息
-        if (data.length > 0)
-            updateLayout(data, false);
+        if (data.length > 0) {
+            if (backoff) {
+                updateLayout(data, false);
+                setBackoff(false);
+            } else
+                designerStoreProxy.doDrag(data)
+        }
         //组件多选情况下，重新计算多选组件的尺寸和坐标信息
+        if (!e.lastEvent) return;
         const {dist, direction} = e.lastEvent;
         const {setGroupCoordinate, groupCoordinate} = eventOperateStore;
         const {setCoordinate, setSize} = footerStore;
@@ -153,7 +181,6 @@ class GroupMovable extends React.Component<GroupMovableProps> {
         target.style.height = `${height}px`;
         target.style.transform = `translate(${drag.beforeTranslate[0]}px, ${drag.beforeTranslate[1]}px)`;
     }
-
 
     render() {
         const {readonly = false} = this.props;

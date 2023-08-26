@@ -87,6 +87,11 @@ class DesignerStore implements AbstractBaseStore {
     layoutConfigs: { [key: string]: MovableItemType } = {};
 
     /**
+     * 初始状态的布局配置（用于回退场景）
+     */
+    initLayoutConfigs: { [key: string]: MovableItemType } = {};
+
+    /**
      * 统计信息
      */
     statisticInfo: Statistic = {
@@ -136,6 +141,7 @@ class DesignerStore implements AbstractBaseStore {
             ? {...this.elemConfigs, ...store.elemConfigs}
             : this.elemConfigs;
         this.layoutConfigs = store.layoutConfigs || this.layoutConfigs;
+        this.initLayoutConfigs = cloneDeep(this.layoutConfigs);
         this.statisticInfo = store.statisticInfo
             ? {...this.statisticInfo, ...store.statisticInfo}
             : this.statisticInfo;

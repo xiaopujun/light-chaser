@@ -103,6 +103,13 @@ class EventOperateStore {
         maxY: -Infinity
     };
 
+    /**
+     * 撤销控制，当backoff = true，变更的数据不会记录到日志队列中。
+     */
+    backoff: boolean = false;
+
+    setBackoff = (backoff: boolean) => this.backoff = backoff;
+
     setMaxLevel = (order: number) => this.maxLevel = order;
 
     setMinLevel = (order: number) => this.minLevel = order;
