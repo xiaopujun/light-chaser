@@ -1,6 +1,8 @@
 /**
  * 操作类型枚举
  */
+import {MovableItemType} from "../../../lib/lc-movable/types";
+
 export enum HistoryType {
     DRAG,
     RESIZE,
@@ -19,8 +21,8 @@ type RecordDataType = DragDataType | ResizeDataType | AddDataType[] | DelDataTyp
  */
 export interface HistoryRecordType {
     type: HistoryType;
-    prev: RecordDataType;
-    next: RecordDataType;
+    prev: RecordDataType | null;
+    next: RecordDataType | null;
 
     //废弃
     data?: RecordDataType;
@@ -50,7 +52,10 @@ export interface ResizeDataType {
  */
 export interface AddDataType {
     id: string;
-    data: any;
+    data: {
+        layoutConfig: MovableItemType;
+        elemConfig: any;
+    };
 }
 
 /**
@@ -58,7 +63,10 @@ export interface AddDataType {
  */
 export interface DelDataType {
     id: string;
-    data: any;
+    data: {
+        layoutConfig: MovableItemType;
+        elemConfig: any;
+    };
 }
 
 /**

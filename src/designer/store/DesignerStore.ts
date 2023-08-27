@@ -13,9 +13,8 @@ import {
 import AbstractBaseStore from "../../framework/core/AbstractBaseStore";
 import {merge} from "../../utils/ObjectUtil";
 import {MovableItemType} from "../../lib/lc-movable/types";
-import eventOperateStore from "../operate-provider/EventOperateStore";
-import {idGenerate} from "../../utils/IdGenerate";
 import AbstractDesignerComponent from "../../framework/core/AbstractDesignerComponent";
+import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryRecordOperateProxy";
 
 /**
  * 设计器核心状态管理类，记录了设计器中的核心数据。包括组件配置，组件布局。 全局设置等。
@@ -253,31 +252,32 @@ class DesignerStore implements AbstractBaseStore {
     };
 
     copyItem = (ids: string[]) => {
-        let newIds: any = [];
-        let {maxLevel, setMaxLevel} = eventOperateStore;
-        for (const id of ids) {
-            //获取被复制元素布局
-            const {[id]: layout} = this.layoutConfigs;
-            if (layout) {
-                //生成新id
-                const newId = idGenerate.generateId();
-                newIds.push(newId);
-                //生成新布局
-                const newLayout = cloneDeep(layout);
-                newLayout.id = newId;
-                const [x = 10, y = 10] = (newLayout.position || []).map((p) => p + 10);
-                newLayout.position = [x, y];
-                newLayout.order = ++maxLevel;
-                this.layoutConfigs[newId] = newLayout;
-                //生成新数据
-                const copiedInstance = this.compInstances[id];
-                let newConfig = cloneDeep(copiedInstance.getConfig());
-                newConfig.info.id = newId;
-                this.elemConfigs![newId] = newConfig;
-            }
-        }
-        setMaxLevel(maxLevel);
-        return newIds;
+        return historyRecordOperateProxy.doCopy(ids);
+        // let newIds: any = [];
+        // let {maxLevel, setMaxLevel} = eventOperateStore;
+        // for (const id of ids) {
+        //     //获取被复制元素布局
+        //     const {[id]: layout} = this.layoutConfigs;
+        //     if (layout) {
+        //         //生成新id
+        //         const newId = idGenerate.generateId();
+        //         newIds.push(newId);
+        //         //生成新布局
+        //         const newLayout = cloneDeep(layout);
+        //         newLayout.id = newId;
+        //         const [x = 10, y = 10] = (newLayout.position || []).map((p) => p + 10);
+        //         newLayout.position = [x, y];
+        //         newLayout.order = ++maxLevel;
+        //         this.layoutConfigs[newId] = newLayout;
+        //         //生成新数据
+        //         const copiedInstance = this.compInstances[id];
+        //         let newConfig = cloneDeep(copiedInstance.getConfig());
+        //         newConfig.info.id = newId;
+        //         this.elemConfigs![newId] = newConfig;
+        //     }
+        // }
+        // setMaxLevel(maxLevel);
+        // return newIds;
     };
 }
 

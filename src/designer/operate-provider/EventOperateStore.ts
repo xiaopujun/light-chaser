@@ -108,6 +108,13 @@ class EventOperateStore {
      */
     backoff: boolean = false;
 
+    /**
+     * 用于记录当前添加的组件id,实际渲染时根据该id读取组件数据并记录操作日志
+     */
+    addRecordCompId: string | null = null;
+
+    setAddRecordCompId = (id: string | null) => this.addRecordCompId = id;
+
     setBackoff = (backoff: boolean) => this.backoff = backoff;
 
     setMaxLevel = (order: number) => this.maxLevel = order;

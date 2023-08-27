@@ -1,14 +1,14 @@
 import eventOperateStore from "../EventOperateStore";
 import designerStore from "../../store/DesignerStore";
 import {MovableItemType} from "../../../lib/lc-movable/types";
-import rightStore from "../../right/RightStore";
 import RenderUtil from "../../../utils/RenderUtil";
 import {SaveType} from "../../DesignerType";
 import {cloneDeep} from "lodash";
 import {message} from "antd";
 import EditorDesignerLoader from "../../loader/EditorDesignerLoader";
 import {historyOperator} from "../undo-redo/HistoryOperator";
-import {DragDataType, HistoryType, ResizeDataType} from "../undo-redo/HistoryType";
+import {AddDataType, DelDataType, DragDataType, HistoryType, ResizeDataType} from "../undo-redo/HistoryType";
+import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 
 export const selectAll = () => {
     let comps = document.getElementsByClassName('lc-comp-item');
@@ -89,14 +89,7 @@ export const toBottom = () => {
 }
 
 export const doDelete = () => {
-    const {targetIds, setTargetIds, setTargets} = eventOperateStore;
-    if (!targetIds || targetIds.length === 0) return;
-    const {setContentVisible, activeConfig} = rightStore;
-    setContentVisible(false);
-    activeConfig("80cc666f", "LcBg");
-    targetIds.length > 0 && designerStore.delItem(targetIds);
-    setTargetIds([]);
-    setTargets([])
+    historyRecordOperateProxy.doDelete();
 }
 
 export const doSave = () => {
@@ -338,7 +331,7 @@ export const undo = () => {
     let record = historyOperator.backoff();
     if (!record) return;
     const {movableRef, setBackoff, setTargets} = eventOperateStore;
-    const {type, prev} = record!;
+    const {type, prev, next} = record!;
     if (type === HistoryType.DRAG) {
         let prevRecordData = prev! as DragDataType;
         //选中目标元素
@@ -364,41 +357,28 @@ export const undo = () => {
             offsetHeight: prevResizeData!.height,
             direction: prevResizeData!.direction,
         }, true);
+    } else if (type === HistoryType.ADD) {
+        let nextAddData = next! as AddDataType[];
+        //执行反向操作删除元素
+        const {delItem} = designerStore;
+        const delIds: string[] = [];
+        nextAddData.forEach((item) => delIds.push(item.id));
+        delItem(delIds);
+        //清空框选状态,避免空框选
+        setTargets([]);
+    } else if (type === HistoryType.DEL) {
+        let prevDelData = prev! as DelDataType[];
+        //执行反向操作添加元素
+        const {addItem, elemConfigs} = designerStore;
+        const targets: HTMLElement[] = [];
+        prevDelData.forEach((item) => {
+            addItem(item.data.layoutConfig)
+            elemConfigs![item.id] = item.data.elemConfig;
+            targets.push(document.getElementById(item.id)!);
+        });
+        //选中目标元素
+        setTargets(targets);
     }
-
-
-    // if (type === HistoryType.DRAG || type === HistoryType.RESIZE || type === HistoryType.STYLE) {
-    //     //直接使用上一步的记录进行回滚
-    //     let prevRecord = record?.prev;
-    //     let prevRecordData = prevRecord?.data;
-    //     if (type === HistoryType.DRAG) {
-    //         prevRecordData = prevRecordData! as DragDataType;
-    //         //选中目标元素
-    //         const targets: HTMLElement[] = [];
-    //         prevRecordData.ids.forEach((id) => targets.push(document.getElementById(id)!));
-    //         setTargets(targets);
-    //         setBackoff(true);
-    //         movableRef?.current?.request("draggable", {
-    //             x: prevRecordData!.x,
-    //             y: prevRecordData!.y,
-    //         }, true);
-    //     }
-    //     if (type === HistoryType.RESIZE) {
-    //         // prevRecordData = prevRecordData! as ResizeDataType[];
-    //         // //获取当前记录变更的方向
-    //         // let direction = (currRecordData[0] as ResizeDataType)!.direction;
-    //         // prevRecordData.forEach((item) => {
-    //         //     setBackoff(true);
-    //         //     movableRef?.current?.request("resizable", {
-    //         //         offsetWidth: item!.width,
-    //         //         offsetHeight: item!.height,
-    //         //         direction: direction,
-    //         //     }, true);
-    //         // });
-    //     }
-    // } else {
-    //     //使用当前记录进行回滚
-    // }
 
 }
 

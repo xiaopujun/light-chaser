@@ -22,18 +22,19 @@ class CompList extends Component {
 
     addItem = (compKey: string, name: string) => {
         const {addItem} = designerStore;
-        let {maxLevel, setMaxLevel} = eventOperateStore;
+        let {maxLevel, setMaxLevel, setAddRecordCompId} = eventOperateStore;
         let movableItem: MovableItemType = {
             name: name,
             type: compKey,
             width: 320,
             height: 200,
             position: [0, 0],
-            id: idGenerate.generateId() + '',
+            id: idGenerate.generateId(),
             locked: false,
             hide: false,
             order: ++maxLevel,
         }
+        setAddRecordCompId(movableItem.id!)
         setMaxLevel && setMaxLevel(maxLevel);
         addItem && addItem(movableItem);
     }

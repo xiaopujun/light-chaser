@@ -8,7 +8,6 @@ import DragScaleProvider from "../DragScaleProvider";
 export const doScale = (e: any) => {
     //如果仍处于拖拽过程中，则不进行缩放
     if (KMMap.rightClick) return;
-    console.log('suo fang')
     //计算缩放比例
     scaleCore.compute(e.deltaY > 0 ? 0 : 1);
     //缩放画布

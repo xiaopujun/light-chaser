@@ -5,7 +5,7 @@ import eventOperateStore from "../../designer/operate-provider/EventOperateStore
 import designerStore from "../../designer/store/DesignerStore";
 import {MovableItemType} from "./types";
 import footerStore from "../../designer/footer/FooterStore";
-import designerStoreProxy from "../../designer/operate-provider/undo-redo/DesignerStoreProxy";
+import historyRecordOperateProxy from "../../designer/operate-provider/undo-redo/HistoryRecordOperateProxy";
 
 interface GroupMovableProps {
     readonly?: boolean;
@@ -47,7 +47,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                 updateLayout(data, false);
                 setBackoff(false);
             } else
-                designerStoreProxy.doDrag(data)
+                historyRecordOperateProxy.doDrag(data)
             //更新footer组件中的坐标信息
             setCoordinate([beforeTranslate[0], beforeTranslate[1]])
         }
@@ -81,7 +81,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                 updateLayout(data, false);
                 setBackoff(false);
             } else
-                designerStoreProxy.doDrag(data)
+                historyRecordOperateProxy.doDrag(data)
         }
         //更新footer组件中的最表信息
         const {setCoordinate} = footerStore;
@@ -109,7 +109,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                 updateLayout(data, false);
                 setBackoff(false);
             } else
-                designerStoreProxy.doResize(data, direction)
+                historyRecordOperateProxy.doResize(data, direction)
             //更新footer组件中的尺寸和坐标信息
             const {setCoordinate, setSize} = footerStore;
             setCoordinate([translate[0], translate[1]])
@@ -142,7 +142,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                 updateLayout(data, false);
                 setBackoff(false);
             } else
-                designerStoreProxy.doResize(data, direction)
+                historyRecordOperateProxy.doResize(data, direction)
 
             //组件多选情况下，重新计算多选组件的尺寸和坐标信息
             const {setGroupCoordinate, groupCoordinate} = eventOperateStore;
