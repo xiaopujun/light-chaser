@@ -7,8 +7,8 @@ import {cloneDeep} from "lodash";
 import {message} from "antd";
 import EditorDesignerLoader from "../../loader/EditorDesignerLoader";
 import {historyOperator} from "../undo-redo/HistoryOperator";
-import {AddDataType, DelDataType, DragDataType, HistoryType, ResizeDataType} from "../undo-redo/HistoryType";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
+import undoRedoMap from "../undo-redo/core";
 
 export const selectAll = () => {
     let comps = document.getElementsByClassName('lc-comp-item');
@@ -330,56 +330,8 @@ export const doBaseLeftDecreaseRight = () => {
 export const undo = () => {
     let record = historyOperator.backoff();
     if (!record) return;
-    const {movableRef, setBackoff, setTargets} = eventOperateStore;
-    const {type, prev, next} = record!;
-    if (type === HistoryType.DRAG) {
-        let prevRecordData = prev! as DragDataType;
-        //选中目标元素
-        const targets: HTMLElement[] = [];
-        prevRecordData.ids.forEach((id) => targets.push(document.getElementById(id)!));
-        setTargets(targets);
-        setBackoff(true);
-        //执行反向操作
-        movableRef?.current?.request("draggable", {
-            x: prevRecordData!.x,
-            y: prevRecordData!.y,
-        }, true);
-    } else if (type === HistoryType.RESIZE) {
-        let prevResizeData = prev! as ResizeDataType;
-        //选中目标元素
-        const targets: HTMLElement[] = [];
-        prevResizeData.ids.forEach((id) => targets.push(document.getElementById(id)!));
-        setTargets(targets);
-        setBackoff(true);
-        //执行反向操作
-        movableRef?.current?.request("resizable", {
-            offsetWidth: prevResizeData!.width,
-            offsetHeight: prevResizeData!.height,
-            direction: prevResizeData!.direction,
-        }, true);
-    } else if (type === HistoryType.ADD) {
-        let nextAddData = next! as AddDataType[];
-        //执行反向操作删除元素
-        const {delItem} = designerStore;
-        const delIds: string[] = [];
-        nextAddData.forEach((item) => delIds.push(item.id));
-        delItem(delIds);
-        //清空框选状态,避免空框选
-        setTargets([]);
-    } else if (type === HistoryType.DEL) {
-        let prevDelData = prev! as DelDataType[];
-        //执行反向操作添加元素
-        const {addItem, elemConfigs} = designerStore;
-        const targets: HTMLElement[] = [];
-        prevDelData.forEach((item) => {
-            addItem(item.data.layoutConfig)
-            elemConfigs![item.id] = item.data.elemConfig;
-            targets.push(document.getElementById(item.id)!);
-        });
-        //选中目标元素
-        setTargets(targets);
-    }
-
+    const {type} = record!;
+    undoRedoMap.get(type)?.undo(record!);
 }
 
 /**
