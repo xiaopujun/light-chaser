@@ -33,8 +33,8 @@ export default class HistoryQueue<T> {
      * @param item
      */
     enqueue(item: T): void {
-        // 队列已满，移动 front 指针来丢弃最早的元素
-        if (this.size === this.capacity) {
+        // 队列已满，移动 front 指针来丢弃最早的元素, 如果插入前backAll为true，说明已经回退过所有元素，此时不需要移动front指针
+        if (this.size === this.capacity && !this.backAll) {
             this.circulate = true;
             this.front = (this.front + 1) % this.capacity;
         }
@@ -84,17 +84,14 @@ export default class HistoryQueue<T> {
         if (this.backAll) {
             console.log('回退到底了', this.elements, 'front', this.front, 'rear', this.rear, 'back', this.back, 'backAll', this.backAll)
             return null;
-            // const res = this.elements[this.front];
-            // return res;
         }
         if (this.back === this.front)
             this.backAll = true;
         //先取出当前退回指针所指向的元素，然后将退回指针前移一位
         const elem = this.elements[this.back];
-        if (!this.backAll)
-            this.back = (this.back - 1 + this.capacity) % this.capacity;
+        this.back = (this.back - 1 + this.capacity) % this.capacity;
         this.backCount++;
-        console.log('回退', elem, 'front', this.front, 'rear', this.rear, 'back', this.back, 'size', this.size)
+        console.log('回退', elem, 'front', this.front, 'rear', this.rear, 'back', this.back, 'size', this.size, 'backAll', this.backAll)
         return elem;
     }
 

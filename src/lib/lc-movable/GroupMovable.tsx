@@ -27,7 +27,6 @@ class GroupMovable extends React.Component<GroupMovableProps> {
     }
 
     onDragEnd = (e: any) => {
-        console.log('onDragEnd')
         const {updateLayout} = designerStore;
         const {setCoordinate} = footerStore;
         let {backoff, setBackoff} = eventOperateStore;
@@ -90,7 +89,6 @@ class GroupMovable extends React.Component<GroupMovableProps> {
     }
 
     onResizeEnd = (e: any) => {
-        console.log('onResizeEnd')
         const {updateLayout} = designerStore;
         let {backoff, setBackoff} = eventOperateStore;
         const {target, lastEvent} = e;
@@ -136,35 +134,36 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                 })
             }
         })
+        if (!e.lastEvent) return;
+        const {dist, direction} = e.lastEvent;
         //更新组件尺寸和坐标信息
         if (data.length > 0) {
             if (backoff) {
                 updateLayout(data, false);
                 setBackoff(false);
             } else
-                designerStoreProxy.doDrag(data)
+                designerStoreProxy.doResize(data, direction)
+
+            //组件多选情况下，重新计算多选组件的尺寸和坐标信息
+            const {setGroupCoordinate, groupCoordinate} = eventOperateStore;
+            const {setCoordinate, setSize} = footerStore;
+            if (direction[0] === -1 || direction[1] === -1) {
+                //缩放元素左侧或上侧，此时需要同时改变坐标
+                setGroupCoordinate({
+                    minX: groupCoordinate.minX! - dist[0],
+                    minY: groupCoordinate.minY! - dist[1],
+                    groupWidth: groupCoordinate.groupWidth + dist[0],
+                    groupHeight: groupCoordinate.groupHeight + dist[1],
+                })
+                setCoordinate([groupCoordinate.minX!, groupCoordinate.minY!])
+            } else {
+                setGroupCoordinate({
+                    groupWidth: groupCoordinate.groupWidth + dist[0],
+                    groupHeight: groupCoordinate.groupHeight + dist[1],
+                })
+            }
+            setSize([groupCoordinate.groupWidth!, groupCoordinate.groupHeight!])
         }
-        //组件多选情况下，重新计算多选组件的尺寸和坐标信息
-        if (!e.lastEvent) return;
-        const {dist, direction} = e.lastEvent;
-        const {setGroupCoordinate, groupCoordinate} = eventOperateStore;
-        const {setCoordinate, setSize} = footerStore;
-        if (direction[0] === -1 || direction[1] === -1) {
-            //缩放元素左侧或上侧，此时需要同时改变坐标
-            setGroupCoordinate({
-                minX: groupCoordinate.minX! - dist[0],
-                minY: groupCoordinate.minY! - dist[1],
-                groupWidth: groupCoordinate.groupWidth + dist[0],
-                groupHeight: groupCoordinate.groupHeight + dist[1],
-            })
-            setCoordinate([groupCoordinate.minX!, groupCoordinate.minY!])
-        } else {
-            setGroupCoordinate({
-                groupWidth: groupCoordinate.groupWidth + dist[0],
-                groupHeight: groupCoordinate.groupHeight + dist[1],
-            })
-        }
-        setSize([groupCoordinate.groupWidth!, groupCoordinate.groupHeight!])
     }
 
     onResizeGroup = (e: OnResizeGroup) => {

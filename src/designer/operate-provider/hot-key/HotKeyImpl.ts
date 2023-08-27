@@ -335,42 +335,70 @@ export const doBaseLeftDecreaseRight = () => {
  * 撤销
  */
 export const undo = () => {
-    let historyRecords = historyOperator.backoff();
+    let record = historyOperator.backoff();
+    if (!record) return;
     const {movableRef, setBackoff, setTargets} = eventOperateStore;
-    let currRecord = historyRecords?.curr;
-    const {type, data: currRecordData} = currRecord!;
-    if (type === HistoryType.DRAG || type === HistoryType.RESIZE || type === HistoryType.STYLE) {
-        //直接使用上一步的记录进行回滚
-        let prevRecord = historyRecords?.prev;
-        let prevRecordData = prevRecord?.data;
-        if (type === HistoryType.DRAG) {
-            prevRecordData = prevRecordData! as DragDataType;
-            //选中目标元素
-            const targets: HTMLElement[] = [];
-            prevRecordData.ids.forEach((id) => targets.push(document.getElementById(id)!));
-            setTargets(targets);
-            setBackoff(true);
-            movableRef?.current?.request("draggable", {
-                x: prevRecordData!.x,
-                y: prevRecordData!.y,
-            }, true);
-        }
-        if (type === HistoryType.RESIZE) {
-            // prevRecordData = prevRecordData! as ResizeDataType[];
-            // //获取当前记录变更的方向
-            // let direction = (currRecordData[0] as ResizeDataType)!.direction;
-            // prevRecordData.forEach((item) => {
-            //     setBackoff(true);
-            //     movableRef?.current?.request("resizable", {
-            //         offsetWidth: item!.width,
-            //         offsetHeight: item!.height,
-            //         direction: direction,
-            //     }, true);
-            // });
-        }
-    } else {
-        //使用当前记录进行回滚
+    const {type, prev} = record!;
+    if (type === HistoryType.DRAG) {
+        let prevRecordData = prev! as DragDataType;
+        //选中目标元素
+        const targets: HTMLElement[] = [];
+        prevRecordData.ids.forEach((id) => targets.push(document.getElementById(id)!));
+        setTargets(targets);
+        setBackoff(true);
+        //执行反向操作
+        movableRef?.current?.request("draggable", {
+            x: prevRecordData!.x,
+            y: prevRecordData!.y,
+        }, true);
+    } else if (type === HistoryType.RESIZE) {
+        let prevResizeData = prev! as ResizeDataType;
+        //选中目标元素
+        const targets: HTMLElement[] = [];
+        prevResizeData.ids.forEach((id) => targets.push(document.getElementById(id)!));
+        setTargets(targets);
+        setBackoff(true);
+        //执行反向操作
+        movableRef?.current?.request("resizable", {
+            offsetWidth: prevResizeData!.width,
+            offsetHeight: prevResizeData!.height,
+            direction: prevResizeData!.direction,
+        }, true);
     }
+
+
+    // if (type === HistoryType.DRAG || type === HistoryType.RESIZE || type === HistoryType.STYLE) {
+    //     //直接使用上一步的记录进行回滚
+    //     let prevRecord = record?.prev;
+    //     let prevRecordData = prevRecord?.data;
+    //     if (type === HistoryType.DRAG) {
+    //         prevRecordData = prevRecordData! as DragDataType;
+    //         //选中目标元素
+    //         const targets: HTMLElement[] = [];
+    //         prevRecordData.ids.forEach((id) => targets.push(document.getElementById(id)!));
+    //         setTargets(targets);
+    //         setBackoff(true);
+    //         movableRef?.current?.request("draggable", {
+    //             x: prevRecordData!.x,
+    //             y: prevRecordData!.y,
+    //         }, true);
+    //     }
+    //     if (type === HistoryType.RESIZE) {
+    //         // prevRecordData = prevRecordData! as ResizeDataType[];
+    //         // //获取当前记录变更的方向
+    //         // let direction = (currRecordData[0] as ResizeDataType)!.direction;
+    //         // prevRecordData.forEach((item) => {
+    //         //     setBackoff(true);
+    //         //     movableRef?.current?.request("resizable", {
+    //         //         offsetWidth: item!.width,
+    //         //         offsetHeight: item!.height,
+    //         //         direction: direction,
+    //         //     }, true);
+    //         // });
+    //     }
+    // } else {
+    //     //使用当前记录进行回滚
+    // }
 
 }
 

@@ -6,7 +6,7 @@ class MyComponent extends React.Component {
     count: number = 0;
 
     render() {
-        let historyQueue = new HistoryQueue<number>(5);
+        let historyQueue = new HistoryQueue<number>(3);
         return (
             <div>
                 <button onClick={() => historyQueue.enqueue(++this.count)}>添加元素</button>
