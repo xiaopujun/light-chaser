@@ -109,7 +109,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                 updateLayout(data, false);
                 setBackoff(false);
             } else
-                historyRecordOperateProxy.   doResize(data, direction)
+                historyRecordOperateProxy.doResize(data, direction)
             //更新footer组件中的尺寸和坐标信息
             const {setCoordinate, setSize} = footerStore;
             setCoordinate([translate[0], translate[1]])

@@ -49,7 +49,7 @@ export const doCopy = () => {
 export const doLock = () => {
     const {targetIds, setTargets} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
-    const {updateLayout, layoutConfigs} = designerStore;
+    const {layoutConfigs} = designerStore;
     let toBeUpdate = [];
     for (const targetId of targetIds) {
         let item = layoutConfigs[targetId];
@@ -72,7 +72,7 @@ export const doUnLock = () => {
 export const toTop = () => {
     let {maxLevel, setMaxLevel, targetIds, setTargetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
-    const {updateLayout, layoutConfigs} = designerStore;
+    const {layoutConfigs} = designerStore;
     let toBeUpdate: MovableItemType[] = [];
     targetIds.forEach((id: string) => {
         let item = layoutConfigs[id];
@@ -86,7 +86,7 @@ export const toTop = () => {
 export const toBottom = () => {
     let {minLevel, setMinLevel, targetIds, setTargetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
-    const {updateLayout, layoutConfigs} = designerStore;
+    const {layoutConfigs} = designerStore;
     let toBeUpdate: MovableItemType[] = [];
     targetIds.forEach((id: string) => {
         let item = layoutConfigs[id];

@@ -8,8 +8,26 @@ import designerStore from "../store/DesignerStore";
 import {AbstractCustomComponentDefinition} from "../../framework/core/AbstractCustomComponentDefinition";
 import {ConfigType} from "./ConfigType";
 import EditorDesignerLoader from "../loader/EditorDesignerLoader";
+import AbstractDesignerComponent from "../../framework/core/AbstractDesignerComponent";
 
 class ConfigContent extends Component {
+
+    createProxy = (instance: AbstractDesignerComponent) => {
+        return new Proxy(instance, {
+            get(target, prop, receiver) {
+                const originalMethod = target[prop as keyof AbstractDesignerComponent];
+                if (typeof originalMethod === 'function' && originalMethod.name === "update") {
+                    return new Proxy(originalMethod, {
+                        apply(target, thisArg, argumentsList) {
+                            console.log("更新前记录操作日志", target.name, thisArg, argumentsList);
+                            return target.apply(thisArg, argumentsList);
+                        }
+                    });
+                }
+                return originalMethod;
+            }
+        });
+    }
 
     buildConfigContent = () => {
         const {compInstances} = designerStore;
@@ -17,7 +35,8 @@ class ConfigContent extends Component {
         let abstractConfigObj: AbstractCustomComponentDefinition = EditorDesignerLoader.getInstance().customComponentInfoMap[activeElem.type + '']
         let configMapping = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp: React.ComponentType<ConfigType> = configMapping![activeMenu];
-        const instance = compInstances[activeElem.id + ''];
+        //使用动态代理对象，监听属性变化
+        const instance = this.createProxy(compInstances[activeElem.id + '']);
         return (
             <Suspense fallback={<Loading/>}>
                 <ConfigComp instance={instance}/>
