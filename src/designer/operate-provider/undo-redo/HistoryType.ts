@@ -9,12 +9,16 @@ export enum HistoryType {
     ADD,
     DEL,
     STYLE,
+    HIDE,
+    ORDER,
+    LOCK
 }
 
 /**
  * 记录操作对应的数据类型
  */
-type RecordDataType = DragDataType | ResizeDataType | AddDataType[] | DelDataType[] | StyleDataType[];
+type RecordDataType = DragDataType | ResizeDataType | AddDataType[] |
+    DelDataType[] | StyleDataType[] | HideDataType[] | OrderDataType[] | LockDataType[];
 
 /**
  * 历史记录类型
@@ -23,9 +27,6 @@ export interface HistoryRecordType {
     type: HistoryType;
     prev: RecordDataType | null;
     next: RecordDataType | null;
-
-    //废弃
-    data?: RecordDataType;
 }
 
 /**
@@ -36,6 +37,22 @@ export interface DragDataType {
     x: number;
     y: number;
 }
+
+export interface HideDataType {
+    id: string;
+    hide: boolean;
+}
+
+export interface LockDataType {
+    id: string;
+    lock: boolean;
+}
+
+export interface OrderDataType {
+    id: string;
+    order: number;
+}
+
 
 /**
  * 缩放数据类型

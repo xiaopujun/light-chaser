@@ -55,9 +55,18 @@ export const doLock = () => {
         let item = layoutConfigs[targetId];
         toBeUpdate.push({...item, locked: true})
     }
-    updateLayout(toBeUpdate);
+    historyRecordOperateProxy.doLockUpd(toBeUpdate);
     //操作完毕之后，清空已被选择的元素。
     setTargets([]);
+}
+
+export const doUnLock = () => {
+    const {unLockedId} = eventOperateStore;
+    if (!unLockedId || unLockedId === '') return;
+    const {updateLayout, layoutConfigs} = designerStore;
+    let item = layoutConfigs[unLockedId];
+    updateLayout([{...item, locked: false}])
+    historyRecordOperateProxy.doLockUpd([{...item, locked: false}]);
 }
 
 export const toTop = () => {
@@ -71,7 +80,7 @@ export const toTop = () => {
     });
     setMaxLevel(maxLevel)
     setTargetIds([]);
-    updateLayout(toBeUpdate);
+    historyRecordOperateProxy.doOrderUpd(toBeUpdate);
 }
 
 export const toBottom = () => {
@@ -85,7 +94,7 @@ export const toBottom = () => {
     });
     setMinLevel(minLevel)
     setTargetIds([]);
-    updateLayout(toBeUpdate);
+    historyRecordOperateProxy.doOrderUpd(toBeUpdate);
 }
 
 export const doDelete = () => {
@@ -107,24 +116,16 @@ export const doSave = () => {
 
 }
 
-export const doUnLock = () => {
-    const {unLockedId} = eventOperateStore;
-    if (!unLockedId || unLockedId === '') return;
-    const {updateLayout, layoutConfigs} = designerStore;
-    let item = layoutConfigs[unLockedId];
-    updateLayout([{...item, locked: false}])
-}
-
 export const doHide = () => {
     const {targetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
-    const {updateLayout, layoutConfigs} = designerStore;
+    const {layoutConfigs} = designerStore;
     let toBeUpdate: MovableItemType[] = [];
     targetIds.forEach((id: string) => {
         let item = layoutConfigs[id];
         toBeUpdate.push({...item, hide: true});
     });
-    updateLayout(toBeUpdate)
+    historyRecordOperateProxy.doHideUpd(toBeUpdate);
 }
 
 /*************************快捷键控制移动组件的位置*************************/

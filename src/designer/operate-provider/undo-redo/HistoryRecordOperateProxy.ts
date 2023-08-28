@@ -1,6 +1,13 @@
 import designerStore from "../../store/DesignerStore";
 import {MovableItemType} from "../../../lib/lc-movable/types";
-import {AddDataType, DelDataType, DragDataType, HistoryRecordType, HistoryType, ResizeDataType} from "./HistoryType";
+import {
+    AddDataType,
+    DelDataType,
+    DragDataType, HideDataType,
+    HistoryRecordType,
+    HistoryType, LockDataType, OrderDataType,
+    ResizeDataType
+} from "./HistoryType";
 import {historyOperator} from "./HistoryOperator";
 import eventOperateStore from "../EventOperateStore";
 import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
@@ -9,6 +16,7 @@ import {toJS} from "mobx";
 import rightStore from "../../right/RightStore";
 import {idGenerate} from "../../../utils/IdGenerate";
 import {cloneDeep} from "lodash";
+import layerListStore from "../../float-configs/layer-list/LayerListStore";
 
 class HistoryRecordOperateProxy {
 
@@ -96,9 +104,6 @@ class HistoryRecordOperateProxy {
         historyOperator.put(data);
     }
 
-    /**
-     * 添加组件代理
-     */
     public doAdd(container: HTMLDivElement | null, layout: MovableItemType): void {
         const {elemConfigs} = designerStore;
         let componentDefine: AbstractCustomComponentDefinition = EditorDesignerLoader.getInstance().customComponentInfoMap[layout!.type + ''];
@@ -133,9 +138,6 @@ class HistoryRecordOperateProxy {
         }
     }
 
-    /**
-     * 删除组件代理方法
-     */
     public doDelete(): void {
         const {targetIds, setTargetIds, setTargets} = eventOperateStore;
         const {delItem, layoutConfigs, compInstances} = designerStore;
@@ -158,10 +160,6 @@ class HistoryRecordOperateProxy {
         setTargets([])
     }
 
-    /**
-     * 复制组件代理方法
-     * @param ids
-     */
     public doCopy(ids: string[]): string[] {
         let newIds: string[] = [];
         const {layoutConfigs, elemConfigs, compInstances} = designerStore;
@@ -203,6 +201,67 @@ class HistoryRecordOperateProxy {
         setMaxLevel(maxLevel);
         return newIds;
     };
+
+    public doHideUpd(items: MovableItemType[]): void {
+        let prev: HideDataType[] = [];
+        let next: HideDataType[] = [];
+        const {layoutConfigs, updateLayout} = designerStore;
+        items.forEach((item) => {
+            const {id, hide} = item;
+            next.push({id: id!, hide: hide!});
+            const oldHideData = layoutConfigs[id!];
+            prev.push({id: id!, hide: oldHideData.hide!});
+        })
+        const data: HistoryRecordType = {type: HistoryType.HIDE, prev, next}
+        historyOperator.put(data);
+        //更新隐藏状态
+        updateLayout(items);
+        const {layerInstanceMap, visible} = layerListStore;
+        if (visible) {
+            //更新图层列表
+            items.forEach((item) => {
+                layerInstanceMap[item.id!].update({hide: item.hide})
+            })
+        }
+    }
+
+    public doLockUpd(items: MovableItemType[]): void {
+        let prev: LockDataType[] = [];
+        let next: LockDataType[] = [];
+        const {layoutConfigs, updateLayout} = designerStore;
+        items.forEach((item) => {
+            const {id, locked} = item;
+            next.push({id: id!, lock: locked!});
+            const oldLockData = layoutConfigs[id!];
+            prev.push({id: id!, lock: oldLockData.locked!});
+        })
+        const data: HistoryRecordType = {type: HistoryType.LOCK, prev, next}
+        historyOperator.put(data);
+        updateLayout(items);
+        const {layerInstanceMap, visible} = layerListStore;
+        if (visible) {
+            //更新图层列表
+            items.forEach((item) => {
+                layerInstanceMap[item.id!].update({lock: item.locked})
+            })
+        }
+    }
+
+    public doOrderUpd(items: MovableItemType[]): void {
+        let prev: OrderDataType[] = [];
+        let next: OrderDataType[] = [];
+        const {layoutConfigs, updateLayout} = designerStore;
+        items.forEach((item) => {
+            const {id, order} = item;
+            next.push({id: id!, order: order!});
+            const oldOrderData = layoutConfigs[id!];
+            prev.push({id: id!, order: oldOrderData.order!});
+        })
+        const data: HistoryRecordType = {type: HistoryType.ORDER, prev, next}
+        historyOperator.put(data);
+        updateLayout(items);
+    }
+
 }
 
 const historyRecordOperateProxy = new HistoryRecordOperateProxy();
