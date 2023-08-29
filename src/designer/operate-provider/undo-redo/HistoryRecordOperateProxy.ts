@@ -64,6 +64,7 @@ class HistoryRecordOperateProxy {
     };
 
     public doResize(items: MovableItemType[], direction: [number, number]): void {
+        console.log("doResize", items)
         //构建历史记录数据
         const {layoutConfigs, updateLayout} = designerStore;
         const ids: string[] = [];
@@ -75,7 +76,7 @@ class HistoryRecordOperateProxy {
             prev = {ids: [items[0].id!], width, height, direction}
             //构建next数据
             const {id} = items[0];
-            next = {ids: [id!], width, height, direction}
+            next = {ids: [id!], width: items[0].width!, height: items[0].height!, direction}
         } else { //多个组件缩放
             //构建prev数据
             const oldItems: MovableItemType[] = [];

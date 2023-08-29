@@ -12,5 +12,5 @@ export default abstract class AbstractRollback {
     /**
      * 重做
      */
-    public abstract redo(): void;
+    public abstract redo(record: HistoryRecordType): void;
 }

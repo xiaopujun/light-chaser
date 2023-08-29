@@ -339,5 +339,8 @@ export const undo = () => {
  * 重做
  */
 export const redo = () => {
-
+    let record = historyOperator.forward();
+    if (!record) return;
+    const {type} = record!;
+    undoRedoMap.get(type)?.redo(record!);
 }

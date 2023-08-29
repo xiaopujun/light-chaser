@@ -4,8 +4,17 @@ import {DelDataType, HistoryRecordType} from "../HistoryType";
 import designerStore from "../../../store/DesignerStore";
 
 export class DelRollbackImpl extends AbstractRollback {
-    redo(): void {
-
+    redo(record: HistoryRecordType): void {
+        if (!record) return;
+        const {prev} = record!;
+        //执行正向操作删除元素
+        const {delItem} = designerStore;
+        const delIds: string[] = [];
+        (prev as DelDataType[]).forEach((item) => delIds.push(item.id));
+        delItem(delIds);
+        const {setTargets} = eventOperateStore;
+        //清空框选状态,避免空框选
+        setTargets([]);
     }
 
     undo(record: HistoryRecordType): void {

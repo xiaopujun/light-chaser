@@ -4,8 +4,12 @@ import {AddDataType, HistoryRecordType} from "../HistoryType";
 import designerStore from "../../../store/DesignerStore";
 
 export class AddRollbackImpl extends AbstractRollback {
-    redo(): void {
-
+    redo(record: HistoryRecordType): void {
+        if (!record) return;
+        const {next} = record!;
+        //执行正向操作添加元素
+        const {addItem} = designerStore;
+        (next as AddDataType[]).forEach((item) => addItem(item.data.layoutConfig));
     }
 
     undo(record: HistoryRecordType): void {

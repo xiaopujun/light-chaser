@@ -4,7 +4,23 @@ import designerStore from "../../../store/DesignerStore";
 import rightStore from "../../../right/RightStore";
 
 export class StyleRollbackImpl extends AbstractRollback {
-    redo(): void {
+    redo(record: HistoryRecordType): void {
+        const {next} = record;
+        if (next) {
+            const {id, data} = next as StyleDataType;
+            const {compInstances} = designerStore;
+            const instance = compInstances[id];
+            if (instance)
+                instance.update(data)
+            const {visible, setContentVisible} = rightStore;
+            //回滚时，若配置项开启，则关闭
+            if (visible) {
+                setContentVisible(false)
+                setTimeout(() => {
+                    setContentVisible(true)
+                }, 1)
+            }
+        }
     }
 
     undo(record: HistoryRecordType): void {

@@ -92,7 +92,6 @@ class GroupMovable extends React.Component<GroupMovableProps> {
         const {updateLayout} = designerStore;
         let {backoff, setBackoff} = eventOperateStore;
         const {target, lastEvent} = e;
-        console.log('lastEvent', lastEvent)
         if (lastEvent) {
             const {width, height, drag: {translate}, direction} = lastEvent;
             const data: MovableItemType[] = [

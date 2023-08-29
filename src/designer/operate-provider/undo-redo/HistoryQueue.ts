@@ -107,6 +107,8 @@ export default class HistoryQueue<T> {
         }
         this.back = (this.back + 1) % this.capacity;
         console.log('前进', this.elements[this.back], 'front', this.front, 'rear', this.rear, 'back', this.back, 'size', this.size)
+        if (this.backAll)
+            this.backAll = false;
         return this.elements[this.back];
     }
 

@@ -6,7 +6,10 @@ import designerStore from "../../../store/DesignerStore";
  * hide, lock, order的撤销与回滚操作实现
  */
 export class OrderRollBackImpl extends AbstractRollback {
-    redo(): void {
+    redo(record: HistoryRecordType): void {
+        const {next} = record;
+        const {updateLayout} = designerStore;
+        if (next) updateLayout(next as OrderDataType[]);
     }
 
     undo(record: HistoryRecordType): void {
