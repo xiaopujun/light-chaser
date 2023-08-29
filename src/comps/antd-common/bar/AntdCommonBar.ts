@@ -38,7 +38,7 @@ export default class AntdCommonBar extends AntdBaseDesignerComponent<Bar, AntdBa
         const {colors: {main, text, supplementary, emphasize, /*background,*/ auxiliary}} = newTheme;
         //图形
         if (styleConfig?.color)
-            styleConfig.color = main;
+            styleConfig.color = [main!];
         //图例
         if ((styleConfig.legend) && (styleConfig.legend.itemName?.style as ShapeAttrs)?.fill)
             (styleConfig!.legend!.itemName!.style as ShapeAttrs).fill = text;
@@ -80,5 +80,6 @@ export default class AntdCommonBar extends AntdBaseDesignerComponent<Bar, AntdBa
             (styleConfig!.yAxis!.subTickLine!.style as ShapeAttrs).stroke = auxiliary;
         //重新渲染
         this.update({style: styleConfig} as any, {reRender: true, operateType: OperateType.OPTIONS});
+        console.log("更新主题", this.config?.style)
     }
 }

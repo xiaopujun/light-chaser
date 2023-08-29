@@ -1,7 +1,7 @@
 import AbstractComponent, {OperateType, UpdateOptions,} from "../../../framework/core/AbstractComponent";
 import ComponentUtil from "../../../utils/ComponentUtil";
 import LayerItem, {LayerItemDataProps} from "./LayerItem";
-import {merge} from "../../../utils/ObjectUtil";
+import ObjectUtil from "../../../utils/ObjectUtil";
 
 export default class LayerComponent extends AbstractComponent<LayerItem, LayerItemDataProps> {
 
@@ -22,7 +22,7 @@ export default class LayerComponent extends AbstractComponent<LayerItem, LayerIt
     }
 
     update(config: LayerItemDataProps, upOp?: UpdateOptions): void {
-        this.config = merge(this.config, config) as LayerItemDataProps;
+        this.config = ObjectUtil.merge(this.config, config) as LayerItemDataProps;
         upOp = upOp || {reRender: true, operateType: OperateType.OPTIONS};
         if (upOp.reRender)
             this.instance?.setState({...this.config})

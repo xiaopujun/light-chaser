@@ -7,7 +7,7 @@ import {Options, Plot} from "@antv/g2plot";
 import ComponentUtil from "../../utils/ComponentUtil";
 import {LoadError} from "../../lib/lc-loaderr/LoadError";
 import ReactDOM from "react-dom";
-import {merge} from "../../utils/ObjectUtil";
+import ObjectUtil from "../../utils/ObjectUtil";
 
 export abstract class AntdBaseDesignerComponent<I extends Plot<any> = Plot<Options>,
     C extends ComponentBaseProps = ComponentBaseProps> extends AbstractDesignerComponent<I, C> {
@@ -78,7 +78,7 @@ export abstract class AntdBaseDesignerComponent<I extends Plot<any> = Plot<Optio
                 this.instance = new Clazz(this.container!, this.config?.style!);
                 this.instance.render();
             } else {
-                this.config = merge(this.config, config);
+                this.config = ObjectUtil.merge(this.config, config);
                 upOp = upOp || {reRender: true, operateType: OperateType.OPTIONS};
                 if (upOp.reRender) {
                     if (upOp.operateType === OperateType.DATA)

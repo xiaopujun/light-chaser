@@ -9,17 +9,21 @@ import {AbstractCustomComponentDefinition} from "../../framework/core/AbstractCu
 import {ConfigType} from "./ConfigType";
 import EditorDesignerLoader from "../loader/EditorDesignerLoader";
 import AbstractDesignerComponent from "../../framework/core/AbstractDesignerComponent";
+import ObjectUtil from "../../utils/ObjectUtil";
+import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryRecordOperateProxy";
 
 class ConfigContent extends Component {
 
     createProxy = (instance: AbstractDesignerComponent) => {
         return new Proxy(instance, {
-            get(target, prop, receiver) {
+            get(target, prop) {
                 const originalMethod = target[prop as keyof AbstractDesignerComponent];
                 if (typeof originalMethod === 'function' && originalMethod.name === "update") {
                     return new Proxy(originalMethod, {
                         apply(target, thisArg, argumentsList) {
-                            console.log("更新前记录操作日志", target.name, thisArg, argumentsList);
+                            const newValue = argumentsList[0];
+                            const oldValue = ObjectUtil.getOriginValue(thisArg.config, argumentsList[0]);
+                            historyRecordOperateProxy.doStyleUpd(newValue, oldValue);
                             return target.apply(thisArg, argumentsList);
                         }
                     });

@@ -11,10 +11,10 @@ import {
     ThemeItemType,
 } from "../DesignerType";
 import AbstractBaseStore from "../../framework/core/AbstractBaseStore";
-import {merge} from "../../utils/ObjectUtil";
 import {MovableItemType} from "../../lib/lc-movable/types";
 import AbstractDesignerComponent from "../../framework/core/AbstractDesignerComponent";
 import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryRecordOperateProxy";
+import ObjectUtil from "../../utils/ObjectUtil";
 
 /**
  * 设计器核心状态管理类，记录了设计器中的核心数据。包括组件配置，组件布局。 全局设置等。
@@ -223,7 +223,7 @@ class DesignerStore implements AbstractBaseStore {
         for (const item of items) {
             let oldItem = this.layoutConfigs[item.id + ""];
             if (!isEqual(oldItem, item))
-                this.layoutConfigs[item.id + ""] = reRender ? {...merge(oldItem, item)} : merge(oldItem, item);
+                this.layoutConfigs[item.id + ""] = reRender ? {...ObjectUtil.merge(oldItem, item)} : ObjectUtil.merge(oldItem, item);
         }
     };
 

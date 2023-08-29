@@ -28,7 +28,7 @@ class GroupColorPicker extends Component<GroupColorPickerProp> {
             this.state = {colors: ['#00e9ff']};
             return;
         }
-        this.state = {colors: value, canAdd};
+        this.state = {colors: [...value], canAdd};
     }
 
 
@@ -37,7 +37,7 @@ class GroupColorPicker extends Component<GroupColorPickerProp> {
         colors[id] = color;
         this.setState({colors})
         const {onChange} = this.props;
-        onChange && onChange(colors);
+        onChange && onChange([...colors]);
     }
 
     addColor = () => {
@@ -48,7 +48,7 @@ class GroupColorPicker extends Component<GroupColorPickerProp> {
         else
             this.setState({colors});
         const {onChange} = this.props;
-        onChange && onChange(colors);
+        onChange && onChange([...colors]);
     }
 
     delColor = (id: number) => {
@@ -59,7 +59,7 @@ class GroupColorPicker extends Component<GroupColorPickerProp> {
         else
             this.setState({colors});
         const {onChange} = this.props;
-        onChange && onChange(colors);
+        onChange && onChange([...colors]);
     }
 
     render() {

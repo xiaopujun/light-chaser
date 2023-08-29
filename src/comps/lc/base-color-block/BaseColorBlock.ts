@@ -3,7 +3,7 @@ import {OperateType, UpdateOptions} from "../../../framework/core/AbstractCompon
 import AbstractDesignerComponent from "../../../framework/core/AbstractDesignerComponent";
 import ComponentUtil from "../../../utils/ComponentUtil";
 import BaseColorBlockComponent, {BaseColorBlockComponentProps} from "./BaseColorBlockComponent";
-import {merge} from "../../../utils/ObjectUtil";
+import ObjectUtil from "../../../utils/ObjectUtil";
 
 export class BaseColorBlock extends AbstractDesignerComponent<BaseColorBlockComponent, BaseColorBlockComponentProps> {
 
@@ -24,7 +24,7 @@ export class BaseColorBlock extends AbstractDesignerComponent<BaseColorBlockComp
     }
 
     update(config: BaseColorBlockComponentProps, upOp: UpdateOptions | undefined): void {
-        this.config = merge(this.config, config);
+        this.config = ObjectUtil.merge(this.config, config);
         upOp = upOp || {reRender: true, operateType: OperateType.OPTIONS};
         if (upOp.reRender)
             this.instance?.setState(this.config);

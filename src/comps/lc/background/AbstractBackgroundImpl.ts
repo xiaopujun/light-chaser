@@ -1,8 +1,8 @@
 import {OperateType, UpdateOptions} from "../../../framework/core/AbstractComponent";
 import {BackgroundColorMode, BackgroundImgRepeat, BackgroundMode, ThemeItemType} from "../../../designer/DesignerType";
 import DesignerBackground from "./DesignerBackground";
-import {merge} from "../../../utils/ObjectUtil";
 import AbstractDesignerComponent from "../../../framework/core/AbstractDesignerComponent";
+import ObjectUtil from "../../../utils/ObjectUtil";
 
 /**
  * 背景设置
@@ -68,7 +68,7 @@ export default class AbstractBackgroundImpl extends AbstractDesignerComponent<De
     }
 
     public update(config: AbstractBackgroundImplProps, upOp?: UpdateOptions): void {
-        this.config = merge(this.config, config);
+        this.config = ObjectUtil.merge(this.config, config);
         upOp = upOp || {reRender: true, operateType: OperateType.OPTIONS};
         if (upOp.reRender) {
             this.instance?.setState({config: this.config?.background});

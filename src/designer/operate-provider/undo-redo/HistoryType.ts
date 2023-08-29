@@ -2,6 +2,7 @@
  * 操作类型枚举
  */
 import {MovableItemType} from "../../../lib/lc-movable/types";
+import {ConfigureObjectFragments} from "../../../utils/ObjectUtil";
 
 export enum HistoryType {
     DRAG,
@@ -17,8 +18,8 @@ export enum HistoryType {
 /**
  * 记录操作对应的数据类型
  */
-type RecordDataType = DragDataType | ResizeDataType | AddDataType[] |
-    DelDataType[] | StyleDataType[] | HideDataType[] | OrderDataType[] | LockDataType[];
+type RecordDataType = DragDataType | ResizeDataType | StyleDataType | AddDataType[] |
+    DelDataType[] | HideDataType[] | OrderDataType[] | LockDataType[];
 
 /**
  * 历史记录类型
@@ -91,5 +92,5 @@ export interface DelDataType {
  */
 export interface StyleDataType {
     id: string;
-    style: any;
+    data: ConfigureObjectFragments;
 }

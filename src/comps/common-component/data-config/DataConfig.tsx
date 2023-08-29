@@ -7,11 +7,11 @@ import './DataConfig.less';
 import {ConfigType} from "../../../designer/right/ConfigType";
 import {DataConfigType} from "../../../designer/DesignerType";
 import {OperateType} from "../../../framework/core/AbstractComponent";
-import {stringToJsObj} from "../../../utils/ObjectUtil";
 import {sendHttpRequest} from "../../../utils/HttpUtil";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import ConfigItemTB from "../../../lib/lc-config-item/ConfigItemTB";
 import {message} from "antd";
+import ObjectUtil from "../../../utils/ObjectUtil";
 
 class DataConfig extends Component<ConfigType> {
 
@@ -78,12 +78,12 @@ export const ApiDataConfig: React.FC<ConfigType> = ({instance}) => {
             message.error('请求方式不能为空');
             return;
         }
-        let header = stringToJsObj(headerRef.current);
+        let header = ObjectUtil.stringToJsObj(headerRef.current);
         if (!header) {
             message.error('请求头不符合json格式');
             return;
         }
-        let params = stringToJsObj(paramsRef.current);
+        let params = ObjectUtil.stringToJsObj(paramsRef.current);
         if (!params) {
             message.error('请求参数不符合json格式');
             return;
@@ -105,9 +105,9 @@ export const ApiDataConfig: React.FC<ConfigType> = ({instance}) => {
             return;
         }
 
-        let header = stringToJsObj(headerRef.current);
+        let header = ObjectUtil.stringToJsObj(headerRef.current);
         if (!header) message.error('请求头不符合json格式');
-        let params = stringToJsObj(paramsRef.current);
+        let params = ObjectUtil.stringToJsObj(paramsRef.current);
         if (!params) message.error('请求参数不符合json格式');
         instance.update({
             data: {

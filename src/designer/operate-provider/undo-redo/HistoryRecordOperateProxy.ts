@@ -6,7 +6,7 @@ import {
     DragDataType, HideDataType,
     HistoryRecordType,
     HistoryType, LockDataType, OrderDataType,
-    ResizeDataType
+    ResizeDataType, StyleDataType
 } from "./HistoryType";
 import {historyOperator} from "./HistoryOperator";
 import eventOperateStore from "../EventOperateStore";
@@ -17,6 +17,7 @@ import rightStore from "../../right/RightStore";
 import {idGenerate} from "../../../utils/IdGenerate";
 import {cloneDeep} from "lodash";
 import layerListStore from "../../float-configs/layer-list/LayerListStore";
+import {ConfigureObjectFragments} from "../../../utils/ObjectUtil";
 
 class HistoryRecordOperateProxy {
 
@@ -262,6 +263,20 @@ class HistoryRecordOperateProxy {
         updateLayout(items);
     }
 
+    /**
+     * 记录组件配置更新
+     * @param newData
+     * @param oldData
+     */
+    public doStyleUpd(newData: ConfigureObjectFragments, oldData: ConfigureObjectFragments): void {
+        const {activeElem: {id}} = rightStore;
+        const record: HistoryRecordType = {
+            type: HistoryType.STYLE,
+            prev: {id, data: oldData} as StyleDataType,
+            next: {id, data: newData} as StyleDataType
+        }
+        historyOperator.put(record);
+    }
 }
 
 const historyRecordOperateProxy = new HistoryRecordOperateProxy();

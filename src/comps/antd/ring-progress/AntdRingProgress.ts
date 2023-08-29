@@ -9,7 +9,7 @@ import {sendHttpRequest} from "../../../utils/HttpUtil";
 import ComponentUtil from "../../../utils/ComponentUtil";
 import {LoadError} from "../../../lib/lc-loaderr/LoadError";
 import ReactDOM from "react-dom";
-import {merge} from "../../../utils/ObjectUtil";
+import ObjectUtil from "../../../utils/ObjectUtil";
 
 export interface AntdRingProgressProps extends ComponentBaseProps {
     style?: WritableRingProgressOptions;
@@ -84,7 +84,7 @@ export default class AntdRingProgress extends AntdBaseDesignerComponent<RingProg
                 this.instance = new RingProgress(this.container!, this.config!.style! as RingProgressOptions);
                 this.instance.render();
             } else {
-                this.config = merge(this.config, config);
+                this.config = ObjectUtil.merge(this.config, config);
                 upOp = upOp || {reRender: true, operateType: OperateType.OPTIONS};
                 if (upOp.reRender) {
                     if (upOp.operateType === OperateType.DATA)

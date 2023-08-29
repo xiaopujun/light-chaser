@@ -3,7 +3,7 @@ import {OperateType, UpdateOptions} from "../../../framework/core/AbstractCompon
 import AbstractDesignerComponent from "../../../framework/core/AbstractDesignerComponent";
 import ComponentUtil from "../../../utils/ComponentUtil";
 import BaseTextComponent, {BaseTextComponentProps} from "./BaseTextComponent";
-import {merge} from "../../../utils/ObjectUtil";
+import ObjectUtil from "../../../utils/ObjectUtil";
 
 export class BaseText extends AbstractDesignerComponent<BaseTextComponent, BaseTextComponentProps> {
 
@@ -24,7 +24,7 @@ export class BaseText extends AbstractDesignerComponent<BaseTextComponent, BaseT
     }
 
     update(config: BaseTextComponentProps, upOp: UpdateOptions | undefined): void {
-        this.config = merge(this.config, config);
+        this.config = ObjectUtil.merge(this.config, config);
         upOp = upOp || {reRender: true, operateType: OperateType.OPTIONS};
         if (upOp.reRender)
             this.instance?.setState(this.config);

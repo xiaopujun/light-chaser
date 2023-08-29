@@ -5,7 +5,7 @@ import Moveable from "react-moveable";
 import {RefObject} from "react";
 import designerStore from "../store/DesignerStore";
 import {MovableItemType} from "../../lib/lc-movable/types";
-import {merge} from "../../utils/ObjectUtil";
+import ObjectUtil from "../../utils/ObjectUtil";
 
 /**
  * 组件多选情况下的坐标值
@@ -152,7 +152,7 @@ class EventOperateStore {
     setPointerTarget = (target: any) => this.pointerTarget = target;
 
     setGroupCoordinate = (coordinate: GroupCoordinateType) => {
-        this.groupCoordinate = merge(this.groupCoordinate, coordinate);
+        this.groupCoordinate = ObjectUtil.merge(this.groupCoordinate, coordinate);
     }
 
     /**
