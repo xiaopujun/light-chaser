@@ -38,7 +38,7 @@ export default class AntdCommonColumn extends AntdBaseDesignerComponent<Column, 
         const {colors: {main, text, supplementary, emphasize, /*background,*/ auxiliary}} = newTheme;
         //图形
         if (styleConfig?.color)
-            styleConfig.color = main;
+            styleConfig.color = [main!];
         //图例
         if ((styleConfig.legend) && (styleConfig.legend.itemName?.style as ShapeAttrs)?.fill)
             (styleConfig!.legend!.itemName!.style as ShapeAttrs).fill = text;

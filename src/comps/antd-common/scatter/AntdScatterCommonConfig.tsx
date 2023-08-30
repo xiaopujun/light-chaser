@@ -5,7 +5,7 @@ import {Scatter, ScatterOptions, ShapeStyle} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import AbstractComponent from "../../../framework/core/AbstractComponent";
 import AntdCommonScatter, {AntdScatterProps} from "./AntdCommonScatter";
-import {WritableScatterOptions} from "../types";
+import {WritableBarOptions, WritableScatterOptions} from "../types";
 import ColorMode, {ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import Accordion from "../../../lib/lc-accordion/Accordion";
 import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
@@ -14,6 +14,7 @@ import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import Select from "../../../lib/lc-select/Select";
+import {Option} from "../../../lib/lc-select/SelectType";
 
 class AntdScatterCommonStyleConfig extends Component<ConfigType> {
 
@@ -123,5 +124,31 @@ export const AntdCommonScatterGraphics: React.FC<AntdCommonScatterGraphicsProps>
                 </ConfigItem>
             </ConfigCard>
         </Accordion>
+    )
+}
+
+
+export const AntdScatterFieldMapping: React.FC<ConfigType<AntdCommonScatter>> = ({instance}) => {
+    const config = instance.getConfig()!.style;
+    const {data, xField, yField} = config!;
+    const options: Option[] = [];
+    if (data && data.length >= 1) {
+        const dataObj = data[0];
+        Object.keys(dataObj).forEach(key => options.push({label: key, value: key}))
+    }
+
+    const fieldChange = (config: WritableBarOptions) => {
+        instance.update({style: config});
+    }
+
+    return (
+        <ConfigCard title={'字段映射'}>
+            <ConfigItem title={'X字段'}>
+                <Select options={options} defaultValue={xField} onChange={(value => fieldChange({xField: value}))}/>
+            </ConfigItem>
+            <ConfigItem title={'Y字段'}>
+                <Select options={options} defaultValue={yField} onChange={(value => fieldChange({yField: value}))}/>
+            </ConfigItem>
+        </ConfigCard>
     )
 }

@@ -2,7 +2,7 @@ import React, {Component, useState} from 'react';
 import {ConfigType} from "../../../designer/right/ConfigType";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
-import {WritableRoseOptions} from "../types";
+import {WritableBarOptions, WritableRoseOptions} from "../types";
 import ColorMode, {ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
@@ -13,6 +13,9 @@ import {AntdLegend} from "../config/AntdFragment";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import Accordion from "../../../lib/lc-accordion/Accordion";
 import AntdCommonRose from "./AntdCommonRose";
+import {Option} from "../../../lib/lc-select/SelectType";
+import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
+import Select from "../../../lib/lc-select/Select";
 
 export default class AntdRoseCommonStyleConfig extends Component<ConfigType> {
 
@@ -212,5 +215,35 @@ export const StatisticTextConfig: React.FC<AntdStatisticTextConfigProps> = ({con
                                 onChange={(event) => onChange({offsetY: parseInt(event.target.value)})}/>
             </ConfigItem>
         </>
+    )
+}
+
+
+export const AntdRoseFieldMapping: React.FC<ConfigType<AntdCommonRose>> = ({instance}) => {
+    const config = instance.getConfig()!.style;
+    const {data, xField, yField, seriesField} = config!;
+    const options: Option[] = [];
+    if (data && data.length >= 1) {
+        const dataObj = data[0];
+        Object.keys(dataObj).forEach(key => options.push({label: key, value: key}))
+    }
+
+    const fieldChange = (config: WritableBarOptions) => {
+        instance.update({style: config});
+    }
+
+    return (
+        <ConfigCard title={'字段映射'}>
+            <ConfigItem title={'X字段'}>
+                <Select options={options} defaultValue={xField} onChange={(value => fieldChange({xField: value}))}/>
+            </ConfigItem>
+            <ConfigItem title={'Y字段'}>
+                <Select options={options} defaultValue={yField} onChange={(value => fieldChange({yField: value}))}/>
+            </ConfigItem>
+            <ConfigItem title={'分类字段'}>
+                <Select options={options} defaultValue={seriesField}
+                        onChange={(value => fieldChange({seriesField: value}))}/>
+            </ConfigItem>
+        </ConfigCard>
     )
 }

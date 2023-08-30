@@ -7,6 +7,7 @@ import AntdCommonLine, {AntdLineProps} from "./AntdCommonLine";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const AntdLineCommonStyleConfig = React.lazy(() => import("./AntdLineCommonConfig").then((module) => ({default: module.AntdLineCommonStyleConfig})));
+const AntdLineFieldMapping = React.lazy(() => import("./AntdLineCommonConfig").then((module) => ({default: module.AntdLineFieldMapping})));
 const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig"));
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
@@ -28,7 +29,8 @@ abstract class AbstractLineDefinition extends AbstractCustomComponentDefinition<
             data: DataConfig,
             style: AntdLineCommonStyleConfig,
             animation: AnimationConfig,
-            theme: ThemeConfig
+            theme: ThemeConfig,
+            mapping: AntdLineFieldMapping
         };
     }
 }

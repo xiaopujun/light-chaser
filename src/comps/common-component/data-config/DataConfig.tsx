@@ -118,6 +118,10 @@ export const ApiDataConfig: React.FC<ConfigType> = ({instance}) => {
                     params: params,
                     flashFrequency: flashFrequencyRef.current
                 }
+            },
+            //todo 要拆分出去
+            style: {
+                data: JSON.parse(testResult)
             }
         });
     }

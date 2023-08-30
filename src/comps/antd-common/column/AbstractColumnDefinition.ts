@@ -7,6 +7,7 @@ import AntdCommonColumn, {AntdColumnProps} from "./AntdCommonColumn";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const AntdColumnCommonStyleConfig = React.lazy(() => import("./AntdColumnCommonConfig").then((module) => ({default: module.AntdColumnCommonStyleConfig})));
+const AntdColumnFieldMapping = React.lazy(() => import("./AntdColumnCommonConfig").then((module) => ({default: module.AntdColumnFieldMapping})));
 const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig"));
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
@@ -27,7 +28,8 @@ abstract class AbstractColumnDefinition extends AbstractCustomComponentDefinitio
             data: DataConfig,
             style: AntdColumnCommonStyleConfig,
             animation: AnimationConfig,
-            theme: ThemeConfig
+            theme: ThemeConfig,
+            mapping: AntdColumnFieldMapping
         };
     }
 }

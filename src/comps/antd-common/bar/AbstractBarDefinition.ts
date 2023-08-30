@@ -7,6 +7,7 @@ import AntdCommonBar, {AntdBarProps} from "../../antd-common/bar/AntdCommonBar";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const AntdBarCommonStyleConfig = React.lazy(() => import("./AntdBarCommonConfig").then((module) => ({default: module.AntdBarCommonStyleConfig})));
+const AntdBarFieldMapping = React.lazy(() => import("./AntdBarCommonConfig").then((module) => ({default: module.AntdBarFieldMapping})));
 const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig"));
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
@@ -28,7 +29,8 @@ abstract class AbstractBarDefinition extends AbstractCustomComponentDefinition<A
             data: DataConfig,
             style: AntdBarCommonStyleConfig,
             animation: AnimationConfig,
-            theme: ThemeConfig
+            theme: ThemeConfig,
+            mapping: AntdBarFieldMapping
         };
     }
 }

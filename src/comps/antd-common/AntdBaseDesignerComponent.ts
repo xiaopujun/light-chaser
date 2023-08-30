@@ -33,7 +33,7 @@ export abstract class AntdBaseDesignerComponent<I extends Plot<any> = Plot<Optio
             case "api":
                 const {url, method, params, header, flashFrequency = 5} = data?.apiData!;
                 this.interval = setInterval(() => {
-                    sendHttpRequest(url!, method!, params!, header!).then((data: any) => {
+                    sendHttpRequest(url!, method!, header!, params!).then((data: any) => {
                         if (data) {
                             this.update({style: {data}} as any, {reRender: true, operateType: OperateType.DATA});
                             if (!this.lastReqState) {

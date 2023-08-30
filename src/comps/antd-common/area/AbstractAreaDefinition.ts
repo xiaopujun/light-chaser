@@ -7,6 +7,7 @@ import AntdCommonArea, {AntdAreaProps} from "./AntdCommonArea";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const AntdAreaCommonStyleConfig = React.lazy(() => import("./AntdAreaCommonConfig").then((module) => ({default: module.AntdAreaCommonStyleConfig})));
+const AntdAreaFieldMapping = React.lazy(() => import("./AntdAreaCommonConfig").then((module) => ({default: module.AntdAreaFieldMapping})));
 const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig"));
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
@@ -28,7 +29,8 @@ abstract class AbstractAreaDefinition extends AbstractCustomComponentDefinition<
             data: DataConfig,
             style: AntdAreaCommonStyleConfig,
             animation: AnimationConfig,
-            theme: ThemeConfig
+            theme: ThemeConfig,
+            mapping: AntdAreaFieldMapping
         };
     }
 }

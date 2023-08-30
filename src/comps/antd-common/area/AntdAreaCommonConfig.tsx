@@ -4,8 +4,8 @@ import {AntdCartesianCoordinateSys, AntdLegend} from "../config/AntdFragment";
 import {Area, AreaOptions, ShapeStyle} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import AbstractComponent from "../../../framework/core/AbstractComponent";
-import {AntdAreaProps} from "./AntdCommonArea";
-import {WritableAreaOptions} from "../types";
+import AntdCommonArea, {AntdAreaProps} from "./AntdCommonArea";
+import {WritableAreaOptions, WritableBarOptions} from "../types";
 import ColorMode, {ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import {ShapeAttrs} from "@antv/g-base";
 import Accordion from "../../../lib/lc-accordion/Accordion";
@@ -17,6 +17,7 @@ import {MappingOptions} from "@antv/g2plot/lib/adaptor/geometries/base";
 import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import Select from "../../../lib/lc-select/Select";
+import {Option} from "../../../lib/lc-select/SelectType";
 
 class AntdAreaCommonStyleConfig extends Component<ConfigType> {
 
@@ -140,5 +141,35 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
                 </ConfigItem>
             </ConfigCard>
         </Accordion>
+    )
+}
+
+
+export const AntdAreaFieldMapping: React.FC<ConfigType<AntdCommonArea>> = ({instance}) => {
+    const config = instance.getConfig()!.style;
+    const {data, xField, yField, seriesField} = config!;
+    const options: Option[] = [];
+    if (data && data.length >= 1) {
+        const dataObj = data[0];
+        Object.keys(dataObj).forEach(key => options.push({label: key, value: key}))
+    }
+
+    const fieldChange = (config: WritableBarOptions) => {
+        instance.update({style: config});
+    }
+
+    return (
+        <ConfigCard title={'字段映射'}>
+            <ConfigItem title={'X字段'}>
+                <Select options={options} defaultValue={xField} onChange={(value => fieldChange({xField: value}))}/>
+            </ConfigItem>
+            <ConfigItem title={'Y字段'}>
+                <Select options={options} defaultValue={yField} onChange={(value => fieldChange({yField: value}))}/>
+            </ConfigItem>
+            <ConfigItem title={'分类字段'}>
+                <Select options={options} defaultValue={seriesField}
+                        onChange={(value => fieldChange({seriesField: value}))}/>
+            </ConfigItem>
+        </ConfigCard>
     )
 }

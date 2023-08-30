@@ -25,4 +25,5 @@ export interface BaseMenuMapping {
     data: MenuMappingType;
     animation: MenuMappingType;
     theme: MenuMappingType;
+    mapping?: MenuMappingType;
 }

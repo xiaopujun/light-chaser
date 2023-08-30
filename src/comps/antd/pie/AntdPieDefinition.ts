@@ -9,6 +9,7 @@ import AntdPie, {AntdPieProps} from "./AntdPie";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const AntdPieConfig = React.lazy(() => import("./AntdPieStyleConfig"));
+const AntdPieFieldMapping = React.lazy(() => import("./AntdPieStyleConfig").then((module) => ({default: module.AntdPieFieldMapping})));
 const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig"));
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
@@ -29,7 +30,8 @@ class AntdPieDefinition extends AbstractCustomComponentDefinition<AntdPie, BaseM
             data: DataConfig,
             style: AntdPieConfig,
             animation: AnimationConfig,
-            theme: ThemeConfig
+            theme: ThemeConfig,
+            mapping: AntdPieFieldMapping
         };
     }
 

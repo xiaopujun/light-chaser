@@ -10,6 +10,9 @@ import {ShapeAttrs} from "@antv/g-base";
 import Accordion from "../../../lib/lc-accordion/Accordion";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
+import {Option} from "../../../lib/lc-select/SelectType";
+import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
+import Select from "../../../lib/lc-select/Select";
 
 class AntdBarCommonStyleConfig extends Component<ConfigType> {
 
@@ -96,5 +99,35 @@ export const AntdBarGraphics: React.FC<AntdBarGraphicsProps> = ({config, onChang
                                 defaultValue={config!.maxBarWidth}/>
             </ConfigItem>
         </Accordion>
+    )
+}
+
+
+export const AntdBarFieldMapping: React.FC<ConfigType<AntdCommonBar>> = ({instance}) => {
+    const config = instance.getConfig()!.style;
+    const {data, xField, yField, seriesField} = config!;
+    const options: Option[] = [];
+    if (data && data.length >= 1) {
+        const dataObj = data[0];
+        Object.keys(dataObj).forEach(key => options.push({label: key, value: key}))
+    }
+
+    const fieldChange = (config: WritableBarOptions) => {
+        instance.update({style: config});
+    }
+
+    return (
+        <ConfigCard title={'字段映射'}>
+            <ConfigItem title={'X字段'}>
+                <Select options={options} defaultValue={xField} onChange={(value => fieldChange({xField: value}))}/>
+            </ConfigItem>
+            <ConfigItem title={'Y字段'}>
+                <Select options={options} defaultValue={yField} onChange={(value => fieldChange({yField: value}))}/>
+            </ConfigItem>
+            <ConfigItem title={'分类字段'}>
+                <Select options={options} defaultValue={seriesField}
+                        onChange={(value => fieldChange({seriesField: value}))}/>
+            </ConfigItem>
+        </ConfigCard>
     )
 }

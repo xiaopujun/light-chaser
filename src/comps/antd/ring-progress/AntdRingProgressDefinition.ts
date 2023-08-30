@@ -21,7 +21,7 @@ class AntdRingProgressDefinition extends AbstractCustomComponentDefinition<AntdR
     }
 
     getMenuList(): Array<MenuInfo> {
-        return getDefaultMenuList();
+        return getDefaultMenuList().filter((menuInfo) => menuInfo.key !== "mapping");
     }
 
     getMenuToConfigContentMap(): BaseMenuMapping | null {

@@ -14,6 +14,8 @@ import {Types} from "@antv/g2";
 import {AntdLegend} from "../../antd-common/config/AntdFragment";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import Accordion from "../../../lib/lc-accordion/Accordion";
+import {Option} from "../../../lib/lc-select/SelectType";
+import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
 
 export default class AntdPieStyleConfig extends Component<ConfigType> {
 
@@ -234,39 +236,30 @@ export const StatisticTextConfig: React.FC<AntdStatisticTextConfigProps> = ({con
     )
 }
 
-//
-// export interface AntdFontProps {
-//     config: LooseObject;
-//     disabled?: boolean;
-//
-//     onChange(config: LooseObject): void;
-// }
-//
-// export const AntdFontConfig: React.FC<AntdFontProps> = ({config, disabled, onChange}) => {
-//
-//     return (
-//         <>
-//             <ConfigItem title={"字号"}>
-//                 <UnderLineInput type={'number'} min={10}
-//                                 disabled={disabled}
-//                                 defaultValue={parseInt(config?.fontSize) || '12'}
-//                                 onChange={(event) => onChange({fontSize: event.target.value + 'px'})}/>
-//             </ConfigItem>
-//             <ConfigItem title={"加粗"}>
-//                 <UnderLineInput type={'number'} min={100} max={900} step={100}
-//                                 disabled={disabled}
-//                                 defaultValue={parseInt(config?.fontWeight) || '500'}
-//                                 onChange={(event) => onChange({fontWeight: parseInt(event.target.value)})}/>
-//             </ConfigItem>
-//             <ConfigItem title={'颜色'}>
-//                 <CfgItemBorder width={'100%'}>
-//                     <BaseColorPicker
-//                         disabled={disabled}
-//                         defaultValue={config?.color || '#fff'}
-//                         onChange={(value) => onChange({color: value})}
-//                         style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-//                 </CfgItemBorder>
-//             </ConfigItem>
-//         </>
-//     )
-// }
+
+export const AntdPieFieldMapping: React.FC<ConfigType<AntdPie>> = ({instance}) => {
+    const config = instance.getConfig()!.style;
+    const {data, angleField, colorField} = config!;
+    const options: Option[] = [];
+    if (data && data.length >= 1) {
+        const dataObj = data[0];
+        Object.keys(dataObj).forEach(key => options.push({label: key, value: key}))
+    }
+
+    const fieldChange = (config: WritablePieOptions) => {
+        instance.update({style: config});
+    }
+
+    return (
+        <ConfigCard title={'字段映射'}>
+            <ConfigItem title={'角度字段'}>
+                <Select options={options} defaultValue={angleField}
+                        onChange={(value => fieldChange({angleField: value}))}/>
+            </ConfigItem>
+            <ConfigItem title={'颜色字段'}>
+                <Select options={options} defaultValue={colorField}
+                        onChange={(value => fieldChange({colorField: value}))}/>
+            </ConfigItem>
+        </ConfigCard>
+    )
+}
