@@ -2,8 +2,6 @@
 
 [中文](README_ZH.md)
 
-[Demo experience](https://xiaopujun.github.io/light-chaser-app/#/)
-
 # 1. Introduction
 
 Light Chaser (LC) is a data visualization designer for large screens based on the React ecosystem. With simple
@@ -30,29 +28,12 @@ It has the following features:
 
 # 2. Showcase
 
-![2023-06-29 21-10-19 -original-horizontal.gif](https://s2.loli.net/2023/06/29/AweO65TG3nuNCLE.gif)
+[online experience](https://xiaopujun.github.io/light-chaser-app/#/)
+| [video showcase](https://www.bilibili.com/video/BV1v8411z78f/?share_source=copy_web&vd_source=ece0559aa5b8c4f5c0d7307cb2b06aac)
 
-![3 -original-horizontal.gif](https://s2.loli.net/2023/06/29/o32EUgvwCuDPLzk.gif)
+![image.png](https://s2.loli.net/2023/08/30/SnIYcomQWxaGyfj.png)
 
-Video
-Demo: [Check out the video](https://www.bilibili.com/video/BV1yu411b7bD/?share_source=copy_web&vd_source=ece0559aa5b8c4f5c0d7307cb2b06aac)
-
-# 3. Main Technology Stack
-
-| Technology Stack | Version | Description |
-| ---- | ---- | ---- |
-| TypeScript | ^4.4.4 | |
-| React | ^17.0.2 | |
-| Mobx | ^6.7.0 | State management |
-| Ant Design | ^4.17.3 | |
-| @ant-design/charts | ^1.4.2 | Chart component library |
-| @scena/react-ruler | ^0.17.1 | Ruler component |
-| react-moveable | ^0.51.0 | Component dragging framework |
-| Codemirror | ^5.65.13 | Code editor |
-
-For detailed dependencies, please refer to the package.json file.
-
-# 4. How to Run
+# 3. How to Run
 
 1. Clone the project to your local machine
 
@@ -84,20 +65,34 @@ http://localhost:3000
 yarn build
 ```
 
-# 5. How to Use
+# 4. How to Use
 
-|Operation/Shortcut|Description|
-|--- | ---|
-|Double-click on a component in the left panel| Add the component to the canvas|
-|Right-click and hold the mouse button| Drag the canvas|
-|Alt + scroll wheel| Zoom in/out of the canvas|
-|Ctrl + V| Copy the component|
-|Ctrl + L| Lock the component|
-|Ctrl + Up Arrow| Bring the component to the front|
-|Ctrl + Down Arrow| Send the component to the back|
-|Delete| Delete the component|
+| Operation/Shortcut | Description |
+| --- | --- |
+| Double-click on the left component | Add component to canvas |
+| Right-click and hold mouse | Drag canvas |
+| alt + Scroll wheel | Zoom canvas |
+| ctrl + v | Copy component |
+| ctrl + l | Lock component |
+| ctrl + Up arrow | Bring component to front |
+| ctrl + Down arrow | Send component to back |
+| delete | Delete component |
+| up | Move component up |
+| down | Move component down |
+| left | Move component left |
+| right | Move component right |
+| ctrl + shift + up | Enlarge component upward |
+| ctrl + shift + down | Enlarge component downward |
+| ctrl + shift + left | Enlarge component to the left |
+| ctrl + shift + right | Enlarge component to the right |
+| ctrl + alt + up | Shrink component upward |
+| ctrl + alt + down | Shrink component downward |
+| ctrl + alt + left | Shrink component to the left |
+| ctrl + alt + right | Shrink component to the right |
+| ctrl + z | Undo |
+| ctrl + shift + z | Redo |
 
-# 6. Directory Structure
+# 5. Directory Structure
 
 ```text
 src
@@ -124,263 +119,20 @@ src
 └─utils Utility classes
 ```
 
-# 7. How to Quickly Integrate Your Own Components
+# 6. How to Quickly Integrate Your Own Components
 
-Integrating your own components into LC is very simple. You only need to do one thing!!!
+Integrating your own component into LC is incredibly simple. You just need to follow a few steps!
 
-1. Find the `src/comps` directory and create a folder for your custom component.
-2. Suppose my custom component name is: `MyComp`.
-3. Create a new TypeScript file named `MyCompCore.ts` in the folder. In this file, create a class that
-   extends `AbstractCustomComponentDefinition` and implement its methods.
+1. Locate the `src/comps` directory and create a new folder for your custom component.
+2. Let's assume your custom component's name is: MyComp.
+3. Create a new TypeScript file named `MyComp.ts` within this folder. In this file, define a class that inherits from `AbstractCustomComponentDefinition` and implement its methods.
+4. Create another TypeScript file named `MyCompDefinition.ts` within the same folder. In this file, define a class that inherits from `AbstractDesignerComponent` and implement its methods.
 
-That's it!!! The rest will be handled by the automatic scanner, which will automatically scan your component and
-register it in LC.
+That's it! The rest is handled by the automatic scanner, which will scan your components and register them in LC.
 
-> The definition of `AbstractCustomComponentDefinition` is as follows:
+For a code example, you can refer to the implementation in `src/comps/antd/pie`.
 
-```typescript
-export abstract class AbstractCustomComponentDefinition {
-    /**
-     * Returns the basic information of the component, used for display in the component list.
-     */
-    abstract getBaseInfo(): BaseInfoType | null;
 
-    /**
-     * Returns the class template of the React component, which will be used when dragging and creating component instances in the designer.
-     */
-    abstract getComponent(): React.Component | React.FC | any;
-
-    /**
-     * Returns the default configuration of the corresponding component, which is used to display the default effect after dragging and generating component instances.
-     */
-    abstract getInitConfig(): ElemConfig | Object | null;
-
-    /**
-     * Returns the thumbnail image of the component, used in the component list. The image should not exceed 300kb, otherwise it will affect the loading speed of the designer.
-     */
-    abstract getChartImg(): any;
-
-    /**
-     * Returns the menu list for the right-click menu. It is displayed when the component is double-clicked.
-     */
-    abstract getMenuList(): Array<MenuInfo>;
-
-    /**
-     * Returns the specific configuration content corresponding to the right-click menu. This return result is a mapping relationship, returned in the form of an object.
-     */
-    abstract getMenuToConfigContentMap(): { [key: string]: React.Component | React.FC | any };
-
-    /**
-     * Method to update the theme style of this component, used when switching themes globally.
-     * @param newTheme The new theme.
-     * @param sourceStyle The original style of the component.
-     */
-    abstract updateTheme(newTheme: ThemeItemType, sourceStyle: any): void;
-}
-```
-
-## 7.1 Code Example
-
-For example, if I want to integrate an Ant Design bar chart component, I only need to provide the following
-implementation:
-
-```typescript
-import React from "react";
-import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
-import {BaseInfoType, ElemConfig} from "../../../designer/DesignerType";
-import {MenuInfo} from "../../../designer/right/MenuType";
-import barImg from "./bar.png";
-import {getDefaultMenuList} from "../../../designer/right/util";
-import {updateTheme} from "../../common-fragment/ThemeFragment";
-
-const AntdBaseBarStyleConfig = React.lazy(() => import('./AntdBaseBarConfig').then(module => ({default: module.AntdBaseBarStyleConfig})));
-const AnimationConfig = React.lazy(() => import("../../../lib/common-fragment/animation-config/AnimationConfig"));
-const ThemeConfig = React.lazy(() => import("../../../lib/common-fragment/theme-config/ThemeConfig"));
-const BaseInfo = React.lazy(() => import("../../../lib/common-fragment/base-info/BaseInfo"));
-const AntdBaseBar = React.lazy(() => import("./AntdBaseBar"));
-const DataConfig = React.lazy(() => import("../../../lib/common-fragment/data-config/DataConfig"));
-
-class AntdBaseBarCore extends AbstractCustomComponentDefinition {
-    getBaseInfo(): BaseInfoType {
-        return {
-            name: "BasicBar Chart",
-            key: 'AntdBaseBar',
-            typeName: "Bar Chart",
-            typeKey: "bar",
-            sourceName: "Antd",
-            sourceKey: "antd",
-        };
-    }
-
-    getChartImg(): any {
-        return barImg;
-    }
-
-    getComponent(): React.Component | React.FC | any {
-        return AntdBaseBar;
-    }
-
-    getInitConfig(): ElemConfig | Object {
-        return {
-            info: {
-                id: '',
-                name: 'Basic Bar Chart',
-                type: 'AntdBaseBar',
-                des: 'Basic bar chart based on Ant Design',
-            },
-            style: {
-                baseStyle: {
-                    padding: "10px",
-                    backgroundColor: "rgba(14,16,20,0.11)",
-                    border: "2px solid #00deffff",
-                    borderRadius: "3px"
-                },
-                chartStyle: {
-                    data: [
-                        {
-                            name: "1951 Year",
-                            value: 48
-                        },
-                        {
-                            name: "1952 Year",
-                            value: 52
-                        },
-                        {
-                            name: "1956 Year",
-                            value: 22
-                        }
-                    ],
-                    xField: "value",
-                    yField: "name",
-                    seriesField: "name",
-                    xAxis: {
-                        grid: null,
-                        label: {
-                            style: {
-                                fill: "#00FFEAFF"
-                            }
-                        },
-                        line: {
-                            style: {
-                                stroke: "#00ffbbff",
-                                lineWidth: 1
-                            }
-                        },
-                        tickLine: {
-                            style: {
-                                stroke: "#00baffff",
-                                lineWidth: 2
-                            },
-                            alignTick: true,
-                            length: 3
-                        },
-                        subTickLine: {
-                            style: {
-                                stroke: "#1a98b5ff",
-                                lineWidth: 3
-                            },
-                            count: 5,
-                            length: 3
-                        },
-                        position: "right",
-                        title: null
-                    },
-                    yAxis: {
-                        grid: null,
-                        label: {
-                            style: {
-                                fill: "#00FFEAFF"
-                            }
-                        },
-                        line: {
-                            style: {
-                                stroke: "#00dbffff",
-                                lineWidth: 1
-                            }
-                        },
-                        tickLine: {
-                            style: {
-                                stroke: "#21f2f5ff",
-                                lineWidth: 2
-                            },
-                            alignTick: true,
-                            length: 3
-                        },
-                        subTickLine: {
-                            style: {
-                                stroke: "#03b7a3ff",
-                                lineWidth: 3
-                            },
-                            count: 5,
-                            length: 2
-                        },
-                        position: "bottom",
-                        title: null
-                    },
-                    color: "#00ffea",
-                    legend: {
-                        position: "right-top",
-                        layout: "vertical",
-                        itemName: {
-                            style: {
-                                fill: "#00f0ffff",
-                                fontSize: 12
-                            }
-                        }
-                    },
-                    maxBarWidth: 14,
-                }
-            },
-            data: {
-                dataSource: 'static',
-                staticData: {
-                    data: [
-                        {
-                            name: "1951 Year",
-                            value: 38
-                        },
-                        {
-                            name: "1952 Year",
-                            value: 52
-                        },
-                        {
-                            name: "1956 Year",
-                            value: 61
-                        }
-                    ]
-                },
-            },
-            animation: {},
-            theme: {
-                themeId: '',
-            },
-        };
-    }
-
-    getMenuList(): Array<MenuInfo> {
-        return getDefaultMenuList();
-    }
-
-    getMenuToConfigContentMap(): {
-        [
-
-            key: string]: React.Component | React.FC | any
-    } {
-        return {
-            'info': BaseInfo,
-            'style': AntdBaseBarStyleConfig,
-            'data': DataConfig,
-            'animation': AnimationConfig,
-            'theme': ThemeConfig
-        };
-    }
-
-    updateTheme = updateTheme;
-}
-
-export default AntdBaseBarCore;
-```
-
-# 8. Conclusion
+# 7. Conclusion
 
 If you find this project helpful, please consider giving it a star.

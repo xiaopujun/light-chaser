@@ -1,7 +1,5 @@
 # 一、简介
 
-[Demo体验](https://xiaopujun.github.io/light-chaser-app/#/)
-
 Light Chaser(LC) 是一款基于React生态的大屏数据可视化设计器。通过简单的拖拽，即可生成漂亮、美观的可视化数据大屏和看板。
 
 她具有以下特点：
@@ -16,28 +14,12 @@ Light Chaser(LC) 是一款基于React生态的大屏数据可视化设计器。�
 
 # 二、效果展示
 
-![2023-06-29 21-10-19 -original-horizontal.gif](https://s2.loli.net/2023/06/29/AweO65TG3nuNCLE.gif)
+[在线体验](https://xiaopujun.github.io/light-chaser-app/#/)
+| [视频展示](https://www.bilibili.com/video/BV1v8411z78f/?share_source=copy_web&vd_source=ece0559aa5b8c4f5c0d7307cb2b06aac)
 
-![3 -original-horizontal.gif](https://s2.loli.net/2023/06/29/o32EUgvwCuDPLzk.gif)
+![image.png](https://s2.loli.net/2023/08/30/SnIYcomQWxaGyfj.png)
 
-视频演示：[查看视频](https://www.bilibili.com/video/BV1yu411b7bD/?share_source=copy_web&vd_source=ece0559aa5b8c4f5c0d7307cb2b06aac)
-
-# 三、主要技术栈
-
-| 技术栈 | 版本 | 说明|
-| ---- | ---- | ---- |
-| typescript | ^4.4.4 ||
-| React | ^17.0.2 ||
-| Mobx | ^6.7.0 |状态管理|
-| antd | ^4.17.3 ||
-| @ant-design/charts |^1.4.2|图表组件库|
-| @scena/react-ruler |^0.17.1|标尺组件|
-| react-moveable |^0.51.0|组件拖拽框架|
-| codemirror |^5.65.13|代码编辑器|
-
-详细依赖请查看package.json
-
-# 四、如何运行
+# 三、如何运行
 
 1. 克隆项目到本地
 
@@ -69,7 +51,7 @@ http://localhost:3000
 yarn build
 ```
 
-# 五、如何使用
+# 四、如何使用
 
 |操作方式/快捷键|说明|
 |--- | ---|
@@ -81,8 +63,22 @@ yarn build
 |ctrl + 方向上键| 置顶组件|
 |ctrl + 方向下键| 置底组件|
 |delete| 删除组件|
+|up| 组件上移|
+|down| 组件下移|
+|left| 组件左移|
+|right| 组件右移|
+|ctrl + shift + up| 组件向上放大|
+|ctrl + shift + down| 组件向下放大|
+|ctrl + shift + left| 组件向左放大|
+|ctrl + shift + right| 组件向右放大|
+|ctrl + alt + up| 组件向上缩小|
+|ctrl + alt + down| 组件向下缩小|
+|ctrl + alt + left| 组件向左缩小|
+|ctrl + alt + fight| 组件向右缩小|
+|ctrl + z| 撤销|
+|ctrl + shift + z| 重做|
 
-# 六、目录结构
+# 五、目录结构
 
 ```text
 src
@@ -109,259 +105,20 @@ src
 └─utils 工具类
 ```
 
-# 七、如何快速接入自己的组件
+# 六、如何快速接入自己的组件
 
 在LC中接入自己的组件非常简单。你仅需要做一件事！！！
 
 1. 找到src/comps目录，新建一个你自定义组件的文件夹
 2. 假设我的自定义组件名为：MyComp
-3. 新建一个ts文件，命名为：MyCompCore.ts，在该文件中新建一个class，并继承AbstractCustomComponentDefinition。实现其中的方法。
+3. 新建ts文件，命名为：MyComp.ts，在该文件中新建一个class，并继承AbstractCustomComponentDefinition。实现其中的方法。
+4. 新建ts文件，命名为：MyCompDefinition.ts，在该文件中新建一个class，并继承AbstractDesignerComponent。实现其中的方法。
 
 到此就结束了！！！剩下的交给自动扫描器，他会自动扫描你的组件，并将其注册到LC中。
 
-> AbstractCustomComponentDefinition定义如下
+代码示例可参考：src/comps/antd/pie 中的实现
 
-```typescript
-export abstract class AbstractCustomComponentDefinition {
-
-    /**
-     * 返回组件基础信息，用于在组件列表中展示
-     */
-    abstract getBaseInfo(): BaseInfoType | null;
-
-    /**
-     * 返回React组件的类模板，在设计器拖拽创建组件实例时会使用到
-     */
-    abstract getComponent(): React.Component | React.FC | any;
-
-    /**
-     * 返回对应组件的默认配置，在拖拽生成组件实例后需要展示默认效果
-     */
-    abstract getInitConfig(): ElemConfig | Object | null
-
-    /**
-     * 返回组件图片缩略图，在组件列表中展示时使用。图片不要超过300kb,否则会影响设计器的加载速度
-     */
-    abstract getChartImg(): any;
-
-    /**
-     * 返回右侧菜单列表，双击组件时需要展示菜单列表
-     */
-    abstract getMenuList(): Array<MenuInfo>;
-
-    /**
-     * 返回右侧菜单对应的具体配置内容。这个返回结果是一个映射关系。以对象形式返回
-     */
-    abstract getMenuToConfigContentMap(): { [key: string]: React.Component | React.FC | any };
-
-    /**
-     * 更新本组件的主题样式方法，用于在全局切换主题时使用
-     * @param newTheme 新主题
-     * @param sourceStyle 组件原样式
-     */
-    abstract updateTheme(newTheme: ThemeItemType, sourceStyle: any): void;
-}
-```
-
-## 7.1 代码示例
-
-比如我要接入一个antd的条形图组件，那么我仅需提供如下实现即可。
-
-```typescript
-import React from "react";
-import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
-import {BaseInfoType, ElemConfig} from "../../../designer/DesignerType";
-import {MenuInfo} from "../../../designer/right/MenuType";
-import barImg from "./bar.png";
-import {getDefaultMenuList} from "../../../designer/right/util";
-import {updateTheme} from "../../common-fragment/ThemeFragment";
-
-const AntdBaseBarStyleConfig = React.lazy(() => import('./AntdBaseBarConfig').then(module => ({default: module.AntdBaseBarStyleConfig})));
-const AnimationConfig = React.lazy(() => import("../../../lib/common-fragment/animation-config/AnimationConfig"));
-const ThemeConfig = React.lazy(() => import("../../../lib/common-fragment/theme-config/ThemeConfig"));
-const BaseInfo = React.lazy(() => import("../../../lib/common-fragment/base-info/BaseInfo"));
-const AntdBaseBar = React.lazy(() => import("./AntdBaseBar"));
-const DataConfig = React.lazy(() => import("../../../lib/common-fragment/data-config/DataConfig"));
-
-class AntdBaseBarCore extends AbstractCustomComponentDefinition {
-
-    getBaseInfo(): BaseInfoType {
-        return {
-            name: "基础条形图",
-            key: 'AntdBaseBar',
-            typeName: "条形图",
-            typeKey: "bar",
-            sourceName: "Antd",
-            sourceKey: "antd",
-        };
-    }
-
-    getChartImg(): any {
-        return barImg;
-    }
-
-    getComponent(): React.Component | React.FC | any {
-        return AntdBaseBar;
-    }
-
-    getInitConfig(): ElemConfig | Object {
-        return {
-            info: {
-                id: '',
-                name: '基础条形图',
-                type: 'AntdBaseBar',
-                des: '基于antd实现的基础条形图',
-            },
-            style: {
-                baseStyle: {
-                    padding: "10px",
-                    backgroundColor: "rgba(14,16,20,0.11)",
-                    border: "2px solid #00deffff",
-                    borderRadius: "3px"
-                },
-                chartStyle: {
-                    data: [
-                        {
-                            name: "1951 年",
-                            value: 48
-                        },
-                        {
-                            name: "1952 年",
-                            value: 52
-                        },
-                        {
-                            name: "1956 年",
-                            value: 22
-                        }
-                    ],
-                    xField: "value",
-                    yField: "name",
-                    seriesField: "name",
-                    xAxis: {
-                        grid: null,
-                        label: {
-                            style: {
-                                fill: "#00FFEAFF"
-                            }
-                        },
-                        line: {
-                            style: {
-                                stroke: "#00ffbbff",
-                                lineWidth: 1
-                            }
-                        },
-                        tickLine: {
-                            style: {
-                                stroke: "#00baffff",
-                                lineWidth: 2
-                            },
-                            alignTick: true,
-                            length: 3
-                        },
-                        subTickLine: {
-                            style: {
-                                stroke: "#1a98b5ff",
-                                lineWidth: 3
-                            },
-                            count: 5,
-                            length: 3
-                        },
-                        position: "right",
-                        title: null
-                    },
-                    yAxis: {
-                        grid: null,
-                        label: {
-                            style: {
-                                fill: "#00FFEAFF"
-                            }
-                        },
-                        line: {
-                            style: {
-                                stroke: "#00dbffff",
-                                lineWidth: 1
-                            }
-                        },
-                        tickLine: {
-                            style: {
-                                stroke: "#21f2f5ff",
-                                lineWidth: 2
-                            },
-                            alignTick: true,
-                            length: 3
-                        },
-                        subTickLine: {
-                            style: {
-                                stroke: "#03b7a3ff",
-                                lineWidth: 3
-                            },
-                            count: 5,
-                            length: 2
-                        },
-                        position: "bottom",
-                        title: null
-                    },
-                    color: "#00ffea",
-                    legend: {
-                        position: "right-top",
-                        layout: "vertical",
-                        itemName: {
-                            style: {
-                                fill: "#00f0ffff",
-                                fontSize: 12
-                            }
-                        }
-                    },
-                    maxBarWidth: 14,
-                }
-            },
-            data: {
-                dataSource: 'static',
-                staticData: {
-                    data: [
-                        {
-                            name: "1951 年",
-                            value: 38
-                        },
-                        {
-                            name: "1952 年",
-                            value: 52
-                        },
-                        {
-                            name: "1956 年",
-                            value: 61
-                        }
-                    ]
-                },
-            },
-            animation: {},
-            theme: {
-                themeId: '',
-            },
-        };
-    }
-
-    getMenuList(): Array<MenuInfo> {
-        return getDefaultMenuList();
-    }
-
-    getMenuToConfigContentMap(): { [key: string]: React.Component | React.FC | any } {
-        return {
-            'info': BaseInfo,
-            'style': AntdBaseBarStyleConfig,
-            'data': DataConfig,
-            'animation': AnimationConfig,
-            'theme': ThemeConfig
-        };
-    }
-
-    updateTheme = updateTheme;
-}
-
-export default AntdBaseBarCore;
-```
-
-# 8、 结语
+# 七、 结语
 
 如果觉得本项目不错，欢迎star
 
