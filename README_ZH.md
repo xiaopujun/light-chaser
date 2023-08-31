@@ -1,3 +1,17 @@
+<h2 align="middle"> LIGHT CHASER</h2>
+
+<p align="middle">
+    <img alt="" src="https://img.shields.io/badge/version-v0.0.3-blue">
+    <img alt="" src="https://img.shields.io/badge/language-typescript-blue">
+    <img alt="" src="https://img.shields.io/badge/license-MIT-08CE5D?logoColor=08CE5D">
+    <img alt="" src="https://img.shields.io/badge/framework-React-61daeb?logoColor=08CE5D">
+</p>
+
+<p align="middle">light chaser 是一个可拖拽式的WEB数据可视化设计器</p>
+<p align="middle">
+    <a href="https://xiaopujun.github.io/light-chaser-app/#/" target="_blank">Demo</a> / <a href="https://www.bilibili.com/video/BV1v8411z78f/?share_source=copy_web&vd_source=ece0559aa5b8c4f5c0d7307cb2b06aac" target="_blank">视频</a>
+</p>
+
 # 一、简介
 
 Light Chaser(LC) 是一款基于React生态的大屏数据可视化设计器。通过简单的拖拽，即可生成漂亮、美观的可视化数据大屏和看板。
@@ -13,9 +27,6 @@ Light Chaser(LC) 是一款基于React生态的大屏数据可视化设计器。�
 - 拖拽栅格化布局：LC提供了拖拽栅格化布局功能。你可以通过拖拽的方式快速的完成布局。从而快速的生成大屏。
 
 # 二、效果展示
-
-[在线体验](https://xiaopujun.github.io/light-chaser-app/#/)
-| [视频展示](https://www.bilibili.com/video/BV1v8411z78f/?share_source=copy_web&vd_source=ece0559aa5b8c4f5c0d7307cb2b06aac)
 
 ![image.png](https://s2.loli.net/2023/08/30/SnIYcomQWxaGyfj.png)
 

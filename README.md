@@ -1,6 +1,20 @@
-# LIGHT CHASER
-
 [中文](README_ZH.md)
+
+<h2 align="middle"> LIGHT CHASER</h2>
+
+<p align="middle">
+    <img alt="" src="https://img.shields.io/badge/version-v0.0.3-blue">
+    <img alt="" src="https://img.shields.io/badge/language-typescript-blue">
+    <img alt="" src="https://img.shields.io/badge/license-MIT-08CE5D?logoColor=08CE5D">
+    <img alt="" src="https://img.shields.io/badge/framework-React-61daeb?logoColor=08CE5D">
+</p>
+
+<p align="middle">LIGHT CHASER IS A DRAG-AND-DROP WEB DATA VISUALIZATION DESIGNER</p>
+<p align="middle">
+    <a href="https://xiaopujun.github.io/light-chaser-app/#/" target="_blank">Demo</a> 
+    / 
+    <a href="https://www.bilibili.com/video/BV1v8411z78f/?share_source=copy_web&vd_source=ece0559aa5b8c4f5c0d7307cb2b06aac" target="_blank">Video</a>
+</p>
 
 # 1. Introduction
 
@@ -27,9 +41,6 @@ It has the following features:
   by dragging components, thereby generating large screens efficiently.
 
 # 2. Showcase
-
-[online experience](https://xiaopujun.github.io/light-chaser-app/#/)
-| [video showcase](https://www.bilibili.com/video/BV1v8411z78f/?share_source=copy_web&vd_source=ece0559aa5b8c4f5c0d7307cb2b06aac)
 
 ![image.png](https://s2.loli.net/2023/08/30/SnIYcomQWxaGyfj.png)
 
@@ -125,13 +136,14 @@ Integrating your own component into LC is incredibly simple. You just need to fo
 
 1. Locate the `src/comps` directory and create a new folder for your custom component.
 2. Let's assume your custom component's name is: MyComp.
-3. Create a new TypeScript file named `MyComp.ts` within this folder. In this file, define a class that inherits from `AbstractCustomComponentDefinition` and implement its methods.
-4. Create another TypeScript file named `MyCompDefinition.ts` within the same folder. In this file, define a class that inherits from `AbstractDesignerComponent` and implement its methods.
+3. Create a new TypeScript file named `MyComp.ts` within this folder. In this file, define a class that inherits
+   from `AbstractCustomComponentDefinition` and implement its methods.
+4. Create another TypeScript file named `MyCompDefinition.ts` within the same folder. In this file, define a class that
+   inherits from `AbstractDesignerComponent` and implement its methods.
 
 That's it! The rest is handled by the automatic scanner, which will scan your components and register them in LC.
 
 For a code example, you can refer to the implementation in `src/comps/antd/pie`.
-
 
 # 7. Conclusion
 
