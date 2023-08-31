@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Input} from "antd";
 import compListStore from "./CompListStore";
 import classifyListStore from "../../left/classify-list/ClassifyListStore";
 import './CompList.less';
@@ -11,6 +10,7 @@ import eventOperateStore from "../../operate-provider/EventOperateStore";
 import FloatPanel from "../common/FloatPanel";
 import {BaseInfoType} from "../../DesignerType";
 import EditorDesignerLoader from "../../loader/EditorDesignerLoader";
+import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 
 class CompList extends Component {
 
@@ -86,10 +86,10 @@ class CompList extends Component {
     render() {
         return (
             <FloatPanel className={'comp-list'} title={'组件列表'} onClose={this.onClose}
-                        initPosition={{x: 60, y: -window.innerHeight + 50}}>
+                        initPosition={{x: 60, y: -window.innerHeight + 50}} width={190}>
                 <div className={'list-search'}>
-                    <Input placeholder="搜索组件" onPressEnter={this.searchChart}
-                           style={{width: '100%'}}/>
+                    <UnderLineInput placeholder="搜索图层" onChange={this.searchChart} containStyle={{height: 40}}
+                                    inputStyle={{height: 40, padding: '0 10px'}}/>
                 </div>
                 <div className={'list-items'}>
                     {this.getChartDom()}

@@ -32,10 +32,10 @@ class FloatPanel extends Component<FloatPanelProps> {
     }
 
     render() {
-        const {initPosition = {x: 0, y: 0}, title, className} = this.props;
+        const {initPosition = {x: 0, y: 0}, title, className, width} = this.props;
         return (
             <div className={`float-panel ${className}`}
-                 style={{transform: `translate(${initPosition.x}px, ${initPosition.y}px)`}}
+                 style={{transform: `translate(${initPosition.x}px, ${initPosition.y}px)`, width}}
                  ref={ref => this.panelRef = ref}>
                 <div className={'panel-title'}>
                     <div className={'title-left'}>{title}</div>

@@ -3,18 +3,27 @@
 .comp-list {
 
   .list-search {
-    .ant-input {
-      margin: 0;
-      color: #c3c3c3;
-      border-radius: 0;
-      background-color: #1a1a1a;
-      border: 2px solid rgb(54, 54, 54);
+    padding: 5px 5px 10px 5px;
+
+    input {
+      background-color: #363636;
+      transition: background-color 0.5s;
+    }
+
+    input:hover {
+      background-color: #2a2a2a;
+      transition-duration: 0.3s;
+    }
+
+    input::placeholder {
+      color: #818181;
+      transition-duration: 0.3s;
     }
   }
 
   .list-items {
+    padding: 0 5px;
     overflow-y: auto;
-    margin-top: 10px;
     height: calc(100% - 70px);
 
 
