@@ -41,7 +41,6 @@ class LayerList extends Component {
     searchLayer = (e: ChangeEvent<HTMLInputElement>) => {
         const {setContent} = layerListStore;
         const content = (e.target as HTMLInputElement).value;
-        // if (content === '') return;
         setContent && setContent(content);
     }
 
@@ -49,11 +48,23 @@ class LayerList extends Component {
     buildLayerList = () => {
         const {layoutConfigs} = designerStore;
         const {targetIds} = eventOperateStore;
-        const {searchContent} = layerListStore;
+        let {searchContent} = layerListStore;
+        //判断是否是命令模式
+        const commandMode = searchContent.startsWith(":");
+        if (commandMode) searchContent = searchContent.substring(1);
         return Object.values(layoutConfigs)
-            .filter((item: MovableItemType) => item.name?.includes(searchContent))
+            .filter((item: MovableItemType) => {
+                if (commandMode) {
+                    //使用命令模式过滤
+                    if (searchContent.trim() === "hide")
+                        return item.hide;
+                    else if (searchContent.trim() === "lock")
+                        return item.locked;
+                } else
+                    return item.name?.includes(searchContent);
+            })
             .sort((a: MovableItemType, b: MovableItemType) => b.order! - a.order!)
-            .map((item: MovableItemType, index) => {
+            .map((item: MovableItemType) => {
                 let _props: LayerItemDataProps = {
                     name: item.name,
                     lock: item.locked,
