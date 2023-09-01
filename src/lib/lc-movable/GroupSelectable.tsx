@@ -26,40 +26,52 @@ class GroupSelectable extends Component {
                 movable.dragStart(e.inputEvent);
             });
         }
+
         //框选多个组件时，不能同时包含锁定和非锁定的组件。
         // 如果最开始选中的是锁定的组件，那么后续选中的组件只能是锁定的组件.反之亦然
-        if (selected && selected.length > 1) {
+        let locked = false;
+        if (selected && selected.length === 1) {
+            locked = selected[0].dataset.locked === 'true';
+        } else if (selected && selected.length > 1) {
             //第一个选中的第一个组件是否是锁定的组件
-            const isFirstLock = selected[0].dataset.locked === 'true';
-            if (isFirstLock) {
+            locked = selected[0].dataset.locked === 'true';
+            if (locked) {
                 //后续只能选中锁定的组件
                 selected = e.selected.filter((item) => item.dataset.locked === 'true') as HTMLElement[];
             } else {
                 //后续只能选中非锁定的组件
                 selected = e.selected.filter((item) => item.dataset.locked !== 'true') as HTMLElement[];
             }
-            // let hasLocked = false;
-            // selected = e.selected.filter((item) => {
-            //     const unLock = item.dataset.locked !== 'true'
-            //     if (!hasLocked && !unLock)
-            //         hasLocked = true;
-            //     return unLock;
-            // }) as HTMLElement[];
-            // message.warn('多选时，不可选中被锁定的组件');
         }
+
         //图层若处于显示状态，则同步勾选图层列表中的元素
         if (e.inputEvent.target.className.indexOf('menu-item') === -1) {
             let targetIds: string[] = [];
             selected.forEach((item: any) => targetIds.push(item.id));
             setTargetIds(targetIds);
         }
+
         //更新选中的组件
         setTargets(selected);
+
+        //更新选中组件的边框颜色（锁定状态组件为红色，非锁定状态组件为蓝色）
+        const wireframes = document.querySelectorAll(".moveable-control,.moveable-line");
+        if (locked) {
+            wireframes.forEach((child: Element) => {
+                (child as HTMLDivElement).style.backgroundColor = '#ff4b29';
+            })
+        } else {
+            wireframes.forEach((child: Element) => {
+                (child as HTMLDivElement).style.backgroundColor = '#00bbffff';
+            })
+        }
+
         //若选中多个组件，计算更新组件多选时的左上角坐标
         if (selected.length > 1) {
             let {calculateGroupCoordinate} = eventOperateStore;
             calculateGroupCoordinate(selected);
         }
+
         //更新底部坐标信息
         let {setCoordinate, setSize} = footerStore;
         const {layoutConfigs} = designerStore;

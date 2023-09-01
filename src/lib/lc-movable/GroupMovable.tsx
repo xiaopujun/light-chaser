@@ -38,19 +38,10 @@ class GroupMovable extends React.Component<GroupMovableProps> {
     }
 
     onDragStart = (e: OnDragStart) => {
-        const {moveable: {controlBox: {children}}, target} = e;
+        const {target} = e;
         const {layoutConfigs} = designerStore;
         const {locked} = layoutConfigs[target.id];
-        if (locked) {
-            Array.from(children).forEach((child: Element) => {
-                (child as HTMLDivElement).style.backgroundColor = '#ff4b29';
-            })
-            return false;
-        } else {
-            Array.from(children).forEach((child: Element) => {
-                (child as HTMLDivElement).style.backgroundColor = '#00bbffff';
-            })
-        }
+        if (locked) return false;
     }
 
     onDragEnd = (e: OnDragEnd) => {
@@ -215,24 +206,10 @@ class GroupMovable extends React.Component<GroupMovableProps> {
     }
 
     onDragGroupStart = (e: OnDragGroupStart) => {
-        const {moveable: {controlBox: {children}}, targets} = e;
+        const {targets} = e;
         const {layoutConfigs} = designerStore;
         const firstLock = layoutConfigs[targets[0].id].locked;
-        if (firstLock) {
-            Array.from(children).forEach((child: Element) => {
-                const element = child as HTMLDivElement;
-                if (element.classList.contains('moveable-control') || element.classList.contains('moveable-line'))
-                    element.style.backgroundColor = '#ff4b29';
-            })
-            return false;
-        } else {
-            Array.from(children).forEach((child: Element) => {
-                const element = child as HTMLDivElement;
-                if (element.classList.contains('moveable-control') || element.classList.contains('moveable-line'))
-                    element.style.backgroundColor = '#00bbffff';
-
-            })
-        }
+        if (firstLock) return false;
     }
 
     onResizeGroupStart = (e: OnResizeGroupStart) => {
