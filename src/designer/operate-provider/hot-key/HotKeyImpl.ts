@@ -14,8 +14,10 @@ export const selectAll = () => {
     let comps = document.getElementsByClassName('lc-comp-item');
     let compIds: string[] = [];
     let compArr: any[] = [];
+    //权限时排除已锁定和隐藏的组件
     comps && Array.from(comps).forEach((comp: any) => {
-        if (comp.dataset.locked !== 'true') {
+        const {locked, hide} = comp.dataset;
+        if (locked !== 'true' && hide !== 'true') {
             compArr.push(comp);
             compIds.push(comp.id);
         }

@@ -16,7 +16,7 @@ import {
     selectAll,
     toBottom,
     toTop,
-    doBaseBottomDecreaseUp, doBaseUpDecreaseDown, doBaseRightDecreaseLeft, doBaseLeftDecreaseRight, undo, redo
+    doBaseBottomDecreaseUp, doBaseUpDecreaseDown, doBaseRightDecreaseLeft, doBaseLeftDecreaseRight, undo, redo, doUnLock
 } from "./HotKeyImpl";
 
 export const getHotKeyConfig: HotKeyConfigType = {
@@ -32,6 +32,9 @@ export const getHotKeyConfig: HotKeyConfigType = {
     },
     'control + l': {
         handler: doLock,
+    },
+    'control + shift + l': {
+        handler: doUnLock,
     },
     'control + arrowup': {
         handler: toTop,

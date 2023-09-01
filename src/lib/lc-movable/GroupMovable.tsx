@@ -1,5 +1,16 @@
 import * as React from "react";
-import Moveable, {OnResize, OnResizeGroup} from "react-moveable";
+import Moveable, {
+    OnDragEnd,
+    OnDragGroupEnd,
+    OnDragGroupStart,
+    OnDragStart,
+    OnResize,
+    OnResizeEnd,
+    OnResizeGroup,
+    OnResizeGroupEnd,
+    OnResizeGroupStart,
+    OnResizeStart
+} from "react-moveable";
 import {observer} from "mobx-react";
 import eventOperateStore from "../../designer/operate-provider/EventOperateStore";
 import designerStore from "../../designer/store/DesignerStore";
@@ -14,7 +25,7 @@ interface GroupMovableProps {
 class GroupMovable extends React.Component<GroupMovableProps> {
     movableRef = React.createRef<Moveable>();
 
-    constructor(props: any) {
+    constructor(props: GroupMovableProps) {
         super(props);
         this.state = {
             targets: [],
@@ -26,7 +37,23 @@ class GroupMovable extends React.Component<GroupMovableProps> {
         setMovableRef(this.movableRef);
     }
 
-    onDragEnd = (e: any) => {
+    onDragStart = (e: OnDragStart) => {
+        const {moveable: {controlBox: {children}}, target} = e;
+        const {layoutConfigs} = designerStore;
+        const {locked} = layoutConfigs[target.id];
+        if (locked) {
+            Array.from(children).forEach((child: Element) => {
+                (child as HTMLDivElement).style.backgroundColor = '#ff4b29';
+            })
+            return false;
+        } else {
+            Array.from(children).forEach((child: Element) => {
+                (child as HTMLDivElement).style.backgroundColor = '#00bbffff';
+            })
+        }
+    }
+
+    onDragEnd = (e: OnDragEnd) => {
         const {updateLayout} = designerStore;
         const {setCoordinate} = footerStore;
         let {backoff, setBackoff} = eventOperateStore;
@@ -36,8 +63,8 @@ class GroupMovable extends React.Component<GroupMovableProps> {
             const data: MovableItemType[] = [
                 {
                     id: target.id,
-                    width: target.offsetWidth,
-                    height: target.offsetHeight,
+                    width: (target as HTMLDivElement).offsetWidth,
+                    height: (target as HTMLDivElement).offsetHeight,
                     type: target.dataset.type,
                     position: [beforeTranslate[0], beforeTranslate[1]]
                 }
@@ -53,7 +80,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
         }
     }
 
-    onDragGroupEnd = (e: any) => {
+    onDragGroupEnd = (e: OnDragGroupEnd) => {
         const {updateLayout} = designerStore;
         let {backoff, setBackoff, setGroupCoordinate, groupCoordinate} = eventOperateStore;
         let data: MovableItemType[] = [];
@@ -88,7 +115,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
         setCoordinate([minX, minY])
     }
 
-    onResizeEnd = (e: any) => {
+    onResizeEnd = (e: OnResizeEnd) => {
         const {updateLayout} = designerStore;
         let {backoff, setBackoff} = eventOperateStore;
         const {target, lastEvent} = e;
@@ -116,7 +143,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
         }
     }
 
-    onResizeGroupEnd = (e: any) => {
+    onResizeGroupEnd = (e: OnResizeGroupEnd) => {
         const {updateLayout} = designerStore;
         let {backoff, setBackoff} = eventOperateStore;
         let data: MovableItemType[] = [];
@@ -180,6 +207,41 @@ class GroupMovable extends React.Component<GroupMovableProps> {
         target.style.transform = `translate(${drag.beforeTranslate[0]}px, ${drag.beforeTranslate[1]}px)`;
     }
 
+    onResizeStart = (e: OnResizeStart) => {
+        const {target} = e;
+        const {layoutConfigs} = designerStore;
+        const {locked} = layoutConfigs[target.id];
+        if (locked) return false;
+    }
+
+    onDragGroupStart = (e: OnDragGroupStart) => {
+        const {moveable: {controlBox: {children}}, targets} = e;
+        const {layoutConfigs} = designerStore;
+        const firstLock = layoutConfigs[targets[0].id].locked;
+        if (firstLock) {
+            Array.from(children).forEach((child: Element) => {
+                const element = child as HTMLDivElement;
+                if (element.classList.contains('moveable-control') || element.classList.contains('moveable-line'))
+                    element.style.backgroundColor = '#ff4b29';
+            })
+            return false;
+        } else {
+            Array.from(children).forEach((child: Element) => {
+                const element = child as HTMLDivElement;
+                if (element.classList.contains('moveable-control') || element.classList.contains('moveable-line'))
+                    element.style.backgroundColor = '#00bbffff';
+
+            })
+        }
+    }
+
+    onResizeGroupStart = (e: OnResizeGroupStart) => {
+        const {targets} = e;
+        const {layoutConfigs} = designerStore;
+        const firstLock = layoutConfigs[targets[0].id].locked;
+        if (firstLock) return false;
+    }
+
     render() {
         const {readonly = false} = this.props;
         const {selectorRef, targets} = eventOperateStore;
@@ -194,17 +256,19 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                           keepRatio={false}
                           throttleDrag={rasterize ? dragStep : 1}
                           throttleResize={rasterize ? resizeStep : 1}
-                          onClickGroup={e => {
-                              (selectorRef.current as any)?.clickTarget(e.inputEvent, e.inputTarget);
-                          }}
+                          onClickGroup={e => (selectorRef.current as any)?.clickTarget(e.inputEvent, e.inputTarget)}
                           onDrag={({target, beforeTranslate}) => {
                               target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
                           }}
+                          onDragStart={this.onDragStart}
                           onDragEnd={this.onDragEnd}
+                          onDragGroupStart={this.onDragGroupStart}
                           onDragGroup={e => e.events.forEach(ev => ev.target.style.transform = ev.transform)}
                           onDragGroupEnd={this.onDragGroupEnd}
+                          onResizeStart={this.onResizeStart}
                           onResize={this.onResize}
                           onResizeEnd={this.onResizeEnd}
+                          onResizeGroupStart={this.onResizeGroupStart}
                           onResizeGroup={this.onResizeGroup}
                           onResizeGroupEnd={this.onResizeGroupEnd}
                 />

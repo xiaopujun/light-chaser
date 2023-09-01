@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Selecto from "react-selecto";
+import Selecto, {OnSelectEnd} from "react-selecto";
 import eventOperateStore from "../../designer/operate-provider/EventOperateStore";
 import {observer} from "mobx-react";
 import Moveable from 'react-moveable';
@@ -14,20 +14,39 @@ class GroupSelectable extends Component {
         setSelectorRef(this.selectorRef);
     }
 
-    onSelectEnd = (e: any) => {
+    onSelectEnd = (e: OnSelectEnd) => {
+        let {selected} = e;
         const {movableRef, setTargets, setTargetIds} = eventOperateStore;
         if (!movableRef) return;
         const movable: Moveable = movableRef!.current!;
+        //这段代码干啥的？
         if (e.isDragStart) {
             e.inputEvent.preventDefault();
             setTimeout(() => {
                 movable.dragStart(e.inputEvent);
             });
         }
-        //排除被锁定的元素
-        let selected = e.selected.filter((item: any) => {
-            return item.dataset.locked !== 'true';
-        });
+        //框选多个组件时，不能同时包含锁定和非锁定的组件。
+        // 如果最开始选中的是锁定的组件，那么后续选中的组件只能是锁定的组件.反之亦然
+        if (selected && selected.length > 1) {
+            //第一个选中的第一个组件是否是锁定的组件
+            const isFirstLock = selected[0].dataset.locked === 'true';
+            if (isFirstLock) {
+                //后续只能选中锁定的组件
+                selected = e.selected.filter((item) => item.dataset.locked === 'true') as HTMLElement[];
+            } else {
+                //后续只能选中非锁定的组件
+                selected = e.selected.filter((item) => item.dataset.locked !== 'true') as HTMLElement[];
+            }
+            // let hasLocked = false;
+            // selected = e.selected.filter((item) => {
+            //     const unLock = item.dataset.locked !== 'true'
+            //     if (!hasLocked && !unLock)
+            //         hasLocked = true;
+            //     return unLock;
+            // }) as HTMLElement[];
+            // message.warn('多选时，不可选中被锁定的组件');
+        }
         //图层若处于显示状态，则同步勾选图层列表中的元素
         if (e.inputEvent.target.className.indexOf('menu-item') === -1) {
             let targetIds: string[] = [];
