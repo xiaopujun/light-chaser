@@ -123,7 +123,7 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
                     extendParams: store.extendParams,
                 })
                 //设置事件操作器的最大最小层级
-                const {setMinLevel, setMaxLevel, setUnLockedIds} = eventOperateStore;
+                const {setMinLevel, setMaxLevel} = eventOperateStore;
                 setMinLevel(store.extendParams?.minLevel || 0);
                 setMaxLevel(store.extendParams?.maxLevel || 0);
                 //设置已处于锁定的组件id
@@ -132,7 +132,6 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
                     if (item.locked)
                         unLockedIds.push(item.id!);
                 })
-                setUnLockedIds(unLockedIds);
             }
             setLoaded(true);
         })
