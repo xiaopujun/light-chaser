@@ -132,12 +132,12 @@ const clickHandler = (event: any) => {
 const contextMenuHandler = (event: any) => {
     event.preventDefault();
     const {mouseDownTime, mouseUpTime, setPosition, updateVisible} = contextMenuStore;
-    const {setUnLockedId} = eventOperateStore;
+    const {setUnLockedIds} = eventOperateStore;
     let targetArr = ['lc-comp-item', 'moveable-area'];
     if (targetArr.some((item: string) => event.target.classList.contains(item)) && mouseUpTime - mouseDownTime < 200) {
         updateVisible && updateVisible(true);
         setPosition([event.clientX, event.clientY]);
-        setUnLockedId(event.target.id);
+        setUnLockedIds(event.target.id);
     } else {
         updateVisible && updateVisible(false);
     }

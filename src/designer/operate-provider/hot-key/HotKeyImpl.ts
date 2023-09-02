@@ -49,7 +49,7 @@ export const doCopy = () => {
 }
 
 export const doLock = () => {
-    const {targetIds, setTargets} = eventOperateStore;
+    const {targetIds, setTargets, setUnLockedIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
     const {layoutConfigs} = designerStore;
     let toBeUpdate = [];
@@ -59,16 +59,22 @@ export const doLock = () => {
     }
     historyRecordOperateProxy.doLockUpd(toBeUpdate);
     //操作完毕之后，清空已被选择的元素。
+    setUnLockedIds(targetIds);
     setTargets([]);
 }
 
 export const doUnLock = () => {
-    const {unLockedId} = eventOperateStore;
-    if (!unLockedId || unLockedId === '') return;
+    const {unLockedIds, setTargets} = eventOperateStore;
+    if (!unLockedIds || unLockedIds.length === 0) return;
     const {updateLayout, layoutConfigs} = designerStore;
-    let item = layoutConfigs[unLockedId];
-    updateLayout([{...item, locked: false}])
-    historyRecordOperateProxy.doLockUpd([{...item, locked: false}]);
+    let toUpdate: MovableItemType[] = [];
+    unLockedIds.forEach((id: string) => {
+        let item = layoutConfigs[id];
+        toUpdate.push({...item, locked: false})
+    })
+    updateLayout(toUpdate)
+    historyRecordOperateProxy.doLockUpd(toUpdate);
+    setTargets([]);
 }
 
 export const toTop = () => {

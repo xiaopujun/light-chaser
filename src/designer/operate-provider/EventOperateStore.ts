@@ -76,7 +76,7 @@ class EventOperateStore {
      * 由于是右键触发系统菜单的时候记录该ID。 因此需要有单独的变量来存放，避免和选择元素框架记录的ID进行相互覆盖。
      * Because the ID is recorded when the right mouse button triggers the system menu. Therefore, a separate variable is needed to store it to avoid mutual coverage with the ID recorded by the selected element framework.
      */
-    unLockedId: string = '';
+    unLockedIds: string[] = [];
     /**
      * 拖拽框架的最大层级，用于操作菜单的置顶操作
      * The maximum level of the drag and drop framework, used for the top operation of the operation menu
@@ -109,7 +109,7 @@ class EventOperateStore {
     backoff: boolean = false;
 
     /**
-     * 用于记录当前添加的组件id,实际渲染时根据该id读取组件数据并记录操作日志
+     * 用于记录当前新添加的组件id,实际渲染时根据该id读取组件数据并记录操作日志
      */
     addRecordCompId: string | null = null;
 
@@ -121,7 +121,7 @@ class EventOperateStore {
 
     setMinLevel = (order: number) => this.minLevel = order;
 
-    setUnLockedId = (id: string) => this.unLockedId = id;
+    setUnLockedIds = (id: string[]) => this.unLockedIds = id;
 
     setMovableRef = (ref: any) => this.movableRef = ref;
 

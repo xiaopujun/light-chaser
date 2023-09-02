@@ -81,8 +81,6 @@ class LayerList extends Component {
             <FloatPanel title={'图层'} onClose={this.onClose} initPosition={{x: 250, y: -window.innerHeight + 50}}
                         className={'layer-list'}>
                 <div className={'list-search'}>
-                    {/*<Input placeholder="搜索图层" onPressEnter={this.searchLayer}*/}
-                    {/*       style={{width: '100%'}}/>*/}
                     <UnderLineInput placeholder="搜索图层" onChange={this.searchLayer} containStyle={{height: 40}}
                                     inputStyle={{height: 40, padding: '0 10px'}}/>
                 </div>

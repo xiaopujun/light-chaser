@@ -6,6 +6,7 @@ import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 import {AbstractHeaderItem, HeaderItemProps} from "../header/HeaderTypes";
 import {AbstractCustomComponentDefinition} from "../../framework/core/AbstractCustomComponentDefinition";
 import {AbstractOperator} from "../../framework/operate/AbstractOperator";
+import {MovableItemType} from "../../lib/lc-movable/types";
 
 export default class EditorDesignerLoader extends AbstractDesignerLoader {
 
@@ -122,9 +123,16 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
                     extendParams: store.extendParams,
                 })
                 //设置事件操作器的最大最小层级
-                const {setMinLevel, setMaxLevel} = eventOperateStore;
+                const {setMinLevel, setMaxLevel, setUnLockedIds} = eventOperateStore;
                 setMinLevel(store.extendParams?.minLevel || 0);
                 setMaxLevel(store.extendParams?.maxLevel || 0);
+                //设置已处于锁定的组件id
+                const unLockedIds: string[] = [];
+                Object.values(store.layoutConfigs!).forEach((item: MovableItemType) => {
+                    if (item.locked)
+                        unLockedIds.push(item.id!);
+                })
+                setUnLockedIds(unLockedIds);
             }
             setLoaded(true);
         })

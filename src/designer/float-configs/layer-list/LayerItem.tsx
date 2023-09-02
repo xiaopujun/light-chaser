@@ -54,7 +54,6 @@ class LayerItem extends React.PureComponent<LayerItemDataProps> {
     render() {
         const {name, lock, hide, selected = false} = this.state || {};
         const itemClass = `layer-item ${selected ? "layer-item-selected" : hide ? "layer-item-hide" : lock ? "layer-item-lock" : ""}`;
-        console.log('render layer item', itemClass);
         return (
             <div className={itemClass}
                  onClick={this.onSelected}>

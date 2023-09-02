@@ -6,6 +6,24 @@ import Moveable from 'react-moveable';
 import footerStore from "../../designer/footer/FooterStore";
 import designerStore from "../../designer/store/DesignerStore";
 
+/**
+ * 设置控制点和边框的颜色
+ * @param locked 是否锁定
+ */
+export function setControlPointLineColor(locked: boolean) {
+    const pointLineDom = document.querySelectorAll(".moveable-control,.moveable-line");
+    if (!pointLineDom) return;
+    if (locked) {
+        pointLineDom.forEach((child: Element) => {
+            (child as HTMLDivElement).style.backgroundColor = '#ff4b29';
+        })
+    } else {
+        pointLineDom.forEach((child: Element) => {
+            (child as HTMLDivElement).style.backgroundColor = '#00bbffff';
+        })
+    }
+}
+
 class GroupSelectable extends Component {
     selectorRef = React.createRef<Selecto>();
 
@@ -17,6 +35,7 @@ class GroupSelectable extends Component {
     onSelectEnd = (e: OnSelectEnd) => {
         let {selected} = e;
         const {movableRef, setTargets, setTargetIds} = eventOperateStore;
+        console.log("onSelectEnd isDragStart", e.isDragStart);
         if (!movableRef) return;
         const movable: Moveable = movableRef!.current!;
         //这段代码干啥的？
@@ -28,7 +47,7 @@ class GroupSelectable extends Component {
         }
 
         //框选多个组件时，不能同时包含锁定和非锁定的组件。
-        // 如果最开始选中的是锁定的组件，那么后续选中的组件只能是锁定的组件.反之亦然
+        //如果最开始选中的是锁定的组件，那么后续选中的组件只能是锁定的组件.反之亦然
         let locked = false;
         if (selected && selected.length === 1) {
             locked = selected[0].dataset.locked === 'true';
@@ -55,16 +74,7 @@ class GroupSelectable extends Component {
         setTargets(selected);
 
         //更新选中组件的边框颜色（锁定状态组件为红色，非锁定状态组件为蓝色）
-        const wireframes = document.querySelectorAll(".moveable-control,.moveable-line");
-        if (locked) {
-            wireframes.forEach((child: Element) => {
-                (child as HTMLDivElement).style.backgroundColor = '#ff4b29';
-            })
-        } else {
-            wireframes.forEach((child: Element) => {
-                (child as HTMLDivElement).style.backgroundColor = '#00bbffff';
-            })
-        }
+        setControlPointLineColor(locked);
 
         //若选中多个组件，计算更新组件多选时的左上角坐标
         if (selected.length > 1) {
