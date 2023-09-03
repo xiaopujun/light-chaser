@@ -168,6 +168,7 @@ class HistoryRecordOperateProxy {
 
         //历史记录
         const next: AddDataType[] = [];
+        const newLayouts: MovableItemType[] = [];
 
         for (const id of ids) {
             //获取被复制元素布局
@@ -178,6 +179,7 @@ class HistoryRecordOperateProxy {
                 newIds.push(newId);
                 //生成新布局
                 const newLayout = cloneDeep(layout);
+                newLayouts.push(newLayout);
                 newLayout.id = newId;
                 const [x = 10, y = 10] = (newLayout.position || []).map((p) => p + 10);
                 newLayout.position = [x, y];
@@ -200,6 +202,11 @@ class HistoryRecordOperateProxy {
         }
         historyOperator.put({type: HistoryType.ADD, prev: null, next})
         setMaxLevel(maxLevel);
+        //多个组件同时复制时，需要计算多选框的新位置
+        if (newLayouts.length > 1) {
+            const {groupCoordinate, setGroupCoordinate} = eventOperateStore;
+            setGroupCoordinate({minX: groupCoordinate.minX! + 10, minY: groupCoordinate.minY! + 10})
+        }
         return newIds;
     };
 
