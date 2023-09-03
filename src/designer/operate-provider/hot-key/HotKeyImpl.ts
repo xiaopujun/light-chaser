@@ -22,9 +22,9 @@ export const selectAll = () => {
             compIds.push(comp.id);
         }
     });
-    const {setTargets, setTargetIds, calculateGroupCoordinate} = eventOperateStore;
+    const {setTargets, /*setTargetIds,*/ calculateGroupCoordinate} = eventOperateStore;
     setTargets(compArr);
-    setTargetIds(compIds);
+    // setTargetIds(compIds);
 
     //计算组件多选时的左上角坐标
     if (compArr.length > 1)
@@ -32,7 +32,9 @@ export const selectAll = () => {
 }
 
 export const doCopy = () => {
-    const {targetIds, setTargetIds, setTargets} = eventOperateStore;
+    console.log('doCopy')
+    const {targetIds, /*setTargetIds,*/ setTargets} = eventOperateStore;
+    console.log('targetIds', targetIds)
     if (!targetIds || targetIds.length === 0) return;
     const {copyItem} = designerStore;
     let newIds = copyItem(targetIds);
@@ -44,7 +46,7 @@ export const doCopy = () => {
         }
         targets.filter((item: any) => item !== null);
         setTargets(targets);
-        setTargetIds(newIds);
+        // setTargetIds(newIds);
     }, 10);
 }
 
@@ -80,7 +82,7 @@ export const doUnLock = () => {
 }
 
 export const toTop = () => {
-    let {maxLevel, setMaxLevel, targetIds, setTargetIds} = eventOperateStore;
+    let {maxLevel, setMaxLevel, targetIds, /*setTargetIds*/} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
     const {layoutConfigs} = designerStore;
     let toBeUpdate: MovableItemType[] = [];
@@ -89,12 +91,12 @@ export const toTop = () => {
         toBeUpdate.push({...item, order: ++maxLevel});
     });
     setMaxLevel(maxLevel)
-    setTargetIds([]);
+    // setTargetIds([]);
     historyRecordOperateProxy.doOrderUpd(toBeUpdate);
 }
 
 export const toBottom = () => {
-    let {minLevel, setMinLevel, targetIds, setTargetIds} = eventOperateStore;
+    let {minLevel, setMinLevel, targetIds, /*setTargetIds*/} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
     const {layoutConfigs} = designerStore;
     let toBeUpdate: MovableItemType[] = [];
@@ -103,7 +105,7 @@ export const toBottom = () => {
         toBeUpdate.push({...item, order: --minLevel});
     });
     setMinLevel(minLevel)
-    setTargetIds([]);
+    // setTargetIds([]);
     historyRecordOperateProxy.doOrderUpd(toBeUpdate);
 }
 

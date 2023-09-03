@@ -27,8 +27,8 @@ class LayerList extends Component {
         const layerListDom = document.querySelector(".layer-list");
         if (!layerListDom || !e.target) return;
         if (layerListDom.contains(e.target as Node) && !(e.target as HTMLElement).classList.contains("layer-item")) {
-            const {setTargetIds, setTargets} = eventOperateStore;
-            setTargetIds([]);
+            const {/*setTargetIds,*/ setTargets} = eventOperateStore;
+            // setTargetIds([]);
             setTargets([]);
         }
     }

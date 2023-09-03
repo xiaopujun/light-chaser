@@ -34,7 +34,7 @@ class GroupSelectable extends Component {
 
     onSelectEnd = (e: OnSelectEnd) => {
         let {selected} = e;
-        const {movableRef, setTargets, setTargetIds} = eventOperateStore;
+        const {movableRef, setTargets, /*setTargetIds*/} = eventOperateStore;
         console.log("onSelectEnd isDragStart", e.isDragStart);
         if (!movableRef) return;
         const movable: Moveable = movableRef!.current!;
@@ -64,14 +64,14 @@ class GroupSelectable extends Component {
         }
 
         //图层若处于显示状态，则同步勾选图层列表中的元素
-        if (e.inputEvent.target.className.indexOf('menu-item') === -1) {
-            let targetIds: string[] = [];
-            selected.forEach((item: any) => targetIds.push(item.id));
-            setTargetIds(targetIds);
-        }
+        // if (e.inputEvent.target.className.indexOf('menu-item') === -1) {
+        //     let targetIds: string[] = [];
+        //     selected.forEach((item: any) => targetIds.push(item.id));
+        //     setTargetIds(targetIds);
+        // }
 
         //更新选中的组件
-        setTargets(selected);
+        setTargets(selected as HTMLElement[]);
 
         //更新选中组件的边框颜色（锁定状态组件为红色，非锁定状态组件为蓝色）
         setControlPointLineColor(locked);

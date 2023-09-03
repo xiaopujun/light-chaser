@@ -62,10 +62,11 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                                     </DesignerBackground>
                                 </GroupMovable>
                             </DragScaleProvider>
-                            <LcRightMenu/>
+
                         </DesignerRuler>
                     </GroupSelectable>
                 </DesignerContainer>
+                <LcRightMenu/>
                 <HotKey handlerMapping={getHotKeyConfig}/>
             </>
         );

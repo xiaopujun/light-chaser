@@ -1,8 +1,9 @@
 import * as React from "react";
 import Moveable, {
+    OnDrag,
     OnDragEnd,
+    OnDragGroup,
     OnDragGroupEnd,
-    OnDragGroupStart,
     OnDragStart,
     OnResize,
     OnResizeEnd,
@@ -72,7 +73,12 @@ class GroupMovable extends React.Component<GroupMovableProps> {
     }
 
     onDragGroupEnd = (e: OnDragGroupEnd) => {
-        const {updateLayout} = designerStore;
+        const {targets} = e;
+        //通过第一个元素来判断。 框选的所有组件是否处于锁定状态，处于锁定状态，则不允许拖拽和缩放。
+        const {updateLayout, layoutConfigs} = designerStore;
+        const firstLock = layoutConfigs[targets[0].id].locked;
+        if (firstLock) return false;
+
         let {backoff, setBackoff, setGroupCoordinate, groupCoordinate} = eventOperateStore;
         let data: MovableItemType[] = [];
         e.events.forEach((ev: any) => {
@@ -205,11 +211,20 @@ class GroupMovable extends React.Component<GroupMovableProps> {
         if (locked) return false;
     }
 
-    onDragGroupStart = (e: OnDragGroupStart) => {
+    onDrag = (e: OnDrag) => {
+        const {target, beforeTranslate} = e;
+        target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
+    }
+
+    onDragGroup = (e: OnDragGroup) => {
         const {targets} = e;
         const {layoutConfigs} = designerStore;
+        //通过第一个元素来判断。 框选的所有组件是否处于锁定状态，处于锁定状态，则不允许拖拽和缩放。
         const firstLock = layoutConfigs[targets[0].id].locked;
-        if (firstLock) return false;
+        if (firstLock)
+            return false;
+        else
+            e.events.forEach(ev => ev.target.style.transform = ev.transform)
     }
 
     onResizeGroupStart = (e: OnResizeGroupStart) => {
@@ -234,13 +249,10 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                           throttleDrag={rasterize ? dragStep : 1}
                           throttleResize={rasterize ? resizeStep : 1}
                           onClickGroup={e => (selectorRef.current as any)?.clickTarget(e.inputEvent, e.inputTarget)}
-                          onDrag={({target, beforeTranslate}) => {
-                              target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
-                          }}
+                          onDrag={this.onDrag}
                           onDragStart={this.onDragStart}
                           onDragEnd={this.onDragEnd}
-                          onDragGroupStart={this.onDragGroupStart}
-                          onDragGroup={e => e.events.forEach(ev => ev.target.style.transform = ev.transform)}
+                          onDragGroup={this.onDragGroup}
                           onDragGroupEnd={this.onDragGroupEnd}
                           onResizeStart={this.onResizeStart}
                           onResize={this.onResize}

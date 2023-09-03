@@ -28,11 +28,11 @@ class LayerListStore {
 
     lockChange = (id: string, lock: boolean) => {
         const {updateLayout} = designerStore;
-        const {targetIds, targets, setTargetIds, setTargets} = eventOperateStore;
-        if (targetIds.includes(id)) {
-            const newTargetIds = targetIds.filter(_id => _id !== id);
-            setTargetIds(newTargetIds);
-        }
+        const {targetIds, targets, /*setTargetIds,*/ setTargets} = eventOperateStore;
+        // if (targetIds.includes(id)) {
+        //     const newTargetIds = targetIds.filter(_id => _id !== id);
+        //     setTargetIds(newTargetIds);
+        // }
         if (targets && targets.length > 0) {
             const newTargets = targets.filter(target => target.id !== id);
             if (newTargets.length !== targets.length)
@@ -45,7 +45,7 @@ class LayerListStore {
 
     //todo 此方法逻辑需要优化
     selectedChange = (data: LayerItemDataProps, e: MouseEvent<HTMLDivElement>) => {
-        let {setTargets, setTargetIds, targetIds, targets} = eventOperateStore;
+        let {setTargets, /*setTargetIds,*/ targetIds, targets} = eventOperateStore;
         const targetDom = document.getElementById(data.compId!);
 
         //隐藏的组件不可选
@@ -89,7 +89,7 @@ class LayerListStore {
         //更新选中组件列表
         setTargets(selected);
         //更新图层列表的显示效果
-        setTargetIds(currentTargetIds);
+        // setTargetIds(currentTargetIds);
 
         if (currentTargetIds.length > 0) {
             currentTargetIds.forEach(id => {

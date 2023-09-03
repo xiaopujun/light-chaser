@@ -48,7 +48,7 @@ class EventOperateStore {
             targets: observable,
             targetIds: observable,
             setTargets: action,
-            setTargetIds: action,
+            // setTargetIds: action,
         })
     }
 
@@ -120,27 +120,54 @@ class EventOperateStore {
 
     setSelectorRef = (ref: any) => this.selectorRef = ref;
 
-    setTargets = (targets: any[]) => this.targets = targets;
+    setTargets = (targets: HTMLElement[]) => {
+        if (!targets) return;
+        this.targets = targets;
 
-    setTargetIds = (targetIds: string[]) => {
-        //清除之前的选中
-        const {layerInstanceMap} = layerListStore;
-        this.targetIds.length > 0 && this.targetIds.forEach(id => {
-            const instance: LayerComponent = layerInstanceMap[id];
-            if (!!instance)
-                instance.update({selected: false});
-        });
-        //设置本次选中的组件id
-        this.targetIds = targetIds;
-        //若显示了图层,则更新图层中被选中的组件
-        if (!!layerInstanceMap) {
-            targetIds.forEach(id => {
+        //记录图层之前处于选中状态的组件id
+        const oldTargetIds: string[] = [...this.targetIds];
+
+        const newTargetIds: string[] = [];
+        targets.forEach(target => newTargetIds.push(target.id));
+        this.targetIds = newTargetIds;
+
+        //更新图层列表状态
+        const {visible, layerInstanceMap} = layerListStore;
+        if (visible) {
+            //清除之前的选中
+            oldTargetIds.forEach(id => {
+                const instance: LayerComponent = layerInstanceMap[id];
+                if (!!instance)
+                    instance.update({selected: false});
+            });
+            //设置本次选中的组件id
+            newTargetIds.forEach(id => {
                 const instance: LayerComponent = layerInstanceMap[id];
                 if (!!instance)
                     instance.update({selected: true});
-            });
+            })
         }
     };
+
+    // setTargetIds = (targetIds: string[]) => {
+    //     //清除之前的选中
+    //     const {layerInstanceMap} = layerListStore;
+    //     this.targetIds.length > 0 && this.targetIds.forEach(id => {
+    //         const instance: LayerComponent = layerInstanceMap[id];
+    //         if (!!instance)
+    //             instance.update({selected: false});
+    //     });
+    //     //设置本次选中的组件id
+    //     this.targetIds = targetIds;
+    //     //若显示了图层,则更新图层中被选中的组件
+    //     if (!!layerInstanceMap) {
+    //         targetIds.forEach(id => {
+    //             const instance: LayerComponent = layerInstanceMap[id];
+    //             if (!!instance)
+    //                 instance.update({selected: true});
+    //         });
+    //     }
+    // };
 
     setPointerTarget = (target: any) => this.pointerTarget = target;
 
