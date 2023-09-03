@@ -253,31 +253,6 @@ class DesignerStore implements AbstractBaseStore {
 
     copyItem = (ids: string[]) => {
         return historyRecordOperateProxy.doCopy(ids);
-        // let newIds: any = [];
-        // let {maxLevel, setMaxLevel} = eventOperateStore;
-        // for (const id of ids) {
-        //     //获取被复制元素布局
-        //     const {[id]: layout} = this.layoutConfigs;
-        //     if (layout) {
-        //         //生成新id
-        //         const newId = idGenerate.generateId();
-        //         newIds.push(newId);
-        //         //生成新布局
-        //         const newLayout = cloneDeep(layout);
-        //         newLayout.id = newId;
-        //         const [x = 10, y = 10] = (newLayout.position || []).map((p) => p + 10);
-        //         newLayout.position = [x, y];
-        //         newLayout.order = ++maxLevel;
-        //         this.layoutConfigs[newId] = newLayout;
-        //         //生成新数据
-        //         const copiedInstance = this.compInstances[id];
-        //         let newConfig = cloneDeep(copiedInstance.getConfig());
-        //         newConfig.info.id = newId;
-        //         this.elemConfigs![newId] = newConfig;
-        //     }
-        // }
-        // setMaxLevel(maxLevel);
-        // return newIds;
     };
 }
 

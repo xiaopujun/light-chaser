@@ -1,11 +1,18 @@
 
 .lc-hotkey-des {
-  padding: 10px;
+  max-height: 600px;
+  overflow-y: auto;
 
   .hotkey-des-item {
+    padding: 5px 10px;
     display: flex;
     justify-content: space-between;
     color: #a6a6a6;
     margin-bottom: 15px;
+    transition: background-color 0.2s;
+  }
+
+  .hotkey-des-item:hover {
+    background-color: rgba(68, 68, 68, 0.74);
   }
 }

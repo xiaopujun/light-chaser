@@ -69,7 +69,7 @@ class Footer extends Component {
                     <div className={'right-info-item'}>项目 : {name}</div>
                     <div className={'right-info-item'}>状态 : {stateStr}</div>
                 </div>
-                <Dialog title={'快捷键说明'} visible={this.state.showHotKeyDes} onClose={this.toggleHotKeyDes}>
+                <Dialog title={'快捷键说明'} visible={this.state.showHotKeyDes} width={500} onClose={this.toggleHotKeyDes}>
                     <HotKeyDes/>
                 </Dialog>
             </div>
