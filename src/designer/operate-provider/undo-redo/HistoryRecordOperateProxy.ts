@@ -141,7 +141,7 @@ class HistoryRecordOperateProxy {
     }
 
     public doDelete(): void {
-        const {targetIds, /*setTargetIds,*/ setTargets} = eventOperateStore;
+        const {targetIds, setTargets} = eventOperateStore;
         const {delItem, layoutConfigs, compInstances} = designerStore;
         if (!targetIds || targetIds.length === 0) return;
         const {setContentVisible, activeConfig} = rightStore;
@@ -158,7 +158,6 @@ class HistoryRecordOperateProxy {
 
         //删除组件
         targetIds.length > 0 && delItem(targetIds);
-        // setTargetIds([]);
         setTargets([])
     }
 

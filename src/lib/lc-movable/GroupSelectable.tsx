@@ -63,13 +63,6 @@ class GroupSelectable extends Component {
             }
         }
 
-        //图层若处于显示状态，则同步勾选图层列表中的元素
-        // if (e.inputEvent.target.className.indexOf('menu-item') === -1) {
-        //     let targetIds: string[] = [];
-        //     selected.forEach((item: any) => targetIds.push(item.id));
-        //     setTargetIds(targetIds);
-        // }
-
         //更新选中的组件
         setTargets(selected as HTMLElement[]);
 

@@ -48,7 +48,6 @@ class EventOperateStore {
             targets: observable,
             targetIds: observable,
             setTargets: action,
-            // setTargetIds: action,
         })
     }
 
@@ -148,26 +147,6 @@ class EventOperateStore {
             })
         }
     };
-
-    // setTargetIds = (targetIds: string[]) => {
-    //     //清除之前的选中
-    //     const {layerInstanceMap} = layerListStore;
-    //     this.targetIds.length > 0 && this.targetIds.forEach(id => {
-    //         const instance: LayerComponent = layerInstanceMap[id];
-    //         if (!!instance)
-    //             instance.update({selected: false});
-    //     });
-    //     //设置本次选中的组件id
-    //     this.targetIds = targetIds;
-    //     //若显示了图层,则更新图层中被选中的组件
-    //     if (!!layerInstanceMap) {
-    //         targetIds.forEach(id => {
-    //             const instance: LayerComponent = layerInstanceMap[id];
-    //             if (!!instance)
-    //                 instance.update({selected: true});
-    //         });
-    //     }
-    // };
 
     setPointerTarget = (target: any) => this.pointerTarget = target;
 
