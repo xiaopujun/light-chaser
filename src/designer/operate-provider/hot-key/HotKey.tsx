@@ -19,7 +19,7 @@ interface HotKeyProps {
 }
 
 //需要屏蔽浏览器默认快捷键效果的快捷键列表
-const shieldKeyList = ['control + s', 'alt', 'control + l', 'control + shift + l']
+const shieldKeyList = ['control + s', 'alt', 'control + l', 'control + shift + l', 'control + h']
 
 class HotKey extends Component<HotKeyProps> {
 

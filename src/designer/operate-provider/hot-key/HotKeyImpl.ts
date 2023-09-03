@@ -129,7 +129,7 @@ export const doSave = () => {
 }
 
 export const doHide = () => {
-    const {targetIds} = eventOperateStore;
+    const {targetIds, setTargets} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
     const {layoutConfigs} = designerStore;
     let toBeUpdate: MovableItemType[] = [];
@@ -138,6 +138,7 @@ export const doHide = () => {
         toBeUpdate.push({...item, hide: true});
     });
     historyRecordOperateProxy.doHideUpd(toBeUpdate);
+    setTargets([]);
 }
 
 /*************************快捷键控制移动组件的位置*************************/
