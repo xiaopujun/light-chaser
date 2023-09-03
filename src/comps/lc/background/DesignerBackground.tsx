@@ -17,7 +17,6 @@ class DesignerBackground extends Component<LcDesignerBackgroundProps> {
     constructor(props: LcDesignerBackgroundProps) {
         super(props);
         const {compInstances, elemConfigs} = designerStore;
-        // const {customComponentInfoMap} = designerStarter;
         let config: AbstractBackgroundImplProps | null = null;
         if ('80cc666f' in elemConfigs!)
             config = elemConfigs['80cc666f'];
@@ -28,7 +27,7 @@ class DesignerBackground extends Component<LcDesignerBackgroundProps> {
         }
         compInstances['80cc666f'] = new AbstractBackgroundImpl(this, config!);
         this.state = {config: config?.background}
-        // delete elemConfigs!['80cc666f'];
+        delete elemConfigs!['80cc666f'];
     }
 
     onClick = (e: MouseEvent<HTMLDivElement>) => {
