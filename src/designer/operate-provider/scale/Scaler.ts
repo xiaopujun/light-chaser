@@ -4,6 +4,7 @@ import eventManager from "../core/EventManager";
 import {KMMap} from "../hot-key/KeyboardMouse";
 import footerStore from "../../footer/FooterStore";
 import DragScaleProvider from "../DragScaleProvider";
+import eventOperateStore from "../EventOperateStore";
 
 export const doScale = (e: any) => {
     //如果仍处于拖拽过程中，则不进行缩放
@@ -15,7 +16,7 @@ export const doScale = (e: any) => {
     //缩放标尺
     eventManager.emit('wheel', e);
     //更新缩放比例显示信息
-    const {setScale} = footerStore;
+    const {setScale} = eventOperateStore;
     setScale(scaleCore.scale);
 }
 

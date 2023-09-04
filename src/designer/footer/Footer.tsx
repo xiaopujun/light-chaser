@@ -8,6 +8,7 @@ import layerListStore from "../float-configs/layer-list/LayerListStore";
 import keyboardIcon from './keyboard-icon.svg';
 import layerIcon from './layers-icon.svg';
 import footerStore from "./FooterStore";
+import eventOperateStore from "../operate-provider/EventOperateStore";
 
 class Footer extends Component {
 
@@ -29,7 +30,8 @@ class Footer extends Component {
 
     render() {
         const {layoutConfigs, projectConfig: {name, state}} = designerStore;
-        const {size, coordinate, scale} = footerStore;
+        const {size, coordinate} = footerStore;
+        const {scale} = eventOperateStore;
         let stateStr = '';
         switch (state) {
             case '0':

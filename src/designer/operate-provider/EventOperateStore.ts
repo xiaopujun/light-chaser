@@ -47,6 +47,8 @@ class EventOperateStore {
         makeObservable(this, {
             targets: observable,
             targetIds: observable,
+            scale: observable,
+            setScale: action,
             setTargets: action,
         })
     }
@@ -106,6 +108,13 @@ class EventOperateStore {
      * 用于记录当前新添加的组件id,实际渲染时根据该id读取组件数据并记录操作日志
      */
     addRecordCompId: string | null = null;
+
+    /**
+     * 当前画布的缩放比例，作为响应式变量，再缩放画布时，实时调整控制点的大小
+     */
+    scale = 1;
+
+    setScale = (scale: number) => this.scale = scale;
 
     setAddRecordCompId = (id: string | null) => this.addRecordCompId = id;
 

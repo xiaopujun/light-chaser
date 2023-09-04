@@ -236,13 +236,14 @@ class GroupMovable extends React.Component<GroupMovableProps> {
 
     render() {
         const {readonly = false} = this.props;
-        const {selectorRef, targets} = eventOperateStore;
+        const {selectorRef, targets, scale} = eventOperateStore;
         const {canvasConfig: {rasterize, dragStep, resizeStep}} = designerStore;
         return (
             <>
                 {this.props.children}
                 <Moveable ref={this.movableRef}
                           target={targets}
+                          zoom={1 / scale}
                           draggable={!readonly}
                           resizable={!readonly}
                           keepRatio={false}

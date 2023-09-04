@@ -11,6 +11,9 @@ import designerStore from "../../designer/store/DesignerStore";
  * @param locked 是否锁定
  */
 export function setControlPointLineColor(locked: boolean) {
+    const {targetIds} = eventOperateStore;
+    //没有选中组件的情况下不会显示边框。
+    if (targetIds.length === 0) return;
     const pointLineDom = document.querySelectorAll(".moveable-control,.moveable-line");
     if (!pointLineDom) return;
     if (locked) {
