@@ -9,6 +9,7 @@ import EditorDesignerLoader from "../../loader/EditorDesignerLoader";
 import {historyOperator} from "../undo-redo/HistoryOperator";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import undoRedoMap from "../undo-redo/core";
+import runtimeConfigStore from "../../store/RuntimeConfigStore";
 
 export const selectAll = () => {
     let comps = document.getElementsByClassName('lc-comp-item');
@@ -350,4 +351,30 @@ export const redo = () => {
     if (!record) return;
     const {type} = record!;
     undoRedoMap.get(type)?.redo(record!);
+}
+
+
+/*************************运行时配置快捷键*************************/
+
+/**
+ * 切换辅助线展示
+ */
+export const toggleSecondaryBorder = () => {
+    const {auxiliaryBorder, setAuxiliaryBorder} = runtimeConfigStore;
+    const newValue = !auxiliaryBorder;
+    if (newValue) {
+        //展示辅助线
+        const compContainers = document.getElementsByClassName('lc-comp-item')
+        compContainers && Array.from(compContainers).forEach((compContainer: any) => {
+            compContainer.style.border = '1px solid #65eafc';
+        });
+    } else {
+        //隐藏辅助线
+        //展示辅助线
+        const compContainers = document.getElementsByClassName('lc-comp-item')
+        compContainers && Array.from(compContainers).forEach((compContainer: any) => {
+            compContainer.style.border = '1px solid #65eafc00';
+        });
+    }
+    setAuxiliaryBorder(!auxiliaryBorder);
 }

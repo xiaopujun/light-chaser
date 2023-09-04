@@ -9,6 +9,7 @@ class HotKeyDes extends Component {
         {name: '锁定组件', key: 'ctrl + l'},
         {name: '解锁组件', key: 'ctrl + shift + l'},
         {name: '隐藏组件', key: 'ctrl + h'},
+        {name: '开/关辅助边框', key: 'ctrl + k'},
         {name: '元素置顶', key: 'ctrl + up-arrow(方向上键)'},
         {name: '元素置底', key: 'ctrl + down-arrow(方向下键)'},
         {name: '删除组件', key: 'delete'},

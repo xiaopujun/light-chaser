@@ -232,8 +232,6 @@ export interface ActiveElem {
 export interface CanvasConfig {
     //开启栅格化
     rasterize?: boolean;
-    //是否开启辅助线框
-    wireframe?: boolean;
     //栅格化拖拽步长
     dragStep?: number;
     //栅格化缩放步长

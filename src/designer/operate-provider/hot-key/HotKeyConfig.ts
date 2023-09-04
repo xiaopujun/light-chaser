@@ -1,29 +1,30 @@
 import {HotKeyConfigType, TriggerType} from "./HotKey";
 import {doScale} from "../scale/Scaler";
 import {
+    doBaseBottomDecreaseUp,
+    doBaseBottomEnlargeUp,
+    doBaseLeftDecreaseRight,
+    doBaseLeftEnlargeRight,
+    doBaseRightDecreaseLeft,
+    doBaseRightEnlargeLeft,
+    doBaseUpDecreaseDown,
+    doBaseUpEnlargeDown,
     doCopy,
     doDelete,
+    doHide,
     doLock,
     doMoveDown,
     doMoveLeft,
     doMoveRight,
     doMoveUp,
-    doBaseUpEnlargeDown,
-    doBaseRightEnlargeLeft,
-    doBaseLeftEnlargeRight,
-    doBaseBottomEnlargeUp,
     doSave,
+    doUnLock,
+    redo,
     selectAll,
     toBottom,
+    toggleSecondaryBorder,
     toTop,
-    doBaseBottomDecreaseUp,
-    doBaseUpDecreaseDown,
-    doBaseRightDecreaseLeft,
-    doBaseLeftDecreaseRight,
-    undo,
-    redo,
-    doUnLock,
-    doHide
+    undo
 } from "./HotKeyImpl";
 
 export const getHotKeyConfig: HotKeyConfigType = {
@@ -63,6 +64,9 @@ export const getHotKeyConfig: HotKeyConfigType = {
     },
     'control + shift + z': {
         handler: redo,
+    },
+    'control + k': {
+        handler: toggleSecondaryBorder,
     },
     'arrowup': {
         handler: doMoveUp,

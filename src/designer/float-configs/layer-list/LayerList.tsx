@@ -61,6 +61,7 @@ class LayerList extends Component {
                         return item.locked;
                 } else
                     return item.name?.includes(searchContent);
+                return false;
             })
             .sort((a: MovableItemType, b: MovableItemType) => b.order! - a.order!)
             .map((item: MovableItemType) => {

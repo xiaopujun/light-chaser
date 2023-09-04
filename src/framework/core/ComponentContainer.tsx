@@ -3,6 +3,7 @@ import {MovableItemType} from "../../lib/lc-movable/types";
 import Loading from "../../lib/loading/Loading";
 import {parseUrlParams} from "../../utils/URLUtil";
 import historyRecordOperateProxy from "../../designer/operate-provider/undo-redo/HistoryRecordOperateProxy";
+import runtimeConfigStore from "../../designer/store/RuntimeConfigStore";
 
 export interface ComponentContainerProps {
     layout: MovableItemType;
@@ -23,6 +24,7 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
 
     render() {
         const {layout} = this.props;
+        const {auxiliaryBorder} = runtimeConfigStore;
         return (
             <Suspense fallback={<Loading/>}>
                 <div
@@ -37,6 +39,7 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
                         transform: `translate(${layout.position![0]}px, ${layout.position![1]}px)`,
                         position: 'absolute',
                         display: layout.hide ? 'none' : 'block',
+                        border: auxiliaryBorder ? '1px solid #65eafc' : '1px solid #65eafc00'
                     }} className={'lc-comp-item'}>
                     <div ref={(ref) => this.ref = ref} style={{
                         width: '100%',

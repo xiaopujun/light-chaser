@@ -64,7 +64,6 @@ class HistoryRecordOperateProxy {
     };
 
     public doResize(items: MovableItemType[], direction: [number, number]): void {
-        console.log("doResize", items)
         //构建历史记录数据
         const {layoutConfigs, updateLayout} = designerStore;
         const ids: string[] = [];

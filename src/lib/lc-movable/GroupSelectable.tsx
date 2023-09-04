@@ -35,7 +35,6 @@ class GroupSelectable extends Component {
     onSelectEnd = (e: OnSelectEnd) => {
         let {selected} = e;
         const {movableRef, setTargets, /*setTargetIds*/} = eventOperateStore;
-        console.log("onSelectEnd isDragStart", e.isDragStart);
         if (!movableRef) return;
         const movable: Moveable = movableRef!.current!;
         //这段代码干啥的？

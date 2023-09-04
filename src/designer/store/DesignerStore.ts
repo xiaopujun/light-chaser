@@ -54,7 +54,6 @@ class DesignerStore implements AbstractBaseStore {
      */
     canvasConfig: CanvasConfig = {
         rasterize: false, //是否栅格化
-        wireframe: false, //是否开启辅助线框
         dragStep: 1, //栅格化拖拽步长
         resizeStep: 1, //栅格化缩放步长
         width: 1920, //画布宽
