@@ -9,20 +9,25 @@ import LcButton from "../lib/lc-button/LcButton";
 import listDelImg from './list-del.svg';
 import listDisplay from './list-display.svg';
 import listEdit from './list-edit.svg';
+import listClone from './list-clone.svg';
 import {buildUrlParams} from "../utils/URLUtil";
 import {ImgUtil} from "../utils/ImgUtil";
 import {ProjectState, SaveType} from "../designer/DesignerType";
 import designerStore from "../designer/store/DesignerStore";
 import EditorDesignerLoader from "../designer/loader/EditorDesignerLoader";
+import Dialog from "../lib/lc-dialog/Dialog";
 
 class LightChaserList extends Component<any> {
 
     state: any = {
         showAddDialog: false,
+        showDelDialog: false,
         addNewData: {},
         data: [],
         imageIdToUrl: {}
     }
+
+    toBeDelId: string = '';
 
     componentDidMount() {
         EditorDesignerLoader.getInstance().scannerProjectOperators();
@@ -62,22 +67,43 @@ class LightChaserList extends Component<any> {
 
     onCancel = () => this.setState({addNewScreen: false});
 
-    openScreen = (e: any) => {
+    operatoHandler = (e: any) => {
         const {type, savetype} = e.target.dataset
         let id = e.currentTarget.id;
-        if (type === 'edit') {
-            let params = buildUrlParams({
-                id: id,
-                action: 'edit'
-            });
-            window.open(`/designer?${params}`, '_blank');
-        } else if (type === 'show') {
-            window.open(`/view?id=${id}&saveType=${savetype}&action=view`, '_blank');
+        switch (type) {
+            case 'edit':
+                let params = buildUrlParams({
+                    id: id,
+                    action: 'edit'
+                });
+                window.open(`/designer?${params}`, '_blank');
+                break;
+            case 'show':
+                window.open(`/view?id=${id}&saveType=${savetype}&action=view`, '_blank');
+                break;
+            case 'del':
+                this.toBeDelId = id;
+                this.setState({showDelDialog: true});
+                break;
+            default:
+                alert('开发中...');
+
         }
     }
 
+    confirmDel = () => {
+        EditorDesignerLoader.getInstance().abstractOperatorMap[SaveType.LOCAL].deleteProject(this.toBeDelId);
+        let {data} = this.state;
+        data = data.filter((item: any) => item.id !== this.toBeDelId);
+        this.setState({data, showDelDialog: false});
+    }
+
+    cancelDel = () => {
+        this.setState({showDelDialog: false});
+    }
+
     render() {
-        const {addNewScreen, data, imageIdToUrl} = this.state;
+        const {addNewScreen, data, imageIdToUrl, showDelDialog} = this.state;
         let width = (window.innerWidth - 230 - (5 * 20)) / 5;
         let height = width * (9 / 16);
         return (
@@ -124,7 +150,7 @@ class LightChaserList extends Component<any> {
                                                  height: height,
                                                  backgroundImage: bgImgUrl && `url(${bgImgUrl})`,
                                              }}
-                                             onClick={this.openScreen}
+                                             onClick={this.operatoHandler}
                                              id={item.id + ''}
                                              className={'project-item'}>
                                             <div className={'pro-list-content'} style={{zIndex: 1}}>
@@ -133,12 +159,15 @@ class LightChaserList extends Component<any> {
                                                     <div className={'operate-item'} data-type={'edit'}>
                                                         <img src={listEdit} alt={'编辑'}/>
                                                     </div>
-                                                    <div className={'operate-item'} data-type={'del'}>
-                                                        <img src={listDelImg} alt={'删除'}/>
-                                                    </div>
                                                     <div className={'operate-item'} data-type={'show'}
                                                          data-savetype={item.saveType}>
                                                         <img src={listDisplay} alt={'展示'}/>
+                                                    </div>
+                                                    <div className={'operate-item'} data-type={'del'}>
+                                                        <img src={listDelImg} alt={'删除'}/>
+                                                    </div>
+                                                    <div className={'operate-item'} data-type={'clone'}>
+                                                        <img src={listClone} alt={'克隆'}/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -155,9 +184,37 @@ class LightChaserList extends Component<any> {
                     </div>
                 </div>
                 <AddNewScreenDialog onOk={this.onOk} onCancel={this.onCancel} visible={addNewScreen}/>
+                <DeleteDialog visible={showDelDialog} onOk={this.confirmDel} onCancel={this.cancelDel}/>
             </div>
         );
     }
 }
 
 export default LightChaserList;
+
+
+interface DialogProps {
+    onOk: () => void;
+    onCancel: () => void;
+    visible: boolean;
+}
+
+const DeleteDialog = (props: DialogProps) => {
+
+    const {onOk, onCancel, visible} = props;
+
+    return (
+        <Dialog title={'删除确认'} visible={visible} onClose={onCancel}>
+            <div style={{color: '#aeaeae', padding: 10}}>确定要删除该项目吗？</div>
+            <div className={'del-pro-confirm'} style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                borderTop: '2px solid #272b34',
+                paddingTop: 5
+            }}>
+                <LcButton onClick={onOk}>确认</LcButton>
+                <LcButton onClick={onCancel}>取消</LcButton>
+            </div>
+        </Dialog>
+    )
+}

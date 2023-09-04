@@ -16,14 +16,18 @@ class DesignerBackground extends Component<LcDesignerBackgroundProps> {
 
     constructor(props: LcDesignerBackgroundProps) {
         super(props);
-        const {compInstances, elemConfigs} = designerStore;
+        const {compInstances, elemConfigs, canvasConfig} = designerStore;
         let config: AbstractBackgroundImplProps | null = null;
         if ('80cc666f' in elemConfigs!)
             config = elemConfigs['80cc666f'];
         else {
             const componentDefine = EditorDesignerLoader.getInstance().customComponentInfoMap['LcBg'];
-            if (componentDefine)
+            if (componentDefine) {
                 config = componentDefine.getInitConfig();
+                //创建项目时，画布宽高读取输入的画布宽高
+                config!.background!.width = canvasConfig.width!;
+                config!.background!.height = canvasConfig.height!;
+            }
         }
         compInstances['80cc666f'] = new AbstractBackgroundImpl(this, config!);
         this.state = {config: config?.background}

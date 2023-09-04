@@ -137,8 +137,19 @@ class LocalOperator extends AbstractOperator {
         }
     }
 
+    //todo 逻辑要优化，要删除promise的传递
     public deleteProject(id: string): boolean {
-        return false;
+        //删除项目数据
+        localforage.removeItem(id).then(() => console.log('删除项目数据成功'));
+        //删除项目截图
+        ImgUtil.delImgFormLocal(LocalConstant.LOCAL_PROJECT_SCREENSHOT + id);
+        //删除项目列表信息
+        this.getProjectSimpleInfoList().then((simpleInfoList) => {
+            let index = simpleInfoList.findIndex((project) => project.id === id);
+            simpleInfoList.splice(index, 1);
+            localforage.setItem(LocalConstant.LOCAL_SIMPLE_PROJECT_LIST, simpleInfoList).then(() => console.log('删除项目列表信息成功'));
+        });
+        return true;
     }
 
     public async getProject(id: string): Promise<ProjectDataType | null> {

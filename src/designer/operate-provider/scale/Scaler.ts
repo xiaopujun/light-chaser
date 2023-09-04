@@ -2,7 +2,6 @@ import designerStore from "../../store/DesignerStore";
 import scaleCore from "./ScaleCore";
 import eventManager from "../core/EventManager";
 import {KMMap} from "../hot-key/KeyboardMouse";
-import footerStore from "../../footer/FooterStore";
 import DragScaleProvider from "../DragScaleProvider";
 import eventOperateStore from "../EventOperateStore";
 
