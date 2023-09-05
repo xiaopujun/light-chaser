@@ -10,6 +10,7 @@ import {idGenerate} from "../../utils/IdGenerate";
 import {LocalConstant} from "../LocalConstant";
 import {message} from "antd";
 import {BackgroundConfigType} from "../../comps/lc/background/AbstractBackgroundImpl";
+import {cloneDeep} from "lodash";
 
 /**
  * 本地项目数据操作实现
@@ -170,6 +171,37 @@ class LocalOperator extends AbstractOperator {
             return simpleDataList;
         else
             return [];
+    }
+
+    public async copyProject(id: string, name?: string): Promise<boolean> {
+        //1. 获取id对应的项目数据
+        const copiedData = await this.getProject(id)
+        //3. 复制项目数据
+        const newId = idGenerate.generateId();
+        const newData = cloneDeep(copiedData);
+        newData!.id = newId;
+        newData!.projectConfig!.name = name || newData!.projectConfig!.name + '(副本)';
+        //4. 复制项目截图
+        const copiedImgBlob = await ImgUtil.getImgBlobFromLocal(LocalConstant.LOCAL_PROJECT_SCREENSHOT + id);
+        const newImgBlob = new Blob([copiedImgBlob!], {type: copiedImgBlob?.type});
+        const newScreenShotId = LocalConstant.LOCAL_PROJECT_SCREENSHOT + newId;
+        await ImgUtil.saveImgBlobToLocal(newImgBlob, newScreenShotId);
+        newData!.projectConfig!.screenshot = newScreenShotId;
+        //5. 存储新的项目数据到indexedDB
+        await localforage.setItem(newId, newData);
+        //6. 更新项目列表信息
+        const simpleInfoList = await this.getProjectSimpleInfoList();
+        simpleInfoList.push({
+            id: newId,
+            name: newData!.projectConfig!.name,
+            des: newData!.projectConfig!.des,
+            state: newData!.projectConfig!.state,
+            updateTime: newData!.projectConfig!.updateTime,
+            screenshot: newData!.projectConfig!.screenshot,
+            saveType: newData!.projectConfig!.saveType
+        });
+        await localforage.setItem(LocalConstant.LOCAL_SIMPLE_PROJECT_LIST, simpleInfoList);
+        return true;
     }
 
 }

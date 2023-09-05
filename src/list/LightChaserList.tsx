@@ -16,20 +16,29 @@ import {ProjectState, SaveType} from "../designer/DesignerType";
 import designerStore from "../designer/store/DesignerStore";
 import EditorDesignerLoader from "../designer/loader/EditorDesignerLoader";
 import Dialog from "../lib/lc-dialog/Dialog";
+import ConfigItem from "../lib/lc-config-item/ConfigItem";
+import UnderLineInput from "../lib/lc-input/UnderLineInput";
+import {message} from "antd";
 
 class LightChaserList extends Component<any> {
 
     state: any = {
         showAddDialog: false,
         showDelDialog: false,
+        showCloneDialog: false,
         addNewData: {},
         data: [],
         imageIdToUrl: {}
     }
 
     toBeDelId: string = '';
+    toBeCloneId: string = '';
 
     componentDidMount() {
+        this.loadProjectList();
+    }
+
+    loadProjectList = () => {
         EditorDesignerLoader.getInstance().scannerProjectOperators();
         const {projectConfig: {saveType = SaveType.LOCAL}} = designerStore;
         EditorDesignerLoader.getInstance().abstractOperatorMap[saveType].getProjectSimpleInfoList().then((data: any) => {
@@ -67,7 +76,7 @@ class LightChaserList extends Component<any> {
 
     onCancel = () => this.setState({addNewScreen: false});
 
-    operatoHandler = (e: any) => {
+    operateHandler = (e: any) => {
         const {type, savetype} = e.target.dataset
         let id = e.currentTarget.id;
         switch (type) {
@@ -86,7 +95,9 @@ class LightChaserList extends Component<any> {
                 this.setState({showDelDialog: true});
                 break;
             default:
-                alert('开发中...');
+                this.toBeCloneId = id;
+                this.setState({showCloneDialog: true});
+                break;
 
         }
     }
@@ -102,8 +113,21 @@ class LightChaserList extends Component<any> {
         this.setState({showDelDialog: false});
     }
 
+    confirmClone = (name: string) => {
+        EditorDesignerLoader.getInstance().abstractOperatorMap[SaveType.LOCAL].copyProject(this.toBeCloneId, name).then(() => {
+            message.success('克隆成功');
+            //重新加载项目列表
+            this.loadProjectList();
+            this.setState({showCloneDialog: false});
+        });
+    }
+
+    cancelClone = () => {
+        this.setState({showCloneDialog: false});
+    }
+
     render() {
-        const {addNewScreen, data, imageIdToUrl, showDelDialog} = this.state;
+        const {addNewScreen, data, imageIdToUrl, showDelDialog, showCloneDialog} = this.state;
         let width = (window.innerWidth - 230 - (5 * 20)) / 5;
         let height = width * (9 / 16);
         return (
@@ -150,7 +174,7 @@ class LightChaserList extends Component<any> {
                                                  height: height,
                                                  backgroundImage: bgImgUrl && `url(${bgImgUrl})`,
                                              }}
-                                             onClick={this.operatoHandler}
+                                             onClick={this.operateHandler}
                                              id={item.id + ''}
                                              className={'project-item'}>
                                             <div className={'pro-list-content'} style={{zIndex: 1}}>
@@ -185,6 +209,8 @@ class LightChaserList extends Component<any> {
                 </div>
                 <AddNewScreenDialog onOk={this.onOk} onCancel={this.onCancel} visible={addNewScreen}/>
                 <DeleteDialog visible={showDelDialog} onOk={this.confirmDel} onCancel={this.cancelDel}/>
+                <CloneDialog onOk={(name) => this.confirmClone(name)} onCancel={this.cancelClone}
+                             visible={showCloneDialog}/>
             </div>
         );
     }
@@ -193,13 +219,13 @@ class LightChaserList extends Component<any> {
 export default LightChaserList;
 
 
-interface DialogProps {
+interface DelDialogProps {
     onOk: () => void;
     onCancel: () => void;
     visible: boolean;
 }
 
-const DeleteDialog = (props: DialogProps) => {
+const DeleteDialog = (props: DelDialogProps) => {
 
     const {onOk, onCancel, visible} = props;
 
@@ -215,6 +241,45 @@ const DeleteDialog = (props: DialogProps) => {
                 <LcButton onClick={onOk}>确认</LcButton>
                 <LcButton onClick={onCancel}>取消</LcButton>
             </div>
+        </Dialog>
+    )
+}
+
+interface CloneDialogProps {
+    onOk: (cloneName: string) => void;
+    onCancel: () => void;
+    visible: boolean;
+}
+
+const CloneDialog = (props: CloneDialogProps) => {
+
+    const {onOk, onCancel, visible} = props;
+
+    let cloneName = "";
+
+    const onSubmit = (event: any) => {
+        console.log(cloneName)
+        event.preventDefault();
+        onOk(cloneName)
+    }
+
+    return (
+        <Dialog title={'克隆项目'} visible={visible} onClose={onCancel}>
+            <form onSubmit={onSubmit}>
+                <ConfigItem title={'项目名称'} contentStyle={{width: '80%'}}>
+                    <UnderLineInput required={true} defaultValue={cloneName}
+                                    onChange={(event) => cloneName = event.target.value}/>
+                </ConfigItem>
+                <div className={'del-pro-confirm'} style={{
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    borderTop: '2px solid #272b34',
+                    paddingTop: 10
+                }}>
+                    <LcButton type={'submit'}>确认</LcButton>
+                    <LcButton onClick={onCancel}>取消</LcButton>
+                </div>
+            </form>
         </Dialog>
     )
 }

@@ -49,6 +49,11 @@ export class ImgUtil {
         }
     }
 
+    static async saveImgBlobToLocal(blob: Blob, key: string): Promise<boolean> {
+        await localforage.setItem(key, blob);
+        return true;
+    }
+
     static delImgFormLocal = (key: string) => {
         localforage.removeItem(key).then(() => {
             console.log("del bgImg success: ", key);
@@ -71,5 +76,9 @@ export class ImgUtil {
     static async getImgFromLocal(key: string | any): Promise<string> {
         const imageObj = await ImgUtil.getImageFromLocalWithKey(key)
         return imageObj[key];
+    }
+
+    static async getImgBlobFromLocal(key: string): Promise<Blob | null> {
+        return await localforage.getItem(key);
     }
 }
