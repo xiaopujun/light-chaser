@@ -12,5 +12,5 @@ export abstract class AbstractOperator {
 
     public abstract getProject(id: string): Promise<ProjectDataType | null>;
 
-    public abstract copyProject(id: string, name?: string): Promise<boolean>;
+    public abstract copyProject(id: string, name?: string): Promise<string>;
 }

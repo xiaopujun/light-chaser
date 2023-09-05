@@ -78,6 +78,7 @@ class LightChaserList extends Component<any> {
 
     operateHandler = (e: any) => {
         const {type, savetype} = e.target.dataset
+        if (!type) return;
         let id = e.currentTarget.id;
         switch (type) {
             case 'edit':
@@ -94,9 +95,11 @@ class LightChaserList extends Component<any> {
                 this.toBeDelId = id;
                 this.setState({showDelDialog: true});
                 break;
-            default:
+            case 'clone':
                 this.toBeCloneId = id;
                 this.setState({showCloneDialog: true});
+                break;
+            default:
                 break;
 
         }
@@ -114,11 +117,20 @@ class LightChaserList extends Component<any> {
     }
 
     confirmClone = (name: string) => {
-        EditorDesignerLoader.getInstance().abstractOperatorMap[SaveType.LOCAL].copyProject(this.toBeCloneId, name).then(() => {
-            message.success('克隆成功');
+        const operator = EditorDesignerLoader.getInstance().abstractOperatorMap[SaveType.LOCAL];
+        operator.copyProject(this.toBeCloneId, name).then((id) => {
             //重新加载项目列表
-            this.loadProjectList();
-            this.setState({showCloneDialog: false});
+            operator.getProjectSimpleInfoList().then((simpleInfoList: any) => {
+                const newSimpleInfo = simpleInfoList.filter((item: any) => item.id === id);
+                ImgUtil.getImageFromLocalWithKey(newSimpleInfo[0].screenshot).then((obj: any) => {
+                    message.success('克隆成功');
+                    this.setState({
+                        data: [...this.state.data, ...newSimpleInfo],
+                        imageIdToUrl: {...this.state.imageIdToUrl, ...obj},
+                        showCloneDialog: false
+                    });
+                })
+            })
         });
     }
 

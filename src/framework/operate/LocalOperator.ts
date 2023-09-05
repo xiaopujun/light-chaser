@@ -173,7 +173,7 @@ class LocalOperator extends AbstractOperator {
             return [];
     }
 
-    public async copyProject(id: string, name?: string): Promise<boolean> {
+    public async copyProject(id: string, name?: string): Promise<string> {
         //1. 获取id对应的项目数据
         const copiedData = await this.getProject(id)
         //3. 复制项目数据
@@ -201,7 +201,7 @@ class LocalOperator extends AbstractOperator {
             saveType: newData!.projectConfig!.saveType
         });
         await localforage.setItem(LocalConstant.LOCAL_SIMPLE_PROJECT_LIST, simpleInfoList);
-        return true;
+        return newId;
     }
 
 }
