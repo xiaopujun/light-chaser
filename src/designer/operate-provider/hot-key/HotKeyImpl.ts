@@ -10,17 +10,18 @@ import {historyOperator} from "../undo-redo/HistoryOperator";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import undoRedoMap from "../undo-redo/core";
 import runtimeConfigStore from "../../store/RuntimeConfigStore";
+import headerStore from "../../header/HeaderStore";
+import layerListStore from "../../float-configs/layer-list/LayerListStore";
+import footerStore from "../../footer/FooterStore";
 
 export const selectAll = () => {
     let comps = document.getElementsByClassName('lc-comp-item');
-    let compIds: string[] = [];
     let compArr: any[] = [];
     //权限时排除已锁定和隐藏的组件
     comps && Array.from(comps).forEach((comp: any) => {
         const {locked, hide} = comp.dataset;
         if (locked !== 'true' && hide !== 'true') {
             compArr.push(comp);
-            compIds.push(comp.id);
         }
     });
     const {setTargets, calculateGroupCoordinate} = eventOperateStore;
@@ -377,4 +378,44 @@ export const toggleSecondaryBorder = () => {
         });
     }
     setAuxiliaryBorder(!auxiliaryBorder);
+}
+
+/**
+ * 切换项目设置弹框
+ */
+export const toggleProjectConfig = () => {
+    const {projectVisible, setProjectVisible} = headerStore;
+    setProjectVisible(!projectVisible);
+}
+
+/**
+ * 切换画布设置弹框
+ */
+export const toggleCanvasConfig = () => {
+    const {canvasVisible, setCanvasVisible} = headerStore;
+    setCanvasVisible(!canvasVisible);
+}
+
+/**
+ * 切换全局主题设置弹框
+ */
+export const toggleGlobalThemeConfig = () => {
+    const {themeVisible, setThemeVisible} = headerStore;
+    setThemeVisible(!themeVisible);
+}
+
+/**
+ * 切换快捷键说明弹框
+ */
+export const toggleHotKeyDes = () => {
+    const {hotKeyVisible, setHotKeyVisible} = footerStore;
+    setHotKeyVisible(!hotKeyVisible)
+}
+
+/**
+ * 切换组件库弹框
+ */
+export const toggleLayer = () => {
+    const {setVisible, visible} = layerListStore;
+    setVisible && setVisible(!visible);
 }

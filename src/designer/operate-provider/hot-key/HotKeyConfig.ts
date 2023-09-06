@@ -21,7 +21,8 @@ import {
     doUnLock,
     redo,
     selectAll,
-    toBottom,
+    toBottom, toggleCanvasConfig, toggleGlobalThemeConfig, toggleHotKeyDes, toggleLayer,
+    toggleProjectConfig,
     toggleSecondaryBorder,
     toTop,
     undo
@@ -67,6 +68,21 @@ export const getHotKeyConfig: HotKeyConfigType = {
     },
     'control + k': {
         handler: toggleSecondaryBorder,
+    },
+    'control + 1': {
+        handler: toggleProjectConfig,
+    },
+    'control + 2': {
+        handler: toggleCanvasConfig,
+    },
+    'control + 3': {
+        handler: toggleGlobalThemeConfig,
+    },
+    'control + 4': {
+        handler: toggleHotKeyDes,
+    },
+    'control + 5': {
+        handler: toggleLayer,
     },
     'arrowup': {
         handler: doMoveUp,

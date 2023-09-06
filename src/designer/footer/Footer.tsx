@@ -12,15 +12,9 @@ import eventOperateStore from "../operate-provider/EventOperateStore";
 
 class Footer extends Component {
 
-    state = {
-        showHotKeyDes: false
-    }
-
     toggleHotKeyDes = () => {
-        const {showHotKeyDes} = this.state;
-        this.setState({
-            showHotKeyDes: !showHotKeyDes
-        })
+        const {hotKeyVisible, setHotKeyVisible} = footerStore;
+        setHotKeyVisible(!hotKeyVisible)
     }
 
     toggleLayerList = () => {
@@ -30,7 +24,7 @@ class Footer extends Component {
 
     render() {
         const {layoutConfigs, projectConfig: {name, state}} = designerStore;
-        const {size, coordinate} = footerStore;
+        const {size, coordinate, hotKeyVisible} = footerStore;
         const {scale} = eventOperateStore;
         let stateStr = '';
         switch (state) {
@@ -71,7 +65,7 @@ class Footer extends Component {
                     <div className={'right-info-item'}>项目 : {name}</div>
                     <div className={'right-info-item'}>状态 : {stateStr}</div>
                 </div>
-                <Dialog title={'快捷键说明'} visible={this.state.showHotKeyDes} width={500} onClose={this.toggleHotKeyDes}>
+                <Dialog title={'快捷键说明'} visible={hotKeyVisible} width={500} onClose={this.toggleHotKeyDes}>
                     <HotKeyDes/>
                 </Dialog>
             </div>
