@@ -11,7 +11,6 @@
     "antd": "^4.17.3",
     "bfj": "^7.0.2",
     "camelcase": "^6.1.0",
-    "codemirror": "^5.65.13",
     "css-loader": "4.3.0",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",

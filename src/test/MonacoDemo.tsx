@@ -21,7 +21,7 @@ class MonacoDemo extends Component {
         return (
             <Editor
                 height="90vh"
-                defaultLanguage="javascript"
+                defaultLanguage="json"
                 defaultValue="function foo() {
                  console.log('foo');
                  }"

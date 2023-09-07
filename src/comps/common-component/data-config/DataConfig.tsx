@@ -1,4 +1,4 @@
-import React, {Component, useRef, useState} from 'react';
+import React, {Component, useEffect, useRef, useState} from 'react';
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import CodeEditor from "../../../lib/lc-code-editer/CodeEditor";
 import LcButton from "../../../lib/lc-button/LcButton";
@@ -12,6 +12,10 @@ import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import ConfigItemTB from "../../../lib/lc-config-item/ConfigItemTB";
 import {message} from "antd";
 import ObjectUtil from "../../../utils/ObjectUtil";
+import Editor from "@monaco-editor/react";
+import Loading from "../../../lib/loading/Loading";
+import js_beautify from "js-beautify";
+import {MonacoEditor} from "../../../lib/lc-code-editer/MonacoEditor";
 
 class DataConfig extends Component<ConfigType> {
 
@@ -158,13 +162,14 @@ export const ApiDataConfig: React.FC<ConfigType> = ({instance}) => {
                 <div>秒</div>
             </ConfigItem>
             <ConfigItemTB title={'请求头(JSON)'} contentStyle={{width: '95%'}}>
-                <CodeEditor onChange={headerOnChange} defaultValue={headerRef.current}/>
+                <MonacoEditor height={100} onChange={value => headerOnChange(value!)} value={headerRef.current}/>
             </ConfigItemTB>
             <ConfigItemTB title={'请求参数(JSON)'} contentStyle={{width: '95%'}}>
-                <CodeEditor onChange={paramsOnChange} defaultValue={paramsRef.current}/>
+                <MonacoEditor height={100} onChange={value => paramsOnChange(value!)} value={paramsRef.current}/>
             </ConfigItemTB>
             <ConfigItemTB title={'响应结果'} contentStyle={{width: '95%'}}>
-                <CodeEditor readonly={true} value={testResult}/>
+                <MonacoEditor height={200} value={testResult}/>
+                {/*<CodeEditor readonly={true} value={testResult}/>*/}
             </ConfigItemTB>
             <LcButton style={{width: 'calc(50% - 16px)', margin: '0 7px'}} onClick={testApi}>测试接口</LcButton>
             <LcButton style={{width: 'calc(50% - 16px)', margin: '0 7px'}} onClick={doSave}>保存</LcButton>
@@ -190,7 +195,7 @@ export const StaticDataConfig: React.FC<ConfigType> = ({instance}) => {
 
     return (
         <>
-            <CodeEditor onChange={(value) => dataCode = value} height={'400'} defaultValue={dataCode || ''}/>
+            <MonacoEditor height={400} onChange={(value) => dataCode = value!} value={dataCode}/>
             <div className={'static-data-btn-arr'}><LcButton onClick={flashData}>保存并刷新数据</LcButton></div>
         </>
     );
