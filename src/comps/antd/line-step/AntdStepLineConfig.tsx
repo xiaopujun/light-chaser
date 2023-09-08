@@ -15,8 +15,10 @@ import {MappingOptions} from "@antv/g2plot/lib/adaptor/geometries/base";
 import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import Select from "../../../lib/lc-select/Select";
+import {AntdBaseDesignerComponent} from "../../antd-common/AntdBaseDesignerComponent";
+import AntdFieldMapping from "../../antd-common/config/field-mapping/AntdFieldMapping";
 
-class AntdStepLineConfig extends Component<ConfigType> {
+class AntdStepLineStyleConfig extends Component<ConfigType> {
 
     lineCoordinateSysChange = (config: LineOptions) => {
         const instance = this.props.instance as AntdCommonLine;
@@ -40,7 +42,7 @@ class AntdStepLineConfig extends Component<ConfigType> {
     }
 }
 
-export {AntdStepLineConfig};
+export {AntdStepLineStyleConfig};
 
 export interface AntdStepLineGraphicsProps {
     config?: WritableLineOptions;
@@ -128,4 +130,8 @@ export const AntdStepLineGraphics: React.FC<AntdStepLineGraphicsProps> = ({confi
             </ConfigCard>
         </Accordion>
     )
+}
+
+export const AntdStepLineFieldMapping: React.FC<ConfigType<AntdBaseDesignerComponent>> = ({instance}) => {
+    return <AntdFieldMapping instance={instance} fields={["xField", "yField"]}/>
 }

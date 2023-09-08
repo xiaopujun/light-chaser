@@ -14,8 +14,8 @@ import {Types} from "@antv/g2";
 import {AntdLegend} from "../../antd-common/config/AntdFragment";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import Accordion from "../../../lib/lc-accordion/Accordion";
-import {Option} from "../../../lib/lc-select/SelectType";
-import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
+import AntdFieldMapping from "../../antd-common/config/field-mapping/AntdFieldMapping";
+import {AntdBaseDesignerComponent} from "../../antd-common/AntdBaseDesignerComponent";
 
 export default class AntdPieStyleConfig extends Component<ConfigType> {
 
@@ -237,29 +237,6 @@ export const StatisticTextConfig: React.FC<AntdStatisticTextConfigProps> = ({con
 }
 
 
-export const AntdPieFieldMapping: React.FC<ConfigType<AntdPie>> = ({instance}) => {
-    const config = instance.getConfig()!.style;
-    const {data, angleField, colorField} = config!;
-    const options: Option[] = [];
-    if (data && data.length >= 1) {
-        const dataObj = data[0];
-        Object.keys(dataObj).forEach(key => options.push({label: key, value: key}))
-    }
-
-    const fieldChange = (config: WritablePieOptions) => {
-        instance.update({style: config});
-    }
-
-    return (
-        <ConfigCard title={'字段映射'}>
-            <ConfigItem title={'角度字段'}>
-                <Select options={options} defaultValue={angleField}
-                        onChange={(value => fieldChange({angleField: value}))}/>
-            </ConfigItem>
-            <ConfigItem title={'颜色字段'}>
-                <Select options={options} defaultValue={colorField}
-                        onChange={(value => fieldChange({colorField: value}))}/>
-            </ConfigItem>
-        </ConfigCard>
-    )
+export const AntdPieFieldMapping: React.FC<ConfigType<AntdBaseDesignerComponent>> = ({instance}) => {
+    return <AntdFieldMapping instance={instance} fields={["angleField", "colorField"]}/>
 }

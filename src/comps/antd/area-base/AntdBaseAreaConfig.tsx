@@ -15,8 +15,10 @@ import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import Select from "../../../lib/lc-select/Select";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
+import AntdFieldMapping from "../../antd-common/config/field-mapping/AntdFieldMapping";
+import {AntdBaseDesignerComponent} from "../../antd-common/AntdBaseDesignerComponent";
 
-class AntdBaseAreaConfig extends Component<ConfigType> {
+class AntdBaseAreaStyleConfig extends Component<ConfigType> {
 
 
     AreaCoordinateSysChange = (config: AreaOptions) => {
@@ -41,7 +43,7 @@ class AntdBaseAreaConfig extends Component<ConfigType> {
     }
 }
 
-export {AntdBaseAreaConfig};
+export {AntdBaseAreaStyleConfig};
 
 
 export interface AntdBaseAreaGraphicsProps {
@@ -139,4 +141,8 @@ export const AntdBaseAreaGraphics: React.FC<AntdBaseAreaGraphicsProps> = ({confi
 
         </Accordion>
     )
+}
+
+export const AntdBaseAreaFieldMapping: React.FC<ConfigType<AntdBaseDesignerComponent>> = ({instance}) => {
+    return <AntdFieldMapping instance={instance} fields={['xField', "yField"]}/>
 }

@@ -34,7 +34,7 @@ class AntdPieDefinition extends AbstractCustomComponentDefinition<AntdPie, AntdP
             style: AntdPieConfig,
             animation: AnimationConfig,
             theme: ThemeConfig,
-            // mapping: AntdPieFieldMapping
+            mapping: AntdPieFieldMapping
         };
     }
 

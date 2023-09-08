@@ -2,9 +2,11 @@ import {BaseInfoType} from "../../../designer/DesignerType";
 import baseAreaImg from "./base-area.png";
 import AbstractAreaDefinition from "../../antd-common/area/AbstractAreaDefinition";
 import {AntdAreaProps} from "../../antd-common/area/AntdCommonArea";
-import {BaseMenuMapping} from "../../common-component/common-types";
-import {AntdBaseAreaConfig} from "./AntdBaseAreaConfig";
 import {MenuToConfigMappingType} from "../../../framework/core/AbstractCustomComponentDefinition";
+import React from "react";
+
+const AntdBaseAreaStyleConfig = React.lazy(() => import("./AntdBaseAreaConfig").then((module) => ({default: module.AntdBaseAreaStyleConfig})));
+const AntdBaseAreaFieldMapping = React.lazy(() => import("./AntdBaseAreaConfig").then((module) => ({default: module.AntdBaseAreaFieldMapping})));
 
 class AntdBaseAreaDefinition extends AbstractAreaDefinition {
 
@@ -24,7 +26,8 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
 
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         let menuToConfigContentMap = super.getMenuToConfigContentMap();
-        menuToConfigContentMap!['style'] = AntdBaseAreaConfig;
+        menuToConfigContentMap!['style'] = AntdBaseAreaStyleConfig;
+        menuToConfigContentMap!['mapping'] = AntdBaseAreaFieldMapping;
         return menuToConfigContentMap;
     }
 

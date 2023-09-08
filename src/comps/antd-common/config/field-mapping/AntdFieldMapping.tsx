@@ -5,7 +5,6 @@ import Select from "../../../../lib/lc-select/Select";
 import ConfigCard from "../../../../lib/lc-config-card/ConfigCard";
 import {Option} from "../../../../lib/lc-select/SelectType";
 import {AntdBaseDesignerComponent} from "../../AntdBaseDesignerComponent";
-import AbstractComponent from "../../../../framework/core/AbstractComponent";
 
 type AntdChartField =
     'xField'
@@ -26,13 +25,15 @@ const fieldNameMapping = {
     sizeField: '尺寸字段',
 }
 
-export interface AntdFieldMappingProps extends ConfigType {
+export interface AntdFieldMappingProps extends ConfigType<AntdBaseDesignerComponent> {
     fields?: AntdChartFields;
 }
 
 const AntdFieldMapping: React.FC<AntdFieldMappingProps> = (props) => {
     const {instance, fields = ['xField', 'yField', 'seriesField']} = props;
-    const data = instance.getConfig()?.data?.staticData?.data;
+    const config = instance.getConfig();
+    const data = config?.data?.staticData?.data;
+    const style = config?.style;
     const options: Option[] = [];
     if (data && data.length >= 1) {
         const dataObj = data[0];
@@ -43,19 +44,12 @@ const AntdFieldMapping: React.FC<AntdFieldMappingProps> = (props) => {
             {fields.map(field => {
                 return (
                     <ConfigItem title={fieldNameMapping[field]}>
-                        <Select options={options}/>
+                        <Select options={options} defaultValue={style![field]} onChange={(value => {
+                            instance.update({style: {[field]: value}})
+                        })}/>
                     </ConfigItem>
                 )
             })}
-            <ConfigItem title={'X字段'}>
-                <Select options={options}/>
-            </ConfigItem>
-            <ConfigItem title={'Y字段'}>
-                <Select options={options}/>
-            </ConfigItem>
-            <ConfigItem title={'分类字段'}>
-                <Select options={options}/>
-            </ConfigItem>
         </ConfigCard>
     )
 }

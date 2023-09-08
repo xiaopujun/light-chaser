@@ -2,9 +2,11 @@ import {BaseInfoType} from "../../../designer/DesignerType";
 import baseLineImg from "./base-line.png";
 import AbstractLineDefinition from "../../antd-common/line/AbstractLineDefinition";
 import {AntdLineProps} from "../../antd-common/line/AntdCommonLine";
-import {BaseMenuMapping} from "../../common-component/common-types";
-import {AntdBaseLineConfig} from "./AntdBaseLineConfig";
 import {MenuToConfigMappingType} from "../../../framework/core/AbstractCustomComponentDefinition";
+import React from "react";
+
+const AntdBaseLineFieldMapping = React.lazy(() => import("./AntdBaseLineConfig").then((module) => ({default: module.AntdBaseLineFieldMapping})));
+const AntdBaseLineStyleConfig = React.lazy(() => import("./AntdBaseLineConfig").then((module) => ({default: module.AntdBaseLineStyleConfig})));
 
 class AntdBaseLineDefinition extends AbstractLineDefinition {
 
@@ -22,10 +24,10 @@ class AntdBaseLineDefinition extends AbstractLineDefinition {
         return baseLineImg;
     }
 
-
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         let menuToConfigContentMap = super.getMenuToConfigContentMap();
-        menuToConfigContentMap!['style'] = AntdBaseLineConfig;
+        menuToConfigContentMap!['style'] = AntdBaseLineStyleConfig;
+        menuToConfigContentMap!['mapping'] = AntdBaseLineFieldMapping;
         return menuToConfigContentMap;
     }
 

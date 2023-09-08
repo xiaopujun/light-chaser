@@ -3,9 +3,8 @@ import {BaseInfoType} from "../../designer/DesignerType";
 import AbstractComponent from "./AbstractComponent";
 import React from "react";
 import {ClazzTemplate} from "../../comps/common-component/common-types";
-import {ConfigType} from "../../designer/right/ConfigType";
 
-export type MenuToConfigMappingType<T extends ConfigType = ConfigType> = { [key: string]: React.ComponentType<T> };
+export type MenuToConfigMappingType = { [key: string]: React.ComponentType<any> };
 
 /**
  * 自动扫描抽象组件定义核心类。

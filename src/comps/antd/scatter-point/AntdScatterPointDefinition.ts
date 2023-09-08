@@ -59,6 +59,7 @@ class AntdScatterPointDefinition extends AbstractScatterDefinition {
                 xField: "x",
                 yField: "y",
                 colorField: "type",
+                sizeField: "y",
                 size: 6,
                 shape: "circle",
                 pointStyle: {

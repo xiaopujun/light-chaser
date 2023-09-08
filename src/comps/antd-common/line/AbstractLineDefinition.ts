@@ -5,7 +5,7 @@ import {
 } from "../../../framework/core/AbstractCustomComponentDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import {BaseMenuMapping, ClazzTemplate} from "../../common-component/common-types";
+import {ClazzTemplate} from "../../common-component/common-types";
 import AntdCommonLine, {AntdLineProps} from "./AntdCommonLine";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
@@ -33,7 +33,7 @@ abstract class AbstractLineDefinition extends AbstractCustomComponentDefinition<
             style: AntdLineCommonStyleConfig,
             animation: AnimationConfig,
             theme: ThemeConfig,
-            // mapping: AntdLineFieldMapping
+            mapping: AntdLineFieldMapping
         };
     }
 }
