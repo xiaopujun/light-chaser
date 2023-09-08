@@ -1,27 +1,45 @@
-import React, {Component, useEffect, useRef, useState} from 'react';
+import React, {Component, useRef, useState} from 'react';
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
-import CodeEditor from "../../../lib/lc-code-editer/CodeEditor";
 import LcButton from "../../../lib/lc-button/LcButton";
 import Select from "../../../lib/lc-select/Select";
 import './DataConfig.less';
 import {ConfigType} from "../../../designer/right/ConfigType";
 import {DataConfigType} from "../../../designer/DesignerType";
-import {OperateType} from "../../../framework/core/AbstractComponent";
+import AbstractComponent, {OperateType} from "../../../framework/core/AbstractComponent";
 import {sendHttpRequest} from "../../../utils/HttpUtil";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import ConfigItemTB from "../../../lib/lc-config-item/ConfigItemTB";
 import {message} from "antd";
 import ObjectUtil from "../../../utils/ObjectUtil";
-import Editor from "@monaco-editor/react";
-import Loading from "../../../lib/loading/Loading";
-import js_beautify from "js-beautify";
 import {MonacoEditor} from "../../../lib/lc-code-editer/MonacoEditor";
 
-class DataConfig extends Component<ConfigType> {
+type DataTypeItem = 'static' | 'api' | 'database' | 'excel';
+
+type DataTypes = (DataTypeItem)[];
+
+export interface DataConfigProps<T extends AbstractComponent = AbstractComponent> extends ConfigType<T> {
+    // 限制数据源类型，默认全部。（针对如进度图类型的图表，其数据只是一个简单的数字，一般不通过excel导入）
+    dataTypes?: DataTypes;
+    // 接口数据转换函数，默认按照json格式转换（对于有自己特殊类型的图表，可以自定义转换函数，比如仪表盘，其数据是一个数字，而不是json）
+    apiDataConvert?: (data: string) => any;
+}
+
+class DataConfig extends Component<DataConfigProps> {
 
     state = {
         dataSource: 'static',
     }
+
+    allDataTypes = [
+        {
+            value: 'static',
+            label: '静态数据',
+        },
+        {
+            value: 'api',
+            label: '接口(API)',
+        }
+    ]
 
     constructor(props: ConfigType) {
         super(props);
@@ -42,17 +60,14 @@ class DataConfig extends Component<ConfigType> {
 
 
     render() {
-        const {instance} = this.props;
+        const {instance, dataTypes} = this.props;
         const {dataSource} = this.state;
+        this.allDataTypes = dataTypes ? this.allDataTypes.filter(item => (dataTypes as DataTypes)?.includes(item.value as DataTypeItem)) : this.allDataTypes;
         return (
             <div className={'lc-data-config'}>
                 <ConfigItem title={'数据源'} contentStyle={{width: 100}}>
-                    <Select onChange={(value) => this.dataSourcesChange(value)} defaultValue={dataSource} options={[
-                        {value: 'static', label: '静态数据'},
-                        {value: 'api', label: '接口(API)'},
-                        // {value: 'database', label: '数据库'},
-                        // {value: 'excel', label: 'EXCEL导入'},
-                    ]}/>
+                    <Select onChange={(value) => this.dataSourcesChange(value)} defaultValue={dataSource}
+                            options={this.allDataTypes}/>
                 </ConfigItem>
                 {dataSource === 'static' &&
                 <StaticDataConfig instance={instance}/>}
@@ -63,7 +78,7 @@ class DataConfig extends Component<ConfigType> {
     }
 }
 
-export const ApiDataConfig: React.FC<ConfigType> = ({instance}) => {
+export const ApiDataConfig: React.FC<DataConfigProps> = ({instance, apiDataConvert}) => {
     const config: DataConfigType = instance.getConfig().data;
     const {apiData} = config;
     const urlRef = useRef(apiData?.url || '');
@@ -71,62 +86,60 @@ export const ApiDataConfig: React.FC<ConfigType> = ({instance}) => {
     const headerRef = useRef(JSON.stringify(apiData?.header || {}));
     const paramsRef = useRef(JSON.stringify(apiData?.params || {}));
     const flashFrequencyRef = useRef(apiData?.flashFrequency || 5);
-    const [testResult, setTestResult] = useState<any>('');
+    const [testResult, setTestResult] = useState<any>(null);
 
-    const testApi = () => {
+    let paramObj: Record<string, any> | null = null;
+    let headerObj: Record<string, any> | null = null;
+
+    const validate = () => {
         if (urlRef.current === '') {
             message.error('接口地址不能为空');
-            return;
+            return false;
         }
         if (methodRef.current === '') {
             message.error('请求方式不能为空');
-            return;
+            return false;
         }
-        let header = ObjectUtil.stringToJsObj(headerRef.current);
-        if (!header) {
+        headerObj = ObjectUtil.stringToJsObj(headerRef.current);
+        if (!headerObj) {
             message.error('请求头不符合json格式');
-            return;
+            return false;
         }
-        let params = ObjectUtil.stringToJsObj(paramsRef.current);
-        if (!params) {
+        paramObj = ObjectUtil.stringToJsObj(paramsRef.current);
+        if (!paramObj) {
             message.error('请求参数不符合json格式');
-            return;
+            return false;
         }
-        sendHttpRequest(urlRef.current, methodRef.current, header, params).then(res => {
-            setTestResult(JSON.stringify(res));
-        }).catch(err => {
-            setTestResult(JSON.stringify(err));
+        return true;
+    }
+
+    const testApi = () => {
+        if (!validate()) return;
+        sendHttpRequest(urlRef.current, methodRef.current, headerObj, paramObj).then(res => {
+            if (apiDataConvert && typeof apiDataConvert === 'function')
+                setTestResult(apiDataConvert(res));
+            else
+                setTestResult(JSON.stringify(res));
+        }).catch(() => {
+            setTestResult('请求失败');
         });
     }
 
     const doSave = () => {
-        if (urlRef.current === '') {
-            message.warning('接口地址不能为空');
-            return;
-        }
-        if (methodRef.current === '') {
-            message.warning('请求方式不能为空');
-            return;
-        }
-
-        let header = ObjectUtil.stringToJsObj(headerRef.current);
-        if (!header) message.error('请求头不符合json格式');
-        let params = ObjectUtil.stringToJsObj(paramsRef.current);
-        if (!params) message.error('请求参数不符合json格式');
+        if (!validate()) return;
         instance.update({
             data: {
+                staticData: {
+                    data: apiDataConvert ? apiDataConvert(testResult) : JSON.parse(testResult),
+                },
                 apiData: {
                     url: urlRef.current,
                     method: methodRef.current,
-                    header: header,
-                    params: params,
+                    header: headerObj,
+                    params: paramObj,
                     flashFrequency: flashFrequencyRef.current
                 }
             },
-            //todo 要拆分出去
-            style: {
-                data: JSON.parse(testResult)
-            }
         });
     }
 
@@ -169,7 +182,6 @@ export const ApiDataConfig: React.FC<ConfigType> = ({instance}) => {
             </ConfigItemTB>
             <ConfigItemTB title={'响应结果'} contentStyle={{width: '95%'}}>
                 <MonacoEditor height={200} value={testResult}/>
-                {/*<CodeEditor readonly={true} value={testResult}/>*/}
             </ConfigItemTB>
             <LcButton style={{width: 'calc(50% - 16px)', margin: '0 7px'}} onClick={testApi}>测试接口</LcButton>
             <LcButton style={{width: 'calc(50% - 16px)', margin: '0 7px'}} onClick={doSave}>保存</LcButton>
@@ -186,7 +198,7 @@ export const StaticDataConfig: React.FC<ConfigType> = ({instance}) => {
         try {
             const dataStr = dataCode.replace(/'/g, '"').replace(/\s/g, '');
             const data = JSON.parse(dataStr);
-            instance.update({data: {staticData: {data}}, style: {data}},
+            instance.update({data: {staticData: {data}}},
                 {reRender: true, operateType: OperateType.DATA});
         } catch (e: any) {
             message.error('数据格式错误');

@@ -23,7 +23,7 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = (props) => {
     })
 
     return (
-        <div style={{width, height, border: '1px solid #373738'}} className={'monaco-editor-container'}>
+        <div style={{width, height, border: '1px solid #414141'}} className={'monaco-editor-container'}>
             <Editor defaultLanguage={language || 'json'}
                     theme="vs-dark"
                     onChange={onChange}

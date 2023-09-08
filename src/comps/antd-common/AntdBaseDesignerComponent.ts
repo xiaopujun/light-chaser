@@ -18,40 +18,57 @@ export abstract class AntdBaseDesignerComponent<I extends Plot<any> = Plot<Optio
     //是否为断开后重新连接
     protected reConnect: boolean = false;
 
+    setData(data: Object): void {
+        //默认都按照antd组件的data设置方式
+        this.config!.style!.data = data;
+    }
+
+    getData(): Object {
+        //默认都去除静态数据设置中的data
+        return this.config?.data?.staticData?.data;
+    }
+
     public commonLoadData(ins: AbstractComponent): void {
-        const {data} = ins.config!;
-        const {dataSource} = data!;
+        //设计模式下，始终从data设置中读取数据。预览模式下则根据数据源类型读取数据
         let mode = getModeByUrl();
-        if (mode !== Mode.VIEW) {
-            ins.config!.style!.data = ins.config?.data?.staticData?.data;
+        if (mode === Mode.VIEW) {
+            //预览模式
+            const {data} = ins.config!;
+            const {dataSource} = data!;
+            switch (dataSource) {
+                case "static":
+                    this.setData(ins);
+                    break;
+                case "api":
+                    const {url, method, params, header, flashFrequency = 5} = data?.apiData!;
+                    this.interval = setInterval(() => {
+                        sendHttpRequest(url!, method!, header!, params!).then((data: any) => {
+                            if (data) {
+                                this.update({data: {staticData: {data}}} as any, {
+                                    reRender: true,
+                                    operateType: OperateType.DATA
+                                });
+                                if (!this.lastReqState) {
+                                    this.lastReqState = true;
+                                    //如果上一次连接失败，则本次为断线重连
+                                    this.reConnect = true;
+                                } else {
+                                    //上一次连接成功，则本次为正常连接
+                                    this.reConnect = false;
+                                }
+                            } else
+                                console.log('error')
+                        }).catch(() => {
+                            this.lastReqState = false;
+                            this.update({} as any);
+                        });
+                    }, flashFrequency * 1000);
+                    break;
+            }
+        } else {
+            //编辑模式
+            this.setData(this.config?.data?.staticData?.data!)
             return;
-        }
-        switch (dataSource) {
-            case "static":
-                ins.config!.style!.data = ins.config?.data?.staticData?.data;
-                break;
-            case "api":
-                const {url, method, params, header, flashFrequency = 5} = data?.apiData!;
-                this.interval = setInterval(() => {
-                    sendHttpRequest(url!, method!, header!, params!).then((data: any) => {
-                        if (data) {
-                            this.update({style: {data}} as any, {reRender: true, operateType: OperateType.DATA});
-                            if (!this.lastReqState) {
-                                this.lastReqState = true;
-                                //如果上一次连接失败，则本次为断线重连
-                                this.reConnect = true;
-                            } else {
-                                //上一次连接成功，则本次为正常连接
-                                this.reConnect = false;
-                            }
-                        } else
-                            console.log('error')
-                    }).catch(() => {
-                        this.lastReqState = false;
-                        this.update({} as any);
-                    });
-                }, flashFrequency * 1000);
-                break;
         }
     }
 
@@ -73,7 +90,7 @@ export abstract class AntdBaseDesignerComponent<I extends Plot<any> = Plot<Optio
             ComponentUtil.createAndRender(this.container!, LoadError);
         } else {
             if (this.reConnect) {
-                //如果为短线重连，则重新挂载组件并渲染，渲染前先清空错误信息提示组件
+                //如果为断线重连，则重新挂载组件并渲染，渲染前先清空错误信息提示组件
                 ReactDOM.unmountComponentAtNode(this.container!);
                 this.instance = new Clazz(this.container!, this.config?.style!);
                 this.instance.render();
@@ -82,13 +99,11 @@ export abstract class AntdBaseDesignerComponent<I extends Plot<any> = Plot<Optio
                 upOp = upOp || {reRender: true, operateType: OperateType.OPTIONS};
                 if (upOp.reRender) {
                     if (upOp.operateType === OperateType.DATA)
-                        this.instance?.changeData(this.config!.style!.data!);
+                        this.instance?.changeData(this.getData());
                     else
                         this.instance?.update(this.config?.style!);
                 }
             }
         }
     }
-
-
 }

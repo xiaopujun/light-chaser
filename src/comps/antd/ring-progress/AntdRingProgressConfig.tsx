@@ -11,10 +11,8 @@ import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import {StatisticTextConfig} from "../pie/AntdPieStyleConfig";
 import {DataConfigType} from "../../../designer/DesignerType";
-import Select from "../../../lib/lc-select/Select";
-import {ApiDataConfig} from "../../common-component/data-config/DataConfig";
+import DataConfig from "../../common-component/data-config/DataConfig";
 import AntdRingProgress from "./AntdRingProgress";
-import {OperateType} from "../../../framework/core/AbstractComponent";
 
 export class AntdRingProgressStyleConfig extends Component<ConfigType> {
 
@@ -163,32 +161,7 @@ export class AntdRingProgressDataConfig extends Component<ConfigType<AntdRingPro
         const {dataSource} = this.state;
         const dataConfig: DataConfigType = instance.getConfig()!.data!;
         return (
-            <div className={'lc-data-config'}>
-                <ConfigItem title={'数据源'} contentStyle={{width: 100}}>
-                    <Select onChange={(value) => this.dataSourcesChange(value)} defaultValue={dataSource} options={[
-                        {value: 'static', label: '静态数据'},
-                        {value: 'api', label: '接口(API)'},
-                    ]}/>
-                </ConfigItem>
-                {dataSource === 'static' && <>
-                    <ConfigItem title={'百分比值'} contentStyle={{width: 240}}>
-                        <UnderLineInput defaultValue={dataConfig.staticData?.data || 0}
-                                        type={'number'} min={0} max={1} step={0.01}
-                                        onChange={e => {
-                                            const value = parseFloat(e.target.value);
-                                            instance.update({
-                                                data: {staticData: {data: value}},
-                                                style: {percent: value}
-                                            }, {
-                                                reRender: true,
-                                                operateType: OperateType.DATA,
-                                            });
-                                        }}/>
-                    </ConfigItem>
-                </>}
-                {dataSource === 'api' &&
-                <ApiDataConfig instance={instance}/>}
-            </div>
+            <DataConfig instance={instance}/>
         );
     }
 }
