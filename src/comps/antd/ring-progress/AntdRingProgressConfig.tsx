@@ -10,9 +10,6 @@ import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import {StatisticTextConfig} from "../pie/AntdPieStyleConfig";
-import {DataConfigType} from "../../../designer/DesignerType";
-import DataConfig from "../../common-component/data-config/DataConfig";
-import AntdRingProgress from "./AntdRingProgress";
 
 export class AntdRingProgressStyleConfig extends Component<ConfigType> {
 
@@ -130,38 +127,4 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
             </Accordion>
         </>
     );
-}
-
-
-export class AntdRingProgressDataConfig extends Component<ConfigType<AntdRingProgress>> {
-
-    state = {
-        dataSource: 'static',
-    }
-
-    constructor(props: ConfigType<AntdRingProgress>) {
-        super(props);
-        const {instance} = props;
-        const dataConfig: DataConfigType = instance.getConfig()!.data!;
-        this.state = {
-            dataSource: dataConfig?.dataSource || 'static',
-        }
-    }
-
-    dataSourcesChange = (value: any) => {
-        const {instance} = this.props;
-        instance.update({data: {dataSource: value}}, {reRender: false});
-        this.setState({
-            dataSource: value,
-        });
-    }
-
-    render() {
-        const {instance} = this.props;
-        const {dataSource} = this.state;
-        const dataConfig: DataConfigType = instance.getConfig()!.data!;
-        return (
-            <DataConfig instance={instance}/>
-        );
-    }
 }

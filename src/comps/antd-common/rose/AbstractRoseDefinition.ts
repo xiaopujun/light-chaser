@@ -1,5 +1,8 @@
 import React from "react";
-import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
+import {
+    AbstractCustomComponentDefinition,
+    MenuToConfigMappingType
+} from "../../../framework/core/AbstractCustomComponentDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {BaseMenuMapping, ClazzTemplate} from "../../common-component/common-types";
@@ -12,7 +15,7 @@ const ThemeConfig = React.lazy(() => import("../../common-component/theme-config
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
-abstract class AbstractRoseDefinition extends AbstractCustomComponentDefinition<AntdCommonRose, BaseMenuMapping, AntdRoseProps> {
+abstract class AbstractRoseDefinition extends AbstractCustomComponentDefinition<AntdCommonRose, AntdRoseProps> {
 
     getComponent(): ClazzTemplate<AntdCommonRose> | null {
         return AntdCommonRose;
@@ -22,14 +25,14 @@ abstract class AbstractRoseDefinition extends AbstractCustomComponentDefinition<
         return getDefaultMenuList();
     }
 
-    getMenuToConfigContentMap(): BaseMenuMapping | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
             info: BaseInfo,
             data: DataConfig,
             style: AntdRoseCommonStyleConfig,
             animation: AnimationConfig,
             theme: ThemeConfig,
-            mapping: AntdRoseFieldMapping
+            // mapping: AntdRoseFieldMapping
         };
     }
 }

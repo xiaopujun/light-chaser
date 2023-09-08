@@ -4,6 +4,7 @@ import AbstractLineDefinition from "../../antd-common/line/AbstractLineDefinitio
 import {AntdLineProps} from "../../antd-common/line/AntdCommonLine";
 import {BaseMenuMapping} from "../../common-component/common-types";
 import {AntdStepLineConfig} from "./AntdStepLineConfig";
+import {MenuToConfigMappingType} from "../../../framework/core/AbstractCustomComponentDefinition";
 
 class AntdStepLineDefinition extends AbstractLineDefinition {
 
@@ -21,7 +22,7 @@ class AntdStepLineDefinition extends AbstractLineDefinition {
         return stepLineImg;
     }
 
-    getMenuToConfigContentMap(): BaseMenuMapping | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         let menuToConfigContentMap = super.getMenuToConfigContentMap();
         menuToConfigContentMap!['style'] = AntdStepLineConfig;
         return menuToConfigContentMap;

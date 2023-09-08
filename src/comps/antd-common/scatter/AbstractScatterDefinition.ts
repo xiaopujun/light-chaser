@@ -1,5 +1,8 @@
 import React from "react";
-import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
+import {
+    AbstractCustomComponentDefinition,
+    MenuToConfigMappingType
+} from "../../../framework/core/AbstractCustomComponentDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {BaseMenuMapping, ClazzTemplate} from "../../common-component/common-types";
@@ -13,7 +16,7 @@ const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseI
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
 
-abstract class AbstractScatterDefinition extends AbstractCustomComponentDefinition<AntdCommonScatter, BaseMenuMapping, AntdScatterProps> {
+abstract class AbstractScatterDefinition extends AbstractCustomComponentDefinition<AntdCommonScatter, AntdScatterProps> {
 
     getComponent(): ClazzTemplate<AntdCommonScatter> | null {
         return AntdCommonScatter;
@@ -23,14 +26,14 @@ abstract class AbstractScatterDefinition extends AbstractCustomComponentDefiniti
         return getDefaultMenuList();
     }
 
-    getMenuToConfigContentMap(): BaseMenuMapping | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
             info: BaseInfo,
             data: DataConfig,
             style: AntdScatterCommonStyleConfig,
             animation: AnimationConfig,
             theme: ThemeConfig,
-            mapping: AntdScatterFieldMapping
+            // mapping: AntdScatterFieldMapping
         };
     }
 }

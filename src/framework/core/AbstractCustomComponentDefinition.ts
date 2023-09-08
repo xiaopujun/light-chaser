@@ -3,6 +3,9 @@ import {BaseInfoType} from "../../designer/DesignerType";
 import AbstractComponent from "./AbstractComponent";
 import React from "react";
 import {ClazzTemplate} from "../../comps/common-component/common-types";
+import {ConfigType} from "../../designer/right/ConfigType";
+
+export type MenuToConfigMappingType<T extends ConfigType = ConfigType> = { [key: string]: React.ComponentType<T> };
 
 /**
  * 自动扫描抽象组件定义核心类。
@@ -14,9 +17,7 @@ import {ClazzTemplate} from "../../comps/common-component/common-types";
  * M: 菜单配置映射，用于指定当前组件配置菜单对应的配置组件的映射关系
  * P: 组件配置类型，用于指定当前组件的配置数据(config属性的类型)
  */
-export abstract class AbstractCustomComponentDefinition<C extends AbstractComponent = AbstractComponent,
-    M = { [key: string]: React.ComponentType<any> },
-    P = any> {
+export abstract class AbstractCustomComponentDefinition<C extends AbstractComponent = AbstractComponent, P = any> {
 
     /**
      * 返回组件基础信息，用于在组件列表中展示
@@ -46,7 +47,7 @@ export abstract class AbstractCustomComponentDefinition<C extends AbstractCompon
     /**
      * 返回右侧菜单对应的具体配置内容。这个返回结果是一个映射关系。以对象形式返回
      */
-    abstract getMenuToConfigContentMap(): M | null;
+    abstract getMenuToConfigContentMap(): MenuToConfigMappingType | null;
 
 }
 

@@ -140,7 +140,7 @@ export const ApiDataConfig: React.FC<DataConfigProps> = ({instance, apiDataConve
                     flashFrequency: flashFrequencyRef.current
                 }
             },
-        });
+        }, {reRender: true, operateType: OperateType.DATA});
     }
 
     const headerOnChange = (value: string) => {

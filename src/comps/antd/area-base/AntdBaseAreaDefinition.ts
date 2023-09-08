@@ -4,6 +4,7 @@ import AbstractAreaDefinition from "../../antd-common/area/AbstractAreaDefinitio
 import {AntdAreaProps} from "../../antd-common/area/AntdCommonArea";
 import {BaseMenuMapping} from "../../common-component/common-types";
 import {AntdBaseAreaConfig} from "./AntdBaseAreaConfig";
+import {MenuToConfigMappingType} from "../../../framework/core/AbstractCustomComponentDefinition";
 
 class AntdBaseAreaDefinition extends AbstractAreaDefinition {
 
@@ -21,7 +22,7 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
         return baseAreaImg;
     }
 
-    getMenuToConfigContentMap(): BaseMenuMapping | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         let menuToConfigContentMap = super.getMenuToConfigContentMap();
         menuToConfigContentMap!['style'] = AntdBaseAreaConfig;
         return menuToConfigContentMap;

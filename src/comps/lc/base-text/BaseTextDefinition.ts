@@ -1,6 +1,9 @@
-import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
+import {
+    AbstractCustomComponentDefinition,
+    MenuToConfigMappingType
+} from "../../../framework/core/AbstractCustomComponentDefinition";
 import {BaseInfoType} from "../../../designer/DesignerType";
-import {BaseMenuMapping, ClazzTemplate} from "../../common-component/common-types";
+import {ClazzTemplate} from "../../common-component/common-types";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import baseTextImg from './base-text.png';
 import {getDefaultMenuList} from "../../../designer/right/util";
@@ -11,7 +14,7 @@ import AnimationConfig from "../../common-component/animation-config/AnimationCo
 import ThemeConfig from "../../common-component/theme-config/ThemeConfig";
 import {BaseTextDataConfig, BaseTextStyleConfig} from "./BaseTextConfig";
 
-export default class BaseTextDefinition extends AbstractCustomComponentDefinition<BaseText, BaseMenuMapping, BaseTextComponentProps> {
+export default class BaseTextDefinition extends AbstractCustomComponentDefinition<BaseText, BaseTextComponentProps> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "基础文本",
@@ -57,7 +60,7 @@ export default class BaseTextDefinition extends AbstractCustomComponentDefinitio
         return getDefaultMenuList().filter((item: MenuInfo) => item.key !== 'theme');
     }
 
-    getMenuToConfigContentMap(): BaseMenuMapping | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
             info: BaseInfo,
             data: BaseTextDataConfig,

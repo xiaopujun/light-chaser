@@ -1,20 +1,23 @@
 import React from "react";
-import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
+import {
+    AbstractCustomComponentDefinition,
+    MenuToConfigMappingType
+} from "../../../framework/core/AbstractCustomComponentDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import {BaseMenuMapping, ClazzTemplate} from "../../common-component/common-types";
+import {ClazzTemplate} from "../../common-component/common-types";
 import AntdRingProgress, {AntdRingProgressProps} from "./AntdRingProgress";
 import ringProgressImg from './ring-progress.png';
 import {BaseInfoType} from "../../../designer/DesignerType";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
+const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 const AntdRingProgressStyleConfig = React.lazy(() => import("./AntdRingProgressConfig").then((module) => ({default: module.AntdRingProgressStyleConfig})));
-const AntdRingProgressDataConfig = React.lazy(() => import("./AntdRingProgressConfig").then((module) => ({default: module.AntdRingProgressDataConfig})));
 const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig"));
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 
 
-class AntdRingProgressDefinition extends AbstractCustomComponentDefinition<AntdRingProgress, BaseMenuMapping, AntdRingProgressProps> {
+class AntdRingProgressDefinition extends AbstractCustomComponentDefinition<AntdRingProgress, AntdRingProgressProps> {
 
     getComponent(): ClazzTemplate<AntdRingProgress> | null {
         return AntdRingProgress;
@@ -24,10 +27,10 @@ class AntdRingProgressDefinition extends AbstractCustomComponentDefinition<AntdR
         return getDefaultMenuList().filter((menuInfo) => menuInfo.key !== "mapping");
     }
 
-    getMenuToConfigContentMap(): BaseMenuMapping | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
             info: BaseInfo,
-            data: AntdRingProgressDataConfig,
+            data: DataConfig,
             style: AntdRingProgressStyleConfig,
             animation: AnimationConfig,
             theme: ThemeConfig

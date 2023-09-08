@@ -1,8 +1,11 @@
 import React from "react";
-import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
+import {
+    AbstractCustomComponentDefinition,
+    MenuToConfigMappingType
+} from "../../../framework/core/AbstractCustomComponentDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import {BaseMenuMapping, ClazzTemplate} from "../../common-component/common-types";
+import {ClazzTemplate} from "../../common-component/common-types";
 import pieImg from './pie.png';
 import {BaseInfoType} from "../../../designer/DesignerType";
 import AntdPie, {AntdPieProps} from "./AntdPie";
@@ -14,7 +17,7 @@ const ThemeConfig = React.lazy(() => import("../../common-component/theme-config
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
-class AntdPieDefinition extends AbstractCustomComponentDefinition<AntdPie, BaseMenuMapping, AntdPieProps> {
+class AntdPieDefinition extends AbstractCustomComponentDefinition<AntdPie, AntdPieProps> {
 
     getComponent(): ClazzTemplate<AntdPie> | null {
         return AntdPie;
@@ -24,14 +27,14 @@ class AntdPieDefinition extends AbstractCustomComponentDefinition<AntdPie, BaseM
         return getDefaultMenuList();
     }
 
-    getMenuToConfigContentMap(): BaseMenuMapping | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
             info: BaseInfo,
             data: DataConfig,
             style: AntdPieConfig,
             animation: AnimationConfig,
             theme: ThemeConfig,
-            mapping: AntdPieFieldMapping
+            // mapping: AntdPieFieldMapping
         };
     }
 

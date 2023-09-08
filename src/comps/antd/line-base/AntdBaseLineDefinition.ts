@@ -4,6 +4,7 @@ import AbstractLineDefinition from "../../antd-common/line/AbstractLineDefinitio
 import {AntdLineProps} from "../../antd-common/line/AntdCommonLine";
 import {BaseMenuMapping} from "../../common-component/common-types";
 import {AntdBaseLineConfig} from "./AntdBaseLineConfig";
+import {MenuToConfigMappingType} from "../../../framework/core/AbstractCustomComponentDefinition";
 
 class AntdBaseLineDefinition extends AbstractLineDefinition {
 
@@ -22,7 +23,7 @@ class AntdBaseLineDefinition extends AbstractLineDefinition {
     }
 
 
-    getMenuToConfigContentMap(): BaseMenuMapping | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         let menuToConfigContentMap = super.getMenuToConfigContentMap();
         menuToConfigContentMap!['style'] = AntdBaseLineConfig;
         return menuToConfigContentMap;

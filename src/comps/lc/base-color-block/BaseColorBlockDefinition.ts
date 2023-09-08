@@ -1,6 +1,9 @@
-import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
+import {
+    AbstractCustomComponentDefinition,
+    MenuToConfigMappingType
+} from "../../../framework/core/AbstractCustomComponentDefinition";
 import {BaseInfoType} from "../../../designer/DesignerType";
-import {BaseMenuMapping, ClazzTemplate} from "../../common-component/common-types";
+import {ClazzTemplate} from "../../common-component/common-types";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import baseColorBlockImg from './base-color-block.png';
 import {getDefaultMenuList} from "../../../designer/right/util";
@@ -11,7 +14,7 @@ import AnimationConfig from "../../common-component/animation-config/AnimationCo
 import ThemeConfig from "../../common-component/theme-config/ThemeConfig";
 import {BaseColorBlockConfig} from "./BaseColorBlockConfig";
 
-export default class BaseColorBlockDefinition extends AbstractCustomComponentDefinition<BaseColorBlock, Omit<BaseMenuMapping, 'data'>, BaseColorBlockComponentProps> {
+export default class BaseColorBlockDefinition extends AbstractCustomComponentDefinition<BaseColorBlock, BaseColorBlockComponentProps> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "基础色块",
@@ -48,7 +51,7 @@ export default class BaseColorBlockDefinition extends AbstractCustomComponentDef
         return getDefaultMenuList().filter((item: MenuInfo) => (item.key !== 'theme' && item.key !== 'data'));
     }
 
-    getMenuToConfigContentMap(): Omit<BaseMenuMapping, 'data'> | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
             info: BaseInfo,
             style: BaseColorBlockConfig,

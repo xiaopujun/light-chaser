@@ -18,13 +18,18 @@ export abstract class AntdBaseDesignerComponent<I extends Plot<any> = Plot<Optio
     //是否为断开后重新连接
     protected reConnect: boolean = false;
 
+    /**
+     * 默认都按照antd组件的data设置方式,如果有特殊的组件需要特殊处理，则重写此方法
+     * @param data
+     */
     setData(data: Object): void {
-        //默认都按照antd组件的data设置方式
         this.config!.style!.data = data;
     }
 
+    /**
+     * 默认都读取静态数据设置中的data,如果有特殊的组件需要特殊处理，则重写此方法
+     */
     getData(): Object {
-        //默认都去除静态数据设置中的data
         return this.config?.data?.staticData?.data;
     }
 
@@ -37,7 +42,7 @@ export abstract class AntdBaseDesignerComponent<I extends Plot<any> = Plot<Optio
             const {dataSource} = data!;
             switch (dataSource) {
                 case "static":
-                    this.setData(ins);
+                    this.setData(this.config?.data?.staticData?.data);
                     break;
                 case "api":
                     const {url, method, params, header, flashFrequency = 5} = data?.apiData!;
