@@ -4,7 +4,7 @@ import LcButton from "../../../lib/lc-button/LcButton";
 import Select from "../../../lib/lc-select/Select";
 import './DataConfig.less';
 import {ConfigType} from "../../../designer/right/ConfigType";
-import {DataConfigType} from "../../../designer/DesignerType";
+import {APIConfig, DataConfigType} from "../../../designer/DesignerType";
 import AbstractComponent, {OperateType} from "../../../framework/core/AbstractComponent";
 import {sendHttpRequest} from "../../../utils/HttpUtil";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
@@ -127,20 +127,21 @@ export const ApiDataConfig: React.FC<DataConfigProps> = ({instance, apiDataConve
 
     const doSave = () => {
         if (!validate()) return;
-        instance.update({
-            data: {
-                staticData: {
-                    data: apiDataConvert ? apiDataConvert(testResult) : JSON.parse(testResult),
-                },
-                apiData: {
-                    url: urlRef.current,
-                    method: methodRef.current,
-                    header: headerObj,
-                    params: paramObj,
-                    flashFrequency: flashFrequencyRef.current
-                }
-            },
-        }, {reRender: true, operateType: OperateType.DATA});
+        const config: DataConfigType = {
+            apiData: {
+                url: urlRef.current,
+                method: methodRef.current as APIConfig['method'],
+                header: headerObj,
+                params: paramObj,
+                flashFrequency: flashFrequencyRef.current
+            }
+        };
+        if (testResult) {
+            config.staticData = {
+                data: apiDataConvert ? apiDataConvert(testResult) : JSON.parse(testResult),
+            };
+        }
+        instance.update({data: config}, {reRender: true, operateType: OperateType.DATA});
     }
 
     const headerOnChange = (value: string) => {

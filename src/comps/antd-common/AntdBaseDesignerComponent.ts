@@ -43,6 +43,7 @@ export abstract class AntdBaseDesignerComponent<I extends Plot<any> = Plot<Optio
             switch (dataSource) {
                 case "static":
                     this.setData(this.config?.data?.staticData?.data);
+                    this.update({} as C, {reRender: true, operateType: OperateType.DATA})
                     break;
                 case "api":
                     const {url, method, params, header, flashFrequency = 5} = data?.apiData!;
@@ -72,7 +73,8 @@ export abstract class AntdBaseDesignerComponent<I extends Plot<any> = Plot<Optio
             }
         } else {
             //编辑模式
-            this.setData(this.config?.data?.staticData?.data!)
+            this.setData(this.config?.data?.staticData?.data!);
+            this.update({} as C, {reRender: true, operateType: OperateType.DATA});
             return;
         }
     }
