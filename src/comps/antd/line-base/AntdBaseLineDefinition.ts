@@ -53,8 +53,9 @@ class AntdBaseLineDefinition extends AbstractLineDefinition {
                 yField: "value",
                 smooth: false,
                 supportCSSTransform: true,
+                color: "#00d7ff",
                 lineStyle: {
-                    stroke: "#00dbffff",
+                    stroke: undefined,
                     lineWidth: 2,
                 },
                 xAxis: {
@@ -98,7 +99,9 @@ class AntdBaseLineDefinition extends AbstractLineDefinition {
                 },
                 point: {
                     size: 4,
-                    color: "#35c6ff70",
+                    style: {
+                        fill: "#00d7ff",
+                    }
                 },
             },
             data: {

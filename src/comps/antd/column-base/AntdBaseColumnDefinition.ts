@@ -50,7 +50,7 @@ class AntdBaseColumnDefinition extends AbstractColumnDefinition {
                 supportCSSTransform: true,
                 color: ["#00dbffff"],
                 columnStyle: {
-                    fill: "#00dbffff",
+                    fill: undefined,
                 },
                 xAxis: {
                     grid: null,

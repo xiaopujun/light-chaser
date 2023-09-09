@@ -62,7 +62,7 @@ class AntdStepLineDefinition extends AbstractLineDefinition {
                 smooth: true,
                 supportCSSTransform: true,
                 lineStyle: {
-                    stroke: "#4be6ffff",
+                    stroke: undefined,
                     lineWidth: 1,
                 },
                 xAxis: {

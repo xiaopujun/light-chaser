@@ -21,11 +21,11 @@ class ThemeEditor extends Component {
         name: '',
         colors: {
             main: '#000000',
-            text: '#000000',
+            mainText: '#000000',
             background: '#000000',
-            auxiliary: '#000000',
-            emphasize: '#000000',
-            supplementary: '#000000'
+            subText: '#000000',
+            supplementFirst: '#000000',
+            supplementSecond: '#000000'
         }
     }
 
@@ -54,16 +54,25 @@ class ThemeEditor extends Component {
         })
     };
 
-    textColorChanged = (color: string) => {
+    mainTextChanged = (color: string) => {
         this.setState({
             themeConfig: {
                 ...this.state.themeConfig,
-                colors: {...this.state.themeConfig.colors, text: color}
+                colors: {...this.state.themeConfig.colors, mainText: color}
             }
         })
     };
 
-    backgroundColorChanged = (color: string) => {
+    subTextChanged = (color: string) => {
+        this.setState({
+            themeConfig: {
+                ...this.state.themeConfig,
+                colors: {...this.state.themeConfig.colors, subText: color}
+            }
+        })
+    };
+
+    backgroundChanged = (color: string) => {
         this.setState({
             themeConfig: {
                 ...this.state.themeConfig,
@@ -72,29 +81,20 @@ class ThemeEditor extends Component {
         })
     };
 
-    auxiliaryColorChanged = (color: string) => {
+    supplementFirstChanged = (color: string) => {
         this.setState({
             themeConfig: {
                 ...this.state.themeConfig,
-                colors: {...this.state.themeConfig.colors, auxiliary: color}
+                colors: {...this.state.themeConfig.colors, supplementFirst: color}
             }
         })
     };
 
-    emphasizeColorChanged = (color: string) => {
+    supplementSecondChanged = (color: string) => {
         this.setState({
             themeConfig: {
                 ...this.state.themeConfig,
-                colors: {...this.state.themeConfig.colors, emphasize: color}
-            }
-        })
-    };
-
-    supplementaryColorChanged = (color: string) => {
-        this.setState({
-            themeConfig: {
-                ...this.state.themeConfig,
-                colors: {...this.state.themeConfig.colors, supplementary: color}
+                colors: {...this.state.themeConfig.colors, supplementSecond: color}
             }
         })
     };
@@ -155,46 +155,46 @@ class ThemeEditor extends Component {
                             </ConfigItem>
                         </ConfigCard>
                         <ConfigCard title={'颜色定义'}>
-                            <ConfigItem title={'主题色'} contentStyle={{width: 80, marginRight: 10}}>
+                            <ConfigItem title={'主体色'} contentStyle={{width: 80, marginRight: 10}}>
                                 <CfgItemBorder>
                                     <BaseColorPicker onChange={this.mainColorChanged} showText={true}
                                                      style={{width: '100%', borderRadius: 2}}
                                                      value={themeConfig.colors.main}/>
                                 </CfgItemBorder>
                             </ConfigItem>
-                            <ConfigItem title={'文字色'} contentStyle={{width: 80, marginRight: 10}}>
+                            <ConfigItem title={'主文字'} contentStyle={{width: 80, marginRight: 10}}>
                                 <CfgItemBorder>
-                                    <BaseColorPicker onChange={this.textColorChanged} showText={true}
+                                    <BaseColorPicker onChange={this.mainTextChanged} showText={true}
                                                      style={{width: '100%', borderRadius: 2}}
-                                                     value={themeConfig.colors.text}/>
+                                                     value={themeConfig.colors.mainText}/>
+                                </CfgItemBorder>
+                            </ConfigItem>
+                            <ConfigItem title={'辅文字'} contentStyle={{width: 80, marginRight: 10}}>
+                                <CfgItemBorder>
+                                    <BaseColorPicker onChange={this.subTextChanged} showText={true}
+                                                     style={{width: '100%', borderRadius: 2}}
+                                                     value={themeConfig.colors.subText}/>
                                 </CfgItemBorder>
                             </ConfigItem>
                             <ConfigItem title={'背景色'} contentStyle={{width: 80, marginRight: 10}}>
                                 <CfgItemBorder>
-                                    <BaseColorPicker onChange={this.backgroundColorChanged} showText={true}
+                                    <BaseColorPicker onChange={this.backgroundChanged} showText={true}
                                                      style={{width: '100%', borderRadius: 2}}
                                                      value={themeConfig.colors.background}/>
                                 </CfgItemBorder>
                             </ConfigItem>
-                            <ConfigItem title={'辅助色'} contentStyle={{width: 80, marginRight: 10}}>
+                            <ConfigItem title={'补充一'} contentStyle={{width: 80, marginRight: 10}}>
                                 <CfgItemBorder>
-                                    <BaseColorPicker onChange={this.auxiliaryColorChanged} showText={true}
+                                    <BaseColorPicker onChange={this.supplementFirstChanged} showText={true}
                                                      style={{width: '100%', borderRadius: 2}}
-                                                     value={themeConfig.colors.auxiliary}/>
+                                                     value={themeConfig.colors.supplementFirst}/>
                                 </CfgItemBorder>
                             </ConfigItem>
-                            <ConfigItem title={'强调色'} contentStyle={{width: 80, marginRight: 10}}>
+                            <ConfigItem title={'补充二'} contentStyle={{width: 80, marginRight: 10}}>
                                 <CfgItemBorder>
-                                    <BaseColorPicker onChange={this.emphasizeColorChanged} showText={true}
+                                    <BaseColorPicker onChange={this.supplementSecondChanged} showText={true}
                                                      style={{width: '100%', borderRadius: 2}}
-                                                     value={themeConfig.colors.emphasize}/>
-                                </CfgItemBorder>
-                            </ConfigItem>
-                            <ConfigItem title={'补充色'} contentStyle={{width: 80, marginRight: 10}}>
-                                <CfgItemBorder>
-                                    <BaseColorPicker onChange={this.supplementaryColorChanged} showText={true}
-                                                     style={{width: '100%', borderRadius: 2}}
-                                                     value={themeConfig.colors.supplementary}/>
+                                                     value={themeConfig.colors.supplementSecond}/>
                                 </CfgItemBorder>
                             </ConfigItem>
                         </ConfigCard>

@@ -20,7 +20,7 @@ class ThemeList extends Component<ThemeListProps> {
     onDel = (id: string) => {
         const {onDel} = this.props;
         const {themeConfig, updateThemeConfig} = designerStore;
-        let newThemes = themeConfig.filter((item: any) => item.id !== id);
+        let newThemes = themeConfig!.filter((item: any) => item.id !== id);
         updateThemeConfig(newThemes);
         onDel && onDel(id);
     }
@@ -37,13 +37,13 @@ class ThemeList extends Component<ThemeListProps> {
         const {showOperator} = this.props;
         const themeConfig = designerStore.themeConfig;
         let themeList = [];
-        for (let i = 0; i < themeConfig.length; i++) {
-            themeList.push(<ThemeItem key={i} id={themeConfig[i].id} selected={themeConfig[i].id === activeId}
-                                      name={themeConfig[i].name}
+        for (let i = 0; i < themeConfig!.length; i++) {
+            themeList.push(<ThemeItem key={i} id={themeConfig![i].id} selected={themeConfig![i].id === activeId}
+                                      name={themeConfig![i].name}
                                       showOperator={showOperator}
                                       onDel={this.onDel}
                                       onSelected={this.onSelected}
-                                      colors={themeConfig[i].colors as ThemeColors}/>)
+                                      colors={themeConfig![i].colors as ThemeColors}/>)
         }
         return (
             <div className={'lc-theme-list'} style={{width: '100%'}}>

@@ -34,50 +34,58 @@ export default class AntdCommonLine extends AntdBaseDesignerComponent<Line, Antd
     updateTheme(newTheme: ThemeItemType): void {
         if (!newTheme)
             return;
+        const {type} = this.config?.info!;
         const styleConfig = this.config?.style!;
-        const {colors: {main, text, supplementary, emphasize, /*background,*/ auxiliary}} = newTheme;
+        const {colors: {main, mainText, supplementSecond, supplementFirst, subText}} = newTheme;
         //图形
-        if (styleConfig?.color)
-            styleConfig.color = [main!];
+        if (styleConfig?.color) {
+            if (type === 'AntdMultiLine')
+                styleConfig.color = [main!, supplementFirst!, supplementSecond!];
+            else
+                styleConfig.color = main;
+        }
+        //点
+        if ((styleConfig?.point) && (styleConfig?.point?.style as ShapeAttrs))
+            (styleConfig!.point!.style as ShapeAttrs).fill = main;
         //图例
         if ((styleConfig.legend) && (styleConfig.legend.itemName?.style as ShapeAttrs)?.fill)
-            (styleConfig!.legend!.itemName!.style as ShapeAttrs).fill = text;
+            (styleConfig!.legend!.itemName!.style as ShapeAttrs).fill = mainText;
         //x轴-文本
         if ((styleConfig?.xAxis) && (styleConfig?.xAxis?.label?.style as ShapeAttrs).fill)
-            (styleConfig!.xAxis!.label!.style as ShapeAttrs).fill = text;
+            (styleConfig!.xAxis!.label!.style as ShapeAttrs).fill = mainText;
         //x轴-标题
         if ((styleConfig?.xAxis) && (styleConfig?.xAxis?.title as ShapeAttrs)?.fill)
-            (styleConfig!.xAxis!.title!.style as ShapeAttrs).fill = text;
+            (styleConfig!.xAxis!.title!.style as ShapeAttrs).fill = mainText;
         //x轴-轴线
         if ((styleConfig?.xAxis) && (styleConfig?.xAxis?.line?.style as ShapeAttrs)?.stroke)
-            (styleConfig!.xAxis!.line!.style as ShapeAttrs).stroke = emphasize;
+            (styleConfig!.xAxis!.line!.style as ShapeAttrs).stroke = supplementSecond;
         //x轴-网格线
         if ((styleConfig?.xAxis) && (styleConfig?.xAxis?.grid?.line?.style as ShapeAttrs)?.stroke)
-            (styleConfig!.xAxis!.grid!.line!.style as ShapeAttrs).stroke = auxiliary;
+            (styleConfig!.xAxis!.grid!.line!.style as ShapeAttrs).stroke = subText;
         //x轴-刻度线
         if ((styleConfig?.xAxis) && (styleConfig?.xAxis?.tickLine?.style as ShapeAttrs)?.stroke)
-            (styleConfig!.xAxis!.tickLine!.style as ShapeAttrs).stroke = supplementary;
+            (styleConfig!.xAxis!.tickLine!.style as ShapeAttrs).stroke = supplementFirst;
         //x轴-子刻度线
         if ((styleConfig?.xAxis) && (styleConfig?.xAxis?.subTickLine?.style as ShapeAttrs)?.stroke)
-            (styleConfig!.xAxis!.subTickLine!.style as ShapeAttrs).stroke = auxiliary;
+            (styleConfig!.xAxis!.subTickLine!.style as ShapeAttrs).stroke = subText;
         //y轴-文本
         if ((styleConfig?.yAxis) && (styleConfig?.yAxis?.label?.style as ShapeAttrs)?.fill)
-            (styleConfig!.yAxis!.label!.style as ShapeAttrs).fill = text;
+            (styleConfig!.yAxis!.label!.style as ShapeAttrs).fill = mainText;
         //y轴-标题
         if ((styleConfig?.yAxis) && (styleConfig?.yAxis?.title as ShapeAttrs)?.fill)
-            (styleConfig!.yAxis!.title!.style as ShapeAttrs).fill = text;
+            (styleConfig!.yAxis!.title!.style as ShapeAttrs).fill = mainText;
         //y轴-轴线
         if ((styleConfig?.yAxis) && (styleConfig?.yAxis?.line?.style as ShapeAttrs)?.stroke)
-            (styleConfig!.yAxis!.line!.style as ShapeAttrs).stroke = emphasize;
+            (styleConfig!.yAxis!.line!.style as ShapeAttrs).stroke = supplementSecond;
         //y轴-网格线
         if ((styleConfig?.yAxis) && (styleConfig?.yAxis?.grid?.line?.style as ShapeAttrs)?.stroke)
-            (styleConfig!.yAxis!.grid!.line!.style as ShapeAttrs).stroke = auxiliary;
+            (styleConfig!.yAxis!.grid!.line!.style as ShapeAttrs).stroke = subText;
         //y轴-刻度线
         if ((styleConfig?.yAxis) && (styleConfig?.yAxis?.tickLine?.style as ShapeAttrs)?.stroke)
-            (styleConfig!.yAxis!.tickLine!.style as ShapeAttrs).stroke = supplementary;
+            (styleConfig!.yAxis!.tickLine!.style as ShapeAttrs).stroke = supplementFirst;
         //y轴-子刻度线
         if ((styleConfig?.yAxis) && (styleConfig?.yAxis?.subTickLine?.style as ShapeAttrs)?.stroke)
-            (styleConfig!.yAxis!.subTickLine!.style as ShapeAttrs).stroke = auxiliary;
+            (styleConfig!.yAxis!.subTickLine!.style as ShapeAttrs).stroke = subText;
         //重新渲染
         this.update({style: styleConfig} as any, {reRender: true, operateType: OperateType.OPTIONS});
     }

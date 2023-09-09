@@ -100,18 +100,17 @@ class DesignerStore implements AbstractBaseStore {
     /**
      * 主题
      */
-    themeConfig: Array<ThemeItemType> | any = [
+    themeConfig: Array<ThemeItemType> | null = [
         {
             id: "0",
             name: "科技风格(默认主题)",
-            des: "科技风格(默认主题)",
             colors: {
                 main: "#00dfff",
-                text: "#62edff",
-                background: "rgba(0,223,255,0.2)",
-                auxiliary: "#4ca4b1",
-                emphasize: "#38929f",
-                supplementary: "#1790a2",
+                mainText: "#62edff",
+                subText: "#4ca4b1",
+                background: "#00dfff33",
+                supplementFirst: "#38929f",
+                supplementSecond: "#1790a2",
             },
         },
     ];
@@ -164,7 +163,7 @@ class DesignerStore implements AbstractBaseStore {
             elemConfigs: elemConfigs,
             layoutConfigs: toJS(this.layoutConfigs),
             statisticInfo: toJS(this.statisticInfo),
-            themeConfig: toJS(this.themeConfig),
+            themeConfig: toJS(this.themeConfig)!,
             extendParams: toJS(this.extendParams),
         };
     }
@@ -179,7 +178,7 @@ class DesignerStore implements AbstractBaseStore {
         this.elemConfigs = {};
         this.layoutConfigs = {};
         this.statisticInfo = {};
-        this.themeConfig = {};
+        this.themeConfig = null;
         this.extendParams = {};
     };
 

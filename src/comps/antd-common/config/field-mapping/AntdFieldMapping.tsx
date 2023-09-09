@@ -41,9 +41,9 @@ const AntdFieldMapping: React.FC<AntdFieldMappingProps> = (props) => {
     }
     return (
         <ConfigCard title={'字段映射'}>
-            {fields.map(field => {
+            {fields.map((field, index) => {
                 return (
-                    <ConfigItem title={fieldNameMapping[field]}>
+                    <ConfigItem key={index + ''} title={fieldNameMapping[field]}>
                         <Select options={options} defaultValue={style![field]} onChange={(value => {
                             instance.update({style: {[field]: value}})
                         })}/>

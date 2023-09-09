@@ -6,16 +6,16 @@ import {MovableItemType} from "../lib/lc-movable/types";
 export interface ThemeColors {
     //主体色
     main?: string;
-    //文字色
-    text?: string;
+    //主文字
+    mainText?: string;
+    //背景色
+    subText?: string;
     //背景色
     background?: string;
-    //辅助色
-    auxiliary?: string;
-    //强调色
-    emphasize?: string;
-    //补充色
-    supplementary?: string;
+    //补充一
+    supplementFirst?: string;
+    //补充二
+    supplementSecond?: string;
 }
 
 export interface ThemeItemType {

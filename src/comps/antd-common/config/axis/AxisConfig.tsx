@@ -261,7 +261,10 @@ export interface AxisGridLineProps {
 
 export const AxisGridLine: React.FC<AxisGridLineProps> = ({config, onChange}) => {
 
-    const initConfig: AxisGridCfg = config || {alignTick: true, style: {stroke: '#fff', lineWidth: 1} as ShapeAttrs};
+    const initConfig: AxisGridCfg = config || {
+        alignTick: true,
+        line: {style: {stroke: '#fff', lineWidth: 1} as ShapeAttrs}
+    };
 
     const [axisTitleDisable, setAxisTitleDisable] = useState(!config);
     const [alignTick, setAlignTick] = useState(config?.alignTick || false);
