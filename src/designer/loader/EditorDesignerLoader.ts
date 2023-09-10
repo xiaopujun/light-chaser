@@ -6,7 +6,6 @@ import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 import {AbstractHeaderItem, HeaderItemProps} from "../header/HeaderTypes";
 import {AbstractCustomComponentDefinition} from "../../framework/core/AbstractCustomComponentDefinition";
 import {AbstractOperator} from "../../framework/operate/AbstractOperator";
-import {MovableItemType} from "../../lib/lc-movable/types";
 
 export default class EditorDesignerLoader extends AbstractDesignerLoader {
 
@@ -127,11 +126,11 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
                 setMinLevel(store.extendParams?.minLevel || 0);
                 setMaxLevel(store.extendParams?.maxLevel || 0);
                 //设置已处于锁定的组件id
-                const unLockedIds: string[] = [];
-                Object.values(store.layoutConfigs!).forEach((item: MovableItemType) => {
-                    if (item.locked)
-                        unLockedIds.push(item.id!);
-                })
+                // const unLockedIds: string[] = [];
+                // Object.values(store.layoutConfigs!).forEach((item: MovableItemType) => {
+                //     if (item.lock)
+                //         unLockedIds.push(item.id!);
+                // })
             }
             setLoaded(true);
         })

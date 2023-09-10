@@ -8,15 +8,15 @@ import designerStore from "../../designer/store/DesignerStore";
 
 /**
  * 设置控制点和边框的颜色
- * @param locked 是否锁定
+ * @param lock 是否锁定
  */
-export function setControlPointLineColor(locked: boolean) {
+export function setControlPointLineColor(lock: boolean) {
     const {targetIds} = eventOperateStore;
     //没有选中组件的情况下不会显示边框。
     if (targetIds.length === 0) return;
     const pointLineDom = document.querySelectorAll(".moveable-control,.moveable-line");
     if (!pointLineDom) return;
-    if (locked) {
+    if (lock) {
         pointLineDom.forEach((child: Element) => {
             (child as HTMLDivElement).style.backgroundColor = '#ff4b29';
         })
@@ -50,18 +50,18 @@ class GroupSelectable extends Component {
 
         //框选多个组件时，不能同时包含锁定和非锁定的组件。
         //如果最开始选中的是锁定的组件，那么后续选中的组件只能是锁定的组件.反之亦然
-        let locked = false;
+        let lock = false;
         if (selected && selected.length === 1) {
-            locked = selected[0].dataset.locked === 'true';
+            lock = selected[0].dataset.lock === 'true';
         } else if (selected && selected.length > 1) {
             //第一个选中的第一个组件是否是锁定的组件
-            locked = selected[0].dataset.locked === 'true';
-            if (locked) {
+            lock = selected[0].dataset.lock === 'true';
+            if (lock) {
                 //后续只能选中锁定的组件
-                selected = e.selected.filter((item) => item.dataset.locked === 'true') as HTMLElement[];
+                selected = e.selected.filter((item) => item.dataset.lock === 'true') as HTMLElement[];
             } else {
                 //后续只能选中非锁定的组件
-                selected = e.selected.filter((item) => item.dataset.locked !== 'true') as HTMLElement[];
+                selected = e.selected.filter((item) => item.dataset.lock !== 'true') as HTMLElement[];
             }
         }
 
@@ -69,7 +69,7 @@ class GroupSelectable extends Component {
         setTargets(selected as HTMLElement[]);
 
         //更新选中组件的边框颜色（锁定状态组件为红色，非锁定状态组件为蓝色）
-        setControlPointLineColor(locked);
+        setControlPointLineColor(lock);
 
         //若选中多个组件，计算更新组件多选时的左上角坐标
         if (selected.length > 1) {

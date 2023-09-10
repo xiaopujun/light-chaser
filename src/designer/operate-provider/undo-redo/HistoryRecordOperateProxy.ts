@@ -237,10 +237,10 @@ class HistoryRecordOperateProxy {
         let next: LockDataType[] = [];
         const {layoutConfigs, updateLayout} = designerStore;
         items.forEach((item) => {
-            const {id, locked} = item;
-            next.push({id: id!, lock: locked!});
+            const {id, lock} = item;
+            next.push({id: id!, lock: lock!});
             const oldLockData = layoutConfigs[id!];
-            prev.push({id: id!, lock: oldLockData.locked!});
+            prev.push({id: id!, lock: oldLockData.lock!});
         })
         const data: HistoryRecordType = {type: HistoryType.LOCK, prev, next}
         historyOperator.put(data);
@@ -249,7 +249,7 @@ class HistoryRecordOperateProxy {
         if (visible) {
             //更新图层列表
             items.forEach((item) => {
-                layerInstanceMap[item.id!].update({lock: item.locked})
+                layerInstanceMap[item.id!].update({lock: item.lock})
             })
         }
     }

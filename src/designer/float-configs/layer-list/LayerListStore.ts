@@ -34,7 +34,7 @@ class LayerListStore {
             if (newTargets.length !== targets.length)
                 setTargets(newTargets);
         }
-        updateLayout && updateLayout([{id, locked: lock}]);
+        updateLayout && updateLayout([{id, lock: lock}]);
         let instance = this.layerInstanceMap[id];
         instance && instance.update({lock});
     }
@@ -59,7 +59,7 @@ class LayerListStore {
             } else {
                 //多选时，若本次选中的组件与首次选中的组件锁定状态不一致，则本次选中无效
                 if (targets.length > 0) {
-                    const firstLock = targets[0].dataset.locked === 'true';
+                    const firstLock = targets[0].dataset.lock === 'true';
                     if (data.lock !== firstLock) return;
                 }
                 //将新的组件加入到选中组件列表中
@@ -92,10 +92,10 @@ class LayerListStore {
             });
         }
 
-        let locked = selected[0].dataset.locked === 'true';
+        let lock = selected[0].dataset.lock === 'true';
         //更新选中组件的边框颜色（锁定状态组件为红色，非锁定状态组件为蓝色）
         const tempTimer = setTimeout(() => {
-            setControlPointLineColor(locked);
+            setControlPointLineColor(lock);
             clearTimeout(tempTimer);
         }, 0)
 

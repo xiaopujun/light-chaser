@@ -19,8 +19,8 @@ export const selectAll = () => {
     let compArr: any[] = [];
     //权限时排除已锁定和隐藏的组件
     comps && Array.from(comps).forEach((comp: any) => {
-        const {locked, hide} = comp.dataset;
-        if (locked !== 'true' && hide !== 'true') {
+        const {lock, hide} = comp.dataset;
+        if (lock !== 'true' && hide !== 'true') {
             compArr.push(comp);
         }
     });
@@ -55,7 +55,7 @@ export const doLock = () => {
     let toBeUpdate = [];
     for (const targetId of targetIds) {
         let item = layoutConfigs[targetId];
-        toBeUpdate.push({...item, locked: true})
+        toBeUpdate.push({...item, lock: true})
     }
     historyRecordOperateProxy.doLockUpd(toBeUpdate);
     //操作完毕之后，清空已被选择的元素。
@@ -69,10 +69,10 @@ export const doUnLock = () => {
     let toUpdate: MovableItemType[] = [];
     (targets as HTMLElement[]).filter(target => {
         //过滤出被锁定的组件
-        return target.dataset.locked === 'true';
+        return target.dataset.lock === 'true';
     }).forEach((target) => {
         let item = layoutConfigs[target.id];
-        toUpdate.push({...item, locked: false})
+        toUpdate.push({...item, lock: false})
     })
     updateLayout(toUpdate)
     historyRecordOperateProxy.doLockUpd(toUpdate);

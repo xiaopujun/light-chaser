@@ -58,7 +58,7 @@ class LayerList extends Component {
                     if (searchContent.trim() === "hide")
                         return item.hide;
                     else if (searchContent.trim() === "lock")
-                        return item.locked;
+                        return item.lock;
                 } else
                     return item.name?.includes(searchContent);
                 return false;
@@ -67,7 +67,7 @@ class LayerList extends Component {
             .map((item: MovableItemType) => {
                 let _props: LayerItemDataProps = {
                     name: item.name,
-                    lock: item.locked,
+                    lock: item.lock,
                     hide: item.hide,
                     compId: item.id,
                     selected: targetIds.includes(item.id!)

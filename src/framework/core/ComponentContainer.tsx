@@ -30,7 +30,7 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
                 <div
                     id={layout.id}
                     data-type={layout.type}
-                    data-locked={layout.locked}
+                    data-lock={layout.lock}
                     data-hide={layout.hide}
                     key={layout.id + ''}
                     style={{

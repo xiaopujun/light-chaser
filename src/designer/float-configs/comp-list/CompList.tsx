@@ -30,7 +30,7 @@ class CompList extends Component {
             height: 200,
             position: [0, 0],
             id: idGenerate.generateId(),
-            locked: false,
+            lock: false,
             hide: false,
             order: ++maxLevel,
         }
