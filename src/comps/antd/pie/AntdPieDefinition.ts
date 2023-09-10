@@ -100,12 +100,8 @@ class AntdPieDefinition extends AbstractCustomComponentDefinition<AntdPie, AntdP
                     },
                 },
                 interactions: [
-                    {
-                        type: "element-selected",
-                    },
-                    {
-                        type: "element-active",
-                    },
+                    {type: "element-selected",},
+                    {type: "element-active",},
                 ],
                 statistic: {
                     title: {

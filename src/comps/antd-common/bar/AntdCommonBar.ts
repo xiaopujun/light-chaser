@@ -32,10 +32,9 @@ export default class AntdCommonBar extends AntdBaseDesignerComponent<Bar, AntdBa
     }
 
     updateTheme(newTheme: ThemeItemType): void {
-        if (!newTheme)
-            return;
+        if (!newTheme) return;
         const styleConfig = this.config?.style!;
-        const {colors: {main, mainText, supplementSecond, supplementFirst, background, subText}} = newTheme;
+        const {colors: {main, mainText, supplementSecond, supplementFirst, subText}} = newTheme;
         //图形
         if (styleConfig?.color) {
             styleConfig.barStyle = {fill: undefined};

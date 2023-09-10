@@ -46,7 +46,7 @@ export default class AntdCommonLine extends AntdBaseDesignerComponent<Line, Antd
         }
         //点
         if ((styleConfig?.point) && (styleConfig?.point?.style as ShapeAttrs))
-            (styleConfig!.point!.style as ShapeAttrs).fill = main;
+            (styleConfig!.point!.style as ShapeAttrs).fill = undefined;
         //图例
         if ((styleConfig.legend) && (styleConfig.legend.itemName?.style as ShapeAttrs)?.fill)
             (styleConfig!.legend!.itemName!.style as ShapeAttrs).fill = mainText;

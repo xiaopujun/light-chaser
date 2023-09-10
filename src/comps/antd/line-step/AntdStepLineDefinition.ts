@@ -115,7 +115,9 @@ class AntdStepLineDefinition extends AbstractLineDefinition {
                 },
                 point: {
                     size: 3,
-                    color: "#00e6ffff",
+                    style: {
+                        fill: "#00d7ff"
+                    },
                     shape: "bowtie",
                 },
             },

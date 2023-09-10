@@ -28,7 +28,7 @@ class GroupColorPicker extends Component<GroupColorPickerProp> {
             this.state = {colors: ['#00e9ff']};
             return;
         }
-        this.state = {colors: [...value], canAdd};
+        this.state = {colors: [...value], canAdd: canAdd && value.length < this.max};
     }
 
 
@@ -42,6 +42,8 @@ class GroupColorPicker extends Component<GroupColorPickerProp> {
 
     addColor = () => {
         let {colors} = this.state;
+        if (colors.length >= this.max)
+            return;
         colors.push('#00e9ff');
         if (colors.length === this.max)
             this.setState({canAdd: false, colors});

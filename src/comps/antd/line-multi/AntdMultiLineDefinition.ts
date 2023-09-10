@@ -130,7 +130,6 @@ class AntdMultiLineDefinition extends AbstractLineDefinition {
                 },
                 point: {
                     size: 3,
-                    color: "#00dcffff",
                 },
             },
             data: {

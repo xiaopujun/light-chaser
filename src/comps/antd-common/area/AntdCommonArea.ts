@@ -36,7 +36,7 @@ export default class AntdCommonArea extends AntdBaseDesignerComponent<Area, Antd
         if (!newTheme)
             return;
         const styleConfig = this.config?.style!;
-        const {colors: {main, mainText, subText, background, supplementFirst, supplementSecond}} = newTheme;
+        const {colors: {main, mainText, subText, supplementFirst, supplementSecond}} = newTheme;
         //图形
         if (styleConfig?.color) {
             if (type === 'AntdBaseArea')

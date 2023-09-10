@@ -1,9 +1,10 @@
 import {ComponentBaseProps} from "../../common-component/common-types";
 import {WritableRingProgressOptions} from "../../antd-common/types";
-import {RingProgress} from "@antv/g2plot";
-import {UpdateOptions} from "../../../framework/core/AbstractComponent";
+import {RingProgress, StatisticText} from "@antv/g2plot";
+import {OperateType, UpdateOptions} from "../../../framework/core/AbstractComponent";
 import {AntdBaseDesignerComponent} from "../../antd-common/AntdBaseDesignerComponent";
 import {ThemeItemType} from "../../../designer/DesignerType";
+import {CSSProperties} from "react";
 
 export interface AntdRingProgressProps extends ComponentBaseProps {
     style?: WritableRingProgressOptions;
@@ -31,6 +32,20 @@ export default class AntdRingProgress extends AntdBaseDesignerComponent<RingProg
     }
 
     updateTheme(newTheme: ThemeItemType): void {
-
+        if (!newTheme) return;
+        const styleConfig = this.config?.style!;
+        const {colors: {main, mainText, supplementSecond, background, supplementFirst, subText}} = newTheme;
+        //图形
+        if (styleConfig?.color) {
+            styleConfig.color = [main!, supplementFirst!];
+        }
+        //标题
+        if ((styleConfig?.statistic) && (styleConfig?.statistic?.title) && (styleConfig.statistic.title as StatisticText).style)
+            ((styleConfig!.statistic!.title as StatisticText).style as CSSProperties)!.color = mainText!;
+        //内容
+        if ((styleConfig?.statistic) && (styleConfig?.statistic?.content) && (styleConfig.statistic.content as StatisticText).style)
+            ((styleConfig!.statistic!.content as StatisticText).style as CSSProperties)!.color = subText!;
+        //重新渲染
+        this.update({style: styleConfig} as any, {reRender: true, operateType: OperateType.OPTIONS});
     }
 }
