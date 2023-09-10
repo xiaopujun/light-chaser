@@ -125,11 +125,14 @@ class ColorMode extends Component<ColorModeProps, ColorModeValue> {
                                      }}
                                      defaultValue={(value as string[])[1]}/>
                     &nbsp;
-                    <UnderLineInput
-                        containStyle={{width: 50}} type={'number'} defaultValue={this.angle} onChange={(event) => {
-                        this.angle = parseInt(event.target.value || '0');
-                        this.colorChange(this.gradientValue);
-                    }}/>
+                    {
+                        mode === ColorModeType.LINER_GRADIENT &&
+                        <UnderLineInput
+                            containStyle={{width: 50}} type={'number'} defaultValue={this.angle} onChange={(event) => {
+                            this.angle = parseInt(event.target.value || '0');
+                            this.colorChange(this.gradientValue);
+                        }}/>
+                    }
                 </div>}
             </div>
         );
