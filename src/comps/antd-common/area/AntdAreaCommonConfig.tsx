@@ -6,7 +6,7 @@ import {Legend} from "@antv/g2plot/lib/types/legend";
 import AbstractComponent from "../../../framework/core/AbstractComponent";
 import AntdCommonArea, {AntdAreaProps} from "./AntdCommonArea";
 import {WritableAreaOptions, WritableBarOptions} from "../types";
-import ColorMode, {ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
+import ColorMode, {ColorModeType, ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import {ShapeAttrs} from "@antv/g-base";
 import Accordion from "../../../lib/lc-accordion/Accordion";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
@@ -137,7 +137,8 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
             </ConfigCard>
             <ConfigCard title={'数据面'} bodyStyle={{width: '100%'}} cardStyle={{width: '100%'}}>
                 <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: 'calc(100% - 38px)'}}>
-                    <ColorMode onChange={areaColorChange} data={buildColorModeData()}/>
+                    <ColorMode onChange={areaColorChange} data={buildColorModeData()}
+                               exclude={[ColorModeType.RADIAL_GRADIENT]}/>
                 </ConfigItem>
             </ConfigCard>
         </Accordion>

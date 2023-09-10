@@ -107,6 +107,10 @@ export const toBottom = () => {
 
 export const doDelete = () => {
     historyRecordOperateProxy.doDelete();
+    const {setPointerTarget} = eventOperateStore;
+    const enforcementCap = document.querySelector('.lc-ruler-content');
+    //删除组件后，重新聚焦鼠标指针到容器上，避免鼠标失去焦点导致其他快捷键失效。
+    setPointerTarget && setPointerTarget(enforcementCap);
 }
 
 export const doSave = () => {

@@ -3,7 +3,7 @@ import {ConfigType} from "../../../designer/right/ConfigType";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import {WritableBarOptions, WritableRoseOptions} from "../types";
-import ColorMode, {ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
+import ColorMode, {ColorModeType, ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 import {RoseOptions, ShapeStyle, StatisticText} from "@antv/g2plot";
@@ -98,7 +98,7 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                 </ConfigItem>
                 <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: '85%'}}>
                     <ColorMode onChange={RoseColorChange} data={buildColorModeData()}
-                               exclude={['gradient']}/>
+                               exclude={[ColorModeType.LINER_GRADIENT, ColorModeType.RADIAL_GRADIENT]}/>
                 </ConfigItem>
                 <ConfigItem title={'描边颜色'}>
                     <CfgItemBorder width={'100%'}>

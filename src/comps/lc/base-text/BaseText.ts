@@ -31,6 +31,6 @@ export class BaseText extends AbstractDesignerComponent<BaseTextComponent, BaseT
     }
 
     updateTheme(newTheme: ThemeItemType): void {
-        throw new Error("Method not implemented.");
+
     }
 }

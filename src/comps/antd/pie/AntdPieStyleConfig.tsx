@@ -4,7 +4,7 @@ import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import AntdPie from "./AntdPie";
 import {WritablePieOptions} from "../../antd-common/types";
-import ColorMode, {ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
+import ColorMode, {ColorModeType, ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 import {PieOptions, ShapeStyle, StatisticText} from "@antv/g2plot";
@@ -98,7 +98,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                 </ConfigItem>
                 <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: '85%'}}>
                     <ColorMode onChange={pieColorChange} data={buildColorModeData()}
-                               exclude={['gradient']}/>
+                               exclude={[ColorModeType.LINER_GRADIENT, ColorModeType.RADIAL_GRADIENT]}/>
                 </ConfigItem>
                 <ConfigItem title={'描边颜色'}>
                     <CfgItemBorder width={'100%'}>

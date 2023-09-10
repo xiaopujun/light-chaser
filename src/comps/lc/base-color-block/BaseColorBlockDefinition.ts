@@ -42,13 +42,13 @@ export default class BaseColorBlockDefinition extends AbstractCustomComponentDef
                 desc: '标准提供的基础色块',
             },
             style: {
-                backgroundColor: '#009DFF33',
+                background: '#009DFF33',
             },
         };
     }
 
     getMenuList(): Array<MenuInfo> | null {
-        return getDefaultMenuList().filter((item: MenuInfo) => (item.key !== 'theme' && item.key !== 'data'));
+        return getDefaultMenuList().filter((item: MenuInfo) => (item.key !== 'theme' && item.key !== 'data' && item.key !== 'mapping'));
     }
 
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {

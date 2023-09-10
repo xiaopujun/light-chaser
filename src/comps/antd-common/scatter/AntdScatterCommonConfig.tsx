@@ -6,7 +6,7 @@ import {Legend} from "@antv/g2plot/lib/types/legend";
 import AbstractComponent from "../../../framework/core/AbstractComponent";
 import AntdCommonScatter, {AntdScatterProps} from "./AntdCommonScatter";
 import {WritableScatterOptions} from "../types";
-import ColorMode, {ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
+import ColorMode, {ColorModeType, ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import Accordion from "../../../lib/lc-accordion/Accordion";
 import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
@@ -95,7 +95,8 @@ export const AntdCommonScatterGraphics: React.FC<AntdCommonScatterGraphicsProps>
                                         onChange({size: parseInt(event.target.value)})}/>
                 </ConfigItem>
                 <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: 'calc(100% - 38px)'}}>
-                    <ColorMode onChange={scatterColorChange} data={buildColorModeData()} exclude={['gradient']}/>
+                    <ColorMode onChange={scatterColorChange} data={buildColorModeData()}
+                               exclude={[ColorModeType.LINER_GRADIENT, ColorModeType.RADIAL_GRADIENT]}/>
                 </ConfigItem>
                 <ConfigItem title={'形状'}>
                     <Select options={[

@@ -3,7 +3,7 @@ import {ConfigType} from "../../../designer/right/ConfigType";
 import {WritableRingProgressOptions, WritableRoseOptions} from "../../antd-common/types";
 import AntdCommonRose from "../../antd-common/rose/AntdCommonRose";
 import {RingProgressOptions, ShapeStyle, StatisticText} from "@antv/g2plot";
-import ColorMode, {ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
+import ColorMode, {ColorModeType, ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import Accordion from "../../../lib/lc-accordion/Accordion";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
@@ -75,7 +75,7 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                 </ConfigItem>
                 <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: '85%'}}>
                     <ColorMode onChange={ringProgressColorChange} data={buildColorModeData()}
-                               exclude={['gradient', 'single']}/>
+                               exclude={[ColorModeType.LINER_GRADIENT, ColorModeType.RADIAL_GRADIENT, ColorModeType.SINGLE]}/>
                 </ConfigItem>
                 <ConfigItem title={'描边颜色'}>
                     <CfgItemBorder width={'100%'}>

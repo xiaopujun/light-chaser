@@ -1,31 +1,52 @@
 import React from 'react';
 import {ConfigType} from "../../../designer/right/ConfigType";
-import Accordion from "../../../lib/lc-accordion/Accordion";
-import {BaseColorBlockComponentStyle} from "./BaseColorBlockComponent";
 import {BaseColorBlock} from "./BaseColorBlock";
-import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
-import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
-import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
+import ColorMode, {ColorModeType, ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
+import ConfigItemTB from "../../../lib/lc-config-item/ConfigItemTB";
 
 export const BaseColorBlockConfig: React.FC<ConfigType> = ({instance}) => {
 
-    const updateStyle = (config: BaseColorBlockComponentStyle) => {
-        instance.update({style: config});
+    const buildColorModeData = (): ColorModeValue => {
+        const {background} = (instance as BaseColorBlock).getConfig()?.style!;
+        let mode = ColorModeType.SINGLE, value: string[] | string = ["#fff"], angle = 0;
+        if (background) {
+            if (background.indexOf('linear-gradient') > -1) {
+                mode = ColorModeType.LINER_GRADIENT;
+                value = [background.match(/#(\w+)/g)?.[0] || '#fff', background.match(/#(\w+)/g)?.[1] || '#fff'];
+                angle = Number(background.match(/(\d+)deg/)?.[1]) || 0;
+            } else if (background.indexOf('radial-gradient') > -1) {
+                mode = ColorModeType.RADIAL_GRADIENT;
+                value = [background.match(/#(\w+)/g)?.[0] || '#fff', background.match(/#(\w+)/g)?.[1] || '#fff'];
+            } else if (background.indexOf('#') > -1) {
+                mode = ColorModeType.SINGLE;
+                value = background;
+            }
+        }
+        return {mode, value, angle}
     }
 
-    const blockStyle = (instance as BaseColorBlock).getConfig()?.style;
+    const colorChange = (data: ColorModeValue) => {
+        const {mode, value, angle} = data;
+        let background = '';
+        switch (mode) {
+            case ColorModeType.SINGLE:
+                background = value as string;
+                break;
+            case ColorModeType.LINER_GRADIENT:
+                background = `linear-gradient(${angle}deg,${(value as string[]).join(',')})`;
+                break;
+            case ColorModeType.RADIAL_GRADIENT:
+                background = `radial-gradient(${(value as string[]).join(',')})`;
+                break;
+        }
+        instance.update({style: {background}});
+    }
+
     return (
         <>
-            <Accordion title={'色块'}>
-                <ConfigItem title={'颜色'}>
-                    <CfgItemBorder width={'100%'}>
-                        <BaseColorPicker
-                            defaultValue={blockStyle?.backgroundColor || '#009DFF33'}
-                            onChange={(value) => updateStyle({backgroundColor: value})}
-                            style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                    </CfgItemBorder>
-                </ConfigItem>
-            </Accordion>
+            <ConfigItemTB title={'颜色'} contentStyle={{width: '100%'}}>
+                <ColorMode exclude={[ColorModeType.MULTI]} data={buildColorModeData()} onChange={colorChange}/>
+            </ConfigItemTB>
         </>
     )
 }

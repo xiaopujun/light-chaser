@@ -5,7 +5,7 @@ import {LineOptions, ShapeStyle} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import AntdCommonLine from "./AntdCommonLine";
 import {WritableBarOptions, WritableLineOptions} from "../types";
-import ColorMode, {ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
+import ColorMode, {ColorModeType, ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import {ShapeAttrs} from "@antv/g-base";
 import Accordion from "../../../lib/lc-accordion/Accordion";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
@@ -106,7 +106,8 @@ export const AntdLineGraphics: React.FC<AntdLineGraphicsProps> = ({config, onCha
                                         onChange({lineStyle: {lineWidth: parseInt(event.target.value)}})}/>
                 </ConfigItem>
                 <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: '85%'}}>
-                    <ColorMode onChange={LineColorChange} data={buildColorModeData()}/>
+                    <ColorMode onChange={LineColorChange} data={buildColorModeData()}
+                               exclude={[ColorModeType.RADIAL_GRADIENT]}/>
                 </ConfigItem>
             </ConfigCard>
             <ConfigCard title={'点'}>

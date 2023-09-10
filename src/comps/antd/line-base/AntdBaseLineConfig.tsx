@@ -5,7 +5,7 @@ import AntdCommonLine, {AntdLineProps} from "../../antd-common/line/AntdCommonLi
 import {AntdCartesianCoordinateSys} from "../../antd-common/config/AntdFragment";
 import AbstractComponent from "../../../framework/core/AbstractComponent";
 import {WritableLineOptions} from "../../antd-common/types";
-import ColorMode, {ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
+import ColorMode, {ColorModeType, ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import {ShapeAttrs} from "@antv/g-base";
 import Accordion from "../../../lib/lc-accordion/Accordion";
 import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
@@ -97,7 +97,8 @@ export const AntdBaseLineGraphics: React.FC<AntdBaseLineGraphicsProps> = ({confi
                                         onChange({lineStyle: {lineWidth: parseInt(event.target.value)}})}/>
                 </ConfigItem>
                 <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: '85%'}}>
-                    <ColorMode onChange={LineColorChange} data={buildColorModeData()} exclude={['multi']}/>
+                    <ColorMode onChange={LineColorChange} data={buildColorModeData()}
+                               exclude={[ColorModeType.MULTI, ColorModeType.RADIAL_GRADIENT]}/>
                 </ConfigItem>
             </ConfigCard>
             <ConfigCard title={'点'}>

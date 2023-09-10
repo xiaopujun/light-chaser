@@ -6,7 +6,7 @@ export interface BaseColorBlockComponentStyle {
     borderWidth?: number;
     borderColor?: string;
     borderStyle?: string;
-    backgroundColor?: string;
+    background?: string;
 }
 
 export interface BaseColorBlockComponentProps {

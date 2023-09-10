@@ -4,7 +4,7 @@ import {AreaOptions, ShapeStyle} from "@antv/g2plot";
 import AntdCommonArea from "../../antd-common/area/AntdCommonArea";
 import {AntdCartesianCoordinateSys} from "../../antd-common/config/AntdFragment";
 import {WritableAreaOptions} from "../../antd-common/types";
-import ColorMode, {ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
+import ColorMode, {ColorModeType, ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import {ShapeAttrs} from "@antv/g-base";
 import Accordion from "../../../lib/lc-accordion/Accordion";
 import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
@@ -135,7 +135,8 @@ export const AntdBaseAreaGraphics: React.FC<AntdBaseAreaGraphicsProps> = ({confi
             </ConfigCard>
             <ConfigCard title={'数据面'}>
                 <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: '82%'}}>
-                    <ColorMode onChange={areaColorChange} data={buildColorModeData()} exclude={['multi']}/>
+                    <ColorMode onChange={areaColorChange} data={buildColorModeData()}
+                               exclude={[ColorModeType.MULTI, ColorModeType.RADIAL_GRADIENT]}/>
                 </ConfigItem>
             </ConfigCard>
 

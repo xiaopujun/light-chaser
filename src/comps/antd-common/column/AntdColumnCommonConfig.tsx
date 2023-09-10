@@ -6,7 +6,7 @@ import {Legend} from "@antv/g2plot/lib/types/legend";
 import AbstractComponent from "../../../framework/core/AbstractComponent";
 import AntdCommonColumn, {AntdColumnProps} from "./AntdCommonColumn";
 import {WritableBarOptions, WritableColumnOptions} from "../types";
-import ColorMode, {ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
+import ColorMode, {ColorModeType, ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import {ShapeAttrs} from "@antv/g-base";
 import Accordion from "../../../lib/lc-accordion/Accordion";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
@@ -92,7 +92,8 @@ export const AntdColumnGraphics: React.FC<AntdColumnGraphicsProps> = ({config, o
     return (
         <Accordion title={'图形'}>
             <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: '85%'}}>
-                <ColorMode onChange={barColorChange} data={buildColorModeData()}/>
+                <ColorMode onChange={barColorChange} data={buildColorModeData()}
+                           exclude={[ColorModeType.RADIAL_GRADIENT]}/>
             </ConfigItem>
             <ConfigItem title={'宽度'}>
                 <UnderLineInput type={'number'} min={1}

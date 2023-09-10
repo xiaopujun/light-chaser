@@ -31,6 +31,6 @@ export class BaseColorBlock extends AbstractDesignerComponent<BaseColorBlockComp
     }
 
     updateTheme(newTheme: ThemeItemType): void {
-        throw new Error("Method not implemented.");
+
     }
 }
