@@ -34,7 +34,7 @@ export default class AntdRingProgress extends AntdBaseDesignerComponent<RingProg
     updateTheme(newTheme: ThemeItemType): void {
         if (!newTheme) return;
         const styleConfig = this.config?.style!;
-        const {colors: {main, mainText, supplementSecond, background, supplementFirst, subText}} = newTheme;
+        const {colors: {main, mainText, supplementFirst, subText}} = newTheme;
         //图形
         if (styleConfig?.color) {
             styleConfig.color = [main!, supplementFirst!];
