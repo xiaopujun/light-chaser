@@ -75,7 +75,6 @@ class ColorMode extends Component<ColorModeProps, ColorModeValue> {
         const {mode} = this.state;
         this.setState({value: _value});
         const {onChange} = this.props;
-        console.log("最新", _value)
         onChange && onChange({mode, value: _value, angle: this.angle});
     }
 

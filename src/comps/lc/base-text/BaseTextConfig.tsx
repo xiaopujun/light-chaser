@@ -6,7 +6,6 @@ import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import {BaseText} from "./BaseText";
-import Accordion from "../../../lib/lc-accordion/Accordion";
 
 export const BaseTextStyleConfig: React.FC<ConfigType> = ({instance}) => {
 
@@ -17,26 +16,24 @@ export const BaseTextStyleConfig: React.FC<ConfigType> = ({instance}) => {
     const textStyle = (instance as BaseText).getConfig()?.style;
     return (
         <>
-            <Accordion title={'文本样式'}>
-                <ConfigItem title={"字号"}>
-                    <UnderLineInput type={'number'} min={12}
-                                    defaultValue={textStyle?.fontSize || 12}
-                                    onChange={(event) => updateStyle({fontSize: parseInt(event.target.value)})}/>
-                </ConfigItem>
-                <ConfigItem title={"加粗"}>
-                    <UnderLineInput type={'number'} min={100} max={900} step={100}
-                                    defaultValue={textStyle?.fontWeight || 500}
-                                    onChange={(event) => updateStyle({fontWeight: parseInt(event.target.value)})}/>
-                </ConfigItem>
-                <ConfigItem title={'颜色'}>
-                    <CfgItemBorder width={'100%'}>
-                        <BaseColorPicker
-                            defaultValue={textStyle?.color || '#fff'}
-                            onChange={(value) => updateStyle({color: value})}
-                            style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                    </CfgItemBorder>
-                </ConfigItem>
-            </Accordion>
+            <ConfigItem title={"字号"}>
+                <UnderLineInput type={'number'} min={12}
+                                defaultValue={textStyle?.fontSize || 12}
+                                onChange={(event) => updateStyle({fontSize: parseInt(event.target.value)})}/>
+            </ConfigItem>
+            <ConfigItem title={"加粗"}>
+                <UnderLineInput type={'number'} min={100} max={900} step={100}
+                                defaultValue={textStyle?.fontWeight || 500}
+                                onChange={(event) => updateStyle({fontWeight: parseInt(event.target.value)})}/>
+            </ConfigItem>
+            <ConfigItem title={'颜色'}>
+                <CfgItemBorder width={'100%'}>
+                    <BaseColorPicker
+                        defaultValue={textStyle?.color || '#fff'}
+                        onChange={(value) => updateStyle({color: value})}
+                        style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
+                </CfgItemBorder>
+            </ConfigItem>
         </>
     )
 }

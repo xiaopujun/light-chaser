@@ -57,7 +57,7 @@ export default class BaseTextDefinition extends AbstractCustomComponentDefinitio
     }
 
     getMenuList(): Array<MenuInfo> | null {
-        return getDefaultMenuList().filter((item: MenuInfo) => item.key !== 'theme');
+        return getDefaultMenuList().filter((item: MenuInfo) => item.key !== 'theme' && item.key !== 'mapping');
     }
 
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {

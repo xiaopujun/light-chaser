@@ -375,10 +375,9 @@ export const toggleSecondaryBorder = () => {
         });
     } else {
         //隐藏辅助线
-        //展示辅助线
         const compContainers = document.getElementsByClassName('lc-comp-item')
         compContainers && Array.from(compContainers).forEach((compContainer: any) => {
-            compContainer.style.border = '1px solid #65eafc00';
+            compContainer.style.border = 'none';
         });
     }
     setAuxiliaryBorder(!auxiliaryBorder);

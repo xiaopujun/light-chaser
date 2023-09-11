@@ -1,10 +1,10 @@
 import {action, makeObservable, observable} from "mobx";
 import LayerComponent from "./LayerComponent";
-import designerStore from "../../store/DesignerStore";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 import {MouseEvent} from "react";
 import {LayerItemDataProps} from "./LayerItem";
 import {setControlPointLineColor} from "../../../lib/lc-movable/GroupSelectable";
+import historyRecordOperateProxy from "../../operate-provider/undo-redo/HistoryRecordOperateProxy";
 
 class LayerListStore {
     constructor() {
@@ -27,14 +27,13 @@ class LayerListStore {
     setContent = (content: string) => this.searchContent = content;
 
     lockChange = (id: string, lock: boolean) => {
-        const {updateLayout} = designerStore;
         const {targets, setTargets} = eventOperateStore;
         if (targets && targets.length > 0) {
             const newTargets = targets.filter(target => target.id !== id);
             if (newTargets.length !== targets.length)
                 setTargets(newTargets);
         }
-        updateLayout && updateLayout([{id, lock: lock}]);
+        historyRecordOperateProxy.doLockUpd([{id, lock}]);
         let instance = this.layerInstanceMap[id];
         instance && instance.update({lock});
     }
@@ -102,8 +101,7 @@ class LayerListStore {
     }
 
     hideChange = (id: string, hide: boolean) => {
-        const {updateLayout} = designerStore;
-        updateLayout && updateLayout([{id, hide}]);
+        historyRecordOperateProxy.doHideUpd([{id, hide}])
         let instance = this.layerInstanceMap[id];
         instance && instance.update({hide});
     }

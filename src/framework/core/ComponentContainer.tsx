@@ -39,7 +39,7 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
                         transform: `translate(${layout.position![0]}px, ${layout.position![1]}px)`,
                         position: 'absolute',
                         display: layout.hide ? 'none' : 'block',
-                        border: auxiliaryBorder ? '1px solid #65eafc' : '1px solid #65eafc00'
+                        border: auxiliaryBorder ? '1px solid #65eafc' : 'none'
                     }} className={'lc-comp-item'}>
                     <div ref={(ref) => this.ref = ref} style={{
                         width: '100%',
