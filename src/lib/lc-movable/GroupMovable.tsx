@@ -1,5 +1,6 @@
 import * as React from "react";
 import Moveable, {
+    MoveableManagerInterface,
     OnDrag,
     OnDragEnd,
     OnDragGroup,
@@ -238,29 +239,53 @@ class GroupMovable extends React.Component<GroupMovableProps> {
         const {readonly = false} = this.props;
         const {selectorRef, targets, scale} = eventOperateStore;
         const {canvasConfig: {rasterize, dragStep, resizeStep}} = designerStore;
+        //获取需要辅助线导航的元素
+        const selectedTargets = document.getElementsByClassName("lc-comp-item");
         return (
             <>
                 {this.props.children}
-                <Moveable ref={this.movableRef}
-                          target={targets}
-                          zoom={1 / scale}
-                          draggable={!readonly}
-                          resizable={!readonly}
-                          keepRatio={false}
-                          throttleDrag={rasterize ? dragStep : 1}
-                          throttleResize={rasterize ? resizeStep : 1}
-                          onClickGroup={e => (selectorRef.current as any)?.clickTarget(e.inputEvent, e.inputTarget)}
-                          onDrag={this.onDrag}
-                          onDragStart={this.onDragStart}
-                          onDragEnd={this.onDragEnd}
-                          onDragGroup={this.onDragGroup}
-                          onDragGroupEnd={this.onDragGroupEnd}
-                          onResizeStart={this.onResizeStart}
-                          onResize={this.onResize}
-                          onResizeEnd={this.onResizeEnd}
-                          onResizeGroupStart={this.onResizeGroupStart}
-                          onResizeGroup={this.onResizeGroup}
-                          onResizeGroupEnd={this.onResizeGroupEnd}
+                <Moveable<DimensionViewableProps>
+                    ref={this.movableRef}
+                    target={targets}
+                    zoom={1 / scale}
+                    draggable={!readonly}
+                    resizable={!readonly}
+                    keepRatio={false}
+
+                    ables={[DimensionViewable as any]}
+                    dimensionViewable={true}
+                    snappable={true}
+                    snapGap={false}
+                    roundable={true}
+                    verticalGuidelines={[0, "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"]}
+                    horizontalGuidelines={[0, "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"]}
+                    snapDirections={true}
+                    elementSnapDirections={true}
+                    isDisplaySnapDigit={true}
+                    isDisplayInnerSnapDigit={true}
+                    isDisplayGridGuidelines={true}
+                    isDisplayShadowRoundControls={true}
+                    displayAroundControls={true}
+                    clipArea={true}
+                    clipVerticalGuidelines={[0, "50%", "100%"]}
+                    clipHorizontalGuidelines={[0, "50%", "100%"]}
+                    clipTargetBounds={true}
+                    elementGuidelines={Array.from(selectedTargets!)}
+
+                    throttleDrag={rasterize ? dragStep : 1}
+                    throttleResize={rasterize ? resizeStep : 1}
+                    onClickGroup={e => (selectorRef.current as any)?.clickTarget(e.inputEvent, e.inputTarget)}
+                    onDrag={this.onDrag}
+                    onDragStart={this.onDragStart}
+                    onDragEnd={this.onDragEnd}
+                    onDragGroup={this.onDragGroup}
+                    onDragGroupEnd={this.onDragGroupEnd}
+                    onResizeStart={this.onResizeStart}
+                    onResize={this.onResize}
+                    onResizeEnd={this.onResizeEnd}
+                    onResizeGroupStart={this.onResizeGroupStart}
+                    onResizeGroup={this.onResizeGroup}
+                    onResizeGroupEnd={this.onResizeGroupEnd}
                 />
             </>
         );
@@ -268,3 +293,43 @@ class GroupMovable extends React.Component<GroupMovableProps> {
 }
 
 export default observer(GroupMovable);
+
+
+export interface DimensionViewableProps {
+    dimensionViewable?: boolean;
+}
+
+export const DimensionViewable = {
+    name: "dimensionViewable",
+    props: {
+        dimensionViewable: Boolean,
+    },
+    events: {},
+    render(moveable: MoveableManagerInterface) {
+        // const zoom = moveable.props.zoom;
+        const rect = moveable.getRect();
+        console.log(rect)
+
+        //todo 思考如何保证缩放比例？
+        return <div key={"dimension-viewer"} className={"moveable-dimension"} style={{
+            left: `0`,
+            top: `-50px`,
+            width: `180px`,
+            height: `25px`,
+            color: "#eff5fa",
+            fontSize: "16px",
+            textAlign: "center",
+            background: "rgba(0,95,176,0.69)",
+            position: 'absolute',
+            fontWeight: '500',
+            boxSizing: 'content-box',
+            borderRadius: '5px',
+            padding: '5px',
+            pointerEvents: 'none',
+        }}>
+            {Math.round(rect.offsetWidth)} x {Math.round(rect.offsetHeight)}
+            &nbsp;&nbsp;|&nbsp;&nbsp;
+            {Math.round(rect.left)} x {Math.round(rect.top)}
+        </div>
+    }
+} as const;
