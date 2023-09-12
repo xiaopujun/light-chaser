@@ -238,7 +238,7 @@ class GroupMovable extends React.Component<GroupMovableProps> {
     render() {
         const {readonly = false} = this.props;
         const {selectorRef, targets, scale} = eventOperateStore;
-        const {canvasConfig: {rasterize, dragStep, resizeStep}} = designerStore;
+        const {canvasConfig: {rasterize, dragStep, resizeStep, width, height}} = designerStore;
         //获取需要辅助线导航的元素
         const selectedTargets = document.getElementsByClassName("lc-comp-item");
         return (
@@ -252,16 +252,34 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                     resizable={!readonly}
                     keepRatio={false}
 
+                    maxSnapElementGapDistance={250}
+                    maxSnapElementGuidelineDistance={250}
+                    snappable={true}
+                    snapGap={true}
+                    snapThreshold={3}
+                    isDisplaySnapDigit={true}
+                    snapDirections={{
+                        top: true,
+                        right: true,
+                        bottom: true,
+                        left: true,
+                        center: true,
+                        middle: true
+                    }}
+                    elementSnapDirections={{
+                        top: true,
+                        right: true,
+                        bottom: true,
+                        left: true,
+                        center: true,
+                        middle: true
+                    }}
+                    snapDistFormat={(v, type) => `${v}px`}
                     ables={[DimensionViewable as any]}
                     dimensionViewable={true}
-                    snappable={true}
-                    snapGap={false}
                     roundable={true}
-                    verticalGuidelines={[0, "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"]}
-                    horizontalGuidelines={[0, "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"]}
-                    snapDirections={true}
-                    elementSnapDirections={true}
-                    isDisplaySnapDigit={true}
+                    // verticalGuidelines={[0, "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"]}
+                    // horizontalGuidelines={[0, "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"]}
                     isDisplayInnerSnapDigit={true}
                     isDisplayGridGuidelines={true}
                     isDisplayShadowRoundControls={true}
