@@ -26,12 +26,18 @@ interface GroupMovableProps {
 
 class GroupMovable extends React.Component<GroupMovableProps> {
     movableRef = React.createRef<Moveable>();
+    verticalGuidelines: number[] = [];
+    horizontalGuidelines: number[] = [];
 
     constructor(props: GroupMovableProps) {
         super(props);
         this.state = {
             targets: [],
         };
+        const {canvasConfig: {width, height}} = designerStore;
+        this.verticalGuidelines = this.generateSnapStep(50, width!);
+        this.horizontalGuidelines = this.generateSnapStep(50, height!);
+        console.log(this.horizontalGuidelines)
     }
 
     componentDidMount() {
@@ -235,10 +241,17 @@ class GroupMovable extends React.Component<GroupMovableProps> {
         if (firstLock) return false;
     }
 
+    generateSnapStep = (step: number, max: number) => {
+        let snapStep = [];
+        for (let i = 0; i < max; i += step)
+            snapStep.push(i);
+        return snapStep;
+    }
+
     render() {
         const {readonly = false} = this.props;
         const {selectorRef, targets, scale} = eventOperateStore;
-        const {canvasConfig: {rasterize, dragStep, resizeStep, width, height}} = designerStore;
+        const {canvasConfig: {rasterize, dragStep, resizeStep}} = designerStore;
         //获取需要辅助线导航的元素
         const selectedTargets = document.getElementsByClassName("lc-comp-item");
         return (
@@ -252,11 +265,11 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                     resizable={!readonly}
                     keepRatio={false}
 
-                    maxSnapElementGapDistance={250}
-                    maxSnapElementGuidelineDistance={250}
+                    maxSnapElementGapDistance={400}
+                    maxSnapElementGuidelineDistance={400}
                     snappable={true}
                     snapGap={true}
-                    snapThreshold={3}
+                    snapThreshold={5}
                     isDisplaySnapDigit={true}
                     snapDirections={{
                         top: true,
@@ -274,12 +287,11 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                         center: true,
                         middle: true
                     }}
-                    snapDistFormat={(v, type) => `${v}px`}
                     ables={[DimensionViewable as any]}
                     dimensionViewable={true}
                     roundable={true}
-                    // verticalGuidelines={[0, "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"]}
-                    // horizontalGuidelines={[0, "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"]}
+                    verticalGuidelines={this.verticalGuidelines}
+                    horizontalGuidelines={this.horizontalGuidelines}
                     isDisplayInnerSnapDigit={true}
                     isDisplayGridGuidelines={true}
                     isDisplayShadowRoundControls={true}
@@ -326,7 +338,6 @@ export const DimensionViewable = {
     render(moveable: MoveableManagerInterface) {
         // const zoom = moveable.props.zoom;
         const rect = moveable.getRect();
-        console.log(rect)
 
         //todo 思考如何保证缩放比例？
         return <div key={"dimension-viewer"} className={"moveable-dimension"} style={{
