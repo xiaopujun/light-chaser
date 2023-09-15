@@ -9,7 +9,7 @@ const LightChaserList = lazy(() => import('./list/LightChaserList'));
 const Designer = lazy(() => import('./designer/Designer'));
 const DesignerView = lazy(() => import('./designer/view/DesignerView'));
 
-class App extends Component<any> {
+class App extends Component {
     render() {
         return (
             <>

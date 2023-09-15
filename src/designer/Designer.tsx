@@ -23,13 +23,9 @@ import {observer} from "mobx-react";
 
 class Designer extends Component {
 
-    constructor(props: any) {
-        super(props);
+    componentDidMount() {
         //加载设计器
         EditorDesignerLoader.getInstance().load();
-    }
-
-    componentDidMount() {
         //加载事件到事件管理器
         registerEventToManager();
         //绑定事件到dom元素
