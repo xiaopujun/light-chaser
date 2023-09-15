@@ -24,7 +24,7 @@ class Footer extends Component {
 
     render() {
         const {layoutConfigs, projectConfig: {name, state}} = designerStore;
-        const {size, coordinate, hotKeyVisible} = footerStore;
+        const {hotKeyVisible} = footerStore;
         const {scale} = eventOperateStore;
         let stateStr = '';
         switch (state) {
@@ -54,12 +54,6 @@ class Footer extends Component {
                     </div>
                 </div>
                 <div className={'footer-right'}>
-                    <div className={'right-info-item'}>
-                        {`尺寸 (${parseInt(size[0] + '')} , ${parseInt(size[1] + '')})`}
-                    </div>
-                    <div className={'right-info-item'}>
-                        {`坐标 (${parseInt(coordinate[0] + '')} , ${parseInt(coordinate[1] + '')})`}
-                    </div>
                     <div className={'right-info-item'}>缩放 : {(scale * 100).toFixed(0)}%</div>
                     <div className={'right-info-item'}>当前组件数 : {Object.keys(layoutConfigs).length}</div>
                     <div className={'right-info-item'}>项目 : {name}</div>

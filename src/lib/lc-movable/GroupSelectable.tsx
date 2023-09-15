@@ -3,8 +3,6 @@ import Selecto, {OnSelectEnd} from "react-selecto";
 import eventOperateStore from "../../designer/operate-provider/EventOperateStore";
 import {observer} from "mobx-react";
 import Moveable from 'react-moveable';
-import footerStore from "../../designer/footer/FooterStore";
-import designerStore from "../../designer/store/DesignerStore";
 
 /**
  * 设置控制点和边框的颜色
@@ -75,19 +73,6 @@ class GroupSelectable extends Component {
         if (selected.length > 1) {
             let {calculateGroupCoordinate} = eventOperateStore;
             calculateGroupCoordinate(selected);
-        }
-
-        //更新底部坐标信息
-        let {setCoordinate, setSize} = footerStore;
-        const {layoutConfigs} = designerStore;
-        if (selected.length === 1) {
-            const {position, width, height} = layoutConfigs[selected[0].id];
-            setCoordinate([position![0], position![1]]);
-            setSize([width!, height!])
-        } else if (selected.length > 1) {
-            let {groupCoordinate} = eventOperateStore;
-            setCoordinate([groupCoordinate.minX!, groupCoordinate.minY!]);
-            setSize([groupCoordinate.groupWidth!, groupCoordinate.groupHeight!])
         }
     }
 
