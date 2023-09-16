@@ -7,87 +7,52 @@
     <img alt="" src="https://img.shields.io/badge/framework-React-61daeb?logoColor=08CE5D">
 </p>
 
-<p align="middle">light chaser 是一个可拖拽式的WEB数据可视化设计器</p>
-<p align="middle">
-    <a href="https://xiaopujun.github.io/light-chaser-app/#/" target="_blank">Demo</a> / <a href="https://www.bilibili.com/video/BV1v8411z78f/?share_source=copy_web&vd_source=ece0559aa5b8c4f5c0d7307cb2b06aac" target="_blank">视频</a>
-</p>
+<p align="middle">light chaser（追光者） 一个拖拽式的数据可视化设计工具</p>
 
 # 一、简介
 
-Light Chaser(LC) 是一款基于React生态的大屏数据可视化设计器。通过简单的拖拽，即可生成漂亮、美观的可视化数据大屏和看板。
+light chaser是一个数据可视化设计器工具。通过拖、拉、拽、快捷键的方式可快速构建出一个数据可视化页面。不论是数据大屏、数据报表它都可以轻松完成。
 
-她具有以下特点：
+同时它也是一个在不断完善的项目。
 
-- 高性能：结合React和Mobx的特点以及LC本身的设计理念。 尽最大努力的避免组件的无效渲染。 使得LC的整体性能保持在了一个较好的水平。 在几百个复杂组件的场景下。 仍能做到流畅的渲染。
-- 高扩展：LC提供一个统一接口。只需实现该接口。理论上可以接入任何react生态的组件。这使得LC的组件库可以无限扩展。
-- 高可定制：同样依赖于设计的统一接口。 对于开发者自己实现的组件。它的配置项完全可以由开发者自定义。你可以使用LC提供的默认配置组件。也可以完全使用自己的实现。
-- 前后端分离：本项目100%前后端分离，即使没有后端服务。LC设计器也可以像本地应用一样完美运行（目前仅支持本地运行，后续会支持部署到服务器）。
-- 主题快速切换：LC提供了主题切换功能。你可以在全局切换主题。也可以在组件级别切换主题。这使得你可以快速的切换主题。从而快速的生成不同风格的大屏。
-- 快捷键操作：LC提供了丰富的快捷键操作。你可以通过快捷键快速的完成一些操作。从而提高你的工作效率。
-- 拖拽栅格化布局：LC提供了拖拽栅格化布局功能。你可以通过拖拽的方式快速的完成布局。从而快速的生成大屏。
+如果你需要一个开源、免费的数据可视化设计工具，那你可以尝试选择它.
 
-# 二、效果展示
+如果你希望它做的更好，请参与，完善它！
 
-![image.png](https://s2.loli.net/2023/08/30/SnIYcomQWxaGyfj.png)
+现在你可以在线体验它：
+[在线体验请点](https://xiaopujun.github.io/light-chaser-app/#/)
+
+要更直观的了解它：
+[实机演示](https://www.bilibili.com/video/BV1Uh4y1v7sv/?share_source=copy_web&vd_source=ece0559aa5b8c4f5c0d7307cb2b06aac)
+
+# 二、他能做
+
+![image.png](https://s2.loli.net/2023/09/13/AqOQ54ULhnEJagP.png)
+
+![01.png](https://s2.loli.net/2023/09/13/KetpTjqzVUyhAG5.png)
 
 # 三、如何运行
 
-1. 克隆项目到本地
-
 ```shell
+# 1. 克隆项目
 git clone https://gitee.com/xiaopujun/light-chaser.git
-```
 
-2. 安装项目依赖
-
-```shell
+# 2. 安装依赖
 yarn install
-```
 
-3. 启动项目
-
-```shell
+# 3. 启动项目 
 yarn start
-```
 
-4. 访问项目
-
-```shell
+# 4. 访问
 http://localhost:3000
-```
 
-5. 打包项目
-
-```shell
+# 5. 编译打包
 yarn build
 ```
 
 # 四、如何使用
 
-|操作方式/快捷键|说明|
-|--- | ---|
-|双击左侧组件| 添加组件到画布|
-|鼠标右键长按 | 拖拽画布|
-|alt + 滑轮 | 缩放画布|
-|ctrl + v| 复制组件|
-|ctrl + l| 锁定组件|
-|ctrl + 方向上键| 置顶组件|
-|ctrl + 方向下键| 置底组件|
-|delete| 删除组件|
-|up| 组件上移|
-|down| 组件下移|
-|left| 组件左移|
-|right| 组件右移|
-|ctrl + shift + up| 组件向上放大|
-|ctrl + shift + down| 组件向下放大|
-|ctrl + shift + left| 组件向左放大|
-|ctrl + shift + right| 组件向右放大|
-|ctrl + alt + up| 组件向上缩小|
-|ctrl + alt + down| 组件向下缩小|
-|ctrl + alt + left| 组件向左缩小|
-|ctrl + alt + fight| 组件向右缩小|
-|ctrl + z| 撤销|
-|ctrl + shift + z| 重做|
+[使用教程](https://www.bilibili.com/video/BV1Fk4y1w7rd/?share_source=copy_web&vd_source=ece0559aa5b8c4f5c0d7307cb2b06aac)
 
 # 五、目录结构
 
