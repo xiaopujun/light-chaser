@@ -145,7 +145,7 @@ class HistoryRecordOperateProxy {
         if (!targetIds || targetIds.length === 0) return;
         const {setContentVisible, activeConfig} = rightStore;
         setContentVisible(false);
-        activeConfig("80cc666f", "LcBg");
+        activeConfig(null, "");
 
         //构建历史记录数据
         const prev: DelDataType[] = [];

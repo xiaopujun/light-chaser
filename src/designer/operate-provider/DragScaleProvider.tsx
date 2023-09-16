@@ -3,8 +3,11 @@ import designerStore from "../store/DesignerStore";
 import {observer} from "mobx-react";
 import CanvasDragger from "./drag/CanvasDragger";
 
+export interface DragScaleProviderProps {
+    onDoubleClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+}
 
-class DragScaleProvider extends Component {
+class DragScaleProvider extends Component<DragScaleProviderProps> {
 
     //画布x坐标（画布拖拽缩放共用）
     public static x: number = 0;
@@ -42,8 +45,9 @@ class DragScaleProvider extends Component {
                 backgroundColor: '#434343'
             }}>
                 <div ref={ref => DragScaleProvider.providerRef = ref}
-                     className={'lc-drag-scale-provider'}
-                     style={{width: canvasConfig?.width, height: canvasConfig?.height}}>
+                     onDoubleClick={this.props.onDoubleClick}
+                     className={'lc-drag-scale-provider lc-canvas-dom'}
+                     style={{width: canvasConfig?.width, height: canvasConfig?.height, background: 'black'}}>
                     {this.props.children}
                 </div>
             </div>

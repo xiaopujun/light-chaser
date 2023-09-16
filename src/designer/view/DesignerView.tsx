@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import DesignerBackground from "../../comps/lc/background/DesignerBackground";
 import './DesignerView.less';
 import {MovableItemType} from "../../lib/lc-movable/types";
 import Loading from "../../lib/loading/Loading";
@@ -24,13 +23,13 @@ class DesignerView extends Component {
     }
 
     render() {
-        let {loaded, elemConfigs} = designerStore!;
+        let {loaded, canvasConfig: {width, height}} = designerStore!;
         if (!loaded)
             return <Loading/>;
         return (
-            <DesignerBackground config={elemConfigs!['80cc666f']['background'] || {}}>
+            <div style={{width, height, background: 'black', overflow: 'hidden'}}>
                 {this.generateElement()}
-            </DesignerBackground>
+            </div>
         );
     }
 }

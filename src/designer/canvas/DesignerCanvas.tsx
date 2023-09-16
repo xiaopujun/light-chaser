@@ -2,7 +2,6 @@ import React, {MouseEvent, PureComponent} from 'react';
 import DragScaleProvider from "../operate-provider/DragScaleProvider";
 import {observer} from "mobx-react";
 import designerStore, {DesignerStore} from "../store/DesignerStore";
-import DesignerBackground from "../../comps/lc/background/DesignerBackground";
 import rightStore from "../right/RightStore";
 import DesignerRuler from "../../lib/lc-ruler/DesignerRuler";
 import DesignerContainer from "../operate-provider/DesignerContainer";
@@ -19,8 +18,6 @@ import {isEqual} from "lodash";
  * 设计器画布
  */
 class DesignerCanvas extends PureComponent<DesignerStore | any> {
-
-    backgroundRef: DesignerBackground | null = null;
 
     state = {
         designerRef: null
@@ -54,15 +51,11 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                 <DesignerContainer>
                     <GroupSelectable>
                         <DesignerRuler offsetX={60} offsetY={50}>
-                            <DragScaleProvider>
+                            <DragScaleProvider onDoubleClick={this.updateActive}>
                                 <GroupMovable>
-                                    <DesignerBackground onClick={this.updateActive}
-                                                        ref={ref => this.backgroundRef = ref}>
-                                        {this.generateElement()}
-                                    </DesignerBackground>
+                                    {this.generateElement()}
                                 </GroupMovable>
                             </DragScaleProvider>
-
                         </DesignerRuler>
                     </GroupSelectable>
                 </DesignerContainer>

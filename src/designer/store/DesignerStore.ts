@@ -242,13 +242,6 @@ class DesignerStore implements AbstractBaseStore {
      */
     updateCanvasConfig = (data: CanvasConfig) => {
         this.canvasConfig = {...this.canvasConfig, ...data}
-        //重新渲染画布尺寸(更新背景)
-        this.compInstances['80cc666f'].update({
-            background: {
-                width: this.canvasConfig.width,
-                height: this.canvasConfig.height
-            }
-        })
     }
 
     /**

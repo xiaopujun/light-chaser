@@ -30,15 +30,15 @@ class RightStore {
     /**
      * 当前选中的组件
      */
-    activeElem: ActiveElem = {id: '80cc666f', type: 'LcBg'};
+    activeElem: ActiveElem = {};
     /**
      * 当前选中组件的操作菜单列表
      */
-    menus: Array<MenuInfo> = bgMenu;
+    menus: Array<MenuInfo> = [];
     /**
      * 当前选中组件的操作菜单列表中处于激活状态的菜单
      */
-    activeMenu: string = 'background';
+    activeMenu: string = '';
     /**
      * 右侧组件配置区域是否可见
      */
@@ -52,35 +52,33 @@ class RightStore {
 
     setContentVisible = (visible: boolean) => this.visible = visible;
 
-    activeConfig = (id: string, type: string) => {
-        if (type === 'LcBg') {
-            //激活背景设置
-            //更新菜单列表
-            this.menus = bgMenu;
-            this.activeMenu = 'background';
-            this.activeElem = {id: '80cc666f', type: 'LcBg'};
-        } else {
-            //更新菜单列表
-            this.menus = (EditorDesignerLoader.getInstance().customComponentInfoMap[type] as AbstractCustomComponentDefinition).getMenuList() || [];
-            if (this.menus.length > 0) {
-                let setNewActiveMenu = true;
-                for (let i = 0; i < this.menus.length; i++) {
-                    if (this.menus[i].key === this.activeMenu) {
-                        setNewActiveMenu = false;
-                        break;
-                    }
+    activeConfig = (id: string | null, type: string | null) => {
+        if (!id) {
+            this.activeMenu = '';
+            this.activeElem = {};
+            this.menus = [];
+            return;
+        }
+        //更新菜单列表
+        this.menus = (EditorDesignerLoader.getInstance().customComponentInfoMap[type!] as AbstractCustomComponentDefinition).getMenuList() || [];
+        if (this.menus.length > 0) {
+            let setNewActiveMenu = true;
+            for (let i = 0; i < this.menus.length; i++) {
+                if (this.menus[i].key === this.activeMenu) {
+                    setNewActiveMenu = false;
+                    break;
                 }
-                if (setNewActiveMenu)
-                    this.activeMenu = this.menus[0].key;
             }
-            this.activeElem = {id, type};
-            //重新挂载配置面板
-            if (this.visible) {
-                this.visible = false;
-                setTimeout(() => {
-                    runInAction(() => this.visible = true);
-                }, 0);
-            }
+            if (setNewActiveMenu)
+                this.activeMenu = this.menus[0].key;
+        }
+        this.activeElem = {id: id!, type: type!};
+        //重新挂载配置面板
+        if (this.visible) {
+            this.visible = false;
+            setTimeout(() => {
+                runInAction(() => this.visible = true);
+            }, 0);
         }
     }
 }

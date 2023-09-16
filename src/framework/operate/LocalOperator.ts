@@ -9,7 +9,6 @@ import {AbstractOperator} from "./AbstractOperator";
 import {idGenerate} from "../../utils/IdGenerate";
 import {LocalConstant} from "../LocalConstant";
 import {message} from "antd";
-import {BackgroundConfigType} from "../../comps/lc/background/AbstractBackgroundImpl";
 import {cloneDeep} from "lodash";
 
 /**
@@ -47,13 +46,6 @@ class LocalOperator extends AbstractOperator {
         const screenShotId = LocalConstant.LOCAL_PROJECT_SCREENSHOT + projectData.id;
         projectData!.projectConfig!.screenshot = screenShotId; //截图
         ImgUtil.htmlToImgWithId(imgDom, screenShotId, {scale: scaleCore.scale}).then(() => console.log('异步生成截图成功'));
-        // 4. 异步保存背景图片（如果有）
-        const bgConfig: BackgroundConfigType = (projectData.elemConfigs ?? {})['80cc666f']['background'];
-        if (bgConfig?.bgImg.bgImgUrl !== '') {
-            const bgImgKey = LocalConstant.LOCAL_BACKGROUND_IMG + projectData.id;
-            bgConfig.bgImg.bgImgUrl = bgImgKey;
-            ImgUtil.saveImgToLocal(bgConfig.bgImg.bgImgUrl!, bgImgKey).then(() => console.log('异步生成背景图片成功'));
-        }
     }
 
     private static async doCreate(projectData: ProjectDataType): Promise<void> {
@@ -96,14 +88,6 @@ class LocalOperator extends AbstractOperator {
         const screenShotId = LocalConstant.LOCAL_PROJECT_SCREENSHOT + projectData.id;
         projectData!.projectConfig!.screenshot = screenShotId; //截图
         ImgUtil.htmlToImgWithId(imgDom, screenShotId, {scale: scaleCore.scale}).then(() => console.log('异步更新截图成功'));
-        //3. 异步处理背景图片
-        const bgConfig: BackgroundConfigType = projectData.elemConfigs?.['80cc666f']['background'];
-        const bgImgKey = LocalConstant.LOCAL_BACKGROUND_IMG + projectData.id;
-        if (bgConfig?.bgImg.bgImgUrl !== '')
-            ImgUtil.saveImgToLocal(bgConfig.bgImg.bgImgUrl!, bgImgKey).then(() => console.log('异步更新背景图片成功'));
-        else
-            ImgUtil.delImgFormLocal(bgImgKey);
-        projectData!.elemConfigs!['80cc666f'].background!.bgImg!.bgImgUrl = bgImgKey;
     }
 
     private async doUpdate(projectData: ProjectDataType): Promise<void> {
@@ -156,12 +140,6 @@ class LocalOperator extends AbstractOperator {
     public async getProject(id: string): Promise<ProjectDataType | null> {
         const projectData = await localforage.getItem(id);
         if (!projectData) return null;
-        let bgConfig: BackgroundConfigType = (projectData as ProjectDataType)!.elemConfigs!['80cc666f']['background'];
-        if (bgConfig?.bgImg.bgImgUrl !== '') {
-            const url = await ImgUtil.getImgFromLocal(bgConfig?.bgImg.bgImgUrl);
-            if (bgConfig)
-                (projectData as ProjectDataType)!.elemConfigs!['80cc666f']['background'].bgImg.bgImgUrl = url;
-        }
         return projectData as ProjectDataType;
     }
 
