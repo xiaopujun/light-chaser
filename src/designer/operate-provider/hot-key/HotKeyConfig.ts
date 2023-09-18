@@ -28,13 +28,15 @@ import {
     undo
 } from "./HotKeyImpl";
 
-export const getHotKeyConfig: HotKeyConfigType = {
+export const hotkeyConfigs: HotKeyConfigType = {
     'alt + wheel': {
         handler: doScale,
         triggerType: TriggerType.COILED,
+        range: ".lc-ruler-content"
     },
     'control + a': {
         handler: selectAll,
+        range: ".lc-ruler-content"
     },
     'control + v': {
         handler: doCopy,
@@ -62,9 +64,11 @@ export const getHotKeyConfig: HotKeyConfigType = {
     },
     'control + z': {
         handler: undo,
+        range: ".lc-ruler-content"
     },
     'control + shift + z': {
         handler: redo,
+        range: ".lc-ruler-content"
     },
     'control + k': {
         handler: toggleSecondaryBorder,
@@ -87,49 +91,61 @@ export const getHotKeyConfig: HotKeyConfigType = {
     'arrowup': {
         handler: doMoveUp,
         triggerType: TriggerType.COILED,
+        range: ".lc-ruler-content"
     },
     'arrowdown': {
         handler: doMoveDown,
         triggerType: TriggerType.COILED,
+        range: ".lc-ruler-content"
     },
     'arrowleft': {
         handler: doMoveLeft,
         triggerType: TriggerType.COILED,
+        range: ".lc-ruler-content"
     },
     'arrowright': {
         handler: doMoveRight,
         triggerType: TriggerType.COILED,
+        range: ".lc-ruler-content"
     },
     'control + shift + arrowup': {
         handler: doBaseBottomEnlargeUp,
         triggerType: TriggerType.COILED,
+        range: ".lc-ruler-content"
     },
     'control + shift + arrowdown': {
         handler: doBaseUpEnlargeDown,
         triggerType: TriggerType.COILED,
+        range: ".lc-ruler-content"
     },
     'control + shift + arrowleft': {
         handler: doBaseRightEnlargeLeft,
         triggerType: TriggerType.COILED,
+        range: ".lc-ruler-content"
     },
     'control + shift + arrowright': {
         handler: doBaseLeftEnlargeRight,
         triggerType: TriggerType.COILED,
+        range: ".lc-ruler-content"
     },
     'control + alt + arrowup': {
         handler: doBaseBottomDecreaseUp,
         triggerType: TriggerType.COILED,
+        range: ".lc-ruler-content"
     },
     'control + alt + arrowdown': {
         handler: doBaseUpDecreaseDown,
         triggerType: TriggerType.COILED,
+        range: ".lc-ruler-content"
     },
     'control + alt + arrowleft': {
         handler: doBaseRightDecreaseLeft,
         triggerType: TriggerType.COILED,
+        range: ".lc-ruler-content"
     },
     'control + alt + arrowright': {
         handler: doBaseLeftDecreaseRight,
         triggerType: TriggerType.COILED,
+        range: ".lc-ruler-content"
     },
 }

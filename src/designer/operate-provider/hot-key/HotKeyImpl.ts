@@ -114,6 +114,7 @@ export const doDelete = () => {
 }
 
 export const doSave = () => {
+    //todo 改为使用loadsh的防抖函数
     RenderUtil.throttle(() => {
         let {projectConfig: {saveType}} = designerStore;
         if (saveType === SaveType.LOCAL) {
@@ -145,8 +146,8 @@ export const doHide = () => {
 
 export const doMoveUp = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
-    const {layoutConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
+    const {layoutConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (targets.length === 1) {
         let id = targets[0].id;
         let yPos = layoutConfigs[id].position![1] - dragStep;
@@ -159,8 +160,8 @@ export const doMoveUp = () => {
 
 export const doMoveDown = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
-    const {layoutConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
+    const {layoutConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (targets.length === 1) {
         let id = targets[0].id;
         let yPos = layoutConfigs[id].position![1] + dragStep;
@@ -173,8 +174,8 @@ export const doMoveDown = () => {
 
 export const doMoveLeft = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
-    const {layoutConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
+    const {layoutConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (targets.length === 1) {
         let id = targets[0].id;
         let xPos = layoutConfigs[id].position![0];
@@ -187,8 +188,8 @@ export const doMoveLeft = () => {
 
 export const doMoveRight = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
-    const {layoutConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
+    const {layoutConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (targets.length === 1) {
         let id = targets[0].id;
         let xPos = layoutConfigs[id].position![0];
@@ -206,8 +207,8 @@ export const doMoveRight = () => {
  */
 export const doBaseBottomEnlargeUp = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
-    const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
+    const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     let height;
     if (targets.length === 1) {
         let id = targets[0].id;
@@ -223,8 +224,8 @@ export const doBaseBottomEnlargeUp = () => {
  */
 export const doBaseUpEnlargeDown = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
-    const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
+    const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     let height;
     if (targets.length === 1) {
         let id = targets[0].id;
@@ -240,8 +241,8 @@ export const doBaseUpEnlargeDown = () => {
  */
 export const doBaseRightEnlargeLeft = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
-    const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
+    const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     let width;
     if (targets.length === 1) {
         let id = targets[0].id;
@@ -257,8 +258,8 @@ export const doBaseRightEnlargeLeft = () => {
  */
 export const doBaseLeftEnlargeRight = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
-    const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
+    const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     let width;
     if (targets.length === 1) {
         let id = targets[0].id;
@@ -275,8 +276,8 @@ export const doBaseLeftEnlargeRight = () => {
  */
 export const doBaseBottomDecreaseUp = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
-    const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
+    const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     let height;
     if (targets.length === 1) {
         height = layoutConfigs[targets[0].id].height! - resizeStep;
@@ -291,8 +292,8 @@ export const doBaseBottomDecreaseUp = () => {
  */
 export const doBaseUpDecreaseDown = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
-    const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
+    const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     let height;
     if (targets.length === 1) {
         let id = targets[0].id;
@@ -308,8 +309,8 @@ export const doBaseUpDecreaseDown = () => {
  */
 export const doBaseRightDecreaseLeft = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
-    const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
+    const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     let width;
     if (targets.length === 1) {
         let id = targets[0].id;
@@ -325,8 +326,8 @@ export const doBaseRightDecreaseLeft = () => {
  */
 export const doBaseLeftDecreaseRight = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
-    const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     if (!targets || targets.length === 0) return;
+    const {layoutConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     let width;
     if (targets.length === 1) {
         let id = targets[0].id;
@@ -388,6 +389,7 @@ export const toggleSecondaryBorder = () => {
  */
 export const toggleProjectConfig = () => {
     const {projectVisible, setProjectVisible} = headerStore;
+    console.log(projectVisible)
     setProjectVisible(!projectVisible);
 }
 

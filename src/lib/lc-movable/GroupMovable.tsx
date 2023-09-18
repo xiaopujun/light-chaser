@@ -36,7 +36,6 @@ class GroupMovable extends React.Component<GroupMovableProps> {
         const {canvasConfig: {width, height}} = designerStore;
         this.verticalGuidelines = this.generateSnapStep(50, width!);
         this.horizontalGuidelines = this.generateSnapStep(50, height!);
-        console.log(this.horizontalGuidelines)
     }
 
     componentDidMount() {
