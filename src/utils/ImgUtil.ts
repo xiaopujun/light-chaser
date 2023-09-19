@@ -19,7 +19,7 @@ export class ImgUtil {
 
     static async htmlToImgWithId(dom: HTMLElement, key: string, options?: any): Promise<boolean> {
         try {
-            const canvas = await html2canvas(dom, {...options, willReadFrequently: true});
+            const canvas = await html2canvas(dom, {...options});
             return await new Promise<boolean>((resolve) => {
                 canvas.toBlob((blob) => {
                     localforage.setItem(key, blob);

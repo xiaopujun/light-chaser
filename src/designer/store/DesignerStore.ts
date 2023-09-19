@@ -124,6 +124,15 @@ class DesignerStore implements AbstractBaseStore {
     };
 
     /**
+     * 保存的事件间隔
+     */
+    lastTimeSave: number = Date.now();
+
+    setLastTimeSave = (time: number) => {
+        this.lastTimeSave = time;
+    }
+
+    /**
      * 初始化store
      */
     doInit = (store: ProjectDataType) => {

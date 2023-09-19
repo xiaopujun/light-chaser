@@ -3,7 +3,6 @@ import {ProjectDataType, SaveType} from "../../designer/DesignerType";
 import localforage from "localforage";
 import {ImgUtil} from "../../utils/ImgUtil";
 import eventOperateStore from "../../designer/operate-provider/EventOperateStore";
-import scaleCore from "../../designer/operate-provider/scale/ScaleCore";
 import {buildUrlParams, parseUrlParams} from "../../utils/URLUtil";
 import {AbstractOperator} from "./AbstractOperator";
 import {idGenerate} from "../../utils/IdGenerate";
@@ -20,7 +19,7 @@ class LocalOperator extends AbstractOperator {
         return SaveType.LOCAL;
     }
 
-    public doCreateOrUpdate(projectData: ProjectDataType): void {
+    public saveProject(projectData: ProjectDataType): void {
         if (projectData.id === '')
             LocalOperator.createProject(projectData).then(() => message.success('保存成功'));
         else {
@@ -45,7 +44,7 @@ class LocalOperator extends AbstractOperator {
         let imgDom: any = document.querySelector('.lc-drag-scale-provider');
         const screenShotId = LocalConstant.LOCAL_PROJECT_SCREENSHOT + projectData.id;
         projectData!.projectConfig!.screenshot = screenShotId; //截图
-        ImgUtil.htmlToImgWithId(imgDom, screenShotId, {scale: scaleCore.scale}).then(() => console.log('异步生成截图成功'));
+        ImgUtil.htmlToImgWithId(imgDom, screenShotId, {scale: 0.3}).then(() => console.log('异步生成截图成功'));
     }
 
     private static async doCreate(projectData: ProjectDataType): Promise<void> {
@@ -55,7 +54,7 @@ class LocalOperator extends AbstractOperator {
                 return;
             }
             await localforage.setItem(projectData.id, projectData);
-            // 8. 维护项目列表（保存项目的轻量级描述信息，避免加载列表时内存占用过大）
+            // 维护项目列表（保存项目的轻量级描述信息，避免加载列表时内存占用过大）
             await LocalOperator.doSaveProjectSimpleInfo(projectData);
         } catch (error) {
             console.log("createProject error", error);
@@ -83,11 +82,19 @@ class LocalOperator extends AbstractOperator {
         const {maxLevel, minLevel} = eventOperateStore;
         projectData.extendParams!.maxLevel = maxLevel;
         projectData.extendParams!.minLevel = minLevel;
-        //2. 异步生成工作区截图
-        let imgDom: any = document.querySelector('.lc-drag-scale-provider');
-        const screenShotId = LocalConstant.LOCAL_PROJECT_SCREENSHOT + projectData.id;
-        projectData!.projectConfig!.screenshot = screenShotId; //截图
-        ImgUtil.htmlToImgWithId(imgDom, screenShotId, {scale: scaleCore.scale}).then(() => console.log('异步更新截图成功'));
+        const updateTime = Date.now();
+        const {lastTimeSave, setLastTimeSave} = designerStore;
+        const duringTime = updateTime - lastTimeSave;
+        console.log('duringTime', duringTime);
+        //距离上一次更新时间超过20分钟，重新生成截图
+        if (duringTime / 1000 / 60 > 20) {
+            //2. 异步生成工作区截图
+            let imgDom: any = document.querySelector('.lc-drag-scale-provider');
+            const screenShotId = LocalConstant.LOCAL_PROJECT_SCREENSHOT + projectData.id;
+            projectData!.projectConfig!.screenshot = screenShotId; //截图
+            ImgUtil.htmlToImgWithId(imgDom, screenShotId, {scale: 0.3}).then(() => console.log('异步更新截图成功'));
+            setLastTimeSave(updateTime);
+        }
     }
 
     private async doUpdate(projectData: ProjectDataType): Promise<void> {

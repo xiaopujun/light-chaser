@@ -47,7 +47,7 @@ class DragScaleProvider extends Component<DragScaleProviderProps> {
                 <div ref={ref => DragScaleProvider.providerRef = ref}
                      onDoubleClick={this.props.onDoubleClick}
                      className={'lc-drag-scale-provider lc-canvas-dom'}
-                     style={{width: canvasConfig?.width, height: canvasConfig?.height, background: 'black'}}>
+                     style={{width: canvasConfig?.width, height: canvasConfig?.height, background: '#1c1c1c'}}>
                     {this.props.children}
                 </div>
             </div>

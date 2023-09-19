@@ -1,10 +1,8 @@
 import eventOperateStore from "../EventOperateStore";
 import designerStore from "../../store/DesignerStore";
 import {MovableItemType} from "../../../lib/lc-movable/types";
-import RenderUtil from "../../../utils/RenderUtil";
 import {SaveType} from "../../DesignerType";
-import {cloneDeep} from "lodash";
-import {message} from "antd";
+import {cloneDeep, throttle} from "lodash";
 import EditorDesignerLoader from "../../loader/EditorDesignerLoader";
 import {historyOperator} from "../undo-redo/HistoryOperator";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
@@ -13,6 +11,7 @@ import runtimeConfigStore from "../../store/RuntimeConfigStore";
 import headerStore from "../../header/HeaderStore";
 import layerListStore from "../../float-configs/layer-list/LayerListStore";
 import footerStore from "../../footer/FooterStore";
+import DateUtil from "../../../utils/DateUtil";
 
 export const selectAll = () => {
     let comps = document.getElementsByClassName('lc-comp-item');
@@ -113,21 +112,19 @@ export const doDelete = () => {
     setPointerTarget && setPointerTarget(enforcementCap);
 }
 
-export const doSave = () => {
-    //todo 改为使用loadsh的防抖函数
-    RenderUtil.throttle(() => {
+//保存函数节流5s, 5s内不可重复保存
+export const doSave = throttle(() => {
+    return new Promise(() => {
         let {projectConfig: {saveType}} = designerStore;
         if (saveType === SaveType.LOCAL) {
-            const {projectConfig: {saveType = SaveType.LOCAL}} = designerStore;
-            EditorDesignerLoader.getInstance().abstractOperatorMap[saveType].doCreateOrUpdate(cloneDeep(designerStore.getData()));
+            const {projectConfig: {saveType = SaveType.LOCAL}, updateProjectConfig} = designerStore;
+            updateProjectConfig({updateTime: DateUtil.format(new Date())})
+            EditorDesignerLoader.getInstance().abstractOperatorMap[saveType].saveProject(cloneDeep(designerStore.getData()));
         } else if (saveType === SaveType.SERVER) {
             alert("server save");
         }
-    }, 5000, () => {
-        message.warn('保存过于频繁，请稍后再试！')
-    })();
-
-}
+    });
+}, 5000);
 
 export const doHide = () => {
     const {targetIds, setTargets} = eventOperateStore;

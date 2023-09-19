@@ -4,7 +4,7 @@ export abstract class AbstractOperator {
 
     public abstract getKey(): string;
 
-    public abstract doCreateOrUpdate(projectData: ProjectDataType): void ;
+    public abstract saveProject(projectData: ProjectDataType): void ;
 
     public abstract deleteProject(id: string): boolean;
 
