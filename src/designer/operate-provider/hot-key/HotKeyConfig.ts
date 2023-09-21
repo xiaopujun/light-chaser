@@ -40,6 +40,7 @@ export const hotkeyConfigs: HotKeyConfigType = {
     },
     'control + v': {
         handler: doCopy,
+        range: ".lc-ruler-content"
     },
     'control + l': {
         handler: doLock,
