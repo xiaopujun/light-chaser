@@ -1,25 +1,21 @@
 import React, {Component} from 'react';
 
 export interface BaseImageComponentStyle {
-    source?: 'link' | 'local';
-    src?: string;
+    type?: 'online' | 'local';
+    onLineUrl?: string;
+    localUrl?: string;
 }
 
-class BaseImageComponent extends Component<BaseImageComponentStyle> {
-
-    state = {
-        src: ''
-    }
+class BaseImageComponent extends Component<BaseImageComponentStyle, BaseImageComponentStyle> {
 
     constructor(props: BaseImageComponentStyle) {
         super(props);
-        this.state = {
-            src: props.src || ''
-        }
+        this.state = {...props}
     }
 
     render() {
-        const {src} = this.state;
+        const {type, onLineUrl, localUrl} = this.state;
+        const src = type === 'online' ? onLineUrl : localUrl;
         return (
             <div style={{width: '100%', height: '100%'}}>
                 {!src ? <div style={{
@@ -31,7 +27,7 @@ class BaseImageComponent extends Component<BaseImageComponentStyle> {
                     }}>
                         <div>请配置图片连接或上传图片</div>
                     </div> :
-                    <img width={'100%'} height={'100%'} src={src} alt={'image'}/>}
+                    <img alt={'图片组件'} width={'100%'} height={'100%'} src={src}/>}
             </div>
         );
     }

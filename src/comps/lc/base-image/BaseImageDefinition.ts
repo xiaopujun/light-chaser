@@ -39,7 +39,9 @@ export default class BaseImageDefinition extends AbstractCustomComponentDefiniti
                 desc: '标准提供的基础图片',
             },
             style: {
-                src: '',
+                type: 'online',
+                localUrl: '',
+                onLineUrl: '',
             },
         };
     }
@@ -52,8 +54,6 @@ export default class BaseImageDefinition extends AbstractCustomComponentDefiniti
         return {
             info: BaseInfo,
             style: BaseImageStyleConfig,
-            // animation: AnimationConfig,
-            // theme: ThemeConfig
         };
     }
 

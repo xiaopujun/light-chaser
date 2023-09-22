@@ -37,6 +37,7 @@ class ConfigContent extends Component {
         const {compInstances} = designerStore;
         let {activeMenu, activeElem} = rightStore;
         let abstractConfigObj: AbstractCustomComponentDefinition = EditorDesignerLoader.getInstance().customComponentInfoMap[activeElem.type + '']
+        if (!abstractConfigObj) return;
         let configMapping = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp: React.ComponentType<ConfigType> = configMapping![activeMenu];
         //使用动态代理对象，监听属性变化
