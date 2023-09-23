@@ -1,7 +1,7 @@
 import React from 'react';
 import {ConfigType} from "../../../designer/right/ConfigType";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
-import {BaseTextComponentProps, BaseTextComponentStyle} from "./BaseTextComponent";
+import {BaseTextComponentStyle} from "./BaseTextComponent";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
@@ -13,9 +13,16 @@ export const BaseTextStyleConfig: React.FC<ConfigType> = ({instance}) => {
         instance.update({style: config});
     }
 
-    const textStyle = (instance as BaseText).getConfig()?.style;
+    const config = (instance as BaseText).getConfig();
+    const textStyle = config?.style;
+    let text = config?.data?.staticData?.data;
     return (
         <>
+            <ConfigItem title={'内容'} contentStyle={{width: '80%'}}>
+                <UnderLineInput type={'text'} defaultValue={text} onChange={(e) => {
+                    instance.update({data: {staticData: {data: e.target.value}}})
+                }}/>
+            </ConfigItem>
             <ConfigItem title={"字号"}>
                 <UnderLineInput type={'number'} min={12}
                                 defaultValue={textStyle?.fontSize || 12}
@@ -37,17 +44,3 @@ export const BaseTextStyleConfig: React.FC<ConfigType> = ({instance}) => {
         </>
     )
 }
-
-
-export const BaseTextDataConfig: React.FC<ConfigType> = ({instance}) => {
-    let config = instance.getConfig() as BaseTextComponentProps;
-    let text = config.data?.staticData?.data;
-    return (
-        <ConfigItem title={'文本内容'} contentStyle={{width: '80%'}}>
-            <UnderLineInput type={'text'} defaultValue={text} onChange={(e) => {
-                instance.update({data: {staticData: {data: e.target.value}}})
-            }}/>
-        </ConfigItem>
-    )
-}
-

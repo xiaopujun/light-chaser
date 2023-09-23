@@ -12,7 +12,7 @@ import {BaseTextComponentProps} from "./BaseTextComponent";
 import BaseInfo from "../../common-component/base-info/BaseInfo";
 import AnimationConfig from "../../common-component/animation-config/AnimationConfig";
 import ThemeConfig from "../../common-component/theme-config/ThemeConfig";
-import {BaseTextDataConfig, BaseTextStyleConfig} from "./BaseTextConfig";
+import {BaseTextStyleConfig} from "./BaseTextConfig";
 
 export default class BaseTextDefinition extends AbstractCustomComponentDefinition<BaseText, BaseTextComponentProps> {
     getBaseInfo(): BaseInfoType {
@@ -57,13 +57,12 @@ export default class BaseTextDefinition extends AbstractCustomComponentDefinitio
     }
 
     getMenuList(): Array<MenuInfo> | null {
-        return getDefaultMenuList().filter((item: MenuInfo) => item.key !== 'theme' && item.key !== 'mapping');
+        return getDefaultMenuList().filter((item: MenuInfo) => item.key !== 'theme' && item.key !== 'mapping' && item.key !== 'data');
     }
 
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
             info: BaseInfo,
-            data: BaseTextDataConfig,
             style: BaseTextStyleConfig,
             animation: AnimationConfig,
             theme: ThemeConfig

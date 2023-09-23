@@ -6,12 +6,11 @@ import {BaseInfoType} from "../../../designer/DesignerType";
 import {ClazzTemplate} from "../../common-component/common-types";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import baseIframeImg from './base-iframe.png';
-import {getDefaultMenuList} from "../../../designer/right/util";
 import {BaseIframe} from "./BaseIframe";
 import {BaseIframeComponentProps} from "./BaseIframeComponent";
 import BaseInfo from "../../common-component/base-info/BaseInfo";
 import {BaseIframeStyleConfig} from "./BaseIframeConfig";
-import {DatabaseFilled, HighlightFilled, InteractionFilled, MediumCircleFilled, SkinFilled} from "@ant-design/icons";
+import {HighlightFilled, MediumCircleFilled} from "@ant-design/icons";
 
 export default class BaseIframeDefinition extends AbstractCustomComponentDefinition<BaseIframe, BaseIframeComponentProps> {
     getBaseInfo(): BaseInfoType {
