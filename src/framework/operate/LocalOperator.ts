@@ -171,7 +171,7 @@ class LocalOperator extends AbstractOperator {
         const {elemConfigs} = projectData as ProjectDataType;
         for (const key of Object.keys(elemConfigs!)) {
             const elemConfig = elemConfigs![key] as ComponentBaseProps;
-            const convertIns = abstractConvertMap[elemConfig.info!.type!];
+            const convertIns = abstractConvertMap[elemConfig?.info?.type!];
             //todo 异步调用想想怎么优化
             if (convertIns) {
                 await convertIns.convertBack(elemConfig);
