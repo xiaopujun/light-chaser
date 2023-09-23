@@ -4,6 +4,7 @@ export interface BaseImageComponentStyle {
     type?: 'online' | 'local';
     onLineUrl?: string;
     localUrl?: string;
+    hashCode?: string;
 }
 
 class BaseImageComponent extends Component<BaseImageComponentStyle, BaseImageComponentStyle> {

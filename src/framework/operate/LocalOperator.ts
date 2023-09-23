@@ -9,6 +9,8 @@ import {idGenerate} from "../../utils/IdGenerate";
 import {LocalConstant} from "../LocalConstant";
 import {message} from "antd";
 import {cloneDeep} from "lodash";
+import EditorDesignerLoader from "../../designer/loader/EditorDesignerLoader";
+import {ComponentBaseProps} from "../../comps/common-component/common-types";
 
 /**
  * 本地项目数据操作实现
@@ -40,7 +42,16 @@ class LocalOperator extends AbstractOperator {
         const {maxLevel, minLevel} = eventOperateStore;
         projectData.extendParams!.maxLevel = maxLevel;
         projectData.extendParams!.minLevel = minLevel;
-        // 3. 异步生成工作区截图
+        // 3. 处理数据转换
+        const {abstractConvertMap} = EditorDesignerLoader.getInstance();
+        const {elemConfigs} = projectData;
+        Object.keys(elemConfigs!).forEach((key: string) => {
+            const elemConfig = elemConfigs![key] as ComponentBaseProps;
+            const convertIns = abstractConvertMap[elemConfig.info!.type!];
+            if (convertIns)
+                convertIns.convert(elemConfig);
+        })
+        // 4. 异步生成工作区截图
         let imgDom: any = document.querySelector('.lc-drag-scale-provider');
         const screenShotId = LocalConstant.LOCAL_PROJECT_SCREENSHOT + projectData.id;
         projectData!.projectConfig!.screenshot = screenShotId; //截图
@@ -85,7 +96,15 @@ class LocalOperator extends AbstractOperator {
         const updateTime = Date.now();
         const {lastTimeSave, setLastTimeSave} = designerStore;
         const duringTime = updateTime - lastTimeSave;
-        console.log('duringTime', duringTime);
+        //2. 处理数据转换
+        const {abstractConvertMap} = EditorDesignerLoader.getInstance();
+        const {elemConfigs} = projectData;
+        Object.keys(elemConfigs!).forEach((key: string) => {
+            const elemConfig = elemConfigs![key] as ComponentBaseProps;
+            const convertIns = abstractConvertMap[elemConfig.info!.type!];
+            if (convertIns)
+                convertIns.convert(elemConfig);
+        })
         //距离上一次更新时间超过20分钟，重新生成截图
         if (duringTime / 1000 / 60 > 20) {
             //2. 异步生成工作区截图
@@ -147,6 +166,18 @@ class LocalOperator extends AbstractOperator {
     public async getProject(id: string): Promise<ProjectDataType | null> {
         const projectData = await localforage.getItem(id);
         if (!projectData) return null;
+        //处理数据转换
+        const {abstractConvertMap} = EditorDesignerLoader.getInstance();
+        const {elemConfigs} = projectData as ProjectDataType;
+        for (const key of Object.keys(elemConfigs!)) {
+            const elemConfig = elemConfigs![key] as ComponentBaseProps;
+            const convertIns = abstractConvertMap[elemConfig.info!.type!];
+            //todo 异步调用想想怎么优化
+            if (convertIns) {
+                await convertIns.convertBack(elemConfig);
+            }
+        }
+
         return projectData as ProjectDataType;
     }
 

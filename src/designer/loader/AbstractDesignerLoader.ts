@@ -1,6 +1,7 @@
 import {AbstractCustomComponentDefinition} from "../../framework/core/AbstractCustomComponentDefinition";
 import {HeaderItemProps} from "../header/HeaderTypes";
 import {AbstractOperator} from "../../framework/operate/AbstractOperator";
+import AbstractConvert from "../../framework/convert/AbstractConvert";
 
 export abstract class AbstractDesignerLoader {
 
@@ -10,6 +11,8 @@ export abstract class AbstractDesignerLoader {
     public headerItemInstances: HeaderItemProps[] = [];
     //项目数据操作映射
     public abstractOperatorMap: { [key: string]: AbstractOperator } = {};
+    //数据转换器
+    public abstractConvertMap: { [key: string]: AbstractConvert } = {};
 
     /**
      * 加载设计器

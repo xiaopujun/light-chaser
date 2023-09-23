@@ -9,6 +9,7 @@ import {Upload} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
 import './BaseImageConfig.less';
 import {UploadFile} from "antd/lib/upload/interface";
+import ImageCache from "../../../framework/cache/ImageCache";
 
 export const BaseImageStyleConfig: React.FC<ConfigType<BaseImage>> = ({instance}) => {
     const {style} = instance.getConfig()!;
@@ -24,20 +25,40 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImage>> = ({instance}
         url: localUrl
     }] : []));
 
+    const fileHash = async (file: File) => {
+        const buffer = await file.arrayBuffer();
+        const hashArray = await crypto.subtle.digest('SHA-256', buffer);
+        const hashCode = Array.from(new Uint8Array(hashArray))
+            .map(b => b.toString(16).padStart(2, '0'))
+            .join('');
+        return hashCode;
+    }
 
     const beforeUpload = (file: any) => {
-        const fileReader = new FileReader();
-        fileReader.onload = (event: ProgressEvent<FileReader>) => {
-            const blob = new Blob([event.target!.result!], {type: file.type});
-            const url = URL.createObjectURL(blob);
-            instance.update({style: {localUrl: url}});
-            setLocalUrl(url);
-            setFileList([{...fileInfo, url}]);
-            //todo 更换图片的时候要释放链接和内存的关联，可以提高部分性能
-            // URL.revokeObjectURL(bgImgUrl);
-        };
-        //通过二进制流读取文件，读取完毕后会调用上方设置好的onload事件
-        fileReader.readAsArrayBuffer(file);
+        fileHash(file).then((hashCode) => {
+            if (ImageCache.isExistImageCache(hashCode)) {
+                const url = ImageCache.getImageCache(hashCode);
+                instance.update({style: {localUrl: url!, hashCode}});
+                setLocalUrl(url!);
+                setFileList([{...fileInfo, url: url!}]);
+            } else {
+                const fileReader = new FileReader();
+                fileReader.onload = (event: ProgressEvent<FileReader>) => {
+                    const blob = new Blob([event.target!.result!], {type: file.type});
+                    const url = URL.createObjectURL(blob);
+                    instance.update({style: {localUrl: url, hashCode}});
+                    setLocalUrl(url);
+                    setFileList([{...fileInfo, url}]);
+                    //设置图片缓存
+                    ImageCache.addImageCache(hashCode, url);
+                    //todo 更换图片的时候要释放链接和内存的关联，可以提高部分性能
+                    // URL.revokeObjectURL(bgImgUrl);
+                };
+                //通过二进制流读取文件，读取完毕后会调用上方设置好的onload事件
+                fileReader.readAsArrayBuffer(file);
+            }
+
+        });
         return false;
     }
 
@@ -64,6 +85,7 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImage>> = ({instance}
                             setFileList([]);
                             setLocalUrl('');
                             instance.update({style: {localUrl: ''}})
+                            //todo 后续要加上定时清理缓存
                         }}
                         onPreview={() => window.open(localUrl)}>
                     {fileList.length > 0 ? null : <div className={'upload-btn'}>

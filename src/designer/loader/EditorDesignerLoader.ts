@@ -6,14 +6,11 @@ import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 import {AbstractHeaderItem, HeaderItemProps} from "../header/HeaderTypes";
 import {AbstractCustomComponentDefinition} from "../../framework/core/AbstractCustomComponentDefinition";
 import {AbstractOperator} from "../../framework/operate/AbstractOperator";
+import AbstractConvert from "../../framework/convert/AbstractConvert";
 
 export default class EditorDesignerLoader extends AbstractDesignerLoader {
 
     private static instance: EditorDesignerLoader | null = null;
-
-    private constructor() {
-        super();
-    }
 
     public static getInstance(): EditorDesignerLoader {
         if (!this.instance)
@@ -67,10 +64,15 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
                     if (compKey)
                         this.customComponentInfoMap[compKey] = customComponentInfo;
                 }
+            } else if (Clazz && AbstractConvert.isPrototypeOf(Clazz)) {
+                let convertInstance: AbstractConvert = new Clazz();
+                let convertKey = convertInstance.getKey();
+                this.abstractConvertMap[convertKey] = convertInstance;
             }
         });
     }
 
+    //扫描项目操作实现（数据保存，加载操作 -> 本地 | 远程）
     public scannerProjectOperators(): void {
         const compCtx = require.context('../../framework', true, /\.(ts)$/);
         compCtx.keys().forEach(key => {
