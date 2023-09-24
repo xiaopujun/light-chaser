@@ -1,6 +1,3 @@
-import AbstractComponent from "../framework/core/AbstractComponent";
-import {MovableItemType} from "../lib/lc-movable/types";
-
 class DemoA /* extends AbstractComponent<any, any>*/ {
     // public getConfig() {
     //     throw new Error("Method not implemented.");

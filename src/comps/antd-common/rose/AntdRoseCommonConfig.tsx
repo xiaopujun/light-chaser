@@ -20,18 +20,18 @@ import Select from "../../../lib/lc-select/Select";
 export default class AntdRoseCommonStyleConfig extends Component<ConfigType> {
 
     roseGraphicsChange = (config: WritableRoseOptions) => {
-        const instance = this.props.instance as AntdCommonRose;
-        instance.update({style: config});
+        const controller = this.props.controller as AntdCommonRose;
+        controller.update({style: config});
     }
 
     legendChange = (legend: Legend) => {
-        const instance = this.props.instance as AntdCommonRose;
-        instance.update({style: {legend}});
+        const controller = this.props.controller as AntdCommonRose;
+        controller.update({style: {legend}});
     }
 
     render() {
-        const instance = this.props.instance as AntdCommonRose;
-        const roseConfig = instance.getConfig()!.style as RoseOptions;
+        const controller = this.props.controller as AntdCommonRose;
+        const roseConfig = controller.getConfig()!.style as RoseOptions;
         return (
             <>
                 <AntdLegend onChange={this.legendChange} config={roseConfig.legend}/>
@@ -219,8 +219,8 @@ export const StatisticTextConfig: React.FC<AntdStatisticTextConfigProps> = ({con
 }
 
 
-export const AntdRoseFieldMapping: React.FC<ConfigType<AntdCommonRose>> = ({instance}) => {
-    const config = instance.getConfig()!.style;
+export const AntdRoseFieldMapping: React.FC<ConfigType<AntdCommonRose>> = ({controller}) => {
+    const config = controller.getConfig()!.style;
     const {data, xField, yField, seriesField} = config!;
     const options: Option[] = [];
     if (data && data.length >= 1) {
@@ -229,7 +229,7 @@ export const AntdRoseFieldMapping: React.FC<ConfigType<AntdCommonRose>> = ({inst
     }
 
     const fieldChange = (config: WritableBarOptions) => {
-        instance.update({style: config});
+        controller.update({style: config});
     }
 
     return (

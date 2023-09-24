@@ -5,7 +5,7 @@ import Select from "../../../lib/lc-select/Select";
 import './DataConfig.less';
 import {ConfigType} from "../../../designer/right/ConfigType";
 import {APIConfig, DataConfigType} from "../../../designer/DesignerType";
-import AbstractComponent, {OperateType} from "../../../framework/core/AbstractComponent";
+import AbstractController, {OperateType} from "../../../framework/core/AbstractController";
 import {sendHttpRequest} from "../../../utils/HttpUtil";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import ConfigItemTB from "../../../lib/lc-config-item/ConfigItemTB";
@@ -17,7 +17,7 @@ type DataTypeItem = 'static' | 'api' | 'database' | 'excel';
 
 type DataTypes = (DataTypeItem)[];
 
-export interface DataConfigProps<T extends AbstractComponent = AbstractComponent> extends ConfigType<T> {
+export interface DataConfigProps<T extends AbstractController = AbstractController> extends ConfigType<T> {
     // 限制数据源类型，默认全部。（针对如进度图类型的图表，其数据只是一个简单的数字，一般不通过excel导入）
     dataTypes?: DataTypes;
     // 接口数据转换函数，默认按照json格式转换（对于有自己特殊类型的图表，可以自定义转换函数，比如仪表盘，其数据是一个数字，而不是json）
@@ -43,16 +43,16 @@ class DataConfig extends Component<DataConfigProps> {
 
     constructor(props: ConfigType) {
         super(props);
-        const {instance} = props;
-        const dataConfig: DataConfigType = instance.getConfig().data;
+        const {controller} = props;
+        const dataConfig: DataConfigType = controller.getConfig().data;
         this.state = {
             dataSource: dataConfig?.dataSource || 'static',
         }
     }
 
     dataSourcesChange = (value: any) => {
-        const {instance} = this.props;
-        instance.update({data: {dataSource: value}}, {reRender: false});
+        const {controller} = this.props;
+        controller.update({data: {dataSource: value}}, {reRender: false});
         this.setState({
             dataSource: value,
         });
@@ -60,7 +60,7 @@ class DataConfig extends Component<DataConfigProps> {
 
 
     render() {
-        const {instance, dataTypes} = this.props;
+        const {controller, dataTypes} = this.props;
         const {dataSource} = this.state;
         this.allDataTypes = dataTypes ? this.allDataTypes.filter(item => (dataTypes as DataTypes)?.includes(item.value as DataTypeItem)) : this.allDataTypes;
         return (
@@ -70,16 +70,16 @@ class DataConfig extends Component<DataConfigProps> {
                             options={this.allDataTypes}/>
                 </ConfigItem>
                 {dataSource === 'static' &&
-                <StaticDataConfig instance={instance}/>}
+                <StaticDataConfig controller={controller}/>}
                 {dataSource === 'api' &&
-                <ApiDataConfig instance={instance}/>}
+                <ApiDataConfig controller={controller}/>}
             </div>
         );
     }
 }
 
-export const ApiDataConfig: React.FC<DataConfigProps> = ({instance, apiDataConvert}) => {
-    const config: DataConfigType = instance.getConfig().data;
+export const ApiDataConfig: React.FC<DataConfigProps> = ({controller, apiDataConvert}) => {
+    const config: DataConfigType = controller.getConfig().data;
     const {apiData} = config;
     const urlRef = useRef(apiData?.url || '');
     const methodRef = useRef(apiData?.method || '');
@@ -141,7 +141,7 @@ export const ApiDataConfig: React.FC<DataConfigProps> = ({instance, apiDataConve
                 data: apiDataConvert ? apiDataConvert(testResult) : JSON.parse(testResult),
             };
         }
-        instance.update({data: config}, {reRender: true, operateType: OperateType.DATA});
+        controller.update({data: config}, {reRender: true, operateType: OperateType.DATA});
     }
 
     const headerOnChange = (value: string) => {
@@ -190,16 +190,16 @@ export const ApiDataConfig: React.FC<DataConfigProps> = ({instance, apiDataConve
     );
 }
 
-export const StaticDataConfig: React.FC<ConfigType> = ({instance}) => {
+export const StaticDataConfig: React.FC<ConfigType> = ({controller}) => {
 
-    const config: DataConfigType = instance.getConfig().data;
+    const config: DataConfigType = controller.getConfig().data;
     let dataCode = JSON.stringify(config.staticData?.data);
 
     const flashData = () => {
         try {
             const dataStr = dataCode.replace(/'/g, '"').replace(/\s/g, '');
             const data = JSON.parse(dataStr);
-            instance.update({data: {staticData: {data}}},
+            controller.update({data: {staticData: {data}}},
                 {reRender: true, operateType: OperateType.DATA});
         } catch (e: any) {
             message.error('数据格式错误');

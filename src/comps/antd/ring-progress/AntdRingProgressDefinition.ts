@@ -6,7 +6,7 @@ import {
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {ClazzTemplate} from "../../common-component/common-types";
-import AntdRingProgress, {AntdRingProgressProps} from "./AntdRingProgress";
+import AntdRingProgressController, {AntdRingProgressProps} from "./AntdRingProgressController";
 import ringProgressImg from './ring-progress.png';
 import {BaseInfoType} from "../../../designer/DesignerType";
 
@@ -17,10 +17,10 @@ const ThemeConfig = React.lazy(() => import("../../common-component/theme-config
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 
 
-class AntdRingProgressDefinition extends AbstractCustomComponentDefinition<AntdRingProgress, AntdRingProgressProps> {
+class AntdRingProgressDefinition extends AbstractCustomComponentDefinition<AntdRingProgressController, AntdRingProgressProps> {
 
-    getComponent(): ClazzTemplate<AntdRingProgress> | null {
-        return AntdRingProgress;
+    getComponent(): ClazzTemplate<AntdRingProgressController> | null {
+        return AntdRingProgressController;
     }
 
     getMenuList(): Array<MenuInfo> {

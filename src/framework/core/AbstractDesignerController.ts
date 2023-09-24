@@ -1,7 +1,7 @@
 import {ThemeItemType} from "../../designer/DesignerType";
-import AbstractComponent from "./AbstractComponent";
+import AbstractController from "./AbstractController";
 
-abstract class AbstractDesignerComponent<I = any, C = any> extends AbstractComponent<I, C> {
+abstract class AbstractDesignerController<I = any, C = any> extends AbstractController<I, C> {
 
     /**
      * 设置组件数据
@@ -26,4 +26,4 @@ abstract class AbstractDesignerComponent<I = any, C = any> extends AbstractCompo
 
 }
 
-export default AbstractDesignerComponent;
+export default AbstractDesignerController;

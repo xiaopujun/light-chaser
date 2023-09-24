@@ -2,15 +2,15 @@ import {ComponentBaseProps} from "../../common-component/common-types";
 import {WritableColumnOptions} from "../types";
 import {Column} from "@antv/g2plot";
 import {ThemeItemType} from "../../../designer/DesignerType";
-import {OperateType, UpdateOptions} from "../../../framework/core/AbstractComponent";
+import {OperateType, UpdateOptions} from "../../../framework/core/AbstractController";
 import {ShapeAttrs} from "@antv/g-base";
-import {AntdBaseDesignerComponent} from "../AntdBaseDesignerComponent";
+import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 
 export interface AntdColumnProps extends ComponentBaseProps {
     style?: WritableColumnOptions;
 }
 
-export default class AntdCommonColumn extends AntdBaseDesignerComponent<Column, AntdColumnProps> {
+export default class AntdCommonColumn extends AntdBaseDesignerController<Column, AntdColumnProps> {
 
     async create(container: HTMLElement, config: AntdColumnProps): Promise<this> {
         return super.commonCreate(container, Column, config);

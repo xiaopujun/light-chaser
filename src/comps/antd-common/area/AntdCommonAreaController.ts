@@ -1,19 +1,19 @@
 import {ComponentBaseProps} from "../../common-component/common-types";
-import {WritableScatterOptions} from "../types";
-import {Scatter} from "@antv/g2plot";
-import {OperateType, UpdateOptions} from "../../../framework/core/AbstractComponent";
-import {AntdBaseDesignerComponent} from "../AntdBaseDesignerComponent";
+import {WritableAreaOptions} from "../types";
+import {Area} from "@antv/g2plot";
+import {OperateType, UpdateOptions} from "../../../framework/core/AbstractController";
+import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
 
-export interface AntdScatterProps extends ComponentBaseProps {
-    style?: WritableScatterOptions;
+export interface AntdAreaProps extends ComponentBaseProps {
+    style?: WritableAreaOptions;
 }
 
-export default class AntdCommonScatter extends AntdBaseDesignerComponent<Scatter, AntdScatterProps> {
+export default class AntdCommonAreaController extends AntdBaseDesignerController<Area, AntdAreaProps> {
 
-    async create(container: HTMLElement, config: AntdScatterProps): Promise<this> {
-        return super.commonCreate(container, Scatter, config);
+    async create(container: HTMLElement, config: AntdAreaProps): Promise<this> {
+        return super.commonCreate(container, Area, config);
     }
 
     destroy(): void {
@@ -23,21 +23,33 @@ export default class AntdCommonScatter extends AntdBaseDesignerComponent<Scatter
         this.interval && clearInterval(this.interval);
     }
 
-    getConfig(): AntdScatterProps | null {
+    getConfig(): AntdAreaProps | null {
         return this.config;
     }
 
-    update(config: AntdScatterProps, upOp?: UpdateOptions): void {
-        super.commonUpdate(config, Scatter, upOp);
+    update(config: AntdAreaProps, upOp?: UpdateOptions): void {
+        super.commonUpdate(config, Area, upOp);
     }
 
     updateTheme(newTheme: ThemeItemType): void {
-        if (!newTheme) return;
+        const {type} = this.config?.info!;
+        if (!newTheme)
+            return;
         const styleConfig = this.config?.style!;
-        const {colors: {main, mainText, supplementSecond, supplementFirst, subText}} = newTheme;
+        const {colors: {main, mainText, subText, supplementFirst, supplementSecond}} = newTheme;
         //图形
-        if (styleConfig?.color)
-            styleConfig.color = [main!, mainText!, subText!, supplementFirst!, supplementSecond!];
+        if (styleConfig?.color) {
+            if (type === 'AntdBaseArea')
+                styleConfig.color = main;
+            else
+                styleConfig.color = [main!, supplementFirst!, supplementSecond!];
+        }
+        //点
+        if ((styleConfig?.point) && (styleConfig?.point?.style as ShapeAttrs))
+            (styleConfig!.point!.style as ShapeAttrs).fill = main;
+        //线
+        if ((styleConfig?.line) && (styleConfig?.line?.style as ShapeAttrs))
+            (styleConfig!.line!.style as ShapeAttrs).stroke = main;
         //图例
         if ((styleConfig.legend) && (styleConfig.legend.itemName?.style as ShapeAttrs))
             (styleConfig!.legend!.itemName!.style as ShapeAttrs).fill = mainText;
@@ -55,7 +67,7 @@ export default class AntdCommonScatter extends AntdBaseDesignerComponent<Scatter
             (styleConfig!.xAxis!.grid!.line!.style as ShapeAttrs).stroke = supplementFirst;
         //x轴-刻度线
         if ((styleConfig?.xAxis) && (styleConfig?.xAxis?.tickLine?.style as ShapeAttrs))
-            (styleConfig!.xAxis!.tickLine!.style as ShapeAttrs).stroke = supplementFirst;
+            (styleConfig!.xAxis!.tickLine!.style as ShapeAttrs).stroke = supplementSecond;
         //x轴-子刻度线
         if ((styleConfig?.xAxis) && (styleConfig?.xAxis?.subTickLine?.style as ShapeAttrs))
             (styleConfig!.xAxis!.subTickLine!.style as ShapeAttrs).stroke = supplementSecond;
@@ -73,7 +85,7 @@ export default class AntdCommonScatter extends AntdBaseDesignerComponent<Scatter
             (styleConfig!.yAxis!.grid!.line!.style as ShapeAttrs).stroke = supplementFirst;
         //y轴-刻度线
         if ((styleConfig?.yAxis) && (styleConfig?.yAxis?.tickLine?.style as ShapeAttrs))
-            (styleConfig!.yAxis!.tickLine!.style as ShapeAttrs).stroke = supplementFirst;
+            (styleConfig!.yAxis!.tickLine!.style as ShapeAttrs).stroke = supplementSecond;
         //y轴-子刻度线
         if ((styleConfig?.yAxis) && (styleConfig?.yAxis?.subTickLine?.style as ShapeAttrs))
             (styleConfig!.yAxis!.subTickLine!.style as ShapeAttrs).stroke = supplementSecond;

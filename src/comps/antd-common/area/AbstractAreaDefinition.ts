@@ -6,7 +6,7 @@ import {
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {ClazzTemplate} from "../../common-component/common-types";
-import AntdCommonArea, {AntdAreaProps} from "./AntdCommonArea";
+import AntdCommonAreaController, {AntdAreaProps} from "./AntdCommonAreaController";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const AntdAreaCommonStyleConfig = React.lazy(() => import("./AntdAreaCommonConfig").then((module) => ({default: module.AntdAreaCommonStyleConfig})));
@@ -16,10 +16,10 @@ const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseI
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
 
-abstract class AbstractAreaDefinition extends AbstractCustomComponentDefinition<AntdCommonArea, AntdAreaProps> {
+abstract class AbstractAreaDefinition extends AbstractCustomComponentDefinition<AntdCommonAreaController, AntdAreaProps> {
 
-    getComponent(): ClazzTemplate<AntdCommonArea> | null {
-        return AntdCommonArea;
+    getComponent(): ClazzTemplate<AntdCommonAreaController> | null {
+        return AntdCommonAreaController;
     }
 
     getMenuList(): Array<MenuInfo> {

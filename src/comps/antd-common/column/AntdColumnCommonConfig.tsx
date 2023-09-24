@@ -3,7 +3,7 @@ import {ConfigType} from "../../../designer/right/ConfigType";
 import {AntdCartesianCoordinateSys, AntdLegend} from "../config/AntdFragment";
 import {Column, ColumnOptions} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
-import AbstractComponent from "../../../framework/core/AbstractComponent";
+import AbstractController from "../../../framework/core/AbstractController";
 import AntdCommonColumn, {AntdColumnProps} from "./AntdCommonColumn";
 import {WritableBarOptions, WritableColumnOptions} from "../types";
 import ColorMode, {ColorModeType, ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
@@ -18,23 +18,23 @@ import Select from "../../../lib/lc-select/Select";
 class AntdColumnCommonStyleConfig extends Component<ConfigType> {
 
     legendChange = (legend: Legend) => {
-        const instance: AbstractComponent<Column, AntdColumnProps> = this.props.instance;
-        instance.update({style: {legend}});
+        const controller: AbstractController<Column, AntdColumnProps> = this.props.controller;
+        controller.update({style: {legend}});
     }
 
     barGraphicsChange = (config: ColumnOptions) => {
-        const instance: AbstractComponent<Column, AntdColumnProps> = this.props.instance;
-        instance.update({style: config});
+        const controller: AbstractController<Column, AntdColumnProps> = this.props.controller;
+        controller.update({style: config});
     }
 
     barCoordinateSysChange = (config: ColumnOptions) => {
-        const instance: AbstractComponent<Column, AntdColumnProps> = this.props.instance;
-        instance.update({style: config});
+        const controller: AbstractController<Column, AntdColumnProps> = this.props.controller;
+        controller.update({style: config});
     }
 
     render() {
-        const {instance} = this.props;
-        const config: ColumnOptions = instance.getConfig().style;
+        const {controller} = this.props;
+        const config: ColumnOptions = controller.getConfig().style;
         return (
             <>
                 <AntdColumnGraphics onChange={this.barGraphicsChange} config={config}/>
@@ -105,8 +105,8 @@ export const AntdColumnGraphics: React.FC<AntdColumnGraphicsProps> = ({config, o
 }
 
 
-export const AntdColumnFieldMapping: React.FC<ConfigType<AntdCommonColumn>> = ({instance}) => {
-    const config = instance.getConfig()!.style;
+export const AntdColumnFieldMapping: React.FC<ConfigType<AntdCommonColumn>> = ({controller}) => {
+    const config = controller.getConfig()!.style;
     const {data, xField, yField, seriesField} = config!;
     const options: Option[] = [];
     if (data && data.length >= 1) {
@@ -115,7 +115,7 @@ export const AntdColumnFieldMapping: React.FC<ConfigType<AntdCommonColumn>> = ({
     }
 
     const fieldChange = (config: WritableBarOptions) => {
-        instance.update({style: config});
+        controller.update({style: config});
     }
 
     return (

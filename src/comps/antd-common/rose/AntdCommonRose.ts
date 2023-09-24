@@ -1,8 +1,8 @@
 import {ComponentBaseProps} from "../../common-component/common-types";
 import {WritableRoseOptions} from "../types";
 import {Rose} from "@antv/g2plot";
-import {OperateType, UpdateOptions} from "../../../framework/core/AbstractComponent";
-import {AntdBaseDesignerComponent} from "../AntdBaseDesignerComponent";
+import {OperateType, UpdateOptions} from "../../../framework/core/AbstractController";
+import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
 
@@ -10,7 +10,7 @@ export interface AntdRoseProps extends ComponentBaseProps {
     style?: WritableRoseOptions;
 }
 
-export default class AntdCommonRose extends AntdBaseDesignerComponent<Rose, AntdRoseProps> {
+export default class AntdCommonRose extends AntdBaseDesignerController<Rose, AntdRoseProps> {
 
     async create(container: HTMLElement, config: AntdRoseProps): Promise<this> {
         return super.commonCreate(container, Rose, config);

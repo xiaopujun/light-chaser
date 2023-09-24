@@ -1,8 +1,8 @@
 import {ComponentBaseProps} from "../../common-component/common-types";
 import {WritableRingProgressOptions} from "../../antd-common/types";
 import {RingProgress, StatisticText} from "@antv/g2plot";
-import {OperateType, UpdateOptions} from "../../../framework/core/AbstractComponent";
-import {AntdBaseDesignerComponent} from "../../antd-common/AntdBaseDesignerComponent";
+import {OperateType, UpdateOptions} from "../../../framework/core/AbstractController";
+import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {CSSProperties} from "react";
 
@@ -10,7 +10,7 @@ export interface AntdRingProgressProps extends ComponentBaseProps {
     style?: WritableRingProgressOptions;
 }
 
-export default class AntdRingProgress extends AntdBaseDesignerComponent<RingProgress, AntdRingProgressProps> {
+export default class AntdRingProgressController extends AntdBaseDesignerController<RingProgress, AntdRingProgressProps> {
 
     async create(container: HTMLElement, config: AntdRingProgressProps): Promise<this> {
         return super.commonCreate(container, RingProgress, config);

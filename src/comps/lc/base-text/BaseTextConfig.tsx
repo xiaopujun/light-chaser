@@ -7,20 +7,20 @@ import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import {BaseText} from "./BaseText";
 
-export const BaseTextStyleConfig: React.FC<ConfigType> = ({instance}) => {
+export const BaseTextStyleConfig: React.FC<ConfigType> = ({controller}) => {
 
     const updateStyle = (config: BaseTextComponentStyle) => {
-        instance.update({style: config});
+        controller.update({style: config});
     }
 
-    const config = (instance as BaseText).getConfig();
+    const config = (controller as BaseText).getConfig();
     const textStyle = config?.style;
     let text = config?.data?.staticData?.data;
     return (
         <>
             <ConfigItem title={'内容'} contentStyle={{width: '80%'}}>
                 <UnderLineInput type={'text'} defaultValue={text} onChange={(e) => {
-                    instance.update({data: {staticData: {data: e.target.value}}})
+                    controller.update({data: {staticData: {data: e.target.value}}})
                 }}/>
             </ConfigItem>
             <ConfigItem title={"字号"}>

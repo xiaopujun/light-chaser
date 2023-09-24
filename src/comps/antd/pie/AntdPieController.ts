@@ -1,8 +1,8 @@
 import {ComponentBaseProps} from "../../common-component/common-types";
 import {WritablePieOptions} from "../../antd-common/types";
 import {Pie, StatisticText} from "@antv/g2plot";
-import {OperateType, UpdateOptions} from "../../../framework/core/AbstractComponent";
-import {AntdBaseDesignerComponent} from "../../antd-common/AntdBaseDesignerComponent";
+import {OperateType, UpdateOptions} from "../../../framework/core/AbstractController";
+import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
 import {CSSProperties} from "react";
@@ -11,7 +11,7 @@ export interface AntdPieProps extends ComponentBaseProps {
     style?: WritablePieOptions;
 }
 
-export default class AntdPie extends AntdBaseDesignerComponent<Pie, AntdPieProps> {
+export default class AntdPieController extends AntdBaseDesignerController<Pie, AntdPieProps> {
 
     async create(container: HTMLElement, config: AntdPieProps): Promise<this> {
         return super.commonCreate(container, Pie, config);

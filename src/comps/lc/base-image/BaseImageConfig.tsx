@@ -11,8 +11,8 @@ import './BaseImageConfig.less';
 import {UploadFile} from "antd/lib/upload/interface";
 import ImageCache from "../../../framework/cache/ImageCache";
 
-export const BaseImageStyleConfig: React.FC<ConfigType<BaseImage>> = ({instance}) => {
-    const {style} = instance.getConfig()!;
+export const BaseImageStyleConfig: React.FC<ConfigType<BaseImage>> = ({controller}) => {
+    const {style} = controller.getConfig()!;
     const [type, setType] = useState(style?.type || 'online');
     const [localUrl, setLocalUrl] = useState(style?.localUrl || '');
     const fileInfo = {
@@ -38,7 +38,7 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImage>> = ({instance}
         fileHash(file).then((hashCode) => {
             if (ImageCache.isExistImageCache(hashCode)) {
                 const url = ImageCache.getImageCache(hashCode);
-                instance.update({style: {localUrl: url!, hashCode}});
+                controller.update({style: {localUrl: url!, hashCode}});
                 setLocalUrl(url!);
                 setFileList([{...fileInfo, url: url!}]);
             } else {
@@ -46,7 +46,7 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImage>> = ({instance}
                 fileReader.onload = (event: ProgressEvent<FileReader>) => {
                     const blob = new Blob([event.target!.result!], {type: file.type});
                     const url = URL.createObjectURL(blob);
-                    instance.update({style: {localUrl: url, hashCode}});
+                    controller.update({style: {localUrl: url, hashCode}});
                     setLocalUrl(url);
                     setFileList([{...fileInfo, url}]);
                     //设置图片缓存
@@ -70,12 +70,12 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImage>> = ({instance}
                     {label: '本地', value: 'local'}
                 ]} defaultValue={type} onChange={(value => {
                     setType(value as 'online' | 'local');
-                    instance.update({style: {type: value as BaseImageComponentStyle['type']}})
+                    controller.update({style: {type: value as BaseImageComponentStyle['type']}})
                 })}/>
             </ConfigItem>
             {type === 'online' && <ConfigItem title={'图片链接'} contentStyle={{width: '80%'}}>
                 <UnderLineInput type={"url"} defaultValue={style?.onLineUrl || ''}
-                                onChange={(event) => instance.update({style: {onLineUrl: event.target.value}})}/>
+                                onChange={(event) => controller.update({style: {onLineUrl: event.target.value}})}/>
             </ConfigItem>}
             {type === 'local' &&
             <ConfigItem title={'上传图片'} contentStyle={{width: '80%'}} itemStyle={{alignItems: "flex-start"}}>
@@ -84,7 +84,7 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImage>> = ({instance}
                         onRemove={() => {
                             setFileList([]);
                             setLocalUrl('');
-                            instance.update({style: {localUrl: ''}})
+                            controller.update({style: {localUrl: ''}})
                             //todo 后续要加上定时清理缓存
                         }}
                         onPreview={() => window.open(localUrl)}>

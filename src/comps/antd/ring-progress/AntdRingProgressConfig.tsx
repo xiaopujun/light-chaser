@@ -14,14 +14,14 @@ import {StatisticTextConfig} from "../pie/AntdPieStyleConfig";
 export class AntdRingProgressStyleConfig extends Component<ConfigType> {
 
     ringProgressGraphicsChange = (config: WritableRoseOptions) => {
-        const instance = this.props.instance as AntdCommonRose;
-        instance.update({style: config});
+        const controller = this.props.controller as AntdCommonRose;
+        controller.update({style: config});
     }
 
 
     render() {
-        const {instance} = this.props;
-        const config: RingProgressOptions = instance.getConfig().style as RingProgressOptions
+        const {controller} = this.props;
+        const config: RingProgressOptions = controller.getConfig().style as RingProgressOptions
         return (
             <>
                 <AntdRingProgressGraphicsConfig config={config}

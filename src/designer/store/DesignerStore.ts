@@ -12,7 +12,7 @@ import {
 } from "../DesignerType";
 import AbstractBaseStore from "../../framework/core/AbstractBaseStore";
 import {MovableItemType} from "../../lib/lc-movable/types";
-import AbstractDesignerComponent from "../../framework/core/AbstractDesignerComponent";
+import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
 import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryRecordOperateProxy";
 import ObjectUtil from "../../utils/ObjectUtil";
 
@@ -77,7 +77,7 @@ class DesignerStore implements AbstractBaseStore {
     /**
      * 画布上组件id与其实例对象的映射
      */
-    compInstances: { [key: string]: AbstractDesignerComponent } = {};
+    compInstances: { [key: string]: AbstractDesignerController } = {};
 
     /**
      * 布局配置

@@ -17,23 +17,23 @@ import Select from "../../../lib/lc-select/Select";
 class AntdBarCommonStyleConfig extends Component<ConfigType> {
 
     legendChange = (legend: Legend) => {
-        const instance = this.props.instance as AntdCommonBar;
-        instance.update({style: {legend}});
+        const controller = this.props.controller as AntdCommonBar;
+        controller.update({style: {legend}});
     }
 
     barGraphicsChange = (config: BarOptions) => {
-        const instance = this.props.instance as AntdCommonBar;
-        instance.update({style: config});
+        const controller = this.props.controller as AntdCommonBar;
+        controller.update({style: config});
     }
 
     barCoordinateSysChange = (config: BarOptions) => {
-        const instance = this.props.instance as AntdCommonBar;
-        instance.update({style: config});
+        const controller = this.props.controller as AntdCommonBar;
+        controller.update({style: config});
     }
 
     render() {
-        const {instance} = this.props;
-        const config: BarOptions = instance.getConfig().style;
+        const {controller} = this.props;
+        const config: BarOptions = controller.getConfig().style;
         return (
             <>
                 <AntdBarGraphics onChange={this.barGraphicsChange} config={config}/>
@@ -104,8 +104,8 @@ export const AntdBarGraphics: React.FC<AntdBarGraphicsProps> = ({config, onChang
 }
 
 
-export const AntdBarFieldMapping: React.FC<ConfigType<AntdCommonBar>> = ({instance}) => {
-    const config = instance.getConfig()!.style;
+export const AntdBarFieldMapping: React.FC<ConfigType<AntdCommonBar>> = ({controller}) => {
+    const config = controller.getConfig()!.style;
     const {data, xField, yField, seriesField} = config!;
     const options: Option[] = [];
     if (data && data.length >= 1) {
@@ -114,7 +114,7 @@ export const AntdBarFieldMapping: React.FC<ConfigType<AntdCommonBar>> = ({instan
     }
 
     const fieldChange = (config: WritableBarOptions) => {
-        instance.update({style: config});
+        controller.update({style: config});
     }
 
     return (

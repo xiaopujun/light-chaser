@@ -4,10 +4,10 @@ import {BaseColorBlock} from "./BaseColorBlock";
 import ColorMode, {ColorModeType, ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import ConfigItemTB from "../../../lib/lc-config-item/ConfigItemTB";
 
-export const BaseColorBlockConfig: React.FC<ConfigType> = ({instance}) => {
+export const BaseColorBlockConfig: React.FC<ConfigType> = ({controller}) => {
 
     const buildColorModeData = (): ColorModeValue => {
-        const {background} = (instance as BaseColorBlock).getConfig()?.style!;
+        const {background} = (controller as BaseColorBlock).getConfig()?.style!;
         let mode = ColorModeType.SINGLE, value: string[] | string = ["#fff"], angle = 0;
         if (background) {
             if (background.indexOf('linear-gradient') > -1) {
@@ -39,7 +39,7 @@ export const BaseColorBlockConfig: React.FC<ConfigType> = ({instance}) => {
                 background = `radial-gradient(${(value as string[]).join(',')})`;
                 break;
         }
-        instance.update({style: {background}});
+        controller.update({style: {background}});
     }
 
     return (

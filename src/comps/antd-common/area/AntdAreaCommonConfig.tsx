@@ -3,8 +3,8 @@ import {ConfigType} from "../../../designer/right/ConfigType";
 import {AntdCartesianCoordinateSys, AntdLegend} from "../config/AntdFragment";
 import {Area, AreaOptions, ShapeStyle} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
-import AbstractComponent from "../../../framework/core/AbstractComponent";
-import AntdCommonArea, {AntdAreaProps} from "./AntdCommonArea";
+import AbstractController from "../../../framework/core/AbstractController";
+import AntdCommonAreaController, {AntdAreaProps} from "./AntdCommonAreaController";
 import {WritableAreaOptions, WritableBarOptions} from "../types";
 import ColorMode, {ColorModeType, ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import {ShapeAttrs} from "@antv/g-base";
@@ -22,23 +22,23 @@ import {Option} from "../../../lib/lc-select/SelectType";
 class AntdAreaCommonStyleConfig extends Component<ConfigType> {
 
     legendChange = (legend: Legend) => {
-        const instance: AbstractComponent<Area, AntdAreaProps> = this.props.instance;
-        instance.update({style: {legend}});
+        const controller: AbstractController<Area, AntdAreaProps> = this.props.controller;
+        controller.update({style: {legend}});
     }
 
     areaCoordinateSysChange = (config: AreaOptions) => {
-        const instance: AbstractComponent<Area, AntdAreaProps> = this.props.instance;
-        instance.update({style: config});
+        const controller: AbstractController<Area, AntdAreaProps> = this.props.controller;
+        controller.update({style: config});
     }
 
     areaGraphicsChange = (config: AreaOptions) => {
-        const instance: AbstractComponent<Area, AntdAreaProps> = this.props.instance;
-        instance.update({style: config});
+        const controller: AbstractController<Area, AntdAreaProps> = this.props.controller;
+        controller.update({style: config});
     }
 
     render() {
-        const {instance} = this.props;
-        const config: AreaOptions = instance.getConfig().style;
+        const {controller} = this.props;
+        const config: AreaOptions = controller.getConfig().style;
         return (
             <>
                 <AntdCommonAreaGraphics config={config} onChange={this.areaGraphicsChange}/>
@@ -146,8 +146,8 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
 }
 
 
-export const AntdAreaFieldMapping: React.FC<ConfigType<AntdCommonArea>> = ({instance}) => {
-    const config = instance.getConfig()!.style;
+export const AntdAreaFieldMapping: React.FC<ConfigType<AntdCommonAreaController>> = ({controller}) => {
+    const config = controller.getConfig()!.style;
     const {data, xField, yField, seriesField} = config!;
     const options: Option[] = [];
     if (data && data.length >= 1) {
@@ -156,7 +156,7 @@ export const AntdAreaFieldMapping: React.FC<ConfigType<AntdCommonArea>> = ({inst
     }
 
     const fieldChange = (config: WritableBarOptions) => {
-        instance.update({style: config});
+        controller.update({style: config});
     }
 
     return (

@@ -8,16 +8,16 @@ import designerStore from "../store/DesignerStore";
 import {AbstractCustomComponentDefinition} from "../../framework/core/AbstractCustomComponentDefinition";
 import {ConfigType} from "./ConfigType";
 import EditorDesignerLoader from "../loader/EditorDesignerLoader";
-import AbstractDesignerComponent from "../../framework/core/AbstractDesignerComponent";
+import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
 import ObjectUtil from "../../utils/ObjectUtil";
 import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryRecordOperateProxy";
 
 class ConfigContent extends Component {
 
-    createProxy = (instance: AbstractDesignerComponent) => {
-        return new Proxy(instance, {
+    createProxy = (controller: AbstractDesignerController) => {
+        return new Proxy(controller, {
             get(target, prop) {
-                const originalMethod = target[prop as keyof AbstractDesignerComponent];
+                const originalMethod = target[prop as keyof AbstractDesignerController];
                 if (typeof originalMethod === 'function' && originalMethod.name === "update") {
                     return new Proxy(originalMethod, {
                         apply(target, thisArg, argumentsList) {
@@ -41,10 +41,10 @@ class ConfigContent extends Component {
         let configMapping = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp: React.ComponentType<ConfigType> = configMapping![activeMenu];
         //使用动态代理对象，监听属性变化
-        const instance = this.createProxy(compInstances[activeElem.id + '']);
+        const controller = this.createProxy(compInstances[activeElem.id + '']);
         return (
             <Suspense fallback={<Loading/>}>
-                <ConfigComp instance={instance}/>
+                <ConfigComp controller={controller}/>
             </Suspense>
         )
 

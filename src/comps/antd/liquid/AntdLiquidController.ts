@@ -1,15 +1,15 @@
 import {ComponentBaseProps} from "../../common-component/common-types";
 import {WritableLiquidOptions} from "../../antd-common/types";
 import {Liquid} from "@antv/g2plot";
-import {UpdateOptions} from "../../../framework/core/AbstractComponent";
-import {AntdBaseDesignerComponent} from "../../antd-common/AntdBaseDesignerComponent";
+import {UpdateOptions} from "../../../framework/core/AbstractController";
+import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 
 export interface AntdLiquidProps extends ComponentBaseProps {
     style?: WritableLiquidOptions;
 }
 
-export default class AntdLiquid extends AntdBaseDesignerComponent<Liquid, AntdLiquidProps> {
+export default class AntdLiquidController extends AntdBaseDesignerController<Liquid, AntdLiquidProps> {
 
     async create(container: HTMLElement, config: AntdLiquidProps): Promise<this> {
         return super.commonCreate(container, Liquid, config);

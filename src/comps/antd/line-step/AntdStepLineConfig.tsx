@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {ConfigType} from "../../../designer/right/ConfigType";
 import {Line, LineOptions, ShapeStyle} from "@antv/g2plot";
-import AntdCommonLine, {AntdLineProps} from "../../antd-common/line/AntdCommonLine";
+import AntdCommonLineController, {AntdLineProps} from "../../antd-common/line/AntdCommonLineController";
 import {AntdCartesianCoordinateSys} from "../../antd-common/config/AntdFragment";
-import AbstractComponent from "../../../framework/core/AbstractComponent";
+import AbstractController from "../../../framework/core/AbstractController";
 import {WritableLineOptions} from "../../antd-common/types";
 import ColorMode, {ColorModeType, ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import {ShapeAttrs} from "@antv/g-base";
@@ -15,24 +15,24 @@ import {MappingOptions} from "@antv/g2plot/lib/adaptor/geometries/base";
 import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import Select from "../../../lib/lc-select/Select";
-import {AntdBaseDesignerComponent} from "../../antd-common/AntdBaseDesignerComponent";
+import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import AntdFieldMapping from "../../antd-common/config/field-mapping/AntdFieldMapping";
 
 class AntdStepLineStyleConfig extends Component<ConfigType> {
 
     lineCoordinateSysChange = (config: LineOptions) => {
-        const instance = this.props.instance as AntdCommonLine;
-        instance.update({style: config});
+        const controller = this.props.controller as AntdCommonLineController;
+        controller.update({style: config});
     }
 
     lineGraphicsChange = (config: LineOptions) => {
-        const instance: AbstractComponent<Line, AntdLineProps> = this.props.instance as AntdCommonLine;
-        instance.update({style: config});
+        const controller: AbstractController<Line, AntdLineProps> = this.props.controller as AntdCommonLineController;
+        controller.update({style: config});
     }
 
     render() {
-        const {instance} = this.props;
-        const config: LineOptions = instance.getConfig().style;
+        const {controller} = this.props;
+        const config: LineOptions = controller.getConfig().style;
         return (
             <>
                 <AntdStepLineGraphics onChange={this.lineGraphicsChange} config={config}/>
@@ -133,6 +133,6 @@ export const AntdStepLineGraphics: React.FC<AntdStepLineGraphicsProps> = ({confi
     )
 }
 
-export const AntdStepLineFieldMapping: React.FC<ConfigType<AntdBaseDesignerComponent>> = ({instance}) => {
-    return <AntdFieldMapping instance={instance} fields={["xField", "yField"]}/>
+export const AntdStepLineFieldMapping: React.FC<ConfigType<AntdBaseDesignerController>> = ({controller}) => {
+    return <AntdFieldMapping controller={controller} fields={["xField", "yField"]}/>
 }

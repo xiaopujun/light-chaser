@@ -1,15 +1,15 @@
 import {ComponentBaseProps} from "../../common-component/common-types";
 import {WritableGaugeOptions} from "../../antd-common/types";
 import {Gauge} from "@antv/g2plot";
-import {UpdateOptions} from "../../../framework/core/AbstractComponent";
-import {AntdBaseDesignerComponent} from "../../antd-common/AntdBaseDesignerComponent";
+import {UpdateOptions} from "../../../framework/core/AbstractController";
+import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 
 export interface AntdGaugeProps extends ComponentBaseProps {
     style?: WritableGaugeOptions;
 }
 
-export default class AntdGauge extends AntdBaseDesignerComponent<Gauge, AntdGaugeProps> {
+export default class AntdGaugeController extends AntdBaseDesignerController<Gauge, AntdGaugeProps> {
 
     async create(container: HTMLElement, config: AntdGaugeProps): Promise<this> {
         return super.commonCreate(container, Gauge, config);

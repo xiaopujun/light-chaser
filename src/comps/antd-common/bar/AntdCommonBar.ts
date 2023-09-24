@@ -1,8 +1,8 @@
 import {ComponentBaseProps} from "../../common-component/common-types";
 import {WritableBarOptions} from "../types";
 import {Bar} from "@antv/g2plot";
-import {OperateType, UpdateOptions} from "../../../framework/core/AbstractComponent";
-import {AntdBaseDesignerComponent} from "../AntdBaseDesignerComponent";
+import {OperateType, UpdateOptions} from "../../../framework/core/AbstractController";
+import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
 
@@ -10,7 +10,7 @@ export interface AntdBarProps extends ComponentBaseProps {
     style?: WritableBarOptions;
 }
 
-export default class AntdCommonBar extends AntdBaseDesignerComponent<Bar, AntdBarProps> {
+export default class AntdCommonBar extends AntdBaseDesignerController<Bar, AntdBarProps> {
 
     async create(container: HTMLElement, config: AntdBarProps): Promise<this> {
         return super.commonCreate(container, Bar, config);

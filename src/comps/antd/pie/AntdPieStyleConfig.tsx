@@ -2,7 +2,7 @@ import React, {Component, useState} from 'react';
 import {ConfigType} from "../../../designer/right/ConfigType";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
-import AntdPie from "./AntdPie";
+import AntdPieController from "./AntdPieController";
 import {WritablePieOptions} from "../../antd-common/types";
 import ColorMode, {ColorModeType, ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
@@ -15,23 +15,23 @@ import {AntdLegend} from "../../antd-common/config/AntdFragment";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import Accordion from "../../../lib/lc-accordion/Accordion";
 import AntdFieldMapping from "../../antd-common/config/field-mapping/AntdFieldMapping";
-import {AntdBaseDesignerComponent} from "../../antd-common/AntdBaseDesignerComponent";
+import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 
 export default class AntdPieStyleConfig extends Component<ConfigType> {
 
     pieGraphicsChange = (config: WritablePieOptions) => {
-        const instance = this.props.instance as AntdPie;
-        instance.update({style: config});
+        const controller = this.props.controller as AntdPieController;
+        controller.update({style: config});
     }
 
     legendChange = (legend: Legend) => {
-        const instance = this.props.instance as AntdPie;
-        instance.update({style: {legend}});
+        const controller = this.props.controller as AntdPieController;
+        controller.update({style: {legend}});
     }
 
     render() {
-        const instance = this.props.instance as AntdPie;
-        const pieConfig = instance.getConfig()!.style as PieOptions;
+        const controller = this.props.controller as AntdPieController;
+        const pieConfig = controller.getConfig()!.style as PieOptions;
         return (
             <>
                 <AntdLegend onChange={this.legendChange} config={pieConfig.legend}/>
@@ -237,6 +237,6 @@ export const StatisticTextConfig: React.FC<AntdStatisticTextConfigProps> = ({con
 }
 
 
-export const AntdPieFieldMapping: React.FC<ConfigType<AntdBaseDesignerComponent>> = ({instance}) => {
-    return <AntdFieldMapping instance={instance} fields={["angleField", "colorField"]}/>
+export const AntdPieFieldMapping: React.FC<ConfigType<AntdBaseDesignerController>> = ({controller}) => {
+    return <AntdFieldMapping controller={controller} fields={["angleField", "colorField"]}/>
 }

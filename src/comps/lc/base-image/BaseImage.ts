@@ -1,8 +1,8 @@
-import AbstractDesignerComponent from "../../../framework/core/AbstractDesignerComponent";
+import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
 import {ComponentInfoType} from "../../common-component/common-types";
 import BaseImageComponent, {BaseImageComponentStyle} from "./BaseImageComponent";
 import ComponentUtil from "../../../utils/ComponentUtil";
-import {OperateType, UpdateOptions} from "../../../framework/core/AbstractComponent";
+import {OperateType, UpdateOptions} from "../../../framework/core/AbstractController";
 import ObjectUtil from "../../../utils/ObjectUtil";
 import {ThemeItemType} from "../../../designer/DesignerType";
 
@@ -12,7 +12,7 @@ export interface BaseImageComponentProps {
 }
 
 
-export default class BaseImage extends AbstractDesignerComponent<BaseImageComponent, BaseImageComponentProps> {
+export default class BaseImage extends AbstractDesignerController<BaseImageComponent, BaseImageComponentProps> {
 
     public async create(container: HTMLElement, config: BaseImageComponentProps): Promise<this> {
         this.config = config;

@@ -3,7 +3,7 @@ import {ConfigType} from "../../../designer/right/ConfigType";
 import {AntdCartesianCoordinateSys, AntdLegend} from "../config/AntdFragment";
 import {LineOptions, ShapeStyle} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
-import AntdCommonLine from "./AntdCommonLine";
+import AntdCommonLineController from "./AntdCommonLineController";
 import {WritableBarOptions, WritableLineOptions} from "../types";
 import ColorMode, {ColorModeType, ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import {ShapeAttrs} from "@antv/g-base";
@@ -21,23 +21,23 @@ import {Option} from "../../../lib/lc-select/SelectType";
 class AntdLineCommonStyleConfig extends Component<ConfigType> {
 
     legendChange = (legend: Legend) => {
-        const instance = this.props.instance as AntdCommonLine;
-        instance.update({style: {legend}});
+        const controller = this.props.controller as AntdCommonLineController;
+        controller.update({style: {legend}});
     }
 
     lineCoordinateSysChange = (config: LineOptions) => {
-        const instance = this.props.instance as AntdCommonLine;
-        instance.update({style: config});
+        const controller = this.props.controller as AntdCommonLineController;
+        controller.update({style: config});
     }
 
     lineGraphicsChange = (config: LineOptions) => {
-        const instance = this.props.instance as AntdCommonLine;
-        instance.update({style: config});
+        const controller = this.props.controller as AntdCommonLineController;
+        controller.update({style: config});
     }
 
     render() {
-        const {instance} = this.props;
-        const config: LineOptions = instance.getConfig().style;
+        const {controller} = this.props;
+        const config: LineOptions = controller.getConfig().style;
         return (
             <>
                 <AntdLineGraphics onChange={this.lineGraphicsChange} config={config}/>
@@ -142,8 +142,8 @@ export const AntdLineGraphics: React.FC<AntdLineGraphicsProps> = ({config, onCha
 }
 
 
-export const AntdLineFieldMapping: React.FC<ConfigType<AntdCommonLine>> = ({instance}) => {
-    const config = instance.getConfig()!.style;
+export const AntdLineFieldMapping: React.FC<ConfigType<AntdCommonLineController>> = ({controller}) => {
+    const config = controller.getConfig()!.style;
     const {data, xField, yField, seriesField} = config!;
     const options: Option[] = [];
     if (data && data.length >= 1) {
@@ -152,7 +152,7 @@ export const AntdLineFieldMapping: React.FC<ConfigType<AntdCommonLine>> = ({inst
     }
 
     const fieldChange = (config: WritableBarOptions) => {
-        instance.update({style: config});
+        controller.update({style: config});
     }
 
     return (

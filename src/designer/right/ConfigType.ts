@@ -1,5 +1,5 @@
-import AbstractComponent from "../../framework/core/AbstractComponent";
+import AbstractController from "../../framework/core/AbstractController";
 
-export interface ConfigType<T extends AbstractComponent = AbstractComponent> {
-    instance: T;
+export interface ConfigType<T extends AbstractController = AbstractController> {
+    controller: T;
 }

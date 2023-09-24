@@ -3,8 +3,8 @@ import {ConfigType} from "../../../designer/right/ConfigType";
 import {AntdCartesianCoordinateSys, AntdLegend} from "../config/AntdFragment";
 import {Scatter, ScatterOptions, ShapeStyle} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
-import AbstractComponent from "../../../framework/core/AbstractComponent";
-import AntdCommonScatter, {AntdScatterProps} from "./AntdCommonScatter";
+import AbstractController from "../../../framework/core/AbstractController";
+import AntdCommonScatterController, {AntdScatterProps} from "./AntdCommonScatterController";
 import {WritableScatterOptions} from "../types";
 import ColorMode, {ColorModeType, ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import Accordion from "../../../lib/lc-accordion/Accordion";
@@ -14,29 +14,29 @@ import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import Select from "../../../lib/lc-select/Select";
-import {AntdBaseDesignerComponent} from "../AntdBaseDesignerComponent";
+import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 import AntdFieldMapping from "../config/field-mapping/AntdFieldMapping";
 
 class AntdScatterCommonStyleConfig extends Component<ConfigType> {
 
     legendChange = (legend: Legend) => {
-        const instance = this.props.instance as AntdCommonScatter;
-        instance.update({style: {legend}});
+        const controller = this.props.controller as AntdCommonScatterController;
+        controller.update({style: {legend}});
     }
 
     scatterCoordinateSysChange = (config: ScatterOptions) => {
-        const instance = this.props.instance as AntdCommonScatter;
-        instance.update({style: config});
+        const controller = this.props.controller as AntdCommonScatterController;
+        controller.update({style: config});
     }
 
     scatterGraphicsChange = (config: ScatterOptions) => {
-        const instance: AbstractComponent<Scatter, AntdScatterProps> = this.props.instance;
-        instance.update({style: config});
+        const controller: AbstractController<Scatter, AntdScatterProps> = this.props.controller;
+        controller.update({style: config});
     }
 
     render() {
-        const {instance} = this.props;
-        const config: ScatterOptions = instance.getConfig().style;
+        const {controller} = this.props;
+        const config: ScatterOptions = controller.getConfig().style;
         return (
             <>
                 <AntdCommonScatterGraphics config={config} onChange={this.scatterGraphicsChange}/>
@@ -129,8 +129,8 @@ export const AntdCommonScatterGraphics: React.FC<AntdCommonScatterGraphicsProps>
     )
 }
 
-export const AntdScatterFieldMapping: React.FC<ConfigType<AntdBaseDesignerComponent>> = ({instance}) => {
+export const AntdScatterFieldMapping: React.FC<ConfigType<AntdBaseDesignerController>> = ({controller}) => {
     return (
-        <AntdFieldMapping instance={instance} fields={['xField', 'yField', 'colorField', 'sizeField']}/>
+        <AntdFieldMapping controller={controller} fields={['xField', 'yField', 'colorField', 'sizeField']}/>
     )
 }

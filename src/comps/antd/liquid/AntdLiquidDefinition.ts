@@ -2,7 +2,7 @@ import React from "react";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {BaseMenuMapping, ClazzTemplate} from "../../common-component/common-types";
-import AntdLiquid, {AntdLiquidProps} from "./AntdLiquid";
+import AntdLiquidController, {AntdLiquidProps} from "./AntdLiquidController";
 import liquidImg from './liquid.png';
 import {BaseInfoType} from "../../../designer/DesignerType";
 
@@ -15,8 +15,8 @@ const DataConfig = React.lazy(() => import("../../common-component/data-config/D
 
 class AntdLiquidDefinition /*extends AbstractCustomComponentDefinition<AntdLiquid, BaseMenuMapping, AntdLiquidProps>*/ {
 
-    getComponent(): ClazzTemplate<AntdLiquid> | null {
-        return AntdLiquid;
+    getComponent(): ClazzTemplate<AntdLiquidController> | null {
+        return AntdLiquidController;
     }
 
     getMenuList(): Array<MenuInfo> {

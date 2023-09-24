@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {ConfigType} from "../../../designer/right/ConfigType";
 import {AreaOptions, ShapeStyle} from "@antv/g2plot";
-import AntdCommonArea from "../../antd-common/area/AntdCommonArea";
+import AntdCommonAreaController from "../../antd-common/area/AntdCommonAreaController";
 import {AntdCartesianCoordinateSys} from "../../antd-common/config/AntdFragment";
 import {WritableAreaOptions} from "../../antd-common/types";
 import ColorMode, {ColorModeType, ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
@@ -16,24 +16,24 @@ import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import Select from "../../../lib/lc-select/Select";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import AntdFieldMapping from "../../antd-common/config/field-mapping/AntdFieldMapping";
-import {AntdBaseDesignerComponent} from "../../antd-common/AntdBaseDesignerComponent";
+import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 
 class AntdBaseAreaStyleConfig extends Component<ConfigType> {
 
 
     AreaCoordinateSysChange = (config: AreaOptions) => {
-        const instance = this.props.instance as AntdCommonArea;
-        instance.update({style: config});
+        const controller = this.props.controller as AntdCommonAreaController;
+        controller.update({style: config});
     }
 
     baseAreaGraphicsChange = (config: AreaOptions) => {
-        const instance = this.props.instance as AntdCommonArea;
-        instance.update({style: config});
+        const controller = this.props.controller as AntdCommonAreaController;
+        controller.update({style: config});
     }
 
     render() {
-        const {instance} = this.props;
-        const config: AreaOptions = instance.getConfig().style;
+        const {controller} = this.props;
+        const config: AreaOptions = controller.getConfig().style;
         return (
             <>
                 <AntdBaseAreaGraphics config={config} onChange={this.AreaCoordinateSysChange}/>
@@ -144,6 +144,6 @@ export const AntdBaseAreaGraphics: React.FC<AntdBaseAreaGraphicsProps> = ({confi
     )
 }
 
-export const AntdBaseAreaFieldMapping: React.FC<ConfigType<AntdBaseDesignerComponent>> = ({instance}) => {
-    return <AntdFieldMapping instance={instance} fields={['xField', "yField"]}/>
+export const AntdBaseAreaFieldMapping: React.FC<ConfigType<AntdBaseDesignerController>> = ({controller}) => {
+    return <AntdFieldMapping controller={controller} fields={['xField', "yField"]}/>
 }

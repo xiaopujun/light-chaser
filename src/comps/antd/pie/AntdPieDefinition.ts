@@ -8,7 +8,7 @@ import {getDefaultMenuList} from "../../../designer/right/util";
 import {ClazzTemplate} from "../../common-component/common-types";
 import pieImg from './pie.png';
 import {BaseInfoType} from "../../../designer/DesignerType";
-import AntdPie, {AntdPieProps} from "./AntdPie";
+import AntdPieController, {AntdPieProps} from "./AntdPieController";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const AntdPieConfig = React.lazy(() => import("./AntdPieStyleConfig"));
@@ -17,10 +17,10 @@ const ThemeConfig = React.lazy(() => import("../../common-component/theme-config
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
-class AntdPieDefinition extends AbstractCustomComponentDefinition<AntdPie, AntdPieProps> {
+class AntdPieDefinition extends AbstractCustomComponentDefinition<AntdPieController, AntdPieProps> {
 
-    getComponent(): ClazzTemplate<AntdPie> | null {
-        return AntdPie;
+    getComponent(): ClazzTemplate<AntdPieController> | null {
+        return AntdPieController;
     }
 
     getMenuList(): Array<MenuInfo> {

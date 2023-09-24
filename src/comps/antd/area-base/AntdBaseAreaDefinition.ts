@@ -1,7 +1,7 @@
 import {BaseInfoType} from "../../../designer/DesignerType";
 import baseAreaImg from "./base-area.png";
 import AbstractAreaDefinition from "../../antd-common/area/AbstractAreaDefinition";
-import {AntdAreaProps} from "../../antd-common/area/AntdCommonArea";
+import {AntdAreaProps} from "../../antd-common/area/AntdCommonAreaController";
 import {MenuToConfigMappingType} from "../../../framework/core/AbstractCustomComponentDefinition";
 import React from "react";
 

@@ -1,7 +1,7 @@
-import AbstractDesignerComponent from "../../framework/core/AbstractDesignerComponent";
+import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
 import {getModeByUrl, Mode} from "../../utils/URLUtil";
 import {sendHttpRequest} from "../../utils/HttpUtil";
-import AbstractComponent, {OperateType, UpdateOptions} from "../../framework/core/AbstractComponent";
+import AbstractController, {OperateType, UpdateOptions} from "../../framework/core/AbstractController";
 import {ComponentBaseProps} from "../common-component/common-types";
 import {Options, Plot} from "@antv/g2plot";
 import ComponentUtil from "../../utils/ComponentUtil";
@@ -9,8 +9,8 @@ import {LoadError} from "../../lib/lc-loaderr/LoadError";
 import ReactDOM from "react-dom";
 import ObjectUtil from "../../utils/ObjectUtil";
 
-export abstract class AntdBaseDesignerComponent<I extends Plot<any> = Plot<Options>,
-    C extends ComponentBaseProps = ComponentBaseProps> extends AbstractDesignerComponent<I, C> {
+export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Options>,
+    C extends ComponentBaseProps = ComponentBaseProps> extends AbstractDesignerController<I, C> {
 
     protected interval: NodeJS.Timer | null = null;
     //上一次数据连接状态 true：成功 false：失败
@@ -33,7 +33,7 @@ export abstract class AntdBaseDesignerComponent<I extends Plot<any> = Plot<Optio
         return this.config?.data?.staticData?.data;
     }
 
-    public commonLoadData(ins: AbstractComponent): void {
+    public commonLoadData(ins: AbstractController): void {
         //设计模式下，始终从data设置中读取数据。预览模式下则根据数据源类型读取数据
         let mode = getModeByUrl();
         if (mode === Mode.VIEW) {

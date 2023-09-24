@@ -1,11 +1,11 @@
 import {ThemeItemType} from "../../../designer/DesignerType";
-import {OperateType, UpdateOptions} from "../../../framework/core/AbstractComponent";
-import AbstractDesignerComponent from "../../../framework/core/AbstractDesignerComponent";
+import {OperateType, UpdateOptions} from "../../../framework/core/AbstractController";
+import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
 import ComponentUtil from "../../../utils/ComponentUtil";
 import BaseTextComponent, {BaseTextComponentProps} from "./BaseTextComponent";
 import ObjectUtil from "../../../utils/ObjectUtil";
 
-export class BaseText extends AbstractDesignerComponent<BaseTextComponent, BaseTextComponentProps> {
+export class BaseText extends AbstractDesignerController<BaseTextComponent, BaseTextComponentProps> {
 
     async create(container: HTMLElement, config: any): Promise<this> {
         this.config = config;

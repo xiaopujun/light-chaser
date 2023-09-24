@@ -15,10 +15,10 @@ class BaseInfo extends Component<ConfigType> {
 
     changeName = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        const {instance} = this.props;
-        instance.update({info: {name: value}}, {reRender: false});
+        const {controller} = this.props;
+        controller.update({info: {name: value}}, {reRender: false});
         const {updateLayout} = designerStore;
-        const id = instance.getConfig().info.id;
+        const id = controller.getConfig().info.id;
         updateLayout && updateLayout([{id, name: value}]);
         //如果显示图层,则更新图层名称
         const {layerInstanceMap} = layerListStore;
@@ -28,13 +28,13 @@ class BaseInfo extends Component<ConfigType> {
 
     changeDesc = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        const {instance} = this.props;
-        instance.update({info: {desc: value}}, {reRender: false});
+        const {controller} = this.props;
+        controller.update({info: {desc: value}}, {reRender: false});
     }
 
     render() {
-        const {instance} = this.props;
-        const {type, name, desc} = (instance.getConfig() as ComponentBaseProps).info!;
+        const {controller} = this.props;
+        const {type, name, desc} = (controller.getConfig() as ComponentBaseProps).info!;
         return (
             <div className={'lc-base-info'}>
                 <ConfigCard title={'基础信息'}>

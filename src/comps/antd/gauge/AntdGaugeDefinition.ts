@@ -2,7 +2,7 @@ import React from "react";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {BaseMenuMapping, ClazzTemplate} from "../../common-component/common-types";
-import AntdGauge, {AntdGaugeProps} from "./AntdGauge";
+import AntdGaugeController, {AntdGaugeProps} from "./AntdGaugeController";
 import gaugeImg from './gauge.png';
 import {BaseInfoType} from "../../../designer/DesignerType";
 
@@ -15,8 +15,8 @@ const DataConfig = React.lazy(() => import("../../common-component/data-config/D
 
 class AntdGaugeDefinition /*extends AbstractCustomComponentDefinition<AntdGauge, BaseMenuMapping, AntdGaugeProps>*/ {
 
-    getComponent(): ClazzTemplate<AntdGauge> | null {
-        return AntdGauge;
+    getComponent(): ClazzTemplate<AntdGaugeController> | null {
+        return AntdGaugeController;
     }
 
     getMenuList(): Array<MenuInfo> {

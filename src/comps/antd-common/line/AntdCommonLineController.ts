@@ -1,8 +1,8 @@
 import {ComponentBaseProps} from "../../common-component/common-types";
 import {WritableLineOptions} from "../types";
 import {Line} from "@antv/g2plot";
-import {OperateType, UpdateOptions} from "../../../framework/core/AbstractComponent";
-import {AntdBaseDesignerComponent} from "../AntdBaseDesignerComponent";
+import {OperateType, UpdateOptions} from "../../../framework/core/AbstractController";
+import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
 
@@ -10,7 +10,7 @@ export interface AntdLineProps extends ComponentBaseProps {
     style?: WritableLineOptions;
 }
 
-export default class AntdCommonLine extends AntdBaseDesignerComponent<Line, AntdLineProps> {
+export default class AntdCommonLineController extends AntdBaseDesignerController<Line, AntdLineProps> {
 
     async create(container: HTMLElement, config: AntdLineProps): Promise<this> {
         return super.commonCreate(container, Line, config);

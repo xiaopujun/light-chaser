@@ -8,7 +8,7 @@ export interface UpdateOptions {
     reRender: boolean;
 }
 
-abstract class AbstractComponent<I = any, C = any> {
+abstract class AbstractController<I = any, C = any> {
 
     /**
      * 组件实例引用
@@ -56,4 +56,4 @@ abstract class AbstractComponent<I = any, C = any> {
 
 }
 
-export default AbstractComponent;
+export default AbstractController;

@@ -1,6 +1,6 @@
 import {MenuInfo} from "../../designer/right/MenuType";
 import {BaseInfoType} from "../../designer/DesignerType";
-import AbstractComponent from "./AbstractComponent";
+import AbstractController from "./AbstractController";
 import React from "react";
 import {ClazzTemplate} from "../../comps/common-component/common-types";
 
@@ -12,11 +12,10 @@ export type MenuToConfigMappingType = { [key: string]: React.ComponentType<any> 
  * 因此，所有要接入设计器的react组件都应该按照该类的约定实现所有的方法。
  *
  * 泛型说明：
- * C: 组件类，用于指定当前组件定义对应的实际组件类
- * M: 菜单配置映射，用于指定当前组件配置菜单对应的配置组件的映射关系
+ * C: 组件控制器类，用于指定当前组件定义对应的控制器类
  * P: 组件配置类型，用于指定当前组件的配置数据(config属性的类型)
  */
-export abstract class AbstractCustomComponentDefinition<C extends AbstractComponent = AbstractComponent, P = any> {
+export abstract class AbstractCustomComponentDefinition<C extends AbstractController = AbstractController, P = any> {
 
     /**
      * 返回组件基础信息，用于在组件列表中展示

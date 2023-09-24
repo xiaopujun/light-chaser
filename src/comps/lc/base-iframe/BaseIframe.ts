@@ -1,11 +1,11 @@
 import {ThemeItemType} from "../../../designer/DesignerType";
-import {OperateType, UpdateOptions} from "../../../framework/core/AbstractComponent";
-import AbstractDesignerComponent from "../../../framework/core/AbstractDesignerComponent";
+import {OperateType, UpdateOptions} from "../../../framework/core/AbstractController";
+import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
 import ComponentUtil from "../../../utils/ComponentUtil";
 import BaseIframeComponent, {BaseIframeComponentProps} from "./BaseIframeComponent";
 import ObjectUtil from "../../../utils/ObjectUtil";
 
-export class BaseIframe extends AbstractDesignerComponent<BaseIframeComponent, BaseIframeComponentProps> {
+export class BaseIframe extends AbstractDesignerController<BaseIframeComponent, BaseIframeComponentProps> {
 
     async create(container: HTMLElement, config: any): Promise<this> {
         this.config = config;

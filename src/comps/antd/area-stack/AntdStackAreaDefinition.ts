@@ -1,7 +1,7 @@
 import {BaseInfoType} from "../../../designer/DesignerType";
 import stackAreaImg from "./stack-area.png";
 import AbstractAreaDefinition from "../../antd-common/area/AbstractAreaDefinition";
-import {AntdAreaProps} from "../../antd-common/area/AntdCommonArea";
+import {AntdAreaProps} from "../../antd-common/area/AntdCommonAreaController";
 
 class AntdStackAreaDefinition extends AbstractAreaDefinition {
 

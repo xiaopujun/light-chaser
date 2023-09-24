@@ -1,9 +1,9 @@
-import AbstractComponent, {OperateType, UpdateOptions,} from "../../../framework/core/AbstractComponent";
+import AbstractController, {OperateType, UpdateOptions,} from "../../../framework/core/AbstractController";
 import ComponentUtil from "../../../utils/ComponentUtil";
 import LayerItem, {LayerItemDataProps} from "./LayerItem";
 import ObjectUtil from "../../../utils/ObjectUtil";
 
-export default class LayerComponent extends AbstractComponent<LayerItem, LayerItemDataProps> {
+export default class LayerComponent extends AbstractController<LayerItem, LayerItemDataProps> {
 
     async create(container: HTMLElement, config: LayerItemDataProps): Promise<this> {
         this.config = config;
