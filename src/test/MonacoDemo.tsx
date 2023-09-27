@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Control} from "../json-schema/SchemaTypes";
-import {SchemaCore} from "../json-schema/SchemaCore";
+import {LCGUI} from "../json-schema/LCGUI";
 
 class MonacoDemo extends Component {
 
@@ -106,7 +106,7 @@ class MonacoDemo extends Component {
                     {
                         type: 'grid',
                         config: {
-                            columns: 1
+                            columns: 4
                         },
                         children: [
                             {
@@ -134,15 +134,12 @@ class MonacoDemo extends Component {
         ]
     }
 
-    ref: any = null;
-
 
     render() {
-        let schemaCore = new SchemaCore();
 
         return (
-            <div style={{width: 400, height: 800, background: "#333333"}} ref={ref => this.ref = ref}>
-                {schemaCore.buildConfigUI(this.testSchema)}
+            <div style={{width: 400, height: 800, background: "#333333"}}>
+                <LCGUI schema={this.testSchema}/>
             </div>
         );
     }
