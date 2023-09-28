@@ -15,6 +15,8 @@ export interface Control {
     label?: string;//有label应该渲染label，无label则直接渲染控件
     type?: string;//有type则需要渲染控件，无type则直接忽略本层级的渲染
     tip?: string;
+    value?: any;
+    defaultValue?: any;
     direction?: "vertical" | "horizontal";//有direction则需要渲染布局，无direction则直接渲染控件.有label无direction默认按照horizontal渲染
     config?: Record<string, any>;
     children?: Control[];

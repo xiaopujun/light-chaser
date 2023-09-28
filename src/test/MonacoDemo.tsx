@@ -6,91 +6,100 @@ class MonacoDemo extends Component {
 
     monacoContainer: any = null;
     schema: Control = {
-        key: "xAxis",
-        label: "X轴",
-        type: "accordion",
+        key: "style",
         children: [
             {
-                key: "grid",
-                label: "网格线",
-                type: "grid",
+                key: "xAxis",
+                type: "accordion",
+                config: {
+                    title: "X轴"
+                },
                 children: [
                     {
-                        label: "开启",
-                        type: "switch",
+                        key: "grid",
+                        label: "网格线",
+                        type: "grid",
                         config: {
-                            value: true,
-                            onChange: () => {
-
+                            columns: 4
+                        },
+                        children: [
+                            {
+                                label: "开启",
+                                type: "switch",
+                                config: {
+                                    value: true,
+                                }
+                            },
+                            {
+                                key: "alignTick",
+                                label: "对齐",
+                                type: "switch",
+                                config: {
+                                    value: true
+                                }
+                            },
+                            {
+                                key: "line",
+                                children: [
+                                    {
+                                        key: "style",
+                                        children: [
+                                            {
+                                                key: "lineWidth",
+                                                label: "线宽",
+                                                type: "number",
+                                                config: {
+                                                    value: 1
+                                                }
+                                            },
+                                            {
+                                                key: "stroke",
+                                                label: "颜色",
+                                                type: "base-color-picker",
+                                                config: {
+                                                    value: "#878787ff",
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
                             }
-                        }
+                        ]
                     },
                     {
-                        key: "alignTick",
-                        label: "对齐刻度",
-                        type: "switch",
+                        key: "label",
+                        // label: "标签",
+                        type: "grid",
                         config: {
-                            value: true
-                        }
-                    },
-                    {
-                        key: "line",
+                            columns: 4
+                        },
                         children: [
                             {
                                 key: "style",
                                 children: [
                                     {
-                                        key: "lineWidth",
-                                        label: "线宽",
-                                        type: "number",
+                                        key: "fill",
+                                        label: "颜色",
+                                        type: "base-color-picker",
                                         config: {
-                                            value: 1
+                                            value: "#878787ff"
                                         }
                                     },
                                     {
-                                        key: "stroke",
-                                        label: "颜色",
-                                        type: "color",
+                                        key: "fontSize",
+                                        label: "字号",
+                                        type: "number",
                                         config: {
-                                            value: "#878787ff",
+                                            value: 10
                                         }
                                     }
                                 ]
                             }
                         ]
                     }
-                ]
-            },
-            {
-                key: "label",
-                label: "标签",
-                type: "grid",
-                children: [
-                    {
-                        key: "style",
-                        label: "",
-                        children: [
-                            {
-                                key: "fill",
-                                label: "颜色",
-                                type: "color",
-                                config: {
-                                    value: "#878787ff"
-                                }
-                            },
-                            {
-                                key: "fontSize",
-                                label: "字体大小",
-                                type: "number",
-                                config: {
-                                    value: 10
-                                }
-                            }
-                        ]
-                    }
-                ]
+                ],
             }
-        ],
+        ]
     }
 
     testSchema: Control = {
@@ -99,8 +108,10 @@ class MonacoDemo extends Component {
             {
                 key: "xAxis",
                 type: "accordion",
+                value: false,
                 config: {
-                    title: "X轴"
+                    title: "X轴",
+                    showSwitch: true,
                 },
                 children: [
                     {
@@ -126,7 +137,42 @@ class MonacoDemo extends Component {
                                     value: "X轴标题"
                                 }
                             },
-
+                        ]
+                    }
+                ]
+            },
+            {
+                key: "yAxis",
+                type: "accordion",
+                value: false,
+                config: {
+                    title: "Y轴",
+                    showSwitch: true,
+                },
+                children: [
+                    {
+                        type: 'grid',
+                        config: {
+                            columns: 4
+                        },
+                        children: [
+                            {
+                                key: "open",
+                                label: "开启",
+                                type: "switch",
+                                config: {
+                                    value: true
+                                }
+                            },
+                            {
+                                key: "title",
+                                label: "标题",
+                                type: "string",
+                                direction: "horizontal",
+                                config: {
+                                    value: "X轴标题"
+                                }
+                            },
                         ]
                     }
                 ]
@@ -138,7 +184,7 @@ class MonacoDemo extends Component {
     render() {
 
         return (
-            <div style={{width: 400, height: 800, background: "#333333"}}>
+            <div style={{width: 400, height: 800, background: "#333333", padding: 10}}>
                 <LCGUI schema={this.testSchema}/>
             </div>
         );
