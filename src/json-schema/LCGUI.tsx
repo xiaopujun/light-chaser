@@ -7,7 +7,7 @@ import UIMap from "../ui";
 
 export interface LCGUIProps {
     schema: Control;
-    onFieldChange?: (data: any, schemaKeyPath: SchemaPathNode[], dataFragments: object, id?: string) => void;
+    onFieldChange?: (data: ControlValueType, schemaKeyPath: SchemaPathNode[], dataFragments: object, id?: string) => void;
 }
 
 export class SchemaPathNode {
@@ -54,7 +54,7 @@ export class LCGUI extends React.Component<LCGUIProps> {
                     const child = children![i];
                     const matchIndex = variable.indexOf(child.key!);
                     if (child.key && matchIndex !== -1) {
-                        rules = rules.replaceAll(`{${child!.key}}`, child.value + "")
+                        rules = rules.replaceAll(`{${child!.key}}`, `'${child.value}'`)
                         variable.splice(matchIndex, 1);
                     }
                 }
@@ -63,7 +63,7 @@ export class LCGUI extends React.Component<LCGUIProps> {
                 //解析parent的其他非children属性
                 const matchIndex = variable.indexOf(parent!.key!);
                 if (parent!.key && matchIndex !== -1) {
-                    rules = rules.replace(`{${parent!.key}}`, parent!.value + "")
+                    rules = rules.replace(`{${parent!.key}}`, `'${parent.value}'`)
                     variable.splice(matchIndex, 1);
                 }
                 if (variable.length > 0) {

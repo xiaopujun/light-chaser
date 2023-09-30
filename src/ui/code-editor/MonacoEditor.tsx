@@ -10,10 +10,11 @@ export interface MonacoEditorProps {
     width?: string | number;
     height?: string | number;
     readonly?: boolean;
+    style?: React.CSSProperties;
 }
 
 export const MonacoEditor: React.FC<MonacoEditorProps> = (props) => {
-    const {value, onChange, language, width, height, readonly = false} = props;
+    const {value, onChange, language, width, height, readonly = false, style} = props;
 
     //格式化代码
     const code = js_beautify(value!, {
@@ -23,7 +24,7 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = (props) => {
     })
 
     return (
-        <div style={{width, height, border: '1px solid #414141'}} className={'monaco-editor-container'}>
+        <div style={{width, height, border: '1px solid #414141', ...style}} className={'monaco-editor-container'}>
             <Editor defaultLanguage={language || 'json'}
                     theme="vs-dark"
                     onChange={onChange}

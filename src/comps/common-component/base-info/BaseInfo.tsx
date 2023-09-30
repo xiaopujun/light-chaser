@@ -1,20 +1,70 @@
-import React, {ChangeEvent, Component} from 'react';
+import React, {Component} from 'react';
 import './BaseInfo.less';
-import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
-import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
-import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import {ConfigType} from "../../../designer/right/ConfigType";
 import designerStore from "../../../designer/store/DesignerStore";
 import layerListStore from "../../../designer/float-configs/layer-list/LayerListStore";
 import {ComponentBaseProps} from "../common-types";
+import {Control, ControlValueType} from "../../../json-schema/SchemaTypes";
+import {LCGUI, SchemaPathNode} from "../../../json-schema/LCGUI";
+import LCGUIUtil from "../../../json-schema/LCGUIUtil";
 
 /**
  * lc组件基础信息
  */
 class BaseInfo extends Component<ConfigType> {
 
-    changeName = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
+    schema: Control = {};
+
+    state = {
+        renderCount: 0
+    }
+
+    constructor(props: ConfigType) {
+        super(props);
+        const {controller} = this.props;
+        const {type, name, desc} = (controller.getConfig() as ComponentBaseProps).info!;
+        this.schema = {
+            type: "item-panel",
+            config: {
+                label: "基础信息",
+            },
+            children: [
+                {
+                    type: 'grid',
+                    config: {
+                        columns: 2
+                    },
+                    children: [
+                        {
+                            id: "name",
+                            key: "name",
+                            label: "名称",
+                            type: "string",
+                            value: name
+                        },
+                        {
+                            key: "type",
+                            label: "类型",
+                            type: "string",
+                            value: type,
+                            config: {
+                                disabled: true
+                            }
+                        },
+                        {
+                            key: "desc",
+                            label: "描述",
+                            type: "string",
+                            value: desc
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+
+
+    changeName = (value: string) => {
         const {controller} = this.props;
         controller.update({info: {name: value}}, {reRender: false});
         const {updateLayout} = designerStore;
@@ -26,29 +76,25 @@ class BaseInfo extends Component<ConfigType> {
         layerInstance && layerInstance.update({name: value});
     }
 
-    changeDesc = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
+    changeDesc = (value: string) => {
         const {controller} = this.props;
         controller.update({info: {desc: value}}, {reRender: false});
     }
 
+    onFieldChange = (data: ControlValueType, schemaKeyPath: SchemaPathNode[], dataFragments: object, id?: string) => {
+        console.log(data, schemaKeyPath, dataFragments, id)
+        if (id === "name") {
+            this.changeName(data as string);
+        } else {
+            this.changeDesc(data as string);
+        }
+        LCGUIUtil.updateSchema(this.schema, schemaKeyPath, data);
+        this.setState({renderCount: this.state.renderCount + 1});
+    }
+
     render() {
-        const {controller} = this.props;
-        const {type, name, desc} = (controller.getConfig() as ComponentBaseProps).info!;
         return (
-            <div className={'lc-base-info'}>
-                <ConfigCard title={'基础信息'}>
-                    <ConfigItem title={'名称'}>
-                        <UnderLineInput type={'text'} onChange={this.changeName} defaultValue={name}/>
-                    </ConfigItem>
-                    <ConfigItem title={'类型'}>
-                        <div className={'item-value'}>{type}</div>
-                    </ConfigItem>
-                    <ConfigItem title={'描述'}>
-                        <UnderLineInput type={'text'} onChange={this.changeDesc} defaultValue={desc}/>
-                    </ConfigItem>
-                </ConfigCard>
-            </div>
+            <LCGUI schema={this.schema} onFieldChange={this.onFieldChange}/>
         )
     }
 }

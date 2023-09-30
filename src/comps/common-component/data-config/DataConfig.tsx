@@ -12,6 +12,9 @@ import ConfigItemTB from "../../../lib/lc-config-item/ConfigItemTB";
 import {message} from "antd";
 import ObjectUtil from "../../../utils/ObjectUtil";
 import {MonacoEditor} from "../../../lib/lc-code-editer/MonacoEditor";
+import {Control, ControlValueType} from "../../../json-schema/SchemaTypes";
+import {LCGUI, SchemaPathNode} from "../../../json-schema/LCGUI";
+import LCGUIUtil from "../../../json-schema/LCGUIUtil";
 
 type DataTypeItem = 'static' | 'api' | 'database' | 'excel';
 
@@ -26,19 +29,16 @@ export interface DataConfigProps<T extends AbstractController = AbstractControll
 
 class DataConfig extends Component<DataConfigProps> {
 
+    schema: Control = {};
+
     state = {
         dataSource: 'static',
+        renderCount: 0
     }
 
     allDataTypes = [
-        {
-            value: 'static',
-            label: '静态数据',
-        },
-        {
-            value: 'api',
-            label: '接口(API)',
-        }
+        {value: 'static', label: '静态数据',},
+        {value: 'api', label: '接口(API)',}
     ]
 
     constructor(props: ConfigType) {
@@ -47,6 +47,118 @@ class DataConfig extends Component<DataConfigProps> {
         const dataConfig: DataConfigType = controller.getConfig().data;
         this.state = {
             dataSource: dataConfig?.dataSource || 'static',
+            renderCount: 0
+        }
+
+        this.schema = {
+            key: 'data',
+            children: [
+                {
+                    key: 'dataSource',
+                    label: '数据源',
+                    type: 'select',
+                    value: dataConfig?.dataSource || 'static',
+                    config: {
+                        options: [
+                            {value: 'static', label: '静态数据',},
+                            {value: 'api', label: '接口(API)',}
+                        ]
+                    }
+                },
+                {
+                    key: 'staticData',
+                    type: 'grid',
+                    rules: "{dataSource} === 'static'",
+                    children: [
+                        {
+                            key: 'data',
+                            type: 'code-editor',
+                            config: {
+                                height: 500,
+                                style: {
+                                    marginTop: 10
+                                }
+                            },
+                            value: JSON.stringify(dataConfig?.staticData?.data) || '',
+                        },
+                        {
+                            id: 'staticConfirmBtn',
+                            type: 'button',
+                            config: {
+                                children: '保存并刷新数据',
+                                style: {
+                                    width: '100%'
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    key: 'apiData',
+                    type: 'grid',
+                    rules: "{dataSource} === 'api'",
+                    children: [
+                        {
+                            key: 'url',
+                            type: 'string',
+                            label: '接口地址',
+                            value: dataConfig?.apiData?.url || '',
+                        },
+                        {
+                            key: 'method',
+                            label: '请求方式',
+                            type: 'select',
+                            value: dataConfig?.apiData?.method || 'get',
+                            config: {
+                                options: [
+                                    {value: 'get', label: 'GET'},
+                                    {value: 'post', label: 'POST'},
+                                ]
+                            }
+                        },
+                        {
+                            key: 'flashFrequency',
+                            label: '刷新频率',
+                            type: 'number',
+                            value: dataConfig?.apiData?.flashFrequency || 5,
+                        },
+                        {
+
+                            type: 'item-panel',
+                            config: {
+                                label: '请求头',
+                            },
+                            children: [
+                                {
+                                    key: 'header',
+                                    type: 'code-editor',
+                                    config: {
+                                        height: 100,
+                                    },
+                                    value: JSON.stringify(dataConfig?.apiData?.header) || '',
+                                }
+                            ]
+                        },
+                        {
+
+                            type: 'item-panel',
+                            config: {
+                                label: '请求参数',
+                            },
+                            children: [
+                                {
+                                    key: 'params',
+                                    type: 'code-editor',
+                                    config: {
+                                        height: 100,
+                                    },
+                                    value: JSON.stringify(dataConfig?.apiData?.params) || '',
+                                }
+                            ]
+                        },
+                    ]
+                }
+            ]
         }
     }
 
@@ -58,22 +170,38 @@ class DataConfig extends Component<DataConfigProps> {
         });
     }
 
+    onFieldChange = (data: ControlValueType, schemaKeyPath: SchemaPathNode[], dataFragments: object, id?: string) => {
+        if (id === 'staticConfirmBtn') {
+            console.log(this.schema!.children![0].children![1]!.value)
+            const dataStr = (this.schema!.children![0].children![1]!.children![0]!.value! as string).replace(/'/g, '"').replace(/\s/g, '');
+            const data = JSON.parse(dataStr);
+            const {controller} = this.props;
+            controller.update({data: {staticData: {data}}},
+                {reRender: true, operateType: OperateType.DATA});
+        }
+        LCGUIUtil.updateSchema(this.schema, schemaKeyPath, data);
+        this.setState({
+            renderCount: this.state.renderCount + 1
+        })
+    }
+
 
     render() {
         const {controller, dataTypes} = this.props;
         const {dataSource} = this.state;
         this.allDataTypes = dataTypes ? this.allDataTypes.filter(item => (dataTypes as DataTypes)?.includes(item.value as DataTypeItem)) : this.allDataTypes;
         return (
-            <div className={'lc-data-config'}>
-                <ConfigItem title={'数据源'} contentStyle={{width: 100}}>
-                    <Select onChange={(value) => this.dataSourcesChange(value)} defaultValue={dataSource}
-                            options={this.allDataTypes}/>
-                </ConfigItem>
-                {dataSource === 'static' &&
-                <StaticDataConfig controller={controller}/>}
-                {dataSource === 'api' &&
-                <ApiDataConfig controller={controller}/>}
-            </div>
+            // <div className={'lc-data-config'}>
+            //     <ConfigItem title={'数据源'} contentStyle={{width: 100}}>
+            //         <Select onChange={(value) => this.dataSourcesChange(value)} defaultValue={dataSource}
+            //                 options={this.allDataTypes}/>
+            //     </ConfigItem>
+            //     {dataSource === 'static' &&
+            //     <StaticDataConfig controller={controller}/>}
+            //     {dataSource === 'api' &&
+            //     <ApiDataConfig controller={controller}/>}
+            // </div>
+            <LCGUI schema={this.schema} onFieldChange={this.onFieldChange}/>
         );
     }
 }

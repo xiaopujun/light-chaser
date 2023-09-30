@@ -2,7 +2,7 @@ import React, {ChangeEvent, Component, InputHTMLAttributes} from 'react';
 import './StringInput.less';
 
 export interface StringInputProps extends Pick<InputHTMLAttributes<HTMLInputElement>,
-    "minLength" | "maxLength" | "required" | "value" | "defaultValue"> {
+    "minLength" | "maxLength" | "required" | "value" | "defaultValue" | "disabled"> {
     //值改变时的回调
     onChange?: (data: string) => void;
 }

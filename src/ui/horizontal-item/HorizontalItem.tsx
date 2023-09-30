@@ -4,6 +4,7 @@ import './HorizontalItem.less';
 interface HorizontalItemProps {
     label?: string;
     children?: React.ReactNode;
+    style?: React.CSSProperties;
 }
 
 /**
@@ -12,9 +13,10 @@ interface HorizontalItemProps {
  * @param children
  * @constructor
  */
-export const HorizontalItem: React.FC<HorizontalItemProps> = ({label, children}) => {
+export const HorizontalItem: React.FC<HorizontalItemProps> = (props) => {
+    const {label, children, style} = props;
     return (
-        <div className={'horizontal-item'}>
+        <div className={'horizontal-item'} style={style}>
             <div className={'horizontal-label'}>{label}</div>
             <div className={'horizontal-content'}>{children}</div>
         </div>

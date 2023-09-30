@@ -57,7 +57,7 @@ class MonacoDemo extends Component {
                                             {
                                                 key: "stroke",
                                                 label: "颜色",
-                                                type: "base-color-picker",
+                                                type: "color-picker",
                                                 config: {
                                                     value: "#878787ff",
                                                 }
@@ -82,7 +82,7 @@ class MonacoDemo extends Component {
                                     {
                                         key: "fill",
                                         label: "颜色",
-                                        type: "base-color-picker",
+                                        type: "color-picker",
                                         config: {
                                             value: "#878787ff"
                                         }

@@ -15,15 +15,15 @@ const UIMap = new Map();
 
 UIMap.set('accordion', Accordion);
 UIMap.set('button', Button);
-UIMap.set('code-editor', MonacoEditor);
-UIMap.set('color-picker', ColorPicker);
-UIMap.set('colors-picker', ColorsPicker);
 UIMap.set('grid', Grid);
 UIMap.set('string', StringInput);
 UIMap.set('number', NumberInput);
 UIMap.set('radio', Radio);
 UIMap.set('select', Select);
 UIMap.set('switch', Switch);
+UIMap.set('code-editor', MonacoEditor);
+UIMap.set('color-picker', ColorPicker);
+UIMap.set('colors-picker', ColorsPicker);
 UIMap.set('item-panel', ItemPanel);
 
 export default UIMap;
