@@ -6,9 +6,10 @@ import {VerticalItem} from "../ui/vertical-item/VerticalItem";
 
 export interface LCGUIProps {
     schema: Control;
+    onChange?: (data: any, schemaKeyPath: SchemaPathNode[], dataKeyPath: string[], id?: string) => void;
 }
 
-export class ChildLevel {
+export class SchemaPathNode {
     constructor(key: string, index?: number) {
         this.key = key;
         this.index = index;
@@ -18,71 +19,88 @@ export class ChildLevel {
     index?: number = 0;
 }
 
+/**
+ * 特殊场景的操作全交给使用方，向外提供Util方法更新schema结构
+ */
 export class LCGUI extends React.Component<LCGUIProps> {
 
-    state = {renderCount: 0}
+    onControlChange = (data: any, schemaKeyPath: SchemaPathNode[], dataKeyPath: string[], id?: string) => {
+        const {onChange} = this.props;
+        onChange && onChange(data, schemaKeyPath, dataKeyPath, id);
+    }
 
-    updateSchema = (oldSchema: Control, path: ChildLevel[], value: any) => {
-        const currentLevel = path.shift();
-        const {key, index} = currentLevel!;
-        if (key in oldSchema) {
-            if (path.length === 0) {
-                //赋值
-                oldSchema[key as keyof Control] = value;
-            } else if (index !== undefined) {
-                //组数
-                this.updateSchema(oldSchema[key as keyof Control][index], path, value);
-            } else {
-                //普通属性
-                this.updateSchema(oldSchema[key as keyof Control], path, value);
+    /**
+     * 解析rules规则，判断是否满足
+     * @param rules
+     * @param control
+     */
+    analyzeRules = (rules: string, control: Control): boolean => {
+        const regex = /{([^}]+)}/g;
+        const variable = [];
+        let match;
+        //解析rule中设置的变量
+        while ((match = regex.exec(rules)) !== null) {
+            variable.push(match[1]);
+        }
+        //从control本层级开始逐级向上匹配，直到所有变量都匹配结束
+        const analyze = (control: Control, variable: string[], rules: string): string => {
+            const {parent} = control;
+            if (parent && "children" in parent) {
+                //解析parent的所有子节点control(与当前control同级)
+                const {children} = parent;
+                for (let i = 0; i < children!.length; i++) {
+                    const child = children![i];
+                    const matchIndex = variable.indexOf(child.key!);
+                    if (child.key && matchIndex !== -1) {
+                        rules = rules.replaceAll(`{${child!.key}}`, child.value + "")
+                        variable.splice(matchIndex, 1);
+                    }
+                }
             }
+            if (variable.length > 0 && parent) {
+                //解析parent的其他非children属性
+                const matchIndex = variable.indexOf(parent!.key!);
+                if (parent!.key && matchIndex !== -1) {
+                    rules = rules.replace(`{${parent!.key}}`, parent!.value)
+                    variable.splice(matchIndex, 1);
+                }
+                if (variable.length > 0) {
+                    return analyze(parent!, variable, rules);
+                }
+            }
+            return rules;
         }
-        this.setState({renderCount: this.state.renderCount + 1});
-        console.log(oldSchema)
+        // eslint-disable-next-line
+        return eval(analyze(control, variable, rules));
     }
 
-    createObjectFromArray = (arr: [], value: any): any => {
-        let result = {};
-        let current: any = result;
-
-        for (let i = 0; i < arr.length; i++) {
-            const key = arr[i];
-            current[key] = i === arr.length - 1 ? value : {};
-            current = current[key];
-        }
-
-        return result;
-    }
-
-    onControlChange = (data: any, schemaKeyPath: ChildLevel[], dataKeyPath: string[]) => {
-        const {schema} = this.props;
-        console.log(data, schemaKeyPath, dataKeyPath)
-        // this.updateSchema(schema, schemaKeyPath, data);
-    }
-
-    buildConfigUI = (control: Control, schemaKeyPath: ChildLevel[], dataKeyPath: string[], childIndex: number): any => {
+    buildConfigUI = (control: Control, schemaKeyPath: SchemaPathNode[], dataKeyPath: string[], childIndex: number): any => {
         const nodes: ReactNode[] = [];
         if (!control) return nodes;
         if ("children" in control) {
             //有子节点，递归解析
             const tempNodes: ReactNode[] = [];
             const {children} = control;
-            const childLevel = new ChildLevel("children");
+            const childLevel = new SchemaPathNode("children");
+            const {type, rules} = control;
+            //判断是否满足rules规则，不满足则不继续递归渲染
+            if (rules && !this.analyzeRules(rules, control))
+                return nodes;
+
             schemaKeyPath.push(childLevel);
             control.key && dataKeyPath.push(control.key);
             children && children.forEach((child: Control, index: number) => {
                 childLevel.index = index;
                 child.parent = control;
-                //todo childLevel同一个对象传递到下一次调用了，有问题. 解决办法：对schemaKeyPath深拷贝
+                //todo 优化当前的序列化产生新对象的方式，找一种更好的方式生成新的对象
                 tempNodes.push(this.buildConfigUI(child, JSON.parse(JSON.stringify(schemaKeyPath)), [...dataKeyPath], index));
             })
-            //构建本级节点对应的组件
-            const {type} = control;
+            //构建本级schema路径下的ReactNode
             if (!type) {
                 //本层没有控件，直接返回子节点
                 nodes.push([...tempNodes]);
             } else {
-                const {type, config, value, defaultValue} = control;
+                const {type, config, value, defaultValue, id} = control;
                 let Component = componentsMap.get(type);
                 schemaKeyPath.pop();
                 schemaKeyPath.push({key: "value"});
@@ -91,37 +109,41 @@ export class LCGUI extends React.Component<LCGUIProps> {
                     ...config,
                     value,
                     defaultValue,
-                    onChange: (data: any) => this.onControlChange(data, schemaKeyPath, dataKeyPath)
+                    onChange: (data: any) => this.onControlChange(data, schemaKeyPath, dataKeyPath, id)
                 };
                 nodes.push(<Component key={childIndex} {..._props}>{tempNodes}</Component>);
             }
         } else {
             //解析叶子节点
-            const {label, type, direction, config, value, defaultValue} = control;
-            if (!type)
-                return null;
+            const {label, type, direction, config, value, defaultValue, rules, id} = control;
+            if (!type) return [];
+            if (rules && !this.analyzeRules(rules, control))
+                return nodes;
+
+            //设置schemaKeyPath和dataKeyPath
             schemaKeyPath.push({key: "value"});
             dataKeyPath.push(control.key!);
             const _props = {
                 ...config,
                 value,
                 defaultValue,
-                onChange: (data: any) => this.onControlChange(data, schemaKeyPath, dataKeyPath)
+                onChange: (data: any) => this.onControlChange(data, schemaKeyPath, dataKeyPath, id)
             };
             let Component = componentsMap.get(type);
-            let tempDom;
+            if (!Component) return [];
+            let schemaReactNode;
             if (!label) {
-                tempDom = <Component key={childIndex} {..._props}/>
+                schemaReactNode = <Component key={childIndex} {..._props} />
             } else if (!direction || direction === 'horizontal') {
-                tempDom = <HorizontalItem key={childIndex} label={label}>
-                    <Component {..._props}/>
+                schemaReactNode = <HorizontalItem key={childIndex} label={label}>
+                    <Component {..._props} />
                 </HorizontalItem>
             } else {
-                tempDom = <VerticalItem key={childIndex} label={label}>
-                    <Component {..._props}/>
+                schemaReactNode = <VerticalItem key={childIndex} label={label}>
+                    <Component {..._props} />
                 </VerticalItem>
             }
-            nodes.push(tempDom);
+            nodes.push(schemaReactNode);
         }
         return nodes;
     }

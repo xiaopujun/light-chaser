@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Control} from "../json-schema/SchemaTypes";
-import {LCGUI} from "../json-schema/LCGUI";
+import {LCGUI, SchemaPathNode} from "../json-schema/LCGUI";
+import LCGUIUtil from "../json-schema/LCGUIUtil";
 
 class MonacoDemo extends Component {
 
@@ -121,21 +122,19 @@ class MonacoDemo extends Component {
                         },
                         children: [
                             {
+                                id: "2016",
                                 key: "open",
                                 label: "开启",
                                 type: "switch",
-                                config: {
-                                    value: true
-                                }
+                                value: false,
                             },
                             {
                                 key: "title",
                                 label: "标题",
                                 type: "string",
+                                rules: '{open} === true',
                                 direction: "horizontal",
-                                config: {
-                                    value: "X轴标题"
-                                }
+                                value: false,
                             },
                         ]
                     }
@@ -145,6 +144,7 @@ class MonacoDemo extends Component {
                 key: "yAxis",
                 type: "accordion",
                 value: false,
+                rules: '{xAxis} === true',
                 config: {
                     title: "Y轴",
                     showSwitch: true,
@@ -160,18 +160,14 @@ class MonacoDemo extends Component {
                                 key: "open",
                                 label: "开启",
                                 type: "switch",
-                                config: {
-                                    value: true
-                                }
+                                value: false,
                             },
                             {
                                 key: "title",
                                 label: "标题",
                                 type: "string",
                                 direction: "horizontal",
-                                config: {
-                                    value: "X轴标题"
-                                }
+                                value: false,
                             },
                         ]
                     }
@@ -180,12 +176,18 @@ class MonacoDemo extends Component {
         ]
     }
 
+    onChange = (data: any, schemaKeyPath: SchemaPathNode[], dataKeyPath: string[], id?: string) => {
+        if (id && id === "2016") {
+            this.testSchema!.children![0]!.children![0]!.children![1].value = "你牛逼了你";
+        }
+        LCGUIUtil.updateSchema(this.testSchema, schemaKeyPath, data)
+        this.setState({count: Date.now()})
+    }
 
     render() {
-
         return (
             <div style={{width: 400, height: 800, background: "#333333", padding: 10}}>
-                <LCGUI schema={this.testSchema}/>
+                <LCGUI schema={this.testSchema} onChange={this.onChange}/>
             </div>
         );
     }
