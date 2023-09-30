@@ -1,12 +1,13 @@
-import {Control} from "./SchemaTypes";
+import {Control, ControlValueType} from "./SchemaTypes";
 import React, {ReactNode} from "react";
-import componentsMap from "../lib";
 import {HorizontalItem} from "../ui/horizontal-item/HorizontalItem";
 import {VerticalItem} from "../ui/vertical-item/VerticalItem";
+import LCGUIUtil from "./LCGUIUtil";
+import UIMap from "../ui";
 
 export interface LCGUIProps {
     schema: Control;
-    onChange?: (data: any, schemaKeyPath: SchemaPathNode[], dataKeyPath: string[], id?: string) => void;
+    onFieldChange?: (data: any, schemaKeyPath: SchemaPathNode[], dataFragments: object, id?: string) => void;
 }
 
 export class SchemaPathNode {
@@ -24,9 +25,10 @@ export class SchemaPathNode {
  */
 export class LCGUI extends React.Component<LCGUIProps> {
 
-    onControlChange = (data: any, schemaKeyPath: SchemaPathNode[], dataKeyPath: string[], id?: string) => {
-        const {onChange} = this.props;
-        onChange && onChange(data, schemaKeyPath, dataKeyPath, id);
+    onControlChange = (data: ControlValueType, schemaKeyPath: SchemaPathNode[], dataKeyPath: string[], id?: string) => {
+        const {onFieldChange} = this.props;
+        const dataFragment = LCGUIUtil.createObjectFromArray(dataKeyPath, data)
+        onFieldChange && onFieldChange(data, schemaKeyPath, dataFragment, id);
     }
 
     /**
@@ -61,7 +63,7 @@ export class LCGUI extends React.Component<LCGUIProps> {
                 //解析parent的其他非children属性
                 const matchIndex = variable.indexOf(parent!.key!);
                 if (parent!.key && matchIndex !== -1) {
-                    rules = rules.replace(`{${parent!.key}}`, parent!.value)
+                    rules = rules.replace(`{${parent!.key}}`, parent!.value + "")
                     variable.splice(matchIndex, 1);
                 }
                 if (variable.length > 0) {
@@ -100,22 +102,21 @@ export class LCGUI extends React.Component<LCGUIProps> {
                 //本层没有控件，直接返回子节点
                 nodes.push([...tempNodes]);
             } else {
-                const {type, config, value, defaultValue, id} = control;
-                let Component = componentsMap.get(type);
+                const {type, config, value, id} = control;
+                let Component = UIMap.get(type);
                 schemaKeyPath.pop();
                 schemaKeyPath.push({key: "value"});
                 //非叶子节点不解析label
                 const _props = {
                     ...config,
                     value,
-                    defaultValue,
                     onChange: (data: any) => this.onControlChange(data, schemaKeyPath, dataKeyPath, id)
                 };
                 nodes.push(<Component key={childIndex} {..._props}>{tempNodes}</Component>);
             }
         } else {
             //解析叶子节点
-            const {label, type, direction, config, value, defaultValue, rules, id} = control;
+            const {label, type, direction, config, value, rules, id} = control;
             if (!type) return [];
             if (rules && !this.analyzeRules(rules, control))
                 return nodes;
@@ -126,10 +127,9 @@ export class LCGUI extends React.Component<LCGUIProps> {
             const _props = {
                 ...config,
                 value,
-                defaultValue,
                 onChange: (data: any) => this.onControlChange(data, schemaKeyPath, dataKeyPath, id)
             };
-            let Component = componentsMap.get(type);
+            let Component = UIMap.get(type);
             if (!Component) return [];
             let schemaReactNode;
             if (!label) {

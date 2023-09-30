@@ -1,0 +1,45 @@
+.string-input-container {
+  position: relative;
+  width: 100%;
+}
+
+.string-input[type=number] {
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+}
+
+.string-input {
+  color: #c6c9cd;
+  font-size: inherit;
+  width: 100%;
+  font-family: inherit;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+.string-input:focus {
+  outline: none;
+}
+
+.string-input::placeholder {
+  color: #FFFFFF99;
+}
+
+.string-input-span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #686868;
+  transform-origin: bottom right;
+  transform: scaleX(0);
+  transition: transform 0.5s ease;
+}
+
+.string-input:focus ~ span {
+  transform-origin: bottom left;
+  transform: scaleX(1);
+}

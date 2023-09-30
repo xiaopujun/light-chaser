@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Control} from "../json-schema/SchemaTypes";
+import {Control, ControlValueType} from "../json-schema/SchemaTypes";
 import {LCGUI, SchemaPathNode} from "../json-schema/LCGUI";
 import LCGUIUtil from "../json-schema/LCGUIUtil";
+import StringInput from "../ui/string-input/StringInput";
 
 class MonacoDemo extends Component {
 
@@ -176,7 +177,7 @@ class MonacoDemo extends Component {
         ]
     }
 
-    onChange = (data: any, schemaKeyPath: SchemaPathNode[], dataKeyPath: string[], id?: string) => {
+    onChange = (data: ControlValueType, schemaKeyPath: SchemaPathNode[], dataFragments: object, id?: string) => {
         if (id && id === "2016") {
             this.testSchema!.children![0]!.children![0]!.children![1].value = "你牛逼了你";
         }
@@ -187,7 +188,8 @@ class MonacoDemo extends Component {
     render() {
         return (
             <div style={{width: 400, height: 800, background: "#333333", padding: 10}}>
-                <LCGUI schema={this.testSchema} onChange={this.onChange}/>
+                <LCGUI schema={this.testSchema} onFieldChange={this.onChange}/>
+                <StringInput/>
             </div>
         );
     }

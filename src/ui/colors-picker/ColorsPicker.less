@@ -1,0 +1,58 @@
+.group-color-picker {
+  flex-wrap: wrap;
+
+  .group-color-item {
+    position: relative;
+
+    span {
+      position: absolute;
+      top: -2px;
+      left: 14px;
+      width: 10px;
+      height: 10px;
+      border-radius: 5px;
+      text-align: center;
+      background-color: #525252;
+
+      label {
+        cursor: pointer;
+        color: #d6d6d6;
+        position: relative;
+        top: -5.8px;
+      }
+    }
+  }
+
+  .color-pick-add-btn {
+    border: 2px solid #007984;
+    width: 21px;
+    height: 21px;
+    text-align: center;
+    border-radius: 15px;
+    font-size: 20px;
+
+    span {
+      color: #007984;
+      position: relative;
+      top: -9px;
+    }
+  }
+
+  .color-pick-add-btn:hover {
+    cursor: pointer;
+    border-color: #00cde3;
+
+    span {
+      color: #00cde3;
+    }
+  }
+
+  .color-pick-add-btn:active {
+    cursor: pointer;
+    border-color: #bef3ff;
+
+    span {
+      color: #bef3ff;
+    }
+  }
+}

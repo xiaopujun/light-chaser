@@ -1,0 +1,54 @@
+import React, {Component, CSSProperties} from "react";
+import "./Switch.less";
+
+interface SwitchProps {
+    onChange?: (data: boolean) => void;
+    // 容器样式(非受控)
+    containerStyle?: CSSProperties;
+    // 开关状态值（受控）
+    value?: boolean;
+    // 开关状态值（非受控）
+    defaultValue?: boolean;
+    disabled?: boolean;
+}
+
+class Switch extends Component<SwitchProps> {
+
+    valueControl: boolean = true;
+
+    state: any = {
+        value: false,
+    }
+
+    constructor(props: SwitchProps) {
+        super(props);
+        const {value, defaultValue} = this.props;
+        if (defaultValue !== undefined && value === undefined)
+            this.valueControl = false;
+        this.state = {value: value || defaultValue || false};
+    }
+
+    handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {checked} = e.target;
+        const {onChange} = this.props;
+        onChange && onChange(checked);
+        if (!this.valueControl)
+            this.setState({value: checked});
+    };
+
+    render() {
+        const {containerStyle = {top: 2.5}, disabled = false} = this.props;
+        return (
+            <div className="lc-switch" style={{...containerStyle}}>
+                <label className="lc-switch-label" style={{cursor: `${disabled ? 'not-allowed' : 'pointer'}`}}>
+                    <input disabled={disabled}
+                           checked={this.valueControl ? this.props.value || false : this.state.value || false}
+                           onChange={this.handleChange} type="checkbox"/>
+                    <span/>
+                </label>
+            </div>
+        );
+    }
+}
+
+export default Switch;

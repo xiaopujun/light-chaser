@@ -1,25 +1,25 @@
-import {Control} from "./SchemaTypes";
+import {Control, ControlValueType} from "./SchemaTypes";
 import {SchemaPathNode} from "./LCGUI";
 
 export default class LCGUIUtil {
-    public static updateSchema(oldSchema: Control, path: SchemaPathNode[], value: any) {
+    public static updateSchema(oldSchema: Control, path: SchemaPathNode[], value: ControlValueType) {
         const currentNode = path.shift();
         const {key, index} = currentNode!;
-        if (key in oldSchema) {
+        if (key && key in oldSchema) {
             if (path.length === 0) {
                 //赋值
-                oldSchema[key as keyof Control] = value;
+                oldSchema.value = value;
             } else if (index !== undefined) {
                 //取指定数据元素继续递归
-                this.updateSchema(oldSchema[key as keyof Control][index], path, value);
+                this.updateSchema((oldSchema[key as keyof Control] as [])[index], path, value);
             } else {
-                //普通属性继续递归
-                this.updateSchema(oldSchema[key as keyof Control], path, value);
+                //普通属性继续递归 todo可能还有特殊场景，注意测试
+                this.updateSchema(oldSchema[key as keyof Control] as Control, path, value);
             }
         }
     }
 
-    public static updateSchemaStringPath(oldSchema: Control, path: string[], value: any) {
+    public static updateSchemaStringPath(oldSchema: Control, path: string[], value: ControlValueType) {
         const schemaPathNode: SchemaPathNode[] = [];
         path.forEach((key, index) => {
             if (key.indexOf("_") !== -1) {
@@ -32,12 +32,12 @@ export default class LCGUIUtil {
         this.updateSchema(oldSchema, schemaPathNode, value);
     }
 
-    public static createObjectFromArray(arr: [], value: any): any {
+    public static createObjectFromArray(keyPath: string[], value: ControlValueType): object {
         let result = {};
         let current: any = result;
-        for (let i = 0; i < arr.length; i++) {
-            const key = arr[i];
-            current[key] = i === arr.length - 1 ? value : {};
+        for (let i = 0; i < keyPath.length; i++) {
+            const key = keyPath[i];
+            current[key] = i === keyPath.length - 1 ? value : {};
             current = current[key];
         }
         return result;
