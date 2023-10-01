@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Control, ControlValueType} from "../json-schema/SchemaTypes";
-import {LCGUI, SchemaPathNode} from "../json-schema/LCGUI";
+import {FieldChangeData, LCGUI, SchemaPathNode} from "../json-schema/LCGUI";
 import LCGUIUtil from "../json-schema/LCGUIUtil";
 import StringInput from "../ui/string-input/StringInput";
 
@@ -111,6 +111,7 @@ class MonacoDemo extends Component {
                 key: "xAxis",
                 type: "accordion",
                 value: false,
+                reRender: true,
                 config: {
                     title: "X轴",
                     showSwitch: true,
@@ -127,15 +128,16 @@ class MonacoDemo extends Component {
                                 key: "open",
                                 label: "开启",
                                 type: "switch",
+
                                 value: false,
                             },
                             {
                                 key: "title",
                                 label: "标题",
                                 type: "string",
-                                rules: '{open} === true',
+                                rules: "{open} === 'true'",
                                 direction: "horizontal",
-                                value: false,
+                                value: "牛hi",
                             },
                         ]
                     }
@@ -145,7 +147,7 @@ class MonacoDemo extends Component {
                 key: "yAxis",
                 type: "accordion",
                 value: false,
-                rules: '{xAxis} === true',
+                rules: "{xAxis} === 'true'",
                 config: {
                     title: "Y轴",
                     showSwitch: true,
@@ -177,12 +179,15 @@ class MonacoDemo extends Component {
         ]
     }
 
-    onChange = (data: ControlValueType, schemaKeyPath: SchemaPathNode[], dataFragments: object, id?: string) => {
+    onChange = (fieldChangeData: FieldChangeData) => {
+        console.log(fieldChangeData)
+        const {schemaKeyPath, data, id, reRender} = fieldChangeData;
         if (id && id === "2016") {
             this.testSchema!.children![0]!.children![0]!.children![1].value = "你牛逼了你";
         }
         LCGUIUtil.updateSchema(this.testSchema, schemaKeyPath, data)
-        this.setState({count: Date.now()})
+        if (reRender)
+            this.setState({count: Date.now()})
     }
 
     render() {

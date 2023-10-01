@@ -5,7 +5,7 @@ import designerStore from "../../../designer/store/DesignerStore";
 import layerListStore from "../../../designer/float-configs/layer-list/LayerListStore";
 import {ComponentBaseProps} from "../common-types";
 import {Control, ControlValueType} from "../../../json-schema/SchemaTypes";
-import {LCGUI, SchemaPathNode} from "../../../json-schema/LCGUI";
+import {FieldChangeData, LCGUI, SchemaPathNode} from "../../../json-schema/LCGUI";
 import LCGUIUtil from "../../../json-schema/LCGUIUtil";
 
 /**
@@ -81,15 +81,16 @@ class BaseInfo extends Component<ConfigType> {
         controller.update({info: {desc: value}}, {reRender: false});
     }
 
-    onFieldChange = (data: ControlValueType, schemaKeyPath: SchemaPathNode[], dataFragments: object, id?: string) => {
-        console.log(data, schemaKeyPath, dataFragments, id)
+    onFieldChange = (fieldChangeData: FieldChangeData) => {
+        const {id, data, schemaKeyPath, reRender} = fieldChangeData;
         if (id === "name") {
             this.changeName(data as string);
         } else {
             this.changeDesc(data as string);
         }
         LCGUIUtil.updateSchema(this.schema, schemaKeyPath, data);
-        this.setState({renderCount: this.state.renderCount + 1});
+        if (reRender)
+            this.setState({renderCount: this.state.renderCount + 1});
     }
 
     render() {

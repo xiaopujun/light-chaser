@@ -13,7 +13,7 @@ import {message} from "antd";
 import ObjectUtil from "../../../utils/ObjectUtil";
 import {MonacoEditor} from "../../../lib/lc-code-editer/MonacoEditor";
 import {Control, ControlValueType} from "../../../json-schema/SchemaTypes";
-import {LCGUI, SchemaPathNode} from "../../../json-schema/LCGUI";
+import {FieldChangeData, LCGUI, SchemaPathNode} from "../../../json-schema/LCGUI";
 import LCGUIUtil from "../../../json-schema/LCGUIUtil";
 
 type DataTypeItem = 'static' | 'api' | 'database' | 'excel';
@@ -156,6 +156,47 @@ class DataConfig extends Component<DataConfigProps> {
                                 }
                             ]
                         },
+                        {
+                            type: 'item-panel',
+                            config: {
+                                label: '响应结果',
+                            },
+                            children: [
+                                {
+                                    type: 'code-editor',
+                                    config: {
+                                        height: 160,
+                                    },
+                                    value: '',
+                                }
+                            ]
+                        },
+                        {
+                            type: 'grid',
+                            config: {
+                                columns: 2
+                            },
+                            children: [
+                                {
+                                    type: 'button',
+                                    config: {
+                                        children: '测试接口',
+                                        style: {
+                                            width: '100%'
+                                        }
+                                    }
+                                },
+                                {
+                                    type: 'button',
+                                    config: {
+                                        children: '保存',
+                                        style: {
+                                            width: '100%'
+                                        }
+                                    }
+                                },
+                            ]
+                        },
                     ]
                 }
             ]
@@ -170,7 +211,8 @@ class DataConfig extends Component<DataConfigProps> {
         });
     }
 
-    onFieldChange = (data: ControlValueType, schemaKeyPath: SchemaPathNode[], dataFragments: object, id?: string) => {
+    onFieldChange = (fieldChangeData: FieldChangeData) => {
+        const {schemaKeyPath, data, reRender, id} = fieldChangeData;
         if (id === 'staticConfirmBtn') {
             console.log(this.schema!.children![0].children![1]!.value)
             const dataStr = (this.schema!.children![0].children![1]!.children![0]!.value! as string).replace(/'/g, '"').replace(/\s/g, '');
@@ -180,9 +222,8 @@ class DataConfig extends Component<DataConfigProps> {
                 {reRender: true, operateType: OperateType.DATA});
         }
         LCGUIUtil.updateSchema(this.schema, schemaKeyPath, data);
-        this.setState({
-            renderCount: this.state.renderCount + 1
-        })
+        if (reRender)
+            this.setState({renderCount: this.state.renderCount + 1})
     }
 
 
