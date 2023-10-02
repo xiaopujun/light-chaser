@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import './Accordion.less';
-import {RightOutlined} from "@ant-design/icons";
+import {QuestionCircleOutlined, RightOutlined} from "@ant-design/icons";
 import Switch from "../switch/Switch";
+import {Tooltip} from "antd";
 
 interface AccordionProps {
     // 标题（非受控）
-    title?: string;
+    label?: string;
     // 是否显示开关（非受控）
     showSwitch?: boolean;
     // 开关变化回调
@@ -14,6 +15,7 @@ interface AccordionProps {
     value?: boolean;
     // 开关状态值（非受控）
     defaultValue?: boolean;
+    tip?: string;
 }
 
 /**
@@ -31,17 +33,17 @@ class Accordion extends Component<AccordionProps> {
 
     state: any = {
         value: false,
-        title: '',
+        label: '',
         showSwitch: false,
     }
 
     constructor(props: AccordionProps) {
         super(props);
-        let {value, title, showSwitch, defaultValue} = this.props;
+        let {value, label, showSwitch, defaultValue} = this.props;
         if (defaultValue !== undefined && value === undefined)
             this.valueControl = false;
         value = !!(value || defaultValue);
-        this.state = {value, title, showSwitch};
+        this.state = {value, label, showSwitch};
     }
 
     componentDidMount() {
@@ -113,11 +115,13 @@ class Accordion extends Component<AccordionProps> {
     }
 
     render() {
-        const {title, showSwitch} = this.state;
+        const {label, showSwitch} = this.state;
+        const {tip} = this.props;
         return (
             <div className={'lc-accordion'}>
                 <div className="accordion-header" ref={dom => this.accDom = dom}>
-                    <div className={'title-content'}>{title}</div>
+                    <div className={'title-content'}>{label} &nbsp;
+                        {tip && <Tooltip title={tip}><QuestionCircleOutlined/>&nbsp;&nbsp;</Tooltip>}</div>
                     <div className={'title-switch'}>{showSwitch ?
                         <Switch
                             value={this.valueControl ? this.props.value : this.state.value}

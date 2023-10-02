@@ -1,13 +1,21 @@
-.lc-switch {
+.lc-switch-container {
+  display: flex;
+  color: #b6b8bb;
+  align-items: center;
   position: relative;
 
-
   .lc-switch-label {
+    min-width: 50px;
+    margin-right: 5px;
+    text-align-last: justify;
+  }
+
+  .lc-switch-body {
     position: relative;
     display: inline-block;
   }
 
-  .lc-switch-label > input {
+  .lc-switch-body > input {
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
@@ -28,7 +36,7 @@
     transition: opacity 0.3s 0.1s, transform 0.2s 0.1s;
   }
 
-  .lc-switch-label > span::before {
+  .lc-switch-body > span::before {
     content: "";
     float: right;
     display: inline-block;
@@ -40,7 +48,7 @@
     transition: background-color 0.2s, opacity 0.2s;
   }
 
-  .lc-switch-label > span::after {
+  .lc-switch-body > span::after {
     content: "";
     position: absolute;
     right: 21px;
@@ -52,47 +60,47 @@
     transition: background-color 0.2s, transform 0.2s;
   }
 
-  .lc-switch-label > input:checked {
+  .lc-switch-body > input:checked {
     right: -8px;
     background-color: rgba(40, 201, 255, 0.84);
   }
 
-  .lc-switch-label > input:checked + span::before {
+  .lc-switch-body > input:checked + span::before {
     background-color: #0097bc;
   }
 
-  .lc-switch-label > input:checked + span::after {
+  .lc-switch-body > input:checked + span::after {
     background-color: #F4F4F4D6;
     transform: translateX(21px);
   }
 
-  .lc-switch-label > input:active {
+  .lc-switch-body > input:active {
     opacity: 1;
     transform: scale(0);
     transition: transform 0s, opacity 0s;
   }
 
-  .lc-switch-label > input:active + span::before {
+  .lc-switch-body > input:active + span::before {
     background-color: #8f8f8f;
   }
 
-  .lc-switch-label > input:checked:active + span::before {
+  .lc-switch-body > input:checked:active + span::before {
     background-color: #85b8b7;
   }
 
-  .lc-switch-label > input:disabled {
+  .lc-switch-body > input:disabled {
     opacity: 0;
   }
 
-  .lc-switch-label > input:disabled + span::before {
+  .lc-switch-body > input:disabled + span::before {
     background-color: #ddd;
   }
 
-  .lc-switch-label > input:checked:disabled + span::before {
+  .lc-switch-body > input:checked:disabled + span::before {
     background-color: #bfdbda;
   }
 
-  .lc-switch-label > input:checked:disabled + span::after {
+  .lc-switch-body > input:checked:disabled + span::after {
     background-color: #61b5b4;
   }
 }

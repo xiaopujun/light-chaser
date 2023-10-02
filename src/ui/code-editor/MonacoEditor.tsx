@@ -1,7 +1,6 @@
-import React, {useEffect} from "react";
+import React from "react";
 import Loading from "../loading/Loading";
-import Editor, {useMonaco} from "@monaco-editor/react";
-import js_beautify from "js-beautify";
+import Editor from "@monaco-editor/react";
 
 export interface MonacoEditorProps {
     value?: string;
@@ -16,16 +15,6 @@ export interface MonacoEditorProps {
 
 export const MonacoEditor: React.FC<MonacoEditorProps> = (props) => {
     const {value, defaultValue, onChange, language, width, height, readonly = false, style} = props;
-    console.log('MonacoEditor', value, defaultValue, onChange, language, width, height, readonly, style)
-    const monaco = useMonaco();
-    // useEffect(() => {
-    //     if (monaco) {
-    //         monaco.editor.addCommand({
-    //             id: "editor.action.formatDocument",
-    //             run: js_beautify,
-    //         })
-    //     }
-    // }, [monaco])
 
     return (
         <div style={{width, height, border: '1px solid #414141', ...style}} className={'monaco-editor-container'}>
