@@ -1,5 +1,5 @@
 import React, {MutableRefObject, useEffect, useRef, useState} from "react";
-import "./Select.less";
+// import "./Select.less";
 import {Option} from "./SelectType";
 
 interface SelectProps {

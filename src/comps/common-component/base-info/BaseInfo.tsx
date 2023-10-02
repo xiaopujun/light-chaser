@@ -32,31 +32,31 @@ class BaseInfo extends Component<ConfigType> {
                 {
                     type: 'grid',
                     config: {
-                        columns: 2
+                        gridGap: '15px'
                     },
                     children: [
                         {
                             id: "name",
                             key: "name",
                             label: "名称",
-                            type: "string",
+                            type: "input",
                             value: name
+                        },
+                        {
+                            key: "desc",
+                            label: "描述",
+                            type: "input",
+                            value: desc
                         },
                         {
                             key: "type",
                             label: "类型",
-                            type: "string",
+                            type: "input",
                             value: type,
                             config: {
                                 disabled: true
                             }
                         },
-                        {
-                            key: "desc",
-                            label: "描述",
-                            type: "string",
-                            value: desc
-                        }
                     ]
                 }
             ]

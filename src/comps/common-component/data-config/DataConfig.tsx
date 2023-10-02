@@ -49,9 +49,12 @@ class DataConfig extends Component<DataConfigProps> {
             dataSource: dataConfig?.dataSource || 'static',
             renderCount: 0
         }
-        console.log(dataConfig?.staticData?.data)
         this.schema = {
             key: 'data',
+            type: 'grid',
+            config: {
+                gridGap: '10px'
+            },
             children: [
                 {
                     key: 'dataSource',
@@ -68,7 +71,6 @@ class DataConfig extends Component<DataConfigProps> {
                 },
                 {
                     key: 'staticData',
-                    type: 'grid',
                     rules: "{dataSource} === 'static'",
                     children: [
                         {
@@ -76,9 +78,6 @@ class DataConfig extends Component<DataConfigProps> {
                             type: 'code-editor',
                             config: {
                                 height: 500,
-                                style: {
-                                    marginTop: 10
-                                }
                             },
                             value: JSON.stringify(dataConfig?.staticData?.data, null, 2) || '',
                         },
@@ -96,12 +95,11 @@ class DataConfig extends Component<DataConfigProps> {
                 },
                 {
                     key: 'apiData',
-                    type: 'grid',
                     rules: "{dataSource} === 'api'",
                     children: [
                         {
                             key: 'url',
-                            type: 'string',
+                            type: 'input',
                             label: '接口地址',
                             value: dataConfig?.apiData?.url || '',
                         },
@@ -120,15 +118,20 @@ class DataConfig extends Component<DataConfigProps> {
                         {
                             key: 'flashFrequency',
                             label: '刷新频率',
-                            type: 'number',
+                            type: 'input',
+                            config: {
+                                prefix: '每',
+                                type: 'number',
+                                suffix: '秒',
+                                min: 5
+                            },
                             value: dataConfig?.apiData?.flashFrequency || 5,
                         },
                         {
 
                             type: 'item-panel',
-                            config: {
-                                label: '请求头',
-                            },
+                            label: '请求头',
+                            tip: '请求头信息，json格式',
                             children: [
                                 {
                                     key: 'header',
@@ -143,7 +146,8 @@ class DataConfig extends Component<DataConfigProps> {
                         {
 
                             type: 'item-panel',
-                            config: {label: '请求参数'},
+                            tip: '请求参数，json格式',
+                            label: '请求参数',
                             children: [
                                 {
                                     key: 'params',
@@ -157,9 +161,7 @@ class DataConfig extends Component<DataConfigProps> {
                         },
                         {
                             type: 'item-panel',
-                            config: {
-                                label: '响应结果',
-                            },
+                            label: '响应结果',
                             children: [
                                 {
                                     type: 'code-editor',
@@ -177,6 +179,7 @@ class DataConfig extends Component<DataConfigProps> {
                             },
                             children: [
                                 {
+                                    id: 'testApiBtn',
                                     type: 'button',
                                     config: {
                                         children: '测试接口',
@@ -186,6 +189,7 @@ class DataConfig extends Component<DataConfigProps> {
                                     }
                                 },
                                 {
+                                    id: 'saveApiBtn',
                                     type: 'button',
                                     config: {
                                         children: '保存',
@@ -213,8 +217,7 @@ class DataConfig extends Component<DataConfigProps> {
     onFieldChange = (fieldChangeData: FieldChangeData) => {
         const {schemaKeyPath, data, reRender, id} = fieldChangeData;
         if (id === 'staticConfirmBtn') {
-            console.log(this.schema!.children![0].children![1]!.value)
-            const dataStr = (this.schema!.children![0].children![1]!.children![0]!.value! as string).replace(/'/g, '"').replace(/\s/g, '');
+            const dataStr = (this.schema!.children![1].children![0]!.value! as string).replace(/'/g, '"').replace(/\s/g, '');
             const data = JSON.parse(dataStr);
             const {controller} = this.props;
             controller.update({data: {staticData: {data}}},

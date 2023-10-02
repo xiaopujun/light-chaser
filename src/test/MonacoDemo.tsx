@@ -57,7 +57,7 @@ class MonacoDemo extends Component {
                                             {
                                                 key: "lineWidth",
                                                 label: "线宽",
-                                                type: "number",
+                                                type: "input",
                                                 config: {
                                                     value: 1
                                                 }
@@ -98,7 +98,7 @@ class MonacoDemo extends Component {
                                     {
                                         key: "fontSize",
                                         label: "字号",
-                                        type: "number",
+                                        type: "input",
                                         config: {
                                             value: 10
                                         }
@@ -142,9 +142,8 @@ class MonacoDemo extends Component {
                             {
                                 key: "title",
                                 label: "标题",
-                                type: "string",
+                                type: "input",
                                 rules: "{open} === 'true'",
-                                direction: "horizontal",
                                 value: "牛hi",
                             },
                         ]
@@ -176,8 +175,7 @@ class MonacoDemo extends Component {
                             {
                                 key: "title",
                                 label: "标题",
-                                type: "string",
-                                direction: "horizontal",
+                                type: "input",
                                 value: false,
                             },
                         ]

@@ -6,8 +6,7 @@ export type UIType =
     "accordion" |
     "button" |
     "grid" |
-    "string" |
-    "number" |
+    "input" |
     "radio" |
     "select" |
     "switch" |
@@ -23,7 +22,6 @@ export interface Control {
     type?: UIType;//有type则需要渲染控件，无type则直接忽略本层级的渲染
     tip?: string;
     value?: ControlValueType;
-    direction?: "vertical" | "horizontal";//有direction则需要渲染布局，无direction则直接渲染控件.有label无direction默认按照horizontal渲染
     config?: Record<string, any>;
     rules?: string;
     reRender?: boolean; //标识该控件的值发生变更后是否需要触发整个schema的重新渲染

@@ -1,7 +1,5 @@
 import {Control, ControlValueType} from "./SchemaTypes";
 import React, {ReactNode} from "react";
-import {HorizontalItem} from "../ui/horizontal-item/HorizontalItem";
-import {VerticalItem} from "../ui/vertical-item/VerticalItem";
 import LCGUIUtil from "./LCGUIUtil";
 import UIMap from "../ui";
 
@@ -114,22 +112,21 @@ export class LCGUI extends React.Component<LCGUIProps> {
                 //本层没有控件，直接返回子节点
                 nodes.push([...tempNodes]);
             } else {
-                const {type, config, value, id, reRender} = control;
+                const {type, config, value, id, reRender, label, tip} = control;
                 let Component = UIMap.get(type);
                 schemaKeyPath.pop();
                 schemaKeyPath.push({key: "value"});
                 //非叶子节点不解析label
                 const controlVal = reRender ? {value} : {defaultValue: value};
                 const _props = {
-                    ...config,
-                    ...controlVal,
+                    ...config, ...controlVal, label, tip,
                     onChange: (data: any) => this.onControlChange(data, schemaKeyPath, dataKeyPath, reRender, id)
                 };
                 nodes.push(<Component key={childIndex} {..._props}>{tempNodes}</Component>);
             }
         } else {
             //解析叶子节点
-            const {label, type, direction, config, value, rules, id, reRender} = control;
+            const {label, type, tip, config, value, rules, id, reRender} = control;
             if (!type) return [];
             if (rules && !this.analyzeRules(rules, control))
                 return nodes;
@@ -139,25 +136,12 @@ export class LCGUI extends React.Component<LCGUIProps> {
             dataKeyPath.push(control.key!);
             const controlVal = reRender ? {value} : {defaultValue: value};
             const _props = {
-                ...config,
-                ...controlVal,
+                ...config, ...controlVal, label, tip,
                 onChange: (data: any) => this.onControlChange(data, schemaKeyPath, dataKeyPath, reRender, id)
             };
             let Component = UIMap.get(type);
             if (!Component) return [];
-            let schemaReactNode;
-            if (!label) {
-                schemaReactNode = <Component key={childIndex} {..._props} />
-            } else if (!direction || direction === 'horizontal') {
-                schemaReactNode = <HorizontalItem key={childIndex} label={label}>
-                    <Component {..._props} />
-                </HorizontalItem>
-            } else {
-                schemaReactNode = <VerticalItem key={childIndex} label={label}>
-                    <Component {..._props} />
-                </VerticalItem>
-            }
-            nodes.push(schemaReactNode);
+            nodes.push(<Component key={childIndex} {..._props} />);
         }
         return nodes;
     }
