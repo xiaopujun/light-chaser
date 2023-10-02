@@ -1,4 +1,4 @@
-import React, {Component, FormEvent} from 'react';
+import React, {Component} from 'react';
 import './Button.less';
 
 export interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onChange"> {

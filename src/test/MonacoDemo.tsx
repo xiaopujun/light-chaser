@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Control, ControlValueType} from "../json-schema/SchemaTypes";
-import {FieldChangeData, LCGUI, SchemaPathNode} from "../json-schema/LCGUI";
+import {Control} from "../json-schema/SchemaTypes";
+import {FieldChangeData, LCGUI} from "../json-schema/LCGUI";
 import LCGUIUtil from "../json-schema/LCGUIUtil";
-import StringInput from "../ui/string-input/StringInput";
+import Input from "../ui/input/Input";
 
 class MonacoDemo extends Component {
 
@@ -194,7 +194,7 @@ class MonacoDemo extends Component {
         return (
             <div style={{width: 400, height: 800, background: "#333333", padding: 10}}>
                 <LCGUI schema={this.testSchema} onFieldChange={this.onChange}/>
-                <StringInput/>
+                <Input label={'的第三方'} tip={'牛逼克拉斯'}/>
             </div>
         );
     }

@@ -4,8 +4,8 @@ import {ConfigType} from "../../../designer/right/ConfigType";
 import designerStore from "../../../designer/store/DesignerStore";
 import layerListStore from "../../../designer/float-configs/layer-list/LayerListStore";
 import {ComponentBaseProps} from "../common-types";
-import {Control, ControlValueType} from "../../../json-schema/SchemaTypes";
-import {FieldChangeData, LCGUI, SchemaPathNode} from "../../../json-schema/LCGUI";
+import {Control} from "../../../json-schema/SchemaTypes";
+import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import LCGUIUtil from "../../../json-schema/LCGUIUtil";
 
 /**

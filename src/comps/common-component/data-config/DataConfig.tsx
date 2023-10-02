@@ -12,8 +12,8 @@ import ConfigItemTB from "../../../lib/lc-config-item/ConfigItemTB";
 import {message} from "antd";
 import ObjectUtil from "../../../utils/ObjectUtil";
 import {MonacoEditor} from "../../../lib/lc-code-editer/MonacoEditor";
-import {Control, ControlValueType} from "../../../json-schema/SchemaTypes";
-import {FieldChangeData, LCGUI, SchemaPathNode} from "../../../json-schema/LCGUI";
+import {Control} from "../../../json-schema/SchemaTypes";
+import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import LCGUIUtil from "../../../json-schema/LCGUIUtil";
 
 type DataTypeItem = 'static' | 'api' | 'database' | 'excel';
@@ -49,7 +49,7 @@ class DataConfig extends Component<DataConfigProps> {
             dataSource: dataConfig?.dataSource || 'static',
             renderCount: 0
         }
-
+        console.log(dataConfig?.staticData?.data)
         this.schema = {
             key: 'data',
             children: [
@@ -57,6 +57,7 @@ class DataConfig extends Component<DataConfigProps> {
                     key: 'dataSource',
                     label: '数据源',
                     type: 'select',
+                    reRender: true,
                     value: dataConfig?.dataSource || 'static',
                     config: {
                         options: [
@@ -79,7 +80,7 @@ class DataConfig extends Component<DataConfigProps> {
                                     marginTop: 10
                                 }
                             },
-                            value: JSON.stringify(dataConfig?.staticData?.data) || '',
+                            value: JSON.stringify(dataConfig?.staticData?.data, null, 2) || '',
                         },
                         {
                             id: 'staticConfirmBtn',
@@ -142,9 +143,7 @@ class DataConfig extends Component<DataConfigProps> {
                         {
 
                             type: 'item-panel',
-                            config: {
-                                label: '请求参数',
-                            },
+                            config: {label: '请求参数'},
                             children: [
                                 {
                                     key: 'params',
