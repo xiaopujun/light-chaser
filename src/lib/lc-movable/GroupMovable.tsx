@@ -326,24 +326,21 @@ export const DimensionViewable = {
 
         //todo 思考如何保证缩放比例？
         return <div key={"dimension-viewer"} className={"moveable-dimension"} style={{
-            left: `0`,
+            left: `-150px`,
             top: `-50px`,
             width: `180px`,
-            height: `25px`,
-            color: "#eff5fa",
-            fontSize: "16px",
+            color: "rgb(202,202,202)",
+            fontSize: "14px",
             textAlign: "center",
-            background: "rgba(0,95,176,0.69)",
             position: 'absolute',
-            fontWeight: '500',
             boxSizing: 'content-box',
             borderRadius: '5px',
             padding: '5px',
             pointerEvents: 'none',
         }}>
-            {Math.round(rect.offsetWidth)} x {Math.round(rect.offsetHeight)}
-            &nbsp;&nbsp;|&nbsp;&nbsp;
-            {Math.round(rect.left)} x {Math.round(rect.top)}
+            pos: {Math.round(rect.left)} x {Math.round(rect.top)}
+            <br/>
+            size: {Math.round(rect.offsetWidth)} x {Math.round(rect.offsetHeight)}
         </div>
     }
 } as const;
