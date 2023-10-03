@@ -79,7 +79,6 @@ export class LCGUI extends React.Component<LCGUIProps> {
                     return analyze(parent!, variable, rules);
                 }
             }
-            console.log(rules);
             return rules;
         }
         // eslint-disable-next-line
