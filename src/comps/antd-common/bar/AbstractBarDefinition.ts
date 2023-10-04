@@ -7,6 +7,7 @@ import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {ClazzTemplate} from "../../common-component/common-types";
 import AntdCommonBar, {AntdBarProps} from "../../antd-common/bar/AntdCommonBar";
+import {AntdBarFieldMapping} from "./AntdBarCommonConfig";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const AntdBarCommonStyleConfig = React.lazy(() => import("./AntdBarCommonConfig").then((module) => ({default: module.AntdBarCommonStyleConfig})));
@@ -33,7 +34,7 @@ abstract class AbstractBarDefinition extends AbstractCustomComponentDefinition<A
             style: AntdBarCommonStyleConfig,
             animation: AnimationConfig,
             theme: ThemeConfig,
-            mapping: AntdFieldMapping,
+            mapping: AntdBarFieldMapping,
         };
     }
 }

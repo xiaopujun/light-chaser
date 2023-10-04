@@ -11,6 +11,7 @@ import Radio from "../ui/radio/Radio";
 import {Grid} from "../ui/grid/Grid";
 import Accordion from "../ui/accordion/Accordion";
 import {Slider} from "../ui/slider/Slider";
+import ColorPicker from "../ui/color-picker/ColorPicker";
 
 class MonacoDemo extends Component {
 
@@ -237,6 +238,7 @@ class MonacoDemo extends Component {
                         <div>item1</div>
                     </Accordion>
                     <Slider label={'滑动条'} tip={'滑动条试实'}/>
+                    <ColorPicker defaultValue={'#fff'}/>
                 </div>
             </div>
         );

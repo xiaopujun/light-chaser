@@ -11,8 +11,8 @@ import Accordion from "../../../lib/lc-accordion/Accordion";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import {Option} from "../../../lib/lc-select/SelectType";
-import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
-import Select from "../../../lib/lc-select/Select";
+import {Control} from "../../../json-schema/SchemaTypes";
+import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 
 class AntdBarCommonStyleConfig extends Component<ConfigType> {
 
@@ -113,22 +113,57 @@ export const AntdBarFieldMapping: React.FC<ConfigType<AntdCommonBar>> = ({contro
         Object.keys(dataObj).forEach(key => options.push({label: key, value: key}))
     }
 
-    const fieldChange = (config: WritableBarOptions) => {
-        controller.update({style: config});
+    const fieldChange = (fieldChangeData: FieldChangeData) => {
+        controller.update(fieldChangeData.dataFragment);
+    }
+
+    const schema: Control = {
+        key: 'style',
+        type: 'item-panel',
+        label: '字段映射',
+        config: {
+            labelStyle: {
+                fontSize: 14,
+                fontWeight: 'bold',
+            }
+        },
+        children: [
+            {
+                type: 'grid',
+                children: [
+                    {
+                        key: 'xField',
+                        type: 'select',
+                        label: 'X字段',
+                        value: xField,
+                        config: {
+                            options,
+                        }
+                    },
+                    {
+                        key: 'yField',
+                        type: 'select',
+                        label: 'Y字段',
+                        value: yField,
+                        config: {
+                            options,
+                        }
+                    },
+                    {
+                        key: 'seriesField',
+                        type: 'select',
+                        label: '分类字段',
+                        value: seriesField,
+                        config: {
+                            options,
+                        }
+                    }
+                ]
+            }
+        ]
     }
 
     return (
-        <ConfigCard title={'字段映射'}>
-            <ConfigItem title={'X字段'}>
-                <Select options={options} defaultValue={xField} onChange={(value => fieldChange({xField: value}))}/>
-            </ConfigItem>
-            <ConfigItem title={'Y字段'}>
-                <Select options={options} defaultValue={yField} onChange={(value => fieldChange({yField: value}))}/>
-            </ConfigItem>
-            <ConfigItem title={'分类字段'}>
-                <Select options={options} defaultValue={seriesField}
-                        onChange={(value => fieldChange({seriesField: value}))}/>
-            </ConfigItem>
-        </ConfigCard>
+        <LCGUI schema={schema} onFieldChange={fieldChange}/>
     )
 }
