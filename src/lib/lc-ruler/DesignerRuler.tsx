@@ -30,6 +30,7 @@ interface DesignerRulerProps {
  * 则鼠标指针在当前缩放系数下的位置为：rulerP = startP + (mouOffset / scale)
  * 鼠标移动后的标尺起始位置为：scrollPos = startP + (mouOffset / scale)
  */
+// todo 通过画布的scale和translate反推标尺的起始位置
 class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
 
     wheelTimerId: any = null;

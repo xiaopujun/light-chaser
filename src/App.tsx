@@ -3,7 +3,8 @@ import 'antd/dist/reset.css';
 import './App.less';
 import {Route, Switch} from "react-router-dom";
 import Loading from "./lib/loading/Loading";
-import MonacoDemo from "./test/MonacoDemo";
+import {Node} from "./blueprint/node/Node";
+import DemoMain from "./test/DemoMain";
 
 const LightChaserList = lazy(() => import('./list/LightChaserList'));
 const Designer = lazy(() => import('./designer/Designer'));
@@ -17,7 +18,7 @@ class App extends Component {
                     <Switch>
                         <Route path={'/designer'} component={Designer}/>
                         <Route path={'/view'} component={DesignerView}/>
-                        <Route path={'/test'} component={MonacoDemo}/>
+                        <Route path={'/test'} component={DemoMain}/>
                         <Route path={'/'} component={LightChaserList}/>
                     </Switch>
                 </Suspense>

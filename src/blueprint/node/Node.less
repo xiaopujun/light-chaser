@@ -1,0 +1,63 @@
+body {
+  background-color: black;
+  padding: 350px 500px !important;
+}
+
+.bp-node {
+  width: 160px;
+  min-height: 60px;
+  background-color: #333333;
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding: 5px;
+  color: #fff;
+
+  .bp-node-header {
+    padding: 8px 7px;
+    background-color: rgba(255, 193, 0, 0.56);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+  }
+
+  .bp-node-body {
+    color: #adadad;
+
+    .bg-node-ap {
+      display: flex;
+      padding: 8px 0;
+      margin: 5px 0;
+      box-sizing: border-box;
+      border-radius: 5px;
+
+      .bg-node-ap-circle {
+        span {
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          border: 2px solid #b4b4b4;
+          position: relative;
+        }
+
+        .ap-circle-input {
+          flex-direction: row;
+          left: -10px;
+        }
+
+        .ap-circle-output {
+          flex-direction: row-reverse;
+          right: -10px;
+        }
+      }
+    }
+
+    .node-ap-input {
+      flex-direction: row;
+    }
+
+    .node-ap-output {
+      flex-direction: row-reverse;
+    }
+  }
+}
