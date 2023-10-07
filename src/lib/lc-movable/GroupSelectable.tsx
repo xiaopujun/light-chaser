@@ -38,10 +38,11 @@ class GroupSelectable extends Component {
         const {movableRef, setTargets, /*setTargetIds*/} = eventOperateStore;
         if (!movableRef) return;
         const movable: Moveable = movableRef!.current!;
-        //这段代码干啥的？
+        //如果为拖拽，则将当前的整个dom事件传递给movable，确保选中元素后可以立马拖拽
         if (e.isDragStart) {
             e.inputEvent.preventDefault();
             setTimeout(() => {
+                //使用异步操作，确保在拖拽前已经给movable传递target
                 movable.dragStart(e.inputEvent);
             });
         }

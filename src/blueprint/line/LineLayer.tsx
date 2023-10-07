@@ -1,24 +1,22 @@
 import React from 'react';
-import {CanvasLineType} from "./types";
-import './BlueprintCanvas.less';
-import CanvasUtil from "./CanvasUtil";
+import {CanvasLineType} from "../types";
+import './LineLayer.less';
+import CanvasUtil from "../util/CanvasUtil";
+import bpStore from "../store/BPStore";
 
 export type Point = [number, number];
 
-class BlueprintCanvas extends React.Component {
+class LineLayer extends React.Component {
 
     //上层
     upLayer: HTMLCanvasElement | null = null;
-    //上层画笔
-    upCtx: CanvasRenderingContext2D | null = null;
     //下层
     downLayer: HTMLCanvasElement | null = null;
-    //下层画笔
-    downCtx: CanvasRenderingContext2D | null = null;
+
 
     currentLine: CanvasLineType = {
         color: "#fff",
-        lineWidth: 1,
+        lineWidth: 2,
         lineDash: [10, 10],
         startPoint: [0, 0],
         endPoint: [0, 0],
@@ -32,33 +30,41 @@ class BlueprintCanvas extends React.Component {
     keyMove: boolean = false;
     //画布引用
     canvasRef: HTMLCanvasElement | null = null;
-    //连线数组
-    lineArr: CanvasLineType[] = [];
-
 
     componentDidMount() {
-        this.upCtx = this.upLayer!.getContext('2d');
-        this.downCtx = this.downLayer!.getContext('2d');
-
+        const {setUpCtx, setDownCtx} = bpStore;
+        setUpCtx(this.upLayer!.getContext('2d')!);
+        setDownCtx(this.downLayer!.getContext('2d')!);
         document.addEventListener('mousedown', (e) => {
+            const {target} = e;
+            if (!target || !(target as HTMLElement).classList.contains('ap-circle')) return;
             //设置起始点坐标
             this.currentLine.startPoint = [e.clientX, e.clientY]
+            this.currentLine.startDom = target as HTMLElement;
             this.keyDown = true;
         });
 
-        document.addEventListener('mouseup', () => {
-            if (!this.keyMove) return;
+        document.addEventListener('mouseup', (e) => {
+            if (!this.keyMove || !e.target || !(e.target as HTMLElement).classList.contains('ap-circle')) {
+                //清空画布
+                bpStore.upCtx?.clearRect(0, 0, 1920, 1080);
+                this.keyDown = false;
+                return;
+            }
             this.keyMove = false;
             this.keyDown = false;
-            const {startPoint, endPoint, firstCP, secondCP} = this.currentLine;
-            this.upCtx!.clearRect(0, 0, 1920, 1080)
+            bpStore.upCtx!.clearRect(0, 0, 1920, 1080)
             //在下层绘制当前操作的线条
             this.currentLine.lineDash = [];
-            this.currentLine.color = "#00b2ff";
-            CanvasUtil.drawBezierCurves(this.downCtx!, this.currentLine)
+            this.currentLine.lineWidth = 2;
+            this.currentLine.color = "#a7a7a7";
+            this.currentLine.endDom = e.target as HTMLElement
+            CanvasUtil.drawBezierCurves(bpStore.downCtx!, this.currentLine)
             //计算线条的采样点，用于计算线条是否被选中
+            const {startPoint, endPoint, firstCP, secondCP, startDom, endDom} = this.currentLine;
             const samplePointArr = CanvasUtil.sampleBezierCurve(startPoint, firstCP, secondCP, endPoint, 20);
-            this.lineArr.push({
+            const {connectedLines} = bpStore;
+            connectedLines.push({
                 color: "#fff",
                 lineWidth: 1,
                 lineDash: [],
@@ -67,11 +73,8 @@ class BlueprintCanvas extends React.Component {
                 firstCP: [...firstCP],
                 secondCP: [...secondCP],
                 samplePoints: samplePointArr,
-            })
-
-            //绘制采样点
-            samplePointArr.forEach((point) => {
-                CanvasUtil.drawPoint(this.downCtx!, point, 8, 'red')
+                startDom: startDom,
+                endDom: endDom
             })
         });
 
@@ -83,8 +86,7 @@ class BlueprintCanvas extends React.Component {
             this.currentLine.endPoint[0] = e.clientX;
             this.currentLine.endPoint[1] = e.clientY;
 
-            const direction = CanvasUtil.calculateBezierCurveDirection(startPoint, endPoint)
-            const contPoi = CanvasUtil.calculateControlPoint(direction, startPoint, endPoint)
+            const contPoi = CanvasUtil.calculateControlPoint(startPoint, endPoint)
             this.currentLine.firstCP = contPoi.firstCP
             this.currentLine.secondCP = contPoi.secondCP
             this.draw();
@@ -94,14 +96,14 @@ class BlueprintCanvas extends React.Component {
 
     //开始绘画
     draw = () => {
-        if (!this.upCtx) return;
+        if (!bpStore.upCtx) return;
         //清空画布
-        this.upCtx.clearRect(0, 0, 1920, 1080)
+        bpStore.upCtx.clearRect(0, 0, 1920, 1080)
 
 
         const {startPoint, endPoint, firstCP, secondCP} = this.currentLine;
-        CanvasUtil.drawBezierCurves(this.upCtx!, {
-            color: "#fff",
+        CanvasUtil.drawBezierCurves(bpStore.upCtx!, {
+            color: "#c0c0c0",
             lineWidth: 1,
             lineDash: [10, 10],
             startPoint: startPoint,
@@ -113,10 +115,10 @@ class BlueprintCanvas extends React.Component {
 
     render() {
         return (
-            <div style={{position: "relative"}}>
-                <canvas style={{position: 'absolute', top: 0, left: 0}} width={1920} height={1080}
+            <div style={{position: "absolute", width: '100%', height: '100%'}}>
+                <canvas style={{position: "inherit", top: 0, left: 0}} width={1920} height={1080}
                         ref={ref => this.downLayer = ref}/>
-                <canvas style={{position: 'absolute', top: 0, left: 0}} width={1920} height={1080}
+                <canvas style={{position: "inherit", top: 0, left: 0}} width={1920} height={1080}
                         ref={ref => this.upLayer = ref}/>
             </div>
         )
@@ -124,4 +126,4 @@ class BlueprintCanvas extends React.Component {
 
 }
 
-export default BlueprintCanvas;
+export default LineLayer;

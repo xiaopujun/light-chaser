@@ -1,4 +1,4 @@
-import {Point} from "./BlueprintCanvas";
+import {Point} from "./line/LineLayer";
 
 export interface CanvasLineType {
     id?: string;
@@ -10,6 +10,7 @@ export interface CanvasLineType {
     firstCP: [number, number];
     secondCP: [number, number];
     //采样点列表
-    //采样点列表
     samplePoints?: Point[];
+    startDom?: HTMLElement;
+    endDom?: HTMLElement;
 }

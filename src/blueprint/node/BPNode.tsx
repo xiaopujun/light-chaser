@@ -1,7 +1,16 @@
-import React, {ReactElement, ReactNode} from "react";
-import './Node.less';
-import {AnchorPointProps, AnchorPointType} from "./AnchorPoint";
+import React from "react";
+import './BPNode.less';
 
+export enum AnchorPointType {
+    INPUT,
+    OUTPUT
+}
+
+export interface AnchorPointProps {
+    id?: string;
+    title?: string;
+    type?: AnchorPointType;
+}
 
 export interface NodeProps {
     icon?: any;
@@ -10,9 +19,9 @@ export interface NodeProps {
     output?: AnchorPointProps[];
 }
 
-export const Node: React.FC<NodeProps> = (props) => {
+export const BPNode: React.FC<NodeProps> = (props) => {
     const {icon: Icon, title, input = [], output = []} = props;
-    const cpList = [...input, ...output];
+    const cpList = [...output, ...input];
     return (
         <div className={'bp-node'}>
             <div className={'bp-node-header'}>
@@ -24,10 +33,10 @@ export const Node: React.FC<NodeProps> = (props) => {
                     cpList.map((cp, index) => {
                         const {id, title, type} = cp;
                         return (
-                            <div
-                                className={`bg-node-ap ${type === AnchorPointType.INPUT ? 'node-ap-input' : 'node-ap-output'}`}>
-                                <div className={'bg-node-ap-circle'}>
-                                    <span id={id} className={`${type === AnchorPointType.INPUT ?
+                            <div key={index}
+                                 className={`bp-node-ap ${type === AnchorPointType.INPUT ? 'node-ap-input' : 'node-ap-output'}`}>
+                                <div className={'bp-node-ap-circle'}>
+                                    <span id={id} className={`ap-circle ${type === AnchorPointType.INPUT ?
                                         'ap-circle-input' : 'ap-circle-output'}`}/>
                                 </div>
                                 <div className={'bg-node-ap-label'}>{title}</div>
@@ -36,6 +45,7 @@ export const Node: React.FC<NodeProps> = (props) => {
                     })
                 }
             </div>
+
         </div>
     )
 }

@@ -3,7 +3,6 @@ import 'antd/dist/reset.css';
 import './App.less';
 import {Route, Switch} from "react-router-dom";
 import Loading from "./lib/loading/Loading";
-import {Node} from "./blueprint/node/Node";
 import DemoMain from "./test/DemoMain";
 
 const LightChaserList = lazy(() => import('./list/LightChaserList'));

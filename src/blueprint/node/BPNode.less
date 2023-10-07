@@ -1,6 +1,6 @@
-body {
-  background-color: black;
-  padding: 350px 500px !important;
+
+.bp-node:hover {
+  border: 1px solid rgba(144, 144, 144, 0.82);
 }
 
 .bp-node {
@@ -23,14 +23,19 @@ body {
   .bp-node-body {
     color: #adadad;
 
-    .bg-node-ap {
+    .bp-node-ap:hover {
+      background-color: #4b4b4b;
+    }
+
+    .bp-node-ap {
       display: flex;
       padding: 8px 0;
       margin: 5px 0;
       box-sizing: border-box;
       border-radius: 5px;
+      transition: background-color 0.3s ease;
 
-      .bg-node-ap-circle {
+      .bp-node-ap-circle {
         span {
           display: inline-block;
           width: 10px;
@@ -38,6 +43,13 @@ body {
           border-radius: 50%;
           border: 2px solid #b4b4b4;
           position: relative;
+          background-color: #333333;
+        }
+
+        span:hover {
+          border: 4px solid #d6d6d6;
+          background-color: #7b7b7b;
+          cursor: pointer;
         }
 
         .ap-circle-input {

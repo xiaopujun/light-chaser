@@ -1,5 +1,5 @@
-import {CanvasLineType} from "./types";
-import {Point} from "./BlueprintCanvas";
+import {CanvasLineType} from "../types";
+import {Point} from "../line/LineLayer";
 
 export interface CubicBezierCurvesCP {
     firstCP: Point;
@@ -22,7 +22,8 @@ export default class CanvasUtil {
     }
 
     //计算三次贝塞尔曲线的2个控制点
-    public static calculateControlPoint(direction: number, startPos: Point, endPos: Point): CubicBezierCurvesCP {
+    public static calculateControlPoint(startPos: Point, endPos: Point): CubicBezierCurvesCP {
+        const direction = CanvasUtil.calculateBezierCurveDirection(startPos, endPos)
         const boxWidth = Math.abs(endPos[0] - startPos[0]);
         const firstCP: Point = [0, 0];
         const secondCP: Point = [0, 0];
