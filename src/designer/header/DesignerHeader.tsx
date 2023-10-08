@@ -4,6 +4,7 @@ import headerStore from "./HeaderStore";
 import {observer} from "mobx-react";
 import Loading from "../../lib/loading/Loading";
 import EditorDesignerLoader from "../loader/EditorDesignerLoader";
+import {BluePrintHdImpl} from "./items/blue-print/BluePrintHdImpl";
 
 const ProjectHdItemImpl = React.lazy(() => import('./items/project/ProjectHdItemImpl'));
 const CanvasHdConfigImpl = React.lazy(() => import('./items/canvas/CanvasHdConfigImpl'));
@@ -26,7 +27,7 @@ class Header extends Component<any> {
     }
 
     render() {
-        const {canvasVisible, projectVisible, themeVisible} = headerStore;
+        const {canvasVisible, projectVisible, themeVisible, bluePrintVisible} = headerStore;
         const items = this.buildHeaderList();
         return (
             <div className={'designer-header'}>
@@ -40,6 +41,7 @@ class Header extends Component<any> {
                 {canvasVisible && <Suspense fallback={<Loading/>}><CanvasHdConfigImpl/></Suspense>}
                 {projectVisible && <Suspense fallback={<Loading/>}><ProjectHdItemImpl/></Suspense>}
                 {themeVisible && <Suspense fallback={<Loading/>}><ThemeHdItemImpl/></Suspense>}
+                {bluePrintVisible && <Suspense fallback={<Loading/>}><BluePrintHdImpl/></Suspense>}
             </div>
         );
     }

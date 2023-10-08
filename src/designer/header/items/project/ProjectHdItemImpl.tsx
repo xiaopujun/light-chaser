@@ -66,7 +66,6 @@ class ProjectHdItemImpl extends Component {
                             <div style={{color: '#c6c9cd'}}>{saveType === '0' ? '本地(local)' : '服务端(server)'}</div>
                         </ConfigItem>
                     </div>
-                    <p style={{padding: '5px 7px', color: '#989898'}}>说明：数据实时刷新开启后，草稿状态下组件数据也会根据配置实时更新</p>
                     <div className={'lc-header-project-footer'}>
                         <LcButton type={'submit'}>保存</LcButton>
                         <LcButton type={'button'} onClick={this.onClose}>取消</LcButton>

@@ -9,9 +9,11 @@ class HeaderStore {
             canvasVisible: observable,
             projectVisible: observable,
             themeVisible: observable,
+            bluePrintVisible: observable,
             setCanvasVisible: action,
             setProjectVisible: action,
             setThemeVisible: action,
+            setBluePrintVisible: action,
         })
     }
 
@@ -27,6 +29,12 @@ class HeaderStore {
      * 主题设置是否可见
      */
     themeVisible: boolean = false;
+    /**
+     * 设置蓝图是否可见
+     */
+    bluePrintVisible: boolean = false;
+
+    setBluePrintVisible = (visible: boolean) => this.bluePrintVisible = visible;
 
     setCanvasVisible = (visible: boolean) => this.canvasVisible = visible;
 

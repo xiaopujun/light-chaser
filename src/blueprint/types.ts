@@ -1,16 +1,16 @@
-import {Point} from "./line/LineLayer";
-
 export interface CanvasLineType {
     id?: string;
     color: string;
     lineWidth: number;
     lineDash: number[];
-    startPoint: [number, number];
-    endPoint: [number, number];
-    firstCP: [number, number];
-    secondCP: [number, number];
+    startPoint: PointType;
+    endPoint: PointType;
+    firstCP: PointType;
+    secondCP: PointType;
     //采样点列表
-    samplePoints?: Point[];
+    samplePoints?: PointType[];
     startDom?: HTMLElement;
     endDom?: HTMLElement;
 }
+
+export type PointType = { x: number; y: number; }

@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import {ColorPicker as AntdColorPicker, Tooltip} from 'antd';
 import './ColorPicker.less';
 import {ColorResult} from 'react-color';
-import {QuestionCircleOutlined} from "@ant-design/icons";
 
 interface ColorPickerProps {
     //颜色色值（受控）
@@ -33,7 +31,7 @@ class ColorPicker extends Component<ColorPickerProps> {
     }
 
     onChangeComplete = (color: ColorResult) => {
-        const {onChange} = this.props;
+        // const {onChange} = this.props;
         // onChange && onChange(type === 'hex' ? hex : rgbColor);
         if (!this.controlled) {
             this.setState({
@@ -43,16 +41,16 @@ class ColorPicker extends Component<ColorPickerProps> {
     };
 
     render() {
-        const {label, tip, showText = false, defaultValue = '#000000', value = '#000000', disabled} = this.props;
+        // const {label, tip, showText = false, defaultValue = '#000000', value = '#000000', disabled} = this.props;
         return (
             <div className={'lc-color-picker-container'}>
-                {label && <div className={'lc-color-picker-label'}>{label}</div>}
-                {tip && <div className={'lc-color-picker-tip'}>
-                    <Tooltip title={tip}><QuestionCircleOutlined/>&nbsp;&nbsp;</Tooltip>
-                </div>}
-                <div className={'lc-color-picker'}>
-                    <AntdColorPicker size={'small'} defaultValue={'#fff'} showText={true} disabled={disabled}/>
-                </div>
+                {/*{label && <div className={'lc-color-picker-label'}>{label}</div>}*/}
+                {/*{tip && <div className={'lc-color-picker-tip'}>*/}
+                {/*    <Tooltip title={tip}><QuestionCircleOutlined/>&nbsp;&nbsp;</Tooltip>*/}
+                {/*</div>}*/}
+                {/*<div className={'lc-color-picker'}>*/}
+                {/*    <AntdColorPicker size={'small'} defaultValue={'#fff'} showText={true} disabled={disabled}/>*/}
+                {/*</div>*/}
             </div>
         );
     }

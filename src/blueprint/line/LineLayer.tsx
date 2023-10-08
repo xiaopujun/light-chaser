@@ -4,8 +4,6 @@ import './LineLayer.less';
 import CanvasUtil from "../util/CanvasUtil";
 import bpStore from "../store/BPStore";
 
-export type Point = [number, number];
-
 class LineLayer extends React.Component {
 
     //上层
@@ -18,10 +16,10 @@ class LineLayer extends React.Component {
         color: "#fff",
         lineWidth: 2,
         lineDash: [10, 10],
-        startPoint: [0, 0],
-        endPoint: [0, 0],
-        firstCP: [0, 0],
-        secondCP: [0, 0],
+        startPoint: {x: 0, y: 0},
+        endPoint: {x: 0, y: 0},
+        firstCP: {x: 0, y: 0},
+        secondCP: {x: 0, y: 0},
     };
 
     //鼠标是否按下
@@ -39,7 +37,7 @@ class LineLayer extends React.Component {
             const {target} = e;
             if (!target || !(target as HTMLElement).classList.contains('ap-circle')) return;
             //设置起始点坐标
-            this.currentLine.startPoint = [e.clientX - 60, e.clientY - 40]
+            this.currentLine.startPoint = {x: e.clientX - 60, y: e.clientY - 40}
             this.currentLine.startDom = target as HTMLElement;
             this.keyDown = true;
         });
@@ -68,10 +66,10 @@ class LineLayer extends React.Component {
                 color: "#fff",
                 lineWidth: 1,
                 lineDash: [],
-                startPoint: [...startPoint],
-                endPoint: [...endPoint],
-                firstCP: [...firstCP],
-                secondCP: [...secondCP],
+                startPoint: {...startPoint},
+                endPoint: {...endPoint},
+                firstCP: {...firstCP},
+                secondCP: {...secondCP},
                 samplePoints: samplePointArr,
                 startDom: startDom,
                 endDom: endDom
@@ -83,8 +81,7 @@ class LineLayer extends React.Component {
             this.keyMove = true;
             const {startPoint, endPoint} = this.currentLine;
             //设置鼠标坐标
-            this.currentLine.endPoint[0] = e.clientX - 60;
-            this.currentLine.endPoint[1] = e.clientY - 40;
+            this.currentLine.endPoint = {x: e.clientX - 60, y: e.clientY - 40}
 
             const contPoi = CanvasUtil.calculateControlPoint(startPoint, endPoint)
             this.currentLine.firstCP = contPoi.firstCP
