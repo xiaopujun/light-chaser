@@ -1,0 +1,44 @@
+@fl-header-height: 40px;
+@fl-footer-height: 35px;
+@fl-left-width: 70px;
+@fl-right-width: 350px;
+
+.frame-layout {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  color: white;
+
+  .fl-header {
+    height: @fl-header-height;
+    width: 100%;
+  }
+
+  .fl-body {
+    display: flex;
+    height: calc(100vh - @fl-header-height - @fl-footer-height);
+
+    .fl-left {
+      width: @fl-left-width;
+      height: calc(100% + @fl-footer-height);
+      background-color: #2c2c2c;
+    }
+
+    .fl-content {
+      flex: 1;
+      background-color: #141414;
+    }
+
+    .fl-right {
+      width: @fl-right-width;
+    }
+  }
+
+  .fl-footer {
+    position: relative;
+    height: @fl-footer-height;
+    width: calc(100% - @fl-left-width);
+    background-color: #1a1a1a;
+    left: @fl-left-width;
+  }
+}

@@ -39,7 +39,7 @@ class LineLayer extends React.Component {
             const {target} = e;
             if (!target || !(target as HTMLElement).classList.contains('ap-circle')) return;
             //设置起始点坐标
-            this.currentLine.startPoint = [e.clientX, e.clientY]
+            this.currentLine.startPoint = [e.clientX - 60, e.clientY - 40]
             this.currentLine.startDom = target as HTMLElement;
             this.keyDown = true;
         });
@@ -83,8 +83,8 @@ class LineLayer extends React.Component {
             this.keyMove = true;
             const {startPoint, endPoint} = this.currentLine;
             //设置鼠标坐标
-            this.currentLine.endPoint[0] = e.clientX;
-            this.currentLine.endPoint[1] = e.clientY;
+            this.currentLine.endPoint[0] = e.clientX - 60;
+            this.currentLine.endPoint[1] = e.clientY - 40;
 
             const contPoi = CanvasUtil.calculateControlPoint(startPoint, endPoint)
             this.currentLine.firstCP = contPoi.firstCP

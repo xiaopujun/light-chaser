@@ -30,8 +30,8 @@ export const BPMovable = observer((props: BPMovableProps) => {
             const {left: startX, top: startY} = startDom!.getBoundingClientRect();
             const {left: endX, top: endY} = endDom!.getBoundingClientRect();
             //+5定位到锚点中心
-            line.startPoint = [startX + 5, startY + 5];
-            line.endPoint = [endX + 5, endY + 5];
+            line.startPoint = [startX + 5 - 60, startY + 5 - 40];
+            line.endPoint = [endX + 5 - 60, endY + 5 - 40];
             //重新计算二次贝塞尔曲线的控制点
             const controlPoi = CanvasUtil.calculateControlPoint(line.startPoint, line.endPoint);
             line.firstCP = controlPoi.firstCP;
