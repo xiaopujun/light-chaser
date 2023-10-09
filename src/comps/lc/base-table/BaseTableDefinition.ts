@@ -1,7 +1,7 @@
 import {
-    AbstractCustomComponentDefinition,
+    AbstractComponentDefinition,
     MenuToConfigMappingType
-} from "../../../framework/core/AbstractCustomComponentDefinition";
+} from "../../../framework/core/AbstractComponentDefinition";
 import {BaseInfoType} from "../../../designer/DesignerType";
 import {ClazzTemplate} from "../../common-component/common-types";
 import {MenuInfo} from "../../../designer/right/MenuType";
@@ -14,7 +14,7 @@ import AnimationConfig from "../../common-component/animation-config/AnimationCo
 import ThemeConfig from "../../common-component/theme-config/ThemeConfig";
 import {BaseTableStyleConfig} from "./BaseTableConfig";
 
-export default class BaseTableDefinition extends AbstractCustomComponentDefinition<BaseTable, BaseTableComponentProps> {
+export default class BaseTableDefinition extends AbstractComponentDefinition<BaseTable, BaseTableComponentProps> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "基础表格",

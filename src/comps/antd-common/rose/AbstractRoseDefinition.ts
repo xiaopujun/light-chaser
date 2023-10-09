@@ -1,8 +1,8 @@
 import React from "react";
 import {
-    AbstractCustomComponentDefinition,
+    AbstractComponentDefinition,
     MenuToConfigMappingType
-} from "../../../framework/core/AbstractCustomComponentDefinition";
+} from "../../../framework/core/AbstractComponentDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {ClazzTemplate} from "../../common-component/common-types";
@@ -15,7 +15,7 @@ const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseI
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 const AntdFieldMapping = React.lazy(() => import("../config/field-mapping/AntdFieldMapping"));
 
-abstract class AbstractRoseDefinition extends AbstractCustomComponentDefinition<AntdCommonRose, AntdRoseProps> {
+abstract class AbstractRoseDefinition extends AbstractComponentDefinition<AntdCommonRose, AntdRoseProps> {
 
     getComponent(): ClazzTemplate<AntdCommonRose> | null {
         return AntdCommonRose;

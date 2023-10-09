@@ -1,8 +1,8 @@
 import React from "react";
 import {
-    AbstractCustomComponentDefinition,
+    AbstractComponentDefinition,
     MenuToConfigMappingType
-} from "../../../framework/core/AbstractCustomComponentDefinition";
+} from "../../../framework/core/AbstractComponentDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {ClazzTemplate} from "../../common-component/common-types";
@@ -17,7 +17,7 @@ const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseI
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
 
-abstract class AbstractBarDefinition extends AbstractCustomComponentDefinition<AntdCommonBar, AntdBarProps> {
+abstract class AbstractBarDefinition extends AbstractComponentDefinition<AntdCommonBar, AntdBarProps> {
 
     getComponent(): ClazzTemplate<AntdCommonBar> | null {
         return AntdCommonBar;

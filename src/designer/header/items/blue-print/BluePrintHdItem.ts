@@ -1,6 +1,6 @@
 import {AbstractHeaderItem, HeaderItemProps} from "../../HeaderTypes";
 import headerStore from "../../HeaderStore";
-import {BranchesOutlined, CodeSandboxSquareFilled, SettingFilled} from "@ant-design/icons";
+import {CodeSandboxSquareFilled} from "@ant-design/icons";
 
 export default class BluePrintHdItem extends AbstractHeaderItem {
     getHeaderItemInfo(): HeaderItemProps {

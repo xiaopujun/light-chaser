@@ -5,7 +5,7 @@ import {observer} from "mobx-react";
 import './ConfigContent.less';
 import Loading from "../../lib/loading/Loading";
 import designerStore from "../store/DesignerStore";
-import {AbstractCustomComponentDefinition} from "../../framework/core/AbstractCustomComponentDefinition";
+import {AbstractComponentDefinition} from "../../framework/core/AbstractCustomComponentDefinition";
 import {ConfigType} from "./ConfigType";
 import EditorDesignerLoader from "../loader/EditorDesignerLoader";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
@@ -36,7 +36,7 @@ class ConfigContent extends Component {
     buildConfigContent = () => {
         const {compInstances} = designerStore;
         let {activeMenu, activeElem} = rightStore;
-        let abstractConfigObj: AbstractCustomComponentDefinition = EditorDesignerLoader.getInstance().customComponentInfoMap[activeElem.type + '']
+        let abstractConfigObj: AbstractComponentDefinition = EditorDesignerLoader.getInstance().customComponentInfoMap[activeElem.type + '']
         if (!abstractConfigObj) return;
         let configMapping = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp: React.ComponentType<ConfigType> = configMapping![activeMenu];

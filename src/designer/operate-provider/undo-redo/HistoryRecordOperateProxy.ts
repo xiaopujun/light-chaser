@@ -10,7 +10,7 @@ import {
 } from "./HistoryType";
 import {historyOperator} from "./HistoryOperator";
 import eventOperateStore from "../EventOperateStore";
-import {AbstractCustomComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
+import {AbstractComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
 import EditorDesignerLoader from "../../loader/EditorDesignerLoader";
 import {toJS} from "mobx";
 import rightStore from "../../right/RightStore";
@@ -107,7 +107,7 @@ class HistoryRecordOperateProxy {
 
     public doAdd(container: HTMLDivElement | null, layout: MovableItemType): void {
         const {elemConfigs} = designerStore;
-        let componentDefine: AbstractCustomComponentDefinition = EditorDesignerLoader.getInstance().customComponentInfoMap[layout!.type + ''];
+        let componentDefine: AbstractComponentDefinition = EditorDesignerLoader.getInstance().customComponentInfoMap[layout!.type + ''];
         if (componentDefine) {
             const AbsCompImpl = componentDefine.getComponent();
             if (AbsCompImpl) {

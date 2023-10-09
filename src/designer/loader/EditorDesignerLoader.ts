@@ -4,7 +4,7 @@ import {parseUrlParams} from "../../utils/URLUtil";
 import {ProjectDataType, SaveType} from "../DesignerType";
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 import {AbstractHeaderItem, HeaderItemProps} from "../header/HeaderTypes";
-import {AbstractCustomComponentDefinition} from "../../framework/core/AbstractCustomComponentDefinition";
+import {AbstractComponentDefinition} from "../../framework/core/AbstractComponentDefinition";
 import {AbstractOperator} from "../../framework/operate/AbstractOperator";
 import AbstractConvert from "../../framework/convert/AbstractConvert";
 
@@ -57,8 +57,8 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
         const compCtx = require.context('../../comps', true, /\.(ts)$/);
         compCtx.keys().forEach(key => {
             const Clazz = compCtx(key).default;
-            if (Clazz && AbstractCustomComponentDefinition.isPrototypeOf(Clazz)) {
-                let customComponentInfo: AbstractCustomComponentDefinition = new Clazz();
+            if (Clazz && AbstractComponentDefinition.isPrototypeOf(Clazz)) {
+                let customComponentInfo: AbstractComponentDefinition = new Clazz();
                 if (typeof customComponentInfo.getBaseInfo === "function") {
                     let compKey = customComponentInfo.getBaseInfo().compKey;
                     if (compKey)

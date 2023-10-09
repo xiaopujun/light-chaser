@@ -15,7 +15,7 @@ export type MenuToConfigMappingType = { [key: string]: React.ComponentType<any> 
  * C: 组件控制器类，用于指定当前组件定义对应的控制器类
  * P: 组件配置类型，用于指定当前组件的配置数据(config属性的类型)
  */
-export abstract class AbstractCustomComponentDefinition<C extends AbstractController = AbstractController, P = any> {
+export abstract class AbstractComponentDefinition<C extends AbstractController = AbstractController, P = any> {
 
     /**
      * 返回组件基础信息，用于在组件列表中展示

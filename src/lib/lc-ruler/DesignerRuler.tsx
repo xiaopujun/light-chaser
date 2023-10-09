@@ -148,7 +148,7 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
                            segment={2}
                            negativeRuler={true}
                            textOffset={[0, 10]}
-                           backgroundColor={'#090f1d'}
+                           backgroundColor={'#1a1a1a'}
                            unit={this.unit}/>
                 </div>
                 <div className={'lc-ruler-vertical'}
@@ -167,7 +167,7 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
                            segment={2}
                            negativeRuler={true}
                            textOffset={[10, 0]}
-                           backgroundColor={'#090f1d'}
+                           backgroundColor={'#1a1a1a'}
                            unit={this.unit}/>
                 </div>
                 <div className={'lc-ruler-content'} style={{

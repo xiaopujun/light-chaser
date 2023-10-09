@@ -7,9 +7,8 @@ import {
     GatewayOutlined,
     NodeIndexOutlined
 } from "@ant-design/icons";
-import {AnchorPointType, BPNode} from "../node/BPNode";
+import {AnchorPointType} from "../node/BPNode";
 import bpStore from "../store/BPStore";
-import ReactDOM from "react-dom";
 import {idGenerate} from "../../utils/IdGenerate";
 
 export const BPLeft: React.FC = () => {

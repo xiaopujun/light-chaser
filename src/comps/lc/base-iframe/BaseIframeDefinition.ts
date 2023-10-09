@@ -1,7 +1,7 @@
 import {
-    AbstractCustomComponentDefinition,
+    AbstractComponentDefinition,
     MenuToConfigMappingType
-} from "../../../framework/core/AbstractCustomComponentDefinition";
+} from "../../../framework/core/AbstractComponentDefinition";
 import {BaseInfoType} from "../../../designer/DesignerType";
 import {ClazzTemplate} from "../../common-component/common-types";
 import {MenuInfo} from "../../../designer/right/MenuType";
@@ -12,7 +12,7 @@ import BaseInfo from "../../common-component/base-info/BaseInfo";
 import {BaseIframeStyleConfig} from "./BaseIframeConfig";
 import {HighlightFilled, MediumCircleFilled} from "@ant-design/icons";
 
-export default class BaseIframeDefinition extends AbstractCustomComponentDefinition<BaseIframe, BaseIframeComponentProps> {
+export default class BaseIframeDefinition extends AbstractComponentDefinition<BaseIframe, BaseIframeComponentProps> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "基础iframe",
