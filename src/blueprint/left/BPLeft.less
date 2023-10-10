@@ -41,6 +41,7 @@
     z-index: 1;
     font-size: 12px;
     border-right: 1px solid #2e2e2e;
+    overflow-y: scroll;
 
     .bp-node-list-header {
       width: 100%;
@@ -55,6 +56,11 @@
     .bp-node-list-body {
       padding: 10px;
       color: #999999;
+
+      .bp-node-list-item-used {
+        background-color: #181818;
+        color: #656565;
+      }
 
       .bp-node-list-item:hover {
         background-color: #3d3d3d;

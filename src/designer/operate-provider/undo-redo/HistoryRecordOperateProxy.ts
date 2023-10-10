@@ -10,7 +10,7 @@ import {
 } from "./HistoryType";
 import {historyOperator} from "./HistoryOperator";
 import eventOperateStore from "../EventOperateStore";
-import {AbstractComponentDefinition} from "../../../framework/core/AbstractCustomComponentDefinition";
+import {AbstractComponentDefinition} from "../../../framework/core/AbstractComponentDefinition";
 import EditorDesignerLoader from "../../loader/EditorDesignerLoader";
 import {toJS} from "mobx";
 import rightStore from "../../right/RightStore";

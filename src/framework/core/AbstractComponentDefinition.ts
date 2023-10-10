@@ -6,6 +6,12 @@ import {ClazzTemplate} from "../../comps/common-component/common-types";
 
 export type MenuToConfigMappingType = { [key: string]: React.ComponentType<any> };
 
+export interface OperateStreamNode {
+    name?: string;
+    key?: string;
+    handler?: (controller: AbstractController, params?: any) => void;
+}
+
 /**
  * 自动扫描抽象组件定义核心类。
  * 对于所有继承并实现了该抽象类的字类，都会被自动扫描到并注册到系统中。
@@ -46,6 +52,20 @@ export abstract class AbstractComponentDefinition<C extends AbstractController =
      * 返回右侧菜单对应的具体配置内容。这个返回结果是一个映射关系。以对象形式返回
      */
     abstract getMenuToConfigContentMap(): MenuToConfigMappingType | null;
+
+    /**
+     * 返回当前组件能触发的事件列表
+     */
+    getEventList(): Array<OperateStreamNode> {
+        return [];
+    }
+
+    /**
+     * 返回当前组件能接受的动作列表
+     */
+    getActionList(): Array<OperateStreamNode> {
+        return [];
+    }
 
 }
 

@@ -1,6 +1,6 @@
 import {action, makeObservable, observable, runInAction} from "mobx";
 import {MenuInfo} from "./MenuType";
-import {AbstractComponentDefinition} from "../../framework/core/AbstractCustomComponentDefinition";
+import {AbstractComponentDefinition} from "../../framework/core/AbstractComponentDefinition";
 import {ActiveElem} from "../DesignerType";
 import {PictureFilled} from "@ant-design/icons";
 import EditorDesignerLoader from "../loader/EditorDesignerLoader";

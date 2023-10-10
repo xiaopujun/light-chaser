@@ -1,4 +1,4 @@
-import {AbstractComponentDefinition} from "../../framework/core/AbstractCustomComponentDefinition";
+import {AbstractComponentDefinition} from "../../framework/core/AbstractComponentDefinition";
 import {HeaderItemProps} from "../header/HeaderTypes";
 import {AbstractOperator} from "../../framework/operate/AbstractOperator";
 import AbstractConvert from "../../framework/convert/AbstractConvert";
