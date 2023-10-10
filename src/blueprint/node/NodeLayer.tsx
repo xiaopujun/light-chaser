@@ -19,7 +19,7 @@ export const NodeLayer = observer(() => {
                 <BPMovable>
                     {nodes.map((node, index) => {
                         return (
-                            <BPNode key={index} icon={CodeSandboxOutlined} title={node.title}
+                            <BPNode key={index} icon={node.icon || CodeSandboxOutlined} name={node.name}
                                     input={node.input}
                                     output={node.output}
                                     position={node.position}

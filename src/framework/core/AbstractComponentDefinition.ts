@@ -6,10 +6,15 @@ import {ClazzTemplate} from "../../comps/common-component/common-types";
 
 export type MenuToConfigMappingType = { [key: string]: React.ComponentType<any> };
 
-export interface OperateStreamNode {
+export interface ActionInfo {
+    name: string;
+    id: string;
+    handler: (controller: AbstractController, params?: any) => void;
+}
+
+export interface EventInfo {
+    id?: string;
     name?: string;
-    key?: string;
-    handler?: (controller: AbstractController, params?: any) => void;
 }
 
 /**
@@ -56,14 +61,14 @@ export abstract class AbstractComponentDefinition<C extends AbstractController =
     /**
      * 返回当前组件能触发的事件列表
      */
-    getEventList(): Array<OperateStreamNode> {
+    getEventList(): EventInfo[] {
         return [];
     }
 
     /**
      * 返回当前组件能接受的动作列表
      */
-    getActionList(): Array<OperateStreamNode> {
+    getActionList(): ActionInfo[] {
         return [];
     }
 

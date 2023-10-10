@@ -2,17 +2,17 @@ import React, {useEffect} from "react";
 import './BPLeft.less';
 import {
     ApartmentOutlined,
+    BlockOutlined,
+    BranchesOutlined,
     CodeSandboxOutlined,
     FilterOutlined,
-    GatewayOutlined,
-    NodeIndexOutlined
+    GatewayOutlined
 } from "@ant-design/icons";
-import {AnchorPointType} from "../node/BPNode";
 import bpStore from "../store/BPStore";
 import bpLeftStore from "./BPLeftStore";
 import {observer} from "mobx-react";
 import designerStore from "../../designer/store/DesignerStore";
-import EditorDesignerLoader from "../../designer/loader/EditorDesignerLoader";
+import {NodeFactory} from "../node/factory/NodeFactory";
 
 export const BPLeft: React.FC = () => {
     return (
@@ -64,55 +64,49 @@ export const BPNodeSortList = () => {
     )
 }
 
+//拖拽开始
+const dragStart = (event: any, element: Element) => {
+    // 设置拖拽数据
+    (event as any).dataTransfer.setData('nodeId', element.getAttribute('data-id'));
+    (event as any).dataTransfer.setData('type', element.getAttribute('data-type'));
+}
+//拖拽覆盖
+const dragover = (event: any) => {
+    event.preventDefault(); // 阻止默认行为以允许拖放
+}
+//释放拖拽元素
+const drop = (event: any) => {
+    event.preventDefault();
+    const nodeId = (event as any).dataTransfer.getData('nodeId');
+    const type = (event as any).dataTransfer.getData('type');
+    //获取鼠标位置
+    const position = {x: event.offsetX, y: event.offsetY};
+    if (type === 'layer') {
+        const {setUsedLayerNodes} = bpLeftStore;
+        setUsedLayerNodes(nodeId, true);
+    }
+    const {addNodes} = bpStore;
+    const node = NodeFactory.createNode(type, nodeId);
+    node.position = position;
+    addNodes(node);
+}
+
 export const BPNodeList = observer(() => {
+    const {activeMenu} = bpLeftStore;
+    const NodeList = nodeListMapping[activeMenu];
 
     useEffect(() => {
         const dropContainer = document.getElementById("bp-node-container");
         const dragElements = document.getElementsByClassName("bp-node-list-item");
-        const {layoutConfigs} = designerStore;
-        const {customComponentInfoMap} = EditorDesignerLoader.getInstance();
         Array.from(dragElements).forEach((element) => {
-            element.addEventListener('dragstart', (event) => {
-                // 设置拖拽数据
-                (event as any).dataTransfer.setData('info', element.getAttribute('data-info'));
-            });
+            element.removeEventListener('dragstart', (event) => dragStart(event, element));
+            element.addEventListener('dragstart', (event) => dragStart(event, element));
         });
-        dropContainer && dropContainer.addEventListener('dragover', (event) => {
-            event.preventDefault(); // 阻止默认行为以允许拖放
-        });
-        dropContainer && dropContainer.addEventListener('drop', (event) => {
-            event.preventDefault();
-            const nodeId = (event as any).dataTransfer.getData('info');
-            //获取鼠标位置
-            const position = {x: event.offsetX, y: event.offsetY};
-            const {setUsedLayerNodes} = bpLeftStore;
-            setUsedLayerNodes(nodeId, true);
-            const {addNodes} = bpStore;
-            const node = layoutConfigs[nodeId];
-            const output = customComponentInfoMap[node.type!].getEventList().map((item) => {
-                return {
-                    id: item.key,
-                    title: item.name,
-                    type: AnchorPointType.OUTPUT
-                }
-            });
-            const input = customComponentInfoMap[node.type!].getActionList().map((item) => {
-                return {
-                    id: item.key,
-                    title: item.name,
-                    type: AnchorPointType.INPUT
-                }
-            });
-            addNodes({
-                title: node.name,
-                position: position,
-                input: input,
-                output: output,
-            })
-        });
-    })
-    const {activeMenu} = bpLeftStore;
-    const NodeList = nodeListMapping[activeMenu];
+        dropContainer && dropContainer.removeEventListener('dragover', dragover);
+        dropContainer && dropContainer.addEventListener('dragover', dragover);
+        dropContainer && dropContainer.removeEventListener('drop', drop);
+        dropContainer && dropContainer.addEventListener('drop', drop);
+    }, [activeMenu])
     return (
         <div className={'bp-node-list'}>
             <div className={'bp-node-list-header'}>
@@ -125,10 +119,6 @@ export const BPNodeList = observer(() => {
     )
 })
 
-export const buildLayerNode = () => {
-
-}
-
 export const BPLayerNodeList = observer(() => {
     const {layoutConfigs,} = designerStore;
     const {usedLayerNodes} = bpLeftStore;
@@ -140,9 +130,10 @@ export const BPLayerNodeList = observer(() => {
                     const used = usedLayerNodes[key];
                     return (
                         <div className={`bp-node-list-item ${used ? 'bp-node-list-item-used' : ''}`}
-                             data-info={item.id}
+                             data-id={item.id}
+                             data-type={'layer'}
                              draggable={!used} key={index}>
-                            <div className={'bpn-li-icon'}><NodeIndexOutlined/></div>
+                            <div className={'bpn-li-icon'}><BlockOutlined/></div>
                             <div className={'bpn-li-label'}>{item.name}</div>
                         </div>
                     )
@@ -154,9 +145,13 @@ export const BPLayerNodeList = observer(() => {
 
 export const BPLogicalNodeList = () => {
     return (
-        <div>逻辑节点列表</div>
+        <div className={`bp-node-list-item`}
+             data-type={'logical'}
+             draggable={true}>
+            <div className={'bpn-li-icon'}><BranchesOutlined/></div>
+            <div className={'bpn-li-label'}>条件判断</div>
+        </div>
     )
-
 }
 
 export const BPGlobalVariablesNodeList = () => {

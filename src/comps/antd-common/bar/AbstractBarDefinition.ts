@@ -1,8 +1,9 @@
 import React from "react";
 import {
     AbstractComponentDefinition,
-    MenuToConfigMappingType,
-    OperateStreamNode
+    ActionInfo,
+    EventInfo,
+    MenuToConfigMappingType
 } from "../../../framework/core/AbstractComponentDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
@@ -41,37 +42,43 @@ abstract class AbstractBarDefinition extends AbstractComponentDefinition<AntdCom
     }
 
 
-    getEventList(): Array<OperateStreamNode> {
+    getEventList(): Array<EventInfo> {
         return [
             {
-                name: "点击时",
-                key: "click",
-                handler: (controller: AbstractController, params?: any) => {
-                    console.log("点击时");
-                }
+                id: "globalClick",
+                name: "点击整个组件时",
             },
             {
-                name: "数据项选中时",
-                key: "select",
-                handler: (controller: AbstractController, params?: any) => {
-                    console.log("数据项选中时");
-                }
+                id: "legendClick",
+                name: "点击图例时"
+            },
+            {
+                id: "elementNameClick",
+                name: "点击图例名称时"
+            },
+            {
+                id: "tooltipShow",
+                name: "工具标签显示时"
+            },
+            {
+                id: "tooltipHide",
+                name: "工具标签隐藏时"
             }
         ]
     }
 
-    getActionList(): Array<OperateStreamNode> {
+    getActionList(): Array<ActionInfo> {
         return [
             {
                 name: "显示",
-                key: "show",
+                id: "show",
                 handler: (controller: AbstractController, params?: any) => {
                     console.log("显示");
                 }
             },
             {
                 name: "隐藏",
-                key: "hide",
+                id: "hide",
                 handler: (controller: AbstractController, params?: any) => {
                     console.log("隐藏");
                 }

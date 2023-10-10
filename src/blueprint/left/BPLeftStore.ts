@@ -20,7 +20,6 @@ class BPLeftStore {
 
     setUsedLayerNodes = (node: string, used: boolean) => {
         this.usedLayerNodes[node] = used;
-        console.log(this.usedLayerNodes);
     }
 }
 
