@@ -17,6 +17,7 @@ export interface NodeProps {
     id?: string;
     icon?: any;
     name?: string;
+    type?: string;
     titleBgColor?: string;
     input?: AnchorPointProps[];
     output?: AnchorPointProps[];
@@ -24,10 +25,11 @@ export interface NodeProps {
 }
 
 export const BPNode: React.FC<NodeProps> = (props) => {
-    const {icon: Icon, name, input = [], output = [], position = {x: 0, y: 0}, titleBgColor = '#247057'} = props;
+    const {icon: Icon, name, input = [], output = [], position = {x: 0, y: 0}, titleBgColor = '#247057', id} = props;
     const cpList = [...output, ...input];
     return (
-        <div className={'bp-node'} style={{transform: 'translate(' + position?.x + 'px,' + position?.y + 'px)'}}>
+        <div className={'bp-node'} id={`bpnode:${id}`}
+             style={{transform: 'translate(' + position?.x + 'px,' + position?.y + 'px)'}}>
             <div className={'bp-node-header'} style={{backgroundColor: titleBgColor}}>
                 <div className={'bp-node-icon'}><Icon/>&nbsp;</div>
                 <div className={'bp-node-title'}>{name}</div>

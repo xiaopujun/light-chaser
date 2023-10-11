@@ -11,7 +11,6 @@ class LineLayer extends React.Component {
     //下层
     downLayer: HTMLCanvasElement | null = null;
 
-
     currentLine: CanvasLineType = {
         color: "#fff",
         lineWidth: 2,
@@ -39,6 +38,7 @@ class LineLayer extends React.Component {
             //设置起始点坐标
             this.currentLine.startPoint = {x: e.clientX - 60, y: e.clientY - 40}
             this.currentLine.startDom = target as HTMLElement;
+            this.currentLine.startAnchorId = (e!.target as HTMLElement).id;
             this.keyDown = true;
         });
 
@@ -57,11 +57,12 @@ class LineLayer extends React.Component {
             this.currentLine.lineWidth = 2;
             this.currentLine.color = "#a7a7a7";
             this.currentLine.endDom = e.target as HTMLElement
+            this.currentLine.endAnchorId = (e!.target as HTMLElement).id;
             CanvasUtil.drawBezierCurves(bpStore.downCtx!, this.currentLine)
             //计算线条的采样点，用于计算线条是否被选中
             const {startPoint, endPoint, firstCP, secondCP, startDom, endDom} = this.currentLine;
             const samplePointArr = CanvasUtil.sampleBezierCurve(startPoint, firstCP, secondCP, endPoint, 20);
-            const {connectedLines} = bpStore;
+            const {connectedLines, addAnchorRelationship, anchorRelationship} = bpStore;
             connectedLines.push({
                 color: "#fff",
                 lineWidth: 1,
@@ -74,6 +75,8 @@ class LineLayer extends React.Component {
                 startDom: startDom,
                 endDom: endDom
             })
+            addAnchorRelationship(this.currentLine.startAnchorId!, this.currentLine.endAnchorId)
+            console.log(anchorRelationship)
         });
 
         document.addEventListener('mousemove', (e) => {

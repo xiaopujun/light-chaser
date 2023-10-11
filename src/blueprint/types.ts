@@ -11,6 +11,10 @@ export interface CanvasLineType {
     samplePoints?: PointType[];
     startDom?: HTMLElement;
     endDom?: HTMLElement;
+    //起始锚点id
+    startAnchorId?: string;
+    //结束锚点id
+    endAnchorId?: string;
 }
 
 export type PointType = { x: number; y: number; }
