@@ -73,7 +73,7 @@ abstract class AbstractBarDefinition extends AbstractComponentDefinition<AntdCom
                 name: "显示",
                 id: "show",
                 handler: (controller: AbstractController, params?: any) => {
-                    console.log("显示");
+                    console.log("显示动作来了");
                 }
             },
             {
