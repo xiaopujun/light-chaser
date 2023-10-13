@@ -114,6 +114,13 @@ class EventOperateStore {
      */
     scale = 1;
 
+    /**
+     * 设计器画布缩放比例
+     */
+    ratio = 1;
+
+    setRatio = (ratio: number) => this.ratio = ratio;
+
     setScale = (scale: number) => this.scale = scale;
 
     setAddRecordCompId = (id: string | null) => this.addRecordCompId = id;

@@ -1,5 +1,4 @@
 import React, {MouseEvent, PureComponent} from 'react';
-import DragScaleProvider from "../operate-provider/DragScaleProvider";
 import {observer} from "mobx-react";
 import designerStore, {DesignerStore} from "../store/DesignerStore";
 import rightStore from "../right/RightStore";
@@ -13,6 +12,7 @@ import HotKey from "../operate-provider/hot-key/HotKey";
 import {hotkeyConfigs} from "../operate-provider/hot-key/HotKeyConfig";
 import ComponentContainer from "../../framework/core/ComponentContainer";
 import {isEqual} from "lodash";
+import {DesignerDragScaleContainer} from "./DesignerDragScaleContainer";
 
 /**
  * 设计器画布
@@ -51,11 +51,11 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                 <DesignerContainer>
                     <GroupSelectable>
                         <DesignerRuler offsetX={60} offsetY={50}>
-                            <DragScaleProvider onDoubleClick={this.updateActive}>
+                            <DesignerDragScaleContainer onDoubleClick={this.updateActive}>
                                 <GroupMovable>
                                     {this.generateElement()}
                                 </GroupMovable>
-                            </DragScaleProvider>
+                            </DesignerDragScaleContainer>
                         </DesignerRuler>
                     </GroupSelectable>
                 </DesignerContainer>

@@ -80,7 +80,7 @@ abstract class AbstractBarDefinition extends AbstractComponentDefinition<AntdCom
                 name: "隐藏",
                 id: "hide",
                 handler: (controller: AbstractController, params?: any) => {
-                    console.log("隐藏");
+                    controller.container!.style.display = "none";
                 }
             }
         ]

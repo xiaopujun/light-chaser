@@ -1,5 +1,4 @@
 import {HotKeyConfigType, TriggerType} from "./HotKey";
-import {doScale} from "../scale/Scaler";
 import {
     doBaseBottomDecreaseUp,
     doBaseBottomEnlargeUp,
@@ -21,7 +20,11 @@ import {
     doUnLock,
     redo,
     selectAll,
-    toBottom, toggleCanvasConfig, toggleGlobalThemeConfig, toggleHotKeyDes, toggleLayer,
+    toBottom,
+    toggleCanvasConfig,
+    toggleGlobalThemeConfig,
+    toggleHotKeyDes,
+    toggleLayer,
     toggleProjectConfig,
     toggleSecondaryBorder,
     toTop,
@@ -29,11 +32,6 @@ import {
 } from "./HotKeyImpl";
 
 export const hotkeyConfigs: HotKeyConfigType = {
-    'alt + wheel': {
-        handler: doScale,
-        triggerType: TriggerType.COILED,
-        range: ".lc-ruler-content"
-    },
     'control + a': {
         handler: selectAll,
         range: ".lc-ruler-content"

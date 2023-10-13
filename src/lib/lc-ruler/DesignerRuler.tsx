@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Ruler, {RulerProps} from "@scena/react-ruler";
 import {KMMap} from "../../designer/operate-provider/hot-key/KeyboardMouse";
 import eventManager from "../../designer/operate-provider/core/EventManager";
-import scaleCore from "../../designer/operate-provider/scale/ScaleCore";
+import eventOperateStore from "../../designer/operate-provider/EventOperateStore";
 
 interface DesignerRulerProps {
     offsetX?: number;
@@ -61,19 +61,20 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
     componentDidMount() {
         const {offsetX: ofX = 0, offsetY: ofY = 0} = this.props;
         eventManager.register('wheel', () => {
-            this.startPosX = this.mousePosX - ((this.mousePosX - this.startPosX) / scaleCore.ratio);
+            const {scale, ratio} = eventOperateStore;
+            this.startPosX = this.mousePosX - ((this.mousePosX - this.startPosX) / ratio);
             this.scrollPosX = this.startPosX;
-            this.startPosY = this.mousePosY - ((this.mousePosY - this.startPosY) / scaleCore.ratio);
+            this.startPosY = this.mousePosY - ((this.mousePosY - this.startPosY) / ratio);
             this.scrollPosY = this.startPosY;
-            this.unit = Math.floor(50 / scaleCore.scale);
+            this.unit = Math.floor(50 / scale);
             clearTimeout(this.wheelTimerId);
             this.wheelTimerId = setTimeout(() => {
                 this.setState({render: this.state.render + 1})
-            }, 400);
+            }, 300);
         });
 
         eventManager.register('pointermove', (e: any) => {
-            const {scale} = scaleCore;
+            const {scale} = eventOperateStore;
             this.mousePosX = this.startPosX + ((e.clientX - this.baseOffset - ofX) / scale);
             this.mousePosY = this.startPosY + ((e.clientY - this.baseOffset - ofY) / scale);
             if (KMMap.rightClick) {
@@ -82,11 +83,8 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
                 this.offsetY = this.offsetY - e.movementY;
                 this._scrollPosY = this.startPosY + (this.offsetY / scale)
 
-                clearTimeout(this.pointerMoveTimerId);
-                this.pointerMoveTimerId = setTimeout(() => {
-                    this.rulerX && this.rulerX.scroll(this._scrollPosX);
-                    this.rulerY && this.rulerY.scroll(this._scrollPosY);
-                }, 400);
+                this.rulerX && this.rulerX.scroll(this._scrollPosX);
+                this.rulerY && this.rulerY.scroll(this._scrollPosY);
             }
         });
 
@@ -120,7 +118,7 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
 
 
     render() {
-        const {scale} = scaleCore;
+        const {scale} = eventOperateStore;
         return (
             <div className={'lc-ruler'} style={{position: 'relative'}}>
                 <div style={{

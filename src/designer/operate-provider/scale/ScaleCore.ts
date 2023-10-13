@@ -28,3 +28,5 @@ class ScaleCore {
 
 const scaleCore = new ScaleCore();
 export default scaleCore;
+
+export {ScaleCore};
