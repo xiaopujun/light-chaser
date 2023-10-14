@@ -29,15 +29,16 @@ class LineLayer extends React.Component {
     canvasRef: HTMLCanvasElement | null = null;
 
     componentDidMount() {
-        const {setUpCtx, setDownCtx} = bpStore;
+        const {setUpCtx, setDownCtx, canvasOffset} = bpStore;
         setUpCtx(this.upLayer!.getContext('2d')!);
         setDownCtx(this.downLayer!.getContext('2d')!);
         document.addEventListener('mousedown', (e) => {
             const {target} = e;
             if (!target || !(target as HTMLElement).classList.contains('ap-circle')) return;
             //设置起始点坐标
-            this.currentLine.startPoint = {x: e.clientX - 60, y: e.clientY - 40}
             this.currentLine.startDom = target as HTMLElement;
+            const {x, y, width, height} = (target as HTMLElement).getBoundingClientRect();
+            this.currentLine.startPoint = {x: x + width / 2 - canvasOffset.x, y: y + height / 2 - canvasOffset.y}
             this.currentLine.startAnchorId = (e!.target as HTMLElement).id;
             this.keyDown = true;
         });
@@ -45,19 +46,21 @@ class LineLayer extends React.Component {
         document.addEventListener('mouseup', (e) => {
             if (!this.keyMove || !e.target || !(e.target as HTMLElement).classList.contains('ap-circle')) {
                 //清空画布
-                bpStore.upCtx?.clearRect(0, 0, 1920, 1080);
+                bpStore.upCtx?.clearRect(0, 0, 10000, 10000);
                 this.keyDown = false;
                 return;
             }
             this.keyMove = false;
             this.keyDown = false;
-            bpStore.upCtx!.clearRect(0, 0, 1920, 1080)
+            bpStore.upCtx!.clearRect(0, 0, 10000, 10000)
             //在下层绘制当前操作的线条
             this.currentLine.lineDash = [];
             this.currentLine.lineWidth = 2;
             this.currentLine.color = "#a7a7a7";
             this.currentLine.endDom = e.target as HTMLElement
             this.currentLine.endAnchorId = (e!.target as HTMLElement).id;
+            const {x, y, width, height} = (e.target as HTMLElement).getBoundingClientRect();
+            this.currentLine.endPoint = {x: x + width / 2 - canvasOffset.x, y: y + height / 2 - canvasOffset.y}
             CanvasUtil.drawBezierCurves(bpStore.downCtx!, this.currentLine)
             //计算线条的采样点，用于计算线条是否被选中
             const {startPoint, endPoint, firstCP, secondCP, startDom, endDom} = this.currentLine;
@@ -76,49 +79,44 @@ class LineLayer extends React.Component {
                 endDom: endDom
             })
             addAnchorRelationship(this.currentLine.startAnchorId!, this.currentLine.endAnchorId)
-            console.log(anchorRelationship)
         });
 
         document.addEventListener('mousemove', (e) => {
             if (!this.keyDown) return;
             this.keyMove = true;
             const {startPoint, endPoint} = this.currentLine;
+            const {canvasOffset} = bpStore;
             //设置鼠标坐标
-            this.currentLine.endPoint = {x: e.clientX - 60, y: e.clientY - 40}
+            this.currentLine.endPoint = {x: e.clientX - canvasOffset.x, y: e.clientY - canvasOffset.y}
 
             const contPoi = CanvasUtil.calculateControlPoint(startPoint, endPoint)
             this.currentLine.firstCP = contPoi.firstCP
             this.currentLine.secondCP = contPoi.secondCP
-            this.draw();
+            //清空画布
+            bpStore.upCtx!.clearRect(0, 0, 10000, 10000)
+            CanvasUtil.drawBezierCurves(bpStore.upCtx!, {
+                color: "#c0c0c0",
+                lineWidth: 1,
+                lineDash: [],
+                startPoint: this.currentLine.startPoint,
+                endPoint: this.currentLine.endPoint,
+                firstCP: this.currentLine.firstCP,
+                secondCP: this.currentLine.secondCP
+            })
         });
 
     }
 
-    //开始绘画
-    draw = () => {
-        if (!bpStore.upCtx) return;
-        //清空画布
-        bpStore.upCtx.clearRect(0, 0, 1920, 1080)
-
-
-        const {startPoint, endPoint, firstCP, secondCP} = this.currentLine;
-        CanvasUtil.drawBezierCurves(bpStore.upCtx!, {
-            color: "#c0c0c0",
-            lineWidth: 1,
-            lineDash: [10, 10],
-            startPoint: startPoint,
-            endPoint: endPoint,
-            firstCP: firstCP,
-            secondCP: secondCP
-        })
-    }
-
     render() {
         return (
-            <div style={{position: "absolute", width: '100%', height: '100%'}}>
-                <canvas style={{position: "inherit", top: 0, left: 0}} width={1920} height={1080}
+            <div style={{position: "absolute"}}>
+                <canvas style={{position: "inherit", top: 0, left: 0}}
+                        width={window.innerWidth - 670}
+                        height={window.innerHeight - 75}
                         ref={ref => this.downLayer = ref}/>
-                <canvas style={{position: "inherit", top: 0, left: 0}} width={1920} height={1080}
+                <canvas style={{position: "inherit", top: 0, left: 0}}
+                        width={window.innerWidth - 670}
+                        height={window.innerHeight - 75}
                         ref={ref => this.upLayer = ref}/>
             </div>
         )

@@ -16,10 +16,14 @@ export const FrameLayout: React.FC<FrameLayoutProps> = (props) => {
             <div className={'fl-header'}>{header}</div>
             <div className={'fl-body'}>
                 <div className={'fl-left'}>{left}</div>
-                <div className={'fl-content'}>{content}</div>
-                <div className={'fl-right'}>{right}</div>
+                <div className={'fl-crf-box'}>
+                    <div className={'fl-cr-box'}>
+                        <div className={'fl-content'}>{content}</div>
+                        <div className={'fl-right'}>{right}</div>
+                    </div>
+                    <div className={'fl-footer'}>{footer}</div>
+                </div>
             </div>
-            <div className={'fl-footer'}>{footer}</div>
         </div>
     )
 }

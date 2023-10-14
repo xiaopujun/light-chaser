@@ -1,11 +1,14 @@
 .bp-left {
-  position: relative;
+  display: flex;
   padding: 3px;
-  height: calc(100% + 35px);
+  height: 100%;
   background-color: #1a1a1a;
   border-right: 1px solid #2e2e2e;
 
   .bp-node-sort-list {
+    height: 100%;
+    width: 70px;
+
     .bp-left-item:hover {
       background-color: #3d3d3d;
       color: #9ed4ff;
@@ -32,11 +35,8 @@
   }
 
   .bp-node-list {
-    position: absolute;
-    top: 0;
-    left: 70px;
     width: 250px;
-    height: calc(100% - 35px);
+    height: 100%;
     background-color: #1a1a1a;
     z-index: 1;
     font-size: 12px;

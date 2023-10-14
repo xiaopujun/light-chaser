@@ -40,10 +40,11 @@ class MyComponent extends React.Component {
                 {/*</div>*/}
                 {/*<BPCanvas/>*/}
                 <FrameLayout header={<BPHeader/>}
-                             footer={<BPFooter/>}
                              left={<BPLeft/>}
+                             content={<BPCanvas/>}
+                             footer={<BPFooter/>}
                              right={<BPRight/>}
-                             content={<BPCanvas/>}/>
+                />
             </>
 
         )

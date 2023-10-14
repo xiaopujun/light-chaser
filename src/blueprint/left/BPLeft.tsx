@@ -96,7 +96,7 @@ export const BPNodeList = observer(() => {
     const NodeList = nodeListMapping[activeMenu];
 
     useEffect(() => {
-        const dropContainer = document.getElementById("bp-node-container");
+        const dropContainer = document.getElementById("blue-print");
         const dragElements = document.getElementsByClassName("bp-node-list-item");
         Array.from(dragElements).forEach((element) => {
             element.removeEventListener('dragstart', (event) => dragStart(event, element));

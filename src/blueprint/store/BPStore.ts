@@ -1,7 +1,7 @@
 import {action, makeObservable, observable} from "mobx";
 import Moveable from "react-moveable";
 import Selecto from "react-selecto";
-import {CanvasLineType} from "../types";
+import {CanvasLineType, PointType} from "../types";
 import {NodeProps} from "../node/BPNode";
 
 class BPStore {
@@ -34,6 +34,8 @@ class BPStore {
     nodeContainerRef: HTMLDivElement | null = null;
 
     nodes: NodeProps[] = [];
+
+    canvasOffset: PointType = {x: 320, y: 40};
 
     setSelectedNodes = (nodes: HTMLElement[]) => {
         this.selectedNodes = nodes;

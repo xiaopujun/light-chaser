@@ -5,6 +5,7 @@ import {BPNode} from "./BPNode";
 import {BPSelectable} from "../drag/BPSelectable";
 import {observer} from "mobx-react";
 import bpStore from "../store/BPStore";
+import {BPDragScaleContainer} from "./BPDragScaleContainer";
 
 export const NodeLayer = observer(() => {
 
@@ -16,20 +17,22 @@ export const NodeLayer = observer(() => {
             setNodeContainerRef(ref!);
         }}>
             <BPSelectable>
-                <BPMovable>
-                    {nodes.map((node, index) => {
-                        return (
-                            <BPNode key={index}
-                                    icon={node.icon || CodeSandboxOutlined}
-                                    name={node.name}
-                                    id={node.id}
-                                    input={node.input}
-                                    output={node.output}
-                                    position={node.position}
-                            />
-                        )
-                    })}
-                </BPMovable>
+                <BPDragScaleContainer>
+                    <BPMovable>
+                        {nodes.map((node, index) => {
+                            return (
+                                <BPNode key={index}
+                                        icon={node.icon || CodeSandboxOutlined}
+                                        name={node.name}
+                                        id={node.id}
+                                        input={node.input}
+                                        output={node.output}
+                                        position={node.position}
+                                />
+                            )
+                        })}
+                    </BPMovable>
+                </BPDragScaleContainer>
             </BPSelectable>
         </div>
     )

@@ -95,14 +95,14 @@ export default class DragScaleProvider {
             if (e.altKey && e.buttons !== 2) {
                 //计算缩放比例
                 this.scaleCore.compute(e.deltaY > 0 ? 0 : 1);
-                //执行回调
-                if (this.scaleCallback)
-                    this.scaleCallback(this.scaleCore.scale, this.scaleCore.ratio, e);
                 //执行缩放
                 const {width, height} = this.content?.style!;
                 this.position.x = this.position.x - ((this.scaleCore.ratio - 1) * (e.clientX - this.posOffset.x - this.position.x - parseFloat(width) * 0.5));
                 this.position.y = this.position.y - ((this.scaleCore.ratio - 1) * (e.clientY - this.posOffset.y - this.position.y - parseFloat(height) * 0.5));
                 this.content!.style.transform = 'translate3d(' + this.position.x + 'px, ' + this.position.y + 'px, 0) scale(' + this.scaleCore.scale + ')';
+                //执行回调
+                if (this.scaleCallback)
+                    this.scaleCallback(this.scaleCore.scale, this.scaleCore.ratio, e);
             }
         });
     }

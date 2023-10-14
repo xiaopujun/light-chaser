@@ -1,14 +1,13 @@
 import React from "react";
 import LineLayer from "./line/LineLayer";
 import {NodeLayer} from "./node/NodeLayer";
-import {BPEvent} from "./event/BPEvent";
 
 export const BPCanvas: React.FC = () => {
     return (
-        <BPEvent>
+        <div className={'blue-print'} id={'blue-print'} style={{overflow: "hidden"}}>
             <LineLayer/>
             <NodeLayer/>
-        </BPEvent>
+        </div>
     )
 }
 

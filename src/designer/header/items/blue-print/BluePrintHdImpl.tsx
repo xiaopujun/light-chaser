@@ -8,7 +8,7 @@ import {BPCanvas} from "../../../../blueprint/BPCanvas";
 import ReactDOM from "react-dom";
 
 export const BluePrintHdImpl: React.FC = () => {
-    return ReactDOM.createPortal(<div style={{position: 'relative', top: -window.innerHeight}}>
+    return ReactDOM.createPortal(<div style={{position: 'relative', top: -window.innerHeight, zIndex: 2}}>
         <FrameLayout header={<BPHeader/>}
                      footer={<BPFooter/>}
                      left={<BPLeft/>}
