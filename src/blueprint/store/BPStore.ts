@@ -37,6 +37,18 @@ class BPStore {
 
     canvasOffset: PointType = {x: 320, y: 40};
 
+    canvasTranslate: PointType = {x: 0, y: 0};
+
+    canvasScale: number = 1;
+
+    setCanvasScale = (scale: number) => {
+        this.canvasScale = scale;
+    }
+
+    setCanvasTranslate = (translate: PointType) => {
+        this.canvasTranslate = translate;
+    }
+
     setSelectedNodes = (nodes: HTMLElement[]) => {
         this.selectedNodes = nodes;
     }

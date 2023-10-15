@@ -45,6 +45,37 @@ class MyComponent extends React.Component {
                              footer={<BPFooter/>}
                              right={<BPRight/>}
                 />
+                {/*<div className={'drag-container'}>*/}
+                {/*    <ul>*/}
+                {/*        <li draggable={true}>1</li>*/}
+                {/*        <li draggable={true}>2</li>*/}
+                {/*        <li draggable={true}>3</li>*/}
+                {/*    </ul>*/}
+                {/*</div>*/}
+                {/*<div className={'canvas-container'}>*/}
+                {/*    <div className={'elem'} style={{width: 100, height: 100}}></div>*/}
+                {/*</div>*/}
+
+                {/*<div id="container" style={{width: 600, height: 600, backgroundColor: '#464646', position: "relative"}}>*/}
+                {/*    <div id="content"*/}
+                {/*         style={{*/}
+                {/*             width: 600,*/}
+                {/*             height: 600,*/}
+                {/*             backgroundColor: '#808080',*/}
+                {/*             position: 'absolute',*/}
+                {/*             transform: 'translate3d(100px, 100px, 0px) scale(1)'*/}
+                {/*         }}>*/}
+                {/*        <div className="item"*/}
+                {/*             style={{*/}
+                {/*                 backgroundColor: '#923434',*/}
+                {/*                 width: 100,*/}
+                {/*                 height: 100,*/}
+                {/*                 transform: 'translate3d(50px, 50px, 0px) scale(1)'*/}
+                {/*             }}>*/}
+                {/*            item1*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
             </>
 
         )

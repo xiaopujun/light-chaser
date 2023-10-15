@@ -13,7 +13,7 @@ export const BPDragScaleContainer: React.FC<BPDragScaleContainerContainerProps> 
     const containerRef = React.useRef<HTMLDivElement>(null);
     const contentRef = React.useRef<HTMLDivElement>(null);
     useEffect(() => {
-        const {canvasOffset} = bpStore;
+        const {canvasOffset, setCanvasTranslate, setCanvasScale} = bpStore;
         const container = containerRef.current;
         const content = contentRef.current;
         if (container && content) {
@@ -21,8 +21,15 @@ export const BPDragScaleContainer: React.FC<BPDragScaleContainerContainerProps> 
                 container,
                 content,
                 posOffset: canvasOffset,
-                dragCallback: () => reRenderLine(),
-                scaleCallback: () => reRenderLine()
+                dragCallback: (position) => {
+                    setCanvasTranslate(position);
+                    reRenderLine();
+                },
+                scaleCallback: (scale, ratio, position) => {
+                    setCanvasScale(scale);
+                    setCanvasTranslate(position);
+                    reRenderLine()
+                }
             });
             return () => {
                 dragScaleProvider.destroy();
@@ -36,7 +43,11 @@ export const BPDragScaleContainer: React.FC<BPDragScaleContainerContainerProps> 
             height: window.innerHeight - 75,
         }}>
             <div className={'bp-ds-content'} ref={contentRef}
-                 style={{width: window.innerWidth - 670, height: window.innerHeight - 75,backgroundColor:'#797979'}}>
+                 style={{
+                     width: 0,
+                     height: 0,
+                     backgroundColor: '#797979'
+                 }}>
                 {children}
             </div>
         </div>

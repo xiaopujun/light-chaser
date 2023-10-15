@@ -80,7 +80,7 @@ const drop = (event: any) => {
     const nodeId = (event as any).dataTransfer.getData('nodeId');
     const type = (event as any).dataTransfer.getData('type');
     //获取鼠标位置
-    const position = {x: event.offsetX, y: event.offsetY};
+    const position = {x: event.layerX, y: event.layerY};
     if (type === 'layer') {
         const {setUsedLayerNodes} = bpLeftStore;
         setUsedLayerNodes(nodeId, true);

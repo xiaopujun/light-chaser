@@ -19,10 +19,10 @@ export interface DragScaleProviderParams {
 export default class DragScaleProvider {
     private container: HTMLDivElement | null = null;
     private content: HTMLDivElement | null = null;
-    private position: PointType = {x: 0, y: 0};
+    private readonly position: PointType = {x: 0, y: 0};
     private posOffset: PointType = {x: 0, y: 0};
-    private dragCallback?: (position: PointType, e: any) => void;
-    private scaleCallback?: (scale: number, ratio: number, e: any) => void;
+    private readonly dragCallback?: (position: PointType, e: any) => void;
+    private readonly scaleCallback?: (scale: number, ratio: number, position: PointType, e: any) => void;
 
     public scaleCore: ScaleCore = new ScaleCore();
 
@@ -102,7 +102,7 @@ export default class DragScaleProvider {
                 this.content!.style.transform = 'translate3d(' + this.position.x + 'px, ' + this.position.y + 'px, 0) scale(' + this.scaleCore.scale + ')';
                 //执行回调
                 if (this.scaleCallback)
-                    this.scaleCallback(this.scaleCore.scale, this.scaleCore.ratio, e);
+                    this.scaleCallback(this.scaleCore.scale, this.scaleCore.ratio, this.position, e);
             }
         });
     }

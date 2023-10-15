@@ -26,7 +26,6 @@ export const reRenderLine = () => {
             x: endX + (endW / 2) - canvasOffset.x,
             y: endY + (endH / 2) - canvasOffset.y
         };
-        console.log('缩放', line.startPoint, line.endPoint)
         //重新计算二次贝塞尔曲线的控制点
         const controlPoi = CanvasUtil.calculateControlPoint(line.startPoint, line.endPoint);
         line.firstCP = controlPoi.firstCP;
