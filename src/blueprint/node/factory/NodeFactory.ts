@@ -43,7 +43,6 @@ const createLogicNode = (): NodeProps => {
         titleBgColor: "#247ba6",
         type: "logical",
         input: [{
-            // id: id + "_judge",
             id: id + '_' + NodeType.CONDITION + '_judge_' + AnchorPointType.INPUT,
             name: "判断",
             type: AnchorPointType.INPUT

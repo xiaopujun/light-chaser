@@ -3,6 +3,7 @@ import {CanvasLineType} from "../types";
 import './LineLayer.less';
 import CanvasUtil from "../util/CanvasUtil";
 import bpStore from "../store/BPStore";
+import {AnchorPointType} from "../node/BPNode";
 
 class LineLayer extends React.Component {
 
@@ -35,11 +36,16 @@ class LineLayer extends React.Component {
         document.addEventListener('mousedown', (e) => {
             const {target} = e;
             if (!target || !(target as HTMLElement).classList.contains('ap-circle')) return;
+            const pointDom = e.target as HTMLElement;
+            const pointInfoArr = pointDom.id.split("_");
+            if (pointInfoArr && pointInfoArr.length === 4 && pointInfoArr[3] === AnchorPointType.INPUT.toString())
+                return;
+
             //设置起始点坐标
-            this.currentLine.startDom = target as HTMLElement;
-            const {x, y, width, height} = (target as HTMLElement).getBoundingClientRect();
+            this.currentLine.startDom = pointDom;
+            const {x, y, width, height} = pointDom.getBoundingClientRect();
             this.currentLine.startPoint = {x: x + width / 2 - canvasOffset.x, y: y + height / 2 - canvasOffset.y}
-            this.currentLine.startAnchorId = (e!.target as HTMLElement).id;
+            this.currentLine.startAnchorId = pointDom.id;
             this.keyDown = true;
         });
 

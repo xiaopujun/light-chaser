@@ -27,6 +27,7 @@ export const NodeLayer = observer(() => {
                                         id={node.id}
                                         input={node.input}
                                         output={node.output}
+                                        titleBgColor={node.titleBgColor}
                                         position={node.position}
                                 />
                             )

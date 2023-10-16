@@ -2,6 +2,7 @@ import React from "react";
 import './BPHeader.less';
 import {LineOutlined} from "@ant-design/icons";
 import headerStore from "../../designer/header/HeaderStore";
+import bpStore from "../store/BPStore";
 
 
 export const BPHeader: React.FC = () => {
@@ -11,6 +12,9 @@ export const BPHeader: React.FC = () => {
             <div className={'bp-header-menu'}><LineOutlined onClick={() => {
                 const {setBluePrintVisible} = headerStore;
                 setBluePrintVisible(false);
+                const {setCanvasTranslate, setCanvasScale} = bpStore;
+                setCanvasTranslate({x: 0, y: 0});
+                setCanvasScale(1);
             }}/></div>
         </div>
     )

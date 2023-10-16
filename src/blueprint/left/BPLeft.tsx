@@ -113,7 +113,9 @@ export const BPNodeList = observer(() => {
                 <div className={'bp-node-list-header-label'}>图层节点(取自画布已有组件)</div>
             </div>
             <div className={'bp-node-list-body'}>
-                {NodeList && <NodeList/>}
+                <div className={'bp-node-list-container'} style={{overflow: "scroll"}}>
+                    {NodeList && <NodeList/>}
+                </div>
             </div>
         </div>
     )

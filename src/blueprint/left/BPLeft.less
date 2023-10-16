@@ -41,7 +41,6 @@
     z-index: 1;
     font-size: 12px;
     border-right: 1px solid #2e2e2e;
-    overflow-y: scroll;
 
     .bp-node-list-header {
       width: 100%;
@@ -56,39 +55,42 @@
     .bp-node-list-body {
       padding: 10px;
       color: #999999;
+      height: calc(100vh - 100px);
+      overflow-y: hidden;
 
-      .bp-node-list-item-used {
-        background-color: #181818;
-        color: #656565;
-      }
+      .bp-node-list-container {
+        height: calc(100vh - 100px);
+        overflow-y: auto;
 
-      .bp-node-list-item:hover {
-        background-color: #3d3d3d;
-        color: #9ed4ff;
-        cursor: pointer;
-      }
-
-      .bp-node-list-item {
-        margin-bottom: 5px;
-        background-color: #262626;
-        padding: 10px 5px;
-        border-radius: 5px;
-        transition: background-color, color, 0.2s ease-in-out;
-        display: flex;
-        align-items: center;
-
-        .bpn-li-icon {
-          width: 18px;
-          height: 18px;
-          margin-right: 5px;
-          padding: 3px;
-          border-radius: 3px;
-          color: white;
-          background-color: rgba(0, 152, 255, 0.25);
+        .bp-node-list-item-used {
+          background-color: #181818;
+          color: #656565;
         }
 
-        .bpn-li-label {
+        .bp-node-list-item:hover {
+          background-color: #3d3d3d;
+          color: #9ed4ff;
+          cursor: pointer;
+        }
 
+        .bp-node-list-item {
+          margin-bottom: 5px;
+          background-color: #262626;
+          padding: 10px 5px;
+          border-radius: 5px;
+          transition: background-color, color, 0.2s ease-in-out;
+          display: flex;
+          align-items: center;
+
+          .bpn-li-icon {
+            width: 18px;
+            height: 18px;
+            margin-right: 5px;
+            padding: 3px;
+            border-radius: 3px;
+            color: white;
+            background-color: rgba(0, 152, 255, 0.25);
+          }
         }
       }
     }

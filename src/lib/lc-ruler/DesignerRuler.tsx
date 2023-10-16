@@ -170,6 +170,7 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
                 </div>
                 <div className={'lc-ruler-content'} style={{
                     position: 'absolute',
+                    overflow: 'hidden',
                     top: this.baseOffset,
                     left: this.baseOffset,
                 }}>
