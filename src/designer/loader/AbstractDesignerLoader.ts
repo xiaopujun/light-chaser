@@ -2,8 +2,9 @@ import {AbstractComponentDefinition} from "../../framework/core/AbstractComponen
 import {HeaderItemProps} from "../header/HeaderTypes";
 import {AbstractOperator} from "../../framework/operate/AbstractOperator";
 import AbstractConvert from "../../framework/convert/AbstractConvert";
+import ALoader from "./ALoader";
 
-export abstract class AbstractDesignerLoader {
+export abstract class AbstractDesignerLoader extends ALoader {
 
     //自定义组件信息映射
     public customComponentInfoMap: Record<string, AbstractComponentDefinition> = {};

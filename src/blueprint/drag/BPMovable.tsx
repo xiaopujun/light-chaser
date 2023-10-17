@@ -14,7 +14,9 @@ export const reRenderLine = () => {
     //更新每条线的起始点和终点
     connectedLines.forEach((line: CanvasLineType) => {
         //重新设置连线的起始点和终点
-        const {startDom, endDom} = line;
+        const {startAnchorId, endAnchorId} = line;
+        const startDom = document.getElementById(startAnchorId!);
+        const endDom = document.getElementById(endAnchorId!);
         const {x: startX, y: startY, width: startW, height: startH} = startDom!.getBoundingClientRect();
         const {x: endX, y: endY, width: endW, height: endH} = endDom!.getBoundingClientRect();
         //定位到锚点中心

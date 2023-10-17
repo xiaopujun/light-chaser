@@ -42,7 +42,6 @@ class LineLayer extends React.Component {
                 return;
 
             //设置起始点坐标
-            this.currentLine.startDom = pointDom;
             const {x, y, width, height} = pointDom.getBoundingClientRect();
             this.currentLine.startPoint = {x: x + width / 2 - canvasOffset.x, y: y + height / 2 - canvasOffset.y}
             this.currentLine.startAnchorId = pointDom.id;
@@ -63,17 +62,16 @@ class LineLayer extends React.Component {
             this.currentLine.lineDash = [];
             this.currentLine.lineWidth = 2;
             this.currentLine.color = "#a7a7a7";
-            this.currentLine.endDom = e.target as HTMLElement
             this.currentLine.endAnchorId = (e!.target as HTMLElement).id;
             const {x, y, width, height} = (e.target as HTMLElement).getBoundingClientRect();
             this.currentLine.endPoint = {x: x + width / 2 - canvasOffset.x, y: y + height / 2 - canvasOffset.y}
             CanvasUtil.drawBezierCurves(bpStore.downCtx!, this.currentLine)
             //计算线条的采样点，用于计算线条是否被选中
-            const {startPoint, endPoint, firstCP, secondCP, startDom, endDom} = this.currentLine;
+            const {startPoint, endPoint, firstCP, secondCP, startAnchorId, endAnchorId} = this.currentLine;
             const samplePointArr = CanvasUtil.sampleBezierCurve(startPoint, firstCP, secondCP, endPoint, 20);
             const {connectedLines, addAnchorRelationship} = bpStore;
             connectedLines.push({
-                color: "#fff",
+                color: "#949494",
                 lineWidth: 1,
                 lineDash: [],
                 startPoint: {...startPoint},
@@ -81,8 +79,8 @@ class LineLayer extends React.Component {
                 firstCP: {...firstCP},
                 secondCP: {...secondCP},
                 samplePoints: samplePointArr,
-                startDom: startDom,
-                endDom: endDom
+                startAnchorId: startAnchorId!,
+                endAnchorId: endAnchorId!,
             })
             addAnchorRelationship(this.currentLine.startAnchorId!, this.currentLine.endAnchorId)
         });

@@ -7,6 +7,7 @@ import {AbstractHeaderItem, HeaderItemProps} from "../header/HeaderTypes";
 import {AbstractComponentDefinition} from "../../framework/core/AbstractComponentDefinition";
 import {AbstractOperator} from "../../framework/operate/AbstractOperator";
 import AbstractConvert from "../../framework/convert/AbstractConvert";
+import bpStore from "../../blueprint/store/BPStore";
 
 export default class EditorDesignerLoader extends AbstractDesignerLoader {
 
@@ -113,6 +114,7 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
         const {doInit, setLoaded} = designerStore;
         this.abstractOperatorMap[SaveType.LOCAL].getProject(urlParams.id).then((store: ProjectDataType | null) => {
             if (store) {
+                //初始化designerStore
                 doInit({
                     id: store.id,
                     canvasConfig: store.canvasConfig,
@@ -127,12 +129,11 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
                 const {setMinLevel, setMaxLevel} = eventOperateStore;
                 setMinLevel(store.extendParams?.minLevel || 0);
                 setMaxLevel(store.extendParams?.maxLevel || 0);
-                //设置已处于锁定的组件id
-                // const unLockedIds: string[] = [];
-                // Object.values(store.layoutConfigs!).forEach((item: MovableItemType) => {
-                //     if (item.lock)
-                //         unLockedIds.push(item.id!);
-                // })
+                //初始化bpStore（蓝图状态） todo 是否可以以更规范的方式处理？
+                const {setNodes, setAnchorRelationship, setConnectedLines} = bpStore;
+                setNodes(store.bpNodes || []);
+                setAnchorRelationship(store.bpAPMap || {});
+                setConnectedLines(store.bpLines || []);
             }
             setLoaded(true);
         })

@@ -9,8 +9,8 @@ export interface CanvasLineType {
     secondCP: PointType;
     //采样点列表
     samplePoints?: PointType[];
-    startDom?: HTMLElement;
-    endDom?: HTMLElement;
+    // startDom?: HTMLElement;
+    // endDom?: HTMLElement;
     //起始锚点id
     startAnchorId?: string;
     //结束锚点id

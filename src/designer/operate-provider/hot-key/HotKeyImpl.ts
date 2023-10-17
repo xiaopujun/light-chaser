@@ -12,6 +12,7 @@ import headerStore from "../../header/HeaderStore";
 import layerListStore from "../../float-configs/layer-list/LayerListStore";
 import footerStore from "../../footer/FooterStore";
 import DateUtil from "../../../utils/DateUtil";
+import bpStore from "../../../blueprint/store/BPStore";
 
 export const selectAll = () => {
     let comps = document.getElementsByClassName('lc-comp-item');
@@ -119,7 +120,13 @@ export const doSave = throttle(() => {
         if (saveType === SaveType.LOCAL) {
             const {projectConfig: {saveType = SaveType.LOCAL}, updateProjectConfig} = designerStore;
             updateProjectConfig({updateTime: DateUtil.format(new Date())})
-            EditorDesignerLoader.getInstance().abstractOperatorMap[saveType].saveProject(cloneDeep(designerStore.getData()));
+            const proData = designerStore.getData();
+            //设置蓝图数据 todo 这里的数据采集方式应该要采用以各种更合理的方式处理
+            const {anchorRelationship, nodes, connectedLines} = bpStore;
+            proData.bpAPMap = anchorRelationship;
+            proData.bpNodes = nodes;
+            proData.bpLines = connectedLines;
+            EditorDesignerLoader.getInstance().abstractOperatorMap[saveType].saveProject(cloneDeep(proData));
         } else if (saveType === SaveType.SERVER) {
             alert("server save");
         }
