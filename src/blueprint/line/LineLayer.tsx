@@ -14,8 +14,8 @@ class LineLayer extends React.Component {
     downLayer: HTMLCanvasElement | null = null;
 
     currentLine: CanvasLineType = {
-        color: "#fff",
-        lineWidth: 2,
+        color: "#c0c0c0",
+        lineWidth: 1,
         lineDash: [10, 10],
         startPoint: {x: 0, y: 0},
         endPoint: {x: 0, y: 0},
@@ -62,21 +62,24 @@ class LineLayer extends React.Component {
             //在下层绘制当前操作的线条
             this.currentLine.id = idGenerate.generateId();
             this.currentLine.lineDash = [];
-            this.currentLine.lineWidth = 2;
-            this.currentLine.color = "#a7a7a7";
+            this.currentLine.lineWidth = 1;
+            this.currentLine.color = "#a2a2a2";
             this.currentLine.endAnchorId = (e!.target as HTMLElement).id;
             const {x, y, width, height} = (e.target as HTMLElement).getBoundingClientRect();
             this.currentLine.endPoint = {x: x + width / 2 - canvasOffset.x, y: y + height / 2 - canvasOffset.y}
             CanvasUtil.drawBezierCurves(bpStore.downCtx!, this.currentLine)
             //计算线条的采样点，用于计算线条是否被选中
-            const {startPoint, endPoint, firstCP, secondCP, startAnchorId, endAnchorId} = this.currentLine;
+            const {
+                id, startPoint, endPoint, firstCP, secondCP, lineDash,
+                startAnchorId, endAnchorId, color, lineWidth
+            } = this.currentLine;
             const samplePointArr = CanvasUtil.sampleBezierCurve(startPoint!, firstCP!, secondCP!, endPoint, 20);
             const {addAPMap, addLine, addAPLineMap} = bpStore;
             addLine({
-                id: this.currentLine.id!,
-                color: "#949494",
-                lineWidth: 1,
-                lineDash: [],
+                id: id!,
+                color: color,
+                lineWidth: lineWidth,
+                lineDash: lineDash,
                 startPoint: {...startPoint!},
                 endPoint: {...endPoint},
                 firstCP: {...firstCP!},

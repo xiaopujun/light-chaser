@@ -10,13 +10,13 @@ export default class CanvasUtil {
     //绘制贝塞尔曲线
     public static drawBezierCurves(ctx: CanvasRenderingContext2D, lineConfig: CanvasLineType) {
         const {startPoint, endPoint, firstCP, secondCP, color, lineWidth, lineDash} = lineConfig;
-        ctx.strokeStyle = color;
-        ctx.lineWidth = lineWidth;
+        ctx.strokeStyle = color!;
+        ctx.lineWidth = lineWidth!;
         ctx.beginPath(); //新建一条path
-        ctx.moveTo(startPoint.x, startPoint.y);
-        ctx.setLineDash(lineDash)
+        ctx.moveTo(startPoint!.x, startPoint!.y);
+        ctx.setLineDash(lineDash!)
         ctx.lineDashOffset = 0;
-        ctx.bezierCurveTo(firstCP.x, firstCP.y, secondCP.x, secondCP.y, endPoint.x, endPoint.y)
+        ctx.bezierCurveTo(firstCP!.x, firstCP!.y, secondCP!.x, secondCP!.y, endPoint!.x, endPoint!.y)
         ctx.stroke(); //绘制路径。
     }
 
