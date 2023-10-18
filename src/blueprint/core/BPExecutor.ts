@@ -21,8 +21,8 @@ export default class BPExecutor {
         let anchorInfoArr = anchorId.split("_");
         if (anchorInfoArr.length !== 4)
             return;
-        const {anchorRelationship} = bpStore;
-        const nextAnchorIds = anchorRelationship[anchorId];
+        const {bpAPMap} = bpStore;
+        const nextAnchorIds = bpAPMap[anchorId];
         if (!nextAnchorIds)
             return;
         nextAnchorIds.forEach((nextAnchorId: string) => {

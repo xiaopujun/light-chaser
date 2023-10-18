@@ -1,27 +1,28 @@
-import {action, makeObservable, observable} from "mobx";
+import {action, makeObservable, observable, runInAction, toJS} from "mobx";
 import Moveable from "react-moveable";
 import Selecto from "react-selecto";
 import {CanvasLineType, PointType} from "../types";
 import {NodeProps} from "../node/BPNode";
+import {idGenerate} from "../../utils/IdGenerate";
 
 class BPStore {
     constructor() {
         makeObservable(this, {
             selectedNodes: observable,
+            bpNodes: observable,
             setSelectedNodes: action,
-            nodes: observable,
             addNodes: action,
         });
     }
 
-    //锚点间的对应关系，一个起始点可以链接多个终点（入库）
-    anchorRelationship: Record<string, string[]> = {};
+    //蓝图节点锚点间的对应关系，一个起始点可以链接多个终点（入库）
+    bpAPMap: Record<string, string[]> = {};
 
     //已经连接的线条列表(入库）
-    connectedLines: CanvasLineType[] = [];
+    bpLines: Record<string, CanvasLineType> = {};
 
     //拖拽到蓝图中的节点（入库）
-    nodes: NodeProps[] = [];
+    bpNodes: Record<string, NodeProps> = {};
 
     //被选中的蓝图节点列表
     selectedNodes: HTMLElement[] = [];
@@ -50,16 +51,41 @@ class BPStore {
     //蓝图画布缩放比例
     canvasScale: number = 1;
 
-    setAnchorRelationship = (anchorRelationship: Record<string, string[]>) => {
-        this.anchorRelationship = anchorRelationship;
+
+    setAPMap = (anchorRelationship: Record<string, string[]>) => {
+        this.bpAPMap = anchorRelationship;
     }
 
-    setConnectedLines = (connectedLines: CanvasLineType[]) => {
-        this.connectedLines = connectedLines;
+    setLines = (connectedLines: Record<string, CanvasLineType>) => {
+        this.bpLines = connectedLines;
     }
 
-    setNodes = (nodes: NodeProps[]) => {
-        this.nodes = nodes;
+    setNodes = (nodes: Record<string, NodeProps>) => {
+        this.bpNodes = nodes;
+    }
+
+    addNodes = (node: NodeProps) => {
+        this.bpNodes[node.id!] = node;
+    }
+
+    addAPMap = (startAnchorId: string, endAnchorId: string) => {
+        if (!this.bpAPMap[startAnchorId])
+            this.bpAPMap[startAnchorId] = [];
+        this.bpAPMap[startAnchorId].push(endAnchorId);
+    }
+
+    delAPMap = (startAnchorId: string, endAnchorId: string) => {
+        if (this.bpAPMap[startAnchorId]) {
+            const index = this.bpAPMap[startAnchorId].indexOf(endAnchorId);
+            if (index !== -1) {
+                this.bpAPMap[startAnchorId].splice(index, 1);
+            }
+        }
+    }
+
+    addLine = (line: CanvasLineType) => {
+        line.id = idGenerate.generateId();
+        this.bpLines[line.id] = line;
     }
 
     setCanvasScale = (scale: number) => {
@@ -94,25 +120,7 @@ class BPStore {
         this.nodeContainerRef = ref;
     }
 
-    addNodes = (node: NodeProps) => {
-        this.nodes.push(node);
-    }
 
-    addAnchorRelationship = (startAnchorId: string, endAnchorId: string) => {
-        if (!this.anchorRelationship[startAnchorId]) {
-            this.anchorRelationship[startAnchorId] = [];
-        }
-        this.anchorRelationship[startAnchorId].push(endAnchorId);
-    }
-
-    removeAnchorRelationship = (startAnchorId: string, endAnchorId: string) => {
-        if (this.anchorRelationship[startAnchorId]) {
-            const index = this.anchorRelationship[startAnchorId].indexOf(endAnchorId);
-            if (index !== -1) {
-                this.anchorRelationship[startAnchorId].splice(index, 1);
-            }
-        }
-    }
 }
 
 const bpStore = new BPStore();

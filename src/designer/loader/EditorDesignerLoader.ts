@@ -130,10 +130,10 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
                 setMinLevel(store.extendParams?.minLevel || 0);
                 setMaxLevel(store.extendParams?.maxLevel || 0);
                 //初始化bpStore（蓝图状态） todo 是否可以以更规范的方式处理？
-                const {setNodes, setAnchorRelationship, setConnectedLines} = bpStore;
-                setNodes(store.bpNodes || []);
-                setAnchorRelationship(store.bpAPMap || {});
-                setConnectedLines(store.bpLines || []);
+                const {setNodes, setAPMap, setLines} = bpStore;
+                setNodes(store.bpNodes || {});
+                setAPMap(store.bpAPMap || {});
+                setLines(store.bpLines || {});
             }
             setLoaded(true);
         })

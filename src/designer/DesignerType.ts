@@ -293,9 +293,9 @@ export interface ProjectDataType {
     extendParams?: extendParams;
 
     //蓝图节点
-    bpNodes?: NodeProps[];
+    bpNodes?: Record<string, NodeProps>;
     //蓝图线条
-    bpLines?: CanvasLineType[];
+    bpLines?: Record<string, CanvasLineType>;
     //蓝图锚点之间的连线关系映射
-    bpAPMap?: Record<string, string[] >;
+    bpAPMap?: Record<string, string[]>;
 }

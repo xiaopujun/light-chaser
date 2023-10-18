@@ -13,7 +13,7 @@ import Accordion from "../ui/accordion/Accordion";
 import {Slider} from "../ui/slider/Slider";
 import ColorPicker from "../ui/color-picker/ColorPicker";
 
-class MonacoDemo extends Component {
+class JsonSchemaDemo extends Component {
 
     monacoContainer: any = null;
     schema: Control = {
@@ -245,5 +245,5 @@ class MonacoDemo extends Component {
     }
 }
 
-export default MonacoDemo;
+export default JsonSchemaDemo;
 

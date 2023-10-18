@@ -1,25 +1,23 @@
-import {makeAutoObservable} from "mobx";
-import _ from "lodash";
+import {action, makeAutoObservable, makeObservable, observable} from "mobx";
+
+export interface Student {
+    id: string;
+    name: string;
+    age: number;
+}
 
 class DemoStore {
     constructor() {
-        makeAutoObservable(this);
+        makeObservable(this, {
+            students: observable,
+            addStudent: action,
+        })
     }
 
-    students: any = {
-        '0': {
-            name: "张三",
-            age: 18,
-        },
-        '1': {
-            name: "李四",
-            age: 19,
-        }
-    }
+    students: Record<string, Student> = {}
 
-    setStudent = (student: any) => {
-        let item = this.students['0'];
-        this.students['0'] = _.merge(item, student);
+    addStudent = (student: Student) => {
+        this.students[student.id] = student;
     }
 }
 

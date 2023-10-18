@@ -10,9 +10,9 @@ export interface BPMovableProps {
 }
 
 export const reRenderLine = () => {
-    const {connectedLines, downCtx, canvasOffset} = bpStore;
+    const {bpLines, downCtx, canvasOffset} = bpStore;
     //更新每条线的起始点和终点
-    connectedLines.forEach((line: CanvasLineType) => {
+    Object.values(bpLines).forEach((line: CanvasLineType) => {
         //重新设置连线的起始点和终点
         const {startAnchorId, endAnchorId} = line;
         const startDom = document.getElementById(startAnchorId!);
@@ -36,7 +36,7 @@ export const reRenderLine = () => {
 
     //重新绘制连线
     downCtx!.clearRect(0, 0, 10000, 10000);
-    connectedLines.forEach((line: CanvasLineType) => {
+    Object.values(bpLines).forEach((line: CanvasLineType) => {
         CanvasUtil.drawBezierCurves(downCtx!, line);
     })
 }

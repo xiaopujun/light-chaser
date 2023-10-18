@@ -69,8 +69,8 @@ class LineLayer extends React.Component {
             //计算线条的采样点，用于计算线条是否被选中
             const {startPoint, endPoint, firstCP, secondCP, startAnchorId, endAnchorId} = this.currentLine;
             const samplePointArr = CanvasUtil.sampleBezierCurve(startPoint, firstCP, secondCP, endPoint, 20);
-            const {connectedLines, addAnchorRelationship} = bpStore;
-            connectedLines.push({
+            const {addAPMap, addLine} = bpStore;
+            addLine({
                 color: "#949494",
                 lineWidth: 1,
                 lineDash: [],
@@ -81,8 +81,8 @@ class LineLayer extends React.Component {
                 samplePoints: samplePointArr,
                 startAnchorId: startAnchorId!,
                 endAnchorId: endAnchorId!,
-            })
-            addAnchorRelationship(this.currentLine.startAnchorId!, this.currentLine.endAnchorId)
+            });
+            addAPMap(this.currentLine.startAnchorId!, this.currentLine.endAnchorId)
         });
 
         document.addEventListener('mousemove', (e) => {
