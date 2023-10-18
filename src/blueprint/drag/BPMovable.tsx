@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import Moveable, {OnDrag, OnDragStart} from "react-moveable";
+import Moveable, {OnDrag, OnDragEnd, OnDragStart} from "react-moveable";
 import bpStore from "../store/BPStore";
 import {observer} from "mobx-react";
 import {CanvasLineType} from "../types";
@@ -42,36 +42,84 @@ export const reRenderLine = () => {
 }
 
 export const BPMovable = observer((props: BPMovableProps) => {
-    const {children} = props;
-    const movableRef = React.createRef<Moveable>();
+        const {children} = props;
+        const movableRef = React.createRef<Moveable>();
 
-    useEffect(() => {
-        const {setBpMovableRef} = bpStore;
-        setBpMovableRef(movableRef.current!);
-    })
+        useEffect(() => {
+            const {setBpMovableRef} = bpStore;
+            setBpMovableRef(movableRef.current!);
+        })
 
-    const onDrag = (e: OnDrag) => {
-        const {target, beforeTranslate} = e;
-        target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
-        //重绘连线
-        reRenderLine();
+        const onDrag = (e: OnDrag) => {
+            const {target, beforeTranslate} = e;
+            target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
+            //重绘连线
+            reRenderLine();
+        }
+
+        const onDragStart = (e: OnDragStart) => {
+            const {inputEvent: {target}} = e;
+            if (target.classList.contains('ap-circle'))
+                return false;
+        }
+
+        const onDragEnd = (e: OnDragEnd) => {
+            const {bpNodes, updNodePos, bpAPLineMap, bpLines, updLinePos} = bpStore;
+            const {target, lastEvent} = e;
+            const {beforeTranslate} = lastEvent;
+            const nodeId = target.id.split(':')[1];
+            //更新节点位置
+            updNodePos({
+                id: nodeId,
+                position: {
+                    x: beforeTranslate[0],
+                    y: beforeTranslate[1]
+                }
+            });
+            //更新线段位置
+            const {input = [], output = []} = bpNodes[nodeId];
+            const aps = [...input!, ...output!];
+            aps && aps.forEach(ap => {
+                const lineIds = bpAPLineMap[ap.id!];
+                lineIds && lineIds.forEach(lineId => {
+                    const lineInfo = bpLines[lineId];
+                    if (lineInfo) {
+                        const {startAnchorId, endAnchorId} = lineInfo;
+                        const startDom = document.getElementById(startAnchorId!);
+                        const endDom = document.getElementById(endAnchorId!);
+                        const {x: startX, y: startY, width: startW, height: startH} = startDom!.getBoundingClientRect();
+                        const {x: endX, y: endY, width: endW, height: endH} = endDom!.getBoundingClientRect();
+                        updLinePos({
+                            id: lineId,
+                            //定位到锚点中心
+                            startPoint: {
+                                x: startX + (startW / 2),
+                                y: startY + (startH / 2)
+                            },
+                            endPoint: {
+                                x: endX + (endW / 2),
+                                y: endY + (endH / 2)
+                            }
+                        })
+                    }
+                })
+            });
+        }
+
+        const {selectedNodes} = bpStore;
+        return (
+            <>
+                {children}
+                <Moveable ref={movableRef}
+                          target={selectedNodes}
+                          draggable={true}
+                          origin={false}
+                          hideDefaultLines={true}
+                          onDrag={onDrag}
+                          onDragStart={onDragStart}
+                          onDragEnd={onDragEnd}
+                />
+            </>
+        )
     }
-    const {selectedNodes} = bpStore;
-    return (
-        <>
-            {children}
-            <Moveable ref={movableRef}
-                      target={selectedNodes}
-                      draggable={true}
-                      origin={false}
-                      onDrag={onDrag}
-                      hideDefaultLines={true}
-                      onDragStart={(e: OnDragStart) => {
-                          const {inputEvent: {target}} = e;
-                          if (target.classList.contains('ap-circle'))
-                              return false;
-                      }}
-            />
-        </>
-    )
-})
+)

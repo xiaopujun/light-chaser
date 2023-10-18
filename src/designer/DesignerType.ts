@@ -298,4 +298,6 @@ export interface ProjectDataType {
     bpLines?: Record<string, CanvasLineType>;
     //蓝图锚点之间的连线关系映射
     bpAPMap?: Record<string, string[]>;
+    //蓝图锚点与线条之间的关系映射
+    bpAPLineMap?: Record<string, string[]>;
 }

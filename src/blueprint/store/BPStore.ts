@@ -1,9 +1,9 @@
-import {action, makeObservable, observable, runInAction, toJS} from "mobx";
+import {action, makeObservable, observable} from "mobx";
 import Moveable from "react-moveable";
 import Selecto from "react-selecto";
 import {CanvasLineType, PointType} from "../types";
 import {NodeProps} from "../node/BPNode";
-import {idGenerate} from "../../utils/IdGenerate";
+import ObjectUtil from "../../utils/ObjectUtil";
 
 class BPStore {
     constructor() {
@@ -12,6 +12,7 @@ class BPStore {
             bpNodes: observable,
             setSelectedNodes: action,
             addNodes: action,
+            updNodePos: action,
         });
     }
 
@@ -23,6 +24,9 @@ class BPStore {
 
     //拖拽到蓝图中的节点（入库）
     bpNodes: Record<string, NodeProps> = {};
+
+    //锚点与线条的对应关系（入库），一个锚点可以连接多条线，用于位置更新时，快速找到线条并更新线条位置
+    bpAPLineMap: Record<string, string[]> = {};
 
     //被选中的蓝图节点列表
     selectedNodes: HTMLElement[] = [];
@@ -51,6 +55,41 @@ class BPStore {
     //蓝图画布缩放比例
     canvasScale: number = 1;
 
+    addAPLineMap = (anchorId: string, lineId: string) => {
+        if (!this.bpAPLineMap[anchorId])
+            this.bpAPLineMap[anchorId] = [];
+        this.bpAPLineMap[anchorId].push(lineId);
+    }
+
+    delAPLineMap = (anchorId: string, lineId: string) => {
+        if (this.bpAPLineMap[anchorId]) {
+            const index = this.bpAPLineMap[anchorId].indexOf(lineId);
+            if (index !== -1) {
+                this.bpAPLineMap[anchorId].splice(index, 1);
+            }
+        }
+    }
+
+    //更新节点与线条的位置
+    updNodePos = (node: NodeProps) => {
+        const oldNode = this.bpNodes[node.id!];
+        if (oldNode) {
+            ObjectUtil.merge(oldNode, node);
+        }
+    }
+
+    //更新线段的位置
+    updLinePos = (line: CanvasLineType) => {
+        const oldLine = this.bpLines[line.id!];
+        if (oldLine) {
+            oldLine.startPoint = line.startPoint;
+            oldLine.endPoint = line.endPoint;
+        }
+    }
+
+    setAPLineMap = (anchorRelationship: Record<string, string[]>) => {
+        this.bpAPLineMap = anchorRelationship;
+    }
 
     setAPMap = (anchorRelationship: Record<string, string[]>) => {
         this.bpAPMap = anchorRelationship;
@@ -84,8 +123,7 @@ class BPStore {
     }
 
     addLine = (line: CanvasLineType) => {
-        line.id = idGenerate.generateId();
-        this.bpLines[line.id] = line;
+        this.bpLines[line.id!] = line;
     }
 
     setCanvasScale = (scale: number) => {

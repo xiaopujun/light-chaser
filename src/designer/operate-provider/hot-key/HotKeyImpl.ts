@@ -122,10 +122,11 @@ export const doSave = throttle(() => {
             updateProjectConfig({updateTime: DateUtil.format(new Date())})
             const proData = designerStore.getData();
             //设置蓝图数据 todo 这里的数据采集方式应该要采用以各种更合理的方式处理
-            const {bpAPMap, bpNodes, bpLines} = bpStore;
+            const {bpAPMap, bpNodes, bpLines, bpAPLineMap} = bpStore;
             proData.bpAPMap = bpAPMap;
             proData.bpNodes = bpNodes;
             proData.bpLines = bpLines;
+            proData.bpAPLineMap = bpAPLineMap;
             EditorDesignerLoader.getInstance().abstractOperatorMap[saveType].saveProject(cloneDeep(proData));
         } else if (saveType === SaveType.SERVER) {
             alert("server save");

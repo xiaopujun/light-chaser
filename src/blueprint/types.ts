@@ -1,16 +1,14 @@
 export interface CanvasLineType {
     id?: string;
-    color: string;
-    lineWidth: number;
-    lineDash: number[];
-    startPoint: PointType;
-    endPoint: PointType;
-    firstCP: PointType;
-    secondCP: PointType;
+    color?: string;
+    lineWidth?: number;
+    lineDash?: number[];
+    startPoint?: PointType;
+    endPoint?: PointType;
+    firstCP?: PointType;
+    secondCP?: PointType;
     //采样点列表
     samplePoints?: PointType[];
-    // startDom?: HTMLElement;
-    // endDom?: HTMLElement;
     //起始锚点id
     startAnchorId?: string;
     //结束锚点id

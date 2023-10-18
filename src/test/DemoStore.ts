@@ -1,4 +1,4 @@
-import {action, makeAutoObservable, makeObservable, observable} from "mobx";
+import {action, makeObservable, observable} from "mobx";
 
 export interface Student {
     id: string;

@@ -1,6 +1,5 @@
 import React from 'react';
 import DragScaleProvider from "../framework/drag-scale/DragScaleProvider";
-import demoStore from "./DemoStore";
 import {idGenerate} from "../utils/IdGenerate";
 import {observer} from "mobx-react";
 import {NodeLayer} from "../blueprint/node/NodeLayer";
@@ -33,7 +32,6 @@ class MyComponent extends React.Component {
     }
 
     render() {
-        const {students, addStudent} = demoStore;
         // const {addNodes} = bpStore;
         return (
             <>
@@ -43,9 +41,9 @@ class MyComponent extends React.Component {
                 {/*             footer={<BPFooter/>}*/}
                 {/*             right={<BPRight/>}*/}
                 {/*/>*/}
-                    <button onClick={addNodes}>添加
-                    </button>
-                    <NodeLayer/>
+                <button onClick={addNodes}>添加
+                </button>
+                <NodeLayer/>
 
             </>
 
