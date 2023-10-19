@@ -86,8 +86,8 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
             this.container = container;
         if (!this.instance)
             this.instance = new Clazz(container, this.config?.style! as C);
-        this.commonLoadData(this);
         this.instance?.render();
+        this.commonLoadData(this);
         return this;
     }
 
