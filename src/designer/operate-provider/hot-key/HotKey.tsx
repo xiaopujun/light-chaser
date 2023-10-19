@@ -95,19 +95,6 @@ class HotKey extends Component<HotKeyProps> {
         }
     }
 
-    wheel = (e: any) => {
-        let hotKey = this.currHotKey.join(' + ') + ' + wheel';
-        const {handler, range} = this.handlerMapping[hotKey] || {};
-        if (handler) {
-            if (range) {
-                const specialDom = this.getSpecialDomCache(range);
-                if (!specialDom || !specialDom.contains(e.target))
-                    return;
-            }
-            handler(e);
-        }
-    }
-
     /**
      * 失去焦点时清空当前热键（一般是切换屏幕）
      */
@@ -119,14 +106,12 @@ class HotKey extends Component<HotKeyProps> {
     componentDidMount() {
         document.addEventListener('keydown', this.keyDown);
         document.addEventListener('keyup', this.keyUp);
-        document.addEventListener('wheel', this.wheel);
         window.onblur = this.onBlur;
     }
 
     componentWillUnmount() {
         document.removeEventListener('keydown', this.keyDown);
         document.removeEventListener('keyup', this.keyUp);
-        document.removeEventListener('wheel', this.wheel);
         window.onblur = null;
     }
 

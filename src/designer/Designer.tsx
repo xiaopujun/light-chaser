@@ -13,7 +13,6 @@ import FloatConfigs from "./float-configs/FloatConfigs";
 import contextMenuStore from "./operate-provider/right-click-menu/ContextMenuStore";
 import eventOperateStore from "./operate-provider/EventOperateStore";
 import eventManager from "./operate-provider/core/EventManager";
-import {KMMap} from "./operate-provider/hot-key/KeyboardMouse";
 import EditorDesignerLoader from "./loader/EditorDesignerLoader";
 import designerStore from "./store/DesignerStore";
 import Loading from "../lib/loading/Loading";
@@ -91,7 +90,6 @@ function bindEventToDom() {
     document.addEventListener("click", clickEmit);
     document.addEventListener("contextmenu", contextMenuEmit);
     document.addEventListener("pointerdown", pointerDownEmit);
-    document.addEventListener("pointermove", pointerMoveEmit);
     document.addEventListener("pointerup", pointerUpEmit);
 }
 
@@ -102,7 +100,6 @@ function unbindEventToDom() {
     document.removeEventListener("click", clickEmit);
     document.removeEventListener("contextmenu", contextMenuEmit);
     document.removeEventListener("pointerdown", pointerDownEmit);
-    document.removeEventListener("pointermove", pointerMoveEmit);
     document.removeEventListener("pointerup", pointerUpEmit);
 }
 
@@ -110,7 +107,6 @@ function unbindEventToDom() {
 const clickEmit = (event: any) => eventManager.emit('click', event);
 const contextMenuEmit = (event: any) => eventManager.emit('contextmenu', event);
 const pointerDownEmit = (event: any) => eventManager.emit('pointerdown', event);
-const pointerMoveEmit = (event: any) => eventManager.emit('pointermove', event);
 const pointerUpEmit = (event: any) => eventManager.emit('pointerup', event);
 
 
@@ -137,20 +133,12 @@ const contextMenuHandler = (event: any) => {
     }
 }
 
-const pointerDownHandler = (event: any) => {
-    if (event.button === 0) {
-        KMMap.leftClick = true;
-    } else if (event.button === 2)
-        KMMap.rightClick = true;
+const pointerDownHandler = () => {
     const {setMouseDownTime} = contextMenuStore;
     setMouseDownTime(Date.now());
 }
 
 const pointerUpHandler = (event: any) => {
-    if (event.button === 0)
-        KMMap.leftClick = false;
-    else if (event.button === 2)
-        KMMap.rightClick = false;
     const {setMouseUpTime} = contextMenuStore;
     setMouseUpTime(Date.now());
     const {setPointerTarget} = eventOperateStore;
