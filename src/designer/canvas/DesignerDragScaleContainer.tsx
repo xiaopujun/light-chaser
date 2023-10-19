@@ -1,7 +1,6 @@
 import React, {useEffect} from "react";
 import DragScaleProvider from "../../framework/drag-scale/DragScaleProvider";
 import designerStore from "../store/DesignerStore";
-import eventManager from "../operate-provider/core/EventManager";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 
 export interface DesignerDragScaleContainerProps {
@@ -18,16 +17,23 @@ export const DesignerDragScaleContainer: React.FC<DesignerDragScaleContainerProp
         const container = containerRef.current;
         const content = contentRef.current;
         if (container && content) {
+            const {setDsContentRef} = eventOperateStore;
+            setDsContentRef(content)
             const dragScaleProvider = new DragScaleProvider({
                 container,
                 content,
                 posOffset: {x: 80, y: 70},
-                scaleCallback: (scale, ratio, e) => {
-                    const {setScale, setRatio} = eventOperateStore;
+                scaleCallback: (dsData, e) => {
+                    const {scale, ratio} = dsData;
+                    const {setScale, setRatio, rulerRef} = eventOperateStore;
                     setScale(scale);
                     setRatio(ratio);
-                    eventManager.emit('wheel', e);
-                }
+                    rulerRef?.ruleWheel(scale, ratio);
+                },
+                dragCallback: (dsData, e) => {
+                    const {rulerRef} = eventOperateStore;
+                    rulerRef?.ruleDrag(e);
+                },
             });
             return () => {
                 dragScaleProvider.destroy();
@@ -39,11 +45,17 @@ export const DesignerDragScaleContainer: React.FC<DesignerDragScaleContainerProp
             overflow: "hidden",
             height: window.innerHeight - 90,
             width: window.innerWidth - 95,
-            backgroundColor: '#434343'
+            backgroundColor: '#434343',
+            position: 'relative'
         }}>
             <div className={'designer-ds-content lc-drag-scale-provider'} ref={contentRef}
                  onDoubleClick={onDoubleClick}
-                 style={{width: canvasConfig?.width, height: canvasConfig?.height, background: '#1c1c1c'}}>
+                 style={{
+                     width: canvasConfig?.width,
+                     height: canvasConfig?.height,
+                     background: '#1c1c1c',
+                     position: 'absolute',
+                 }}>
                 {children}
             </div>
         </div>

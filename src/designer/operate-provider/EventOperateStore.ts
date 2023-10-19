@@ -6,6 +6,7 @@ import {RefObject} from "react";
 import designerStore from "../store/DesignerStore";
 import {MovableItemType} from "../../lib/lc-movable/types";
 import ObjectUtil from "../../utils/ObjectUtil";
+import DesignerRuler from "../../lib/lc-ruler/DesignerRuler";
 
 /**
  * 组件多选情况下的坐标值
@@ -64,6 +65,14 @@ class EventOperateStore {
      */
     selectorRef: any = null;
     /**
+     * 设计器标尺组件实例引用
+     */
+    rulerRef: DesignerRuler | null = null;
+    /**
+     * 设计器画布拖拽缩放内容dom实例引用（用于同步标尺的缩放）
+     */
+    dsContentRef: HTMLDivElement | null = null;
+    /**
      * 被框选中的目标元素，用于框选后移动、缩放操作
      * The target element selected by the frame, used for moving and scaling operations after the frame is selected
      */
@@ -118,6 +127,10 @@ class EventOperateStore {
      * 设计器画布缩放比例
      */
     ratio = 1;
+
+    setDsContentRef = (ref: HTMLDivElement | null) => this.dsContentRef = ref;
+
+    setRuleRef = (ref: DesignerRuler | null) => this.rulerRef = ref;
 
     setRatio = (ratio: number) => this.ratio = ratio;
 

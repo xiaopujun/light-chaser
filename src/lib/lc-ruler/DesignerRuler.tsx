@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import Ruler, {RulerProps} from "@scena/react-ruler";
-import {KMMap} from "../../designer/operate-provider/hot-key/KeyboardMouse";
-import eventManager from "../../designer/operate-provider/core/EventManager";
 import eventOperateStore from "../../designer/operate-provider/EventOperateStore";
+import {PointType} from "../../blueprint/types";
 
 interface DesignerRulerProps {
     offsetX?: number;
@@ -30,92 +29,42 @@ interface DesignerRulerProps {
  * 则鼠标指针在当前缩放系数下的位置为：rulerP = startP + (mouOffset / scale)
  * 鼠标移动后的标尺起始位置为：scrollPos = startP + (mouOffset / scale)
  */
-// todo 通过画布的scale和translate反推标尺的起始位置
 class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
-
-    wheelTimerId: any = null;
-    pointerMoveTimerId: any = null;
 
     state = {
         render: 0
     }
 
+    rulerX: any = null;
+    rulerY: any = null;
+
     unit = 50;
 
+    scrollPos: PointType = {x: 0, y: 0};
+
     baseOffset = 20;
-    _scrollPosX = 0;
-    _scrollPosY = 0;
 
-    rulerX: any = null;
-    offsetX = 0;
-    mousePosX = 0;
-    scrollPosX = 0;
-    startPosX = 0;
+    ruleWheel = (scale: number) => {
+        const {dsContentRef} = eventOperateStore;
+        const {x, y} = dsContentRef?.getBoundingClientRect()!;
+        this.scrollPos.x = -(x - 80) / scale;
+        this.scrollPos.y = -(y - 70) / scale;
 
-    rulerY: any = null;
-    offsetY = 0;
-    mousePosY = 0;
-    scrollPosY = 0;
-    startPosY = 0;
+        this.unit = Math.floor(50 / scale);
+        this.setState({render: this.state.render + 1})
+    }
+
+    ruleDrag = () => {
+        const {dsContentRef, scale} = eventOperateStore;
+        const {x, y} = dsContentRef?.getBoundingClientRect()!;
+        this.rulerX && this.rulerX.scroll(-(x - 80) / scale);
+        this.rulerY && this.rulerY.scroll(-(y - 70) / scale);
+    }
 
     componentDidMount() {
-        const {offsetX: ofX = 0, offsetY: ofY = 0} = this.props;
-        eventManager.register('wheel', () => {
-            const {scale, ratio} = eventOperateStore;
-            this.startPosX = this.mousePosX - ((this.mousePosX - this.startPosX) / ratio);
-            this.scrollPosX = this.startPosX;
-            this.startPosY = this.mousePosY - ((this.mousePosY - this.startPosY) / ratio);
-            this.scrollPosY = this.startPosY;
-            this.unit = Math.floor(50 / scale);
-            clearTimeout(this.wheelTimerId);
-            this.wheelTimerId = setTimeout(() => {
-                this.setState({render: this.state.render + 1})
-            }, 300);
-        });
-
-        eventManager.register('pointermove', (e: any) => {
-            const {scale} = eventOperateStore;
-            this.mousePosX = this.startPosX + ((e.clientX - this.baseOffset - ofX) / scale);
-            this.mousePosY = this.startPosY + ((e.clientY - this.baseOffset - ofY) / scale);
-            if (KMMap.rightClick) {
-                this.offsetX = this.offsetX - e.movementX;
-                this._scrollPosX = this.startPosX + (this.offsetX / scale)
-                this.offsetY = this.offsetY - e.movementY;
-                this._scrollPosY = this.startPosY + (this.offsetY / scale)
-
-                this.rulerX && this.rulerX.scroll(this._scrollPosX);
-                this.rulerY && this.rulerY.scroll(this._scrollPosY);
-            }
-        });
-
-        eventManager.register('pointerdown', (e: PointerEvent) => {
-            if (e.button === 2) {
-                this.offsetX = 0;
-                this.offsetY = 0;
-            }
-        });
-
-        eventManager.register('pointerup', (e: PointerEvent) => {
-            if (e.button === 2) {
-                this.offsetX = 0;
-                this.offsetY = 0;
-                this.scrollPosX = this._scrollPosX;
-                this.startPosX = this._scrollPosX;
-                this.scrollPosY = this._scrollPosY;
-                this.startPosY = this._scrollPosY;
-            }
-        });
+        const {setRuleRef} = eventOperateStore;
+        setRuleRef(this);
     }
-
-    componentWillUnmount() {
-        eventManager.unregister('wheel');
-        eventManager.unregister('pointermove');
-        eventManager.unregister('pointerdown');
-        eventManager.unregister('pointerup');
-        clearTimeout(this.wheelTimerId);
-        clearTimeout(this.pointerMoveTimerId);
-    }
-
 
     render() {
         const {scale} = eventOperateStore;
@@ -139,7 +88,7 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
                          left: this.baseOffset
                      }}>
                     <Ruler ref={ref => this.rulerX = ref}
-                           scrollPos={this.scrollPosX}
+                           scrollPos={this.scrollPos.x}
                            zoom={scale}
                            lineColor={'#444b4d'}
                            textColor={'#a6a6a6'}
@@ -158,7 +107,7 @@ class DesignerRuler extends Component<RulerProps & DesignerRulerProps> {
                      }}>
                     <Ruler ref={ref => this.rulerY = ref}
                            type={'vertical'}
-                           scrollPos={this.scrollPosY}
+                           scrollPos={this.scrollPos.y}
                            lineColor={'#444b4d'}
                            textColor={'#a6a6a6'}
                            zoom={scale}

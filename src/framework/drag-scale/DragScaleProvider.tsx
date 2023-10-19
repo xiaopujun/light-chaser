@@ -1,13 +1,21 @@
 import {PointType} from "../../blueprint/types";
 import {ScaleCore} from "../../designer/operate-provider/scale/ScaleCore";
 
+export interface DragScaleData {
+    scale: number;
+    ratio: number;
+    position: PointType;
+}
+
 export interface DragScaleProviderParams {
     container: HTMLDivElement | null;
     content: HTMLDivElement | null;
     position?: PointType;
     posOffset?: PointType;
-    dragCallback?: (position: PointType, e: any) => void;
-    scaleCallback?: (scale: number, ratio: number, e: any) => void;
+    dragCallback?: (dsData: DragScaleData, e: any) => void;
+    dragStartCallback?: (dsData: DragScaleData, e: any) => void;
+    dragEndCallback?: (dsData: DragScaleData, e: any) => void;
+    scaleCallback?: (dsData: DragScaleData, e: any) => void;
 }
 
 /**
@@ -21,13 +29,18 @@ export default class DragScaleProvider {
     private content: HTMLDivElement | null = null;
     private readonly position: PointType = {x: 0, y: 0};
     private posOffset: PointType = {x: 0, y: 0};
-    private readonly dragCallback?: (position: PointType, e: any) => void;
-    private readonly scaleCallback?: (scale: number, ratio: number, position: PointType, e: any) => void;
+    private readonly dragCallback?: (dsData: DragScaleData, e: any) => void;
+    private readonly scaleCallback?: (dsData: DragScaleData, e: any) => void;
+    private readonly dragStartCallback?: (dsData: DragScaleData, e: any) => void;
+    private readonly dragEndCallback?: (dsData: DragScaleData, e: any) => void;
 
     public scaleCore: ScaleCore = new ScaleCore();
 
     constructor(params: DragScaleProviderParams) {
-        const {container, content, position, posOffset, dragCallback, scaleCallback} = params;
+        const {
+            container, content, position, posOffset,
+            dragCallback, scaleCallback, dragStartCallback, dragEndCallback
+        } = params;
         this.container = container;
         this.content = content;
         if (position)
@@ -38,6 +51,10 @@ export default class DragScaleProvider {
             this.dragCallback = dragCallback;
         if (scaleCallback)
             this.scaleCallback = scaleCallback;
+        if (dragStartCallback)
+            this.dragStartCallback = dragStartCallback;
+        if (dragEndCallback)
+            this.dragEndCallback = dragEndCallback;
         this.registerDrag();
         this.registerScale();
     }
@@ -68,16 +85,24 @@ export default class DragScaleProvider {
             if (e.button === 2) {
                 this.container?.releasePointerCapture(e.pointerId);
                 this.container?.removeEventListener('pointermove', this.onDragMove);
+                if (this.dragEndCallback) {
+                    const {scale, ratio} = this.scaleCore;
+                    this.dragEndCallback({scale, ratio, position: this.position}, e);
+                }
             }
         });
     }
 
     private onDragMove = (e: any): void => {
-        this.position.x += e.movementX;
-        this.position.y += e.movementY;
-        this.content!.style.transform = 'translate3d(' + this.position.x + 'px, ' + this.position.y + 'px, 0) scale(' + this.scaleCore.scale + ')';
-        if (this.dragCallback)
-            this.dragCallback(this.position, e);
+        if (e.buttons === 2) {
+            this.position.x += e.movementX;
+            this.position.y += e.movementY;
+            this.content!.style.transform = 'translate3d(' + this.position.x + 'px, ' + this.position.y + 'px, 0) scale(' + this.scaleCore.scale + ')';
+            if (this.dragCallback) {
+                const {scale, ratio} = this.scaleCore;
+                this.dragCallback({scale, ratio, position: this.position}, e);
+            }
+        }
     }
 
     private onDragStart = (): void => {
@@ -85,6 +110,10 @@ export default class DragScaleProvider {
             if (e.button === 2) {
                 this.container?.setPointerCapture(e.pointerId);
                 this.container?.addEventListener('pointermove', this.onDragMove);
+                if (this.dragStartCallback) {
+                    const {scale, ratio} = this.scaleCore;
+                    this.dragStartCallback({scale, ratio, position: this.position}, e);
+                }
             }
         });
     }
@@ -101,8 +130,10 @@ export default class DragScaleProvider {
                 this.position.y = this.position.y - ((this.scaleCore.ratio - 1) * (e.clientY - this.posOffset.y - this.position.y - parseFloat(height) * 0.5));
                 this.content!.style.transform = 'translate3d(' + this.position.x + 'px, ' + this.position.y + 'px, 0) scale(' + this.scaleCore.scale + ')';
                 //执行回调
-                if (this.scaleCallback)
-                    this.scaleCallback(this.scaleCore.scale, this.scaleCore.ratio, this.position, e);
+                if (this.scaleCallback) {
+                    const {scale, ratio} = this.scaleCore;
+                    this.scaleCallback({scale, ratio, position: this.position}, e);
+                }
             }
         });
     }
