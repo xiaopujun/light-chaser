@@ -131,7 +131,8 @@ class BPStore {
     }
 
     setCanvasTranslate = (translate: PointType) => {
-        this.canvasTranslate = translate;
+        if (translate)
+            this.canvasTranslate = translate;
     }
 
     setSelectedNodes = (nodes: HTMLElement[]) => {

@@ -8,7 +8,6 @@ import bpStore from "../store/BPStore";
 import {BPDragScaleContainer} from "./BPDragScaleContainer";
 
 export const NodeLayer = observer(() => {
-    console.log('NodeLayer')
     const {bpNodes} = bpStore;
 
     return (

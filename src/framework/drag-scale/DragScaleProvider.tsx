@@ -67,6 +67,8 @@ export default class DragScaleProvider {
 
     /************************注册拖拽事件************************/
     private registerDrag() {
+        //初始化被拖拽对象位置
+        this.content!.style.transform = 'translate3d(' + this.position.x + 'px, ' + this.position.y + 'px, 0) scale(' + this.scaleCore.scale + ')';
         //阻止系统右键菜单显示
         this.container?.addEventListener("contextmenu", (e) => e.preventDefault())
         this.onDragStart();

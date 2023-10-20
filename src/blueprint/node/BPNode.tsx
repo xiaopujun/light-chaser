@@ -2,6 +2,7 @@ import React from "react";
 import './BPNode.less';
 import {PointType} from "../types";
 import bpStore from "../store/BPStore";
+import {toJS} from "mobx";
 
 export enum AnchorPointType {
     INPUT,
@@ -29,6 +30,7 @@ export const BPNode: React.FC<NodeProps> = React.memo((props) => {
     const {icon: Icon, name, input = [], output = [], position = {x: 0, y: 0}, titleBgColor = '#247057', id} = props;
     const cpList = [...output, ...input];
     const {canvasTranslate, canvasScale} = bpStore;
+    console.log('render node', toJS(canvasTranslate));
     return (
         <div className={'bp-node'} id={`bpnode:${id}`}
              style={{transform: 'translate(' + (position?.x - canvasTranslate.x) / canvasScale + 'px,' + (position?.y - canvasTranslate.y) / canvasScale + 'px)'}}>
