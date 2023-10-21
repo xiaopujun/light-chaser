@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {BPMovable} from "../drag/BPMovable";
 import {CodeSandboxOutlined} from "@ant-design/icons";
 import {BPNode} from "./BPNode";

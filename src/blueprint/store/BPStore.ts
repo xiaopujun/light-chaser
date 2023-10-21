@@ -174,14 +174,33 @@ class BPStore {
         this.nodeContainerRef = ref;
     }
 
-    delNode = (node: NodeProps) => {
-        //先删除节点，后删除节点上的线段
+    delNode = (ids: string[]) => {
+        if (!ids || ids.length === 0)
+            return;
+        //先删除节点上的线段，后删除节点
+        ids.forEach(id => {
+            const node = this.bpNodes[id];
+            if (node) {
+                const aps = [...node.input!, ...node.output!];
+                aps.forEach(ap => {
+                    const lineIds = this.bpAPLineMap[ap.id!];
+                    if (lineIds)
+                        this.delLine(lineIds);
+                });
+            }
+            delete this.bpNodes[id];
+        });
+        this.setSelectedNodes([]);
     }
 
-    delLine = (line: CanvasLineType) => {
-
+    delLine = (ids: string[]) => {
+        if (!ids || ids.length === 0)
+            return;
+        ids.forEach(id => {
+            delete this.bpLines[id];
+        });
+        this.setSelectedLines([]);
     }
-
 
 }
 

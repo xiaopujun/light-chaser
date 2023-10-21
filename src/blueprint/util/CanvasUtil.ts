@@ -140,7 +140,6 @@ export default class CanvasUtil {
     public static isMouseOnLine(mousePoint: PointType, pointArray: PointType[], precision: number): boolean {
         for (let i = 0; i < pointArray.length - 1; i++) {
             const distance = CanvasUtil.distanceBetweenPointAndLine(mousePoint, pointArray[i], pointArray[i + 1]);
-            console.log(distance)
             if (distance <= precision)
                 return true; // 鼠标指针在线段上
         }

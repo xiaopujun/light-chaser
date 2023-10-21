@@ -2,7 +2,6 @@ import React from "react";
 import './BPNode.less';
 import {PointType} from "../types";
 import bpStore from "../store/BPStore";
-import {toJS} from "mobx";
 
 export enum AnchorPointType {
     INPUT,

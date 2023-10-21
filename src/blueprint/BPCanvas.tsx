@@ -6,6 +6,10 @@ import bpStore from "./store/BPStore";
 import CanvasUtil from "./util/CanvasUtil";
 import {CanvasLineType} from "./types";
 
+/**
+ * 蓝图画布点击事件，监控鼠标是否命中线段
+ * @param event
+ */
 const lineSegmentCollisions = (event: MouseEvent) => {
     const {clientX, clientY, shiftKey} = event;
     const {selectedLines, setSelectedLines, downCtx} = bpStore;
@@ -27,17 +31,20 @@ const lineSegmentCollisions = (event: MouseEvent) => {
         CanvasUtil.isMouseInRectangle(mousePoint, line.startPoint!, line.endPoint!) && targetLines.push(line);
     });
     if (targetLines.length === 0) return;
+    //遍历有效范围内的线条是否命中
+    const hitLines: CanvasLineType[] = [];
     for (let i = 0; i < targetLines.length; i++) {
         const targetLine = targetLines[i];
-        const {samplePoints, id} = targetLine!;
-        if (CanvasUtil.isMouseOnLine(mousePoint, samplePoints!, 3)) {
-            selectedLines.push(targetLine);
+        const {samplePoints} = targetLine!;
+        if (CanvasUtil.isMouseOnLine(mousePoint, samplePoints!, 5)) {
             targetLine.lineWidth = 2;
             targetLine.color = '#1ad6ff';
+            hitLines.push(targetLine);
             CanvasUtil.drawBezierCurves(downCtx!, targetLine);
             break;
         }
     }
+    setSelectedLines(hitLines);
 }
 
 export const BPCanvas: React.FC = () => {

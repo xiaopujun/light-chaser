@@ -1,5 +1,7 @@
 import {HotKeyConfigType, TriggerType} from "./HotKey";
 import {
+    delLine,
+    delNode,
     doBaseBottomDecreaseUp,
     doBaseBottomEnlargeUp,
     doBaseLeftDecreaseRight,
@@ -31,6 +33,7 @@ import {
     undo
 } from "./HotKeyImpl";
 
+
 export const hotkeyConfigs: HotKeyConfigType = {
     'control + a': {
         handler: selectAll,
@@ -59,7 +62,7 @@ export const hotkeyConfigs: HotKeyConfigType = {
         handler: doSave,
     },
     'delete': {
-        handler: doDelete,
+        handler: [doDelete, delLine, delNode],
     },
     'control + z': {
         handler: undo,

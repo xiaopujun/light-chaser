@@ -13,6 +13,7 @@ import layerListStore from "../../float-configs/layer-list/LayerListStore";
 import footerStore from "../../footer/FooterStore";
 import DateUtil from "../../../utils/DateUtil";
 import bpStore from "../../../blueprint/store/BPStore";
+import {reRenderLine} from "../../../blueprint/drag/BPMovable";
 
 export const selectAll = () => {
     let comps = document.getElementsByClassName('lc-comp-item');
@@ -424,4 +425,28 @@ export const toggleHotKeyDes = () => {
 export const toggleLayer = () => {
     const {setVisible, visible} = layerListStore;
     setVisible && setVisible(!visible);
+}
+
+/*************************蓝图快捷键实现*************************/
+
+/**
+ * 删除蓝图中选中的节点
+ */
+export const delNode = () => {
+    const {selectedNodes, delNode} = bpStore;
+    if (selectedNodes.length === 0) return;
+    const selectedNodeIds = selectedNodes.map(node => node.id.split(':')[1]!);
+    delNode(selectedNodeIds);
+    reRenderLine();
+}
+
+/**
+ * 删除蓝图中选中的连线
+ */
+export const delLine = () => {
+    const {selectedLines, delLine} = bpStore;
+    if (selectedLines.length === 0) return;
+    const selectedLineIds = selectedLines.map(line => line.id!);
+    delLine(selectedLineIds);
+    reRenderLine();
 }
