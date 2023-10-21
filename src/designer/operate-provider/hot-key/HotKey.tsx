@@ -11,7 +11,7 @@ export enum TriggerType {
 export interface HotKeyConfigType {
     [key: string]: {
         //快捷键处理函数
-        handler: Function,
+        handler: Function | Function[],
         //快捷键生效范围，布设置（默认）所有范围内可用。值为css选择器
         range?: string,
         //快捷键触发类型
@@ -70,8 +70,11 @@ class HotKey extends Component<HotKeyProps> {
                     if (!targetDom || !targetDom.contains(pointerTarget))
                         return;
                 }
-                //其余情况均执行快捷键
-                handler(e);
+                //其余情况均执行快捷键，如果是数组则遍历执行，反之直接执行
+                if (Array.isArray(handler))
+                    handler.forEach(func => func(e));
+                else
+                    handler(e);
                 this.existHandlerKey = hotKey;
             }
         }

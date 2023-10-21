@@ -31,6 +31,9 @@ class BPStore {
     //被选中的蓝图节点列表
     selectedNodes: HTMLElement[] = [];
 
+    //被选中的线条列表
+    selectedLines: CanvasLineType[] = [];
+
     //蓝图移动框架引用
     bpMovableRef: Moveable | null = null;
 
@@ -54,6 +57,10 @@ class BPStore {
 
     //蓝图画布缩放比例
     canvasScale: number = 1;
+
+    setSelectedLines = (lines: CanvasLineType[]) => {
+        this.selectedLines = lines;
+    }
 
     addAPLineMap = (anchorId: string, lineId: string) => {
         if (!this.bpAPLineMap[anchorId])
@@ -136,7 +143,15 @@ class BPStore {
     }
 
     setSelectedNodes = (nodes: HTMLElement[]) => {
+        //清理旧的选中节点的样式
+        this.selectedNodes.forEach(node => {
+            node.style.border = "1px solid #55555570";
+        });
         this.selectedNodes = nodes;
+        //设置新的选中节点的样式
+        this.selectedNodes.forEach(node => {
+            node.style.border = "1px solid #3cd2ff";
+        })
     }
 
     setBpMovableRef = (ref: Moveable) => {
@@ -157,6 +172,14 @@ class BPStore {
 
     setNodeContainerRef = (ref: HTMLDivElement) => {
         this.nodeContainerRef = ref;
+    }
+
+    delNode = (node: NodeProps) => {
+        //先删除节点，后删除节点上的线段
+    }
+
+    delLine = (line: CanvasLineType) => {
+
     }
 
 

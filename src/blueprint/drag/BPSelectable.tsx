@@ -27,9 +27,11 @@ export const BPSelectable: React.FC<BPSelectableProps> = (props) => {
 
     const onSelectEnd = (e: OnSelectEnd) => {
         let {selected} = e;
-        selected = selected.filter((item) => item.classList.contains('bp-node'));
-        if (selected.length === 0) return;
         const {bpMovableRef, setSelectedNodes} = bpStore;
+        selected = selected.filter((item) => item.classList.contains('bp-node'));
+        //更新选中的组件
+        setSelectedNodes(selected as HTMLElement[]);
+        if (selected.length === 0) return;
 
         //如果为拖拽，则将当前的整个dom事件传递给movable，确保选中元素后可以立马拖拽
         if (e.isDragStart) {
@@ -38,8 +40,6 @@ export const BPSelectable: React.FC<BPSelectableProps> = (props) => {
                 bpMovableRef!.dragStart(e.inputEvent);
             });
         }
-        //更新选中的组件
-        setSelectedNodes(selected as HTMLElement[]);
     }
 
     return (
@@ -49,10 +49,10 @@ export const BPSelectable: React.FC<BPSelectableProps> = (props) => {
                      dragContainer={".blue-print"}
                      selectableTargets={[".bp-node"]}
                      hitRate={0}
+                     ratio={0}
                      selectByClick={true}
                      selectFromInside={false}
                      toggleContinueSelect={["ctrl"]}
-                     ratio={0}
                      onDragStart={onDragStart}
                      onSelectEnd={onSelectEnd}
             />

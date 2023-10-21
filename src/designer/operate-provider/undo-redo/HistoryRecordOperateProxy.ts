@@ -157,7 +157,11 @@ class HistoryRecordOperateProxy {
 
         //删除组件
         targetIds.length > 0 && delItem(targetIds);
-        setTargets([])
+        setTargets([]);
+        const {setPointerTarget} = eventOperateStore;
+        const enforcementCap = document.querySelector('.lc-ruler-content');
+        //删除组件后，重新聚焦鼠标指针到容器上，避免鼠标失去焦点导致其他快捷键失效。
+        setPointerTarget && setPointerTarget(enforcementCap);
     }
 
     public doCopy(ids: string[]): string[] {

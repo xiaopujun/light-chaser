@@ -82,4 +82,68 @@ export default class CanvasUtil {
         ctx.fillStyle = color;
         ctx.fillRect(point.x - size / 2, point.y - size / 2, size, size);
     }
+
+    public static isMouseInRectangle(mousePoint: PointType, rectStart: PointType, rectEnd: PointType): boolean {
+        const x1 = Math.min(rectStart.x, rectEnd.x);
+        const x2 = Math.max(rectStart.x, rectEnd.x);
+        const y1 = Math.min(rectStart.y, rectEnd.y);
+        const y2 = Math.max(rectStart.y, rectEnd.y);
+
+        return (
+            mousePoint.x >= x1 && mousePoint.x <= x2 &&
+            mousePoint.y >= y1 && mousePoint.y <= y2
+        );
+    }
+
+    /**
+     * 计算点到线段的距离（基于向量计算）
+     * @param point
+     * @param lineStart
+     * @param lineEnd
+     */
+    public static distanceBetweenPointAndLine(point: PointType, lineStart: PointType, lineEnd: PointType): number {
+        const A = point.x - lineStart.x;
+        const B = point.y - lineStart.y;
+        const C = lineEnd.x - lineStart.x;
+        const D = lineEnd.y - lineStart.y;
+
+        const dot = A * C + B * D;
+        const lenSq = C * C + D * D;
+        let param = -1;
+        if (lenSq !== 0) {
+            param = dot / lenSq;
+        }
+
+        let closestX, closestY;
+        if (param < 0) {
+            closestX = lineStart.x;
+            closestY = lineStart.y;
+        } else if (param > 1) {
+            closestX = lineEnd.x;
+            closestY = lineEnd.y;
+        } else {
+            closestX = lineStart.x + param * C;
+            closestY = lineStart.y + param * D;
+        }
+
+        const dx = point.x - closestX;
+        const dy = point.y - closestY;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    /**
+     * 判断目标点是否在canvas线上
+     * @param mousePoint 鼠标指针位置
+     * @param pointArray 线段采样点数组
+     * @param precision 精度范围
+     */
+    public static isMouseOnLine(mousePoint: PointType, pointArray: PointType[], precision: number): boolean {
+        for (let i = 0; i < pointArray.length - 1; i++) {
+            const distance = CanvasUtil.distanceBetweenPointAndLine(mousePoint, pointArray[i], pointArray[i + 1]);
+            console.log(distance)
+            if (distance <= precision)
+                return true; // 鼠标指针在线段上
+        }
+        return false; // 鼠标指针不在任何线段上
+    }
 }
