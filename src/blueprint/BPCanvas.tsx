@@ -7,6 +7,7 @@ import CanvasUtil from "./util/CanvasUtil";
 import {CanvasLineType} from "./types";
 
 /**
+ * todo 该方法要做性能优化，考虑防抖避免频繁采样和线段重复绘制，用算法做好碰撞检测
  * 蓝图画布点击事件，监控鼠标是否命中线段
  * @param event
  */
@@ -61,7 +62,3 @@ export const BPCanvas: React.FC = () => {
         </div>
     )
 }
-
-
-
-

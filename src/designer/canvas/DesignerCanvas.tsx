@@ -50,7 +50,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
             <>
                 <DesignerContainer>
                     <GroupSelectable>
-                        <DesignerRuler offsetX={60} offsetY={50}>
+                        <DesignerRuler>
                             <DesignerDragScaleContainer onDoubleClick={this.updateActive}>
                                 <GroupMovable>
                                     {this.generateElement()}

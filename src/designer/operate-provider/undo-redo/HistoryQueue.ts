@@ -52,7 +52,7 @@ export default class HistoryQueue<T> {
             this.size++;
         this.back = this.rear;
         this.backAll = false;
-        console.log('插入', this.elements, 'front', this.front, 'rear', this.rear, 'back', this.back, 'backAll', this.backAll, 'size', this.size)
+        // console.log('插入', this.elements, 'front', this.front, 'rear', this.rear, 'back', this.back, 'backAll', this.backAll, 'size', this.size)
     }
 
     /**
@@ -82,7 +82,7 @@ export default class HistoryQueue<T> {
             return null;
         //如果已经退回到最后一个元素（退无可退了）则直接返回队首元素
         if (this.backAll) {
-            console.log('回退到底了', this.elements, 'front', this.front, 'rear', this.rear, 'back', this.back, 'backAll', this.backAll)
+            // console.log('回退到底了', this.elements, 'front', this.front, 'rear', this.rear, 'back', this.back, 'backAll', this.backAll)
             return null;
         }
         if (this.back === this.front)
@@ -91,7 +91,7 @@ export default class HistoryQueue<T> {
         const elem = this.elements[this.back];
         this.back = (this.back - 1 + this.capacity) % this.capacity;
         this.backCount++;
-        console.log('回退', elem, 'front', this.front, 'rear', this.rear, 'back', this.back, 'size', this.size, 'backAll', this.backAll)
+        // console.log('回退', elem, 'front', this.front, 'rear', this.rear, 'back', this.back, 'size', this.size, 'backAll', this.backAll)
         return elem;
     }
 
@@ -102,11 +102,11 @@ export default class HistoryQueue<T> {
         if (this.size === 0)
             return null;
         if (this.back === this.rear) {
-            console.log('已经前进到最后一个元素', this.elements, 'front', this.front, 'rear', this.rear, 'back', this.back, 'size', this.size)
+            // console.log('已经前进到最后一个元素', this.elements, 'front', this.front, 'rear', this.rear, 'back', this.back, 'size', this.size)
             return null;
         }
         this.back = (this.back + 1) % this.capacity;
-        console.log('前进', this.elements[this.back], 'front', this.front, 'rear', this.rear, 'back', this.back, 'size', this.size)
+        // console.log('前进', this.elements[this.back], 'front', this.front, 'rear', this.rear, 'back', this.back, 'size', this.size)
         if (this.backAll)
             this.backAll = false;
         return this.elements[this.back];
