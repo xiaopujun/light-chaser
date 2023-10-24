@@ -1,16 +1,15 @@
 import React, {Component} from 'react';
-import {Popover, Tooltip} from 'antd';
+import {Popover} from 'antd';
 import './ColorPicker.less';
 import {colorConversion, rgbaToHex} from '../../utils/ColorUtil';
-import {QuestionCircleOutlined} from "@ant-design/icons";
 import {GradientColorPicker} from "./GradientColorPicker";
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
 
 interface ColorPickerProps extends UIContainerProps {
     value?: string;
     defaultValue?: string;
-    width?: number;
-    height?: number;
+    width?: number | string;
+    height?: number | string;
     radius?: number;
     showBorder?: boolean;
     hideControls?: boolean;

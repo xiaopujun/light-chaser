@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './Accordion.less';
+// import './Accordion.less';
 import LcSwitch from "../lc-switch/LcSwitch";
 import {RightOutlined} from "@ant-design/icons";
 

@@ -18,6 +18,8 @@ import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import Select from "../../../lib/lc-select/Select";
 import {Option} from "../../../lib/lc-select/SelectType";
+import {Control} from "../../../json-schema/SchemaTypes";
+import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 
 class AntdAreaCommonStyleConfig extends Component<ConfigType> {
 
@@ -94,54 +96,67 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
         return {mode, value, angle};
     }
 
+    const _onChange = (fieldChangeData: FieldChangeData) => {
+
+    }
+
+    const schema: Control = {
+        key: 'style',
+        type: 'accordion',
+        label: '图形',
+
+
+    }
+
     return (
-        <Accordion title={'图形'}>
-            <ConfigCard title={'数据点'}>
-                <ConfigItem title={'尺寸'}>
-                    <UnderLineInput defaultValue={(config?.point as MappingOptions)?.size as number || 0}
-                                    type={'number'} min={0}
-                                    onChange={(event) =>
-                                        onChange({point: {size: parseInt(event.target.value)}})}/>
-                </ConfigItem>
-                <ConfigItem title={'颜色'}>
-                    <CfgItemBorder width={'100%'}>
-                        <BaseColorPicker
-                            defaultValue={(config?.point?.style as ShapeStyle)?.fill || '#fff'}
-                            onChange={(value) => onChange({point: {style: {fill: value}}})}
-                            style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                    </CfgItemBorder>
-                </ConfigItem>
-                <ConfigItem title={'形状'}>
-                    <Select options={[
-                        {value: 'circle', label: '圈形'},
-                        {value: 'square', label: '方形'},
-                        {value: 'bowtie', label: '领结'},
-                        {value: 'diamond', label: '钻石'},
-                        {value: 'hexagon', label: '六角形'},
-                        {value: 'triangle', label: '三角形'}]}
-                            defaultValue={config?.point?.shape as string || 'circle'}
-                            onChange={(value) => onChange({point: {shape: value}})}/>
-                </ConfigItem>
-            </ConfigCard>
-            <ConfigCard title={'数据线'}>
-                <ConfigItem title={'平滑'}>
-                    <LcSwitch defaultValue={config?.smooth}
-                              onChange={(value) => onChange({smooth: value})}/>
-                </ConfigItem>
-                <ConfigItem title={'线宽'}>
-                    <UnderLineInput defaultValue={(config?.line?.style as ShapeStyle)?.lineWidth as number || 1}
-                                    type={'number'} min={0}
-                                    onChange={(event) =>
-                                        onChange({line: {style: {lineWidth: parseInt(event.target.value)}}})}/>
-                </ConfigItem>
-            </ConfigCard>
-            <ConfigCard title={'数据面'} bodyStyle={{width: '100%'}} cardStyle={{width: '100%'}}>
-                <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: 'calc(100% - 38px)'}}>
-                    <ColorMode onChange={areaColorChange} data={buildColorModeData()}
-                               exclude={[ColorModeType.RADIAL_GRADIENT]}/>
-                </ConfigItem>
-            </ConfigCard>
-        </Accordion>
+        <LCGUI schema={schema} onFieldChange={_onChange}/>
+        // <Accordion title={'图形'}>
+        //     <ConfigCard title={'数据点'}>
+        //         <ConfigItem title={'尺寸'}>
+        //             <UnderLineInput defaultValue={(config?.point as MappingOptions)?.size as number || 0}
+        //                             type={'number'} min={0}
+        //                             onChange={(event) =>
+        //                                 onChange({point: {size: parseInt(event.target.value)}})}/>
+        //         </ConfigItem>
+        //         <ConfigItem title={'颜色'}>
+        //             <CfgItemBorder width={'100%'}>
+        //                 <BaseColorPicker
+        //                     defaultValue={(config?.point?.style as ShapeStyle)?.fill || '#fff'}
+        //                     onChange={(value) => onChange({point: {style: {fill: value}}})}
+        //                     style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
+        //             </CfgItemBorder>
+        //         </ConfigItem>
+        //         <ConfigItem title={'形状'}>
+        //             <Select options={[
+        //                 {value: 'circle', label: '圈形'},
+        //                 {value: 'square', label: '方形'},
+        //                 {value: 'bowtie', label: '领结'},
+        //                 {value: 'diamond', label: '钻石'},
+        //                 {value: 'hexagon', label: '六角形'},
+        //                 {value: 'triangle', label: '三角形'}]}
+        //                     defaultValue={config?.point?.shape as string || 'circle'}
+        //                     onChange={(value) => onChange({point: {shape: value}})}/>
+        //         </ConfigItem>
+        //     </ConfigCard>
+        //     <ConfigCard title={'数据线'}>
+        //         <ConfigItem title={'平滑'}>
+        //             <LcSwitch defaultValue={config?.smooth}
+        //                       onChange={(value) => onChange({smooth: value})}/>
+        //         </ConfigItem>
+        //         <ConfigItem title={'线宽'}>
+        //             <UnderLineInput defaultValue={(config?.line?.style as ShapeStyle)?.lineWidth as number || 1}
+        //                             type={'number'} min={0}
+        //                             onChange={(event) =>
+        //                                 onChange({line: {style: {lineWidth: parseInt(event.target.value)}}})}/>
+        //         </ConfigItem>
+        //     </ConfigCard>
+        //     <ConfigCard title={'数据面'} bodyStyle={{width: '100%'}} cardStyle={{width: '100%'}}>
+        //         <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: 'calc(100% - 38px)'}}>
+        //             <ColorMode onChange={areaColorChange} data={buildColorModeData()}
+        //                        exclude={[ColorModeType.RADIAL_GRADIENT]}/>
+        //         </ConfigItem>
+        //     </ConfigCard>
+        // </Accordion>
     )
 }
 

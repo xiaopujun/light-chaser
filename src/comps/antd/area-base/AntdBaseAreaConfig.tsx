@@ -17,6 +17,9 @@ import Select from "../../../lib/lc-select/Select";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import AntdFieldMapping from "../../antd-common/config/field-mapping/AntdFieldMapping";
 import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
+import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
+import {Control} from "../../../json-schema/SchemaTypes";
+import {key} from "localforage";
 
 class AntdBaseAreaStyleConfig extends Component<ConfigType> {
 
@@ -81,66 +84,207 @@ export const AntdBaseAreaGraphics: React.FC<AntdBaseAreaGraphicsProps> = ({confi
         return {mode, value};
     }
 
-    return (
-        <Accordion title={'图形'}>
-            <ConfigItem title={'基准填充'}>
-                <LcSwitch defaultValue={!!config?.startOnZero}
-                          onChange={(value) => onChange({startOnZero: value})}/>
-            </ConfigItem>
-            <ConfigCard title={'数据点'}>
-                <ConfigItem title={'尺寸'}>
-                    <UnderLineInput defaultValue={(config?.point as MappingOptions)?.size as number || 0}
-                                    type={'number'} min={0}
-                                    onChange={(event) =>
-                                        onChange({point: {size: parseInt(event.target.value)}})}/>
-                </ConfigItem>
-                <ConfigItem title={'颜色'}>
-                    <CfgItemBorder width={'100%'}>
-                        <BaseColorPicker
-                            defaultValue={(config?.point?.style as ShapeStyle)?.fill || '#fff'}
-                            onChange={(value) => onChange({point: {style: {fill: value}}})}
-                            style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                    </CfgItemBorder>
-                </ConfigItem>
-                <ConfigItem title={'形状'}>
-                    <Select options={[
-                        {value: 'circle', label: '圈形'},
-                        {value: 'square', label: '方形'},
-                        {value: 'bowtie', label: '领结'},
-                        {value: 'diamond', label: '钻石'},
-                        {value: 'hexagon', label: '六角形'},
-                        {value: 'triangle', label: '三角形'}]}
-                            defaultValue={config?.point?.shape as string || 'circle'}
-                            onChange={(value) => onChange({point: {shape: value}})}/>
-                </ConfigItem>
-            </ConfigCard>
-            <ConfigCard title={'数据线'}>
-                <ConfigItem title={'平滑'}>
-                    <LcSwitch defaultValue={config?.smooth}
-                              onChange={(value) => onChange({smooth: value})}/>
-                </ConfigItem>
-                <ConfigItem title={'线宽'}>
-                    <UnderLineInput defaultValue={config?.line?.size as number}
-                                    type={'number'} min={0}
-                                    onChange={(event) =>
-                                        onChange({line: {size: parseInt(event.target.value)}})}/>
-                </ConfigItem>
-                <ConfigItem title={'颜色'}>
-                    <CfgItemBorder width={'100%'}>
-                        <BaseColorPicker onChange={(value) => onChange({line: {color: value}})}
-                                         defaultValue={config?.line?.color as string || '#fff'}
-                                         style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                    </CfgItemBorder>
-                </ConfigItem>
-            </ConfigCard>
-            <ConfigCard title={'数据面'}>
-                <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: '82%'}}>
-                    <ColorMode onChange={areaColorChange} data={buildColorModeData()}
-                               exclude={[ColorModeType.MULTI, ColorModeType.RADIAL_GRADIENT]}/>
-                </ConfigItem>
-            </ConfigCard>
+    const _onChange = (fieldChangeData: FieldChangeData) => {
 
-        </Accordion>
+    }
+
+    const schema: Control = {
+        key: 'style',
+        type: 'accordion',
+        label: '图形',
+        children: [
+            {
+                type: 'grid',
+                config: {
+                    gridGap: '15px'
+                },
+                children: [
+                    {
+                        label: '基准填充',
+                        type: 'switch',
+                        key: 'startOnZero',
+                        value: !!config?.startOnZero,
+                    },
+                    {
+                        label: '数据点',
+                        type: 'item-panel',
+                        children: [
+                            {
+                                type: 'grid',
+                                config: {
+                                    gridGap: '15px',
+                                    columns: 2,
+                                },
+                                children: [
+                                    {
+                                        label: '尺寸',
+                                        type: 'input',
+                                        key: 'size',
+                                        value: (config?.point as MappingOptions)?.size as number || 0,
+                                        config: {
+                                            type: 'number',
+                                            min: 0,
+                                            max: 10,
+                                        }
+                                    },
+                                    {
+                                        key: 'point',
+                                        children: [
+                                            {
+                                                key: 'style',
+                                                children: [
+                                                    {
+                                                        key: 'fill',
+                                                        type: 'color-picker',
+                                                        label: '颜色',
+                                                        value: (config?.point?.style as ShapeStyle)?.fill || '#fff',
+                                                        config: {
+                                                            width: '100%',
+                                                            radius: 3,
+                                                            showBorder: true,
+                                                            showText: true,
+                                                            height: 16
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                key: 'shape',
+                                                type: 'select',
+                                                label: '形状',
+                                                value: (config?.point as MappingOptions)?.shape as string || 'circle',
+                                                config: {
+                                                    options: [
+                                                        {value: 'circle', label: '圈形'},
+                                                        {value: 'square', label: '方形'},
+                                                        {value: 'bowtie', label: '领结'},
+                                                        {value: 'diamond', label: '钻石'},
+                                                        {value: 'hexagon', label: '六角形'},
+                                                        {value: 'triangle', label: '三角形'}]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                    },
+                    {
+                        label: '数据线',
+                        type: 'item-panel',
+                        children: [
+                            {
+                                type: 'grid',
+                                config: {
+                                    gridGap: '15px',
+                                    columns: 2,
+                                },
+                                children: [
+                                    {
+                                        label: '平滑',
+                                        type: 'switch',
+                                        key: 'smooth',
+                                        value: !!config?.smooth,
+                                    },
+                                    {
+                                        key: 'line',
+                                        children: [
+                                            {
+                                                key: 'size',
+                                                type: 'input',
+                                                label: '宽度',
+                                                config: {
+                                                    type: 'number',
+                                                    min: 0,
+                                                    max: 10,
+                                                }
+                                            },
+                                            {
+                                                key: 'color',
+                                                type: 'color-picker',
+                                                label: '颜色',
+                                                value: config?.line?.color as string || '#fff',
+                                                config: {
+                                                    width: '100%',
+                                                    radius: 3,
+                                                    showBorder: true,
+                                                    showText: true,
+                                                    height: 16
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        label: '数据面',
+                        type: 'item-panel',
+                        children: [
+                            {
+                                key: 'areaStyle',
+                                children: [
+                                    {
+                                        type: 'grid',
+                                        config: {
+                                            columns: 2,
+                                        },
+                                        children: [
+                                            {
+                                                key: 'fill',
+                                                type: 'color-picker',
+                                                label: '颜色',
+                                                value: (config?.point?.style as ShapeStyle)?.fill || '#fff',
+                                                config: {
+                                                    width: '100%',
+                                                    radius: 3,
+                                                    showBorder: true,
+                                                    showText: true,
+                                                    height: 16
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+        ],
+    }
+
+    return (
+        <LCGUI schema={schema} onFieldChange={_onChange}/>
+        // <Accordion title={'图形'}>
+        //     <ConfigCard title={'数据线'}>
+        //         <ConfigItem title={'平滑'}>
+        //             <LcSwitch defaultValue={config?.smooth}
+        //                       onChange={(value) => onChange({smooth: value})}/>
+        //         </ConfigItem>
+        //         <ConfigItem title={'线宽'}>
+        //             <UnderLineInput defaultValue={config?.line?.size as number}
+        //                             type={'number'} min={0}
+        //                             onChange={(event) =>
+        //                                 onChange({line: {size: parseInt(event.target.value)}})}/>
+        //         </ConfigItem>
+        //         <ConfigItem title={'颜色'}>
+        //             <CfgItemBorder width={'100%'}>
+        //                 <BaseColorPicker onChange={(value) => onChange({line: {color: value}})}
+        //                                  defaultValue={config?.line?.color as string || '#fff'}
+        //                                  style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
+        //             </CfgItemBorder>
+        //         </ConfigItem>
+        //     </ConfigCard>
+        //     <ConfigCard title={'数据面'}>
+        //         <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: '82%'}}>
+        //             <ColorMode onChange={areaColorChange} data={buildColorModeData()}
+        //                        exclude={[ColorModeType.MULTI, ColorModeType.RADIAL_GRADIENT]}/>
+        //         </ConfigItem>
+        //     </ConfigCard>
+        //
+        // </Accordion>
     )
 }
 

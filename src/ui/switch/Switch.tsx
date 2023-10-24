@@ -39,12 +39,14 @@ class Switch extends Component<SwitchProps> {
         const {disabled = false, tip, label} = this.props;
         return (
             <UIContainer tip={tip} label={label} className={'lc-switch'}>
-                <label className="lc-switch-body">
-                    <input disabled={disabled}
-                           checked={this.valueControl ? this.props.value || false : this.state.value || false}
-                           onChange={this.handleChange} type="checkbox"/>
-                    <span/>
-                </label>
+                <div style={{display: 'flex'}}>
+                    <label className="lc-switch-body">
+                        <input disabled={disabled}
+                               checked={this.valueControl ? this.props.value || false : this.state.value || false}
+                               onChange={this.handleChange} type="checkbox"/>
+                        <span/>
+                    </label>
+                </div>
             </UIContainer>
         );
     }
