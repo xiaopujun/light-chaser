@@ -1,29 +1,37 @@
-.lc-color-picker-container {
+.color-pick-container {
+  display: flex;
+  font-size: 12px;
+  color: #b6b8bb;
+  align-items: center;
 
-  .lc-color-picker {
-    .ant-color-picker-trigger {
-      .ant-color-picker-trigger-text {
-        color: #bdbdbd;
-      }
+  .lc-color-picker-label {
+    min-width: 50px;
+    margin-right: 5px;
+    text-align-last: justify;
+  }
 
-      background-color: #272727;
+  .color-area {
+    display: flex;
+    width: 21px;
+    height: 21px;
+    margin-right: 3px;
+    border: #f5f5f5 0 solid;
+    border-radius: 20px;
+    color: white;
+    align-items: center;
+    justify-content: space-around;
 
+
+    span {
+      mix-blend-mode: difference;
+    }
+  }
+
+  .ant-popover-inner-content {
+    padding: 0 !important;
+
+    .color-picker {
+      //padding: 5px;
     }
   }
 }
-
-//.ant-color-picker {
-//  .ant-popover-arrow:before {
-//    background-color: #282828;
-//  }
-//
-//  .ant-popover-inner {
-//    background-color: #282828;
-//    border: 1px solid #282828;
-//
-//    .ant-select-selector {
-//      background-color: #282828;
-//      color: white;
-//    }
-//  }
-//}

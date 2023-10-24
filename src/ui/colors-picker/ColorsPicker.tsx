@@ -1,12 +1,18 @@
 import React, {Component} from 'react';
 import './ColorsPicker.less';
 import ColorPicker from "../color-picker/ColorPicker";
+import {QuestionCircleOutlined} from "@ant-design/icons";
+import {Tooltip} from "antd";
+
 
 interface ColorsPickerProp {
-    onChange?: (data: string[]) => void;
+    label?: string;
+    tip?: string;
     value?: string[];
+    defaultValue?: string[];
     canAdd?: boolean;
     containerStyle?: React.CSSProperties;
+    onChange?: (data: string[]) => void;
 }
 
 /**
@@ -65,25 +71,33 @@ class ColorsPicker extends Component<ColorsPickerProp> {
 
     render() {
         const {colors = [], canAdd = false} = this.state;
-        const {containerStyle} = this.props;
+        const {containerStyle, label, tip} = this.props;
         const _style: React.CSSProperties = {
             display: "flex",
             flexDirection: "row",
             ...containerStyle
         }
         return (
-            <div className={'group-color-picker'} style={{..._style}}>
-                {colors.map((item: string, i: number) => {
-                    return (
-                        <div className={"group-color-item"} key={i + ''}>
-                            <ColorPicker value={item}
-                                         onChange={(color: string) => this.onChange(color, i)}/>
-                            <span onClick={() => this.delColor(i)}><label>×</label></span>
-                        </div>
-                    )
-                })}
-                {canAdd &&
-                <div onClick={this.addColor} className={'color-pick-add-btn'}><span>+</span></div>}
+            <div className={'colors-picker-container'}>
+                {label &&
+                <div className={`lc-colors-picker-label`}>{label}</div>}
+                {tip &&
+                <div className={'lc-colors-picker-tip'}>
+                    <Tooltip title={tip}><QuestionCircleOutlined/>&nbsp;&nbsp;</Tooltip>
+                </div>}
+                <div className={'colors-picker'} style={{..._style}}>
+                    {colors.map((item: string, i: number) => {
+                        return (
+                            <div className={"colors-item"} key={i + ''}>
+                                <ColorPicker value={item}
+                                             onChange={(color: string) => this.onChange(color, i)}/>
+                                <span onClick={() => this.delColor(i)}><label>×</label></span>
+                            </div>
+                        )
+                    })}
+                    {canAdd &&
+                    <div onClick={this.addColor} className={'colors-pick-add-btn'}><span>+</span></div>}
+                </div>
             </div>
         )
     }
