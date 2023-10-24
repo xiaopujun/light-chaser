@@ -1,71 +1,59 @@
-.colors-picker-container {
-  display: flex;
-  font-size: 12px;
-  color: #b6b8bb;
-  align-items: center;
+.colors-picker {
+  flex-wrap: wrap;
 
-  .lc-colors-picker-label {
-    min-width: 50px;
-    margin-right: 5px;
-    text-align-last: justify;
+  .colors-item {
+    position: relative;
+    margin-right: 3px;
+
+    span {
+      position: absolute;
+      top: -2px;
+      left: 14px;
+      width: 10px;
+      height: 10px;
+      border-radius: 5px;
+      text-align: center;
+      background-color: #525252;
+
+      label {
+        cursor: pointer;
+        color: #d6d6d6;
+        position: relative;
+        top: -5.8px;
+      }
+    }
   }
 
-  .colors-picker {
-    flex-wrap: wrap;
+  .colors-pick-add-btn {
+    border: 2px solid #007984;
+    width: 21px;
+    height: 21px;
+    text-align: center;
+    border-radius: 15px;
+    font-size: 20px;
 
-    .colors-item {
+    span {
+      color: #007984;
       position: relative;
-
-      span {
-        position: absolute;
-        top: -2px;
-        left: 14px;
-        width: 10px;
-        height: 10px;
-        border-radius: 5px;
-        text-align: center;
-        background-color: #525252;
-
-        label {
-          cursor: pointer;
-          color: #d6d6d6;
-          position: relative;
-          top: -5.8px;
-        }
-      }
+      top: -9px;
     }
+  }
 
-    .colors-pick-add-btn {
-      border: 2px solid #007984;
-      width: 21px;
-      height: 21px;
-      text-align: center;
-      border-radius: 15px;
-      font-size: 20px;
+  .colors-pick-add-btn:hover {
+    cursor: pointer;
+    border-color: #00cde3;
 
-      span {
-        color: #007984;
-        position: relative;
-        top: -9px;
-      }
+    span {
+      color: #00cde3;
     }
+  }
 
-    .colors-pick-add-btn:hover {
-      cursor: pointer;
-      border-color: #00cde3;
+  .colors-pick-add-btn:active {
+    cursor: pointer;
+    border-color: #bef3ff;
 
-      span {
-        color: #00cde3;
-      }
-    }
-
-    .colors-pick-add-btn:active {
-      cursor: pointer;
-      border-color: #bef3ff;
-
-      span {
-        color: #bef3ff;
-      }
+    span {
+      color: #bef3ff;
     }
   }
 }

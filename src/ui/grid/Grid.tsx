@@ -1,13 +1,10 @@
 import React from "react";
 import './Grid.less';
-import {Tooltip} from "antd";
-import {QuestionCircleOutlined} from "@ant-design/icons";
+import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
 
-export interface GridProps {
+export interface GridProps extends UIContainerProps {
     children?: React.ReactNode;
     columns?: number;
-    tip?: string;
-    label?: string;
     gridGap?: string;
 }
 
@@ -16,13 +13,8 @@ export const Grid: React.FC<GridProps> = (props) => {
     const gtc = `repeat(${columns}, 1fr)`;
     const gridStyle = {gridTemplateColumns: gtc, gridGap}
     return (
-        <div className={'lc-grid-container'}>
-            {label && <div className={'lc-grid-label'}>{label}</div>}
-            {tip && <div className={'lc-grid-tip'}>
-                <Tooltip title={tip}><QuestionCircleOutlined/>&nbsp;&nbsp;</Tooltip>
-            </div>}
+        <UIContainer tip={tip} label={label} className={'lc-grid'}>
             <div style={gridStyle} className={'lc-grid-layout'}>{children}</div>
-        </div>
-
+        </UIContainer>
     )
 }

@@ -1,27 +1,20 @@
 import React from "react";
-import {Tooltip, Slider as AntdSlider} from "antd";
-import {QuestionCircleOutlined} from "@ant-design/icons";
+import {Slider as AntdSlider} from "antd";
 import './Slider.less';
+import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
 
-export interface SliderProps {
+export interface SliderProps extends UIContainerProps {
     value?: number;
     defaultValue?: number;
-    label?: string;
-    tip?: string;
 }
 
 export const Slider: React.FC<SliderProps> = (props) => {
-    const {label, tip, value, defaultValue} = props;
-    console.log(value, defaultValue)
+    const {label, tip, defaultValue} = props;
     return (
-        <div className={'lc-slider-container'}>
-            {label && <div className={'lc-slider-label'}>{label}</div>}
-            {tip && <div className={'lc-input-tip'}>
-                <Tooltip title={tip}><QuestionCircleOutlined/>&nbsp;&nbsp;</Tooltip>
-            </div>}
-            <div className={'lc-slider'}>
+        <UIContainer tip={tip} label={label} className={'lc-slider'}>
+            <div className={'lc-slider-body'}>
                 <AntdSlider defaultValue={defaultValue}/>
             </div>
-        </div>
+        </UIContainer>
     )
 }

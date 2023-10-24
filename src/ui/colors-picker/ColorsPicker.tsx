@@ -1,13 +1,9 @@
 import React, {Component} from 'react';
 import './ColorsPicker.less';
 import ColorPicker from "../color-picker/ColorPicker";
-import {QuestionCircleOutlined} from "@ant-design/icons";
-import {Tooltip} from "antd";
+import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
 
-
-interface ColorsPickerProp {
-    label?: string;
-    tip?: string;
+interface ColorsPickerProp extends UIContainerProps {
     value?: string[];
     defaultValue?: string[];
     canAdd?: boolean;
@@ -78,18 +74,13 @@ class ColorsPicker extends Component<ColorsPickerProp> {
             ...containerStyle
         }
         return (
-            <div className={'colors-picker-container'}>
-                {label &&
-                <div className={`lc-colors-picker-label`}>{label}</div>}
-                {tip &&
-                <div className={'lc-colors-picker-tip'}>
-                    <Tooltip title={tip}><QuestionCircleOutlined/>&nbsp;&nbsp;</Tooltip>
-                </div>}
+            <UIContainer tip={tip} label={label}>
                 <div className={'colors-picker'} style={{..._style}}>
                     {colors.map((item: string, i: number) => {
                         return (
                             <div className={"colors-item"} key={i + ''}>
                                 <ColorPicker value={item}
+                                             hideControls={true}
                                              onChange={(color: string) => this.onChange(color, i)}/>
                                 <span onClick={() => this.delColor(i)}><label>×</label></span>
                             </div>
@@ -98,7 +89,7 @@ class ColorsPicker extends Component<ColorsPickerProp> {
                     {canAdd &&
                     <div onClick={this.addColor} className={'colors-pick-add-btn'}><span>+</span></div>}
                 </div>
-            </div>
+            </UIContainer>
         )
     }
 }

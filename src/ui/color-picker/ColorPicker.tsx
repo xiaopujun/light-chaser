@@ -1,23 +1,19 @@
 import React, {Component} from 'react';
 import {Popover, Tooltip} from 'antd';
 import './ColorPicker.less';
-import {ChromePicker} from 'react-color';
 import {colorConversion, rgbaToHex} from '../../utils/ColorUtil';
 import {QuestionCircleOutlined} from "@ant-design/icons";
+import {GradientColorPicker} from "./GradientColorPicker";
+import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
 
-interface ColorPickerProps {
-    tip?: string;
-    label?: string;
-    //颜色色值（受控）
+interface ColorPickerProps extends UIContainerProps {
     value?: string;
-    //颜色色值（非受控）
     defaultValue?: string;
-    //颜色区域样式（非受控）
-    style?: React.CSSProperties;
     width?: number;
     height?: number;
     radius?: number;
-    border?: string;
+    showBorder?: boolean;
+    hideControls?: boolean;
     //是否显示色值文本（非受控）
     showText?: boolean;
     disabled?: boolean;
@@ -36,50 +32,48 @@ class ColorPicker extends Component<ColorPickerProps> {
         super(props);
         const {value, defaultValue} = props;
         this.control = !defaultValue && !!value;
+        this.state = {value: defaultValue || value || '#00e9ff'};
     }
 
-    onChangeComplete = (color: any) => {
+    onChangeComplete = (color: string) => {
         const {onChange, value} = this.props;
-        const rgbColor = `rgba(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`;
-        const hex = rgbaToHex(rgbColor);
-        onChange && onChange(hex);
+        if (color.indexOf('gradient') === -1 && color.indexOf('rgba') !== -1)
+            color = rgbaToHex(color);
+        onChange && onChange(color);
         if (!value) {
-            console.log('非受控');
-            this.setState({value: hex});
+            this.setState({value: color});
         }
     };
 
     render() {
-        let colorObj = colorConversion((this.control ? this.props.value : this.state.value) || '#000000');
-        const {disabled, tip, label, showText, width, height, radius, border} = this.props;
-        const content = (disabled ? null :
-                <ChromePicker className={'color-picker'}
-                              color={colorObj.hex}
-                              onChange={this.onChangeComplete}/>
-        );
-        const showContent = showText ? colorObj.hex : null;
+        const color = this.control ? this.props.value : this.state.value;
+        const {disabled, tip, label, showText, width, height, radius, showBorder, ...rest} = this.props;
+        let hex = null;
+        if (showText && color?.indexOf('gradient') === -1 && color?.indexOf('rgba') !== -1) {
+            hex = colorConversion(color).hex;
+        } else if (showText && color?.indexOf('#') !== -1) {
+            hex = color;
+        }
         let _style = {
             width,
             height,
             borderRadius: radius,
-            border,
-            padding: border && 2,
-            backgroundClip: border && 'content-box',
             cursor: disabled ? 'not-allowed' : 'pointer'
         };
         return (
-            <div className={'color-pick-container'}>
-                {label &&
-                <div className={`lc-color-picker-label`}>{label}</div>}
-                {tip &&
-                <div className={'lc-color-picker-tip'}><Tooltip title={tip}><QuestionCircleOutlined/>&nbsp;&nbsp;
-                </Tooltip></div>}
-                <Popover content={content} trigger={'click'}>
-                    <div style={{backgroundColor: `${colorObj.hex}`, ..._style}} className={'color-area'}>
-                        {showText ? <span>{showContent}</span> : null}
+            <UIContainer tip={tip} label={label} className={'lc-color-pick'}>
+                <Popover content={(disabled ? null :
+                    <div style={{padding: 4}}>
+                        <GradientColorPicker value={color} onChange={this.onChangeComplete} {...rest}/>
+                    </div>)} trigger={'click'}>
+                    <div className={`${showBorder && 'color-picker-border'}`} style={{..._style}}>
+                        <div style={{background: `${color}`, ..._style}}
+                             className={'color-area'}>
+                            {showText ? <span>{hex}</span> : null}
+                        </div>
                     </div>
                 </Popover>
-            </div>
+            </UIContainer>
         );
     }
 }

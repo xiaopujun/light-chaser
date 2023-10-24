@@ -1,18 +1,18 @@
-import React, {useState} from 'react'
-import ColorPicker from 'react-best-gradient-color-picker'
+import React from 'react'
+import ColorPicker from 'react-best-gradient-color-picker';
 
-export function GradientColorPicker() {
-    const [color, setColor] = useState('rgba(255,255,255,1)');
+export function GradientColorPicker(props) {
+    const {value, onChange, ...rest} = props;
+    const [color, setColor] = React.useState(value);
     return <ColorPicker value={color}
-                        hideInputs={true}
-                        hideControls={false}
-                        hidePresets={false}
-                        hideEyeDrop={true}
+                        height={150}
+                        {...rest}
                         hideAdvancedSliders={true}
-                        hideColorGuide={false}
-                        hideInputTypes={false}
-                        onChange={(value) => {
-                            setColor(value);
+                        hideColorGuide={true}
+                        hideInputType={true}
+                        onChange={(color) => {
+                            setColor(color);
+                            onChange(color);
                         }}
     />
 }

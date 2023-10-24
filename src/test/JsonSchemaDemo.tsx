@@ -14,7 +14,7 @@ import {Slider as DemoSlider} from "../ui/slider/Slider";
 import ColorPicker from "../ui/color-picker/ColorPicker";
 import './DemoMain.less'
 import ColorsPicker from "../ui/colors-picker/ColorsPicker";
-import {GradientColorPicker} from "../ui/color-picker/GradientColorPicker";
+import {UIContainer} from "../ui/ui-container/UIContainer";
 
 
 class JsonSchemaDemo extends Component {
@@ -191,7 +191,6 @@ class JsonSchemaDemo extends Component {
     }
 
     onChange = (fieldChangeData: FieldChangeData) => {
-        console.log(fieldChangeData)
         const {schemaKeyPath, data, id, reRender} = fieldChangeData;
         if (id && id === "2016") {
             this.testSchema!.children![0]!.children![0]!.children![1].value = "你牛逼了你";
@@ -241,12 +240,14 @@ class JsonSchemaDemo extends Component {
                     <Accordion label={'手风琴'}>
                         <div>item1</div>
                     </Accordion>
-                    <DemoSlider label={'滑动条'} tip={'滑动条试实'}/>
-                    <ColorPicker defaultValue={'#fff'} label={'颜色'} tip={'颜色tip'} width={80} radius={1}
-                                 showText={true}
-                                 border={'1px solid #777777'}/>
-                    <ColorsPicker label={'颜色组'} tip={'颜色组'}/>
-                    <GradientColorPicker/>
+                    <DemoSlider label={'滑动条'} tip={'滑动条试实'} defaultValue={4}/>
+                    <ColorPicker defaultValue={'#fff'} label={'颜色'} tip={'颜色tip'} width={80} radius={2}
+                                 showBorder={true}
+                                 showText={true}/>
+                    <ColorsPicker label={'颜色组'} tip={'颜色组'} defaultValue={['#fff']}/>
+                    <UIContainer label={'容器'} tip={'容器'}>
+                        <ColorPicker defaultValue={'#fff'} width={80} radius={2} showBorder={true} showText={true}/>
+                    </UIContainer>
                 </div>
             </div>
         );

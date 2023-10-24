@@ -98,7 +98,7 @@ class ColorMode extends Component<ColorModeProps, ColorModeValue> {
                     <ColorPicker
                         defaultValue={value as string}
                         onChange={this.colorChange}
-                        style={{width: '100px', height: '15px', borderRadius: 2}}
+                        // style={{width: '100px', height: '15px', borderRadius: 2}}
                         showText={true}/>
                 }
                 {mode === ColorModeType.MULTI && <ColorsPicker onChange={this.colorChange} canAdd={true}
@@ -112,10 +112,11 @@ class ColorMode extends Component<ColorModeProps, ColorModeValue> {
                                      this.gradientValue[0] = value;
                                      this.colorChange(this.gradientValue);
                                  }}
-                                 style={{width: '80px', height: '15px', borderRadius: 2}}
+                        // style={{width: '80px', height: '15px', borderRadius: 2}}
                                  defaultValue={(value as string[])[0]}/>
                     &nbsp;
-                    <ColorPicker showText={true} style={{width: '80px', height: '15px', borderRadius: 2}}
+                    <ColorPicker showText={true}
+                        // style={{width: '80px', height: '15px', borderRadius: 2}}
                                  onChange={(value) => {
                                      this.gradientValue[1] = value;
                                      this.colorChange(this.gradientValue);

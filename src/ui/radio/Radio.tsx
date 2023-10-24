@@ -1,22 +1,19 @@
 import React, {Component} from 'react';
 
 import './Radio.less';
-import {Tooltip} from "antd";
-import {QuestionCircleOutlined} from "@ant-design/icons";
+import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
 
 export interface Option {
     label: string;
     value: string;
 }
 
-export interface RadioProps {
+export interface RadioProps extends UIContainerProps {
     options?: Option[];
     value?: string | any
     defaultValue?: string | any;
     onChange?: (value: string) => void;
     disabled?: boolean;
-    tip?: string;
-    label?: string;
 }
 
 class Radio extends Component<RadioProps> {
@@ -69,16 +66,11 @@ class Radio extends Component<RadioProps> {
     render() {
         const {label, tip} = this.props;
         return (
-            <div className={'lc-radio-container'}>
-                {label && <div className={'lc-radio-label'}>{label}</div>}
-                {tip && <div className={'lc-input-tip'}>
-                    <Tooltip title={tip}><QuestionCircleOutlined/>&nbsp;&nbsp;</Tooltip>
-                </div>}
+            <UIContainer label={label} tip={tip} className={'lc-radio'}>
                 <div className="radio-buttons">
                     {this.generateOptions()}
                 </div>
-            </div>
-
+            </UIContainer>
         );
     }
 }

@@ -1,10 +1,9 @@
 import React, {MutableRefObject, useEffect, useRef, useState} from "react";
 import "./Select.less";
 import {Option} from "./SelectType";
-import {Tooltip} from "antd";
-import {QuestionCircleOutlined} from "@ant-design/icons";
+import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
 
-interface SelectProps {
+interface SelectProps extends UIContainerProps {
     // 选项列表（非受控）
     options: Option[];
     // 占位符（非受控）
@@ -16,8 +15,6 @@ interface SelectProps {
     // 选中值改变时的回调
     onChange?: (value: string) => void;
     disabled?: boolean;
-    tip?: string;
-    label?: string;
 }
 
 const Select: React.FC<SelectProps> = (props) => {
@@ -59,11 +56,7 @@ const Select: React.FC<SelectProps> = (props) => {
     const showContent = valueControl ? getTargetOption(value)?.label || placeholder : selectedOption?.label || placeholder;
 
     return (
-        <div className={'lc-select-container'}>
-            {label && <div className={'lc-select-label'}>{label}</div>}
-            {tip && <div className={'lc-select-tip'}>
-                <Tooltip title={tip}><QuestionCircleOutlined/>&nbsp;&nbsp;</Tooltip>
-            </div>}
+        <UIContainer tip={tip} label={label}>
             <div className="lc-select" ref={dom}>
                 <div className={`lc-select-header`} style={{cursor: `${disabled ? 'not-allowed' : 'pointer'}`}}
                      onClick={disabled ? undefined : toggleDropdown}>
@@ -82,8 +75,7 @@ const Select: React.FC<SelectProps> = (props) => {
                     )}
                 </div>
             </div>
-        </div>
-
+        </UIContainer>
     );
 };
 export default Select;

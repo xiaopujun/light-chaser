@@ -1,17 +1,14 @@
 import React, {Component} from "react";
 import "./Switch.less";
-import {Tooltip} from "antd";
-import {QuestionCircleOutlined} from "@ant-design/icons";
+import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
 
-interface SwitchProps {
+interface SwitchProps extends UIContainerProps {
     onChange?: (data: boolean) => void;
     // 开关状态值（受控）
     value?: boolean;
     // 开关状态值（非受控）
     defaultValue?: boolean;
     disabled?: boolean;
-    label?: string;
-    tip?: string;
 }
 
 class Switch extends Component<SwitchProps> {
@@ -41,18 +38,14 @@ class Switch extends Component<SwitchProps> {
     render() {
         const {disabled = false, tip, label} = this.props;
         return (
-            <div className="lc-switch-container">
-                {label && <div className={'lc-switch-label'}>{label}</div>}
-                {tip && <div className={'lc-switch-tip'}>
-                    <Tooltip title={tip}><QuestionCircleOutlined/>&nbsp;&nbsp;</Tooltip>
-                </div>}
+            <UIContainer tip={tip} label={label} className={'lc-switch'}>
                 <label className="lc-switch-body">
                     <input disabled={disabled}
                            checked={this.valueControl ? this.props.value || false : this.state.value || false}
                            onChange={this.handleChange} type="checkbox"/>
                     <span/>
                 </label>
-            </div>
+            </UIContainer>
         );
     }
 }
