@@ -6,14 +6,12 @@ import {Legend} from "@antv/g2plot/lib/types/legend";
 import AbstractController from "../../../framework/core/AbstractController";
 import AntdCommonColumn, {AntdColumnProps} from "./AntdCommonColumn";
 import {WritableBarOptions, WritableColumnOptions} from "../types";
-import ColorMode, {ColorModeType, ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
-import {ShapeAttrs} from "@antv/g-base";
-import Accordion from "../../../lib/lc-accordion/Accordion";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
-import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import {Option} from "../../../lib/lc-select/SelectType";
 import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
 import Select from "../../../lib/lc-select/Select";
+import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
+import {Control} from "../../../json-schema/SchemaTypes";
 
 class AntdColumnCommonStyleConfig extends Component<ConfigType> {
 
@@ -56,52 +54,83 @@ export interface AntdColumnGraphicsProps {
 
 export const AntdColumnGraphics: React.FC<AntdColumnGraphicsProps> = ({config, onChange}) => {
 
-    const barColorChange = (data: ColorModeValue) => {
-        const {mode, value} = data;
-        switch (mode) {
-            case 'single':
-                onChange({columnStyle: {fill: value as string}});
-                break;
-            case 'multi':
-                onChange({color: value, columnStyle: {fill: undefined}});
-                break;
-            case 'gradient':
-                onChange({columnStyle: {fill: `l(0) 0:${value[0]} 1:${value[1]}`}});
-                break;
-        }
+    // const barColorChange = (data: ColorModeValue) => {
+    //     const {mode, value} = data;
+    //     switch (mode) {
+    //         case 'single':
+    //             onChange({columnStyle: {fill: value as string}});
+    //             break;
+    //         case 'multi':
+    //             onChange({color: value, columnStyle: {fill: undefined}});
+    //             break;
+    //         case 'gradient':
+    //             onChange({columnStyle: {fill: `l(0) 0:${value[0]} 1:${value[1]}`}});
+    //             break;
+    //     }
+    // }
+    //
+    // const buildColorModeData = (): ColorModeValue => {
+    //     let mode = 'single', value: string | string[] = '#fff';
+    //     if ((config?.columnStyle as ShapeAttrs)?.fill) {
+    //         const fill = (config?.columnStyle as ShapeAttrs).fill as string;
+    //         if (fill.startsWith('l')) {
+    //             mode = 'gradient';
+    //             value = [fill.split(':')[1].split(' ')[0], fill.split(':')[2].split(' ')[0]];
+    //         } else {
+    //             mode = 'single';
+    //             value = fill;
+    //         }
+    //     } else if (config?.color) {
+    //         mode = 'multi';
+    //         value = config?.color as string[];
+    //     }
+    //     return {mode, value};
+    // }
+
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+
     }
 
-    const buildColorModeData = (): ColorModeValue => {
-        let mode = 'single', value: string | string[] = '#fff';
-        if ((config?.columnStyle as ShapeAttrs)?.fill) {
-            const fill = (config?.columnStyle as ShapeAttrs).fill as string;
-            if (fill.startsWith('l')) {
-                mode = 'gradient';
-                value = [fill.split(':')[1].split(' ')[0], fill.split(':')[2].split(' ')[0]];
-            } else {
-                mode = 'single';
-                value = fill;
+    const schema: Control = {
+        type: 'accordion',
+        label: '图形',
+        children: [
+            {
+                type: 'grid',
+                config: {columns: 2},
+                children: [
+                    {
+                        type: 'input',
+                        label: '宽度',
+                        value: 12,
+                        config: {
+                            type: 'number',
+                            min: 0,
+                            max: 100,
+                        }
+                    },
+                    {
+                        type: 'color-picker',
+                        label: '颜色',
+                        value: '#1c1c1c',
+                        config: {
+                            width: '100%',
+                            radius: 3,
+                            showBorder: true,
+                            showText: true,
+                            height: 16,
+                            hideControls: true
+                        }
+                    }
+                ]
             }
-        } else if (config?.color) {
-            mode = 'multi';
-            value = config?.color as string[];
-        }
-        return {mode, value};
+        ]
     }
 
     return (
-        <Accordion title={'图形'}>
-            <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: '85%'}}>
-                <ColorMode onChange={barColorChange} data={buildColorModeData()}
-                           exclude={[ColorModeType.RADIAL_GRADIENT]}/>
-            </ConfigItem>
-            <ConfigItem title={'宽度'}>
-                <UnderLineInput type={'number'} min={1}
-                                onChange={(e) => onChange({maxColumnWidth: parseInt(e.target.value)})}
-                                defaultValue={config!.maxColumnWidth}/>
-            </ConfigItem>
-        </Accordion>
+        <LCGUI schema={schema} onFieldChange={onFieldChange}/>
     )
+
 }
 
 

@@ -96,8 +96,115 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
         key: 'style',
         type: 'accordion',
         label: '图形',
-
-
+        children: [
+            {
+                type: 'item-panel',
+                label: '数据点',
+                children: [
+                    {
+                        type: 'grid',
+                        config: {
+                            columns: 2
+                        },
+                        children: [
+                            {
+                                type: 'input',
+                                label: '尺寸',
+                                value: 1,
+                                config: {
+                                    type: 'number',
+                                    min: 0,
+                                    max: 100
+                                }
+                            },
+                            {
+                                type: 'select',
+                                label: '形状',
+                                value: 'circle',
+                                config: {
+                                    options: [
+                                        {value: 'circle', label: '圈形'},
+                                        {value: 'square', label: '方形'},
+                                        {value: 'bowtie', label: '领结'},
+                                        {value: 'diamond', label: '钻石'},
+                                        {value: 'hexagon', label: '六角形'},
+                                        {value: 'triangle', label: '三角形'}]
+                                }
+                            },
+                            {
+                                type: 'color-picker',
+                                label: '颜色',
+                                value: '#1c1c1c',
+                                config: {
+                                    width: '100%',
+                                    radius: 3,
+                                    showBorder: true,
+                                    showText: true,
+                                    height: 16,
+                                    hideControls: true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                type: 'item-panel',
+                label: '数据线',
+                children: [
+                    {
+                        type: 'grid',
+                        config: {
+                            columns: 2
+                        },
+                        children: [
+                            {
+                                type: 'switch',
+                                label: '平滑',
+                                value: false,
+                            },
+                            {
+                                type: 'input',
+                                label: '宽度',
+                                value: 0,
+                                config: {
+                                    type: 'number',
+                                    min: 0,
+                                    max: 100
+                                }
+                            },
+                        ]
+                    }
+                ]
+            },
+            {
+                type: 'item-panel',
+                label: '数据面',
+                children: [
+                    {
+                        type: 'grid',
+                        config: {
+                            columns: 2
+                        },
+                        children: [
+                            {
+                                type: 'color-picker',
+                                label: '颜色',
+                                value: '#1c1c1c',
+                                config: {
+                                    width: '100%',
+                                    radius: 3,
+                                    showBorder: true,
+                                    showText: true,
+                                    height: 16,
+                                    hideControls: true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
     }
 
     return (

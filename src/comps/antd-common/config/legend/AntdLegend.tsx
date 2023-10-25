@@ -7,6 +7,8 @@ import ConfigItem from "../../../../lib/lc-config-item/ConfigItem";
 import {LegendType} from "./LegendType";
 import Select from "../../../../lib/lc-select/Select";
 import UnderLineInput from "../../../../lib/lc-input/UnderLineInput";
+import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI";
+import {Control} from "../../../../json-schema/SchemaTypes";
 
 
 interface LegendProps {
@@ -38,48 +40,121 @@ class AntdLegend extends Component<LegendProps> {
         onChange && onChange(key, data);
     }
 
+    onFieldChange = (fieldChangeData: FieldChangeData) => {
+
+    }
+
+    schema: Control = {
+        type: 'accordion',
+        label: '图例',
+        children: [
+            {
+                type: 'grid',
+                config: {columns: 2},
+                children: [
+                    {
+                        key: 'enable',
+                        type: 'switch',
+                        label: '开启',
+                        value: true,
+                    },
+                    {
+                        type: 'input',
+                        label: '数量',
+                        value: 5,
+                        config: {
+                            type: 'number',
+                            min: 0,
+                            max: 100,
+                        }
+                    },
+                    {
+                        type: 'input',
+                        label: '长度',
+                        value: 2,
+                        config: {
+                            type: 'number',
+                            min: 0,
+                            max: 10,
+                        }
+                    },
+                    {
+                        type: 'input',
+                        label: '宽度',
+                        value: 1,
+                        config: {
+                            type: 'number',
+                            min: 0,
+                            max: 10,
+                        }
+                    },
+                    {
+                        type: 'color-picker',
+                        label: '颜色',
+                        value: '#1c1c1c',
+                        config: {
+                            width: '100%',
+                            radius: 3,
+                            showBorder: true,
+                            showText: true,
+                            height: 16,
+                            hideControls: true
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+
+
     render() {
         const {config} = this.props;
         return (
-            <Accordion title={'图例'} showSwitch={true} defaultValue={config?.visible}
-                       onChange={value => this.onChange('enable', value)}>
-                <ConfigItem title={'位置'}>
-                    <Select defaultValue={config?.position} onChange={(value => this.onChange('position', value))}
-                            options={[
-                                {value: 'left-top', label: '左上'},
-                                {value: 'left', label: '正左'},
-                                {value: 'left-bottom', label: '左下'},
-                                {value: 'top-left', label: '上左'},
-                                {value: 'top', label: '正上'},
-                                {value: 'top-right', label: '上右'},
-                                {value: 'right-top', label: '右上'},
-                                {value: 'right', label: '正右'},
-                                {value: 'right-bottom', label: '右下'},
-                                {value: 'bottom-left', label: '下左'},
-                                {value: 'bottom', label: '正下'},
-                                {value: 'bottom-right', label: '下右'},
-                            ]}/>
-                </ConfigItem>
-                <ConfigItem title={'方向'}>
-                    <Select defaultValue={config?.direction} onChange={(value => this.onChange('direction', value))}
-                            options={[
-                                {value: 'horizontal', label: '横向'},
-                                {value: 'vertical', label: '纵向'},
-                            ]}/>
-                </ConfigItem>
-                <ConfigItem title={'字号'}>
-                    <UnderLineInput type={'number'} min={12} defaultValue={config?.fontSize || 12}
-                                    onChange={value => this.onChange('fontSize', value)}/>
-                </ConfigItem>
-                <ConfigItem title={'颜色'}>
-                    <CfgItemBorder width={'100%'}>
-                        <BaseColorPicker defaultValue={config?.color} onChange={value => this.onChange('color', value)}
-                                         style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                    </CfgItemBorder>
-                </ConfigItem>
-            </Accordion>
+            <>
+                <LCGUI schema={this.schema} onFieldChange={this.onFieldChange}/>
+                <Accordion title={'图例'} showSwitch={true} defaultValue={config?.visible}
+                           onChange={value => this.onChange('enable', value)}>
+                    <ConfigItem title={'位置'}>
+                        <Select defaultValue={config?.position} onChange={(value => this.onChange('position', value))}
+                                options={[
+                                    {value: 'left-top', label: '左上'},
+                                    {value: 'left', label: '正左'},
+                                    {value: 'left-bottom', label: '左下'},
+                                    {value: 'top-left', label: '上左'},
+                                    {value: 'top', label: '正上'},
+                                    {value: 'top-right', label: '上右'},
+                                    {value: 'right-top', label: '右上'},
+                                    {value: 'right', label: '正右'},
+                                    {value: 'right-bottom', label: '右下'},
+                                    {value: 'bottom-left', label: '下左'},
+                                    {value: 'bottom', label: '正下'},
+                                    {value: 'bottom-right', label: '下右'},
+                                ]}/>
+                    </ConfigItem>
+                    <ConfigItem title={'方向'}>
+                        <Select defaultValue={config?.direction} onChange={(value => this.onChange('direction', value))}
+                                options={[
+                                    {value: 'horizontal', label: '横向'},
+                                    {value: 'vertical', label: '纵向'},
+                                ]}/>
+                    </ConfigItem>
+                    <ConfigItem title={'字号'}>
+                        <UnderLineInput type={'number'} min={12} defaultValue={config?.fontSize || 12}
+                                        onChange={value => this.onChange('fontSize', value)}/>
+                    </ConfigItem>
+                    <ConfigItem title={'颜色'}>
+                        <CfgItemBorder width={'100%'}>
+                            <BaseColorPicker defaultValue={config?.color}
+                                             onChange={value => this.onChange('color', value)}
+                                             style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
+                        </CfgItemBorder>
+                    </ConfigItem>
+                </Accordion>
+            </>
+
         )
     }
+
 }
 
 export default AntdLegend;

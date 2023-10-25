@@ -156,6 +156,7 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
             }
         ]
     }
+
     return (
         <LCGUI schema={schema} onFieldChange={onFieldChange}/>
     )

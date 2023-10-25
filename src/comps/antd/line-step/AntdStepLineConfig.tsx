@@ -35,7 +35,7 @@ class AntdStepLineStyleConfig extends Component<ConfigType> {
         const config: LineOptions = controller.getConfig().style;
         return (
             <>
-                <AntdStepLineGraphics onChange={this.lineGraphicsChange} config={config}/>
+                {/*<AntdStepLineGraphics onChange={this.lineGraphicsChange} config={config}/>*/}
                 <AntdCartesianCoordinateSys onChange={this.lineCoordinateSysChange} config={config}/>
             </>
         );

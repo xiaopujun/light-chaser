@@ -40,7 +40,7 @@ class AntdLineCommonStyleConfig extends Component<ConfigType> {
         const config: LineOptions = controller.getConfig().style;
         return (
             <>
-                <AntdLineGraphics onChange={this.lineGraphicsChange} config={config}/>
+                {/*<AntdLineGraphics onChange={this.lineGraphicsChange} config={config}/>*/}
                 <AntdLegend onChange={this.legendChange} config={config.legend}/>
                 <AntdCartesianCoordinateSys onChange={this.lineCoordinateSysChange} config={config}/>
             </>
