@@ -1,23 +1,15 @@
-import React, {ChangeEvent, Component, useState} from 'react';
+import React, {Component} from 'react';
 import './AxisConfig.less';
-import ConfigCard from "../../../../lib/lc-config-card/ConfigCard";
 import ConfigItem from "../../../../lib/lc-config-item/ConfigItem";
-import CfgItemBorder from "../../../../lib/lc-config-item/CfgItemBorder";
 import {Axis} from "@antv/g2plot";
 import Accordion from "../../../../lib/lc-accordion/Accordion";
 import {Types} from "@antv/g2";
 import {AxisLabelCfg, AxisLineCfg, AxisSubTickLineCfg, AxisTickLineCfg, AxisTitleCfg} from "@antv/component/esm";
-import {ShapeAttrs} from "@antv/g-base";
 import {AxisGridCfg} from "@antv/g2/esm/interface";
 import {isEqual} from "lodash";
 import {Control} from "../../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI";
 
-
-const BaseColorPicker = React.lazy(() => import('../../../../lib/lc-color-picker/BaseColorPicker'));
-const LcSwitch = React.lazy(() => import('../../../../lib/lc-switch/LcSwitch'));
-const UnderLineInput = React.lazy(() => import('../../../../lib/lc-input/UnderLineInput'));
-const Select = React.lazy(() => import('../../../../lib/lc-select/Select'));
 const Radio = React.lazy(() => import('../../../../lib/lc-radio/Radio'));
 
 interface AxisConfigProps {
@@ -177,75 +169,67 @@ export interface AxisTickLineProps {
 
 export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) => {
 
-    const initConfig: AxisGridCfg = config || {
-        alignTick: true,
-        length: 1,
-        style: {stroke: '#fff', lineWidth: 1} as ShapeAttrs
-    };
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
 
-    const [enable, setEnable] = useState(!!config);
-    const [alignTick, setAlignTick] = useState(config?.alignTick || false);
-    const [length, setLength] = useState(config?.length || 0);
-    const [width, setWidth] = useState((config?.style as ShapeAttrs)?.lineWidth || 0);
-    const [color, setColor] = useState((config?.style as ShapeAttrs)?.stroke || '#ffffff');
-
+    }
+    const schema: Control = {
+        type: 'item-panel',
+        label: '刻度线',
+        children: [
+            {
+                type: 'grid',
+                config: {columns: 2},
+                children: [
+                    {
+                        key: 'enable',
+                        type: 'switch',
+                        label: '开启',
+                        value: true,
+                    },
+                    {
+                        type: 'switch',
+                        label: '对齐',
+                        value: true,
+                    },
+                    {
+                        type: 'input',
+                        label: '长度',
+                        value: 5,
+                        config: {
+                            type: 'number',
+                            min: 0,
+                            max: 10,
+                        }
+                    },
+                    {
+                        type: 'input',
+                        label: '宽度',
+                        value: 2,
+                        config: {
+                            type: 'number',
+                            min: 0,
+                            max: 10,
+                        }
+                    },
+                    {
+                        type: 'color-picker',
+                        label: '颜色',
+                        value: '#1c1c1c',
+                        config: {
+                            width: '100%',
+                            radius: 3,
+                            showBorder: true,
+                            showText: true,
+                            height: 16,
+                            hideControls: true
+                        }
+                    }
+                ]
+            }
+        ]
+    }
     return (
-        <ConfigCard title={'刻度线'}>
-            <ConfigItem title={'开启'}>
-                <LcSwitch defaultValue={enable}
-                          onChange={value => {
-                              onChange(value ? initConfig : null);
-                              if (value) {
-                                  setEnable(true);
-                                  setAlignTick(true);
-                                  setLength(2);
-                                  setWidth(2);
-                                  setColor("#FFFFFF");
-                              } else {
-                                  setEnable(false);
-                              }
-                          }}/>
-            </ConfigItem>
-            <ConfigItem title={'对齐'}>
-                <LcSwitch value={alignTick}
-                          disabled={!enable}
-                          onChange={value => {
-                              onChange({alignTick: value});
-                              setAlignTick(value);
-                          }}/>
-            </ConfigItem>
-            <ConfigItem title={'长度'}>
-                <UnderLineInput value={length}
-                                disabled={!enable}
-                                onChange={e => {
-                                    const value = parseInt(e.target.value);
-                                    onChange({length: value});
-                                    setLength(value);
-                                }}
-                                type={'number'}/>
-            </ConfigItem>
-            <ConfigItem title={'宽度'}>
-                <UnderLineInput value={width}
-                                disabled={!enable}
-                                onChange={e => {
-                                    const value = parseInt(e.target.value);
-                                    onChange({style: {lineWidth: value}});
-                                    setWidth(value);
-                                }}
-                                type={'number'}/>
-            </ConfigItem>
-            <ConfigItem title={'颜色'}>
-                <CfgItemBorder>
-                    <BaseColorPicker value={color}
-                                     disabled={!enable}
-                                     onChange={value => {
-                                         onChange({style: {stroke: value}});
-                                         setColor(value);
-                                     }}
-                                     style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                </CfgItemBorder>
-            </ConfigItem>
-        </ConfigCard>
+        <LCGUI schema={schema} onFieldChange={onFieldChange}/>
     )
 }
 
@@ -257,56 +241,59 @@ export interface AxisGridLineProps {
 
 export const AxisGridLine: React.FC<AxisGridLineProps> = ({config, onChange}) => {
 
-    const initConfig: AxisGridCfg = config || {
-        alignTick: true,
-        line: {style: {stroke: '#fff', lineWidth: 1} as ShapeAttrs}
-    };
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
 
-    const [axisTitleDisable, setAxisTitleDisable] = useState(!config);
-    const [alignTick, setAlignTick] = useState(config?.alignTick || false);
-    const [color, setColor] = useState((config?.line?.style as ShapeAttrs)?.stroke || '#ffffff');
+    }
+
+    const schema: Control = {
+        type: 'item-panel',
+        label: '网格线',
+        children: [
+            {
+                type: 'grid',
+                config: {columns: 2},
+                children: [
+                    {
+                        key: 'enable',
+                        type: 'switch',
+                        label: '开启',
+                        value: true,
+                    },
+                    {
+                        type: 'switch',
+                        label: '对齐',
+                        value: true,
+                    },
+                    {
+                        type: 'input',
+                        label: '宽度',
+                        value: 2,
+                        config: {
+                            type: 'number',
+                            min: 0,
+                            max: 10,
+                        }
+                    },
+                    {
+                        type: 'color-picker',
+                        label: '颜色',
+                        value: '#1c1c1c',
+                        config: {
+                            width: '100%',
+                            radius: 3,
+                            showBorder: true,
+                            showText: true,
+                            height: 16,
+                            hideControls: true
+                        }
+                    }
+                ]
+            }
+        ]
+    }
 
     return (
-        <ConfigCard title={'网格线'}>
-            <ConfigItem title={'开启'}>
-                <LcSwitch defaultValue={!axisTitleDisable}
-                          onChange={value => {
-                              if (value) {
-                                  setAxisTitleDisable(false);
-                                  setAlignTick(true);
-                              } else {
-                                  setAxisTitleDisable(true);
-                                  setAlignTick(false);
-                              }
-                              onChange(value ? initConfig : null)
-                          }}/>
-            </ConfigItem>
-            <ConfigItem title={'刻度对齐'}>
-                <LcSwitch value={alignTick} disabled={axisTitleDisable}
-                          onChange={value => {
-                              setAlignTick(value);
-                              onChange({alignTick: value})
-                          }}/>
-            </ConfigItem>
-            <ConfigItem title={'线宽'}>
-                <UnderLineInput defaultValue={(config?.line?.style as ShapeAttrs)?.lineWidth || 0}
-                                disabled={axisTitleDisable}
-                                min={0} max={10}
-                                onChange={e => onChange({line: {style: {lineWidth: parseInt(e.target.value)}}})}
-                                type={'number'}/>
-            </ConfigItem>
-            <ConfigItem title={'颜色'}>
-                <CfgItemBorder>
-                    <BaseColorPicker value={color}
-                                     disabled={axisTitleDisable}
-                                     onChange={value => {
-                                         onChange({line: {style: {stroke: value}}});
-                                         setColor(value);
-                                     }}
-                                     style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                </CfgItemBorder>
-            </ConfigItem>
-        </ConfigCard>
+        <LCGUI schema={schema} onFieldChange={onFieldChange}/>
     )
 }
 
@@ -317,49 +304,54 @@ export interface AxisLIneProps {
 
 export const AxisLine: React.FC<AxisLIneProps> = ({config, onChange}) => {
 
-    const initConfig: AxisLineCfg = config || {style: {stroke: '#fff', lineWidth: 1} as ShapeAttrs};
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
 
-    const [axisLineDisable, setAxisLineDisable] = useState(!config);
-    const [lineWidth, setLineWidth] = useState(config?.style?.lineWidth || 0);
-    const [lineColor, setLineColor] = useState(config?.style?.stroke || '#FFFFFF');
+    }
+
+    const schema: Control = {
+        type: 'item-panel',
+        label: '轴线',
+        children: [
+            {
+                type: 'grid',
+                config: {columns: 2},
+                children: [
+                    {
+                        key: 'enable',
+                        type: 'switch',
+                        label: '开启',
+                        value: true,
+                    },
+                    {
+                        type: 'input',
+                        label: '宽度',
+                        value: 2,
+                        config: {
+                            type: 'number',
+                            min: 0,
+                            max: 10,
+                        }
+                    },
+                    {
+                        type: 'color-picker',
+                        label: '颜色',
+                        value: '#1c1c1c',
+                        config: {
+                            width: '100%',
+                            radius: 3,
+                            showBorder: true,
+                            showText: true,
+                            height: 16,
+                            hideControls: true
+                        }
+                    }
+                ]
+            }
+        ]
+    }
 
     return (
-        <ConfigCard title={'轴线'}>
-            <ConfigItem title={'开启'}>
-                <LcSwitch defaultValue={!axisLineDisable}
-                          onChange={value => {
-                              if (value) {
-                                  setAxisLineDisable(false);
-                                  setLineWidth(2);
-                                  setLineColor('#FFFFFF');
-                              } else {
-                                  setAxisLineDisable(true);
-                              }
-                              onChange(value ? initConfig : null)
-                          }}/>
-            </ConfigItem>
-            <ConfigItem title={'颜色'}>
-                <CfgItemBorder>
-                    <BaseColorPicker value={lineColor}
-                                     disabled={axisLineDisable}
-                                     onChange={value => {
-                                         onChange({style: {stroke: value}});
-                                         setLineColor(value);
-                                     }}
-                                     style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                </CfgItemBorder>
-            </ConfigItem>
-            <ConfigItem title={'线宽'}>
-                <UnderLineInput value={lineWidth} min={0} max={10}
-                                disabled={axisLineDisable}
-                                onChange={e => {
-                                    const value = parseInt(e.target.value);
-                                    onChange({style: {lineWidth: value}});
-                                    setLineWidth(value);
-                                }}
-                                type={'number'}/>
-            </ConfigItem>
-        </ConfigCard>
+        <LCGUI schema={schema} onFieldChange={onFieldChange}/>
     )
 }
 
@@ -370,73 +362,78 @@ export interface AxisTitleProps {
 
 export const AxisTitle: React.FC<AxisTitleProps> = ({config, onChange}) => {
 
-    const initConfig = config || {text: '标题', position: 'center', style: {fill: '#fff'}};
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
 
-    const [axisTitleDisable, setAxisTitleDisable] = useState(!config);
-    const [titlePos, setTitlePos] = useState(config?.position || 'center');
-    const [title, setTitle] = useState(config?.text || '');
-    const [titleColor, setTitleColor] = useState(config?.style?.fill || '#ffffff');
+    }
+
+    const schema: Control = {
+        type: 'item-panel',
+        label: '标题',
+        children: [
+            {
+                type: 'grid',
+                config: {columns: 2},
+                children: [
+                    {
+                        key: 'enable',
+                        type: 'switch',
+                        label: '开启',
+                        value: true,
+                    },
+                    {
+                        type: 'select',
+                        label: '位置',
+                        value: 'end',
+                        config: {
+                            options: [
+                                {value: 'start', label: '前'},
+                                {value: 'center', label: '中'},
+                                {value: 'end', label: '后'}]
+                        }
+                    },
+                    {
+                        type: 'input',
+                        label: '内容',
+                        value: '',
+                    },
+                    {
+                        type: 'input',
+                        label: '字号',
+                        value: 12,
+                        config: {
+                            type: 'number',
+                            min: 1,
+                            max: 50,
+                        }
+                    },
+                    {
+                        type: 'input',
+                        label: '偏移',
+                        value: 0,
+                        config: {
+                            type: 'number'
+                        }
+                    },
+                    {
+                        type: 'color-picker',
+                        label: '颜色',
+                        value: '#1c1c1c',
+                        config: {
+                            width: '100%',
+                            radius: 3,
+                            showBorder: true,
+                            showText: true,
+                            height: 16,
+                            hideControls: true
+                        }
+                    }
+                ]
+            }
+        ]
+    }
 
     return (
-        <ConfigCard title={'标题'}>
-            <ConfigItem title={'开启'}>
-                <LcSwitch defaultValue={!axisTitleDisable}
-                          onChange={(value) => {
-                              if (value) {
-                                  setAxisTitleDisable(false);
-                                  setTitlePos('center');
-                                  setTitle('标题');
-                                  setTitleColor('#ffffff');
-                              } else {
-                                  setAxisTitleDisable(true)
-                              }
-                              onChange(value ? initConfig : null);
-                          }}/>
-            </ConfigItem>
-            <ConfigItem title={'位置'}>
-                <Select options={[
-                    {value: 'start', label: '前'},
-                    {value: 'center', label: '中'},
-                    {value: 'end', label: '后'}]}
-                        value={titlePos} placeholder={'请选择位置'}
-                        disabled={axisTitleDisable}
-                        onChange={value => {
-                            onChange({position: value});
-                            setTitlePos(value);
-                        }}/>
-            </ConfigItem>
-            <ConfigItem title={'内容'}>
-                <UnderLineInput value={title} disabled={axisTitleDisable}
-                                onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                    const value = e.target.value;
-                                    onChange({text: value});
-                                    setTitle(value);
-                                }}
-                                type={'text'}/>
-            </ConfigItem>
-            <ConfigItem title={'颜色'}>
-                <CfgItemBorder>
-                    <BaseColorPicker value={titleColor as string}
-                                     disabled={axisTitleDisable}
-                                     onChange={value => {
-                                         onChange({style: {fill: value}});
-                                         setTitleColor(value);
-                                     }}
-                                     style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                </CfgItemBorder>
-            </ConfigItem>
-            <ConfigItem title={'字号'}>
-                <UnderLineInput defaultValue={(config?.style as ShapeAttrs)?.fontSize || 12}
-                                disabled={axisTitleDisable}
-                                min={0} type={'number'}
-                                onChange={e => onChange({style: {fontSize: parseInt(e.target.value)}})}/>
-            </ConfigItem>
-            <ConfigItem title={'偏移量'}>
-                <UnderLineInput defaultValue={config?.offset || 0} min={0} type={'number'}
-                                disabled={axisTitleDisable}
-                                onChange={e => onChange({offset: parseInt(e.target.value)})}/>
-            </ConfigItem>
-        </ConfigCard>
+        <LCGUI schema={schema} onFieldChange={onFieldChange}/>
     )
 }
 
@@ -447,29 +444,66 @@ export interface AxisTextProps {
 
 export const AxisText: React.FC<AxisTextProps> = ({config, onChange}) => {
 
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+
+    }
+
+    const schema: Control = {
+        type: 'item-panel',
+        label: '文本',
+        children: [
+            {
+                type: 'grid',
+                config: {columns: 2},
+                children: [
+                    {
+                        type: 'input',
+                        label: '字号',
+                        value: 12,
+                        config: {
+                            type: 'number',
+                            min: 1,
+                            max: 50,
+                        }
+                    },
+                    {
+                        type: 'input',
+                        label: '角度',
+                        value: 0,
+                        config: {
+                            type: 'number',
+                            min: 0,
+                            max: 360,
+                        }
+                    },
+                    {
+                        type: 'input',
+                        label: '偏移',
+                        value: 0,
+                        config: {
+                            type: 'number'
+                        }
+                    },
+                    {
+                        type: 'color-picker',
+                        label: '颜色',
+                        value: '#1c1c1c',
+                        config: {
+                            width: '100%',
+                            radius: 3,
+                            showBorder: true,
+                            showText: true,
+                            height: 16,
+                            hideControls: true
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+
     return (
-        <ConfigCard title={'文本'}>
-            <ConfigItem title={'颜色'}>
-                <CfgItemBorder>
-                    <BaseColorPicker defaultValue={(config?.style as ShapeAttrs)?.fill || '#d5d5d5'}
-                                     onChange={value => onChange({style: {fill: value}})}
-                                     style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                </CfgItemBorder>
-            </ConfigItem>
-            <ConfigItem title={'字号'}>
-                <UnderLineInput defaultValue={(config?.style as ShapeAttrs)?.fontSize || 12}
-                                min={0} type={'number'}
-                                onChange={e => onChange({style: {fontSize: parseInt(e.target.value)}})}/>
-            </ConfigItem>
-            <ConfigItem title={'角度'}>
-                <UnderLineInput defaultValue={config?.rotate || 0} step={0.1} min={0} max={2} type={'number'}
-                                onChange={e => onChange({rotate: parseFloat(e.target.value) * Math.PI})}/>
-            </ConfigItem>
-            <ConfigItem title={'偏移量'}>
-                <UnderLineInput defaultValue={config?.offset || 0} type={'number'}
-                                onChange={e => onChange({offset: parseInt(e.target.value)})}/>
-            </ConfigItem>
-        </ConfigCard>
+        <LCGUI schema={schema} onFieldChange={onFieldChange}/>
     )
 }
 

@@ -1,46 +1,61 @@
 import React from 'react';
 import {ConfigType} from "../../../designer/right/ConfigType";
-import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
-import {BaseTextComponentStyle} from "./BaseTextComponent";
-import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
-import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
-import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
-import {BaseText} from "./BaseText";
+import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
+import {Control} from "../../../json-schema/SchemaTypes";
 
 export const BaseTextStyleConfig: React.FC<ConfigType> = ({controller}) => {
 
-    const updateStyle = (config: BaseTextComponentStyle) => {
-        controller.update({style: config});
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+
     }
 
-    const config = (controller as BaseText).getConfig();
-    const textStyle = config?.style;
-    let text = config?.data?.staticData?.data;
+    const schema: Control = {
+        type: 'grid',
+        config: {columns: 2},
+        children: [
+            {
+                type: 'input',
+                label: '内容',
+                value: '',
+            },
+            {
+                type: 'input',
+                label: '字号',
+                value: 12,
+                config: {
+                    type: 'number',
+                    min: 0,
+                    max: 100,
+                }
+            },
+            {
+                type: 'input',
+                label: '粗细',
+                value: 500,
+                config: {
+                    type: 'number',
+                    min: 100,
+                    max: 900,
+                    step: 100
+                }
+            },
+            {
+                type: 'color-picker',
+                label: '颜色',
+                value: '#1c1c1c',
+                config: {
+                    width: '100%',
+                    radius: 3,
+                    showBorder: true,
+                    showText: true,
+                    height: 16,
+                    hideControls: true
+                }
+            }
+        ]
+    }
+
     return (
-        <>
-            <ConfigItem title={'内容'} contentStyle={{width: '80%'}}>
-                <UnderLineInput type={'text'} defaultValue={text} onChange={(e) => {
-                    controller.update({data: {staticData: {data: e.target.value}}})
-                }}/>
-            </ConfigItem>
-            <ConfigItem title={"字号"}>
-                <UnderLineInput type={'number'} min={12}
-                                defaultValue={textStyle?.fontSize || 12}
-                                onChange={(event) => updateStyle({fontSize: parseInt(event.target.value)})}/>
-            </ConfigItem>
-            <ConfigItem title={"加粗"}>
-                <UnderLineInput type={'number'} min={100} max={900} step={100}
-                                defaultValue={textStyle?.fontWeight || 500}
-                                onChange={(event) => updateStyle({fontWeight: parseInt(event.target.value)})}/>
-            </ConfigItem>
-            <ConfigItem title={'颜色'}>
-                <CfgItemBorder width={'100%'}>
-                    <BaseColorPicker
-                        defaultValue={textStyle?.color || '#fff'}
-                        onChange={(value) => updateStyle({color: value})}
-                        style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                </CfgItemBorder>
-            </ConfigItem>
-        </>
+        <LCGUI schema={schema} onFieldChange={onFieldChange}/>
     )
 }

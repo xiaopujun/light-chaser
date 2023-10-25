@@ -24,41 +24,33 @@ class BaseInfo extends Component<ConfigType> {
         const {controller} = this.props;
         const {type, name, desc} = (controller.getConfig() as ComponentBaseProps).info!;
         this.schema = {
-            type: "item-panel",
+            type: 'grid',
             config: {
-                label: "基础信息",
+                gridGap: '15px'
             },
             children: [
                 {
-                    type: 'grid',
+                    id: "name",
+                    key: "name",
+                    label: "名称",
+                    type: "input",
+                    value: name
+                },
+                {
+                    key: "desc",
+                    label: "描述",
+                    type: "input",
+                    value: desc
+                },
+                {
+                    key: "type",
+                    label: "类型",
+                    type: "input",
+                    value: type,
                     config: {
-                        gridGap: '15px'
-                    },
-                    children: [
-                        {
-                            id: "name",
-                            key: "name",
-                            label: "名称",
-                            type: "input",
-                            value: name
-                        },
-                        {
-                            key: "desc",
-                            label: "描述",
-                            type: "input",
-                            value: desc
-                        },
-                        {
-                            key: "type",
-                            label: "类型",
-                            type: "input",
-                            value: type,
-                            config: {
-                                disabled: true
-                            }
-                        },
-                    ]
-                }
+                        disabled: true
+                    }
+                },
             ]
         }
     }
