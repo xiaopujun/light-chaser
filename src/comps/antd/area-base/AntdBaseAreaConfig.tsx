@@ -48,33 +48,6 @@ export interface AntdBaseAreaGraphicsProps {
 
 export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
 
-    // const areaColorChange = (data: ColorModeValue) => {
-    //     const {mode, value, angle = 0} = data;
-    //     switch (mode) {
-    //         case 'single':
-    //             onChange({areaStyle: {fill: value as string}});
-    //             break;
-    //         case 'gradient':
-    //             onChange({areaStyle: {fill: `l(${angle}) 0:${value[0]} 1:${value[1]}`}});
-    //             break;
-    //     }
-    // }
-    //
-    // const buildColorModeData = (): ColorModeValue => {
-    //     let mode = 'single', value: string | string[] = '#fff';
-    //     if ((config?.areaStyle as ShapeAttrs)?.fill) {
-    //         const fill = (config?.areaStyle as ShapeAttrs).fill as string;
-    //         if (fill.startsWith('l')) {
-    //             mode = 'gradient';
-    //             value = [fill.split(':')[1].split(' ')[0], fill.split(':')[2].split(' ')[0]];
-    //         } else {
-    //             mode = 'single';
-    //             value = fill;
-    //         }
-    //     }
-    //     return {mode, value};
-    // }
-
     const config: AreaOptions = controller.getConfig().style;
 
     const _onChange = (fieldChangeData: FieldChangeData) => {
@@ -272,5 +245,6 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
 }
 
 export const AntdBaseAreaFieldMapping: React.FC<ConfigType<AntdBaseDesignerController>> = ({controller}) => {
+
     return <AntdFieldMapping controller={controller} fields={['xField', "yField"]}/>
 }

@@ -10,6 +10,8 @@ import {AxisLabelCfg, AxisLineCfg, AxisSubTickLineCfg, AxisTickLineCfg, AxisTitl
 import {ShapeAttrs} from "@antv/g-base";
 import {AxisGridCfg} from "@antv/g2/esm/interface";
 import {isEqual} from "lodash";
+import {Control} from "../../../../json-schema/SchemaTypes";
+import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI";
 
 
 const BaseColorPicker = React.lazy(() => import('../../../../lib/lc-color-picker/BaseColorPicker'));
@@ -97,79 +99,73 @@ export interface AxisSubTickLineProps {
 
 export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChange}) => {
 
-    const initConfig: AxisSubTickLineCfg = config || {
-        count: 5,
-        length: 1,
-        style: {stroke: '#fff', lineWidth: 1} as ShapeAttrs
-    };
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
 
-    const [enable, setEnable] = useState(!!config);
-    const [subTickLineCount, setSubTickLineCount] = useState(config?.count || 0);
-    const [subTickLineLength, setSubTickLineLength] = useState(config?.length || 0);
-    const [subTickLineWidth, setSubTickLineWidth] = useState((config?.style as ShapeAttrs)?.lineWidth || 0);
-    const [subTickLineColor, setSubTickLineColor] = useState((config?.style as ShapeAttrs)?.stroke || '#ffffff');
+    }
+
+    const schema: Control = {
+        type: 'item-panel',
+        label: '子刻度',
+        children: [
+            {
+                type: 'grid',
+                config: {columns: 2},
+                children: [
+                    {
+                        key: 'enable',
+                        type: 'switch',
+                        label: '开启',
+                        value: true,
+                    },
+                    {
+                        type: 'input',
+                        label: '数量',
+                        value: 5,
+                        config: {
+                            type: 'number',
+                            min: 0,
+                            max: 100,
+                        }
+                    },
+                    {
+                        type: 'input',
+                        label: '长度',
+                        value: 2,
+                        config: {
+                            type: 'number',
+                            min: 0,
+                            max: 10,
+                        }
+                    },
+                    {
+                        type: 'input',
+                        label: '宽度',
+                        value: 1,
+                        config: {
+                            type: 'number',
+                            min: 0,
+                            max: 10,
+                        }
+                    },
+                    {
+                        type: 'color-picker',
+                        label: '颜色',
+                        value: '#1c1c1c',
+                        config: {
+                            width: '100%',
+                            radius: 3,
+                            showBorder: true,
+                            showText: true,
+                            height: 16,
+                            hideControls: true
+                        }
+                    }
+                ]
+            }
+        ]
+    }
     return (
-        <ConfigCard title={'子刻度'}>
-            <ConfigItem title={'开启'}>
-                <LcSwitch defaultValue={enable}
-                          onChange={value => {
-                              onChange(value ? initConfig : null);
-                              if (value) {
-                                  setEnable(true);
-                                  setSubTickLineCount(5);
-                                  setSubTickLineLength(2);
-                                  setSubTickLineWidth(2);
-                                  setSubTickLineColor('#ffffff')
-                              } else {
-                                  setEnable(false);
-                              }
-
-                          }}/>
-            </ConfigItem>
-            <ConfigItem title={'数量'}>
-                <UnderLineInput value={subTickLineCount}
-                                disabled={!enable}
-                                onChange={e => {
-                                    const value = parseInt(e.target.value);
-                                    onChange({count: value});
-                                    setSubTickLineCount(value);
-                                }}
-                                type={'number'}/>
-            </ConfigItem>
-            <ConfigItem title={'长度'}>
-                <UnderLineInput value={subTickLineLength}
-                                disabled={!enable}
-                                onChange={e => {
-                                    const value = parseInt(e.target.value);
-                                    onChange({length: value});
-                                    setSubTickLineLength(value);
-                                }}
-                                type={'number'}/>
-            </ConfigItem>
-            <ConfigItem title={'宽度'}>
-                <UnderLineInput value={subTickLineWidth}
-                                disabled={!enable}
-                                onChange={e => {
-                                    const value = parseInt(e.target.value);
-                                    onChange({style: {lineWidth: value}});
-                                    setSubTickLineWidth(value);
-                                }}
-                                min={0}
-                                max={5}
-                                type={'number'}/>
-            </ConfigItem>
-            <ConfigItem title={'颜色'}>
-                <CfgItemBorder>
-                    <BaseColorPicker value={subTickLineColor}
-                                     disabled={!enable}
-                                     onChange={value => {
-                                         onChange({style: {stroke: value}});
-                                         setSubTickLineColor(value);
-                                     }}
-                                     style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                </CfgItemBorder>
-            </ConfigItem>
-        </ConfigCard>
+        <LCGUI schema={schema} onFieldChange={onFieldChange}/>
     )
 }
 
