@@ -4,22 +4,13 @@ import {AreaOptions, ShapeStyle} from "@antv/g2plot";
 import AntdCommonAreaController from "../../antd-common/area/AntdCommonAreaController";
 import {AntdCartesianCoordinateSys} from "../../antd-common/config/AntdFragment";
 import {WritableAreaOptions} from "../../antd-common/types";
-import ColorMode, {ColorModeType, ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
-import {ShapeAttrs} from "@antv/g-base";
-import Accordion from "../../../lib/lc-accordion/Accordion";
-import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
-import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
-import LcSwitch from "../../../lib/lc-switch/LcSwitch";
 import {MappingOptions} from "@antv/g2plot/lib/adaptor/geometries/base";
-import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
-import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
-import Select from "../../../lib/lc-select/Select";
-import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import AntdFieldMapping from "../../antd-common/config/field-mapping/AntdFieldMapping";
 import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
-import {key} from "localforage";
+import {parseGradient} from "../../../utils/ColorUtil";
+import LCGUIUtil from "../../../json-schema/LCGUIUtil";
 
 class AntdBaseAreaStyleConfig extends Component<ConfigType> {
 
@@ -39,7 +30,7 @@ class AntdBaseAreaStyleConfig extends Component<ConfigType> {
         const config: AreaOptions = controller.getConfig().style;
         return (
             <>
-                <AntdBaseAreaGraphics config={config} onChange={this.AreaCoordinateSysChange}/>
+                <AntdBaseAreaGraphics controller={controller}/>
                 <AntdCartesianCoordinateSys onChange={this.AreaCoordinateSysChange} config={config}/>
             </>
         );
@@ -55,37 +46,57 @@ export interface AntdBaseAreaGraphicsProps {
     onChange(config: WritableAreaOptions): void;
 }
 
-export const AntdBaseAreaGraphics: React.FC<AntdBaseAreaGraphicsProps> = ({config, onChange}) => {
+export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
 
-    const areaColorChange = (data: ColorModeValue) => {
-        const {mode, value, angle = 0} = data;
-        switch (mode) {
-            case 'single':
-                onChange({areaStyle: {fill: value as string}});
-                break;
-            case 'gradient':
-                onChange({areaStyle: {fill: `l(${angle}) 0:${value[0]} 1:${value[1]}`}});
-                break;
-        }
-    }
+    // const areaColorChange = (data: ColorModeValue) => {
+    //     const {mode, value, angle = 0} = data;
+    //     switch (mode) {
+    //         case 'single':
+    //             onChange({areaStyle: {fill: value as string}});
+    //             break;
+    //         case 'gradient':
+    //             onChange({areaStyle: {fill: `l(${angle}) 0:${value[0]} 1:${value[1]}`}});
+    //             break;
+    //     }
+    // }
+    //
+    // const buildColorModeData = (): ColorModeValue => {
+    //     let mode = 'single', value: string | string[] = '#fff';
+    //     if ((config?.areaStyle as ShapeAttrs)?.fill) {
+    //         const fill = (config?.areaStyle as ShapeAttrs).fill as string;
+    //         if (fill.startsWith('l')) {
+    //             mode = 'gradient';
+    //             value = [fill.split(':')[1].split(' ')[0], fill.split(':')[2].split(' ')[0]];
+    //         } else {
+    //             mode = 'single';
+    //             value = fill;
+    //         }
+    //     }
+    //     return {mode, value};
+    // }
 
-    const buildColorModeData = (): ColorModeValue => {
-        let mode = 'single', value: string | string[] = '#fff';
-        if ((config?.areaStyle as ShapeAttrs)?.fill) {
-            const fill = (config?.areaStyle as ShapeAttrs).fill as string;
-            if (fill.startsWith('l')) {
-                mode = 'gradient';
-                value = [fill.split(':')[1].split(' ')[0], fill.split(':')[2].split(' ')[0]];
-            } else {
-                mode = 'single';
-                value = fill;
-            }
-        }
-        return {mode, value};
-    }
+    const config: AreaOptions = controller.getConfig().style;
 
     const _onChange = (fieldChangeData: FieldChangeData) => {
+        let {id, data, dataFragment, dataKeyPath} = fieldChangeData;
 
+        if (id === 'areaColor') {
+            //解析渐变色
+            if (typeof data === 'string' && data.indexOf('linear-gradient') !== -1) {
+                //线性渐变
+                const gradientColor = parseGradient(data.toLowerCase());
+                const colorStr = gradientColor?.colors?.map(item => `${item.pos}:${item.color}`).join(' ');
+                data = `l(${gradientColor.angle}) ${colorStr}`;
+                controller.update(LCGUIUtil.createObjectFromArray(dataKeyPath, data));
+            } else if (typeof data === 'string' && data.indexOf('radial-gradient')! === -1) {
+                //径向渐变
+                console.log('暂不径向渐变')
+            } else {
+                controller.update({areaStyle: data});
+            }
+        } else {
+            controller.update(fieldChangeData.dataFragment);
+        }
     }
 
     const schema: Control = {
@@ -117,19 +128,19 @@ export const AntdBaseAreaGraphics: React.FC<AntdBaseAreaGraphicsProps> = ({confi
                                 },
                                 children: [
                                     {
-                                        label: '尺寸',
-                                        type: 'input',
-                                        key: 'size',
-                                        value: (config?.point as MappingOptions)?.size as number || 0,
-                                        config: {
-                                            type: 'number',
-                                            min: 0,
-                                            max: 10,
-                                        }
-                                    },
-                                    {
                                         key: 'point',
                                         children: [
+                                            {
+                                                label: '尺寸',
+                                                type: 'input',
+                                                key: 'size',
+                                                value: (config?.point as MappingOptions)?.size as number || 0,
+                                                config: {
+                                                    type: 'number',
+                                                    min: 0,
+                                                    max: 10,
+                                                }
+                                            },
                                             {
                                                 key: 'style',
                                                 children: [
@@ -143,7 +154,8 @@ export const AntdBaseAreaGraphics: React.FC<AntdBaseAreaGraphicsProps> = ({confi
                                                             radius: 3,
                                                             showBorder: true,
                                                             showText: true,
-                                                            height: 16
+                                                            height: 16,
+                                                            hideControls: true
                                                         }
                                                     }
                                                 ]
@@ -188,17 +200,17 @@ export const AntdBaseAreaGraphics: React.FC<AntdBaseAreaGraphicsProps> = ({confi
                                     },
                                     {
                                         key: 'line',
-                                        children: [
-                                            {
-                                                key: 'size',
-                                                type: 'input',
-                                                label: '宽度',
-                                                config: {
-                                                    type: 'number',
-                                                    min: 0,
-                                                    max: 10,
-                                                }
-                                            },
+                                        children: [{
+                                            key: 'size',
+                                            type: 'input',
+                                            label: '宽度',
+                                            value: config?.line?.size as number || 0,
+                                            config: {
+                                                type: 'number',
+                                                min: 0,
+                                                max: 10,
+                                            }
+                                        },
                                             {
                                                 key: 'color',
                                                 type: 'color-picker',
@@ -209,10 +221,10 @@ export const AntdBaseAreaGraphics: React.FC<AntdBaseAreaGraphicsProps> = ({confi
                                                     radius: 3,
                                                     showBorder: true,
                                                     showText: true,
-                                                    height: 16
+                                                    height: 16,
+                                                    hideControls: true
                                                 }
-                                            }
-                                        ]
+                                            }]
                                     }
                                 ]
                             }
@@ -230,21 +242,20 @@ export const AntdBaseAreaGraphics: React.FC<AntdBaseAreaGraphicsProps> = ({confi
                                         config: {
                                             columns: 2,
                                         },
-                                        children: [
-                                            {
-                                                key: 'fill',
-                                                type: 'color-picker',
-                                                label: '颜色',
-                                                value: (config?.point?.style as ShapeStyle)?.fill || '#fff',
-                                                config: {
-                                                    width: '100%',
-                                                    radius: 3,
-                                                    showBorder: true,
-                                                    showText: true,
-                                                    height: 16
-                                                }
+                                        children: [{
+                                            id: 'areaColor',
+                                            key: 'fill',
+                                            type: 'color-picker',
+                                            label: '颜色',
+                                            value: (config?.point?.style as ShapeStyle)?.fill || '#fff',
+                                            config: {
+                                                width: '100%',
+                                                radius: 3,
+                                                showBorder: true,
+                                                showText: true,
+                                                height: 16
                                             }
-                                        ]
+                                        }]
                                     }
                                 ]
                             }
@@ -257,34 +268,6 @@ export const AntdBaseAreaGraphics: React.FC<AntdBaseAreaGraphicsProps> = ({confi
 
     return (
         <LCGUI schema={schema} onFieldChange={_onChange}/>
-        // <Accordion title={'图形'}>
-        //     <ConfigCard title={'数据线'}>
-        //         <ConfigItem title={'平滑'}>
-        //             <LcSwitch defaultValue={config?.smooth}
-        //                       onChange={(value) => onChange({smooth: value})}/>
-        //         </ConfigItem>
-        //         <ConfigItem title={'线宽'}>
-        //             <UnderLineInput defaultValue={config?.line?.size as number}
-        //                             type={'number'} min={0}
-        //                             onChange={(event) =>
-        //                                 onChange({line: {size: parseInt(event.target.value)}})}/>
-        //         </ConfigItem>
-        //         <ConfigItem title={'颜色'}>
-        //             <CfgItemBorder width={'100%'}>
-        //                 <BaseColorPicker onChange={(value) => onChange({line: {color: value}})}
-        //                                  defaultValue={config?.line?.color as string || '#fff'}
-        //                                  style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-        //             </CfgItemBorder>
-        //         </ConfigItem>
-        //     </ConfigCard>
-        //     <ConfigCard title={'数据面'}>
-        //         <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: '82%'}}>
-        //             <ColorMode onChange={areaColorChange} data={buildColorModeData()}
-        //                        exclude={[ColorModeType.MULTI, ColorModeType.RADIAL_GRADIENT]}/>
-        //         </ConfigItem>
-        //     </ConfigCard>
-        //
-        // </Accordion>
     )
 }
 

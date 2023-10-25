@@ -36,3 +36,44 @@ export const rgbaToHex = (rgba: string) => {
     let aa = Math.round(a * 255).toString(16).length === 1 ? "0" + Math.round(a * 255).toString(16) : Math.round(a * 255).toString(16);
     return "#" + rr + gg + bb + aa;
 }
+
+export const parseGradient = (gradient: string) => {
+    // 提取角度
+    const angle = gradient.match(/-?\d+deg/);
+    const angleValue = angle ? parseInt(angle[0]) : 0;
+
+    // 提取颜色和位置
+    const colors = gradient.match(/rgba?\([^)]+\) \d+(\.\d+)?%?/g);
+    const parsedColors = colors?.map((color, index) => {
+        const cutPos = color.lastIndexOf(' ');
+        return {
+            color: color.substring(0, cutPos),
+            pos: parseFloat(color.substring(cutPos)) / 100
+        };
+    });
+
+    return {
+        angle: angleValue,
+        colors: parsedColors
+    };
+}
+
+
+export const parseAntdGradientToCss = (gradient: string) => {
+    const angle = gradient.match(/l\((\d+)\)/);
+    const angleValue = angle ? parseInt(angle[1]) : 0;
+
+    const colors = gradient.match(/(\d+):rgba?\([^)]+\)/g);
+
+    const parsedColors = colors?.map((color) => {
+        const [pos, rgba] = color.split(':');
+        return {
+            color: rgba,
+            pos: parseFloat(pos) / 100
+        };
+    });
+
+    return `linear-gradient(${angleValue}deg,${parsedColors?.map((color) =>
+        `${color.color} ${color.pos * 100}%`)
+        .join(', ')})`;
+}

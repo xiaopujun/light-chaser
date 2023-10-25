@@ -35,18 +35,18 @@ class ColorPicker extends Component<ColorPickerProps> {
     }
 
     onChangeComplete = (color: string) => {
-        const {onChange, value} = this.props;
+        const {onChange} = this.props;
         if (color.indexOf('gradient') === -1 && color.indexOf('rgba') !== -1)
             color = rgbaToHex(color);
         onChange && onChange(color);
-        if (!value) {
+        if (!this.control) {
             this.setState({value: color});
         }
     };
 
     render() {
         const color = this.control ? this.props.value : this.state.value;
-        const {disabled, tip, label, showText, width, height, radius, showBorder, ...rest} = this.props;
+        const {disabled, tip, label, showText, width, height, radius, showBorder,} = this.props;
         let hex = null;
         if (showText && color?.indexOf('gradient') === -1 && color?.indexOf('rgba') !== -1) {
             hex = colorConversion(color).hex;
@@ -63,7 +63,7 @@ class ColorPicker extends Component<ColorPickerProps> {
             <UIContainer tip={tip} label={label} className={'lc-color-pick'}>
                 <Popover content={(disabled ? null :
                     <div style={{padding: 4}}>
-                        <GradientColorPicker value={color} onChange={this.onChangeComplete} {...rest}/>
+                        <GradientColorPicker value={color} onChange={this.onChangeComplete}/>
                     </div>)} trigger={'click'}>
                     <div className={`${showBorder && 'color-picker-border'}`} style={{..._style}}>
                         <div style={{background: `${color}`, ..._style}}
