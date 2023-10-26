@@ -1,15 +1,16 @@
-import React, {ChangeEvent, Component, FormEvent} from 'react';
+import React, {Component, FormEvent} from 'react';
 import './ThemeEditor.less';
-import ConfigItem from "../../../../lib/lc-config-item/ConfigItem";
-import UnderLineInput from "../../../../lib/lc-input/UnderLineInput";
-import BaseColorPicker from "../../../../lib/lc-color-picker/BaseColorPicker";
-import CfgItemBorder from "../../../../lib/lc-config-item/CfgItemBorder";
 import ConfigCard from "../../../../lib/lc-config-card/ConfigCard";
 import LcButton from "../../../../lib/lc-button/LcButton";
 import {ThemeItemType} from "../../../../designer/DesignerType";
 import designerStore from "../../../../designer/store/DesignerStore";
 import ThemeList from "../theme-list/ThemeList";
 import {cloneDeep} from "lodash";
+import ColorPicker from "../../../../ui/color-picker/ColorPicker";
+import {ItemPanel} from "../../../../ui/item-panel/ItemPanel";
+import Input from "../../../../ui/input/Input";
+import {UIContainer} from "../../../../ui/ui-container/UIContainer";
+import {Grid} from "../../../../ui/grid/Grid";
 
 /**
  * 主题编辑器
@@ -41,8 +42,8 @@ class ThemeEditor extends Component {
     }
 
 
-    nameChanged = (e: ChangeEvent<HTMLInputElement>) => {
-        this.setState({themeConfig: {...this.state.themeConfig, name: e.target.value}})
+    nameChanged = (name: string | number) => {
+        this.setState({themeConfig: {...this.state.themeConfig, name}})
     }
 
     mainColorChanged = (color: string) => {
@@ -148,56 +149,45 @@ class ThemeEditor extends Component {
             <div className={'lc-theme-editor'}>
                 <div className={'editor-left'}>
                     <form onSubmit={this.doSaveOrUpd}>
-                        <ConfigCard title={'主题信息'}>
-                            <ConfigItem title={'名称'} contentStyle={{width: 80, marginRight: 10}}>
-                                <UnderLineInput value={themeConfig.name} onChange={this.nameChanged}
-                                                required={true}/>
-                            </ConfigItem>
-                        </ConfigCard>
-                        <ConfigCard title={'颜色定义'}>
-                            <ConfigItem title={'主体色'} contentStyle={{width: 80, marginRight: 10}}>
-                                <CfgItemBorder>
-                                    <BaseColorPicker onChange={this.mainColorChanged} showText={true}
-                                                     style={{width: '100%', borderRadius: 2}}
-                                                     value={themeConfig.colors.main}/>
-                                </CfgItemBorder>
-                            </ConfigItem>
-                            <ConfigItem title={'主文字'} contentStyle={{width: 80, marginRight: 10}}>
-                                <CfgItemBorder>
-                                    <BaseColorPicker onChange={this.mainTextChanged} showText={true}
-                                                     style={{width: '100%', borderRadius: 2}}
-                                                     value={themeConfig.colors.mainText}/>
-                                </CfgItemBorder>
-                            </ConfigItem>
-                            <ConfigItem title={'辅文字'} contentStyle={{width: 80, marginRight: 10}}>
-                                <CfgItemBorder>
-                                    <BaseColorPicker onChange={this.subTextChanged} showText={true}
-                                                     style={{width: '100%', borderRadius: 2}}
-                                                     value={themeConfig.colors.subText}/>
-                                </CfgItemBorder>
-                            </ConfigItem>
-                            <ConfigItem title={'背景色'} contentStyle={{width: 80, marginRight: 10}}>
-                                <CfgItemBorder>
-                                    <BaseColorPicker onChange={this.backgroundChanged} showText={true}
-                                                     style={{width: '100%', borderRadius: 2}}
-                                                     value={themeConfig.colors.background}/>
-                                </CfgItemBorder>
-                            </ConfigItem>
-                            <ConfigItem title={'补充一'} contentStyle={{width: 80, marginRight: 10}}>
-                                <CfgItemBorder>
-                                    <BaseColorPicker onChange={this.supplementFirstChanged} showText={true}
-                                                     style={{width: '100%', borderRadius: 2}}
-                                                     value={themeConfig.colors.supplementFirst}/>
-                                </CfgItemBorder>
-                            </ConfigItem>
-                            <ConfigItem title={'补充二'} contentStyle={{width: 80, marginRight: 10}}>
-                                <CfgItemBorder>
-                                    <BaseColorPicker onChange={this.supplementSecondChanged} showText={true}
-                                                     style={{width: '100%', borderRadius: 2}}
-                                                     value={themeConfig.colors.supplementSecond}/>
-                                </CfgItemBorder>
-                            </ConfigItem>
-                        </ConfigCard>
+                        <ItemPanel label={'主题列表'}>
+                            <UIContainer label={'名称'}>
+                                <Input value={themeConfig.name} onChange={this.nameChanged} required={true}/>
+                            </UIContainer>
+                        </ItemPanel>
+                        <ItemPanel label={'颜色定义'}>
+                            <Grid columns={3} gridGap={'15px'}>
+                                <UIContainer label={'主体色'}>
+                                    <ColorPicker onChange={this.mainColorChanged}
+                                                 width={'100%'} showBorder={true} showText={true} radius={2}
+                                                 value={themeConfig.colors.main}/>
+                                </UIContainer>
+                                <UIContainer label={'主文字'}>
+                                    <ColorPicker onChange={this.mainTextChanged}
+                                                 width={'100%'} showBorder={true} showText={true} radius={2}
+                                                 value={themeConfig.colors.mainText}/>
+                                </UIContainer>
+                                <UIContainer label={'辅文字'}>
+                                    <ColorPicker onChange={this.subTextChanged}
+                                                 width={'100%'} showBorder={true} showText={true} radius={2}
+                                                 value={themeConfig.colors.subText}/>
+                                </UIContainer>
+                                <UIContainer label={'背景色'}>
+                                    <ColorPicker onChange={this.backgroundChanged}
+                                                 width={'100%'} showBorder={true} showText={true} radius={2}
+                                                 value={themeConfig.colors.background}/>
+                                </UIContainer>
+                                <UIContainer label={'补充一'}>
+                                    <ColorPicker onChange={this.supplementFirstChanged}
+                                                 width={'100%'} showBorder={true} showText={true} radius={2}
+                                                 value={themeConfig.colors.supplementFirst}/>
+                                </UIContainer>
+                                <UIContainer label={'补充二'}>
+                                    <ColorPicker onChange={this.supplementSecondChanged}
+                                                 width={'100%'} showBorder={true} showText={true} radius={2}
+                                                 value={themeConfig.colors.supplementSecond}/>
+                                </UIContainer>
+                            </Grid>
+                        </ItemPanel>
                         <p style={{color: '#6e6e6e'}}>说明：自定义主题色的色值应该保持在同一色系。以确保整体统一的风格。主题色占据主要面积</p>
                         <br/>
                         <div className={'theme-operate-btn'}>

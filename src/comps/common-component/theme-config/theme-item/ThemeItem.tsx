@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import BaseColorPicker from "../../../../lib/lc-color-picker/BaseColorPicker";
 import './ThemeItem.less';
 import {ThemeColors, ThemeItemType} from "../../../../designer/DesignerType";
 import closeIcon from './close.svg';
+import ColorPicker from "../../../../ui/color-picker/ColorPicker";
 
 
 interface ThemeItemProps extends ThemeColors {
@@ -43,8 +43,7 @@ class ThemeItem extends Component<ThemeItemProps> {
                 <div className={'lc-theme-item-body'}>
                     {
                         Object.keys(this.props.colors).map((key, index) => {
-                            return <BaseColorPicker disabled={true} key={index} value={(colors as any)[key]}
-                                                    style={{width: 20, borderRadius: 20}}/>
+                            return <ColorPicker disabled={true} key={index} value={(colors as any)[key]}/>
                         })
                     }
                 </div>
