@@ -16,7 +16,9 @@ import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import Select from "../../../lib/lc-select/Select";
 import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
-import AntdFieldMapping from "../../antd-common/config/field-mapping/AntdFieldMapping";
+import AntdCommonUtil from "../../antd-common/AntdCommonUtil";
+import {Control} from "../../../json-schema/SchemaTypes";
+import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 
 class AntdStepLineStyleConfig extends Component<ConfigType> {
 
@@ -134,5 +136,33 @@ export const AntdStepLineGraphics: React.FC<AntdStepLineGraphicsProps> = ({confi
 }
 
 export const AntdStepLineFieldMapping: React.FC<ConfigType<AntdBaseDesignerController>> = ({controller}) => {
-    return <AntdFieldMapping controller={controller} fields={["xField", "yField"]}/>
+    const options = AntdCommonUtil.getDataFieldOptions(controller);
+    const schema: Control = {
+        type: 'grid',
+        config: {
+            columns: 2,
+        },
+        children: [
+            {
+                type: 'select',
+                label: 'X字段',
+                config: {
+                    options,
+                }
+            },
+            {
+                type: 'select',
+                label: 'Y字段',
+                config: {
+                    options,
+                }
+            },
+        ]
+    }
+
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+
+    }
+
+    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
 }

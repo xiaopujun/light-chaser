@@ -5,10 +5,10 @@ import AntdCommonLineController, {AntdLineProps} from "../../antd-common/line/An
 import {AntdCartesianCoordinateSys} from "../../antd-common/config/AntdFragment";
 import AbstractController from "../../../framework/core/AbstractController";
 import {WritableLineOptions} from "../../antd-common/types";
-import AntdFieldMapping from "../../antd-common/config/field-mapping/AntdFieldMapping";
 import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
+import AntdCommonUtil from "../../antd-common/AntdCommonUtil";
 
 class AntdBaseLineStyleConfig extends Component<ConfigType> {
 
@@ -181,5 +181,33 @@ export const AntdBaseLineGraphics: React.FC<AntdBaseLineGraphicsProps> = ({confi
 }
 
 export const AntdBaseLineFieldMapping: React.FC<ConfigType<AntdBaseDesignerController>> = ({controller}) => {
-    return <AntdFieldMapping controller={controller} fields={["xField", "yField"]}/>
+    const options = AntdCommonUtil.getDataFieldOptions(controller);
+    const schema: Control = {
+        type: 'grid',
+        config: {
+            columns: 2,
+        },
+        children: [
+            {
+                type: 'select',
+                label: 'X字段',
+                config: {
+                    options,
+                }
+            },
+            {
+                type: 'select',
+                label: 'Y字段',
+                config: {
+                    options,
+                }
+            },
+        ]
+    }
+
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+
+    }
+
+    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
 }

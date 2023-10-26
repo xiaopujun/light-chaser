@@ -2,8 +2,7 @@ import React, {Component, useState} from 'react';
 import {ConfigType} from "../../../designer/right/ConfigType";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
-import {WritableBarOptions, WritableRoseOptions} from "../types";
-import {ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
+import {WritableRoseOptions} from "../types";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
 import {RoseOptions, StatisticText} from "@antv/g2plot";
@@ -11,11 +10,9 @@ import LcSwitch from "../../../lib/lc-switch/LcSwitch";
 import {AntdLegend} from "../config/AntdFragment";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import AntdCommonRose from "./AntdCommonRose";
-import {Option} from "../../../lib/lc-select/SelectType";
-import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
-import Select from "../../../lib/lc-select/Select";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
+import AntdCommonUtil from "../AntdCommonUtil";
 
 export default class AntdRoseCommonStyleConfig extends Component<ConfigType> {
 
@@ -49,29 +46,29 @@ export interface AntdRoseGraphicsConfigProps {
 
 export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({config, onChange}) => {
 
-    const RoseColorChange = (data: ColorModeValue) => {
-        const {mode, value} = data;
-        switch (mode) {
-            case 'single':
-            case 'multi':
-                onChange({color: value});
-                break;
-            case 'gradient':
-                onChange({sectorStyle: {fill: `l(0.4,0.5) 0:${value[0]} 1:${value[1]}`}});
-                break;
-        }
-    }
-
-    const buildColorModeData = (): ColorModeValue => {
-        let mode = 'single', value: string | string[];
-        let multi = Array.isArray(config.color) && config.color.length > 1;
-        if (multi) {
-            mode = 'multi';
-            value = config.color as string[];
-        } else
-            value = config.color as string;
-        return {mode, value};
-    }
+    // const RoseColorChange = (data: ColorModeValue) => {
+    //     const {mode, value} = data;
+    //     switch (mode) {
+    //         case 'single':
+    //         case 'multi':
+    //             onChange({color: value});
+    //             break;
+    //         case 'gradient':
+    //             onChange({sectorStyle: {fill: `l(0.4,0.5) 0:${value[0]} 1:${value[1]}`}});
+    //             break;
+    //     }
+    // }
+    //
+    // const buildColorModeData = (): ColorModeValue => {
+    //     let mode = 'single', value: string | string[];
+    //     let multi = Array.isArray(config.color) && config.color.length > 1;
+    //     if (multi) {
+    //         mode = 'multi';
+    //         value = config.color as string[];
+    //     } else
+    //         value = config.color as string;
+    //     return {mode, value};
+    // }
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
 
@@ -402,30 +399,40 @@ export const StatisticTextConfig: React.FC<AntdStatisticTextConfigProps> = ({con
 
 
 export const AntdRoseFieldMapping: React.FC<ConfigType<AntdCommonRose>> = ({controller}) => {
-    const config = controller.getConfig()!.style;
-    const {data, xField, yField, seriesField} = config!;
-    const options: Option[] = [];
-    if (data && data.length >= 1) {
-        const dataObj = data[0];
-        Object.keys(dataObj).forEach(key => options.push({label: key, value: key}))
+    const options = AntdCommonUtil.getDataFieldOptions(controller);
+    const schema: Control = {
+        type: 'grid',
+        config: {
+            columns: 2,
+        },
+        children: [
+            {
+                type: 'select',
+                label: 'X字段',
+                config: {
+                    options,
+                }
+            },
+            {
+                type: 'select',
+                label: 'Y字段',
+                config: {
+                    options,
+                }
+            },
+            {
+                type: 'select',
+                label: '分组字段',
+                config: {
+                    options,
+                }
+            }
+        ]
     }
 
-    const fieldChange = (config: WritableBarOptions) => {
-        controller.update({style: config});
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+
     }
 
-    return (
-        <ConfigCard title={'字段映射'}>
-            <ConfigItem title={'X字段'}>
-                <Select options={options} defaultValue={xField} onChange={(value => fieldChange({xField: value}))}/>
-            </ConfigItem>
-            <ConfigItem title={'Y字段'}>
-                <Select options={options} defaultValue={yField} onChange={(value => fieldChange({yField: value}))}/>
-            </ConfigItem>
-            <ConfigItem title={'分类字段'}>
-                <Select options={options} defaultValue={seriesField}
-                        onChange={(value => fieldChange({seriesField: value}))}/>
-            </ConfigItem>
-        </ConfigCard>
-    )
+    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
 }

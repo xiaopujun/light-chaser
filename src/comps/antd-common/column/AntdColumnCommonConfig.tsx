@@ -4,14 +4,11 @@ import {AntdCartesianCoordinateSys, AntdLegend} from "../config/AntdFragment";
 import {Column, ColumnOptions} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import AbstractController from "../../../framework/core/AbstractController";
-import AntdCommonColumn, {AntdColumnProps} from "./AntdCommonColumn";
-import {WritableBarOptions, WritableColumnOptions} from "../types";
-import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
-import {Option} from "../../../lib/lc-select/SelectType";
-import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
-import Select from "../../../lib/lc-select/Select";
+import {AntdColumnProps} from "./AntdCommonColumn";
+import {WritableColumnOptions} from "../types";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
+import AntdCommonUtil from "../AntdCommonUtil";
 
 class AntdColumnCommonStyleConfig extends Component<ConfigType> {
 
@@ -134,31 +131,42 @@ export const AntdColumnGraphics: React.FC<AntdColumnGraphicsProps> = ({config, o
 }
 
 
-export const AntdColumnFieldMapping: React.FC<ConfigType<AntdCommonColumn>> = ({controller}) => {
-    const config = controller.getConfig()!.style;
-    const {data, xField, yField, seriesField} = config!;
-    const options: Option[] = [];
-    if (data && data.length >= 1) {
-        const dataObj = data[0];
-        Object.keys(dataObj).forEach(key => options.push({label: key, value: key}))
+export const AntdColumnCommonFieldMapping: React.FC<ConfigType> = (props) => {
+    const {controller} = props;
+    const options = AntdCommonUtil.getDataFieldOptions(controller);
+    const schema: Control = {
+        type: 'grid',
+        config: {
+            columns: 2,
+        },
+        children: [
+            {
+                type: 'select',
+                label: 'X字段',
+                config: {
+                    options,
+                }
+            },
+            {
+                type: 'select',
+                label: 'Y字段',
+                config: {
+                    options,
+                }
+            },
+            {
+                type: 'select',
+                label: '分组字段',
+                config: {
+                    options,
+                }
+            }
+        ]
     }
 
-    const fieldChange = (config: WritableBarOptions) => {
-        controller.update({style: config});
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+
     }
 
-    return (
-        <ConfigCard title={'字段映射'}>
-            <ConfigItem title={'X字段'}>
-                <Select options={options} defaultValue={xField} onChange={(value => fieldChange({xField: value}))}/>
-            </ConfigItem>
-            <ConfigItem title={'Y字段'}>
-                <Select options={options} defaultValue={yField} onChange={(value => fieldChange({yField: value}))}/>
-            </ConfigItem>
-            <ConfigItem title={'分类字段'}>
-                <Select options={options} defaultValue={seriesField}
-                        onChange={(value => fieldChange({seriesField: value}))}/>
-            </ConfigItem>
-        </ConfigCard>
-    )
+    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
 }

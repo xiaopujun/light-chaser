@@ -7,13 +7,13 @@ import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {ClazzTemplate} from "../../common-component/common-types";
 import AntdCommonRose, {AntdRoseProps} from "./AntdCommonRose";
+import {AntdRoseFieldMapping} from "./AntdRoseCommonConfig";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const AntdRoseCommonStyleConfig = React.lazy(() => import("./AntdRoseCommonConfig"));
 const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig"));
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
-const AntdFieldMapping = React.lazy(() => import("../config/field-mapping/AntdFieldMapping"));
 
 abstract class AbstractRoseDefinition extends AbstractComponentDefinition<AntdCommonRose, AntdRoseProps> {
 
@@ -32,7 +32,7 @@ abstract class AbstractRoseDefinition extends AbstractComponentDefinition<AntdCo
             style: AntdRoseCommonStyleConfig,
             animation: AnimationConfig,
             theme: ThemeConfig,
-            mapping: AntdFieldMapping
+            mapping: AntdRoseFieldMapping
         };
     }
 }

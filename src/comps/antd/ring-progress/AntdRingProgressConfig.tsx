@@ -3,7 +3,6 @@ import {ConfigType} from "../../../designer/right/ConfigType";
 import {WritableRingProgressOptions, WritableRoseOptions} from "../../antd-common/types";
 import AntdCommonRose from "../../antd-common/rose/AntdCommonRose";
 import {RingProgressOptions} from "@antv/g2plot";
-import {ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
 
@@ -36,25 +35,25 @@ export interface AntdRingProgressGraphicsConfigProps {
 
 export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsConfigProps> = ({config, onChange}) => {
 
-    const ringProgressColorChange = (data: ColorModeValue) => {
-        const {mode, value} = data;
-        switch (mode) {
-            case 'single':
-            case 'multi':
-                onChange({color: value, progressStyle: {fill: undefined}});
-                break;
-        }
-    }
-
-    const buildColorModeData = (): ColorModeValue => {
-        let mode = 'multi', value: string | string[];
-        let multi = Array.isArray(config.color) && config.color.length > 1;
-        if (multi) {
-            value = config.color as string[];
-        } else
-            value = ['#00c4ff', '#fff']
-        return {mode, value};
-    }
+    // const ringProgressColorChange = (data: ColorModeValue) => {
+    //     const {mode, value} = data;
+    //     switch (mode) {
+    //         case 'single':
+    //         case 'multi':
+    //             onChange({color: value, progressStyle: {fill: undefined}});
+    //             break;
+    //     }
+    // }
+    //
+    // const buildColorModeData = (): ColorModeValue => {
+    //     let mode = 'multi', value: string | string[];
+    //     let multi = Array.isArray(config.color) && config.color.length > 1;
+    //     if (multi) {
+    //         value = config.color as string[];
+    //     } else
+    //         value = ['#00c4ff', '#fff']
+    //     return {mode, value};
+    // }
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
 

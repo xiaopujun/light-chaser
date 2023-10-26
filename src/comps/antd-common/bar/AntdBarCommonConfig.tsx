@@ -132,7 +132,7 @@ export const AntdBarGraphics: React.FC<AntdBarGraphicsProps> = ({config, onChang
 
 export const AntdBarFieldMapping: React.FC<ConfigType<AntdCommonBar>> = ({controller}) => {
     const config = controller.getConfig()!.style;
-    const {data, xField, yField, seriesField} = config!;
+    const {data,/* xField, yField, seriesField*/} = config!;
     const options: Option[] = [];
     if (data && data.length >= 1) {
         const dataObj = data[0];
@@ -145,46 +145,31 @@ export const AntdBarFieldMapping: React.FC<ConfigType<AntdCommonBar>> = ({contro
 
     const schema: Control = {
         key: 'style',
-        type: 'item-panel',
-        label: '字段映射',
+        type: 'grid',
         config: {
-            labelStyle: {
-                fontSize: 14,
-                fontWeight: 'bold',
-            }
+            columns: 2,
         },
         children: [
             {
-                type: 'grid',
-                children: [
-                    {
-                        key: 'xField',
-                        type: 'select',
-                        label: 'X字段',
-                        value: xField,
-                        config: {
-                            options,
-                        }
-                    },
-                    {
-                        key: 'yField',
-                        type: 'select',
-                        label: 'Y字段',
-                        value: yField,
-                        config: {
-                            options,
-                        }
-                    },
-                    {
-                        key: 'seriesField',
-                        type: 'select',
-                        label: '分类字段',
-                        value: seriesField,
-                        config: {
-                            options,
-                        }
-                    }
-                ]
+                type: 'select',
+                label: 'X字段',
+                config: {
+                    options,
+                }
+            },
+            {
+                type: 'select',
+                label: 'Y字段',
+                config: {
+                    options,
+                }
+            },
+            {
+                type: 'select',
+                label: '分组字段',
+                config: {
+                    options,
+                }
             }
         ]
     }

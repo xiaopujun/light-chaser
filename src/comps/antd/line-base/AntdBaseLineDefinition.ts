@@ -5,7 +5,6 @@ import {AntdLineProps} from "../../antd-common/line/AntdCommonLineController";
 import {MenuToConfigMappingType} from "../../../framework/core/AbstractComponentDefinition";
 import React from "react";
 
-const AntdBaseLineFieldMapping = React.lazy(() => import("./AntdBaseLineConfig").then((module) => ({default: module.AntdBaseLineFieldMapping})));
 const AntdBaseLineStyleConfig = React.lazy(() => import("./AntdBaseLineConfig").then((module) => ({default: module.AntdBaseLineStyleConfig})));
 
 class AntdBaseLineDefinition extends AbstractLineDefinition {
@@ -27,7 +26,6 @@ class AntdBaseLineDefinition extends AbstractLineDefinition {
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         let menuToConfigContentMap = super.getMenuToConfigContentMap();
         menuToConfigContentMap!['style'] = AntdBaseLineStyleConfig;
-        menuToConfigContentMap!['mapping'] = AntdBaseLineFieldMapping;
         return menuToConfigContentMap;
     }
 

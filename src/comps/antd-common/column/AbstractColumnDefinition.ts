@@ -7,10 +7,10 @@ import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {ClazzTemplate} from "../../common-component/common-types";
 import AntdCommonColumn, {AntdColumnProps} from "./AntdCommonColumn";
+import {AntdColumnCommonFieldMapping} from "./AntdColumnCommonConfig";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const AntdColumnCommonStyleConfig = React.lazy(() => import("./AntdColumnCommonConfig").then((module) => ({default: module.AntdColumnCommonStyleConfig})));
-const AntdFieldMapping = React.lazy(() => import("../config/field-mapping/AntdFieldMapping"));
 const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig"));
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
@@ -32,7 +32,7 @@ abstract class AbstractColumnDefinition extends AbstractComponentDefinition<Antd
             style: AntdColumnCommonStyleConfig,
             animation: AnimationConfig,
             theme: ThemeConfig,
-            mapping: AntdFieldMapping
+            mapping: AntdColumnCommonFieldMapping
         };
     }
 }

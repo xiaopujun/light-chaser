@@ -5,7 +5,6 @@ import {AntdLineProps} from "../../antd-common/line/AntdCommonLineController";
 import {MenuToConfigMappingType} from "../../../framework/core/AbstractComponentDefinition";
 import React from "react";
 
-const AntdStepLineFieldMapping = React.lazy(() => import("./AntdStepLineConfig").then((module) => ({default: module.AntdStepLineFieldMapping})));
 const AntdStepLineStyleConfig = React.lazy(() => import("./AntdStepLineConfig").then((module) => ({default: module.AntdStepLineStyleConfig})));
 
 
@@ -28,7 +27,6 @@ class AntdStepLineDefinition extends AbstractLineDefinition {
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         let menuToConfigContentMap = super.getMenuToConfigContentMap();
         menuToConfigContentMap!['style'] = AntdStepLineStyleConfig;
-        menuToConfigContentMap!['mapping'] = AntdStepLineFieldMapping;
         return menuToConfigContentMap;
     }
 

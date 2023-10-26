@@ -6,11 +6,10 @@ import {Legend} from "@antv/g2plot/lib/types/legend";
 import AbstractController from "../../../framework/core/AbstractController";
 import AntdCommonScatterController, {AntdScatterProps} from "./AntdCommonScatterController";
 import {WritableScatterOptions} from "../types";
-import {ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
-import AntdFieldMapping from "../config/field-mapping/AntdFieldMapping";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
+import AntdCommonUtil from "../AntdCommonUtil";
 
 class AntdScatterCommonStyleConfig extends Component<ConfigType> {
 
@@ -53,32 +52,32 @@ export interface AntdCommonScatterGraphicsProps {
 
 export const AntdCommonScatterGraphics: React.FC<AntdCommonScatterGraphicsProps> = ({config, onChange}) => {
 
-    const scatterColorChange = (data: ColorModeValue) => {
-        const {mode, value} = data;
-        switch (mode) {
-            case 'single':
-                onChange({color: value});
-                break;
-            case 'multi':
-                onChange({color: value as string[]});
-                break;
-        }
-    }
-
-    const buildColorModeData = (): ColorModeValue => {
-        let mode = 'single', value: string | string[] = '#fff';
-        if ((config?.color)) {
-            let multi = Array.isArray(config?.color);
-            if (multi) {
-                mode = 'multi';
-                value = config?.color as string[] || ['#fff'];
-            } else {
-                mode = 'single';
-                value = config?.color as string;
-            }
-        }
-        return {mode, value};
-    }
+    // const scatterColorChange = (data: ColorModeValue) => {
+    //     const {mode, value} = data;
+    //     switch (mode) {
+    //         case 'single':
+    //             onChange({color: value});
+    //             break;
+    //         case 'multi':
+    //             onChange({color: value as string[]});
+    //             break;
+    //     }
+    // }
+    //
+    // const buildColorModeData = (): ColorModeValue => {
+    //     let mode = 'single', value: string | string[] = '#fff';
+    //     if ((config?.color)) {
+    //         let multi = Array.isArray(config?.color);
+    //         if (multi) {
+    //             mode = 'multi';
+    //             value = config?.color as string[] || ['#fff'];
+    //         } else {
+    //             mode = 'single';
+    //             value = config?.color as string;
+    //         }
+    //     }
+    //     return {mode, value};
+    // }
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
 
@@ -206,7 +205,47 @@ export const AntdCommonScatterGraphics: React.FC<AntdCommonScatterGraphicsProps>
 }
 
 export const AntdScatterFieldMapping: React.FC<ConfigType<AntdBaseDesignerController>> = ({controller}) => {
-    return (
-        <AntdFieldMapping controller={controller} fields={['xField', 'yField', 'colorField', 'sizeField']}/>
-    )
+    const options = AntdCommonUtil.getDataFieldOptions(controller);
+    const schema: Control = {
+        type: 'grid',
+        config: {
+            columns: 2,
+        },
+        children: [
+            {
+                type: 'select',
+                label: 'X字段',
+                config: {
+                    options,
+                }
+            },
+            {
+                type: 'select',
+                label: '颜色字段',
+                config: {
+                    options,
+                }
+            },
+            {
+                type: 'select',
+                label: 'Y字段',
+                config: {
+                    options,
+                }
+            },
+            {
+                type: 'select',
+                label: '尺寸字段',
+                config: {
+                    options,
+                }
+            }
+        ]
+    }
+
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+
+    }
+
+    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
 }

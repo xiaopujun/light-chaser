@@ -10,10 +10,10 @@ import {PieOptions, StatisticText} from "@antv/g2plot";
 import LcSwitch from "../../../lib/lc-switch/LcSwitch";
 import {AntdLegend} from "../../antd-common/config/AntdFragment";
 import {Legend} from "@antv/g2plot/lib/types/legend";
-import AntdFieldMapping from "../../antd-common/config/field-mapping/AntdFieldMapping";
 import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
+import AntdCommonUtil from "../../antd-common/AntdCommonUtil";
 
 export default class AntdPieStyleConfig extends Component<ConfigType> {
 
@@ -561,5 +561,33 @@ export const StatisticTextConfig: React.FC<AntdStatisticTextConfigProps> = ({con
 
 
 export const AntdPieFieldMapping: React.FC<ConfigType<AntdBaseDesignerController>> = ({controller}) => {
-    return <AntdFieldMapping controller={controller} fields={["angleField", "colorField"]}/>
+    const options = AntdCommonUtil.getDataFieldOptions(controller);
+    const schema: Control = {
+        type: 'grid',
+        config: {
+            columns: 2,
+        },
+        children: [
+            {
+                type: 'select',
+                label: '角度字段',
+                config: {
+                    options,
+                }
+            },
+            {
+                type: 'select',
+                label: '颜色字段',
+                config: {
+                    options,
+                }
+            },
+        ]
+    }
+
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+
+    }
+
+    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
 }

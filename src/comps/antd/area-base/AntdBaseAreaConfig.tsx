@@ -5,12 +5,12 @@ import AntdCommonAreaController from "../../antd-common/area/AntdCommonAreaContr
 import {AntdCartesianCoordinateSys} from "../../antd-common/config/AntdFragment";
 import {WritableAreaOptions} from "../../antd-common/types";
 import {MappingOptions} from "@antv/g2plot/lib/adaptor/geometries/base";
-import AntdFieldMapping from "../../antd-common/config/field-mapping/AntdFieldMapping";
 import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
 import {parseGradient} from "../../../utils/ColorUtil";
 import LCGUIUtil from "../../../json-schema/LCGUIUtil";
+import AntdCommonUtil from "../../antd-common/AntdCommonUtil";
 
 class AntdBaseAreaStyleConfig extends Component<ConfigType> {
 
@@ -245,7 +245,35 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
     )
 }
 
-export const AntdBaseAreaFieldMapping: React.FC<ConfigType<AntdBaseDesignerController>> = ({controller}) => {
+export const AntdBaseAreaFieldMapping: React.FC<ConfigType<AntdBaseDesignerController>> = (props) => {
+    const {controller} = props;
+    const options = AntdCommonUtil.getDataFieldOptions(controller);
+    const schema: Control = {
+        type: 'grid',
+        config: {
+            columns: 2,
+        },
+        children: [
+            {
+                type: 'select',
+                label: 'X字段',
+                config: {
+                    options,
+                }
+            },
+            {
+                type: 'select',
+                label: 'Y字段',
+                config: {
+                    options,
+                }
+            }
+        ]
+    }
 
-    return <AntdFieldMapping controller={controller} fields={['xField', "yField"]}/>
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+
+    }
+
+    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
 }
