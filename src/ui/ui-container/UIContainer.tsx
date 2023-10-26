@@ -15,12 +15,12 @@ export interface UIContainerProps {
 export const UIContainer: React.FC<UIContainerProps> = (props) => {
     const {label, tip, children, className, margin, padding} = props;
     return (
-        <div className={`ui-container ${className}`} style={{margin, padding}}>
-            {label && <div className={'ui-container-label'}>
+        <div className={`ui-container ${className || ''}`} style={{margin, padding}}>
+            {label &&
+            <div className={'ui-container-label'}>
                 <div>{label}</div>
-                &nbsp;
-                {tip && <div className={'ui-container-tip'}><Tooltip title={tip}><QuestionCircleOutlined/>
-                    &nbsp;&nbsp;</Tooltip></div>}
+                {tip && <div className={'ui-container-tip'}>
+                    <Tooltip title={tip} style={{marginLeft: 1}}><QuestionCircleOutlined/></Tooltip></div>}
             </div>}
             <div className={'ui-container-content'}>{children}</div>
         </div>
