@@ -3,19 +3,19 @@ import {ConfigType} from "../../../designer/right/ConfigType";
 import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
 import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import {WritableBarOptions, WritableRoseOptions} from "../types";
-import ColorMode, {ColorModeType, ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
+import {ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
 import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
-import {RoseOptions, ShapeStyle, StatisticText} from "@antv/g2plot";
+import {RoseOptions, StatisticText} from "@antv/g2plot";
 import LcSwitch from "../../../lib/lc-switch/LcSwitch";
-import {Types} from "@antv/g2";
 import {AntdLegend} from "../config/AntdFragment";
 import {Legend} from "@antv/g2plot/lib/types/legend";
-import Accordion from "../../../lib/lc-accordion/Accordion";
 import AntdCommonRose from "./AntdCommonRose";
 import {Option} from "../../../lib/lc-select/SelectType";
 import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
 import Select from "../../../lib/lc-select/Select";
+import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
+import {Control} from "../../../json-schema/SchemaTypes";
 
 export default class AntdRoseCommonStyleConfig extends Component<ConfigType> {
 
@@ -73,81 +73,263 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
         return {mode, value};
     }
 
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+
+    }
+
+    const schema: Control = {
+        children: [
+            {
+                type: 'accordion',
+                label: '图形',
+                children: [
+                    {
+                        type: 'grid',
+                        config: {columns: 2},
+                        children: [
+                            {
+                                type: 'input',
+                                label: '外径',
+                                value: 0.8,
+                                config: {
+                                    type: 'number',
+                                    min: 0,
+                                    max: 1,
+                                    step: 0.01
+                                }
+                            },
+                            {
+                                type: 'input',
+                                label: '起始角',
+                                value: 0,
+                                config: {
+                                    type: 'number',
+                                    min: 0,
+                                    max: 360,
+                                }
+                            },
+                            {
+                                type: 'input',
+                                label: '内径',
+                                value: 0.6,
+                                config: {
+                                    type: 'number',
+                                    min: 0,
+                                    max: 1,
+                                    step: 0.01
+                                }
+                            },
+                            {
+                                type: 'input',
+                                label: '结束角',
+                                value: 360,
+                                config: {
+                                    type: 'number',
+                                    min: 0,
+                                    max: 360,
+                                }
+                            },
+                            {
+                                type: 'color-picker',
+                                label: '颜色',
+                                value: '#1c1c1c',
+                                config: {
+                                    width: '90%',
+                                    radius: 3,
+                                    showBorder: true,
+                                    showText: true,
+                                    height: 16,
+                                    hideControls: true
+                                }
+                            },
+                            {
+                                type: 'color-picker',
+                                label: '描边色',
+                                value: '#1c1c1c',
+                                config: {
+                                    width: '90%',
+                                    radius: 3,
+                                    showBorder: true,
+                                    showText: true,
+                                    height: 16,
+                                    hideControls: true
+                                }
+                            },
+                            {
+                                type: 'input',
+                                label: '描边宽',
+                                value: 0,
+                                config: {
+                                    type: 'number',
+                                    min: 0,
+                                    max: 30,
+                                }
+                            },
+                        ]
+                    }
+                ]
+            },
+            {
+                type: 'accordion',
+                label: '标签',
+                children: [
+                    {
+                        type: 'grid',
+                        config: {columns: 2},
+                        children: [
+                            {
+                                type: 'select',
+                                label: '位置',
+                                value: 'inner',
+                                config: {
+                                    options: [
+                                        {value: 'inner', label: '内测'},
+                                        {value: 'outer', label: '外侧'}]
+                                }
+                            },
+                            {
+                                type: 'input',
+                                label: '偏移',
+                                value: 0,
+                                config: {
+                                    type: 'number',
+                                    min: 0,
+                                    max: 100,
+                                }
+                            },
+                            {
+                                type: 'input',
+                                label: '字号',
+                                value: 12,
+                                config: {
+                                    type: 'number',
+                                    min: 0,
+                                    max: 100,
+                                }
+                            },
+                            {
+                                type: 'input',
+                                label: '加粗',
+                                value: 500,
+                                config: {
+                                    type: 'number',
+                                    min: 100,
+                                    max: 900,
+                                    step: 100
+                                }
+                            },
+                            {
+                                type: 'switch',
+                                label: '自动旋转',
+                                value: false,
+                            },
+                            {
+                                type: 'input',
+                                label: '旋转角度',
+                                value: 90,
+                                config: {
+                                    type: 'number',
+                                    min: 0,
+                                    max: 360,
+                                }
+                            },
+                            {
+                                type: 'color-picker',
+                                label: '颜色',
+                                value: '#1c1c1c',
+                                config: {
+                                    width: '100%',
+                                    radius: 3,
+                                    showBorder: true,
+                                    showText: true,
+                                    height: 16,
+                                    hideControls: true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+
+
     return (
         <>
-            <Accordion title={'图形'}>
-                <ConfigItem title={"半径"}>
-                    <UnderLineInput type={"number"} min={0} max={1} step={0.01}
-                                    defaultValue={config?.radius || 0.9}
-                                    onChange={(event) => onChange({radius: parseFloat(event.target.value)})}/>
-                </ConfigItem>
-                <ConfigItem title={"内径"}>
-                    <UnderLineInput type={"number"} min={0} max={1} step={0.01}
-                                    defaultValue={config?.innerRadius || 0}
-                                    onChange={(event) => onChange({innerRadius: parseFloat(event.target.value)})}/>
-                </ConfigItem>
-                <ConfigItem title={"起始角度"}>
-                    <UnderLineInput type={"number"} min={0} max={2} step={0.01}
-                                    defaultValue={config?.startAngle || 0}
-                                    onChange={(event) => onChange({startAngle: parseFloat(event.target.value) * Math.PI})}/>
-                </ConfigItem>
-                <ConfigItem title={"结束角度"}>
-                    <UnderLineInput type={"number"} min={0} max={2} step={0.01}
-                                    defaultValue={config?.endAngle || 2}
-                                    onChange={(event) => onChange({endAngle: parseFloat(event.target.value) * Math.PI})}/>
-                </ConfigItem>
-                <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: '85%'}}>
-                    <ColorMode onChange={RoseColorChange} data={buildColorModeData()}
-                               exclude={[ColorModeType.LINER_GRADIENT, ColorModeType.RADIAL_GRADIENT]}/>
-                </ConfigItem>
-                <ConfigItem title={'描边颜色'}>
-                    <CfgItemBorder width={'100%'}>
-                        <BaseColorPicker
-                            defaultValue={(config?.sectorStyle as ShapeStyle)?.stroke || '#fff'}
-                            onChange={(value) => onChange({sectorStyle: {stroke: value}})}
-                            style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                    </CfgItemBorder>
-                </ConfigItem>
-                <ConfigItem title={'描边宽度'}>
-                    <UnderLineInput type={"number"} min={0}
-                                    defaultValue={(config?.sectorStyle as ShapeStyle)?.lineWidth || 0}
-                                    onChange={(event) => onChange({sectorStyle: {lineWidth: parseInt(event.target.value)}})}/>
-                </ConfigItem>
-            </Accordion>
-            <Accordion title={"标签"}>
-                <ConfigItem title={'偏移'}>
-                    <UnderLineInput type={"number"}
-                                    defaultValue={(config?.label as Types.GeometryLabelCfg)?.offset || 0}
-                                    onChange={(event) => onChange({label: {offset: parseInt(event.target.value)}})}/>
-                </ConfigItem>
-                <ConfigItem title={"字号"}>
-                    <UnderLineInput type={'number'} min={0}
-                                    defaultValue={(config?.label as Types.GeometryLabelCfg)?.style?.fontSize || 12}
-                                    onChange={(event) => onChange({label: {style: {fontSize: parseInt(event.target.value)}}})}/>
-                </ConfigItem>
-                <ConfigItem title={"加粗"}>
-                    <UnderLineInput type={'number'} min={100} max={900} step={100}
-                                    defaultValue={parseInt((config?.label as Types.GeometryLabelCfg)?.style?.fontWeight || 500)}
-                                    onChange={(event) => onChange({label: {style: {fontWeight: parseInt(event.target.value)}}})}/>
-                </ConfigItem>
-                <ConfigItem title={"自动旋转"}>
-                    <LcSwitch defaultValue={!!(config?.label as Types.GeometryLabelCfg)?.autoRotate}
-                              onChange={(value) => onChange({label: {autoRotate: value}})}/>
-                </ConfigItem>
-                <ConfigItem title={"旋转角度"}>
-                    <UnderLineInput type={'number'} min={0} max={2} step={0.01}
-                                    defaultValue={(config?.label as Types.GeometryLabelCfg).rotate || 0}
-                                    onChange={(event) => onChange({label: {rotate: parseFloat(event.target.value) * Math.PI}})}/>
-                </ConfigItem>
-                <ConfigItem title={'颜色'}>
-                    <CfgItemBorder width={'100%'}>
-                        <BaseColorPicker
-                            defaultValue={(config?.label as Types.GeometryLabelCfg)?.style?.fill || '#fff'}
-                            onChange={(value) => onChange({label: {style: {fill: value}}})}
-                            style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                    </CfgItemBorder>
-                </ConfigItem>
-            </Accordion>
+            <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+            {/*<Accordion title={'图形'}>*/}
+            {/*    <ConfigItem title={"半径"}>*/}
+            {/*        <UnderLineInput type={"number"} min={0} max={1} step={0.01}*/}
+            {/*                        defaultValue={config?.radius || 0.9}*/}
+            {/*                        onChange={(event) => onChange({radius: parseFloat(event.target.value)})}/>*/}
+            {/*    </ConfigItem>*/}
+            {/*    <ConfigItem title={"内径"}>*/}
+            {/*        <UnderLineInput type={"number"} min={0} max={1} step={0.01}*/}
+            {/*                        defaultValue={config?.innerRadius || 0}*/}
+            {/*                        onChange={(event) => onChange({innerRadius: parseFloat(event.target.value)})}/>*/}
+            {/*    </ConfigItem>*/}
+            {/*    <ConfigItem title={"起始角度"}>*/}
+            {/*        <UnderLineInput type={"number"} min={0} max={2} step={0.01}*/}
+            {/*                        defaultValue={config?.startAngle || 0}*/}
+            {/*                        onChange={(event) => onChange({startAngle: parseFloat(event.target.value) * Math.PI})}/>*/}
+            {/*    </ConfigItem>*/}
+            {/*    <ConfigItem title={"结束角度"}>*/}
+            {/*        <UnderLineInput type={"number"} min={0} max={2} step={0.01}*/}
+            {/*                        defaultValue={config?.endAngle || 2}*/}
+            {/*                        onChange={(event) => onChange({endAngle: parseFloat(event.target.value) * Math.PI})}/>*/}
+            {/*    </ConfigItem>*/}
+            {/*    <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: '85%'}}>*/}
+            {/*        <ColorMode onChange={RoseColorChange} data={buildColorModeData()}*/}
+            {/*                   exclude={[ColorModeType.LINER_GRADIENT, ColorModeType.RADIAL_GRADIENT]}/>*/}
+            {/*    </ConfigItem>*/}
+            {/*    <ConfigItem title={'描边颜色'}>*/}
+            {/*        <CfgItemBorder width={'100%'}>*/}
+            {/*            <BaseColorPicker*/}
+            {/*                defaultValue={(config?.sectorStyle as ShapeStyle)?.stroke || '#fff'}*/}
+            {/*                onChange={(value) => onChange({sectorStyle: {stroke: value}})}*/}
+            {/*                style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>*/}
+            {/*        </CfgItemBorder>*/}
+            {/*    </ConfigItem>*/}
+            {/*    <ConfigItem title={'描边宽度'}>*/}
+            {/*        <UnderLineInput type={"number"} min={0}*/}
+            {/*                        defaultValue={(config?.sectorStyle as ShapeStyle)?.lineWidth || 0}*/}
+            {/*                        onChange={(event) => onChange({sectorStyle: {lineWidth: parseInt(event.target.value)}})}/>*/}
+            {/*    </ConfigItem>*/}
+            {/*</Accordion>*/}
+            {/*<Accordion title={"标签"}>*/}
+            {/*    <ConfigItem title={'偏移'}>*/}
+            {/*        <UnderLineInput type={"number"}*/}
+            {/*                        defaultValue={(config?.label as Types.GeometryLabelCfg)?.offset || 0}*/}
+            {/*                        onChange={(event) => onChange({label: {offset: parseInt(event.target.value)}})}/>*/}
+            {/*    </ConfigItem>*/}
+            {/*    <ConfigItem title={"字号"}>*/}
+            {/*        <UnderLineInput type={'number'} min={0}*/}
+            {/*                        defaultValue={(config?.label as Types.GeometryLabelCfg)?.style?.fontSize || 12}*/}
+            {/*                        onChange={(event) => onChange({label: {style: {fontSize: parseInt(event.target.value)}}})}/>*/}
+            {/*    </ConfigItem>*/}
+            {/*    <ConfigItem title={"加粗"}>*/}
+            {/*        <UnderLineInput type={'number'} min={100} max={900} step={100}*/}
+            {/*                        defaultValue={parseInt((config?.label as Types.GeometryLabelCfg)?.style?.fontWeight || 500)}*/}
+            {/*                        onChange={(event) => onChange({label: {style: {fontWeight: parseInt(event.target.value)}}})}/>*/}
+            {/*    </ConfigItem>*/}
+            {/*    <ConfigItem title={"自动旋转"}>*/}
+            {/*        <LcSwitch defaultValue={!!(config?.label as Types.GeometryLabelCfg)?.autoRotate}*/}
+            {/*                  onChange={(value) => onChange({label: {autoRotate: value}})}/>*/}
+            {/*    </ConfigItem>*/}
+            {/*    <ConfigItem title={"旋转角度"}>*/}
+            {/*        <UnderLineInput type={'number'} min={0} max={2} step={0.01}*/}
+            {/*                        defaultValue={(config?.label as Types.GeometryLabelCfg).rotate || 0}*/}
+            {/*                        onChange={(event) => onChange({label: {rotate: parseFloat(event.target.value) * Math.PI}})}/>*/}
+            {/*    </ConfigItem>*/}
+            {/*    <ConfigItem title={'颜色'}>*/}
+            {/*        <CfgItemBorder width={'100%'}>*/}
+            {/*            <BaseColorPicker*/}
+            {/*                defaultValue={(config?.label as Types.GeometryLabelCfg)?.style?.fill || '#fff'}*/}
+            {/*                onChange={(value) => onChange({label: {style: {fill: value}}})}*/}
+            {/*                style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>*/}
+            {/*        </CfgItemBorder>*/}
+            {/*    </ConfigItem>*/}
+            {/*</Accordion>*/}
         </>
 
     );

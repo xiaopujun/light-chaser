@@ -1,21 +1,16 @@
 import React, {Component} from 'react';
 import {ConfigType} from "../../../designer/right/ConfigType";
 import {AntdCartesianCoordinateSys, AntdLegend} from "../config/AntdFragment";
-import {Scatter, ScatterOptions, ShapeStyle} from "@antv/g2plot";
+import {Scatter, ScatterOptions} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import AbstractController from "../../../framework/core/AbstractController";
 import AntdCommonScatterController, {AntdScatterProps} from "./AntdCommonScatterController";
 import {WritableScatterOptions} from "../types";
-import ColorMode, {ColorModeType, ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
-import Accordion from "../../../lib/lc-accordion/Accordion";
-import ConfigCard from "../../../lib/lc-config-card/ConfigCard";
-import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
-import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
-import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
-import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
-import Select from "../../../lib/lc-select/Select";
+import {ColorModeValue} from "../../../lib/lc-color-mode/ColorMode";
 import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 import AntdFieldMapping from "../config/field-mapping/AntdFieldMapping";
+import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
+import {Control} from "../../../json-schema/SchemaTypes";
 
 class AntdScatterCommonStyleConfig extends Component<ConfigType> {
 
@@ -85,47 +80,128 @@ export const AntdCommonScatterGraphics: React.FC<AntdCommonScatterGraphicsProps>
         return {mode, value};
     }
 
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+
+    }
+
+    const schema: Control = {
+        type: 'accordion',
+        label: '图形',
+        children: [
+            {
+                type: 'grid',
+                config: {columns: 2},
+                children: [
+                    {
+                        type: 'input',
+                        label: '尺寸',
+                        value: 5,
+                        config: {
+                            type: 'number',
+                            min: 0,
+                            max: 100,
+                        }
+                    },
+                    {
+                        type: 'input',
+                        label: '线宽',
+                        value: 2,
+                        config: {
+                            type: 'number',
+                            min: 0,
+                            max: 10,
+                        }
+                    },
+                    {
+                        type: 'select',
+                        label: '形状',
+                        value: 'circle',
+                        config: {
+                            options: [
+                                {value: 'circle', label: '圈形'},
+                                {value: 'square', label: '方形'},
+                                {value: 'bowtie', label: '领结'},
+                                {value: 'diamond', label: '钻石'},
+                                {value: 'hexagon', label: '六角形'},
+                                {value: 'triangle', label: '三角形'}]
+                        }
+                    },
+                    {
+                        type: 'color-picker',
+                        label: '颜色',
+                        value: '#1c1c1c',
+                        config: {
+                            width: '100%',
+                            radius: 3,
+                            showBorder: true,
+                            showText: true,
+                            height: 16,
+                            hideControls: true
+                        }
+                    },
+                    {
+                        type: 'color-picker',
+                        label: '描边色',
+                        value: '#1c1c1c',
+                        config: {
+                            width: '100%',
+                            radius: 3,
+                            showBorder: true,
+                            showText: true,
+                            height: 16,
+                            hideControls: true
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+
     return (
-        <Accordion title={'图形'}>
-            <ConfigCard title={'数据点'}>
-                <ConfigItem title={'尺寸'}>
-                    <UnderLineInput defaultValue={config?.size as number || 5}
-                                    type={'number'} min={0}
-                                    onChange={(event) =>
-                                        onChange({size: parseInt(event.target.value)})}/>
-                </ConfigItem>
-                <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: 'calc(100% - 38px)'}}>
-                    <ColorMode onChange={scatterColorChange} data={buildColorModeData()}
-                               exclude={[ColorModeType.LINER_GRADIENT, ColorModeType.RADIAL_GRADIENT]}/>
-                </ConfigItem>
-                <ConfigItem title={'形状'}>
-                    <Select options={[
-                        {value: 'circle', label: '圈形'},
-                        {value: 'square', label: '方形'},
-                        {value: 'bowtie', label: '领结'},
-                        {value: 'diamond', label: '钻石'},
-                        {value: 'hexagon', label: '六角形'},
-                        {value: 'triangle', label: '三角形'}]}
-                            defaultValue={config?.shape as string || 'circle'}
-                            onChange={(value) => onChange({shape: value})}/>
-                </ConfigItem>
-                <ConfigItem title={'描边色'}>
-                    <CfgItemBorder width={'100%'}>
-                        <BaseColorPicker defaultValue={(config?.pointStyle as ShapeStyle)?.stroke as string || '#fff'}
-                                         style={{width: '100%', height: '15px', borderRadius: 2}}
-                                         showText={true}
-                                         onChange={(value) =>
-                                             onChange({pointStyle: {stroke: value}})}/>
-                    </CfgItemBorder>
-                </ConfigItem>
-                <ConfigItem title={'线宽'}>
-                    <UnderLineInput defaultValue={(config?.pointStyle as ShapeStyle)?.lineWidth as number || 0}
-                                    type={'number'} min={0}
-                                    onChange={(event) =>
-                                        onChange({pointStyle: {lineWidth: parseInt(event.target.value)}})}/>
-                </ConfigItem>
-            </ConfigCard>
-        </Accordion>
+        <>
+            <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+            {/*<Accordion title={'图形'}>*/}
+            {/*    <ConfigCard title={'数据点'}>*/}
+            {/*        <ConfigItem title={'尺寸'}>*/}
+            {/*            <UnderLineInput defaultValue={config?.size as number || 5}*/}
+            {/*                            type={'number'} min={0}*/}
+            {/*                            onChange={(event) =>*/}
+            {/*                                onChange({size: parseInt(event.target.value)})}/>*/}
+            {/*        </ConfigItem>*/}
+            {/*        <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: 'calc(100% - 38px)'}}>*/}
+            {/*            <ColorMode onChange={scatterColorChange} data={buildColorModeData()}*/}
+            {/*                       exclude={[ColorModeType.LINER_GRADIENT, ColorModeType.RADIAL_GRADIENT]}/>*/}
+            {/*        </ConfigItem>*/}
+            {/*        <ConfigItem title={'形状'}>*/}
+            {/*            <Select options={[*/}
+            {/*                {value: 'circle', label: '圈形'},*/}
+            {/*                {value: 'square', label: '方形'},*/}
+            {/*                {value: 'bowtie', label: '领结'},*/}
+            {/*                {value: 'diamond', label: '钻石'},*/}
+            {/*                {value: 'hexagon', label: '六角形'},*/}
+            {/*                {value: 'triangle', label: '三角形'}]}*/}
+            {/*                    defaultValue={config?.shape as string || 'circle'}*/}
+            {/*                    onChange={(value) => onChange({shape: value})}/>*/}
+            {/*        </ConfigItem>*/}
+            {/*        <ConfigItem title={'描边色'}>*/}
+            {/*            <CfgItemBorder width={'100%'}>*/}
+            {/*                <BaseColorPicker*/}
+            {/*                    defaultValue={(config?.pointStyle as ShapeStyle)?.stroke as string || '#fff'}*/}
+            {/*                    style={{width: '100%', height: '15px', borderRadius: 2}}*/}
+            {/*                    showText={true}*/}
+            {/*                    onChange={(value) =>*/}
+            {/*                        onChange({pointStyle: {stroke: value}})}/>*/}
+            {/*            </CfgItemBorder>*/}
+            {/*        </ConfigItem>*/}
+            {/*        <ConfigItem title={'线宽'}>*/}
+            {/*            <UnderLineInput defaultValue={(config?.pointStyle as ShapeStyle)?.lineWidth as number || 0}*/}
+            {/*                            type={'number'} min={0}*/}
+            {/*                            onChange={(event) =>*/}
+            {/*                                onChange({pointStyle: {lineWidth: parseInt(event.target.value)}})}/>*/}
+            {/*        </ConfigItem>*/}
+            {/*    </ConfigCard>*/}
+            {/*</Accordion>*/}
+        </>
     )
 }
 

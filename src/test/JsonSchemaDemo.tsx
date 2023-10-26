@@ -2,19 +2,7 @@ import React, {Component} from 'react';
 import {Control} from "../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../json-schema/LCGUI";
 import LCGUIUtil from "../json-schema/LCGUIUtil";
-import Input from "../ui/input/Input";
-import {ItemPanel} from "../ui/item-panel/ItemPanel";
-import Switch from "../ui/switch/Switch";
-import Select from '../ui/select/Select';
-import {ProjectState} from "../designer/DesignerType";
-import Radio from "../ui/radio/Radio";
-import {Grid} from "../ui/grid/Grid";
-import Accordion from "../ui/accordion/Accordion";
-import {Slider as DemoSlider} from "../ui/slider/Slider";
-import ColorPicker from "../ui/color-picker/ColorPicker";
 import './DemoMain.less'
-import ColorsPicker from "../ui/colors-picker/ColorsPicker";
-import {UIContainer} from "../ui/ui-container/UIContainer";
 
 
 class JsonSchemaDemo extends Component {
