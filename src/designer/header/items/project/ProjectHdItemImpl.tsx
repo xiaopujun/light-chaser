@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
-import ConfigItem from "../../../../lib/lc-config-item/ConfigItem";
 import Dialog from "../../../../lib/lc-dialog/Dialog";
 import headerStore from "../../HeaderStore";
-import UnderLineInput from "../../../../lib/lc-input/UnderLineInput";
-import Radio from "../../../../lib/lc-radio/Radio";
 import LcButton from "../../../../lib/lc-button/LcButton";
 import './ProjectHdItemImpl.less';
 import designerStore from "../../../store/DesignerStore";
 import {ProjectConfig, ProjectState} from "../../../DesignerType";
+import {Grid} from "../../../../ui/grid/Grid";
+import Input from "../../../../ui/input/Input";
+import Radio from "../../../../ui/radio/Radio";
+import Select from "../../../../ui/select/Select";
 
 class ProjectHdItemImpl extends Component {
 
@@ -44,27 +45,21 @@ class ProjectHdItemImpl extends Component {
             <Dialog title={'项目设置'} className={'lc-header-project-set'} visible={projectVisible} onClose={this.onClose}>
                 <form onSubmit={this.doSave}>
                     <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                        <ConfigItem title={'项目名称'} contentStyle={{width: 120}}>
-                            <UnderLineInput defaultValue={name}
-                                            onChange={(event) => this.config!.name = event.target.value}
-                                            required={true} maxLength={20}/>
-                        </ConfigItem>
-                        <ConfigItem title={'项目描述'} contentStyle={{width: 140}}>
-                            <UnderLineInput defaultValue={des}
-                                            onChange={(event) => this.config!.des = event.target.value}
-                                            maxLength={60}/>
-                        </ConfigItem>
-                        <ConfigItem title={'项目状态'} contentStyle={{width: 190}}>
-                            <Radio onChange={value => this.config!.state = value as ProjectState}
-                                   defaultValue={state} options={[
-                                {label: '草稿', value: ProjectState.DRAFT},
-                                {label: '发布', value: ProjectState.PUBLISH},
-                                {label: '封存', value: ProjectState.SEALED}
-                            ]}/>
-                        </ConfigItem>
-                        <ConfigItem title={'存储类型'} contentStyle={{width: 190}}>
-                            <div style={{color: '#c6c9cd'}}>{saveType === '0' ? '本地(local)' : '服务端(server)'}</div>
-                        </ConfigItem>
+                        <Grid gridGap={'15px'}>
+                            <Input label={'项目名称'} required={true} maxLength={20} defaultValue={name}
+                                   onChange={(name) => this.config!.name = name as string}/>
+                            <Input label={'项目描述'} required={true} maxLength={60} defaultValue={des}
+                                   onChange={(des) => this.config!.des = des as string}/>
+                            <Radio label={'项目状态'} onChange={value => this.config!.state = value as ProjectState}
+                                   defaultValue={state}
+                                   options={[
+                                       {label: '草稿', value: ProjectState.DRAFT},
+                                       {label: '发布', value: ProjectState.PUBLISH},
+                                       {label: '封存', value: ProjectState.SEALED}
+                                   ]}/>
+                            <Select label={'存储类型'} options={[{value: '1', label: '本地存储'}]} defaultValue={saveType}/>
+                        </Grid>
+
                     </div>
                     <div className={'lc-header-project-footer'}>
                         <LcButton type={'submit'}>保存</LcButton>

@@ -1,7 +1,5 @@
 import React, {Component, FormEvent} from 'react';
 import './ThemeEditor.less';
-import ConfigCard from "../../../../lib/lc-config-card/ConfigCard";
-import LcButton from "../../../../lib/lc-button/LcButton";
 import {ThemeItemType} from "../../../../designer/DesignerType";
 import designerStore from "../../../../designer/store/DesignerStore";
 import ThemeList from "../theme-list/ThemeList";
@@ -11,6 +9,7 @@ import {ItemPanel} from "../../../../ui/item-panel/ItemPanel";
 import Input from "../../../../ui/input/Input";
 import {UIContainer} from "../../../../ui/ui-container/UIContainer";
 import {Grid} from "../../../../ui/grid/Grid";
+import Button from "../../../../ui/button/Button";
 
 /**
  * 主题编辑器
@@ -149,7 +148,7 @@ class ThemeEditor extends Component {
             <div className={'lc-theme-editor'}>
                 <div className={'editor-left'}>
                     <form onSubmit={this.doSaveOrUpd}>
-                        <ItemPanel label={'主题列表'}>
+                        <ItemPanel label={'主题信息'}>
                             <UIContainer label={'名称'}>
                                 <Input value={themeConfig.name} onChange={this.nameChanged} required={true}/>
                             </UIContainer>
@@ -191,14 +190,14 @@ class ThemeEditor extends Component {
                         <p style={{color: '#6e6e6e'}}>说明：自定义主题色的色值应该保持在同一色系。以确保整体统一的风格。主题色占据主要面积</p>
                         <br/>
                         <div className={'theme-operate-btn'}>
-                            <LcButton type={"submit"}>添加 / 更新</LcButton>
+                            <Button type={"submit"}>添加 / 更新</Button>
                         </div>
                     </form>
                 </div>
                 <div className={'editor-right'}>
-                    <ConfigCard title={'主题列表'}>
+                    <ItemPanel label={'主题列表'}>
                         <ThemeList showOperator={true} onSelected={this.onSelected} onDel={this.onDel}/>
-                    </ConfigCard>
+                    </ItemPanel>
                 </div>
             </div>
         );

@@ -1,10 +1,10 @@
-import React, {ChangeEvent, Component} from 'react';
+import React, {Component} from 'react';
 import './style/AddNewScreenDialog.less';
 import Dialog from "../lib/lc-dialog/Dialog";
-import ConfigItem from "../lib/lc-config-item/ConfigItem";
-import UnderLineInput from "../lib/lc-input/UnderLineInput";
-import LcButton from "../lib/lc-button/LcButton";
-import Select from "../lib/lc-select/Select";
+import Button from "../ui/button/Button";
+import {Grid} from "../ui/grid/Grid";
+import Input from "../ui/input/Input";
+import Select from "../ui/select/Select";
 
 export interface NewProjectInfoType {
     name: string;
@@ -35,6 +35,7 @@ class AddNewScreenDialog extends Component<AddNewScreenDialogProps> {
     }
 
     onCancel = () => {
+        console.log('关闭')
         const {onCancel} = this.props;
         onCancel && onCancel();
     }
@@ -45,25 +46,17 @@ class AddNewScreenDialog extends Component<AddNewScreenDialogProps> {
             <Dialog title={'新建大屏'} visible={visible} className={'add-new-screen-dialog'} onClose={this.onCancel}>
                 <form onSubmit={this.onOk}>
                     <div className={'lc-add-new-screen'}>
-                        <ConfigItem title={'名称'}>
-                            <UnderLineInput required={true} maxLength={20}
-                                            onChange={(e: ChangeEvent<HTMLInputElement>) => this.projectInfo.name = e.target.value}/>
-                        </ConfigItem>
-                        <ConfigItem title={'描述'}>
-                            <UnderLineInput maxLength={60}
-                                            onChange={(e: ChangeEvent<HTMLInputElement>) => this.projectInfo.description = e.target.value}/>
-                        </ConfigItem>
-                        <ConfigItem title={'宽度'}>
-                            <UnderLineInput type={'number'} min={500} required={true}
-                                            onChange={(e: ChangeEvent<HTMLInputElement>) => this.projectInfo.width = parseInt(e.target.value)}/>
-                        </ConfigItem>
-                        <ConfigItem title={'高度'}>
-                            <UnderLineInput type={'number'} min={300} required={true}
-                                            onChange={(e: ChangeEvent<HTMLInputElement>) => this.projectInfo.height = parseInt(e.target.value)}/>
-                        </ConfigItem>
-                        <ConfigItem title={'存储'}>
-                            <Select defaultValue={'1'} options={[{value: '1', label: '本地存储'}]}/>
-                        </ConfigItem>
+                        <Grid gridGap={'15px'} columns={2}>
+                            <Input label={'名称'} required={true} maxLength={20}
+                                   onChange={(name) => this.projectInfo.name = name as string}/>
+                            <Input label={'描述'} required={true} maxLength={20}
+                                   onChange={(description) => this.projectInfo.description = description as string}/>
+                            <Input label={'宽度'} type={'number'} min={300} required={true}
+                                   onChange={(width) => this.projectInfo.width = width as number}/>
+                            <Input label={'高度'} type={'number'} min={300} required={true}
+                                   onChange={(height) => this.projectInfo.height = height as number}/>
+                            <Select label={'存储'} options={[{value: '1', label: '本地存储'}]} defaultValue={'1'}/>
+                        </Grid>
                     </div>
                     <div className={'add-new-screen-explain'}>
                         <p>说明：</p>
@@ -71,8 +64,8 @@ class AddNewScreenDialog extends Component<AddNewScreenDialogProps> {
                         <p>2、宽度必须&ge;500，高度必须&ge;300</p>
                     </div>
                     <div className={'add-new-screen-footer'}>
-                        <LcButton type={"submit"}>保存</LcButton>
-                        <LcButton onClick={this.onCancel}>取消</LcButton>
+                        <Button type={"submit"}>保存</Button>
+                        <Button onClick={this.onCancel}>取消</Button>
                     </div>
                 </form>
             </Dialog>

@@ -1,14 +1,14 @@
 import {observer} from "mobx-react";
-import {ChangeEvent, Component, FormEvent} from 'react';
-import LcButton from "../../../../lib/lc-button/LcButton";
-import ConfigItem from "../../../../lib/lc-config-item/ConfigItem";
+import {Component, FormEvent} from 'react';
 import Dialog from "../../../../lib/lc-dialog/Dialog";
-import UnderLineInput from "../../../../lib/lc-input/UnderLineInput";
-import LcSwitch from "../../../../lib/lc-switch/LcSwitch";
 import {CanvasConfig} from "../../../DesignerType";
 import designerStore from "../../../store/DesignerStore";
 import headerStore from "../../HeaderStore";
 import './CanvasHdConfigImpl.less';
+import {Grid} from "../../../../ui/grid/Grid";
+import Input from "../../../../ui/input/Input";
+import Switch from "../../../../ui/switch/Switch";
+import Button from "../../../../ui/button/Button";
 
 /**
  * 画布设置React组件实现
@@ -37,6 +37,7 @@ class CanvasHdConfigImpl extends Component {
 
     doSave = (e: FormEvent<HTMLFormElement>) => {
         const {updateCanvasConfig} = designerStore;
+        console.log(this.config);
         updateCanvasConfig(this.config!);
         e.preventDefault();
         this.onClose();
@@ -50,39 +51,25 @@ class CanvasHdConfigImpl extends Component {
             <Dialog className={'lc-header-canvas'} title={'画布设置'} visible={canvasVisible} onClose={this.onClose}>
                 <form onSubmit={this.doSave}>
                     <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                        <ConfigItem title={'宽度'} contentStyle={{width: 110}}>
-                            <UnderLineInput type={'number'} defaultValue={width}
-                                            onChange={(event: ChangeEvent<HTMLInputElement>) => this.config!.width = parseInt(event.target.value)}
-                                            required={true} min={500}/>
-                        </ConfigItem>
-                        <ConfigItem title={'高度'} contentStyle={{width: 110}}>
-                            <UnderLineInput type={'number'} defaultValue={height}
-                                            onChange={(event: ChangeEvent<HTMLInputElement>) => this.config!.height = parseInt(event.target.value)}
-                                            required={true} min={300}/>
-                        </ConfigItem>
-                        <ConfigItem title={'栅格化'} contentStyle={{width: 60}}>
-                            <LcSwitch defaultValue={rasterize} onChange={value => {
+                        <Grid gridGap={'15px'}>
+                            <Input label={'宽度'} required={true} type={'number'} defaultValue={width} min={500}
+                                   onChange={(width) => this.config!.width = width as number}/>
+                            <Input label={'高度'} required={true} type={'number'} defaultValue={height} min={300}
+                                   onChange={(height) => this.config!.height = height as number}/>
+                            <Switch label={'栅格化'} defaultValue={rasterize} onChange={value => {
                                 this.config!.rasterize = value;
-                                this.setState({_rasterize: value});
+                                this.setState({_rasterize: value})
                             }}/>
-                        </ConfigItem>
-                        <ConfigItem title={'拖拽步长'} contentStyle={{width: 60}}>
-                            <UnderLineInput readOnly={!_rasterize} type={'number'} defaultValue={dragStep} min={1}
-                                            onChange={(event: ChangeEvent<HTMLInputElement>) => this.config!.dragStep = parseInt(event.target.value)}/>
-                        </ConfigItem>
-                        <ConfigItem title={'缩放步长'} contentStyle={{width: 60}}>
-                            <UnderLineInput readOnly={!_rasterize} type={'number'} defaultValue={resizeStep}
-                                            onChange={(event: ChangeEvent<HTMLInputElement>) => this.config!.resizeStep = parseInt(event.target.value)}/>
-                        </ConfigItem>
+                            <Input label={'拖拽步长'} disabled={!_rasterize} type={'number'} defaultValue={dragStep} min={1}
+                                   onChange={(dragStep) => this.config!.dragStep = dragStep as number}/>
+                            <Input label={'缩放步长'} disabled={!_rasterize} type={'number'} defaultValue={resizeStep}
+                                   onChange={(resizeStep) => this.config!.resizeStep = resizeStep as number}/>
+                        </Grid>
                     </div>
-                    <p style={{
-                        color: '#7c7c7c',
-                        padding: '0 5px',
-                        fontSize: '12px'
-                    }}>说明：修改画布设置，会对整体效果产生较大影响，建议先调试好画布设置后再进行大屏设计</p>
+                    <p className={'canvas-config-desc'}>说明：修改画布设置，会对整体效果产生较大影响，建议先调试好画布设置后再进行大屏设计</p>
                     <div className={'lc-header-canvas-footer'}>
-                        <LcButton type={'submit'}>保存</LcButton>
-                        <LcButton type={'button'} onClick={this.onClose}>取消</LcButton>
+                        <Button type={'submit'}>保存</Button>
+                        <Button type={'button'} onClick={this.onClose}>取消</Button>
                     </div>
                 </form>
             </Dialog>

@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import Dialog from "../../../lib/lc-dialog/Dialog";
 import ThemeEditor from "./theme-editor/ThemeEditor";
-import LcButton from "../../../lib/lc-button/LcButton";
 import ThemeList from "./theme-list/ThemeList";
 import {ConfigType} from "../../../designer/right/ConfigType";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import rightStore from "../../../designer/right/RightStore";
 import designerStore from "../../../designer/store/DesignerStore";
+import Button from "../../../ui/button/Button";
 
 class ThemeConfig extends Component<ConfigType> {
     state = {
@@ -30,7 +30,7 @@ class ThemeConfig extends Component<ConfigType> {
             <>
                 <div className={'lc-theme-config'}>
                     <div className={'lc-theme-custom'}>
-                        <LcButton onClick={this.openThemeEditor} style={{width: '100%'}}>+ 自定义主题</LcButton>
+                        <Button onClick={this.openThemeEditor} style={{width: '100%'}}>+ 自定义主题</Button>
                     </div>
                     <br/>
                     <ThemeList onSelected={this.themeChange}/>

@@ -1,16 +1,15 @@
 import React, {Component} from 'react';
 import './AxisConfig.less';
-import ConfigItem from "../../../../lib/lc-config-item/ConfigItem";
 import {Axis} from "@antv/g2plot";
-import Accordion from "../../../../lib/lc-accordion/Accordion";
 import {Types} from "@antv/g2";
 import {AxisLabelCfg, AxisLineCfg, AxisSubTickLineCfg, AxisTickLineCfg, AxisTitleCfg} from "@antv/component/esm";
 import {AxisGridCfg} from "@antv/g2/esm/interface";
 import {isEqual} from "lodash";
 import {Control} from "../../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI";
+import Accordion from "../../../../ui/accordion/Accordion";
+import Radio from "../../../../ui/radio/Radio";
 
-const Radio = React.lazy(() => import('../../../../lib/lc-radio/Radio'));
 
 interface AxisConfigProps {
     config?: Axis;
@@ -55,7 +54,7 @@ class AxisConfig extends Component<AxisConfigProps> {
         const {grid, line, label, title: _title, tickLine, subTickLine} = config || {};
         const enable = !!(grid || line || label || _title || tickLine || subTickLine);
         return (
-            <Accordion title={title} showSwitch={true} defaultValue={enable}
+            <Accordion label={title} showSwitch={true} defaultValue={enable}
                        onChange={value => {
                            onChange(value ?
                                (isEqual(this.oldData, this.emptyData) ?
@@ -63,14 +62,14 @@ class AxisConfig extends Component<AxisConfigProps> {
                                    this.oldData) :
                                this.emptyData)
                        }}>
-                <ConfigItem title={'位置'} contentStyle={{width: '250px', paddingLeft: '20px'}}>
-                    <Radio defaultValue={(config as Types.AxisCfg)?.position || 'right'}
-                           onChange={(value => onChange({position: value as Types.AxisCfg["position"]}))}
-                           options={[{label: '上', value: 'top'},
-                               {label: '下', value: 'bottom'},
-                               {label: '左', value: 'left'},
-                               {label: '右', value: 'right'}]}/>
-                </ConfigItem>
+
+                <Radio padding={'7px 0 10px 0'} label={'位置'}
+                       defaultValue={(config as Types.AxisCfg)?.position || 'right'}
+                       onChange={(value => onChange({position: value as Types.AxisCfg["position"]}))}
+                       options={[{label: '上', value: 'top'},
+                           {label: '下', value: 'bottom'},
+                           {label: '左', value: 'left'},
+                           {label: '右', value: 'right'}]}/>
                 <AxisText config={(config as Types.AxisCfg)?.label!} onChange={(data => onChange({label: data}))}/>
                 <AxisTitle config={(config as Types.AxisCfg)?.title!} onChange={(data => onChange({title: data}))}/>
                 <AxisLine config={(config as Types.AxisCfg)?.line!} onChange={(data => onChange({line: data}))}/>

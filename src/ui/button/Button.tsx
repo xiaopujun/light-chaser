@@ -7,9 +7,10 @@ export interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonE
 
 class Button extends Component<ButtonProps> {
 
-    onChange = () => {
-        const {onChange} = this.props;
+    onChange = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        const {onChange, onClick} = this.props;
         onChange && onChange();
+        onClick && onClick(e);
     }
 
     render() {
