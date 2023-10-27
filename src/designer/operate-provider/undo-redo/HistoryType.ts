@@ -1,7 +1,7 @@
 /**
  * 操作类型枚举
  */
-import {MovableItemType} from "../../../lib/lc-movable/types";
+import {MovableItemType} from "../movable/types";
 import {ConfigureObjectFragments} from "../../../utils/ObjectUtil";
 
 export enum HistoryType {

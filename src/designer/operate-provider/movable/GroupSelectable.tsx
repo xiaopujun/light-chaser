@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Selecto, {OnSelectEnd} from "react-selecto";
-import eventOperateStore from "../../designer/operate-provider/EventOperateStore";
+import eventOperateStore from "../EventOperateStore";
 import {observer} from "mobx-react";
 import Moveable from 'react-moveable';
 

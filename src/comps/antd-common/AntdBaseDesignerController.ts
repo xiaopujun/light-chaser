@@ -5,7 +5,7 @@ import AbstractController, {OperateType, UpdateOptions} from "../../framework/co
 import {ComponentBaseProps} from "../common-component/common-types";
 import {Options, Plot} from "@antv/g2plot";
 import ComponentUtil from "../../utils/ComponentUtil";
-import {LoadError} from "../../lib/lc-loaderr/LoadError";
+import {LoadError} from "../../ui/err-msg/LoadError";
 import ReactDOM from "react-dom";
 import ObjectUtil from "../../utils/ObjectUtil";
 

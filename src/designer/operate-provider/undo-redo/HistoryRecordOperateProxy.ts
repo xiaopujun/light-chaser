@@ -1,5 +1,5 @@
 import designerStore from "../../store/DesignerStore";
-import {MovableItemType} from "../../../lib/lc-movable/types";
+import {MovableItemType} from "../movable/types";
 import {
     AddDataType,
     DelDataType,

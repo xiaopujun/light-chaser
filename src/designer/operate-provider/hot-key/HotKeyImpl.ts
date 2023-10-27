@@ -1,6 +1,6 @@
 import eventOperateStore from "../EventOperateStore";
 import designerStore from "../../store/DesignerStore";
-import {MovableItemType} from "../../../lib/lc-movable/types";
+import {MovableItemType} from "../movable/types";
 import {SaveType} from "../../DesignerType";
 import {cloneDeep, throttle} from "lodash";
 import EditorDesignerLoader from "../../loader/EditorDesignerLoader";

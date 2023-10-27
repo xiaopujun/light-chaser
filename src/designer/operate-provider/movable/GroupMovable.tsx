@@ -14,10 +14,10 @@ import Moveable, {
     OnResizeStart
 } from "react-moveable";
 import {observer} from "mobx-react";
-import eventOperateStore from "../../designer/operate-provider/EventOperateStore";
-import designerStore from "../../designer/store/DesignerStore";
+import eventOperateStore from "../EventOperateStore";
+import designerStore from "../../store/DesignerStore";
 import {MovableItemType} from "./types";
-import historyRecordOperateProxy from "../../designer/operate-provider/undo-redo/HistoryRecordOperateProxy";
+import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 
 interface GroupMovableProps {
     readonly?: boolean;

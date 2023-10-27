@@ -5,7 +5,7 @@ import './CompList.less';
 import {observer} from "mobx-react";
 import designerStore from "../../store/DesignerStore";
 import {idGenerate} from "../../../utils/IdGenerate";
-import {MovableItemType} from "../../../lib/lc-movable/types";
+import {MovableItemType} from "../../operate-provider/movable/types";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 import FloatPanel from "../common/FloatPanel";
 import {BaseInfoType} from "../../DesignerType";

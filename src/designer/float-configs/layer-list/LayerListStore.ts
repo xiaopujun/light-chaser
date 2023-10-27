@@ -3,7 +3,7 @@ import LayerComponent from "./LayerComponent";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 import {MouseEvent} from "react";
 import {LayerItemDataProps} from "./LayerItem";
-import {setControlPointLineColor} from "../../../lib/lc-movable/GroupSelectable";
+import {setControlPointLineColor} from "../../operate-provider/movable/GroupSelectable";
 import historyRecordOperateProxy from "../../operate-provider/undo-redo/HistoryRecordOperateProxy";
 
 class LayerListStore {

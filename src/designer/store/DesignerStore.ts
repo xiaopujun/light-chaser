@@ -11,7 +11,7 @@ import {
     ThemeItemType,
 } from "../DesignerType";
 import AbstractBaseStore from "../../framework/core/AbstractBaseStore";
-import {MovableItemType} from "../../lib/lc-movable/types";
+import {MovableItemType} from "../operate-provider/movable/types";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
 import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryRecordOperateProxy";
 import ObjectUtil from "../../utils/ObjectUtil";

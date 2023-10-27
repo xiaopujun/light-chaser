@@ -1,7 +1,7 @@
 /**
  * 主题
  */
-import {MovableItemType} from "../lib/lc-movable/types";
+import {MovableItemType} from "./operate-provider/movable/types";
 import {NodeProps} from "../blueprint/node/BPNode";
 import {CanvasLineType} from "../blueprint/types";
 

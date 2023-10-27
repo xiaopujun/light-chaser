@@ -8,7 +8,7 @@ import FloatPanel from "../common/FloatPanel";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 import eventManager from "../../operate-provider/core/EventManager";
 import LayerContainer from "./LayerContainer";
-import {MovableItemType} from "../../../lib/lc-movable/types";
+import {MovableItemType} from "../../operate-provider/movable/types";
 import Input from "../../../ui/input/Input";
 
 //todo 该组件的重新渲染逻辑要重点优化

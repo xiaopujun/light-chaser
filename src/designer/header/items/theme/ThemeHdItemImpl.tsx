@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Dialog from "../../../../lib/lc-dialog/Dialog";
+import Dialog from "../../../../ui/dialog/Dialog";
 import './ThemeHdItem.less';
 import headerStore from "../../HeaderStore";
 import ThemeList from "../../../../comps/common-component/theme-config/theme-list/ThemeList";

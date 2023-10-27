@@ -4,9 +4,9 @@ import LayerComponent from "../float-configs/layer-list/LayerComponent";
 import Moveable from "react-moveable";
 import {RefObject} from "react";
 import designerStore from "../store/DesignerStore";
-import {MovableItemType} from "../../lib/lc-movable/types";
+import {MovableItemType} from "./movable/types";
 import ObjectUtil from "../../utils/ObjectUtil";
-import DesignerRuler from "../../lib/lc-ruler/DesignerRuler";
+import DesignerRuler from "../canvas/DesignerRuler";
 
 /**
  * 组件多选情况下的坐标值

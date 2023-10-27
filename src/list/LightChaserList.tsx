@@ -14,7 +14,7 @@ import {ImgUtil} from "../utils/ImgUtil";
 import {ProjectState, SaveType} from "../designer/DesignerType";
 import designerStore from "../designer/store/DesignerStore";
 import EditorDesignerLoader from "../designer/loader/EditorDesignerLoader";
-import Dialog from "../lib/lc-dialog/Dialog";
+import Dialog from "../ui/dialog/Dialog";
 import {message} from "antd";
 import Button from "../ui/button/Button";
 import Input from "../ui/input/Input";

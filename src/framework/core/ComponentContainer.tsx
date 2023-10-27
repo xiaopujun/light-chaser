@@ -1,5 +1,5 @@
 import React, {Suspense} from "react";
-import {MovableItemType} from "../../lib/lc-movable/types";
+import {MovableItemType} from "../../designer/operate-provider/movable/types";
 import {parseUrlParams} from "../../utils/URLUtil";
 import historyRecordOperateProxy from "../../designer/operate-provider/undo-redo/HistoryRecordOperateProxy";
 import runtimeConfigStore from "../../designer/store/RuntimeConfigStore";

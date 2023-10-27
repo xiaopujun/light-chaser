@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './style/AddNewScreenDialog.less';
-import Dialog from "../lib/lc-dialog/Dialog";
+import Dialog from "../ui/dialog/Dialog";
 import Button from "../ui/button/Button";
 import {Grid} from "../ui/grid/Grid";
 import Input from "../ui/input/Input";
