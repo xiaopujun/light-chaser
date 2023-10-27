@@ -3,6 +3,7 @@ import {Control} from "../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../json-schema/LCGUI";
 import LCGUIUtil from "../json-schema/LCGUIUtil";
 import './DemoMain.less'
+import {ImageUpload} from "../ui/imag-upload/ImageUpload";
 
 
 class JsonSchemaDemo extends Component {
@@ -199,13 +200,8 @@ class JsonSchemaDemo extends Component {
     render() {
         return (
             <div style={{width: 400, height: 800, background: "#333333", padding: 10}}>
-                <div>
-                    <LCGUI schema={this.testSchema} onFieldChange={this.onChange}/>
-                </div>
-                <div id={'contaier'}>
-                    <div>1</div>
-                    <div>2</div>
-                </div>
+                <LCGUI schema={this.testSchema} onFieldChange={this.onChange}/>
+                <ImageUpload label={'上传'} tip={'测试上传'}/>
                 {/*<div style={{display: 'grid', gridGap: 15}}>*/}
                 {/*    <Input label={'频率'} tip={'牛逼克拉斯'} prefix={'每'} suffix={'s'}/>*/}
                 {/*    <Input label={'速度'} tip={'牛逼克拉斯'} suffix={'m/s'}/>*/}

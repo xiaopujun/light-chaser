@@ -12,7 +12,7 @@ export interface BaseImageComponentProps {
 }
 
 
-export default class BaseImage extends AbstractDesignerController<BaseImageComponent, BaseImageComponentProps> {
+export default class BaseImageController extends AbstractDesignerController<BaseImageComponent, BaseImageComponentProps> {
 
     public async create(container: HTMLElement, config: BaseImageComponentProps): Promise<this> {
         this.config = config;

@@ -1,4 +1,6 @@
-export type BaseDataType = string | boolean | number;
+export type BaseType = string | boolean | number | object | null | undefined;
+
+export type BaseDataType = BaseType | Record<string, BaseType>;
 
 export type ControlValueType = BaseDataType | BaseDataType[];
 
@@ -13,6 +15,7 @@ export type UIType =
     "code-editor" |
     "color-picker" |
     "colors-picker" |
+    "image-upload" |
     "item-panel";
 
 export interface Control {

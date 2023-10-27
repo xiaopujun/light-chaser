@@ -10,7 +10,6 @@ export interface DesignerDragScaleContainerProps {
 }
 
 export const DesignerDragScaleContainer: React.FC<DesignerDragScaleContainerProps> = observer((props) => {
-    console.log('重新渲染画布')
     const {children, onDoubleClick} = props;
     const containerRef = React.useRef<HTMLDivElement>(null);
     const contentRef = React.useRef<HTMLDivElement>(null);

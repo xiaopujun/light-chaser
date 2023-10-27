@@ -2,7 +2,7 @@ import {
     AbstractComponentDefinition,
     MenuToConfigMappingType
 } from "../../../framework/core/AbstractComponentDefinition";
-import BaseImage, {BaseImageComponentProps} from "./BaseImage";
+import BaseImageController, {BaseImageComponentProps} from "./BaseImageController";
 import {BaseInfoType} from "../../../designer/DesignerType";
 import baseImage from './baseImage.png';
 import {ClazzTemplate} from "../../common-component/common-types";
@@ -11,7 +11,7 @@ import {getDefaultMenuList} from "../../../designer/right/util";
 import BaseInfo from "../../common-component/base-info/BaseInfo";
 import {BaseImageStyleConfig} from "./BaseImageConfig";
 
-export default class BaseImageDefinition extends AbstractComponentDefinition<BaseImage, BaseImageComponentProps> {
+export default class BaseImageDefinition extends AbstractComponentDefinition<BaseImageController, BaseImageComponentProps> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "基础图片",
@@ -26,8 +26,8 @@ export default class BaseImageDefinition extends AbstractComponentDefinition<Bas
         return baseImage;
     }
 
-    getComponent(): ClazzTemplate<BaseImage> | null {
-        return BaseImage;
+    getComponent(): ClazzTemplate<BaseImageController> | null {
+        return BaseImageController;
     }
 
     getInitConfig(): BaseImageComponentProps {

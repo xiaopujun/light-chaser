@@ -1,5 +1,5 @@
 import AbstractConvert from "../../../framework/convert/AbstractConvert";
-import {BaseImageComponentProps} from "./BaseImage";
+import {BaseImageComponentProps} from "./BaseImageController";
 import {ImgUtil} from "../../../utils/ImgUtil";
 import ImageCache from "../../../framework/cache/ImageCache";
 
