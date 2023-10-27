@@ -3,7 +3,6 @@ import {LineOutlined} from "@ant-design/icons";
 import rightStore from "./RightStore";
 import {observer} from "mobx-react";
 import './ConfigContent.less';
-import Loading from "../../lib/loading/Loading";
 import designerStore from "../store/DesignerStore";
 import {AbstractComponentDefinition} from "../../framework/core/AbstractComponentDefinition";
 import {ConfigType} from "./ConfigType";
@@ -11,6 +10,7 @@ import EditorDesignerLoader from "../loader/EditorDesignerLoader";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
 import ObjectUtil from "../../utils/ObjectUtil";
 import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryRecordOperateProxy";
+import Loading from "../../ui/loading/Loading";
 
 class ConfigContent extends Component {
 

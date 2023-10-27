@@ -3,7 +3,8 @@ import './Input.less';
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
 
 export interface InputProps extends Pick<InputHTMLAttributes<HTMLInputElement>,
-    "minLength" | "maxLength" | "required" | "value" | "defaultValue" | "disabled" | "type" | "min" | "max">, UIContainerProps {
+    "minLength" | "maxLength" | "required" | "value" | "defaultValue"
+    | "disabled" | "type" | "min" | "max" | "placeholder">, UIContainerProps {
     onChange?: (data: string | number) => void;
     prefix?: string;
     suffix?: string;

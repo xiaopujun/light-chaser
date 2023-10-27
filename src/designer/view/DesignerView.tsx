@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import './DesignerView.less';
 import {MovableItemType} from "../../lib/lc-movable/types";
-import Loading from "../../lib/loading/Loading";
 import designerStore from "../store/DesignerStore";
 import ComponentContainer from "../../framework/core/ComponentContainer";
 import {observer} from "mobx-react";
 import EditorDesignerLoader from "../loader/EditorDesignerLoader";
+import Loading from "../../ui/loading/Loading";
 
 class DesignerView extends Component {
 

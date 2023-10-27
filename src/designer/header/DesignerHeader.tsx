@@ -2,9 +2,9 @@ import React, {Component, ReactElement, Suspense} from 'react';
 import './DesignerHeader.less';
 import headerStore from "./HeaderStore";
 import {observer} from "mobx-react";
-import Loading from "../../lib/loading/Loading";
 import EditorDesignerLoader from "../loader/EditorDesignerLoader";
 import {BluePrintHdImpl} from "./items/blue-print/BluePrintHdImpl";
+import Loading from "../../ui/loading/Loading";
 
 const ProjectHdItemImpl = React.lazy(() => import('./items/project/ProjectHdItemImpl'));
 const CanvasHdConfigImpl = React.lazy(() => import('./items/canvas/CanvasHdConfigImpl'));

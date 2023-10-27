@@ -2,8 +2,8 @@ import React, {Component, lazy, Suspense} from 'react';
 import 'antd/dist/antd.min.css';
 import './App.less';
 import {Route, Switch} from "react-router-dom";
-import Loading from "./lib/loading/Loading";
 import JsonSchemaDemo from "./test/JsonSchemaDemo";
+import Loading from "./ui/loading/Loading";
 
 const LightChaserList = lazy(() => import('./list/LightChaserList'));
 const Designer = lazy(() => import('./designer/Designer'));

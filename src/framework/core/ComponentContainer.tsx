@@ -1,9 +1,9 @@
 import React, {Suspense} from "react";
 import {MovableItemType} from "../../lib/lc-movable/types";
-import Loading from "../../lib/loading/Loading";
 import {parseUrlParams} from "../../utils/URLUtil";
 import historyRecordOperateProxy from "../../designer/operate-provider/undo-redo/HistoryRecordOperateProxy";
 import runtimeConfigStore from "../../designer/store/RuntimeConfigStore";
+import Loading from "../../ui/loading/Loading";
 
 export interface ComponentContainerProps {
     layout: MovableItemType;

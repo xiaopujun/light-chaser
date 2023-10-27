@@ -4,7 +4,6 @@ import AddNewScreenDialog, {NewProjectInfoType} from "./AddNewScreenDialog";
 import listBottom from './icon/list-bottom.svg';
 import templateMarket from './icon/template-market.svg';
 import datasource from './icon/datasource.svg';
-import LcButton from "../lib/lc-button/LcButton";
 
 import listDelImg from './list-del.svg';
 import listDisplay from './list-display.svg';
@@ -16,9 +15,9 @@ import {ProjectState, SaveType} from "../designer/DesignerType";
 import designerStore from "../designer/store/DesignerStore";
 import EditorDesignerLoader from "../designer/loader/EditorDesignerLoader";
 import Dialog from "../lib/lc-dialog/Dialog";
-import ConfigItem from "../lib/lc-config-item/ConfigItem";
-import UnderLineInput from "../lib/lc-input/UnderLineInput";
 import {message} from "antd";
+import Button from "../ui/button/Button";
+import Input from "../ui/input/Input";
 
 class LightChaserList extends Component<any> {
 
@@ -166,8 +165,8 @@ class LightChaserList extends Component<any> {
                         <div className={'content-body'}>
                             <div className={'project-list'}>
                                 <div style={{width: width, height: height, margin: '0 20px 20px 0'}}>
-                                    <LcButton onClick={this.toggleNewProVisible}
-                                              style={{width: width, height: height, fontSize: 20}}>+ 新建项目</LcButton>
+                                    <Button onClick={this.toggleNewProVisible}
+                                            style={{width: width, height: height, fontSize: 20}}>+ 新建项目</Button>
                                 </div>
                                 {data && data.map((item: any) => {
                                     let bgImgUrl = imageIdToUrl[item?.screenshot];
@@ -250,8 +249,8 @@ const DeleteDialog = (props: DelDialogProps) => {
                 borderTop: '2px solid #272b34',
                 paddingTop: 5
             }}>
-                <LcButton onClick={onOk}>确认</LcButton>
-                <LcButton onClick={onCancel}>取消</LcButton>
+                <Button onClick={onOk}>确认</Button>
+                <Button onClick={onCancel}>取消</Button>
             </div>
         </Dialog>
     )
@@ -278,18 +277,16 @@ const CloneDialog = (props: CloneDialogProps) => {
     return (
         <Dialog title={'克隆项目'} visible={visible} onClose={onCancel}>
             <form onSubmit={onSubmit}>
-                <ConfigItem title={'项目名称'} contentStyle={{width: '80%'}}>
-                    <UnderLineInput required={true} defaultValue={cloneName}
-                                    onChange={(event) => cloneName = event.target.value}/>
-                </ConfigItem>
+                <Input label={'项目名称'} required={true} defaultValue={cloneName}
+                       onChange={(name) => cloneName = name as string}/>
                 <div className={'del-pro-confirm'} style={{
                     display: 'flex',
                     justifyContent: 'flex-end',
                     borderTop: '2px solid #272b34',
                     paddingTop: 10
                 }}>
-                    <LcButton type={'submit'}>确认</LcButton>
-                    <LcButton onClick={onCancel}>取消</LcButton>
+                    <Button type={'submit'}>确认</Button>
+                    <Button onClick={onCancel}>取消</Button>
                 </div>
             </form>
         </Dialog>

@@ -1,18 +1,13 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import {ConfigType} from "../../../designer/right/ConfigType";
-import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
-import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
 import {WritableRoseOptions} from "../types";
-import BaseColorPicker from "../../../lib/lc-color-picker/BaseColorPicker";
-import CfgItemBorder from "../../../lib/lc-config-item/CfgItemBorder";
-import {RoseOptions, StatisticText} from "@antv/g2plot";
-import LcSwitch from "../../../lib/lc-switch/LcSwitch";
-import {AntdLegend} from "../config/AntdFragment";
+import {RoseOptions} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import AntdCommonRose from "./AntdCommonRose";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
 import AntdCommonUtil from "../AntdCommonUtil";
+import {AntdLegend} from "../config/legend/AntdLegend";
 
 export default class AntdRoseCommonStyleConfig extends Component<ConfigType> {
 
@@ -333,70 +328,70 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
 }
 
 
-export interface AntdStatisticTextConfigProps {
-    config: StatisticText | false;
-
-    onChange(config: StatisticText | false): void;
-}
-
-export const StatisticTextConfig: React.FC<AntdStatisticTextConfigProps> = ({config, onChange}) => {
-
-    const [disEnable, setDisEnable] = useState(!!config);
-
-    return (
-        <>
-            <ConfigItem title={"开启"}>
-                <LcSwitch defaultValue={disEnable}
-                          onChange={(value) => {
-                              let titleConfig: StatisticText | boolean;
-                              if (value) titleConfig = {style: {fontSize: '12px', color: '#fff'}, content: 'text'}
-                              else titleConfig = false;
-                              onChange(titleConfig)
-                              setDisEnable(value)
-                          }}/>
-            </ConfigItem>
-            <ConfigItem title={"内容"}>
-                <UnderLineInput defaultValue={(config as StatisticText)?.content || 'text'}
-                                disabled={!disEnable}
-                                onChange={(event) => onChange({content: event.target.value})}/>
-            </ConfigItem>
-            <ConfigItem title={"字号"}>
-                <UnderLineInput type={'number'} min={10}
-                                disabled={!disEnable}
-                                defaultValue={parseInt(((config as StatisticText)?.style as any)?.fontSize || '12')}
-                                onChange={(event) => onChange({style: {fontSize: event.target.value + 'px'}})}/>
-            </ConfigItem>
-            <ConfigItem title={"加粗"}>
-                <UnderLineInput type={'number'} min={100} max={900} step={100}
-                                disabled={!disEnable}
-                                defaultValue={parseInt(((config as StatisticText)?.style as any)?.fontWeight || '500')}
-                                onChange={(event) => onChange({style: {fontWeight: parseInt(event.target.value)}})}/>
-            </ConfigItem>
-            <ConfigItem title={'颜色'}>
-                <CfgItemBorder width={'100%'}>
-                    <BaseColorPicker
-                        disabled={!disEnable}
-                        defaultValue={((config as StatisticText)?.style as any)?.value || '#fff'}
-                        onChange={(value) => onChange({style: {color: value}})}
-                        style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-                </CfgItemBorder>
-            </ConfigItem>
-            <ConfigItem title={"x偏移"}>
-                <UnderLineInput type={'number'}
-                                disabled={!disEnable}
-                                defaultValue={(config as StatisticText)?.offsetX || 0}
-                                onChange={(event) => onChange({offsetX: parseInt(event.target.value)})}/>
-            </ConfigItem>
-            <ConfigItem title={"y偏移"}>
-                <UnderLineInput type={'number'}
-                                disabled={!disEnable}
-                                defaultValue={(config as StatisticText)?.offsetY || 0}
-                                onChange={(event) => onChange({offsetY: parseInt(event.target.value)})}/>
-            </ConfigItem>
-        </>
-    )
-}
-
+// export interface AntdStatisticTextConfigProps {
+//     config: StatisticText | false;
+//
+//     onChange(config: StatisticText | false): void;
+// }
+//
+// export const StatisticTextConfig: React.FC<AntdStatisticTextConfigProps> = ({config, onChange}) => {
+//
+//     const [disEnable, setDisEnable] = useState(!!config);
+//
+//     return (
+//         <>
+//             <ConfigItem title={"开启"}>
+//                 <LcSwitch defaultValue={disEnable}
+//                           onChange={(value) => {
+//                               let titleConfig: StatisticText | boolean;
+//                               if (value) titleConfig = {style: {fontSize: '12px', color: '#fff'}, content: 'text'}
+//                               else titleConfig = false;
+//                               onChange(titleConfig)
+//                               setDisEnable(value)
+//                           }}/>
+//             </ConfigItem>
+//             <ConfigItem title={"内容"}>
+//                 <UnderLineInput defaultValue={(config as StatisticText)?.content || 'text'}
+//                                 disabled={!disEnable}
+//                                 onChange={(event) => onChange({content: event.target.value})}/>
+//             </ConfigItem>
+//             <ConfigItem title={"字号"}>
+//                 <UnderLineInput type={'number'} min={10}
+//                                 disabled={!disEnable}
+//                                 defaultValue={parseInt(((config as StatisticText)?.style as any)?.fontSize || '12')}
+//                                 onChange={(event) => onChange({style: {fontSize: event.target.value + 'px'}})}/>
+//             </ConfigItem>
+//             <ConfigItem title={"加粗"}>
+//                 <UnderLineInput type={'number'} min={100} max={900} step={100}
+//                                 disabled={!disEnable}
+//                                 defaultValue={parseInt(((config as StatisticText)?.style as any)?.fontWeight || '500')}
+//                                 onChange={(event) => onChange({style: {fontWeight: parseInt(event.target.value)}})}/>
+//             </ConfigItem>
+//             <ConfigItem title={'颜色'}>
+//                 <CfgItemBorder width={'100%'}>
+//                     <BaseColorPicker
+//                         disabled={!disEnable}
+//                         defaultValue={((config as StatisticText)?.style as any)?.value || '#fff'}
+//                         onChange={(value) => onChange({style: {color: value}})}
+//                         style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
+//                 </CfgItemBorder>
+//             </ConfigItem>
+//             <ConfigItem title={"x偏移"}>
+//                 <UnderLineInput type={'number'}
+//                                 disabled={!disEnable}
+//                                 defaultValue={(config as StatisticText)?.offsetX || 0}
+//                                 onChange={(event) => onChange({offsetX: parseInt(event.target.value)})}/>
+//             </ConfigItem>
+//             <ConfigItem title={"y偏移"}>
+//                 <UnderLineInput type={'number'}
+//                                 disabled={!disEnable}
+//                                 defaultValue={(config as StatisticText)?.offsetY || 0}
+//                                 onChange={(event) => onChange({offsetY: parseInt(event.target.value)})}/>
+//             </ConfigItem>
+//         </>
+//     )
+// }
+//
 
 export const AntdRoseFieldMapping: React.FC<ConfigType<AntdCommonRose>> = ({controller}) => {
     const options = AntdCommonUtil.getDataFieldOptions(controller);

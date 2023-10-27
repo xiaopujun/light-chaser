@@ -1,5 +1,5 @@
 import AbstractController from "../../framework/core/AbstractController";
-import {Option} from "../../lib/lc-select/SelectType";
+import {Option} from "../../ui/select/SelectType";
 
 export default class AntdCommonUtil {
     public static getDataFieldOptions(controller: AbstractController) {

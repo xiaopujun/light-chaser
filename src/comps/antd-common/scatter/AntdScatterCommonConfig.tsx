@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ConfigType} from "../../../designer/right/ConfigType";
-import {AntdCartesianCoordinateSys, AntdLegend} from "../config/AntdFragment";
+import {AntdCartesianCoordinateSys} from "../config/AntdFragment";
 import {Scatter, ScatterOptions} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import AbstractController from "../../../framework/core/AbstractController";
@@ -10,6 +10,7 @@ import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
 import AntdCommonUtil from "../AntdCommonUtil";
+import {AntdLegend} from "../config/legend/AntdLegend";
 
 class AntdScatterCommonStyleConfig extends Component<ConfigType> {
 

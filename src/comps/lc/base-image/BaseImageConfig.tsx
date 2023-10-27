@@ -1,14 +1,7 @@
 import React, {useState} from "react";
 import {ConfigType} from "../../../designer/right/ConfigType";
 import BaseImage from "./BaseImage";
-import ConfigItem from "../../../lib/lc-config-item/ConfigItem";
-import Select from "../../../lib/lc-select/Select";
-import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
-import {BaseImageComponentStyle} from "./BaseImageComponent";
-import {Upload} from "antd";
-import {PlusOutlined} from "@ant-design/icons";
 import './BaseImageConfig.less';
-import {UploadFile} from "antd/lib/upload/interface";
 import ImageCache from "../../../framework/cache/ImageCache";
 
 export const BaseImageStyleConfig: React.FC<ConfigType<BaseImage>> = ({controller}) => {
@@ -20,7 +13,7 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImage>> = ({controlle
         name: 'image.png',
         status: 'done',
     }
-    const [fileList, setFileList] = useState((type === 'local' && localUrl !== '' ? [{
+    const [/*fileList*/, setFileList] = useState((type === 'local' && localUrl !== '' ? [{
         ...fileInfo,
         url: localUrl
     }] : []));
@@ -64,36 +57,36 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImage>> = ({controlle
 
     return (
         <div className={"base-image-style-config"}>
-            <ConfigItem title={'图片来源'}>
-                <Select options={[
-                    {label: '在线', value: 'online'},
-                    {label: '本地', value: 'local'}
-                ]} defaultValue={type} onChange={(value => {
-                    setType(value as 'online' | 'local');
-                    controller.update({style: {type: value as BaseImageComponentStyle['type']}})
-                })}/>
-            </ConfigItem>
-            {type === 'online' && <ConfigItem title={'图片链接'} contentStyle={{width: '80%'}}>
-                <UnderLineInput type={"url"} defaultValue={style?.onLineUrl || ''}
-                                onChange={(event) => controller.update({style: {onLineUrl: event.target.value}})}/>
-            </ConfigItem>}
-            {type === 'local' &&
-            <ConfigItem title={'上传图片'} contentStyle={{width: '80%'}} itemStyle={{alignItems: "flex-start"}}>
-                <Upload name={'file'} beforeUpload={beforeUpload} listType={'picture-card'}
-                        fileList={fileList as Array<UploadFile>}
-                        onRemove={() => {
-                            setFileList([]);
-                            setLocalUrl('');
-                            controller.update({style: {localUrl: ''}})
-                            //todo 后续要加上定时清理缓存
-                        }}
-                        onPreview={() => window.open(localUrl)}>
-                    {fileList.length > 0 ? null : <div className={'upload-btn'}>
-                        <PlusOutlined/>
-                        <div style={{marginTop: 8}}>Upload</div>
-                    </div>}
-                </Upload>
-            </ConfigItem>}
+            {/*<ConfigItem title={'图片来源'}>*/}
+            {/*    <Select options={[*/}
+            {/*        {label: '在线', value: 'online'},*/}
+            {/*        {label: '本地', value: 'local'}*/}
+            {/*    ]} defaultValue={type} onChange={(value => {*/}
+            {/*        setType(value as 'online' | 'local');*/}
+            {/*        controller.update({style: {type: value as BaseImageComponentStyle['type']}})*/}
+            {/*    })}/>*/}
+            {/*</ConfigItem>*/}
+            {/*{type === 'online' && <ConfigItem title={'图片链接'} contentStyle={{width: '80%'}}>*/}
+            {/*    <UnderLineInput type={"url"} defaultValue={style?.onLineUrl || ''}*/}
+            {/*                    onChange={(event) => controller.update({style: {onLineUrl: event.target.value}})}/>*/}
+            {/*</ConfigItem>}*/}
+            {/*{type === 'local' &&*/}
+            {/*<ConfigItem title={'上传图片'} contentStyle={{width: '80%'}} itemStyle={{alignItems: "flex-start"}}>*/}
+            {/*    <Upload name={'file'} beforeUpload={beforeUpload} listType={'picture-card'}*/}
+            {/*            fileList={fileList as Array<UploadFile>}*/}
+            {/*            onRemove={() => {*/}
+            {/*                setFileList([]);*/}
+            {/*                setLocalUrl('');*/}
+            {/*                controller.update({style: {localUrl: ''}})*/}
+            {/*                //todo 后续要加上定时清理缓存*/}
+            {/*            }}*/}
+            {/*            onPreview={() => window.open(localUrl)}>*/}
+            {/*        {fileList.length > 0 ? null : <div className={'upload-btn'}>*/}
+            {/*            <PlusOutlined/>*/}
+            {/*            <div style={{marginTop: 8}}>Upload</div>*/}
+            {/*        </div>}*/}
+            {/*    </Upload>*/}
+            {/*</ConfigItem>}*/}
         </div>
     )
 }

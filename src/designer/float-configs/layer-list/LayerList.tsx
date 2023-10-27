@@ -1,4 +1,4 @@
-import React, {ChangeEvent, Component} from 'react';
+import React, {Component} from 'react';
 import './LayerList.less';
 import layerListStore from "./LayerListStore";
 import designerStore from "../../store/DesignerStore";
@@ -9,7 +9,7 @@ import eventOperateStore from "../../operate-provider/EventOperateStore";
 import eventManager from "../../operate-provider/core/EventManager";
 import LayerContainer from "./LayerContainer";
 import {MovableItemType} from "../../../lib/lc-movable/types";
-import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
+import Input from "../../../ui/input/Input";
 
 //todo 该组件的重新渲染逻辑要重点优化
 class LayerList extends Component {
@@ -37,10 +37,9 @@ class LayerList extends Component {
         setVisible && setVisible(false);
     }
 
-    searchLayer = (e: ChangeEvent<HTMLInputElement>) => {
+    searchLayer = (data: string | number) => {
         const {setContent} = layerListStore;
-        const content = (e.target as HTMLInputElement).value;
-        setContent && setContent(content);
+        setContent && setContent(data as string);
     }
 
 
@@ -81,8 +80,7 @@ class LayerList extends Component {
             <FloatPanel title={'图层'} onClose={this.onClose} initPosition={{x: 250, y: -window.innerHeight + 50}}
                         className={'layer-list'}>
                 <div className={'list-search'}>
-                    <UnderLineInput placeholder="搜索图层" onChange={this.searchLayer} containStyle={{height: 40}}
-                                    inputStyle={{height: 40, padding: '0 10px'}}/>
+                    <Input placeholder="搜索图层" onChange={this.searchLayer}/>
                 </div>
                 <div className={'layer-items'}>
                     {this.buildLayerList()}

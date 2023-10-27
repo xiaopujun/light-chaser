@@ -15,10 +15,10 @@ import eventOperateStore from "./operate-provider/EventOperateStore";
 import eventManager from "./operate-provider/core/EventManager";
 import EditorDesignerLoader from "./loader/EditorDesignerLoader";
 import designerStore from "./store/DesignerStore";
-import Loading from "../lib/loading/Loading";
 import DesignerHeader from "./header/DesignerHeader";
 import DesignerCanvas from "./canvas/DesignerCanvas";
 import {observer} from "mobx-react";
+import Loading from "../ui/loading/Loading";
 
 class Designer extends Component {
 

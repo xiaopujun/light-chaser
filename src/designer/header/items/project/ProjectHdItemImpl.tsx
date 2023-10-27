@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Dialog from "../../../../lib/lc-dialog/Dialog";
 import headerStore from "../../HeaderStore";
-import LcButton from "../../../../lib/lc-button/LcButton";
 import './ProjectHdItemImpl.less';
 import designerStore from "../../../store/DesignerStore";
 import {ProjectConfig, ProjectState} from "../../../DesignerType";
@@ -9,6 +8,7 @@ import {Grid} from "../../../../ui/grid/Grid";
 import Input from "../../../../ui/input/Input";
 import Radio from "../../../../ui/radio/Radio";
 import Select from "../../../../ui/select/Select";
+import Button from "../../../../ui/button/Button";
 
 class ProjectHdItemImpl extends Component {
 
@@ -62,8 +62,8 @@ class ProjectHdItemImpl extends Component {
 
                     </div>
                     <div className={'lc-header-project-footer'}>
-                        <LcButton type={'submit'}>保存</LcButton>
-                        <LcButton type={'button'} onClick={this.onClose}>取消</LcButton>
+                        <Button type={'submit'}>保存</Button>
+                        <Button type={'button'} onClick={this.onClose}>取消</Button>
                     </div>
                 </form>
             </Dialog>

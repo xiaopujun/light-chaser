@@ -10,7 +10,6 @@ import Select from "./select/Select";
 import Switch from "./switch/Switch";
 import {ItemPanel} from "./item-panel/ItemPanel";
 import {Slider} from "./slider/Slider";
-import ColorMode from "../lib/lc-color-mode/ColorMode";
 
 const UIMap = new Map();
 
@@ -24,7 +23,6 @@ UIMap.set('switch', Switch);
 UIMap.set('code-editor', MonacoEditor);
 UIMap.set('color-picker', ColorPicker);
 UIMap.set('colors-picker', ColorsPicker);
-UIMap.set('colors-mode', ColorMode);
 UIMap.set('item-panel', ItemPanel);
 UIMap.set('slider', Slider);
 

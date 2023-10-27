@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import {ConfigType} from "../../../designer/right/ConfigType";
-import {AntdCartesianCoordinateSys, AntdLegend} from "../config/AntdFragment";
+import {AntdCartesianCoordinateSys} from "../config/AntdFragment";
 import {BarOptions} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import AntdCommonBar from "./AntdCommonBar";
 import {WritableBarOptions} from "../types";
-import {Option} from "../../../lib/lc-select/SelectType";
 import {Control} from "../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
+import {AntdLegend} from "../config/legend/AntdLegend";
+import {Option} from "../../../ui/select/SelectType";
 
 class AntdBarCommonStyleConfig extends Component<ConfigType> {
 

@@ -10,7 +10,7 @@ import eventOperateStore from "../../operate-provider/EventOperateStore";
 import FloatPanel from "../common/FloatPanel";
 import {BaseInfoType} from "../../DesignerType";
 import EditorDesignerLoader from "../../loader/EditorDesignerLoader";
-import UnderLineInput from "../../../lib/lc-input/UnderLineInput";
+import Input from "../../../ui/input/Input";
 
 class CompList extends Component {
 
@@ -78,9 +78,9 @@ class CompList extends Component {
         setVisible && setVisible(false);
     }
 
-    searchChart = (e: any) => {
+    searchChart = (data: string | number) => {
         const {setCompKey} = compListStore;
-        setCompKey && setCompKey(e.currentTarget.value);
+        setCompKey && setCompKey(data as string);
     }
 
     render() {
@@ -88,8 +88,7 @@ class CompList extends Component {
             <FloatPanel className={'comp-list'} title={'组件列表'} onClose={this.onClose}
                         initPosition={{x: 60, y: -window.innerHeight + 50}} width={190}>
                 <div className={'list-search'}>
-                    <UnderLineInput placeholder="搜索图层" onChange={this.searchChart} containStyle={{height: 40}}
-                                    inputStyle={{height: 40, padding: '0 10px'}}/>
+                    <Input placeholder="搜索图层" onChange={this.searchChart}/>
                 </div>
                 <div className={'list-items'}>
                     {this.getChartDom()}
