@@ -5,7 +5,7 @@ import ComponentUtil from "../../../utils/ComponentUtil";
 import BaseTextComponent, {BaseTextComponentProps} from "./BaseTextComponent";
 import ObjectUtil from "../../../utils/ObjectUtil";
 
-export class BaseText extends AbstractDesignerController<BaseTextComponent, BaseTextComponentProps> {
+export class BaseTextController extends AbstractDesignerController<BaseTextComponent, BaseTextComponentProps> {
 
     async create(container: HTMLElement, config: any): Promise<this> {
         this.config = config;
@@ -23,7 +23,7 @@ export class BaseText extends AbstractDesignerController<BaseTextComponent, Base
         return this.config;
     }
 
-    update(config: BaseTextComponentProps, upOp: UpdateOptions | undefined): void {
+    update(config: BaseTextComponentProps, upOp?: UpdateOptions | undefined): void {
         this.config = ObjectUtil.merge(this.config, config);
         upOp = upOp || {reRender: true, operateType: OperateType.OPTIONS};
         if (upOp.reRender)

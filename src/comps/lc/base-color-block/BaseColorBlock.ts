@@ -23,7 +23,7 @@ export class BaseColorBlock extends AbstractDesignerController<BaseColorBlockCom
         return this.config;
     }
 
-    update(config: BaseColorBlockComponentProps, upOp: UpdateOptions | undefined): void {
+    update(config: BaseColorBlockComponentProps, upOp?: UpdateOptions | undefined): void {
         this.config = ObjectUtil.merge(this.config, config);
         upOp = upOp || {reRender: true, operateType: OperateType.OPTIONS};
         if (upOp.reRender)

@@ -7,14 +7,14 @@ import {ClazzTemplate} from "../../common-component/common-types";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import baseTextImg from './base-text.png';
 import {getDefaultMenuList} from "../../../designer/right/util";
-import {BaseText} from "./BaseText";
+import {BaseTextController} from "./BaseTextController";
 import {BaseTextComponentProps} from "./BaseTextComponent";
 import BaseInfo from "../../common-component/base-info/BaseInfo";
 import AnimationConfig from "../../common-component/animation-config/AnimationConfig";
 import ThemeConfig from "../../common-component/theme-config/ThemeConfig";
 import {BaseTextStyleConfig} from "./BaseTextConfig";
 
-export default class BaseTextDefinition extends AbstractComponentDefinition<BaseText, BaseTextComponentProps> {
+export default class BaseTextDefinition extends AbstractComponentDefinition<BaseTextController, BaseTextComponentProps> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "基础文本",
@@ -29,8 +29,8 @@ export default class BaseTextDefinition extends AbstractComponentDefinition<Base
         return baseTextImg;
     }
 
-    getComponent(): ClazzTemplate<BaseText> | null {
-        return BaseText;
+    getComponent(): ClazzTemplate<BaseTextController> | null {
+        return BaseTextController;
     }
 
     getInitConfig(): BaseTextComponentProps {

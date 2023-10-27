@@ -2,11 +2,15 @@ import React from 'react';
 import {ConfigType} from "../../../designer/right/ConfigType";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
+import {BaseTextController} from "./BaseTextController";
 
-export const BaseTextStyleConfig: React.FC<ConfigType> = ({controller}) => {
+export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({controller}) => {
+
+    const {data, style} = controller.getConfig()!;
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
-
+        const {dataFragment} = fieldChangeData;
+        controller.update(dataFragment!);
     }
 
     const schema: Control = {
@@ -14,43 +18,63 @@ export const BaseTextStyleConfig: React.FC<ConfigType> = ({controller}) => {
         config: {columns: 2},
         children: [
             {
-                type: 'input',
-                label: '内容',
-                value: '',
+                key: 'data',
+                children: [
+                    {
+                        key: 'staticData',
+                        children: [
+                            {
+                                key: 'data',
+                                type: 'input',
+                                label: '内容',
+                                value: data?.staticData?.data,
+                            },
+                        ]
+                    }
+                ]
             },
             {
-                type: 'input',
-                label: '字号',
-                value: 12,
-                config: {
-                    type: 'number',
-                    min: 0,
-                    max: 100,
-                }
-            },
-            {
-                type: 'input',
-                label: '粗细',
-                value: 500,
-                config: {
-                    type: 'number',
-                    min: 100,
-                    max: 900,
-                    step: 100
-                }
-            },
-            {
-                type: 'color-picker',
-                label: '颜色',
-                value: '#1c1c1c',
-                config: {
-                    width: '100%',
-                    radius: 3,
-                    showBorder: true,
-                    showText: true,
-                    height: 16,
-                    hideControls: true
-                }
+                key: 'style',
+                children: [
+                    {
+                        key: 'fontSize',
+                        type: 'input',
+                        label: '字号',
+                        value: style?.fontSize,
+                        config: {
+                            type: 'number',
+                            min: 100,
+                            max: 900,
+                            step: 100
+                        }
+                    },
+                    {
+                        key: 'fontWeight',
+                        type: 'input',
+                        label: '粗细',
+                        value: style?.fontWeight,
+                        config: {
+                            type: 'number',
+                            min: 100,
+                            max: 900,
+                            step: 100
+                        }
+                    },
+                    {
+                        key: 'color',
+                        type: 'color-picker',
+                        label: '颜色',
+                        value: '#1c1c1c',
+                        config: {
+                            width: '100%',
+                            radius: 3,
+                            showBorder: true,
+                            showText: true,
+                            height: 16,
+                            hideControls: true
+                        }
+                    }
+                ]
             }
         ]
     }
