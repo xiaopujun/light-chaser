@@ -27,7 +27,8 @@ interface AccordionProps {
  */
 class Accordion extends Component<AccordionProps> {
 
-    accDom: any = null;
+    accordionBodyRef: HTMLDivElement | null = null;
+    headerRef: HTMLDivElement | null = null;
     valueControl: boolean = true;
     pendingTimer: NodeJS.Timer | null = null;
 
@@ -47,50 +48,34 @@ class Accordion extends Component<AccordionProps> {
     }
 
     componentDidMount() {
-        if (!this.accDom) return;
         const {showSwitch = false, value} = this.state;
         if (!showSwitch) {
-            this.accDom.addEventListener("click", this.titleClickMode);
-            let panel = this.accDom.nextElementSibling;
-            panel.style.overflow = 'hidden';
+            //普通模式
+            this.headerRef!.addEventListener("click", this.titleClickMode);
+            this.accordionBodyRef!.style.display = 'none';
         }
         if (showSwitch && value) {
-            this.accDom.classList.toggle("accordion-active");
-            let panel = this.accDom.nextElementSibling;
-            if (panel?.style.maxHeight)
-                panel.style.maxHeight = null;
-            else
-                panel.style.maxHeight = (panel.scrollHeight || 2000) + "px";
+            //开关模式处于开启
+            this.accordionBodyRef!.style.display = 'block';
         } else {
-            let panel = this.accDom.nextElementSibling;
-            panel.style.overflow = 'hidden';
+            //开关模式处于关闭
+            this.accordionBodyRef!.style.display = 'none';
         }
     }
 
     componentWillUnmount() {
-        this.accDom.removeEventListener("click", this.titleClickMode);
+        this.headerRef?.removeEventListener("click", this.titleClickMode);
     }
 
     calculateFold = (value: boolean) => {
-        if (!this.accDom) return;
-        this.accDom.classList.toggle("accordion-active");
-        let panel = this.accDom.nextElementSibling;
+        const {showSwitch} = this.state;
+        if (!showSwitch)
+            this.headerRef!.classList.toggle("accordion-active");
         if (value) {
-            this.pendingTimer = setTimeout(() => {
-                panel.style.overflow = 'visible';
-                this.pendingTimer = null;
-            }, 200);
+            this.accordionBodyRef!.style.display = 'block';
         } else {
-            panel.style.overflow = 'hidden';
-            if (this.pendingTimer) {
-                clearTimeout(this.pendingTimer);
-                this.pendingTimer = null;
-            }
+            this.accordionBodyRef!.style.display = 'none';
         }
-        if (panel?.style.maxHeight)
-            panel.style.maxHeight = null;
-        else
-            panel.style.maxHeight = (panel.scrollHeight || 2000) + "px";
     }
 
 
@@ -119,7 +104,7 @@ class Accordion extends Component<AccordionProps> {
         const {tip} = this.props;
         return (
             <div className={'lc-accordion'}>
-                <div className="accordion-header" ref={dom => this.accDom = dom}>
+                <div className="accordion-header" ref={ref => this.headerRef = ref}>
                     <div className={'title-content'}>{label} &nbsp;
                         {tip && <Tooltip title={tip}><QuestionCircleOutlined/>&nbsp;&nbsp;</Tooltip>}</div>
                     <div className={'title-switch'}>{showSwitch ?
@@ -128,7 +113,7 @@ class Accordion extends Component<AccordionProps> {
                             onChange={this.switchChange}/> :
                         <RightOutlined className={'accordion-icon'}/>}</div>
                 </div>
-                <div className="lc-accordion-body">
+                <div className="lc-accordion-body" ref={ref => this.accordionBodyRef = ref}>
                     {this.props.children}
                 </div>
             </div>

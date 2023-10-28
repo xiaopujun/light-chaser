@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import './AxisConfig.less';
 import {Axis} from "@antv/g2plot";
 import {Types} from "@antv/g2";
@@ -9,6 +9,7 @@ import {Control} from "../../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI";
 import Accordion from "../../../../ui/accordion/Accordion";
 import Radio from "../../../../ui/radio/Radio";
+import {ShapeAttrs} from "@antv/g-base";
 
 
 interface AxisConfigProps {
@@ -362,8 +363,23 @@ export interface AxisTitleProps {
 
 export const AxisTitle: React.FC<AxisTitleProps> = ({config, onChange}) => {
 
-    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+    const [_config, setConfig] = useState<AxisTitleCfg | null>(config);
+    const [, setCount] = useState(0);
 
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+        const {id, data, dataFragment, reRender} = fieldChangeData;
+        if (id === 'titleSwitch') {
+            //处理开关
+            if (data) {
+                onChange({text: '标题', offset: 0, style: {fill: '#d2d2d2', fontSize: 12}});
+                setConfig({text: '标题', offset: 0, style: {fill: '#d2d2d2', fontSize: 12}});
+            } else {
+                onChange(null);
+                setConfig(null);
+            }
+        } else {
+            onChange(fieldChangeData.dataFragment);
+        }
     }
 
     const schema: Control = {
@@ -375,57 +391,74 @@ export const AxisTitle: React.FC<AxisTitleProps> = ({config, onChange}) => {
                 config: {columns: 2},
                 children: [
                     {
-                        key: 'enable',
+                        key: 'titleSwitch',
+                        id: 'titleSwitch',
                         type: 'switch',
                         label: '开启',
-                        value: true,
+                        reRender: true,
+                        value: !!_config,
                     },
                     {
-                        type: 'select',
-                        label: '位置',
-                        value: 'end',
-                        config: {
-                            options: [
-                                {value: 'start', label: '前'},
-                                {value: 'center', label: '中'},
-                                {value: 'end', label: '后'}]
-                        }
-                    },
-                    {
-                        type: 'input',
-                        label: '内容',
-                        value: '',
-                    },
-                    {
-                        type: 'input',
-                        label: '字号',
-                        value: 12,
-                        config: {
-                            type: 'number',
-                            min: 1,
-                            max: 50,
-                        }
-                    },
-                    {
-                        type: 'input',
-                        label: '偏移',
-                        value: 0,
-                        config: {
-                            type: 'number'
-                        }
-                    },
-                    {
-                        type: 'color-picker',
-                        label: '颜色',
-                        value: '#1c1c1c',
-                        config: {
-                            width: '100%',
-                            radius: 3,
-                            showBorder: true,
-                            showText: true,
-                            height: 16,
-                            hideControls: true
-                        }
+                        rules: "{titleSwitch} === 'true'",
+                        children: [
+                            {
+                                key: 'position',
+                                type: 'select',
+                                label: '位置',
+                                value: 'end',
+                                config: {
+                                    options: [
+                                        {value: 'start', label: '前'},
+                                        {value: 'center', label: '中'},
+                                        {value: 'end', label: '后'}]
+                                }
+                            },
+                            {
+                                key: 'text',
+                                type: 'input',
+                                label: '内容',
+                                value: '',
+                            },
+                            {
+                                key: 'offset',
+                                type: 'input',
+                                label: '偏移',
+                                value: 0,
+                                config: {
+                                    type: 'number'
+                                }
+                            },
+                            {
+                                key: 'style',
+                                children: [
+                                    {
+                                        key: 'fontSize',
+                                        type: 'input',
+                                        label: '字号',
+                                        value: 12,
+                                        config: {
+                                            type: 'number',
+                                            min: 1,
+                                            max: 50,
+                                        }
+                                    },
+                                    {
+                                        key: 'fill',
+                                        type: 'color-picker',
+                                        label: '颜色',
+                                        value: '#1c1c1c',
+                                        config: {
+                                            width: '100%',
+                                            radius: 3,
+                                            showBorder: true,
+                                            showText: true,
+                                            height: 16,
+                                            hideControls: true
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             }
@@ -444,8 +477,10 @@ export interface AxisTextProps {
 
 export const AxisText: React.FC<AxisTextProps> = ({config, onChange}) => {
 
-    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+    const {offset, style, rotate} = config;
 
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+        onChange(fieldChangeData.dataFragment);
     }
 
     const schema: Control = {
@@ -457,19 +492,10 @@ export const AxisText: React.FC<AxisTextProps> = ({config, onChange}) => {
                 config: {columns: 2},
                 children: [
                     {
-                        type: 'input',
-                        label: '字号',
-                        value: 12,
-                        config: {
-                            type: 'number',
-                            min: 1,
-                            max: 50,
-                        }
-                    },
-                    {
+                        key: 'rotate',
                         type: 'input',
                         label: '角度',
-                        value: 0,
+                        value: rotate || 0,
                         config: {
                             type: 'number',
                             min: 0,
@@ -477,25 +503,43 @@ export const AxisText: React.FC<AxisTextProps> = ({config, onChange}) => {
                         }
                     },
                     {
+                        key: 'offset',
                         type: 'input',
                         label: '偏移',
-                        value: 0,
+                        value: offset || 0,
                         config: {
                             type: 'number'
                         }
                     },
                     {
-                        type: 'color-picker',
-                        label: '颜色',
-                        value: '#1c1c1c',
-                        config: {
-                            width: '100%',
-                            radius: 3,
-                            showBorder: true,
-                            showText: true,
-                            height: 16,
-                            hideControls: true
-                        }
+                        key: 'style',
+                        children: [
+                            {
+                                key: 'fontSize',
+                                type: 'input',
+                                label: '字号',
+                                value: (style as ShapeAttrs).fontSize,
+                                config: {
+                                    type: 'number',
+                                    min: 1,
+                                    max: 50,
+                                }
+                            },
+                            {
+                                key: 'fill',
+                                type: 'color-picker',
+                                label: '颜色',
+                                value: (style as ShapeAttrs).fill,
+                                config: {
+                                    width: '100%',
+                                    radius: 3,
+                                    showBorder: true,
+                                    showText: true,
+                                    height: 16,
+                                    hideControls: true
+                                }
+                            }
+                        ]
                     }
                 ]
             }
