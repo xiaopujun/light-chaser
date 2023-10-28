@@ -9,7 +9,7 @@ export const AntdLegend = (props: ConfigType) => {
     const {legend} = controller.getConfig().style;
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
-        const {id, data, dataFragment, reRender} = fieldChangeData;
+        const {id, data, dataFragment} = fieldChangeData;
         if (id === 'legendSwitch') {
             if (data) controller.update({style: {legend}});
             else controller.update({style: {legend: false}});

@@ -91,8 +91,27 @@ export interface AxisSubTickLineProps {
 
 export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChange}) => {
 
-    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+    const [_config, setConfig] = useState<AxisSubTickLineCfg | null>(config);
 
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+        const {id, data} = fieldChangeData;
+        if (id === 'subTickLineSwitch') {
+            //处理开关
+            if (data) {
+                const defaultConfig = {
+                    count: 5,
+                    length: 1,
+                    style: {stroke: '#6e6e6e', lineWidth: 1} as ShapeAttrs
+                };
+                onChange(defaultConfig);
+                setConfig(defaultConfig);
+            } else {
+                onChange(null);
+                setConfig(null);
+            }
+        } else {
+            onChange(fieldChangeData.dataFragment);
+        }
     }
 
     const schema: Control = {
@@ -104,15 +123,18 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
                 config: {columns: 2},
                 children: [
                     {
-                        key: 'enable',
+                        key: 'subTickLineSwitch',
+                        id: 'subTickLineSwitch',
                         type: 'switch',
                         label: '开启',
-                        value: true,
+                        value: !!_config,
                     },
                     {
+                        rules: "{subTickLineSwitch}==='true'",
+                        key: 'count',
                         type: 'input',
                         label: '数量',
-                        value: 5,
+                        value: _config?.count,
                         config: {
                             type: 'number',
                             min: 0,
@@ -120,9 +142,11 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
                         }
                     },
                     {
+                        rules: "{subTickLineSwitch}==='true'",
+                        key: 'length',
                         type: 'input',
                         label: '长度',
-                        value: 2,
+                        value: _config?.length,
                         config: {
                             type: 'number',
                             min: 0,
@@ -130,27 +154,35 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
                         }
                     },
                     {
-                        type: 'input',
-                        label: '宽度',
-                        value: 1,
-                        config: {
-                            type: 'number',
-                            min: 0,
-                            max: 10,
-                        }
-                    },
-                    {
-                        type: 'color-picker',
-                        label: '颜色',
-                        value: '#1c1c1c',
-                        config: {
-                            width: '100%',
-                            radius: 3,
-                            showBorder: true,
-                            showText: true,
-                            height: 16,
-                            hideControls: true
-                        }
+                        rules: "{subTickLineSwitch}==='true'",
+                        key: 'style',
+                        children: [
+                            {
+                                key: 'lineWidth',
+                                type: 'input',
+                                label: '宽度',
+                                value: (_config?.style as ShapeAttrs)?.lineWidth,
+                                config: {
+                                    type: 'number',
+                                    min: 0,
+                                    max: 10,
+                                }
+                            },
+                            {
+                                key: 'stroke',
+                                type: 'color-picker',
+                                label: '颜色',
+                                value: (_config?.style as ShapeAttrs)?.stroke,
+                                config: {
+                                    width: '100%',
+                                    radius: 3,
+                                    showBorder: true,
+                                    showText: true,
+                                    height: 16,
+                                    hideControls: true
+                                }
+                            }
+                        ]
                     }
                 ]
             }
@@ -170,8 +202,27 @@ export interface AxisTickLineProps {
 
 export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) => {
 
-    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+    const [_config, setConfig] = useState<AxisTickLineCfg | null>(config);
 
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+        const {id, data} = fieldChangeData;
+        if (id === 'tickLineSwitch') {
+            //处理开关
+            if (data) {
+                const defaultConfig = {
+                    alignTick: true,
+                    length: 1,
+                    style: {stroke: '#6e6e6e', lineWidth: 1} as ShapeAttrs
+                };
+                onChange(defaultConfig);
+                setConfig(defaultConfig);
+            } else {
+                onChange(null);
+                setConfig(null);
+            }
+        } else {
+            onChange(fieldChangeData.dataFragment);
+        }
     }
     const schema: Control = {
         type: 'item-panel',
@@ -182,20 +233,25 @@ export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) =>
                 config: {columns: 2},
                 children: [
                     {
-                        key: 'enable',
+                        key: 'tickLineSwitch',
+                        id: 'tickLineSwitch',
                         type: 'switch',
                         label: '开启',
-                        value: true,
+                        value: !!_config,
                     },
                     {
+                        key: 'alignTick',
+                        rules: "{tickLineSwitch}==='true'",
                         type: 'switch',
                         label: '对齐',
-                        value: true,
+                        value: (_config as AxisTickLineCfg)?.alignTick,
                     },
                     {
+                        key: 'length',
+                        rules: "{tickLineSwitch}==='true'",
                         type: 'input',
                         label: '长度',
-                        value: 5,
+                        value: (_config as AxisTickLineCfg)?.length,
                         config: {
                             type: 'number',
                             min: 0,
@@ -203,27 +259,35 @@ export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) =>
                         }
                     },
                     {
-                        type: 'input',
-                        label: '宽度',
-                        value: 2,
-                        config: {
-                            type: 'number',
-                            min: 0,
-                            max: 10,
-                        }
-                    },
-                    {
-                        type: 'color-picker',
-                        label: '颜色',
-                        value: '#1c1c1c',
-                        config: {
-                            width: '100%',
-                            radius: 3,
-                            showBorder: true,
-                            showText: true,
-                            height: 16,
-                            hideControls: true
-                        }
+                        key: 'style',
+                        rules: "{tickLineSwitch}==='true'",
+                        children: [
+                            {
+                                key: 'lineWidth',
+                                type: 'input',
+                                label: '宽度',
+                                value: (_config?.style as ShapeAttrs)?.lineWidth,
+                                config: {
+                                    type: 'number',
+                                    min: 0,
+                                    max: 10,
+                                }
+                            },
+                            {
+                                key: 'stroke',
+                                type: 'color-picker',
+                                label: '颜色',
+                                value: (_config?.style as ShapeAttrs)?.stroke,
+                                config: {
+                                    width: '100%',
+                                    radius: 3,
+                                    showBorder: true,
+                                    showText: true,
+                                    height: 16,
+                                    hideControls: true
+                                }
+                            }
+                        ]
                     }
                 ]
             }
@@ -242,8 +306,26 @@ export interface AxisGridLineProps {
 
 export const AxisGridLine: React.FC<AxisGridLineProps> = ({config, onChange}) => {
 
-    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+    const [_config, setConfig] = useState<AxisGridCfg | null>(config);
 
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+        const {id, data} = fieldChangeData;
+        if (id === 'gridLineSwitch') {
+            //处理开关
+            if (data) {
+                const defaultConfig = {
+                    alignTick: true,
+                    line: {style: {stroke: '#5c5c5c', lineWidth: 1} as ShapeAttrs}
+                }
+                onChange(defaultConfig);
+                setConfig(defaultConfig);
+            } else {
+                onChange(null);
+                setConfig(null);
+            }
+        } else {
+            onChange(fieldChangeData.dataFragment);
+        }
     }
 
     const schema: Control = {
@@ -255,38 +337,54 @@ export const AxisGridLine: React.FC<AxisGridLineProps> = ({config, onChange}) =>
                 config: {columns: 2},
                 children: [
                     {
-                        key: 'enable',
+                        key: 'gridLineSwitch',
+                        id: 'gridLineSwitch',
                         type: 'switch',
                         label: '开启',
-                        value: true,
+                        value: !!_config,
                     },
                     {
+                        rules: "{gridLineSwitch} === 'true'",
+                        key: 'alignTick',
                         type: 'switch',
                         label: '对齐',
-                        value: true,
+                        value: _config?.alignTick,
                     },
                     {
-                        type: 'input',
-                        label: '宽度',
-                        value: 2,
-                        config: {
-                            type: 'number',
-                            min: 0,
-                            max: 10,
-                        }
-                    },
-                    {
-                        type: 'color-picker',
-                        label: '颜色',
-                        value: '#1c1c1c',
-                        config: {
-                            width: '100%',
-                            radius: 3,
-                            showBorder: true,
-                            showText: true,
-                            height: 16,
-                            hideControls: true
-                        }
+                        rules: "{gridLineSwitch} === 'true'",
+                        key: 'line',
+                        children: [
+                            {
+                                key: 'style',
+                                children: [
+                                    {
+                                        key: 'lineWidth',
+                                        type: 'input',
+                                        label: '宽度',
+                                        value: (_config?.line?.style as ShapeAttrs)?.lineWidth,
+                                        config: {
+                                            type: 'number',
+                                            min: 0,
+                                            max: 10,
+                                        }
+                                    },
+                                    {
+                                        key: 'stroke',
+                                        type: 'color-picker',
+                                        label: '颜色',
+                                        value: (_config?.line?.style as ShapeAttrs)?.stroke,
+                                        config: {
+                                            width: '100%',
+                                            radius: 3,
+                                            showBorder: true,
+                                            showText: true,
+                                            height: 16,
+                                            hideControls: true
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             }
@@ -305,8 +403,22 @@ export interface AxisLIneProps {
 
 export const AxisLine: React.FC<AxisLIneProps> = ({config, onChange}) => {
 
-    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+    const [_config, setConfig] = useState<AxisTitleCfg | null>(config);
 
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+        const {id, data} = fieldChangeData;
+        if (id === 'lineSwitch') {
+            //处理开关
+            if (data) {
+                onChange({style: {stroke: '#595959', lineWidth: 1}});
+                setConfig({style: {stroke: '#595959', lineWidth: 1}});
+            } else {
+                onChange(null);
+                setConfig(null);
+            }
+        } else {
+            onChange(fieldChangeData.dataFragment);
+        }
     }
 
     const schema: Control = {
@@ -318,33 +430,42 @@ export const AxisLine: React.FC<AxisLIneProps> = ({config, onChange}) => {
                 config: {columns: 2},
                 children: [
                     {
-                        key: 'enable',
+                        key: 'lineSwitch',
+                        id: 'lineSwitch',
                         type: 'switch',
                         label: '开启',
-                        value: true,
+                        value: !!_config,
                     },
                     {
-                        type: 'input',
-                        label: '宽度',
-                        value: 2,
-                        config: {
-                            type: 'number',
-                            min: 0,
-                            max: 10,
-                        }
-                    },
-                    {
-                        type: 'color-picker',
-                        label: '颜色',
-                        value: '#1c1c1c',
-                        config: {
-                            width: '100%',
-                            radius: 3,
-                            showBorder: true,
-                            showText: true,
-                            height: 16,
-                            hideControls: true
-                        }
+                        key: 'style',
+                        rules: "{lineSwitch} === 'true'",
+                        children: [
+                            {
+                                key: 'lineWidth',
+                                type: 'input',
+                                label: '宽度',
+                                value: _config?.style?.lineWidth || 1,
+                                config: {
+                                    type: 'number',
+                                    min: 0,
+                                    max: 10,
+                                }
+                            },
+                            {
+                                key: 'stroke',
+                                type: 'color-picker',
+                                label: '颜色',
+                                value: _config?.style?.stroke || '#595959',
+                                config: {
+                                    width: '100%',
+                                    radius: 3,
+                                    showBorder: true,
+                                    showText: true,
+                                    height: 16,
+                                    hideControls: true
+                                }
+                            }
+                        ]
                     }
                 ]
             }
@@ -364,10 +485,9 @@ export interface AxisTitleProps {
 export const AxisTitle: React.FC<AxisTitleProps> = ({config, onChange}) => {
 
     const [_config, setConfig] = useState<AxisTitleCfg | null>(config);
-    const [, setCount] = useState(0);
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
-        const {id, data, dataFragment, reRender} = fieldChangeData;
+        const {id, data} = fieldChangeData;
         if (id === 'titleSwitch') {
             //处理开关
             if (data) {
@@ -405,7 +525,7 @@ export const AxisTitle: React.FC<AxisTitleProps> = ({config, onChange}) => {
                                 key: 'position',
                                 type: 'select',
                                 label: '位置',
-                                value: 'end',
+                                value: _config?.position || 'center',
                                 config: {
                                     options: [
                                         {value: 'start', label: '前'},
@@ -417,13 +537,13 @@ export const AxisTitle: React.FC<AxisTitleProps> = ({config, onChange}) => {
                                 key: 'text',
                                 type: 'input',
                                 label: '内容',
-                                value: '',
+                                value: _config?.text || '标题',
                             },
                             {
                                 key: 'offset',
                                 type: 'input',
                                 label: '偏移',
-                                value: 0,
+                                value: _config?.offset || 0,
                                 config: {
                                     type: 'number'
                                 }
@@ -477,7 +597,7 @@ export interface AxisTextProps {
 
 export const AxisText: React.FC<AxisTextProps> = ({config, onChange}) => {
 
-    const {offset, style, rotate} = config;
+    const {offset, style, rotate} = config || {};
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
         onChange(fieldChangeData.dataFragment);
@@ -518,7 +638,7 @@ export const AxisText: React.FC<AxisTextProps> = ({config, onChange}) => {
                                 key: 'fontSize',
                                 type: 'input',
                                 label: '字号',
-                                value: (style as ShapeAttrs).fontSize,
+                                value: (style as ShapeAttrs)?.fontSize || 12,
                                 config: {
                                     type: 'number',
                                     min: 1,
@@ -529,7 +649,7 @@ export const AxisText: React.FC<AxisTextProps> = ({config, onChange}) => {
                                 key: 'fill',
                                 type: 'color-picker',
                                 label: '颜色',
-                                value: (style as ShapeAttrs).fill,
+                                value: (style as ShapeAttrs)?.fill || '#1c1c1c',
                                 config: {
                                     width: '100%',
                                     radius: 3,
