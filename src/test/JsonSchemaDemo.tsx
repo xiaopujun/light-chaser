@@ -4,6 +4,7 @@ import {FieldChangeData, LCGUI} from "../json-schema/LCGUI";
 import LCGUIUtil from "../json-schema/LCGUIUtil";
 import './DemoMain.less'
 import {ImageUpload} from "../ui/imag-upload/ImageUpload";
+import ColorMode from "../ui/color-mode/ColorMode";
 
 
 class JsonSchemaDemo extends Component {
@@ -202,6 +203,10 @@ class JsonSchemaDemo extends Component {
             <div style={{width: 400, height: 800, background: "#333333", padding: 10}}>
                 <LCGUI schema={this.testSchema} onFieldChange={this.onChange}/>
                 <ImageUpload label={'上传'} tip={'测试上传'}/>
+                <ColorMode label={'演示模式'} tip={'嘿嘿'} defaultValue={['#fff']}
+                           onChange={(value => console.log('颜色模式', value))}/>
+
+
                 {/*<div style={{display: 'grid', gridGap: 15}}>*/}
                 {/*    <Input label={'频率'} tip={'牛逼克拉斯'} prefix={'每'} suffix={'s'}/>*/}
                 {/*    <Input label={'速度'} tip={'牛逼克拉斯'} suffix={'m/s'}/>*/}

@@ -7,7 +7,6 @@ interface ColorsPickerProp extends UIContainerProps {
     value?: string[];
     defaultValue?: string[];
     canAdd?: boolean;
-    containerStyle?: React.CSSProperties;
     onChange?: (data: string[]) => void;
 }
 
@@ -26,7 +25,7 @@ class ColorsPicker extends Component<ColorsPickerProp> {
         super(props);
         const {value = [], canAdd} = props;
         if (value.length === 0) {
-            this.state = {colors: ['#00e9ff']};
+            this.state = {colors: ['#252525']};
             return;
         }
         this.state = {colors: [...value], canAdd: canAdd && value.length < this.max};
@@ -45,7 +44,7 @@ class ColorsPicker extends Component<ColorsPickerProp> {
         let {colors} = this.state;
         if (colors.length >= this.max)
             return;
-        colors.push('#00e9ff');
+        colors.push('#252525');
         if (colors.length === this.max)
             this.setState({canAdd: false, colors});
         else
@@ -67,15 +66,10 @@ class ColorsPicker extends Component<ColorsPickerProp> {
 
     render() {
         const {colors = [], canAdd = false} = this.state;
-        const {containerStyle, label, tip} = this.props;
-        const _style: React.CSSProperties = {
-            display: "flex",
-            flexDirection: "row",
-            ...containerStyle
-        }
+        const {label, tip} = this.props;
         return (
             <UIContainer tip={tip} label={label}>
-                <div className={'colors-picker'} style={{..._style}}>
+                <div className={'colors-picker'}>
                     {colors.map((item: string, i: number) => {
                         return (
                             <div className={"colors-item"} key={i + ''}>

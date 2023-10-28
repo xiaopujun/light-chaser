@@ -3,135 +3,98 @@ import './ColorMode.less';
 import ColorPicker from "../color-picker/ColorPicker";
 import Select from "../select/Select";
 import ColorsPicker from "../colors-picker/ColorsPicker";
-import Input from "../input/Input";
+import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
 
-
-export enum ColorModeType {
-    SINGLE = 'single',
-    MULTI = 'multi',
-    LINER_GRADIENT = 'liner_gradient',
-    RADIAL_GRADIENT = 'radial_gradient',
-}
+export type ColorModeType = 'general' | 'multi';
 
 export interface ColorModeValue {
-    mode: string;
-    value: string | string[];
-    angle?: number;
+    mode: ColorModeType;
+    color: string | string[];
 }
 
-export interface ColorModeProps {
-    data?: ColorModeValue
-    exclude?: string[];
-
-    onChange?(data: ColorModeValue): void;
+export interface ColorModeProps extends UIContainerProps {
+    value?: string | string[];
+    defaultValue?: string | string[];
+    onChange?: (value: string | string[]) => void;
 }
 
-class ColorMode extends Component<ColorModeProps, ColorModeValue> {
+class ColorMode extends Component<ColorModeProps> {
 
-    singleValue: string = '#fff';
-    multiValue: string[] = ['#fff'];
-    gradientValue: string[] = ['#fff', '#fff'];
-    angle: number = 0;
-
-    state: ColorModeValue = {
-        value: '',
-        mode: '',
-    }
+    _generalValue: string = '#252525';
+    _multiValue: string[] = ['#252525'];
+    controlled: boolean = false;
+    state: { value: string | string[] } = {value: '#252525'}
 
     constructor(props: ColorModeProps) {
         super(props);
-        const {mode = ColorModeType.SINGLE, value = "#fff", angle = 0} = props.data!;
-        this.state = {mode, value};
-        this.angle = angle;
-        if (mode === ColorModeType.MULTI)
-            this.multiValue = value as string[];
-        else if (mode === ColorModeType.LINER_GRADIENT || mode === ColorModeType.RADIAL_GRADIENT)
-            this.gradientValue = value as string[];
+        const {value, defaultValue} = props!;
+        this.controlled = !!value && !defaultValue;
+        const _value = value || defaultValue || '#000000';
+        this.state = {value: _value}
     }
 
     modeChange = (_mode: string) => {
         let {value} = this.state;
         switch (_mode) {
-            case ColorModeType.SINGLE:
-                value = this.singleValue;
+            case 'general':
+                value = this._generalValue;
                 break;
-            case ColorModeType.MULTI:
-                value = this.multiValue;
-                break;
-            case ColorModeType.LINER_GRADIENT:
-                value = this.gradientValue;
-                break;
-            case ColorModeType.RADIAL_GRADIENT:
-                value = this.gradientValue;
+            case 'multi':
+                value = this._multiValue;
                 break;
         }
-        this.setState({mode: _mode, value});
-        const {onChange} = this.props;
-        onChange && onChange({mode: _mode, value});
+        if (this.controlled) {
+            const {onChange} = this.props;
+            onChange && onChange(value);
+        }
+        this.setState({value});
     }
 
-    colorChange = (_value: string | string[]) => {
-        const {mode} = this.state;
-        this.setState({value: _value});
-        const {onChange} = this.props;
-        onChange && onChange({mode, value: _value, angle: this.angle});
+    colorChange = (value: string | string[]) => {
+        this.setState({value});
+        if (this.controlled) {
+            const {onChange} = this.props;
+            onChange && onChange(value);
+        }
+    }
+
+    buildColorModeValue = (color: string | string[]) => {
+        if (Array.isArray(color))
+            return {color, mode: 'multi'};
+        else
+            return {color, mode: 'general'};
     }
 
     render() {
-        const {mode, value} = this.state;
-        const {exclude} = this.props;
-        const modeOptions = [
-            {value: ColorModeType.SINGLE, label: '单色'},
-            {value: ColorModeType.MULTI, label: '多色'},
-            {value: ColorModeType.LINER_GRADIENT, label: '线性'},
-            {value: ColorModeType.RADIAL_GRADIENT, label: '径向'},
-        ].filter(item => !exclude?.includes(item.value));
+        const {value: stateValue} = this.state;
+        const {padding, margin, tip, label, value: propValue} = this.props;
+        const {color, mode} = this.buildColorModeValue(this.controlled ? propValue! : stateValue);
         return (
-            <div className={"lc-color-mode"}>
-                <div className={'mode-select'} style={{width: 70}}>
-                    <Select defaultValue={mode || ColorModeType.SINGLE}
-                            onChange={this.modeChange}
-                            options={modeOptions}/>
-                </div>
-                {
-                    mode === ColorModeType.SINGLE &&
-                    <ColorPicker
-                        defaultValue={value as string}
-                        onChange={this.colorChange}
-                        // style={{width: '100px', height: '15px', borderRadius: 2}}
-                        showText={true}/>
-                }
-                {mode === ColorModeType.MULTI && <ColorsPicker onChange={this.colorChange} canAdd={true}
-                                                               containerStyle={{width: 'calc(100% - 30px)'}}
-                                                               value={(value as string[]) || ['#00bcff']}/>}
-                {(mode === ColorModeType.LINER_GRADIENT ||
-                    mode === ColorModeType.RADIAL_GRADIENT) &&
-                <div style={{display: 'flex', alignItems: 'center'}}>
-                    <ColorPicker showText={true}
-                                 onChange={(value) => {
-                                     this.gradientValue[0] = value;
-                                     this.colorChange(this.gradientValue);
-                                 }}
-                        // style={{width: '80px', height: '15px', borderRadius: 2}}
-                                 defaultValue={(value as string[])[0]}/>
-                    &nbsp;
-                    <ColorPicker showText={true}
-                        // style={{width: '80px', height: '15px', borderRadius: 2}}
-                                 onChange={(value) => {
-                                     this.gradientValue[1] = value;
-                                     this.colorChange(this.gradientValue);
-                                 }}
-                                 defaultValue={(value as string[])[1]}/>
-                    &nbsp;
+            <UIContainer tip={tip} label={label} margin={margin} padding={padding}>
+                <div className={"lc-color-mode"}>
+                    <div className={'mode-select'} style={{width: 80}}>
+                        <Select value={mode || 'general'}
+                                onChange={(mode: string) => this.modeChange(mode as ColorModeType)}
+                                options={[
+                                    {value: 'general', label: '单色&渐变'},
+                                    {value: 'multi', label: '多色'},
+                                ]}/>
+                    </div>
                     {
-                        mode === ColorModeType.LINER_GRADIENT &&
-                        <Input type={'number'} defaultValue={this.angle} onChange={(value) => {
-                            this.angle = value as number;
-                            this.colorChange(this.gradientValue);
-                        }}/>
+                        mode === 'general' &&
+                        <ColorPicker
+                            value={color as string}
+                            onChange={this.colorChange}
+                            width={100}
+                            showBorder={true}
+                            radius={2}
+                            showText={true}/>
                     }
-                </div>}
-            </div>
+                    {mode === 'multi' &&
+                    <ColorsPicker onChange={this.colorChange} canAdd={true}
+                                  value={(color as string[]) || ['#252525']}/>}
+                </div>
+            </UIContainer>
         );
     }
 }

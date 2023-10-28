@@ -63,7 +63,8 @@ class ColorPicker extends Component<ColorPickerProps> {
             <UIContainer tip={tip} label={label} className={'lc-color-pick'}>
                 <Popover content={(disabled ? null :
                     <div style={{padding: 4}}>
-                        <GradientColorPicker value={color} onChange={this.onChangeComplete} hideControls/>
+                        <GradientColorPicker value={color} onChange={this.onChangeComplete}
+                                             hideControls={hideControls}/>
                     </div>)} trigger={'click'}>
                     <div className={`${showBorder && 'color-picker-border'}`} style={{..._style}}>
                         <div style={{background: `${color}`, ..._style}}
