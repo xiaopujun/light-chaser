@@ -11,6 +11,7 @@ import Switch from "./switch/Switch";
 import {ItemPanel} from "./item-panel/ItemPanel";
 import {Slider} from "./slider/Slider";
 import {ImageUpload} from "./imag-upload/ImageUpload";
+import ColorMode from "./color-mode/ColorMode";
 
 const UIMap = new Map();
 
@@ -24,6 +25,7 @@ UIMap.set('switch', Switch);
 UIMap.set('code-editor', MonacoEditor);
 UIMap.set('color-picker', ColorPicker);
 UIMap.set('colors-picker', ColorsPicker);
+UIMap.set('color-mode', ColorMode);
 UIMap.set('item-panel', ItemPanel);
 UIMap.set('slider', Slider);
 UIMap.set('image-upload', ImageUpload);

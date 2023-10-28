@@ -26,7 +26,7 @@ export default class AntdRoseCommonStyleConfig extends Component<ConfigType> {
         const roseConfig = controller.getConfig()!.style as RoseOptions;
         return (
             <>
-                <AntdLegend onChange={this.legendChange} config={roseConfig.legend}/>
+                <AntdLegend controller={controller}/>
                 <AntdRoseGraphicsConfig onChange={this.roseGraphicsChange} config={roseConfig}/>
             </>
         );

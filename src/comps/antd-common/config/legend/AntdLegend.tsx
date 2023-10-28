@@ -2,32 +2,37 @@ import React from 'react';
 import './Legend.less';
 import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI";
 import {Control} from "../../../../json-schema/SchemaTypes";
-import {Legend} from "@antv/g2plot/lib/types/legend";
+import {ConfigType} from "../../../../designer/right/ConfigType";
 
-
-export interface AntdLegendProps {
-    config?: Legend;
-
-    onChange(config: Legend): void;
-}
-
-export const AntdLegend = (props: AntdLegendProps) => {
+export const AntdLegend = (props: ConfigType) => {
+    const {controller} = props;
+    const {legend} = controller.getConfig().style;
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
-
+        const {id, data, dataFragment, reRender} = fieldChangeData;
+        if (id === 'legendSwitch') {
+            if (data) controller.update({style: {legend}});
+            else controller.update({style: {legend: false}});
+        } else {
+            controller.update(dataFragment);
+        }
     }
 
     const schema: Control = {
+        key: 'style',
+        id: 'legendSwitch',
         type: 'accordion',
         label: '图例',
         config: {showSwitch: true},
-        value: true,
+        value: !!legend,
         children: [
             {
+                key: 'legend',
                 type: 'grid',
                 config: {columns: 2},
                 children: [
                     {
+                        key: 'position',
                         type: 'select',
                         label: '位置',
                         value: 'left-top',
@@ -49,6 +54,7 @@ export const AntdLegend = (props: AntdLegendProps) => {
                         }
                     },
                     {
+                        key: 'layout',
                         type: 'select',
                         label: '方向',
                         value: 'horizontal',
@@ -60,27 +66,39 @@ export const AntdLegend = (props: AntdLegendProps) => {
                         }
                     },
                     {
-                        type: 'input',
-                        label: '字号',
-                        value: 12,
-                        config: {
-                            type: 'number',
-                            min: 0,
-                            max: 100,
-                        }
-                    },
-                    {
-                        type: 'color-picker',
-                        label: '颜色',
-                        value: '#1c1c1c',
-                        config: {
-                            width: '100%',
-                            radius: 3,
-                            showBorder: true,
-                            showText: true,
-                            height: 16,
-                            hideControls: true
-                        }
+                        key: 'itemName',
+                        children: [
+                            {
+                                key: 'style',
+                                children: [
+                                    {
+                                        key: 'fontSize',
+                                        type: 'input',
+                                        label: '字号',
+                                        value: 12,
+                                        config: {
+                                            type: 'number',
+                                            min: 0,
+                                            max: 100,
+                                        }
+                                    },
+                                    {
+                                        key: 'fill',
+                                        type: 'color-picker',
+                                        label: '颜色',
+                                        value: '#1c1c1c',
+                                        config: {
+                                            width: '100%',
+                                            radius: 3,
+                                            showBorder: true,
+                                            showText: true,
+                                            height: 16,
+                                            hideControls: true
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             }

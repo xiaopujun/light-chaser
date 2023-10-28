@@ -32,7 +32,7 @@ class AntdLineCommonStyleConfig extends Component<ConfigType> {
         return (
             <>
                 {/*<AntdLineGraphics onChange={this.lineGraphicsChange} config={config}/>*/}
-                <AntdLegend onChange={this.legendChange} config={config.legend}/>
+                <AntdLegend controller={controller}/>
                 <AntdCartesianCoordinateSys onChange={this.lineCoordinateSysChange} config={config}/>
             </>
         );

@@ -35,7 +35,7 @@ class AntdScatterCommonStyleConfig extends Component<ConfigType> {
         return (
             <>
                 <AntdCommonScatterGraphics config={config} onChange={this.scatterGraphicsChange}/>
-                <AntdLegend onChange={this.legendChange} config={config.legend}/>
+                <AntdLegend controller={controller}/>
                 <AntdCartesianCoordinateSys onChange={this.scatterCoordinateSysChange} config={config}/>
             </>
         );

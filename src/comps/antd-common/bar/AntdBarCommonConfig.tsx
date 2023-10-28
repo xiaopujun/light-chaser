@@ -4,13 +4,12 @@ import {AntdCartesianCoordinateSys} from "../config/AntdFragment";
 import {BarOptions} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import AntdCommonBar from "./AntdCommonBar";
-import {WritableBarOptions} from "../types";
 import {Control} from "../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {AntdLegend} from "../config/legend/AntdLegend";
 import {Option} from "../../../ui/select/SelectType";
 
-class AntdBarCommonStyleConfig extends Component<ConfigType> {
+class AntdBarCommonStyleConfig extends Component<ConfigType<AntdCommonBar>> {
 
     legendChange = (legend: Legend) => {
         const controller = this.props.controller as AntdCommonBar;
@@ -29,11 +28,11 @@ class AntdBarCommonStyleConfig extends Component<ConfigType> {
 
     render() {
         const {controller} = this.props;
-        const config: BarOptions = controller.getConfig().style;
+        const config = controller.getConfig()!.style!;
         return (
             <>
-                <AntdBarGraphics onChange={this.barGraphicsChange} config={config}/>
-                <AntdLegend onChange={this.legendChange} config={config.legend}/>
+                <AntdBarGraphics controller={controller}/>
+                <AntdLegend controller={controller}/>
                 <AntdCartesianCoordinateSys onChange={this.barCoordinateSysChange} config={config}/>
             </>
         );
@@ -43,82 +42,56 @@ class AntdBarCommonStyleConfig extends Component<ConfigType> {
 export {AntdBarCommonStyleConfig};
 
 
-export interface AntdBarGraphicsProps {
-    config?: WritableBarOptions;
+export const AntdBarGraphics: React.FC<ConfigType<AntdCommonBar>> = ({controller}) => {
 
-    onChange(config: WritableBarOptions): void;
-}
-
-export const AntdBarGraphics: React.FC<AntdBarGraphicsProps> = ({config, onChange}) => {
-
-    // const barColorChange = (data: ColorModeValue) => {
-    //     const {mode, value} = data;
-    //     switch (mode) {
-    //         case 'single':
-    //             onChange({barStyle: {fill: value as string}});
-    //             break;
-    //         case 'multi':
-    //             onChange({color: value, barStyle: {fill: undefined}});
-    //             break;
-    //         case 'gradient':
-    //             onChange({barStyle: {fill: `l(0) 0:${value[0]} 1:${value[1]}`}});
-    //             break;
-    //     }
-    // }
-    //
-    // const buildColorModeData = (): ColorModeValue => {
-    //     let mode = 'single', value: string | string[] = '#fff';
-    //     if ((config?.barStyle as ShapeAttrs)?.fill) {
-    //         const fill = (config?.barStyle as ShapeAttrs).fill as string;
-    //         if (fill.startsWith('l')) {
-    //             mode = 'gradient';
-    //             value = [fill.split(':')[1].split(' ')[0], fill.split(':')[2].split(' ')[0]];
-    //         } else {
-    //             mode = 'single';
-    //             value = fill;
-    //         }
-    //     } else if (config?.color) {
-    //         mode = 'multi';
-    //         value = config?.color as string[];
-    //     }
-    //     return {mode, value};
-    // }
-
+    const config = controller.getConfig()!.style!;
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
-
+        const {id, data, dataFragment} = fieldChangeData;
+        if (id === 'barColor') {
+            if (data && Array.isArray(data)) {
+                controller.update({style: {color: data as any, barStyle: {fill: undefined}}});
+            } else if (data && typeof data === 'string' && data.indexOf('gradient') !== -1) {
+                //渐变
+            } else {
+                controller.update({style: {barStyle: {fill: data as string}}});
+            }
+        } else {
+            controller.update(dataFragment);
+        }
     }
 
     const schema: Control = {
+        key: 'style',
         type: 'accordion',
         label: '图形',
         children: [
             {
                 type: 'grid',
-                config: {columns: 2},
+                config: {columns: 2, margin: '0 0 7px 0'},
                 children: [
                     {
+                        key: 'maxBarWidth',
                         type: 'input',
                         label: '宽度',
-                        value: 12,
+                        value: config?.maxBarWidth,
                         config: {
+                            width: 80,
                             type: 'number',
-                            min: 0,
+                            min: 1,
                             max: 100,
                         }
                     },
+                ]
+            },
+            {
+                type: 'grid',
+                children: [
                     {
-                        type: 'color-picker',
+                        id: 'barColor',
+                        type: 'color-mode',
                         label: '颜色',
                         value: '#1c1c1c',
-                        config: {
-                            width: '100%',
-                            radius: 3,
-                            showBorder: true,
-                            showText: true,
-                            height: 16,
-                            hideControls: true
-                        }
                     }
                 ]
             }

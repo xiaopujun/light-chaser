@@ -43,18 +43,18 @@ class ColorMode extends Component<ColorModeProps> {
                 value = this._multiValue;
                 break;
         }
-        if (this.controlled) {
-            const {onChange} = this.props;
-            onChange && onChange(value);
+        const {onChange} = this.props;
+        onChange && onChange(value);
+        if (!this.controlled) {
+            this.setState({value});
         }
-        this.setState({value});
     }
 
     colorChange = (value: string | string[]) => {
-        this.setState({value});
-        if (this.controlled) {
-            const {onChange} = this.props;
-            onChange && onChange(value);
+        const {onChange} = this.props;
+        onChange && onChange(value);
+        if (!this.controlled) {
+            this.setState({value});
         }
     }
 
@@ -92,7 +92,7 @@ class ColorMode extends Component<ColorModeProps> {
                     }
                     {mode === 'multi' &&
                     <ColorsPicker onChange={this.colorChange} canAdd={true}
-                                  value={(color as string[]) || ['#252525']}/>}
+                                  value={(color as string[]) || ['#a9a9a9']}/>}
                 </div>
             </UIContainer>
         );

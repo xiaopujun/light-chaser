@@ -34,7 +34,7 @@ class AntdAreaCommonStyleConfig extends Component<ConfigType> {
         return (
             <>
                 <AntdCommonAreaGraphics config={config} onChange={this.areaGraphicsChange}/>
-                <AntdLegend onChange={this.legendChange} config={config.legend}/>
+                <AntdLegend controller={controller}/>
                 <AntdCartesianCoordinateSys onChange={this.areaCoordinateSysChange} config={config}/>
             </>
         );

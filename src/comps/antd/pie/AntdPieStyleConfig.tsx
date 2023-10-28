@@ -27,7 +27,7 @@ export default class AntdPieStyleConfig extends Component<ConfigType> {
         const pieConfig = controller.getConfig()!.style as PieOptions;
         return (
             <>
-                <AntdLegend onChange={this.legendChange} config={pieConfig.legend}/>
+                <AntdLegend controller={controller}/>
                 <AntdPieGraphicsConfig onChange={this.pieGraphicsChange} config={pieConfig}/>
             </>
         );

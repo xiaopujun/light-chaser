@@ -34,7 +34,7 @@ class AntdColumnCommonStyleConfig extends Component<ConfigType> {
         return (
             <>
                 <AntdColumnGraphics onChange={this.barGraphicsChange} config={config}/>
-                <AntdLegend onChange={this.legendChange} config={config.legend}/>
+                <AntdLegend controller={controller}/>
                 <AntdCartesianCoordinateSys onChange={this.barCoordinateSysChange} config={config}/>
             </>
         );

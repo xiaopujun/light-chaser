@@ -15,6 +15,7 @@ export type UIType =
     "code-editor" |
     "color-picker" |
     "colors-picker" |
+    "color-mode" |
     "image-upload" |
     "item-panel";
 
