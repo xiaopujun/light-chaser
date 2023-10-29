@@ -10,12 +10,13 @@ export interface UIContainerProps {
     children?: React.ReactNode;
     padding?: string | number;
     margin?: string | number;
+    gridColumn?: string;
 }
 
 export const UIContainer: React.FC<UIContainerProps> = (props) => {
-    const {label, tip, children, className, margin, padding} = props;
+    const {label, tip, children, className, ...rest} = props;
     return (
-        <div className={`ui-container ${className || ''}`} style={{margin, padding}}>
+        <div className={`ui-container ${className || ''}`} style={{...rest}}>
             {label &&
             <div className={'ui-container-label'}>
                 <div>{label}</div>

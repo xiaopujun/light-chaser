@@ -8,6 +8,7 @@ import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerCont
 import AntdCommonUtil from "../../antd-common/AntdCommonUtil";
 import {Control} from "../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
+import {AntdLineCommonGraphics} from "../../antd-common/line/AntdLineCommonConfig";
 
 class AntdStepLineStyleConfig extends Component<ConfigType> {
 
@@ -26,7 +27,7 @@ class AntdStepLineStyleConfig extends Component<ConfigType> {
         const config: LineOptions = controller.getConfig().style;
         return (
             <>
-                {/*<AntdStepLineGraphics onChange={this.lineGraphicsChange} config={config}/>*/}
+                <AntdLineCommonGraphics onChange={this.lineGraphicsChange} config={config}/>
                 <AntdCartesianCoordinateSys onChange={this.lineCoordinateSysChange} config={config}/>
             </>
         );

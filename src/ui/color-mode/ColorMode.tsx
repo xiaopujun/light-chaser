@@ -67,10 +67,10 @@ class ColorMode extends Component<ColorModeProps> {
 
     render() {
         const {value: stateValue} = this.state;
-        const {padding, margin, tip, label, value: propValue} = this.props;
+        const {padding, margin, tip, label, value: propValue, gridColumn} = this.props;
         const {color, mode} = this.buildColorModeValue(this.controlled ? propValue! : stateValue);
         return (
-            <UIContainer tip={tip} label={label} margin={margin} padding={padding}>
+            <UIContainer tip={tip} label={label} margin={margin} padding={padding} gridColumn={gridColumn}>
                 <div className={"lc-color-mode"}>
                     <div className={'mode-select'} style={{width: 80}}>
                         <Select value={mode || 'general'}

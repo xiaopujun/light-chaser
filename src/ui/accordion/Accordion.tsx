@@ -69,6 +69,7 @@ class Accordion extends Component<AccordionProps> {
 
     calculateFold = (value: boolean) => {
         const {showSwitch} = this.state;
+        if (!this.headerRef || !this.accordionBodyRef) return;
         if (!showSwitch)
             this.headerRef!.classList.toggle("accordion-active");
         if (value) {

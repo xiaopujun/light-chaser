@@ -10,6 +10,7 @@ import {Control} from "../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import AntdCommonUtil from "../AntdCommonUtil";
 import {AntdLegend} from "../config/legend/AntdLegend";
+import {ShapeAttrs} from "@antv/g-base";
 
 class AntdAreaCommonStyleConfig extends Component<ConfigType> {
 
@@ -52,63 +53,40 @@ export interface AntdCommonAreaGraphicsProps {
 
 export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({config, onChange}) => {
 
-    // const areaColorChange = (data: ColorModeValue) => {
-    //     const {mode, value, angle = 0} = data;
-    //     switch (mode) {
-    //         case 'single':
-    //             onChange({areaStyle: {fill: value as string}});
-    //             break;
-    //         case 'multi':
-    //             onChange({color: value as string[], areaStyle: {fill: undefined}});
-    //             break;
-    //         case 'gradient':
-    //             onChange({areaStyle: {fill: `l(${angle}) 0:${value[0]} 1:${value[1]}`}});
-    //             break;
-    //     }
-    // }
-    //
-    // const buildColorModeData = (): ColorModeValue => {
-    //     let mode, value: string | string[], angle = 0;
-    //     if ((config?.areaStyle as ShapeAttrs)?.fill) {
-    //         const fill = (config?.areaStyle as ShapeAttrs).fill as string;
-    //         if (fill.startsWith('l')) {
-    //             mode = 'gradient';
-    //             value = [fill.split(':')[1].split(' ')[0], fill.split(':')[2].split(' ')[0]];
-    //             angle = parseInt(fill.split('(')[1].split(')')[0]);
-    //         } else {
-    //             mode = 'single';
-    //             value = fill;
-    //         }
-    //     } else {
-    //         mode = 'multi';
-    //         value = config?.color as string[] || ['#fff'];
-    //     }
-    //     return {mode, value, angle};
-    // }
-
     const _onChange = (fieldChangeData: FieldChangeData) => {
-
+        const {id, data, dataFragment} = fieldChangeData;
+        console.log(id, data, dataFragment);
+        if (id === 'areaColor') {
+            if (data && Array.isArray(data)) {
+                onChange({color: data as any, areaStyle: {fill: undefined}});
+            } else if (data && typeof data === 'string' && data.indexOf('gradient') !== -1) {
+                //渐变
+            } else {
+                onChange({areaStyle: {fill: data as string}});
+            }
+        } else {
+            onChange && onChange(dataFragment);
+        }
     }
 
     const schema: Control = {
-        key: 'style',
         type: 'accordion',
         label: '图形',
         children: [
             {
                 type: 'item-panel',
                 label: '数据点',
+                key: 'point',
                 children: [
                     {
                         type: 'grid',
-                        config: {
-                            columns: 2
-                        },
+                        config: {columns: 2},
                         children: [
                             {
+                                key: 'size',
                                 type: 'input',
                                 label: '尺寸',
-                                value: 1,
+                                value: config?.point?.size || 0,
                                 config: {
                                     type: 'number',
                                     min: 0,
@@ -116,9 +94,10 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
                                 }
                             },
                             {
+                                key: 'shape',
                                 type: 'select',
                                 label: '形状',
-                                value: 'circle',
+                                value: config?.point?.shape || 'circle',
                                 config: {
                                     options: [
                                         {value: 'circle', label: '圈形'},
@@ -130,17 +109,23 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
                                 }
                             },
                             {
-                                type: 'color-picker',
-                                label: '颜色',
-                                value: '#1c1c1c',
-                                config: {
-                                    width: '100%',
-                                    radius: 3,
-                                    showBorder: true,
-                                    showText: true,
-                                    height: 16,
-                                    hideControls: true
-                                }
+                                key: 'style',
+                                children: [
+                                    {
+                                        key: 'fill',
+                                        type: 'color-picker',
+                                        label: '颜色',
+                                        value: (config?.point?.style as ShapeAttrs)?.fill || '#1c1c1c',
+                                        config: {
+                                            width: '100%',
+                                            radius: 3,
+                                            showBorder: true,
+                                            showText: true,
+                                            height: 16,
+                                            hideControls: true
+                                        }
+                                    }
+                                ]
                             }
                         ]
                     }
@@ -152,25 +137,35 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
                 children: [
                     {
                         type: 'grid',
-                        config: {
-                            columns: 2
-                        },
+                        config: {columns: 2},
                         children: [
                             {
+                                key: 'smooth',
                                 type: 'switch',
                                 label: '平滑',
-                                value: false,
+                                value: config?.smooth || false,
                             },
                             {
-                                type: 'input',
-                                label: '宽度',
-                                value: 0,
-                                config: {
-                                    type: 'number',
-                                    min: 0,
-                                    max: 100
-                                }
-                            },
+                                key: 'line',
+                                children: [
+                                    {
+                                        key: 'style',
+                                        children: [
+                                            {
+                                                key: 'lineWidth',
+                                                type: 'input',
+                                                label: '宽度',
+                                                value: (config?.line?.style as ShapeAttrs)?.lineWidth || 0,
+                                                config: {
+                                                    type: 'number',
+                                                    min: 0,
+                                                    max: 100
+                                                }
+                                            },
+                                        ]
+                                    }
+                                ]
+                            }
                         ]
                     }
                 ]
@@ -181,14 +176,12 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
                 children: [
                     {
                         type: 'grid',
-                        config: {
-                            columns: 2
-                        },
                         children: [
                             {
-                                type: 'color-picker',
+                                id: 'areaColor',
+                                type: 'color-mode',
                                 label: '颜色',
-                                value: '#1c1c1c',
+                                value: (config?.areaStyle as ShapeAttrs)?.fill || '#1c1c1c',
                                 config: {
                                     width: '100%',
                                     radius: 3,
@@ -254,30 +247,36 @@ export const AntdAreaFieldMapping: React.FC<ConfigType<AntdCommonAreaController>
 
 export const AntdAreaCommonFieldMapping: React.FC<ConfigType> = (props) => {
     const {controller} = props;
+    const config = controller.config.style;
     const options = AntdCommonUtil.getDataFieldOptions(controller);
     const schema: Control = {
+        key: 'style',
         type: 'grid',
-        config: {
-            columns: 2,
-        },
+        config: {columns: 2},
         children: [
             {
+                key: 'xField',
                 type: 'select',
                 label: 'X字段',
+                value: config.xField,
                 config: {
                     options,
                 }
             },
             {
+                key: 'yField',
                 type: 'select',
                 label: 'Y字段',
+                value: config.yField,
                 config: {
                     options,
                 }
             },
             {
+                key: 'seriesField',
                 type: 'select',
                 label: '分组字段',
+                value: config.seriesField,
                 config: {
                     options,
                 }
@@ -286,7 +285,7 @@ export const AntdAreaCommonFieldMapping: React.FC<ConfigType> = (props) => {
     }
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
-
+        controller.update(fieldChangeData.dataFragment);
     }
 
     return <LCGUI schema={schema} onFieldChange={onFieldChange}/>

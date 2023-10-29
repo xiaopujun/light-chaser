@@ -106,7 +106,7 @@ export const AntdBarGraphics: React.FC<ConfigType<AntdCommonBar>> = ({controller
 
 export const AntdBarFieldMapping: React.FC<ConfigType<AntdCommonBar>> = ({controller}) => {
     const config = controller.getConfig()!.style;
-    const {data,/* xField, yField, seriesField*/} = config!;
+    const {data, xField, yField, seriesField} = config!;
     const options: Option[] = [];
     if (data && data.length >= 1) {
         const dataObj = data[0];
@@ -125,22 +125,28 @@ export const AntdBarFieldMapping: React.FC<ConfigType<AntdCommonBar>> = ({contro
         },
         children: [
             {
+                key: 'xField',
                 type: 'select',
                 label: 'X字段',
+                value: xField,
                 config: {
                     options,
                 }
             },
             {
+                key: 'yField',
                 type: 'select',
                 label: 'Y字段',
+                value: yField,
                 config: {
                     options,
                 }
             },
             {
+                key: 'seriesField',
                 type: 'select',
                 label: '分组字段',
+                value: seriesField,
                 config: {
                     options,
                 }

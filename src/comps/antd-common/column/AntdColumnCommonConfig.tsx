@@ -52,41 +52,21 @@ export interface AntdColumnGraphicsProps {
 
 export const AntdColumnGraphics: React.FC<AntdColumnGraphicsProps> = ({config, onChange}) => {
 
-    // const barColorChange = (data: ColorModeValue) => {
-    //     const {mode, value} = data;
-    //     switch (mode) {
-    //         case 'single':
-    //             onChange({columnStyle: {fill: value as string}});
-    //             break;
-    //         case 'multi':
-    //             onChange({color: value, columnStyle: {fill: undefined}});
-    //             break;
-    //         case 'gradient':
-    //             onChange({columnStyle: {fill: `l(0) 0:${value[0]} 1:${value[1]}`}});
-    //             break;
-    //     }
-    // }
-    //
-    // const buildColorModeData = (): ColorModeValue => {
-    //     let mode = 'single', value: string | string[] = '#fff';
-    //     if ((config?.columnStyle as ShapeAttrs)?.fill) {
-    //         const fill = (config?.columnStyle as ShapeAttrs).fill as string;
-    //         if (fill.startsWith('l')) {
-    //             mode = 'gradient';
-    //             value = [fill.split(':')[1].split(' ')[0], fill.split(':')[2].split(' ')[0]];
-    //         } else {
-    //             mode = 'single';
-    //             value = fill;
-    //         }
-    //     } else if (config?.color) {
-    //         mode = 'multi';
-    //         value = config?.color as string[];
-    //     }
-    //     return {mode, value};
-    // }
-
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
-
+        const {id, data, dataFragment} = fieldChangeData;
+        if (id === 'columnColor') {
+            if (data && Array.isArray(data)) {
+                //多色
+                onChange({color: data as string[], columnStyle: {fill: undefined}})
+            } else if (data && typeof data === 'string' && data.indexOf('gradient') !== -1) {
+                //渐变
+            } else {
+                //单色
+                onChange({columnStyle: {fill: data as string}})
+            }
+        } else {
+            onChange(dataFragment);
+        }
     }
 
     const schema: Control = {
@@ -98,6 +78,7 @@ export const AntdColumnGraphics: React.FC<AntdColumnGraphicsProps> = ({config, o
                 config: {columns: 2},
                 children: [
                     {
+                        key: 'maxColumnWidth',
                         type: 'input',
                         label: '宽度',
                         value: 12,
@@ -107,8 +88,15 @@ export const AntdColumnGraphics: React.FC<AntdColumnGraphicsProps> = ({config, o
                             max: 100,
                         }
                     },
+
+                ]
+            },
+            {
+                type: 'grid',
+                children: [
                     {
-                        type: 'color-picker',
+                        id: 'columnColor',
+                        type: 'color-mode',
                         label: '颜色',
                         value: '#1c1c1c',
                         config: {
@@ -134,30 +122,36 @@ export const AntdColumnGraphics: React.FC<AntdColumnGraphicsProps> = ({config, o
 
 export const AntdColumnCommonFieldMapping: React.FC<ConfigType> = (props) => {
     const {controller} = props;
+    const {xField, yField, seriesField} = controller.getConfig().style;
     const options = AntdCommonUtil.getDataFieldOptions(controller);
     const schema: Control = {
+        key: 'style',
         type: 'grid',
-        config: {
-            columns: 2,
-        },
+        config: {columns: 2},
         children: [
             {
+                key: 'xField',
                 type: 'select',
                 label: 'X字段',
+                value: xField,
                 config: {
                     options,
                 }
             },
             {
+                key: 'yField',
                 type: 'select',
                 label: 'Y字段',
+                value: yField,
                 config: {
                     options,
                 }
             },
             {
+                key: 'seriesField',
                 type: 'select',
                 label: '分组字段',
+                value: seriesField,
                 config: {
                     options,
                 }
@@ -166,7 +160,8 @@ export const AntdColumnCommonFieldMapping: React.FC<ConfigType> = (props) => {
     }
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
-
+        const {dataFragment} = fieldChangeData;
+        controller.update(dataFragment);
     }
 
     return <LCGUI schema={schema} onFieldChange={onFieldChange}/>

@@ -247,23 +247,27 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
 
 export const AntdBaseAreaFieldMapping: React.FC<ConfigType<AntdBaseDesignerController>> = (props) => {
     const {controller} = props;
+    const config = controller?.config?.style;
     const options = AntdCommonUtil.getDataFieldOptions(controller);
     const schema: Control = {
+        key: 'style',
         type: 'grid',
-        config: {
-            columns: 2,
-        },
+        config: {columns: 2},
         children: [
             {
+                key: 'xField',
                 type: 'select',
                 label: 'X字段',
+                value: config?.xField,
                 config: {
                     options,
                 }
             },
             {
+                key: 'yField',
                 type: 'select',
                 label: 'Y字段',
+                value: config?.yField,
                 config: {
                     options,
                 }
@@ -272,7 +276,7 @@ export const AntdBaseAreaFieldMapping: React.FC<ConfigType<AntdBaseDesignerContr
     }
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
-
+        controller.update(fieldChangeData.dataFragment);
     }
 
     return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
