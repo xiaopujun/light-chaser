@@ -11,6 +11,7 @@ import AntdCommonUtil from "../../antd-common/AntdCommonUtil";
 import {AntdLegend} from "../../antd-common/config/legend/AntdLegend";
 import LCGUIUtil from "../../../json-schema/LCGUIUtil";
 import {ShapeAttrs} from "@antv/g-base";
+import ObjectUtil from "../../../utils/ObjectUtil";
 
 export default class AntdPieStyleConfig extends Component<ConfigType> {
 
@@ -62,10 +63,10 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                     }
                 };
                 onChange(defaultTitleConfig);
-                setConfig({..._config, ...defaultTitleConfig});
+                  setConfig({...ObjectUtil.merge(_config, defaultTitleConfig)});
             } else {
-                onChange({statistic: {title: false}});
-                setConfig({..._config, statistic: {title: false}});
+                onChange({statistic: {content: false}});
+                setConfig({...ObjectUtil.merge(_config, {statistic: {title: false}})});
             }
         } else if (id === "contentSwitch") {
             if (data) {
@@ -78,10 +79,10 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                     }
                 };
                 onChange(defaultContentConfig);
-                setConfig({..._config, ...defaultContentConfig});
+                setConfig({...ObjectUtil.merge(_config, defaultContentConfig)});
             } else {
                 onChange({statistic: {title: false}});
-                setConfig({..._config, statistic: {title: false}});
+                setConfig({...ObjectUtil.merge(_config, {statistic: {content: false}})});
             }
         } else if (id === "labelRotate") {
             onChange({label: {rotate: (data as number) * Math.PI}});

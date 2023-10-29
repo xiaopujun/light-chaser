@@ -86,6 +86,7 @@ class ColorMode extends Component<ColorModeProps> {
                             value={color as string}
                             onChange={this.colorChange}
                             width={100}
+                            height={16}
                             showBorder={true}
                             radius={2}
                             showText={true}/>

@@ -25,9 +25,6 @@ class BaseInfo extends Component<ConfigType> {
         const {type, name, desc} = (controller.getConfig() as ComponentBaseProps).info!;
         this.schema = {
             type: 'grid',
-            config: {
-                gridGap: '15px'
-            },
             children: [
                 {
                     id: "name",

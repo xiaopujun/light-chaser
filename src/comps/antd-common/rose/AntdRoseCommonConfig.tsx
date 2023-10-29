@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {ConfigType} from "../../../designer/right/ConfigType";
 import {WritableRoseOptions} from "../types";
 import {RoseOptions} from "@antv/g2plot";
@@ -8,6 +8,8 @@ import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
 import AntdCommonUtil from "../AntdCommonUtil";
 import {AntdLegend} from "../config/legend/AntdLegend";
+import {ShapeAttrs} from "@antv/g-base";
+import LCGUIUtil from "../../../json-schema/LCGUIUtil";
 
 export default class AntdRoseCommonStyleConfig extends Component<ConfigType> {
 
@@ -34,39 +36,26 @@ export default class AntdRoseCommonStyleConfig extends Component<ConfigType> {
 }
 
 export interface AntdRoseGraphicsConfigProps {
-    config: RoseOptions;
-
-    onChange(config: WritableRoseOptions): void;
+    config: any;
+    onChange: (config: any) => void;
 }
 
 export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({config, onChange}) => {
 
-    // const RoseColorChange = (data: ColorModeValue) => {
-    //     const {mode, value} = data;
-    //     switch (mode) {
-    //         case 'single':
-    //         case 'multi':
-    //             onChange({color: value});
-    //             break;
-    //         case 'gradient':
-    //             onChange({sectorStyle: {fill: `l(0.4,0.5) 0:${value[0]} 1:${value[1]}`}});
-    //             break;
-    //     }
-    // }
-    //
-    // const buildColorModeData = (): ColorModeValue => {
-    //     let mode = 'single', value: string | string[];
-    //     let multi = Array.isArray(config.color) && config.color.length > 1;
-    //     if (multi) {
-    //         mode = 'multi';
-    //         value = config.color as string[];
-    //     } else
-    //         value = config.color as string;
-    //     return {mode, value};
-    // }
+    const [_config, setConfig] = useState(config);
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
-
+        let {id, data, dataKeyPath, dataFragment, reRender} = fieldChangeData;
+        if (id === 'startAngle' || id === 'endAngle') {
+            data = Math.PI * (data as number);
+            onChange && onChange(LCGUIUtil.createObjectFromArray(dataKeyPath, data));
+        } else if (id === "labelRotate") {
+            onChange({label: {rotate: (data as number) * Math.PI}});
+        } else {
+            onChange && onChange(dataFragment);
+        }
+        if (reRender)
+            setConfig({..._config, ...dataFragment});
     }
 
     const schema: Control = {
@@ -80,9 +69,10 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                         config: {columns: 2},
                         children: [
                             {
+                                key: 'radius',
                                 type: 'input',
                                 label: '外径',
-                                value: 0.8,
+                                value: config.radius,
                                 config: {
                                     type: 'number',
                                     min: 0,
@@ -91,19 +81,24 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                                 }
                             },
                             {
+                                id: 'startAngle',
+                                key: 'startAngle',
                                 type: 'input',
                                 label: '起始角',
-                                value: 0,
+                                value: (config.startAngle || 0) / Math.PI,
                                 config: {
+                                    suffix: 'Π',
                                     type: 'number',
                                     min: 0,
-                                    max: 360,
+                                    max: 2,
+                                    step: 0.01
                                 }
                             },
                             {
+                                key: 'innerRadius',
                                 type: 'input',
                                 label: '内径',
-                                value: 0.6,
+                                value: config.innerRadius,
                                 config: {
                                     type: 'number',
                                     min: 0,
@@ -112,49 +107,56 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                                 }
                             },
                             {
+                                id: 'endAngle',
+                                key: 'endAngle',
                                 type: 'input',
                                 label: '结束角',
-                                value: 360,
+                                value: (config.endAngle || 2 * Math.PI) / Math.PI,
                                 config: {
+                                    suffix: 'Π',
                                     type: 'number',
                                     min: 0,
-                                    max: 360,
+                                    max: 2,
+                                    step: 0.01
                                 }
                             },
                             {
-                                type: 'color-picker',
+                                key: 'pieStyle',
+                                children: [
+                                    {
+                                        key: 'stroke',
+                                        type: 'color-picker',
+                                        label: '描边色',
+                                        value: '#1c1c1c',
+                                        config: {
+                                            width: '100%',
+                                            radius: 3,
+                                            showBorder: true,
+                                            showText: true,
+                                            height: 16,
+                                            hideControls: true
+                                        }
+                                    },
+                                    {
+                                        key: 'lineWidth',
+                                        type: 'input',
+                                        label: '描边宽',
+                                        value: 0,
+                                        config: {
+                                            type: 'number',
+                                            min: 0,
+                                            max: 30,
+                                        }
+                                    },
+                                ]
+                            },
+                            {
+                                key: 'color',
+                                type: 'color-mode',
                                 label: '颜色',
                                 value: '#1c1c1c',
                                 config: {
-                                    width: '90%',
-                                    radius: 3,
-                                    showBorder: true,
-                                    showText: true,
-                                    height: 16,
-                                    hideControls: true
-                                }
-                            },
-                            {
-                                type: 'color-picker',
-                                label: '描边色',
-                                value: '#1c1c1c',
-                                config: {
-                                    width: '90%',
-                                    radius: 3,
-                                    showBorder: true,
-                                    showText: true,
-                                    height: 16,
-                                    hideControls: true
-                                }
-                            },
-                            {
-                                type: 'input',
-                                label: '描边宽',
-                                value: 0,
-                                config: {
-                                    type: 'number',
-                                    min: 0,
-                                    max: 30,
+                                    gridColumn: '1 / 3',
                                 }
                             },
                         ]
@@ -166,78 +168,82 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                 label: '标签',
                 children: [
                     {
+                        key: 'label',
                         type: 'grid',
                         config: {columns: 2},
                         children: [
                             {
-                                type: 'select',
-                                label: '位置',
-                                value: 'inner',
-                                config: {
-                                    options: [
-                                        {value: 'inner', label: '内测'},
-                                        {value: 'outer', label: '外侧'}]
-                                }
-                            },
-                            {
+                                key: 'offset',
                                 type: 'input',
                                 label: '偏移',
-                                value: 0,
+                                value: _config.label?.offset || 0,
                                 config: {
                                     type: 'number',
-                                    min: 0,
-                                    max: 100,
                                 }
                             },
                             {
-                                type: 'input',
-                                label: '字号',
-                                value: 12,
-                                config: {
-                                    type: 'number',
-                                    min: 0,
-                                    max: 100,
-                                }
+                                key: 'style',
+                                children: [
+                                    {
+                                        key: 'fontSize',
+                                        type: 'input',
+                                        label: '字号',
+                                        value: (_config.label?.style as ShapeAttrs)?.fontSize || 12,
+                                        config: {
+                                            type: 'number',
+                                            min: 0,
+                                            max: 100,
+                                        }
+                                    },
+                                    {
+                                        key: 'fontWeight',
+                                        type: 'input',
+                                        label: '加粗',
+                                        value: (_config.label?.style as ShapeAttrs)?.fontWeight || 500,
+                                        config: {
+                                            type: 'number',
+                                            min: 100,
+                                            max: 900,
+                                            step: 100
+                                        }
+                                    },
+                                    {
+                                        key: 'fill',
+                                        type: 'color-picker',
+                                        label: '颜色',
+                                        value: (_config.label?.style as ShapeAttrs)?.fill,
+                                        config: {
+                                            width: '100%',
+                                            radius: 3,
+                                            showBorder: true,
+                                            showText: true,
+                                            height: 16,
+                                            hideControls: true
+                                        }
+                                    }
+                                ]
                             },
                             {
-                                type: 'input',
-                                label: '加粗',
-                                value: 500,
-                                config: {
-                                    type: 'number',
-                                    min: 100,
-                                    max: 900,
-                                    step: 100
-                                }
-                            },
-                            {
+                                key: 'autoRotate',
                                 type: 'switch',
                                 label: '自动旋转',
-                                value: false,
+                                reRender: true,
+                                value: _config.label?.autoRotate,
                             },
                             {
+                                id: 'labelRotate',
+                                key: 'rotate',
                                 type: 'input',
                                 label: '旋转角度',
-                                value: 90,
+                                rules: "{autoRotate} === 'false'",
+                                value: _config.label?.rotate || 0,
                                 config: {
                                     type: 'number',
                                     min: 0,
-                                    max: 360,
+                                    max: 2,
+                                    step: 0.01
                                 }
                             },
-                            {
-                                type: 'color-picker',
-                                label: '颜色',
-                                value: '#1c1c1c',
-                                config: {
-                                    width: '100%',
-                                    radius: 3,
-                                    showBorder: true,
-                                    showText: true,
-                                    height: 16,
-                                    hideControls: true
-                                }
-                            }
                         ]
                     }
                 ]
@@ -247,186 +253,44 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
 
 
     return (
-        <>
-            <LCGUI schema={schema} onFieldChange={onFieldChange}/>
-            {/*<Accordion title={'图形'}>*/}
-            {/*    <ConfigItem title={"半径"}>*/}
-            {/*        <UnderLineInput type={"number"} min={0} max={1} step={0.01}*/}
-            {/*                        defaultValue={config?.radius || 0.9}*/}
-            {/*                        onChange={(event) => onChange({radius: parseFloat(event.target.value)})}/>*/}
-            {/*    </ConfigItem>*/}
-            {/*    <ConfigItem title={"内径"}>*/}
-            {/*        <UnderLineInput type={"number"} min={0} max={1} step={0.01}*/}
-            {/*                        defaultValue={config?.innerRadius || 0}*/}
-            {/*                        onChange={(event) => onChange({innerRadius: parseFloat(event.target.value)})}/>*/}
-            {/*    </ConfigItem>*/}
-            {/*    <ConfigItem title={"起始角度"}>*/}
-            {/*        <UnderLineInput type={"number"} min={0} max={2} step={0.01}*/}
-            {/*                        defaultValue={config?.startAngle || 0}*/}
-            {/*                        onChange={(event) => onChange({startAngle: parseFloat(event.target.value) * Math.PI})}/>*/}
-            {/*    </ConfigItem>*/}
-            {/*    <ConfigItem title={"结束角度"}>*/}
-            {/*        <UnderLineInput type={"number"} min={0} max={2} step={0.01}*/}
-            {/*                        defaultValue={config?.endAngle || 2}*/}
-            {/*                        onChange={(event) => onChange({endAngle: parseFloat(event.target.value) * Math.PI})}/>*/}
-            {/*    </ConfigItem>*/}
-            {/*    <ConfigItem title={'颜色'} itemStyle={{width: '100%'}} contentStyle={{width: '85%'}}>*/}
-            {/*        <ColorMode onChange={RoseColorChange} data={buildColorModeData()}*/}
-            {/*                   exclude={[ColorModeType.LINER_GRADIENT, ColorModeType.RADIAL_GRADIENT]}/>*/}
-            {/*    </ConfigItem>*/}
-            {/*    <ConfigItem title={'描边颜色'}>*/}
-            {/*        <CfgItemBorder width={'100%'}>*/}
-            {/*            <BaseColorPicker*/}
-            {/*                defaultValue={(config?.sectorStyle as ShapeStyle)?.stroke || '#fff'}*/}
-            {/*                onChange={(value) => onChange({sectorStyle: {stroke: value}})}*/}
-            {/*                style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>*/}
-            {/*        </CfgItemBorder>*/}
-            {/*    </ConfigItem>*/}
-            {/*    <ConfigItem title={'描边宽度'}>*/}
-            {/*        <UnderLineInput type={"number"} min={0}*/}
-            {/*                        defaultValue={(config?.sectorStyle as ShapeStyle)?.lineWidth || 0}*/}
-            {/*                        onChange={(event) => onChange({sectorStyle: {lineWidth: parseInt(event.target.value)}})}/>*/}
-            {/*    </ConfigItem>*/}
-            {/*</Accordion>*/}
-            {/*<Accordion title={"标签"}>*/}
-            {/*    <ConfigItem title={'偏移'}>*/}
-            {/*        <UnderLineInput type={"number"}*/}
-            {/*                        defaultValue={(config?.label as Types.GeometryLabelCfg)?.offset || 0}*/}
-            {/*                        onChange={(event) => onChange({label: {offset: parseInt(event.target.value)}})}/>*/}
-            {/*    </ConfigItem>*/}
-            {/*    <ConfigItem title={"字号"}>*/}
-            {/*        <UnderLineInput type={'number'} min={0}*/}
-            {/*                        defaultValue={(config?.label as Types.GeometryLabelCfg)?.style?.fontSize || 12}*/}
-            {/*                        onChange={(event) => onChange({label: {style: {fontSize: parseInt(event.target.value)}}})}/>*/}
-            {/*    </ConfigItem>*/}
-            {/*    <ConfigItem title={"加粗"}>*/}
-            {/*        <UnderLineInput type={'number'} min={100} max={900} step={100}*/}
-            {/*                        defaultValue={parseInt((config?.label as Types.GeometryLabelCfg)?.style?.fontWeight || 500)}*/}
-            {/*                        onChange={(event) => onChange({label: {style: {fontWeight: parseInt(event.target.value)}}})}/>*/}
-            {/*    </ConfigItem>*/}
-            {/*    <ConfigItem title={"自动旋转"}>*/}
-            {/*        <LcSwitch defaultValue={!!(config?.label as Types.GeometryLabelCfg)?.autoRotate}*/}
-            {/*                  onChange={(value) => onChange({label: {autoRotate: value}})}/>*/}
-            {/*    </ConfigItem>*/}
-            {/*    <ConfigItem title={"旋转角度"}>*/}
-            {/*        <UnderLineInput type={'number'} min={0} max={2} step={0.01}*/}
-            {/*                        defaultValue={(config?.label as Types.GeometryLabelCfg).rotate || 0}*/}
-            {/*                        onChange={(event) => onChange({label: {rotate: parseFloat(event.target.value) * Math.PI}})}/>*/}
-            {/*    </ConfigItem>*/}
-            {/*    <ConfigItem title={'颜色'}>*/}
-            {/*        <CfgItemBorder width={'100%'}>*/}
-            {/*            <BaseColorPicker*/}
-            {/*                defaultValue={(config?.label as Types.GeometryLabelCfg)?.style?.fill || '#fff'}*/}
-            {/*                onChange={(value) => onChange({label: {style: {fill: value}}})}*/}
-            {/*                style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>*/}
-            {/*        </CfgItemBorder>*/}
-            {/*    </ConfigItem>*/}
-            {/*</Accordion>*/}
-        </>
-
+        <LCGUI schema={schema} onFieldChange={onFieldChange}/>
     );
 }
 
 
-// export interface AntdStatisticTextConfigProps {
-//     config: StatisticText | false;
-//
-//     onChange(config: StatisticText | false): void;
-// }
-//
-// export const StatisticTextConfig: React.FC<AntdStatisticTextConfigProps> = ({config, onChange}) => {
-//
-//     const [disEnable, setDisEnable] = useState(!!config);
-//
-//     return (
-//         <>
-//             <ConfigItem title={"开启"}>
-//                 <LcSwitch defaultValue={disEnable}
-//                           onChange={(value) => {
-//                               let titleConfig: StatisticText | boolean;
-//                               if (value) titleConfig = {style: {fontSize: '12px', color: '#fff'}, content: 'text'}
-//                               else titleConfig = false;
-//                               onChange(titleConfig)
-//                               setDisEnable(value)
-//                           }}/>
-//             </ConfigItem>
-//             <ConfigItem title={"内容"}>
-//                 <UnderLineInput defaultValue={(config as StatisticText)?.content || 'text'}
-//                                 disabled={!disEnable}
-//                                 onChange={(event) => onChange({content: event.target.value})}/>
-//             </ConfigItem>
-//             <ConfigItem title={"字号"}>
-//                 <UnderLineInput type={'number'} min={10}
-//                                 disabled={!disEnable}
-//                                 defaultValue={parseInt(((config as StatisticText)?.style as any)?.fontSize || '12')}
-//                                 onChange={(event) => onChange({style: {fontSize: event.target.value + 'px'}})}/>
-//             </ConfigItem>
-//             <ConfigItem title={"加粗"}>
-//                 <UnderLineInput type={'number'} min={100} max={900} step={100}
-//                                 disabled={!disEnable}
-//                                 defaultValue={parseInt(((config as StatisticText)?.style as any)?.fontWeight || '500')}
-//                                 onChange={(event) => onChange({style: {fontWeight: parseInt(event.target.value)}})}/>
-//             </ConfigItem>
-//             <ConfigItem title={'颜色'}>
-//                 <CfgItemBorder width={'100%'}>
-//                     <BaseColorPicker
-//                         disabled={!disEnable}
-//                         defaultValue={((config as StatisticText)?.style as any)?.value || '#fff'}
-//                         onChange={(value) => onChange({style: {color: value}})}
-//                         style={{width: '100%', height: '15px', borderRadius: 2}} showText={true}/>
-//                 </CfgItemBorder>
-//             </ConfigItem>
-//             <ConfigItem title={"x偏移"}>
-//                 <UnderLineInput type={'number'}
-//                                 disabled={!disEnable}
-//                                 defaultValue={(config as StatisticText)?.offsetX || 0}
-//                                 onChange={(event) => onChange({offsetX: parseInt(event.target.value)})}/>
-//             </ConfigItem>
-//             <ConfigItem title={"y偏移"}>
-//                 <UnderLineInput type={'number'}
-//                                 disabled={!disEnable}
-//                                 defaultValue={(config as StatisticText)?.offsetY || 0}
-//                                 onChange={(event) => onChange({offsetY: parseInt(event.target.value)})}/>
-//             </ConfigItem>
-//         </>
-//     )
-// }
-//
-
 export const AntdRoseFieldMapping: React.FC<ConfigType<AntdCommonRose>> = ({controller}) => {
+    const config = controller.getConfig()?.style;
     const options = AntdCommonUtil.getDataFieldOptions(controller);
     const schema: Control = {
         type: 'grid',
-        config: {
-            columns: 2,
-        },
+        config: {columns: 2},
         children: [
             {
+                key: 'xField',
                 type: 'select',
                 label: 'X字段',
-                config: {
-                    options,
-                }
+                value: config?.xField,
+                config: {options}
             },
             {
+                key: 'yField',
                 type: 'select',
                 label: 'Y字段',
-                config: {
-                    options,
-                }
+                value: config?.yField,
+                config: {options}
             },
             {
+                key: 'seriesField',
                 type: 'select',
                 label: '分组字段',
-                config: {
-                    options,
-                }
+                value: config?.seriesField,
+                config: {options}
             }
         ]
     }
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
-
+        controller.update(fieldChangeData.dataFragment);
     }
 
     return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
