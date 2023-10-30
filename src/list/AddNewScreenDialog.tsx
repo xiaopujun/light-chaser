@@ -49,7 +49,7 @@ class AddNewScreenDialog extends Component<AddNewScreenDialogProps> {
                         <Grid gridGap={'15px'} columns={2}>
                             <Input label={'名称'} required={true} maxLength={20}
                                    onChange={(name) => this.projectInfo.name = name as string}/>
-                            <Input label={'描述'} required={true} maxLength={20}
+                            <Input label={'描述'} maxLength={20}
                                    onChange={(description) => this.projectInfo.description = description as string}/>
                             <Input label={'宽度'} type={'number'} min={300} required={true}
                                    onChange={(width) => this.projectInfo.width = width as number}/>

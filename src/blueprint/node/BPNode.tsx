@@ -2,11 +2,7 @@ import React from "react";
 import './BPNode.less';
 import {PointType} from "../types";
 import bpStore from "../store/BPStore";
-
-export enum AnchorPointType {
-    INPUT,
-    OUTPUT
-}
+import {AnchorPointType} from "./core/AbstractNode";
 
 export interface AnchorPointProps {
     id?: string;

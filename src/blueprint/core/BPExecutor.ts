@@ -5,7 +5,7 @@
 import bpStore from "../store/BPStore";
 import nodeParserMap from "./parser";
 import {NodeType} from "../node/types";
-import {AnchorPointType} from "../node/BPNode";
+import {AnchorPointType} from "../node/core/AbstractNode";
 
 export interface BPTransportNode {
     nodeId: string;

@@ -81,14 +81,14 @@ const drop = (event: any) => {
     const type = (event as any).dataTransfer.getData('type');
     //获取鼠标位置
     const position = {x: event.layerX, y: event.layerY};
-    if (type === 'layer') {
+    if (type === 'layer-node') {
         const {setUsedLayerNodes} = bpLeftStore;
         setUsedLayerNodes(nodeId, true);
     }
     const {addNodes} = bpStore;
-    const node = NodeFactory.createNode(type, nodeId);
-    node.position = position;
-    addNodes(node);
+    const nodeObj = NodeFactory.createNode(type, nodeId);
+    nodeObj!.position = position;
+    addNodes(nodeObj!);
 }
 
 export const BPNodeList = observer(() => {
@@ -133,7 +133,7 @@ export const BPLayerNodeList = observer(() => {
                     return (
                         <div className={`bp-node-list-item ${used ? 'bp-node-list-item-used' : ''}`}
                              data-id={item.id}
-                             data-type={'layer'}
+                             data-type={'layer-node'}
                              draggable={!used} key={index}>
                             <div className={'bpn-li-icon'}><BlockOutlined/></div>
                             <div className={'bpn-li-label'}>{item.name}</div>
@@ -148,7 +148,7 @@ export const BPLayerNodeList = observer(() => {
 export const BPLogicalNodeList = () => {
     return (
         <div className={`bp-node-list-item`}
-             data-type={'logical'}
+             data-type={'condition-node'}
              draggable={true}>
             <div className={'bpn-li-icon'}><BranchesOutlined/></div>
             <div className={'bpn-li-label'}>条件判断</div>
