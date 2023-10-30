@@ -13,7 +13,7 @@ export interface AntdBarProps extends ComponentBaseProps {
     style?: WritableBarOptions;
 }
 
-export default class AntdCommonBar extends AntdBaseDesignerController<Bar, AntdBarProps> {
+export default class AntdCommonBarController extends AntdBaseDesignerController<Bar, AntdBarProps> {
 
     async create(container: HTMLElement, config: AntdBarProps): Promise<this> {
         const controller = super.commonCreate(container, Bar, config);

@@ -3,26 +3,26 @@ import {ConfigType} from "../../../designer/right/ConfigType";
 import {AntdCartesianCoordinateSys} from "../config/AntdFragment";
 import {BarOptions} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
-import AntdCommonBar from "./AntdCommonBar";
+import AntdCommonBarController from "./AntdCommonBarController";
 import {Control} from "../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {AntdLegend} from "../config/legend/AntdLegend";
 import {Option} from "../../../ui/select/SelectType";
 
-class AntdBarCommonStyleConfig extends Component<ConfigType<AntdCommonBar>> {
+class AntdBarCommonStyleConfig extends Component<ConfigType<AntdCommonBarController>> {
 
     legendChange = (legend: Legend) => {
-        const controller = this.props.controller as AntdCommonBar;
+        const controller = this.props.controller as AntdCommonBarController;
         controller.update({style: {legend}});
     }
 
     barGraphicsChange = (config: BarOptions) => {
-        const controller = this.props.controller as AntdCommonBar;
+        const controller = this.props.controller as AntdCommonBarController;
         controller.update({style: config});
     }
 
     barCoordinateSysChange = (config: BarOptions) => {
-        const controller = this.props.controller as AntdCommonBar;
+        const controller = this.props.controller as AntdCommonBarController;
         controller.update({style: config});
     }
 
@@ -42,7 +42,7 @@ class AntdBarCommonStyleConfig extends Component<ConfigType<AntdCommonBar>> {
 export {AntdBarCommonStyleConfig};
 
 
-export const AntdBarGraphics: React.FC<ConfigType<AntdCommonBar>> = ({controller}) => {
+export const AntdBarGraphics: React.FC<ConfigType<AntdCommonBarController>> = ({controller}) => {
 
     const config = controller.getConfig()!.style!;
 
@@ -104,7 +104,7 @@ export const AntdBarGraphics: React.FC<ConfigType<AntdCommonBar>> = ({controller
 }
 
 
-export const AntdBarFieldMapping: React.FC<ConfigType<AntdCommonBar>> = ({controller}) => {
+export const AntdBarFieldMapping: React.FC<ConfigType<AntdCommonBarController>> = ({controller}) => {
     const config = controller.getConfig()!.style;
     const {data, xField, yField, seriesField} = config!;
     const options: Option[] = [];

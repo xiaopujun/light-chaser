@@ -1,6 +1,6 @@
 import {BaseInfoType} from "../../../designer/DesignerType";
 import stackBarImg from "./stack-bar.png";
-import {AntdBarProps} from "../../antd-common/bar/AntdCommonBar";
+import {AntdBarProps} from "../../antd-common/bar/AntdCommonBarController";
 import AbstractBarDefinition from "../../antd-common/bar/AbstractBarDefinition";
 
 class AntdStackBarDefinition extends AbstractBarDefinition {

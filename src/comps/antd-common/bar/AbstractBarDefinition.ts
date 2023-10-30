@@ -8,7 +8,7 @@ import {
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {ClazzTemplate} from "../../common-component/common-types";
-import AntdCommonBar, {AntdBarProps} from "../../antd-common/bar/AntdCommonBar";
+import AntdCommonBarController, {AntdBarProps} from "../../antd-common/bar/AntdCommonBarController";
 import {AntdBarFieldMapping} from "./AntdBarCommonConfig";
 import AbstractController from "../../../framework/core/AbstractController";
 
@@ -19,10 +19,10 @@ const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseI
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
 
-abstract class AbstractBarDefinition extends AbstractComponentDefinition<AntdCommonBar, AntdBarProps> {
+abstract class AbstractBarDefinition extends AbstractComponentDefinition<AntdCommonBarController, AntdBarProps> {
 
-    getComponent(): ClazzTemplate<AntdCommonBar> | null {
-        return AntdCommonBar;
+    getComponent(): ClazzTemplate<AntdCommonBarController> | null {
+        return AntdCommonBarController;
     }
 
     getMenuList(): Array<MenuInfo> {
@@ -72,7 +72,7 @@ abstract class AbstractBarDefinition extends AbstractComponentDefinition<AntdCom
                 name: "显示",
                 id: "show",
                 handler: (controller: AbstractController, params?: any) => {
-                    console.log("显示动作来了");
+                    controller.container!.style.display = "block";
                 }
             },
             {

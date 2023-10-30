@@ -1,6 +1,6 @@
 import {BaseInfoType} from "../../../designer/DesignerType";
 import rangeBarImg from "./range-bar.png";
-import {AntdBarProps} from "../../antd-common/bar/AntdCommonBar";
+import {AntdBarProps} from "../../antd-common/bar/AntdCommonBarController";
 import AbstractBarDefinition from "../../antd-common/bar/AbstractBarDefinition";
 
 class AntdRangeBarDefinition extends AbstractBarDefinition {
