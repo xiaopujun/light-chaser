@@ -111,10 +111,10 @@ export const doDelete = () => {
     //如果蓝图中使用了当前要被删除的组件，则需要先删除蓝图中的组件和连线，且蓝图中的删除操作目前无法回退
     const {targetIds} = eventOperateStore;
     if (targetIds && targetIds.length > 0) {
-        const {bpNodes, delNode} = bpStore;
+        const {delNode, bpNodeLayoutMap} = bpStore;
         const preDelNodeIds: string[] = [];
         targetIds.forEach((id: string) => {
-            if (bpNodes[id])
+            if (bpNodeLayoutMap[id])
                 preDelNodeIds.push(id);
         });
         if (preDelNodeIds.length > 0)
@@ -134,11 +134,13 @@ export const doSave = throttle(() => {
             updateProjectConfig({updateTime: DateUtil.format(new Date())})
             const proData = designerStore.getData();
             //设置蓝图数据 todo 这里的数据采集方式应该要采用以各种更合理的方式处理
-            const {bpAPMap, bpNodes, bpLines, bpAPLineMap} = bpStore;
+            const {bpAPMap, bpLines, bpAPLineMap, getAllNodeConfig, bpNodeLayoutMap} = bpStore;
             proData.bpAPMap = bpAPMap;
-            proData.bpNodes = bpNodes;
             proData.bpLines = bpLines;
             proData.bpAPLineMap = bpAPLineMap;
+            // proData.bpNodeConfigMap = getAllNodeConfig();
+            console.log("bpNodeLayoutMap", getAllNodeConfig())
+            proData.bpNodeLayoutMap = bpNodeLayoutMap;
             EditorDesignerLoader.getInstance().abstractOperatorMap[saveType].saveProject(cloneDeep(proData));
         } else if (saveType === SaveType.SERVER) {
             alert("server save");

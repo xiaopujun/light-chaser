@@ -5,7 +5,6 @@ import BPNode, {NodeProps} from "../../../BPNode";
 import designerStore from "../../../../../designer/store/DesignerStore";
 import EditorDesignerLoader from "../../../../../designer/loader/EditorDesignerLoader";
 import {NodeType} from "../../../types";
-import {CodeSandboxOutlined} from "@ant-design/icons";
 
 export interface LayerNodeConfig extends NodeProps {
 
@@ -53,7 +52,7 @@ export default class LayerNodeController extends AbstractBPNodeController<LayerN
         return {
             id: nodeId,
             name: compLayout.name,
-            icon: CodeSandboxOutlined,
+            icon: "CodeSandboxOutlined",
             type: 'layer-node',
             titleBgColor: "#247057",
             input,

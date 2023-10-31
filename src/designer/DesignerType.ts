@@ -2,8 +2,8 @@
  * 主题
  */
 import {MovableItemType} from "./operate-provider/movable/types";
-import {NodeProps} from "../blueprint/node/BPNode";
 import {CanvasLineType} from "../blueprint/types";
+import {BPNodeLayoutType} from "../blueprint/store/BPStore";
 
 export interface ThemeColors {
     //主体色
@@ -292,8 +292,10 @@ export interface ProjectDataType {
     //扩展参数
     extendParams?: extendParams;
 
-    //蓝图节点
-    bpNodes?: Record<string, NodeProps>;
+    //蓝图节点布局
+    bpNodeLayoutMap?: Record<string, BPNodeLayoutType>;
+    //蓝图节点配置
+    bpNodeConfigMap?: Record<string, any>;
     //蓝图线条
     bpLines?: Record<string, CanvasLineType>;
     //蓝图锚点之间的连线关系映射

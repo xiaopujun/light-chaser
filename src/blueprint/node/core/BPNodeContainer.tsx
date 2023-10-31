@@ -6,17 +6,19 @@ export interface BPNodeContainerProps {
     layout: BPNodeLayoutType;
 }
 
-export const BPNodeContainer: React.FC<BPNodeContainerProps> = ({layout}) => {
-
+export const BPNodeContainer: React.FC<BPNodeContainerProps> = React.memo(({layout}) => {
     const ref = useRef<HTMLDivElement>(null);
     useEffect(() => {
         const NodeController = bpNodeControllerMap.get(layout.type!);
         if (!NodeController) return;
         const ncIns = new NodeController();
         if (!ncIns) return;
-        const nodeInfo = ncIns.getNodeInfo(layout?.id!);
+        const {bpNodeControllerInsMap, bpNodeConfigMap} = bpStore;
+        //获取节点配置，优先从bpStore.bpNodeConfigMap中获取【已经保存的配置】，没有的，则调用controller的getNodeConfig方法获取【默认配置】
+        let nodeInfo = bpNodeConfigMap[layout.id!];
+        if (!nodeInfo)
+            nodeInfo = ncIns.getNodeInfo(layout.id!);
         ncIns.create(ref.current!, nodeInfo!).then((node) => {
-            const {bpNodeControllerInsMap} = bpStore;
             bpNodeControllerInsMap[layout.id!] = ncIns;
         });
     }, [layout.id, layout.type]);
@@ -31,4 +33,4 @@ export const BPNodeContainer: React.FC<BPNodeContainerProps> = ({layout}) => {
              }}
         />
     )
-}
+})

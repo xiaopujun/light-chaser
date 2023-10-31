@@ -2,6 +2,8 @@ import React from "react";
 import './BPNode.less';
 import {PointType} from "../types";
 import {AnchorPointType} from "./core/AbstractBPNodeController";
+import nodeIconMap from "./NodeIconMap";
+import {CodeSandboxOutlined} from "@ant-design/icons";
 
 export interface AnchorPointProps {
     id?: string;
@@ -22,8 +24,9 @@ export interface NodeProps {
 
 export default class BPNode extends React.PureComponent<NodeProps> {
     render() {
-        const {icon: Icon, name, input = [], output = [], titleBgColor = '#247057'} = this.props;
+        const {icon, name, input = [], output = [], titleBgColor = '#247057'} = this.props;
         const cpList = [...output, ...input];
+        const Icon = nodeIconMap.get(icon) || CodeSandboxOutlined;
         return (
             <div className={'bp-node'}>
                 <div className={'bp-node-header'} style={{backgroundColor: titleBgColor}}>

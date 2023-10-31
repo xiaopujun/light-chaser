@@ -2,7 +2,6 @@ import {action, makeObservable, observable} from "mobx";
 import Moveable from "react-moveable";
 import Selecto from "react-selecto";
 import {CanvasLineType, PointType} from "../types";
-import {NodeProps} from "../node/BPNode";
 import ObjectUtil from "../../utils/ObjectUtil";
 import {AbstractBPNodeController} from "../node/core/AbstractBPNodeController";
 
@@ -16,11 +15,8 @@ class BPStore {
     constructor() {
         makeObservable(this, {
             selectedNodes: observable,
-            bpNodes: observable,
             bpNodeLayoutMap: observable,
             setSelectedNodes: action,
-            addNodes: action,
-            updNodePos: action,
             addBPNodeLayout: action,
             updBpNodeLayout: action,
         });
@@ -32,9 +28,6 @@ class BPStore {
     //已经连接的线条列表(入库）
     bpLines: Record<string, CanvasLineType> = {};
 
-    //拖拽到蓝图中的节点（入库）
-    bpNodes: Record<string, NodeProps> = {};
-
     //锚点与线条的对应关系（入库），一个锚点可以连接多条线，用于位置更新时，快速找到线条并更新线条位置
     bpAPLineMap: Record<string, string[]> = {};
 
@@ -43,6 +36,9 @@ class BPStore {
 
     //蓝图节点控制器实例映射（入库）
     bpNodeControllerInsMap: Record<string, AbstractBPNodeController> = {};
+
+
+    bpNodeConfigMap: Record<string, any> = {};
 
     //被选中的蓝图节点列表
     selectedNodes: HTMLElement[] = [];
@@ -74,6 +70,25 @@ class BPStore {
     //蓝图画布缩放比例
     canvasScale: number = 1;
 
+    //获取所有节点信息及配置
+    getAllNodeConfig = (): Record<string, any> => {
+        if (!this.bpNodeLayoutMap)
+            return {};
+        const nodeConfigMap: Record<string, any> = {};
+        Object.keys(this.bpNodeLayoutMap).forEach((id: string) => {
+            nodeConfigMap[id] = this.bpNodeControllerInsMap[id].getConfig();
+        });
+        return nodeConfigMap;
+    }
+
+    setBpNodeLayoutMap = (layoutMap: Record<string, BPNodeLayoutType>) => {
+        this.bpNodeLayoutMap = layoutMap;
+    }
+
+    setBpNodeConfigMap = (configMap: Record<string, any>) => {
+        this.bpNodeConfigMap = configMap;
+    }
+
     addBPNodeLayout = (layout: BPNodeLayoutType) => {
         this.bpNodeLayoutMap[layout.id!] = layout;
     }
@@ -103,14 +118,6 @@ class BPStore {
         }
     }
 
-    //更新节点与线条的位置
-    updNodePos = (node: NodeProps) => {
-        const oldNode = this.bpNodes[node.id!];
-        if (oldNode) {
-            ObjectUtil.merge(oldNode, node);
-        }
-    }
-
     //更新线段的位置
     updLinePos = (line: CanvasLineType) => {
         const oldLine = this.bpLines[line.id!];
@@ -130,14 +137,6 @@ class BPStore {
 
     setLines = (connectedLines: Record<string, CanvasLineType>) => {
         this.bpLines = connectedLines;
-    }
-
-    setNodes = (nodes: Record<string, NodeProps>) => {
-        this.bpNodes = nodes;
-    }
-
-    addNodes = (node: NodeProps) => {
-        this.bpNodes[node.id!] = node;
     }
 
     addAPMap = (startAnchorId: string, endAnchorId: string) => {
@@ -205,16 +204,22 @@ class BPStore {
             return;
         //先删除节点上的线段，后删除节点
         ids.forEach(id => {
-            const node = this.bpNodes[id];
-            if (node) {
-                const aps = [...node.input!, ...node.output!];
+            const bpNodeController = this.bpNodeControllerInsMap[id];
+            if (bpNodeController) {
+                let nodeConfig = bpNodeController.getConfig();
+                const aps = [...nodeConfig.input!, ...nodeConfig.output!];
+                //删除与节点相关的连线
                 aps.forEach(ap => {
                     const lineIds = this.bpAPLineMap[ap.id!];
                     if (lineIds)
                         this.delLine(lineIds);
                 });
+
             }
-            delete this.bpNodes[id];
+            //删除节点布局信息
+            delete this.bpNodeLayoutMap[id];
+            //删除节点实例信息
+            delete this.bpNodeControllerInsMap[id];
         });
         this.setSelectedNodes([]);
     }

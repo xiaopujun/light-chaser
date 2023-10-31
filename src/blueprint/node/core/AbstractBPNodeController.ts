@@ -2,7 +2,7 @@ import AbstractController from "../../../framework/core/AbstractController";
 
 export interface NodeInfoType {
     id?: string;
-    icon?: any;
+    icon?: string;
     name?: string;
     type?: string;
     titleBgColor?: string;
@@ -26,7 +26,6 @@ export enum AnchorPointType {
     INPUT,
     OUTPUT
 }
-
 
 
 /**

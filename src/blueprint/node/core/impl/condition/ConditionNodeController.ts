@@ -3,7 +3,6 @@ import ComponentUtil from "../../../../../utils/ComponentUtil";
 import {UpdateOptions} from "../../../../../framework/core/AbstractController";
 import BPNode from "../../../BPNode";
 import {NodeType} from "../../../types";
-import {BranchesOutlined} from "@ant-design/icons";
 
 export interface ConditionConfigType {
 
@@ -37,7 +36,7 @@ export default class ConditionNodeController extends AbstractBPNodeController<Co
             name: "条件判断",
             titleBgColor: "#247ba6",
             type: "logical",
-            icon: BranchesOutlined,
+            icon: "BranchesOutlined",
             input: [
                 {
                     id: nodeId + '_' + NodeType.CONDITION + '_judge_' + AnchorPointType.INPUT,
