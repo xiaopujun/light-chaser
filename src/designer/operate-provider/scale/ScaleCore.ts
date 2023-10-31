@@ -2,8 +2,8 @@
  * 缩放参数计算核心类
  */
 class ScaleCore {
-    max: number = 8;
-    min: number = 0.25;
+    max: number = 10;
+    min: number = 0.01;
     scale: number = 1;
     ratio: number = 1;
 
