@@ -1,4 +1,5 @@
 import AbstractController from "../../../framework/core/AbstractController";
+import React, {ComponentType} from "react";
 
 export interface NodeInfoType {
     id?: string;
@@ -42,4 +43,6 @@ export abstract class AbstractBPNodeController<C = any> extends AbstractControll
      * 获取蓝图节点的配置信息
      */
     public abstract getNodeInfo(nodeId?: string): NodeInfoType | null;
+
+    public abstract getConfigComponent(): React.ComponentType<any> | null;
 }

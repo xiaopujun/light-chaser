@@ -21,6 +21,10 @@ class BPLeftStore {
     setUsedLayerNodes = (node: string, used: boolean) => {
         this.usedLayerNodes[node] = used;
     }
+
+    initUsedLayerNodes = (usedNodes: Record<string, boolean>) => {
+        this.usedLayerNodes = usedNodes;
+    }
 }
 
 const bpLeftStore = new BPLeftStore();

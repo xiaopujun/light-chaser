@@ -8,6 +8,7 @@ import {AbstractComponentDefinition} from "../../framework/core/AbstractComponen
 import {AbstractOperator} from "../../framework/operate/AbstractOperator";
 import AbstractConvert from "../../framework/convert/AbstractConvert";
 import bpStore from "../../blueprint/store/BPStore";
+import bpLeftStore from "../../blueprint/left/BPLeftStore";
 
 export default class EditorDesignerLoader extends AbstractDesignerLoader {
 
@@ -129,6 +130,7 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
                 const {setMinLevel, setMaxLevel} = eventOperateStore;
                 setMinLevel(store.extendParams?.minLevel || 0);
                 setMaxLevel(store.extendParams?.maxLevel || 0);
+
                 //初始化bpStore（蓝图状态） todo 是否可以以更规范的方式处理？
                 const {setAPMap, setLines, setAPLineMap, setBpNodeLayoutMap, setBpNodeConfigMap} = bpStore;
                 setAPMap(store.bpAPMap || {});
@@ -136,6 +138,13 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
                 setAPLineMap(store.bpAPLineMap || {});
                 setBpNodeLayoutMap(store.bpNodeLayoutMap || {});
                 setBpNodeConfigMap(store.bpNodeConfigMap || {});
+                //初始化蓝图左侧节点列表
+                const {initUsedLayerNodes} = bpLeftStore;
+                const usedLayerNodes: Record<string, boolean> = {};
+                Object.keys(store.bpNodeLayoutMap || {}).forEach(key => {
+                    usedLayerNodes[key] = true;
+                })
+                initUsedLayerNodes(usedLayerNodes);
             }
             setLoaded(true);
         })

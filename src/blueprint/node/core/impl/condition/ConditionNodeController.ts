@@ -3,6 +3,8 @@ import ComponentUtil from "../../../../../utils/ComponentUtil";
 import {UpdateOptions} from "../../../../../framework/core/AbstractController";
 import BPNode from "../../../BPNode";
 import {NodeType} from "../../../types";
+import React, {ComponentType} from "react";
+import {ConditionNodeConfig} from "./ConditionNodeConfig";
 
 export interface ConditionConfigType {
 
@@ -57,6 +59,10 @@ export default class ConditionNodeController extends AbstractBPNodeController<Co
                 }
             ]
         };
+    }
+
+    public getConfigComponent(): React.ComponentType | null {
+        return ConditionNodeConfig;
     }
 
 }

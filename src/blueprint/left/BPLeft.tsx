@@ -123,8 +123,9 @@ export const BPNodeList = observer(() => {
 })
 
 export const BPLayerNodeList = observer(() => {
-    const {layoutConfigs,} = designerStore;
+    const {layoutConfigs} = designerStore;
     const {usedLayerNodes} = bpLeftStore;
+
     return (
         <>
             {

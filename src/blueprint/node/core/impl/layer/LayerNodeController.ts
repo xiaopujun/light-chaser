@@ -5,6 +5,7 @@ import BPNode, {NodeProps} from "../../../BPNode";
 import designerStore from "../../../../../designer/store/DesignerStore";
 import EditorDesignerLoader from "../../../../../designer/loader/EditorDesignerLoader";
 import {NodeType} from "../../../types";
+import React from "react";
 
 export interface LayerNodeConfig extends NodeProps {
 
@@ -58,6 +59,10 @@ export default class LayerNodeController extends AbstractBPNodeController<LayerN
             input,
             output
         };
+    }
+
+    getConfigComponent(): React.ComponentType | null {
+        return null;
     }
 
 }

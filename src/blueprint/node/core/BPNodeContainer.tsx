@@ -1,6 +1,7 @@
 import React, {useEffect, useRef} from "react";
 import bpStore, {BPNodeLayoutType} from "../../store/BPStore";
 import bpNodeControllerMap from "./impl/BPNodeControllerMap";
+import bpRightStore from "../../right/BPRightStore";
 
 export interface BPNodeContainerProps {
     layout: BPNodeLayoutType;
@@ -8,6 +9,12 @@ export interface BPNodeContainerProps {
 
 export const BPNodeContainer: React.FC<BPNodeContainerProps> = React.memo(({layout}) => {
     const ref = useRef<HTMLDivElement>(null);
+
+    const activeNodeConfig = (id: string) => {
+        const {setActiveNode} = bpRightStore;
+        setActiveNode(id);
+    }
+
     useEffect(() => {
         const NodeController = bpNodeControllerMap.get(layout.type!);
         if (!NodeController) return;
@@ -25,9 +32,9 @@ export const BPNodeContainer: React.FC<BPNodeContainerProps> = React.memo(({layo
     const {canvasTranslate, canvasScale} = bpStore;
     const {position, id} = layout;
     return (
-
         <div ref={ref} className={'bp-node-container'}
              id={`bpnode:${id}`}
+             onDoubleClick={() => activeNodeConfig(id!)}
              style={{
                  transform: 'translate(' + (position!.x - canvasTranslate.x) / canvasScale + 'px,' + (position!.y - canvasTranslate.y) / canvasScale + 'px)',
                  position: 'absolute',
