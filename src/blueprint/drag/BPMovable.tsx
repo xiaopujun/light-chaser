@@ -117,7 +117,6 @@ export const BPMovable = observer((props: BPMovableProps) => {
             if (!lastEvent) return;
             const {beforeTranslate} = lastEvent;
             const nodeId = target.id.split(':')[1];
-            console.log('onDragEnd', beforeTranslate[0], beforeTranslate[1]);
             updNodeAndLinePos(nodeId, {x: beforeTranslate[0], y: beforeTranslate[1]});
         }
 

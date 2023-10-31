@@ -22,10 +22,10 @@ export interface NodeProps {
 
 export default class BPNode extends React.PureComponent<NodeProps> {
     render() {
-        const {icon: Icon, name, input = [], output = [], titleBgColor = '#247057', id} = this.props;
+        const {icon: Icon, name, input = [], output = [], titleBgColor = '#247057'} = this.props;
         const cpList = [...output, ...input];
         return (
-            <div className={'bp-node'} id={`bpnode:${id}`}>
+            <div className={'bp-node'}>
                 <div className={'bp-node-header'} style={{backgroundColor: titleBgColor}}>
                     <div className={'bp-node-icon'}><Icon/>&nbsp;</div>
                     <div className={'bp-node-title'}>{name}</div>

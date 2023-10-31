@@ -22,6 +22,7 @@ class BPStore {
             addNodes: action,
             updNodePos: action,
             addBPNodeLayout: action,
+            updBpNodeLayout: action,
         });
     }
 

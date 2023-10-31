@@ -12,6 +12,7 @@ import bpStore from "../store/BPStore";
 import bpLeftStore from "./BPLeftStore";
 import {observer} from "mobx-react";
 import designerStore from "../../designer/store/DesignerStore";
+import {idGenerate} from "../../utils/IdGenerate";
 
 export const BPLeft: React.FC = () => {
     return (
@@ -76,13 +77,16 @@ const dragover = (event: any) => {
 //释放拖拽元素
 const drop = (event: any) => {
     event.preventDefault();
-    const nodeId = (event as any).dataTransfer.getData('nodeId');
+    let nodeId = (event as any).dataTransfer.getData('nodeId');
     const type = (event as any).dataTransfer.getData('type');
     //获取鼠标位置
     const position = {x: event.layerX, y: event.layerY};
     if (type === 'layer-node') {
         const {setUsedLayerNodes} = bpLeftStore;
         setUsedLayerNodes(nodeId, true);
+    } else {
+        //非图层节点，需要单独生成一个唯一节点id
+        nodeId = idGenerate.generateId();
     }
     const {addBPNodeLayout} = bpStore;
     addBPNodeLayout({id: nodeId, type, position});

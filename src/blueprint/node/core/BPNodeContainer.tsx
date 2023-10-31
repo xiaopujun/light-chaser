@@ -21,14 +21,13 @@ export const BPNodeContainer: React.FC<BPNodeContainerProps> = ({layout}) => {
         });
     }, [layout.id, layout.type]);
     const {canvasTranslate, canvasScale} = bpStore;
-    const {position} = layout;
+    const {position, id} = layout;
     return (
-        <div ref={ref} className={'.bp-node-container'}
+        <div ref={ref} className={'bp-node-container'}
+             id={`bpnode:${id}`}
              style={{
                  transform: 'translate(' + (position!.x - canvasTranslate.x) / canvasScale + 'px,' + (position!.y - canvasTranslate.y) / canvasScale + 'px)',
                  position: 'absolute',
-                 width: 160,
-                 minHeight: 80,
              }}
         />
     )

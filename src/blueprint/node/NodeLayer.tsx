@@ -8,7 +8,6 @@ import {BPNodeContainer} from "./core/BPNodeContainer";
 
 export const NodeLayer = observer(() => {
     const {bpNodeLayoutMap} = bpStore;
-
     return (
         <div id={'bp-node-container'} style={{position: 'relative', width: '100%', height: '100%'}} ref={ref => {
             const {setNodeContainerRef} = bpStore;
