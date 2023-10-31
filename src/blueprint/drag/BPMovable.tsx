@@ -45,17 +45,21 @@ export const reRenderLine = () => {
 }
 
 export const updNodeAndLinePos = (nodeId: string, position: PointType) => {
-    const {bpNodes, updNodePos, bpAPLineMap, bpLines, updLinePos, canvasOffset} = bpStore;
+    const {
+        bpNodeControllerInsMap, bpAPLineMap, bpLines,
+        updLinePos, updBpNodeLayout, canvasOffset
+    } = bpStore;
     //更新节点位置
-    updNodePos({
+    updBpNodeLayout({
         id: nodeId,
         position: {
             x: position.x,
             y: position.y
         }
-    });
+    })
     //更新线段位置
-    const {input = [], output = []} = bpNodes[nodeId];
+    const bpNodeCtrlIns = bpNodeControllerInsMap[nodeId];
+    const {input = [], output = []} = bpNodeCtrlIns.getConfig();
     const aps = [...input!, ...output!];
     aps && aps.forEach(ap => {
         const lineIds = bpAPLineMap[ap.id!];
@@ -113,11 +117,8 @@ export const BPMovable = observer((props: BPMovableProps) => {
             if (!lastEvent) return;
             const {beforeTranslate} = lastEvent;
             const nodeId = target.id.split(':')[1];
+            console.log('onDragEnd', beforeTranslate[0], beforeTranslate[1]);
             updNodeAndLinePos(nodeId, {x: beforeTranslate[0], y: beforeTranslate[1]});
-        }
-
-        const onDragGroupStart = (e: any) => {
-            // console.log(e)
         }
 
         const onDragGroup = (e: any) => {
@@ -149,7 +150,6 @@ export const BPMovable = observer((props: BPMovableProps) => {
                           onDragStart={onDragStart}
                           onDrag={onDrag}
                           onDragEnd={onDragEnd}
-                          onDragGroupStart={onDragGroupStart}
                           onDragGroup={onDragGroup}
                           onDragGroupEnd={onDragGroupEnd}
                 />

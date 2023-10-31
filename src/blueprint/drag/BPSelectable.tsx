@@ -18,6 +18,7 @@ export const BPSelectable: React.FC<BPSelectableProps> = (props) => {
     const onDragStart = (e: any) => {
         const {bpMovableRef, selectedNodes} = bpStore;
         const target = e.inputEvent.target;
+        console.log('onDragStart', (bpMovableRef!.isMoveableElement(target)));
         if ((bpMovableRef!.isMoveableElement(target))
             || selectedNodes.some((t: any) => t === target || t.contains(target))
         ) {
@@ -28,7 +29,7 @@ export const BPSelectable: React.FC<BPSelectableProps> = (props) => {
     const onSelectEnd = (e: OnSelectEnd) => {
         let {selected} = e;
         const {bpMovableRef, setSelectedNodes} = bpStore;
-        selected = selected.filter((item) => item.classList.contains('bp-node'));
+        selected = selected.filter((item) => item.classList.contains('.bp-node-container'));
         //更新选中的组件
         setSelectedNodes(selected as HTMLElement[]);
         if (selected.length === 0) return;
@@ -47,7 +48,7 @@ export const BPSelectable: React.FC<BPSelectableProps> = (props) => {
             {children}
             <Selecto ref={selectorRef}
                      dragContainer={".blue-print"}
-                     selectableTargets={[".bp-node"]}
+                     selectableTargets={[".bp-node-container"]}
                      hitRate={0}
                      ratio={0}
                      selectByClick={true}

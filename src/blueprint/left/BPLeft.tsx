@@ -12,7 +12,6 @@ import bpStore from "../store/BPStore";
 import bpLeftStore from "./BPLeftStore";
 import {observer} from "mobx-react";
 import designerStore from "../../designer/store/DesignerStore";
-import {NodeFactory} from "../node/factory/NodeFactory";
 
 export const BPLeft: React.FC = () => {
     return (
@@ -85,10 +84,8 @@ const drop = (event: any) => {
         const {setUsedLayerNodes} = bpLeftStore;
         setUsedLayerNodes(nodeId, true);
     }
-    const {addNodes} = bpStore;
-    const nodeObj = NodeFactory.createNode(type, nodeId);
-    nodeObj!.position = position;
-    addNodes(nodeObj!);
+    const {addBPNodeLayout} = bpStore;
+    addBPNodeLayout({id: nodeId, type, position});
 }
 
 export const BPNodeList = observer(() => {

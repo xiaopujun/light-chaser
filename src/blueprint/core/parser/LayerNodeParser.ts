@@ -3,7 +3,7 @@ import {BPTransportNode} from "../BPExecutor";
 import designerStore from "../../../designer/store/DesignerStore";
 import EditorDesignerLoader from "../../../designer/loader/EditorDesignerLoader";
 import {ActionInfo} from "../../../framework/core/AbstractComponentDefinition";
-import {AnchorPointType} from "../../node/core/AbstractNode";
+import {AnchorPointType} from "../../node/core/AbstractBPNodeController";
 
 class LayerNodeParser extends AbstractNodeParser {
     doParse(transportNode: BPTransportNode, params: any): void {

@@ -4,15 +4,24 @@ import Selecto from "react-selecto";
 import {CanvasLineType, PointType} from "../types";
 import {NodeProps} from "../node/BPNode";
 import ObjectUtil from "../../utils/ObjectUtil";
+import {AbstractBPNodeController} from "../node/core/AbstractBPNodeController";
+
+export interface BPNodeLayoutType {
+    id?: string;
+    type?: string;
+    position?: PointType;
+}
 
 class BPStore {
     constructor() {
         makeObservable(this, {
             selectedNodes: observable,
             bpNodes: observable,
+            bpNodeLayoutMap: observable,
             setSelectedNodes: action,
             addNodes: action,
             updNodePos: action,
+            addBPNodeLayout: action,
         });
     }
 
@@ -27,6 +36,12 @@ class BPStore {
 
     //锚点与线条的对应关系（入库），一个锚点可以连接多条线，用于位置更新时，快速找到线条并更新线条位置
     bpAPLineMap: Record<string, string[]> = {};
+
+    //蓝图节点布局信息映射（入库）
+    bpNodeLayoutMap: Record<string, BPNodeLayoutType> = {};
+
+    //蓝图节点控制器实例映射（入库）
+    bpNodeControllerInsMap: Record<string, AbstractBPNodeController> = {};
 
     //被选中的蓝图节点列表
     selectedNodes: HTMLElement[] = [];
@@ -57,6 +72,16 @@ class BPStore {
 
     //蓝图画布缩放比例
     canvasScale: number = 1;
+
+    addBPNodeLayout = (layout: BPNodeLayoutType) => {
+        this.bpNodeLayoutMap[layout.id!] = layout;
+    }
+
+    updBpNodeLayout = (layout: BPNodeLayoutType) => {
+        const oldLayout = this.bpNodeLayoutMap[layout.id!];
+        if (oldLayout)
+            ObjectUtil.merge(oldLayout, layout);
+    }
 
     setSelectedLines = (lines: CanvasLineType[]) => {
         this.selectedLines = lines;

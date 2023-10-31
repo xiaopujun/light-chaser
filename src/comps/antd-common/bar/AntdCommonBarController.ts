@@ -7,7 +7,7 @@ import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
 import BPExecutor from "../../../blueprint/core/BPExecutor";
 import {NodeType} from "../../../blueprint/node/types";
-import {AnchorPointType} from "../../../blueprint/node/core/AbstractNode";
+import {AnchorPointType} from "../../../blueprint/node/core/AbstractBPNodeController";
 
 export interface AntdBarProps extends ComponentBaseProps {
     style?: WritableBarOptions;
