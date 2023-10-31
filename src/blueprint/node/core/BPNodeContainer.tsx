@@ -18,18 +18,20 @@ export const BPNodeContainer: React.FC<BPNodeContainerProps> = React.memo(({layo
         let nodeInfo = bpNodeConfigMap[layout.id!];
         if (!nodeInfo)
             nodeInfo = ncIns.getNodeInfo(layout.id!);
-        ncIns.create(ref.current!, nodeInfo!).then((node) => {
+        ncIns.create(ref.current!, nodeInfo!).then(() => {
             bpNodeControllerInsMap[layout.id!] = ncIns;
         });
     }, [layout.id, layout.type]);
     const {canvasTranslate, canvasScale} = bpStore;
     const {position, id} = layout;
     return (
+
         <div ref={ref} className={'bp-node-container'}
              id={`bpnode:${id}`}
              style={{
                  transform: 'translate(' + (position!.x - canvasTranslate.x) / canvasScale + 'px,' + (position!.y - canvasTranslate.y) / canvasScale + 'px)',
                  position: 'absolute',
+                 overflow: 'visible'
              }}
         />
     )
