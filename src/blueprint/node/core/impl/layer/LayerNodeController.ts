@@ -3,10 +3,10 @@ import {UpdateOptions} from "../../../../../framework/core/AbstractController";
 import ComponentUtil from "../../../../../utils/ComponentUtil";
 import BPNode, {NodeProps} from "../../../BPNode";
 import designerStore from "../../../../../designer/store/DesignerStore";
-import EditorDesignerLoader from "../../../../../designer/loader/EditorDesignerLoader";
 import React from "react";
 import {ActionInfo} from "../../../../../framework/core/AbstractComponentDefinition";
 import BPExecutor from "../../../../core/BPExecutor";
+import DesignerLoaderFactory from "../../../../../designer/loader/DesignerLoaderFactory";
 
 export interface LayerNodeConfig extends NodeProps {
 
@@ -34,7 +34,7 @@ export default class LayerNodeController extends AbstractBPNodeController<LayerN
             if (!compInstance)
                 return;
             const {type} = layoutConfigs[nodeId];
-            const {customComponentInfoMap} = EditorDesignerLoader.getInstance();
+            const {customComponentInfoMap} = DesignerLoaderFactory.getLoader();
             let actionList = customComponentInfoMap[type!].getActionList();
             //2.获取当前组件可执行的动作列表
             const action = actionList.find((action: ActionInfo) => action.id === anchorId);
@@ -56,7 +56,7 @@ export default class LayerNodeController extends AbstractBPNodeController<LayerN
     getNodeInfo(nodeId: string): NodeInfoType | null {
         const {layoutConfigs} = designerStore;
         const compLayout = layoutConfigs[nodeId];
-        const {customComponentInfoMap} = EditorDesignerLoader.getInstance();
+        const {customComponentInfoMap} = DesignerLoaderFactory.getLoader();
         const output = customComponentInfoMap[compLayout.type!].getEventList().map((item) => {
             return {
                 id: nodeId + ':' + item.id + ':' + AnchorPointType.OUTPUT,

@@ -2,9 +2,9 @@ import React, {Component, ReactElement, Suspense} from 'react';
 import './DesignerHeader.less';
 import headerStore from "./HeaderStore";
 import {observer} from "mobx-react";
-import EditorDesignerLoader from "../loader/EditorDesignerLoader";
 import {BluePrintHdImpl} from "./items/blue-print/BluePrintHdImpl";
 import Loading from "../../ui/loading/Loading";
+import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
 
 const ProjectHdItemImpl = React.lazy(() => import('./items/project/ProjectHdItemImpl'));
 const CanvasHdConfigImpl = React.lazy(() => import('./items/canvas/CanvasHdConfigImpl'));
@@ -14,7 +14,7 @@ class Header extends Component<any> {
 
     buildHeaderList = (): Array<ReactElement> => {
         let items: Array<ReactElement> = [];
-        const {headerItemInstances} = EditorDesignerLoader.getInstance();
+        const {headerItemInstances} = DesignerLoaderFactory.getLoader();
         for (let i = 0; i < headerItemInstances.length; i++) {
             const {icon: Icon, name, onClick} = headerItemInstances[i];
             items.push(

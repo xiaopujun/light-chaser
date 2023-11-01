@@ -78,11 +78,22 @@ class BPStore {
     getAllNodeConfig = (): Record<string, any> => {
         if (!this.bpNodeLayoutMap)
             return {};
-        const nodeConfigMap: Record<string, any> = {};
-        Object.keys(this.bpNodeLayoutMap).forEach((id: string) => {
-            nodeConfigMap[id] = this.bpNodeControllerInsMap[id].getConfig();
-        });
-        return nodeConfigMap;
+
+        const bpNodeLayoutList = Object.keys(this.bpNodeLayoutMap);
+        //只有在this.bpNodeControllerInsMap数量大于0时候才需要获取蓝图节点配置
+        if (Object.keys(this.bpNodeControllerInsMap).length > 0) {
+            const nodeConfigMap: Record<string, any> = {};
+            bpNodeLayoutList.forEach((id: string) => {
+                nodeConfigMap[id] = this.bpNodeControllerInsMap[id].getConfig();
+            });
+            return nodeConfigMap;
+        } else {
+            //否则直接返回this.bpNodeConfigMap中的数据即可
+            //这包含两种情况：
+            // 1. 打开过蓝图编辑器，但是没有产生过节点实例，或者实例被删除
+            // 2. 蓝图数据保存过，也产生过节点实例，但是重新打开后没有编辑过蓝图，此时不会产生新的蓝图数据，直接返回之前的数据即可
+            return this.bpNodeConfigMap;
+        }
     }
 
     setBpNodeLayoutMap = (layoutMap: Record<string, BPNodeLayoutType>) => {

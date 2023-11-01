@@ -5,14 +5,13 @@ import designerStore from "../store/DesignerStore";
 import ComponentContainer from "../../framework/core/ComponentContainer";
 import {observer} from "mobx-react";
 import Loading from "../../ui/loading/Loading";
-import {ViewDesignerLoader} from "../loader/ViewDesignerLoader";
-import {toJS} from "mobx";
+import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
 
 class DesignerView extends Component {
 
     constructor(props: any) {
         super(props);
-        ViewDesignerLoader.getInstance().load();
+        DesignerLoaderFactory.getLoader().load();
     }
 
     generateElement = () => {

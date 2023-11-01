@@ -9,7 +9,7 @@ export const LogicalProcessNodeConfig: React.FC<BPRightConfigProps> = (props) =>
     let handleCode = config.handle || "function handle(data) { \n \n }";
     const onCodeChange = debounce((value: string | undefined) => {
         if (!value) return;
-        controller?.update({handle: value});
+        controller?.update({handler: value});
     }, 500);
     return (
         <div className={'logical-process-node-config'}>

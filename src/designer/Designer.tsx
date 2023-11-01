@@ -13,18 +13,18 @@ import FloatConfigs from "./float-configs/FloatConfigs";
 import contextMenuStore from "./operate-provider/right-click-menu/ContextMenuStore";
 import eventOperateStore from "./operate-provider/EventOperateStore";
 import eventManager from "./operate-provider/core/EventManager";
-import EditorDesignerLoader from "./loader/EditorDesignerLoader";
 import designerStore from "./store/DesignerStore";
 import DesignerHeader from "./header/DesignerHeader";
 import DesignerCanvas from "./canvas/DesignerCanvas";
 import {observer} from "mobx-react";
 import Loading from "../ui/loading/Loading";
+import DesignerLoaderFactory from "./loader/DesignerLoaderFactory";
 
 class Designer extends Component {
 
     componentDidMount() {
         //加载设计器
-        EditorDesignerLoader.getInstance().load();
+        DesignerLoaderFactory.getLoader().load();
         //加载事件到事件管理器
         registerEventToManager();
         //绑定事件到dom元素

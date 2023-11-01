@@ -6,11 +6,11 @@ import './ConfigContent.less';
 import designerStore from "../store/DesignerStore";
 import {AbstractComponentDefinition} from "../../framework/core/AbstractComponentDefinition";
 import {ConfigType} from "./ConfigType";
-import EditorDesignerLoader from "../loader/EditorDesignerLoader";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
 import ObjectUtil from "../../utils/ObjectUtil";
 import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryRecordOperateProxy";
 import Loading from "../../ui/loading/Loading";
+import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
 
 class ConfigContent extends Component {
 
@@ -36,7 +36,7 @@ class ConfigContent extends Component {
     buildConfigContent = () => {
         const {compInstances} = designerStore;
         let {activeMenu, activeElem} = rightStore;
-        let abstractConfigObj: AbstractComponentDefinition = EditorDesignerLoader.getInstance().customComponentInfoMap[activeElem.type + '']
+        let abstractConfigObj: AbstractComponentDefinition = DesignerLoaderFactory.getLoader().customComponentInfoMap[activeElem.type + '']
         if (!abstractConfigObj) return;
         let configMapping = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp: React.ComponentType<ConfigType> = configMapping![activeMenu];

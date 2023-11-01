@@ -3,7 +3,6 @@ import designerStore from "../../store/DesignerStore";
 import {MovableItemType} from "../movable/types";
 import {SaveType} from "../../DesignerType";
 import {cloneDeep, throttle} from "lodash";
-import EditorDesignerLoader from "../../loader/EditorDesignerLoader";
 import {historyOperator} from "../undo-redo/HistoryOperator";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import undoRedoMap from "../undo-redo/core";
@@ -15,6 +14,7 @@ import DateUtil from "../../../utils/DateUtil";
 import bpStore from "../../../blueprint/store/BPStore";
 import {reRenderLine} from "../../../blueprint/drag/BPMovable";
 import bpLeftStore from "../../../blueprint/left/BPLeftStore";
+import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
 
 export const selectAll = () => {
     let comps = document.getElementsByClassName('lc-comp-item');
@@ -141,7 +141,7 @@ export const doSave = throttle(() => {
             proData.bpAPLineMap = bpAPLineMap;
             proData.bpNodeConfigMap = getAllNodeConfig();
             proData.bpNodeLayoutMap = bpNodeLayoutMap;
-            EditorDesignerLoader.getInstance().abstractOperatorMap[saveType].saveProject(cloneDeep(proData));
+            DesignerLoaderFactory.getLoader().abstractOperatorMap[saveType].saveProject(cloneDeep(proData));
         } else if (saveType === SaveType.SERVER) {
             alert("server save");
         }

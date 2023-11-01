@@ -9,8 +9,8 @@ import {MovableItemType} from "../../operate-provider/movable/types";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 import FloatPanel from "../common/FloatPanel";
 import {BaseInfoType} from "../../DesignerType";
-import EditorDesignerLoader from "../../loader/EditorDesignerLoader";
 import Input from "../../../ui/input/Input";
+import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
 
 class CompList extends Component {
 
@@ -56,7 +56,7 @@ class CompList extends Component {
         for (let i = 0; i < compInfoArr.length; i++) {
             let compInfo: any = compInfoArr[i];
             const {compName, compKey} = compInfo;
-            let lcCompInit: any = EditorDesignerLoader.getInstance().customComponentInfoMap[compKey];
+            let lcCompInit: any = DesignerLoaderFactory.getLoader().customComponentInfoMap[compKey];
             let chartImg = lcCompInit.getChartImg();
             chartDom.push(
                 <div key={i + ''} className={'list-item droppable-element'}>

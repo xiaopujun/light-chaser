@@ -3,7 +3,7 @@ import {MenuInfo} from "./MenuType";
 import {AbstractComponentDefinition} from "../../framework/core/AbstractComponentDefinition";
 import {ActiveElem} from "../DesignerType";
 import {PictureFilled} from "@ant-design/icons";
-import EditorDesignerLoader from "../loader/EditorDesignerLoader";
+import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
 
 
 export const bgMenu: MenuInfo[] = [{
@@ -60,7 +60,7 @@ class RightStore {
             return;
         }
         //更新菜单列表
-        this.menus = (EditorDesignerLoader.getInstance().customComponentInfoMap[type!] as AbstractComponentDefinition).getMenuList() || [];
+        this.menus = (DesignerLoaderFactory.getLoader().customComponentInfoMap[type!] as AbstractComponentDefinition).getMenuList() || [];
         if (this.menus.length > 0) {
             let setNewActiveMenu = true;
             for (let i = 0; i < this.menus.length; i++) {

@@ -9,8 +9,8 @@ import {idGenerate} from "../../utils/IdGenerate";
 import {LocalConstant} from "../LocalConstant";
 import {message} from "antd";
 import {cloneDeep} from "lodash";
-import EditorDesignerLoader from "../../designer/loader/EditorDesignerLoader";
 import {ComponentBaseProps} from "../../comps/common-component/common-types";
+import DesignerLoaderFactory from "../../designer/loader/DesignerLoaderFactory";
 
 /**
  * 本地项目数据操作实现
@@ -43,7 +43,7 @@ class LocalOperator extends AbstractOperator {
         projectData.extendParams!.maxLevel = maxLevel;
         projectData.extendParams!.minLevel = minLevel;
         // 3. 处理数据转换
-        const {abstractConvertMap} = EditorDesignerLoader.getInstance();
+        const {abstractConvertMap} = DesignerLoaderFactory.getLoader();
         const {elemConfigs} = projectData;
         Object.keys(elemConfigs!).forEach((key: string) => {
             const elemConfig = elemConfigs![key] as ComponentBaseProps;
@@ -97,7 +97,7 @@ class LocalOperator extends AbstractOperator {
         const {lastTimeSave, setLastTimeSave} = designerStore;
         const duringTime = updateTime - lastTimeSave;
         //2. 处理数据转换
-        const {abstractConvertMap} = EditorDesignerLoader.getInstance();
+        const {abstractConvertMap} = DesignerLoaderFactory.getLoader();
         const {elemConfigs} = projectData;
         Object.keys(elemConfigs!).forEach((key: string) => {
             const elemConfig = elemConfigs![key] as ComponentBaseProps;
@@ -167,7 +167,7 @@ class LocalOperator extends AbstractOperator {
         const projectData = await localforage.getItem(id);
         if (!projectData) return null;
         //处理数据转换
-        const {abstractConvertMap} = EditorDesignerLoader.getInstance();
+        const {abstractConvertMap} = DesignerLoaderFactory.getLoader();
         const {elemConfigs} = projectData as ProjectDataType;
         for (const key of Object.keys(elemConfigs!)) {
             const elemConfig = elemConfigs![key] as ComponentBaseProps;

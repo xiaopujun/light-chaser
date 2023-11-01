@@ -3,21 +3,25 @@ import {MovableItemType} from "../movable/types";
 import {
     AddDataType,
     DelDataType,
-    DragDataType, HideDataType,
+    DragDataType,
+    HideDataType,
     HistoryRecordType,
-    HistoryType, LockDataType, OrderDataType,
-    ResizeDataType, StyleDataType
+    HistoryType,
+    LockDataType,
+    OrderDataType,
+    ResizeDataType,
+    StyleDataType
 } from "./HistoryType";
 import {historyOperator} from "./HistoryOperator";
 import eventOperateStore from "../EventOperateStore";
 import {AbstractComponentDefinition} from "../../../framework/core/AbstractComponentDefinition";
-import EditorDesignerLoader from "../../loader/EditorDesignerLoader";
 import {toJS} from "mobx";
 import rightStore from "../../right/RightStore";
 import {idGenerate} from "../../../utils/IdGenerate";
 import {cloneDeep} from "lodash";
 import layerListStore from "../../float-configs/layer-list/LayerListStore";
 import {ConfigureObjectFragments} from "../../../utils/ObjectUtil";
+import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
 
 class HistoryRecordOperateProxy {
 
@@ -107,7 +111,7 @@ class HistoryRecordOperateProxy {
 
     public doAdd(container: HTMLDivElement | null, layout: MovableItemType): void {
         const {elemConfigs} = designerStore;
-        let componentDefine: AbstractComponentDefinition = EditorDesignerLoader.getInstance().customComponentInfoMap[layout!.type + ''];
+        let componentDefine: AbstractComponentDefinition = DesignerLoaderFactory.getLoader().customComponentInfoMap[layout!.type + ''];
         if (componentDefine) {
             const AbsCompImpl = componentDefine.getComponent();
             if (AbsCompImpl) {
