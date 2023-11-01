@@ -145,7 +145,7 @@ export const BPMovable = observer((props: BPMovableProps) => {
                           target={selectedNodes}
                           draggable={true}
                           origin={false}
-                          hideDefaultLines={true}
+                          hideDefaultLines={false}
                           onDragStart={onDragStart}
                           onDrag={onDrag}
                           onDragEnd={onDragEnd}

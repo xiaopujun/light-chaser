@@ -4,7 +4,7 @@ import {BPSelectable} from "../drag/BPSelectable";
 import {observer} from "mobx-react";
 import bpStore from "../store/BPStore";
 import {BPDragScaleContainer} from "./BPDragScaleContainer";
-import {BPNodeContainer} from "./core/BPNodeContainer";
+import {BPNodeContainer} from "./core/node-container/BPNodeContainer";
 
 export const NodeLayer = observer(() => {
     const {bpNodeLayoutMap} = bpStore;

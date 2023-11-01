@@ -4,6 +4,11 @@ import {observer} from "mobx-react";
 import bpStore from "../store/BPStore";
 import bpRightStore from "./BPRightStore";
 import Accordion from "../../ui/accordion/Accordion";
+import {AbstractBPNodeController} from "../node/core/AbstractBPNodeController";
+
+export interface BPRightConfigProps {
+    controller?: AbstractBPNodeController;
+}
 
 export const BPRight: React.FC = observer(() => {
     const {bpNodeControllerInsMap} = bpStore;
@@ -13,7 +18,7 @@ export const BPRight: React.FC = observer(() => {
     if (!nodeConfig)
         return <div className={'bp-right node-config-empty-info'}>请激活节点配置...</div>
     const apList = [...nodeConfig.input, ...nodeConfig.output]
-    const ConfigComponent: React.ComponentType | null = activeNodeController.getConfigComponent();
+    const ConfigComponent: React.ComponentType<BPRightConfigProps> | null = activeNodeController.getConfigComponent();
     return (
         <div className={'bp-right bp-node-config'}>
             <div className={'bp-node-config-header'}>
@@ -38,7 +43,7 @@ export const BPRight: React.FC = observer(() => {
                 ConfigComponent &&
                 <div className={'bp-node-config-detail'}>
                     <Accordion label={'节点配置'}>
-                        <ConfigComponent/>
+                        <ConfigComponent controller={activeNodeController}/>
                     </Accordion>
                 </div>
             }

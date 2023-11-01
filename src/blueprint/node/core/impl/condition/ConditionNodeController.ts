@@ -3,11 +3,12 @@ import ComponentUtil from "../../../../../utils/ComponentUtil";
 import {UpdateOptions} from "../../../../../framework/core/AbstractController";
 import BPNode from "../../../BPNode";
 import {NodeType} from "../../../types";
-import React, {ComponentType} from "react";
+import React from "react";
 import {ConditionNodeConfig} from "./ConditionNodeConfig";
+import ObjectUtil from "../../../../../utils/ObjectUtil";
 
-export interface ConditionConfigType {
-
+export interface ConditionConfigType extends NodeInfoType {
+    handler?: string;
 }
 
 export default class ConditionNodeController extends AbstractBPNodeController<ConditionConfigType> {
@@ -29,15 +30,15 @@ export default class ConditionNodeController extends AbstractBPNodeController<Co
     }
 
     update(config: ConditionConfigType, upOp?: UpdateOptions | undefined): void {
+        this.config = ObjectUtil.merge(this.config, config);
     }
 
     getNodeInfo(nodeId?: string): NodeInfoType | null {
-        //生成id
         return {
             id: nodeId,
             name: "条件判断",
             titleBgColor: "#247ba6",
-            type: "logical",
+            type: "condition-node",
             icon: "BranchesOutlined",
             input: [
                 {

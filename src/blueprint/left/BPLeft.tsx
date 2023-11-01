@@ -5,7 +5,7 @@ import {
     BlockOutlined,
     BranchesOutlined,
     CodeSandboxOutlined,
-    FilterOutlined,
+    FilterOutlined, FunctionOutlined,
     GatewayOutlined
 } from "@ant-design/icons";
 import bpStore from "../store/BPStore";
@@ -148,13 +148,29 @@ export const BPLayerNodeList = observer(() => {
 })
 
 export const BPLogicalNodeList = () => {
+
+    const logicalNodeList = [
+        {name: '条件判断', icon: BranchesOutlined, type: 'condition-node'},
+        {name: '逻辑处理', icon: FunctionOutlined, type: 'logical-process-node'},
+    ]
+
     return (
-        <div className={`bp-node-list-item`}
-             data-type={'condition-node'}
-             draggable={true}>
-            <div className={'bpn-li-icon'}><BranchesOutlined/></div>
-            <div className={'bpn-li-label'}>条件判断</div>
-        </div>
+        <>
+            {
+                logicalNodeList.map((item, index) => {
+                    return (
+                        <div className={`bp-node-list-item`}
+                             data-type={item.type}
+                             draggable={true} key={index}>
+                            <div className={'bpn-li-icon'}>
+                                <item.icon/>
+                            </div>
+                            <div className={'bpn-li-label'}>{item.name}</div>
+                        </div>
+                    )
+                })
+            }
+        </>
     )
 }
 

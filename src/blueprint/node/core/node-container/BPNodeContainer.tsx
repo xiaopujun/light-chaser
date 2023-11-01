@@ -1,7 +1,8 @@
 import React, {useEffect, useRef} from "react";
-import bpStore, {BPNodeLayoutType} from "../../store/BPStore";
-import bpNodeControllerMap from "./impl/BPNodeControllerMap";
-import bpRightStore from "../../right/BPRightStore";
+import bpStore, {BPNodeLayoutType} from "../../../store/BPStore";
+import bpNodeControllerMap from "../impl/BPNodeControllerMap";
+import bpRightStore from "../../../right/BPRightStore";
+import './BPNodeContainer.less';
 
 export interface BPNodeContainerProps {
     layout: BPNodeLayoutType;
@@ -37,8 +38,6 @@ export const BPNodeContainer: React.FC<BPNodeContainerProps> = React.memo(({layo
              onDoubleClick={() => activeNodeConfig(id!)}
              style={{
                  transform: 'translate(' + (position!.x - canvasTranslate.x) / canvasScale + 'px,' + (position!.y - canvasTranslate.y) / canvasScale + 'px)',
-                 position: 'absolute',
-                 overflow: 'visible'
              }}
         />
     )

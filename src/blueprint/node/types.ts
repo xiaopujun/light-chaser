@@ -3,4 +3,6 @@ export enum NodeType {
     LAYER,
     //条件判断
     CONDITION,
+    //逻辑处理
+    LOGICAL_PROCESS,
 }

@@ -169,14 +169,14 @@ class BPStore {
 
     setSelectedNodes = (nodes: HTMLElement[]) => {
         //清理旧的选中节点的样式
-        this.selectedNodes.forEach(node => {
-            node.style.border = "1px solid #55555570";
-        });
+        // this.selectedNodes.forEach(node => {
+        //     node.style.border = "1px solid #55555570";
+        // });
         this.selectedNodes = nodes;
         //设置新的选中节点的样式
-        this.selectedNodes.forEach(node => {
-            node.style.border = "1px solid #3cd2ff";
-        })
+        // this.selectedNodes.forEach(node => {
+        //     node.style.border = "1px solid #3cd2ff";
+        // })
     }
 
     setBpMovableRef = (ref: Moveable) => {

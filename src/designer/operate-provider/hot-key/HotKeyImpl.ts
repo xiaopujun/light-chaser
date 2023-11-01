@@ -14,6 +14,7 @@ import footerStore from "../../footer/FooterStore";
 import DateUtil from "../../../utils/DateUtil";
 import bpStore from "../../../blueprint/store/BPStore";
 import {reRenderLine} from "../../../blueprint/drag/BPMovable";
+import bpLeftStore from "../../../blueprint/left/BPLeftStore";
 
 export const selectAll = () => {
     let comps = document.getElementsByClassName('lc-comp-item');
@@ -138,8 +139,7 @@ export const doSave = throttle(() => {
             proData.bpAPMap = bpAPMap;
             proData.bpLines = bpLines;
             proData.bpAPLineMap = bpAPLineMap;
-            // proData.bpNodeConfigMap = getAllNodeConfig();
-            console.log("bpNodeLayoutMap", getAllNodeConfig())
+            proData.bpNodeConfigMap = getAllNodeConfig();
             proData.bpNodeLayoutMap = bpNodeLayoutMap;
             EditorDesignerLoader.getInstance().abstractOperatorMap[saveType].saveProject(cloneDeep(proData));
         } else if (saveType === SaveType.SERVER) {
@@ -456,6 +456,12 @@ export const delBPNode = () => {
     if (selectedNodes.length === 0) return;
     const selectedNodeIds = selectedNodes.map(node => node.id.split(':')[1]!);
     delNode(selectedNodeIds);
+    //如果删除的是图层节点，则恢复左侧图层节点的可拖拽性
+    const {setUsedLayerNodes, usedLayerNodes} = bpLeftStore;
+    selectedNodeIds.forEach(nodeId => {
+        if (nodeId in usedLayerNodes)
+            setUsedLayerNodes(nodeId, false);
+    })
     reRenderLine();
 }
 

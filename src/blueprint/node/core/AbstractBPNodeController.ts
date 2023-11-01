@@ -1,5 +1,5 @@
 import AbstractController from "../../../framework/core/AbstractController";
-import React, {ComponentType} from "react";
+import React from "react";
 
 export interface NodeInfoType {
     id?: string;
