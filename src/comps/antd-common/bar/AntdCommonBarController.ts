@@ -6,8 +6,6 @@ import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
 import BPExecutor from "../../../blueprint/core/BPExecutor";
-import {NodeType} from "../../../blueprint/node/types";
-import {AnchorPointType} from "../../../blueprint/node/core/AbstractBPNodeController";
 
 export interface AntdBarProps extends ComponentBaseProps {
     style?: WritableBarOptions;
@@ -24,7 +22,7 @@ export default class AntdCommonBarController extends AntdBaseDesignerController<
     private registerEvent(): void {
         const nodeId = this.config?.info?.id!;
         this.instance?.on('plot:click', (...args: any) => {
-            BPExecutor.execute(nodeId! + "_" + NodeType.LAYER + "_globalClick_" + AnchorPointType.OUTPUT, {msg: '这是测试参数'})
+            BPExecutor.triggerComponentEvent(nodeId!, "globalClick", {msg: '这是测试参数'})
         });
         // this.instance?.on('element:click', (...args: any) => {
         //     console.log('element:click', ...args);

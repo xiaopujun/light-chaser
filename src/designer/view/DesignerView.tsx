@@ -4,14 +4,15 @@ import {MovableItemType} from "../operate-provider/movable/types";
 import designerStore from "../store/DesignerStore";
 import ComponentContainer from "../../framework/core/ComponentContainer";
 import {observer} from "mobx-react";
-import EditorDesignerLoader from "../loader/EditorDesignerLoader";
 import Loading from "../../ui/loading/Loading";
+import {ViewDesignerLoader} from "../loader/ViewDesignerLoader";
+import {toJS} from "mobx";
 
 class DesignerView extends Component {
 
     constructor(props: any) {
         super(props);
-        EditorDesignerLoader.getInstance().load();
+        ViewDesignerLoader.getInstance().load();
     }
 
     generateElement = () => {
@@ -24,10 +25,11 @@ class DesignerView extends Component {
 
     render() {
         let {loaded, canvasConfig: {width, height}} = designerStore!;
+        console.log("view render", loaded)
         if (!loaded)
             return <Loading/>;
         return (
-            <div style={{width, height, background: 'black', overflow: 'hidden'}}>
+            <div style={{width, height, background: 'black', overflow: 'hidden', position: "relative"}}>
                 {this.generateElement()}
             </div>
         );

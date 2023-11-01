@@ -1,17 +1,20 @@
-import {AbstractBPNodeController, AnchorPointType, NodeInfoType} from "../../AbstractBPNodeController";
+import {AbstractBPNodeController, AnchorPointType, ExecuteInfoType, NodeInfoType} from "../../AbstractBPNodeController";
 import ComponentUtil from "../../../../../utils/ComponentUtil";
 import {UpdateOptions} from "../../../../../framework/core/AbstractController";
 import BPNode from "../../../BPNode";
-import {NodeType} from "../../../types";
 import React from "react";
 import {ConditionNodeConfig} from "./ConditionNodeConfig";
 import ObjectUtil from "../../../../../utils/ObjectUtil";
+import BPExecutor from "../../../../core/BPExecutor";
 
 export interface ConditionConfigType extends NodeInfoType {
     handler?: string;
 }
 
 export default class ConditionNodeController extends AbstractBPNodeController<ConditionConfigType> {
+
+    private static handler: Function | null = null;
+
     async create(container: HTMLElement, config: ConditionConfigType): Promise<this> {
         this.config = config;
         this.container = container;
@@ -22,7 +25,30 @@ export default class ConditionNodeController extends AbstractBPNodeController<Co
     destroy(): void {
     }
 
-    execute(params: any): void {
+    execute(executeInfo: ExecuteInfoType, executor: BPExecutor, params: any): void {
+        const {nodeId, anchorType} = executeInfo;
+        //输出类型节点不执行
+        if (anchorType === 1)
+            return;
+        if (!ConditionNodeController.handler) {
+            if (!this.config?.handler)
+                return;
+            try {
+                // eslint-disable-next-line
+                ConditionNodeController.handler = eval(`(${this.config.handler})`);
+            } catch (e) {
+                console.error('解析条件函数错误，请检查你写条件判断函数');
+                return;
+            }
+        }
+        const result = ConditionNodeController!.handler!(params);
+        if (result) {
+            const anchorId = nodeId + ":satisfy:" + AnchorPointType.OUTPUT;
+            executor.execute(anchorId, executor, params);
+        } else {
+            const anchorId = nodeId + ':unSatisfy:' + AnchorPointType.OUTPUT;
+            executor.execute(anchorId, executor, params);
+        }
     }
 
     getConfig(): ConditionConfigType | null {
@@ -42,19 +68,19 @@ export default class ConditionNodeController extends AbstractBPNodeController<Co
             icon: "BranchesOutlined",
             input: [
                 {
-                    id: nodeId + '_' + NodeType.CONDITION + '_judge_' + AnchorPointType.INPUT,
+                    id: nodeId + ':judge:' + AnchorPointType.INPUT,
                     name: "判断",
                     type: AnchorPointType.INPUT
                 }
             ],
             output: [
                 {
-                    id: nodeId + "_" + NodeType.CONDITION + "_satisfy_" + AnchorPointType.OUTPUT,
+                    id: nodeId + ":satisfy:" + AnchorPointType.OUTPUT,
                     name: "满足",
                     type: AnchorPointType.OUTPUT
                 },
                 {
-                    id: nodeId + '_' + NodeType.CONDITION + '_unSatisfy_' + AnchorPointType.OUTPUT,
+                    id: nodeId + ':unSatisfy:' + AnchorPointType.OUTPUT,
                     name: "不满足",
                     type: AnchorPointType.OUTPUT
                 }

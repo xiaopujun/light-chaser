@@ -1,18 +1,19 @@
-import {AbstractBPNodeController, AnchorPointType, NodeInfoType} from "../../AbstractBPNodeController";
+import {AbstractBPNodeController, AnchorPointType, ExecuteInfoType, NodeInfoType} from "../../AbstractBPNodeController";
 import {UpdateOptions} from "../../../../../framework/core/AbstractController";
 import ComponentUtil from "../../../../../utils/ComponentUtil";
 import BPNode, {NodeProps} from "../../../BPNode";
-import {NodeType} from "../../../types";
 import React from "react";
 import ObjectUtil from "../../../../../utils/ObjectUtil";
 import {LogicalProcessNodeConfig} from "./LogicalProcessNodeConfig";
+import BPExecutor from "../../../../core/BPExecutor";
 
-export interface LogicalProcessNodeConfig extends NodeProps {
+export interface LogicalProcessNodeConfigType extends NodeProps {
     handler?: string;
 }
 
-export default class LogicalProcessNodeController extends AbstractBPNodeController<LogicalProcessNodeConfig> {
-    async create(container: HTMLElement, config: LogicalProcessNodeConfig): Promise<this> {
+export default class LogicalProcessNodeController extends AbstractBPNodeController<LogicalProcessNodeConfigType> {
+
+    async create(container: HTMLElement, config: LogicalProcessNodeConfigType): Promise<this> {
         this.config = config;
         this.container = container;
         this.instance = await ComponentUtil.createAndRender(container, BPNode, config);
@@ -22,10 +23,10 @@ export default class LogicalProcessNodeController extends AbstractBPNodeControll
     destroy(): void {
     }
 
-    execute(params: any): void {
+    execute(executeInfo: ExecuteInfoType, executor: BPExecutor, params: any): void {
     }
 
-    getConfig(): LogicalProcessNodeConfig | null {
+    getConfig(): LogicalProcessNodeConfigType | null {
         return this.config;
     }
 
@@ -42,14 +43,14 @@ export default class LogicalProcessNodeController extends AbstractBPNodeControll
             icon: "FunctionOutlined",
             input: [
                 {
-                    id: nodeId + '_' + NodeType.LOGICAL_PROCESS + '_execute_' + AnchorPointType.INPUT,
+                    id: nodeId + ':execute:' + AnchorPointType.INPUT,
                     name: "执行",
                     type: AnchorPointType.INPUT
                 }
             ],
             output: [
                 {
-                    id: nodeId + "_" + NodeType.LOGICAL_PROCESS + "_afterExecute_" + AnchorPointType.OUTPUT,
+                    id: nodeId + ":afterExecute:" + AnchorPointType.OUTPUT,
                     name: "执行后",
                     type: AnchorPointType.OUTPUT
                 }

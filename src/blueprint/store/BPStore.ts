@@ -70,6 +70,10 @@ class BPStore {
     //蓝图画布缩放比例
     canvasScale: number = 1;
 
+    setBpNodeControllerInsMap = (insMap: Record<string, AbstractBPNodeController>) => {
+        this.bpNodeControllerInsMap = insMap;
+    }
+
     //获取所有节点信息及配置
     getAllNodeConfig = (): Record<string, any> => {
         if (!this.bpNodeLayoutMap)
@@ -227,7 +231,11 @@ class BPStore {
     delLine = (ids: string[]) => {
         if (!ids || ids.length === 0)
             return;
+        //先删除该条线段对应的锚点映射关系
         ids.forEach(id => {
+            const line = this.bpLines[id];
+            if (line)
+                this.delAPMap(line.startAnchorId!, line.endAnchorId!);
             delete this.bpLines[id];
         });
         this.setSelectedLines([]);
