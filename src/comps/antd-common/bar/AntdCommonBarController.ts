@@ -5,7 +5,6 @@ import {OperateType, UpdateOptions} from "../../../framework/core/AbstractContro
 import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
-import BPExecutor from "../../../blueprint/core/BPExecutor";
 
 export interface AntdBarProps extends ComponentBaseProps {
     style?: WritableBarOptions;
@@ -14,31 +13,7 @@ export interface AntdBarProps extends ComponentBaseProps {
 export default class AntdCommonBarController extends AntdBaseDesignerController<Bar, AntdBarProps> {
 
     async create(container: HTMLElement, config: AntdBarProps): Promise<this> {
-        const controller = super.commonCreate(container, Bar, config);
-        this.registerEvent();
-        return controller;
-    }
-
-    private registerEvent(): void {
-        const nodeId = this.config?.info?.id!;
-        this.instance?.on('plot:click', (...args: any) => {
-            BPExecutor.triggerComponentEvent(nodeId!, "globalClick", {msg: '这是测试参数'})
-        });
-        this.instance?.on('element:click', (...args: any) => {
-            BPExecutor.triggerComponentEvent(nodeId!, "elementClick", {msg: '这是测试参数'})
-        });
-        // 图例添加点击事件
-        this.instance?.on('legend-item:click', (...args: any) => {
-            BPExecutor.triggerComponentEvent(nodeId!, "legendClick", {msg: '这是测试参数'})
-        });
-        // 图例名称添加点击事件
-        this.instance?.on('legend-item-name:click', (...args: any) => {
-            BPExecutor.triggerComponentEvent(nodeId!, "elementNameClick", {msg: '这是测试参数'})
-        });
-        // axis-label 添加点击事件
-        this.instance?.on('axis-label:click', (...args: any) => {
-            BPExecutor.triggerComponentEvent(nodeId!, "axisLabelClick", {msg: '这是测试参数'})
-        });
+        return super.commonCreate(container, Bar, config);
     }
 
     destroy(): void {
