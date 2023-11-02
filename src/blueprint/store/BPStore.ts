@@ -127,9 +127,11 @@ class BPStore {
     delAPLineMap = (anchorId: string, lineId: string) => {
         if (this.bpAPLineMap[anchorId]) {
             const index = this.bpAPLineMap[anchorId].indexOf(lineId);
-            if (index !== -1) {
+            if (index !== -1)
                 this.bpAPLineMap[anchorId].splice(index, 1);
-            }
+            //如果锚点没有连接的线条了，就删除这个锚点
+            if (this.bpAPLineMap[anchorId].length === 0)
+                delete this.bpAPLineMap[anchorId];
         }
     }
 
@@ -163,9 +165,11 @@ class BPStore {
     delAPMap = (startAnchorId: string, endAnchorId: string) => {
         if (this.bpAPMap[startAnchorId]) {
             const index = this.bpAPMap[startAnchorId].indexOf(endAnchorId);
-            if (index !== -1) {
+            if (index !== -1)
                 this.bpAPMap[startAnchorId].splice(index, 1);
-            }
+            //如果锚点已经没有关联任何其他锚点，就删除这个锚点
+            if (this.bpAPMap[startAnchorId].length === 0)
+                delete this.bpAPMap[startAnchorId];
         }
     }
 
@@ -235,6 +239,8 @@ class BPStore {
             delete this.bpNodeLayoutMap[id];
             //删除节点实例信息
             delete this.bpNodeControllerInsMap[id];
+            //删除节点配置信息（如果存在）
+            delete this.bpNodeConfigMap[id];
         });
         this.setSelectedNodes([]);
     }
@@ -248,6 +254,9 @@ class BPStore {
             if (line)
                 this.delAPMap(line.startAnchorId!, line.endAnchorId!);
             delete this.bpLines[id];
+            //删除锚点与链接线段的映射关系
+            this.delAPLineMap(line.startAnchorId!, id);
+            this.delAPLineMap(line.endAnchorId!, id);
         });
         this.setSelectedLines([]);
     }
