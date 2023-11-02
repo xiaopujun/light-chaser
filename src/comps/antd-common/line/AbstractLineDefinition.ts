@@ -1,12 +1,10 @@
 import React from "react";
-import {
-    AbstractComponentDefinition,
-    MenuToConfigMappingType
-} from "../../../framework/core/AbstractComponentDefinition";
+import {MenuToConfigMappingType} from "../../../framework/core/AbstractComponentDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {ClazzTemplate} from "../../common-component/common-types";
 import AntdCommonLineController, {AntdLineProps} from "./AntdCommonLineController";
+import {AntdCommonDefinition} from "../AntdCommonDefinition";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const AntdLineCommonStyleConfig = React.lazy(() => import("./AntdLineCommonConfig").then((module) => ({default: module.AntdLineCommonStyleConfig})));
@@ -16,7 +14,7 @@ const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseI
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
 
-abstract class AbstractLineDefinition extends AbstractComponentDefinition<AntdCommonLineController, AntdLineProps> {
+abstract class AbstractLineDefinition extends AntdCommonDefinition<AntdCommonLineController, AntdLineProps> {
 
     getComponent(): ClazzTemplate<AntdCommonLineController> | null {
         return AntdCommonLineController;

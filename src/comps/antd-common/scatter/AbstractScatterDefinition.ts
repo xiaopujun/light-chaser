@@ -7,6 +7,7 @@ import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {ClazzTemplate} from "../../common-component/common-types";
 import AntdCommonScatterController, {AntdScatterProps} from "./AntdCommonScatterController";
+import {AntdCommonDefinition} from "../AntdCommonDefinition";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const AntdScatterCommonStyleConfig = React.lazy(() => import("./AntdScatterCommonConfig").then((module) => ({default: module.AntdScatterCommonStyleConfig})));
@@ -16,7 +17,7 @@ const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseI
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
 
-abstract class AbstractScatterDefinition extends AbstractComponentDefinition<AntdCommonScatterController, AntdScatterProps> {
+abstract class AbstractScatterDefinition extends AntdCommonDefinition<AntdCommonScatterController, AntdScatterProps> {
 
     getComponent(): ClazzTemplate<AntdCommonScatterController> | null {
         return AntdCommonScatterController;

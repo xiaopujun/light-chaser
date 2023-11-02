@@ -9,6 +9,7 @@ import {ClazzTemplate} from "../../common-component/common-types";
 import pieImg from './pie.png';
 import {BaseInfoType} from "../../../designer/DesignerType";
 import AntdPieController, {AntdPieProps} from "./AntdPieController";
+import {AntdCommonDefinition} from "../../antd-common/AntdCommonDefinition";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const AntdPieConfig = React.lazy(() => import("./AntdPieStyleConfig"));
@@ -17,7 +18,7 @@ const ThemeConfig = React.lazy(() => import("../../common-component/theme-config
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
-class AntdPieDefinition extends AbstractComponentDefinition<AntdPieController, AntdPieProps> {
+class AntdPieDefinition extends AntdCommonDefinition<AntdPieController, AntdPieProps> {
 
     getComponent(): ClazzTemplate<AntdPieController> | null {
         return AntdPieController;

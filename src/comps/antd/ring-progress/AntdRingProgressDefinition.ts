@@ -9,6 +9,7 @@ import {ClazzTemplate} from "../../common-component/common-types";
 import AntdRingProgressController, {AntdRingProgressProps} from "./AntdRingProgressController";
 import ringProgressImg from './ring-progress.png';
 import {BaseInfoType} from "../../../designer/DesignerType";
+import {AntdCommonDefinition} from "../../antd-common/AntdCommonDefinition";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
@@ -17,7 +18,7 @@ const ThemeConfig = React.lazy(() => import("../../common-component/theme-config
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 
 
-class AntdRingProgressDefinition extends AbstractComponentDefinition<AntdRingProgressController, AntdRingProgressProps> {
+class AntdRingProgressDefinition extends AntdCommonDefinition<AntdRingProgressController, AntdRingProgressProps> {
 
     getComponent(): ClazzTemplate<AntdRingProgressController> | null {
         return AntdRingProgressController;
