@@ -5,8 +5,7 @@ import {
     BlockOutlined,
     BranchesOutlined,
     CodeSandboxOutlined,
-    FilterOutlined, FunctionOutlined,
-    GatewayOutlined
+    FunctionOutlined
 } from "@ant-design/icons";
 import bpStore from "../store/BPStore";
 import bpLeftStore from "./BPLeftStore";
@@ -35,16 +34,16 @@ export const BPNodeSortList = () => {
             label: '逻辑节点',
             key: 'logical'
         },
-        {
-            icon: <GatewayOutlined/>,
-            label: '全局变量',
-            key: 'global'
-        },
-        {
-            icon: <FilterOutlined/>,
-            label: '过滤器',
-            key: 'filter'
-        }
+        // {
+        //     icon: <GatewayOutlined/>,
+        //     label: '全局变量',
+        //     key: 'global'
+        // },
+        // {
+        //     icon: <FilterOutlined/>,
+        //     label: '过滤器',
+        //     key: 'filter'
+        // }
     ]
     return (
         <div className={'bp-node-sort-list'}>

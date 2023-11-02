@@ -24,43 +24,21 @@ export default class AntdCommonBarController extends AntdBaseDesignerController<
         this.instance?.on('plot:click', (...args: any) => {
             BPExecutor.triggerComponentEvent(nodeId!, "globalClick", {msg: '这是测试参数'})
         });
-        // this.instance?.on('element:click', (...args: any) => {
-        //     console.log('element:click', ...args);
-        // });
-        // // 图例添加点击事件
-        // this.instance?.on('legend-item:click', (...args: any) => {
-        //     console.log('legend-item:click', ...args);
-        // });
-        // // 图例名称添加点击事件
-        // this.instance?.on('legend-item-name:click', (...args: any) => {
-        //     console.log('legend-item-name:click', ...args);
-        // });
-        // // 给 tooltip 添加点击事件
-        // this.instance?.on('tooltip:show', (...args: any) => {
-        //     console.log('tooltip:show', ...args);
-        // });
-        // this.instance?.on('tooltip:hide', (...args: any) => {
-        //     console.log('tooltip:hide', ...args);
-        // });
-        // this.instance?.on('tooltip:change', (...args: any) => {
-        //     console.log('tooltip:change', ...args);
-        // });
-        // // label 添加点击事件
-        // this.instance?.on('label:click', (...args: any) => {
-        //     console.log('label:click', ...args);
-        // });
-        // // mask 添加点击事件
-        // this.instance?.on('mask:click', (...args: any) => {
-        //     console.log('mask:click', ...args);
-        // });
-        // // axis-label 添加点击事件
-        // this.instance?.on('axis-label:click', (...args: any) => {
-        //     console.log('axis-label:click', ...args);
-        // });
-        // // 给 annotation 添加点击事件
-        // this.instance?.on('annotation:click', (...args: any) => {
-        //     console.log('annotation:click', ...args);
-        // });
+        this.instance?.on('element:click', (...args: any) => {
+            BPExecutor.triggerComponentEvent(nodeId!, "elementClick", {msg: '这是测试参数'})
+        });
+        // 图例添加点击事件
+        this.instance?.on('legend-item:click', (...args: any) => {
+            BPExecutor.triggerComponentEvent(nodeId!, "legendClick", {msg: '这是测试参数'})
+        });
+        // 图例名称添加点击事件
+        this.instance?.on('legend-item-name:click', (...args: any) => {
+            BPExecutor.triggerComponentEvent(nodeId!, "elementNameClick", {msg: '这是测试参数'})
+        });
+        // axis-label 添加点击事件
+        this.instance?.on('axis-label:click', (...args: any) => {
+            BPExecutor.triggerComponentEvent(nodeId!, "axisLabelClick", {msg: '这是测试参数'})
+        });
     }
 
     destroy(): void {

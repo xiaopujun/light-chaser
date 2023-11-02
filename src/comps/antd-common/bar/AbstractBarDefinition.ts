@@ -1,16 +1,11 @@
 import React from "react";
-import {
-    AbstractComponentDefinition,
-    ActionInfo,
-    EventInfo,
-    MenuToConfigMappingType
-} from "../../../framework/core/AbstractComponentDefinition";
+import {MenuToConfigMappingType} from "../../../framework/core/AbstractComponentDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {ClazzTemplate} from "../../common-component/common-types";
 import AntdCommonBarController, {AntdBarProps} from "../../antd-common/bar/AntdCommonBarController";
 import {AntdBarFieldMapping} from "./AntdBarCommonConfig";
-import AbstractController from "../../../framework/core/AbstractController";
+import {AntdCommonDefinition} from "../AntdCommonDefinition";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const AntdBarCommonStyleConfig = React.lazy(() => import("./AntdBarCommonConfig").then((module) => ({default: module.AntdBarCommonStyleConfig})));
@@ -18,8 +13,7 @@ const ThemeConfig = React.lazy(() => import("../../common-component/theme-config
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
-
-abstract class AbstractBarDefinition extends AbstractComponentDefinition<AntdCommonBarController, AntdBarProps> {
+abstract class AbstractBarDefinition extends AntdCommonDefinition<AntdCommonBarController, AntdBarProps> {
 
     getComponent(): ClazzTemplate<AntdCommonBarController> | null {
         return AntdCommonBarController;
@@ -38,51 +32,6 @@ abstract class AbstractBarDefinition extends AbstractComponentDefinition<AntdCom
             theme: ThemeConfig,
             mapping: AntdBarFieldMapping,
         };
-    }
-
-
-    getEventList(): Array<EventInfo> {
-        return [
-            {
-                id: "globalClick",
-                name: "点击整个组件时",
-            },
-            {
-                id: "legendClick",
-                name: "点击图例时"
-            },
-            {
-                id: "elementNameClick",
-                name: "点击图例名称时"
-            },
-            {
-                id: "tooltipShow",
-                name: "工具标签显示时"
-            },
-            {
-                id: "tooltipHide",
-                name: "工具标签隐藏时"
-            }
-        ]
-    }
-
-    getActionList(): Array<ActionInfo> {
-        return [
-            {
-                name: "显示",
-                id: "show",
-                handler: (controller: AbstractController, params?: any) => {
-                    controller.container!.style.display = "block";
-                }
-            },
-            {
-                name: "隐藏",
-                id: "hide",
-                handler: (controller: AbstractController, params?: any) => {
-                    controller.container!.style.display = "none";
-                }
-            }
-        ]
     }
 }
 
