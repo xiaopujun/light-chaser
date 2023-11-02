@@ -3,15 +3,7 @@
  * 说明：蓝图设计器中编辑的事件路径统一通过蓝图执行器进行执行，包括事件的触发、事件的执行、事件的终止等
  */
 import bpStore from "../store/BPStore";
-import {NodeType} from "../node/types";
 import {AnchorPointType} from "../node/core/AbstractBPNodeController";
-
-export interface BPTransportNode {
-    nodeId: string;
-    nodeType: NodeType;
-    anchorId: string;
-    anchorType: AnchorPointType;
-}
 
 export default class BPExecutor {
 
@@ -32,7 +24,7 @@ export default class BPExecutor {
     public execute(anchorId: string, executor: BPExecutor, params: any): void {
         //执行逻辑保护，一条路径执行的中间节点次数超过1000次，说明可能出现了死循环，直接终止
         if (executor.executeCount > 1000) {
-            console.warn("蓝图执行器执行次数超过1000次，请检查是否出现死循环逻辑")
+            console.warn("蓝图单条路径执行次数超过1000，请检查是否出现死循环逻辑！")
             return;
         }
         executor.executeCount++;

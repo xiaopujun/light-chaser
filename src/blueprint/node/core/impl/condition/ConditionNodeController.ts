@@ -13,7 +13,7 @@ export interface ConditionConfigType extends NodeInfoType {
 
 export default class ConditionNodeController extends AbstractBPNodeController<ConditionConfigType> {
 
-    private static handler: Function | null = null;
+    private handler: Function | null = null;
 
     async create(container: HTMLElement, config: ConditionConfigType): Promise<this> {
         this.config = config;
@@ -30,18 +30,18 @@ export default class ConditionNodeController extends AbstractBPNodeController<Co
         //输出类型节点不执行
         if (anchorType === 1)
             return;
-        if (!ConditionNodeController.handler) {
+        if (!this.handler) {
             if (!this.config?.handler)
                 return;
             try {
                 // eslint-disable-next-line
-                ConditionNodeController.handler = eval(`(${this.config.handler})`);
+                this.handler = eval(`(${this.config.handler})`);
             } catch (e) {
                 console.error('解析条件函数错误，请检查你写条件判断函数');
                 return;
             }
         }
-        const result = ConditionNodeController!.handler!(params);
+        const result = this.handler!(params);
         if (result) {
             const anchorId = nodeId + ":satisfy:" + AnchorPointType.OUTPUT;
             executor.execute(anchorId, executor, params);

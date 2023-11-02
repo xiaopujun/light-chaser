@@ -13,6 +13,8 @@ export interface LogicalProcessNodeConfigType extends NodeProps {
 
 export default class LogicalProcessNodeController extends AbstractBPNodeController<LogicalProcessNodeConfigType> {
 
+    private handler: Function | null = null;
+
     async create(container: HTMLElement, config: LogicalProcessNodeConfigType): Promise<this> {
         this.config = config;
         this.container = container;
@@ -24,6 +26,21 @@ export default class LogicalProcessNodeController extends AbstractBPNodeControll
     }
 
     execute(executeInfo: ExecuteInfoType, executor: BPExecutor, params: any): void {
+        const {nodeId} = executeInfo;
+        if (!this.handler) {
+            if (!this.config?.handler)
+                return;
+            try {
+                // eslint-disable-next-line
+                this.handler = eval(`(${this.config.handler})`);
+            } catch (e) {
+                console.error('解析条件函数错误，请检查你写条件判断函数');
+                return;
+            }
+        }
+        const newParams = this.handler!(params) || params;
+        const anchorId = nodeId + ':afterExecute:' + AnchorPointType.OUTPUT;
+        executor.execute(anchorId, executor, newParams);
     }
 
     getConfig(): LogicalProcessNodeConfigType | null {
