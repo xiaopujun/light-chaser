@@ -145,6 +145,12 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
                     usedLayerNodes[key] = true;
                 })
                 initUsedLayerNodes(usedLayerNodes);
+                // console.log('initUsedLayerNodes', usedLayerNodes)
+                // console.log("bpAPMap", store.bpAPMap)
+                // console.log("bpLines", store.bpLines)
+                // console.log("bpAPLineMap", store.bpAPLineMap)
+                // console.log("bpNodeLayoutMap", store.bpNodeLayoutMap)
+                // console.log("bpNodeConfigMap", store.bpNodeConfigMap)
             }
             setLoaded(true);
         })
