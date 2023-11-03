@@ -15,7 +15,7 @@ export default class DesignerLoaderFactory {
         if (action && loaderMap.has(action)) {
             return loaderMap.get(action)!;
         } else {
-            throw new Error(`get loader error: ${action}`);
+            return EditorDesignerLoader.getInstance();
         }
     }
 }

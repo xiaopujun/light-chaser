@@ -3,7 +3,8 @@ import Moveable from "react-moveable";
 import Selecto from "react-selecto";
 import {CanvasLineType, PointType} from "../types";
 import ObjectUtil from "../../utils/ObjectUtil";
-import {AbstractBPNodeController} from "../node/core/AbstractBPNodeController";
+import {AbstractBPNodeController, AnchorPointInfoType} from "../node/core/AbstractBPNodeController";
+import bpNodeControllerMap from "../node/core/impl/BPNodeControllerMap";
 
 export interface BPNodeLayoutType {
     id?: string;
@@ -22,10 +23,10 @@ class BPStore {
         });
     }
 
-    //蓝图节点锚点间的对应关系，一个起始点可以链接多个终点（入库）
+    //蓝图节点上锚点与锚点的映射关系，一个起始点可以链接多个终点（入库）
     bpAPMap: Record<string, string[]> = {};
 
-    //已经连接的线条列表(入库）
+    //蓝图节点锚点间连接的线条列表(入库）
     bpLines: Record<string, CanvasLineType> = {};
 
     //锚点与线条的对应关系（入库），一个锚点可以连接多条线，用于位置更新时，快速找到线条并更新线条位置
@@ -37,7 +38,7 @@ class BPStore {
     //蓝图节点控制器实例映射（入库）
     bpNodeControllerInsMap: Record<string, AbstractBPNodeController> = {};
 
-
+    //蓝图节点产生的配置信息映射（入库）
     bpNodeConfigMap: Record<string, any> = {};
 
     //被选中的蓝图节点列表
@@ -135,6 +136,17 @@ class BPStore {
         }
     }
 
+    delAPMap = (startAnchorId: string, endAnchorId: string) => {
+        if (this.bpAPMap[startAnchorId]) {
+            const index = this.bpAPMap[startAnchorId].indexOf(endAnchorId);
+            if (index !== -1)
+                this.bpAPMap[startAnchorId].splice(index, 1);
+            //如果锚点已经没有关联任何其他锚点，就删除这个锚点
+            if (this.bpAPMap[startAnchorId].length === 0)
+                delete this.bpAPMap[startAnchorId];
+        }
+    }
+
     //更新线段的位置
     updLinePos = (line: CanvasLineType) => {
         const oldLine = this.bpLines[line.id!];
@@ -160,17 +172,6 @@ class BPStore {
         if (!this.bpAPMap[startAnchorId])
             this.bpAPMap[startAnchorId] = [];
         this.bpAPMap[startAnchorId].push(endAnchorId);
-    }
-
-    delAPMap = (startAnchorId: string, endAnchorId: string) => {
-        if (this.bpAPMap[startAnchorId]) {
-            const index = this.bpAPMap[startAnchorId].indexOf(endAnchorId);
-            if (index !== -1)
-                this.bpAPMap[startAnchorId].splice(index, 1);
-            //如果锚点已经没有关联任何其他锚点，就删除这个锚点
-            if (this.bpAPMap[startAnchorId].length === 0)
-                delete this.bpAPMap[startAnchorId];
-        }
     }
 
     addLine = (line: CanvasLineType) => {
@@ -218,31 +219,67 @@ class BPStore {
         this.nodeContainerRef = ref;
     }
 
+    /**
+     * 删除节点步骤：
+     * 1. 如果节点关联的锚点有连线
+     *  1.1 删除锚点与锚点的映射关系
+     *  1.2 删除锚点与线段的映射关系
+     *  1.3 删除线段
+     * 2. 删除节点配置
+     * 3. 删除节点布局信息
+     * 4. 删除节点controller实例信息
+     * @param ids
+     */
     delNode = (ids: string[]) => {
         if (!ids || ids.length === 0)
             return;
         //先删除节点上的线段，后删除节点
         ids.forEach(id => {
-            const bpNodeController = this.bpNodeControllerInsMap[id];
+            let bpNodeController = this.bpNodeControllerInsMap[id];
+            if (!bpNodeController) {
+                //如果没有获取到实例，判断是否由于没有打开过蓝图编辑器导致。如果没有打开，则临时初始化所有节点的controller实例
+                const nodeLayoutList = Object.values(this.bpNodeLayoutMap);
+                if (Object.keys(this.bpNodeControllerInsMap).length === 0 && nodeLayoutList.length !== 0) {
+                    //存在节点布局信息，但没有controller实例信息，说明没有打开过蓝图编辑器（实例信息在渲染节点时才产生）
+                    nodeLayoutList.forEach(layout => {
+                        const Controller = bpNodeControllerMap.get(layout.type!);
+                        const config = this.bpNodeConfigMap[layout.id!];
+                        if (Controller) {
+                            //@ts-ignore  todo这里在抽象类中统一定义了构造器格式，理论上应该支持，后续研究下是否ts不支持这种方式
+                            this.bpNodeControllerInsMap[layout.id!] = new Controller(config)!;
+                        }
+                    })
+                }
+                //再次获取实例
+                bpNodeController = this.bpNodeControllerInsMap[id];
+            }
             if (bpNodeController) {
                 let nodeConfig = bpNodeController.getConfig();
-                const aps = [...nodeConfig.input!, ...nodeConfig.output!];
-                //删除与节点相关的连线
+                //获取当前节点下的所有锚点
+                const aps: AnchorPointInfoType[] = [...nodeConfig.input!, ...nodeConfig.output!];
                 aps.forEach(ap => {
-                    const lineIds = this.bpAPLineMap[ap.id!];
-                    if (lineIds)
+                    const {id} = ap;
+                    //删除锚点与锚点的映射关系
+                    if (id! in this.bpAPMap)
+                        delete this.bpAPMap[id!];
+                    //删除锚点关联的线段 & 删除锚点与线段的映射关系
+                    if (id! in this.bpAPLineMap) {
+                        const lineIds = this.bpAPLineMap[id!];
                         this.delLine(lineIds);
+                        delete this.bpAPLineMap[id!];
+                    }
                 });
 
             }
+            //删除节点配置信息（如果存在）
+            delete this.bpNodeConfigMap[id];
             //删除节点布局信息
             delete this.bpNodeLayoutMap[id];
             //删除节点实例信息
             delete this.bpNodeControllerInsMap[id];
-            //删除节点配置信息（如果存在）
-            delete this.bpNodeConfigMap[id];
         });
         this.setSelectedNodes([]);
+        // console.log("删除节点后的映射关系：", this.bpAPMap, this.bpAPLineMap, this.bpLines);
     }
 
     delLine = (ids: string[]) => {

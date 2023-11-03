@@ -118,6 +118,7 @@ export const doDelete = () => {
             if (bpNodeLayoutMap[id])
                 preDelNodeIds.push(id);
         });
+        console.log('preDelNodeIds', preDelNodeIds);
         if (preDelNodeIds.length > 0)
             delNode(preDelNodeIds);
     }
