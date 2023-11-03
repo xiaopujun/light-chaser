@@ -1,100 +1,89 @@
-<h2 align="middle"> LIGHT CHASER</h2>
+<h2> LIGHT CHASER</h2>
 
-<p align="middle">
+<p>
     <img alt="" src="https://img.shields.io/badge/version-v0.0.3-blue">
     <img alt="" src="https://img.shields.io/badge/language-typescript-blue">
     <img alt="" src="https://img.shields.io/badge/license-MIT-08CE5D?logoColor=08CE5D">
     <img alt="" src="https://img.shields.io/badge/framework-React-61daeb?logoColor=08CE5D">
 </p>
 
-<p align="middle">light chaser（追光者） 一个拖拽式的数据可视化设计工具</p>
+<p>数据可视化工具</p>
 
-# 一、简介
+light chaser 是一款开源免费的数据可视化设计工具，基于 React 技术栈实现。 通过它，你可以简单快速地制作数据可视化相关内容。它可用于大屏幕数据 可视化展示、数据报告、数据分析等场景。
 
-light chaser是一个数据可视化设计器工具。通过拖、拉、拽、快捷键的方式可快速构建出一个数据可视化页面。不论是数据大屏、数据报表它都可以轻松完成。
+这个项目包含:
 
-同时它也是一个在不断完善的项目。
+- 一个标准的组件编辑面板
+- 一个用于事件交互的蓝图编辑器
+- 丰富的组件、快捷键和扩展能力
 
-如果你需要一个开源、免费的数据可视化设计工具，那你可以尝试选择它.
+light chaser 专为数据可视化而设计，并将不断发展和完善！
 
-如果你希望它做的更好，请参与，完善它！
+# 目录
 
-现在你可以在线体验它：
-[在线体验请点](https://xiaopujun.github.io/light-chaser-app/#/)
+- [样例](#样例)
+- [部署和使用](#部署和使用)
+- [贡献](#贡献)
+- [License](#License)
 
-要更直观的了解它：
-[实机演示](https://www.bilibili.com/video/BV1Uh4y1v7sv/?share_source=copy_web&vd_source=ece0559aa5b8c4f5c0d7307cb2b06aac)
+# 样例
 
-# 二、他能做
+您可以访问 [light chaser online](https://xiaopujun.github.io/light-chaser-app/#) 在线体验，也可以 克隆项目代码在本地启动后进行体验！
 
-![image.png](https://s2.loli.net/2023/09/13/AqOQ54ULhnEJagP.png)
+预览图：
 
-![01.png](https://s2.loli.net/2023/09/13/KetpTjqzVUyhAG5.png)
+![lightchaser1](https://picss.sunbangyan.cn/2023/11/03/9cbcb42f4c6d7bc12ffb79f4ad0ef9dd.png)
 
-# 三、如何运行
+![lightchaser blueprint](https://picss.sunbangyan.cn/2023/11/03/59ff17df602ce90d6ba7885037860449.png)
+
+# 部署和使用
+
+如果您需要在本地启动该项目，或将其构建并部署到自己的服务器上，请参考以下命令：
+
+- 将项目克隆到本地计算机
 
 ```shell
-# 1. 克隆项目
 git clone https://gitee.com/xiaopujun/light-chaser.git
+```
 
-# 2. 安装依赖
+- 安装项目依赖
+
+```shell
 yarn install
+```
 
-# 3. 启动项目 
+- 启动项目
+
+```shell
 yarn start
+```
 
-# 4. 访问
+- 访问链接
+
+```shell
 http://localhost:3000
+```
 
-# 5. 编译打包
+- 构建项目
+
+```shell
 yarn build
 ```
 
-# 四、如何使用
+# 贡献
 
-[使用教程](https://www.bilibili.com/video/BV1Fk4y1w7rd/?share_source=copy_web&vd_source=ece0559aa5b8c4f5c0d7307cb2b06aac)
+欢迎随时加入！打开issue或提交PR。
 
-# 五、目录结构
+light chaser遵守《贡献者公约行为准则》。
 
-```text
-src
-├─comps 设计器组件列表（所有可拖拽的组件均在该目录下实现）
-│  ├─antd antd组件实现
-│  ├─common-fragment 公共代码片段
-│  └─lc 设计器自带组件实现
-├─designer 设计器
-│  ├─canvas 画布
-│  ├─common 公共代码
-│  ├─footer 设计器底部
-│  ├─header 设计器头部
-│  ├─left 设计器左侧
-│  ├─operate-provider 设计器事件操作
-│  ├─right 设计器右侧
-│  ├─store 设计器状态管理
-│  ├─structure 设计器页面框架结构
-│  └─view 
-├─framework 框架设计
-│  └─core 自动扫描组件定义
-├─icon 
-├─lib 自己实现的组件库
-├─list 列表页（首页）
-└─utils 工具类
-```
+# License
 
-# 六、如何快速接入自己的组件
+[MIT](LICENSE) © xiaopujun
 
-在LC中接入自己的组件非常简单。你仅需要做一件事！！！
+感谢为本项目做出贡献的每一位开发人员和个人！
 
-1. 找到src/comps目录，新建一个你自定义组件的文件夹
-2. 假设我的自定义组件名为：MyComp
-3. 新建ts文件，命名为：MyComp.ts，在该文件中新建一个class，并继承AbstractCustomComponentDefinition。实现其中的方法。
-4. 新建ts文件，命名为：MyCompDefinition.ts，在该文件中新建一个class，并继承AbstractDesignerComponent。实现其中的方法。
+## 联系我
 
-到此就结束了！！！剩下的交给自动扫描器，他会自动扫描你的组件，并将其注册到LC中。
+扫码联系我进群交流
 
-代码示例可参考：src/comps/antd/pie 中的实现
-
-# 七、 结语
-
-如果觉得本项目不错，欢迎star
-
+![me](https://picst.sunbangyan.cn/2023/11/03/1c7a824a6d22b3a78c3a82a0a73a7245.jpg)
