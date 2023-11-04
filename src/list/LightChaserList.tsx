@@ -5,10 +5,10 @@ import listBottom from './icon/list-bottom.svg';
 import templateMarket from './icon/template-market.svg';
 import datasource from './icon/datasource.svg';
 
-import listDelImg from './list-del.svg';
-import listDisplay from './list-display.svg';
-import listEdit from './list-edit.svg';
-import listClone from './list-clone.svg';
+import listDelImg from './icon/list-del.svg';
+import listDisplay from './icon/list-display.svg';
+import listEdit from './icon/list-edit.svg';
+import listClone from './icon/list-clone.svg';
 import {buildUrlParams} from "../utils/URLUtil";
 import {ImgUtil} from "../utils/ImgUtil";
 import {ProjectState, SaveType} from "../designer/DesignerType";
