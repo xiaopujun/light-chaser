@@ -17,9 +17,11 @@ class BPStore {
         makeObservable(this, {
             selectedNodes: observable,
             bpNodeLayoutMap: observable,
+            canvasScale: observable,
             setSelectedNodes: action,
             addBPNodeLayout: action,
             updBpNodeLayout: action,
+            setCanvasScale: action,
         });
     }
 
