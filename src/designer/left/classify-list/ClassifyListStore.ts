@@ -1,16 +1,16 @@
 import {makeAutoObservable} from "mobx";
 import {ClassifyEnum} from "./ClassifyType";
-import icon_all from '../../../icon/icon-all.svg';
-import icon_bar from '../../../icon/icon-bar.svg';
-import icon_column from '../../../icon/icon-column.svg';
-import icon_area from '../../../icon/icon-area.svg';
-import icon_pie from '../../../icon/icon-pie.svg';
-import icon_scatter from '../../../icon/icon-scatter.svg';
-import icon_line from '../../../icon/icon-line.svg';
-import icon_loading from '../../../icon/icon-loading.svg';
-import icon_flowers from '../../../icon/icon-flowers.svg';
-import icon_optimize from '../../../icon/icon-optimize.svg';
-import icon_points from '../../../icon/icon-points.svg';
+import icon_all from './icon/icon-all.svg';
+import icon_bar from './icon/icon-bar.svg';
+import icon_column from './icon/icon-column.svg';
+import icon_area from './icon/icon-area.svg';
+import icon_pie from './icon/icon-pie.svg';
+import icon_scatter from './icon/icon-scatter.svg';
+import icon_line from './icon/icon-line.svg';
+import icon_loading from './icon/icon-loading.svg';
+import icon_flowers from './icon/icon-flowers.svg';
+import icon_optimize from './icon/icon-optimize.svg';
+import icon_points from './icon/icon-points.svg';
 
 const getClassifyItemInfo = () => {
     return [
