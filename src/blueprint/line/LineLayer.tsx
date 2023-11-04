@@ -27,8 +27,6 @@ class LineLayer extends React.Component {
     keyDown: boolean = false;
     //是否移动
     keyMove: boolean = false;
-    //画布引用
-    canvasRef: HTMLCanvasElement | null = null;
 
     componentDidMount() {
         const {setUpCtx, setDownCtx, canvasOffset} = bpStore;

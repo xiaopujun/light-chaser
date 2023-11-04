@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import Selecto, {OnSelectEnd} from "react-selecto";
+import Selecto, {OnDragStart, OnSelectEnd} from "react-selecto";
 import bpStore from "../store/BPStore";
 
 export interface BPSelectableProps {
@@ -15,7 +15,7 @@ export const BPSelectable: React.FC<BPSelectableProps> = (props) => {
         setBpSelectRef(selectorRef.current!);
     })
 
-    const onDragStart = (e: any) => {
+    const onDragStart = (e: OnDragStart) => {
         const {bpMovableRef, selectedNodes} = bpStore;
         const target = e.inputEvent.target;
         if ((bpMovableRef!.isMoveableElement(target))

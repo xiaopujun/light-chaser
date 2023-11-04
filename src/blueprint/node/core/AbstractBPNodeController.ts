@@ -31,7 +31,7 @@ export enum AnchorPointType {
 
 export interface ExecuteInfoType {
     nodeId: string;
-    anchorId: string;
+    apId: string;
     anchorType: AnchorPointType;
 }
 

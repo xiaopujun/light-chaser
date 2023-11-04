@@ -25,7 +25,7 @@ export default class LayerNodeController extends AbstractBPNodeController<LayerN
     }
 
     execute(executeInfo: ExecuteInfoType, executor: BPExecutor, params: any): void {
-        const {nodeId, anchorId, anchorType} = executeInfo;
+        const {nodeId, apId, anchorType} = executeInfo;
         if (anchorType === AnchorPointType.INPUT) {
             //输入点，执行动作
             //1.获取当前组件的控制器实例
@@ -37,7 +37,7 @@ export default class LayerNodeController extends AbstractBPNodeController<LayerN
             const {customComponentInfoMap} = DesignerLoaderFactory.getLoader();
             let actionList = customComponentInfoMap[type!].getActionList();
             //2.获取当前组件可执行的动作列表
-            const action = actionList.find((action: ActionInfo) => action.id === anchorId);
+            const action = actionList.find((action: ActionInfo) => action.id === apId);
             if (!action)
                 return;
             //3.执行动作
