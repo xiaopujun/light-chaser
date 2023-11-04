@@ -20,7 +20,42 @@ class CompList extends Component {
         doInit && doInit();
     }
 
-    addItem = (compKey: string, name: string) => {
+
+    componentDidMount() {
+        //处理拖拽元素到画布中
+        const dragContainer = document.getElementById("designer-ds-content");
+        const dragElements = document.getElementsByClassName("droppable-element");
+        Array.from(dragElements).forEach((element) => {
+            element.removeEventListener('dragstart', (event) => this.dragStart(event, element));
+            element.addEventListener('dragstart', (event) => this.dragStart(event, element));
+        });
+        dragContainer && dragContainer.removeEventListener('dragover', this.dragover);
+        dragContainer && dragContainer.addEventListener('dragover', this.dragover);
+        dragContainer && dragContainer.removeEventListener('drop', this.drop);
+        dragContainer && dragContainer.addEventListener('drop', this.drop);
+    }
+
+    //拖拽开始
+    dragStart = (event: any, element: Element) => {
+        // 设置拖拽数据
+        console.log(element.getAttribute('data-type'));
+        (event as any).dataTransfer.setData('type', element.getAttribute('data-type'));
+        (event as any).dataTransfer.setData('name', element.getAttribute('data-name'));
+    }
+    //拖拽覆盖
+    dragover = (event: any) => {
+        event.preventDefault(); // 阻止默认行为以允许拖放
+    }
+    //释放拖拽元素
+    drop = (event: any) => {
+        event.preventDefault();
+        const type = (event as any).dataTransfer.getData('type');
+        const name = (event as any).dataTransfer.getData('name');
+        //获取鼠标位置,添加元素
+        this.addItem(type, name, [event.clientX, event.clientY]);
+    }
+
+    addItem = (compKey: string, name: string, position?: [number, number]) => {
         const {addItem} = designerStore;
         let {maxLevel, setMaxLevel, setAddRecordCompId} = eventOperateStore;
         let movableItem: MovableItemType = {
@@ -28,7 +63,7 @@ class CompList extends Component {
             type: compKey,
             width: 320,
             height: 200,
-            position: [0, 0],
+            position: position || [0, 0],
             id: idGenerate.generateId(),
             lock: false,
             hide: false,
@@ -59,7 +94,10 @@ class CompList extends Component {
             let lcCompInit: any = DesignerLoaderFactory.getLoader().customComponentInfoMap[compKey];
             let chartImg = lcCompInit.getChartImg();
             chartDom.push(
-                <div key={i + ''} className={'list-item droppable-element'}>
+                <div key={i + ''} className={'list-item droppable-element'} draggable={true}
+                     data-type={compKey}
+                    //todo 想想办法，中文变量值能否不放在这里
+                     data-name={compName}>
                     <div className={'item-header'} ref={'drag-target'}>
                         <div className={'item-name'}>{compName}</div>
                         <div className={'item-type'}>Antd</div>

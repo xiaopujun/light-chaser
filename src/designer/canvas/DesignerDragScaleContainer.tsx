@@ -42,14 +42,17 @@ export const DesignerDragScaleContainer: React.FC<DesignerDragScaleContainerProp
         }
     }, []);
     return (
-        <div className={'designer-ds-container'} ref={containerRef} style={{
-            overflow: "hidden",
-            height: window.innerHeight - 90,
-            width: window.innerWidth - 95,
-            backgroundColor: '#434343',
-            position: 'relative'
-        }}>
-            <div className={'designer-ds-content lc-drag-scale-provider'} ref={contentRef}
+        <div className={'designer-ds-container'} ref={containerRef}
+             style={{
+                 overflow: "hidden",
+                 height: window.innerHeight - 90,
+                 width: window.innerWidth - 95,
+                 backgroundColor: '#434343',
+                 position: 'relative'
+             }}>
+            <div className={'designer-ds-content lc-drag-scale-provider'}
+                 id={'designer-ds-content'}
+                 ref={contentRef}
                  onDoubleClick={onDoubleClick}
                  style={{
                      width: canvasConfig?.width,

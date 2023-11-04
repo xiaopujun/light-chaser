@@ -4,6 +4,7 @@ import {parseUrlParams} from "../../utils/URLUtil";
 import historyRecordOperateProxy from "../../designer/operate-provider/undo-redo/HistoryRecordOperateProxy";
 import runtimeConfigStore from "../../designer/store/RuntimeConfigStore";
 import Loading from "../../ui/loading/Loading";
+import eventOperateStore from "../../designer/operate-provider/EventOperateStore";
 
 export interface ComponentContainerProps {
     layout: MovableItemType;
@@ -25,6 +26,10 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
     render() {
         const {layout} = this.props;
         const {auxiliaryBorder} = runtimeConfigStore;
+        const {scale, dsContentRef} = eventOperateStore;
+        const contentPos = dsContentRef?.getBoundingClientRect();
+        const x = (layout.position![0] - contentPos!.x) / scale;
+        const y = (layout.position![1] - contentPos!.y) / scale;
         return (
             <Suspense fallback={<Loading/>}>
                 <div
@@ -36,7 +41,7 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
                     style={{
                         width: layout.width,
                         height: layout.height,
-                        transform: `translate(${layout.position![0]}px, ${layout.position![1]}px)`,
+                        transform: `translate(${x}px, ${y}px)`,
                         position: 'absolute',
                         display: layout.hide ? 'none' : 'block',
                         border: auxiliaryBorder ? '1px solid #65eafc' : 'none'
