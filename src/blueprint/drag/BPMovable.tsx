@@ -2,8 +2,8 @@ import React, {useEffect} from "react";
 import Moveable, {OnDrag, OnDragEnd, OnDragStart} from "react-moveable";
 import bpStore from "../store/BPStore";
 import {observer} from "mobx-react";
-import {CanvasLineType, PointType} from "../types";
 import CanvasUtil from "../util/CanvasUtil";
+import {BPLineType, PointType} from "../BPTypes";
 
 export interface BPMovableProps {
     children?: React.ReactNode;
@@ -12,7 +12,7 @@ export interface BPMovableProps {
 export const reRenderLine = () => {
     const {bpLines, downCtx, canvasOffset} = bpStore;
     //更新每条线的起始点和终点
-    Object.values(bpLines).forEach((line: CanvasLineType) => {
+    Object.values(bpLines).forEach((line: BPLineType) => {
         //重新设置连线的起始点和终点
         const {startAnchorId, endAnchorId} = line;
         const startDom = document.getElementById(startAnchorId!);
@@ -39,7 +39,7 @@ export const reRenderLine = () => {
 
     //重新绘制连线
     downCtx!.clearRect(0, 0, 10000, 10000);
-    Object.values(bpLines).forEach((line: CanvasLineType) => {
+    Object.values(bpLines).forEach((line: BPLineType) => {
         CanvasUtil.drawBezierCurves(downCtx!, line);
     })
 }

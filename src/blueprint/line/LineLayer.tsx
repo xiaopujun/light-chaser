@@ -1,10 +1,10 @@
 import React from 'react';
-import {CanvasLineType} from "../types";
 import './LineLayer.less';
 import CanvasUtil from "../util/CanvasUtil";
 import bpStore from "../store/BPStore";
 import {idGenerate} from "../../utils/IdGenerate";
 import {AnchorPointType} from "../node/core/AbstractBPNodeController";
+import {BPLineType} from "../BPTypes";
 
 class LineLayer extends React.Component {
 
@@ -13,7 +13,7 @@ class LineLayer extends React.Component {
     //下层
     downLayer: HTMLCanvasElement | null = null;
 
-    currentLine: CanvasLineType = {
+    currentLine: BPLineType = {
         color: "#c0c0c0",
         lineWidth: 1,
         lineDash: [10, 10],

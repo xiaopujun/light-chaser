@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import Ruler, {RulerProps} from "@scena/react-ruler";
 import eventOperateStore from "../operate-provider/EventOperateStore";
-import {PointType} from "../../blueprint/types";
+import {PointType} from "../../blueprint/BPTypes";
 
 interface DesignerRulerProps {
     offset?: PointType;

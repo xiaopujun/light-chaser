@@ -1,10 +1,10 @@
 import {action, makeObservable, observable} from "mobx";
 import Moveable from "react-moveable";
 import Selecto from "react-selecto";
-import {CanvasLineType, PointType} from "../types";
 import ObjectUtil from "../../utils/ObjectUtil";
 import {AbstractBPNodeController, AnchorPointInfoType} from "../node/core/AbstractBPNodeController";
 import bpNodeControllerMap from "../node/core/impl/BPNodeControllerMap";
+import {BPLineType, PointType} from "../BPTypes";
 
 export interface BPNodeLayoutType {
     id?: string;
@@ -29,7 +29,7 @@ class BPStore {
     bpAPMap: Record<string, string[]> = {};
 
     //蓝图节点锚点间连接的线条列表(入库）
-    bpLines: Record<string, CanvasLineType> = {};
+    bpLines: Record<string, BPLineType> = {};
 
     //锚点与线条的对应关系（入库），一个锚点可以连接多条线，用于位置更新时，快速找到线条并更新线条位置
     bpAPLineMap: Record<string, string[]> = {};
@@ -47,7 +47,7 @@ class BPStore {
     selectedNodes: HTMLElement[] = [];
 
     //被选中的线条列表
-    selectedLines: CanvasLineType[] = [];
+    selectedLines: BPLineType[] = [];
 
     //蓝图移动框架引用
     bpMovableRef: Moveable | null = null;
@@ -117,7 +117,7 @@ class BPStore {
             ObjectUtil.merge(oldLayout, layout);
     }
 
-    setSelectedLines = (lines: CanvasLineType[]) => {
+    setSelectedLines = (lines: BPLineType[]) => {
         this.selectedLines = lines;
     }
 
@@ -150,7 +150,7 @@ class BPStore {
     }
 
     //更新线段的位置
-    updLinePos = (line: CanvasLineType) => {
+    updLinePos = (line: BPLineType) => {
         const oldLine = this.bpLines[line.id!];
         if (oldLine) {
             oldLine.startPoint = line.startPoint;
@@ -166,7 +166,7 @@ class BPStore {
         this.bpAPMap = anchorRelationship;
     }
 
-    setLines = (connectedLines: Record<string, CanvasLineType>) => {
+    setLines = (connectedLines: Record<string, BPLineType>) => {
         this.bpLines = connectedLines;
     }
 
@@ -176,7 +176,7 @@ class BPStore {
         this.bpAPMap[startAnchorId].push(endAnchorId);
     }
 
-    addLine = (line: CanvasLineType) => {
+    addLine = (line: BPLineType) => {
         this.bpLines[line.id!] = line;
     }
 

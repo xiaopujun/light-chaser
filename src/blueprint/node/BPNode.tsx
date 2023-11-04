@@ -1,24 +1,11 @@
 import React from "react";
 import './BPNode.less';
-import {PointType} from "../types";
-import {AnchorPointType} from "./core/AbstractBPNodeController";
+import {AnchorPointType, NodeInfoType} from "./core/AbstractBPNodeController";
 import nodeIconMap from "./NodeIconMap";
 import {CodeSandboxOutlined} from "@ant-design/icons";
+import {PointType} from "../BPTypes";
 
-export interface AnchorPointProps {
-    id?: string;
-    name?: string;
-    type?: AnchorPointType;
-}
-
-export interface NodeProps {
-    id?: string;
-    icon?: any;
-    name?: string;
-    type?: string;
-    titleBgColor?: string;
-    input?: AnchorPointProps[];
-    output?: AnchorPointProps[];
+export interface NodeProps extends NodeInfoType {
     position?: PointType;
 }
 

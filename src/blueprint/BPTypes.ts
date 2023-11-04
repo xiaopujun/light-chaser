@@ -1,4 +1,4 @@
-export interface CanvasLineType {
+export interface BPLineType {
     id?: string;
     color?: string;
     lineWidth?: number;

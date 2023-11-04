@@ -2,7 +2,7 @@
  * 主题
  */
 import {MovableItemType} from "./operate-provider/movable/types";
-import {CanvasLineType} from "../blueprint/types";
+import {BPLineType} from "../blueprint/BPTypes";
 import {BPNodeLayoutType} from "../blueprint/store/BPStore";
 
 export interface ThemeColors {
@@ -297,7 +297,7 @@ export interface ProjectDataType {
     //蓝图节点配置
     bpNodeConfigMap?: Record<string, any>;
     //蓝图线条
-    bpLines?: Record<string, CanvasLineType>;
+    bpLines?: Record<string, BPLineType>;
     //蓝图锚点之间的连线关系映射
     bpAPMap?: Record<string, string[]>;
     //蓝图锚点与线条之间的关系映射

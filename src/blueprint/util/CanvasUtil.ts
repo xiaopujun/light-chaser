@@ -1,4 +1,4 @@
-import {CanvasLineType, PointType} from "../types";
+import {BPLineType, PointType} from "../BPTypes";
 
 export interface CubicBezierCurvesCP {
     firstCP: PointType;
@@ -8,7 +8,7 @@ export interface CubicBezierCurvesCP {
 export default class CanvasUtil {
 
     //绘制贝塞尔曲线
-    public static drawBezierCurves(ctx: CanvasRenderingContext2D, lineConfig: CanvasLineType) {
+    public static drawBezierCurves(ctx: CanvasRenderingContext2D, lineConfig: BPLineType) {
         const {startPoint, endPoint, firstCP, secondCP, color, lineWidth, lineDash} = lineConfig;
         ctx.strokeStyle = color!;
         ctx.lineWidth = lineWidth!;

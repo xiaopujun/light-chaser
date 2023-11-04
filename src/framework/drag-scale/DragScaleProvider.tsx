@@ -1,4 +1,4 @@
-import {PointType} from "../../blueprint/types";
+import {PointType} from "../../blueprint/BPTypes";
 import {ScaleCore} from "../../designer/operate-provider/scale/ScaleCore";
 
 export interface DragScaleData {
