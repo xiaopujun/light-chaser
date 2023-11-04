@@ -52,7 +52,11 @@ class CompList extends Component {
         const type = (event as any).dataTransfer.getData('type');
         const name = (event as any).dataTransfer.getData('name');
         //获取鼠标位置,添加元素
-        this.addItem(type, name, [event.clientX, event.clientY]);
+        const {scale, dsContentRef} = eventOperateStore;
+        const contentPos = dsContentRef?.getBoundingClientRect();
+        const x = (event.clientX - (contentPos?.x || 0)) / scale;
+        const y = (event.clientY - (contentPos?.y || 0)) / scale;
+        this.addItem(type, name, [x, y]);
     }
 
     addItem = (compKey: string, name: string, position?: [number, number]) => {
