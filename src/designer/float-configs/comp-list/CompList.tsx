@@ -24,30 +24,28 @@ class CompList extends Component {
     componentDidMount() {
         //处理拖拽元素到画布中
         const dragContainer = document.getElementById("designer-ds-content");
-        const dragElements = document.getElementsByClassName("droppable-element");
-        Array.from(dragElements).forEach((element) => {
-            element.addEventListener('dragstart', (event) => this.dragStart(event, element));
-        });
+        const dragElements = document.getElementById("component-drag-container");
+        dragElements && dragElements.addEventListener('dragstart', this.dragStart);
         dragContainer && dragContainer.addEventListener('dragover', this.dragover);
         dragContainer && dragContainer.addEventListener('drop', this.drop);
     }
 
     componentWillUnmount() {
         const dragContainer = document.getElementById("designer-ds-content");
-        const dragElements = document.getElementsByClassName("droppable-element");
-        Array.from(dragElements).forEach((element) => {
-            element.removeEventListener('dragstart', (event) => this.dragStart(event, element));
-        });
+        const dragElements = document.getElementById("component-drag-container");
+        dragElements && dragElements.removeEventListener('dragstart', this.dragStart);
         dragContainer && dragContainer.removeEventListener('dragover', this.dragover);
         dragContainer && dragContainer.removeEventListener('drop', this.drop);
     }
 
     //拖拽开始
-    dragStart = (event: any, element: Element) => {
+    dragStart = (event: any) => {
         // 设置拖拽数据
-        console.log(element.getAttribute('data-type'));
-        (event as any).dataTransfer.setData('type', element.getAttribute('data-type'));
-        (event as any).dataTransfer.setData('name', element.getAttribute('data-name'));
+        if (event.target.classList.contains('droppable-element')) {
+            const element = event.target;
+            (event as any).dataTransfer.setData('type', element.getAttribute('data-type'));
+            (event as any).dataTransfer.setData('name', element.getAttribute('data-name'));
+        }
     }
     //拖拽覆盖
     dragover = (event: any) => {
@@ -106,15 +104,18 @@ class CompList extends Component {
             let chartImg = lcCompInit.getChartImg();
             chartDom.push(
                 <div key={i + ''} className={'list-item droppable-element'} draggable={true}
+                     onDoubleClick={() => this.addItem(compKey, compName)}
                      data-type={compKey}
                     //todo 想想办法，中文变量值能否不放在这里
                      data-name={compName}>
-                    <div className={'item-header'} ref={'drag-target'}>
-                        <div className={'item-name'}>{compName}</div>
-                        <div className={'item-type'}>Antd</div>
-                    </div>
-                    <div className={'item-content'} onDoubleClick={() => this.addItem(compKey, compName)}>
-                        <img src={chartImg} alt={'组件预览图'}/>
+                    <div style={{pointerEvents: 'none'}}>
+                        <div className={'item-header'} ref={'drag-target'}>
+                            <div className={'item-name'}>{compName}</div>
+                            <div className={'item-type'}>Antd</div>
+                        </div>
+                        <div className={'item-content'}>
+                            <img src={chartImg} alt={'组件预览图'}/>
+                        </div>
                     </div>
                 </div>
             )
@@ -139,7 +140,7 @@ class CompList extends Component {
                 <div className={'list-search'}>
                     <Input placeholder="搜索图层" onChange={this.searchChart}/>
                 </div>
-                <div className={'list-items'}>
+                <div className={'list-items'} id={'component-drag-container'}>
                     {this.getChartDom()}
                 </div>
             </FloatPanel>
