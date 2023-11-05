@@ -25,10 +25,16 @@ light chaser is built for data visualization and will continue to grow and impro
 
 # Catalogs
 
+- [Document](#document)
 - [Example](#example)
 - [Usage & Deployment](#usage--deployment)
 - [Contributing](#contributing)
 - [License](#license)
+
+# Document
+
+For more information about the designer, please refer to it
+[Document](https://xiaopujun.github.io/light-chaser-doc/#/)
 
 # Example
 

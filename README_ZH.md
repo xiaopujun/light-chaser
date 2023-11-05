@@ -21,10 +21,15 @@ light chaser 专为数据可视化而设计，并将不断发展和完善！
 
 # 目录
 
+- [文档](#文档)
 - [样例](#样例)
 - [部署和使用](#部署和使用)
 - [贡献](#贡献)
 - [License](#License)
+
+# 文档
+
+设计器详细内容请参考 [文档](https://xiaopujun.github.io/light-chaser-doc/#/)
 
 # 样例
 
