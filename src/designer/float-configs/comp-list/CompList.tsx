@@ -27,12 +27,19 @@ class CompList extends Component {
         const dragElements = document.getElementsByClassName("droppable-element");
         Array.from(dragElements).forEach((element) => {
             element.removeEventListener('dragstart', (event) => this.dragStart(event, element));
-            element.addEventListener('dragstart', (event) => this.dragStart(event, element));
+        });
+        dragContainer && dragContainer.addEventListener('dragover', this.dragover);
+        dragContainer && dragContainer.addEventListener('drop', this.drop);
+    }
+
+    componentWillUnmount() {
+        const dragContainer = document.getElementById("designer-ds-content");
+        const dragElements = document.getElementsByClassName("droppable-element");
+        Array.from(dragElements).forEach((element) => {
+            element.removeEventListener('dragstart', (event) => this.dragStart(event, element));
         });
         dragContainer && dragContainer.removeEventListener('dragover', this.dragover);
-        dragContainer && dragContainer.addEventListener('dragover', this.dragover);
         dragContainer && dragContainer.removeEventListener('drop', this.drop);
-        dragContainer && dragContainer.addEventListener('drop', this.drop);
     }
 
     //拖拽开始
