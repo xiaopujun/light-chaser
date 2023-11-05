@@ -26,7 +26,7 @@ class CompList extends Component {
         const dragContainer = document.getElementById("designer-ds-content");
         const dragElements = document.getElementsByClassName("droppable-element");
         Array.from(dragElements).forEach((element) => {
-            element.removeEventListener('dragstart', (event) => this.dragStart(event, element));
+            element.addEventListener('dragstart', (event) => this.dragStart(event, element));
         });
         dragContainer && dragContainer.addEventListener('dragover', this.dragover);
         dragContainer && dragContainer.addEventListener('drop', this.drop);
