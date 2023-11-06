@@ -134,7 +134,7 @@ export const doSave = throttle(() => {
             const {projectConfig: {saveType = SaveType.LOCAL}, updateProjectConfig} = designerStore;
             updateProjectConfig({updateTime: DateUtil.format(new Date())})
             const proData = designerStore.getData();
-            //设置蓝图数据 todo 这里的数据采集方式应该要采用以各种更合理的方式处理
+            //设置蓝图数据
             const {bpAPMap, bpLines, bpAPLineMap, getAllNodeConfig, bpNodeLayoutMap} = bpStore;
             proData.bpAPMap = bpAPMap;
             proData.bpLines = bpLines;

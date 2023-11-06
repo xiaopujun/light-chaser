@@ -13,7 +13,7 @@ export default class LCGUIUtil {
                 //取指定数据元素继续递归
                 this.updateSchema((oldSchema[key as keyof Control] as [])[index], path, value);
             } else {
-                //普通属性继续递归 todo可能还有特殊场景，注意测试
+                //普通属性继续递归
                 this.updateSchema(oldSchema[key as keyof Control] as Control, path, value);
             }
         }
