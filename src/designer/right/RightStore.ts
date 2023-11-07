@@ -53,14 +53,14 @@ class RightStore {
     setContentVisible = (visible: boolean) => this.visible = visible;
 
     activeConfig = (id: string | null, type: string | null) => {
-        if (!id) {
+        if (!id || !type) {
             this.activeMenu = '';
             this.activeElem = {};
             this.menus = [];
             return;
         }
         //更新菜单列表
-        this.menus = (DesignerLoaderFactory.getLoader().customComponentInfoMap[type!] as AbstractComponentDefinition).getMenuList() || [];
+        this.menus = (DesignerLoaderFactory.getLoader()?.customComponentInfoMap[type] as AbstractComponentDefinition)?.getMenuList() || [];
         if (this.menus.length > 0) {
             let setNewActiveMenu = true;
             for (let i = 0; i < this.menus.length; i++) {
@@ -72,7 +72,7 @@ class RightStore {
             if (setNewActiveMenu)
                 this.activeMenu = this.menus[0].key;
         }
-        this.activeElem = {id: id!, type: type!};
+        this.activeElem = {id, type};
         //重新挂载配置面板
         if (this.visible) {
             this.visible = false;
