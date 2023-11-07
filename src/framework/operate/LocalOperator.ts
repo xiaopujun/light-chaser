@@ -3,14 +3,14 @@ import {ProjectDataType, SaveType} from "../../designer/DesignerType";
 import localforage from "localforage";
 import {ImgUtil} from "../../utils/ImgUtil";
 import eventOperateStore from "../../designer/operate-provider/EventOperateStore";
-import {buildUrlParams, parseUrlParams} from "../../utils/URLUtil";
 import {AbstractOperator} from "./AbstractOperator";
-import {idGenerate} from "../../utils/IdGenerate";
 import {LocalConstant} from "../LocalConstant";
 import {message} from "antd";
 import {cloneDeep} from "lodash";
 import {ComponentBaseProps} from "../../comps/common-component/common-types";
 import DesignerLoaderFactory from "../../designer/loader/DesignerLoaderFactory";
+import URLUtil from "../../utils/URLUtil";
+import IdGenerate from "../../utils/IdGenerate";
 
 /**
  * 本地项目数据操作实现
@@ -37,7 +37,7 @@ class LocalOperator extends AbstractOperator {
 
     private static createProjectBefore(projectData: ProjectDataType): void {
         //1. 生成项目id
-        projectData.id = idGenerate.generateId();
+        projectData.id = IdGenerate.generateId();
         // 2. 处理元素层级
         const {maxLevel, minLevel} = eventOperateStore;
         projectData.extendParams!.maxLevel = maxLevel;
@@ -78,9 +78,9 @@ class LocalOperator extends AbstractOperator {
         //更新id
         id && id !== '' && setId && setId(id);
         //修改路由参数，新增变为更新
-        let urlParams = parseUrlParams();
+        let urlParams = URLUtil.parseUrlParams();
         urlParams = {...urlParams, ...{id: id!, action: 'edit'}};
-        window.history.replaceState(null, '', '?' + buildUrlParams(urlParams));
+        window.history.replaceState(null, '', '?' + URLUtil.buildUrlParams(urlParams));
     }
 
     private async updateProject(projectData: ProjectDataType): Promise<void> {
@@ -193,7 +193,7 @@ class LocalOperator extends AbstractOperator {
         //1. 获取id对应的项目数据
         const copiedData = await this.getProject(id)
         //3. 复制项目数据
-        const newId = idGenerate.generateId();
+        const newId = IdGenerate.generateId();
         const newData = cloneDeep(copiedData);
         newData!.id = newId;
         newData!.projectConfig!.name = name || newData!.projectConfig!.name + '(副本)';

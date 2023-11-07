@@ -1,5 +1,4 @@
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
-import {parseUrlParams} from "../../utils/URLUtil";
 import {AbstractComponentDefinition} from "../../framework/core/AbstractComponentDefinition";
 import AbstractConvert from "../../framework/convert/AbstractConvert";
 import {AbstractOperator} from "../../framework/operate/AbstractOperator";
@@ -11,6 +10,7 @@ import bpLeftStore from "../../blueprint/left/BPLeftStore";
 import {AbstractBPNodeController} from "../../blueprint/node/core/AbstractBPNodeController";
 import bpNodeControllerMap from "../../blueprint/node/core/impl/BPNodeControllerMap";
 import {ClazzTemplate} from "../../comps/common-component/common-types";
+import URLUtil from "../../utils/URLUtil";
 
 /**
  * 展示模式下的设计器加载器
@@ -31,7 +31,7 @@ export class ViewDesignerLoader extends AbstractDesignerLoader {
     }
 
     protected loadProjectData(): void {
-        let urlParams = parseUrlParams();
+        let urlParams = URLUtil.parseUrlParams();
         const {action} = urlParams;
         if ("view" === action)
             this.initExistProject();
@@ -76,7 +76,7 @@ export class ViewDesignerLoader extends AbstractDesignerLoader {
      * 初始化以更新方式打开时项目信息
      */
     private initExistProject(): void {
-        let urlParams = parseUrlParams();
+        let urlParams = URLUtil.parseUrlParams();
         const {doInit, setLoaded} = designerStore;
         this.abstractOperatorMap[SaveType.LOCAL].getProject(urlParams.id).then((store: ProjectDataType | null) => {
             if (store) {

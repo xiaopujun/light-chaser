@@ -11,7 +11,7 @@ import bpStore from "../store/BPStore";
 import bpLeftStore from "./BPLeftStore";
 import {observer} from "mobx-react";
 import designerStore from "../../designer/store/DesignerStore";
-import {idGenerate} from "../../utils/IdGenerate";
+import IdGenerate from "../../utils/IdGenerate";
 
 export const BPLeft: React.FC = () => {
     return (
@@ -85,7 +85,7 @@ const drop = (event: any) => {
         setUsedLayerNodes(nodeId, true);
     } else {
         //非图层节点，需要单独生成一个唯一节点id
-        nodeId = idGenerate.generateId();
+        nodeId = IdGenerate.generateId();
     }
     const {addBPNodeLayout} = bpStore;
     addBPNodeLayout({id: nodeId, type, position});

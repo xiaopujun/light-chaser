@@ -1,6 +1,5 @@
 import designerStore from "../store/DesignerStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
-import {parseUrlParams} from "../../utils/URLUtil";
 import {ProjectDataType, SaveType} from "../DesignerType";
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 import {AbstractHeaderItem, HeaderItemProps} from "../header/HeaderTypes";
@@ -9,6 +8,7 @@ import {AbstractOperator} from "../../framework/operate/AbstractOperator";
 import AbstractConvert from "../../framework/convert/AbstractConvert";
 import bpStore from "../../blueprint/store/BPStore";
 import bpLeftStore from "../../blueprint/left/BPLeftStore";
+import URLUtil from "../../utils/URLUtil";
 
 export default class EditorDesignerLoader extends AbstractDesignerLoader {
 
@@ -27,7 +27,7 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
     }
 
     protected loadProjectData(): void {
-        let urlParams = parseUrlParams();
+        let urlParams = URLUtil.parseUrlParams();
         const {action} = urlParams;
         if (['edit', 'view'].includes(action))
             this.initExistProject();
@@ -91,7 +91,7 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
      * 初始化以创建方式打开时项目信息
      */
     private initNewProject(): void {
-        let urlParams = parseUrlParams();
+        let urlParams = URLUtil.parseUrlParams();
         const {width, height, name} = urlParams;
         const {doInit} = designerStore;
         doInit({
@@ -111,7 +111,7 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
      * 初始化以更新方式打开时项目信息
      */
     private initExistProject(): void {
-        let urlParams = parseUrlParams();
+        let urlParams = URLUtil.parseUrlParams();
         const {doInit, setLoaded} = designerStore;
         this.abstractOperatorMap[SaveType.LOCAL].getProject(urlParams.id).then((store: ProjectDataType | null) => {
             if (store) {

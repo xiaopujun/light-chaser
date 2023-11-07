@@ -8,9 +8,9 @@ import {MappingOptions} from "@antv/g2plot/lib/adaptor/geometries/base";
 import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
-import {parseGradient} from "../../../utils/ColorUtil";
 import LCGUIUtil from "../../../json-schema/LCGUIUtil";
 import AntdCommonUtil from "../../antd-common/AntdCommonUtil";
+import ColorUtil from "../../../utils/ColorUtil";
 
 class AntdBaseAreaStyleConfig extends Component<ConfigType> {
 
@@ -56,7 +56,7 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
             //解析渐变色
             if (typeof data === 'string' && data.indexOf('linear-gradient') !== -1) {
                 //线性渐变
-                const gradientColor = parseGradient(data.toLowerCase());
+                const gradientColor = ColorUtil.parseGradient(data.toLowerCase());
                 const colorStr = gradientColor?.colors?.map(item => `${item.pos}:${item.color}`).join(' ');
                 data = `l(${gradientColor.angle}) ${colorStr}`;
                 controller.update(LCGUIUtil.createObjectFromArray(dataKeyPath, data));
