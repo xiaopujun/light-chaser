@@ -87,8 +87,10 @@ light chaser遵守《贡献者公约行为准则》。
 
 感谢为本项目做出贡献的每一位开发人员和个人！
 
-## 联系我
+## 社区
 
-扫码联系我进群交流
 
-![me](https://picst.sunbangyan.cn/2023/11/03/1c7a824a6d22b3a78c3a82a0a73a7245.jpg)
+<div style="display: flex">
+    <div  style="padding: 20px"><img alt="me" src="https://picdl.sunbangyan.cn/2023/11/05/a7ccc0b5df28f551527b25ff792dead7.jpg"></div>
+    <div  style="padding: 20px"><img alt="group" src="https://picdm.sunbangyan.cn/2023/11/05/211f4c8d8008325318d5873b806dfd32.jpg"></div>
+</div>

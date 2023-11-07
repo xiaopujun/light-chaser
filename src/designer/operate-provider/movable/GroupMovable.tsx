@@ -321,7 +321,6 @@ export const DimensionViewable = {
     },
     events: {},
     render(moveable: MoveableManagerInterface) {
-        // const zoom = moveable.props.zoom;
         const rect = moveable.getRect();
 
         //todo 思考如何保证缩放比例？

@@ -11,7 +11,6 @@ import LayerContainer from "./LayerContainer";
 import {MovableItemType} from "../../operate-provider/movable/types";
 import Input from "../../../ui/input/Input";
 
-//todo 该组件的重新渲染逻辑要重点优化
 class LayerList extends Component {
 
     componentDidMount() {

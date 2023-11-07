@@ -10,7 +10,7 @@ export class ImgUtil {
                     resolve(blob);
                 });
             });
-            return URL.createObjectURL(blob);
+            return URL.createObjectURL(blob!);
         } catch (error) {
             console.error('生成截图失败', error);
             return '';
@@ -64,7 +64,7 @@ export class ImgUtil {
         try {
             const blob = await localforage.getItem(key);
             if (blob)
-                return {[key]: URL.createObjectURL(blob)};
+                return {[key]: URL.createObjectURL(blob as Blob)};
             else
                 return {[key]: ""};
         } catch (error) {
