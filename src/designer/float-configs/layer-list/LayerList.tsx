@@ -6,26 +6,27 @@ import {LayerItemDataProps} from "./LayerItem";
 import {observer} from "mobx-react";
 import FloatPanel from "../common/FloatPanel";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
-import eventManager from "../../operate-provider/core/EventManager";
 import LayerContainer from "./LayerContainer";
 import {MovableItemType} from "../../operate-provider/movable/types";
 import Input from "../../../ui/input/Input";
 
 class LayerList extends Component {
 
+    floatPanelRef: FloatPanel | null = null;
+
     componentDidMount() {
-        eventManager.register("click", this.cancelSelected);
+        this.floatPanelRef?.panelRef?.addEventListener("click", this.cancelSelected);
     }
 
     componentWillUnmount() {
-        eventManager.unregister("click", this.cancelSelected);
+        this.floatPanelRef?.panelRef?.removeEventListener("click", this.cancelSelected);
     }
 
-    //todo: 想想怎么优化
-    cancelSelected = (e: PointerEvent) => {
-        const layerListDom = document.querySelector(".layer-list");
-        if (!layerListDom || !e.target) return;
-        if (layerListDom.contains(e.target as Node) && !(e.target as HTMLElement).classList.contains("layer-item")) {
+    cancelSelected = (e: any) => {
+        if (!this.floatPanelRef) return;
+        const {panelRef} = this.floatPanelRef;
+        if (!panelRef) return;
+        if (panelRef.contains(e.target as Node) && !(e.target as HTMLElement).classList.contains("layer-item")) {
             const {setTargets} = eventOperateStore;
             setTargets([]);
         }
@@ -40,7 +41,6 @@ class LayerList extends Component {
         const {setContent} = layerListStore;
         setContent && setContent(data as string);
     }
-
 
     buildLayerList = () => {
         const {layoutConfigs} = designerStore;
@@ -76,7 +76,8 @@ class LayerList extends Component {
 
     render() {
         return (
-            <FloatPanel title={'图层'} onClose={this.onClose} initPosition={{x: 250, y: -window.innerHeight + 50}}
+            <FloatPanel ref={ref => this.floatPanelRef = ref} title={'图层'} onClose={this.onClose}
+                        initPosition={{x: 250, y: -window.innerHeight + 50}}
                         className={'layer-list'}>
                 <div className={'list-search'}>
                     <Input placeholder="搜索图层" onChange={this.searchLayer}/>
