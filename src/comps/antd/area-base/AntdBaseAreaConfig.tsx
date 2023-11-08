@@ -3,7 +3,6 @@ import {ConfigType} from "../../../designer/right/ConfigType";
 import {AreaOptions, ShapeStyle} from "@antv/g2plot";
 import AntdCommonAreaController from "../../antd-common/area/AntdCommonAreaController";
 import {AntdCartesianCoordinateSys} from "../../antd-common/config/AntdFragment";
-import {WritableAreaOptions} from "../../antd-common/types";
 import {MappingOptions} from "@antv/g2plot/lib/adaptor/geometries/base";
 import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
@@ -37,13 +36,6 @@ class AntdBaseAreaStyleConfig extends Component<ConfigType> {
 }
 
 export {AntdBaseAreaStyleConfig};
-
-
-export interface AntdBaseAreaGraphicsProps {
-    config?: WritableAreaOptions;
-
-    onChange(config: WritableAreaOptions): void;
-}
 
 export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
 

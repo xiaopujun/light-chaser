@@ -15,6 +15,8 @@ import bpStore from "../../../blueprint/store/BPStore";
 import {reRenderLine} from "../../../blueprint/drag/BPMovable";
 import bpLeftStore from "../../../blueprint/left/BPLeftStore";
 import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
+import {OperateResult} from "../../../framework/operate/AbstractOperator";
+import {message} from "antd";
 
 export const selectAll = () => {
     let comps = document.getElementsByClassName('lc-comp-item');
@@ -141,7 +143,13 @@ export const doSave = throttle(() => {
             proData.bpAPLineMap = bpAPLineMap;
             proData.bpNodeConfigMap = getAllNodeConfig();
             proData.bpNodeLayoutMap = bpNodeLayoutMap;
-            DesignerLoaderFactory.getLoader().abstractOperatorMap[saveType].saveProject(cloneDeep(proData));
+            DesignerLoaderFactory.getLoader().abstractOperatorMap[saveType].saveProject(cloneDeep(proData)).then((res: OperateResult) => {
+                const {status, msg} = res;
+                if (status)
+                    message.success(msg);
+                else
+                    message.error(msg);
+            });
         } else if (saveType === SaveType.SERVER) {
             alert("server save");
         }
