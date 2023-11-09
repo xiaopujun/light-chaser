@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import './MenuList.less';
 import {MenuInfo} from "./MenuType";
 import rightStore from "./RightStore";

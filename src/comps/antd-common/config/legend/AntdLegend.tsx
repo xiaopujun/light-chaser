@@ -1,4 +1,3 @@
-import React from 'react';
 import './Legend.less';
 import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI";
 import {Control} from "../../../../json-schema/SchemaTypes";

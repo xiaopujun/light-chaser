@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import ClassifyList from "./classify-list/ClassifyList";
 import {observer} from "mobx-react";
 

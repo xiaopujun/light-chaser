@@ -1,9 +1,6 @@
 import React, {Component, useState} from 'react';
 import './AxisConfig.less';
 import {Axis} from "@antv/g2plot";
-import {Types} from "@antv/g2";
-import {AxisLabelCfg, AxisLineCfg, AxisSubTickLineCfg, AxisTickLineCfg, AxisTitleCfg} from "@antv/component/esm";
-import {AxisGridCfg} from "@antv/g2/esm/interface";
 import {isEqual} from "lodash";
 import {Control} from "../../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI";
@@ -65,19 +62,19 @@ class AxisConfig extends Component<AxisConfigProps> {
                        }}>
 
                 <Radio padding={'7px 0 10px 0'} label={'位置'}
-                       defaultValue={(config as Types.AxisCfg)?.position || 'right'}
-                       onChange={(value => onChange({position: value as Types.AxisCfg["position"]}))}
+                       defaultValue={(config as any)?.position || 'right'}
+                       onChange={(value => onChange({position: value as any["position"]}))}
                        options={[{label: '上', value: 'top'},
                            {label: '下', value: 'bottom'},
                            {label: '左', value: 'left'},
                            {label: '右', value: 'right'}]}/>
-                <AxisText config={(config as Types.AxisCfg)?.label!} onChange={(data => onChange({label: data}))}/>
-                <AxisTitle config={(config as Types.AxisCfg)?.title!} onChange={(data => onChange({title: data}))}/>
-                <AxisLine config={(config as Types.AxisCfg)?.line!} onChange={(data => onChange({line: data}))}/>
-                <AxisGridLine config={(config as Types.AxisCfg)?.grid!} onChange={(data => onChange({grid: data}))}/>
-                <AxisTickLine config={(config as Types.AxisCfg)?.tickLine!}
+                <AxisText config={(config as any)?.label!} onChange={(data => onChange({label: data}))}/>
+                <AxisTitle config={(config as any)?.title!} onChange={(data => onChange({title: data}))}/>
+                <AxisLine config={(config as any)?.line!} onChange={(data => onChange({line: data}))}/>
+                <AxisGridLine config={(config as any)?.grid!} onChange={(data => onChange({grid: data}))}/>
+                <AxisTickLine config={(config as any)?.tickLine!}
                               onChange={(data => onChange({tickLine: data}))}/>
-                <AxisSubTickLine config={(config as Types.AxisCfg)?.subTickLine!}
+                <AxisSubTickLine config={(config as any)?.subTickLine!}
                                  onChange={(data => onChange({subTickLine: data}))}/>
             </Accordion>
         );
@@ -85,13 +82,13 @@ class AxisConfig extends Component<AxisConfigProps> {
 }
 
 export interface AxisSubTickLineProps {
-    config: AxisSubTickLineCfg;
-    onChange: (data: AxisSubTickLineCfg | null) => void;
+    config: any;
+    onChange: (data: any | null) => void;
 }
 
 export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChange}) => {
 
-    const [_config, setConfig] = useState<AxisSubTickLineCfg | null>(config);
+    const [_config, setConfig] = useState<any | null>(config);
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
         const {id, data} = fieldChangeData;
@@ -196,13 +193,13 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
 
 
 export interface AxisTickLineProps {
-    config: AxisTickLineCfg;
-    onChange: (data: AxisTickLineCfg | null) => void;
+    config: any;
+    onChange: (data: any | null) => void;
 }
 
 export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) => {
 
-    const [_config, setConfig] = useState<AxisTickLineCfg | null>(config);
+    const [_config, setConfig] = useState<any | null>(config);
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
         const {id, data} = fieldChangeData;
@@ -244,14 +241,14 @@ export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) =>
                         rules: "{tickLineSwitch}==='true'",
                         type: 'switch',
                         label: '对齐',
-                        value: (_config as AxisTickLineCfg)?.alignTick,
+                        value: (_config as any)?.alignTick,
                     },
                     {
                         key: 'length',
                         rules: "{tickLineSwitch}==='true'",
                         type: 'input',
                         label: '长度',
-                        value: (_config as AxisTickLineCfg)?.length,
+                        value: (_config as any)?.length,
                         config: {
                             type: 'number',
                             min: 0,
@@ -299,14 +296,14 @@ export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) =>
 }
 
 export interface AxisGridLineProps {
-    config: AxisGridCfg;
-    onChange: (data: AxisGridCfg | null) => void;
+    config: any;
+    onChange: (data: any | null) => void;
 }
 
 
 export const AxisGridLine: React.FC<AxisGridLineProps> = ({config, onChange}) => {
 
-    const [_config, setConfig] = useState<AxisGridCfg | null>(config);
+    const [_config, setConfig] = useState<any | null>(config);
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
         const {id, data} = fieldChangeData;
@@ -348,7 +345,7 @@ export const AxisGridLine: React.FC<AxisGridLineProps> = ({config, onChange}) =>
                         key: 'alignTick',
                         type: 'switch',
                         label: '对齐',
-                        value: _config?.alignTick,
+                        value: (_config as any)?.alignTick,
                     },
                     {
                         rules: "{gridLineSwitch} === 'true'",
@@ -397,13 +394,13 @@ export const AxisGridLine: React.FC<AxisGridLineProps> = ({config, onChange}) =>
 }
 
 export interface AxisLIneProps {
-    config: AxisLineCfg;
-    onChange: (data: AxisLineCfg | null) => void;
+    config: any;
+    onChange: (data: any | null) => void;
 }
 
 export const AxisLine: React.FC<AxisLIneProps> = ({config, onChange}) => {
 
-    const [_config, setConfig] = useState<AxisTitleCfg | null>(config);
+    const [_config, setConfig] = useState<any | null>(config);
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
         const {id, data} = fieldChangeData;
@@ -478,13 +475,13 @@ export const AxisLine: React.FC<AxisLIneProps> = ({config, onChange}) => {
 }
 
 export interface AxisTitleProps {
-    config: AxisTitleCfg;
-    onChange: (data?: AxisTitleCfg | null) => void;
+    config: any;
+    onChange: (data?: any | null) => void;
 }
 
 export const AxisTitle: React.FC<AxisTitleProps> = ({config, onChange}) => {
 
-    const [_config, setConfig] = useState<AxisTitleCfg | null>(config);
+    const [_config, setConfig] = useState<any | null>(config);
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
         const {id, data} = fieldChangeData;
@@ -591,8 +588,8 @@ export const AxisTitle: React.FC<AxisTitleProps> = ({config, onChange}) => {
 }
 
 export interface AxisTextProps {
-    config: AxisLabelCfg;
-    onChange: (data: AxisLabelCfg) => void;
+    config: any;
+    onChange: (data: any) => void;
 }
 
 export const AxisText: React.FC<AxisTextProps> = ({config, onChange}) => {

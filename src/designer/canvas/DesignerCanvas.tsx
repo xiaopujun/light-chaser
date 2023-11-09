@@ -1,4 +1,4 @@
-import React, {MouseEvent, PureComponent} from 'react';
+import {MouseEvent, PureComponent} from 'react';
 import {observer} from "mobx-react";
 import designerStore, {DesignerStore} from "../store/DesignerStore";
 import rightStore from "../right/RightStore";

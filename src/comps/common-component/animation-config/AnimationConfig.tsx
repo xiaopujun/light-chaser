@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import './AnimationConfig.less';
 import {ConfigType} from '../../../designer/right/ConfigType';
 

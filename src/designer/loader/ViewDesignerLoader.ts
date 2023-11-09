@@ -42,9 +42,11 @@ export class ViewDesignerLoader extends AbstractDesignerLoader {
 
     //扫描自定义组件
     private scannerCustomComponents(): void {
-        const compCtx = require.context('../../comps', true, /\.(ts)$/);
-        compCtx.keys().forEach(key => {
-            const Clazz = compCtx(key).default;
+        const compCtx: any = import.meta.glob('../../comps/*/*/*.ts', {
+            eager: true,
+        });
+        Object.keys(compCtx).forEach(key => {
+            const Clazz = compCtx[key]?.default;
             if (Clazz && AbstractComponentDefinition.isPrototypeOf(Clazz)) {
                 let customComponentInfo: AbstractComponentDefinition = new Clazz();
                 if (typeof customComponentInfo.getBaseInfo === "function") {
@@ -62,9 +64,11 @@ export class ViewDesignerLoader extends AbstractDesignerLoader {
 
     //扫描项目操作实现（数据保存，加载操作 -> 本地 | 远程）
     public scannerProjectOperators(): void {
-        const compCtx = require.context('../../framework', true, /\.(ts)$/);
-        compCtx.keys().forEach(key => {
-            const Clazz = compCtx(key).default;
+        const compCtx: any = import.meta.glob('../../framework/*/*.ts', {
+            eager: true,
+        });
+        Object.keys(compCtx).forEach(key => {
+            const Clazz = compCtx[key]?.default;
             if (Clazz && AbstractOperator.isPrototypeOf(Clazz)) {
                 let operatorInstance: AbstractOperator = new Clazz();
                 let operateEnv = operatorInstance.getKey();

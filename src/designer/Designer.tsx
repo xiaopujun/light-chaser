@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import LcHeader from "./structure/LcHeader";
 import LcBody from "./structure/LcBody";
 import LcLeft from "./structure/LcLeft";

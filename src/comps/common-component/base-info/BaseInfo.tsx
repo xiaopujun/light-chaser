@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import './BaseInfo.less';
 import {ConfigType} from "../../../designer/right/ConfigType";
 import designerStore from "../../../designer/store/DesignerStore";

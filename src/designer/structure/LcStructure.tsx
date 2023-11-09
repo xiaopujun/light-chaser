@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import './structure.less';
 
 class LcStructure extends Component {

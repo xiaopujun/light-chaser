@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import  {Component} from 'react';
 import './ColorMode.less';
 import ColorPicker from "../color-picker/ColorPicker";
 import Select from "../select/Select";

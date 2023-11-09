@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import './style/AddNewScreenDialog.less';
 import Dialog from "../ui/dialog/Dialog";
 import Button from "../ui/button/Button";

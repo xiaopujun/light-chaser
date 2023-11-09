@@ -1,5 +1,5 @@
-import React from 'react'
 import ColorPicker from 'react-best-gradient-color-picker';
+import React from "react";
 
 export function GradientColorPicker(props) {
     const {value, onChange, ...rest} = props;

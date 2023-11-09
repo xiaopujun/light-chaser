@@ -1,4 +1,3 @@
-import React from "react";
 import {BPMovable} from "../drag/BPMovable";
 import {BPSelectable} from "../drag/BPSelectable";
 import {observer} from "mobx-react";

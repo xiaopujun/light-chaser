@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import  {Component} from 'react';
 import './Accordion.less';
 import {QuestionCircleOutlined, RightOutlined} from "@ant-design/icons";
 import Switch from "../switch/Switch";
