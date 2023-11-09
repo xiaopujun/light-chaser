@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "ignoreErrors": false,
     "target": "es2015",
     "useDefineForClassFields": true,
     "lib": [
@@ -7,21 +8,23 @@
       "dom.iterable",
       "esnext"
     ],
-    "module": "ESNext",
+    "allowJs": true,
     "skipLibCheck": true,
-    /* Bundler mode */
+    "esModuleInterop": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
     "moduleResolution": "node",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    /* Linting */
-    "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": false,
+    "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    //    "noEmit": true,
+    "jsx": "react-jsx"
   },
   "include": [
     "src"
