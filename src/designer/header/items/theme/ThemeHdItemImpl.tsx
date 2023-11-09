@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import Dialog from "../../../../ui/dialog/Dialog";
 import './ThemeHdItem.less';
 import headerStore from "../../HeaderStore";

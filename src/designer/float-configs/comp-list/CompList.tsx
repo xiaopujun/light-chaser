@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import compListStore from "./CompListStore";
 import classifyListStore from "../../left/classify-list/ClassifyListStore";
 import './CompList.less';

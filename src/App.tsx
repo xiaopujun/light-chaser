@@ -1,4 +1,4 @@
-import React, {Component, lazy, Suspense} from 'react';
+import {Component, lazy, Suspense} from 'react';
 import 'antd/dist/antd.min.css';
 import './App.less';
 import {Route, Switch} from "react-router-dom";

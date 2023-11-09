@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import {ThemeColors, ThemeItemType} from "../../../../designer/DesignerType";
 import ThemeItem from "../theme-item/ThemeItem";
 import designerStore from "../../../../designer/store/DesignerStore";

@@ -40,10 +40,12 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
 
     //扫描头部组件
     private scannerHeader(): void {
-        const headerCtx = require.context('../header/items', true, /\.(tsx|ts)$/);
+        const headerCtx: any = import.meta.glob(['/src/designer/header/items/*/*.tsx', '/src/designer/header/items/*/*.ts'], {
+            eager: true,
+        });
         let tempHeaderItemInstances: HeaderItemProps[] = [];
-        headerCtx.keys().forEach(key => {
-            const HeaderClazz = headerCtx(key).default;
+        Object.keys(headerCtx).forEach(key => {
+            const HeaderClazz = headerCtx[key]?.default;
             if (HeaderClazz && AbstractHeaderItem.isPrototypeOf(HeaderClazz)) {
                 let headerItemIns = new HeaderClazz();
                 tempHeaderItemInstances.push(headerItemIns.getHeaderItemInfo());
@@ -57,9 +59,11 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
 
     //扫描自定义组件
     private scannerCustomComponents(): void {
-        const compCtx = require.context('../../comps', true, /\.(ts)$/);
-        compCtx.keys().forEach(key => {
-            const Clazz = compCtx(key).default;
+        const compCtx: any = import.meta.glob('../../comps/*/*/*.ts', {
+            eager: true,
+        });
+        Object.keys(compCtx).forEach(key => {
+            const Clazz = compCtx[key]?.default;
             if (Clazz && AbstractComponentDefinition.isPrototypeOf(Clazz)) {
                 let customComponentInfo: AbstractComponentDefinition = new Clazz();
                 if (typeof customComponentInfo.getBaseInfo === "function") {
@@ -77,9 +81,11 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
 
     //扫描项目操作实现（数据保存，加载操作 -> 本地 | 远程）
     public scannerProjectOperators(): void {
-        const compCtx = require.context('../../framework', true, /\.(ts)$/);
-        compCtx.keys().forEach(key => {
-            const Clazz = compCtx(key).default;
+        const compCtx: any = import.meta.glob('../../framework/*/*.ts', {
+            eager: true,
+        });
+        Object.keys(compCtx).forEach(key => {
+            const Clazz = compCtx[key]?.default;
             if (Clazz && AbstractOperator.isPrototypeOf(Clazz)) {
                 let operatorInstance: AbstractOperator = new Clazz();
                 let operateEnv = operatorInstance.getKey();

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, Component, InputHTMLAttributes} from 'react';
+import  {ChangeEvent, Component, InputHTMLAttributes} from 'react';
 import './Input.less';
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
 

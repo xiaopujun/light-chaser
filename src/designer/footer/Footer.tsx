@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import './Footer.less';
 import {observer} from "mobx-react";
 import designerStore from "../store/DesignerStore";

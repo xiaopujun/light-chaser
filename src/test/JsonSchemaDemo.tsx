@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import {Control} from "../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../json-schema/LCGUI";
 import LCGUIUtil from "../json-schema/LCGUIUtil";

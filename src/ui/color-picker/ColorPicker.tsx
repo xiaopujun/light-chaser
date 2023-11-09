@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import  {Component} from 'react';
 import {Popover} from 'antd';
 import './ColorPicker.less';
 import {GradientColorPicker} from "./GradientColorPicker";

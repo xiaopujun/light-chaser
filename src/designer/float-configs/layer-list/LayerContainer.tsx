@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import LayerComponent from "./LayerComponent";
 import layerListStore from "./LayerListStore";
 import {LayerItemDataProps} from "./LayerItem";

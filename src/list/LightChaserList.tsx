@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import './style/LightChaserList.less';
 import AddNewScreenDialog, {NewProjectInfoType} from "./AddNewScreenDialog";
 import listBottom from './icon/list-bottom.svg';
