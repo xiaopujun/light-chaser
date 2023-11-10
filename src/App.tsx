@@ -4,6 +4,7 @@ import './App.less';
 import {Route, Switch} from "react-router-dom";
 import JsonSchemaDemo from "./test/JsonSchemaDemo";
 import Loading from "./ui/loading/Loading";
+import {Login} from "./pages/login/Login";
 
 const LightChaserList = lazy(() => import('./list/LightChaserList'));
 const Designer = lazy(() => import('./designer/Designer'));
@@ -18,7 +19,9 @@ class App extends Component {
                         <Route path={'/designer'} component={Designer}/>
                         <Route path={'/view'} component={DesignerView}/>
                         <Route path={'/test'} component={JsonSchemaDemo}/>
-                        <Route path={'/'} component={LightChaserList}/>
+                        <Route path={'/list'} component={LightChaserList}/>
+                        <Route path={'/login'} component={Login}/>
+                        <Route path={'/'} component={Login}/>
                     </Switch>
                 </Suspense>
             </>
