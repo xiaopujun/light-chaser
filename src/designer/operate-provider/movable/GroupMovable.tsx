@@ -275,15 +275,15 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                     ables={[DimensionViewable as any]}
                     dimensionViewable={true}
                     roundable={true}
-                    verticalGuidelines={this.verticalGuidelines}
-                    horizontalGuidelines={this.horizontalGuidelines}
+                    // verticalGuidelines={this.verticalGuidelines}
+                    // horizontalGuidelines={this.horizontalGuidelines}
                     isDisplayInnerSnapDigit={true}
                     isDisplayGridGuidelines={true}
                     isDisplayShadowRoundControls={true}
                     displayAroundControls={true}
                     clipArea={true}
-                    clipVerticalGuidelines={[0, "50%", "100%"]}
-                    clipHorizontalGuidelines={[0, "50%", "100%"]}
+                    // clipVerticalGuidelines={[0, "50%", "100%"]}
+                    // clipHorizontalGuidelines={[0, "50%", "100%"]}
                     clipTargetBounds={true}
                     elementGuidelines={Array.from(selectedTargets!)}
 

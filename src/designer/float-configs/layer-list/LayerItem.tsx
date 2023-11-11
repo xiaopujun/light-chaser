@@ -61,8 +61,7 @@ class LayerItem extends React.PureComponent<LayerItemDataProps> {
                 <div className={'layer-item-operators'}>
                     <div className={'layer-item-operator'}>
                         <span onClick={this.toggleHide}>
-                            <img src={hide ? previewClose : previewOpen} alt={hide ? '显示' : '隐藏'}
-                                 style={{width: 14}}/>
+                            <img src={hide ? previewClose : previewOpen} alt={hide ? '显示' : '隐藏'}/>
                         </span>
                     </div>
                     <div className={'layer-item-operator'}>
