@@ -1,7 +1,7 @@
 import {Component} from 'react';
 import LayerComponent from "./LayerComponent";
 import layerListStore from "./LayerListStore";
-import {LayerItemDataProps} from "./LayerItem";
+import {LayerItemDataProps} from "./item/LayerItem";
 
 export interface LayerContainerProps {
     item: LayerItemDataProps;

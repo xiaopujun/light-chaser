@@ -1,10 +1,10 @@
 import React, {MouseEvent} from 'react';
 import './LayerItem.less';
-import lockImg from './icon/lock.svg';
-import previewClose from './icon/preview-close.svg';
-import previewOpen from './icon/preview-open.svg';
-import unlockImg from './icon/unlock.svg';
-import layerListStore from "./LayerListStore";
+import lockImg from '../icon/lock.svg';
+import previewClose from '../icon/preview-close.svg';
+import previewOpen from '../icon/preview-open.svg';
+import unlockImg from '../icon/unlock.svg';
+import layerListStore from "../LayerListStore";
 
 export interface LayerItemDataProps {
     compId?: string;

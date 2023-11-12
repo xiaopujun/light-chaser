@@ -34,6 +34,16 @@ export const SelectableDemo: React.FC<BPSelectableProps> = observer((props) => {
         }
     }
 
+    const onDragStart = (e: any) => {
+        const {movableRef: movable, targets} = layerDemoStore;
+        const target = e.inputEvent.target;
+        if ((movable.isMoveableElement(target))
+            || targets.some((t: any) => t === target || t.contains(target))
+        ) {
+            e.stop();
+        }
+    }
+
     return (
         <>
             {children}
@@ -45,6 +55,7 @@ export const SelectableDemo: React.FC<BPSelectableProps> = observer((props) => {
                      selectByClick={true}
                      selectFromInside={false}
                      toggleContinueSelect={["ctrl"]}
+                     onDragStart={onDragStart}
                      onSelectEnd={onSelectEnd}
             />
         </>

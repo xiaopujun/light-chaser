@@ -60,9 +60,11 @@ class CanvasHdConfigImpl extends Component {
                                 this.config!.rasterize = value;
                                 this.setState({_rasterize: value})
                             }}/>
-                            <Input label={'拖拽步长'} disabled={!_rasterize} type={'number'} defaultValue={dragStep} min={1}
+                            <Input label={'拖拽步长'} disabled={!_rasterize} type={'number'}
+                                   defaultValue={dragStep} min={1}
                                    onChange={(dragStep) => this.config!.dragStep = dragStep as number}/>
-                            <Input label={'缩放步长'} disabled={!_rasterize} type={'number'} defaultValue={resizeStep}
+                            <Input label={'缩放步长'} disabled={!_rasterize} type={'number'}
+                                   defaultValue={resizeStep} min={1}
                                    onChange={(resizeStep) => this.config!.resizeStep = resizeStep as number}/>
                         </Grid>
                     </div>

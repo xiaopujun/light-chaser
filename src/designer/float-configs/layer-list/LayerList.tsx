@@ -2,7 +2,7 @@ import {Component} from 'react';
 import './LayerList.less';
 import layerListStore from "./LayerListStore";
 import designerStore from "../../store/DesignerStore";
-import {LayerItemDataProps} from "./LayerItem";
+import {LayerItemDataProps} from "./item/LayerItem";
 import {observer} from "mobx-react";
 import FloatPanel from "../common/FloatPanel";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
@@ -49,7 +49,8 @@ class LayerList extends Component {
         //判断是否是命令模式
         const commandMode = searchContent.startsWith(":");
         if (commandMode) searchContent = searchContent.substring(1);
-        return Object.values(layoutConfigs)
+        console.time('图层加载')
+        const res = Object.values(layoutConfigs)
             .filter((item: MovableItemType) => {
                 if (commandMode) {
                     //使用命令模式过滤
@@ -72,6 +73,8 @@ class LayerList extends Component {
                 }
                 return <LayerContainer key={item.id} item={_props}/>
             });
+        console.timeEnd('图层加载')
+        return res;
     }
 
     render() {
