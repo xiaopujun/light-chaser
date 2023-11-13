@@ -1,31 +1,32 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import './LayerList.less';
 import layerListStore from "./LayerListStore";
 import designerStore from "../../store/DesignerStore";
-import {LayerItemDataProps} from "./LayerItem";
+import {LayerItemDataProps} from "./item/LayerItem";
 import {observer} from "mobx-react";
 import FloatPanel from "../common/FloatPanel";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
-import eventManager from "../../operate-provider/core/EventManager";
 import LayerContainer from "./LayerContainer";
 import {MovableItemType} from "../../operate-provider/movable/types";
 import Input from "../../../ui/input/Input";
 
 class LayerList extends Component {
 
+    floatPanelRef: FloatPanel | null = null;
+
     componentDidMount() {
-        eventManager.register("click", this.cancelSelected);
+        this.floatPanelRef?.panelRef?.addEventListener("click", this.cancelSelected);
     }
 
     componentWillUnmount() {
-        eventManager.unregister("click", this.cancelSelected);
+        this.floatPanelRef?.panelRef?.removeEventListener("click", this.cancelSelected);
     }
 
-    //todo: 想想怎么优化
-    cancelSelected = (e: PointerEvent) => {
-        const layerListDom = document.querySelector(".layer-list");
-        if (!layerListDom || !e.target) return;
-        if (layerListDom.contains(e.target as Node) && !(e.target as HTMLElement).classList.contains("layer-item")) {
+    cancelSelected = (e: any) => {
+        if (!this.floatPanelRef) return;
+        const {panelRef} = this.floatPanelRef;
+        if (!panelRef) return;
+        if (panelRef.contains(e.target as Node) && !(e.target as HTMLElement).classList.contains("layer-item")) {
             const {setTargets} = eventOperateStore;
             setTargets([]);
         }
@@ -41,7 +42,6 @@ class LayerList extends Component {
         setContent && setContent(data as string);
     }
 
-
     buildLayerList = () => {
         const {layoutConfigs} = designerStore;
         const {targetIds} = eventOperateStore;
@@ -49,7 +49,8 @@ class LayerList extends Component {
         //判断是否是命令模式
         const commandMode = searchContent.startsWith(":");
         if (commandMode) searchContent = searchContent.substring(1);
-        return Object.values(layoutConfigs)
+        console.time('图层加载')
+        const res = Object.values(layoutConfigs)
             .filter((item: MovableItemType) => {
                 if (commandMode) {
                     //使用命令模式过滤
@@ -72,11 +73,14 @@ class LayerList extends Component {
                 }
                 return <LayerContainer key={item.id} item={_props}/>
             });
+        console.timeEnd('图层加载')
+        return res;
     }
 
     render() {
         return (
-            <FloatPanel title={'图层'} onClose={this.onClose} initPosition={{x: 250, y: -window.innerHeight + 50}}
+            <FloatPanel ref={ref => this.floatPanelRef = ref} title={'图层'} onClose={this.onClose}
+                        initPosition={{x: 250, y: -window.innerHeight + 50}}
                         className={'layer-list'}>
                 <div className={'list-search'}>
                     <Input placeholder="搜索图层" onChange={this.searchLayer}/>

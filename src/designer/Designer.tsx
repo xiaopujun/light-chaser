@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import LcHeader from "./structure/LcHeader";
 import LcBody from "./structure/LcBody";
 import LcLeft from "./structure/LcLeft";
@@ -12,7 +12,6 @@ import Footer from "./footer/Footer";
 import FloatConfigs from "./float-configs/FloatConfigs";
 import contextMenuStore from "./operate-provider/right-click-menu/ContextMenuStore";
 import eventOperateStore from "./operate-provider/EventOperateStore";
-import eventManager from "./operate-provider/core/EventManager";
 import designerStore from "./store/DesignerStore";
 import DesignerHeader from "./header/DesignerHeader";
 import DesignerCanvas from "./canvas/DesignerCanvas";
@@ -25,15 +24,11 @@ class Designer extends Component {
     componentDidMount() {
         //加载设计器
         DesignerLoaderFactory.getLoader().load();
-        //加载事件到事件管理器
-        registerEventToManager();
         //绑定事件到dom元素
         bindEventToDom();
     }
 
     componentWillUnmount() {
-        //卸载事件管理器中的事件
-        unRegisterEventToManager();
         //卸载dom元素上的事件
         unbindEventToDom();
     }
@@ -63,52 +58,26 @@ class Designer extends Component {
 
 export default observer(Designer);
 
-/**
- * 注册事件到事件管理器
- */
-function registerEventToManager() {
-    eventManager.register('click', clickHandler);
-    eventManager.register('contextmenu', contextMenuHandler);
-    eventManager.register('pointerdown', pointerDownHandler);
-    eventManager.register('pointerup', pointerUpHandler);
-}
-
-/**
- * 卸载事件管理器中的事件
- */
-function unRegisterEventToManager() {
-    eventManager.unregister('click', clickHandler);
-    eventManager.unregister('contextmenu', contextMenuHandler);
-    eventManager.unregister('pointerdown', pointerDownHandler);
-    eventManager.unregister('pointerup', pointerUpHandler);
-}
 
 /**
  * 绑定事件到dom元素
  */
 function bindEventToDom() {
-    document.addEventListener("click", clickEmit);
-    document.addEventListener("contextmenu", contextMenuEmit);
-    document.addEventListener("pointerdown", pointerDownEmit);
-    document.addEventListener("pointerup", pointerUpEmit);
+    document.addEventListener("click", clickHandler);
+    document.addEventListener("contextmenu", contextMenuHandler);
+    document.addEventListener("pointerdown", pointerDownHandler);
+    document.addEventListener("pointerup", pointerUpHandler);
 }
 
 /**
  * 卸载dom元素上的事件
  */
 function unbindEventToDom() {
-    document.removeEventListener("click", clickEmit);
-    document.removeEventListener("contextmenu", contextMenuEmit);
-    document.removeEventListener("pointerdown", pointerDownEmit);
-    document.removeEventListener("pointerup", pointerUpEmit);
+    document.removeEventListener("click", clickHandler);
+    document.removeEventListener("contextmenu", contextMenuHandler);
+    document.removeEventListener("pointerdown", pointerDownHandler);
+    document.removeEventListener("pointerup", pointerUpHandler);
 }
-
-/*****************事件分发*****************/
-const clickEmit = (event: any) => eventManager.emit('click', event);
-const contextMenuEmit = (event: any) => eventManager.emit('contextmenu', event);
-const pointerDownEmit = (event: any) => eventManager.emit('pointerdown', event);
-const pointerUpEmit = (event: any) => eventManager.emit('pointerup', event);
-
 
 /*****************事件处理*****************/
 const clickHandler = (event: any) => {

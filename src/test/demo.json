@@ -1,0 +1,827 @@
+{
+  "requestGlobalConfig": {
+    "requestDataPond": [],
+    "requestOriginUrl": "",
+    "requestInterval": 0,
+    "requestIntervalUnit": "second",
+    "requestParams": {
+      "Body": {
+        "form-data": {},
+        "x-www-form-urlencoded": {},
+        "json": "",
+        "xml": ""
+      },
+      "Header": {},
+      "Params": {}
+    }
+  },
+  "theatreAnimationConfig": {
+    "sheetsById": {
+      "组件": {
+        "staticOverrides": {
+          "byObject": {}
+        }
+      }
+    },
+    "definitionVersion": "0.4.0",
+    "revisionHistory": [
+      "gKbBS9vMGvraL3ep"
+    ]
+  },
+  "pageConfig": {
+    "activeIndex": 0,
+    "pageList": [
+      {
+        "id": "id_3dmsvsvr5e4000",
+        "title": "页面 1",
+        "componentList": [
+          {
+            "id": "id_a9j4opu9hks00",
+            "isGroup": true,
+            "attr": {
+              "w": 827,
+              "h": 624,
+              "x": 494,
+              "y": -33,
+              "offsetX": 0,
+              "offsetY": 0,
+              "zIndex": -1
+            },
+            "styles": {
+              "filterShow": false,
+              "hueRotate": 0,
+              "saturate": 1,
+              "contrast": 1,
+              "brightness": 1,
+              "opacity": 1,
+              "rotateZ": 0,
+              "rotateX": 0,
+              "rotateY": 0,
+              "scaleX": 0,
+              "scaleY": 0,
+              "translateX": 0,
+              "translateY": 0,
+              "translateZ": 0,
+              "skewX": 0,
+              "skewY": 0,
+              "blendMode": "normal",
+              "blur": 0,
+              "animationsConfig": {
+                "use": false,
+                "infinite": false,
+                "list": [
+                  {
+                    "name": "goview__opacity",
+                    "duration": 2,
+                    "delay": 0,
+                    "timing": "linear",
+                    "direction": "normal"
+                  }
+                ]
+              },
+              "clipPathShow": false,
+              "clipPath": ""
+            },
+            "colors": {
+              "name": "",
+              "color": []
+            },
+            "preview": {
+              "overFlowHidden": false
+            },
+            "status": {
+              "lock": false,
+              "hide": false
+            },
+            "request": {
+              "requestDataType": 0,
+              "requestHttpType": "get",
+              "requestUrl": "",
+              "requestInterval": null,
+              "requestIntervalUnit": "second",
+              "requestProxy": false,
+              "requestContentType": 0,
+              "requestParamsBodyType": "none",
+              "requestSQLContent": {
+                "sql": "select * from  where",
+                "sqlParseString": "",
+                "sqlParseSlotObj": {},
+                "dataSourceId": ""
+              },
+              "requestParams": {
+                "Body": {
+                  "form-data": {},
+                  "x-www-form-urlencoded": {},
+                  "json": "",
+                  "xml": ""
+                },
+                "Header": {},
+                "Params": {}
+              }
+            },
+            "filter": null,
+            "filterConfig": {
+              "use": true,
+              "selectList": [
+                {
+                  "globalFilterId": "",
+                  "use": true
+                }
+              ]
+            },
+            "mapping": [],
+            "events": {
+              "action": [],
+              "baseEvent": {
+                "click": null,
+                "dblclick": null,
+                "mouseenter": null,
+                "mouseleave": null
+              },
+              "advancedEvents": {
+                "vnodeMounted": null,
+                "vnodeBeforeMount": null
+              },
+              "interactEvents": []
+            },
+            "chartConfig": {
+              "key": "group",
+              "chartKey": "group",
+              "conKey": "group",
+              "category": "group",
+              "categoryName": "group",
+              "package": "group",
+              "chartFrame": "common",
+              "title": "分组",
+              "image": ""
+            },
+            "groupList": [
+              {
+                "id": "id_1girlbhezp4w00",
+                "isGroup": false,
+                "attr": {
+                  "x": 327,
+                  "y": 0,
+                  "w": 500,
+                  "h": 300,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "zIndex": -1
+                },
+                "styles": {
+                  "filterShow": true,
+                  "hueRotate": 0,
+                  "saturate": 1,
+                  "contrast": 1,
+                  "brightness": 1,
+                  "opacity": 1,
+                  "rotateZ": 0,
+                  "rotateX": 0,
+                  "rotateY": 0,
+                  "scaleX": 1,
+                  "scaleY": 1,
+                  "translateX": 0,
+                  "translateY": 0,
+                  "translateZ": 0,
+                  "skewX": 0,
+                  "skewY": 0,
+                  "blendMode": "normal",
+                  "animationsConfig": {
+                    "use": false,
+                    "infinite": false,
+                    "list": [
+                      {
+                        "name": "rubberBand",
+                        "duration": 2,
+                        "delay": 0,
+                        "timing": "linear"
+                      }
+                    ]
+                  },
+                  "clipPathShow": false,
+                  "clipPath": "",
+                  "blur": 0
+                },
+                "colors": {
+                  "name": "",
+                  "color": []
+                },
+                "preview": {
+                  "overFlowHidden": false
+                },
+                "status": {
+                  "lock": false,
+                  "hide": false
+                },
+                "request": {
+                  "requestDataType": 0,
+                  "requestHttpType": "get",
+                  "requestUrl": "",
+                  "requestInterval": null,
+                  "requestIntervalUnit": "second",
+                  "requestContentType": 0,
+                  "requestParamsBodyType": "none",
+                  "requestSQLContent": {
+                    "sql": "select * from  where",
+                    "sqlParseString": "",
+                    "sqlParseSlotObj": {},
+                    "dataSourceId": ""
+                  },
+                  "requestParams": {
+                    "Body": {
+                      "form-data": {},
+                      "x-www-form-urlencoded": {},
+                      "json": "",
+                      "xml": ""
+                    },
+                    "Header": {},
+                    "Params": {}
+                  },
+                  "requestProxy": false
+                },
+                "filter": null,
+                "mapping": [],
+                "events": {
+                  "action": [],
+                  "baseEvent": {
+                    "click": null,
+                    "dblclick": null,
+                    "mouseenter": null,
+                    "mouseleave": null
+                  },
+                  "advancedEvents": {
+                    "vnodeMounted": null,
+                    "vnodeBeforeMount": null
+                  },
+                  "interactEvents": []
+                },
+                "key": "TableScrollBoard",
+                "chartConfig": {
+                  "key": "TableScrollBoard",
+                  "chartKey": "VTableScrollBoard",
+                  "conKey": "VCTableScrollBoard",
+                  "title": "轮播列表",
+                  "category": "Tables",
+                  "categoryName": "表格",
+                  "package": "Tables",
+                  "chartFrame": "common",
+                  "image": "table_scrollboard.png"
+                },
+                "option": {
+                  "header": [
+                    "列1",
+                    "列2",
+                    "列3"
+                  ],
+                  "dataset": [
+                    [
+                      "行1列1",
+                      "行1列2",
+                      "<div style='color:#1890FF'>行1列3</div>"
+                    ],
+                    [
+                      "行2列1",
+                      "行2列2",
+                      "<div style='color:#1890FF'>行2列3</div>"
+                    ],
+                    [
+                      "行3列1",
+                      "行3列2",
+                      "<div style='color:#1890FF'>行3列3</div>"
+                    ],
+                    [
+                      "行4列1",
+                      "行4列2",
+                      "<div style='color:#00D68A'>行4列3</div>"
+                    ],
+                    [
+                      "行5列1",
+                      "行5列2",
+                      "<div style='color:#00D68A'>行5列3</div>"
+                    ],
+                    [
+                      "行6列1",
+                      "行6列2",
+                      "<div style='color:#00D68A'>行6列3</div>"
+                    ],
+                    [
+                      "行7列1",
+                      "行7列2",
+                      "<div style='color:#00D68A'>行7列3</div>"
+                    ],
+                    [
+                      "行8列1",
+                      "行8列2",
+                      "<div style='color:#E66151'>行8列3</div>"
+                    ],
+                    [
+                      "行9列1",
+                      "行9列2",
+                      "<div style='color:#E66151'>行9列3</div>"
+                    ],
+                    [
+                      "行10列1",
+                      "行10列2",
+                      "<div style='color:#E66151'>行10列3</div>"
+                    ]
+                  ],
+                  "index": true,
+                  "columnWidth": [
+                    30,
+                    100,
+                    100
+                  ],
+                  "align": [
+                    "center",
+                    "right",
+                    "right",
+                    "right"
+                  ],
+                  "rowNum": 5,
+                  "waitTime": 2,
+                  "headerHeight": 35,
+                  "carousel": "single",
+                  "headerBGC": "#00BAFF",
+                  "oddRowBGC": "#003B51",
+                  "evenRowBGC": "#0A2732",
+                  "fontFamily": "inherit"
+                },
+                "index": 0,
+                "filterConfig": {
+                  "use": true,
+                  "selectList": [
+                    {
+                      "globalFilterId": null,
+                      "use": true
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "id_3aw8ibb6bbc000",
+                "isGroup": false,
+                "attr": {
+                  "x": 0,
+                  "y": 324,
+                  "w": 500,
+                  "h": 300,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "zIndex": -1
+                },
+                "styles": {
+                  "filterShow": false,
+                  "hueRotate": 0,
+                  "saturate": 1,
+                  "contrast": 1,
+                  "brightness": 1,
+                  "opacity": 1,
+                  "rotateZ": 0,
+                  "rotateX": 0,
+                  "rotateY": 0,
+                  "scaleX": 1,
+                  "scaleY": 1,
+                  "translateX": 0,
+                  "translateY": 0,
+                  "translateZ": 0,
+                  "skewX": 0,
+                  "skewY": 0,
+                  "blendMode": "normal",
+                  "blur": 0,
+                  "animationsConfig": {
+                    "use": false,
+                    "infinite": false,
+                    "list": [
+                      {
+                        "name": "goview__opacity",
+                        "duration": 2,
+                        "delay": 0,
+                        "timing": "linear",
+                        "direction": "normal"
+                      }
+                    ]
+                  },
+                  "clipPathShow": false,
+                  "clipPath": ""
+                },
+                "colors": {
+                  "name": "",
+                  "color": []
+                },
+                "preview": {
+                  "overFlowHidden": false
+                },
+                "status": {
+                  "lock": false,
+                  "hide": false
+                },
+                "request": {
+                  "requestDataType": 0,
+                  "requestHttpType": "get",
+                  "requestUrl": "",
+                  "requestInterval": null,
+                  "requestIntervalUnit": "second",
+                  "requestProxy": false,
+                  "requestContentType": 0,
+                  "requestParamsBodyType": "none",
+                  "requestSQLContent": {
+                    "sql": "select * from  where",
+                    "sqlParseString": "",
+                    "sqlParseSlotObj": {},
+                    "dataSourceId": ""
+                  },
+                  "requestParams": {
+                    "Body": {
+                      "form-data": {},
+                      "x-www-form-urlencoded": {},
+                      "json": "",
+                      "xml": ""
+                    },
+                    "Header": {},
+                    "Params": {}
+                  }
+                },
+                "filter": null,
+                "filterConfig": {
+                  "use": true,
+                  "selectList": [
+                    {
+                      "globalFilterId": "",
+                      "use": true
+                    }
+                  ]
+                },
+                "mapping": [],
+                "events": {
+                  "action": [],
+                  "baseEvent": {
+                    "click": null,
+                    "dblclick": null,
+                    "mouseenter": null,
+                    "mouseleave": null
+                  },
+                  "advancedEvents": {
+                    "vnodeMounted": null,
+                    "vnodeBeforeMount": null
+                  },
+                  "interactEvents": []
+                },
+                "key": "BarCrossrange",
+                "chartConfig": {
+                  "key": "BarCrossrange",
+                  "chartKey": "VBarCrossrange",
+                  "conKey": "VCBarCrossrange",
+                  "title": "横向柱状图",
+                  "category": "Bars",
+                  "categoryName": "柱状图",
+                  "package": "Charts",
+                  "chartFrame": "echarts",
+                  "image": "bar_y.png"
+                },
+                "option": {
+                  "legend": {
+                    "show": true,
+                    "type": "scroll",
+                    "x": "center",
+                    "y": "top",
+                    "icon": "circle",
+                    "orient": "horizontal",
+                    "textStyle": {
+                      "color": "#B9B8CE",
+                      "fontSize": 18
+                    },
+                    "itemHeight": 15,
+                    "itemWidth": 15,
+                    "pageTextStyle": {
+                      "color": "#B9B8CE"
+                    }
+                  },
+                  "xAxis": {
+                    "show": true,
+                    "name": "",
+                    "nameGap": 15,
+                    "nameTextStyle": {
+                      "color": "#B9B8CE",
+                      "fontSize": 12
+                    },
+                    "inverse": false,
+                    "axisLabel": {
+                      "show": true,
+                      "fontSize": 12,
+                      "color": "#B9B8CE",
+                      "rotate": 0
+                    },
+                    "position": "bottom",
+                    "axisLine": {
+                      "show": true,
+                      "lineStyle": {
+                        "color": "#B9B8CE",
+                        "width": 1
+                      },
+                      "onZero": true
+                    },
+                    "axisTick": {
+                      "show": true,
+                      "length": 5
+                    },
+                    "splitLine": {
+                      "show": false,
+                      "lineStyle": {
+                        "color": "#484753",
+                        "width": 1,
+                        "type": "solid"
+                      }
+                    },
+                    "type": "value"
+                  },
+                  "yAxis": {
+                    "show": true,
+                    "name": "",
+                    "nameGap": 15,
+                    "nameTextStyle": {
+                      "color": "#B9B8CE",
+                      "fontSize": 12
+                    },
+                    "inverse": false,
+                    "axisLabel": {
+                      "show": true,
+                      "fontSize": 12,
+                      "color": "#B9B8CE",
+                      "rotate": 0
+                    },
+                    "position": "left",
+                    "axisLine": {
+                      "show": true,
+                      "lineStyle": {
+                        "color": "#B9B8CE",
+                        "width": 1
+                      },
+                      "onZero": true
+                    },
+                    "axisTick": {
+                      "show": true,
+                      "length": 5
+                    },
+                    "splitLine": {
+                      "show": true,
+                      "lineStyle": {
+                        "color": "#484753",
+                        "width": 1,
+                        "type": "solid"
+                      }
+                    },
+                    "type": "category"
+                  },
+                  "grid": {
+                    "show": false,
+                    "left": "10%",
+                    "top": "60",
+                    "right": "10%",
+                    "bottom": "60"
+                  },
+                  "tooltip": {
+                    "show": true,
+                    "trigger": "axis",
+                    "axisPointer": {
+                      "show": true,
+                      "type": "shadow"
+                    }
+                  },
+                  "dataset": {
+                    "dimensions": [
+                      "product",
+                      "data1",
+                      "data2"
+                    ],
+                    "source": [
+                      {
+                        "product": "Mon",
+                        "data1": 120,
+                        "data2": 130
+                      },
+                      {
+                        "product": "Tue",
+                        "data1": 200,
+                        "data2": 130
+                      },
+                      {
+                        "product": "Wed",
+                        "data1": 150,
+                        "data2": 312
+                      },
+                      {
+                        "product": "Thu",
+                        "data1": 80,
+                        "data2": 268
+                      },
+                      {
+                        "product": "Fri",
+                        "data1": 70,
+                        "data2": 155
+                      },
+                      {
+                        "product": "Sat",
+                        "data1": 110,
+                        "data2": 117
+                      },
+                      {
+                        "product": "Sun",
+                        "data1": 130,
+                        "data2": 160
+                      }
+                    ]
+                  },
+                  "series": [
+                    {
+                      "type": "bar",
+                      "barWidth": null,
+                      "label": {
+                        "show": true,
+                        "position": "right",
+                        "color": "#fff",
+                        "fontSize": 12
+                      },
+                      "itemStyle": {
+                        "color": null,
+                        "borderRadius": 0
+                      }
+                    },
+                    {
+                      "type": "bar",
+                      "barWidth": null,
+                      "label": {
+                        "show": true,
+                        "position": "right",
+                        "color": "#fff",
+                        "fontSize": 12
+                      },
+                      "itemStyle": {
+                        "color": null,
+                        "borderRadius": 0
+                      }
+                    }
+                  ],
+                  "backgroundColor": "rgba(0,0,0,0)"
+                },
+                "index": 0
+              }
+            ],
+            "key": "group",
+            "option": {},
+            "index": 0
+          }
+        ],
+        "editCanvasConfig": {
+          "width": 1920,
+          "height": 1080,
+          "filterShow": false,
+          "hueRotate": 0,
+          "saturate": 1,
+          "contrast": 1,
+          "brightness": 1,
+          "opacity": 1,
+          "rotateZ": 0,
+          "rotateX": 0,
+          "rotateY": 0,
+          "translateX": 0,
+          "translateY": 0,
+          "translateZ": 0,
+          "scaleX": 0,
+          "scaleY": 0,
+          "skewX": 0,
+          "skewY": 0,
+          "clipPathShow": false,
+          "clipPath": "",
+          "blendMode": "normal",
+          "background": "#232324",
+          "backgroundImage": null,
+          "selectColor": true,
+          "chartThemeColor": "dark",
+          "chartCustomThemeColorInfo": null,
+          "chartThemeSetting": {
+            "title": {
+              "show": true,
+              "textStyle": {
+                "color": "#BFBFBF",
+                "fontSize": 18
+              },
+              "subtextStyle": {
+                "color": "#A2A2A2",
+                "fontSize": 14
+              }
+            },
+            "xAxis": {
+              "show": true,
+              "name": "",
+              "nameGap": 15,
+              "nameTextStyle": {
+                "color": "#B9B8CE",
+                "fontSize": 12
+              },
+              "inverse": false,
+              "axisLabel": {
+                "show": true,
+                "fontSize": 12,
+                "color": "#B9B8CE",
+                "rotate": 0
+              },
+              "position": "bottom",
+              "axisLine": {
+                "show": true,
+                "lineStyle": {
+                  "color": "#B9B8CE",
+                  "width": 1
+                },
+                "onZero": true
+              },
+              "axisTick": {
+                "show": true,
+                "length": 5
+              },
+              "splitLine": {
+                "show": false,
+                "lineStyle": {
+                  "color": "#484753",
+                  "width": 1,
+                  "type": "solid"
+                }
+              }
+            },
+            "yAxis": {
+              "show": true,
+              "name": "",
+              "nameGap": 15,
+              "nameTextStyle": {
+                "color": "#B9B8CE",
+                "fontSize": 12
+              },
+              "inverse": false,
+              "axisLabel": {
+                "show": true,
+                "fontSize": 12,
+                "color": "#B9B8CE",
+                "rotate": 0
+              },
+              "position": "left",
+              "axisLine": {
+                "show": true,
+                "lineStyle": {
+                  "color": "#B9B8CE",
+                  "width": 1
+                },
+                "onZero": true
+              },
+              "axisTick": {
+                "show": true,
+                "length": 5
+              },
+              "splitLine": {
+                "show": true,
+                "lineStyle": {
+                  "color": "#484753",
+                  "width": 1,
+                  "type": "solid"
+                }
+              }
+            },
+            "legend": {
+              "show": true,
+              "type": "scroll",
+              "x": "center",
+              "y": "top",
+              "icon": "circle",
+              "orient": "horizontal",
+              "textStyle": {
+                "color": "#B9B8CE",
+                "fontSize": 18
+              },
+              "itemHeight": 15,
+              "itemWidth": 15,
+              "pageTextStyle": {
+                "color": "#B9B8CE"
+              }
+            },
+            "grid": {
+              "show": false,
+              "left": "10%",
+              "top": "60",
+              "right": "10%",
+              "bottom": "60"
+            },
+            "dataset": null,
+            "renderer": "canvas"
+          },
+          "previewScaleType": "fit",
+          "pp": "",
+          "animationsConfig": {
+            "use": false,
+            "infinite": false,
+            "list": []
+          }
+        }
+      }
+    ],
+    "globalVarList": [],
+    "globalFilterList": []
+  }
+}

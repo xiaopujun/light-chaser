@@ -1,6 +1,5 @@
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
-import {getModeByUrl, Mode} from "../../utils/URLUtil";
-import {sendHttpRequest} from "../../utils/HttpUtil";
+import URLUtil, {Mode} from "../../utils/URLUtil";
 import AbstractController, {OperateType, UpdateOptions} from "../../framework/core/AbstractController";
 import {ComponentBaseProps} from "../common-component/common-types";
 import {Options, Plot} from "@antv/g2plot";
@@ -9,6 +8,7 @@ import {LoadError} from "../../ui/err-msg/LoadError";
 import ReactDOM from "react-dom";
 import ObjectUtil from "../../utils/ObjectUtil";
 import BPExecutor from "../../blueprint/core/BPExecutor";
+import HttpUtil from "../../utils/HttpUtil";
 
 export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Options>,
     C extends ComponentBaseProps = ComponentBaseProps> extends AbstractDesignerController<I, C> {
@@ -36,7 +36,7 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
 
     public commonLoadData(ins: AbstractController): void {
         //设计模式下，始终从data设置中读取数据。预览模式下则根据数据源类型读取数据
-        let mode = getModeByUrl();
+        let mode = URLUtil.getModeByUrl();
         if (mode === Mode.VIEW) {
             //预览模式
             const {data} = ins.config!;
@@ -49,7 +49,7 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
                 case "api":
                     const {url, method, params, header, flashFrequency = 5} = data?.apiData!;
                     this.interval = setInterval(() => {
-                        sendHttpRequest(url!, method!, header!, params!).then((data: any) => {
+                        HttpUtil.sendHttpRequest(url!, method!, header!, params!).then((data: any) => {
                             if (data) {
                                 this.update({data: {staticData: {data}}} as any, {
                                     reRender: true,

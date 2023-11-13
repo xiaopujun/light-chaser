@@ -1,0 +1,50 @@
+.lc-checkbox {
+  .lc-checkbox-container {
+    position: relative;
+    cursor: pointer;
+    font-size: 12px;
+    width: 18px;
+    user-select: none;
+
+    input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+
+    .checkmark {
+      position: relative;
+      top: 0;
+      left: 0;
+      height: 13px;
+      width: 13px;
+      background: #606062;
+      border-radius: 3px;
+      box-shadow: 0 0 1px rgba(0, 0, 0, 0.30), 0 1px 1px rgba(0, 5);
+    }
+
+    .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+      left: 0.45em;
+      top: 0.20em;
+      width: 0.24em;
+      height: 0.6em;
+      border: solid white;
+      border-width: 0 0.15em 0.15em 0;
+      transform: rotate(45deg);
+    }
+
+    input:checked ~ .checkmark {
+      background-image: linear-gradient(#255CD2, #1D52C1)
+    }
+
+    input:checked ~ .checkmark:after {
+      display: block;
+    }
+  }
+}
+

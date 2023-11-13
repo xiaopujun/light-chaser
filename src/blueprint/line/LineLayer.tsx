@@ -2,9 +2,9 @@ import React from 'react';
 import './LineLayer.less';
 import CanvasUtil from "../util/CanvasUtil";
 import bpStore from "../store/BPStore";
-import {idGenerate} from "../../utils/IdGenerate";
 import {AnchorPointType} from "../node/core/AbstractBPNodeController";
 import {BPLineType} from "../BPTypes";
+import IdGenerate from "../../utils/IdGenerate";
 
 class LineLayer extends React.Component {
 
@@ -58,7 +58,7 @@ class LineLayer extends React.Component {
             this.keyDown = false;
             bpStore.upCtx!.clearRect(0, 0, 10000, 10000)
             //在下层绘制当前操作的线条
-            this.currentLine.id = idGenerate.generateId();
+            this.currentLine.id = IdGenerate.generateId();
             this.currentLine.lineDash = [];
             this.currentLine.lineWidth = 1;
             this.currentLine.color = "#a2a2a2";

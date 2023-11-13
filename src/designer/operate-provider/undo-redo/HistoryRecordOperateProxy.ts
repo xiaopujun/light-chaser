@@ -17,11 +17,11 @@ import eventOperateStore from "../EventOperateStore";
 import {AbstractComponentDefinition} from "../../../framework/core/AbstractComponentDefinition";
 import {toJS} from "mobx";
 import rightStore from "../../right/RightStore";
-import {idGenerate} from "../../../utils/IdGenerate";
 import {cloneDeep} from "lodash";
 import layerListStore from "../../float-configs/layer-list/LayerListStore";
 import {ConfigureObjectFragments} from "../../../utils/ObjectUtil";
 import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
+import IdGenerate from "../../../utils/IdGenerate";
 
 class HistoryRecordOperateProxy {
 
@@ -182,7 +182,7 @@ class HistoryRecordOperateProxy {
             const {[id]: layout} = layoutConfigs;
             if (layout) {
                 //生成新id
-                const newId = idGenerate.generateId();
+                const newId = IdGenerate.generateId();
                 newIds.push(newId);
                 //生成新布局
                 const newLayout = cloneDeep(layout);

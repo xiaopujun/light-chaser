@@ -1,6 +1,6 @@
 import AbstractController, {OperateType, UpdateOptions,} from "../../../framework/core/AbstractController";
 import ComponentUtil from "../../../utils/ComponentUtil";
-import LayerItem, {LayerItemDataProps} from "./LayerItem";
+import LayerItem, {LayerItemDataProps} from "./item/LayerItem";
 import ObjectUtil from "../../../utils/ObjectUtil";
 
 export default class LayerComponent extends AbstractController<LayerItem, LayerItemDataProps> {

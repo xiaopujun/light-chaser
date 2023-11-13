@@ -2,6 +2,7 @@
   "compilerOptions": {
     "ignoreErrors": false,
     "target": "es2015",
+    "useDefineForClassFields": true,
     "lib": [
       "dom",
       "dom.iterable",
@@ -10,20 +11,27 @@
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
     "module": "esnext",
     "moduleResolution": "node",
+    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
     "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true,
     //    "noEmit": true,
     "jsx": "react-jsx"
   },
   "include": [
-    "src",
-    "global.d.ts"
+    "src"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
   ]
 }

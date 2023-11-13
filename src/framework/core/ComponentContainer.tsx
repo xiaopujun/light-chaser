@@ -1,9 +1,9 @@
 import React, {Suspense} from "react";
 import {MovableItemType} from "../../designer/operate-provider/movable/types";
-import {parseUrlParams} from "../../utils/URLUtil";
 import historyRecordOperateProxy from "../../designer/operate-provider/undo-redo/HistoryRecordOperateProxy";
 import runtimeConfigStore from "../../designer/store/RuntimeConfigStore";
 import Loading from "../../ui/loading/Loading";
+import URLUtil from "../../utils/URLUtil";
 
 export interface ComponentContainerProps {
     layout: MovableItemType;
@@ -13,7 +13,7 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
 
     private ref: HTMLDivElement | null = null;
 
-    private mode: string = parseUrlParams()?.action || 'edit';
+    private mode: string = URLUtil.parseUrlParams()?.action || 'edit';
 
     componentDidMount(): void {
         //通过ref创建组件，并将组件实例方法Map中。后续通过Map匹配到具体实例，

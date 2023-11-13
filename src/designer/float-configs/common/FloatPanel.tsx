@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import {LineOutlined} from "@ant-design/icons";
 import CommonDragger from "../../operate-provider/drag/CommonDragger";
 import './FloatPanel.less';

@@ -1,16 +1,16 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import compListStore from "./CompListStore";
 import classifyListStore from "../../left/classify-list/ClassifyListStore";
 import './CompList.less';
 import {observer} from "mobx-react";
 import designerStore from "../../store/DesignerStore";
-import {idGenerate} from "../../../utils/IdGenerate";
 import {MovableItemType} from "../../operate-provider/movable/types";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 import FloatPanel from "../common/FloatPanel";
 import {BaseInfoType} from "../../DesignerType";
 import Input from "../../../ui/input/Input";
 import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
+import IdGenerate from "../../../utils/IdGenerate";
 
 class CompList extends Component {
 
@@ -73,7 +73,7 @@ class CompList extends Component {
             width: 320,
             height: 200,
             position: position || [0, 0],
-            id: idGenerate.generateId(),
+            id: IdGenerate.generateId(),
             lock: false,
             hide: false,
             order: ++maxLevel,

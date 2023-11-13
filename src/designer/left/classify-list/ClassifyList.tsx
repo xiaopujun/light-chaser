@@ -1,4 +1,4 @@
-import React, {Component, MouseEvent} from 'react';
+import {Component, MouseEvent} from 'react';
 import {observer} from "mobx-react";
 import '../classify-list/ClassifyList.less';
 import classifyListStore from "./ClassifyListStore";

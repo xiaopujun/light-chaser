@@ -1,4 +1,4 @@
-import React, {Component, FormEvent} from 'react';
+import {Component, FormEvent} from 'react';
 import './ThemeEditor.less';
 import {ThemeItemType} from "../../../../designer/DesignerType";
 import designerStore from "../../../../designer/store/DesignerStore";

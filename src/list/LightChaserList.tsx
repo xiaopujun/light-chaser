@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import './style/LightChaserList.less';
 import AddNewScreenDialog, {NewProjectInfoType} from "./AddNewScreenDialog";
 import listBottom from './icon/list-bottom.svg';
@@ -9,7 +9,6 @@ import listDelImg from './icon/list-del.svg';
 import listDisplay from './icon/list-display.svg';
 import listEdit from './icon/list-edit.svg';
 import listClone from './icon/list-clone.svg';
-import {buildUrlParams} from "../utils/URLUtil";
 import {ImgUtil} from "../utils/ImgUtil";
 import {ProjectState, SaveType} from "../designer/DesignerType";
 import designerStore from "../designer/store/DesignerStore";
@@ -18,6 +17,7 @@ import Dialog from "../ui/dialog/Dialog";
 import {message} from "antd";
 import Button from "../ui/button/Button";
 import Input from "../ui/input/Input";
+import URLUtil from "../utils/URLUtil";
 
 class LightChaserList extends Component<any> {
 
@@ -68,7 +68,7 @@ class LightChaserList extends Component<any> {
     }
 
     onOk = (data: NewProjectInfoType) => {
-        let urlParams = buildUrlParams({...data, ...{action: 'create'}});
+        let urlParams = URLUtil.buildUrlParams({...data, ...{action: 'create'}});
         this.setState({addNewScreen: false});
         window.open(`/designer?${urlParams}`, '_blank');
     }
@@ -81,7 +81,7 @@ class LightChaserList extends Component<any> {
         let id = e.currentTarget.id;
         switch (type) {
             case 'edit':
-                let params = buildUrlParams({
+                let params = URLUtil.buildUrlParams({
                     id: id,
                     action: 'edit'
                 });

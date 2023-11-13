@@ -1,14 +1,14 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import './DataConfig.less';
 import {ConfigType} from "../../../designer/right/ConfigType";
 import {DataConfigType} from "../../../designer/DesignerType";
 import AbstractController, {OperateType} from "../../../framework/core/AbstractController";
-import {sendHttpRequest} from "../../../utils/HttpUtil";
 import {message} from "antd";
 import ObjectUtil from "../../../utils/ObjectUtil";
 import {Control} from "../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import LCGUIUtil from "../../../json-schema/LCGUIUtil";
+import HttpUtil from "../../../utils/HttpUtil";
 
 type DataTypeItem = 'static' | 'api' | 'database' | 'excel';
 
@@ -231,7 +231,7 @@ class DataConfig extends Component<DataConfigProps> {
         header = header && typeof header === 'string' ? ObjectUtil.stringToJsObj(this.dataConfig.apiData?.header) : header;
         params = params && typeof params === 'string' ? ObjectUtil.stringToJsObj(this.dataConfig.apiData?.params) : params;
         const {url, method} = this.dataConfig.apiData!;
-        sendHttpRequest(url!, method!, header, params).then(res => {
+        HttpUtil.sendHttpRequest(url!, method!, header, params).then(res => {
             this.schema!.children![2].children![5].children![0].value = JSON.stringify(res, null, 2);
             this.setState({renderCount: this.state.renderCount + 1});
         }).catch(() => {

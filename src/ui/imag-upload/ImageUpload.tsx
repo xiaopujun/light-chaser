@@ -1,9 +1,10 @@
 import React, {useState} from "react";
-import {Upload as AntdUpLoad, UploadFile} from "antd";
+import {Upload as AntdUpLoad} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
 import ImageCache from "../../framework/cache/ImageCache";
 import './ImageUpload.less';
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
+import { UploadFile } from "antd/lib/upload/interface";
 
 export interface UploadDataType {
     value: string;

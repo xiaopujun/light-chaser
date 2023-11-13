@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import './DesignerView.less';
 import {MovableItemType} from "../operate-provider/movable/types";
 import designerStore from "../store/DesignerStore";

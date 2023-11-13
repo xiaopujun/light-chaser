@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import  {Component} from 'react';
 import ReactDOM from "react-dom";
 import './Dialog.less';
 import {LineOutlined} from "@ant-design/icons";

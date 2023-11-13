@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import {ComponentInfoType} from "../../common-component/common-types";
 
 export interface BaseColorBlockComponentStyle {

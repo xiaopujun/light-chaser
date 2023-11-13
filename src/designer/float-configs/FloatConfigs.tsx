@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import {observer} from "mobx-react";
 import CompList from "./comp-list/CompList";
 import compListStore from "./comp-list/CompListStore";

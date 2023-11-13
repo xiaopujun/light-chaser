@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import  {Component} from 'react';
 import './ColorsPicker.less';
 import ColorPicker from "../color-picker/ColorPicker";
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";

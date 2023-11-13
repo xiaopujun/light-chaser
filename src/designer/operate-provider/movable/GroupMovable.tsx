@@ -245,46 +245,46 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                 <Moveable<DimensionViewableProps>
                     ref={this.movableRef}
                     target={targets}
-                    zoom={1 / scale}
+                    // zoom={1 / scale}
                     draggable={!readonly}
                     resizable={!readonly}
                     keepRatio={false}
 
-                    maxSnapElementGapDistance={400}
-                    maxSnapElementGuidelineDistance={400}
+                    maxSnapElementGapDistance={100}
+                    maxSnapElementGuidelineDistance={100}
                     snappable={true}
                     snapGap={true}
-                    snapThreshold={5}
+                    snapThreshold={3}
                     isDisplaySnapDigit={true}
-                    snapDirections={{
-                        top: true,
-                        right: true,
-                        bottom: true,
-                        left: true,
-                        center: true,
-                        middle: true
-                    }}
-                    elementSnapDirections={{
-                        top: true,
-                        right: true,
-                        bottom: true,
-                        left: true,
-                        center: true,
-                        middle: true
-                    }}
+                    // snapDirections={{
+                    //     top: true,
+                    //     right: true,
+                    //     bottom: true,
+                    //     left: true,
+                    //     center: true,
+                    //     middle: true
+                    // }}
+                    // elementSnapDirections={{
+                    //     top: true,
+                    //     right: true,
+                    //     bottom: true,
+                    //     left: true,
+                    //     center: true,
+                    //     middle: true
+                    // }}
                     ables={[DimensionViewable as any]}
                     dimensionViewable={true}
-                    roundable={true}
-                    verticalGuidelines={this.verticalGuidelines}
-                    horizontalGuidelines={this.horizontalGuidelines}
-                    isDisplayInnerSnapDigit={true}
-                    isDisplayGridGuidelines={true}
-                    isDisplayShadowRoundControls={true}
-                    displayAroundControls={true}
-                    clipArea={true}
-                    clipVerticalGuidelines={[0, "50%", "100%"]}
-                    clipHorizontalGuidelines={[0, "50%", "100%"]}
-                    clipTargetBounds={true}
+                    // roundable={true}
+                    // verticalGuidelines={this.verticalGuidelines}
+                    // horizontalGuidelines={this.horizontalGuidelines}
+                    // isDisplayInnerSnapDigit={true}
+                    // isDisplayGridGuidelines={true}
+                    // isDisplayShadowRoundControls={true}
+                    // displayAroundControls={true}
+                    // clipArea={true}
+                    // clipVerticalGuidelines={[0, "50%", "100%"]}
+                    // clipHorizontalGuidelines={[0, "50%", "100%"]}
+                    // clipTargetBounds={true}
                     elementGuidelines={Array.from(selectedTargets!)}
 
                     throttleDrag={rasterize ? dragStep : 1}

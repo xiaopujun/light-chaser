@@ -3,14 +3,13 @@ import {ConfigType} from "../../../designer/right/ConfigType";
 import {AreaOptions, ShapeStyle} from "@antv/g2plot";
 import AntdCommonAreaController from "../../antd-common/area/AntdCommonAreaController";
 import {AntdCartesianCoordinateSys} from "../../antd-common/config/AntdFragment";
-import {WritableAreaOptions} from "../../antd-common/types";
 import {MappingOptions} from "@antv/g2plot/lib/adaptor/geometries/base";
 import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
-import {parseGradient} from "../../../utils/ColorUtil";
 import LCGUIUtil from "../../../json-schema/LCGUIUtil";
 import AntdCommonUtil from "../../antd-common/AntdCommonUtil";
+import ColorUtil from "../../../utils/ColorUtil";
 
 class AntdBaseAreaStyleConfig extends Component<ConfigType> {
 
@@ -38,13 +37,6 @@ class AntdBaseAreaStyleConfig extends Component<ConfigType> {
 
 export {AntdBaseAreaStyleConfig};
 
-
-export interface AntdBaseAreaGraphicsProps {
-    config?: WritableAreaOptions;
-
-    onChange(config: WritableAreaOptions): void;
-}
-
 export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
 
     const config: AreaOptions = controller.getConfig().style;
@@ -56,7 +48,7 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
             //解析渐变色
             if (typeof data === 'string' && data.indexOf('linear-gradient') !== -1) {
                 //线性渐变
-                const gradientColor = parseGradient(data.toLowerCase());
+                const gradientColor = ColorUtil.parseGradient(data.toLowerCase());
                 const colorStr = gradientColor?.colors?.map(item => `${item.pos}:${item.color}`).join(' ');
                 data = `l(${gradientColor.angle}) ${colorStr}`;
                 controller.update(LCGUIUtil.createObjectFromArray(dataKeyPath, data));
