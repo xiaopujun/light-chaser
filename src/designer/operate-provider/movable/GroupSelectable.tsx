@@ -3,6 +3,8 @@ import Selecto, {OnSelectEnd} from "react-selecto";
 import eventOperateStore from "../EventOperateStore";
 import {observer} from "mobx-react";
 import Moveable from 'react-moveable';
+import designerStore from "../../store/DesignerStore";
+import {MovableItemType} from "./types";
 
 /**
  * 设置控制点和边框的颜色
@@ -33,9 +35,55 @@ class GroupSelectable extends Component {
         setSelectorRef(this.selectorRef);
     }
 
+
+    /**
+     * 递归查找所有非分组图层的id
+     * @param ids
+     * @param res
+     */
+    findAllLayer = (ids: string[], res: string[]) => {
+        const {layoutConfigs} = designerStore;
+        ids.forEach((id) => {
+            const item: MovableItemType = layoutConfigs[id];
+            if (item.type === 'group') {
+                this.findAllLayer(item.childIds, res);
+            } else {
+                res.push(id);
+            }
+        });
+    }
+
+    /**
+     * 计算当前组件首付存在分组内，如果存在分组，则需要选中分组内的所有组件，不断向上扫描，直到找到最顶层的分组及旗下的所有元素
+     */
+    selectTargets = (elements: HTMLElement[]): HTMLElement[] => {
+        const layerIdSet = new Set();
+        const {layoutConfigs} = designerStore;
+        elements.forEach((item) => {
+            let _id = item.id;
+            let _pid = layoutConfigs[item.id].pid;
+            while (_pid) {
+                const {pid, id} = layoutConfigs[_pid];
+                _pid = pid;
+                _id = id;
+            }
+            //获取多选时最终的图层id，多个组件可能存在同一个分组内，所以需要去重
+            layerIdSet.add(_id);
+        });
+        const compLayerId = [];
+        this.findAllLayer(Array.from(layerIdSet), compLayerId);
+        const res = [];
+        compLayerId.forEach((id) => {
+            const target = document.getElementById(id);
+            if (target)
+                res.push(target);
+        });
+        return res;
+    }
+
     onSelectEnd = (e: OnSelectEnd) => {
         let {selected} = e;
-        const {movableRef, setTargets, /*setTargetIds*/} = eventOperateStore;
+        const {movableRef, setTargets} = eventOperateStore;
         if (!movableRef) return;
         const movable: Moveable = movableRef!.current!;
         //如果为拖拽，则将当前的整个dom事件传递给movable，确保选中元素后可以立马拖拽
@@ -47,6 +95,9 @@ class GroupSelectable extends Component {
             });
         }
 
+        //判断是否存在分组，如果存在分组，则需要选中分组内的所有组件，不断向上扫描，直到找到最顶层的分组及旗下的所有元素
+        selected = this.selectTargets(selected as HTMLElement[]);
+
         //框选多个组件时，不能同时包含锁定和非锁定的组件。
         //如果最开始选中的是锁定的组件，那么后续选中的组件只能是锁定的组件.反之亦然
         let lock = false;
@@ -57,10 +108,10 @@ class GroupSelectable extends Component {
             lock = selected[0].dataset.lock === 'true';
             if (lock) {
                 //后续只能选中锁定的组件
-                selected = e.selected.filter((item) => item.dataset.lock === 'true') as HTMLElement[];
+                selected = selected.filter((item) => item.dataset.lock === 'true') as HTMLElement[];
             } else {
                 //后续只能选中非锁定的组件
-                selected = e.selected.filter((item) => item.dataset.lock !== 'true') as HTMLElement[];
+                selected = selected.filter((item) => item.dataset.lock !== 'true') as HTMLElement[];
             }
         }
 

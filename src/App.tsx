@@ -2,11 +2,9 @@ import {Component, lazy, Suspense} from 'react';
 import 'antd/dist/antd.min.css';
 import './App.less';
 import {Route, Switch} from "react-router-dom";
-import JsonSchemaDemo from "./test/JsonSchemaDemo";
 import Loading from "./ui/loading/Loading";
 import {Login} from "./pages/login/Login";
-import {LayerDemo} from "./test/canvas-demo/LayerDemo";
-import {LayerGroupItem} from "./designer/float-configs/layer-list/group/LayerGroupItem";
+import LayerGroupItem from "./designer/float-configs/layer-list/group/LayerGroupItem";
 import DemoMain from "./test/DemoMain";
 
 const LightChaserList = lazy(() => import('./list/LightChaserList'));

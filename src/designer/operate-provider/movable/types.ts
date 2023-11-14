@@ -19,6 +19,8 @@ export interface MovableItemType {
     order?: number;
     //父图层id
     pid?: string;
+    //子图层列表
+    children?: MovableItemType[];
     //子图层id
-    children?: string[];
+    childIds?: string[];
 }

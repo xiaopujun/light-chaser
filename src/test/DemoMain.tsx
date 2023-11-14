@@ -1,10 +1,13 @@
 import React from 'react';
 import {observer} from "mobx-react";
 import './DemoMain.less';
-import {LayerGroupItem} from "../designer/float-configs/layer-list/group/LayerGroupItem";
+import LayerGroupItem from "../designer/float-configs/layer-list/group/LayerGroupItem";
 import LayerItem from "../designer/float-configs/layer-list/item/LayerItem";
 import {MovableItemType} from "../designer/operate-provider/movable/types";
 import AVLTree from "../framework/data-structure/avl-tree/AVLTree";
+import ReactDOM from "react-dom";
+import LayerBuilder from "../designer/float-configs/layer-list/LayerBuilder";
+import {cloneDeep} from "lodash";
 
 interface TreeNode {
     id: number;
@@ -15,65 +18,9 @@ interface TreeNode {
 
 class MyComponent extends React.Component {
 
-    avlTree = new AVLTree();
+    // avlTree = new AVLTree();
 
-    layerData: MovableItemType[] = [
-        {
-            "name": "Antd基础面积图",
-            "type": "AntdBaseArea",
-            "width": 250,
-            "height": 220,
-            "position": [
-                375,
-                79.9895
-            ],
-            "id": "HhHnA4HDKZ",
-            "lock": false,
-            "hide": false,
-            "order": 9
-        },
-        {
-            "name": "Antd基础面积图",
-            "type": "AntdBaseArea",
-            "width": 250,
-            "height": 220,
-            "position": [
-                660,
-                80
-            ],
-            "id": "aKsbw8mFmq",
-            "lock": false,
-            "hide": false,
-            "order": 17
-        },
-        {
-            "name": "Antd区间条形图",
-            "type": "AntdRangeBar",
-            "width": 260,
-            "height": 200,
-            "position": [
-                375,
-                300
-            ],
-            "id": "311uMpnelG",
-            "lock": false,
-            "hide": false,
-            "order": 18
-        },
-        {
-            "name": "Antd基础柱状图",
-            "type": "AntdBaseColumn",
-            "width": 238,
-            "height": 200,
-            "position": [
-                672.286,
-                300
-            ],
-            "id": "kL0aATkPEQ",
-            "lock": false,
-            "hide": false,
-            "order": 19
-        },
+    layerData: MovableItemType = [
         {
             "name": "Antd百分比柱状图",
             "type": "AntdPercentColumn",
@@ -88,48 +35,6 @@ class MyComponent extends React.Component {
             "hide": false,
             "order": 20,
             "pid": 'ke1MpSvTa2'
-        },
-        {
-            "name": "Antd饼图",
-            "type": "AntdPie",
-            "width": 320,
-            "height": 200,
-            "position": [
-                332,
-                494
-            ],
-            "id": "tvzJnuWZru",
-            "lock": false,
-            "hide": false,
-            "order": 21
-        },
-        {
-            "name": "Antd气泡图",
-            "type": "AntdScatterBubble",
-            "width": 320,
-            "height": 200,
-            "position": [
-                422,
-                213
-            ],
-            "id": "xvqYHHqVuH",
-            "lock": false,
-            "hide": false,
-            "order": 39
-        },
-        {
-            "name": "Antd百分比面积图",
-            "type": "AntdPercentArea",
-            "width": 320,
-            "height": 200,
-            "position": [
-                281,
-                286
-            ],
-            "id": "ZT8kOIcfsH",
-            "lock": false,
-            "hide": false,
-            "order": 40
         },
         {
             "name": "Antd基础面积图",
@@ -161,7 +66,7 @@ class MyComponent extends React.Component {
             "order": 42
         },
         {
-            "name": "Antd基础面积图",
+            "name": "新建分组",
             "type": "group",
             "id": "ke1MpSvTa2",
             "lock": false,
@@ -180,22 +85,10 @@ class MyComponent extends React.Component {
             "id": "aUfIsKSSZk",
             "lock": false,
             "hide": false,
-            "order": 43
+            "order": 43,
+            "pid": 'jJyeQ0iDoH'
         },
     ]
-
-    // testData = [
-    //     {id: 0, name: '数据0'},
-    //     {id: 1, pid: 0, name: '数据1'},
-    //     {id: 2, pid: 0, name: '数据2'},
-    //     {id: 3, pid: 1, name: '数据3'},
-    //     {id: 4, name: '数据4'},
-    //     {id: 5, pid: 1, name: '数据5'},
-    //     {id: 6, name: '数据6'},
-    //     {id: 7, pid: 2, name: '数据7'},
-    //     {id: 8, pid: 2, name: '数据8'},
-    //     {id: 9, name: '数据9'},
-    // ]
 
     resData = [
         {
@@ -258,30 +151,35 @@ class MyComponent extends React.Component {
     ];
 
     render() {
-        // 解析数据
-        const resData = this.parseData(this.testData);
-        console.log(resData)
+        const layerMap: Record<string, MovableItemType> = {};
+        Object.values(this.layerData).forEach((item: MovableItemType) => {
+            layerMap[item.id] = item;
+        });
+
+        const layerData = new LayerBuilder().buildLayerList(layerMap);
+
         return (
             <>
                 <div style={{width: 300}}>
-                    <LayerGroupItem>
-                        <LayerItem compId={'d'} name={'测试节点2'}/>
-                        <LayerItem compId={'d'} name={'测试节点3'}/>
-                        <LayerItem compId={'d'} name={'测试节点3'}/>
-                        <LayerGroupItem>
-                            <LayerItem compId={'d'} name={'测试节点2'}/>
-                            <LayerItem compId={'d'} name={'测试节点3'}/>
-                            <LayerGroupItem>
-                                <LayerItem compId={'d'} name={'测试节点2'}/>
-                                <LayerItem compId={'d'} name={'测试节点3'}/>
-                                <LayerItem compId={'d'} name={'测试节点3'}/>
-                                <LayerGroupItem>
-                                    <LayerItem compId={'d'} name={'测试节点2'}/>
-                                    <LayerItem compId={'d'} name={'测试节点3'}/>
-                                </LayerGroupItem>
-                            </LayerGroupItem>
-                        </LayerGroupItem>
-                    </LayerGroupItem>
+                    {layerData}
+                    {/*<LayerGroupItem>*/}
+                    {/*    <LayerItem compId={'d'} name={'测试节点2'}/>*/}
+                    {/*    <LayerItem compId={'d'} name={'测试节点3'}/>*/}
+                    {/*    <LayerItem compId={'d'} name={'测试节点3'}/>*/}
+                    {/*    <LayerGroupItem>*/}
+                    {/*        <LayerItem compId={'d'} name={'测试节点2'}/>*/}
+                    {/*        <LayerItem compId={'d'} name={'测试节点3'}/>*/}
+                    {/*        <LayerGroupItem>*/}
+                    {/*            <LayerItem compId={'d'} name={'测试节点2'}/>*/}
+                    {/*            <LayerItem compId={'d'} name={'测试节点3'}/>*/}
+                    {/*            <LayerItem compId={'d'} name={'测试节点3'}/>*/}
+                    {/*            <LayerGroupItem>*/}
+                    {/*                <LayerItem compId={'d'} name={'测试节点2'}/>*/}
+                    {/*                <LayerItem compId={'d'} name={'测试节点3'}/>*/}
+                    {/*            </LayerGroupItem>*/}
+                    {/*        </LayerGroupItem>*/}
+                    {/*    </LayerGroupItem>*/}
+                    {/*</LayerGroupItem>*/}
                 </div>
             </>
         )

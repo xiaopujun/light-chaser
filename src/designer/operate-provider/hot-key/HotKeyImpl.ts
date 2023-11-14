@@ -17,6 +17,9 @@ import bpLeftStore from "../../../blueprint/left/BPLeftStore";
 import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
 import {OperateResult} from "../../../framework/operate/AbstractOperator";
 import {message} from "antd";
+import IdGenerate from "../../../utils/IdGenerate";
+import LayerUtil from "../../float-configs/layer-list/util/LayerUtil";
+import {toJS} from "mobx";
 
 export const selectAll = () => {
     let comps = document.getElementsByClassName('lc-comp-item');
@@ -53,6 +56,7 @@ export const doCopy = () => {
 }
 
 export const doLock = () => {
+    console.log(layerListStore.layerInstances)
     const {targetIds, setTargets} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
     const {layoutConfigs} = designerStore;
@@ -167,6 +171,65 @@ export const doHide = () => {
     });
     historyRecordOperateProxy.doHideUpd(toBeUpdate);
     setTargets([]);
+}
+
+/**
+ * 图层编组,
+ * 编组时候，如果都是普通组件图层，则直接编组
+ * 如果包含了已经分组的图层，则将将已经编组的这个组作为基本图层和其他图层进行编组，
+ * 比如有A,B,C三个普通图层，则编组的时候可直接生成编组G
+ * 如果A,B已经编组为G1，此时再选中A,C或B,C，或者A,B,C，则编组的时候，G1作为基本图层，和C进行编组，生成G2
+ */
+export const doGrouping = () => {
+    const {targetIds, maxLevel, setMaxLevel} = eventOperateStore;
+    if (!targetIds || targetIds.length <= 1) return;
+    //查找当前选中的图层的所有父级图层
+    const layerIdSet = LayerUtil.findGroupLayer(targetIds);
+    //新建编组
+    const {addItem, updateLayout} = designerStore;
+    const order = maxLevel + 1;
+    const pid = IdGenerate.generateId();
+    const childIds = Array.from(layerIdSet);
+    const groupItem: MovableItemType = {
+        id: pid,
+        type: 'group',
+        name: '新建分组',
+        hide: false,
+        lock: false,
+        childIds,
+        order,
+    };
+    addItem(groupItem);
+    setMaxLevel(order);
+    //设置子图层的pid
+    const updateItems: MovableItemType[] = [];
+    childIds.forEach((id: string) => {
+        updateItems.push({id, pid});
+    });
+    updateLayout(updateItems);
+}
+
+export const doUnGrouping = () => {
+    const {targetIds} = eventOperateStore;
+    //找出当前选中的图层中，最顶层的分组图层
+    let groupIds = LayerUtil.findGroupLayer(targetIds);
+    //过滤掉其中分组等于自身的图层（即非分组图层）
+    const {layoutConfigs, updateLayout, delLayout} = designerStore;
+    groupIds = groupIds.filter((id: string) => layoutConfigs[id].type === 'group');
+    //对每个分组图层进行解组
+    //1.更新每个分组图层的子图层的pid为null
+    groupIds.forEach((id: string) => {
+        let item = layoutConfigs[id];
+        let childIds = item.childIds;
+        const updateItems: MovableItemType[] = [];
+        childIds && childIds.forEach((cid: string) => {
+            updateItems.push({id: cid, pid: null});
+        });
+        updateLayout(updateItems);
+    });
+    //2.删除分组图层
+    delLayout(groupIds);
+    console.log('dsafds', designerStore.layoutConfigs)
 }
 
 /*************************快捷键控制移动组件的位置*************************/

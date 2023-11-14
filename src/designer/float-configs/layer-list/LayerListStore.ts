@@ -20,6 +20,8 @@ class LayerListStore {
 
     layerInstanceMap: { [key: string]: LayerComponent } = {};
 
+    layerInstances: Record<string, any> = {};
+
     searchContent = "";
 
     setVisible = (visible: boolean) => this.visible = visible;
