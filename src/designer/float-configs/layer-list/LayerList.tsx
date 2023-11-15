@@ -80,7 +80,6 @@ class LayerList extends Component {
     render() {
         const {layoutConfigs} = designerStore;
         const layerDom = new LayerBuilder().buildLayerList(layoutConfigs);
-        const {layerInstances} = layerListStore;
         return (
             <FloatPanel ref={ref => this.floatPanelRef = ref} title={'图层'} onClose={this.onClose}
                         initPosition={{x: 250, y: -window.innerHeight + 50}}

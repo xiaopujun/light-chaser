@@ -120,7 +120,6 @@ class GroupSelectable extends Component {
 
         //更新选中组件的边框颜色（锁定状态组件为红色，非锁定状态组件为蓝色）
         setControlPointLineColor(lock);
-
         //若选中多个组件，计算更新组件多选时的左上角坐标
         if (selected.length > 1) {
             let {calculateGroupCoordinate} = eventOperateStore;

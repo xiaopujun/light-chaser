@@ -95,7 +95,7 @@ export default class LayerBuilder {
             children?.forEach((item: MovableItemType) => {
                 childDomArr.push(this.buildComponents(item));
             });
-            return <div key={layer.id} className={'component-group'} id={layer.id}
+            return <div key={layer.id} className={'component-group'}
                         style={{position: 'absolute'}}>{childDomArr}</div>;
         } else {
             return <ComponentContainer layout={layer} key={layer.id}/>;

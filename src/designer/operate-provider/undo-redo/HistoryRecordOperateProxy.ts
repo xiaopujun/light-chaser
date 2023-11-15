@@ -22,6 +22,7 @@ import layerListStore from "../../float-configs/layer-list/LayerListStore";
 import {ConfigureObjectFragments} from "../../../utils/ObjectUtil";
 import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
 import IdGenerate from "../../../utils/IdGenerate";
+import React, {Component} from "react";
 
 class HistoryRecordOperateProxy {
 
@@ -231,11 +232,14 @@ class HistoryRecordOperateProxy {
         historyOperator.put(data);
         //更新隐藏状态
         updateLayout(items);
-        const {layerInstanceMap, visible} = layerListStore;
+        //取消所有选中状态
+        const {setTargets} = eventOperateStore;
+        setTargets([]);
+        const {layerInstances, visible} = layerListStore;
         if (visible) {
             //更新图层列表
             items.forEach((item) => {
-                layerInstanceMap[item.id!].update({hide: item.hide, selected: false})
+                (layerInstances[item.id!] as Component).setState({hide: item.hide, selected: false})
             })
         }
     }
@@ -253,11 +257,11 @@ class HistoryRecordOperateProxy {
         const data: HistoryRecordType = {type: HistoryType.LOCK, prev, next}
         historyOperator.put(data);
         updateLayout(items);
-        const {layerInstanceMap, visible} = layerListStore;
+        const {layerInstances, visible} = layerListStore;
         if (visible) {
             //更新图层列表
             items.forEach((item) => {
-                layerInstanceMap[item.id!].update({lock: item.lock})
+                (layerInstances[item.id!] as React.Component).setState({lock: item.lock})
             })
         }
     }

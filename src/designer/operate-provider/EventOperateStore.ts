@@ -1,6 +1,4 @@
 import {action, makeObservable, observable} from "mobx";
-import layerListStore from "../float-configs/layer-list/LayerListStore";
-import LayerComponent from "../float-configs/layer-list/LayerComponent";
 import Moveable from "react-moveable";
 import {RefObject} from "react";
 import designerStore from "../store/DesignerStore";
@@ -153,28 +151,29 @@ class EventOperateStore {
         this.targets = targets;
 
         //记录图层之前处于选中状态的组件id
-        const oldTargetIds: string[] = [...this.targetIds];
+        // let oldTargetIds: string[] = [...this.targetIds];
 
         const newTargetIds: string[] = [];
         targets.forEach(target => newTargetIds.push(target.id));
         this.targetIds = newTargetIds;
 
         //更新图层列表状态
-        const {visible, layerInstanceMap} = layerListStore;
-        if (visible) {
-            //清除之前的选中
-            oldTargetIds.forEach(id => {
-                const instance: LayerComponent = layerInstanceMap[id];
-                if (!!instance)
-                    instance.update({selected: false});
-            });
-            //设置本次选中的组件id
-            newTargetIds.forEach(id => {
-                const instance: LayerComponent = layerInstanceMap[id];
-                if (!!instance)
-                    instance.update({selected: true});
-            })
-        }
+        // const {visible, layerInstances} = layerListStore;
+        // if (visible) {
+        //     //清除之前的选中(由于可能存在分组的情况，需要向上查找一次）
+        //     oldTargetIds = LayerUtil.findChildLayer(LayerUtil.findGroupLayer(oldTargetIds));
+        //     oldTargetIds.forEach(id => {
+        //         const instance: Component = layerInstances[id];
+        //         if (!!instance)
+        //             instance.setState({selected: false});
+        //     });
+        //     //设置本次选中的组件id
+        //     newTargetIds.forEach(id => {
+        //         const instance: Component = layerInstances[id];
+        //         if (!!instance)
+        //             instance.setState({selected: true});
+        //     })
+        // }
     };
 
     setPointerTarget = (target: any) => this.pointerTarget = target;

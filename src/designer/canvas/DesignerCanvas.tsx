@@ -50,6 +50,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
 
     render() {
         const {layoutConfigs} = designerStore!;
+        console.log('render')
         return (
             <>
                 <DesignerContainer>

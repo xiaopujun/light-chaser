@@ -56,7 +56,6 @@ export const doCopy = () => {
 }
 
 export const doLock = () => {
-    console.log(layerListStore.layerInstances)
     const {targetIds, setTargets} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
     const {layoutConfigs} = designerStore;
@@ -181,7 +180,7 @@ export const doHide = () => {
  * 如果A,B已经编组为G1，此时再选中A,C或B,C，或者A,B,C，则编组的时候，G1作为基本图层，和C进行编组，生成G2
  */
 export const doGrouping = () => {
-    const {targetIds, maxLevel, setMaxLevel} = eventOperateStore;
+    const {targetIds, maxLevel, setMaxLevel, setTargets} = eventOperateStore;
     if (!targetIds || targetIds.length <= 1) return;
     //查找当前选中的图层的所有父级图层
     const layerIdSet = LayerUtil.findGroupLayer(targetIds);
@@ -206,11 +205,12 @@ export const doGrouping = () => {
     childIds.forEach((id: string) => {
         updateItems.push({id, pid});
     });
-    updateLayout(updateItems);
+    updateLayout(updateItems, false);
+    setTargets([])
 }
 
 export const doUnGrouping = () => {
-    const {targetIds} = eventOperateStore;
+    const {targetIds, setTargets} = eventOperateStore;
     //找出当前选中的图层中，最顶层的分组图层
     let groupIds = LayerUtil.findGroupLayer(targetIds);
     //过滤掉其中分组等于自身的图层（即非分组图层）
@@ -225,11 +225,11 @@ export const doUnGrouping = () => {
         childIds && childIds.forEach((cid: string) => {
             updateItems.push({id: cid, pid: null});
         });
-        updateLayout(updateItems);
+        updateLayout(updateItems, false);
     });
     //2.删除分组图层
     delLayout(groupIds);
-    console.log('dsafds', designerStore.layoutConfigs)
+    setTargets([]);
 }
 
 /*************************快捷键控制移动组件的位置*************************/

@@ -1,10 +1,11 @@
-import React from "react";
-import './LayerGroupItem.less';
+import React, {MouseEvent} from "react";
 import previewClose from "../icon/preview-close.svg";
 import previewOpen from "../icon/preview-open.svg";
 import lockImg from "../icon/lock.svg";
 import unlockImg from "../icon/unlock.svg";
 import {FolderOpenFilled} from "@ant-design/icons";
+import layerListStore from "../LayerListStore";
+import './LayerGroupItem.less';
 
 
 export interface GroupItemProps {
@@ -17,10 +18,17 @@ export interface GroupItemProps {
 }
 
 export default class LayerGroupItem extends React.Component<GroupItemProps> {
-    state = {
-        hide: false,
-        lock: false,
-        showContent: false
+
+    constructor(props) {
+        super(props);
+        const {hide, compId, lock, name} = this.props;
+        this.state = {
+            hide: hide || false,
+            lock: lock || false,
+            name: name || '',
+            selected: false,
+            compId
+        }
     }
 
     toggleHide = () => {
@@ -30,13 +38,18 @@ export default class LayerGroupItem extends React.Component<GroupItemProps> {
     toggleLock = () => {
     }
 
+    onSelected = (event: MouseEvent<HTMLDivElement>) => {
+        const {selectedChange} = layerListStore;
+        selectedChange && selectedChange({...this.state, ...{selected: true}}, event);
+    }
+
     render() {
-        const {children, name} = this.props;
-        const {hide, lock, showContent} = this.state;
+        const {children, compId} = this.props;
+        const {hide, lock, showContent, selected, name} = this.state;
         return (
-            <div className={'layer-group-item'}>
-                <div className={'layer-group-header'} onClick={() => {
-                    this.setState({showContent: !this.state.showContent})
+            <div className={'layer-group-item'} id={compId} onClick={this.onSelected}>
+                <div className={`layer-group-header ${selected ? 'layer-group-header-selected' : ''}`} onClick={() => {
+                    this.setState({showContent: !showContent})
                 }}>
                     <div className={'layer-group-left'}>
                         <div className={'layer-group-icon'}><FolderOpenFilled/></div>

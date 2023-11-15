@@ -1,10 +1,10 @@
 import {action, makeObservable, observable} from "mobx";
-import LayerComponent from "./LayerComponent";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
-import {MouseEvent} from "react";
-import {LayerItemDataProps} from "./LayerItem";
+import {Component, MouseEvent, ReactElement} from "react";
+import {LayerItemDataProps} from "./item/LayerItem";
 import {setControlPointLineColor} from "../../operate-provider/movable/GroupSelectable";
 import historyRecordOperateProxy from "../../operate-provider/undo-redo/HistoryRecordOperateProxy";
+import LayerUtil from "./util/LayerUtil";
 
 class LayerListStore {
     constructor() {
@@ -18,9 +18,7 @@ class LayerListStore {
 
     visible = false;
 
-    layerInstanceMap: { [key: string]: LayerComponent } = {};
-
-    layerInstances: Record<string, any> = {};
+    layerInstances: Record<string, ReactElement> = {};
 
     searchContent = "";
 
@@ -28,19 +26,25 @@ class LayerListStore {
 
     setContent = (content: string) => this.searchContent = content;
 
+    /**
+     * 更新图层的锁定状态，包括普通图层和分组图层
+     * 普通图层直接更新即可，分组图层要更新分组图层中的所有子图层
+     */
     lockChange = (id: string, lock: boolean) => {
-        const {targets, setTargets} = eventOperateStore;
-        if (targets && targets.length > 0) {
-            const newTargets = targets.filter(target => target.id !== id);
-            if (newTargets.length !== targets.length)
-                setTargets(newTargets);
-        }
-        historyRecordOperateProxy.doLockUpd([{id, lock}]);
-        let instance = this.layerInstanceMap[id];
-        instance && instance.update({lock});
+        const updData = [];
+        LayerUtil.findChildLayer([id]).forEach(id => updData.push({id, lock}));
+        historyRecordOperateProxy.doLockUpd(updData);
     }
 
-    //todo 此方法逻辑需要优化
+    /**
+     * 通过图层选中组件
+     * 直接点击图层为单选：
+     *  1. 普通图层可以直接选中
+     *  2. 分组图层选中时要同时选中分组图层中的所有子图层
+     * 按照ctrl键多选：
+     *  1. 多选普通图层为增量选中，比如选中A，按照ctrl键选中B，则A和B都会被选中。按住ctrl多次选中同一个图层，则这个图层会被取消选中
+     *  2. 多选分组图层时同样为增量选中，基本规则与普通图层相同，但是多选分组图层时要同时选中它的所有子图层
+     */
     selectedChange = (data: LayerItemDataProps, e: MouseEvent<HTMLDivElement>) => {
         let {setTargets, targetIds, targets} = eventOperateStore;
         const targetDom = document.getElementById(data.compId!);
@@ -58,7 +62,7 @@ class LayerListStore {
                 currentTargetIds = targetIds.filter(id => id !== data.compId);
                 selected = targets.filter(target => target.id !== data.compId);
             } else {
-                //多选时，若本次选中的组件与首次选中的组件锁定状态不一致，则本次选中无效
+                //多选时，若本次选中的组件与其他已选中的组件锁定状态不一致，则本次选中无效（不能同时选中锁定状态不一致的组件）
                 if (targets.length > 0) {
                     const firstLock = targets[0].dataset.lock === 'true';
                     if (data.lock !== firstLock) return;
@@ -69,8 +73,15 @@ class LayerListStore {
             }
         } else {
             //单选
-            currentTargetIds = [data.compId!];
-            selected = [targetDom];
+            let layerIds = LayerUtil.findChildLayer([data.compId!]);
+            currentTargetIds = layerIds;
+            layerIds = LayerUtil.excludeGroupLayer(layerIds);
+            const tempTargets = [];
+            layerIds.forEach(id => {
+                const target = document.getElementById(id);
+                target && tempTargets.push(target);
+            });
+            selected = tempTargets;
         }
 
         if (selected.length === 0) return;
@@ -78,23 +89,24 @@ class LayerListStore {
         //之前已经选中的取消选中
         if (targetIds.length > 0) {
             targetIds.forEach(id => {
-                let instance = this.layerInstanceMap[id];
-                instance && instance.update({selected: false});
+                let instance = this.layerInstances[id];
+                instance && (instance as Component).setState({selected: false});
             });
         }
-
         //更新选中组件列表
         setTargets(selected);
-
+        //更新图层列表
         if (currentTargetIds.length > 0) {
+            console.log('ddd', ...currentTargetIds)
             currentTargetIds.forEach(id => {
-                let instance = this.layerInstanceMap[id];
-                instance && instance.update({selected: true});
+                let instance = this.layerInstances[id];
+                console.log('ddd', instance)
+                instance && (instance as Component).setState({selected: true});
             });
         }
 
-        let lock = selected[0].dataset.lock === 'true';
         //更新选中组件的边框颜色（锁定状态组件为红色，非锁定状态组件为蓝色）
+        let lock = selected[0].dataset.lock === 'true';
         const tempTimer = setTimeout(() => {
             setControlPointLineColor(lock);
             clearTimeout(tempTimer);
@@ -103,9 +115,9 @@ class LayerListStore {
     }
 
     hideChange = (id: string, hide: boolean) => {
-        historyRecordOperateProxy.doHideUpd([{id, hide}])
-        let instance = this.layerInstanceMap[id];
-        instance && instance.update({hide});
+        const updData = [];
+        LayerUtil.findChildLayer([id]).forEach(id => updData.push({id, hide}));
+        historyRecordOperateProxy.doHideUpd(updData);
     }
 }
 

@@ -60,9 +60,9 @@ class BaseInfo extends Component<ConfigType> {
         const id = controller.getConfig().info.id;
         updateLayout && updateLayout([{id, name: value}]);
         //如果显示图层,则更新图层名称
-        const {layerInstanceMap} = layerListStore;
-        let layerInstance = layerInstanceMap[id];
-        layerInstance && layerInstance.update({name: value});
+        const {layerInstances} = layerListStore;
+        let layerInstance = layerInstances[id];
+        layerInstance && (layerInstance as Component).setState({name: value});
     }
 
     changeDesc = (value: string) => {
