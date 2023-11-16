@@ -47,7 +47,7 @@ export default class LayerGroupItem extends React.Component<GroupItemProps> {
         const {children, compId} = this.props;
         const {hide, lock, showContent, selected, name} = this.state;
         return (
-            <div className={'layer-group-item'} id={compId} onClick={this.onSelected}>
+            <div className={'layer-group-item'} onClick={this.onSelected}>
                 <div className={`layer-group-header ${selected ? 'layer-group-header-selected' : ''}`} onClick={() => {
                     this.setState({showContent: !showContent})
                 }}>

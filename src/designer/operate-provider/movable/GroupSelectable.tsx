@@ -5,6 +5,8 @@ import {observer} from "mobx-react";
 import Moveable from 'react-moveable';
 import designerStore from "../../store/DesignerStore";
 import {MovableItemType} from "./types";
+import layerListStore from "../../float-configs/layer-list/LayerListStore";
+import LayerUtil from "../../float-configs/layer-list/util/LayerUtil";
 
 /**
  * 设置控制点和边框的颜色
@@ -95,31 +97,72 @@ class GroupSelectable extends Component {
             });
         }
 
+        const {layoutConfigs} = designerStore;
+        let layerIds = selected.map((item) => item.id);
+        let lockState = !!layoutConfigs[layerIds[0]]?.lock;
+        if (layerIds.length === 1) {
+            //点选
+            const pid = layoutConfigs[layerIds[0]].pid;
+            if (!pid) {
+                //普通图层--不管是否锁定，都可以选中
+            } else {
+                //分组图层--选中这个分组下的所有未锁定、未隐藏的组件
+                layerIds = LayerUtil.findAllChildLayerBySubId(layerIds);
+                selected = layerIds.map((id) => document.getElementById(id)!).filter((item) => !!item);
+            }
+        } else if (layerIds.length > 1) {
+            /**
+             * 框选
+             * 框选多个组件时，不能同时包含锁定和非锁定的组件。
+             * 如果最开始选中的是锁定的组件，那么后续选中的组件只能是锁定的组件.反之亦然
+             */
+
+                // 根据已框选的组件，向上查找是否存在分组,存在则还需要选中分组内的所有组件
+            let allChildLayerId = LayerUtil.findAllChildLayerBySubId(layerIds, true);
+            //检测是否同时包含锁定和非锁定的组件
+            for (let i = 0; i < allChildLayerId.length; i++) {
+                if (layoutConfigs[allChildLayerId[i]].lock !== lockState) {
+                    //只选中未锁定的组件
+                    lockState = false;
+                    break;
+                }
+            }
+            allChildLayerId = allChildLayerId.filter((id) => layoutConfigs[id].lock === lockState);
+            selected = allChildLayerId.map((id) => document.getElementById(id)!).filter((item) => !!item);
+        }
+        console.log('框选', selected);
         //判断是否存在分组，如果存在分组，则需要选中分组内的所有组件，不断向上扫描，直到找到最顶层的分组及旗下的所有元素
-        selected = this.selectTargets(selected as HTMLElement[]);
+        // selected = this.selectTargets(selected as HTMLElement[]);
 
         //框选多个组件时，不能同时包含锁定和非锁定的组件。
         //如果最开始选中的是锁定的组件，那么后续选中的组件只能是锁定的组件.反之亦然
-        let lock = false;
-        if (selected && selected.length === 1) {
-            lock = selected[0].dataset.lock === 'true';
-        } else if (selected && selected.length > 1) {
-            //第一个选中的第一个组件是否是锁定的组件
-            lock = selected[0].dataset.lock === 'true';
-            if (lock) {
-                //后续只能选中锁定的组件
-                selected = selected.filter((item) => item.dataset.lock === 'true') as HTMLElement[];
-            } else {
-                //后续只能选中非锁定的组件
-                selected = selected.filter((item) => item.dataset.lock !== 'true') as HTMLElement[];
-            }
-        }
+        // let lock = false;
+        // if (selected && selected.length === 1) {
+        //     lock = selected[0].dataset.lock === 'true';
+        // } else if (selected && selected.length > 1) {
+        //     //第一个选中的第一个组件是否是锁定的组件
+        //     lock = selected[0].dataset.lock === 'true';
+        //     if (lock) {
+        //         //后续只能选中锁定的组件
+        //         selected = selected.filter((item) => item.dataset.lock === 'true') as HTMLElement[];
+        //     } else {
+        //         //后续只能选中非锁定的组件
+        //         selected = selected.filter((item) => item.dataset.lock !== 'true') as HTMLElement[];
+        //     }
+        // }
 
         //更新选中的组件
         setTargets(selected as HTMLElement[]);
+        //更新图层列表状态
+        const {visible, layerInstances} = layerListStore;
+        if (visible) {
+            layerIds.forEach((id) => {
+                (layerInstances[id] as Component)?.setState({selected: true});
+            });
+        }
 
         //更新选中组件的边框颜色（锁定状态组件为红色，非锁定状态组件为蓝色）
-        setControlPointLineColor(lock);
+        setControlPointLineColor(lockState);
         //若选中多个组件，计算更新组件多选时的左上角坐标
         if (selected.length > 1) {
             let {calculateGroupCoordinate} = eventOperateStore;

@@ -154,7 +154,7 @@ class EventOperateStore {
         // let oldTargetIds: string[] = [...this.targetIds];
 
         const newTargetIds: string[] = [];
-        targets.forEach(target => newTargetIds.push(target.id));
+        targets.forEach(target => target && newTargetIds.push(target.id));
         this.targetIds = newTargetIds;
 
         //更新图层列表状态
