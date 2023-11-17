@@ -68,6 +68,24 @@ export default class LayerUtil {
 
 
     /**
+     * 判断layerIds中的图层是否处于同一个图层 -- 用于判断是否可以进行图层编组
+     * @param layerIds 图层id
+     */
+    public static hasSameGroup = (layerIds: string[]): boolean => {
+        if (layerIds.length <= 1) return false;
+        const {layoutConfigs} = designerStore;
+        //如果layerIds中存在没有pid的图层，则说明这个图层一定没有编组，则直接返回false，说明本次可以编组
+        if (layerIds.some((id) => layoutConfigs[id].type !== 'group' && !layoutConfigs[id].pid)) return false;
+        const groupLayerIds = new Set();
+        layerIds.filter((id) => layoutConfigs[id].type !== 'group').forEach((id) => {
+            LayerUtil.findTopGroupLayer([id], true).forEach((id) => groupLayerIds.add(id));
+        })
+        //若所有图层向上查找分组后，只有一个结果返回，则说明所有图层处于同一个分组内
+        return groupLayerIds.size === 1;
+    }
+
+
+    /**
      * @deprecated
      * 给定指定的图层id，向上查找其顶层的分组图层,没有分组的图层则返回自身
      * 例：A、B、C三个组件，A、B组成分组G1，C未分组。则传入A、B、C三个图层id，返回G1、C两个图层id
@@ -120,14 +138,4 @@ export default class LayerUtil {
         });
     }
 
-    /**
-     * todo 废弃
-     * @deprecated
-     * 排除掉分组图层id
-     * @param layerIds
-     */
-    public static excludeGroupLayer = (layerIds: string[]): string[] => {
-        const {layoutConfigs} = designerStore;
-        return layerIds.filter(id => layoutConfigs[id].type !== 'group');
-    }
 }

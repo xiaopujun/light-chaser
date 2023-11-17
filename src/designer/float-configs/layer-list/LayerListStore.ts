@@ -32,7 +32,15 @@ class LayerListStore {
      */
     lockChange = (id: string, lock: boolean) => {
         const updData = [];
-        LayerUtil.findChildLayer([id]).forEach(id => updData.push({id, lock}));
+        const {layoutConfigs} = designerStore;
+        const {type} = layoutConfigs[id];
+        if (type === 'group') {
+            //分组图层
+            LayerUtil.findAllChildLayer([id]).forEach(id => updData.push({id, lock}));
+        } else {
+            //普通图层
+            updData.push({id, lock});
+        }
         historyRecordOperateProxy.doLockUpd(updData);
     }
 
@@ -110,7 +118,15 @@ class LayerListStore {
 
     hideChange = (id: string, hide: boolean) => {
         const updData = [];
-        LayerUtil.findChildLayer([id]).forEach(id => updData.push({id, hide}));
+        const {layoutConfigs} = designerStore;
+        const {type} = layoutConfigs[id];
+        if (type === 'group') {
+            //分组图层
+            LayerUtil.findAllChildLayer([id]).forEach(id => updData.push({id, hide}));
+        } else {
+            //普通图层
+            updData.push({id, hide});
+        }
         historyRecordOperateProxy.doHideUpd(updData);
     }
 }

@@ -72,7 +72,8 @@ class GroupSelectable extends Component {
             let allChildLayerId = LayerUtil.findAllChildLayerBySubId(layerIds, true);
             //检测是否同时包含锁定和非锁定的组件
             for (let i = 0; i < allChildLayerId.length; i++) {
-                if (layoutConfigs[allChildLayerId[i]].lock !== lockState) {
+                const layer = layoutConfigs[allChildLayerId[i]];
+                if (layer.lock !== lockState && layer.type !== 'group') {
                     //只选中未锁定的组件
                     lockState = false;
                     break;

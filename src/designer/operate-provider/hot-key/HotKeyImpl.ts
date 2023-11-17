@@ -19,6 +19,7 @@ import {OperateResult} from "../../../framework/operate/AbstractOperator";
 import {message} from "antd";
 import IdGenerate from "../../../utils/IdGenerate";
 import LayerUtil from "../../float-configs/layer-list/util/LayerUtil";
+import {Component} from "react";
 
 export const selectAll = () => {
     const {layoutConfigs} = designerStore;
@@ -63,16 +64,15 @@ export const doLock = () => {
 }
 
 export const doUnLock = () => {
-    const {setTargetIds, targets} = eventOperateStore;
-    if (!targets || targets.length === 0) return;
+    const {setTargetIds, targetIds} = eventOperateStore;
+    if (!targetIds || targetIds.length === 0) return;
     const {updateLayout, layoutConfigs} = designerStore;
     let toUpdate: MovableItemType[] = [];
-    (targets as HTMLElement[]).filter(target => {
+    targetIds.filter(id => {
         //过滤出被锁定的组件
-        return target.dataset.lock === 'true';
-    }).forEach((target) => {
-        let item = layoutConfigs[target.id];
-        toUpdate.push({...item, lock: false})
+        return layoutConfigs[id].lock;
+    }).forEach((id) => {
+        toUpdate.push({id, lock: false})
     })
     updateLayout(toUpdate)
     historyRecordOperateProxy.doLockUpd(toUpdate);
@@ -175,19 +175,29 @@ export const doHide = () => {
 export const doGrouping = () => {
     const {targetIds, maxLevel, setMaxLevel, setTargetIds} = eventOperateStore;
     if (!targetIds || targetIds.length <= 1) return;
+    if (LayerUtil.hasSameGroup(targetIds)) return;
     //查找当前选中的图层的所有父级图层
     const layerIdSet = LayerUtil.findGroupLayer(targetIds);
     //新建编组
-    const {addItem, updateLayout} = designerStore;
+    const {addItem, updateLayout, layoutConfigs} = designerStore;
     const order = maxLevel + 1;
     const pid = IdGenerate.generateId();
     const childIds = Array.from(layerIdSet);
+    //计算分组的锁定状态
+    let allLock = layoutConfigs[childIds[0]].lock;
+    for (let i = 1; i < childIds.length; i++) {
+        if (allLock !== layoutConfigs[childIds[i]].lock) {
+            allLock = false;
+            break;
+        }
+    }
+    //构建分组数据
     const groupItem: MovableItemType = {
         id: pid,
         type: 'group',
         name: '新建分组',
         hide: false,
-        lock: false,
+        lock: allLock,
         childIds,
         order,
     };
@@ -199,7 +209,15 @@ export const doGrouping = () => {
         updateItems.push({id, pid});
     });
     updateLayout(updateItems, false);
-    setTargetIds([])
+    setTargetIds([]);
+    //特殊场景处理，如果编组时，所有的子图层都处于锁定状态，则编组后，编组图层也处于锁定状态
+    if (allLock) {
+        const {layerInstances} = layerListStore;
+        const groupTimer = setTimeout(() => {
+            (layerInstances[pid] as Component).setState({lock: true});
+            clearTimeout(groupTimer);
+        }, 10);
+    }
 }
 
 export const doUnGrouping = () => {
