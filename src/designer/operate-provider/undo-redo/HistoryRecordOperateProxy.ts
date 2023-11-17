@@ -145,7 +145,7 @@ class HistoryRecordOperateProxy {
     }
 
     public doDelete(): void {
-        const {targetIds, setTargets} = eventOperateStore;
+        const {targetIds, setTargetIds} = eventOperateStore;
         const {delItem, layoutConfigs, compInstances} = designerStore;
         if (!targetIds || targetIds.length === 0) return;
         const {setContentVisible, activeConfig} = rightStore;
@@ -162,7 +162,7 @@ class HistoryRecordOperateProxy {
 
         //删除组件
         targetIds.length > 0 && delItem(targetIds);
-        setTargets([]);
+        setTargetIds([]);
         const {setPointerTarget} = eventOperateStore;
         const enforcementCap = document.querySelector('.lc-ruler-content');
         //删除组件后，重新聚焦鼠标指针到容器上，避免鼠标失去焦点导致其他快捷键失效。
@@ -192,6 +192,7 @@ class HistoryRecordOperateProxy {
                 const [x = 10, y = 10] = (newLayout.position || []).map((p) => p + 10);
                 newLayout.position = [x, y];
                 newLayout.order = ++maxLevel;
+                newLayout.pid = null;
                 layoutConfigs[newId] = newLayout;
                 //生成新数据
                 const copiedInstance = compInstances[id];
@@ -233,8 +234,8 @@ class HistoryRecordOperateProxy {
         //更新隐藏状态
         updateLayout(items);
         //取消所有选中状态
-        const {setTargets} = eventOperateStore;
-        setTargets([]);
+        const {setTargetIds} = eventOperateStore;
+        setTargetIds([]);
         const {layerInstances, visible} = layerListStore;
         if (visible) {
             //更新图层列表
@@ -261,7 +262,7 @@ class HistoryRecordOperateProxy {
         if (visible) {
             //更新图层列表
             items.forEach((item) => {
-                (layerInstances[item.id!] as React.Component).setState({lock: item.lock})
+                (layerInstances[item.id!] as React.Component)?.setState({lock: item.lock})
             })
         }
     }

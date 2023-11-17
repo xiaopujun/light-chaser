@@ -19,44 +19,37 @@ import {OperateResult} from "../../../framework/operate/AbstractOperator";
 import {message} from "antd";
 import IdGenerate from "../../../utils/IdGenerate";
 import LayerUtil from "../../float-configs/layer-list/util/LayerUtil";
-import {toJS} from "mobx";
 
 export const selectAll = () => {
-    let comps = document.getElementsByClassName('lc-comp-item');
-    let compArr: any[] = [];
-    //权限时排除已锁定和隐藏的组件
-    comps && Array.from(comps).forEach((comp: any) => {
-        const {lock, hide} = comp.dataset;
-        if (lock !== 'true' && hide !== 'true') {
-            compArr.push(comp);
-        }
+    const {layoutConfigs} = designerStore;
+    const {setTargetIds, calculateGroupCoordinate} = eventOperateStore;
+    const selected = Object.values(layoutConfigs).map((item: MovableItemType) => {
+        if (!item.lock && !item.hide)
+            return item.id;
     });
-    const {setTargets, calculateGroupCoordinate} = eventOperateStore;
-    setTargets(compArr);
+    setTargetIds(selected);
 
-    //计算组件多选时的左上角坐标
-    if (compArr.length > 1)
-        calculateGroupCoordinate(compArr);
+    if (selected.length > 0)
+        calculateGroupCoordinate(selected.map((id: string) => document.getElementById(id)).filter((item: HTMLElement) => !!item));
 }
 
+/**
+ * 普通复制，只复制非分组图层
+ */
 export const doCopy = () => {
-    const {targetIds, setTargets} = eventOperateStore;
+    let {targetIds, setTargetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
-    const {copyItem} = designerStore;
+
+    const {layoutConfigs, copyItem} = designerStore;
+    //过滤掉分组图层
+    targetIds = targetIds.filter((id: string) => layoutConfigs[id].type !== 'group');
     let newIds = copyItem(targetIds);
-    let targets: any = [];
     //延迟10毫秒，等待dom元素渲染完毕后再获取。
-    setTimeout(() => {
-        for (const newId of newIds) {
-            targets.push(document.getElementById(newId));
-        }
-        targets.filter((item: any) => item !== null);
-        setTargets(targets);
-    }, 10);
+    setTimeout(() => setTargetIds(newIds), 10);
 }
 
 export const doLock = () => {
-    const {targetIds, setTargets} = eventOperateStore;
+    const {targetIds, setTargetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
     const {layoutConfigs} = designerStore;
     let toBeUpdate = [];
@@ -66,11 +59,11 @@ export const doLock = () => {
     }
     historyRecordOperateProxy.doLockUpd(toBeUpdate);
     //操作完毕之后，清空已被选择的元素。
-    setTargets([]);
+    setTargetIds([]);
 }
 
 export const doUnLock = () => {
-    const {setTargets, targets} = eventOperateStore;
+    const {setTargetIds, targets} = eventOperateStore;
     if (!targets || targets.length === 0) return;
     const {updateLayout, layoutConfigs} = designerStore;
     let toUpdate: MovableItemType[] = [];
@@ -83,7 +76,7 @@ export const doUnLock = () => {
     })
     updateLayout(toUpdate)
     historyRecordOperateProxy.doLockUpd(toUpdate);
-    setTargets([]);
+    setTargetIds([]);
 }
 
 export const toTop = () => {
@@ -160,7 +153,7 @@ export const doSave = throttle(() => {
 }, 5000);
 
 export const doHide = () => {
-    const {targetIds, setTargets} = eventOperateStore;
+    const {targetIds, setTargetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
     const {layoutConfigs} = designerStore;
     let toBeUpdate: MovableItemType[] = [];
@@ -169,7 +162,7 @@ export const doHide = () => {
         toBeUpdate.push({...item, hide: true});
     });
     historyRecordOperateProxy.doHideUpd(toBeUpdate);
-    setTargets([]);
+    setTargetIds([]);
 }
 
 /**
@@ -180,7 +173,7 @@ export const doHide = () => {
  * 如果A,B已经编组为G1，此时再选中A,C或B,C，或者A,B,C，则编组的时候，G1作为基本图层，和C进行编组，生成G2
  */
 export const doGrouping = () => {
-    const {targetIds, maxLevel, setMaxLevel, setTargets} = eventOperateStore;
+    const {targetIds, maxLevel, setMaxLevel, setTargetIds} = eventOperateStore;
     if (!targetIds || targetIds.length <= 1) return;
     //查找当前选中的图层的所有父级图层
     const layerIdSet = LayerUtil.findGroupLayer(targetIds);
@@ -206,11 +199,11 @@ export const doGrouping = () => {
         updateItems.push({id, pid});
     });
     updateLayout(updateItems, false);
-    setTargets([])
+    setTargetIds([])
 }
 
 export const doUnGrouping = () => {
-    const {targetIds, setTargets} = eventOperateStore;
+    const {targetIds, setTargetIds} = eventOperateStore;
     //找出当前选中的图层中，最顶层的分组图层
     let groupIds = LayerUtil.findGroupLayer(targetIds);
     //过滤掉其中分组等于自身的图层（即非分组图层）
@@ -229,7 +222,7 @@ export const doUnGrouping = () => {
     });
     //2.删除分组图层
     delLayout(groupIds);
-    setTargets([]);
+    setTargetIds([]);
 }
 
 /*************************快捷键控制移动组件的位置*************************/

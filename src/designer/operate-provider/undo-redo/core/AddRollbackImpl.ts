@@ -14,7 +14,7 @@ export class AddRollbackImpl extends AbstractRollback {
 
     undo(record: HistoryRecordType): void {
         if (!record) return;
-        const {setTargets} = eventOperateStore;
+        const {setTargetIds} = eventOperateStore;
         const {next} = record!;
         let nextAddData = next! as AddDataType[];
         //执行反向操作删除元素
@@ -23,7 +23,7 @@ export class AddRollbackImpl extends AbstractRollback {
         nextAddData.forEach((item) => delIds.push(item.id));
         delItem(delIds);
         //清空框选状态,避免空框选
-        setTargets([]);
+        setTargetIds([]);
     }
 
 }

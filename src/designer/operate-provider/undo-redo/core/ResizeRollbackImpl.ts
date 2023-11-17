@@ -5,13 +5,11 @@ import {HistoryRecordType, ResizeDataType} from "../HistoryType";
 export class ResizeRollbackImpl extends AbstractRollback {
     redo(record: HistoryRecordType): void {
         if (!record) return;
-        const {movableRef, setBackoff, setTargets} = eventOperateStore;
+        const {movableRef, setBackoff, setTargetIds} = eventOperateStore;
         const {next} = record!;
         let nextResizeData = next! as ResizeDataType;
         //选中目标元素
-        const targets: HTMLElement[] = [];
-        nextResizeData.ids.forEach((id) => targets.push(document.getElementById(id)!));
-        setTargets(targets);
+        setTargetIds(nextResizeData.ids);
         setBackoff(true);
         //执行反向操作
         movableRef?.current?.request("resizable", {
@@ -23,13 +21,11 @@ export class ResizeRollbackImpl extends AbstractRollback {
 
     undo(record: HistoryRecordType): void {
         if (!record) return;
-        const {movableRef, setBackoff, setTargets} = eventOperateStore;
+        const {movableRef, setBackoff, setTargetIds} = eventOperateStore;
         const {prev} = record!;
         let prevResizeData = prev! as ResizeDataType;
         //选中目标元素
-        const targets: HTMLElement[] = [];
-        prevResizeData.ids.forEach((id) => targets.push(document.getElementById(id)!));
-        setTargets(targets);
+        setTargetIds(prevResizeData.ids);
         setBackoff(true);
         //执行反向操作
         movableRef?.current?.request("resizable", {
