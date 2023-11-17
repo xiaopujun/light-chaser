@@ -3,9 +3,10 @@ import previewClose from "../icon/preview-close.svg";
 import previewOpen from "../icon/preview-open.svg";
 import lockImg from "../icon/lock.svg";
 import unlockImg from "../icon/unlock.svg";
-import {FolderOpenFilled} from "@ant-design/icons";
+import {CaretRightOutlined, FolderOpenFilled} from "@ant-design/icons";
 import layerListStore from "../LayerListStore";
 import './LayerGroupItem.less';
+import {fontStyle} from "html2canvas/dist/types/css/property-descriptors/font-style";
 
 
 export interface GroupItemProps {
@@ -39,8 +40,10 @@ export default class LayerGroupItem extends React.Component<GroupItemProps> {
     }
 
     onSelected = (event: MouseEvent<HTMLDivElement>) => {
+        event.stopPropagation();
         const {selectedChange} = layerListStore;
-        selectedChange && selectedChange({...this.state, ...{selected: true}}, event);
+        const {compId} = this.props;
+        selectedChange && selectedChange(compId, event);
     }
 
     render() {

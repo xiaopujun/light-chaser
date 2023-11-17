@@ -1,10 +1,10 @@
 import {action, makeObservable, observable} from "mobx";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
-import {Component, MouseEvent, ReactElement} from "react";
-import {LayerItemDataProps} from "./item/LayerItem";
+import {MouseEvent, ReactElement} from "react";
 import {setControlPointLineColor} from "../../operate-provider/movable/GroupSelectable";
 import historyRecordOperateProxy from "../../operate-provider/undo-redo/HistoryRecordOperateProxy";
 import LayerUtil from "./util/LayerUtil";
+import designerStore from "../../store/DesignerStore";
 
 class LayerListStore {
     constructor() {
@@ -45,70 +45,64 @@ class LayerListStore {
      *  1. 多选普通图层为增量选中，比如选中A，按照ctrl键选中B，则A和B都会被选中。按住ctrl多次选中同一个图层，则这个图层会被取消选中
      *  2. 多选分组图层时同样为增量选中，基本规则与普通图层相同，但是多选分组图层时要同时选中它的所有子图层
      */
-    selectedChange = (data: LayerItemDataProps, e: MouseEvent<HTMLDivElement>) => {
-        let {setTargets, targetIds, targets} = eventOperateStore;
-        const targetDom = document.getElementById(data.compId!);
-
-        //隐藏的组件不可选
-        if (!targetDom || data.hide) return;
-
-        //计算本次选中的组件id
-        let currentTargetIds: string[];
-        let selected: HTMLElement[] = [];
-        if (e.ctrlKey) {
+    selectedChange = (id: string, event: MouseEvent) => {
+        const {targetIds, setTargetIds} = eventOperateStore;
+        const {layoutConfigs} = designerStore;
+        const {type, lock} = layoutConfigs[id];
+        if (!type) return;
+        const groupLayer = type === 'group';
+        let selectedLayerIds = [];
+        //处理单选多选
+        if (event.ctrlKey) {
             //多选
-            if (targetIds.includes(data.compId!)) {
-                //重复选择之前已经选中的组件,则取消选中该组件
-                currentTargetIds = targetIds.filter(id => id !== data.compId);
-                selected = targets.filter(target => target.id !== data.compId);
+            if (targetIds.includes(id)) {
+                //多选模式下同一图层再次点击视为取消选中
+                if (groupLayer) {
+                    //分组图层
+                    const toBeCancelled = LayerUtil.findAllChildLayer([id]);
+                    selectedLayerIds = targetIds.filter(_id => !toBeCancelled.includes(_id));
+                } else
+                    selectedLayerIds = targetIds.filter(_id => _id !== id);
             } else {
-                //多选时，若本次选中的组件与其他已选中的组件锁定状态不一致，则本次选中无效（不能同时选中锁定状态不一致的组件）
-                if (targets.length > 0) {
-                    const firstLock = targets[0].dataset.lock === 'true';
-                    if (data.lock !== firstLock) return;
+                //多选时，不能同时选中锁定状态不一致的组件，若存在状态不一致的场景，只选中未锁定的组件
+                if (targetIds.length === 0) {
+                    if (groupLayer)
+                        selectedLayerIds = LayerUtil.findAllChildLayer([id]);
+                    else
+                        selectedLayerIds = [id];
+                } else {
+                    const firstLock = layoutConfigs[targetIds[0]].lock;
+                    if (lock !== firstLock) {
+                        //只选中未锁定的组件
+                        if (groupLayer)
+                            selectedLayerIds = [...targetIds, ...LayerUtil.findAllChildLayer([id])].filter(id => !layoutConfigs[id].lock);
+                        else
+                            selectedLayerIds = [...targetIds, id].filter(id => !layoutConfigs[id].lock);
+                    } else {
+                        //直接在已选择的组件上增量本次选中的图层
+                        if (groupLayer)
+                            selectedLayerIds = [...targetIds, ...LayerUtil.findAllChildLayer([id])];
+                        else
+                            selectedLayerIds = [...targetIds, id];
+                    }
                 }
-                //将新的组件加入到选中组件列表中
-                currentTargetIds = [...targetIds, data.compId!];
-                selected = [...targets, targetDom];
             }
         } else {
             //单选
-            let layerIds = LayerUtil.findChildLayer([data.compId!]);
-            currentTargetIds = layerIds;
-            layerIds = LayerUtil.excludeGroupLayer(layerIds);
-            const tempTargets = [];
-            layerIds.forEach(id => {
-                const target = document.getElementById(id);
-                target && tempTargets.push(target);
-            });
-            selected = tempTargets;
+            if (groupLayer)
+                selectedLayerIds = LayerUtil.findAllChildLayer([id]);
+            else
+                selectedLayerIds = [id];
         }
-
-        if (selected.length === 0) return;
-
-        //之前已经选中的取消选中
-        if (targetIds.length > 0) {
-            targetIds.forEach(id => {
-                let instance = this.layerInstances[id];
-                instance && (instance as Component).setState({selected: false});
-            });
-        }
-        //更新选中组件列表
-        setTargets(selected);
-        //更新图层列表
-        if (currentTargetIds.length > 0) {
-            console.log('ddd', ...currentTargetIds)
-            currentTargetIds.forEach(id => {
-                let instance = this.layerInstances[id];
-                console.log('ddd', instance)
-                instance && (instance as Component).setState({selected: true});
-            });
-        }
+        const targetTimer = setTimeout(() => {
+            setTargetIds(selectedLayerIds);
+            clearTimeout(targetTimer);
+        }, 0)
 
         //更新选中组件的边框颜色（锁定状态组件为红色，非锁定状态组件为蓝色）
-        let lock = selected[0].dataset.lock === 'true';
+        let finalLock = layoutConfigs[selectedLayerIds[0]]?.lock;
         const tempTimer = setTimeout(() => {
-            setControlPointLineColor(lock);
+            setControlPointLineColor(finalLock);
             clearTimeout(tempTimer);
         }, 0)
 

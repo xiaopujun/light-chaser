@@ -36,12 +36,14 @@ class LayerItem extends React.PureComponent<LayerItemDataProps> {
         }
     }
 
-    toggleLock = () => {
+    toggleLock = (event: MouseEvent) => {
+        event.stopPropagation();
         const {lockChange} = layerListStore;
         lockChange && lockChange(this.state.compId, !this.state.lock);
     }
 
-    toggleHide = () => {
+    toggleHide = (event: MouseEvent) => {
+        event.stopPropagation();
         const {hideChange} = layerListStore;
         hideChange && hideChange(this.state.compId, !this.state.hide);
     }
@@ -49,7 +51,7 @@ class LayerItem extends React.PureComponent<LayerItemDataProps> {
     onSelected = (event: MouseEvent<HTMLDivElement>) => {
         event.stopPropagation();
         const {selectedChange} = layerListStore;
-        selectedChange && selectedChange({...this.state, ...{selected: true}}, event);
+        selectedChange && selectedChange(this.props.compId, event);
     }
 
     render() {

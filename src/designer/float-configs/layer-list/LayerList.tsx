@@ -24,10 +24,12 @@ class LayerList extends Component {
         if (!this.floatPanelRef) return;
         const {panelRef} = this.floatPanelRef;
         if (!panelRef) return;
-        if (panelRef.contains(e.target as Node) && !(e.target as HTMLElement).classList.contains("layer-item")) {
-            const {setTargets, targetIds} = eventOperateStore;
+        if (panelRef.contains(e.target as Node)
+            && (!(e.target as HTMLElement).classList.contains("layer-item")
+                && !(e.target as HTMLElement).classList.contains("layer-group-header"))) {
+            const {setTargetIds, targetIds} = eventOperateStore;
             if (targetIds.length > 0)
-                setTargets([]);
+                setTargetIds([]);
         }
     }
 

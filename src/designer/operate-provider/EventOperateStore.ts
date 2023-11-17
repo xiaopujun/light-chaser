@@ -1,10 +1,11 @@
 import {action, makeObservable, observable} from "mobx";
 import Moveable from "react-moveable";
-import {RefObject} from "react";
+import {Component, RefObject} from "react";
 import designerStore from "../store/DesignerStore";
 import {MovableItemType} from "./movable/types";
 import ObjectUtil from "../../utils/ObjectUtil";
 import DesignerRuler from "../canvas/DesignerRuler";
+import layerListStore from "../float-configs/layer-list/LayerListStore";
 
 /**
  * 组件多选情况下的坐标值
@@ -49,6 +50,7 @@ class EventOperateStore {
             scale: observable,
             setScale: action,
             setTargets: action,
+            setTargetIds: action,
         })
     }
 
@@ -146,6 +148,46 @@ class EventOperateStore {
 
     setSelectorRef = (ref: any) => this.selectorRef = ref;
 
+    setTargetIds = (ids: string[]) => {
+        //存储之前一次的选中组件id，用于清空图层列表的上一次选中状态
+        const oldTargetIds = [...this.targetIds];
+        this.targetIds = ids;
+        const _targets = [];
+        ids.forEach(id => {
+            const target = document.getElementById(id);
+            target && _targets.push(target);
+        });
+        this.targets = _targets;
+
+        //更新图层列表状态
+        const {visible, layerInstances} = layerListStore;
+        if (visible) {
+            //清除之前的选中
+            oldTargetIds.forEach(id => {
+                const instance: Component = layerInstances[id];
+                if (!!instance)
+                    instance.setState({selected: false});
+            });
+            //设置本次选中的组件id
+            this.targetIds.forEach(id => {
+                const instance: Component = layerInstances[id];
+                if (!!instance)
+                    instance.setState({selected: true});
+            })
+        }
+
+        //若选中多个组件，计算更新组件多选时的左上角坐标
+        if (this.targets.length > 1) {
+            let {calculateGroupCoordinate} = eventOperateStore;
+            calculateGroupCoordinate(this.targets);
+        }
+    }
+
+    /**
+     * @deprecated
+     * //todo 准备删除这个方法，使用setTargetIds替代
+     * @param targets
+     */
     setTargets = (targets: HTMLElement[]) => {
         if (!targets) return;
         this.targets = targets;

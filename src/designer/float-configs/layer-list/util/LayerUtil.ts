@@ -56,7 +56,7 @@ export default class LayerUtil {
         const {layoutConfigs} = designerStore;
         groupLayerIds.forEach((id) => {
             if (!layoutConfigs[id])
-                console.log(toJS(layoutConfigs, id))
+                console.log(toJS(layoutConfigs), id)
             let {childIds} = layoutConfigs[id];
             if (childIds && childIds.length > 0) {
                 res.push(...childIds);
@@ -77,10 +77,8 @@ export default class LayerUtil {
         //使用set数据结构去重，多个不同的组件可能存在同一个分组内
         const groupLayerIdSet = new Set();
         const {layoutConfigs} = designerStore;
-        console.log(toJS(layoutConfigs))
         layerIds.forEach((id) => {
             let _id = id;
-            console.log("_id", _id)
             let _pid = layoutConfigs[_id].pid;
             while (_pid) {
                 const {pid, id} = layoutConfigs[_pid];
