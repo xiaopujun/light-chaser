@@ -15,6 +15,7 @@ import {isEqual} from "lodash";
 import {DesignerDragScaleContainer} from "./DesignerDragScaleContainer";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import LayerBuilder from "../float-configs/layer-list/LayerBuilder";
+import layerBuilder from "../float-configs/layer-list/LayerBuilder";
 
 /**
  * 设计器画布
@@ -57,7 +58,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                         <DesignerRuler>
                             <DesignerDragScaleContainer onDoubleClick={this.updateActive}>
                                 <GroupMovable>
-                                    {new LayerBuilder().buildCanvasComponents(layoutConfigs)}
+                                    {layerBuilder.buildCanvasComponents(layoutConfigs)}
                                 </GroupMovable>
                             </DesignerDragScaleContainer>
                         </DesignerRuler>

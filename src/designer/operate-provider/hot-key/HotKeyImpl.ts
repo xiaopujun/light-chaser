@@ -175,7 +175,7 @@ export const doGrouping = () => {
     if (!targetIds || targetIds.length <= 1) return;
     if (LayerUtil.hasSameGroup(targetIds)) return;
     //查找当前选中的图层的所有父级图层
-    const layerIdSet = LayerUtil.findGroupLayer(targetIds);
+    const layerIdSet = LayerUtil.findTopGroupLayer(targetIds, true);
     //新建编组
     const {addItem, updateLayout, layoutConfigs} = designerStore;
     const order = maxLevel + 1;
@@ -221,7 +221,7 @@ export const doGrouping = () => {
 export const doUnGrouping = () => {
     const {targetIds, setTargetIds} = eventOperateStore;
     //找出当前选中的图层中，最顶层的分组图层
-    let groupIds = LayerUtil.findGroupLayer(targetIds);
+    let groupIds = LayerUtil.findTopGroupLayer(targetIds, true);
     //过滤掉其中分组等于自身的图层（即非分组图层）
     const {layoutConfigs, updateLayout, delLayout} = designerStore;
     groupIds = groupIds.filter((id: string) => layoutConfigs[id].type === 'group');

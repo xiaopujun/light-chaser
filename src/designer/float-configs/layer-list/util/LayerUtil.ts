@@ -4,6 +4,33 @@ import {toJS} from "mobx";
 export default class LayerUtil {
 
     /**
+     * 查找图层上层路径的所有分组图层，比如
+     * |A
+     * |-B
+     * |--C
+     * 传入C的id，返回[A,B]，未找到则返回空数组
+     * @param layerIds
+     */
+    public static findPathGroupLayer = (layerIds: string[]): string[] => {
+        const groupLayerIdSet = new Set();
+        const {layoutConfigs} = designerStore;
+        layerIds.forEach((id) => {
+            let _id = id;
+            const layer = layoutConfigs[id];
+            if (layer.type === 'group')
+                groupLayerIdSet.add(id);
+            let _pid = layer?.pid;
+            while (_pid) {
+                const {pid, id, type} = layoutConfigs[_pid];
+                _pid = pid;
+                if (type === 'group')
+                    groupLayerIdSet.add(id);
+            }
+        });
+        return Array.from(groupLayerIdSet);
+    }
+
+    /**
      * 查找layerIds对应的图层中最顶层的分组图层，例如：
      * |A
      * |-B
@@ -82,60 +109,6 @@ export default class LayerUtil {
         })
         //若所有图层向上查找分组后，只有一个结果返回，则说明所有图层处于同一个分组内
         return groupLayerIds.size === 1;
-    }
-
-
-    /**
-     * @deprecated
-     * 给定指定的图层id，向上查找其顶层的分组图层,没有分组的图层则返回自身
-     * 例：A、B、C三个组件，A、B组成分组G1，C未分组。则传入A、B、C三个图层id，返回G1、C两个图层id
-     * @param layerIds 待查找的图层id
-     */
-    public static findGroupLayer = (layerIds: string[]): string[] => {
-        //使用set数据结构去重，多个不同的组件可能存在同一个分组内
-        const groupLayerIdSet = new Set();
-        const {layoutConfigs} = designerStore;
-        layerIds.forEach((id) => {
-            let _id = id;
-            let _pid = layoutConfigs[_id].pid;
-            while (_pid) {
-                const {pid, id} = layoutConfigs[_pid];
-                _pid = pid;
-                _id = id;
-            }
-            //获取多选时最终的图层id，多个组件可能存在同一个分组内，所以需要去重
-            groupLayerIdSet.add(_id);
-        });
-        return Array.from(groupLayerIdSet);
-    }
-
-    /**
-     * //todo 废弃
-     * @deprecated
-     * @param layerIds
-     */
-    public static findChildLayer = (layerIds: string[]): string[] => {
-        const layerIdSet = [];
-        LayerUtil._findChildLayer(layerIds, layerIdSet);
-        return [...new Set(layerIdSet)];
-    }
-
-    /**
-     * todo 废弃
-     * @param layerIds
-     * @param res
-     * @private
-     */
-    private static _findChildLayer(layerIds: string[], res: string[]) {
-        layerIds.forEach((id) => {
-            const {childIds} = designerStore.layoutConfigs[id];
-            if (childIds && childIds.length > 0) {
-                res.push(...[...childIds, id]);
-                LayerUtil._findChildLayer(childIds, res);
-            } else {
-                res.push(id);
-            }
-        });
     }
 
 }

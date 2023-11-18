@@ -12,7 +12,7 @@ export enum RenderOrder {
     DESC,
 }
 
-export default class LayerBuilder {
+class LayerBuilder {
 
     /**
      * 解析函数
@@ -111,3 +111,6 @@ export default class LayerBuilder {
     }
 
 }
+
+const layerBuilder = new LayerBuilder();
+export default layerBuilder;

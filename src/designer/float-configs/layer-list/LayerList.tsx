@@ -6,7 +6,9 @@ import {observer} from "mobx-react";
 import FloatPanel from "../common/FloatPanel";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 import Input from "../../../ui/input/Input";
-import LayerBuilder from "./LayerBuilder";
+import layerBuilder from "./LayerBuilder";
+import {MovableItemType} from "../../operate-provider/movable/types";
+import LayerUtil from "./util/LayerUtil";
 
 class LayerList extends Component {
 
@@ -44,9 +46,39 @@ class LayerList extends Component {
         setContent && setContent(data as string);
     }
 
-    render() {
+    buildLayerList = () => {
         const {layoutConfigs} = designerStore;
-        const layerDom = new LayerBuilder().buildLayerList(layoutConfigs);
+        const {searchContent} = layerListStore;
+        if (!searchContent || searchContent === '')
+            return layerBuilder.buildLayerList(layoutConfigs);
+        let filterLayer: Record<string, any> = {};
+        if (searchContent === ':hide') {
+            //仅过展示隐藏的图层
+            Object.values(layoutConfigs).forEach((item: MovableItemType) => {
+                if (item.hide && item.type !== 'group')
+                    filterLayer[item.id] = item;
+            });
+        } else if (searchContent === ':lock') {
+            //仅过展示锁定的图层
+            Object.values(layoutConfigs).forEach((item: MovableItemType) => {
+                if (item.lock && item.type !== 'group')
+                    filterLayer[item.id] = item;
+            });
+        } else {
+            Object.values(layoutConfigs).forEach((item: MovableItemType) => {
+                if (item.name?.includes(searchContent) && item.type !== 'group')
+                    filterLayer[item.id] = item;
+            });
+        }
+        //补充分组图层
+        const groupLayerId = LayerUtil.findPathGroupLayer(Object.keys(filterLayer));
+        groupLayerId.forEach((id: string) => {
+            filterLayer[id] = layoutConfigs[id];
+        });
+        return layerBuilder.buildLayerList(filterLayer);
+    }
+
+    render() {
         return (
             <FloatPanel ref={ref => this.floatPanelRef = ref} title={'图层'} onClose={this.onClose}
                         initPosition={{x: 250, y: -window.innerHeight + 50}}
@@ -56,7 +88,7 @@ class LayerList extends Component {
                 </div>
                 <div className={'layer-items'}>
                     <div ref={ref => this.layerItemsContainerRef = ref}>
-                        {layerDom}
+                        {this.buildLayerList()}
                     </div>
                 </div>
             </FloatPanel>
