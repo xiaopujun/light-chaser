@@ -7,15 +7,23 @@ import {cloneDeep} from "lodash";
 import layerListStore from "./LayerListStore";
 import ComponentContainer from "../../../framework/core/ComponentContainer";
 
+export enum RenderOrder {
+    ASC,
+    DESC,
+}
+
 export default class LayerBuilder {
 
     /**
      * 解析函数
      */
-    public parser = (layerMap: Record<string, MovableItemType>): MovableItemType[] => {
+    public parser = (layerMap: Record<string, MovableItemType>, order: RenderOrder = RenderOrder.DESC): MovableItemType[] => {
         layerMap = cloneDeep(layerMap);
-        const sourceLayerArr = Object.values(layerMap).sort((a, b) => b.order - a.order);
-
+        let sourceLayerArr;
+        if (order === RenderOrder.DESC)
+            sourceLayerArr = Object.values(layerMap).sort((a, b) => b.order - a.order);
+        else
+            sourceLayerArr = Object.values(layerMap).sort((a, b) => a.order - b.order);
         // 构建树结构
         const resData: MovableItemType[] = [];
         for (const layerItem of sourceLayerArr) {
@@ -40,7 +48,7 @@ export default class LayerBuilder {
      */
     public buildLayerList = (layerMap: Record<string, MovableItemType>): ReactElement => {
         const res = [];
-        this.parser(layerMap).forEach((item: MovableItemType) => {
+        this.parser(layerMap, RenderOrder.DESC).forEach((item: MovableItemType) => {
             res.push(this.buildLayer(item));
         });
         return res;
@@ -81,7 +89,7 @@ export default class LayerBuilder {
      */
     public buildCanvasComponents = (layerMap: Record<string, MovableItemType>): ReactElement => {
         const res = [];
-        this.parser(layerMap).forEach((item: MovableItemType) => {
+        this.parser(layerMap, RenderOrder.ASC).forEach((item: MovableItemType) => {
             res.push(this.buildComponents(item));
         });
         return res;

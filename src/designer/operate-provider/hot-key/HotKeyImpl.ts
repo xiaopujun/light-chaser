@@ -41,9 +41,7 @@ export const doCopy = () => {
     let {targetIds, setTargetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
 
-    const {layoutConfigs, copyItem} = designerStore;
-    //过滤掉分组图层
-    targetIds = targetIds.filter((id: string) => layoutConfigs[id].type !== 'group');
+    const {copyItem} = designerStore;
     let newIds = copyItem(targetIds);
     //延迟10毫秒，等待dom元素渲染完毕后再获取。
     setTimeout(() => setTargetIds(newIds), 10);
