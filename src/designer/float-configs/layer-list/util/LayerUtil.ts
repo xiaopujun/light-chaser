@@ -15,7 +15,6 @@ export default class LayerUtil {
         const groupLayerIdSet = new Set();
         const {layoutConfigs} = designerStore;
         layerIds.forEach((id) => {
-            let _id = id;
             const layer = layoutConfigs[id];
             if (layer.type === 'group')
                 groupLayerIdSet.add(id);
