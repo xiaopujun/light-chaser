@@ -22,7 +22,7 @@ import layerListStore from "../../float-configs/layer-list/LayerListStore";
 import {ConfigureObjectFragments} from "../../../utils/ObjectUtil";
 import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
 import IdGenerate from "../../../utils/IdGenerate";
-import React, {Component} from "react";
+import {Component} from "react";
 
 class HistoryRecordOperateProxy {
 
@@ -197,7 +197,7 @@ class HistoryRecordOperateProxy {
         newLayout.order = maxLevel;
         layoutConfigs[newId] = newLayout;
         //生成新组件配置项数据
-        const copiedInstance = compInstances[layout.id];
+        const copiedInstance = compInstances[layout.id!];
         let newConfig = cloneDeep(copiedInstance.getConfig());
         newConfig.info.id = newId;
         elemConfigs![newId] = newConfig;
@@ -240,7 +240,7 @@ class HistoryRecordOperateProxy {
                 const newLayout = this._copyNormalLayer(layout, newLayouts, maxLevel, newIds);
                 //如果本图层是属于单独选中的分组图层的子图层（有pid，但pid对应的图层未被选中），则需要将新复制出来的图层id加入到pid对应图层的childIds中
                 if (newLayout.pid)
-                    layoutConfigs[newLayout.pid].childIds.push(newLayout.id);
+                    layoutConfigs[newLayout.pid].childIds!.push(newLayout.id!);
             }
         }
 
@@ -257,7 +257,7 @@ class HistoryRecordOperateProxy {
             if (layout) {
                 maxLevel++;
                 const newLayout = this._copyNormalLayer(layout, newLayouts, maxLevel, newIds);
-                childIdNewToOld.set(newLayout.id, id);
+                childIdNewToOld.set(newLayout.id!, id);
             }
         }
 
@@ -269,7 +269,7 @@ class HistoryRecordOperateProxy {
             if (layout) {
                 maxLevel++;
                 const newLayout = this._copyGroupLayer(layout, newIds, newLayouts, maxLevel);
-                groupIdOldToNew.set(id, newLayout.id);
+                groupIdOldToNew.set(id, newLayout.id!);
             }
         }
 
@@ -359,7 +359,7 @@ class HistoryRecordOperateProxy {
         if (visible) {
             //更新图层列表
             items.forEach((item) => {
-                (layerInstances[item.id!] as React.Component)?.setState({lock: item.lock})
+                (layerInstances[item.id!] as Component)?.setState({lock: item.lock})
             })
         }
     }

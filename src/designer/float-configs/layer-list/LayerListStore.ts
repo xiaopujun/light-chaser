@@ -1,6 +1,6 @@
 import {action, makeObservable, observable} from "mobx";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
-import {MouseEvent, ReactElement} from "react";
+import {Component, MouseEvent} from "react";
 import {setControlPointLineColor} from "../../operate-provider/movable/GroupSelectable";
 import historyRecordOperateProxy from "../../operate-provider/undo-redo/HistoryRecordOperateProxy";
 import LayerUtil from "./util/LayerUtil";
@@ -18,7 +18,7 @@ class LayerListStore {
 
     visible = false;
 
-    layerInstances: Record<string, ReactElement> = {};
+    layerInstances: Record<string, Component> = {};
 
     searchContent = "";
 
@@ -59,7 +59,7 @@ class LayerListStore {
         const {type, lock} = layoutConfigs[id];
         if (!type) return;
         const groupLayer = type === 'group';
-        let selectedLayerIds = [];
+        let selectedLayerIds: string[] = [];
         //处理单选多选
         if (event.ctrlKey) {
             //多选
@@ -110,7 +110,7 @@ class LayerListStore {
         //更新选中组件的边框颜色（锁定状态组件为红色，非锁定状态组件为蓝色）
         let finalLock = layoutConfigs[selectedLayerIds[0]]?.lock;
         const tempTimer = setTimeout(() => {
-            setControlPointLineColor(finalLock);
+            setControlPointLineColor(finalLock!);
             clearTimeout(tempTimer);
         }, 0)
 

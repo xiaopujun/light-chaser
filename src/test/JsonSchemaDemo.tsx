@@ -114,7 +114,7 @@ class JsonSchemaDemo extends Component {
     render() {
         return (
             <div style={{width: 400, height: 800, background: "#333333", padding: 10}}>
-                <LCGUI schema={this.test} onFieldChange={this.onChange}/>
+                <LCGUI schema={this.schema} onFieldChange={this.onChange}/>
                 <ImageUpload label={'上传'} tip={'测试上传'}/>
                 <ColorMode label={'演示模式'} tip={'嘿嘿'} defaultValue={['#fff']}
                            onChange={(value => console.log('颜色模式', value))}/>

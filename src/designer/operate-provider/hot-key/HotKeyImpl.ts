@@ -28,10 +28,10 @@ export const selectAll = () => {
         if (!item.lock && !item.hide)
             return item.id;
     });
-    setTargetIds(selected);
+    setTargetIds(selected as string[]);
 
     if (selected.length > 0)
-        calculateGroupCoordinate(selected.map((id: string) => document.getElementById(id)).filter((item: HTMLElement) => !!item));
+        calculateGroupCoordinate(selected.map((id: string | undefined) => document.getElementById(id!))?.filter((item: HTMLElement | null) => !!item));
 }
 
 /**
@@ -232,7 +232,7 @@ export const doUnGrouping = () => {
         let childIds = item.childIds;
         const updateItems: MovableItemType[] = [];
         childIds && childIds.forEach((cid: string) => {
-            updateItems.push({id: cid, pid: null});
+            updateItems.push({id: cid, pid: undefined});
         });
         updateLayout(updateItems, false);
     });

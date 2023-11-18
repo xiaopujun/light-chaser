@@ -56,18 +56,18 @@ class LayerList extends Component {
             //仅过展示隐藏的图层
             Object.values(layoutConfigs).forEach((item: MovableItemType) => {
                 if (item.hide && item.type !== 'group')
-                    filterLayer[item.id] = item;
+                    filterLayer[item.id!] = item;
             });
         } else if (searchContent === ':lock') {
             //仅过展示锁定的图层
             Object.values(layoutConfigs).forEach((item: MovableItemType) => {
                 if (item.lock && item.type !== 'group')
-                    filterLayer[item.id] = item;
+                    filterLayer[item.id!] = item;
             });
         } else {
             Object.values(layoutConfigs).forEach((item: MovableItemType) => {
                 if (item.name?.includes(searchContent) && item.type !== 'group')
-                    filterLayer[item.id] = item;
+                    filterLayer[item.id!] = item;
             });
         }
         //补充分组图层

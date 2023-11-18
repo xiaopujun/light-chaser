@@ -13,8 +13,6 @@ import {hotkeyConfigs} from "../operate-provider/hot-key/HotKeyConfig";
 import ComponentContainer from "../../framework/core/ComponentContainer";
 import {isEqual} from "lodash";
 import {DesignerDragScaleContainer} from "./DesignerDragScaleContainer";
-import eventOperateStore from "../operate-provider/EventOperateStore";
-import LayerBuilder from "../float-configs/layer-list/LayerBuilder";
 import layerBuilder from "../float-configs/layer-list/LayerBuilder";
 
 /**

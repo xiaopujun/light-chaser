@@ -24,37 +24,37 @@ export default class LayerGroupItem extends React.Component<GroupItemProps> {
         lock: false,
         name: '',
         selected: false,
-        id: '',
+        showContent: false,
     }
 
-    constructor(props) {
+    constructor(props: GroupItemProps) {
         super(props);
-        const {hide, compId, lock, name} = this.props;
+        const {hide, lock, name} = this.props;
         this.state = {
             hide: hide || false,
             lock: lock || false,
             name: name || '',
             selected: false,
-            compId
+            showContent: false,
         }
     }
 
     toggleLock = (event: MouseEvent) => {
         event.stopPropagation();
         const {lockChange} = layerListStore;
-        lockChange && lockChange(this.props.compId, !this.state.lock);
+        lockChange && lockChange(this.props.compId!, !this.state.lock);
     }
 
     toggleHide = (event: MouseEvent) => {
         event.stopPropagation();
         const {hideChange} = layerListStore;
-        hideChange && hideChange(this.props.compId, !this.state.hide);
+        hideChange && hideChange(this.props.compId!, !this.state.hide);
     }
 
     onSelected = (event: MouseEvent<HTMLDivElement>) => {
         event.stopPropagation();
         const {selectedChange} = layerListStore;
-        selectedChange && selectedChange(this.props.compId, event);
+        selectedChange && selectedChange(this.props.compId!, event);
     }
 
     render() {

@@ -21,9 +21,9 @@ class LayerBuilder {
         layerMap = cloneDeep(layerMap);
         let sourceLayerArr;
         if (order === RenderOrder.DESC)
-            sourceLayerArr = Object.values(layerMap).sort((a, b) => b.order - a.order);
+            sourceLayerArr = Object.values(layerMap).sort((a, b) => b.order! - a.order!);
         else
-            sourceLayerArr = Object.values(layerMap).sort((a, b) => a.order - b.order);
+            sourceLayerArr = Object.values(layerMap).sort((a, b) => a.order! - b.order!);
         // 构建树结构
         const resData: MovableItemType[] = [];
         for (const layerItem of sourceLayerArr) {
@@ -46,8 +46,8 @@ class LayerBuilder {
     /**
      * 构建图层组件
      */
-    public buildLayerList = (layerMap: Record<string, MovableItemType>): ReactElement => {
-        const res = [];
+    public buildLayerList = (layerMap: Record<string, MovableItemType>): ReactElement[] => {
+        const res: ReactElement[] = [];
         this.parser(layerMap, RenderOrder.DESC).forEach((item: MovableItemType) => {
             res.push(this.buildLayer(item));
         });
@@ -70,16 +70,16 @@ class LayerBuilder {
         }
         if (type === 'group') {
             //先生成子元素再包裹groupItem
-            const childDomArr = [];
+            const childDomArr: ReactElement[] = [];
             children?.forEach((item: MovableItemType) => {
                 childDomArr.push(this.buildLayer(item));
             });
-            return <LayerGroupItem {..._props} ref={ref => layerInstances[layer.id] = ref}>
+            return <LayerGroupItem {..._props} ref={ref => layerInstances[layer.id!] = ref!}>
                 {childDomArr}
             </LayerGroupItem>;
         } else {
             //直接生成layerItem
-            return <LayerItem {..._props} ref={ref => layerInstances[layer.id] = ref}/>;
+            return <LayerItem {..._props} ref={ref => layerInstances[layer.id!] = ref!}/>;
         }
     }
 
@@ -87,8 +87,8 @@ class LayerBuilder {
      * 构建设计器主画布组件
      * @param layerMap
      */
-    public buildCanvasComponents = (layerMap: Record<string, MovableItemType>): ReactElement => {
-        const res = [];
+    public buildCanvasComponents = (layerMap: Record<string, MovableItemType>): ReactElement[] => {
+        const res: ReactElement[] = [];
         this.parser(layerMap, RenderOrder.ASC).forEach((item: MovableItemType) => {
             res.push(this.buildComponents(item));
         });
@@ -99,7 +99,7 @@ class LayerBuilder {
         const {type, children} = layer;
         if (type === 'group') {
             //先生成子元素再包裹groupItem
-            const childDomArr = [];
+            const childDomArr: ReactElement[] = [];
             children?.forEach((item: MovableItemType) => {
                 childDomArr.push(this.buildComponents(item));
             });

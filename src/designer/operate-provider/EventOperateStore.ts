@@ -151,7 +151,7 @@ class EventOperateStore {
         //存储之前一次的选中组件id，用于清空图层列表的上一次选中状态
         const oldTargetIds = [...this.targetIds];
         this.targetIds = ids;
-        const _targets = [];
+        const _targets: HTMLElement[] = [];
         ids.forEach(id => {
             const target = document.getElementById(id);
             target && _targets.push(target);

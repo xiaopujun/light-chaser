@@ -1,13 +1,8 @@
 import React from 'react';
 import {observer} from "mobx-react";
 import './DemoMain.less';
-import LayerGroupItem from "../designer/float-configs/layer-list/group/LayerGroupItem";
-import LayerItem from "../designer/float-configs/layer-list/item/LayerItem";
 import {MovableItemType} from "../designer/operate-provider/movable/types";
-import AVLTree from "../framework/data-structure/avl-tree/AVLTree";
-import ReactDOM from "react-dom";
-import LayerBuilder from "../designer/float-configs/layer-list/LayerBuilder";
-import {cloneDeep} from "lodash";
+import layerBuilder from "../designer/float-configs/layer-list/LayerBuilder";
 
 interface TreeNode {
     id: number;
@@ -20,73 +15,73 @@ class MyComponent extends React.Component {
 
     // avlTree = new AVLTree();
 
-    layerData: MovableItemType = [
+    layerData: MovableItemType[] = [
         {
-            "name": "Antd百分比柱状图",
-            "type": "AntdPercentColumn",
-            "width": 320,
-            "height": 200,
-            "position": [
+            name: "Antd百分比柱状图",
+            type: "AntdPercentColumn",
+            width: 320,
+            height: 200,
+            position: [
                 335,
                 306
             ],
-            "id": "6LnduuTQ7I",
-            "lock": false,
-            "hide": false,
-            "order": 20,
-            "pid": 'ke1MpSvTa2'
+            id: "6LnduuTQ7I",
+            lock: false,
+            hide: false,
+            order: 20,
+            pid: 'ke1MpSvTa2'
         },
         {
-            "name": "Antd基础面积图",
-            "type": "AntdBaseArea",
-            "width": 320,
-            "height": 200,
-            "position": [
+            name: "Antd基础面积图",
+            type: "AntdBaseArea",
+            width: 320,
+            height: 200,
+            position: [
                 341,
                 183
             ],
-            "id": "jJyeQ0iDoH",
-            "lock": false,
-            "hide": false,
-            "order": 41,
-            "pid": 'ke1MpSvTa2'
+            id: "jJyeQ0iDoH",
+            lock: false,
+            hide: false,
+            order: 41,
+            pid: 'ke1MpSvTa2'
         },
         {
-            "name": "Antd基础面积图",
-            "type": "AntdBaseArea",
-            "width": 250,
-            "height": 220,
-            "position": [
+            name: "Antd基础面积图",
+            type: "AntdBaseArea",
+            width: 250,
+            height: 220,
+            position: [
                 375.014,
                 113.995
             ],
-            "id": "ke1MpSvTao",
-            "lock": false,
-            "hide": false,
-            "order": 42
+            id: "ke1MpSvTao",
+            lock: false,
+            hide: false,
+            order: 42
         },
         {
-            "name": "新建分组",
-            "type": "group",
-            "id": "ke1MpSvTa2",
-            "lock": false,
-            "hide": false,
-            "order": 425
+            name: "新建分组",
+            type: "group",
+            id: "ke1MpSvTa2",
+            lock: false,
+            hide: false,
+            order: 425
         },
         {
-            "name": "Antd基础面积图",
-            "type": "AntdBaseArea",
-            "width": 250,
-            "height": 220,
-            "position": [
+            name: "Antd基础面积图",
+            type: "AntdBaseArea",
+            width: 250,
+            height: 220,
+            position: [
                 660.014,
                 114.0055
             ],
-            "id": "aUfIsKSSZk",
-            "lock": false,
-            "hide": false,
-            "order": 43,
-            "pid": 'jJyeQ0iDoH'
+            id: "aUfIsKSSZk",
+            lock: false,
+            hide: false,
+            order: 43,
+            pid: 'jJyeQ0iDoH'
         },
     ]
 
@@ -153,10 +148,10 @@ class MyComponent extends React.Component {
     render() {
         const layerMap: Record<string, MovableItemType> = {};
         Object.values(this.layerData).forEach((item: MovableItemType) => {
-            layerMap[item.id] = item;
+            layerMap[item.id!] = item;
         });
 
-        const layerData = new LayerBuilder().buildLayerList(layerMap);
+        const layerData = layerBuilder.buildLayerList(layerMap);
 
         return (
             <>

@@ -24,11 +24,11 @@ export class DelRollbackImpl extends AbstractRollback {
         let prevDelData = prev! as DelDataType[];
         //执行反向操作添加元素
         const {addItem, elemConfigs} = designerStore;
-        const targetIds: HTMLElement[] = [];
+        const targetIds: string[] = [];
         prevDelData.forEach((item) => {
-            addItem(item.data.layoutConfig)
+            addItem(item.data.layoutConfig);
             elemConfigs![item.id] = item.data.elemConfig;
-            targetIds.push(document.getElementById(item.id)!);
+            targetIds.push(item.id!);
         });
         //选中目标元素
         setTargetIds(targetIds);

@@ -12,7 +12,7 @@ export default class LayerUtil {
      * @param layerIds
      */
     public static findPathGroupLayer = (layerIds: string[]): string[] => {
-        const groupLayerIdSet = new Set();
+        const groupLayerIdSet = new Set<string>();
         const {layoutConfigs} = designerStore;
         layerIds.forEach((id) => {
             const layer = layoutConfigs[id];
@@ -23,7 +23,7 @@ export default class LayerUtil {
                 const {pid, id, type} = layoutConfigs[_pid];
                 _pid = pid;
                 if (type === 'group')
-                    groupLayerIdSet.add(id);
+                    groupLayerIdSet.add(id!);
             }
         });
         return Array.from(groupLayerIdSet);
@@ -40,7 +40,7 @@ export default class LayerUtil {
      */
     public static findTopGroupLayer = (layerIds: string[], hasSelf: boolean = false): string[] => {
         //使用set数据结构去重，多个不同的组件可能存在同一个分组内
-        const groupLayerIdSet = new Set();
+        const groupLayerIdSet = new Set<string>();
         const {layoutConfigs} = designerStore;
         layerIds.forEach((id) => {
             let _id = id;
@@ -48,7 +48,7 @@ export default class LayerUtil {
             while (_pid) {
                 const {pid, id} = layoutConfigs[_pid];
                 _pid = pid;
-                _id = id;
+                _id = id!;
             }
             if (hasSelf || _id !== id)
                 groupLayerIdSet.add(_id);
@@ -73,9 +73,9 @@ export default class LayerUtil {
      * @param layerIds 分组图层ids
      */
     public static findAllChildLayer = (layerIds: string[]): string[] => {
-        const layerIdSet = [];
-        LayerUtil._findAllChildLayer(layerIds, layerIdSet);
-        return [...new Set(layerIdSet)];
+        const layerIdArr: string[] = [];
+        LayerUtil._findAllChildLayer(layerIds, layerIdArr);
+        return [...new Set(layerIdArr)];
     }
 
     private static _findAllChildLayer(groupLayerIds: string[], res: string[]) {

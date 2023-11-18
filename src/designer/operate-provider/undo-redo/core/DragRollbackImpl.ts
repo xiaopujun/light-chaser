@@ -9,7 +9,6 @@ export class DragRollbackImpl extends AbstractRollback {
         const {next} = record!;
         let nextRecordData = next! as DragDataType;
         //选中目标元素
-        const targets: HTMLElement[] = [];
         setTargetIds(nextRecordData.ids);
         setBackoff(true);
         //执行反向操作
