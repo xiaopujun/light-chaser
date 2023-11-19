@@ -61,13 +61,13 @@ git clone https://gitee.com/xiaopujun/light-chaser.git
 - Install project dependencies
 
 ```shell
-yarn install
+pnpm install
 ```
 
 - Start the project
 
 ```shell
-yarn start
+pnpm dev
 ```
 
 - Access the project
@@ -79,7 +79,7 @@ http://localhost:3000
 - Build the project
 
 ```shell
-yarn build
+pnpm build
 ```
 
 # Contributing
