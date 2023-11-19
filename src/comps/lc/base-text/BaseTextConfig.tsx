@@ -43,9 +43,7 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
                         value: style?.fontSize,
                         config: {
                             type: 'number',
-                            min: 100,
-                            max: 900,
-                            step: 100
+                            min: 1,
                         }
                     },
                     {

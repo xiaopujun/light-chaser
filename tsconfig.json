@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "ignoreErrors": false,
     "target": "es2015",
     "useDefineForClassFields": true,
     "lib": [
@@ -23,11 +22,14 @@
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
-    //    "noEmit": true,
+    "noEmit": true,
     "jsx": "react-jsx"
   },
   "include": [
     "src"
+  ],
+  "exclude": [
+    "node_modules"
   ],
   "references": [
     {

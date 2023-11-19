@@ -17,43 +17,38 @@ import bpLeftStore from "../../../blueprint/left/BPLeftStore";
 import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
 import {OperateResult} from "../../../framework/operate/AbstractOperator";
 import {message} from "antd";
+import IdGenerate from "../../../utils/IdGenerate";
+import LayerUtil from "../../float-configs/layer-list/util/LayerUtil";
+import {Component} from "react";
 
 export const selectAll = () => {
-    let comps = document.getElementsByClassName('lc-comp-item');
-    let compArr: any[] = [];
-    //权限时排除已锁定和隐藏的组件
-    comps && Array.from(comps).forEach((comp: any) => {
-        const {lock, hide} = comp.dataset;
-        if (lock !== 'true' && hide !== 'true') {
-            compArr.push(comp);
-        }
+    const {layoutConfigs} = designerStore;
+    const {setTargetIds, calculateGroupCoordinate} = eventOperateStore;
+    const selected = Object.values(layoutConfigs).map((item: MovableItemType) => {
+        if (!item.lock && !item.hide)
+            return item.id;
     });
-    const {setTargets, calculateGroupCoordinate} = eventOperateStore;
-    setTargets(compArr);
+    setTargetIds(selected as string[]);
 
-    //计算组件多选时的左上角坐标
-    if (compArr.length > 1)
-        calculateGroupCoordinate(compArr);
+    if (selected.length > 0)
+        calculateGroupCoordinate(selected.map((id: string | undefined) => document.getElementById(id!))?.filter((item: HTMLElement | null) => !!item));
 }
 
+/**
+ * 普通复制，只复制非分组图层
+ */
 export const doCopy = () => {
-    const {targetIds, setTargets} = eventOperateStore;
+    let {targetIds, setTargetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
+
     const {copyItem} = designerStore;
     let newIds = copyItem(targetIds);
-    let targets: any = [];
     //延迟10毫秒，等待dom元素渲染完毕后再获取。
-    setTimeout(() => {
-        for (const newId of newIds) {
-            targets.push(document.getElementById(newId));
-        }
-        targets.filter((item: any) => item !== null);
-        setTargets(targets);
-    }, 10);
+    setTimeout(() => setTargetIds(newIds), 10);
 }
 
 export const doLock = () => {
-    const {targetIds, setTargets} = eventOperateStore;
+    const {targetIds, setTargetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
     const {layoutConfigs} = designerStore;
     let toBeUpdate = [];
@@ -63,24 +58,23 @@ export const doLock = () => {
     }
     historyRecordOperateProxy.doLockUpd(toBeUpdate);
     //操作完毕之后，清空已被选择的元素。
-    setTargets([]);
+    setTargetIds([]);
 }
 
 export const doUnLock = () => {
-    const {setTargets, targets} = eventOperateStore;
-    if (!targets || targets.length === 0) return;
+    const {setTargetIds, targetIds} = eventOperateStore;
+    if (!targetIds || targetIds.length === 0) return;
     const {updateLayout, layoutConfigs} = designerStore;
     let toUpdate: MovableItemType[] = [];
-    (targets as HTMLElement[]).filter(target => {
+    targetIds.filter(id => {
         //过滤出被锁定的组件
-        return target.dataset.lock === 'true';
-    }).forEach((target) => {
-        let item = layoutConfigs[target.id];
-        toUpdate.push({...item, lock: false})
+        return layoutConfigs[id].lock;
+    }).forEach((id) => {
+        toUpdate.push({id, lock: false})
     })
     updateLayout(toUpdate)
     historyRecordOperateProxy.doLockUpd(toUpdate);
-    setTargets([]);
+    setTargetIds([]);
 }
 
 export const toTop = () => {
@@ -157,7 +151,7 @@ export const doSave = throttle(() => {
 }, 5000);
 
 export const doHide = () => {
-    const {targetIds, setTargets} = eventOperateStore;
+    const {targetIds, setTargetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
     const {layoutConfigs} = designerStore;
     let toBeUpdate: MovableItemType[] = [];
@@ -166,7 +160,85 @@ export const doHide = () => {
         toBeUpdate.push({...item, hide: true});
     });
     historyRecordOperateProxy.doHideUpd(toBeUpdate);
-    setTargets([]);
+    setTargetIds([]);
+}
+
+/**
+ * 图层编组,
+ * 编组时候，如果都是普通组件图层，则直接编组
+ * 如果包含了已经分组的图层，则将将已经编组的这个组作为基本图层和其他图层进行编组，
+ * 比如有A,B,C三个普通图层，则编组的时候可直接生成编组G
+ * 如果A,B已经编组为G1，此时再选中A,C或B,C，或者A,B,C，则编组的时候，G1作为基本图层，和C进行编组，生成G2
+ */
+export const doGrouping = () => {
+    const {targetIds, maxLevel, setMaxLevel, setTargetIds} = eventOperateStore;
+    if (!targetIds || targetIds.length <= 1) return;
+    if (LayerUtil.hasSameGroup(targetIds)) return;
+    //查找当前选中的图层的所有父级图层
+    const layerIdSet = LayerUtil.findTopGroupLayer(targetIds, true);
+    //新建编组
+    const {addItem, updateLayout, layoutConfigs} = designerStore;
+    const order = maxLevel + 1;
+    const pid = IdGenerate.generateId();
+    const childIds = Array.from(layerIdSet);
+    //计算分组的锁定状态
+    let allLock = layoutConfigs[childIds[0]].lock;
+    for (let i = 1; i < childIds.length; i++) {
+        if (allLock !== layoutConfigs[childIds[i]].lock) {
+            allLock = false;
+            break;
+        }
+    }
+    //构建分组数据
+    const groupItem: MovableItemType = {
+        id: pid,
+        type: 'group',
+        name: '新建分组',
+        hide: false,
+        lock: allLock,
+        childIds,
+        order,
+    };
+    addItem(groupItem);
+    setMaxLevel(order);
+    //设置子图层的pid
+    const updateItems: MovableItemType[] = [];
+    childIds.forEach((id: string) => {
+        updateItems.push({id, pid});
+    });
+    updateLayout(updateItems, false);
+    setTargetIds([]);
+    //特殊场景处理，如果编组时，所有的子图层都处于锁定状态，则编组后，编组图层也处于锁定状态
+    if (allLock) {
+        const {layerInstances} = layerListStore;
+        const groupTimer = setTimeout(() => {
+            (layerInstances[pid] as Component).setState({lock: true});
+            clearTimeout(groupTimer);
+        }, 10);
+    }
+}
+
+export const doUnGrouping = () => {
+    const {targetIds, setTargetIds} = eventOperateStore;
+    //找出当前选中的图层中，最顶层的分组图层
+    let groupIds = LayerUtil.findTopGroupLayer(targetIds, true);
+    //过滤掉其中分组等于自身的图层（即非分组图层）
+    const {layoutConfigs, updateLayout, delLayout} = designerStore;
+    groupIds = groupIds.filter((id: string) => layoutConfigs[id].type === 'group');
+    //对每个分组图层进行解组
+    //1.更新每个分组图层的子图层的pid为null
+    groupIds.forEach((id: string) => {
+        let item = layoutConfigs[id];
+        let childIds = item.childIds;
+        const updateItems: MovableItemType[] = [];
+        childIds && childIds.forEach((cid: string) => {
+            updateItems.push({id: cid, pid: undefined});
+        });
+        updateLayout(updateItems, false);
+    });
+    //2.删除分组图层
+    delLayout(groupIds);
+    setTargetIds([]);
 }
 
 /*************************快捷键控制移动组件的位置*************************/

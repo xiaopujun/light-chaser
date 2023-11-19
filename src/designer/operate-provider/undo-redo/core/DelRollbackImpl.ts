@@ -12,26 +12,26 @@ export class DelRollbackImpl extends AbstractRollback {
         const delIds: string[] = [];
         (prev as DelDataType[]).forEach((item) => delIds.push(item.id));
         delItem(delIds);
-        const {setTargets} = eventOperateStore;
+        const {setTargetIds} = eventOperateStore;
         //清空框选状态,避免空框选
-        setTargets([]);
+        setTargetIds([]);
     }
 
     undo(record: HistoryRecordType): void {
         if (!record) return;
-        const {setTargets} = eventOperateStore;
+        const {setTargetIds} = eventOperateStore;
         const {prev} = record!;
         let prevDelData = prev! as DelDataType[];
         //执行反向操作添加元素
         const {addItem, elemConfigs} = designerStore;
-        const targets: HTMLElement[] = [];
+        const targetIds: string[] = [];
         prevDelData.forEach((item) => {
-            addItem(item.data.layoutConfig)
+            addItem(item.data.layoutConfig);
             elemConfigs![item.id] = item.data.elemConfig;
-            targets.push(document.getElementById(item.id)!);
+            targetIds.push(item.id!);
         });
         //选中目标元素
-        setTargets(targets);
+        setTargetIds(targetIds);
     }
 
 }

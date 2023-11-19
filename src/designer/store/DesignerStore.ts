@@ -39,6 +39,7 @@ class DesignerStore implements AbstractBaseStore {
             updateCanvasConfig: action,
             updateProjectConfig: action,
             copyItem: action,
+            delLayout: action,
         });
     }
 
@@ -233,6 +234,17 @@ class DesignerStore implements AbstractBaseStore {
                 this.layoutConfigs[item.id + ""] = reRender ? {...ObjectUtil.merge(oldItem, item)} : ObjectUtil.merge(oldItem, item);
         }
     };
+
+    /**
+     * 直接删除只能删除type = group的图层数据，要同时删除组件布局数据，需要调用delItem
+     * @param ids
+     */
+    delLayout = (ids: string[]) => {
+        for (const id of ids) {
+            if (this.layoutConfigs[id] && this.layoutConfigs[id].type === "group")
+                delete this.layoutConfigs[id];
+        }
+    }
 
     updateThemeConfig = (data: any) => {
         this.themeConfig = data;

@@ -12,8 +12,8 @@ export default class BluePrintHdItem extends AbstractHeaderItem {
             order: 0,
             onClick: () => {
                 //打开蓝图前清空画布中已经选中的组件,避免删除蓝图节点时，误删画布中的组件
-                const {setTargets} = eventOperateStore;
-                setTargets([]);
+                const {setTargetIds} = eventOperateStore;
+                setTargetIds([]);
                 setBluePrintVisible(true);
             }
         };

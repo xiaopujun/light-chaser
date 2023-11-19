@@ -11,14 +11,14 @@ import {
     doBaseUpDecreaseDown,
     doBaseUpEnlargeDown,
     doCopy,
-    doDelete,
+    doDelete, doGrouping,
     doHide,
     doLock,
     doMoveDown,
     doMoveLeft,
     doMoveRight,
     doMoveUp,
-    doSave,
+    doSave, doUnGrouping,
     doUnLock,
     redo,
     selectAll,
@@ -150,4 +150,10 @@ export const hotkeyConfigs: HotKeyConfigType = {
         triggerType: TriggerType.COILED,
         range: ".lc-ruler-content"
     },
+    'control + g': {
+        handler: doGrouping,
+    },
+    'control + shift + g': {
+        handler: doUnGrouping,
+    }
 }

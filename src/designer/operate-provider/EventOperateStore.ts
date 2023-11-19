@@ -1,12 +1,11 @@
 import {action, makeObservable, observable} from "mobx";
-import layerListStore from "../float-configs/layer-list/LayerListStore";
-import LayerComponent from "../float-configs/layer-list/LayerComponent";
 import Moveable from "react-moveable";
-import {RefObject} from "react";
+import {Component, RefObject} from "react";
 import designerStore from "../store/DesignerStore";
 import {MovableItemType} from "./movable/types";
 import ObjectUtil from "../../utils/ObjectUtil";
 import DesignerRuler from "../canvas/DesignerRuler";
+import layerListStore from "../float-configs/layer-list/LayerListStore";
 
 /**
  * 组件多选情况下的坐标值
@@ -50,7 +49,7 @@ class EventOperateStore {
             targetIds: observable,
             scale: observable,
             setScale: action,
-            setTargets: action,
+            setTargetIds: action,
         })
     }
 
@@ -148,34 +147,40 @@ class EventOperateStore {
 
     setSelectorRef = (ref: any) => this.selectorRef = ref;
 
-    setTargets = (targets: HTMLElement[]) => {
-        if (!targets) return;
-        this.targets = targets;
-
-        //记录图层之前处于选中状态的组件id
-        const oldTargetIds: string[] = [...this.targetIds];
-
-        const newTargetIds: string[] = [];
-        targets.forEach(target => newTargetIds.push(target.id));
-        this.targetIds = newTargetIds;
+    setTargetIds = (ids: string[]) => {
+        //存储之前一次的选中组件id，用于清空图层列表的上一次选中状态
+        const oldTargetIds = [...this.targetIds];
+        this.targetIds = ids;
+        const _targets: HTMLElement[] = [];
+        ids.forEach(id => {
+            const target = document.getElementById(id);
+            target && _targets.push(target);
+        });
+        this.targets = _targets;
 
         //更新图层列表状态
-        const {visible, layerInstanceMap} = layerListStore;
+        const {visible, layerInstances} = layerListStore;
         if (visible) {
             //清除之前的选中
             oldTargetIds.forEach(id => {
-                const instance: LayerComponent = layerInstanceMap[id];
+                const instance: Component = layerInstances[id];
                 if (!!instance)
-                    instance.update({selected: false});
+                    instance.setState({selected: false});
             });
             //设置本次选中的组件id
-            newTargetIds.forEach(id => {
-                const instance: LayerComponent = layerInstanceMap[id];
+            this.targetIds.forEach(id => {
+                const instance: Component = layerInstances[id];
                 if (!!instance)
-                    instance.update({selected: true});
+                    instance.setState({selected: true});
             })
         }
-    };
+
+        //若选中多个组件，计算更新组件多选时的左上角坐标
+        if (this.targets.length > 1) {
+            let {calculateGroupCoordinate} = eventOperateStore;
+            calculateGroupCoordinate(this.targets);
+        }
+    }
 
     setPointerTarget = (target: any) => this.pointerTarget = target;
 

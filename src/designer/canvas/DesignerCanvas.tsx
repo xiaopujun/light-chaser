@@ -13,6 +13,7 @@ import {hotkeyConfigs} from "../operate-provider/hot-key/HotKeyConfig";
 import ComponentContainer from "../../framework/core/ComponentContainer";
 import {isEqual} from "lodash";
 import {DesignerDragScaleContainer} from "./DesignerDragScaleContainer";
+import layerBuilder from "../float-configs/layer-list/LayerBuilder";
 
 /**
  * 设计器画布
@@ -41,11 +42,13 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
         let {layoutConfigs} = designerStore!;
         const sortLayout = Object.values(layoutConfigs).sort((a: MovableItemType, b: MovableItemType) => a.order! - b.order!);
         return sortLayout.map((item: MovableItemType) => {
+            if (item.type === 'group') return null;
             return <ComponentContainer layout={item} key={item.id}/>
         });
     }
 
     render() {
+        const {layoutConfigs} = designerStore!;
         return (
             <>
                 <DesignerContainer>
@@ -53,7 +56,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                         <DesignerRuler>
                             <DesignerDragScaleContainer onDoubleClick={this.updateActive}>
                                 <GroupMovable>
-                                    {this.generateElement()}
+                                    {layerBuilder.buildCanvasComponents(layoutConfigs)}
                                 </GroupMovable>
                             </DesignerDragScaleContainer>
                         </DesignerRuler>

@@ -1,7 +1,3 @@
-body {
-  background-color: #1d1d1d;
-}
-
 .layer-group-item {
   width: 100%;
   color: #b6b6b6ff;
@@ -19,6 +15,7 @@ body {
     height: 25px;
 
     .layer-group-left {
+      pointer-events: none;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -55,14 +52,14 @@ body {
 }
 
 .layer-group-header-selected {
-  background: #00aeff54;
+  background: #00aeff54 !important;
 }
 
 .layer-group-header-lock {
-  background: #ff1f1f59;
+  background: #ff1f1f59 !important;
 }
 
 .layer-group-header-hide {
-  background: #97979799;
+  background: #97979799 !important;
   cursor: not-allowed;
 }
