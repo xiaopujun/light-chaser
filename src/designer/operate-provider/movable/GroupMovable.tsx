@@ -19,23 +19,14 @@ import designerStore from "../../store/DesignerStore";
 import {MovableItemType} from "./types";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 
-interface GroupMovableProps {
-    readonly?: boolean;
-}
-
-class GroupMovable extends React.Component<GroupMovableProps> {
+class GroupMovable extends React.Component {
     movableRef = React.createRef<Moveable>();
-    verticalGuidelines: number[] = [];
-    horizontalGuidelines: number[] = [];
 
-    constructor(props: GroupMovableProps) {
+    constructor(props: {}) {
         super(props);
         this.state = {
             targets: [],
         };
-        const {canvasConfig: {width, height}} = designerStore;
-        this.verticalGuidelines = this.generateSnapStep(50, width!);
-        this.horizontalGuidelines = this.generateSnapStep(50, height!);
     }
 
     componentDidMount() {
@@ -226,16 +217,8 @@ class GroupMovable extends React.Component<GroupMovableProps> {
         if (firstLock) return false;
     }
 
-    generateSnapStep = (step: number, max: number) => {
-        let snapStep = [];
-        for (let i = 0; i < max; i += step)
-            snapStep.push(i);
-        return snapStep;
-    }
-
     render() {
-        const {readonly = false} = this.props;
-        const {selectorRef, targets, scale} = eventOperateStore;
+        const {selectorRef, targets} = eventOperateStore;
         const {canvasConfig: {rasterize, dragStep, resizeStep}} = designerStore;
         //获取需要辅助线导航的元素
         const selectedTargets = document.getElementsByClassName("lc-comp-item");
@@ -245,16 +228,16 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                 <Moveable<DimensionViewableProps>
                     ref={this.movableRef}
                     target={targets}
-                    zoom={1 / scale}
-                    draggable={!readonly}
-                    resizable={!readonly}
+                    draggable={true}
+                    resizable={true}
+                    //保持尺寸比例
                     keepRatio={false}
-
-                    maxSnapElementGapDistance={100}
-                    maxSnapElementGuidelineDistance={100}
+                    //辅助线可捕捉显示的最大距离
+                    maxSnapElementGuidelineDistance={300}
                     snappable={true}
-                    snapGap={true}
+                    snapGap={false}
                     snapThreshold={5}
+                    //显示辅助线距离
                     isDisplaySnapDigit={true}
                     snapDirections={{
                         top: true,
@@ -272,19 +255,14 @@ class GroupMovable extends React.Component<GroupMovableProps> {
                         center: true,
                         middle: true
                     }}
+                    //外挂dom元素
                     ables={[DimensionViewable as any]}
                     dimensionViewable={true}
-                    roundable={true}
-                    verticalGuidelines={this.verticalGuidelines}
-                    horizontalGuidelines={this.horizontalGuidelines}
+
+                    verticalGuidelines={['0', '50%', '100%']}
+                    horizontalGuidelines={['0', '50%', '100%']}
+                    //控件内部显示辅助线
                     isDisplayInnerSnapDigit={true}
-                    isDisplayGridGuidelines={true}
-                    isDisplayShadowRoundControls={true}
-                    displayAroundControls={true}
-                    clipArea={true}
-                    clipVerticalGuidelines={[0, "50%", "100%"]}
-                    clipHorizontalGuidelines={[0, "50%", "100%"]}
-                    clipTargetBounds={true}
                     elementGuidelines={Array.from(selectedTargets!)}
 
                     throttleDrag={rasterize ? dragStep : 1}
