@@ -81,14 +81,14 @@ export default class LayerUtil {
     private static _findAllChildLayer(groupLayerIds: string[], res: string[]) {
         const {layoutConfigs} = designerStore;
         groupLayerIds.forEach((id) => {
-            if (!layoutConfigs[id])
-                console.log(toJS(layoutConfigs), id)
-            let {childIds} = layoutConfigs[id];
-            if (childIds && childIds.length > 0) {
-                res.push(...childIds);
-                LayerUtil._findAllChildLayer(childIds, res);
+            if (layoutConfigs[id]) {
+                let {childIds} = layoutConfigs[id];
+                if (childIds && childIds.length > 0) {
+                    res.push(...childIds);
+                    LayerUtil._findAllChildLayer(childIds, res);
+                }
+                res.push(id);
             }
-            res.push(id);
         });
     }
 

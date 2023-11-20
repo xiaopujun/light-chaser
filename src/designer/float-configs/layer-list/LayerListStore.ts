@@ -72,8 +72,11 @@ class LayerListStore {
                 } else
                     selectedLayerIds = targetIds.filter(_id => _id !== id);
             } else {
-                //多选时，不能同时选中锁定状态不一致的组件，若存在状态不一致的场景，只选中未锁定的组件
+                /**
+                 * 多选时，不能同时选中锁定状态不一致的组件，若存在状态不一致的场景，只选中未锁定的组件
+                 */
                 if (targetIds.length === 0) {
+                    //多选模式首次选中
                     if (groupLayer)
                         selectedLayerIds = LayerUtil.findAllChildLayer([id]);
                     else
@@ -93,6 +96,8 @@ class LayerListStore {
                         else
                             selectedLayerIds = [...targetIds, id];
                     }
+                    //多选模式下需要去重，（避免在图层列表选中先选中子图层，再多选选中分组图层时候，分组图层被重复计算的问题）
+                    selectedLayerIds = [...new Set(selectedLayerIds)];
                 }
             }
         } else {
