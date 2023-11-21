@@ -52,9 +52,11 @@ export default class LayerGroupItem extends React.Component<GroupItemProps> {
     }
 
     onSelected = (event: MouseEvent<HTMLDivElement>) => {
+        const {hide, compId} = this.props;
+        if (hide) return;
         event.stopPropagation();
         const {selectedChange} = layerListStore;
-        selectedChange && selectedChange(this.props.compId!, event);
+        selectedChange && selectedChange(compId!, event);
     }
 
     render() {

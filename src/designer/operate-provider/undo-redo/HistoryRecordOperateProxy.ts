@@ -337,7 +337,7 @@ class HistoryRecordOperateProxy {
         if (visible) {
             //更新图层列表
             items.forEach((item) => {
-                (layerInstances[item.id!] as Component).setState({hide: item.hide, selected: false})
+                (layerInstances[item.id!] as Component)?.setState({hide: item.hide, selected: false})
             })
         }
     }
