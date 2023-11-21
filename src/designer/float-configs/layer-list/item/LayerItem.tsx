@@ -49,9 +49,11 @@ class LayerItem extends React.PureComponent<LayerItemDataProps> {
     }
 
     onSelected = (event: MouseEvent<HTMLDivElement>) => {
+        const {hide, compId} = this.state;
+        if (hide) return;
         event.stopPropagation();
         const {selectedChange} = layerListStore;
-        selectedChange && selectedChange(this.props.compId!, event);
+        selectedChange && selectedChange(compId!, event);
     }
 
     render() {
