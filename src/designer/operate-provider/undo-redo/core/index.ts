@@ -8,6 +8,7 @@ import styleRollbackImpl from "./StyleRollbackImpl";
 import hideRollbackImpl from "./HideRollbackImpl";
 import lockRollbackImpl from "./LockRollbackImpl";
 import orderRollBackImpl from "./OrderRollbackImpl";
+import updLayerGroupRollbackImpl from "./UpdLayerGroupRollbackImpl";
 
 const undoRedoMap = new Map<HistoryType, AbstractRollback>();
 undoRedoMap.set(HistoryType.DRAG, dragRollbackImpl);
@@ -18,5 +19,6 @@ undoRedoMap.set(HistoryType.STYLE, styleRollbackImpl);
 undoRedoMap.set(HistoryType.HIDE, hideRollbackImpl);
 undoRedoMap.set(HistoryType.LOCK, lockRollbackImpl);
 undoRedoMap.set(HistoryType.ORDER, orderRollBackImpl);
+undoRedoMap.set(HistoryType.UPD_LAYER_GROUP, updLayerGroupRollbackImpl);
 
 export default undoRedoMap;
