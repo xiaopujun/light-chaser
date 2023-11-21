@@ -1,5 +1,4 @@
 import designerStore from "../../../store/DesignerStore";
-import {toJS} from "mobx";
 
 export default class LayerUtil {
 

@@ -23,6 +23,7 @@ import {ConfigureObjectFragments} from "../../../utils/ObjectUtil";
 import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
 import IdGenerate from "../../../utils/IdGenerate";
 import {Component} from "react";
+import LayerUtil from "../../float-configs/layer-list/util/LayerUtil";
 
 class HistoryRecordOperateProxy {
 
@@ -65,7 +66,7 @@ class HistoryRecordOperateProxy {
         //更新布局数据
         updateLayout(items, false);
         //历史记录入队
-        historyOperator.put(data);
+        historyOperator.put({actions: [data]});
     };
 
     public doResize(items: MovableItemType[], direction: [number, number]): void {
@@ -107,7 +108,7 @@ class HistoryRecordOperateProxy {
         //更新布局数据
         updateLayout(items, false);
         //历史记录入队
-        historyOperator.put(data);
+        historyOperator.put({actions: [data]});
     }
 
     public doAdd(container: HTMLDivElement | null, layout: MovableItemType): void {
@@ -138,27 +139,76 @@ class HistoryRecordOperateProxy {
                             }
                         }]
                     }
-                    historyOperator.put(data);
+                    historyOperator.put({actions: [data]});
                 }
             }
         }
     }
 
     public doDelete(): void {
-        const {targetIds, setTargetIds} = eventOperateStore;
-        const {delItem, layoutConfigs, compInstances} = designerStore;
+        let {targetIds, setTargetIds} = eventOperateStore;
+        const {delItem, layoutConfigs, compInstances, updateLayout} = designerStore;
         if (!targetIds || targetIds.length === 0) return;
         const {setContentVisible, activeConfig} = rightStore;
         setContentVisible(false);
         activeConfig(null, "");
 
-        //构建历史记录数据
-        const prev: DelDataType[] = [];
+        //对被删除元素分类：1. 完全独立的组件（没有分组）2.分组的子组件（选中了分组中的子组件，但没有选中分组）3.分组图层（包括分组图层和其下所有子图层）
+        //可删除数据分为：1. 可以直接删除的数据。 2. 删除后需要维护图层关系的数据
+        const directDelIds: string[] = [];
+        const maintenanceDelIds: string[] = [];
         targetIds.forEach((id) => {
-            const elemConfig = compInstances[id] && compInstances[id].getConfig();
-            prev.push({id, data: {layoutConfig: toJS(layoutConfigs[id]), elemConfig: elemConfig}})
+            const layer = layoutConfigs[id];
+            if (layer) {
+                const {type, pid} = layer;
+                if (type !== 'group' && pid && !targetIds.includes(pid))
+                    maintenanceDelIds.push(id);
+                else
+                    directDelIds.push(id);
+            }
+        });
+
+        const prev: DelDataType[] = [];
+        //可直接删除的数据--构建操作记录
+        directDelIds.forEach((id) => {
+            const {type} = layoutConfigs[id];
+            if (type === 'group') {
+                prev.push({id, data: {layoutConfig: toJS(layoutConfigs[id])}})
+            } else {
+                const elemConfig = compInstances[id] && compInstances[id].getConfig();
+                prev.push({id, data: {layoutConfig: toJS(layoutConfigs[id]), elemConfig: elemConfig}})
+            }
         })
-        historyOperator.put({type: HistoryType.DEL, prev, next: null})
+        //需要维护图层关系的数据--构建操作记录
+        const updPrev: MovableItemType[] = [];
+        const updNext: MovableItemType[] = [];
+        maintenanceDelIds.forEach((id) => {
+                const {pid} = layoutConfigs[id];
+                const groupLayer = layoutConfigs[pid!];
+                if (groupLayer.childIds!.length === 1 && groupLayer.childIds![0] === id) {
+                    //说明该分组下只有一个图层，且本次需要删除。这种场景下，将分组图层一起删除
+                    prev.push({id: pid!, data: {layoutConfig: toJS(layoutConfigs[pid!])}});
+                    targetIds = [...targetIds, pid!];
+                } else {
+                    //否则，只需要更新分组图层的childIds字段即可
+                    updPrev.push({id: pid!, childIds: toJS(groupLayer.childIds!)});
+                    //删除分组图层中的目标子图层
+                    const oldChildIds = cloneDeep(groupLayer.childIds)
+                    const newChildIds = oldChildIds!.filter((cid) => cid !== id);
+                    updateLayout([{id: pid!, childIds: newChildIds}], false)
+                    updNext.push({id: pid!, childIds: toJS(groupLayer.childIds!)});
+                }
+                //构建子图层的操作记录
+                const elemConfig = compInstances[id] && compInstances[id].getConfig();
+                prev.push({id, data: {layoutConfig: toJS(layoutConfigs[id]), elemConfig: elemConfig}});
+            }
+        );
+
+        const actions: HistoryRecordType[] = [{type: HistoryType.DEL, prev, next: null}];
+        if (updPrev.length > 0 || updNext.length > 0)
+            actions.push({type: HistoryType.UPD_LAYER_GROUP, prev: updPrev, next: updNext});
+
+        historyOperator.put({actions});
 
         //删除组件
         targetIds.length > 0 && delItem(targetIds);
@@ -167,6 +217,7 @@ class HistoryRecordOperateProxy {
         const enforcementCap = document.querySelector('.lc-ruler-content');
         //删除组件后，重新聚焦鼠标指针到容器上，避免鼠标失去焦点导致其他快捷键失效。
         setPointerTarget && setPointerTarget(enforcementCap);
+        console.log(toJS(designerStore.layoutConfigs))
     }
 
     private _copyGroupLayer = (layout: MovableItemType, newIds: string[], newLayouts: MovableItemType[], maxLevel: number): MovableItemType => {
@@ -215,7 +266,6 @@ class HistoryRecordOperateProxy {
         let newIds: string[] = [];
         const {layoutConfigs, elemConfigs} = designerStore;
         let {maxLevel, setMaxLevel} = eventOperateStore;
-        console.log('复制前', maxLevel)
         //next用于保存操作记录的下一个状态
         const next: AddDataType[] = [];
         const newLayouts: MovableItemType[] = [];
@@ -305,8 +355,7 @@ class HistoryRecordOperateProxy {
             }
         })
 
-        historyOperator.put({type: HistoryType.ADD, prev: null, next})
-        console.log('复制后=======', maxLevel, toJS(layoutConfigs))
+        historyOperator.put({actions: [{type: HistoryType.ADD, prev: null, next}]})
         setMaxLevel(maxLevel);
         //多个组件同时复制时，需要计算多选框的新位置
         if (newLayouts.length > 1) {
@@ -327,7 +376,7 @@ class HistoryRecordOperateProxy {
             prev.push({id: id!, hide: oldHideData.hide!});
         })
         const data: HistoryRecordType = {type: HistoryType.HIDE, prev, next}
-        historyOperator.put(data);
+        historyOperator.put({actions: [data]});
         //更新隐藏状态
         updateLayout(items);
         //取消所有选中状态
@@ -353,7 +402,7 @@ class HistoryRecordOperateProxy {
             prev.push({id: id!, lock: oldLockData.lock!});
         })
         const data: HistoryRecordType = {type: HistoryType.LOCK, prev, next}
-        historyOperator.put(data);
+        historyOperator.put({actions: [data]});
         updateLayout(items);
         const {layerInstances, visible} = layerListStore;
         if (visible) {
@@ -375,7 +424,7 @@ class HistoryRecordOperateProxy {
             prev.push({id: id!, order: oldOrderData.order!});
         })
         const data: HistoryRecordType = {type: HistoryType.ORDER, prev, next}
-        historyOperator.put(data);
+        historyOperator.put({actions: [data]});
         updateLayout(items);
     }
 
@@ -391,7 +440,112 @@ class HistoryRecordOperateProxy {
             prev: {id, data: oldData} as StyleDataType,
             next: {id, data: newData} as StyleDataType
         }
-        historyOperator.put(record);
+        historyOperator.put({actions: [record]});
+    }
+
+    /**
+     * 图层编组
+     */
+    public doGrouping() {
+        const {targetIds, maxLevel, setMaxLevel, setTargetIds} = eventOperateStore;
+        if (!targetIds || targetIds.length <= 1) return;
+        if (LayerUtil.hasSameGroup(targetIds)) return;
+        //查找当前选中的图层的所有父级图层
+        const layerIdSet = LayerUtil.findTopGroupLayer(targetIds, true);
+        //新建编组
+        const {addItem, updateLayout, layoutConfigs} = designerStore;
+        const order = maxLevel + 1;
+        const pid = IdGenerate.generateId();
+        const childIds = Array.from(layerIdSet);
+        //计算分组的锁定状态
+        let allLock = layoutConfigs[childIds[0]].lock;
+        for (let i = 1; i < childIds.length; i++) {
+            if (allLock !== layoutConfigs[childIds[i]].lock) {
+                allLock = false;
+                break;
+            }
+        }
+
+        //构建操作记录
+        const actions: HistoryRecordType[] = [];
+
+        //构建分组数据
+        const groupItem: MovableItemType = {
+            id: pid,
+            type: 'group',
+            name: '新建分组',
+            hide: false,
+            lock: allLock,
+            childIds,
+            order,
+        };
+
+        //操作记录-新增分组图层
+        actions.push({type: HistoryType.ADD, prev: null, next: [{id: pid, data: {layoutConfig: groupItem}}]});
+
+        addItem(groupItem);
+        setMaxLevel(order);
+
+        //操作记录-更新子图层的pid
+        const childPrev: MovableItemType[] = [];
+        const childNext: MovableItemType[] = [];
+
+        //设置子图层的pid
+        const updateItems: MovableItemType[] = [];
+        childIds.forEach((id: string) => {
+            childPrev.push({id, pid: undefined});
+            updateItems.push({id, pid});
+            childNext.push({id, pid});
+        });
+        updateLayout(updateItems, false);
+        setTargetIds([]);
+        actions.push({type: HistoryType.UPD_LAYER_GROUP, prev: childPrev, next: childNext});
+        historyOperator.put({actions});
+        //特殊场景处理，如果编组时，所有的子图层都处于锁定状态，则编组后，编组图层也处于锁定状态
+        if (allLock) {
+            const {layerInstances} = layerListStore;
+            const groupTimer = setTimeout(() => {
+                (layerInstances[pid] as Component).setState({lock: true});
+                clearTimeout(groupTimer);
+            }, 10);
+        }
+    }
+
+    public doUnGrouping() {
+        const {targetIds, setTargetIds} = eventOperateStore;
+        //找出当前选中的图层中，最顶层的分组图层
+        let groupIds = LayerUtil.findTopGroupLayer(targetIds, true);
+        //过滤掉其中分组等于自身的图层（即非分组图层）
+        const {layoutConfigs, updateLayout, delLayout} = designerStore;
+        groupIds = groupIds.filter((id: string) => layoutConfigs[id].type === 'group');
+        //对每个分组图层进行解组
+        const actions: HistoryRecordType[] = [];
+        const childPrev: MovableItemType[] = [];
+        const childNext: MovableItemType[] = [];
+        const groupPrev: DelDataType[] = [];
+        groupIds.forEach((groupId: string) => {
+            let item = layoutConfigs[groupId];
+            //记录被删除的分组图层
+            groupPrev.push(item);
+            let childIds = item.childIds;
+            const updateItems: MovableItemType[] = [];
+            childIds && childIds.forEach((childId: string) => {
+                childPrev.push({id: childId, pid: groupId});
+                //更新每个分组图层的子图层的pid为null
+                updateItems.push({id: childId, pid: undefined});
+                childNext.push({id: childId, pid: undefined});
+            });
+            updateLayout(updateItems, false);
+            groupPrev.push({id: groupId, data: {layoutConfig: item}});
+        });
+        actions.push({type: HistoryType.UPD_LAYER_GROUP, prev: childPrev, next: childNext});
+        //操作记录--被删除的分组图层
+        actions.push({type: HistoryType.DEL, prev: groupPrev, next: null});
+        //执行操作记录入队
+        historyOperator.put({actions});
+        //2.删除分组图层
+        delLayout(groupIds);
+        setTargetIds([]);
     }
 }
 

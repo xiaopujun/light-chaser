@@ -17,9 +17,7 @@ import bpLeftStore from "../../../blueprint/left/BPLeftStore";
 import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
 import {OperateResult} from "../../../framework/operate/AbstractOperator";
 import {message} from "antd";
-import IdGenerate from "../../../utils/IdGenerate";
 import LayerUtil from "../../float-configs/layer-list/util/LayerUtil";
-import {Component} from "react";
 
 export const selectAll = () => {
     const {layoutConfigs} = designerStore;
@@ -64,7 +62,7 @@ export const doLock = () => {
 export const doUnLock = () => {
     const {setTargetIds, targetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
-    const {updateLayout, layoutConfigs} = designerStore;
+    const {layoutConfigs} = designerStore;
     let toUpdate: MovableItemType[] = [];
     targetIds.filter(id => {
         //过滤出被锁定的组件
@@ -72,7 +70,6 @@ export const doUnLock = () => {
     }).forEach((id) => {
         toUpdate.push({id, lock: false})
     })
-    updateLayout(toUpdate)
     historyRecordOperateProxy.doLockUpd(toUpdate);
     setTargetIds([]);
 }
@@ -171,74 +168,11 @@ export const doHide = () => {
  * 如果A,B已经编组为G1，此时再选中A,C或B,C，或者A,B,C，则编组的时候，G1作为基本图层，和C进行编组，生成G2
  */
 export const doGrouping = () => {
-    const {targetIds, maxLevel, setMaxLevel, setTargetIds} = eventOperateStore;
-    if (!targetIds || targetIds.length <= 1) return;
-    if (LayerUtil.hasSameGroup(targetIds)) return;
-    //查找当前选中的图层的所有父级图层
-    const layerIdSet = LayerUtil.findTopGroupLayer(targetIds, true);
-    //新建编组
-    const {addItem, updateLayout, layoutConfigs} = designerStore;
-    const order = maxLevel + 1;
-    const pid = IdGenerate.generateId();
-    const childIds = Array.from(layerIdSet);
-    //计算分组的锁定状态
-    let allLock = layoutConfigs[childIds[0]].lock;
-    for (let i = 1; i < childIds.length; i++) {
-        if (allLock !== layoutConfigs[childIds[i]].lock) {
-            allLock = false;
-            break;
-        }
-    }
-    //构建分组数据
-    const groupItem: MovableItemType = {
-        id: pid,
-        type: 'group',
-        name: '新建分组',
-        hide: false,
-        lock: allLock,
-        childIds,
-        order,
-    };
-    addItem(groupItem);
-    setMaxLevel(order);
-    //设置子图层的pid
-    const updateItems: MovableItemType[] = [];
-    childIds.forEach((id: string) => {
-        updateItems.push({id, pid});
-    });
-    updateLayout(updateItems, false);
-    setTargetIds([]);
-    //特殊场景处理，如果编组时，所有的子图层都处于锁定状态，则编组后，编组图层也处于锁定状态
-    if (allLock) {
-        const {layerInstances} = layerListStore;
-        const groupTimer = setTimeout(() => {
-            (layerInstances[pid] as Component).setState({lock: true});
-            clearTimeout(groupTimer);
-        }, 10);
-    }
+    historyRecordOperateProxy.doGrouping();
 }
 
 export const doUnGrouping = () => {
-    const {targetIds, setTargetIds} = eventOperateStore;
-    //找出当前选中的图层中，最顶层的分组图层
-    let groupIds = LayerUtil.findTopGroupLayer(targetIds, true);
-    //过滤掉其中分组等于自身的图层（即非分组图层）
-    const {layoutConfigs, updateLayout, delLayout} = designerStore;
-    groupIds = groupIds.filter((id: string) => layoutConfigs[id].type === 'group');
-    //对每个分组图层进行解组
-    //1.更新每个分组图层的子图层的pid为null
-    groupIds.forEach((id: string) => {
-        let item = layoutConfigs[id];
-        let childIds = item.childIds;
-        const updateItems: MovableItemType[] = [];
-        childIds && childIds.forEach((cid: string) => {
-            updateItems.push({id: cid, pid: undefined});
-        });
-        updateLayout(updateItems, false);
-    });
-    //2.删除分组图层
-    delLayout(groupIds);
-    setTargetIds([]);
+    historyRecordOperateProxy.doUnGrouping();
 }
 
 /*************************快捷键控制移动组件的位置*************************/
@@ -442,20 +376,26 @@ export const doBaseLeftDecreaseRight = () => {
  * 撤销
  */
 export const undo = () => {
-    let record = historyOperator.backoff();
-    if (!record) return;
-    const {type} = record!;
-    undoRedoMap.get(type)?.undo(record!);
+    let history = historyOperator.backoff();
+    if (!history) return;
+    const {actions} = history!;
+    actions.forEach(action => {
+        const {type} = action!;
+        undoRedoMap.get(type)?.undo(action!);
+    })
 }
 
 /**
  * 重做
  */
 export const redo = () => {
-    let record = historyOperator.forward();
-    if (!record) return;
-    const {type} = record!;
-    undoRedoMap.get(type)?.redo(record!);
+    let history = historyOperator.forward();
+    if (!history) return;
+    const {actions} = history!;
+    actions.forEach(action => {
+        const {type} = action!;
+        undoRedoMap.get(type)?.redo(action!);
+    });
 }
 
 
