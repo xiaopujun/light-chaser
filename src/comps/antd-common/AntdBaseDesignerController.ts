@@ -103,12 +103,9 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
     }
 
     public async commonCreate(container: HTMLElement, Clazz: new (...args: any[]) => I, config: C): Promise<this> {
-        if (!this.config)
-            this.config = config;
-        if (!this.container)
-            this.container = container;
-        if (!this.instance)
-            this.instance = new Clazz(container, this.config?.style! as C);
+        this.config = config;
+        this.container = container;
+        this.instance = new Clazz(container, this.config?.style! as C);
         this.instance?.render();
         //todo 这个地方因为数据的更新导致组件的重新渲染可能会导致组件动画的加载效果受到影响，后续需要优化
         setTimeout(() => {
