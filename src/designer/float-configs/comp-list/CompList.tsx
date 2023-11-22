@@ -55,10 +55,7 @@ class CompList extends Component {
     drop = (event: any) => {
         event.preventDefault();
         const type = (event as any).dataTransfer.getData('type');
-        if (!type) {
-            alert('本次拖拽失败')
-            return;
-        }
+        if (!type) return;
         const name = (event as any).dataTransfer.getData('name');
         //获取鼠标位置,添加元素
         const {scale, dsContentRef} = eventOperateStore;
