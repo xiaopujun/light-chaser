@@ -1,8 +1,6 @@
 import {Component} from 'react';
 import './DesignerView.less';
-import {MovableItemType} from "../operate-provider/movable/types";
 import designerStore from "../store/DesignerStore";
-import ComponentContainer from "../../framework/core/ComponentContainer";
 import {observer} from "mobx-react";
 import Loading from "../../ui/loading/Loading";
 import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";

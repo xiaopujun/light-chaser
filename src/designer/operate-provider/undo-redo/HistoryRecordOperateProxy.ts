@@ -531,7 +531,7 @@ class HistoryRecordOperateProxy {
         groupIds.forEach((groupId: string) => {
             let item = layoutConfigs[groupId];
             //记录被删除的分组图层
-            groupPrev.push(item);
+            groupPrev.push({id: groupId, data: {layoutConfig: item}});
             let childIds = item.childIds;
             const updateItems: MovableItemType[] = [];
             childIds && childIds.forEach((childId: string) => {

@@ -17,7 +17,6 @@ import bpLeftStore from "../../../blueprint/left/BPLeftStore";
 import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
 import {OperateResult} from "../../../framework/operate/AbstractOperator";
 import {message} from "antd";
-import LayerUtil from "../../float-configs/layer-list/util/LayerUtil";
 
 export const selectAll = () => {
     const {layoutConfigs} = designerStore;
