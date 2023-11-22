@@ -112,16 +112,21 @@ class HistoryRecordOperateProxy {
     }
 
     public doAdd(container: HTMLDivElement | null, layout: MovableItemType): void {
-        const {elemConfigs} = designerStore;
+        const {elemConfigs, compInstances} = designerStore;
         let componentDefine: AbstractComponentDefinition = DesignerLoaderFactory.getLoader().customComponentInfoMap[layout!.type + ''];
         if (componentDefine) {
             const AbsCompImpl = componentDefine.getComponent();
             if (AbsCompImpl) {
-                const config = layout.id! in elemConfigs! ? elemConfigs![layout.id!] : (function () {
-                    let initConfig = componentDefine.getInitConfig();
-                    initConfig.info.id = layout.id!;
-                    return initConfig;
-                })() as any;
+                let config;
+                if (layout.id! in elemConfigs!) {
+                    config = elemConfigs![layout.id!];
+                } else if (layout.id! in compInstances!) {
+                    //重新编组后，被编组组件会重新渲染，需从之前的实例中获取原有数据
+                    config = compInstances![layout.id!].getConfig();
+                } else {
+                    config = componentDefine.getInitConfig();
+                    config.info.id = layout.id!;
+                }
                 new AbsCompImpl()!.create(container!, config).then((instance: any) => {
                     const {compInstances} = designerStore;
                     compInstances[layout.id + ''] = instance;
