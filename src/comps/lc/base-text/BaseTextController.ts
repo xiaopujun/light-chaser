@@ -4,6 +4,8 @@ import AbstractDesignerController from "../../../framework/core/AbstractDesigner
 import ComponentUtil from "../../../utils/ComponentUtil";
 import BaseTextComponent, {BaseTextComponentProps} from "./BaseTextComponent";
 import ObjectUtil from "../../../utils/ObjectUtil";
+import {toJS} from "mobx";
+import designerStore from "../../../designer/store/DesignerStore";
 
 export class BaseTextController extends AbstractDesignerController<BaseTextComponent, BaseTextComponentProps> {
 
