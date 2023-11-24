@@ -1,10 +1,10 @@
-export enum OperateType {
+export enum UpdateType {
     OPTIONS,
     DATA,
 }
 
 export interface UpdateOptions {
-    operateType?: OperateType;
+    updateType?: UpdateType;
     reRender: boolean;
 }
 

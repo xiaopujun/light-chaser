@@ -2,7 +2,7 @@ import AbstractDesignerController from "../../../framework/core/AbstractDesigner
 import {ComponentInfoType} from "../../common-component/common-types";
 import BaseImageComponent, {BaseImageComponentStyle} from "./BaseImageComponent";
 import ComponentUtil from "../../../utils/ComponentUtil";
-import {OperateType, UpdateOptions} from "../../../framework/core/AbstractController";
+import {UpdateType, UpdateOptions} from "../../../framework/core/AbstractController";
 import ObjectUtil from "../../../utils/ObjectUtil";
 import {ThemeItemType} from "../../../designer/DesignerType";
 
@@ -32,7 +32,7 @@ export default class BaseImageController extends AbstractDesignerController<Base
 
     update(config: BaseImageComponentProps, upOp?: UpdateOptions | undefined): void {
         this.config = ObjectUtil.merge(this.config, config);
-        upOp = upOp || {reRender: true, operateType: OperateType.OPTIONS};
+        upOp = upOp || {reRender: true, updateType: UpdateType.OPTIONS};
         if (upOp.reRender) {
             console.log('update', this.config?.style);
             this.instance?.setState(this.config?.style!);

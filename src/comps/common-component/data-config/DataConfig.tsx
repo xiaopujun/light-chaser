@@ -2,7 +2,7 @@ import {Component} from 'react';
 import './DataConfig.less';
 import {ConfigType} from "../../../designer/right/ConfigType";
 import {DataConfigType} from "../../../designer/DesignerType";
-import AbstractController, {OperateType} from "../../../framework/core/AbstractController";
+import AbstractController, {UpdateType} from "../../../framework/core/AbstractController";
 import {message} from "antd";
 import ObjectUtil from "../../../utils/ObjectUtil";
 import {Control} from "../../../json-schema/SchemaTypes";
@@ -250,7 +250,7 @@ class DataConfig extends Component<DataConfigProps> {
             const data = JSON.parse(dataStr);
             const {controller} = this.props;
             controller.update({data: {staticData: {data}}},
-                {reRender: true, operateType: OperateType.DATA});
+                {reRender: true, updateType: UpdateType.DATA});
         }
         if (id === 'doTest') {
             this.testApi();
@@ -262,7 +262,7 @@ class DataConfig extends Component<DataConfigProps> {
             params && typeof params === 'string' && (this.dataConfig.apiData!.params = ObjectUtil.stringToJsObj(params));
             header && typeof header === 'string' && (this.dataConfig.apiData!.header = ObjectUtil.stringToJsObj(header));
             controller.update({data: {apiData: this.dataConfig.apiData}},
-                {reRender: true, operateType: OperateType.DATA});
+                {reRender: true, updateType: UpdateType.DATA});
         }
 
         LCGUIUtil.updateSchema(this.schema, schemaKeyPath, data);
