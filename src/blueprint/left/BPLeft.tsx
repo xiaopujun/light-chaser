@@ -122,14 +122,14 @@ export const BPNodeList = observer(() => {
 })
 
 export const BPLayerNodeList = observer(() => {
-    const {layoutConfigs} = designerStore;
+    const {layerConfigs} = designerStore;
     const {usedLayerNodes} = bpLeftStore;
 
     return (
         <>
             {
-                layoutConfigs && Object.keys(layoutConfigs).map((key, index) => {
-                    const item = layoutConfigs[key];
+                layerConfigs && Object.keys(layerConfigs).map((key, index) => {
+                    const item = layerConfigs[key];
                     const used = usedLayerNodes[key];
                     return (
                         <div className={`bp-node-list-item ${used ? 'bp-node-list-item-used' : ''}`}

@@ -1,5 +1,5 @@
 import {ThemeItemType} from "../../../designer/DesignerType";
-import {OperateType, UpdateOptions} from "../../../framework/core/AbstractController";
+import {UpdateType, UpdateOptions} from "../../../framework/core/AbstractController";
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
 import ComponentUtil from "../../../utils/ComponentUtil";
 import BaseTableComponent, {BaseTableComponentProps} from "./BaseTableComponent";
@@ -25,7 +25,7 @@ export class BaseTable extends AbstractDesignerController<BaseTableComponent, Ba
 
     update(config: BaseTableComponentProps, upOp: UpdateOptions | undefined): void {
         this.config = ObjectUtil.merge(this.config, config);
-        upOp = upOp || {reRender: true, operateType: OperateType.OPTIONS};
+        upOp = upOp || {reRender: true, updateType: UpdateType.OPTIONS};
         if (upOp.reRender)
             this.instance?.setState(this.config);
     }

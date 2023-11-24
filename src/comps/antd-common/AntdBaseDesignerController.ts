@@ -1,6 +1,6 @@
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
 import URLUtil, {Mode} from "../../utils/URLUtil";
-import AbstractController, {OperateType, UpdateOptions} from "../../framework/core/AbstractController";
+import AbstractController, {UpdateType, UpdateOptions} from "../../framework/core/AbstractController";
 import {ComponentBaseProps} from "../common-component/common-types";
 import {Options, Plot} from "@antv/g2plot";
 import ComponentUtil from "../../utils/ComponentUtil";
@@ -44,7 +44,7 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
             switch (dataSource) {
                 case "static":
                     this.setData(this.config?.data?.staticData?.data);
-                    this.update({} as C, {reRender: true, operateType: OperateType.DATA})
+                    this.update({} as C, {reRender: true, updateType: UpdateType.DATA})
                     break;
                 case "api":
                     const {url, method, params, header, flashFrequency = 5} = data?.apiData!;
@@ -53,7 +53,7 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
                             if (data) {
                                 this.update({data: {staticData: {data}}} as any, {
                                     reRender: true,
-                                    operateType: OperateType.DATA
+                                    updateType: UpdateType.DATA
                                 });
                                 if (!this.lastReqState) {
                                     this.lastReqState = true;
@@ -75,7 +75,7 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
         } else {
             //编辑模式
             this.setData(this.config?.data?.staticData?.data!);
-            this.update({} as C, {reRender: true, operateType: OperateType.DATA});
+            this.update({} as C, {reRender: true, updateType: UpdateType.DATA});
             return;
         }
     }
@@ -128,9 +128,9 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
                 this.instance.render();
             } else {
                 this.config = ObjectUtil.merge(this.config, config);
-                upOp = upOp || {reRender: true, operateType: OperateType.OPTIONS};
+                upOp = upOp || {reRender: true, updateType: UpdateType.OPTIONS};
                 if (upOp.reRender) {
-                    if (upOp.operateType === OperateType.DATA)
+                    if (upOp.updateType === UpdateType.DATA)
                         this.instance?.changeData(this.getData());
                     else
                         this.instance?.update(this.config?.style!);

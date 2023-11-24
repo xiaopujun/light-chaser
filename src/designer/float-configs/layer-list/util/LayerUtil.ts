@@ -12,14 +12,14 @@ export default class LayerUtil {
      */
     public static findPathGroupLayer = (layerIds: string[]): string[] => {
         const groupLayerIdSet = new Set<string>();
-        const {layoutConfigs} = designerStore;
+        const {layerConfigs} = designerStore;
         layerIds.forEach((id) => {
-            const layer = layoutConfigs[id];
+            const layer = layerConfigs[id];
             if (layer.type === 'group')
                 groupLayerIdSet.add(id);
             let _pid = layer?.pid;
             while (_pid) {
-                const {pid, id, type} = layoutConfigs[_pid];
+                const {pid, id, type} = layerConfigs[_pid];
                 _pid = pid;
                 if (type === 'group')
                     groupLayerIdSet.add(id!);
@@ -40,12 +40,12 @@ export default class LayerUtil {
     public static findTopGroupLayer = (layerIds: string[], hasSelf: boolean = false): string[] => {
         //使用set数据结构去重，多个不同的组件可能存在同一个分组内
         const groupLayerIdSet = new Set<string>();
-        const {layoutConfigs} = designerStore;
+        const {layerConfigs} = designerStore;
         layerIds.forEach((id) => {
             let _id = id;
-            let _pid = layoutConfigs[id]?.pid;
+            let _pid = layerConfigs[id]?.pid;
             while (_pid) {
-                const {pid, id} = layoutConfigs[_pid];
+                const {pid, id} = layerConfigs[_pid];
                 _pid = pid;
                 _id = id!;
             }
@@ -78,10 +78,10 @@ export default class LayerUtil {
     }
 
     private static _findAllChildLayer(groupLayerIds: string[], res: string[]) {
-        const {layoutConfigs} = designerStore;
+        const {layerConfigs} = designerStore;
         groupLayerIds.forEach((id) => {
-            if (layoutConfigs[id]) {
-                let {childIds} = layoutConfigs[id];
+            if (layerConfigs[id]) {
+                let {childIds} = layerConfigs[id];
                 if (childIds && childIds.length > 0) {
                     res.push(...childIds);
                     LayerUtil._findAllChildLayer(childIds, res);
@@ -98,11 +98,11 @@ export default class LayerUtil {
      */
     public static hasSameGroup = (layerIds: string[]): boolean => {
         if (layerIds.length <= 1) return false;
-        const {layoutConfigs} = designerStore;
+        const {layerConfigs} = designerStore;
         //如果layerIds中存在没有pid的图层，则说明这个图层一定没有编组，则直接返回false，说明本次可以编组
-        if (layerIds.some((id) => layoutConfigs[id].type !== 'group' && !layoutConfigs[id].pid)) return false;
+        if (layerIds.some((id) => layerConfigs[id].type !== 'group' && !layerConfigs[id].pid)) return false;
         const groupLayerIds = new Set();
-        layerIds.filter((id) => layoutConfigs[id].type !== 'group').forEach((id) => {
+        layerIds.filter((id) => layerConfigs[id].type !== 'group').forEach((id) => {
             LayerUtil.findTopGroupLayer([id], true).forEach((id) => groupLayerIds.add(id));
         })
         //若所有图层向上查找分组后，只有一个结果返回，则说明所有图层处于同一个分组内

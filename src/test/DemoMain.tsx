@@ -1,8 +1,8 @@
 import React from 'react';
 import {observer} from "mobx-react";
 import './DemoMain.less';
-import {MovableItemType} from "../designer/operate-provider/movable/types";
 import layerBuilder from "../designer/float-configs/layer-list/LayerBuilder";
+import {ILayerItem} from "../designer/DesignerType";
 
 interface TreeNode {
     id: number;
@@ -15,7 +15,7 @@ class MyComponent extends React.Component {
 
     // avlTree = new AVLTree();
 
-    layerData: MovableItemType[] = [
+    layerData: ILayerItem[] = [
         {
             name: "Antd百分比柱状图",
             type: "AntdPercentColumn",
@@ -146,8 +146,8 @@ class MyComponent extends React.Component {
     ];
 
     render() {
-        const layerMap: Record<string, MovableItemType> = {};
-        Object.values(this.layerData).forEach((item: MovableItemType) => {
+        const layerMap: Record<string, ILayerItem> = {};
+        Object.values(this.layerData).forEach((item: ILayerItem) => {
             layerMap[item.id!] = item;
         });
 
