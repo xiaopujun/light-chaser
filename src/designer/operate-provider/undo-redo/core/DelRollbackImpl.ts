@@ -26,7 +26,7 @@ export class DelRollbackImpl extends AbstractRollback {
         const {addItem, elemConfigs} = designerStore;
         const targetIds: string[] = [];
         prevDelData.forEach((item) => {
-            addItem(item.data.layoutConfig);
+            addItem(item.data.layerConfig);
             elemConfigs![item.id] = item.data.elemConfig;
             targetIds.push(item.id!);
         });

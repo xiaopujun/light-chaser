@@ -39,8 +39,8 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
      * 元素生成
      */
     generateElement = () => {
-        let {layoutConfigs} = designerStore!;
-        const sortLayout = Object.values(layoutConfigs).sort((a: MovableItemType, b: MovableItemType) => a.order! - b.order!);
+        let {layerConfigs} = designerStore!;
+        const sortLayout = Object.values(layerConfigs).sort((a: MovableItemType, b: MovableItemType) => a.order! - b.order!);
         return sortLayout.map((item: MovableItemType) => {
             if (item.type === 'group') return null;
             return <ComponentContainer layout={item} key={item.id}/>
@@ -48,7 +48,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
     }
 
     render() {
-        const {layoutConfigs} = designerStore!;
+        const {layerConfigs} = designerStore!;
         return (
             <>
                 <DesignerContainer>
@@ -56,7 +56,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                         <DesignerRuler>
                             <DesignerDragScaleContainer onDoubleClick={this.updateActive}>
                                 <GroupMovable>
-                                    {layerBuilder.buildCanvasComponents(layoutConfigs)}
+                                    {layerBuilder.buildCanvasComponents(layerConfigs)}
                                 </GroupMovable>
                             </DesignerDragScaleContainer>
                         </DesignerRuler>

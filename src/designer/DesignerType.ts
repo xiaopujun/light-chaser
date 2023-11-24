@@ -283,8 +283,8 @@ export interface ProjectDataType {
     projectConfig?: ProjectConfig;
     //元素样式
     elemConfigs?: { [key: string]: Record<string, any> };
-    //布局信息
-    layoutConfigs?: { [key: string]: MovableItemType };
+    //图层信息
+    layerConfigs?: { [key: string]: MovableItemType };
     //统计信息
     statisticInfo?: Statistic;
     //全局主题

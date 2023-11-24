@@ -29,11 +29,11 @@ export default class LayerNodeController extends AbstractBPNodeController<LayerN
         if (anchorType === AnchorPointType.INPUT) {
             //输入点，执行动作
             //1.获取当前组件的控制器实例
-            const {compInstances, layoutConfigs} = designerStore;
+            const {compInstances, layerConfigs} = designerStore;
             const compInstance = compInstances[nodeId];
             if (!compInstance)
                 return;
-            const {type} = layoutConfigs[nodeId];
+            const {type} = layerConfigs[nodeId];
             const {customComponentInfoMap} = DesignerLoaderFactory.getLoader();
             let actionList = customComponentInfoMap[type!].getActionList();
             //2.获取当前组件可执行的动作列表
@@ -54,8 +54,8 @@ export default class LayerNodeController extends AbstractBPNodeController<LayerN
     }
 
     getNodeInfo(nodeId: string): NodeInfoType | null {
-        const {layoutConfigs} = designerStore;
-        const compLayout = layoutConfigs[nodeId];
+        const {layerConfigs} = designerStore;
+        const compLayout = layerConfigs[nodeId];
         const {customComponentInfoMap} = DesignerLoaderFactory.getLoader();
         const output = customComponentInfoMap[compLayout.type!].getEventList().map((item) => {
             return {

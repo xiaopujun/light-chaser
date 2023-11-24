@@ -14,12 +14,12 @@ class DesignerView extends Component {
     }
 
     render() {
-        let {loaded, canvasConfig: {width, height}, layoutConfigs} = designerStore!;
+        let {loaded, canvasConfig: {width, height}, layerConfigs} = designerStore!;
         if (!loaded)
             return <Loading/>;
         return (
             <div style={{width, height, background: 'black', overflow: 'hidden', position: "relative"}}>
-                {layerBuilder.buildCanvasComponents(layoutConfigs)}
+                {layerBuilder.buildCanvasComponents(layerConfigs)}
             </div>
         );
     }

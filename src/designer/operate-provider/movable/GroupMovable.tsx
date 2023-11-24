@@ -36,8 +36,8 @@ class GroupMovable extends React.Component {
 
     onDragStart = (e: OnDragStart) => {
         const {target} = e;
-        const {layoutConfigs} = designerStore;
-        const {lock} = layoutConfigs[target.id];
+        const {layerConfigs} = designerStore;
+        const {lock} = layerConfigs[target.id];
         if (lock) return false;
     }
 
@@ -68,8 +68,8 @@ class GroupMovable extends React.Component {
     onDragGroupEnd = (e: OnDragGroupEnd) => {
         const {targets} = e;
         //通过第一个元素来判断。 框选的所有组件是否处于锁定状态，处于锁定状态，则不允许拖拽和缩放。
-        const {updateLayout, layoutConfigs} = designerStore;
-        const firstLock = layoutConfigs[targets[0].id].lock;
+        const {updateLayout, layerConfigs} = designerStore;
+        const firstLock = layerConfigs[targets[0].id].lock;
         if (firstLock) return false;
 
         let {backoff, setBackoff, setGroupCoordinate, groupCoordinate} = eventOperateStore;
@@ -189,8 +189,8 @@ class GroupMovable extends React.Component {
 
     onResizeStart = (e: OnResizeStart) => {
         const {target} = e;
-        const {layoutConfigs} = designerStore;
-        const {lock} = layoutConfigs[target.id];
+        const {layerConfigs} = designerStore;
+        const {lock} = layerConfigs[target.id];
         if (lock) return false;
     }
 
@@ -201,9 +201,9 @@ class GroupMovable extends React.Component {
 
     onDragGroup = (e: OnDragGroup) => {
         const {targets} = e;
-        const {layoutConfigs} = designerStore;
+        const {layerConfigs} = designerStore;
         //通过第一个元素来判断。 框选的所有组件是否处于锁定状态，处于锁定状态，则不允许拖拽和缩放。
-        const firstLock = layoutConfigs[targets[0].id].lock;
+        const firstLock = layerConfigs[targets[0].id].lock;
         if (firstLock)
             return false;
         else
@@ -212,8 +212,8 @@ class GroupMovable extends React.Component {
 
     onResizeGroupStart = (e: OnResizeGroupStart) => {
         const {targets} = e;
-        const {layoutConfigs} = designerStore;
-        const firstLock = layoutConfigs[targets[0].id].lock;
+        const {layerConfigs} = designerStore;
+        const firstLock = layerConfigs[targets[0].id].lock;
         if (firstLock) return false;
     }
 

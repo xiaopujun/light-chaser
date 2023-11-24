@@ -29,13 +29,13 @@ class HistoryRecordOperateProxy {
 
     public doDrag(items: MovableItemType[]): void {
         //构建历史记录数据
-        const {layoutConfigs, updateLayout} = designerStore;
+        const {layerConfigs, updateLayout} = designerStore;
         const ids: string[] = [];
         let prev: DragDataType | null;
         let next: DragDataType | null;
         if (items.length === 1) { //单个组件拖动
             //构建prev数据
-            const [x, y] = layoutConfigs[items[0].id!].position as [number, number];
+            const [x, y] = layerConfigs[items[0].id!].position as [number, number];
             prev = {ids: [items[0].id!], x, y}
             //构建next数据
             const {id, position} = items[0];
@@ -44,7 +44,7 @@ class HistoryRecordOperateProxy {
             //构建prev数据
             const oldItems: MovableItemType[] = [];
             items.forEach((item) => ids.push(item.id!));
-            ids.forEach((id) => oldItems.push(layoutConfigs[id]))
+            ids.forEach((id) => oldItems.push(layerConfigs[id]))
             let x = +Infinity, y = +Infinity;
             oldItems.forEach((oldItem) => {
                 const {position} = oldItem;
@@ -71,13 +71,13 @@ class HistoryRecordOperateProxy {
 
     public doResize(items: MovableItemType[], direction: [number, number]): void {
         //构建历史记录数据
-        const {layoutConfigs, updateLayout} = designerStore;
+        const {layerConfigs, updateLayout} = designerStore;
         const ids: string[] = [];
         let prev: ResizeDataType | null;
         let next: ResizeDataType | null;
         if (items.length === 1) { //单个组件缩放
             //构建prev数据
-            const {width = 0, height = 0} = layoutConfigs[items[0].id!];
+            const {width = 0, height = 0} = layerConfigs[items[0].id!];
             prev = {ids: [items[0].id!], width, height, direction}
             //构建next数据
             const {id} = items[0];
@@ -86,7 +86,7 @@ class HistoryRecordOperateProxy {
             //构建prev数据
             const oldItems: MovableItemType[] = [];
             items.forEach((item) => ids.push(item.id!));
-            ids.forEach((id) => oldItems.push(layoutConfigs[id]))
+            ids.forEach((id) => oldItems.push(layerConfigs[id]))
             let minX = +Infinity, minY = +Infinity, maxX = -Infinity, maxY = -Infinity;
             oldItems.forEach((oldItem) => {
                 const {position} = oldItem;
@@ -139,7 +139,7 @@ class HistoryRecordOperateProxy {
                         prev: null,
                         next: [{
                             id: layout.id, data: {
-                                layoutConfig: toJS(layout),
+                                layerConfig: toJS(layout),
                                 elemConfig: null
                             }
                         }]
@@ -152,7 +152,7 @@ class HistoryRecordOperateProxy {
 
     public doDelete(): void {
         let {targetIds, setTargetIds} = eventOperateStore;
-        const {delItem, layoutConfigs, compInstances, updateLayout} = designerStore;
+        const {delItem, layerConfigs, compInstances, updateLayout} = designerStore;
         if (!targetIds || targetIds.length === 0) return;
         const {setContentVisible, activeConfig} = rightStore;
         setContentVisible(false);
@@ -163,7 +163,7 @@ class HistoryRecordOperateProxy {
         const directDelIds: string[] = [];
         const maintenanceDelIds: string[] = [];
         targetIds.forEach((id) => {
-            const layer = layoutConfigs[id];
+            const layer = layerConfigs[id];
             if (layer) {
                 const {type, pid} = layer;
                 if (type !== 'group' && pid && !targetIds.includes(pid))
@@ -176,23 +176,23 @@ class HistoryRecordOperateProxy {
         const prev: DelDataType[] = [];
         //可直接删除的数据--构建操作记录
         directDelIds.forEach((id) => {
-            const {type} = layoutConfigs[id];
+            const {type} = layerConfigs[id];
             if (type === 'group') {
-                prev.push({id, data: {layoutConfig: toJS(layoutConfigs[id])}})
+                prev.push({id, data: {layerConfig: toJS(layerConfigs[id])}})
             } else {
                 const elemConfig = compInstances[id] && compInstances[id].getConfig();
-                prev.push({id, data: {layoutConfig: toJS(layoutConfigs[id]), elemConfig: elemConfig}})
+                prev.push({id, data: {layerConfig: toJS(layerConfigs[id]), elemConfig: elemConfig}})
             }
         })
         //需要维护图层关系的数据--构建操作记录
         const updPrev: MovableItemType[] = [];
         const updNext: MovableItemType[] = [];
         maintenanceDelIds.forEach((id) => {
-                const {pid} = layoutConfigs[id];
-                const groupLayer = layoutConfigs[pid!];
+                const {pid} = layerConfigs[id];
+                const groupLayer = layerConfigs[pid!];
                 if (groupLayer.childIds!.length === 1 && groupLayer.childIds![0] === id) {
                     //说明该分组下只有一个图层，且本次需要删除。这种场景下，将分组图层一起删除
-                    prev.push({id: pid!, data: {layoutConfig: toJS(layoutConfigs[pid!])}});
+                    prev.push({id: pid!, data: {layerConfig: toJS(layerConfigs[pid!])}});
                     targetIds = [...targetIds, pid!];
                 } else {
                     //否则，只需要更新分组图层的childIds字段即可
@@ -205,7 +205,7 @@ class HistoryRecordOperateProxy {
                 }
                 //构建子图层的操作记录
                 const elemConfig = compInstances[id] && compInstances[id].getConfig();
-                prev.push({id, data: {layoutConfig: toJS(layoutConfigs[id]), elemConfig: elemConfig}});
+                prev.push({id, data: {layerConfig: toJS(layerConfigs[id]), elemConfig: elemConfig}});
             }
         );
 
@@ -222,11 +222,11 @@ class HistoryRecordOperateProxy {
         const enforcementCap = document.querySelector('.lc-ruler-content');
         //删除组件后，重新聚焦鼠标指针到容器上，避免鼠标失去焦点导致其他快捷键失效。
         setPointerTarget && setPointerTarget(enforcementCap);
-        console.log(toJS(designerStore.layoutConfigs))
+        console.log(toJS(designerStore.layerConfigs))
     }
 
     private _copyGroupLayer = (layout: MovableItemType, newIds: string[], newLayouts: MovableItemType[], maxLevel: number): MovableItemType => {
-        const {layoutConfigs} = designerStore;
+        const {layerConfigs} = designerStore;
         //生成新id
         const newId = IdGenerate.generateId();
         newIds.push(newId);
@@ -236,12 +236,12 @@ class HistoryRecordOperateProxy {
         newLayout.id = newId;
         newLayout.order = maxLevel;
         newLayout.childIds = [];
-        layoutConfigs[newId] = newLayout;
+        layerConfigs[newId] = newLayout;
         return newLayout;
     }
 
     private _copyNormalLayer = (layout: MovableItemType, newLayouts: MovableItemType[], maxLevel: number, newIds: string[]): MovableItemType => {
-        const {layoutConfigs, compInstances, elemConfigs} = designerStore;
+        const {layerConfigs, compInstances, elemConfigs} = designerStore;
         //生成新id
         const newId = IdGenerate.generateId();
         //生成新布局
@@ -251,7 +251,7 @@ class HistoryRecordOperateProxy {
         const [x = 10, y = 10] = (newLayout.position || []).map((p) => p + 10);
         newLayout.position = [x, y];
         newLayout.order = maxLevel;
-        layoutConfigs[newId] = newLayout;
+        layerConfigs[newId] = newLayout;
         //生成新组件配置项数据
         const copiedInstance = compInstances[layout.id!];
         let newConfig = cloneDeep(copiedInstance.getConfig());
@@ -269,7 +269,7 @@ class HistoryRecordOperateProxy {
      */
     public doCopy(ids: string[]): string[] {
         let newIds: string[] = [];
-        const {layoutConfigs, elemConfigs} = designerStore;
+        const {layerConfigs, elemConfigs} = designerStore;
         let {maxLevel, setMaxLevel} = eventOperateStore;
         //next用于保存操作记录的下一个状态
         const next: AddDataType[] = [];
@@ -279,7 +279,7 @@ class HistoryRecordOperateProxy {
         const groupIds: string[] = [];
         const normalIds: string[] = [];
         ids.forEach((id) => {
-            const {type, pid} = layoutConfigs[id];
+            const {type, pid} = layerConfigs[id];
             if ((type !== 'group' && !pid) || (pid && !ids.includes(pid)))
                 normalIds.push(id);
             else
@@ -289,13 +289,13 @@ class HistoryRecordOperateProxy {
         //复制normalIds
         for (const id of normalIds) {
             //获取被复制元素布局
-            const {[id]: layout} = layoutConfigs;
+            const {[id]: layout} = layerConfigs;
             if (layout) {
                 maxLevel++;
                 const newLayout = this._copyNormalLayer(layout, newLayouts, maxLevel, newIds);
                 //如果本图层是属于单独选中的分组图层的子图层（有pid，但pid对应的图层未被选中），则需要将新复制出来的图层id加入到pid对应图层的childIds中
                 if (newLayout.pid)
-                    layoutConfigs[newLayout.pid].childIds!.push(newLayout.id!);
+                    layerConfigs[newLayout.pid].childIds!.push(newLayout.id!);
             }
         }
 
@@ -305,10 +305,10 @@ class HistoryRecordOperateProxy {
         const groupIdOldToNew = new Map<string, string>(); //分组图层映射关系
         const childIdNewToOld = new Map<string, string>(); //子图层映射关系
         //复制分组图层下的子图层
-        const onlyChildIds = groupIds.filter((id) => layoutConfigs[id].type !== 'group');
+        const onlyChildIds = groupIds.filter((id) => layerConfigs[id].type !== 'group');
         for (const id of onlyChildIds) {
             //获取被复制元素布局
-            const {[id]: layout} = layoutConfigs;
+            const {[id]: layout} = layerConfigs;
             if (layout) {
                 maxLevel++;
                 const newLayout = this._copyNormalLayer(layout, newLayouts, maxLevel, newIds);
@@ -317,10 +317,10 @@ class HistoryRecordOperateProxy {
         }
 
         //复制type=group的图层
-        const onlyGroupIds = groupIds.filter((id) => layoutConfigs[id].type === 'group');
+        const onlyGroupIds = groupIds.filter((id) => layerConfigs[id].type === 'group');
         for (const id of onlyGroupIds) {
             //获取被复制元素布局
-            const {[id]: layout} = layoutConfigs;
+            const {[id]: layout} = layerConfigs;
             if (layout) {
                 maxLevel++;
                 const newLayout = this._copyGroupLayer(layout, newIds, newLayouts, maxLevel);
@@ -330,30 +330,30 @@ class HistoryRecordOperateProxy {
 
         //根据映射，重新建立分组图层和子图层的关系
         childIdNewToOld.forEach((oldId, newId) => {
-            const newLayerItem = layoutConfigs[newId];
+            const newLayerItem = layerConfigs[newId];
             //设置新子图层的pid
-            newLayerItem.pid = groupIdOldToNew.get(layoutConfigs[oldId].pid!);
+            newLayerItem.pid = groupIdOldToNew.get(layerConfigs[oldId].pid!);
             //设置新分组图层的childIds
-            layoutConfigs[newLayerItem.pid!].childIds!.push(newId);
+            layerConfigs[newLayerItem.pid!].childIds!.push(newId);
         });
 
 
         //设置分组复制的操作记录信息
         newIds.forEach((id) => {
-            const newLayout = layoutConfigs[id];
+            const newLayout = layerConfigs[id];
             const newConfig = elemConfigs![id];
             if (newLayout.type === 'group') {
                 next.push({
                     id: id,
                     data: {
-                        layoutConfig: toJS(newLayout),
+                        layerConfig: toJS(newLayout),
                     }
                 })
             } else {
                 next.push({
                     id: id,
                     data: {
-                        layoutConfig: toJS(newLayout),
+                        layerConfig: toJS(newLayout),
                         elemConfig: toJS(newConfig)
                     }
                 })
@@ -373,11 +373,11 @@ class HistoryRecordOperateProxy {
     public doHideUpd(items: MovableItemType[]): void {
         let prev: HideDataType[] = [];
         let next: HideDataType[] = [];
-        const {layoutConfigs, updateLayout} = designerStore;
+        const {layerConfigs, updateLayout} = designerStore;
         items.forEach((item) => {
             const {id, hide} = item;
             next.push({id: id!, hide: hide!});
-            const oldHideData = layoutConfigs[id!];
+            const oldHideData = layerConfigs[id!];
             prev.push({id: id!, hide: oldHideData.hide!});
         })
         const data: HistoryRecordType = {type: HistoryType.HIDE, prev, next}
@@ -399,11 +399,11 @@ class HistoryRecordOperateProxy {
     public doLockUpd(items: MovableItemType[]): void {
         let prev: LockDataType[] = [];
         let next: LockDataType[] = [];
-        const {layoutConfigs, updateLayout} = designerStore;
+        const {layerConfigs, updateLayout} = designerStore;
         items.forEach((item) => {
             const {id, lock} = item;
             next.push({id: id!, lock: lock!});
-            const oldLockData = layoutConfigs[id!];
+            const oldLockData = layerConfigs[id!];
             prev.push({id: id!, lock: oldLockData.lock!});
         })
         const data: HistoryRecordType = {type: HistoryType.LOCK, prev, next}
@@ -421,11 +421,11 @@ class HistoryRecordOperateProxy {
     public doOrderUpd(items: MovableItemType[]): void {
         let prev: OrderDataType[] = [];
         let next: OrderDataType[] = [];
-        const {layoutConfigs, updateLayout} = designerStore;
+        const {layerConfigs, updateLayout} = designerStore;
         items.forEach((item) => {
             const {id, order} = item;
             next.push({id: id!, order: order!});
-            const oldOrderData = layoutConfigs[id!];
+            const oldOrderData = layerConfigs[id!];
             prev.push({id: id!, order: oldOrderData.order!});
         })
         const data: HistoryRecordType = {type: HistoryType.ORDER, prev, next}
@@ -458,14 +458,14 @@ class HistoryRecordOperateProxy {
         //查找当前选中的图层的所有父级图层
         const layerIdSet = LayerUtil.findTopGroupLayer(targetIds, true);
         //新建编组
-        const {addItem, updateLayout, layoutConfigs} = designerStore;
+        const {addItem, updateLayout, layerConfigs} = designerStore;
         const order = maxLevel + 1;
         const pid = IdGenerate.generateId();
         const childIds = Array.from(layerIdSet);
         //计算分组的锁定状态
-        let allLock = layoutConfigs[childIds[0]].lock;
+        let allLock = layerConfigs[childIds[0]].lock;
         for (let i = 1; i < childIds.length; i++) {
-            if (allLock !== layoutConfigs[childIds[i]].lock) {
+            if (allLock !== layerConfigs[childIds[i]].lock) {
                 allLock = false;
                 break;
             }
@@ -486,7 +486,7 @@ class HistoryRecordOperateProxy {
         };
 
         //操作记录-新增分组图层
-        actions.push({type: HistoryType.ADD, prev: null, next: [{id: pid, data: {layoutConfig: groupItem}}]});
+        actions.push({type: HistoryType.ADD, prev: null, next: [{id: pid, data: {layerConfig: groupItem}}]});
 
         addItem(groupItem);
         setMaxLevel(order);
@@ -521,17 +521,17 @@ class HistoryRecordOperateProxy {
         //找出当前选中的图层中，最顶层的分组图层
         let groupIds = LayerUtil.findTopGroupLayer(targetIds, true);
         //过滤掉其中分组等于自身的图层（即非分组图层）
-        const {layoutConfigs, updateLayout, delLayout} = designerStore;
-        groupIds = groupIds.filter((id: string) => layoutConfigs[id].type === 'group');
+        const {layerConfigs, updateLayout, delLayout} = designerStore;
+        groupIds = groupIds.filter((id: string) => layerConfigs[id].type === 'group');
         //对每个分组图层进行解组
         const actions: HistoryRecordType[] = [];
         const childPrev: MovableItemType[] = [];
         const childNext: MovableItemType[] = [];
         const groupPrev: DelDataType[] = [];
         groupIds.forEach((groupId: string) => {
-            let item = layoutConfigs[groupId];
+            let item = layerConfigs[groupId];
             //记录被删除的分组图层
-            groupPrev.push({id: groupId, data: {layoutConfig: item}});
+            groupPrev.push({id: groupId, data: {layerConfig: item}});
             let childIds = item.childIds;
             const updateItems: MovableItemType[] = [];
             childIds && childIds.forEach((childId: string) => {
@@ -541,7 +541,7 @@ class HistoryRecordOperateProxy {
                 childNext.push({id: childId, pid: undefined});
             });
             updateLayout(updateItems, false);
-            groupPrev.push({id: groupId, data: {layoutConfig: item}});
+            groupPrev.push({id: groupId, data: {layerConfig: item}});
         });
         actions.push({type: HistoryType.UPD_LAYER_GROUP, prev: childPrev, next: childNext});
         //操作记录--被删除的分组图层

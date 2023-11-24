@@ -129,7 +129,7 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
                     canvasConfig: store?.canvasConfig,
                     projectConfig: store?.projectConfig,
                     elemConfigs: store?.elemConfigs,
-                    layoutConfigs: store?.layoutConfigs,
+                    layerConfigs: store?.layerConfigs,
                     statisticInfo: store?.statisticInfo,
                     themeConfig: store?.themeConfig,
                     extendParams: store?.extendParams,

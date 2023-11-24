@@ -193,7 +193,7 @@ class EventOperateStore {
      * @param compArr
      */
     calculateGroupCoordinate = (compArr: any[]) => {
-        const {layoutConfigs} = designerStore;
+        const {layerConfigs} = designerStore;
         let groupCoordinate: GroupCoordinateType = {
             minX: Infinity,
             minY: Infinity,
@@ -201,8 +201,8 @@ class EventOperateStore {
             maxY: -Infinity
         };
         compArr.forEach((item: any) => {
-            const layoutConfig: MovableItemType = layoutConfigs[item.id];
-            let {position, width, height} = layoutConfig;
+            const layerConfig: MovableItemType = layerConfigs[item.id];
+            let {position, width, height} = layerConfig;
             const x = position![0];
             const y = position![1];
             if (x < groupCoordinate.minX!)

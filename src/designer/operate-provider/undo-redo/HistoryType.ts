@@ -81,7 +81,7 @@ export interface ResizeDataType {
 export interface AddDataType {
     id: string;
     data: {
-        layoutConfig?: MovableItemType;
+        layerConfig?: MovableItemType;
         elemConfig?: any;
     };
 }
@@ -92,7 +92,7 @@ export interface AddDataType {
 export interface DelDataType {
     id: string;
     data: {
-        layoutConfig: MovableItemType;
+        layerConfig: MovableItemType;
         elemConfig?: any;
     };
 }
