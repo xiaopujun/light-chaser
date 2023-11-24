@@ -120,15 +120,15 @@ class LightChaserList extends Component<any> {
         operator.copyProject(this.toBeCloneId, name).then((id) => {
             //重新加载项目列表
             operator.getProjectSimpleInfoList().then((simpleInfoList: any) => {
-                const newSimpleInfo = simpleInfoList.filter((item: any) => item.id === id);
-                ImgUtil.getImageFromLocalWithKey(newSimpleInfo[0].screenshot).then((obj: any) => {
-                    message.success('克隆成功');
-                    this.setState({
-                        data: [...this.state.data, ...newSimpleInfo],
-                        imageIdToUrl: {...this.state.imageIdToUrl, ...obj},
-                        showCloneDialog: false
-                    });
-                })
+                this.setState({data: simpleInfoList, showCloneDialog: false});
+                message.success('克隆成功');
+                // ImgUtil.getImageFromLocalWithKey(newSimpleInfo[0].screenshot).then((obj: any) => {
+                //     this.setState({
+                //         data: [...this.state.data, ...newSimpleInfo],
+                //         imageIdToUrl: {...this.state.imageIdToUrl, ...obj},
+                //         showCloneDialog: false
+                //     });
+                // })
             })
         });
     }
