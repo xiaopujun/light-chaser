@@ -1,21 +1,21 @@
 import AbstractRollback from "./AbstractRollback";
-import {HistoryRecordType, OrderDataType} from "../HistoryType";
+import {IHistoryRecord, IOrderOperateData} from "../OperateType";
 import designerStore from "../../../store/DesignerStore";
 
 /**
  * hide, lock, order的撤销与回滚操作实现
  */
 export class OrderRollBackImpl extends AbstractRollback {
-    redo(record: HistoryRecordType): void {
+    redo(record: IHistoryRecord): void {
         const {next} = record;
         const {updateLayout} = designerStore;
-        if (next) updateLayout(next as OrderDataType[]);
+        if (next) updateLayout(next as IOrderOperateData[]);
     }
 
-    undo(record: HistoryRecordType): void {
+    undo(record: IHistoryRecord): void {
         const {prev} = record;
         const {updateLayout} = designerStore;
-        if (prev) updateLayout(prev as OrderDataType[]);
+        if (prev) updateLayout(prev as IOrderOperateData[]);
     }
 
 }

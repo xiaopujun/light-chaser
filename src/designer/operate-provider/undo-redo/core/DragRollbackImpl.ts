@@ -1,13 +1,13 @@
 import AbstractRollback from "./AbstractRollback";
 import eventOperateStore from "../../EventOperateStore";
-import {DragDataType, HistoryRecordType} from "../HistoryType";
+import {IDragOperateData, IHistoryRecord} from "../OperateType";
 
 export class DragRollbackImpl extends AbstractRollback {
-    redo(record: HistoryRecordType): void {
+    redo(record: IHistoryRecord): void {
         if (!record) return;
         const {movableRef, setBackoff, setTargetIds} = eventOperateStore;
         const {next} = record!;
-        let nextRecordData = next! as DragDataType;
+        let nextRecordData = next! as IDragOperateData;
         //选中目标元素
         setTargetIds(nextRecordData.ids);
         setBackoff(true);
@@ -19,11 +19,11 @@ export class DragRollbackImpl extends AbstractRollback {
 
     }
 
-    undo(record: HistoryRecordType): void {
+    undo(record: IHistoryRecord): void {
         if (!record) return;
         const {movableRef, setBackoff, setTargetIds} = eventOperateStore;
         const {prev} = record!;
-        let prevRecordData = prev! as DragDataType;
+        let prevRecordData = prev! as IDragOperateData;
         //选中目标元素
         setTargetIds(prevRecordData.ids);
         setBackoff(true);

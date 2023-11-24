@@ -1,13 +1,13 @@
 import AbstractRollback from "./AbstractRollback";
-import {HistoryRecordType, StyleDataType} from "../HistoryType";
+import {IHistoryRecord, IUpdStyleOperateData} from "../OperateType";
 import designerStore from "../../../store/DesignerStore";
 import rightStore from "../../../right/RightStore";
 
 export class StyleRollbackImpl extends AbstractRollback {
-    redo(record: HistoryRecordType): void {
+    redo(record: IHistoryRecord): void {
         const {next} = record;
         if (next) {
-            const {id, data} = next as StyleDataType;
+            const {id, data} = next as IUpdStyleOperateData;
             const {compInstances} = designerStore;
             const instance = compInstances[id];
             if (instance)
@@ -23,10 +23,10 @@ export class StyleRollbackImpl extends AbstractRollback {
         }
     }
 
-    undo(record: HistoryRecordType): void {
+    undo(record: IHistoryRecord): void {
         const {prev} = record;
         if (prev) {
-            const {id, data} = prev as StyleDataType;
+            const {id, data} = prev as IUpdStyleOperateData;
             const {compInstances} = designerStore;
             const instance = compInstances[id];
             if (instance)

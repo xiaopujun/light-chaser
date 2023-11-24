@@ -1,10 +1,10 @@
 import AbstractRollback from "./AbstractRollback";
-import {HistoryRecordType} from "../HistoryType";
+import {IHistoryRecord} from "../OperateType";
 import designerStore from "../../../store/DesignerStore";
 import {MovableItemType} from "../../movable/types";
 
 export class UpdLayerGroupRollbackImpl extends AbstractRollback {
-    redo(record: HistoryRecordType): void {
+    redo(record: IHistoryRecord): void {
         const {next} = record;
         if (next) {
             const updData: MovableItemType[] = [];
@@ -17,7 +17,7 @@ export class UpdLayerGroupRollbackImpl extends AbstractRollback {
         }
     }
 
-    undo(record: HistoryRecordType): void {
+    undo(record: IHistoryRecord): void {
         const {prev} = record;
         if (prev) {
             const updData: MovableItemType[] = [];

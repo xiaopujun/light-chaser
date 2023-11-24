@@ -1,17 +1,17 @@
 import designerStore from "../../store/DesignerStore";
 import {MovableItemType} from "../movable/types";
 import {
-    AddDataType,
-    DelDataType,
-    DragDataType,
-    HideDataType,
-    HistoryRecordType,
-    HistoryType,
-    LockDataType,
-    OrderDataType,
-    ResizeDataType,
-    StyleDataType
-} from "./HistoryType";
+    IAddOperateData,
+    IDelOperateData,
+    IDragOperateData,
+    IHideOperateData,
+    IHistoryRecord,
+    OperateType,
+    ILockOperateData,
+    IOrderOperateData,
+    IResizeOperateData,
+    IUpdStyleOperateData
+} from "./OperateType";
 import {historyOperator} from "./HistoryOperator";
 import eventOperateStore from "../EventOperateStore";
 import {AbstractComponentDefinition} from "../../../framework/core/AbstractComponentDefinition";
@@ -31,8 +31,8 @@ class HistoryRecordOperateProxy {
         //构建历史记录数据
         const {layerConfigs, updateLayout} = designerStore;
         const ids: string[] = [];
-        let prev: DragDataType | null;
-        let next: DragDataType | null;
+        let prev: IDragOperateData | null;
+        let next: IDragOperateData | null;
         if (items.length === 1) { //单个组件拖动
             //构建prev数据
             const [x, y] = layerConfigs[items[0].id!].position as [number, number];
@@ -58,8 +58,8 @@ class HistoryRecordOperateProxy {
             next = {ids, x: groupCoordinate.minX!, y: groupCoordinate.minY!}
         }
         //构建历史记录节点
-        const data: HistoryRecordType = {
-            type: HistoryType.DRAG,
+        const data: IHistoryRecord = {
+            type: OperateType.DRAG,
             prev: prev!,
             next: next!
         }
@@ -73,8 +73,8 @@ class HistoryRecordOperateProxy {
         //构建历史记录数据
         const {layerConfigs, updateLayout} = designerStore;
         const ids: string[] = [];
-        let prev: ResizeDataType | null;
-        let next: ResizeDataType | null;
+        let prev: IResizeOperateData | null;
+        let next: IResizeOperateData | null;
         if (items.length === 1) { //单个组件缩放
             //构建prev数据
             const {width = 0, height = 0} = layerConfigs[items[0].id!];
@@ -104,7 +104,7 @@ class HistoryRecordOperateProxy {
             next = {ids, width: groupCoordinate.groupWidth!, height: groupCoordinate.groupHeight!, direction}
         }
         //构建历史记录节点
-        const data: HistoryRecordType = {type: HistoryType.RESIZE, prev: prev!, next: next!}
+        const data: IHistoryRecord = {type: OperateType.RESIZE, prev: prev!, next: next!}
         //更新布局数据
         updateLayout(items, false);
         //历史记录入队
@@ -134,8 +134,8 @@ class HistoryRecordOperateProxy {
                 //如果addRecordCompId存在，说明是新增组件，该组件的数据需要存储到历史记录中
                 const {addRecordCompId} = eventOperateStore;
                 if (addRecordCompId && addRecordCompId === layout.id) {
-                    const data: HistoryRecordType = {
-                        type: HistoryType.ADD,
+                    const data: IHistoryRecord = {
+                        type: OperateType.ADD,
                         prev: null,
                         next: [{
                             id: layout.id, data: {
@@ -173,7 +173,7 @@ class HistoryRecordOperateProxy {
             }
         });
 
-        const prev: DelDataType[] = [];
+        const prev: IDelOperateData[] = [];
         //可直接删除的数据--构建操作记录
         directDelIds.forEach((id) => {
             const {type} = layerConfigs[id];
@@ -209,9 +209,9 @@ class HistoryRecordOperateProxy {
             }
         );
 
-        const actions: HistoryRecordType[] = [{type: HistoryType.DEL, prev, next: null}];
+        const actions: IHistoryRecord[] = [{type: OperateType.DEL, prev, next: null}];
         if (updPrev.length > 0 || updNext.length > 0)
-            actions.push({type: HistoryType.UPD_LAYER_GROUP, prev: updPrev, next: updNext});
+            actions.push({type: OperateType.UPD_LAYER_GROUP, prev: updPrev, next: updNext});
 
         historyOperator.put({actions});
 
@@ -272,7 +272,7 @@ class HistoryRecordOperateProxy {
         const {layerConfigs, elemConfigs} = designerStore;
         let {maxLevel, setMaxLevel} = eventOperateStore;
         //next用于保存操作记录的下一个状态
-        const next: AddDataType[] = [];
+        const next: IAddOperateData[] = [];
         const newLayouts: MovableItemType[] = [];
 
         //区分图层类型， 普通图层和独立的子图层一类（可直接复制），分组图层及其下子图层一类（复制后重新建立关系）。
@@ -360,7 +360,7 @@ class HistoryRecordOperateProxy {
             }
         })
 
-        historyOperator.put({actions: [{type: HistoryType.ADD, prev: null, next}]})
+        historyOperator.put({actions: [{type: OperateType.ADD, prev: null, next}]})
         setMaxLevel(maxLevel);
         //多个组件同时复制时，需要计算多选框的新位置
         if (newLayouts.length > 1) {
@@ -371,8 +371,8 @@ class HistoryRecordOperateProxy {
     };
 
     public doHideUpd(items: MovableItemType[]): void {
-        let prev: HideDataType[] = [];
-        let next: HideDataType[] = [];
+        let prev: IHideOperateData[] = [];
+        let next: IHideOperateData[] = [];
         const {layerConfigs, updateLayout} = designerStore;
         items.forEach((item) => {
             const {id, hide} = item;
@@ -380,7 +380,7 @@ class HistoryRecordOperateProxy {
             const oldHideData = layerConfigs[id!];
             prev.push({id: id!, hide: oldHideData.hide!});
         })
-        const data: HistoryRecordType = {type: HistoryType.HIDE, prev, next}
+        const data: IHistoryRecord = {type: OperateType.HIDE, prev, next}
         historyOperator.put({actions: [data]});
         //更新隐藏状态
         updateLayout(items);
@@ -397,8 +397,8 @@ class HistoryRecordOperateProxy {
     }
 
     public doLockUpd(items: MovableItemType[]): void {
-        let prev: LockDataType[] = [];
-        let next: LockDataType[] = [];
+        let prev: ILockOperateData[] = [];
+        let next: ILockOperateData[] = [];
         const {layerConfigs, updateLayout} = designerStore;
         items.forEach((item) => {
             const {id, lock} = item;
@@ -406,7 +406,7 @@ class HistoryRecordOperateProxy {
             const oldLockData = layerConfigs[id!];
             prev.push({id: id!, lock: oldLockData.lock!});
         })
-        const data: HistoryRecordType = {type: HistoryType.LOCK, prev, next}
+        const data: IHistoryRecord = {type: OperateType.LOCK, prev, next}
         historyOperator.put({actions: [data]});
         updateLayout(items);
         const {layerInstances, visible} = layerListStore;
@@ -419,8 +419,8 @@ class HistoryRecordOperateProxy {
     }
 
     public doOrderUpd(items: MovableItemType[]): void {
-        let prev: OrderDataType[] = [];
-        let next: OrderDataType[] = [];
+        let prev: IOrderOperateData[] = [];
+        let next: IOrderOperateData[] = [];
         const {layerConfigs, updateLayout} = designerStore;
         items.forEach((item) => {
             const {id, order} = item;
@@ -428,7 +428,7 @@ class HistoryRecordOperateProxy {
             const oldOrderData = layerConfigs[id!];
             prev.push({id: id!, order: oldOrderData.order!});
         })
-        const data: HistoryRecordType = {type: HistoryType.ORDER, prev, next}
+        const data: IHistoryRecord = {type: OperateType.ORDER, prev, next}
         historyOperator.put({actions: [data]});
         updateLayout(items);
     }
@@ -440,10 +440,10 @@ class HistoryRecordOperateProxy {
      */
     public doStyleUpd(newData: ConfigureObjectFragments, oldData: ConfigureObjectFragments): void {
         const {activeElem: {id}} = rightStore;
-        const record: HistoryRecordType = {
-            type: HistoryType.STYLE,
-            prev: {id, data: oldData} as StyleDataType,
-            next: {id, data: newData} as StyleDataType
+        const record: IHistoryRecord = {
+            type: OperateType.UPD_STYLE,
+            prev: {id, data: oldData} as IUpdStyleOperateData,
+            next: {id, data: newData} as IUpdStyleOperateData
         }
         historyOperator.put({actions: [record]});
     }
@@ -472,7 +472,7 @@ class HistoryRecordOperateProxy {
         }
 
         //构建操作记录
-        const actions: HistoryRecordType[] = [];
+        const actions: IHistoryRecord[] = [];
 
         //构建分组数据
         const groupItem: MovableItemType = {
@@ -486,7 +486,7 @@ class HistoryRecordOperateProxy {
         };
 
         //操作记录-新增分组图层
-        actions.push({type: HistoryType.ADD, prev: null, next: [{id: pid, data: {layerConfig: groupItem}}]});
+        actions.push({type: OperateType.ADD, prev: null, next: [{id: pid, data: {layerConfig: groupItem}}]});
 
         addItem(groupItem);
         setMaxLevel(order);
@@ -504,7 +504,7 @@ class HistoryRecordOperateProxy {
         });
         updateLayout(updateItems, false);
         setTargetIds([]);
-        actions.push({type: HistoryType.UPD_LAYER_GROUP, prev: childPrev, next: childNext});
+        actions.push({type: OperateType.UPD_LAYER_GROUP, prev: childPrev, next: childNext});
         historyOperator.put({actions});
         //特殊场景处理，如果编组时，所有的子图层都处于锁定状态，则编组后，编组图层也处于锁定状态
         if (allLock) {
@@ -524,10 +524,10 @@ class HistoryRecordOperateProxy {
         const {layerConfigs, updateLayout, delLayout} = designerStore;
         groupIds = groupIds.filter((id: string) => layerConfigs[id].type === 'group');
         //对每个分组图层进行解组
-        const actions: HistoryRecordType[] = [];
+        const actions: IHistoryRecord[] = [];
         const childPrev: MovableItemType[] = [];
         const childNext: MovableItemType[] = [];
-        const groupPrev: DelDataType[] = [];
+        const groupPrev: IDelOperateData[] = [];
         groupIds.forEach((groupId: string) => {
             let item = layerConfigs[groupId];
             //记录被删除的分组图层
@@ -543,9 +543,9 @@ class HistoryRecordOperateProxy {
             updateLayout(updateItems, false);
             groupPrev.push({id: groupId, data: {layerConfig: item}});
         });
-        actions.push({type: HistoryType.UPD_LAYER_GROUP, prev: childPrev, next: childNext});
+        actions.push({type: OperateType.UPD_LAYER_GROUP, prev: childPrev, next: childNext});
         //操作记录--被删除的分组图层
-        actions.push({type: HistoryType.DEL, prev: groupPrev, next: null});
+        actions.push({type: OperateType.DEL, prev: groupPrev, next: null});
         //执行操作记录入队
         historyOperator.put({actions});
         //2.删除分组图层
