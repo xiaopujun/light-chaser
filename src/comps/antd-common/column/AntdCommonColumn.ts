@@ -45,7 +45,7 @@ export default class AntdCommonColumn extends AntdBaseDesignerController<Column,
         if ((styleConfig.legend) && (styleConfig.legend.itemName?.style as ShapeAttrs))
             (styleConfig!.legend!.itemName!.style as ShapeAttrs).fill = mainText;
         //x轴-文本
-        if ((styleConfig?.xAxis) && (styleConfig?.xAxis?.label?.style as ShapeAttrs).fill)
+        if ((styleConfig?.xAxis) && (styleConfig?.xAxis?.label?.style as ShapeAttrs)?.fill)
             (styleConfig!.xAxis!.label!.style as ShapeAttrs).fill = subText;
         //x轴-标题
         if ((styleConfig?.xAxis) && (styleConfig?.xAxis?.title as ShapeAttrs))
