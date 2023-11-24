@@ -1,8 +1,8 @@
 import AbstractController from "../../framework/core/AbstractController";
-import {AbstractComponentDefinition, ActionInfo, EventInfo} from "../../framework/core/AbstractComponentDefinition";
+import {AbstractDefinition, ActionInfo, EventInfo} from "../../framework/core/AbstractDefinition";
 
 
-export abstract class AntdCommonDefinition<C extends AbstractController = AbstractController, P = any> extends AbstractComponentDefinition<C, P> {
+export abstract class AntdCommonDefinition<C extends AbstractController = AbstractController, P = any> extends AbstractDefinition<C, P> {
 
     getEventList(): Array<EventInfo> {
         return [

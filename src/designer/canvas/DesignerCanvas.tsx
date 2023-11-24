@@ -4,47 +4,32 @@ import designerStore, {DesignerStore} from "../store/DesignerStore";
 import rightStore from "../right/RightStore";
 import DesignerRuler from "./DesignerRuler";
 import DesignerContainer from "../operate-provider/DesignerContainer";
-import GroupMovable from "../operate-provider/movable/GroupMovable";
-import GroupSelectable from "../operate-provider/movable/GroupSelectable";
-import LcRightMenu from "../operate-provider/right-click-menu/ContextMenu";
+import GroupMovable from "../operate-provider/movable/DesignerMovable";
+import GroupSelectable from "../operate-provider/movable/DesignerSelectable";
+import ContextMenu from "../operate-provider/right-click-menu/ContextMenu";
 import HotKey from "../operate-provider/hot-key/HotKey";
 import {hotkeyConfigs} from "../operate-provider/hot-key/HotKeyConfig";
-import ComponentContainer from "../../framework/core/ComponentContainer";
-import {isEqual} from "lodash";
 import {DesignerDragScaleContainer} from "./DesignerDragScaleContainer";
 import layerBuilder from "../float-configs/layer-list/LayerBuilder";
-import {ILayerItem} from "../DesignerType";
+import eventOperateStore from "../operate-provider/EventOperateStore";
+import LayerUtil from "../float-configs/layer-list/util/LayerUtil";
 
 /**
  * 设计器画布
  */
 class DesignerCanvas extends PureComponent<DesignerStore | any> {
 
-    state = {
-        designerRef: null
-    }
-
-    componentDidMount() {
-        this.setState({designerRef: document.querySelector('.lc-ruler-content')});
-    }
-
     updateActive = (e: MouseEvent<HTMLDivElement>) => {
-        let {id, dataset: {type}} = e.target as HTMLDivElement;
-        const {activeConfig, activeElem} = rightStore;
-        if (isEqual(activeElem, {id, type})) return;
-        activeConfig(id, type!);
-    }
-
-    /**
-     * 元素生成
-     */
-    generateElement = () => {
-        let {layerConfigs} = designerStore!;
-        const sortLayout = Object.values(layerConfigs).sort((a: ILayerItem, b: ILayerItem) => a.order! - b.order!);
-        return sortLayout.map((item: ILayerItem) => {
-            if (item.type === 'group') return null;
-            return <ComponentContainer layer={item} key={item.id}/>
-        });
+        const {targetIds} = eventOperateStore;
+        const {layerConfigs} = designerStore!;
+        if (targetIds.length === 0) return;
+        const layerIds = LayerUtil.findTopGroupLayer(targetIds, true);
+        if (layerIds.length !== 1) return;
+        const layerId = layerIds[0];
+        const layer = layerConfigs[layerId];
+        const {activeElem, activeConfig} = rightStore;
+        if (layerId === activeElem.id) return;
+        activeConfig(layerId, layer.type!);
     }
 
     render() {
@@ -62,7 +47,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                         </DesignerRuler>
                     </GroupSelectable>
                 </DesignerContainer>
-                <LcRightMenu/>
+                <ContextMenu/>
                 <HotKey handlerMapping={hotkeyConfigs}/>
             </>
         );

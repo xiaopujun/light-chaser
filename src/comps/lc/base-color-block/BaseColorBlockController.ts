@@ -5,7 +5,7 @@ import ComponentUtil from "../../../utils/ComponentUtil";
 import BaseColorBlockComponent, {BaseColorBlockComponentProps} from "./BaseColorBlockComponent";
 import ObjectUtil from "../../../utils/ObjectUtil";
 
-export class BaseColorBlock extends AbstractDesignerController<BaseColorBlockComponent, BaseColorBlockComponentProps> {
+export class BaseColorBlockController extends AbstractDesignerController<BaseColorBlockComponent, BaseColorBlockComponentProps> {
 
     async create(container: HTMLElement, config: any): Promise<this> {
         this.config = config;

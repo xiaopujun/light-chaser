@@ -10,9 +10,9 @@ import {Component} from "react";
 export class LockRollbackImpl extends AbstractRollback {
     redo(record: IHistoryRecord): void {
         const {next} = record;
-        const {updateLayout} = designerStore;
+        const {updateLayer} = designerStore;
         if (next)
-            updateLayout(next as ILockOperateData[]);
+            updateLayer(next as ILockOperateData[]);
         const {visible, layerInstances} = layerListStore;
         if (visible) {
             //图层列表若显示，则需要更新图层列表的组件状态
@@ -25,9 +25,9 @@ export class LockRollbackImpl extends AbstractRollback {
 
     undo(record: IHistoryRecord): void {
         const {prev} = record;
-        const {updateLayout} = designerStore;
+        const {updateLayer} = designerStore;
         if (prev)
-            updateLayout(prev as ILockOperateData[]);
+            updateLayer(prev as ILockOperateData[]);
         const {visible, layerInstances} = layerListStore;
         if (visible) {
             //图层列表若显示，则需要更新图层列表的组件状态

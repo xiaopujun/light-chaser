@@ -11,7 +11,6 @@ class AntdStackRoseDefinition extends AbstractRoseDefinition {
             compKey: "AntdStackRose",
             type: "玫瑰图",
             typeKey: "rose",
-            desc: "基于Antd Designer实现的堆叠玫瑰图组件",
         };
     }
 
@@ -73,11 +72,10 @@ class AntdStackRoseDefinition extends AbstractRoseDefinition {
             },
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: 'Antd堆叠玫瑰图',
                 type: 'AntdStackRose',
-                desc: '基于Antd Designer实现的堆叠玫瑰图组件',
             },
             style: {
                 data: data,

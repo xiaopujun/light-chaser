@@ -1,5 +1,4 @@
 import React, {Component, useState} from 'react';
-import {ConfigType} from "../../../designer/right/ConfigType";
 import AntdPieController from "./AntdPieController";
 import {WritablePieOptions} from "../../antd-common/types";
 import {PieOptions, StatisticText} from "@antv/g2plot";
@@ -12,6 +11,7 @@ import {AntdLegend} from "../../antd-common/config/legend/AntdLegend";
 import LCGUIUtil from "../../../json-schema/LCGUIUtil";
 import {ShapeAttrs} from "@antv/g-base";
 import ObjectUtil from "../../../utils/ObjectUtil";
+import {ConfigType} from "../../../designer/right/ConfigContent";
 
 export default class AntdPieStyleConfig extends Component<ConfigType> {
 

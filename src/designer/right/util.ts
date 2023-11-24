@@ -1,12 +1,12 @@
-import {DatabaseFilled, HighlightFilled, InteractionFilled, MediumCircleFilled, SkinFilled} from "@ant-design/icons";
+import {AppstoreFilled, DatabaseFilled, HighlightFilled, InteractionFilled, SkinFilled} from "@ant-design/icons";
 import {MenuInfo} from "./MenuType";
 
 export const getDefaultMenuList = (): Array<MenuInfo> => {
     return [
         {
-            icon: MediumCircleFilled,
-            name: '信息',
-            key: 'info',
+            icon: AppstoreFilled,
+            name: '基础',
+            key: 'base',
         },
         {
             icon: HighlightFilled,

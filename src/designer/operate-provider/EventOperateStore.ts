@@ -113,7 +113,7 @@ class EventOperateStore {
     backoff: boolean = false;
 
     /**
-     * 用于记录当前新添加的组件id,实际渲染时根据该id读取组件数据并记录操作日志
+     * 用于记录当前手动（双击或拖拽）新添加的组件id,实际渲染时根据该id读取组件数据并记录操作日志。非手动添加的组件不会记录操作日志
      */
     addRecordCompId: string | null = null;
 
@@ -202,9 +202,7 @@ class EventOperateStore {
         };
         compArr.forEach((item: any) => {
             const layerConfig: ILayerItem = layerConfigs[item.id];
-            let {position, width, height} = layerConfig;
-            const x = position![0];
-            const y = position![1];
+            let {x = 0, y = 0, width, height} = layerConfig!;
             if (x < groupCoordinate.minX!)
                 groupCoordinate.minX = x;
             if (y < groupCoordinate.minY!)

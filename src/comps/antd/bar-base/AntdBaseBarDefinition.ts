@@ -11,7 +11,6 @@ class AntdBaseBarDefinition extends AbstractBarDefinition {
             compKey: "AntdBaseBar",
             type: "条形图",
             typeKey: "bar",
-            desc: "基于Antd Designer实现的基础条形图组件",
         };
     }
 
@@ -35,11 +34,10 @@ class AntdBaseBarDefinition extends AbstractBarDefinition {
             }
         ]
         return {
-            info: {
+            base: {
                 id: "",
                 name: '基础条形图',
                 type: 'AntdBaseBar',
-                desc: '基于antd实现的基础条形图',
             },
             style: {
                 data: data,

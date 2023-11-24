@@ -5,6 +5,7 @@ import Moveable, {
     OnDragEnd,
     OnDragGroup,
     OnDragGroupEnd,
+    OnDragGroupStart,
     OnDragStart,
     OnResize,
     OnResizeEnd,
@@ -18,14 +19,17 @@ import eventOperateStore from "../EventOperateStore";
 import designerStore from "../../store/DesignerStore";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import {ILayerItem} from "../../DesignerType";
+import './DesignerMovable.less';
+import baseInfoStore from "../../../comps/common-component/base-info/BaseInfoStore";
+import LayerUtil from "../../float-configs/layer-list/util/LayerUtil";
 
-class GroupMovable extends React.Component {
+class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }> {
     movableRef = React.createRef<Moveable>();
 
     constructor(props: {}) {
         super(props);
         this.state = {
-            targets: [],
+            throttleDragRotate: 0
         };
     }
 
@@ -35,14 +39,21 @@ class GroupMovable extends React.Component {
     }
 
     onDragStart = (e: OnDragStart) => {
-        const {target} = e;
+        const {target, inputEvent} = e;
         const {layerConfigs} = designerStore;
         const {lock} = layerConfigs[target.id];
         if (lock) return false;
+        if (inputEvent && inputEvent.shiftKey)
+            this.setState({throttleDragRotate: 90});
+    }
+
+    onDrag = (e: OnDrag) => {
+        const {target, beforeTranslate} = e;
+        target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
     }
 
     onDragEnd = (e: OnDragEnd) => {
-        const {updateLayout} = designerStore;
+        const {updateLayer} = designerStore;
         let {backoff, setBackoff} = eventOperateStore;
         const {lastEvent, target} = e;
         if (lastEvent) {
@@ -53,26 +64,50 @@ class GroupMovable extends React.Component {
                     width: (target as HTMLDivElement).offsetWidth,
                     height: (target as HTMLDivElement).offsetHeight,
                     type: target.dataset.type,
-                    position: [beforeTranslate[0], beforeTranslate[1]]
+                    x: beforeTranslate[0],
+                    y: beforeTranslate[1]
                 }
             ];
             //更新组件位置信息
             if (backoff) {
-                updateLayout(data, false);
+                updateLayer(data, false);
                 setBackoff(false);
             } else
-                historyRecordOperateProxy.doDrag(data)
+                historyRecordOperateProxy.doDrag(data);
+            //更新右侧菜单中的位置信息
+            const {updateBaseConfig} = baseInfoStore;
+            updateBaseConfig(data[0]);
         }
+        const {throttleDragRotate} = this.state;
+        if (throttleDragRotate !== 0)
+            this.setState({throttleDragRotate: 0});
+    }
+
+    onDragGroupStart = (e: OnDragGroupStart) => {
+        const {inputEvent} = e;
+        if (inputEvent && inputEvent.shiftKey)
+            this.setState({throttleDragRotate: 90});
+    }
+
+    onDragGroup = (e: OnDragGroup) => {
+        const {targets} = e;
+        const {layerConfigs} = designerStore;
+        //通过第一个元素来判断。 框选的所有组件是否处于锁定状态，处于锁定状态，则不允许拖拽和缩放。
+        const firstLock = layerConfigs[targets[0].id].lock;
+        if (firstLock)
+            return false;
+        else
+            e.events.forEach(ev => ev.target.style.transform = ev.transform)
     }
 
     onDragGroupEnd = (e: OnDragGroupEnd) => {
         const {targets} = e;
         //通过第一个元素来判断。 框选的所有组件是否处于锁定状态，处于锁定状态，则不允许拖拽和缩放。
-        const {updateLayout, layerConfigs} = designerStore;
+        const {updateLayer, layerConfigs} = designerStore;
         const firstLock = layerConfigs[targets[0].id].lock;
         if (firstLock) return false;
 
-        let {backoff, setBackoff, setGroupCoordinate, groupCoordinate} = eventOperateStore;
+        let {backoff, setBackoff, setGroupCoordinate, groupCoordinate, targetIds} = eventOperateStore;
         let data: ILayerItem[] = [];
         e.events.forEach((ev: any) => {
             const {target, lastEvent} = ev;
@@ -83,7 +118,8 @@ class GroupMovable extends React.Component {
                     width: target.offsetWidth,
                     height: target.offsetHeight,
                     type: target.dataset.type,
-                    position: [beforeTranslate[0], beforeTranslate[1]]
+                    x: beforeTranslate[0],
+                    y: beforeTranslate[1]
                 })
             }
         })
@@ -95,15 +131,42 @@ class GroupMovable extends React.Component {
         //更新组件位置信息并记录操作
         if (data.length > 0) {
             if (backoff) {
-                updateLayout(data, false);
+                updateLayer(data, false);
                 setBackoff(false);
             } else
                 historyRecordOperateProxy.doDrag(data)
         }
+        const {throttleDragRotate} = this.state;
+        if (throttleDragRotate !== 0)
+            this.setState({throttleDragRotate: 0});
+        //更新右侧菜单中的位置信息
+        const layerIds = LayerUtil.findTopGroupLayer(targetIds, true);
+        if (layerIds.length === 1) {
+            const {updateBaseConfig} = baseInfoStore;
+            updateBaseConfig({
+                id: layerIds[0],
+                x: Math.round(minX),
+                y: Math.round(minY),
+            });
+        }
+    }
+
+    onResizeStart = (e: OnResizeStart) => {
+        const {target} = e;
+        const {layerConfigs} = designerStore;
+        const {lock} = layerConfigs[target.id];
+        if (lock) return false;
+    }
+
+    onResize = (e: OnResize) => {
+        const {target, width, height, drag} = e;
+        target.style.width = `${width}px`;
+        target.style.height = `${height}px`;
+        target.style.transform = `translate(${drag.beforeTranslate[0]}px, ${drag.beforeTranslate[1]}px)`;
     }
 
     onResizeEnd = (e: OnResizeEnd) => {
-        const {updateLayout} = designerStore;
+        const {updateLayer} = designerStore;
         let {backoff, setBackoff} = eventOperateStore;
         const {target, lastEvent} = e;
         if (lastEvent) {
@@ -114,21 +177,40 @@ class GroupMovable extends React.Component {
                     width: width,
                     height: height,
                     type: target.dataset.type,
-                    position: [translate[0], translate[1]]
+                    x: translate[0],
+                    y: translate[1],
                 }
             ];
             //更新组件尺寸信息
             if (backoff) {
-                updateLayout(data, false);
+                updateLayer(data, false);
                 setBackoff(false);
             } else
                 historyRecordOperateProxy.doResize(data, direction);
+            //更新右侧菜单中的尺寸信息
+            const {updateBaseConfig} = baseInfoStore;
+            updateBaseConfig(data[0]);
         }
     }
 
+    onResizeGroupStart = (e: OnResizeGroupStart) => {
+        const {targets} = e;
+        const {layerConfigs} = designerStore;
+        const firstLock = layerConfigs[targets[0].id].lock;
+        if (firstLock) return false;
+    }
+
+    onResizeGroup = (e: OnResizeGroup) => {
+        e.events.forEach((ev: OnResize) => {
+            ev.target.style.width = `${ev.width}px`;
+            ev.target.style.height = `${ev.height}px`;
+            ev.target.style.transform = ev.drag.transform;
+        })
+    }
+
     onResizeGroupEnd = (e: OnResizeGroupEnd) => {
-        const {updateLayout} = designerStore;
-        let {backoff, setBackoff} = eventOperateStore;
+        const {updateLayer} = designerStore;
+        let {backoff, setBackoff, targetIds} = eventOperateStore;
         let data: ILayerItem[] = [];
         e.events.forEach((ev: any) => {
             const {target, lastEvent} = ev;
@@ -139,7 +221,8 @@ class GroupMovable extends React.Component {
                     width: target.offsetWidth,
                     height: target.offsetHeight,
                     type: target.dataset.type,
-                    position: [translate[0], translate[1]]
+                    x: translate[0],
+                    y: translate[1]
                 })
             }
         })
@@ -148,7 +231,7 @@ class GroupMovable extends React.Component {
         //更新组件尺寸和坐标信息
         if (data.length > 0) {
             if (backoff) {
-                updateLayout(data, false);
+                updateLayer(data, false);
                 setBackoff(false);
             } else
                 historyRecordOperateProxy.doResize(data, direction)
@@ -169,55 +252,23 @@ class GroupMovable extends React.Component {
                     groupHeight: groupCoordinate.groupHeight + dist[1],
                 })
             }
+            //更新右侧菜单中的尺寸，位置信息
+            const layerIds = LayerUtil.findTopGroupLayer(targetIds, true);
+            if (layerIds.length === 1) {
+                const {updateBaseConfig} = baseInfoStore;
+                updateBaseConfig({
+                    id: layerIds[0],
+                    x: Math.round(groupCoordinate.minX!),
+                    y: Math.round(groupCoordinate.minY!),
+                    width: Math.round(groupCoordinate.groupWidth!),
+                    height: Math.round(groupCoordinate.groupHeight!)
+                });
+            }
         }
     }
 
-    onResizeGroup = (e: OnResizeGroup) => {
-        e.events.forEach((ev: OnResize) => {
-            ev.target.style.width = `${ev.width}px`;
-            ev.target.style.height = `${ev.height}px`;
-            ev.target.style.transform = ev.drag.transform;
-        })
-    }
-
-    onResize = (e: OnResize) => {
-        const {target, width, height, drag} = e;
-        target.style.width = `${width}px`;
-        target.style.height = `${height}px`;
-        target.style.transform = `translate(${drag.beforeTranslate[0]}px, ${drag.beforeTranslate[1]}px)`;
-    }
-
-    onResizeStart = (e: OnResizeStart) => {
-        const {target} = e;
-        const {layerConfigs} = designerStore;
-        const {lock} = layerConfigs[target.id];
-        if (lock) return false;
-    }
-
-    onDrag = (e: OnDrag) => {
-        const {target, beforeTranslate} = e;
-        target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
-    }
-
-    onDragGroup = (e: OnDragGroup) => {
-        const {targets} = e;
-        const {layerConfigs} = designerStore;
-        //通过第一个元素来判断。 框选的所有组件是否处于锁定状态，处于锁定状态，则不允许拖拽和缩放。
-        const firstLock = layerConfigs[targets[0].id].lock;
-        if (firstLock)
-            return false;
-        else
-            e.events.forEach(ev => ev.target.style.transform = ev.transform)
-    }
-
-    onResizeGroupStart = (e: OnResizeGroupStart) => {
-        const {targets} = e;
-        const {layerConfigs} = designerStore;
-        const firstLock = layerConfigs[targets[0].id].lock;
-        if (firstLock) return false;
-    }
-
     render() {
+        const {throttleDragRotate} = this.state;
         const {selectorRef, targets} = eventOperateStore;
         const {canvasConfig: {rasterize, dragStep, resizeStep}} = designerStore;
         //获取需要辅助线导航的元素
@@ -233,6 +284,7 @@ class GroupMovable extends React.Component {
                     //保持尺寸比例
                     keepRatio={false}
                     //辅助线可捕捉显示的最大距离
+                    throttleDragRotate={throttleDragRotate}
                     maxSnapElementGuidelineDistance={300}
                     snappable={true}
                     snapGap={false}
@@ -271,6 +323,7 @@ class GroupMovable extends React.Component {
                     onDrag={this.onDrag}
                     onDragStart={this.onDragStart}
                     onDragEnd={this.onDragEnd}
+                    onDragGroupStart={this.onDragGroupStart}
                     onDragGroup={this.onDragGroup}
                     onDragGroupEnd={this.onDragGroupEnd}
                     onResizeStart={this.onResizeStart}
@@ -285,7 +338,7 @@ class GroupMovable extends React.Component {
     }
 }
 
-export default observer(GroupMovable);
+export default observer(DesignerMovable);
 
 
 export interface DimensionViewableProps {
@@ -300,8 +353,6 @@ export const DimensionViewable = {
     events: {},
     render(moveable: MoveableManagerInterface) {
         const rect = moveable.getRect();
-
-        //todo 思考如何保证缩放比例？
         return <div key={"dimension-viewer"} className={"moveable-dimension"} style={{
             left: `-125px`,
             top: `-60px`,

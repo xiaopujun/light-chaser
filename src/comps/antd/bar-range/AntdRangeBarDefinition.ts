@@ -11,7 +11,6 @@ class AntdRangeBarDefinition extends AbstractBarDefinition {
             compKey: "AntdRangeBar",
             type: "条形图",
             typeKey: "bar",
-            desc: "基于Antd Designer实现的区间条形图组件",
         };
     }
 
@@ -27,11 +26,10 @@ class AntdRangeBarDefinition extends AbstractBarDefinition {
             {type: 'sort4', values: [20, 135]},
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: 'Antd区间条形图',
                 type: 'AntdRangeBar',
-                desc: '基于Antd Designer实现的区间条形图组件',
             },
             style: {
                 data: data,

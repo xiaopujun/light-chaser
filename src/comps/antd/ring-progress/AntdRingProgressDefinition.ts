@@ -1,5 +1,5 @@
 import React from "react";
-import {MenuToConfigMappingType} from "../../../framework/core/AbstractComponentDefinition";
+import {MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {ClazzTemplate} from "../../common-component/common-types";
@@ -27,7 +27,7 @@ class AntdRingProgressDefinition extends AntdCommonDefinition<AntdRingProgressCo
 
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
-            info: BaseInfo,
+            base: BaseInfo,
             data: DataConfig,
             style: AntdRingProgressStyleConfig,
             animation: AnimationConfig,
@@ -41,7 +41,6 @@ class AntdRingProgressDefinition extends AntdCommonDefinition<AntdRingProgressCo
             compKey: "AntdRingProgress",
             type: "进度图",
             typeKey: "progress",
-            desc: "基于Antd Designer实现的迷你环图组件",
         };
     }
 
@@ -51,11 +50,10 @@ class AntdRingProgressDefinition extends AntdCommonDefinition<AntdRingProgressCo
 
     getInitConfig(): AntdRingProgressProps {
         return {
-            info: {
+            base: {
                 id: "",
                 name: 'Antd迷你环图',
                 type: 'AntdRingProgress',
-                desc: '基于Antd Designer实现的迷你环图组件',
             },
             style: {
                 percent: 0.7,

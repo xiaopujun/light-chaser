@@ -2,7 +2,7 @@ import {BaseInfoType} from "../../../designer/DesignerType";
 import baseAreaImg from "./base-area.png";
 import AbstractAreaDefinition from "../../antd-common/area/AbstractAreaDefinition";
 import {AntdAreaProps} from "../../antd-common/area/AntdCommonAreaController";
-import {MenuToConfigMappingType} from "../../../framework/core/AbstractComponentDefinition";
+import {MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import React from "react";
 
 const AntdBaseAreaStyleConfig = React.lazy(() => import("./AntdBaseAreaConfig").then((module) => ({default: module.AntdBaseAreaStyleConfig})));
@@ -16,7 +16,6 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
             compKey: "AntdBaseArea",
             type: "条形图",
             typeKey: "area",
-            desc: "基于Antd Designer实现的基础面积图组件",
         };
     }
 
@@ -39,11 +38,10 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
             {"name": "Q4", "value": 220}
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: '基础面积图',
                 type: 'AntdBaseArea',
-                desc: '基于antd实现的基础面积图',
             },
             style: {
                 data: data,

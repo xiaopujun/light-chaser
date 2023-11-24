@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import {ConfigType} from "../../../designer/right/ConfigType";
+import {ConfigType} from "../../../designer/right/ConfigContent";
 
 class AntdGaugeConfig extends Component<ConfigType> {
 

@@ -81,7 +81,7 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
     }
 
     private registerEvent(): void {
-        const nodeId = this.config?.info?.id!;
+        const nodeId = this.config?.base?.id!;
         this.instance?.on('plot:click', (...args: any) => {
             BPExecutor.triggerComponentEvent(nodeId!, "globalClick", {msg: '这是测试参数'})
         });

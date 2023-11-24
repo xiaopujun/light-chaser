@@ -11,7 +11,6 @@ class AntdStackColumnDefinition extends AbstractColumnDefinition {
             compKey: "AntdStackColumn",
             type: "柱状图",
             typeKey: "column",
-            desc: "基于Antd Designer实现的堆叠柱状图组件",
         };
     }
 
@@ -53,11 +52,10 @@ class AntdStackColumnDefinition extends AbstractColumnDefinition {
             },
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: 'Antd堆叠柱状图',
                 type: 'AntdStackColumn',
-                desc: '基于Antd Designer实现的堆叠柱状图组件',
             },
             style: {
                 data: data,

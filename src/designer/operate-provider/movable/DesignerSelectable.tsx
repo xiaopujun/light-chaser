@@ -28,7 +28,7 @@ export function setControlPointLineColor(lock: boolean) {
     }
 }
 
-class GroupSelectable extends Component {
+class DesignerSelectable extends Component {
     selectorRef = React.createRef<Selecto>();
 
     componentDidMount() {
@@ -44,9 +44,10 @@ class GroupSelectable extends Component {
         //如果为拖拽，则将当前的整个dom事件传递给movable，确保选中元素后可以立马拖拽
         if (e.isDragStart) {
             e.inputEvent.preventDefault();
-            setTimeout(() => {
+            const selectTimer = setTimeout(() => {
                 //使用异步操作，确保在拖拽前已经给movable传递target
                 movable.dragStart(e.inputEvent);
+                clearTimeout(selectTimer);
             });
         }
 
@@ -61,7 +62,6 @@ class GroupSelectable extends Component {
             } else {
                 //分组图层--选中这个分组下的所有未锁定、未隐藏的组件
                 layerIds = LayerUtil.findAllChildLayerBySubId(layerIds);
-                selected = layerIds.map((id) => document.getElementById(id)!).filter((item) => !!item);
             }
         } else if (layerIds.length > 1) {
             /**
@@ -127,4 +127,4 @@ class GroupSelectable extends Component {
     }
 }
 
-export default observer(GroupSelectable);
+export default observer(DesignerSelectable);

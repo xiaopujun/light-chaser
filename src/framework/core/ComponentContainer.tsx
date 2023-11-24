@@ -36,7 +36,7 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
                     style={{
                         width: layer.width,
                         height: layer.height,
-                        transform: `translate(${layer.position![0]}px, ${layer.position![1]}px)`,
+                        transform: `translate(${layer.x!}px, ${layer.y!}px)`,
                         position: 'absolute',
                         display: layer.hide ? 'none' : 'block',
                         border: auxiliaryBorder ? '1px solid #65eafc' : 'none'

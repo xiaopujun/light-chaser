@@ -2,6 +2,7 @@ import AbstractRollback from "./AbstractRollback";
 import eventOperateStore from "../../EventOperateStore";
 import {IAddOperateData, IHistoryRecord} from "../OperateType";
 import designerStore from "../../../store/DesignerStore";
+import rightStore from "../../../right/RightStore";
 
 export class AddRollbackImpl extends AbstractRollback {
     redo(record: IHistoryRecord): void {
@@ -24,6 +25,12 @@ export class AddRollbackImpl extends AbstractRollback {
         delItem(delIds);
         //清空框选状态,避免空框选
         setTargetIds([]);
+        //如果右侧属性面板展示的设置项对应的组件，正是当前被删除的组件，则卸载属性面板
+        const {setContentVisible, activeConfig, activeElem} = rightStore;
+        if (delIds.includes(activeElem.id!)) {
+            setContentVisible(false);
+            activeConfig(null, "");
+        }
     }
 
 }

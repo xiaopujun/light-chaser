@@ -1,18 +1,23 @@
 import React, {useEffect} from "react";
 import Moveable, {OnDrag, OnDragEnd, OnDragStart} from "react-moveable";
-import bpStore from "../store/BPStore";
+import bpStore, {IBPLine, IPoint} from "../store/BPStore";
 import {observer} from "mobx-react";
 import CanvasUtil from "../util/CanvasUtil";
-import {BPLineType, PointType} from "../BPTypes";
 
 export interface BPMovableProps {
     children?: React.ReactNode;
 }
 
-export const reRenderLine = () => {
-    const {bpLines, downCtx, canvasOffset} = bpStore;
+export const reRenderAllLine = () => {
+    const {bpLines} = bpStore;
+    reRenderLine(Object.values(bpLines));
+}
+
+export const reRenderLine = (lines: IBPLine[]) => {
+    const {downCtx, canvasOffset, nodeContainerRef} = bpStore;
+    const {width: canvasW, height: canvasH} = nodeContainerRef?.getBoundingClientRect()!;
     //更新每条线的起始点和终点
-    Object.values(bpLines).forEach((line: BPLineType) => {
+    lines.forEach((line: IBPLine) => {
         //重新设置连线的起始点和终点
         const {startAnchorId, endAnchorId} = line;
         const startDom = document.getElementById(startAnchorId!);
@@ -32,19 +37,14 @@ export const reRenderLine = () => {
         const controlPoi = CanvasUtil.calculateControlPoint(line.startPoint, line.endPoint);
         line.firstCP = controlPoi.firstCP;
         line.secondCP = controlPoi.secondCP;
-        //重新计算采样点
-        const {startPoint, firstCP, secondCP, endPoint} = line;
-        line.samplePoints = CanvasUtil.sampleBezierCurve(startPoint!, firstCP!, secondCP!, endPoint, 20);
     });
 
     //重新绘制连线
-    downCtx!.clearRect(0, 0, 10000, 10000);
-    Object.values(bpLines).forEach((line: BPLineType) => {
-        CanvasUtil.drawBezierCurves(downCtx!, line);
-    })
+    downCtx!.clearRect(0, 0, canvasW, canvasH);
+    CanvasUtil.drawBezierCurves(downCtx!, lines);
 }
 
-export const updNodeAndLinePos = (nodeId: string, position: PointType) => {
+export const updNodeAndLinePos = (nodeId: string, position: IPoint) => {
     const {
         bpNodeControllerInsMap, bpAPLineMap, bpLines,
         updLinePos, updBpNodeLayout, canvasOffset
@@ -100,8 +100,7 @@ export const BPMovable = observer((props: BPMovableProps) => {
         const onDrag = (e: OnDrag) => {
             const {target, beforeTranslate} = e;
             target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
-            //重绘连线
-            reRenderLine();
+            reRenderAllLine();
         }
 
         const onDragStart = (e: OnDragStart) => {
@@ -118,12 +117,13 @@ export const BPMovable = observer((props: BPMovableProps) => {
             const {beforeTranslate} = lastEvent;
             const nodeId = target.id.split(':')[1];
             updNodeAndLinePos(nodeId, {x: beforeTranslate[0], y: beforeTranslate[1]});
+            CanvasUtil.updSegmentSamplingPoint();
         }
 
         const onDragGroup = (e: any) => {
             e.events.forEach((ev: any) => ev.target.style.transform = ev.transform);
             //重绘连线
-            reRenderLine();
+            reRenderAllLine();
         }
 
         const onDragGroupEnd = (e: any) => {
@@ -135,6 +135,7 @@ export const BPMovable = observer((props: BPMovableProps) => {
                     updNodeAndLinePos(nodeId, {x: beforeTranslate[0], y: beforeTranslate[1]});
                 }
             })
+            CanvasUtil.updSegmentSamplingPoint();
         }
 
         const {selectedNodes} = bpStore;
@@ -145,7 +146,7 @@ export const BPMovable = observer((props: BPMovableProps) => {
                           target={selectedNodes}
                           draggable={true}
                           origin={false}
-                          hideDefaultLines={false}
+                          hideDefaultLines={true}
                           onDragStart={onDragStart}
                           onDrag={onDrag}
                           onDragEnd={onDragEnd}

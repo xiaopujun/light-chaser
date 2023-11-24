@@ -6,6 +6,7 @@ import {cloneDeep} from "lodash";
 import layerListStore from "./LayerListStore";
 import ComponentContainer from "../../../framework/core/ComponentContainer";
 import {ILayerItem} from "../../DesignerType";
+import GroupLayer from "../../../comps/group-layer/GroupLayer";
 
 export enum RenderOrder {
     ASC,
@@ -103,8 +104,7 @@ class LayerBuilder {
             children?.forEach((item: ILayerItem) => {
                 childDomArr.push(this.buildComponents(item));
             });
-            return <div key={layer.id} className={'component-group'}
-                        style={{position: 'absolute'}}>{childDomArr}</div>;
+            return <GroupLayer layer={layer} key={layer.id}>{childDomArr}</GroupLayer>;
         } else {
             return <ComponentContainer layer={layer} key={layer.id}/>;
         }

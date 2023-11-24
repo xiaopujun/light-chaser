@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {ConfigType} from "../../../designer/right/ConfigType";
 import {AntdCartesianCoordinateSys} from "../config/AntdFragment";
 import {Column, ColumnOptions} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
@@ -10,6 +9,7 @@ import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
 import AntdCommonUtil from "../AntdCommonUtil";
 import {AntdLegend} from "../config/legend/AntdLegend";
+import {ConfigType} from "../../../designer/right/ConfigContent";
 
 class AntdColumnCommonStyleConfig extends Component<ConfigType> {
 

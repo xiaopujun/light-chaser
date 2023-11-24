@@ -2,7 +2,8 @@ import {action, makeObservable, observable, runInAction, toJS} from "mobx";
 import {isEqual} from "lodash";
 import {
     CanvasConfig,
-    IExtendParams, ILayerItem,
+    IExtendParams,
+    ILayerItem,
     ProjectConfig,
     ProjectDataType,
     ProjectState,
@@ -10,7 +11,6 @@ import {
     Statistic,
     ThemeItemType,
 } from "../DesignerType";
-import AbstractBaseStore from "../../framework/core/AbstractBaseStore";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
 import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryRecordOperateProxy";
 import ObjectUtil from "../../utils/ObjectUtil";
@@ -18,12 +18,12 @@ import ObjectUtil from "../../utils/ObjectUtil";
 /**
  * 设计器核心状态管理类，记录了设计器中的核心数据。包括组件配置，组件布局。 全局设置等。
  */
-class DesignerStore implements AbstractBaseStore {
+class DesignerStore {
     constructor() {
         makeObservable(this, {
             canvasConfig: observable,
             projectConfig: observable,
-            layerConfigs: observable,
+            layerConfigs: observable.shallow,
             statisticInfo: observable,
             themeConfig: observable,
             extendParams: observable,
@@ -32,7 +32,7 @@ class DesignerStore implements AbstractBaseStore {
             addItem: action,
             delItem: action,
             setLoaded: action,
-            updateLayout: action,
+            updateLayer: action,
             updateThemeConfig: action,
             flashGlobalTheme: action,
             updateCanvasConfig: action,
@@ -220,7 +220,7 @@ class DesignerStore implements AbstractBaseStore {
     /**
      * 更新布局
      */
-    updateLayout = (items: ILayerItem[], reRender: boolean = true) => {
+    updateLayer = (items: ILayerItem[], reRender: boolean = true) => {
         for (const item of items) {
             let oldItem = this.layerConfigs[item.id + ""];
             if (!isEqual(oldItem, item))

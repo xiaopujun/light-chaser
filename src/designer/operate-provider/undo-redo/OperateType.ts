@@ -42,7 +42,7 @@ export enum OperateType {
      */
     GROUP,
     /**
-     * 更新图层数据
+     * 更新图层分组
      */
     UPD_LAYER_GROUP,
 }

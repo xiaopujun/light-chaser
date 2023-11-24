@@ -11,7 +11,6 @@ class AntdPercentAreaDefinition extends AbstractAreaDefinition {
             compKey: "AntdPercentArea",
             type: "条形图",
             typeKey: "area",
-            desc: "基于Antd Designer实现的百分比面积图组件",
         };
     }
 
@@ -128,11 +127,10 @@ class AntdPercentAreaDefinition extends AbstractAreaDefinition {
             }
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: '百分比面积图',
                 type: 'AntdPercentArea',
-                desc: '基于antd实现的百分比面积图',
             },
             style: {
                 data: data,

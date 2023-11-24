@@ -5,7 +5,7 @@ import ComponentUtil from "../../../utils/ComponentUtil";
 import BaseIframeComponent, {BaseIframeComponentProps} from "./BaseIframeComponent";
 import ObjectUtil from "../../../utils/ObjectUtil";
 
-export class BaseIframe extends AbstractDesignerController<BaseIframeComponent, BaseIframeComponentProps> {
+export class BaseIframeController extends AbstractDesignerController<BaseIframeComponent, BaseIframeComponentProps> {
 
     async create(container: HTMLElement, config: any): Promise<this> {
         this.config = config;

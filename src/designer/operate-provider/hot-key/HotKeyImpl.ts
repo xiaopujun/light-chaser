@@ -11,7 +11,7 @@ import layerListStore from "../../float-configs/layer-list/LayerListStore";
 import footerStore from "../../footer/FooterStore";
 import DateUtil from "../../../utils/DateUtil";
 import bpStore from "../../../blueprint/store/BPStore";
-import {reRenderLine} from "../../../blueprint/drag/BPMovable";
+import {reRenderAllLine} from "../../../blueprint/drag/BPMovable";
 import bpLeftStore from "../../../blueprint/left/BPLeftStore";
 import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
 import {OperateResult} from "../../../framework/operate/AbstractOperator";
@@ -132,7 +132,7 @@ export const doSave = throttle(() => {
             proData.bpAPLineMap = bpAPLineMap;
             proData.bpNodeConfigMap = getAllNodeConfig();
             proData.bpNodeLayoutMap = bpNodeLayoutMap;
-            DesignerLoaderFactory.getLoader().abstractOperatorMap[saveType].saveProject(cloneDeep(proData)).then((res: OperateResult) => {
+            DesignerLoaderFactory.getLoader().operatorMap[saveType].saveProject(cloneDeep(proData)).then((res: OperateResult) => {
                 const {status, msg} = res;
                 if (status)
                     message.success(msg);
@@ -181,7 +181,7 @@ export const doMoveUp = () => {
     const {layerConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (targets.length === 1) {
         let id = targets[0].id;
-        let yPos = layerConfigs[id].position![1] - dragStep;
+        let yPos = layerConfigs[id].y! - dragStep;
         movableRef?.current?.request("draggable", {y: yPos}, true);
     } else {
         const yPos = groupCoordinate?.minY! - dragStep;
@@ -195,7 +195,7 @@ export const doMoveDown = () => {
     const {layerConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (targets.length === 1) {
         let id = targets[0].id;
-        let yPos = layerConfigs[id].position![1] + dragStep;
+        let yPos = layerConfigs[id].y! + dragStep;
         movableRef?.current?.request("draggable", {y: yPos}, true);
     } else {
         const yPos = groupCoordinate?.minY! + dragStep;
@@ -209,7 +209,7 @@ export const doMoveLeft = () => {
     const {layerConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (targets.length === 1) {
         let id = targets[0].id;
-        let xPos = layerConfigs[id].position![0];
+        let xPos = layerConfigs[id].x!;
         movableRef?.current?.request("draggable", {x: xPos - dragStep}, true);
     } else {
         const xPos = groupCoordinate?.minX! - dragStep;
@@ -223,7 +223,7 @@ export const doMoveRight = () => {
     const {layerConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (targets.length === 1) {
         let id = targets[0].id;
-        let xPos = layerConfigs[id].position![0];
+        let xPos = layerConfigs[id].x!;
         movableRef?.current?.request("draggable", {x: xPos + dragStep}, true);
     } else {
         const xPos = groupCoordinate?.minX! + dragStep;
@@ -480,7 +480,7 @@ export const delBPNode = () => {
         if (nodeId in usedLayerNodes)
             setUsedLayerNodes(nodeId, false);
     })
-    reRenderLine();
+    reRenderAllLine();
 }
 
 /**
@@ -493,5 +493,5 @@ export const delBPLine = () => {
     if (selectedLines.length === 0) return;
     const selectedLineIds = selectedLines.map(line => line.id!);
     delLine(selectedLineIds);
-    reRenderLine();
+    reRenderAllLine();
 }

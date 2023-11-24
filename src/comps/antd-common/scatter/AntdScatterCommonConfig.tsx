@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {ConfigType} from "../../../designer/right/ConfigType";
 import {AntdCartesianCoordinateSys} from "../config/AntdFragment";
 import {Scatter, ScatterOptions} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
@@ -12,6 +11,7 @@ import {Control} from "../../../json-schema/SchemaTypes";
 import AntdCommonUtil from "../AntdCommonUtil";
 import {AntdLegend} from "../config/legend/AntdLegend";
 import {ShapeAttrs} from "@antv/g-base";
+import {ConfigType} from "../../../designer/right/ConfigContent";
 
 class AntdScatterCommonStyleConfig extends Component<ConfigType> {
 

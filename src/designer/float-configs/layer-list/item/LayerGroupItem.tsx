@@ -1,37 +1,38 @@
-import previewClose from "../icon/preview-close.svg";
-import previewOpen from "../icon/preview-open.svg";
-import lockImg from "../icon/lock.svg";
-import unlockImg from "../icon/unlock.svg";
-import {FolderOpenFilled} from "@ant-design/icons";
+import {EditFilled, EyeFilled, EyeInvisibleFilled, FolderOpenFilled, UnlockFilled, UsbFilled} from "@ant-design/icons";
 import {BaseLayer} from "./BaseLayer";
 
 export default class LayerGroupItem extends BaseLayer {
 
     render() {
         const {children} = this.props;
-        const {hide, lock, showContent, selected, name} = this.state;
+        const {hide, lock, showContent, selected, name, inputMode} = this.state;
         return (
             <div className={'layer-group'}>
                 <div className={`group-header ${selected ? "layer-selected" : hide
                     ? "layer-hide" : lock ? "layer-lock" : ""}`}
-                     onClick={(e) => {
-                         this.onSelected(e);
-                         this.setState({showContent: !showContent})
-                     }}>
+                     onDoubleClick={this.openInput}
+                     onClick={(e) => this.onSelected(e)}>
                     <div className={'group-left'}>
-                        <div className={'group-icon'}><FolderOpenFilled/></div>
-                        <div className={'group-name'}>{name}</div>
+                        <div className={'group-icon'} onClick={() => this.setState({showContent: !showContent})}>
+                            <FolderOpenFilled/></div>
+                        <div className={'group-name'}>{inputMode ?
+                            <input type="text" defaultValue={name} autoFocus={true} onChange={this.changeLayerName}
+                                   onKeyDown={(e) => {
+                                       if (e.code === "Enter")
+                                           this.closeInput();
+                                   }}
+                                   onBlur={this.closeInput}/> : name}
+                        </div>
                     </div>
                     <div className={'group-operators'}>
-                        <div className={'group-operator'}>
-                            <span onClick={this.toggleHide}>
-                                <img src={hide ? previewClose : previewOpen} alt={hide ? '显示' : '隐藏'}/>
-                            </span>
+                        <div className={'group-operator'} onClick={this.openInput}>
+                            <EditFilled/>
                         </div>
-                        <div className={'group-operator'}>
-                            <span onClick={this.toggleLock}>
-                                <img src={lock ? lockImg : unlockImg} alt={lock ? '锁定' : '解锁'}/>
-                            </span>
+                        <div className={'group-operator'} onClick={this.toggleHide}>
+                            {hide ? <EyeInvisibleFilled/> : <EyeFilled/>}
+                        </div>
+                        <div className={'group-operator'} onClick={this.toggleLock}>
+                            {lock ? <UsbFilled/> : <UnlockFilled/>}
                         </div>
                     </div>
                 </div>

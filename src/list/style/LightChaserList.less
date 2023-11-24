@@ -1,17 +1,17 @@
 .lc-console {
 
   .console-head {
-    border-bottom: 2px solid #2A2A2A96;
+    border-bottom: 1px solid #2e2e2e;
     display: flex;
     height: 64px;
     padding: 0 20px;
     align-items: center;
-    background-color: #141414;
+    background-color: #1f1f1f;
 
     .console-head-title {
-      font-size: 21px;
-      font-weight: 600;
-      color: rgb(40, 255, 255);
+      font-size: 16px;
+      font-weight: 500;
+      color: #bfbfbfff;
     }
   }
 
@@ -21,11 +21,11 @@
     .console-list {
       width: 200px;
       height: calc(100vh - 64px);
-      background-color: #141414;
-      border-right: 1px solid #2A2A2A96;
+      background-color: #1f1f1f;
+      border-right: 1px solid #2e2e2e;
 
       .console-list-item:hover {
-        background-color: rgba(38, 56, 56, 0.84);
+        background-color: #474747d6;
         cursor: pointer;
       }
 
@@ -33,18 +33,18 @@
         color: #c5c5c5;
         display: flex;
         padding: 5px 10px;
-        font-size: 16px;
+        font-size: 12px;
         height: 50px;
         line-height: 40px;
         transition: background-color 0.5s ease;
 
         .item-icon {
-          margin-right: 15px;
+          margin-right: 8px;
           position: relative;
           top: -1px;
 
           img {
-            width: 18px;
+            width: 14px;
           }
         }
       }
@@ -53,7 +53,7 @@
     .console-content {
       width: calc(100vw - 200px);
       height: calc(100vh - 64px);
-      background-color: #171717;
+      background-color: #1f1f1f;
       padding: 15px;
       overflow-y: scroll;
 
