@@ -4,7 +4,7 @@ import './App.less';
 import {Route, Switch} from "react-router-dom";
 import Loading from "./ui/loading/Loading";
 import {Login} from "./pages/login/Login";
-import LayerGroupItem from "./designer/float-configs/layer-list/group/LayerGroupItem";
+import LayerGroupItem from "./designer/float-configs/layer-list/item/LayerGroupItem";
 import DemoMain from "./test/DemoMain";
 
 const LightChaserList = lazy(() => import('./list/LightChaserList'));
