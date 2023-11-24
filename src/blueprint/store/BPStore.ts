@@ -64,6 +64,9 @@ class BPStore {
     //节点容器
     nodeContainerRef: HTMLDivElement | null = null;
 
+    //蓝图拖拽容器dom引用
+    bpDragContentRef: HTMLDivElement | null = null;
+
     //蓝图画布相对于屏幕的偏移量
     canvasOffset: PointType = {x: 320, y: 40};
 
@@ -72,6 +75,8 @@ class BPStore {
 
     //蓝图画布缩放比例
     canvasScale: number = 1;
+
+    setBpDragContentRef = (ref: HTMLDivElement) => this.bpDragContentRef = ref;
 
     setBpNodeControllerInsMap = (insMap: Record<string, AbstractBPNodeController>) => {
         this.bpNodeControllerInsMap = insMap;
