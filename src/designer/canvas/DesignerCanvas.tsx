@@ -7,13 +7,13 @@ import DesignerContainer from "../operate-provider/DesignerContainer";
 import GroupMovable from "../operate-provider/movable/GroupMovable";
 import GroupSelectable from "../operate-provider/movable/GroupSelectable";
 import LcRightMenu from "../operate-provider/right-click-menu/ContextMenu";
-import {MovableItemType} from "../operate-provider/movable/types";
 import HotKey from "../operate-provider/hot-key/HotKey";
 import {hotkeyConfigs} from "../operate-provider/hot-key/HotKeyConfig";
 import ComponentContainer from "../../framework/core/ComponentContainer";
 import {isEqual} from "lodash";
 import {DesignerDragScaleContainer} from "./DesignerDragScaleContainer";
 import layerBuilder from "../float-configs/layer-list/LayerBuilder";
+import {ILayerItem} from "../DesignerType";
 
 /**
  * 设计器画布
@@ -40,10 +40,10 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
      */
     generateElement = () => {
         let {layerConfigs} = designerStore!;
-        const sortLayout = Object.values(layerConfigs).sort((a: MovableItemType, b: MovableItemType) => a.order! - b.order!);
-        return sortLayout.map((item: MovableItemType) => {
+        const sortLayout = Object.values(layerConfigs).sort((a: ILayerItem, b: ILayerItem) => a.order! - b.order!);
+        return sortLayout.map((item: ILayerItem) => {
             if (item.type === 'group') return null;
-            return <ComponentContainer layout={item} key={item.id}/>
+            return <ComponentContainer layer={item} key={item.id}/>
         });
     }
 

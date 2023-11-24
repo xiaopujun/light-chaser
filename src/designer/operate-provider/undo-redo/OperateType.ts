@@ -1,8 +1,8 @@
 /**
  * 操作类型枚举
  */
-import {MovableItemType} from "../movable/types";
 import {ConfigureObjectFragments} from "../../../utils/ObjectUtil";
+import {ILayerItem} from "../../DesignerType";
 
 export enum OperateType {
     /**
@@ -51,7 +51,7 @@ export enum OperateType {
  * 记录操作对应的数据类型
  */
 type RecordDataType = IDragOperateData | IResizeOperateData | IUpdStyleOperateData | IAddOperateData[] |
-    IDelOperateData[] | IHideOperateData[] | IOrderOperateData[] | ILockOperateData[] | MovableItemType[] | MovableItemType;
+    IDelOperateData[] | IHideOperateData[] | IOrderOperateData[] | ILockOperateData[] | ILayerItem[] | ILayerItem;
 
 /**
  * 使用HistoriesRecordType，因为一次操作可能会涉及到多个不同维度的更新。比如：删除图层时，如果存在分组，还需要更新分组的子图层id
@@ -111,7 +111,7 @@ export interface IResizeOperateData {
 export interface IAddOperateData {
     id: string;
     data: {
-        layerConfig?: MovableItemType;
+        layerConfig?: ILayerItem;
         elemConfig?: any;
     };
 }
@@ -122,7 +122,7 @@ export interface IAddOperateData {
 export interface IDelOperateData {
     id: string;
     data: {
-        layerConfig: MovableItemType;
+        layerConfig: ILayerItem;
         elemConfig?: any;
     };
 }

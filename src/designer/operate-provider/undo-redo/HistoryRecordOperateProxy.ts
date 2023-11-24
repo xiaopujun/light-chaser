@@ -1,5 +1,4 @@
 import designerStore from "../../store/DesignerStore";
-import {MovableItemType} from "../movable/types";
 import {
     IAddOperateData,
     IDelOperateData,
@@ -24,10 +23,11 @@ import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
 import IdGenerate from "../../../utils/IdGenerate";
 import {Component} from "react";
 import LayerUtil from "../../float-configs/layer-list/util/LayerUtil";
+import {ILayerItem} from "../../DesignerType";
 
 class HistoryRecordOperateProxy {
 
-    public doDrag(items: MovableItemType[]): void {
+    public doDrag(items: ILayerItem[]): void {
         //构建历史记录数据
         const {layerConfigs, updateLayout} = designerStore;
         const ids: string[] = [];
@@ -42,7 +42,7 @@ class HistoryRecordOperateProxy {
             next = {ids: [id!], x: position![0], y: position![1]}
         } else { //多个组件拖动
             //构建prev数据
-            const oldItems: MovableItemType[] = [];
+            const oldItems: ILayerItem[] = [];
             items.forEach((item) => ids.push(item.id!));
             ids.forEach((id) => oldItems.push(layerConfigs[id]))
             let x = +Infinity, y = +Infinity;
@@ -69,7 +69,7 @@ class HistoryRecordOperateProxy {
         historyOperator.put({actions: [data]});
     };
 
-    public doResize(items: MovableItemType[], direction: [number, number]): void {
+    public doResize(items: ILayerItem[], direction: [number, number]): void {
         //构建历史记录数据
         const {layerConfigs, updateLayout} = designerStore;
         const ids: string[] = [];
@@ -84,7 +84,7 @@ class HistoryRecordOperateProxy {
             next = {ids: [id!], width: items[0].width!, height: items[0].height!, direction}
         } else { //多个组件缩放
             //构建prev数据
-            const oldItems: MovableItemType[] = [];
+            const oldItems: ILayerItem[] = [];
             items.forEach((item) => ids.push(item.id!));
             ids.forEach((id) => oldItems.push(layerConfigs[id]))
             let minX = +Infinity, minY = +Infinity, maxX = -Infinity, maxY = -Infinity;
@@ -111,7 +111,7 @@ class HistoryRecordOperateProxy {
         historyOperator.put({actions: [data]});
     }
 
-    public doAdd(container: HTMLDivElement | null, layout: MovableItemType): void {
+    public doAdd(container: HTMLDivElement | null, layout: ILayerItem): void {
         const {elemConfigs, compInstances} = designerStore;
         let componentDefine: AbstractComponentDefinition = DesignerLoaderFactory.getLoader().customComponentInfoMap[layout!.type + ''];
         if (componentDefine) {
@@ -185,8 +185,8 @@ class HistoryRecordOperateProxy {
             }
         })
         //需要维护图层关系的数据--构建操作记录
-        const updPrev: MovableItemType[] = [];
-        const updNext: MovableItemType[] = [];
+        const updPrev: ILayerItem[] = [];
+        const updNext: ILayerItem[] = [];
         maintenanceDelIds.forEach((id) => {
                 const {pid} = layerConfigs[id];
                 const groupLayer = layerConfigs[pid!];
@@ -225,7 +225,7 @@ class HistoryRecordOperateProxy {
         console.log(toJS(designerStore.layerConfigs))
     }
 
-    private _copyGroupLayer = (layout: MovableItemType, newIds: string[], newLayouts: MovableItemType[], maxLevel: number): MovableItemType => {
+    private _copyGroupLayer = (layout: ILayerItem, newIds: string[], newLayouts: ILayerItem[], maxLevel: number): ILayerItem => {
         const {layerConfigs} = designerStore;
         //生成新id
         const newId = IdGenerate.generateId();
@@ -240,7 +240,7 @@ class HistoryRecordOperateProxy {
         return newLayout;
     }
 
-    private _copyNormalLayer = (layout: MovableItemType, newLayouts: MovableItemType[], maxLevel: number, newIds: string[]): MovableItemType => {
+    private _copyNormalLayer = (layout: ILayerItem, newLayouts: ILayerItem[], maxLevel: number, newIds: string[]): ILayerItem => {
         const {layerConfigs, compInstances, elemConfigs} = designerStore;
         //生成新id
         const newId = IdGenerate.generateId();
@@ -273,7 +273,7 @@ class HistoryRecordOperateProxy {
         let {maxLevel, setMaxLevel} = eventOperateStore;
         //next用于保存操作记录的下一个状态
         const next: IAddOperateData[] = [];
-        const newLayouts: MovableItemType[] = [];
+        const newLayouts: ILayerItem[] = [];
 
         //区分图层类型， 普通图层和独立的子图层一类（可直接复制），分组图层及其下子图层一类（复制后重新建立关系）。
         const groupIds: string[] = [];
@@ -370,7 +370,7 @@ class HistoryRecordOperateProxy {
         return newIds;
     };
 
-    public doHideUpd(items: MovableItemType[]): void {
+    public doHideUpd(items: ILayerItem[]): void {
         let prev: IHideOperateData[] = [];
         let next: IHideOperateData[] = [];
         const {layerConfigs, updateLayout} = designerStore;
@@ -396,7 +396,7 @@ class HistoryRecordOperateProxy {
         }
     }
 
-    public doLockUpd(items: MovableItemType[]): void {
+    public doLockUpd(items: ILayerItem[]): void {
         let prev: ILockOperateData[] = [];
         let next: ILockOperateData[] = [];
         const {layerConfigs, updateLayout} = designerStore;
@@ -418,7 +418,7 @@ class HistoryRecordOperateProxy {
         }
     }
 
-    public doOrderUpd(items: MovableItemType[]): void {
+    public doOrderUpd(items: ILayerItem[]): void {
         let prev: IOrderOperateData[] = [];
         let next: IOrderOperateData[] = [];
         const {layerConfigs, updateLayout} = designerStore;
@@ -475,7 +475,7 @@ class HistoryRecordOperateProxy {
         const actions: IHistoryRecord[] = [];
 
         //构建分组数据
-        const groupItem: MovableItemType = {
+        const groupItem: ILayerItem = {
             id: pid,
             type: 'group',
             name: '新建分组',
@@ -492,11 +492,11 @@ class HistoryRecordOperateProxy {
         setMaxLevel(order);
 
         //操作记录-更新子图层的pid
-        const childPrev: MovableItemType[] = [];
-        const childNext: MovableItemType[] = [];
+        const childPrev: ILayerItem[] = [];
+        const childNext: ILayerItem[] = [];
 
         //设置子图层的pid
-        const updateItems: MovableItemType[] = [];
+        const updateItems: ILayerItem[] = [];
         childIds.forEach((id: string) => {
             childPrev.push({id, pid: undefined});
             updateItems.push({id, pid});
@@ -525,15 +525,15 @@ class HistoryRecordOperateProxy {
         groupIds = groupIds.filter((id: string) => layerConfigs[id].type === 'group');
         //对每个分组图层进行解组
         const actions: IHistoryRecord[] = [];
-        const childPrev: MovableItemType[] = [];
-        const childNext: MovableItemType[] = [];
+        const childPrev: ILayerItem[] = [];
+        const childNext: ILayerItem[] = [];
         const groupPrev: IDelOperateData[] = [];
         groupIds.forEach((groupId: string) => {
             let item = layerConfigs[groupId];
             //记录被删除的分组图层
             groupPrev.push({id: groupId, data: {layerConfig: item}});
             let childIds = item.childIds;
-            const updateItems: MovableItemType[] = [];
+            const updateItems: ILayerItem[] = [];
             childIds && childIds.forEach((childId: string) => {
                 childPrev.push({id: childId, pid: groupId});
                 //更新每个分组图层的子图层的pid为null

@@ -1,12 +1,12 @@
 import React, {Suspense} from "react";
-import {MovableItemType} from "../../designer/operate-provider/movable/types";
 import historyRecordOperateProxy from "../../designer/operate-provider/undo-redo/HistoryRecordOperateProxy";
 import runtimeConfigStore from "../../designer/store/RuntimeConfigStore";
 import Loading from "../../ui/loading/Loading";
 import URLUtil from "../../utils/URLUtil";
+import {ILayerItem} from "../../designer/DesignerType";
 
 export interface ComponentContainerProps {
-    layout: MovableItemType;
+    layer: ILayerItem;
 }
 
 class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
@@ -18,27 +18,27 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
     componentDidMount(): void {
         //通过ref创建组件，并将组件实例方法Map中。后续通过Map匹配到具体实例，
         //调用实例的对象方法进行组件的更新操作
-        const {layout} = this.props;
-        historyRecordOperateProxy.doAdd(this.ref, layout);
+        const {layer} = this.props;
+        historyRecordOperateProxy.doAdd(this.ref, layer);
     }
 
     render() {
-        const {layout} = this.props;
+        const {layer} = this.props;
         const {auxiliaryBorder} = runtimeConfigStore;
         return (
             <Suspense fallback={<Loading/>}>
                 <div
-                    id={layout.id}
-                    data-type={layout.type}
-                    data-lock={layout.lock}
-                    data-hide={layout.hide}
-                    key={layout.id + ''}
+                    id={layer.id}
+                    data-type={layer.type}
+                    data-lock={layer.lock}
+                    data-hide={layer.hide}
+                    key={layer.id + ''}
                     style={{
-                        width: layout.width,
-                        height: layout.height,
-                        transform: `translate(${layout.position![0]}px, ${layout.position![1]}px)`,
+                        width: layer.width,
+                        height: layer.height,
+                        transform: `translate(${layer.position![0]}px, ${layer.position![1]}px)`,
                         position: 'absolute',
-                        display: layout.hide ? 'none' : 'block',
+                        display: layer.hide ? 'none' : 'block',
                         border: auxiliaryBorder ? '1px solid #65eafc' : 'none'
                     }} className={'lc-comp-item'}>
                     <div ref={(ref) => this.ref = ref} style={{

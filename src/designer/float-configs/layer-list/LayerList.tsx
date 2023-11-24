@@ -7,8 +7,8 @@ import FloatPanel from "../common/FloatPanel";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 import Input from "../../../ui/input/Input";
 import layerBuilder from "./LayerBuilder";
-import {MovableItemType} from "../../operate-provider/movable/types";
 import LayerUtil from "./util/LayerUtil";
+import {ILayerItem} from "../../DesignerType";
 
 class LayerList extends Component {
 
@@ -54,18 +54,18 @@ class LayerList extends Component {
         let filterLayer: Record<string, any> = {};
         if (searchContent === ':hide') {
             //仅过展示隐藏的图层
-            Object.values(layerConfigs).forEach((item: MovableItemType) => {
+            Object.values(layerConfigs).forEach((item: ILayerItem) => {
                 if (item.hide && item.type !== 'group')
                     filterLayer[item.id!] = item;
             });
         } else if (searchContent === ':lock') {
             //仅过展示锁定的图层
-            Object.values(layerConfigs).forEach((item: MovableItemType) => {
+            Object.values(layerConfigs).forEach((item: ILayerItem) => {
                 if (item.lock && item.type !== 'group')
                     filterLayer[item.id!] = item;
             });
         } else {
-            Object.values(layerConfigs).forEach((item: MovableItemType) => {
+            Object.values(layerConfigs).forEach((item: ILayerItem) => {
                 if (item.name?.includes(searchContent) && item.type !== 'group')
                     filterLayer[item.id!] = item;
             });

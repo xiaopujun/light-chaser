@@ -1,7 +1,6 @@
 import eventOperateStore from "../EventOperateStore";
 import designerStore from "../../store/DesignerStore";
-import {MovableItemType} from "../movable/types";
-import {SaveType} from "../../DesignerType";
+import {ILayerItem, SaveType} from "../../DesignerType";
 import {cloneDeep, throttle} from "lodash";
 import {historyOperator} from "../undo-redo/HistoryOperator";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
@@ -21,7 +20,7 @@ import {message} from "antd";
 export const selectAll = () => {
     const {layerConfigs} = designerStore;
     const {setTargetIds, calculateGroupCoordinate} = eventOperateStore;
-    const selected = Object.values(layerConfigs).map((item: MovableItemType) => {
+    const selected = Object.values(layerConfigs).map((item: ILayerItem) => {
         if (!item.lock && !item.hide)
             return item.id;
     });
@@ -62,7 +61,7 @@ export const doUnLock = () => {
     const {setTargetIds, targetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
     const {layerConfigs} = designerStore;
-    let toUpdate: MovableItemType[] = [];
+    let toUpdate: ILayerItem[] = [];
     targetIds.filter(id => {
         //过滤出被锁定的组件
         return layerConfigs[id].lock;
@@ -77,7 +76,7 @@ export const toTop = () => {
     let {maxLevel, setMaxLevel, targetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
     const {layerConfigs} = designerStore;
-    let toBeUpdate: MovableItemType[] = [];
+    let toBeUpdate: ILayerItem[] = [];
     targetIds.forEach((id: string) => {
         let item = layerConfigs[id];
         toBeUpdate.push({...item, order: ++maxLevel});
@@ -90,7 +89,7 @@ export const toBottom = () => {
     let {minLevel, setMinLevel, targetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
     const {layerConfigs} = designerStore;
-    let toBeUpdate: MovableItemType[] = [];
+    let toBeUpdate: ILayerItem[] = [];
     targetIds.forEach((id: string) => {
         let item = layerConfigs[id];
         toBeUpdate.push({...item, order: --minLevel});
@@ -150,7 +149,7 @@ export const doHide = () => {
     const {targetIds, setTargetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
     const {layerConfigs} = designerStore;
-    let toBeUpdate: MovableItemType[] = [];
+    let toBeUpdate: ILayerItem[] = [];
     targetIds.forEach((id: string) => {
         let item = layerConfigs[id];
         toBeUpdate.push({...item, hide: true});

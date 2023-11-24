@@ -1,14 +1,14 @@
 import AbstractRollback from "./AbstractRollback";
 import {IHistoryRecord} from "../OperateType";
 import designerStore from "../../../store/DesignerStore";
-import {MovableItemType} from "../../movable/types";
+import {ILayerItem} from "../../../DesignerType";
 
 export class UpdLayerGroupRollbackImpl extends AbstractRollback {
     redo(record: IHistoryRecord): void {
         const {next} = record;
         if (next) {
-            const updData: MovableItemType[] = [];
-            (next as MovableItemType[]).forEach((item) => {
+            const updData: ILayerItem[] = [];
+            (next as ILayerItem[]).forEach((item) => {
                 const {id, childIds} = item;
                 updData.push({id, childIds});
             });
@@ -20,8 +20,8 @@ export class UpdLayerGroupRollbackImpl extends AbstractRollback {
     undo(record: IHistoryRecord): void {
         const {prev} = record;
         if (prev) {
-            const updData: MovableItemType[] = [];
-            (prev as MovableItemType[]).forEach((item) => {
+            const updData: ILayerItem[] = [];
+            (prev as ILayerItem[]).forEach((item) => {
                 updData.push(item);
             });
             const {updateLayout} = designerStore;

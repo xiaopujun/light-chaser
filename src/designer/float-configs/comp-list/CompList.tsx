@@ -4,10 +4,9 @@ import classifyListStore from "../../left/classify-list/ClassifyListStore";
 import './CompList.less';
 import {observer} from "mobx-react";
 import designerStore from "../../store/DesignerStore";
-import {MovableItemType} from "../../operate-provider/movable/types";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 import FloatPanel from "../common/FloatPanel";
-import {BaseInfoType} from "../../DesignerType";
+import {BaseInfoType, ILayerItem} from "../../DesignerType";
 import Input from "../../../ui/input/Input";
 import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
 import IdGenerate from "../../../utils/IdGenerate";
@@ -68,7 +67,7 @@ class CompList extends Component {
     addItem = (compKey: string, name: string, position?: [number, number]) => {
         const {addItem} = designerStore;
         let {maxLevel, setMaxLevel, setAddRecordCompId} = eventOperateStore;
-        let movableItem: MovableItemType = {
+        let movableItem: ILayerItem = {
             name: name,
             type: compKey,
             width: 320,

@@ -2,7 +2,7 @@ import {action, makeObservable, observable, runInAction, toJS} from "mobx";
 import {isEqual} from "lodash";
 import {
     CanvasConfig,
-    extendParams,
+    IExtendParams, ILayerItem,
     ProjectConfig,
     ProjectDataType,
     ProjectState,
@@ -11,7 +11,6 @@ import {
     ThemeItemType,
 } from "../DesignerType";
 import AbstractBaseStore from "../../framework/core/AbstractBaseStore";
-import {MovableItemType} from "../operate-provider/movable/types";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
 import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryRecordOperateProxy";
 import ObjectUtil from "../../utils/ObjectUtil";
@@ -83,7 +82,7 @@ class DesignerStore implements AbstractBaseStore {
     /**
      * 布局配置
      */
-    layerConfigs: { [key: string]: MovableItemType } = {};
+    layerConfigs: { [key: string]: ILayerItem } = {};
 
     /**
      * 统计信息
@@ -114,7 +113,7 @@ class DesignerStore implements AbstractBaseStore {
     /**
      * 扩展参数
      */
-    extendParams: extendParams = {
+    extendParams: IExtendParams = {
         maxLevel: 0,
         minLevel: 0,
     };
@@ -202,7 +201,7 @@ class DesignerStore implements AbstractBaseStore {
     /**
      * 添加元素
      */
-    addItem = (item: MovableItemType) => {
+    addItem = (item: ILayerItem) => {
         this.layerConfigs[item.id + ""] = item;
         if (this.statisticInfo)
             this.statisticInfo.count = Object.keys(this.layerConfigs).length;
@@ -221,7 +220,7 @@ class DesignerStore implements AbstractBaseStore {
     /**
      * 更新布局
      */
-    updateLayout = (items: MovableItemType[], reRender: boolean = true) => {
+    updateLayout = (items: ILayerItem[], reRender: boolean = true) => {
         for (const item of items) {
             let oldItem = this.layerConfigs[item.id + ""];
             if (!isEqual(oldItem, item))

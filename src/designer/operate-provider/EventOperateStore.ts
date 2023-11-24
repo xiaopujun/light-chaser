@@ -2,10 +2,10 @@ import {action, makeObservable, observable} from "mobx";
 import Moveable from "react-moveable";
 import {Component, RefObject} from "react";
 import designerStore from "../store/DesignerStore";
-import {MovableItemType} from "./movable/types";
 import ObjectUtil from "../../utils/ObjectUtil";
 import DesignerRuler from "../canvas/DesignerRuler";
 import layerListStore from "../float-configs/layer-list/LayerListStore";
+import {ILayerItem} from "../DesignerType";
 
 /**
  * 组件多选情况下的坐标值
@@ -201,7 +201,7 @@ class EventOperateStore {
             maxY: -Infinity
         };
         compArr.forEach((item: any) => {
-            const layerConfig: MovableItemType = layerConfigs[item.id];
+            const layerConfig: ILayerItem = layerConfigs[item.id];
             let {position, width, height} = layerConfig;
             const x = position![0];
             const y = position![1];
