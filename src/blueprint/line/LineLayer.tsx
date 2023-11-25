@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {CSSProperties} from 'react';
 import './LineLayer.less';
 import CanvasUtil from "../util/CanvasUtil";
 import bpStore from "../store/BPStore";
@@ -49,7 +49,7 @@ class LineLayer extends React.Component {
 
         document.addEventListener('mouseup', (e) => {
             const {nodeContainerRef, upCtx} = bpStore;
-            const {width: canvasW, height: canvasH} = nodeContainerRef?.getBoundingClientRect();
+            const {width: canvasW, height: canvasH} = nodeContainerRef?.getBoundingClientRect()!;
             if (!this.keyMove || !e.target || !(e.target as HTMLElement).classList.contains('ap-circle')) {
                 //清空画布
                 upCtx?.clearRect(0, 0, canvasW, canvasH);
@@ -99,7 +99,7 @@ class LineLayer extends React.Component {
             this.keyMove = true;
             const {startPoint, endPoint} = this.currentLine;
             const {nodeContainerRef, canvasOffset} = bpStore;
-            const {width: canvasW, height: canvasH} = nodeContainerRef?.getBoundingClientRect();
+            const {width: canvasW, height: canvasH} = nodeContainerRef?.getBoundingClientRect()!;
             //设置鼠标坐标
             this.currentLine.endPoint = {x: e.clientX - canvasOffset.x, y: e.clientY - canvasOffset.y}
 
@@ -123,7 +123,7 @@ class LineLayer extends React.Component {
 
     render() {
         const width = window.innerWidth - 670, height = window.innerHeight - 75;
-        const _canvasStyle = {position: "inherit", top: 0, left: 0};
+        const _canvasStyle: CSSProperties = {position: "inherit", top: 0, left: 0};
         return (
             <div style={{position: "absolute"}}>
                 <canvas style={_canvasStyle} width={width} height={height} ref={ref => this.downLayer = ref}/>

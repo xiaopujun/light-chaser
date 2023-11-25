@@ -11,7 +11,7 @@ export interface BPMovableProps {
 
 export const reRenderLine = () => {
     const {bpLines, downCtx, canvasOffset, nodeContainerRef} = bpStore;
-    const {width: canvasW, height: canvasH} = nodeContainerRef?.getBoundingClientRect();
+    const {width: canvasW, height: canvasH} = nodeContainerRef?.getBoundingClientRect()!;
     //更新每条线的起始点和终点
     Object.values(bpLines).forEach((line: BPLineType) => {
         //重新设置连线的起始点和终点
