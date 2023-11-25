@@ -52,14 +52,19 @@ export const BPCanvas: React.FC = () => {
     useEffect(() => {
         //加载完毕后绘制链接线（由于节点组件的创建与渲染都是异步的，需要等节点的锚点都渲染完毕后才能确定连线的位置，因此暂时使用异步延时连线的渲染时机）
         // todo 后续要调整为更精确的时机
-        setTimeout(() => {
+        const renderLineTimer = setTimeout(() => {
             reRenderLine();
+            clearTimeout(renderLineTimer);
         }, 50);
         const {nodeContainerRef} = bpStore;
         nodeContainerRef?.addEventListener('click', lineSegmentCollisions);
     }, [])
     return (
-        <div className={'blue-print'} id={'blue-print'} style={{overflow: "hidden"}}>
+        <div className={'blue-print-canvas'} style={{
+            overflow: "hidden",
+            width: window.innerWidth - 670,
+            height: window.innerHeight - 75,
+        }}>
             <LineLayer/>
             <NodeLayer/>
         </div>
