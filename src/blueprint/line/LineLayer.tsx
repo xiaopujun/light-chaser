@@ -50,7 +50,9 @@ class LineLayer extends React.Component {
         document.addEventListener('mouseup', (e) => {
             const {nodeContainerRef, upCtx} = bpStore;
             const {width: canvasW, height: canvasH} = nodeContainerRef?.getBoundingClientRect()!;
-            if (!this.keyMove || !e.target || !(e.target as HTMLElement).classList.contains('ap-circle')) {
+            const endElem = e.target as HTMLElement;
+            if (!this.keyMove || !endElem || !endElem.classList.contains('ap-circle')
+                || endElem.id?.split(":")[2] !== AnchorPointType.INPUT.toString()) {
                 //清空画布
                 upCtx?.clearRect(0, 0, canvasW, canvasH);
                 this.keyDown = false;
