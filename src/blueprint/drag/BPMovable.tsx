@@ -38,9 +38,6 @@ export const reRenderLine = (lines: BPLineType[]) => {
         const controlPoi = CanvasUtil.calculateControlPoint(line.startPoint, line.endPoint);
         line.firstCP = controlPoi.firstCP;
         line.secondCP = controlPoi.secondCP;
-        //重新计算采样点
-        const {startPoint, firstCP, secondCP, endPoint} = line;
-        line.samplePoints = CanvasUtil.sampleBezierCurve(startPoint!, firstCP!, secondCP!, endPoint, 20);
     });
 
     //重新绘制连线
@@ -121,6 +118,7 @@ export const BPMovable = observer((props: BPMovableProps) => {
             const {beforeTranslate} = lastEvent;
             const nodeId = target.id.split(':')[1];
             updNodeAndLinePos(nodeId, {x: beforeTranslate[0], y: beforeTranslate[1]});
+            CanvasUtil.updSegmentSamplingPoint();
         }
 
         const onDragGroup = (e: any) => {
@@ -138,6 +136,7 @@ export const BPMovable = observer((props: BPMovableProps) => {
                     updNodeAndLinePos(nodeId, {x: beforeTranslate[0], y: beforeTranslate[1]});
                 }
             })
+            CanvasUtil.updSegmentSamplingPoint();
         }
 
         const {selectedNodes} = bpStore;

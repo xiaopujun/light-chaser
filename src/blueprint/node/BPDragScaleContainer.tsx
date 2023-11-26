@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import DragScaleProvider from "../../framework/drag-scale/DragScaleProvider";
 import bpStore from "../store/BPStore";
 import {reRenderAllLine} from "../drag/BPMovable";
+import CanvasUtil from "../util/CanvasUtil";
 
 
 export interface BPDragScaleContainerContainerProps {
@@ -27,12 +28,16 @@ export const BPDragScaleContainer: React.FC<BPDragScaleContainerContainerProps> 
                     setCanvasTranslate(position);
                     reRenderAllLine();
                 },
+                dragEndCallback: () => {
+                    CanvasUtil.updSegmentSamplingPoint();
+                },
                 scaleCallback: (dsData) => {
                     const {position, scale} = dsData;
                     setCanvasScale(scale);
                     setCanvasTranslate(position);
-                    reRenderAllLine()
-                }
+                    reRenderAllLine();
+                    CanvasUtil.updSegmentSamplingPoint();
+                },
             });
             return () => {
                 dragScaleProvider.destroy();

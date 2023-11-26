@@ -1,4 +1,5 @@
 import {BPLineType, PointType} from "../BPTypes";
+import bpStore from "../store/BPStore";
 
 export interface CubicBezierCurvesCP {
     firstCP: PointType;
@@ -140,5 +141,18 @@ export default class CanvasUtil {
                 return true; // 鼠标指针在线段上
         }
         return false; // 鼠标指针不在任何线段上
+    }
+
+    /**
+     * 更新蓝图线段采样点
+     * 注：本方法单独更新线段采样点，调用时机应为所有线段都渲染完毕后单独调用此方法。
+     * 单独计算线段采样点可以避免渲染线段同时大量无效采样点的计算（只有最后一次渲染的采样点是有效的）
+     */
+    public static updSegmentSamplingPoint() {
+        const {bpLines} = bpStore;
+        Object.values(bpLines).forEach(line => {
+            const {startPoint, firstCP, secondCP, endPoint} = line;
+            line.samplePoints = CanvasUtil.sampleBezierCurve(startPoint!, firstCP!, secondCP!, endPoint, 20);
+        })
     }
 }

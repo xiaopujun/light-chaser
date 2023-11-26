@@ -19,8 +19,8 @@ const lineSegmentCollisions = (event: MouseEvent) => {
         selectedLines.forEach((line) => {
             line.lineWidth = 1;
             line.color = '#a2a2a2';
-            //todo 需要做好性能优化，非必要的线可以不用重复渲染
             reRenderAllLine();
+            CanvasUtil.updSegmentSamplingPoint();
         });
         setSelectedLines([]);
     }
@@ -42,6 +42,7 @@ const lineSegmentCollisions = (event: MouseEvent) => {
             targetLine.color = '#d9d9d9';
             hitLines.push(targetLine);
             CanvasUtil.drawBezierCurves(downCtx!, [targetLine]);
+            CanvasUtil.updSegmentSamplingPoint();
             break;
         }
     }
@@ -54,6 +55,7 @@ export const BPCanvas: React.FC = () => {
         // todo 后续要调整为更精确的时机
         const renderLineTimer = setTimeout(() => {
             reRenderAllLine();
+            CanvasUtil.updSegmentSamplingPoint();
             clearTimeout(renderLineTimer);
         }, 50);
         const {nodeContainerRef} = bpStore;
