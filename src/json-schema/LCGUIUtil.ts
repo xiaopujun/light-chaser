@@ -19,19 +19,6 @@ export default class LCGUIUtil {
         }
     }
 
-    public static updateSchemaStringPath(oldSchema: Control, path: string[], value: ControlValueType) {
-        const schemaPathNode: SchemaPathNode[] = [];
-        path.forEach((key, index) => {
-            if (key.indexOf("_") !== -1) {
-                const [_key, index] = key.split("_");
-                schemaPathNode.push({key: _key, index: parseInt(index)});
-            } else {
-                schemaPathNode.push({key});
-            }
-        });
-        this.updateSchema(oldSchema, schemaPathNode, value);
-    }
-
     public static createObjectFromArray(keyPath: string[], value: ControlValueType): object {
         let result = {};
         let current: any = result;

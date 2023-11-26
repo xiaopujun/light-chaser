@@ -11,7 +11,7 @@ import layerListStore from "../../float-configs/layer-list/LayerListStore";
 import footerStore from "../../footer/FooterStore";
 import DateUtil from "../../../utils/DateUtil";
 import bpStore from "../../../blueprint/store/BPStore";
-import {reRenderLine} from "../../../blueprint/drag/BPMovable";
+import {reRenderAllLine} from "../../../blueprint/drag/BPMovable";
 import bpLeftStore from "../../../blueprint/left/BPLeftStore";
 import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
 import {OperateResult} from "../../../framework/operate/AbstractOperator";
@@ -480,7 +480,7 @@ export const delBPNode = () => {
         if (nodeId in usedLayerNodes)
             setUsedLayerNodes(nodeId, false);
     })
-    reRenderLine();
+    reRenderAllLine();
 }
 
 /**
@@ -493,5 +493,5 @@ export const delBPLine = () => {
     if (selectedLines.length === 0) return;
     const selectedLineIds = selectedLines.map(line => line.id!);
     delLine(selectedLineIds);
-    reRenderLine();
+    reRenderAllLine();
 }

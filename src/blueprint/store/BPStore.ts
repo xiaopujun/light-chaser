@@ -272,7 +272,8 @@ class BPStore {
                     //删除锚点关联的线段 & 删除锚点与线段的映射关系
                     if (id! in this.bpAPLineMap) {
                         const lineIds = this.bpAPLineMap[id!];
-                        this.delLine(lineIds);
+                        //传递lines副本，避免操作原始数据造成的数据不一致
+                        this.delLine([...lineIds]);
                         delete this.bpAPLineMap[id!];
                     }
                 });

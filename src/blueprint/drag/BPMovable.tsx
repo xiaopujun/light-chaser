@@ -9,11 +9,16 @@ export interface BPMovableProps {
     children?: React.ReactNode;
 }
 
-export const reRenderLine = () => {
-    const {bpLines, downCtx, canvasOffset, nodeContainerRef} = bpStore;
+export const reRenderAllLine = () => {
+    const {bpLines} = bpStore;
+    reRenderLine(Object.values(bpLines));
+}
+
+export const reRenderLine = (lines: BPLineType[]) => {
+    const {downCtx, canvasOffset, nodeContainerRef} = bpStore;
     const {width: canvasW, height: canvasH} = nodeContainerRef?.getBoundingClientRect()!;
     //更新每条线的起始点和终点
-    Object.values(bpLines).forEach((line: BPLineType) => {
+    lines.forEach((line: BPLineType) => {
         //重新设置连线的起始点和终点
         const {startAnchorId, endAnchorId} = line;
         const startDom = document.getElementById(startAnchorId!);
@@ -40,7 +45,7 @@ export const reRenderLine = () => {
 
     //重新绘制连线
     downCtx!.clearRect(0, 0, canvasW, canvasH);
-    Object.values(bpLines).forEach((line: BPLineType) => {
+    lines.forEach((line: BPLineType) => {
         CanvasUtil.drawBezierCurves(downCtx!, line);
     })
 }
@@ -101,8 +106,7 @@ export const BPMovable = observer((props: BPMovableProps) => {
         const onDrag = (e: OnDrag) => {
             const {target, beforeTranslate} = e;
             target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
-            //重绘连线
-            reRenderLine();
+            reRenderAllLine();
         }
 
         const onDragStart = (e: OnDragStart) => {
@@ -124,7 +128,7 @@ export const BPMovable = observer((props: BPMovableProps) => {
         const onDragGroup = (e: any) => {
             e.events.forEach((ev: any) => ev.target.style.transform = ev.transform);
             //重绘连线
-            reRenderLine();
+            reRenderAllLine();
         }
 
         const onDragGroupEnd = (e: any) => {
@@ -146,7 +150,7 @@ export const BPMovable = observer((props: BPMovableProps) => {
                           target={selectedNodes}
                           draggable={true}
                           origin={false}
-                          hideDefaultLines={false}
+                          hideDefaultLines={true}
                           onDragStart={onDragStart}
                           onDrag={onDrag}
                           onDragEnd={onDragEnd}

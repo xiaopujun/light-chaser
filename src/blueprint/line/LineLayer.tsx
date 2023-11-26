@@ -36,8 +36,8 @@ class LineLayer extends React.Component {
             const {target} = e;
             if (!target || !(target as HTMLElement).classList.contains('ap-circle')) return;
             const pointDom = e.target as HTMLElement;
-            const pointInfoArr = pointDom.id.split("_");
-            if (pointInfoArr && pointInfoArr.length === 4 && pointInfoArr[3] === AnchorPointType.INPUT.toString())
+            const pointInfoArr = pointDom.id.split(":");
+            if (pointInfoArr && pointInfoArr.length === 3 && pointInfoArr[2] === AnchorPointType.INPUT.toString())
                 return;
 
             //设置起始点坐标
