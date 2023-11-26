@@ -23,7 +23,7 @@ class DesignerStore implements AbstractBaseStore {
         makeObservable(this, {
             canvasConfig: observable,
             projectConfig: observable,
-            layerConfigs: observable,
+            layerConfigs: observable.shallow,
             statisticInfo: observable,
             themeConfig: observable,
             extendParams: observable,
