@@ -152,7 +152,7 @@ export default class CanvasUtil {
         const {bpLines} = bpStore;
         Object.values(bpLines).forEach(line => {
             const {startPoint, firstCP, secondCP, endPoint} = line;
-            line.samplePoints = CanvasUtil.sampleBezierCurve(startPoint!, firstCP!, secondCP!, endPoint, 20);
+            line.samplePoints = CanvasUtil.sampleBezierCurve(startPoint!, firstCP!, secondCP!, endPoint!, 20);
         })
     }
 }
