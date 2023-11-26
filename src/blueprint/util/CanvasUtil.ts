@@ -24,20 +24,20 @@ export default class CanvasUtil {
 
     //计算三次贝塞尔曲线的2个控制点
     public static calculateControlPoint(startPos: PointType, endPos: PointType): CubicBezierCurvesCP {
-        const direction = CanvasUtil.calculateBezierCurveDirection(startPos, endPos)
+        const direction = endPos.x < startPos.x ? 'left' : 'right';
         const boxWidth = Math.abs(endPos.x - startPos.x);
         const firstCP: PointType = {x: 0, y: 0};
         const secondCP: PointType = {x: 0, y: 0};
         //计算贝塞尔控制点
-        if (direction === 1 || direction === 4) {
+        if (direction === 'right') {
             firstCP.x = startPos.x + (boxWidth * 0.5);
             firstCP.y = startPos.y;
             secondCP.x = endPos.x - (boxWidth * 0.5);
             secondCP.y = endPos.y;
-        } else if (direction === 2 || direction === 3) {
-            firstCP.x = startPos.x - (boxWidth * 0.5);
+        } else {
+            firstCP.x = startPos.x + (boxWidth * 0.3);
             firstCP.y = startPos.y;
-            secondCP.x = endPos.x + (boxWidth * 0.5);
+            secondCP.x = endPos.x - (boxWidth * 0.3);
             secondCP.y = endPos.y;
         }
         return {firstCP, secondCP};
@@ -63,22 +63,6 @@ export default class CanvasUtil {
         return points;
     }
 
-    //计算贝塞尔曲线结束点方位,返回值表示结束点位于起始点的第几象限
-    public static calculateBezierCurveDirection(startPoi: PointType, endPoi: PointType): number {
-        let direction = 1;
-        //判断目标点位置
-        if (endPoi.x < startPoi.x) {
-            if (endPoi.y > startPoi.y)
-                direction = 3;
-            else
-                direction = 2;
-        } else {
-            if (endPoi.y > startPoi.y)
-                direction = 4;
-        }
-        return direction;
-    }
-
     //绘制点元素
     public static drawPoint(ctx: CanvasRenderingContext2D, point: PointType, size: number, color: string) {
         ctx.fillStyle = color;
@@ -86,11 +70,21 @@ export default class CanvasUtil {
     }
 
     public static isMouseInRectangle(mousePoint: PointType, rectStart: PointType, rectEnd: PointType): boolean {
-        const x1 = Math.min(rectStart.x, rectEnd.x);
-        const x2 = Math.max(rectStart.x, rectEnd.x);
+        //放大保卫盒边界（兼容线段结束点在起始点左边时贝塞尔曲线反向弯曲后增加的宽度）
+        const boxWidth = Math.abs(rectEnd.x - rectStart.x);
+        let x1, x2;
+        if (rectEnd.x < rectStart.x) {
+            //结束点在起始点左边,注：0.05这个比例只是一个估计值，非精确值。在保证起始点在结束点左边的情况下，能正确判定鼠标点是否在控制点包围盒内即可。
+            //这个比例值和计算贝塞尔曲线的控制点所用到的比例是相关的：代码位置：light-chaser/src/blueprint/util/CanvasUtil.ts:38
+            x1 = Math.min(rectStart.x + (boxWidth * 0.05), rectEnd.x - (boxWidth * 0.05));
+            x2 = Math.max(rectStart.x + (boxWidth * 0.05), rectEnd.x - (boxWidth * 0.05));
+        } else {
+            //结束点在起始点右边
+            x1 = Math.min(rectStart.x, rectEnd.x);
+            x2 = Math.max(rectStart.x, rectEnd.x);
+        }
         const y1 = Math.min(rectStart.y, rectEnd.y);
         const y2 = Math.max(rectStart.y, rectEnd.y);
-
         return (
             mousePoint.x >= x1 && mousePoint.x <= x2 &&
             mousePoint.y >= y1 && mousePoint.y <= y2
