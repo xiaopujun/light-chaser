@@ -8,16 +8,18 @@ export interface CubicBezierCurvesCP {
 export default class CanvasUtil {
 
     //绘制贝塞尔曲线
-    public static drawBezierCurves(ctx: CanvasRenderingContext2D, lineConfig: BPLineType) {
-        const {startPoint, endPoint, firstCP, secondCP, color, lineWidth, lineDash} = lineConfig;
-        ctx.strokeStyle = color!;
-        ctx.lineWidth = lineWidth!;
-        ctx.beginPath(); //新建一条path
-        ctx.moveTo(startPoint!.x, startPoint!.y);
-        ctx.setLineDash(lineDash!)
-        ctx.lineDashOffset = 0;
-        ctx.bezierCurveTo(firstCP!.x, firstCP!.y, secondCP!.x, secondCP!.y, endPoint!.x, endPoint!.y)
-        ctx.stroke(); //绘制路径。
+    public static drawBezierCurves(ctx: CanvasRenderingContext2D, lines: BPLineType[]) {
+        ctx.beginPath();
+        for (let i = 0; i < lines.length; i++) {
+            const {startPoint, endPoint, firstCP, secondCP, color, lineWidth, lineDash} = lines[i];
+            ctx.strokeStyle = color!;
+            ctx.lineWidth = lineWidth!;
+            ctx.moveTo(startPoint!.x, startPoint!.y);
+            ctx.setLineDash(lineDash!)
+            ctx.lineDashOffset = 0;
+            ctx.bezierCurveTo(firstCP!.x, firstCP!.y, secondCP!.x, secondCP!.y, endPoint!.x, endPoint!.y)
+        }
+        ctx.stroke();
     }
 
     //计算三次贝塞尔曲线的2个控制点

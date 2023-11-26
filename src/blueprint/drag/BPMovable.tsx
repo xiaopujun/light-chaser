@@ -45,9 +45,7 @@ export const reRenderLine = (lines: BPLineType[]) => {
 
     //重新绘制连线
     downCtx!.clearRect(0, 0, canvasW, canvasH);
-    lines.forEach((line: BPLineType) => {
-        CanvasUtil.drawBezierCurves(downCtx!, line);
-    })
+    CanvasUtil.drawBezierCurves(downCtx!, lines);
 }
 
 export const updNodeAndLinePos = (nodeId: string, position: PointType) => {

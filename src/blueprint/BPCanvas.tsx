@@ -41,7 +41,7 @@ const lineSegmentCollisions = (event: MouseEvent) => {
             targetLine.lineWidth = 2;
             targetLine.color = '#d9d9d9';
             hitLines.push(targetLine);
-            CanvasUtil.drawBezierCurves(downCtx!, targetLine);
+            CanvasUtil.drawBezierCurves(downCtx!, [targetLine]);
             break;
         }
     }

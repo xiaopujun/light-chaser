@@ -67,7 +67,7 @@ class LineLayer extends React.Component {
             this.currentLine.endAnchorId = (e!.target as HTMLElement).id;
             const {x, y, width: apw, height: aph} = (e.target as HTMLElement).getBoundingClientRect();
             this.currentLine.endPoint = {x: x + apw / 2 - canvasOffset.x, y: y + aph / 2 - canvasOffset.y}
-            CanvasUtil.drawBezierCurves(bpStore.downCtx!, this.currentLine)
+            CanvasUtil.drawBezierCurves(bpStore.downCtx!, [this.currentLine])
             //计算线条的采样点，用于计算线条是否被选中
             const {
                 id, startPoint, endPoint, firstCP, secondCP, lineDash,
@@ -108,7 +108,7 @@ class LineLayer extends React.Component {
             this.currentLine.secondCP = contPoi.secondCP
             //清空画布
             bpStore.upCtx!.clearRect(0, 0, canvasW, canvasH)
-            CanvasUtil.drawBezierCurves(bpStore.upCtx!, {
+            CanvasUtil.drawBezierCurves(bpStore.upCtx!, [{
                 color: "#c0c0c0",
                 lineWidth: 1,
                 lineDash: [10, 10],
@@ -116,7 +116,7 @@ class LineLayer extends React.Component {
                 endPoint: this.currentLine.endPoint,
                 firstCP: this.currentLine.firstCP,
                 secondCP: this.currentLine.secondCP
-            })
+            }])
         });
 
     }
