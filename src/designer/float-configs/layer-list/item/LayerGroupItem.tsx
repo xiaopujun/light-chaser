@@ -1,12 +1,4 @@
-import {
-    EditFilled,
-    EditOutlined,
-    EyeFilled,
-    EyeInvisibleFilled,
-    FolderOpenFilled,
-    UnlockFilled,
-    UsbFilled
-} from "@ant-design/icons";
+import {EditFilled, EyeFilled, EyeInvisibleFilled, FolderOpenFilled, UnlockFilled, UsbFilled} from "@ant-design/icons";
 import {BaseLayer} from "./BaseLayer";
 import Input from "../../../../ui/input/Input";
 

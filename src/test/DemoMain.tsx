@@ -3,12 +3,6 @@ import {observer, Observer} from "mobx-react";
 import './DemoMain.less';
 import demoStore from "./DemoStore";
 
-interface TreeNode {
-    id: number;
-    name: string;
-    pid?: number;
-    children?: TreeNode[];
-}
 
 class MyComponent extends React.Component {
 
@@ -35,11 +29,9 @@ class MyComponent extends React.Component {
                 <button onClick={() => {
                     const {updateStudent} = demoStore;
                     updateStudent({
-                        id: 1000,
-                        niubi: 'sdf',
+                        id: '1000',
                         city: {
                             name: '北京xx',
-                            tmd: 'sdfsd'
                         }
                     });
                 }}>更新

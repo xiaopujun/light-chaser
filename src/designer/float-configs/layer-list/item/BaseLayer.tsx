@@ -61,5 +61,5 @@ export abstract class BaseLayer extends React.PureComponent<LayerProps, LayerPro
         }
     }
 
-    changeLayerName = (name: string | number) => this.layerName = name;
+    changeLayerName = (name: string | number) => this.layerName = name as string;
 }
