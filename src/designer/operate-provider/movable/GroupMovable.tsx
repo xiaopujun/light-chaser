@@ -21,14 +21,13 @@ import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import {ILayerItem} from "../../DesignerType";
 import './GroupMovable.less';
 
-class GroupMovable extends React.Component {
+class GroupMovable extends React.Component<{}, { throttleDragRotate: number }> {
     movableRef = React.createRef<Moveable>();
-    throttleDragRotate: number = 0;
 
     constructor(props: {}) {
         super(props);
         this.state = {
-            targets: [],
+            throttleDragRotate: 0
         };
     }
 
