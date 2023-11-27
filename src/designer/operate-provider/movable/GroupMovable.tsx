@@ -18,6 +18,7 @@ import eventOperateStore from "../EventOperateStore";
 import designerStore from "../../store/DesignerStore";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import {ILayerItem} from "../../DesignerType";
+import './GroupMovable.less';
 
 class GroupMovable extends React.Component {
     movableRef = React.createRef<Moveable>();
