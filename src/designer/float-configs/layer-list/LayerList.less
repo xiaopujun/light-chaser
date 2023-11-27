@@ -1,7 +1,7 @@
 .layerItemStyle {
   color: #b6b6b6ff;
   padding: 3px 10px;
-  font-size: 10px;
+  font-size: 11px;
   height: 25px;
   background: #363636;
   display: flex;
@@ -42,20 +42,19 @@
       margin-bottom: 5px;
 
       .layer-name {
-        pointer-events: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .layer-operators {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        color: #848484;
 
         .layer-operator {
-          margin-left: 5px;
-
-          img {
-            width: 12px;
-          }
+          padding: 2px;
         }
       }
     }
@@ -69,7 +68,6 @@
         .layerItemStyle();
 
         .group-left {
-          pointer-events: none;
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -77,20 +75,23 @@
           .group-icon {
             margin-right: 5px;
           }
+
+          .group-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
         }
 
         .group-operators {
           display: flex;
           align-items: center;
           justify-content: space-between;
+          color: #848484;
 
           .group-operator {
-            margin-left: 5px;
+            padding: 2px;
             cursor: pointer;
-
-            img {
-              width: 12px;
-            }
           }
         }
       }
@@ -114,7 +115,6 @@
 
     .layer-hide {
       background: #97979799 !important;
-      cursor: not-allowed;
     }
 
   }

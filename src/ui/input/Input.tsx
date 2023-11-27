@@ -1,10 +1,11 @@
-import  {ChangeEvent, Component, InputHTMLAttributes} from 'react';
+import {ChangeEvent, Component, InputHTMLAttributes} from 'react';
 import './Input.less';
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
 
 export interface InputProps extends Pick<InputHTMLAttributes<HTMLInputElement>,
     "minLength" | "maxLength" | "required" | "value" | "defaultValue"
-    | "disabled" | "type" | "min" | "max" | "placeholder">, UIContainerProps {
+    | "disabled" | "type" | "min" | "max" | "placeholder" | "onBlur"
+    | "autoFocus" | "onKeyDown">, UIContainerProps {
     onChange?: (data: string | number) => void;
     prefix?: string;
     suffix?: string;
