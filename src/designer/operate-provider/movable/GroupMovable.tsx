@@ -5,6 +5,7 @@ import Moveable, {
     OnDragEnd,
     OnDragGroup,
     OnDragGroupEnd,
+    OnDragGroupStart,
     OnDragStart,
     OnResize,
     OnResizeEnd,
@@ -22,6 +23,7 @@ import './GroupMovable.less';
 
 class GroupMovable extends React.Component {
     movableRef = React.createRef<Moveable>();
+    throttleDragRotate: number = 0;
 
     constructor(props: {}) {
         super(props);
@@ -36,10 +38,17 @@ class GroupMovable extends React.Component {
     }
 
     onDragStart = (e: OnDragStart) => {
-        const {target} = e;
+        const {target, inputEvent: {shiftKey}} = e;
         const {layerConfigs} = designerStore;
         const {lock} = layerConfigs[target.id];
         if (lock) return false;
+        if (shiftKey)
+            this.setState({throttleDragRotate: 90});
+    }
+
+    onDrag = (e: OnDrag) => {
+        const {target, beforeTranslate} = e;
+        target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
     }
 
     onDragEnd = (e: OnDragEnd) => {
@@ -64,6 +73,26 @@ class GroupMovable extends React.Component {
             } else
                 historyRecordOperateProxy.doDrag(data)
         }
+        const {throttleDragRotate} = this.state;
+        if (throttleDragRotate !== 0)
+            this.setState({throttleDragRotate: 0});
+    }
+
+    onDragGroupStart = (e: OnDragGroupStart) => {
+        const {inputEvent: {shiftKey}} = e;
+        if (shiftKey)
+            this.setState({throttleDragRotate: 90});
+    }
+
+    onDragGroup = (e: OnDragGroup) => {
+        const {targets} = e;
+        const {layerConfigs} = designerStore;
+        //通过第一个元素来判断。 框选的所有组件是否处于锁定状态，处于锁定状态，则不允许拖拽和缩放。
+        const firstLock = layerConfigs[targets[0].id].lock;
+        if (firstLock)
+            return false;
+        else
+            e.events.forEach(ev => ev.target.style.transform = ev.transform)
     }
 
     onDragGroupEnd = (e: OnDragGroupEnd) => {
@@ -101,6 +130,23 @@ class GroupMovable extends React.Component {
             } else
                 historyRecordOperateProxy.doDrag(data)
         }
+        const {throttleDragRotate} = this.state;
+        if (throttleDragRotate !== 0)
+            this.setState({throttleDragRotate: 0});
+    }
+
+    onResizeStart = (e: OnResizeStart) => {
+        const {target} = e;
+        const {layerConfigs} = designerStore;
+        const {lock} = layerConfigs[target.id];
+        if (lock) return false;
+    }
+
+    onResize = (e: OnResize) => {
+        const {target, width, height, drag} = e;
+        target.style.width = `${width}px`;
+        target.style.height = `${height}px`;
+        target.style.transform = `translate(${drag.beforeTranslate[0]}px, ${drag.beforeTranslate[1]}px)`;
     }
 
     onResizeEnd = (e: OnResizeEnd) => {
@@ -125,6 +171,21 @@ class GroupMovable extends React.Component {
             } else
                 historyRecordOperateProxy.doResize(data, direction);
         }
+    }
+
+    onResizeGroupStart = (e: OnResizeGroupStart) => {
+        const {targets} = e;
+        const {layerConfigs} = designerStore;
+        const firstLock = layerConfigs[targets[0].id].lock;
+        if (firstLock) return false;
+    }
+
+    onResizeGroup = (e: OnResizeGroup) => {
+        e.events.forEach((ev: OnResize) => {
+            ev.target.style.width = `${ev.width}px`;
+            ev.target.style.height = `${ev.height}px`;
+            ev.target.style.transform = ev.drag.transform;
+        })
     }
 
     onResizeGroupEnd = (e: OnResizeGroupEnd) => {
@@ -173,52 +234,8 @@ class GroupMovable extends React.Component {
         }
     }
 
-    onResizeGroup = (e: OnResizeGroup) => {
-        e.events.forEach((ev: OnResize) => {
-            ev.target.style.width = `${ev.width}px`;
-            ev.target.style.height = `${ev.height}px`;
-            ev.target.style.transform = ev.drag.transform;
-        })
-    }
-
-    onResize = (e: OnResize) => {
-        const {target, width, height, drag} = e;
-        target.style.width = `${width}px`;
-        target.style.height = `${height}px`;
-        target.style.transform = `translate(${drag.beforeTranslate[0]}px, ${drag.beforeTranslate[1]}px)`;
-    }
-
-    onResizeStart = (e: OnResizeStart) => {
-        const {target} = e;
-        const {layerConfigs} = designerStore;
-        const {lock} = layerConfigs[target.id];
-        if (lock) return false;
-    }
-
-    onDrag = (e: OnDrag) => {
-        const {target, beforeTranslate} = e;
-        target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
-    }
-
-    onDragGroup = (e: OnDragGroup) => {
-        const {targets} = e;
-        const {layerConfigs} = designerStore;
-        //通过第一个元素来判断。 框选的所有组件是否处于锁定状态，处于锁定状态，则不允许拖拽和缩放。
-        const firstLock = layerConfigs[targets[0].id].lock;
-        if (firstLock)
-            return false;
-        else
-            e.events.forEach(ev => ev.target.style.transform = ev.transform)
-    }
-
-    onResizeGroupStart = (e: OnResizeGroupStart) => {
-        const {targets} = e;
-        const {layerConfigs} = designerStore;
-        const firstLock = layerConfigs[targets[0].id].lock;
-        if (firstLock) return false;
-    }
-
     render() {
+        const {throttleDragRotate} = this.state;
         const {selectorRef, targets} = eventOperateStore;
         const {canvasConfig: {rasterize, dragStep, resizeStep}} = designerStore;
         //获取需要辅助线导航的元素
@@ -234,6 +251,7 @@ class GroupMovable extends React.Component {
                     //保持尺寸比例
                     keepRatio={false}
                     //辅助线可捕捉显示的最大距离
+                    throttleDragRotate={throttleDragRotate}
                     maxSnapElementGuidelineDistance={300}
                     snappable={true}
                     snapGap={false}
@@ -272,6 +290,7 @@ class GroupMovable extends React.Component {
                     onDrag={this.onDrag}
                     onDragStart={this.onDragStart}
                     onDragEnd={this.onDragEnd}
+                    onDragGroupStart={this.onDragGroupStart}
                     onDragGroup={this.onDragGroup}
                     onDragGroupEnd={this.onDragGroupEnd}
                     onResizeStart={this.onResizeStart}
