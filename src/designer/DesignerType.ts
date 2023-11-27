@@ -190,6 +190,14 @@ export interface BaseInfoType {
      * 组件描述
      */
     desc: string;
+    /**
+     * 初始宽度
+     */
+    width?: number;
+    /**
+     * 初始高度
+     */
+    height?: number;
 }
 
 /**

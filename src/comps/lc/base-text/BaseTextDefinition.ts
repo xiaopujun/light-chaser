@@ -22,6 +22,8 @@ export default class BaseTextDefinition extends AbstractComponentDefinition<Base
             type: "基础",
             typeKey: "base",
             desc: "标准提供的基础文本",
+            width: 100,
+            height: 30,
         };
     }
 
@@ -44,7 +46,7 @@ export default class BaseTextDefinition extends AbstractComponentDefinition<Base
             style: {
                 color: '#a7a7a7',
                 fontSize: 16,
-                alignItems: 'center',
+                alignItems: 'left',
                 justifyContent: 'space-around',
             },
             data: {
