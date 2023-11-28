@@ -55,7 +55,7 @@ class Footer extends Component {
                 </div>
                 <div className={'footer-right'}>
                     <div className={'right-info-item'}>缩放 : {(scale * 100).toFixed(0)}%</div>
-                    <div className={'right-info-item'}>当前组件数 : {Object.keys(layerConfigs).length}</div>
+                    <div className={'right-info-item'}>图层 : {Object.keys(layerConfigs).length}</div>
                     <div className={'right-info-item'}>项目 : {name}</div>
                     <div className={'right-info-item'}>状态 : {stateStr}</div>
                 </div>

@@ -32,7 +32,7 @@ class Header extends Component<any> {
         return (
             <div className={'designer-header'}>
                 <div className={'header-left'}>
-                    <div className={'header-title'}>L C</div>
+                    <div className={'header-title'}>LIGHT CHASER</div>
                 </div>
                 <div className={'header-right'}>
                     {items}

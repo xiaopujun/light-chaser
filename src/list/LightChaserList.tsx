@@ -144,7 +144,7 @@ class LightChaserList extends Component<any> {
         return (
             <div className={'lc-console'}>
                 <div className={'console-head'}>
-                    <div className={'console-head-title'}>LC 控制台</div>
+                    <div className={'console-head-title'}>LIGHT CHASER 控制台</div>
                 </div>
                 <div className={'console-body'}>
                     <div className={'console-list'}>

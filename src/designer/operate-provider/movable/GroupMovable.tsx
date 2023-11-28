@@ -37,11 +37,11 @@ class GroupMovable extends React.Component<{}, { throttleDragRotate: number }> {
     }
 
     onDragStart = (e: OnDragStart) => {
-        const {target, inputEvent: {shiftKey}} = e;
+        const {target, inputEvent} = e;
         const {layerConfigs} = designerStore;
         const {lock} = layerConfigs[target.id];
         if (lock) return false;
-        if (shiftKey)
+        if (inputEvent && inputEvent.shiftKey)
             this.setState({throttleDragRotate: 90});
     }
 
@@ -78,8 +78,8 @@ class GroupMovable extends React.Component<{}, { throttleDragRotate: number }> {
     }
 
     onDragGroupStart = (e: OnDragGroupStart) => {
-        const {inputEvent: {shiftKey}} = e;
-        if (shiftKey)
+        const {inputEvent} = e;
+        if (inputEvent && inputEvent.shiftKey)
             this.setState({throttleDragRotate: 90});
     }
 
