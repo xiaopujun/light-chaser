@@ -3,7 +3,7 @@ import eventOperateStore from "../operate-provider/EventOperateStore";
 import {SaveType} from "../DesignerType";
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 import {AbstractHeaderItem, HeaderItemProps} from "../header/HeaderTypes";
-import {AbstractComponentDefinition} from "../../framework/core/AbstractComponentDefinition";
+import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
 import {AbstractOperator} from "../../framework/operate/AbstractOperator";
 import AbstractConvert from "../../framework/convert/AbstractConvert";
 import bpStore from "../../blueprint/store/BPStore";
@@ -64,8 +64,8 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
         });
         Object.keys(compCtx).forEach(key => {
             const Clazz = compCtx[key]?.default;
-            if (Clazz && AbstractComponentDefinition.isPrototypeOf(Clazz)) {
-                let customComponentInfo: AbstractComponentDefinition = new Clazz();
+            if (Clazz && AbstractDefinition.isPrototypeOf(Clazz)) {
+                let customComponentInfo: AbstractDefinition = new Clazz();
                 if (typeof customComponentInfo.getBaseInfo === "function") {
                     let compKey = customComponentInfo.getBaseInfo().compKey;
                     if (compKey)

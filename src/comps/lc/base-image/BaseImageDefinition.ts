@@ -1,7 +1,7 @@
 import {
-    AbstractComponentDefinition,
+    AbstractDefinition,
     MenuToConfigMappingType
-} from "../../../framework/core/AbstractComponentDefinition";
+} from "../../../framework/core/AbstractDefinition";
 import BaseImageController, {BaseImageComponentProps} from "./BaseImageController";
 import {BaseInfoType} from "../../../designer/DesignerType";
 import baseImage from './baseImage.png';
@@ -11,7 +11,7 @@ import {getDefaultMenuList} from "../../../designer/right/util";
 import BaseInfo from "../../common-component/base-info/BaseInfo";
 import {BaseImageStyleConfig} from "./BaseImageConfig";
 
-export default class BaseImageDefinition extends AbstractComponentDefinition<BaseImageController, BaseImageComponentProps> {
+export default class BaseImageDefinition extends AbstractDefinition<BaseImageController, BaseImageComponentProps> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "基础图片",

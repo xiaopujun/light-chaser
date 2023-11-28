@@ -1,5 +1,5 @@
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
-import {AbstractComponentDefinition} from "../../framework/core/AbstractComponentDefinition";
+import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
 import AbstractConvert from "../../framework/convert/AbstractConvert";
 import {AbstractOperator} from "../../framework/operate/AbstractOperator";
 import designerStore from "../store/DesignerStore";
@@ -47,8 +47,8 @@ export class ViewDesignerLoader extends AbstractDesignerLoader {
         });
         Object.keys(compCtx).forEach(key => {
             const Clazz = compCtx[key]?.default;
-            if (Clazz && AbstractComponentDefinition.isPrototypeOf(Clazz)) {
-                let customComponentInfo: AbstractComponentDefinition = new Clazz();
+            if (Clazz && AbstractDefinition.isPrototypeOf(Clazz)) {
+                let customComponentInfo: AbstractDefinition = new Clazz();
                 if (typeof customComponentInfo.getBaseInfo === "function") {
                     let compKey = customComponentInfo.getBaseInfo().compKey;
                     if (compKey)

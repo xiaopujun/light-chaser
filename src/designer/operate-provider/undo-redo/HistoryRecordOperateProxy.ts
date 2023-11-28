@@ -13,7 +13,7 @@ import {
 } from "./OperateType";
 import {historyOperator} from "./HistoryOperator";
 import eventOperateStore from "../EventOperateStore";
-import {AbstractComponentDefinition} from "../../../framework/core/AbstractComponentDefinition";
+import {AbstractDefinition} from "../../../framework/core/AbstractDefinition";
 import {toJS} from "mobx";
 import rightStore from "../../right/RightStore";
 import {cloneDeep} from "lodash";
@@ -113,7 +113,7 @@ class HistoryRecordOperateProxy {
 
     public doAdd(container: HTMLDivElement | null, layout: ILayerItem): void {
         const {elemConfigs, compInstances} = designerStore;
-        let componentDefine: AbstractComponentDefinition = DesignerLoaderFactory.getLoader().customComponentInfoMap[layout!.type + ''];
+        let componentDefine: AbstractDefinition = DesignerLoaderFactory.getLoader().customComponentInfoMap[layout!.type + ''];
         if (componentDefine) {
             const AbsCompImpl = componentDefine.getComponent();
             if (AbsCompImpl) {

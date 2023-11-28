@@ -13,7 +13,7 @@ const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseI
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
 
-class AntdLiquidDefinition /*extends AbstractComponentDefinition<AntdLiquid, BaseMenuMapping, AntdLiquidProps>*/ {
+class AntdLiquidDefinition /*extends AbstractDefinition<AntdLiquid, BaseMenuMapping, AntdLiquidProps>*/ {
 
     getComponent(): ClazzTemplate<AntdLiquidController> | null {
         return AntdLiquidController;

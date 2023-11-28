@@ -1,7 +1,7 @@
 import {
-    AbstractComponentDefinition,
+    AbstractDefinition,
     MenuToConfigMappingType
-} from "../../../framework/core/AbstractComponentDefinition";
+} from "../../../framework/core/AbstractDefinition";
 import {BaseInfoType} from "../../../designer/DesignerType";
 import {ClazzTemplate} from "../../common-component/common-types";
 import {MenuInfo} from "../../../designer/right/MenuType";
@@ -14,7 +14,7 @@ import AnimationConfig from "../../common-component/animation-config/AnimationCo
 import ThemeConfig from "../../common-component/theme-config/ThemeConfig";
 import {BaseTextStyleConfig} from "./BaseTextConfig";
 
-export default class BaseTextDefinition extends AbstractComponentDefinition<BaseTextController, BaseTextComponentProps> {
+export default class BaseTextDefinition extends AbstractDefinition<BaseTextController, BaseTextComponentProps> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "基础文本",
