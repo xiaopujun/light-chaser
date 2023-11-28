@@ -1,7 +1,7 @@
 import {action, makeObservable, observable} from "mobx";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 import {Component, MouseEvent} from "react";
-import {setControlPointLineColor} from "../../operate-provider/movable/GroupSelectable";
+import {setControlPointLineColor} from "../../operate-provider/movable/DesignerSelectable";
 import historyRecordOperateProxy from "../../operate-provider/undo-redo/HistoryRecordOperateProxy";
 import LayerUtil from "./util/LayerUtil";
 import designerStore from "../../store/DesignerStore";

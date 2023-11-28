@@ -19,9 +19,9 @@ import eventOperateStore from "../EventOperateStore";
 import designerStore from "../../store/DesignerStore";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import {ILayerItem} from "../../DesignerType";
-import './GroupMovable.less';
+import './DesignerMovable.less';
 
-class GroupMovable extends React.Component<{}, { throttleDragRotate: number }> {
+class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }> {
     movableRef = React.createRef<Moveable>();
 
     constructor(props: {}) {
@@ -304,7 +304,7 @@ class GroupMovable extends React.Component<{}, { throttleDragRotate: number }> {
     }
 }
 
-export default observer(GroupMovable);
+export default observer(DesignerMovable);
 
 
 export interface DimensionViewableProps {
