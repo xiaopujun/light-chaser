@@ -1,6 +1,7 @@
 import React, {MouseEvent} from "react";
 import layerListStore from "../LayerListStore";
 import designerStore from "../../../store/DesignerStore";
+import contextMenuStore from "../../../operate-provider/right-click-menu/ContextMenuStore";
 
 export interface LayerProps {
     compId?: string;
@@ -21,16 +22,27 @@ export abstract class BaseLayer extends React.PureComponent<LayerProps, LayerPro
         this.layerName = props.name || '';
     }
 
+    /**
+     * 由于图层列表的操作事件阻止了冒泡，因此通过本方法单独判断是否需要关闭图层列表上打开的右键菜单
+     */
+    closeContextMenu = () => {
+        const {visible, updateVisible} = contextMenuStore;
+        if (visible)
+            updateVisible(false);
+    }
+
     toggleLock = (event: MouseEvent) => {
         event.stopPropagation();
         const {lockChange} = layerListStore;
         lockChange && lockChange(this.state.compId!, !this.state.lock);
+        this.closeContextMenu();
     }
 
     toggleHide = (event: MouseEvent) => {
         event.stopPropagation();
         const {hideChange} = layerListStore;
         hideChange && hideChange(this.state.compId!, !this.state.hide);
+        this.closeContextMenu();
     }
 
     onSelected = (event: MouseEvent<HTMLDivElement>) => {
@@ -39,6 +51,7 @@ export abstract class BaseLayer extends React.PureComponent<LayerProps, LayerPro
         event.stopPropagation();
         const {selectedChange} = layerListStore;
         selectedChange && selectedChange(compId!, event);
+        this.closeContextMenu();
     }
 
     openInput = (event: MouseEvent<HTMLDivElement>) => {
@@ -46,6 +59,7 @@ export abstract class BaseLayer extends React.PureComponent<LayerProps, LayerPro
         const {inputMode} = this.state;
         if (!inputMode)
             this.setState({inputMode: true});
+        this.closeContextMenu();
     }
 
     closeInput = () => {

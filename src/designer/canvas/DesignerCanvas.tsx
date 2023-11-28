@@ -6,7 +6,7 @@ import DesignerRuler from "./DesignerRuler";
 import DesignerContainer from "../operate-provider/DesignerContainer";
 import GroupMovable from "../operate-provider/movable/DesignerMovable";
 import GroupSelectable from "../operate-provider/movable/DesignerSelectable";
-import LcRightMenu from "../operate-provider/right-click-menu/ContextMenu";
+import ContextMenu from "../operate-provider/right-click-menu/ContextMenu";
 import HotKey from "../operate-provider/hot-key/HotKey";
 import {hotkeyConfigs} from "../operate-provider/hot-key/HotKeyConfig";
 import {isEqual} from "lodash";
@@ -40,7 +40,7 @@ class DesignerCanvas extends PureComponent<DesignerStore | any> {
                         </DesignerRuler>
                     </GroupSelectable>
                 </DesignerContainer>
-                <LcRightMenu/>
+                <ContextMenu/>
                 <HotKey handlerMapping={hotkeyConfigs}/>
             </>
         );
