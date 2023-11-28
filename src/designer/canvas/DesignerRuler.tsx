@@ -96,7 +96,7 @@ class DesignerRuler extends PureComponent<RulerProps & DesignerRulerProps> {
                            segment={2}
                            negativeRuler={true}
                            textOffset={[0, 10]}
-                           backgroundColor={'#1a1a1a'}
+                           backgroundColor={'#1f1f1f'}
                            unit={this.unit}/>
                 </div>
                 <div className={'lc-ruler-vertical'}
@@ -115,7 +115,7 @@ class DesignerRuler extends PureComponent<RulerProps & DesignerRulerProps> {
                            segment={2}
                            negativeRuler={true}
                            textOffset={[10, 0]}
-                           backgroundColor={'#1a1a1a'}
+                           backgroundColor={'#1f1f1f'}
                            unit={this.unit}/>
                 </div>
                 <div className={'lc-ruler-content'} style={{
