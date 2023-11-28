@@ -113,7 +113,7 @@ class HistoryRecordOperateProxy {
 
     public doAdd(container: HTMLDivElement | null, layout: ILayerItem): void {
         const {elemConfigs, compInstances} = designerStore;
-        let componentDefine: AbstractDefinition = DesignerLoaderFactory.getLoader().customComponentInfoMap[layout!.type + ''];
+        let componentDefine: AbstractDefinition = DesignerLoaderFactory.getLoader().definitionMap[layout!.type + ''];
         if (componentDefine) {
             const AbsCompImpl = componentDefine.getComponent();
             if (AbsCompImpl) {

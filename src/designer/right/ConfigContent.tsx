@@ -36,7 +36,7 @@ class ConfigContent extends Component {
     buildConfigContent = () => {
         const {compInstances} = designerStore;
         let {activeMenu, activeElem} = rightStore;
-        let abstractConfigObj: AbstractDefinition = DesignerLoaderFactory.getLoader().customComponentInfoMap[activeElem.type + '']
+        let abstractConfigObj: AbstractDefinition = DesignerLoaderFactory.getLoader().definitionMap[activeElem.type + '']
         if (!abstractConfigObj) return;
         let configMapping = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp: React.ComponentType<ConfigType> = configMapping![activeMenu];

@@ -2,10 +2,9 @@ import React from "react";
 import {SelectableDemo} from "./SelectableDemo";
 import {MovableDemo} from "./MovableDemo";
 import './LayerDemo.less';
-import SortBinaryTree from "../../framework/data-structure/sort-binary-tree/SortBinaryTree";
 
 export const LayerDemo: React.FC<{}> = props => {
-    new SortBinaryTree();
+
     return (
         <div style={{width: '100%', height: '100%', background: 'black', position: 'relative'}}
              className={'selectable-demo-container'}>

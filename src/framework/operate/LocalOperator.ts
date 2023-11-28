@@ -52,11 +52,11 @@ class LocalOperator extends AbstractOperator {
         projectData.extendParams!.maxLevel = maxLevel;
         projectData.extendParams!.minLevel = minLevel;
         // 3. 处理数据转换
-        const {abstractConvertMap} = DesignerLoaderFactory.getLoader();
+        const {convertMap} = DesignerLoaderFactory.getLoader();
         const {elemConfigs} = projectData;
         Object.keys(elemConfigs!).forEach((key: string) => {
             const elemConfig = elemConfigs![key] as ComponentBaseProps;
-            const convertIns = abstractConvertMap[elemConfig.info!.type!];
+            const convertIns = convertMap[elemConfig.info!.type!];
             if (convertIns)
                 convertIns.convert(elemConfig);
         })
@@ -106,11 +106,11 @@ class LocalOperator extends AbstractOperator {
         // const {lastTimeSave, setLastTimeSave} = designerStore;
         // const duringTime = updateTime - lastTimeSave;
         //2. 处理数据转换
-        const {abstractConvertMap} = DesignerLoaderFactory.getLoader();
+        const {convertMap} = DesignerLoaderFactory.getLoader();
         const {elemConfigs} = projectData;
         Object.keys(elemConfigs!).forEach((key: string) => {
             const elemConfig = elemConfigs![key] as ComponentBaseProps;
-            const convertIns = abstractConvertMap[elemConfig.info!.type!];
+            const convertIns = convertMap[elemConfig.info!.type!];
             if (convertIns)
                 convertIns.convert(elemConfig);
         })
@@ -176,11 +176,11 @@ class LocalOperator extends AbstractOperator {
         const projectData = await localforage.getItem(id);
         if (!projectData) return {status: false, msg: '项目不存在'};
         //处理数据转换(图片blob转换为url)
-        const {abstractConvertMap} = DesignerLoaderFactory.getLoader();
+        const {convertMap} = DesignerLoaderFactory.getLoader();
         const {elemConfigs} = projectData as ProjectDataType;
         for (const key of Object.keys(elemConfigs!)) {
             const elemConfig = elemConfigs![key] as ComponentBaseProps;
-            const convertIns = abstractConvertMap[elemConfig?.info?.type!];
+            const convertIns = convertMap[elemConfig?.info?.type!];
             //todo 异步调用想想怎么优化
             if (convertIns) {
                 await convertIns.convertBack(elemConfig);

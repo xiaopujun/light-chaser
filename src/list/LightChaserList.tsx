@@ -40,7 +40,7 @@ class LightChaserList extends Component<any> {
     loadProjectList = () => {
         EditorDesignerLoader.getInstance().scannerProjectOperators();
         const {projectConfig: {saveType = SaveType.LOCAL}} = designerStore;
-        EditorDesignerLoader.getInstance().abstractOperatorMap[saveType].getProjectSimpleInfoList().then((data: any) => {
+        EditorDesignerLoader.getInstance().operatorMap[saveType].getProjectSimpleInfoList().then((data: any) => {
             if (data && data.length > 0) {
                 this.setState({data});
                 let imageIds: any = [];
@@ -105,7 +105,7 @@ class LightChaserList extends Component<any> {
     }
 
     confirmDel = () => {
-        EditorDesignerLoader.getInstance().abstractOperatorMap[SaveType.LOCAL].deleteProject(this.toBeDelId);
+        EditorDesignerLoader.getInstance().operatorMap[SaveType.LOCAL].deleteProject(this.toBeDelId);
         let {data} = this.state;
         data = data.filter((item: any) => item.id !== this.toBeDelId);
         this.setState({data, showDelDialog: false});
@@ -116,7 +116,7 @@ class LightChaserList extends Component<any> {
     }
 
     confirmClone = (name: string) => {
-        const operator = EditorDesignerLoader.getInstance().abstractOperatorMap[SaveType.LOCAL];
+        const operator = EditorDesignerLoader.getInstance().operatorMap[SaveType.LOCAL];
         operator.copyProject(this.toBeCloneId, name).then((id) => {
             //重新加载项目列表
             operator.getProjectSimpleInfoList().then((simpleInfoList: any) => {

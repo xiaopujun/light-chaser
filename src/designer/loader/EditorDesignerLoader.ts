@@ -65,16 +65,16 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
         Object.keys(compCtx).forEach(key => {
             const Clazz = compCtx[key]?.default;
             if (Clazz && AbstractDefinition.isPrototypeOf(Clazz)) {
-                let customComponentInfo: AbstractDefinition = new Clazz();
-                if (typeof customComponentInfo.getBaseInfo === "function") {
-                    let compKey = customComponentInfo.getBaseInfo().compKey;
+                let definition: AbstractDefinition = new Clazz();
+                if (typeof definition.getBaseInfo === "function") {
+                    let compKey = definition.getBaseInfo().compKey;
                     if (compKey)
-                        this.customComponentInfoMap[compKey] = customComponentInfo;
+                        this.definitionMap[compKey] = definition;
                 }
             } else if (Clazz && AbstractConvert.isPrototypeOf(Clazz)) {
-                let convertInstance: AbstractConvert = new Clazz();
-                let convertKey = convertInstance.getKey();
-                this.abstractConvertMap[convertKey] = convertInstance;
+                let convert: AbstractConvert = new Clazz();
+                let convertKey = convert.getKey();
+                this.convertMap[convertKey] = convert;
             }
         });
     }
@@ -87,9 +87,9 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
         Object.keys(compCtx).forEach(key => {
             const Clazz = compCtx[key]?.default;
             if (Clazz && AbstractOperator.isPrototypeOf(Clazz)) {
-                let operatorInstance: AbstractOperator = new Clazz();
-                let operateEnv = operatorInstance.getKey();
-                this.abstractOperatorMap[operateEnv] = operatorInstance;
+                let operator: AbstractOperator = new Clazz();
+                let operateEnv = operator.getKey();
+                this.operatorMap[operateEnv] = operator;
             }
         });
     }
@@ -120,7 +120,7 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
     private initExistProject(): void {
         let urlParams = URLUtil.parseUrlParams();
         const {doInit, setLoaded} = designerStore;
-        this.abstractOperatorMap[SaveType.LOCAL].getProject(urlParams.id).then((res) => {
+        this.operatorMap[SaveType.LOCAL].getProject(urlParams.id).then((res) => {
             const {status, data: store, msg} = res;
             if (status) {
                 //初始化designerStore

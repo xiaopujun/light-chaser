@@ -132,7 +132,7 @@ export const doSave = throttle(() => {
             proData.bpAPLineMap = bpAPLineMap;
             proData.bpNodeConfigMap = getAllNodeConfig();
             proData.bpNodeLayoutMap = bpNodeLayoutMap;
-            DesignerLoaderFactory.getLoader().abstractOperatorMap[saveType].saveProject(cloneDeep(proData)).then((res: OperateResult) => {
+            DesignerLoaderFactory.getLoader().operatorMap[saveType].saveProject(cloneDeep(proData)).then((res: OperateResult) => {
                 const {status, msg} = res;
                 if (status)
                     message.success(msg);

@@ -31,10 +31,10 @@ class CompListStore {
 
     doInit = () => {
         const comps: Array<any> = [];
-        const {customComponentInfoMap} = DesignerLoaderFactory.getLoader();
-        if (customComponentInfoMap) {
-            Object.keys(customComponentInfoMap).forEach(key => {
-                let baseInfo = customComponentInfoMap[key].getBaseInfo();
+        const {definitionMap} = DesignerLoaderFactory.getLoader();
+        if (definitionMap) {
+            Object.keys(definitionMap).forEach(key => {
+                let baseInfo = definitionMap[key].getBaseInfo();
                 if (baseInfo.compKey !== 'LcBg') comps.push(baseInfo);
             });
         }

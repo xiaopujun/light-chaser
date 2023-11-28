@@ -60,7 +60,7 @@ class RightStore {
             return;
         }
         //更新菜单列表
-        this.menus = (DesignerLoaderFactory.getLoader()?.customComponentInfoMap[type] as AbstractDefinition)?.getMenuList() || [];
+        this.menus = (DesignerLoaderFactory.getLoader()?.definitionMap[type] as AbstractDefinition)?.getMenuList() || [];
         if (this.menus.length > 0) {
             let setNewActiveMenu = true;
             for (let i = 0; i < this.menus.length; i++) {

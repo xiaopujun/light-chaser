@@ -66,8 +66,8 @@ class CompList extends Component {
     addItem = (compKey: string, position?: [number, number]) => {
         const {addItem} = designerStore;
         let {maxLevel, setMaxLevel, setAddRecordCompId} = eventOperateStore;
-        const {customComponentInfoMap} = EditorDesignerLoader.getInstance();
-        const {compName, width = 320, height = 200} = customComponentInfoMap[compKey].getBaseInfo();
+        const {definitionMap} = EditorDesignerLoader.getInstance();
+        const {compName, width = 320, height = 200} = definitionMap[compKey].getBaseInfo();
         let movableItem: ILayerItem = {
             name: compName,
             type: compKey,
@@ -101,7 +101,7 @@ class CompList extends Component {
         for (let i = 0; i < compInfoArr.length; i++) {
             let compInfo: any = compInfoArr[i];
             const {compName, compKey} = compInfo;
-            let lcCompInit: any = DesignerLoaderFactory.getLoader().customComponentInfoMap[compKey];
+            let lcCompInit: any = DesignerLoaderFactory.getLoader().definitionMap[compKey];
             let chartImg = lcCompInit.getChartImg();
             chartDom.push(
                 <div key={i + ''} className={'list-item droppable-element'} draggable={true}
