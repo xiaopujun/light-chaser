@@ -1,9 +1,8 @@
 import React, {useEffect} from "react";
 import Moveable, {OnDrag, OnDragEnd, OnDragStart} from "react-moveable";
-import bpStore from "../store/BPStore";
+import bpStore, {IBPLine, IPoint} from "../store/BPStore";
 import {observer} from "mobx-react";
 import CanvasUtil from "../util/CanvasUtil";
-import {BPLineType, PointType} from "../BPTypes";
 
 export interface BPMovableProps {
     children?: React.ReactNode;
@@ -14,11 +13,11 @@ export const reRenderAllLine = () => {
     reRenderLine(Object.values(bpLines));
 }
 
-export const reRenderLine = (lines: BPLineType[]) => {
+export const reRenderLine = (lines: IBPLine[]) => {
     const {downCtx, canvasOffset, nodeContainerRef} = bpStore;
     const {width: canvasW, height: canvasH} = nodeContainerRef?.getBoundingClientRect()!;
     //更新每条线的起始点和终点
-    lines.forEach((line: BPLineType) => {
+    lines.forEach((line: IBPLine) => {
         //重新设置连线的起始点和终点
         const {startAnchorId, endAnchorId} = line;
         const startDom = document.getElementById(startAnchorId!);
@@ -45,7 +44,7 @@ export const reRenderLine = (lines: BPLineType[]) => {
     CanvasUtil.drawBezierCurves(downCtx!, lines);
 }
 
-export const updNodeAndLinePos = (nodeId: string, position: PointType) => {
+export const updNodeAndLinePos = (nodeId: string, position: IPoint) => {
     const {
         bpNodeControllerInsMap, bpAPLineMap, bpLines,
         updLinePos, updBpNodeLayout, canvasOffset

@@ -1,6 +1,5 @@
 import {Component} from 'react';
 import './DataConfig.less';
-import {ConfigType} from "../../../designer/right/ConfigType";
 import {DataConfigType} from "../../../designer/DesignerType";
 import AbstractController, {UpdateType} from "../../../framework/core/AbstractController";
 import {message} from "antd";
@@ -9,6 +8,7 @@ import {Control} from "../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import LCGUIUtil from "../../../json-schema/LCGUIUtil";
 import HttpUtil from "../../../utils/HttpUtil";
+import {ConfigType} from "../../../designer/right/ConfigContent";
 
 type DataTypeItem = 'static' | 'api' | 'database' | 'excel';
 

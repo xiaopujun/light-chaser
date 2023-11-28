@@ -1,6 +1,6 @@
 import {DataConfigType} from "../../designer/DesignerType";
 import React from "react";
-import {ConfigType} from "../../designer/right/ConfigType";
+import {ConfigType} from "../../designer/right/ConfigContent";
 
 export interface ComponentBaseProps {
     info?: ComponentInfoType;

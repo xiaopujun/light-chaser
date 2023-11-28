@@ -1,7 +1,7 @@
 import './Legend.less';
 import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI";
 import {Control} from "../../../../json-schema/SchemaTypes";
-import {ConfigType} from "../../../../designer/right/ConfigType";
+import {ConfigType} from "../../../../designer/right/ConfigContent";
 
 export const AntdLegend = (props: ConfigType) => {
     const {controller} = props;

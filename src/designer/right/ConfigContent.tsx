@@ -5,12 +5,16 @@ import {observer} from "mobx-react";
 import './ConfigContent.less';
 import designerStore from "../store/DesignerStore";
 import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
-import {ConfigType} from "./ConfigType";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
 import ObjectUtil from "../../utils/ObjectUtil";
 import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryRecordOperateProxy";
 import Loading from "../../ui/loading/Loading";
 import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
+import AbstractController from "../../framework/core/AbstractController";
+
+export interface ConfigType<T extends AbstractController = AbstractController> {
+    controller: T;
+}
 
 class ConfigContent extends Component {
 

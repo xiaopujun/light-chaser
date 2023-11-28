@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {ConfigType} from "../../../designer/right/ConfigType";
 import {AreaOptions, ShapeStyle} from "@antv/g2plot";
 import AntdCommonAreaController from "../../antd-common/area/AntdCommonAreaController";
 import {AntdCartesianCoordinateSys} from "../../antd-common/config/AntdFragment";
@@ -10,6 +9,7 @@ import {Control} from "../../../json-schema/SchemaTypes";
 import LCGUIUtil from "../../../json-schema/LCGUIUtil";
 import AntdCommonUtil from "../../antd-common/AntdCommonUtil";
 import ColorUtil from "../../../utils/ColorUtil";
+import {ConfigType} from "../../../designer/right/ConfigContent";
 
 class AntdBaseAreaStyleConfig extends Component<ConfigType> {
 

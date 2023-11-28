@@ -1,6 +1,6 @@
 import {Component} from 'react';
 import './AnimationConfig.less';
-import {ConfigType} from '../../../designer/right/ConfigType';
+import {ConfigType} from "../../../designer/right/ConfigContent";
 
 class AnimationConfig extends Component<ConfigType> {
     render() {

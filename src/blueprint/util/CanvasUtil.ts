@@ -1,15 +1,14 @@
-import {BPLineType, PointType} from "../BPTypes";
-import bpStore from "../store/BPStore";
+import bpStore, {IBPLine, IPoint} from "../store/BPStore";
 
 export interface CubicBezierCurvesCP {
-    firstCP: PointType;
-    secondCP: PointType;
+    firstCP: IPoint;
+    secondCP: IPoint;
 }
 
 export default class CanvasUtil {
 
     //绘制贝塞尔曲线
-    public static drawBezierCurves(ctx: CanvasRenderingContext2D, lines: BPLineType[]) {
+    public static drawBezierCurves(ctx: CanvasRenderingContext2D, lines: IBPLine[]) {
         ctx.beginPath();
         for (let i = 0; i < lines.length; i++) {
             const {startPoint, endPoint, firstCP, secondCP, color, lineWidth, lineDash} = lines[i];
@@ -24,11 +23,11 @@ export default class CanvasUtil {
     }
 
     //计算三次贝塞尔曲线的2个控制点
-    public static calculateControlPoint(startPos: PointType, endPos: PointType): CubicBezierCurvesCP {
+    public static calculateControlPoint(startPos: IPoint, endPos: IPoint): CubicBezierCurvesCP {
         const direction = endPos.x < startPos.x ? 'left' : 'right';
         const boxWidth = Math.abs(endPos.x - startPos.x);
-        const firstCP: PointType = {x: 0, y: 0};
-        const secondCP: PointType = {x: 0, y: 0};
+        const firstCP: IPoint = {x: 0, y: 0};
+        const secondCP: IPoint = {x: 0, y: 0};
         //计算贝塞尔控制点
         if (direction === 'right') {
             firstCP.x = startPos.x + (boxWidth * 0.5);
@@ -45,8 +44,8 @@ export default class CanvasUtil {
     }
 
     //计算贝塞尔曲线采样点
-    public static sampleBezierCurve(startPoi: PointType, firstCP: PointType, secondCP: PointType, endPoi: PointType, numSamples: number): PointType[] {
-        const points: PointType[] = [];
+    public static sampleBezierCurve(startPoi: IPoint, firstCP: IPoint, secondCP: IPoint, endPoi: IPoint, numSamples: number): IPoint[] {
+        const points: IPoint[] = [];
         for (let i = 0; i <= numSamples; i++) {
             const t = i / numSamples;
             const x =
@@ -65,12 +64,12 @@ export default class CanvasUtil {
     }
 
     //绘制点元素
-    public static drawPoint(ctx: CanvasRenderingContext2D, point: PointType, size: number, color: string) {
+    public static drawPoint(ctx: CanvasRenderingContext2D, point: IPoint, size: number, color: string) {
         ctx.fillStyle = color;
         ctx.fillRect(point.x - size / 2, point.y - size / 2, size, size);
     }
 
-    public static isMouseInRectangle(mousePoint: PointType, rectStart: PointType, rectEnd: PointType): boolean {
+    public static isMouseInRectangle(mousePoint: IPoint, rectStart: IPoint, rectEnd: IPoint): boolean {
         //放大保卫盒边界（兼容线段结束点在起始点左边时贝塞尔曲线反向弯曲后增加的宽度）
         const boxWidth = Math.abs(rectEnd.x - rectStart.x);
         let x1, x2;
@@ -98,7 +97,7 @@ export default class CanvasUtil {
      * @param lineStart
      * @param lineEnd
      */
-    public static distanceBetweenPointAndLine(point: PointType, lineStart: PointType, lineEnd: PointType): number {
+    public static distanceBetweenPointAndLine(point: IPoint, lineStart: IPoint, lineEnd: IPoint): number {
         const A = point.x - lineStart.x;
         const B = point.y - lineStart.y;
         const C = lineEnd.x - lineStart.x;
@@ -134,7 +133,7 @@ export default class CanvasUtil {
      * @param pointArray 线段采样点数组
      * @param precision 精度范围
      */
-    public static isMouseOnLine(mousePoint: PointType, pointArray: PointType[], precision: number): boolean {
+    public static isMouseOnLine(mousePoint: IPoint, pointArray: IPoint[], precision: number): boolean {
         for (let i = 0; i < pointArray.length - 1; i++) {
             const distance = CanvasUtil.distanceBetweenPointAndLine(mousePoint, pointArray[i], pointArray[i + 1]);
             if (distance <= precision)

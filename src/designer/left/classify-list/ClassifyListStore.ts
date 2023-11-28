@@ -1,5 +1,5 @@
 import {makeAutoObservable} from "mobx";
-import {ClassifyEnum} from "./ClassifyType";
+import {ClassifyEnum} from "./ClassifyEnum";
 import icon_all from './icon/icon-all.svg';
 import icon_bar from './icon/icon-bar.svg';
 import icon_column from './icon/icon-column.svg';

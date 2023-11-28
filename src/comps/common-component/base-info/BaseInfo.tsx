@@ -1,12 +1,12 @@
 import {Component} from 'react';
 import './BaseInfo.less';
-import {ConfigType} from "../../../designer/right/ConfigType";
 import designerStore from "../../../designer/store/DesignerStore";
 import layerListStore from "../../../designer/float-configs/layer-list/LayerListStore";
 import {ComponentBaseProps} from "../common-types";
 import {Control} from "../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import LCGUIUtil from "../../../json-schema/LCGUIUtil";
+import {ConfigType} from "../../../designer/right/ConfigContent";
 
 /**
  * lc组件基础信息

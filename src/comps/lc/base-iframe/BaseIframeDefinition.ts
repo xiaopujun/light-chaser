@@ -6,13 +6,13 @@ import {BaseInfoType} from "../../../designer/DesignerType";
 import {ClazzTemplate} from "../../common-component/common-types";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import baseIframeImg from './base-iframe.png';
-import {BaseIframe} from "./BaseIframe";
+import {BaseIframeController} from "./BaseIframeController";
 import {BaseIframeComponentProps} from "./BaseIframeComponent";
 import BaseInfo from "../../common-component/base-info/BaseInfo";
 import {BaseIframeStyleConfig} from "./BaseIframeConfig";
 import {HighlightFilled, MediumCircleFilled} from "@ant-design/icons";
 
-export default class BaseIframeDefinition extends AbstractDefinition<BaseIframe, BaseIframeComponentProps> {
+export default class BaseIframeDefinition extends AbstractDefinition<BaseIframeController, BaseIframeComponentProps> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "基础iframe",
@@ -27,8 +27,8 @@ export default class BaseIframeDefinition extends AbstractDefinition<BaseIframe,
         return baseIframeImg;
     }
 
-    getComponent(): ClazzTemplate<BaseIframe> | null {
-        return BaseIframe;
+    getComponent(): ClazzTemplate<BaseIframeController> | null {
+        return BaseIframeController;
     }
 
     getInitConfig(): BaseIframeComponentProps {

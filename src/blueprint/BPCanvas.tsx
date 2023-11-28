@@ -2,9 +2,8 @@ import React, {useEffect} from "react";
 import LineLayer from "./line/LineLayer";
 import {NodeLayer} from "./node/NodeLayer";
 import {reRenderAllLine} from "./drag/BPMovable";
-import bpStore from "./store/BPStore";
+import bpStore, {IBPLine} from "./store/BPStore";
 import CanvasUtil from "./util/CanvasUtil";
-import {BPLineType} from "./BPTypes";
 
 /**
  * todo 该方法要做性能优化，考虑防抖避免频繁采样和线段重复绘制，用算法做好碰撞检测
@@ -26,14 +25,14 @@ const lineSegmentCollisions = (event: MouseEvent) => {
     }
     if (!shiftKey) return;
     const {bpLines, canvasOffset} = bpStore;
-    const targetLines: BPLineType[] = [];
+    const targetLines: IBPLine[] = [];
     const mousePoint = {x: clientX - canvasOffset.x, y: clientY - canvasOffset.y};
     Object.values(bpLines).forEach((line) => {
         CanvasUtil.isMouseInRectangle(mousePoint, line.startPoint!, line.endPoint!) && targetLines.push(line);
     });
     if (targetLines.length === 0) return;
     //遍历有效范围内的线条是否命中
-    const hitLines: BPLineType[] = [];
+    const hitLines: IBPLine[] = [];
     for (let i = 0; i < targetLines.length; i++) {
         const targetLine = targetLines[i];
         const {samplePoints} = targetLine!;
