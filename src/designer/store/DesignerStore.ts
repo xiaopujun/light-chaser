@@ -32,7 +32,7 @@ class DesignerStore {
             addItem: action,
             delItem: action,
             setLoaded: action,
-            updateLayout: action,
+            updateLayer: action,
             updateThemeConfig: action,
             flashGlobalTheme: action,
             updateCanvasConfig: action,
@@ -220,7 +220,7 @@ class DesignerStore {
     /**
      * 更新布局
      */
-    updateLayout = (items: ILayerItem[], reRender: boolean = true) => {
+    updateLayer = (items: ILayerItem[], reRender: boolean = true) => {
         for (const item of items) {
             let oldItem = this.layerConfigs[item.id + ""];
             if (!isEqual(oldItem, item))

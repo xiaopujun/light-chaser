@@ -29,7 +29,7 @@ class HistoryRecordOperateProxy {
 
     public doDrag(items: ILayerItem[]): void {
         //构建历史记录数据
-        const {layerConfigs, updateLayout} = designerStore;
+        const {layerConfigs, updateLayer} = designerStore;
         const ids: string[] = [];
         let prev: IDragOperateData | null;
         let next: IDragOperateData | null;
@@ -64,14 +64,14 @@ class HistoryRecordOperateProxy {
             next: next!
         }
         //更新布局数据
-        updateLayout(items, false);
+        updateLayer(items, false);
         //历史记录入队
         historyOperator.put({actions: [data]});
     };
 
     public doResize(items: ILayerItem[], direction: [number, number]): void {
         //构建历史记录数据
-        const {layerConfigs, updateLayout} = designerStore;
+        const {layerConfigs, updateLayer} = designerStore;
         const ids: string[] = [];
         let prev: IResizeOperateData | null;
         let next: IResizeOperateData | null;
@@ -106,7 +106,7 @@ class HistoryRecordOperateProxy {
         //构建历史记录节点
         const data: IHistoryRecord = {type: OperateType.RESIZE, prev: prev!, next: next!}
         //更新布局数据
-        updateLayout(items, false);
+        updateLayer(items, false);
         //历史记录入队
         historyOperator.put({actions: [data]});
     }
@@ -152,7 +152,7 @@ class HistoryRecordOperateProxy {
 
     public doDelete(): void {
         let {targetIds, setTargetIds} = eventOperateStore;
-        const {delItem, layerConfigs, compInstances, updateLayout} = designerStore;
+        const {delItem, layerConfigs, compInstances, updateLayer} = designerStore;
         if (!targetIds || targetIds.length === 0) return;
         const {setContentVisible, activeConfig} = rightStore;
         setContentVisible(false);
@@ -200,7 +200,7 @@ class HistoryRecordOperateProxy {
                     //删除分组图层中的目标子图层
                     const oldChildIds = cloneDeep(groupLayer.childIds)
                     const newChildIds = oldChildIds!.filter((cid) => cid !== id);
-                    updateLayout([{id: pid!, childIds: newChildIds}], false)
+                    updateLayer([{id: pid!, childIds: newChildIds}], false)
                     updNext.push({id: pid!, childIds: toJS(groupLayer.childIds!)});
                 }
                 //构建子图层的操作记录
@@ -373,7 +373,7 @@ class HistoryRecordOperateProxy {
     public doHideUpd(items: ILayerItem[]): void {
         let prev: IHideOperateData[] = [];
         let next: IHideOperateData[] = [];
-        const {layerConfigs, updateLayout} = designerStore;
+        const {layerConfigs, updateLayer} = designerStore;
         items.forEach((item) => {
             const {id, hide} = item;
             next.push({id: id!, hide: hide!});
@@ -383,7 +383,7 @@ class HistoryRecordOperateProxy {
         const data: IHistoryRecord = {type: OperateType.HIDE, prev, next}
         historyOperator.put({actions: [data]});
         //更新隐藏状态
-        updateLayout(items);
+        updateLayer(items);
         //取消所有选中状态
         const {setTargetIds} = eventOperateStore;
         setTargetIds([]);
@@ -399,7 +399,7 @@ class HistoryRecordOperateProxy {
     public doLockUpd(items: ILayerItem[]): void {
         let prev: ILockOperateData[] = [];
         let next: ILockOperateData[] = [];
-        const {layerConfigs, updateLayout} = designerStore;
+        const {layerConfigs, updateLayer} = designerStore;
         items.forEach((item) => {
             const {id, lock} = item;
             next.push({id: id!, lock: lock!});
@@ -408,7 +408,7 @@ class HistoryRecordOperateProxy {
         })
         const data: IHistoryRecord = {type: OperateType.LOCK, prev, next}
         historyOperator.put({actions: [data]});
-        updateLayout(items);
+        updateLayer(items);
         const {layerInstances, visible} = layerListStore;
         if (visible) {
             //更新图层列表
@@ -421,7 +421,7 @@ class HistoryRecordOperateProxy {
     public doOrderUpd(items: ILayerItem[]): void {
         let prev: IOrderOperateData[] = [];
         let next: IOrderOperateData[] = [];
-        const {layerConfigs, updateLayout} = designerStore;
+        const {layerConfigs, updateLayer} = designerStore;
         items.forEach((item) => {
             const {id, order} = item;
             next.push({id: id!, order: order!});
@@ -430,7 +430,7 @@ class HistoryRecordOperateProxy {
         })
         const data: IHistoryRecord = {type: OperateType.ORDER, prev, next}
         historyOperator.put({actions: [data]});
-        updateLayout(items);
+        updateLayer(items);
     }
 
     /**
@@ -458,7 +458,7 @@ class HistoryRecordOperateProxy {
         //查找当前选中的图层的所有父级图层
         const layerIdSet = LayerUtil.findTopGroupLayer(targetIds, true);
         //新建编组
-        const {addItem, updateLayout, layerConfigs} = designerStore;
+        const {addItem, updateLayer, layerConfigs} = designerStore;
         const order = maxLevel + 1;
         const pid = IdGenerate.generateId();
         const childIds = Array.from(layerIdSet);
@@ -502,7 +502,7 @@ class HistoryRecordOperateProxy {
             updateItems.push({id, pid});
             childNext.push({id, pid});
         });
-        updateLayout(updateItems, false);
+        updateLayer(updateItems, false);
         setTargetIds([]);
         actions.push({type: OperateType.UPD_LAYER_GROUP, prev: childPrev, next: childNext});
         historyOperator.put({actions});
@@ -521,7 +521,7 @@ class HistoryRecordOperateProxy {
         //找出当前选中的图层中，最顶层的分组图层
         let groupIds = LayerUtil.findTopGroupLayer(targetIds, true);
         //过滤掉其中分组等于自身的图层（即非分组图层）
-        const {layerConfigs, updateLayout, delLayout} = designerStore;
+        const {layerConfigs, updateLayer, delLayout} = designerStore;
         groupIds = groupIds.filter((id: string) => layerConfigs[id].type === 'group');
         //对每个分组图层进行解组
         const actions: IHistoryRecord[] = [];
@@ -540,7 +540,7 @@ class HistoryRecordOperateProxy {
                 updateItems.push({id: childId, pid: undefined});
                 childNext.push({id: childId, pid: undefined});
             });
-            updateLayout(updateItems, false);
+            updateLayer(updateItems, false);
             groupPrev.push({id: groupId, data: {layerConfig: item}});
         });
         actions.push({type: OperateType.UPD_LAYER_GROUP, prev: childPrev, next: childNext});

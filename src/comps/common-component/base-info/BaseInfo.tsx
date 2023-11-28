@@ -56,9 +56,9 @@ class BaseInfo extends Component<ConfigType> {
     changeName = (value: string) => {
         const {controller} = this.props;
         controller.update({info: {name: value}}, {reRender: false});
-        const {updateLayout} = designerStore;
+        const {updateLayer} = designerStore;
         const id = controller.getConfig().info.id;
-        updateLayout && updateLayout([{id, name: value}]);
+        updateLayer && updateLayer([{id, name: value}]);
         //如果显示图层,则更新图层名称
         const {layerInstances} = layerListStore;
         let layerInstance = layerInstances[id];

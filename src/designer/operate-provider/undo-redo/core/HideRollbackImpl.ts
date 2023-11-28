@@ -11,9 +11,9 @@ export class HideRollbackImpl extends AbstractRollback {
     redo(record: IHistoryRecord): void {
         if (!record) return;
         const {next} = record;
-        const {updateLayout} = designerStore;
+        const {updateLayer} = designerStore;
         if (next)
-            updateLayout(next as IHideOperateData[]);
+            updateLayer(next as IHideOperateData[]);
         const {visible, layerInstances} = layerListStore;
         if (visible) {
             //图层列表若显示，则需要更新图层列表的组件状态
@@ -27,9 +27,9 @@ export class HideRollbackImpl extends AbstractRollback {
     undo(record: IHistoryRecord): void {
         if (!record) return;
         const {prev} = record;
-        const {updateLayout} = designerStore;
+        const {updateLayer} = designerStore;
         if (prev)
-            updateLayout(prev as IHideOperateData[]);
+            updateLayer(prev as IHideOperateData[]);
         const {visible, layerInstances} = layerListStore;
         if (visible) {
             //图层列表若显示，则需要更新图层列表的组件状态

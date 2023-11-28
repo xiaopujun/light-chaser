@@ -51,7 +51,7 @@ class GroupMovable extends React.Component<{}, { throttleDragRotate: number }> {
     }
 
     onDragEnd = (e: OnDragEnd) => {
-        const {updateLayout} = designerStore;
+        const {updateLayer} = designerStore;
         let {backoff, setBackoff} = eventOperateStore;
         const {lastEvent, target} = e;
         if (lastEvent) {
@@ -67,7 +67,7 @@ class GroupMovable extends React.Component<{}, { throttleDragRotate: number }> {
             ];
             //更新组件位置信息
             if (backoff) {
-                updateLayout(data, false);
+                updateLayer(data, false);
                 setBackoff(false);
             } else
                 historyRecordOperateProxy.doDrag(data)
@@ -97,7 +97,7 @@ class GroupMovable extends React.Component<{}, { throttleDragRotate: number }> {
     onDragGroupEnd = (e: OnDragGroupEnd) => {
         const {targets} = e;
         //通过第一个元素来判断。 框选的所有组件是否处于锁定状态，处于锁定状态，则不允许拖拽和缩放。
-        const {updateLayout, layerConfigs} = designerStore;
+        const {updateLayer, layerConfigs} = designerStore;
         const firstLock = layerConfigs[targets[0].id].lock;
         if (firstLock) return false;
 
@@ -124,7 +124,7 @@ class GroupMovable extends React.Component<{}, { throttleDragRotate: number }> {
         //更新组件位置信息并记录操作
         if (data.length > 0) {
             if (backoff) {
-                updateLayout(data, false);
+                updateLayer(data, false);
                 setBackoff(false);
             } else
                 historyRecordOperateProxy.doDrag(data)
@@ -149,7 +149,7 @@ class GroupMovable extends React.Component<{}, { throttleDragRotate: number }> {
     }
 
     onResizeEnd = (e: OnResizeEnd) => {
-        const {updateLayout} = designerStore;
+        const {updateLayer} = designerStore;
         let {backoff, setBackoff} = eventOperateStore;
         const {target, lastEvent} = e;
         if (lastEvent) {
@@ -165,7 +165,7 @@ class GroupMovable extends React.Component<{}, { throttleDragRotate: number }> {
             ];
             //更新组件尺寸信息
             if (backoff) {
-                updateLayout(data, false);
+                updateLayer(data, false);
                 setBackoff(false);
             } else
                 historyRecordOperateProxy.doResize(data, direction);
@@ -188,7 +188,7 @@ class GroupMovable extends React.Component<{}, { throttleDragRotate: number }> {
     }
 
     onResizeGroupEnd = (e: OnResizeGroupEnd) => {
-        const {updateLayout} = designerStore;
+        const {updateLayer} = designerStore;
         let {backoff, setBackoff} = eventOperateStore;
         let data: ILayerItem[] = [];
         e.events.forEach((ev: any) => {
@@ -209,7 +209,7 @@ class GroupMovable extends React.Component<{}, { throttleDragRotate: number }> {
         //更新组件尺寸和坐标信息
         if (data.length > 0) {
             if (backoff) {
-                updateLayout(data, false);
+                updateLayer(data, false);
                 setBackoff(false);
             } else
                 historyRecordOperateProxy.doResize(data, direction)
