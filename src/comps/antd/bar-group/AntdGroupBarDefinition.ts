@@ -53,7 +53,7 @@ class AntdGroupBarDefinition extends AbstractBarDefinition {
             }
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: "Antd分组条形图",
                 type: "AntdGroupBar",

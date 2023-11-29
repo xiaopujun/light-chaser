@@ -35,7 +35,7 @@ export default class BaseColorBlockDefinition extends AbstractDefinition<BaseCol
 
     getInitConfig(): BaseColorBlockComponentProps {
         return {
-            info: {
+            base: {
                 id: "",
                 name: '基础色块',
                 type: 'LcBaseColorBlock',
@@ -53,7 +53,7 @@ export default class BaseColorBlockDefinition extends AbstractDefinition<BaseCol
 
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
-            info: BaseInfo,
+            base: BaseInfo,
             style: BaseColorBlockConfig,
             animation: AnimationConfig,
             theme: ThemeConfig

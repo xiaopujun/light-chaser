@@ -56,7 +56,7 @@ class LocalOperator extends AbstractOperator {
         const {elemConfigs} = projectData;
         Object.keys(elemConfigs!).forEach((key: string) => {
             const elemConfig = elemConfigs![key] as ComponentBaseProps;
-            const convertIns = convertMap[elemConfig.info!.type!];
+            const convertIns = convertMap[elemConfig.base!.type!];
             if (convertIns)
                 convertIns.convert(elemConfig);
         })
@@ -110,7 +110,7 @@ class LocalOperator extends AbstractOperator {
         const {elemConfigs} = projectData;
         Object.keys(elemConfigs!).forEach((key: string) => {
             const elemConfig = elemConfigs![key] as ComponentBaseProps;
-            const convertIns = convertMap[elemConfig.info!.type!];
+            const convertIns = convertMap[elemConfig.base!.type!];
             if (convertIns)
                 convertIns.convert(elemConfig);
         })
@@ -180,7 +180,7 @@ class LocalOperator extends AbstractOperator {
         const {elemConfigs} = projectData as ProjectDataType;
         for (const key of Object.keys(elemConfigs!)) {
             const elemConfig = elemConfigs![key] as ComponentBaseProps;
-            const convertIns = convertMap[elemConfig?.info?.type!];
+            const convertIns = convertMap[elemConfig?.base?.type!];
             //todo 异步调用想想怎么优化
             if (convertIns) {
                 await convertIns.convertBack(elemConfig);

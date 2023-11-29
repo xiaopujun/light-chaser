@@ -39,7 +39,7 @@ class AntdBaseLineDefinition extends AbstractLineDefinition {
             {"name": "1995", "value": 250},
             {"name": "1996", "value": 156}];
         return {
-            info: {
+            base: {
                 id: "",
                 name: '基础折线图',
                 type: 'AntdBaseLine',

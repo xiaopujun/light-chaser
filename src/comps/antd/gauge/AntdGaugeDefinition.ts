@@ -25,7 +25,7 @@ class AntdGaugeDefinition /*extends AbstractDefinition<AntdGauge, BaseMenuMappin
 
     getMenuToConfigContentMap(): BaseMenuMapping | null {
         return {
-            info: BaseInfo,
+            base: BaseInfo,
             data: DataConfig,
             style: AntdGaugeConfig,
             animation: AnimationConfig,
@@ -49,7 +49,7 @@ class AntdGaugeDefinition /*extends AbstractDefinition<AntdGauge, BaseMenuMappin
 
     getInitConfig(): AntdGaugeProps {
         return {
-            info: {
+            base: {
                 id: "",
                 name: 'Antd仪表盘',
                 type: 'AntdGauge',

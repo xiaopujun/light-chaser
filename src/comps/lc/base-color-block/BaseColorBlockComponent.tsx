@@ -10,7 +10,7 @@ export interface BaseColorBlockComponentStyle {
 }
 
 export interface BaseColorBlockComponentProps {
-    info?: ComponentInfoType;
+    base?: ComponentInfoType;
     style?: BaseColorBlockComponentStyle;
 }
 

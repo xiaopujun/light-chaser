@@ -25,7 +25,7 @@ abstract class AbstractColumnDefinition extends AntdCommonDefinition<AntdCommonC
 
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
-            info: BaseInfo,
+            base: BaseInfo,
             data: DataConfig,
             style: AntdColumnCommonStyleConfig,
             animation: AnimationConfig,

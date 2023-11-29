@@ -27,7 +27,7 @@ class AntdPieDefinition extends AntdCommonDefinition<AntdPieController, AntdPieP
 
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
-            info: BaseInfo,
+            base: BaseInfo,
             data: DataConfig,
             style: AntdPieConfig,
             animation: AnimationConfig,
@@ -58,7 +58,7 @@ class AntdPieDefinition extends AntdCommonDefinition<AntdPieController, AntdPieP
             {type: 'sort4', value: 25}
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: 'Antd饼图',
                 type: 'AntdPie',

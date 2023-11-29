@@ -95,7 +95,7 @@ class AntdScatterBubbleDefinition extends AbstractScatterDefinition {
             }
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: 'Antd气泡图',
                 type: 'AntdScatterBubble',

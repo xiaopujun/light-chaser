@@ -26,7 +26,7 @@ abstract class AbstractScatterDefinition extends AntdCommonDefinition<AntdCommon
 
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
-            info: BaseInfo,
+            base: BaseInfo,
             data: DataConfig,
             style: AntdScatterCommonStyleConfig,
             animation: AnimationConfig,

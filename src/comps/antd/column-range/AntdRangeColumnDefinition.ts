@@ -27,7 +27,7 @@ class AntdRangeColumnDefinition extends AbstractColumnDefinition {
             {type: 'sort4', values: [38, 129]},
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: 'Antd区间柱状图',
                 type: 'AntdRangeColumn',

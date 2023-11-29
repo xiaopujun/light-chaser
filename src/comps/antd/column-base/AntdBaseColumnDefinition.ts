@@ -35,7 +35,7 @@ class AntdBaseColumnDefinition extends AbstractColumnDefinition {
             }
         ]
         return {
-            info: {
+            base: {
                 id: "",
                 name: '基础条形图',
                 type: 'AntdBaseBar',

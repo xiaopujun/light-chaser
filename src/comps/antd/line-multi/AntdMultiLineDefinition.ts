@@ -64,7 +64,7 @@ class AntdMultiLineDefinition extends AbstractLineDefinition {
         ]
 
         return {
-            info: {
+            base: {
                 id: "",
                 name: '多折线图',
                 type: 'AntdMultiLine',

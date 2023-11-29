@@ -53,7 +53,7 @@ class AntdStackColumnDefinition extends AbstractColumnDefinition {
             },
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: 'Antd堆叠柱状图',
                 type: 'AntdStackColumn',

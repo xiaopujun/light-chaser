@@ -39,7 +39,7 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
             {"name": "Q4", "value": 220}
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: '基础面积图',
                 type: 'AntdBaseArea',

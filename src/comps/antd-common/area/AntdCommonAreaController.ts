@@ -32,7 +32,7 @@ export default class AntdCommonAreaController extends AntdBaseDesignerController
     }
 
     updateTheme(newTheme: ThemeItemType): void {
-        const {type} = this.config?.info!;
+        const {type} = this.config?.base!;
         if (!newTheme)
             return;
         const styleConfig = this.config?.style!;

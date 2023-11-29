@@ -1,7 +1,4 @@
-import {
-    AbstractDefinition,
-    MenuToConfigMappingType
-} from "../../../framework/core/AbstractDefinition";
+import {AbstractDefinition, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import {BaseInfoType} from "../../../designer/DesignerType";
 import {ClazzTemplate} from "../../common-component/common-types";
 import {MenuInfo} from "../../../designer/right/MenuType";
@@ -10,7 +7,7 @@ import {BaseIframeController} from "./BaseIframeController";
 import {BaseIframeComponentProps} from "./BaseIframeComponent";
 import BaseInfo from "../../common-component/base-info/BaseInfo";
 import {BaseIframeStyleConfig} from "./BaseIframeConfig";
-import {HighlightFilled, MediumCircleFilled} from "@ant-design/icons";
+import {AppstoreFilled, HighlightFilled} from "@ant-design/icons";
 
 export default class BaseIframeDefinition extends AbstractDefinition<BaseIframeController, BaseIframeComponentProps> {
     getBaseInfo(): BaseInfoType {
@@ -33,7 +30,7 @@ export default class BaseIframeDefinition extends AbstractDefinition<BaseIframeC
 
     getInitConfig(): BaseIframeComponentProps {
         return {
-            info: {
+            base: {
                 id: "",
                 name: '基础iframe',
                 type: 'LcBaseIframe',
@@ -48,9 +45,9 @@ export default class BaseIframeDefinition extends AbstractDefinition<BaseIframeC
     getMenuList(): Array<MenuInfo> | null {
         return [
             {
-                icon: MediumCircleFilled,
-                name: '信息',
-                key: 'info',
+                icon: AppstoreFilled,
+                name: '基础',
+                key: 'base',
             },
             {
                 icon: HighlightFilled,
@@ -62,7 +59,7 @@ export default class BaseIframeDefinition extends AbstractDefinition<BaseIframeC
 
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
-            info: BaseInfo,
+            base: BaseInfo,
             style: BaseIframeStyleConfig,
         };
     }

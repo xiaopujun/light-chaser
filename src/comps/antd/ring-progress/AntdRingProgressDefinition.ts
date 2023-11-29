@@ -27,7 +27,7 @@ class AntdRingProgressDefinition extends AntdCommonDefinition<AntdRingProgressCo
 
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
-            info: BaseInfo,
+            base: BaseInfo,
             data: DataConfig,
             style: AntdRingProgressStyleConfig,
             animation: AnimationConfig,
@@ -51,7 +51,7 @@ class AntdRingProgressDefinition extends AntdCommonDefinition<AntdRingProgressCo
 
     getInitConfig(): AntdRingProgressProps {
         return {
-            info: {
+            base: {
                 id: "",
                 name: 'Antd迷你环图',
                 type: 'AntdRingProgress',

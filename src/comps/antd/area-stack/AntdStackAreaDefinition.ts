@@ -818,7 +818,7 @@ class AntdStackAreaDefinition extends AbstractAreaDefinition {
             }
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: '堆叠面积图',
                 type: 'AntdStackArea',

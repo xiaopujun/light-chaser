@@ -53,7 +53,7 @@ class AntdGroupColumnDefinition extends AbstractColumnDefinition {
             }
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: "Antd分组柱状图",
                 type: "AntdGroupColumn",

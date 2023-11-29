@@ -125,7 +125,7 @@ class HistoryRecordOperateProxy {
                     config = compInstances![layout.id!].getConfig();
                 } else {
                     config = componentDefine.getInitConfig();
-                    config.info.id = layout.id!;
+                    config.base.id = layout.id!;
                 }
                 new AbsCompImpl()!.create(container!, config).then((instance: any) => {
                     const {compInstances} = designerStore;
@@ -254,7 +254,7 @@ class HistoryRecordOperateProxy {
         //生成新组件配置项数据
         const copiedInstance = compInstances[layout.id!];
         let newConfig = cloneDeep(copiedInstance.getConfig());
-        newConfig.info.id = newId;
+        newConfig.base.id = newId;
         elemConfigs![newId] = newConfig;
         newIds.push(newId);
         return newLayout;

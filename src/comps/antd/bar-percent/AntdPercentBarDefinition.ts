@@ -68,7 +68,7 @@ class AntdPercentBarDefinition extends AbstractBarDefinition {
             }
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: 'Antd百分比条形图',
                 type: 'AntdPercentBar',

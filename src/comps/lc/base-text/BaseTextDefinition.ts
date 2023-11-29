@@ -37,7 +37,7 @@ export default class BaseTextDefinition extends AbstractDefinition<BaseTextContr
 
     getInitConfig(): BaseTextComponentProps {
         return {
-            info: {
+            base: {
                 id: "",
                 name: '基础文本',
                 type: 'LcBaseText',
@@ -64,7 +64,7 @@ export default class BaseTextDefinition extends AbstractDefinition<BaseTextContr
 
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
-            info: BaseInfo,
+            base: BaseInfo,
             style: BaseTextStyleConfig,
             animation: AnimationConfig,
             theme: ThemeConfig

@@ -26,7 +26,7 @@ abstract class AbstractLineDefinition extends AntdCommonDefinition<AntdCommonLin
 
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
-            info: BaseInfo,
+            base: BaseInfo,
             data: DataConfig,
             style: AntdLineCommonStyleConfig,
             animation: AnimationConfig,

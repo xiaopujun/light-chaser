@@ -25,7 +25,7 @@ abstract class AbstractRoseDefinition extends AntdCommonDefinition<AntdCommonRos
 
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
-            info: BaseInfo,
+            base: BaseInfo,
             data: DataConfig,
             style: AntdRoseCommonStyleConfig,
             animation: AnimationConfig,

@@ -68,7 +68,7 @@ class AntdPercentColumnDefinition extends AbstractColumnDefinition {
             }
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: 'Antd百分比柱状图',
                 type: 'AntdPercentColumn',

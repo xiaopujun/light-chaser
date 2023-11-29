@@ -27,7 +27,7 @@ class AntdBaseRoseDefinition extends AbstractRoseDefinition {
             {type: 'sort4', value: 15}
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: 'Antd基础玫瑰图',
                 type: 'AntdBaseRose',

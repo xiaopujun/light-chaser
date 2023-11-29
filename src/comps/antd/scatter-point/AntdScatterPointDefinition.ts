@@ -48,7 +48,7 @@ class AntdScatterPointDefinition extends AbstractScatterDefinition {
             },
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: 'Antd散点图',
                 type: 'AntdScatterPoint',

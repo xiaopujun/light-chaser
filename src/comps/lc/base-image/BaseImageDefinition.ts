@@ -32,7 +32,7 @@ export default class BaseImageDefinition extends AbstractDefinition<BaseImageCon
 
     getInitConfig(): BaseImageComponentProps {
         return {
-            info: {
+            base: {
                 id: "",
                 name: '基础图片',
                 type: 'LcBaseImage',
@@ -52,7 +52,7 @@ export default class BaseImageDefinition extends AbstractDefinition<BaseImageCon
 
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
-            info: BaseInfo,
+            base: BaseInfo,
             style: BaseImageStyleConfig,
         };
     }

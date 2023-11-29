@@ -3,7 +3,7 @@ import React from "react";
 import {ConfigType} from "../../designer/right/ConfigContent";
 
 export interface ComponentBaseProps {
-    info?: ComponentInfoType;
+    base?: ComponentInfoType;
     style?: Record<string, any>;
     data?: DataConfigType;
 }
@@ -20,7 +20,7 @@ export type ClazzTemplate<C> = new () => C | null;
 type MenuMappingType = React.ComponentType<ConfigType<any>>;
 
 export interface BaseMenuMapping {
-    info: MenuMappingType;
+    base: MenuMappingType;
     style?: MenuMappingType;
     data: MenuMappingType;
     animation: MenuMappingType;

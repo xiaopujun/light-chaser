@@ -45,7 +45,7 @@ class AntdStepLineDefinition extends AbstractLineDefinition {
             {year: '1999', value: 8},
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: '多折线图',
                 type: 'AntdStepLine',

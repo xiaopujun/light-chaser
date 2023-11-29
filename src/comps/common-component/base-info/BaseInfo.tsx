@@ -22,7 +22,7 @@ class BaseInfo extends Component<ConfigType> {
     constructor(props: ConfigType) {
         super(props);
         const {controller} = this.props;
-        const {type, name, desc} = (controller.getConfig() as ComponentBaseProps).info!;
+        const {type, name, desc} = (controller.getConfig() as ComponentBaseProps).base!;
         this.schema = {
             type: 'grid',
             children: [
@@ -55,9 +55,9 @@ class BaseInfo extends Component<ConfigType> {
 
     changeName = (value: string) => {
         const {controller} = this.props;
-        controller.update({info: {name: value}}, {reRender: false});
+        controller.update({base: {name: value}}, {reRender: false});
         const {updateLayer} = designerStore;
-        const id = controller.getConfig().info.id;
+        const id = controller.getConfig().base.id;
         updateLayer && updateLayer([{id, name: value}]);
         //如果显示图层,则更新图层名称
         const {layerInstances} = layerListStore;
@@ -67,7 +67,7 @@ class BaseInfo extends Component<ConfigType> {
 
     changeDesc = (value: string) => {
         const {controller} = this.props;
-        controller.update({info: {desc: value}}, {reRender: false});
+        controller.update({base: {desc: value}}, {reRender: false});
     }
 
     onFieldChange = (fieldChangeData: FieldChangeData) => {

@@ -34,7 +34,7 @@ export default class AntdCommonLineController extends AntdBaseDesignerController
     updateTheme(newTheme: ThemeItemType): void {
         if (!newTheme)
             return;
-        const {type} = this.config?.info!;
+        const {type} = this.config?.base!;
         const styleConfig = this.config?.style!;
         const {colors: {main, mainText, supplementSecond, supplementFirst, subText}} = newTheme;
         //图形

@@ -53,7 +53,7 @@ class AntdStackBarDefinition extends AbstractBarDefinition {
             },
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: 'Antd堆叠条形图',
                 type: 'AntdStackBar',

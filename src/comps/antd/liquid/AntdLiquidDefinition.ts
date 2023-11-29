@@ -25,7 +25,7 @@ class AntdLiquidDefinition /*extends AbstractDefinition<AntdLiquid, BaseMenuMapp
 
     getMenuToConfigContentMap(): BaseMenuMapping | null {
         return {
-            info: BaseInfo,
+            base: BaseInfo,
             data: DataConfig,
             style: AntdLiquidConfig,
             animation: AnimationConfig,
@@ -49,7 +49,7 @@ class AntdLiquidDefinition /*extends AbstractDefinition<AntdLiquid, BaseMenuMapp
 
     getInitConfig(): AntdLiquidProps {
         return {
-            info: {
+            base: {
                 id: "",
                 name: 'Antd水波图',
                 type: 'AntdLiquid',

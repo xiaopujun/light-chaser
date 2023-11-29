@@ -7,7 +7,7 @@ import ObjectUtil from "../../../utils/ObjectUtil";
 import {ThemeItemType} from "../../../designer/DesignerType";
 
 export interface BaseImageComponentProps {
-    info?: ComponentInfoType;
+    base?: ComponentInfoType;
     style?: BaseImageComponentStyle;
 }
 

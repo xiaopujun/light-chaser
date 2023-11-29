@@ -53,7 +53,7 @@ class AntdGroupRoseDefinition extends AbstractRoseDefinition {
             }
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: 'Antd基础玫瑰图',
                 type: 'AntdBaseRose',

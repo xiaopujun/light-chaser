@@ -27,7 +27,7 @@ class AntdRangeBarDefinition extends AbstractBarDefinition {
             {type: 'sort4', values: [20, 135]},
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: 'Antd区间条形图',
                 type: 'AntdRangeBar',

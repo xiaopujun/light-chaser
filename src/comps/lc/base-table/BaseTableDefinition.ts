@@ -35,7 +35,7 @@ export default class BaseTableDefinition extends AbstractDefinition<BaseTable, B
 
     getInitConfig(): BaseTableComponentProps {
         return {
-            info: {
+            base: {
                 id: "",
                 name: '基础表格',
                 type: 'LcBaseTable',
@@ -57,7 +57,7 @@ export default class BaseTableDefinition extends AbstractDefinition<BaseTable, B
 
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
-            info: BaseInfo,
+            base: BaseInfo,
             style: BaseTableStyleConfig,
             animation: AnimationConfig,
             theme: ThemeConfig

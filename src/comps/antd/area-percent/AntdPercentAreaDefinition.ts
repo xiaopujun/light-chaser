@@ -128,7 +128,7 @@ class AntdPercentAreaDefinition extends AbstractAreaDefinition {
             }
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: '百分比面积图',
                 type: 'AntdPercentArea',

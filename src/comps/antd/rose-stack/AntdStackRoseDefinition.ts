@@ -73,7 +73,7 @@ class AntdStackRoseDefinition extends AbstractRoseDefinition {
             },
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: 'Antd堆叠玫瑰图',
                 type: 'AntdStackRose',

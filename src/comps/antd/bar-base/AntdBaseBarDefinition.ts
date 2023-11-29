@@ -35,7 +35,7 @@ class AntdBaseBarDefinition extends AbstractBarDefinition {
             }
         ]
         return {
-            info: {
+            base: {
                 id: "",
                 name: '基础条形图',
                 type: 'AntdBaseBar',
