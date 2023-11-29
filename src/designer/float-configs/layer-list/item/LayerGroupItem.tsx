@@ -11,12 +11,13 @@ export default class LayerGroupItem extends BaseLayer {
             <div className={'layer-group'}>
                 <div className={`group-header ${selected ? "layer-selected" : hide
                     ? "layer-hide" : lock ? "layer-lock" : ""}`}
+                     onDoubleClick={this.openInput}
                      onClick={(e) => this.onSelected(e)}>
                     <div className={'group-left'}>
                         <div className={'group-icon'} onClick={() => this.setState({showContent: !showContent})}>
                             <FolderOpenFilled/></div>
                         <div className={'group-name'}>{inputMode ?
-                            <Input type="text" defaultValue={name} autoFocus={true} onChange={this.changeLayerName}
+                            <input type="text" defaultValue={name} autoFocus={true} onChange={this.changeLayerName}
                                    onKeyDown={(e) => {
                                        if (e.code === "Enter")
                                            this.closeInput();

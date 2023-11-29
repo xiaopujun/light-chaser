@@ -1,4 +1,4 @@
-import React, {MouseEvent} from "react";
+import React, {ChangeEvent, MouseEvent} from "react";
 import layerListStore from "../LayerListStore";
 import designerStore from "../../../store/DesignerStore";
 import contextMenuStore from "../../../operate-provider/right-click-menu/ContextMenuStore";
@@ -68,12 +68,14 @@ export abstract class BaseLayer extends React.PureComponent<LayerProps, LayerPro
             const {updateLayer, compInstances} = designerStore;
             updateLayer([{id: compId!, name: this.layerName}], false);
             const compInstance = compInstances[compId!];
-            compInstance && compInstance.update({base: {name: this.layerName}});
+            compInstance && compInstance.update({base: {name: this.layerName}}, {reRender: false});
             this.setState({inputMode: false, name: this.layerName});
         } else {
             this.setState({inputMode: false});
         }
     }
 
-    changeLayerName = (name: string | number) => this.layerName = name as string;
+    changeLayerName = (event: ChangeEvent<HTMLInputElement>) => {
+        this.layerName = event.target.value;
+    }
 }
