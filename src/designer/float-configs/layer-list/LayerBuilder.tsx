@@ -1,4 +1,4 @@
-import {ReactElement} from "react";
+import React, {ReactElement} from "react";
 import LayerItem from "./item/LayerItem";
 import LayerGroupItem from "./item/LayerGroupItem";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
@@ -103,8 +103,7 @@ class LayerBuilder {
             children?.forEach((item: ILayerItem) => {
                 childDomArr.push(this.buildComponents(item));
             });
-            return <div key={layer.id} className={'component-group'}
-                        style={{position: 'absolute'}}>{childDomArr}</div>;
+            return <GroupLayer key={layer.id}>{childDomArr}</GroupLayer>;
         } else {
             return <ComponentContainer layer={layer} key={layer.id}/>;
         }
@@ -114,3 +113,10 @@ class LayerBuilder {
 
 const layerBuilder = new LayerBuilder();
 export default layerBuilder;
+
+export class GroupLayer extends React.PureComponent<any> {
+    render() {
+        return <div className={'component-group'}
+                    style={{position: 'absolute'}}>{this.props.children}</div>;
+    }
+}

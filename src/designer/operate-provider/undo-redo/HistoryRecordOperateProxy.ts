@@ -222,7 +222,6 @@ class HistoryRecordOperateProxy {
         const enforcementCap = document.querySelector('.lc-ruler-content');
         //删除组件后，重新聚焦鼠标指针到容器上，避免鼠标失去焦点导致其他快捷键失效。
         setPointerTarget && setPointerTarget(enforcementCap);
-        console.log(toJS(designerStore.layerConfigs))
     }
 
     private _copyGroupLayer = (layout: ILayerItem, newIds: string[], newLayouts: ILayerItem[], maxLevel: number): ILayerItem => {
@@ -488,9 +487,6 @@ class HistoryRecordOperateProxy {
         //操作记录-新增分组图层
         actions.push({type: OperateType.ADD, prev: null, next: [{id: pid, data: {layerConfig: groupItem}}]});
 
-        addItem(groupItem);
-        setMaxLevel(order);
-
         //操作记录-更新子图层的pid
         const childPrev: ILayerItem[] = [];
         const childNext: ILayerItem[] = [];
@@ -503,6 +499,9 @@ class HistoryRecordOperateProxy {
             childNext.push({id, pid});
         });
         updateLayer(updateItems, false);
+        //添加分组并渲染
+        addItem(groupItem);
+        setMaxLevel(order);
         setTargetIds([]);
         actions.push({type: OperateType.UPD_LAYER_GROUP, prev: childPrev, next: childNext});
         historyOperator.put({actions});
