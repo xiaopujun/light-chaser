@@ -34,7 +34,6 @@ class Input extends Component<InputProps> {
                     {prefix && <div className={'lc-input-prefix'}>{prefix}&nbsp;</div>}
                     <div className={'lc-input-body'}>
                         <input {...rest} onChange={this.onChange} className={'lc-input'}/>
-                        <span className={'lc-input-span'}/>
                     </div>
                     {suffix && <div className={'lc-input-suffix'}>&nbsp;{suffix}</div>}
                 </div>

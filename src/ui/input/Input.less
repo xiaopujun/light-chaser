@@ -6,44 +6,31 @@
     position: relative;
     flex-grow: 1;
 
-    .lc-input[type=number] {
-      &::-webkit-outer-spin-button,
-      &::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-      }
-    }
-
     .lc-input {
       font-size: inherit;
+      background-color: #39393a;
+      box-shadow: 0 0 .4vw rgba(0, 0, 0, 0.5), 0 0 0 .15vw transparent;
+      border-radius: 3px;
+      border: none;
+      outline: none;
+      padding: 2px 5px;
       width: 100%;
-      font-family: inherit;
-      background-color: transparent;
-      border: 1px solid transparent;
+      height: 25px;
+      transition: .4s;
+    }
+
+    .lc-input[type="number"]::-webkit-inner-spin-button,
+    .lc-input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
     }
 
     .lc-input:focus {
-      outline: none;
+      box-shadow: 0 0 0 1px #787878;
     }
 
     .lc-input::placeholder {
       color: #FFFFFF99;
-    }
-
-    .lc-input-span {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background-color: #686868;
-      transform-origin: bottom right;
-      transform: scaleX(0);
-      transition: transform 0.5s ease;
-    }
-
-    .lc-input:focus ~ span {
-      transform-origin: bottom left;
-      transform: scaleX(1);
     }
 
   }
