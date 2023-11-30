@@ -14,6 +14,7 @@ import {ImageUpload} from "./imag-upload/ImageUpload";
 import ColorMode from "./color-mode/ColorMode";
 import {TextOnly} from "./text-only/TextOnly";
 import TextArea from "./text-area/TextArea";
+import {GroupButton} from "./group-button/GroupButton";
 
 const UIMap = new Map();
 
@@ -33,5 +34,6 @@ UIMap.set('slider', Slider);
 UIMap.set('image-upload', ImageUpload);
 UIMap.set('text-only', TextOnly);
 UIMap.set('text-area', TextArea);
+UIMap.set('group-button', GroupButton);
 
 export default UIMap;

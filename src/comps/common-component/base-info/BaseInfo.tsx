@@ -5,9 +5,7 @@ import layerListStore from "../../../designer/float-configs/layer-list/LayerList
 import {ComponentBaseProps} from "../common-types";
 import {Control} from "../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
-import LCGUIUtil from "../../../json-schema/LCGUIUtil";
 import {ConfigType} from "../../../designer/right/ConfigContent";
-import {UIContainer} from "../../../ui/ui-container/UIContainer";
 import {InfoCircleOutlined} from "@ant-design/icons";
 import alignLeft from './icon/align-left.svg';
 import alignHorizontally from './icon/align-horizontally.svg';
@@ -16,23 +14,109 @@ import alignTop from './icon/align-top.svg';
 import alignVertically from './icon/align-vertically.svg';
 import alignBottom from './icon/align-bottom.svg';
 import rightStore from "../../../designer/right/RightStore";
+import {ILayerItem} from "../../../designer/DesignerType";
+import eventOperateStore from "../../../designer/operate-provider/EventOperateStore";
 
 /**
  * lc组件基础信息
  */
-class BaseInfo extends Component<ConfigType> {
-
-    schema: Control = {};
-
-    state = {
-        renderCount: 0
-    }
+class BaseInfo extends Component<ConfigType, ILayerItem> {
 
     constructor(props: ConfigType) {
         super(props);
+        const {controller} = props;
+        const {id} = (controller.getConfig() as ComponentBaseProps).base!;
+        const {layerConfigs} = designerStore;
+        this.state = layerConfigs[id];
+    }
+
+    componentDidMount() {
+        const {setBaseConfigRef} = rightStore;
+        setBaseConfigRef && setBaseConfigRef(this);
+    }
+
+    changeName = (value: string) => {
         const {controller} = this.props;
-        const {name} = (controller.getConfig() as ComponentBaseProps).base!;
-        this.schema = {
+        controller.update({base: {name: value}}, {reRender: false});
+        const {updateLayer} = designerStore;
+        const id = controller.getConfig().base.id;
+        updateLayer && updateLayer([{id, name: value}]);
+        //如果显示图层,则更新图层名称
+        const {layerInstances} = layerListStore;
+        let layerInstance = layerInstances[id];
+        layerInstance && (layerInstance as Component).setState({name: value});
+    }
+
+    doAlign = (type: string) => {
+        const {movableRef} = eventOperateStore;
+        const {canvasConfig: {width, height}} = designerStore;
+        switch (type) {
+            case 'left':
+                movableRef?.current?.request("draggable", {x: 0}, true);
+                break;
+            case 'horizontally':
+                movableRef?.current?.request("draggable", {x: width / 2 - this.state.width / 2}, true);
+                break;
+            case 'right':
+                movableRef?.current?.request("draggable", {x: width - this.state.width}, true);
+                break;
+            case 'top':
+                movableRef?.current?.request("draggable", {y: 0}, true);
+                break;
+            case 'vertically':
+                movableRef?.current?.request("draggable", {y: height / 2 - this.state.height / 2}, true);
+                break;
+            case 'bottom':
+                movableRef?.current?.request("draggable", {y: height - this.state.height}, true);
+                break;
+        }
+    }
+
+
+    onFieldChange = (fieldChangeData: FieldChangeData) => {
+        const {id, data} = fieldChangeData;
+        const {movableRef, targetIds, setTargetIds} = eventOperateStore;
+        if (!targetIds.includes(this.state.id))
+            setTargetIds([this.state.id]);
+        const layerTimer = setTimeout(() => {
+            switch (id) {
+                case 'name':
+                    const {controller} = this.props;
+                    controller.update({base: {name: data}}, {reRender: false});
+                    const {updateLayer} = designerStore;
+                    updateLayer && updateLayer([{id: this.state.id, name: data}]);
+                    //如果显示图层,则更新图层名称
+                    const {layerInstances} = layerListStore;
+                    let layerInstance = layerInstances[this.state.id];
+                    layerInstance && (layerInstance as Component).setState({name: data});
+                    break;
+                case 'width':
+                    movableRef?.current?.request("resizable", {offsetWidth: data, direction: [1, 1]}, true);
+                    this.setState({width: data});
+                    break;
+                case 'height':
+                    movableRef?.current?.request("resizable", {offsetHeight: data, direction: [1, 1]}, true);
+                    this.setState({height: data});
+                    break;
+                case 'posX':
+                    movableRef?.current?.request("draggable", {x: data}, true);
+                    this.setState({x: data});
+                    break;
+                case 'posY':
+                    movableRef?.current?.request("draggable", {y: data}, true);
+                    this.setState({y: data});
+                    break;
+                case 'align':
+                    this.doAlign(data);
+                    break;
+            }
+            clearTimeout(layerTimer);
+        }, 1);
+    }
+
+    buildSchema = (): Control => {
+        const {name, width, height, x, y} = this.state;
+        return {
             type: 'grid',
             config: {
                 columns: 2
@@ -57,17 +141,23 @@ class BaseInfo extends Component<ConfigType> {
                     },
                     children: [
                         {
+                            id: "width",
+                            key: "width",
                             type: "input",
                             label: "宽度",
-                            value: 0,
+                            value: width,
+                            reRender: true,
                             config: {
                                 type: "number",
                             }
                         },
                         {
+                            id: "height",
+                            key: "height",
                             type: "input",
                             label: "高度",
-                            value: 0,
+                            value: height,
+                            reRender: true,
                             config: {
                                 type: "number",
                             }
@@ -83,78 +173,76 @@ class BaseInfo extends Component<ConfigType> {
                     },
                     children: [
                         {
+                            id: "posX",
+                            key: "posX",
                             type: "input",
                             label: "X轴",
-                            value: 0,
+                            reRender: true,
+                            value: x,
                             config: {
                                 type: "number",
                             }
                         },
                         {
+                            id: "posY",
+                            key: "posY",
                             type: "input",
                             label: "Y轴",
-                            value: 0,
+                            reRender: true,
+                            value: y,
                             config: {
                                 type: "number",
                             }
                         },
                     ]
+                },
+                {
+                    id: 'align',
+                    label: '对齐',
+                    type: 'group-button',
+                    config: {
+                        gridColumn: '1/3',
+                        items: [
+                            {
+                                value: 'left',
+                                content: <img src={alignLeft} alt={'left'}/>
+                            },
+                            {
+                                value: 'horizontally',
+                                content: <img src={alignHorizontally} alt={'horizontally'}/>
+                            },
+                            {
+                                value: 'right',
+                                content: <img src={alignRight} alt={'right'}/>
+                            },
+                            {
+                                value: 'top',
+                                content: <img src={alignTop} alt={'top'}/>
+                            },
+                            {
+                                value: 'vertically',
+                                content: <img src={alignVertically} alt={'vertically'}/>
+                            },
+                            {
+                                value: 'bottom',
+                                content: <img src={alignBottom} alt={'bottom'}/>
+                            }
+                        ]
+                    }
                 }
             ]
         }
     }
 
-    componentDidMount() {
-        const {setBaseConfigRef} = rightStore;
-        setBaseConfigRef && setBaseConfigRef(this);
-    }
-
-    changeName = (value: string) => {
-        const {controller} = this.props;
-        controller.update({base: {name: value}}, {reRender: false});
-        const {updateLayer} = designerStore;
-        const id = controller.getConfig().base.id;
-        updateLayer && updateLayer([{id, name: value}]);
-        //如果显示图层,则更新图层名称
-        const {layerInstances} = layerListStore;
-        let layerInstance = layerInstances[id];
-        layerInstance && (layerInstance as Component).setState({name: value});
-    }
-
-    changeDesc = (value: string) => {
-        const {controller} = this.props;
-        controller.update({base: {desc: value}}, {reRender: false});
-    }
-
-    onFieldChange = (fieldChangeData: FieldChangeData) => {
-        const {id, data, schemaKeyPath, reRender} = fieldChangeData;
-        if (id === "name") {
-            this.changeName(data as string);
-        } else {
-            this.changeDesc(data as string);
-        }
-        LCGUIUtil.updateSchema(this.schema, schemaKeyPath, data);
-        if (reRender)
-            this.setState({renderCount: this.state.renderCount + 1});
-    }
-
     render() {
-        const {controller} = this.props;
-        const {type} = (controller.getConfig() as ComponentBaseProps).base!;
+        const {type} = this.state;
+        const schema = this.buildSchema();
         return (
             <div className={'base-info-config'}>
                 <div className={'version-info'}>
                     <span><InfoCircleOutlined/> {type} | 版本: v1.0.0</span>
                 </div>
-                <LCGUI schema={this.schema} onFieldChange={this.onFieldChange}/>
-                <UIContainer label={'对齐'} className={'base-info-align'}>
-                    <div className={'align-item align-left'}><img alt={'align'} src={alignLeft}/></div>
-                    <div className={'align-item align-horizontally'}><img alt={'align'} src={alignHorizontally}/></div>
-                    <div className={'align-item align-right'}><img alt={'align'} src={alignRight}/></div>
-                    <div className={'align-item align-top'}><img alt={'align'} src={alignTop}/></div>
-                    <div className={'align-item align-vertically'}><img alt={'align'} src={alignVertically}/></div>
-                    <div className={'align-item align-bottom'}><img alt={'align'} src={alignBottom}/></div>
-                </UIContainer>
+                <LCGUI schema={schema} onFieldChange={this.onFieldChange}/>
             </div>
         )
     }

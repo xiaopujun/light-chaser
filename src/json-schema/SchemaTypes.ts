@@ -20,6 +20,7 @@ export type UIType =
     "text-only" |
     "text-area" |
     "slider" |
+    "group-button" |
     "item-panel";
 
 export interface Control {

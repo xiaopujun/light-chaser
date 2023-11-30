@@ -1,7 +1,7 @@
 import {action, makeObservable, observable, runInAction} from "mobx";
 import {MenuInfo} from "./MenuType";
 import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
-import {ActiveElem} from "../DesignerType";
+import {ActiveElem, ILayerItem} from "../DesignerType";
 import {PictureFilled} from "@ant-design/icons";
 import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
 import React from "react";
@@ -48,6 +48,12 @@ class RightStore {
      * 基础配置组件的实例引用
      */
     baseConfigRef: React.Component | null = null;
+
+    updateBaseConfig = (data: ILayerItem) => {
+        const {id} = this.activeElem;
+        if (id !== data?.id) return;
+        this.baseConfigRef?.setState(data);
+    }
 
     setBaseConfigRef = (ref: React.Component | null) => this.baseConfigRef = ref;
 
