@@ -27,9 +27,9 @@ class Input extends Component<InputProps> {
     }
 
     render() {
-        const {onChange, label, prefix, suffix, tip, ...rest} = this.props;
+        const {onChange, label, prefix, suffix, tip, gridColumn, ...rest} = this.props;
         return (
-            <UIContainer label={label} tip={tip}>
+            <UIContainer label={label} tip={tip} gridColumn={gridColumn}>
                 <div className={'lc-input-content'}>
                     {prefix && <div className={'lc-input-prefix'}>{prefix}&nbsp;</div>}
                     <div className={'lc-input-body'}>

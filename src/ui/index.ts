@@ -12,6 +12,8 @@ import {ItemPanel} from "./item-panel/ItemPanel";
 import {Slider} from "./slider/Slider";
 import {ImageUpload} from "./imag-upload/ImageUpload";
 import ColorMode from "./color-mode/ColorMode";
+import {TextOnly} from "./text-only/TextOnly";
+import TextArea from "./text-area/TextArea";
 
 const UIMap = new Map();
 
@@ -29,5 +31,7 @@ UIMap.set('color-mode', ColorMode);
 UIMap.set('item-panel', ItemPanel);
 UIMap.set('slider', Slider);
 UIMap.set('image-upload', ImageUpload);
+UIMap.set('text-only', TextOnly);
+UIMap.set('text-area', TextArea);
 
 export default UIMap;

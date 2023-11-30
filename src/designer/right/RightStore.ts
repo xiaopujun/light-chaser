@@ -4,6 +4,7 @@ import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
 import {ActiveElem} from "../DesignerType";
 import {PictureFilled} from "@ant-design/icons";
 import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
+import React from "react";
 
 
 export const bgMenu: MenuInfo[] = [{
@@ -43,6 +44,12 @@ class RightStore {
      * 右侧组件配置区域是否可见
      */
     visible: boolean = false;
+    /**
+     * 基础配置组件的实例引用
+     */
+    baseConfigRef: React.Component | null = null;
+
+    setBaseConfigRef = (ref: React.Component | null) => this.baseConfigRef = ref;
 
     setActiveMenu = (menu: string, newMenus?: string[]) => {
         if (newMenus && newMenus.includes(this.activeMenu))

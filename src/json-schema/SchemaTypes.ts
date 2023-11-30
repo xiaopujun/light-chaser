@@ -17,6 +17,9 @@ export type UIType =
     "colors-picker" |
     "color-mode" |
     "image-upload" |
+    "text-only" |
+    "text-area" |
+    "slider" |
     "item-panel";
 
 export interface Control {

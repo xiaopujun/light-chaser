@@ -1,9 +1,44 @@
-@import "../../../designer/common/DesignerStyle.less";
+.base-info-config {
+  .version-info {
+    font-size: 12px;
+    color: #b6b8bb;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-left: 3px solid #626262;
+    background-color: #313131;
 
-.lc-base-info {
-  color: @lc-config-value;
 
-  .lc-input {
-    padding: 0;
+  }
+
+  .lc-input-prefix {
+    width: 18px;
+  }
+
+  .base-info-align {
+    margin-top: 10px;
+
+    .ui-container-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .align-item {
+        width: 40px;
+        height: 25px;
+        padding: 2px;
+        text-align: center;
+        background-color: #3c3c3c;
+        transition: background-color 0.3s ease-in-out;
+
+        img {
+          width: 15px;
+        }
+      }
+
+      .align-item:hover {
+        background-color: #656565;
+        cursor: pointer;
+      }
+    }
   }
 }

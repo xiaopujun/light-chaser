@@ -1,0 +1,42 @@
+import React, {ChangeEvent, useState} from 'react';
+import './TextArea.less';
+import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
+
+export interface TextAreaProps extends UIContainerProps {
+    value?: string;
+    defaultValue?: string;
+    onChange?: (data: string) => void;
+}
+
+/**
+ * 下滑线输入框
+ */
+export const TextArea: React.FC<TextAreaProps> = (props) => {
+    const {value, defaultValue, ...rest} = props;
+    const control = value && !defaultValue;
+    const [text, setText] = useState(defaultValue);
+
+    const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+        event.stopPropagation();
+        if (!event.target.checkValidity()) {
+            event.target.reportValidity()
+            return;
+        }
+        if (control) {
+            const {onChange} = props;
+            onChange && onChange(event.target.value);
+        } else {
+            setText(event.target.value);
+        }
+    }
+
+    return (
+        <UIContainer {...rest}>
+            <div className={'lc-text-area-container'}>
+                <textarea value={control ? value : text} onChange={onChange} className={'lc-text-area'}/>
+            </div>
+        </UIContainer>
+    );
+}
+
+export default TextArea;
