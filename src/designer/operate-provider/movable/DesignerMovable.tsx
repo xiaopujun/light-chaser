@@ -62,7 +62,8 @@ class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }
                     width: (target as HTMLDivElement).offsetWidth,
                     height: (target as HTMLDivElement).offsetHeight,
                     type: target.dataset.type,
-                    position: [beforeTranslate[0], beforeTranslate[1]]
+                    x: beforeTranslate[0],
+                    y: beforeTranslate[1]
                 }
             ];
             //更新组件位置信息
@@ -112,7 +113,8 @@ class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }
                     width: target.offsetWidth,
                     height: target.offsetHeight,
                     type: target.dataset.type,
-                    position: [beforeTranslate[0], beforeTranslate[1]]
+                    x: beforeTranslate[0],
+                    y: beforeTranslate[1]
                 })
             }
         })
@@ -160,7 +162,8 @@ class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }
                     width: width,
                     height: height,
                     type: target.dataset.type,
-                    position: [translate[0], translate[1]]
+                    x: translate[0],
+                    y: translate[1],
                 }
             ];
             //更新组件尺寸信息
@@ -200,7 +203,8 @@ class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }
                     width: target.offsetWidth,
                     height: target.offsetHeight,
                     type: target.dataset.type,
-                    position: [translate[0], translate[1]]
+                    x: translate[0],
+                    y: translate[1]
                 })
             }
         })

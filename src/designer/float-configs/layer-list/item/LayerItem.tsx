@@ -1,5 +1,4 @@
 import {BaseLayer} from "./BaseLayer";
-import Input from "../../../../ui/input/Input";
 import {EditFilled, EyeFilled, EyeInvisibleFilled, UnlockFilled, UsbFilled} from "@ant-design/icons";
 
 class LayerItem extends BaseLayer {

@@ -16,12 +16,8 @@ export const TextArea: React.FC<TextAreaProps> = (props) => {
     const control = value && !defaultValue;
     const [text, setText] = useState(defaultValue);
 
-    const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         event.stopPropagation();
-        if (!event.target.checkValidity()) {
-            event.target.reportValidity()
-            return;
-        }
         if (control) {
             const {onChange} = props;
             onChange && onChange(event.target.value);

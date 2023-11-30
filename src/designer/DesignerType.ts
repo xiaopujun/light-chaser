@@ -244,7 +244,9 @@ export interface ILayerItem {
     //高度
     height?: number;
     //坐标
-    position?: [number, number];
+    x?: number;
+    //y坐标
+    y?: number;
     //是否隐藏
     hide?: boolean;
     //是否锁定

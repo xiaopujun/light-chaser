@@ -202,9 +202,7 @@ class EventOperateStore {
         };
         compArr.forEach((item: any) => {
             const layerConfig: ILayerItem = layerConfigs[item.id];
-            let {position, width, height} = layerConfig;
-            const x = position![0];
-            const y = position![1];
+            let {x = 0, y = 0, width, height} = layerConfig!;
             if (x < groupCoordinate.minX!)
                 groupCoordinate.minX = x;
             if (y < groupCoordinate.minY!)

@@ -181,7 +181,7 @@ export const doMoveUp = () => {
     const {layerConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (targets.length === 1) {
         let id = targets[0].id;
-        let yPos = layerConfigs[id].position![1] - dragStep;
+        let yPos = layerConfigs[id].y! - dragStep;
         movableRef?.current?.request("draggable", {y: yPos}, true);
     } else {
         const yPos = groupCoordinate?.minY! - dragStep;
@@ -195,7 +195,7 @@ export const doMoveDown = () => {
     const {layerConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (targets.length === 1) {
         let id = targets[0].id;
-        let yPos = layerConfigs[id].position![1] + dragStep;
+        let yPos = layerConfigs[id].y! + dragStep;
         movableRef?.current?.request("draggable", {y: yPos}, true);
     } else {
         const yPos = groupCoordinate?.minY! + dragStep;
@@ -209,7 +209,7 @@ export const doMoveLeft = () => {
     const {layerConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (targets.length === 1) {
         let id = targets[0].id;
-        let xPos = layerConfigs[id].position![0];
+        let xPos = layerConfigs[id].x!;
         movableRef?.current?.request("draggable", {x: xPos - dragStep}, true);
     } else {
         const xPos = groupCoordinate?.minX! - dragStep;
@@ -223,7 +223,7 @@ export const doMoveRight = () => {
     const {layerConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (targets.length === 1) {
         let id = targets[0].id;
-        let xPos = layerConfigs[id].position![0];
+        let xPos = layerConfigs[id].x!;
         movableRef?.current?.request("draggable", {x: xPos + dragStep}, true);
     } else {
         const xPos = groupCoordinate?.minX! + dragStep;

@@ -1,6 +1,5 @@
 import {EditFilled, EyeFilled, EyeInvisibleFilled, FolderOpenFilled, UnlockFilled, UsbFilled} from "@ant-design/icons";
 import {BaseLayer} from "./BaseLayer";
-import Input from "../../../../ui/input/Input";
 
 export default class LayerGroupItem extends BaseLayer {
 

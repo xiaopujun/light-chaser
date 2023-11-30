@@ -71,7 +71,8 @@ class CompList extends Component {
         let movableItem: ILayerItem = {
             name: compName,
             type: compKey,
-            position: position || [0, 0],
+            x: position![0],
+            y: position![1],
             id: IdGenerate.generateId(),
             lock: false,
             hide: false,

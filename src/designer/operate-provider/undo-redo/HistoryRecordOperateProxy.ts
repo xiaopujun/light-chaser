@@ -5,11 +5,11 @@ import {
     IDragOperateData,
     IHideOperateData,
     IHistoryRecord,
-    OperateType,
     ILockOperateData,
     IOrderOperateData,
     IResizeOperateData,
-    IUpdStyleOperateData
+    IUpdStyleOperateData,
+    OperateType
 } from "./OperateType";
 import {historyOperator} from "./HistoryOperator";
 import eventOperateStore from "../EventOperateStore";
@@ -35,11 +35,11 @@ class HistoryRecordOperateProxy {
         let next: IDragOperateData | null;
         if (items.length === 1) { //单个组件拖动
             //构建prev数据
-            const [x, y] = layerConfigs[items[0].id!].position as [number, number];
-            prev = {ids: [items[0].id!], x, y}
+            const oldLayer = layerConfigs[items[0].id!];
+            prev = {ids: [items[0].id!], x: oldLayer.x!, y: oldLayer.y!}
             //构建next数据
-            const {id, position} = items[0];
-            next = {ids: [id!], x: position![0], y: position![1]}
+            const {id, x = 0, y = 0} = items[0];
+            next = {ids: [id!], x, y}
         } else { //多个组件拖动
             //构建prev数据
             const oldItems: ILayerItem[] = [];
@@ -47,9 +47,8 @@ class HistoryRecordOperateProxy {
             ids.forEach((id) => oldItems.push(layerConfigs[id]))
             let x = +Infinity, y = +Infinity;
             oldItems.forEach((oldItem) => {
-                const {position} = oldItem;
-                if (position![0] < x) x = position![0];
-                if (position![1] < y) y = position![1];
+                if (oldItem.x! < x) x = oldItem.x!;
+                if (oldItem.y! < y) y = oldItem.y!;
             });
             prev = {ids, x, y};
 
@@ -89,11 +88,11 @@ class HistoryRecordOperateProxy {
             ids.forEach((id) => oldItems.push(layerConfigs[id]))
             let minX = +Infinity, minY = +Infinity, maxX = -Infinity, maxY = -Infinity;
             oldItems.forEach((oldItem) => {
-                const {position} = oldItem;
-                if (position![0] < minX) minX = position![0];
-                if (position![1] < minY) minY = position![1];
-                if (position![0] + oldItem.width! > maxX) maxX = position![0] + oldItem.width!;
-                if (position![1] + oldItem.height! > maxY) maxY = position![1] + oldItem.height!;
+                const {x = 0, y = 0} = oldItem;
+                if (x < minX) minX = x;
+                if (y < minY) minY = y;
+                if (x + oldItem.width! > maxX) maxX = x + oldItem.width!;
+                if (y + oldItem.height! > maxY) maxY = y + oldItem.height!;
             });
             const width = maxX - minX;
             const height = maxY - minY;
@@ -247,8 +246,8 @@ class HistoryRecordOperateProxy {
         const newLayout = cloneDeep(layout);
         newLayouts.push(newLayout);
         newLayout.id = newId;
-        const [x = 10, y = 10] = (newLayout.position || []).map((p) => p + 10);
-        newLayout.position = [x, y];
+        newLayout.x = newLayout.x! + 10;
+        newLayout.y = newLayout.y! + 10;
         newLayout.order = maxLevel;
         layerConfigs[newId] = newLayout;
         //生成新组件配置项数据
