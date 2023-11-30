@@ -13,9 +13,9 @@ import alignRight from './icon/align-right.svg';
 import alignTop from './icon/align-top.svg';
 import alignVertically from './icon/align-vertically.svg';
 import alignBottom from './icon/align-bottom.svg';
-import rightStore from "../../../designer/right/RightStore";
 import {ILayerItem} from "../../../designer/DesignerType";
 import eventOperateStore from "../../../designer/operate-provider/EventOperateStore";
+import baseInfoStore from "./BaseInfoStore";
 
 /**
  * lc组件基础信息
@@ -31,7 +31,7 @@ class BaseInfo extends Component<ConfigType, ILayerItem> {
     }
 
     componentDidMount() {
-        const {setBaseConfigRef} = rightStore;
+        const {setBaseConfigRef} = baseInfoStore;
         setBaseConfigRef && setBaseConfigRef(this);
     }
 
@@ -55,19 +55,19 @@ class BaseInfo extends Component<ConfigType, ILayerItem> {
                 movableRef?.current?.request("draggable", {x: 0}, true);
                 break;
             case 'horizontally':
-                movableRef?.current?.request("draggable", {x: width / 2 - this.state.width / 2}, true);
+                movableRef?.current?.request("draggable", {x: width! / 2 - this.state.width! / 2}, true);
                 break;
             case 'right':
-                movableRef?.current?.request("draggable", {x: width - this.state.width}, true);
+                movableRef?.current?.request("draggable", {x: width! - this.state.width!}, true);
                 break;
             case 'top':
                 movableRef?.current?.request("draggable", {y: 0}, true);
                 break;
             case 'vertically':
-                movableRef?.current?.request("draggable", {y: height / 2 - this.state.height / 2}, true);
+                movableRef?.current?.request("draggable", {y: height! / 2 - this.state.height! / 2}, true);
                 break;
             case 'bottom':
-                movableRef?.current?.request("draggable", {y: height - this.state.height}, true);
+                movableRef?.current?.request("draggable", {y: height! - this.state.height!}, true);
                 break;
         }
     }
@@ -76,38 +76,34 @@ class BaseInfo extends Component<ConfigType, ILayerItem> {
     onFieldChange = (fieldChangeData: FieldChangeData) => {
         const {id, data} = fieldChangeData;
         const {movableRef, targetIds, setTargetIds} = eventOperateStore;
-        if (!targetIds.includes(this.state.id))
-            setTargetIds([this.state.id]);
+        if (!targetIds.includes(this.state.id as string))
+            setTargetIds([this.state.id as string]);
         const layerTimer = setTimeout(() => {
             switch (id) {
                 case 'name':
                     const {controller} = this.props;
                     controller.update({base: {name: data}}, {reRender: false});
                     const {updateLayer} = designerStore;
-                    updateLayer && updateLayer([{id: this.state.id, name: data}]);
+                    updateLayer && updateLayer([{id: this.state.id!, name: data as string}]);
                     //如果显示图层,则更新图层名称
                     const {layerInstances} = layerListStore;
-                    let layerInstance = layerInstances[this.state.id];
+                    let layerInstance = layerInstances[this.state.id!];
                     layerInstance && (layerInstance as Component).setState({name: data});
                     break;
                 case 'width':
-                    movableRef?.current?.request("resizable", {offsetWidth: data, direction: [1, 1]}, true);
-                    this.setState({width: data});
+                    movableRef?.current?.request("resizable", {offsetWidth: data as number, direction: [1, 1]}, true);
                     break;
                 case 'height':
-                    movableRef?.current?.request("resizable", {offsetHeight: data, direction: [1, 1]}, true);
-                    this.setState({height: data});
+                    movableRef?.current?.request("resizable", {offsetHeight: data as number, direction: [1, 1]}, true);
                     break;
                 case 'posX':
-                    movableRef?.current?.request("draggable", {x: data}, true);
-                    this.setState({x: data});
+                    movableRef?.current?.request("draggable", {x: data as number}, true);
                     break;
                 case 'posY':
-                    movableRef?.current?.request("draggable", {y: data}, true);
-                    this.setState({y: data});
+                    movableRef?.current?.request("draggable", {y: data as number}, true);
                     break;
                 case 'align':
-                    this.doAlign(data);
+                    this.doAlign(data as string);
                     break;
             }
             clearTimeout(layerTimer);

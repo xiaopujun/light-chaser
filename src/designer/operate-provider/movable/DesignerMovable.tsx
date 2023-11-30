@@ -20,7 +20,7 @@ import designerStore from "../../store/DesignerStore";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import {ILayerItem} from "../../DesignerType";
 import './DesignerMovable.less';
-import rightStore from "../../right/RightStore";
+import baseInfoStore from "../../../comps/common-component/base-info/BaseInfoStore";
 
 class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }> {
     movableRef = React.createRef<Moveable>();
@@ -74,7 +74,7 @@ class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }
             } else
                 historyRecordOperateProxy.doDrag(data);
             //更新右侧菜单中的位置信息
-            const {updateBaseConfig} = rightStore;
+            const {updateBaseConfig} = baseInfoStore;
             updateBaseConfig(data[0]);
         }
         const {throttleDragRotate} = this.state;
@@ -177,7 +177,7 @@ class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }
             } else
                 historyRecordOperateProxy.doResize(data, direction);
             //更新右侧菜单中的尺寸信息
-            const {updateBaseConfig} = rightStore;
+            const {updateBaseConfig} = baseInfoStore;
             updateBaseConfig(data[0]);
         }
     }

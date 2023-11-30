@@ -1,4 +1,4 @@
-import React, {ReactNode} from "react";
+import {ReactNode} from "react";
 import "./GroupButton.less";
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
 
