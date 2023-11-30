@@ -46,6 +46,7 @@ class LineLayer extends React.Component {
             this.keyDown = true;
         });
 
+        //todo 待处理，蓝图的点击事件不要绑定在document上
         document.addEventListener('mouseup', (e) => {
             const {nodeContainerRef, upCtx} = bpStore;
             const {width: canvasW, height: canvasH} = nodeContainerRef?.getBoundingClientRect()!;
@@ -66,7 +67,7 @@ class LineLayer extends React.Component {
             this.currentLine.lineWidth = 1;
             this.currentLine.color = "#a2a2a2";
             this.currentLine.endAnchorId = (e!.target as HTMLElement).id;
-            const {x, y, width: apw, height: aph} = (e.target as HTMLElement).getBoundingClientRect();
+            const {x, y, width: apw, height: aph} = (e.target as HTMLElement)?.getBoundingClientRect();
             this.currentLine.endPoint = {x: x + apw / 2 - canvasOffset.x, y: y + aph / 2 - canvasOffset.y}
             CanvasUtil.drawBezierCurves(bpStore.downCtx!, [this.currentLine])
             //计算线条的采样点，用于计算线条是否被选中
