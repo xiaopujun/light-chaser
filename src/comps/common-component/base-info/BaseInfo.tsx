@@ -39,73 +39,41 @@ class BaseInfo extends Component<ConfigType, ILayerItem> {
         const {controller} = this.props;
         controller.update({base: {name: value}}, {reRender: false});
         const {updateLayer} = designerStore;
-        const id = controller.getConfig().base.id;
-        updateLayer && updateLayer([{id, name: value}]);
+        updateLayer && updateLayer([{id: this.state.id!, name: value as string}]);
         //如果显示图层,则更新图层名称
         const {layerInstances} = layerListStore;
-        let layerInstance = layerInstances[id];
+        let layerInstance = layerInstances[this.state.id!];
         layerInstance && (layerInstance as Component).setState({name: value});
     }
 
-    doAlign = (type: string) => {
-        const {movableRef} = eventOperateStore;
-        const {canvasConfig: {width, height}} = designerStore;
-        switch (type) {
-            case 'left':
-                movableRef?.current?.request("draggable", {x: 0}, true);
-                break;
-            case 'horizontally':
-                movableRef?.current?.request("draggable", {x: width! / 2 - this.state.width! / 2}, true);
-                break;
-            case 'right':
-                movableRef?.current?.request("draggable", {x: width! - this.state.width!}, true);
-                break;
-            case 'top':
-                movableRef?.current?.request("draggable", {y: 0}, true);
-                break;
-            case 'vertically':
-                movableRef?.current?.request("draggable", {y: height! / 2 - this.state.height! / 2}, true);
-                break;
-            case 'bottom':
-                movableRef?.current?.request("draggable", {y: height! - this.state.height!}, true);
-                break;
-        }
+    handleMap: Record<string, Function> = {
+        "name": this.changeName,
+        "width": (value: number) => eventOperateStore.movableRef?.current?.request("resizable", {
+            offsetWidth: value as number,
+            direction: [1, 1]
+        }, true),
+        "height": (value: number) => eventOperateStore.movableRef?.current?.request("resizable", {
+            offsetHeight: value as number,
+            direction: [1, 1]
+        }, true),
+        "posX": (value: number) => eventOperateStore.movableRef?.current?.request("draggable", {x: value as number}, true),
+        "posY": (value: number) => eventOperateStore.movableRef?.current?.request("draggable", {y: value as number}, true),
+        "align": (align: string) => this.handleMap[align](),
+        "left": () => eventOperateStore.movableRef?.current?.request("draggable", {x: 0}, true),
+        "horizontally": () => eventOperateStore.movableRef?.current?.request("draggable", {x: designerStore.canvasConfig.width! / 2 - this.state.width! / 2}, true),
+        "right": () => eventOperateStore.movableRef?.current?.request("draggable", {x: designerStore.canvasConfig.width! - this.state.width!}, true),
+        "top": () => eventOperateStore.movableRef?.current?.request("draggable", {y: 0}, true),
+        "vertically": () => eventOperateStore.movableRef?.current?.request("draggable", {y: designerStore.canvasConfig.height! / 2 - this.state.height! / 2}, true),
+        "bottom": () => eventOperateStore.movableRef?.current?.request("draggable", {y: designerStore.canvasConfig.height! - this.state.height!}, true),
     }
 
-
     onFieldChange = (fieldChangeData: FieldChangeData) => {
-        const {id, data} = fieldChangeData;
-        const {movableRef, targetIds, setTargetIds} = eventOperateStore;
+        const {id: key, data} = fieldChangeData;
+        const {targetIds, setTargetIds} = eventOperateStore;
         if (!targetIds.includes(this.state.id as string))
             setTargetIds([this.state.id as string]);
         const layerTimer = setTimeout(() => {
-            switch (id) {
-                case 'name':
-                    const {controller} = this.props;
-                    controller.update({base: {name: data}}, {reRender: false});
-                    const {updateLayer} = designerStore;
-                    updateLayer && updateLayer([{id: this.state.id!, name: data as string}]);
-                    //如果显示图层,则更新图层名称
-                    const {layerInstances} = layerListStore;
-                    let layerInstance = layerInstances[this.state.id!];
-                    layerInstance && (layerInstance as Component).setState({name: data});
-                    break;
-                case 'width':
-                    movableRef?.current?.request("resizable", {offsetWidth: data as number, direction: [1, 1]}, true);
-                    break;
-                case 'height':
-                    movableRef?.current?.request("resizable", {offsetHeight: data as number, direction: [1, 1]}, true);
-                    break;
-                case 'posX':
-                    movableRef?.current?.request("draggable", {x: data as number}, true);
-                    break;
-                case 'posY':
-                    movableRef?.current?.request("draggable", {y: data as number}, true);
-                    break;
-                case 'align':
-                    this.doAlign(data as string);
-                    break;
-            }
+            this.handleMap[key!](data);
             clearTimeout(layerTimer);
         }, 1);
     }
