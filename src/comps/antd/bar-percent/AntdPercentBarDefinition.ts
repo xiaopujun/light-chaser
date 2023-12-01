@@ -11,7 +11,6 @@ class AntdPercentBarDefinition extends AbstractBarDefinition {
             compKey: "AntdPercentBar",
             type: "条形图",
             typeKey: "bar",
-            desc: "基于Antd Designer实现的百分比条形图组件",
         };
     }
 
@@ -72,7 +71,6 @@ class AntdPercentBarDefinition extends AbstractBarDefinition {
                 id: "",
                 name: 'Antd百分比条形图',
                 type: 'AntdPercentBar',
-                desc: '基于Antd Designer实现的百分比条形图组件',
             },
             style: {
                 data: data,

@@ -11,7 +11,6 @@ class AntdStackAreaDefinition extends AbstractAreaDefinition {
             compKey: "AntdStackArea",
             type: "条形图",
             typeKey: "area",
-            desc: "基于Antd Designer实现的堆叠面积图组件",
         };
     }
 
@@ -822,7 +821,6 @@ class AntdStackAreaDefinition extends AbstractAreaDefinition {
                 id: "",
                 name: '堆叠面积图',
                 type: 'AntdStackArea',
-                desc: '基于antd实现的堆叠面积图',
             },
             style: {
                 data: data,

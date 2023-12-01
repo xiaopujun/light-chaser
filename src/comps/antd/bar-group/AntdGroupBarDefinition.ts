@@ -11,7 +11,6 @@ class AntdGroupBarDefinition extends AbstractBarDefinition {
             compKey: "AntdGroupBar",
             type: "条形图",
             typeKey: "bar",
-            desc: "基于Antd Designer实现的分组条形图组件",
         };
     }
 
@@ -57,7 +56,6 @@ class AntdGroupBarDefinition extends AbstractBarDefinition {
                 id: "",
                 name: "Antd分组条形图",
                 type: "AntdGroupBar",
-                desc: '基于Antd Designer实现的分组条形图组件',
             },
             style: {
                 data: data,

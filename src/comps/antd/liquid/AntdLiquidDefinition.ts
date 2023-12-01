@@ -39,7 +39,6 @@ class AntdLiquidDefinition /*extends AbstractDefinition<AntdLiquid, BaseMenuMapp
             compKey: "AntdLiquid",
             type: "水波图",
             typeKey: "liquid",
-            desc: "基于Antd Designer实现的水波图组件",
         };
     }
 
@@ -53,7 +52,6 @@ class AntdLiquidDefinition /*extends AbstractDefinition<AntdLiquid, BaseMenuMapp
                 id: "",
                 name: 'Antd水波图',
                 type: 'AntdLiquid',
-                desc: '基于Antd Designer实现的水波图组件',
             },
             style: {
                 percent: 0.25,

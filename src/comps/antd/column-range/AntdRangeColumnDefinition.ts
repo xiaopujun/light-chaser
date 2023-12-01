@@ -11,7 +11,6 @@ class AntdRangeColumnDefinition extends AbstractColumnDefinition {
             compKey: "AntdRangeColumn",
             type: "柱状图",
             typeKey: "column",
-            desc: "基于Antd Designer实现的区间柱状图组件",
         };
     }
 
@@ -31,7 +30,6 @@ class AntdRangeColumnDefinition extends AbstractColumnDefinition {
                 id: "",
                 name: 'Antd区间柱状图',
                 type: 'AntdRangeColumn',
-                desc: '基于Antd Designer实现的区间柱状图组件',
             },
             style: {
                 data: data,

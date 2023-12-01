@@ -11,7 +11,6 @@ class AntdStackBarDefinition extends AbstractBarDefinition {
             compKey: "AntdStackBar",
             type: "条形图",
             typeKey: "bar",
-            desc: "基于Antd Designer实现的堆叠条形图组件",
         };
     }
 
@@ -57,7 +56,6 @@ class AntdStackBarDefinition extends AbstractBarDefinition {
                 id: "",
                 name: 'Antd堆叠条形图',
                 type: 'AntdStackBar',
-                desc: '基于Antd Designer实现的堆叠条形图组件',
             },
             style: {
                 data: data,

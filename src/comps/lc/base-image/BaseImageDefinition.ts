@@ -18,7 +18,6 @@ export default class BaseImageDefinition extends AbstractDefinition<BaseImageCon
             compKey: "LcBaseImage",
             type: "基础",
             typeKey: "base",
-            desc: "标准提供的基础图片",
         };
     }
 
@@ -36,7 +35,6 @@ export default class BaseImageDefinition extends AbstractDefinition<BaseImageCon
                 id: "",
                 name: '基础图片',
                 type: 'LcBaseImage',
-                desc: '标准提供的基础图片',
             },
             style: {
                 type: 'online',

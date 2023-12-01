@@ -21,7 +21,6 @@ export default class BaseTableDefinition extends AbstractDefinition<BaseTable, B
             compKey: "LcBaseTable",
             type: "基础",
             typeKey: "base",
-            desc: "标准提供的基础表格",
         };
     }
 
@@ -39,7 +38,6 @@ export default class BaseTableDefinition extends AbstractDefinition<BaseTable, B
                 id: "",
                 name: '基础表格',
                 type: 'LcBaseTable',
-                desc: '标准提供的基础表格',
             },
             style: {},
             data: {

@@ -11,7 +11,6 @@ class AntdBaseColumnDefinition extends AbstractColumnDefinition {
             compKey: "AntdBaseColumn",
             type: "柱状图",
             typeKey: "column",
-            desc: "基于Antd Designer实现的基础柱状图组件",
         };
     }
 
@@ -39,7 +38,6 @@ class AntdBaseColumnDefinition extends AbstractColumnDefinition {
                 id: "",
                 name: '基础条形图',
                 type: 'AntdBaseBar',
-                desc: '基于antd实现的基础条形图',
             },
             style: {
                 data: data,

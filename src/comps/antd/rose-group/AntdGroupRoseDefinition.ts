@@ -11,7 +11,6 @@ class AntdGroupRoseDefinition extends AbstractRoseDefinition {
             compKey: "AntdGroupRose",
             type: "玫瑰图",
             typeKey: "rose",
-            desc: "基于Antd Designer实现的分组玫瑰图组件",
         };
     }
 
@@ -57,7 +56,6 @@ class AntdGroupRoseDefinition extends AbstractRoseDefinition {
                 id: "",
                 name: 'Antd基础玫瑰图',
                 type: 'AntdBaseRose',
-                desc: '基于Antd Designer实现的基础玫瑰图组件',
             },
             style: {
                 data: data,

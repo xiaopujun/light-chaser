@@ -41,7 +41,6 @@ class AntdRingProgressDefinition extends AntdCommonDefinition<AntdRingProgressCo
             compKey: "AntdRingProgress",
             type: "进度图",
             typeKey: "progress",
-            desc: "基于Antd Designer实现的迷你环图组件",
         };
     }
 
@@ -55,7 +54,6 @@ class AntdRingProgressDefinition extends AntdCommonDefinition<AntdRingProgressCo
                 id: "",
                 name: 'Antd迷你环图',
                 type: 'AntdRingProgress',
-                desc: '基于Antd Designer实现的迷你环图组件',
             },
             style: {
                 percent: 0.7,

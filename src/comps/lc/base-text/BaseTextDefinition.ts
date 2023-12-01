@@ -21,7 +21,6 @@ export default class BaseTextDefinition extends AbstractDefinition<BaseTextContr
             compKey: "LcBaseText",
             type: "基础",
             typeKey: "base",
-            desc: "标准提供的基础文本",
             width: 100,
             height: 30,
         };
@@ -41,7 +40,6 @@ export default class BaseTextDefinition extends AbstractDefinition<BaseTextContr
                 id: "",
                 name: '基础文本',
                 type: 'LcBaseText',
-                desc: '标准提供的基础文本',
             },
             style: {
                 color: '#a7a7a7',

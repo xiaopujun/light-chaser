@@ -42,7 +42,6 @@ class AntdPieDefinition extends AntdCommonDefinition<AntdPieController, AntdPieP
             compKey: "AntdPie",
             type: "饼图",
             typeKey: "pie",
-            desc: "基于Antd Designer实现的饼图组件",
         };
     }
 
@@ -62,7 +61,6 @@ class AntdPieDefinition extends AntdCommonDefinition<AntdPieController, AntdPieP
                 id: "",
                 name: 'Antd饼图',
                 type: 'AntdPie',
-                desc: '基于Antd Designer实现的饼图组件',
             },
             style: {
                 data,

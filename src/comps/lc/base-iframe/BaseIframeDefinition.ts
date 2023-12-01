@@ -16,7 +16,6 @@ export default class BaseIframeDefinition extends AbstractDefinition<BaseIframeC
             compKey: "LcBaseIframe",
             type: "基础",
             typeKey: "base",
-            desc: "标准提供的基础iframe",
         };
     }
 
@@ -34,7 +33,6 @@ export default class BaseIframeDefinition extends AbstractDefinition<BaseIframeC
                 id: "",
                 name: '基础iframe',
                 type: 'LcBaseIframe',
-                desc: '标准提供的基础iframe',
             },
             style: {
                 src: '',

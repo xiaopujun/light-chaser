@@ -15,7 +15,6 @@ class AntdBaseLineDefinition extends AbstractLineDefinition {
             compKey: "AntdBaseLine",
             type: "折线图",
             typeKey: "line",
-            desc: "基于Antd Designer实现的基础折线图组件",
         };
     }
 
@@ -43,7 +42,6 @@ class AntdBaseLineDefinition extends AbstractLineDefinition {
                 id: "",
                 name: '基础折线图',
                 type: 'AntdBaseLine',
-                desc: '基于antd实现的基础折线图',
             },
             style: {
                 data: data,

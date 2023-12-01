@@ -12,7 +12,6 @@ export interface ComponentInfoType {
     id: string;
     name: string;
     type: string;
-    desc: string;
 }
 
 export type ClazzTemplate<C> = new () => C | null;

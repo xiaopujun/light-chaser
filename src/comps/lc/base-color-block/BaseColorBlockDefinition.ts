@@ -21,7 +21,6 @@ export default class BaseColorBlockDefinition extends AbstractDefinition<BaseCol
             compKey: "LcBaseColorBlock",
             type: "基础",
             typeKey: "base",
-            desc: "标准提供的基础色块",
         };
     }
 
@@ -39,7 +38,6 @@ export default class BaseColorBlockDefinition extends AbstractDefinition<BaseCol
                 id: "",
                 name: '基础色块',
                 type: 'LcBaseColorBlock',
-                desc: '标准提供的基础色块',
             },
             style: {
                 background: '#009DFF33',

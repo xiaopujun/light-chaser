@@ -11,7 +11,6 @@ class AntdMultiLineDefinition extends AbstractLineDefinition {
             compKey: "AntdMultiLine",
             type: "折线图",
             typeKey: "line",
-            desc: "基于Antd Designer实现的多折线图组件",
         };
     }
 
@@ -68,7 +67,6 @@ class AntdMultiLineDefinition extends AbstractLineDefinition {
                 id: "",
                 name: '多折线图',
                 type: 'AntdMultiLine',
-                desc: '基于antd实现的多折线图',
             },
             style: {
                 data: data,

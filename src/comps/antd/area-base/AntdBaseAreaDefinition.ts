@@ -16,7 +16,6 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
             compKey: "AntdBaseArea",
             type: "条形图",
             typeKey: "area",
-            desc: "基于Antd Designer实现的基础面积图组件",
         };
     }
 
@@ -43,7 +42,6 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
                 id: "",
                 name: '基础面积图',
                 type: 'AntdBaseArea',
-                desc: '基于antd实现的基础面积图',
             },
             style: {
                 data: data,

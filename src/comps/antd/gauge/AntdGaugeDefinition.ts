@@ -39,7 +39,6 @@ class AntdGaugeDefinition /*extends AbstractDefinition<AntdGauge, BaseMenuMappin
             compKey: "AntdGauge",
             type: "仪表盘",
             typeKey: "gauge",
-            desc: "基于Antd Designer实现的仪表盘组件",
         };
     }
 
@@ -53,7 +52,6 @@ class AntdGaugeDefinition /*extends AbstractDefinition<AntdGauge, BaseMenuMappin
                 id: "",
                 name: 'Antd仪表盘',
                 type: 'AntdGauge',
-                desc: '基于Antd Designer实现的仪表盘组件',
             },
             style: {
                 percent: 0.75,

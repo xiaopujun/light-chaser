@@ -16,7 +16,6 @@ class AntdStepLineDefinition extends AbstractLineDefinition {
             compKey: "AntdStepLine",
             type: "折线图",
             typeKey: "line",
-            desc: "基于Antd Designer实现的阶梯折线图组件",
         };
     }
 
@@ -49,7 +48,6 @@ class AntdStepLineDefinition extends AbstractLineDefinition {
                 id: "",
                 name: '多折线图',
                 type: 'AntdStepLine',
-                desc: '基于antd实现的多折线图',
             },
             style: {
                 data: data,
