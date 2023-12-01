@@ -9,9 +9,10 @@ import GroupSelectable from "../operate-provider/movable/DesignerSelectable";
 import ContextMenu from "../operate-provider/right-click-menu/ContextMenu";
 import HotKey from "../operate-provider/hot-key/HotKey";
 import {hotkeyConfigs} from "../operate-provider/hot-key/HotKeyConfig";
-import {isEqual} from "lodash";
 import {DesignerDragScaleContainer} from "./DesignerDragScaleContainer";
 import layerBuilder from "../float-configs/layer-list/LayerBuilder";
+import eventOperateStore from "../operate-provider/EventOperateStore";
+import LayerUtil from "../float-configs/layer-list/util/LayerUtil";
 
 /**
  * 设计器画布
@@ -19,10 +20,16 @@ import layerBuilder from "../float-configs/layer-list/LayerBuilder";
 class DesignerCanvas extends PureComponent<DesignerStore | any> {
 
     updateActive = (e: MouseEvent<HTMLDivElement>) => {
-        let {id, dataset: {type}} = e.target as HTMLDivElement;
-        const {activeConfig, activeElem} = rightStore;
-        if (isEqual(activeElem, {id, type})) return;
-        activeConfig(id, type!);
+        const {targetIds} = eventOperateStore;
+        const {layerConfigs} = designerStore!;
+        if (targetIds.length === 0) return;
+        const layerIds = LayerUtil.findTopGroupLayer(targetIds, true);
+        if (layerIds.length !== 1) return;
+        const layerId = layerIds[0];
+        const layer = layerConfigs[layerId];
+        const {activeElem, activeConfig} = rightStore;
+        if (layerId === activeElem.id) return;
+        activeConfig(layerId, layer.type!);
     }
 
     render() {

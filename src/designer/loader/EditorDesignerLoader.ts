@@ -59,7 +59,7 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
 
     //扫描自定义组件
     private scannerCustomComponents(): void {
-        const compCtx: any = import.meta.glob('../../comps/*/*/*.ts', {
+        const compCtx: any = import.meta.glob('../../comps/**/*Definition.ts', {
             eager: true,
         });
         Object.keys(compCtx).forEach(key => {

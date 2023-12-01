@@ -186,6 +186,10 @@ export interface BaseInfoType {
      */
     typeKey: string;
     /**
+     * 版本
+     */
+    version?: string;
+    /**
      * 初始宽度
      */
     width?: number;

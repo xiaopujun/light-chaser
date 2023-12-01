@@ -6,6 +6,7 @@ import {cloneDeep} from "lodash";
 import layerListStore from "./LayerListStore";
 import ComponentContainer from "../../../framework/core/ComponentContainer";
 import {ILayerItem} from "../../DesignerType";
+import GroupLayer from "../../../comps/group-layer/GroupLayer";
 
 export enum RenderOrder {
     ASC,
@@ -103,7 +104,7 @@ class LayerBuilder {
             children?.forEach((item: ILayerItem) => {
                 childDomArr.push(this.buildComponents(item));
             });
-            return <GroupLayer key={layer.id}>{childDomArr}</GroupLayer>;
+            return <GroupLayer layer={layer} key={layer.id}>{childDomArr}</GroupLayer>;
         } else {
             return <ComponentContainer layer={layer} key={layer.id}/>;
         }
@@ -113,10 +114,3 @@ class LayerBuilder {
 
 const layerBuilder = new LayerBuilder();
 export default layerBuilder;
-
-export class GroupLayer extends React.PureComponent<any> {
-    render() {
-        return <div className={'component-group'}
-                    style={{position: 'absolute'}}>{this.props.children}</div>;
-    }
-}

@@ -21,6 +21,7 @@ import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import {ILayerItem} from "../../DesignerType";
 import './DesignerMovable.less';
 import baseInfoStore from "../../../comps/common-component/base-info/BaseInfoStore";
+import LayerUtil from "../../float-configs/layer-list/util/LayerUtil";
 
 class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }> {
     movableRef = React.createRef<Moveable>();
@@ -106,7 +107,7 @@ class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }
         const firstLock = layerConfigs[targets[0].id].lock;
         if (firstLock) return false;
 
-        let {backoff, setBackoff, setGroupCoordinate, groupCoordinate} = eventOperateStore;
+        let {backoff, setBackoff, setGroupCoordinate, groupCoordinate, targetIds} = eventOperateStore;
         let data: ILayerItem[] = [];
         e.events.forEach((ev: any) => {
             const {target, lastEvent} = ev;
@@ -138,6 +139,16 @@ class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }
         const {throttleDragRotate} = this.state;
         if (throttleDragRotate !== 0)
             this.setState({throttleDragRotate: 0});
+        //更新右侧菜单中的位置信息
+        const layerIds = LayerUtil.findTopGroupLayer(targetIds, true);
+        if (layerIds.length === 1) {
+            const {updateBaseConfig} = baseInfoStore;
+            updateBaseConfig({
+                id: layerIds[0],
+                x: Math.round(minX),
+                y: Math.round(minY),
+            });
+        }
     }
 
     onResizeStart = (e: OnResizeStart) => {
@@ -199,7 +210,7 @@ class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }
 
     onResizeGroupEnd = (e: OnResizeGroupEnd) => {
         const {updateLayer} = designerStore;
-        let {backoff, setBackoff} = eventOperateStore;
+        let {backoff, setBackoff, targetIds} = eventOperateStore;
         let data: ILayerItem[] = [];
         e.events.forEach((ev: any) => {
             const {target, lastEvent} = ev;
@@ -240,6 +251,18 @@ class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }
                     groupWidth: groupCoordinate.groupWidth + dist[0],
                     groupHeight: groupCoordinate.groupHeight + dist[1],
                 })
+            }
+            //更新右侧菜单中的尺寸，位置信息
+            const layerIds = LayerUtil.findTopGroupLayer(targetIds, true);
+            if (layerIds.length === 1) {
+                const {updateBaseConfig} = baseInfoStore;
+                updateBaseConfig({
+                    id: layerIds[0],
+                    x: Math.round(groupCoordinate.minX),
+                    y: Math.round(groupCoordinate.minY),
+                    width: Math.round(groupCoordinate.groupWidth),
+                    height: Math.round(groupCoordinate.groupHeight)
+                });
             }
         }
     }
@@ -330,8 +353,6 @@ export const DimensionViewable = {
     events: {},
     render(moveable: MoveableManagerInterface) {
         const rect = moveable.getRect();
-
-        //todo 思考如何保证缩放比例？
         return <div key={"dimension-viewer"} className={"moveable-dimension"} style={{
             left: `-125px`,
             top: `-60px`,

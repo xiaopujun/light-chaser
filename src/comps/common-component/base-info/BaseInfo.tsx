@@ -2,7 +2,6 @@ import {Component} from 'react';
 import './BaseInfo.less';
 import designerStore from "../../../designer/store/DesignerStore";
 import layerListStore from "../../../designer/float-configs/layer-list/LayerListStore";
-import {ComponentBaseProps} from "../common-types";
 import {Control} from "../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {ConfigType} from "../../../designer/right/ConfigContent";
@@ -16,18 +15,48 @@ import alignBottom from './icon/align-bottom.svg';
 import {ILayerItem} from "../../../designer/DesignerType";
 import eventOperateStore from "../../../designer/operate-provider/EventOperateStore";
 import baseInfoStore from "./BaseInfoStore";
+import rightStore from "../../../designer/right/RightStore";
+import EditorDesignerLoader from "../../../designer/loader/EditorDesignerLoader";
+import LayerUtil from "../../../designer/float-configs/layer-list/util/LayerUtil";
 
 /**
  * lc组件基础信息
  */
-class BaseInfo extends Component<ConfigType, ILayerItem> {
+class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> {
 
     constructor(props: ConfigType) {
         super(props);
-        const {controller} = props;
-        const {id} = (controller.getConfig() as ComponentBaseProps).base!;
+        this.init();
+    }
+
+    init = () => {
+        const {activeElem} = rightStore;
         const {layerConfigs} = designerStore;
-        this.state = layerConfigs[id];
+        const layer: ILayerItem = layerConfigs[activeElem.id];
+        if (!layer) return;
+        if (layer.type === 'group') {
+            //分组图层
+            const childLayerIds = LayerUtil.findAllChildLayer([layer.id!]).filter((id: string) => layerConfigs[id].type !== 'group');
+            const rect = this.calculateGroupRect(childLayerIds);
+            this.state = {...layer, ...rect};
+        } else {
+            //普通组件
+            const baseInfo = EditorDesignerLoader.getInstance().definitionMap[layer.type!]?.getBaseInfo();
+            this.state = {...layer, version: baseInfo?.version};
+        }
+    }
+
+    calculateGroupRect = (childLayerIds: string[]) => {
+        const {layerConfigs} = designerStore;
+        let minX = +Infinity, minY = +Infinity, maxX = -Infinity, maxY = -Infinity;
+        childLayerIds.forEach((layerId: string) => {
+            const {x, y, width, height} = layerConfigs[layerId];
+            minX = Math.min(minX, x);
+            minY = Math.min(minY, y);
+            maxX = Math.max(maxX, x + width);
+            maxY = Math.max(maxY, y + height);
+        });
+        return {x: minX, y: minY, width: maxX - minX, height: maxY - minY};
     }
 
     componentDidMount() {
@@ -70,8 +99,16 @@ class BaseInfo extends Component<ConfigType, ILayerItem> {
     onFieldChange = (fieldChangeData: FieldChangeData) => {
         const {id: key, data} = fieldChangeData;
         const {targetIds, setTargetIds} = eventOperateStore;
-        if (!targetIds.includes(this.state.id as string))
-            setTargetIds([this.state.id as string]);
+        if (!targetIds.includes(this.state.id as string)) {
+            const {type} = this.state;
+            if (type === 'group') {
+                const {layerConfigs} = designerStore;
+                const childIds = LayerUtil.findAllChildLayer([this.state.id!]).filter((id: string) => layerConfigs[id].type !== 'group');
+                setTargetIds(childIds!);
+            } else {
+                setTargetIds([this.state.id as string]);
+            }
+        }
         const layerTimer = setTimeout(() => {
             this.handleMap[key!](data);
             clearTimeout(layerTimer);
@@ -199,12 +236,12 @@ class BaseInfo extends Component<ConfigType, ILayerItem> {
     }
 
     render() {
-        const {type} = this.state;
+        const {type, version} = this.state;
         const schema = this.buildSchema();
         return (
             <div className={'base-info-config'}>
                 <div className={'version-info'}>
-                    <span><InfoCircleOutlined/> {type} | 版本: v1.0.0</span>
+                    <span><InfoCircleOutlined/> {type} | {version ? `版本: ${version}` : '无版本信息'}</span>
                 </div>
                 <LCGUI schema={schema} onFieldChange={this.onFieldChange}/>
             </div>
