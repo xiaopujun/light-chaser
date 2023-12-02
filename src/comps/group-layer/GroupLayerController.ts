@@ -1,12 +1,13 @@
 import {ComponentInfoType} from "../common-component/common-types";
-import AbstractController, {UpdateOptions} from "../../framework/core/AbstractController";
+import {UpdateOptions} from "../../framework/core/AbstractController";
 import GroupLayer from "./GroupLayer";
+import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
 
 export interface GroupLayerProps {
     base: ComponentInfoType;
 }
 
-export default class GroupLayerController extends AbstractController<GroupLayer, GroupLayerProps> {
+export default class GroupLayerController extends AbstractDesignerController<GroupLayer, GroupLayerProps> {
 
     constructor(container: HTMLElement, config: GroupLayerProps, instance: GroupLayer) {
         super();
@@ -14,13 +15,9 @@ export default class GroupLayerController extends AbstractController<GroupLayer,
         this.config = config;
         this.instance = instance;
     }
-
-
+    
     async create(container: HTMLElement, config: GroupLayerProps): Promise<this> {
         return this;
-    }
-
-    destroy(): void {
     }
 
     getConfig(): GroupLayerProps | null {

@@ -32,7 +32,7 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
     init = () => {
         const {activeElem} = rightStore;
         const {layerConfigs} = designerStore;
-        const layer: ILayerItem = layerConfigs[activeElem.id];
+        const layer: ILayerItem = layerConfigs[activeElem.id!];
         if (!layer) return;
         if (layer.type === 'group') {
             //分组图层
@@ -50,7 +50,7 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
         const {layerConfigs} = designerStore;
         let minX = +Infinity, minY = +Infinity, maxX = -Infinity, maxY = -Infinity;
         childLayerIds.forEach((layerId: string) => {
-            const {x, y, width, height} = layerConfigs[layerId];
+            const {x = 0, y = 0, width = 0, height = 0} = layerConfigs[layerId];
             minX = Math.min(minX, x);
             minY = Math.min(minY, y);
             maxX = Math.max(maxX, x + width);

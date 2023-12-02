@@ -1,4 +1,4 @@
-import React, {ReactElement} from "react";
+import {ReactElement} from "react";
 import LayerItem from "./item/LayerItem";
 import LayerGroupItem from "./item/LayerGroupItem";
 import eventOperateStore from "../../operate-provider/EventOperateStore";

@@ -258,10 +258,10 @@ class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }
                 const {updateBaseConfig} = baseInfoStore;
                 updateBaseConfig({
                     id: layerIds[0],
-                    x: Math.round(groupCoordinate.minX),
-                    y: Math.round(groupCoordinate.minY),
-                    width: Math.round(groupCoordinate.groupWidth),
-                    height: Math.round(groupCoordinate.groupHeight)
+                    x: Math.round(groupCoordinate.minX!),
+                    y: Math.round(groupCoordinate.minY!),
+                    width: Math.round(groupCoordinate.groupWidth!),
+                    height: Math.round(groupCoordinate.groupHeight!)
                 });
             }
         }

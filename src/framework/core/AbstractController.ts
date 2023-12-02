@@ -45,7 +45,11 @@ abstract class AbstractController<I = any, C = any> {
     /**
      * 销毁组件
      */
-    public abstract destroy(): void;
+    public destroy(): void {
+        this.instance = null;
+        this.config = null;
+        this.container = null;
+    }
 
 
     /******************普通方法******************/

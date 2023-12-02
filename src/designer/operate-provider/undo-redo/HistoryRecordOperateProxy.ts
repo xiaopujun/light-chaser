@@ -153,9 +153,11 @@ class HistoryRecordOperateProxy {
         let {targetIds, setTargetIds} = eventOperateStore;
         const {delItem, layerConfigs, compInstances, updateLayer} = designerStore;
         if (!targetIds || targetIds.length === 0) return;
-        const {setContentVisible, activeConfig} = rightStore;
-        setContentVisible(false);
-        activeConfig(null, "");
+        const {setContentVisible, activeConfig, activeElem} = rightStore;
+        if (targetIds.includes(activeElem.id!)) {
+            setContentVisible(false);
+            activeConfig(null, "");
+        }
 
         //对被删除元素分类：1. 完全独立的组件（没有分组）2.分组的子组件（选中了分组中的子组件，但没有选中分组）3.分组图层（包括分组图层和其下所有子图层）
         //可删除数据分为：1. 可以直接删除的数据。 2. 删除后需要维护图层关系的数据
@@ -548,8 +550,16 @@ class HistoryRecordOperateProxy {
         historyOperator.put({actions});
         //2.删除分组图层
         delLayout(groupIds);
+        //清空组件选中状态
         setTargetIds([]);
+        //处理右侧设置项，如果为当前选中的分组图层，则卸载该设置项（因为分组图层已经被删除）
+        const {activeElem, activeConfig, setContentVisible} = rightStore;
+        if (activeElem && groupIds.includes(activeElem.id!)) {
+            setContentVisible(false);
+            activeConfig(null, "");
+        }
     }
+
 }
 
 const historyRecordOperateProxy = new HistoryRecordOperateProxy();
