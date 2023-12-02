@@ -36,9 +36,9 @@ class Switch extends Component<SwitchProps> {
     };
 
     render() {
-        const {disabled = false, tip, label} = this.props;
+        const {disabled = false, tip, label, gridColumn} = this.props;
         return (
-            <UIContainer tip={tip} label={label} className={'lc-switch'}>
+            <UIContainer tip={tip} label={label} gridColumn={gridColumn} className={'lc-switch'}>
                 <div style={{display: 'flex'}}>
                     <label className="lc-switch-body">
                         <input disabled={disabled}

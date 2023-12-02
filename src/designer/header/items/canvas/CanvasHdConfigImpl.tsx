@@ -51,19 +51,19 @@ class CanvasHdConfigImpl extends Component {
             <Dialog className={'lc-header-canvas'} title={'画布设置'} visible={canvasVisible} onClose={this.onClose}>
                 <form onSubmit={this.doSave}>
                     <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                        <Grid gridGap={'15px'}>
+                        <Grid gridGap={'15px'} columns={3}>
                             <Input label={'宽度'} required={true} type={'number'} defaultValue={width} min={500}
                                    onChange={(width) => this.config!.width = width as number}/>
                             <Input label={'高度'} required={true} type={'number'} defaultValue={height} min={300}
                                    onChange={(height) => this.config!.height = height as number}/>
-                            <Switch label={'栅格化'} defaultValue={rasterize} onChange={value => {
+                            <Switch label={'栅格化'} defaultValue={rasterize} gridColumn={'1/2'} onChange={value => {
                                 this.config!.rasterize = value;
                                 this.setState({_rasterize: value})
                             }}/>
-                            <Input label={'拖拽步长'} disabled={!_rasterize} type={'number'}
+                            <Input label={'拖拽'} disabled={!_rasterize} type={'number'}
                                    defaultValue={dragStep} min={1}
                                    onChange={(dragStep) => this.config!.dragStep = dragStep as number}/>
-                            <Input label={'缩放步长'} disabled={!_rasterize} type={'number'}
+                            <Input label={'缩放'} disabled={!_rasterize} type={'number'}
                                    defaultValue={resizeStep} min={1}
                                    onChange={(resizeStep) => this.config!.resizeStep = resizeStep as number}/>
                         </Grid>
