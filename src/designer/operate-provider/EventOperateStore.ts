@@ -113,7 +113,7 @@ class EventOperateStore {
     backoff: boolean = false;
 
     /**
-     * 用于记录当前新添加的组件id,实际渲染时根据该id读取组件数据并记录操作日志
+     * 用于记录当前手动（双击或拖拽）新添加的组件id,实际渲染时根据该id读取组件数据并记录操作日志。非手动添加的组件不会记录操作日志
      */
     addRecordCompId: string | null = null;
 

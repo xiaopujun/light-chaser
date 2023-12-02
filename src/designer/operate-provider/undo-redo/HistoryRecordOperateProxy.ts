@@ -130,8 +130,8 @@ class HistoryRecordOperateProxy {
                     const {compInstances} = designerStore;
                     compInstances[layout.id + ''] = instance;
                 });
-                //如果addRecordCompId存在，说明是新增组件，该组件的数据需要存储到历史记录中
-                const {addRecordCompId} = eventOperateStore;
+                //如果addRecordCompId存在，说明是手动（拖拽、双击）新增组件，该组件的数据需要存储到历史记录中
+                const {addRecordCompId, setAddRecordCompId} = eventOperateStore;
                 if (addRecordCompId && addRecordCompId === layout.id) {
                     const data: IHistoryRecord = {
                         type: OperateType.ADD,
@@ -144,6 +144,7 @@ class HistoryRecordOperateProxy {
                         }]
                     }
                     historyOperator.put({actions: [data]});
+                    setAddRecordCompId(null);
                 }
             }
         }

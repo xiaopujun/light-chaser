@@ -12,8 +12,7 @@ export class UpdLayerGroupRollbackImpl extends AbstractRollback {
         if (next) {
             const updData: ILayerItem[] = [];
             (next as ILayerItem[]).forEach((item) => {
-                const {id, childIds} = item;
-                updData.push({id, childIds});
+                updData.push(item);
             });
             const {updateLayer} = designerStore;
             updateLayer(updData);
