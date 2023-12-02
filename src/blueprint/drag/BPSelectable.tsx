@@ -46,7 +46,7 @@ export const BPSelectable: React.FC<BPSelectableProps> = (props) => {
         <>
             {children}
             <Selecto ref={selectorRef}
-                     dragContainer={".blue-print"}
+                     dragContainer={".blue-print-canvas"}
                      selectableTargets={[".bp-node-container"]}
                      hitRate={0}
                      ratio={0}

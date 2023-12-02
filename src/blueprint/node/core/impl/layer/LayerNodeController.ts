@@ -4,7 +4,7 @@ import ComponentUtil from "../../../../../utils/ComponentUtil";
 import BPNode, {NodeProps} from "../../../BPNode";
 import designerStore from "../../../../../designer/store/DesignerStore";
 import React from "react";
-import {ActionInfo} from "../../../../../framework/core/AbstractComponentDefinition";
+import {ActionInfo} from "../../../../../framework/core/AbstractDefinition";
 import BPExecutor from "../../../../core/BPExecutor";
 import DesignerLoaderFactory from "../../../../../designer/loader/DesignerLoaderFactory";
 
@@ -29,13 +29,13 @@ export default class LayerNodeController extends AbstractBPNodeController<LayerN
         if (anchorType === AnchorPointType.INPUT) {
             //输入点，执行动作
             //1.获取当前组件的控制器实例
-            const {compInstances, layoutConfigs} = designerStore;
+            const {compInstances, layerConfigs} = designerStore;
             const compInstance = compInstances[nodeId];
             if (!compInstance)
                 return;
-            const {type} = layoutConfigs[nodeId];
-            const {customComponentInfoMap} = DesignerLoaderFactory.getLoader();
-            let actionList = customComponentInfoMap[type!].getActionList();
+            const {type} = layerConfigs[nodeId];
+            const {definitionMap} = DesignerLoaderFactory.getLoader();
+            let actionList = definitionMap[type!].getActionList();
             //2.获取当前组件可执行的动作列表
             const action = actionList.find((action: ActionInfo) => action.id === apId);
             if (!action)
@@ -54,17 +54,17 @@ export default class LayerNodeController extends AbstractBPNodeController<LayerN
     }
 
     getNodeInfo(nodeId: string): NodeInfoType | null {
-        const {layoutConfigs} = designerStore;
-        const compLayout = layoutConfigs[nodeId];
-        const {customComponentInfoMap} = DesignerLoaderFactory.getLoader();
-        const output = customComponentInfoMap[compLayout.type!].getEventList().map((item) => {
+        const {layerConfigs} = designerStore;
+        const compLayout = layerConfigs[nodeId];
+        const {definitionMap} = DesignerLoaderFactory.getLoader();
+        const output = definitionMap[compLayout.type!].getEventList().map((item) => {
             return {
                 id: nodeId + ':' + item.id + ':' + AnchorPointType.OUTPUT,
                 name: item.name,
                 type: AnchorPointType.OUTPUT
             }
         });
-        const input = customComponentInfoMap[compLayout.type!].getActionList().map((item) => {
+        const input = definitionMap[compLayout.type!].getActionList().map((item) => {
             return {
                 id: nodeId + ':' + item.id + ':' + AnchorPointType.INPUT,
                 name: item.name,

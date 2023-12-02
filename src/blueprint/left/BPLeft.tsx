@@ -74,12 +74,18 @@ const dragover = (event: any) => {
     event.preventDefault(); // 阻止默认行为以允许拖放
 }
 //释放拖拽元素
-const drop = (event: any) => {
+const drop = (event: DragEvent) => {
     event.preventDefault();
     let nodeId = (event as any).dataTransfer.getData('nodeId');
     const type = (event as any).dataTransfer.getData('type');
+    const {bpDragContentRef, canvasScale} = bpStore;
+    const contentPos = bpDragContentRef?.getBoundingClientRect();
     //获取鼠标位置
-    const position = {x: event.layerX, y: event.layerY};
+    const position = {
+        x: (event.clientX - (contentPos?.x || 0)) / canvasScale,
+        y: (event.clientY - (contentPos?.y || 0)) / canvasScale
+    };
+    console.log('position', position)
     if (type === 'layer-node') {
         const {setUsedLayerNodes} = bpLeftStore;
         setUsedLayerNodes(nodeId, true);
@@ -96,7 +102,7 @@ export const BPNodeList = observer(() => {
     const NodeList = nodeListMapping[activeMenu];
 
     useEffect(() => {
-        const dropContainer = document.getElementById("blue-print");
+        const dropContainer = document.getElementById("bp-ds-container");
         const dragElements = document.getElementsByClassName("bp-node-list-item");
         Array.from(dragElements).forEach((element) => {
             element.removeEventListener('dragstart', (event) => dragStart(event, element));
@@ -122,14 +128,14 @@ export const BPNodeList = observer(() => {
 })
 
 export const BPLayerNodeList = observer(() => {
-    const {layoutConfigs} = designerStore;
+    const {layerConfigs} = designerStore;
     const {usedLayerNodes} = bpLeftStore;
 
     return (
         <>
             {
-                layoutConfigs && Object.keys(layoutConfigs).map((key, index) => {
-                    const item = layoutConfigs[key];
+                layerConfigs && Object.keys(layerConfigs).map((key, index) => {
+                    const item = layerConfigs[key];
                     const used = usedLayerNodes[key];
                     return (
                         <div className={`bp-node-list-item ${used ? 'bp-node-list-item-used' : ''}`}

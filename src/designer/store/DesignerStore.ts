@@ -1,8 +1,9 @@
 import {action, makeObservable, observable, runInAction, toJS} from "mobx";
-import {cloneDeep, isEqual} from "lodash";
+import {isEqual} from "lodash";
 import {
     CanvasConfig,
-    extendParams,
+    IExtendParams,
+    ILayerItem,
     ProjectConfig,
     ProjectDataType,
     ProjectState,
@@ -10,8 +11,6 @@ import {
     Statistic,
     ThemeItemType,
 } from "../DesignerType";
-import AbstractBaseStore from "../../framework/core/AbstractBaseStore";
-import {MovableItemType} from "../operate-provider/movable/types";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
 import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryRecordOperateProxy";
 import ObjectUtil from "../../utils/ObjectUtil";
@@ -19,12 +18,12 @@ import ObjectUtil from "../../utils/ObjectUtil";
 /**
  * 设计器核心状态管理类，记录了设计器中的核心数据。包括组件配置，组件布局。 全局设置等。
  */
-class DesignerStore implements AbstractBaseStore {
+class DesignerStore {
     constructor() {
         makeObservable(this, {
             canvasConfig: observable,
             projectConfig: observable,
-            layoutConfigs: observable,
+            layerConfigs: observable.shallow,
             statisticInfo: observable,
             themeConfig: observable,
             extendParams: observable,
@@ -33,7 +32,7 @@ class DesignerStore implements AbstractBaseStore {
             addItem: action,
             delItem: action,
             setLoaded: action,
-            updateLayout: action,
+            updateLayer: action,
             updateThemeConfig: action,
             flashGlobalTheme: action,
             updateCanvasConfig: action,
@@ -83,12 +82,7 @@ class DesignerStore implements AbstractBaseStore {
     /**
      * 布局配置
      */
-    layoutConfigs: { [key: string]: MovableItemType } = {};
-
-    /**
-     * 初始状态的布局配置（用于回退场景）
-     */
-    initLayoutConfigs: { [key: string]: MovableItemType } = {};
+    layerConfigs: { [key: string]: ILayerItem } = {};
 
     /**
      * 统计信息
@@ -119,7 +113,7 @@ class DesignerStore implements AbstractBaseStore {
     /**
      * 扩展参数
      */
-    extendParams: extendParams = {
+    extendParams: IExtendParams = {
         maxLevel: 0,
         minLevel: 0,
     };
@@ -147,8 +141,7 @@ class DesignerStore implements AbstractBaseStore {
         this.elemConfigs = store.elemConfigs
             ? {...this.elemConfigs, ...store.elemConfigs}
             : this.elemConfigs;
-        this.layoutConfigs = store.layoutConfigs || this.layoutConfigs;
-        this.initLayoutConfigs = cloneDeep(this.layoutConfigs);
+        this.layerConfigs = store.layerConfigs || this.layerConfigs;
         this.statisticInfo = store.statisticInfo
             ? {...this.statisticInfo, ...store.statisticInfo}
             : this.statisticInfo;
@@ -171,7 +164,7 @@ class DesignerStore implements AbstractBaseStore {
             canvasConfig: toJS(this.canvasConfig),
             projectConfig: toJS(this.projectConfig),
             elemConfigs: elemConfigs,
-            layoutConfigs: toJS(this.layoutConfigs),
+            layerConfigs: toJS(this.layerConfigs),
             statisticInfo: toJS(this.statisticInfo),
             themeConfig: toJS(this.themeConfig)!,
             extendParams: toJS(this.extendParams),
@@ -186,7 +179,7 @@ class DesignerStore implements AbstractBaseStore {
         this.canvasConfig = {};
         this.projectConfig = {};
         this.elemConfigs = {};
-        this.layoutConfigs = {};
+        this.layerConfigs = {};
         this.statisticInfo = {};
         this.themeConfig = null;
         this.extendParams = {};
@@ -208,10 +201,10 @@ class DesignerStore implements AbstractBaseStore {
     /**
      * 添加元素
      */
-    addItem = (item: MovableItemType) => {
-        this.layoutConfigs[item.id + ""] = item;
+    addItem = (item: ILayerItem) => {
+        this.layerConfigs[item.id + ""] = item;
         if (this.statisticInfo)
-            this.statisticInfo.count = Object.keys(this.layoutConfigs).length;
+            this.statisticInfo.count = Object.keys(this.layerConfigs).length;
     };
 
     /**
@@ -219,7 +212,7 @@ class DesignerStore implements AbstractBaseStore {
      */
     delItem = (ids: string[]) => {
         for (const id of ids) {
-            delete this.layoutConfigs[id];
+            delete this.layerConfigs[id];
             delete this.compInstances[id];
         }
     };
@@ -227,11 +220,11 @@ class DesignerStore implements AbstractBaseStore {
     /**
      * 更新布局
      */
-    updateLayout = (items: MovableItemType[], reRender: boolean = true) => {
+    updateLayer = (items: ILayerItem[], reRender: boolean = true) => {
         for (const item of items) {
-            let oldItem = this.layoutConfigs[item.id + ""];
+            let oldItem = this.layerConfigs[item.id + ""];
             if (!isEqual(oldItem, item))
-                this.layoutConfigs[item.id + ""] = reRender ? {...ObjectUtil.merge(oldItem, item)} : ObjectUtil.merge(oldItem, item);
+                this.layerConfigs[item.id + ""] = reRender ? {...ObjectUtil.merge(oldItem, item)} : ObjectUtil.merge(oldItem, item);
         }
     };
 
@@ -241,8 +234,8 @@ class DesignerStore implements AbstractBaseStore {
      */
     delLayout = (ids: string[]) => {
         for (const id of ids) {
-            if (this.layoutConfigs[id] && this.layoutConfigs[id].type === "group")
-                delete this.layoutConfigs[id];
+            if (this.layerConfigs[id] && this.layerConfigs[id].type === "group")
+                delete this.layerConfigs[id];
         }
     }
 

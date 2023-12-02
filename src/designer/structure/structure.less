@@ -8,6 +8,7 @@
   .structure-header {
     height: @headerHeight;
     background-color: @headBgColor;
+    border-bottom: 1px solid #2e2e2e;
   }
 
   .structure-body {
@@ -21,6 +22,7 @@
       background-color: @leftBgColor;
       overflow-y: scroll;
       position: relative;
+      border-right: 1px solid #2e2e2e;
     }
 
     .structure-body-content {
@@ -32,6 +34,7 @@
       width: @rightWidth;
       background-color: @rightMenuListBgColor;
       z-index: 1;
+      border-left: 1px solid #2e2e2e;
     }
   }
 
@@ -41,5 +44,6 @@
     width: calc(100% - 60px);
     height: @footHeight;
     background-color: @footer-bg-color;
+    border-top: 1px solid #2e2e2e;
   }
 }

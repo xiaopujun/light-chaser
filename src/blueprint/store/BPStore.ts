@@ -4,12 +4,30 @@ import Selecto from "react-selecto";
 import ObjectUtil from "../../utils/ObjectUtil";
 import {AbstractBPNodeController, AnchorPointInfoType} from "../node/core/AbstractBPNodeController";
 import bpNodeControllerMap from "../node/core/impl/BPNodeControllerMap";
-import {BPLineType, PointType} from "../BPTypes";
+
+export interface IBPLine {
+    id?: string;
+    color?: string;
+    lineWidth?: number;
+    lineDash?: number[];
+    startPoint?: IPoint;
+    endPoint?: IPoint;
+    firstCP?: IPoint;
+    secondCP?: IPoint;
+    //采样点列表
+    samplePoints?: IPoint[];
+    //起始锚点id
+    startAnchorId?: string;
+    //结束锚点id
+    endAnchorId?: string;
+}
+
+export type IPoint = { x: number; y: number; }
 
 export interface BPNodeLayoutType {
     id?: string;
     type?: string;
-    position?: PointType;
+    position?: IPoint;
 }
 
 class BPStore {
@@ -29,7 +47,7 @@ class BPStore {
     bpAPMap: Record<string, string[]> = {};
 
     //蓝图节点锚点间连接的线条列表(入库）
-    bpLines: Record<string, BPLineType> = {};
+    bpLines: Record<string, IBPLine> = {};
 
     //锚点与线条的对应关系（入库），一个锚点可以连接多条线，用于位置更新时，快速找到线条并更新线条位置
     bpAPLineMap: Record<string, string[]> = {};
@@ -47,7 +65,7 @@ class BPStore {
     selectedNodes: HTMLElement[] = [];
 
     //被选中的线条列表
-    selectedLines: BPLineType[] = [];
+    selectedLines: IBPLine[] = [];
 
     //蓝图移动框架引用
     bpMovableRef: Moveable | null = null;
@@ -64,14 +82,19 @@ class BPStore {
     //节点容器
     nodeContainerRef: HTMLDivElement | null = null;
 
+    //蓝图拖拽容器dom引用
+    bpDragContentRef: HTMLDivElement | null = null;
+
     //蓝图画布相对于屏幕的偏移量
-    canvasOffset: PointType = {x: 320, y: 40};
+    canvasOffset: IPoint = {x: 320, y: 40};
 
     //蓝图画布拖拽后的偏移量
-    canvasTranslate: PointType = {x: 0, y: 0};
+    canvasTranslate: IPoint = {x: 0, y: 0};
 
     //蓝图画布缩放比例
     canvasScale: number = 1;
+
+    setBpDragContentRef = (ref: HTMLDivElement) => this.bpDragContentRef = ref;
 
     setBpNodeControllerInsMap = (insMap: Record<string, AbstractBPNodeController>) => {
         this.bpNodeControllerInsMap = insMap;
@@ -117,7 +140,7 @@ class BPStore {
             ObjectUtil.merge(oldLayout, layout);
     }
 
-    setSelectedLines = (lines: BPLineType[]) => {
+    setSelectedLines = (lines: IBPLine[]) => {
         this.selectedLines = lines;
     }
 
@@ -150,7 +173,7 @@ class BPStore {
     }
 
     //更新线段的位置
-    updLinePos = (line: BPLineType) => {
+    updLinePos = (line: IBPLine) => {
         const oldLine = this.bpLines[line.id!];
         if (oldLine) {
             oldLine.startPoint = line.startPoint;
@@ -166,7 +189,7 @@ class BPStore {
         this.bpAPMap = anchorRelationship;
     }
 
-    setLines = (connectedLines: Record<string, BPLineType>) => {
+    setLines = (connectedLines: Record<string, IBPLine>) => {
         this.bpLines = connectedLines;
     }
 
@@ -176,7 +199,7 @@ class BPStore {
         this.bpAPMap[startAnchorId].push(endAnchorId);
     }
 
-    addLine = (line: BPLineType) => {
+    addLine = (line: IBPLine) => {
         this.bpLines[line.id!] = line;
     }
 
@@ -184,7 +207,7 @@ class BPStore {
         this.canvasScale = scale;
     }
 
-    setCanvasTranslate = (translate: PointType) => {
+    setCanvasTranslate = (translate: IPoint) => {
         if (translate)
             this.canvasTranslate = translate;
     }
@@ -267,7 +290,8 @@ class BPStore {
                     //删除锚点关联的线段 & 删除锚点与线段的映射关系
                     if (id! in this.bpAPLineMap) {
                         const lineIds = this.bpAPLineMap[id!];
-                        this.delLine(lineIds);
+                        //传递lines副本，避免操作原始数据造成的数据不一致
+                        this.delLine([...lineIds]);
                         delete this.bpAPLineMap[id!];
                     }
                 });

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {ConfigType} from "../../../designer/right/ConfigType";
 import {AntdCartesianCoordinateSys} from "../config/AntdFragment";
 import {Area, AreaOptions} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
@@ -11,6 +10,7 @@ import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import AntdCommonUtil from "../AntdCommonUtil";
 import {AntdLegend} from "../config/legend/AntdLegend";
 import {ShapeAttrs} from "@antv/g-base";
+import {ConfigType} from "../../../designer/right/ConfigContent";
 
 class AntdAreaCommonStyleConfig extends Component<ConfigType> {
 

@@ -13,7 +13,7 @@ const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseI
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
 
-class AntdGaugeDefinition /*extends AbstractComponentDefinition<AntdGauge, BaseMenuMapping, AntdGaugeProps>*/ {
+class AntdGaugeDefinition /*extends AbstractDefinition<AntdGauge, BaseMenuMapping, AntdGaugeProps>*/ {
 
     getComponent(): ClazzTemplate<AntdGaugeController> | null {
         return AntdGaugeController;
@@ -25,7 +25,7 @@ class AntdGaugeDefinition /*extends AbstractComponentDefinition<AntdGauge, BaseM
 
     getMenuToConfigContentMap(): BaseMenuMapping | null {
         return {
-            info: BaseInfo,
+            base: BaseInfo,
             data: DataConfig,
             style: AntdGaugeConfig,
             animation: AnimationConfig,
@@ -39,7 +39,6 @@ class AntdGaugeDefinition /*extends AbstractComponentDefinition<AntdGauge, BaseM
             compKey: "AntdGauge",
             type: "仪表盘",
             typeKey: "gauge",
-            desc: "基于Antd Designer实现的仪表盘组件",
         };
     }
 
@@ -49,11 +48,10 @@ class AntdGaugeDefinition /*extends AbstractComponentDefinition<AntdGauge, BaseM
 
     getInitConfig(): AntdGaugeProps {
         return {
-            info: {
+            base: {
                 id: "",
                 name: 'Antd仪表盘',
                 type: 'AntdGauge',
-                desc: '基于Antd Designer实现的仪表盘组件',
             },
             style: {
                 percent: 0.75,

@@ -3,10 +3,10 @@ import './BPNode.less';
 import {AnchorPointType, NodeInfoType} from "./core/AbstractBPNodeController";
 import nodeIconMap from "./NodeIconMap";
 import {CodeSandboxOutlined} from "@ant-design/icons";
-import {PointType} from "../BPTypes";
+import {IPoint} from "../store/BPStore";
 
 export interface NodeProps extends NodeInfoType {
-    position?: PointType;
+    position?: IPoint;
 }
 
 export default class BPNode extends React.PureComponent<NodeProps> {

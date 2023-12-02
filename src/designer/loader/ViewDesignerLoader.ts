@@ -1,5 +1,5 @@
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
-import {AbstractComponentDefinition} from "../../framework/core/AbstractComponentDefinition";
+import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
 import AbstractConvert from "../../framework/convert/AbstractConvert";
 import {AbstractOperator} from "../../framework/operate/AbstractOperator";
 import designerStore from "../store/DesignerStore";
@@ -47,17 +47,17 @@ export class ViewDesignerLoader extends AbstractDesignerLoader {
         });
         Object.keys(compCtx).forEach(key => {
             const Clazz = compCtx[key]?.default;
-            if (Clazz && AbstractComponentDefinition.isPrototypeOf(Clazz)) {
-                let customComponentInfo: AbstractComponentDefinition = new Clazz();
+            if (Clazz && AbstractDefinition.isPrototypeOf(Clazz)) {
+                let customComponentInfo: AbstractDefinition = new Clazz();
                 if (typeof customComponentInfo.getBaseInfo === "function") {
                     let compKey = customComponentInfo.getBaseInfo().compKey;
                     if (compKey)
-                        this.customComponentInfoMap[compKey] = customComponentInfo;
+                        this.definitionMap[compKey] = customComponentInfo;
                 }
             } else if (Clazz && AbstractConvert.isPrototypeOf(Clazz)) {
                 let convertInstance: AbstractConvert = new Clazz();
                 let convertKey = convertInstance.getKey();
-                this.abstractConvertMap[convertKey] = convertInstance;
+                this.convertMap[convertKey] = convertInstance;
             }
         });
     }
@@ -72,7 +72,7 @@ export class ViewDesignerLoader extends AbstractDesignerLoader {
             if (Clazz && AbstractOperator.isPrototypeOf(Clazz)) {
                 let operatorInstance: AbstractOperator = new Clazz();
                 let operateEnv = operatorInstance.getKey();
-                this.abstractOperatorMap[operateEnv] = operatorInstance;
+                this.operatorMap[operateEnv] = operatorInstance;
             }
         });
     }
@@ -83,7 +83,7 @@ export class ViewDesignerLoader extends AbstractDesignerLoader {
     private initExistProject(): void {
         let urlParams = URLUtil.parseUrlParams();
         const {doInit, setLoaded} = designerStore;
-        this.abstractOperatorMap[SaveType.LOCAL].getProject(urlParams.id).then((res) => {
+        this.operatorMap[SaveType.LOCAL].getProject(urlParams.id).then((res) => {
             const {status, data: store, msg} = res;
             if (status) {
                 //初始化designerStore
@@ -92,7 +92,7 @@ export class ViewDesignerLoader extends AbstractDesignerLoader {
                     canvasConfig: store?.canvasConfig,
                     projectConfig: store?.projectConfig,
                     elemConfigs: store?.elemConfigs,
-                    layoutConfigs: store?.layoutConfigs,
+                    layerConfigs: store?.layerConfigs,
                     statisticInfo: store?.statisticInfo,
                     themeConfig: store?.themeConfig,
                     extendParams: store?.extendParams,

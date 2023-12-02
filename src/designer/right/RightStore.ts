@@ -1,6 +1,6 @@
 import {action, makeObservable, observable, runInAction} from "mobx";
 import {MenuInfo} from "./MenuType";
-import {AbstractComponentDefinition} from "../../framework/core/AbstractComponentDefinition";
+import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
 import {ActiveElem} from "../DesignerType";
 import {PictureFilled} from "@ant-design/icons";
 import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
@@ -60,7 +60,7 @@ class RightStore {
             return;
         }
         //更新菜单列表
-        this.menus = (DesignerLoaderFactory.getLoader()?.customComponentInfoMap[type] as AbstractComponentDefinition)?.getMenuList() || [];
+        this.menus = (DesignerLoaderFactory.getLoader()?.definitionMap[type] as AbstractDefinition)?.getMenuList() || [];
         if (this.menus.length > 0) {
             let setNewActiveMenu = true;
             for (let i = 0; i < this.menus.length; i++) {

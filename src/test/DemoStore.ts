@@ -1,23 +1,38 @@
-import {action, makeObservable, observable} from "mobx";
+import {action, makeObservable, observable, toJS} from "mobx";
 
 export interface Student {
-    id: string;
-    name: string;
-    age: number;
+    id?: string;
+    name?: string;
+    age?: number;
+    city?: {
+        code?: string;
+        name?: string;
+        position?: [number, number]
+    }
 }
 
 class DemoStore {
     constructor() {
         makeObservable(this, {
-            students: observable,
-            addStudent: action,
+            student: observable.struct,
+            updateStudent: action,
         })
     }
 
-    students: Record<string, Student> = {}
+    student: Student = {
+        id: "1",
+        name: "张三",
+        age: 18,
+        city: {
+            code: "110000",
+            name: "北京市",
+            position: [116.405285, 39.904989]
+        }
+    }
 
-    addStudent = (student: Student) => {
-        this.students[student.id] = student;
+    updateStudent = (student: Student) => {
+        this.student = student
+        console.log(toJS(this.student))
     }
 }
 

@@ -1,7 +1,7 @@
 import {ComponentBaseProps} from "../../common-component/common-types";
 import {WritableRoseOptions} from "../types";
 import {Rose} from "@antv/g2plot";
-import {OperateType, UpdateOptions} from "../../../framework/core/AbstractController";
+import {UpdateType, UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
@@ -49,6 +49,6 @@ export default class AntdCommonRose extends AntdBaseDesignerController<Rose, Ant
         if ((styleConfig?.label) && (styleConfig?.label?.style as ShapeAttrs))
             (styleConfig!.label!.style as ShapeAttrs).fill = mainText;
         //重新渲染
-        this.update({style: styleConfig} as any, {reRender: true, operateType: OperateType.OPTIONS});
+        this.update({style: styleConfig} as any, {reRender: true, updateType: UpdateType.OPTIONS});
     }
 }

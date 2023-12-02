@@ -1,31 +1,33 @@
 import AbstractRollback from "./AbstractRollback";
-import {HistoryRecordType} from "../HistoryType";
+import {IHistoryRecord} from "../OperateType";
 import designerStore from "../../../store/DesignerStore";
-import {MovableItemType} from "../../movable/types";
+import {ILayerItem} from "../../../DesignerType";
 
+/**
+ * 图层编组和解除编组不能简单的认为只需要调用doGrouping和doUnGrouping即可。撤销和重做的额过程中，图层对应的设置项也要完整的撤销和重做
+ */
 export class UpdLayerGroupRollbackImpl extends AbstractRollback {
-    redo(record: HistoryRecordType): void {
+    redo(record: IHistoryRecord): void {
         const {next} = record;
         if (next) {
-            const updData: MovableItemType[] = [];
-            (next as MovableItemType[]).forEach((item) => {
-                const {id, childIds} = item;
-                updData.push({id, childIds});
+            const updData: ILayerItem[] = [];
+            (next as ILayerItem[]).forEach((item) => {
+                updData.push(item);
             });
-            const {updateLayout} = designerStore;
-            updateLayout(updData);
+            const {updateLayer} = designerStore;
+            updateLayer(updData);
         }
     }
 
-    undo(record: HistoryRecordType): void {
+    undo(record: IHistoryRecord): void {
         const {prev} = record;
         if (prev) {
-            const updData: MovableItemType[] = [];
-            (prev as MovableItemType[]).forEach((item) => {
+            const updData: ILayerItem[] = [];
+            (prev as ILayerItem[]).forEach((item) => {
                 updData.push(item);
             });
-            const {updateLayout} = designerStore;
-            updateLayout(updData);
+            const {updateLayer} = designerStore;
+            updateLayer(updData);
         }
     }
 

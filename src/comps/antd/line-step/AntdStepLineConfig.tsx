@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {ConfigType} from "../../../designer/right/ConfigType";
 import {Line, LineOptions} from "@antv/g2plot";
 import AntdCommonLineController, {AntdLineProps} from "../../antd-common/line/AntdCommonLineController";
 import {AntdCartesianCoordinateSys} from "../../antd-common/config/AntdFragment";
@@ -9,6 +8,7 @@ import AntdCommonUtil from "../../antd-common/AntdCommonUtil";
 import {Control} from "../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {AntdLineCommonGraphics} from "../../antd-common/line/AntdLineCommonConfig";
+import {ConfigType} from "../../../designer/right/ConfigContent";
 
 class AntdStepLineStyleConfig extends Component<ConfigType> {
 

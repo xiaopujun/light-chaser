@@ -11,7 +11,6 @@ class AntdScatterBubbleDefinition extends AbstractScatterDefinition {
             compKey: "AntdScatterBubble",
             type: "散点图",
             typeKey: "scatter",
-            desc: "基于Antd Designer实现的气泡图组件",
         };
     }
 
@@ -95,11 +94,10 @@ class AntdScatterBubbleDefinition extends AbstractScatterDefinition {
             }
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: 'Antd气泡图',
                 type: 'AntdScatterBubble',
-                desc: '基于antd实现的气泡图',
             },
             style: {
                 data: data,

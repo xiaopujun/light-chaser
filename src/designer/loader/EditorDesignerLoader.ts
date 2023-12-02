@@ -3,7 +3,7 @@ import eventOperateStore from "../operate-provider/EventOperateStore";
 import {SaveType} from "../DesignerType";
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 import {AbstractHeaderItem, HeaderItemProps} from "../header/HeaderTypes";
-import {AbstractComponentDefinition} from "../../framework/core/AbstractComponentDefinition";
+import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
 import {AbstractOperator} from "../../framework/operate/AbstractOperator";
 import AbstractConvert from "../../framework/convert/AbstractConvert";
 import bpStore from "../../blueprint/store/BPStore";
@@ -59,22 +59,22 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
 
     //扫描自定义组件
     private scannerCustomComponents(): void {
-        const compCtx: any = import.meta.glob('../../comps/*/*/*.ts', {
+        const compCtx: any = import.meta.glob('../../comps/**/*Definition.ts', {
             eager: true,
         });
         Object.keys(compCtx).forEach(key => {
             const Clazz = compCtx[key]?.default;
-            if (Clazz && AbstractComponentDefinition.isPrototypeOf(Clazz)) {
-                let customComponentInfo: AbstractComponentDefinition = new Clazz();
-                if (typeof customComponentInfo.getBaseInfo === "function") {
-                    let compKey = customComponentInfo.getBaseInfo().compKey;
+            if (Clazz && AbstractDefinition.isPrototypeOf(Clazz)) {
+                let definition: AbstractDefinition = new Clazz();
+                if (typeof definition.getBaseInfo === "function") {
+                    let compKey = definition.getBaseInfo().compKey;
                     if (compKey)
-                        this.customComponentInfoMap[compKey] = customComponentInfo;
+                        this.definitionMap[compKey] = definition;
                 }
             } else if (Clazz && AbstractConvert.isPrototypeOf(Clazz)) {
-                let convertInstance: AbstractConvert = new Clazz();
-                let convertKey = convertInstance.getKey();
-                this.abstractConvertMap[convertKey] = convertInstance;
+                let convert: AbstractConvert = new Clazz();
+                let convertKey = convert.getKey();
+                this.convertMap[convertKey] = convert;
             }
         });
     }
@@ -87,9 +87,9 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
         Object.keys(compCtx).forEach(key => {
             const Clazz = compCtx[key]?.default;
             if (Clazz && AbstractOperator.isPrototypeOf(Clazz)) {
-                let operatorInstance: AbstractOperator = new Clazz();
-                let operateEnv = operatorInstance.getKey();
-                this.abstractOperatorMap[operateEnv] = operatorInstance;
+                let operator: AbstractOperator = new Clazz();
+                let operateEnv = operator.getKey();
+                this.operatorMap[operateEnv] = operator;
             }
         });
     }
@@ -120,7 +120,7 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
     private initExistProject(): void {
         let urlParams = URLUtil.parseUrlParams();
         const {doInit, setLoaded} = designerStore;
-        this.abstractOperatorMap[SaveType.LOCAL].getProject(urlParams.id).then((res) => {
+        this.operatorMap[SaveType.LOCAL].getProject(urlParams.id).then((res) => {
             const {status, data: store, msg} = res;
             if (status) {
                 //初始化designerStore
@@ -129,7 +129,7 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
                     canvasConfig: store?.canvasConfig,
                     projectConfig: store?.projectConfig,
                     elemConfigs: store?.elemConfigs,
-                    layoutConfigs: store?.layoutConfigs,
+                    layerConfigs: store?.layerConfigs,
                     statisticInfo: store?.statisticInfo,
                     themeConfig: store?.themeConfig,
                     extendParams: store?.extendParams,

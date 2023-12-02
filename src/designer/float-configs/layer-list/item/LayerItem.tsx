@@ -1,78 +1,31 @@
-import React, {MouseEvent} from 'react';
-import './LayerItem.less';
-import lockImg from '../icon/lock.svg';
-import previewClose from '../icon/preview-close.svg';
-import previewOpen from '../icon/preview-open.svg';
-import unlockImg from '../icon/unlock.svg';
-import layerListStore from "../LayerListStore";
+import {BaseLayer} from "./BaseLayer";
+import {EditFilled, EyeFilled, EyeInvisibleFilled, UnlockFilled, UsbFilled} from "@ant-design/icons";
 
-export interface LayerItemDataProps {
-    compId?: string;
-    name?: string;
-    lock?: boolean;
-    hide?: boolean;
-    selected?: boolean;
-}
-
-class LayerItem extends React.PureComponent<LayerItemDataProps> {
-
-    state = {
-        selected: false,
-        lock: false,
-        hide: false,
-        compId: '',
-        name: ''
-    }
-
-    constructor(props: LayerItemDataProps) {
-        super(props);
-        const {selected, lock, hide, compId, name} = props;
-        this.state = {
-            selected: selected || false,
-            lock: lock || false,
-            hide: hide || false,
-            compId: compId || '',
-            name: name || ''
-        }
-    }
-
-    toggleLock = (event: MouseEvent) => {
-        event.stopPropagation();
-        const {lockChange} = layerListStore;
-        lockChange && lockChange(this.state.compId, !this.state.lock);
-    }
-
-    toggleHide = (event: MouseEvent) => {
-        event.stopPropagation();
-        const {hideChange} = layerListStore;
-        hideChange && hideChange(this.state.compId, !this.state.hide);
-    }
-
-    onSelected = (event: MouseEvent<HTMLDivElement>) => {
-        const {hide, compId} = this.state;
-        if (hide) return;
-        event.stopPropagation();
-        const {selectedChange} = layerListStore;
-        selectedChange && selectedChange(compId!, event);
-    }
+class LayerItem extends BaseLayer {
 
     render() {
-        const {name, lock, hide, selected = false} = this.state || {};
-        const itemClass = `layer-item ${selected ? "layer-item-selected" : hide ? "layer-item-hide" : lock ? "layer-item-lock" : ""}`;
+        const {name = '', inputMode, lock = false, hide = false, selected = false} = this.state || {};
         return (
-            <div className={itemClass}
-                 onClick={this.onSelected}>
-                <div className={'layer-item-name'}>{name}</div>
-                <div className={'layer-item-operators'}>
-                    <div className={'layer-item-operator'}>
-                        <span onClick={this.toggleHide}>
-                            <img src={hide ? previewClose : previewOpen} alt={hide ? '显示' : '隐藏'}/>
-                        </span>
+            <div className={`layer-item ${selected ? "layer-selected" :
+                hide ? "layer-hide" : lock ? "layer-lock" : ""}`} onClick={this.onSelected}
+                 onDoubleClick={this.openInput}>
+                <div className={'layer-name'}>
+                    {inputMode ? <input type="text" defaultValue={name} autoFocus={true} onChange={this.changeLayerName}
+                                        onKeyDown={(e) => {
+                                            if (e.code === "Enter")
+                                                this.closeInput();
+                                        }}
+                                        onBlur={this.closeInput}/> : name}
+                </div>
+                <div className={'layer-operators'}>
+                    <div className={'layer-operator'} onClick={this.openInput}>
+                        <EditFilled/>
                     </div>
-                    <div className={'layer-item-operator'}>
-                        <span onClick={this.toggleLock}>
-                            <img src={lock ? lockImg : unlockImg} alt={lock ? '锁定' : '解锁'}/>
-                        </span>
+                    <div className={'layer-operator'} onClick={this.toggleHide}>
+                        {hide ? <EyeInvisibleFilled/> : <EyeFilled/>}
+                    </div>
+                    <div className={'layer-operator'} onClick={this.toggleLock}>
+                        {lock ? <UsbFilled/> : <UnlockFilled/>}
                     </div>
                 </div>
             </div>

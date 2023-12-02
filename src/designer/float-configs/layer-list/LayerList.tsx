@@ -7,8 +7,8 @@ import FloatPanel from "../common/FloatPanel";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 import Input from "../../../ui/input/Input";
 import layerBuilder from "./LayerBuilder";
-import {MovableItemType} from "../../operate-provider/movable/types";
 import LayerUtil from "./util/LayerUtil";
+import {ILayerItem} from "../../DesignerType";
 
 class LayerList extends Component {
 
@@ -47,25 +47,25 @@ class LayerList extends Component {
     }
 
     buildLayerList = () => {
-        const {layoutConfigs} = designerStore;
+        const {layerConfigs} = designerStore;
         const {searchContent} = layerListStore;
         if (!searchContent || searchContent === '')
-            return layerBuilder.buildLayerList(layoutConfigs);
+            return layerBuilder.buildLayerList(layerConfigs);
         let filterLayer: Record<string, any> = {};
         if (searchContent === ':hide') {
             //仅过展示隐藏的图层
-            Object.values(layoutConfigs).forEach((item: MovableItemType) => {
+            Object.values(layerConfigs).forEach((item: ILayerItem) => {
                 if (item.hide && item.type !== 'group')
                     filterLayer[item.id!] = item;
             });
         } else if (searchContent === ':lock') {
             //仅过展示锁定的图层
-            Object.values(layoutConfigs).forEach((item: MovableItemType) => {
+            Object.values(layerConfigs).forEach((item: ILayerItem) => {
                 if (item.lock && item.type !== 'group')
                     filterLayer[item.id!] = item;
             });
         } else {
-            Object.values(layoutConfigs).forEach((item: MovableItemType) => {
+            Object.values(layerConfigs).forEach((item: ILayerItem) => {
                 if (item.name?.includes(searchContent) && item.type !== 'group')
                     filterLayer[item.id!] = item;
             });
@@ -73,7 +73,7 @@ class LayerList extends Component {
         //补充分组图层
         const groupLayerId = LayerUtil.findPathGroupLayer(Object.keys(filterLayer));
         groupLayerId.forEach((id: string) => {
-            filterLayer[id] = layoutConfigs[id];
+            filterLayer[id] = layerConfigs[id];
         });
         return layerBuilder.buildLayerList(filterLayer);
     }

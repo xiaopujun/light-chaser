@@ -1,7 +1,7 @@
 import {
-    AbstractComponentDefinition,
+    AbstractDefinition,
     MenuToConfigMappingType
-} from "../../../framework/core/AbstractComponentDefinition";
+} from "../../../framework/core/AbstractDefinition";
 import {BaseInfoType} from "../../../designer/DesignerType";
 import {ClazzTemplate} from "../../common-component/common-types";
 import {MenuInfo} from "../../../designer/right/MenuType";
@@ -14,14 +14,13 @@ import AnimationConfig from "../../common-component/animation-config/AnimationCo
 import ThemeConfig from "../../common-component/theme-config/ThemeConfig";
 import {BaseTableStyleConfig} from "./BaseTableConfig";
 
-export default class BaseTableDefinition extends AbstractComponentDefinition<BaseTable, BaseTableComponentProps> {
+export default class BaseTableDefinition extends AbstractDefinition<BaseTable, BaseTableComponentProps> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "基础表格",
             compKey: "LcBaseTable",
             type: "基础",
             typeKey: "base",
-            desc: "标准提供的基础表格",
         };
     }
 
@@ -35,11 +34,10 @@ export default class BaseTableDefinition extends AbstractComponentDefinition<Bas
 
     getInitConfig(): BaseTableComponentProps {
         return {
-            info: {
+            base: {
                 id: "",
                 name: '基础表格',
                 type: 'LcBaseTable',
-                desc: '标准提供的基础表格',
             },
             style: {},
             data: {
@@ -57,7 +55,7 @@ export default class BaseTableDefinition extends AbstractComponentDefinition<Bas
 
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
-            info: BaseInfo,
+            base: BaseInfo,
             style: BaseTableStyleConfig,
             animation: AnimationConfig,
             theme: ThemeConfig

@@ -1,7 +1,7 @@
 import {ComponentBaseProps} from "../../common-component/common-types";
 import {WritableRingProgressOptions} from "../../antd-common/types";
 import {RingProgress, StatisticText} from "@antv/g2plot";
-import {OperateType, UpdateOptions} from "../../../framework/core/AbstractController";
+import {UpdateType, UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {CSSProperties} from "react";
@@ -46,6 +46,6 @@ export default class AntdRingProgressController extends AntdBaseDesignerControll
         if ((styleConfig?.statistic) && (styleConfig?.statistic?.content) && (styleConfig.statistic.content as StatisticText).style)
             ((styleConfig!.statistic!.content as StatisticText).style as CSSProperties)!.color = subText!;
         //重新渲染
-        this.update({style: styleConfig} as any, {reRender: true, operateType: OperateType.OPTIONS});
+        this.update({style: styleConfig} as any, {reRender: true, updateType: UpdateType.OPTIONS});
     }
 }

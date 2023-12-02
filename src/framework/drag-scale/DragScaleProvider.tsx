@@ -1,17 +1,17 @@
-import {PointType} from "../../blueprint/BPTypes";
 import {ScaleCore} from "../../designer/operate-provider/scale/ScaleCore";
+import {IPoint} from "../../blueprint/store/BPStore";
 
 export interface DragScaleData {
     scale: number;
     ratio: number;
-    position: PointType;
+    position: IPoint;
 }
 
 export interface DragScaleProviderParams {
     container: HTMLDivElement | null;
     content: HTMLDivElement | null;
-    position?: PointType;
-    posOffset?: PointType;
+    position?: IPoint;
+    posOffset?: IPoint;
     dragCallback?: (dsData: DragScaleData, e: any) => void;
     dragStartCallback?: (dsData: DragScaleData, e: any) => void;
     dragEndCallback?: (dsData: DragScaleData, e: any) => void;
@@ -27,8 +27,8 @@ export interface DragScaleProviderParams {
 export default class DragScaleProvider {
     private container: HTMLDivElement | null = null;
     private content: HTMLDivElement | null = null;
-    private readonly position: PointType = {x: 0, y: 0};
-    private posOffset: PointType = {x: 0, y: 0};
+    private readonly position: IPoint = {x: 0, y: 0};
+    private posOffset: IPoint = {x: 0, y: 0};
     private readonly dragCallback?: (dsData: DragScaleData, e: any) => void;
     private readonly scaleCallback?: (dsData: DragScaleData, e: any) => void;
     private readonly dragStartCallback?: (dsData: DragScaleData, e: any) => void;

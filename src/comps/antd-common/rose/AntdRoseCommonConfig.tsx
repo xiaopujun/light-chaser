@@ -1,5 +1,4 @@
 import React, {Component, useState} from 'react';
-import {ConfigType} from "../../../designer/right/ConfigType";
 import {WritableRoseOptions} from "../types";
 import {RoseOptions} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
@@ -10,6 +9,7 @@ import AntdCommonUtil from "../AntdCommonUtil";
 import {AntdLegend} from "../config/legend/AntdLegend";
 import {ShapeAttrs} from "@antv/g-base";
 import LCGUIUtil from "../../../json-schema/LCGUIUtil";
+import {ConfigType} from "../../../designer/right/ConfigContent";
 
 export default class AntdRoseCommonStyleConfig extends Component<ConfigType> {
 

@@ -2,10 +2,10 @@ import {action, makeObservable, observable} from "mobx";
 import Moveable from "react-moveable";
 import {Component, RefObject} from "react";
 import designerStore from "../store/DesignerStore";
-import {MovableItemType} from "./movable/types";
 import ObjectUtil from "../../utils/ObjectUtil";
 import DesignerRuler from "../canvas/DesignerRuler";
 import layerListStore from "../float-configs/layer-list/LayerListStore";
+import {ILayerItem} from "../DesignerType";
 
 /**
  * 组件多选情况下的坐标值
@@ -113,7 +113,7 @@ class EventOperateStore {
     backoff: boolean = false;
 
     /**
-     * 用于记录当前新添加的组件id,实际渲染时根据该id读取组件数据并记录操作日志
+     * 用于记录当前手动（双击或拖拽）新添加的组件id,实际渲染时根据该id读取组件数据并记录操作日志。非手动添加的组件不会记录操作日志
      */
     addRecordCompId: string | null = null;
 
@@ -193,7 +193,7 @@ class EventOperateStore {
      * @param compArr
      */
     calculateGroupCoordinate = (compArr: any[]) => {
-        const {layoutConfigs} = designerStore;
+        const {layerConfigs} = designerStore;
         let groupCoordinate: GroupCoordinateType = {
             minX: Infinity,
             minY: Infinity,
@@ -201,10 +201,8 @@ class EventOperateStore {
             maxY: -Infinity
         };
         compArr.forEach((item: any) => {
-            const layoutConfig: MovableItemType = layoutConfigs[item.id];
-            let {position, width, height} = layoutConfig;
-            const x = position![0];
-            const y = position![1];
+            const layerConfig: ILayerItem = layerConfigs[item.id];
+            let {x = 0, y = 0, width, height} = layerConfig!;
             if (x < groupCoordinate.minX!)
                 groupCoordinate.minX = x;
             if (y < groupCoordinate.minY!)

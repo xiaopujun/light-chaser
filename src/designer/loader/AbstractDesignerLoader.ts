@@ -1,19 +1,19 @@
-import {AbstractComponentDefinition} from "../../framework/core/AbstractComponentDefinition";
+import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
 import {HeaderItemProps} from "../header/HeaderTypes";
 import {AbstractOperator} from "../../framework/operate/AbstractOperator";
 import AbstractConvert from "../../framework/convert/AbstractConvert";
-import ALoader from "./ALoader";
+import AbstractLoader from "./AbstractLoader";
 
-export abstract class AbstractDesignerLoader extends ALoader {
+export abstract class AbstractDesignerLoader extends AbstractLoader {
 
     //自定义组件信息映射
-    public customComponentInfoMap: Record<string, AbstractComponentDefinition> = {};
+    public definitionMap: Record<string, AbstractDefinition> = {};
     //头部操作菜单实例
     public headerItemInstances: HeaderItemProps[] = [];
     //项目数据操作映射
-    public abstractOperatorMap: { [key: string]: AbstractOperator } = {};
+    public operatorMap: { [key: string]: AbstractOperator } = {};
     //数据转换器
-    public abstractConvertMap: { [key: string]: AbstractConvert } = {};
+    public convertMap: { [key: string]: AbstractConvert } = {};
 
     /**
      * 加载设计器

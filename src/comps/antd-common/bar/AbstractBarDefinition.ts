@@ -1,5 +1,5 @@
 import React from "react";
-import {MenuToConfigMappingType} from "../../../framework/core/AbstractComponentDefinition";
+import {MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {ClazzTemplate} from "../../common-component/common-types";
@@ -25,7 +25,7 @@ abstract class AbstractBarDefinition extends AntdCommonDefinition<AntdCommonBarC
 
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
-            info: BaseInfo,
+            base: BaseInfo,
             data: DataConfig,
             style: AntdBarCommonStyleConfig,
             animation: AnimationConfig,

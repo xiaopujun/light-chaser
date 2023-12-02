@@ -4,13 +4,17 @@ import rightStore from "./RightStore";
 import {observer} from "mobx-react";
 import './ConfigContent.less';
 import designerStore from "../store/DesignerStore";
-import {AbstractComponentDefinition} from "../../framework/core/AbstractComponentDefinition";
-import {ConfigType} from "./ConfigType";
+import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
 import ObjectUtil from "../../utils/ObjectUtil";
 import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryRecordOperateProxy";
 import Loading from "../../ui/loading/Loading";
 import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
+import AbstractController from "../../framework/core/AbstractController";
+
+export interface ConfigType<T extends AbstractController = AbstractController> {
+    controller: T;
+}
 
 class ConfigContent extends Component {
 
@@ -36,7 +40,7 @@ class ConfigContent extends Component {
     buildConfigContent = () => {
         const {compInstances} = designerStore;
         let {activeMenu, activeElem} = rightStore;
-        let abstractConfigObj: AbstractComponentDefinition = DesignerLoaderFactory.getLoader().customComponentInfoMap[activeElem.type + '']
+        let abstractConfigObj: AbstractDefinition = DesignerLoaderFactory.getLoader().definitionMap[activeElem.type + '']
         if (!abstractConfigObj) return;
         let configMapping = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp: React.ComponentType<ConfigType> = configMapping![activeMenu];

@@ -11,7 +11,6 @@ class AntdGroupColumnDefinition extends AbstractColumnDefinition {
             compKey: "AntdGroupColumn",
             type: "柱状图",
             typeKey: "column",
-            desc: "基于Antd Designer实现的分组柱状图组件",
         };
     }
 
@@ -53,11 +52,10 @@ class AntdGroupColumnDefinition extends AbstractColumnDefinition {
             }
         ];
         return {
-            info: {
+            base: {
                 id: "",
                 name: "Antd分组柱状图",
                 type: "AntdGroupColumn",
-                desc: '基于Antd Designer实现的分组柱状图组件',
             },
             style: {
                 data: data,

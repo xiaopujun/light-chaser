@@ -1,5 +1,4 @@
 import React, {Component, useState} from 'react';
-import {ConfigType} from "../../../designer/right/ConfigType";
 import {WritableRoseOptions} from "../../antd-common/types";
 import AntdCommonRose from "../../antd-common/rose/AntdCommonRose";
 import {ColorAttr, RingProgressOptions, StatisticText} from "@antv/g2plot";
@@ -7,6 +6,7 @@ import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
 import {ShapeAttrs} from "@antv/g-base";
 import ObjectUtil from "../../../utils/ObjectUtil";
+import {ConfigType} from "../../../designer/right/ConfigContent";
 
 export class AntdRingProgressStyleConfig extends Component<ConfigType> {
 

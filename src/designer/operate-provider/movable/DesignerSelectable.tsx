@@ -28,7 +28,7 @@ export function setControlPointLineColor(lock: boolean) {
     }
 }
 
-class GroupSelectable extends Component {
+class DesignerSelectable extends Component {
     selectorRef = React.createRef<Selecto>();
 
     componentDidMount() {
@@ -44,24 +44,24 @@ class GroupSelectable extends Component {
         //如果为拖拽，则将当前的整个dom事件传递给movable，确保选中元素后可以立马拖拽
         if (e.isDragStart) {
             e.inputEvent.preventDefault();
-            setTimeout(() => {
+            const selectTimer = setTimeout(() => {
                 //使用异步操作，确保在拖拽前已经给movable传递target
                 movable.dragStart(e.inputEvent);
+                clearTimeout(selectTimer);
             });
         }
 
-        const {layoutConfigs} = designerStore;
+        const {layerConfigs} = designerStore;
         let layerIds = selected.map((item) => item.id);
-        let lockState = !!layoutConfigs[layerIds[0]]?.lock;
+        let lockState = !!layerConfigs[layerIds[0]]?.lock;
         if (layerIds.length === 1) {
             //点选
-            const pid = layoutConfigs[layerIds[0]].pid;
+            const pid = layerConfigs[layerIds[0]].pid;
             if (!pid) {
                 //普通图层--不管是否锁定，都可以选中
             } else {
                 //分组图层--选中这个分组下的所有未锁定、未隐藏的组件
                 layerIds = LayerUtil.findAllChildLayerBySubId(layerIds);
-                selected = layerIds.map((id) => document.getElementById(id)!).filter((item) => !!item);
             }
         } else if (layerIds.length > 1) {
             /**
@@ -72,14 +72,14 @@ class GroupSelectable extends Component {
             let allChildLayerId = LayerUtil.findAllChildLayerBySubId(layerIds, true);
             //检测是否同时包含锁定和非锁定的组件
             for (let i = 0; i < allChildLayerId.length; i++) {
-                const layer = layoutConfigs[allChildLayerId[i]];
+                const layer = layerConfigs[allChildLayerId[i]];
                 if (layer.lock !== lockState && layer.type !== 'group') {
                     //只选中未锁定的组件
                     lockState = false;
                     break;
                 }
             }
-            layerIds = allChildLayerId.filter((id) => layoutConfigs[id].lock === lockState);
+            layerIds = allChildLayerId.filter((id) => layerConfigs[id].lock === lockState);
         }
 
         //更新选中的组件id
@@ -127,4 +127,4 @@ class GroupSelectable extends Component {
     }
 }
 
-export default observer(GroupSelectable);
+export default observer(DesignerSelectable);

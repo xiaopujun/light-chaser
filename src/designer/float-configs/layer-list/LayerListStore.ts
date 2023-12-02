@@ -1,7 +1,7 @@
 import {action, makeObservable, observable} from "mobx";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 import {Component, MouseEvent} from "react";
-import {setControlPointLineColor} from "../../operate-provider/movable/GroupSelectable";
+import {setControlPointLineColor} from "../../operate-provider/movable/DesignerSelectable";
 import historyRecordOperateProxy from "../../operate-provider/undo-redo/HistoryRecordOperateProxy";
 import LayerUtil from "./util/LayerUtil";
 import designerStore from "../../store/DesignerStore";
@@ -32,8 +32,8 @@ class LayerListStore {
      */
     lockChange = (id: string, lock: boolean) => {
         const updData = [];
-        const {layoutConfigs} = designerStore;
-        const {type} = layoutConfigs[id];
+        const {layerConfigs} = designerStore;
+        const {type} = layerConfigs[id];
         if (type === 'group') {
             //分组图层
             LayerUtil.findAllChildLayer([id]).forEach(id => updData.push({id, lock}));
@@ -55,8 +55,8 @@ class LayerListStore {
      */
     selectedChange = (id: string, event: MouseEvent) => {
         const {targetIds, setTargetIds} = eventOperateStore;
-        const {layoutConfigs} = designerStore;
-        const {type, lock} = layoutConfigs[id];
+        const {layerConfigs} = designerStore;
+        const {type, lock} = layerConfigs[id];
         if (!type) return;
         const groupLayer = type === 'group';
         let selectedLayerIds: string[] = [];
@@ -82,13 +82,13 @@ class LayerListStore {
                     else
                         selectedLayerIds = [id];
                 } else {
-                    const firstLock = layoutConfigs[targetIds[0]].lock;
+                    const firstLock = layerConfigs[targetIds[0]].lock;
                     if (lock !== firstLock) {
                         //只选中未锁定的组件
                         if (groupLayer)
-                            selectedLayerIds = [...targetIds, ...LayerUtil.findAllChildLayer([id])].filter(id => !layoutConfigs[id].lock);
+                            selectedLayerIds = [...targetIds, ...LayerUtil.findAllChildLayer([id])].filter(id => !layerConfigs[id].lock);
                         else
-                            selectedLayerIds = [...targetIds, id].filter(id => !layoutConfigs[id].lock);
+                            selectedLayerIds = [...targetIds, id].filter(id => !layerConfigs[id].lock);
                     } else {
                         //直接在已选择的组件上增量本次选中的图层
                         if (groupLayer)
@@ -113,7 +113,7 @@ class LayerListStore {
         }, 0)
 
         //更新选中组件的边框颜色（锁定状态组件为红色，非锁定状态组件为蓝色）
-        let finalLock = layoutConfigs[selectedLayerIds[0]]?.lock;
+        let finalLock = layerConfigs[selectedLayerIds[0]]?.lock;
         const tempTimer = setTimeout(() => {
             setControlPointLineColor(finalLock!);
             clearTimeout(tempTimer);
@@ -123,8 +123,8 @@ class LayerListStore {
 
     hideChange = (id: string, hide: boolean) => {
         const updData = [];
-        const {layoutConfigs} = designerStore;
-        const {type} = layoutConfigs[id];
+        const {layerConfigs} = designerStore;
+        const {type} = layerConfigs[id];
         if (type === 'group') {
             //分组图层
             LayerUtil.findAllChildLayer([id]).forEach(id => updData.push({id, hide}));

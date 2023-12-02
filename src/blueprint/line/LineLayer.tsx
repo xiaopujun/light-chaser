@@ -1,9 +1,8 @@
-import React from 'react';
+import React, {CSSProperties} from 'react';
 import './LineLayer.less';
 import CanvasUtil from "../util/CanvasUtil";
-import bpStore from "../store/BPStore";
+import bpStore, {IBPLine} from "../store/BPStore";
 import {AnchorPointType} from "../node/core/AbstractBPNodeController";
-import {BPLineType} from "../BPTypes";
 import IdGenerate from "../../utils/IdGenerate";
 
 class LineLayer extends React.Component {
@@ -13,7 +12,7 @@ class LineLayer extends React.Component {
     //下层
     downLayer: HTMLCanvasElement | null = null;
 
-    currentLine: BPLineType = {
+    currentLine: IBPLine = {
         color: "#c0c0c0",
         lineWidth: 1,
         lineDash: [10, 10],
@@ -36,8 +35,8 @@ class LineLayer extends React.Component {
             const {target} = e;
             if (!target || !(target as HTMLElement).classList.contains('ap-circle')) return;
             const pointDom = e.target as HTMLElement;
-            const pointInfoArr = pointDom.id.split("_");
-            if (pointInfoArr && pointInfoArr.length === 4 && pointInfoArr[3] === AnchorPointType.INPUT.toString())
+            const pointInfoArr = pointDom.id.split(":");
+            if (pointInfoArr && pointInfoArr.length === 3 && pointInfoArr[2] === AnchorPointType.INPUT.toString())
                 return;
 
             //设置起始点坐标
@@ -47,25 +46,30 @@ class LineLayer extends React.Component {
             this.keyDown = true;
         });
 
+        //todo 待处理，蓝图的点击事件不要绑定在document上
         document.addEventListener('mouseup', (e) => {
-            if (!this.keyMove || !e.target || !(e.target as HTMLElement).classList.contains('ap-circle')) {
+            const {nodeContainerRef, upCtx} = bpStore;
+            const {width: canvasW, height: canvasH} = nodeContainerRef?.getBoundingClientRect()!;
+            const endElem = e.target as HTMLElement;
+            if (!this.keyMove || !endElem || !endElem.classList.contains('ap-circle')
+                || endElem.id?.split(":")[2] !== AnchorPointType.INPUT.toString()) {
                 //清空画布
-                bpStore.upCtx?.clearRect(0, 0, 10000, 10000);
+                upCtx?.clearRect(0, 0, canvasW, canvasH);
                 this.keyDown = false;
                 return;
             }
             this.keyMove = false;
             this.keyDown = false;
-            bpStore.upCtx!.clearRect(0, 0, 10000, 10000)
+            bpStore.upCtx!.clearRect(0, 0, canvasW, canvasH)
             //在下层绘制当前操作的线条
             this.currentLine.id = IdGenerate.generateId();
             this.currentLine.lineDash = [];
             this.currentLine.lineWidth = 1;
             this.currentLine.color = "#a2a2a2";
             this.currentLine.endAnchorId = (e!.target as HTMLElement).id;
-            const {x, y, width, height} = (e.target as HTMLElement).getBoundingClientRect();
-            this.currentLine.endPoint = {x: x + width / 2 - canvasOffset.x, y: y + height / 2 - canvasOffset.y}
-            CanvasUtil.drawBezierCurves(bpStore.downCtx!, this.currentLine)
+            const {x, y, width: apw, height: aph} = (e.target as HTMLElement)?.getBoundingClientRect();
+            this.currentLine.endPoint = {x: x + apw / 2 - canvasOffset.x, y: y + aph / 2 - canvasOffset.y}
+            CanvasUtil.drawBezierCurves(bpStore.downCtx!, [this.currentLine])
             //计算线条的采样点，用于计算线条是否被选中
             const {
                 id, startPoint, endPoint, firstCP, secondCP, lineDash,
@@ -96,7 +100,8 @@ class LineLayer extends React.Component {
             if (!this.keyDown) return;
             this.keyMove = true;
             const {startPoint, endPoint} = this.currentLine;
-            const {canvasOffset} = bpStore;
+            const {nodeContainerRef, canvasOffset} = bpStore;
+            const {width: canvasW, height: canvasH} = nodeContainerRef?.getBoundingClientRect()!;
             //设置鼠标坐标
             this.currentLine.endPoint = {x: e.clientX - canvasOffset.x, y: e.clientY - canvasOffset.y}
 
@@ -104,8 +109,8 @@ class LineLayer extends React.Component {
             this.currentLine.firstCP = contPoi.firstCP
             this.currentLine.secondCP = contPoi.secondCP
             //清空画布
-            bpStore.upCtx!.clearRect(0, 0, 10000, 10000)
-            CanvasUtil.drawBezierCurves(bpStore.upCtx!, {
+            bpStore.upCtx!.clearRect(0, 0, canvasW, canvasH)
+            CanvasUtil.drawBezierCurves(bpStore.upCtx!, [{
                 color: "#c0c0c0",
                 lineWidth: 1,
                 lineDash: [10, 10],
@@ -113,22 +118,18 @@ class LineLayer extends React.Component {
                 endPoint: this.currentLine.endPoint,
                 firstCP: this.currentLine.firstCP,
                 secondCP: this.currentLine.secondCP
-            })
+            }])
         });
 
     }
 
     render() {
+        const width = window.innerWidth - 670, height = window.innerHeight - 75;
+        const _canvasStyle: CSSProperties = {position: "inherit", top: 0, left: 0};
         return (
             <div style={{position: "absolute"}}>
-                <canvas style={{position: "inherit", top: 0, left: 0}}
-                        width={window.innerWidth - 670}
-                        height={window.innerHeight - 75}
-                        ref={ref => this.downLayer = ref}/>
-                <canvas style={{position: "inherit", top: 0, left: 0}}
-                        width={window.innerWidth - 670}
-                        height={window.innerHeight - 75}
-                        ref={ref => this.upLayer = ref}/>
+                <canvas style={_canvasStyle} width={width} height={height} ref={ref => this.downLayer = ref}/>
+                <canvas style={_canvasStyle} width={width} height={height} ref={ref => this.upLayer = ref}/>
             </div>
         )
     }

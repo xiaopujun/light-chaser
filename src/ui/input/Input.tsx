@@ -1,10 +1,11 @@
-import  {ChangeEvent, Component, InputHTMLAttributes} from 'react';
+import {ChangeEvent, Component, InputHTMLAttributes} from 'react';
 import './Input.less';
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
 
 export interface InputProps extends Pick<InputHTMLAttributes<HTMLInputElement>,
     "minLength" | "maxLength" | "required" | "value" | "defaultValue"
-    | "disabled" | "type" | "min" | "max" | "placeholder">, UIContainerProps {
+    | "disabled" | "type" | "min" | "max" | "placeholder" | "onBlur"
+    | "autoFocus" | "onKeyDown">, UIContainerProps {
     onChange?: (data: string | number) => void;
     prefix?: string;
     suffix?: string;
@@ -26,14 +27,13 @@ class Input extends Component<InputProps> {
     }
 
     render() {
-        const {onChange, label, prefix, suffix, tip, ...rest} = this.props;
+        const {onChange, label, prefix, suffix, tip, gridColumn, ...rest} = this.props;
         return (
-            <UIContainer label={label} tip={tip}>
+            <UIContainer label={label} tip={tip} gridColumn={gridColumn}>
                 <div className={'lc-input-content'}>
                     {prefix && <div className={'lc-input-prefix'}>{prefix}&nbsp;</div>}
                     <div className={'lc-input-body'}>
                         <input {...rest} onChange={this.onChange} className={'lc-input'}/>
-                        <span className={'lc-input-span'}/>
                     </div>
                     {suffix && <div className={'lc-input-suffix'}>&nbsp;{suffix}</div>}
                 </div>

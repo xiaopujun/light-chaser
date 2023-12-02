@@ -1,8 +1,8 @@
 import React, {useState} from "react";
-import {ConfigType} from "../../../designer/right/ConfigType";
 import BaseImageController from "./BaseImageController";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
+import {ConfigType} from "../../../designer/right/ConfigContent";
 
 export const BaseImageStyleConfig: React.FC<ConfigType<BaseImageController>> = ({controller}) => {
     const {style} = controller.getConfig()!;

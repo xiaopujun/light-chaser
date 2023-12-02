@@ -1,18 +1,18 @@
 import HistoryQueue from "./HistoryQueue";
-import {HistoriesRecordType} from "./HistoryType";
+import {IHistoriesRecord} from "./OperateType";
 
 class HistoryOperator {
-    private queue: HistoryQueue<HistoriesRecordType> = new HistoryQueue<HistoriesRecordType>(50);
+    private queue: HistoryQueue<IHistoriesRecord> = new HistoryQueue<IHistoriesRecord>(50);
 
-    public put(record: HistoriesRecordType): void {
+    public put(record: IHistoriesRecord): void {
         this.queue.enqueue(record);
     }
 
-    public backoff(): HistoriesRecordType | null {
+    public backoff(): IHistoriesRecord | null {
         return this.queue.backoff();
     }
 
-    public forward(): HistoriesRecordType | null {
+    public forward(): IHistoriesRecord | null {
         return this.queue.forward();
     }
 }

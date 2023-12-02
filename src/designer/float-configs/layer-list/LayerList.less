@@ -1,3 +1,16 @@
+.layerItemStyle {
+  color: #b6b6b6ff;
+  padding: 3px 10px;
+  font-size: 10px;
+  height: 25px;
+  background: #363636;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
 .layer-list {
   .list-search {
     padding: 5px;
@@ -23,5 +36,100 @@
     height: calc(100% - 84px);
     overflow-y: auto;
     padding: 0 5px;
+
+    .layer-item {
+      .layerItemStyle();
+      margin-bottom: 5px;
+
+      .layer-name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        input {
+          background-color: #00000000;
+          outline: none;
+          border: none;
+          width: 100%;
+        }
+      }
+
+      .layer-operators {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #848484;
+
+        .layer-operator {
+          padding: 2px;
+        }
+      }
+    }
+
+    .layer-group {
+      width: 100%;
+      color: #b6b6b6ff;
+      margin-bottom: 5px;
+
+      .group-header {
+        .layerItemStyle();
+
+        .group-left {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .group-icon {
+            margin-right: 5px;
+          }
+
+          .group-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            input {
+              background-color: #00000000;
+              outline: none;
+              border: none;
+              width: 100%;
+            }
+          }
+        }
+
+        .group-operators {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          color: #848484;
+
+          .group-operator {
+            padding: 2px;
+            cursor: pointer;
+          }
+        }
+      }
+
+      .group-content {
+        padding: 5px 0 0 3px;
+      }
+    }
+
+    .layer-item:hover, .group-header:hover {
+      background: #00aeff54;
+    }
+
+    .layer-selected {
+      background: #00aeff54 !important;
+    }
+
+    .layer-lock {
+      background: #ff1f1f59 !important;
+    }
+
+    .layer-hide {
+      background: #97979799 !important;
+    }
+
   }
 }

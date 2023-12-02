@@ -30,14 +30,13 @@ export const BPNodeContainer: React.FC<BPNodeContainerProps> = React.memo(({layo
             bpNodeControllerInsMap[layout.id!] = ncIns;
         });
     }, [layout.id, layout.type]);
-    const {canvasTranslate, canvasScale} = bpStore;
     const {position, id} = layout;
     return (
         <div ref={ref} className={'bp-node-container'}
              id={`bpnode:${id}`}
              onDoubleClick={() => activeNodeConfig(id!)}
              style={{
-                 transform: 'translate(' + (position!.x - canvasTranslate.x) / canvasScale + 'px,' + (position!.y - canvasTranslate.y) / canvasScale + 'px)',
+                 transform: 'translate(' + position!.x + 'px,' + position!.y + 'px)',
              }}
         />
     )

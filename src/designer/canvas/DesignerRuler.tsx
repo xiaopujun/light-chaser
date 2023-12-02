@@ -1,10 +1,10 @@
 import {PureComponent} from 'react';
 import Ruler, {RulerProps} from "@scena/react-ruler";
 import eventOperateStore from "../operate-provider/EventOperateStore";
-import {PointType} from "../../blueprint/BPTypes";
+import {IPoint} from "../../blueprint/store/BPStore";
 
 interface DesignerRulerProps {
-    offset?: PointType;
+    offset?: IPoint;
 }
 
 /**
@@ -39,7 +39,7 @@ class DesignerRuler extends PureComponent<RulerProps & DesignerRulerProps> {
 
     unit = 50;
 
-    scrollPos: PointType = {x: 0, y: 0};
+    scrollPos: IPoint = {x: 0, y: 0};
 
     baseOffset = 20;
 
@@ -96,7 +96,7 @@ class DesignerRuler extends PureComponent<RulerProps & DesignerRulerProps> {
                            segment={2}
                            negativeRuler={true}
                            textOffset={[0, 10]}
-                           backgroundColor={'#1a1a1a'}
+                           backgroundColor={'#1f1f1f'}
                            unit={this.unit}/>
                 </div>
                 <div className={'lc-ruler-vertical'}
@@ -115,7 +115,7 @@ class DesignerRuler extends PureComponent<RulerProps & DesignerRulerProps> {
                            segment={2}
                            negativeRuler={true}
                            textOffset={[10, 0]}
-                           backgroundColor={'#1a1a1a'}
+                           backgroundColor={'#1f1f1f'}
                            unit={this.unit}/>
                 </div>
                 <div className={'lc-ruler-content'} style={{

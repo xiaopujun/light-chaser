@@ -2,11 +2,11 @@ import {Component} from 'react';
 import Dialog from "../../../ui/dialog/Dialog";
 import ThemeEditor from "./theme-editor/ThemeEditor";
 import ThemeList from "./theme-list/ThemeList";
-import {ConfigType} from "../../../designer/right/ConfigType";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import rightStore from "../../../designer/right/RightStore";
 import designerStore from "../../../designer/store/DesignerStore";
 import Button from "../../../ui/button/Button";
+import {ConfigType} from "../../../designer/right/ConfigContent";
 
 class ThemeConfig extends Component<ConfigType> {
     state = {
