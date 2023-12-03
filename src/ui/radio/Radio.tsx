@@ -64,9 +64,10 @@ class Radio extends Component<RadioProps> {
     }
 
     render() {
-        const {label, tip, padding, margin} = this.props;
+        const {label, tip, padding, margin, gridColumn} = this.props;
         return (
-            <UIContainer label={label} tip={tip} className={'lc-radio'} padding={padding} margin={margin}>
+            <UIContainer label={label} tip={tip} gridColumn={gridColumn} className={'lc-radio'}
+                         padding={padding} margin={margin}>
                 <div className="radio-buttons">
                     {this.generateOptions()}
                 </div>

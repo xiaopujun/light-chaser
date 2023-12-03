@@ -45,12 +45,13 @@ class ProjectHdItemImpl extends Component {
             <Dialog title={'项目设置'} className={'lc-header-project-set'} visible={projectVisible} onClose={this.onClose}>
                 <form onSubmit={this.doSave}>
                     <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                        <Grid gridGap={'15px'}>
+                        <Grid gridGap={'15px'} columns={2}>
                             <Input label={'项目名称'} required={true} maxLength={20} defaultValue={name}
                                    onChange={(name) => this.config!.name = name as string}/>
                             <Input label={'项目描述'} required={true} maxLength={60} defaultValue={des}
                                    onChange={(des) => this.config!.des = des as string}/>
                             <Radio label={'项目状态'} onChange={value => this.config!.state = value as ProjectState}
+                                   gridColumn={'1/3'}
                                    defaultValue={state}
                                    options={[
                                        {label: '草稿', value: ProjectState.DRAFT},
