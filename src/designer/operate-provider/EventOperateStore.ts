@@ -217,6 +217,15 @@ class EventOperateStore {
         this.setGroupCoordinate(groupCoordinate);
     }
 
+    /**
+     * 让鼠标重新聚焦到设计器画布上
+     */
+    focusDesignerCanvas = () => {
+        const enforcementCap = document.querySelector('.lc-ruler-content');
+        //删除组件后，重新聚焦鼠标指针到容器上，避免鼠标失去焦点导致其他快捷键失效。
+        this.setPointerTarget(enforcementCap);
+    }
+
 }
 
 const eventOperateStore = new EventOperateStore();

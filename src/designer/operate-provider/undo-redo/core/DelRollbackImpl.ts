@@ -12,9 +12,11 @@ export class DelRollbackImpl extends AbstractRollback {
         const delIds: string[] = [];
         (prev as IDelOperateData[]).forEach((item) => delIds.push(item.id));
         delItem(delIds);
-        const {setTargetIds} = eventOperateStore;
+        const {setTargetIds, focusDesignerCanvas} = eventOperateStore;
         //清空框选状态,避免空框选
         setTargetIds([]);
+        //删除元素后重新聚焦画布
+        focusDesignerCanvas();
     }
 
     undo(record: IHistoryRecord): void {
