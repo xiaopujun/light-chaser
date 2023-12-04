@@ -226,42 +226,6 @@ class HistoryRecordOperateProxy {
         setPointerTarget && setPointerTarget(enforcementCap);
     }
 
-    private _copyGroupLayer = (layout: ILayerItem, newIds: string[], newLayouts: ILayerItem[], maxLevel: number): ILayerItem => {
-        const {layerConfigs} = designerStore;
-        //生成新id
-        const newId = IdGenerate.generateId();
-        newIds.push(newId);
-        //生成新布局
-        const newLayout = cloneDeep(layout);
-        newLayouts.push(newLayout);
-        newLayout.id = newId;
-        newLayout.order = maxLevel;
-        newLayout.childIds = [];
-        layerConfigs[newId] = newLayout;
-        return newLayout;
-    }
-
-    private _copyNormalLayer = (layout: ILayerItem, newLayouts: ILayerItem[], maxLevel: number, newIds: string[]): ILayerItem => {
-        const {layerConfigs, compInstances, elemConfigs} = designerStore;
-        //生成新id
-        const newId = IdGenerate.generateId();
-        //生成新布局
-        const newLayout = cloneDeep(layout);
-        newLayouts.push(newLayout);
-        newLayout.id = newId;
-        newLayout.x = newLayout.x! + 10;
-        newLayout.y = newLayout.y! + 10;
-        newLayout.order = maxLevel;
-        layerConfigs[newId] = newLayout;
-        //生成新组件配置项数据
-        const copiedInstance = compInstances[layout.id!];
-        let newConfig = cloneDeep(copiedInstance.getConfig());
-        newConfig.base.id = newId;
-        elemConfigs![newId] = newConfig;
-        newIds.push(newId);
-        return newLayout;
-    }
-
     private _copyLayer = (oldLayer: ILayerItem, newIds: string[], newLayers: ILayerItem[], maxLevel: number): ILayerItem => {
         const {layerConfigs, compInstances, elemConfigs} = designerStore;
         const newLayer = cloneDeep(oldLayer);
