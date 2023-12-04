@@ -15,7 +15,7 @@ export class AddRollbackImpl extends AbstractRollback {
 
     undo(record: IHistoryRecord): void {
         if (!record) return;
-        const {setTargetIds} = eventOperateStore;
+        const {setTargetIds, focusDesignerCanvas} = eventOperateStore;
         const {next} = record!;
         let nextAddData = next! as IAddOperateData[];
         //执行反向操作删除元素
@@ -31,6 +31,8 @@ export class AddRollbackImpl extends AbstractRollback {
             setContentVisible(false);
             activeConfig(null, "");
         }
+        //删除元素后重新聚焦画布
+        focusDesignerCanvas();
     }
 
 }

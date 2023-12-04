@@ -20,8 +20,8 @@ class ThemeConfig extends Component<ConfigType> {
     themeChange = (theme: ThemeItemType) => {
         if (!theme) return;
         const {activeElem: {id}} = rightStore;
-        const {compInstances} = designerStore;
-        const instance = compInstances[id + ''];
+        const {compController} = designerStore;
+        const instance = compController[id + ''];
         instance && instance.updateTheme(theme);
     }
 
