@@ -18,11 +18,11 @@ export default class GroupLayer extends React.PureComponent<GroupLayerStyleProps
         const {elemConfigs, compInstances} = designerStore;
         let groupDefinition: AbstractDefinition = DesignerLoaderFactory.getLoader().definitionMap['group'];
         let config;
-        if (layer.id! in elemConfigs!) {
-            config = elemConfigs![layer.id!];
-        } else if (layer.id! in compInstances!) {
+        if (layer.id! in compInstances!) {
             //重新编组后，被编组组件会重新渲染，需从之前的实例中获取原有数据
             config = compInstances![layer.id!].getConfig();
+        } else if (layer.id! in elemConfigs!) {
+            config = elemConfigs![layer.id!];
         } else {
             config = groupDefinition.getInitConfig();
             config.base.id = layer.id!;

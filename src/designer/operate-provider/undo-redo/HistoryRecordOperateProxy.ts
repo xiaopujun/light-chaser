@@ -117,11 +117,11 @@ class HistoryRecordOperateProxy {
             const AbsCompImpl = componentDefine.getComponent();
             if (AbsCompImpl) {
                 let config;
-                if (layout.id! in elemConfigs!) {
-                    config = elemConfigs![layout.id!];
-                } else if (layout.id! in compInstances!) {
+                if (layout.id! in compInstances!) {
                     //重新编组后，被编组组件会重新渲染，需从之前的实例中获取原有数据
                     config = compInstances![layout.id!].getConfig();
+                } else if (layout.id! in elemConfigs!) {
+                    config = elemConfigs![layout.id!];
                 } else {
                     config = componentDefine.getInitConfig();
                     config.base.id = layout.id!;
@@ -262,7 +262,34 @@ class HistoryRecordOperateProxy {
         return newLayout;
     }
 
+    private _copyLayer = (oldLayer: ILayerItem, newIds: string[], newLayers: ILayerItem[], maxLevel: number): ILayerItem => {
+        const {layerConfigs, compInstances, elemConfigs} = designerStore;
+        const newLayer = cloneDeep(oldLayer);
+        newLayer.id = IdGenerate.generateId();
+        newLayer.order = maxLevel;
+        if (newLayer.type !== 'group') {
+            newLayer.x = newLayer.x! + 10;
+            newLayer.y = newLayer.y! + 10;
+        }
+        if (newLayer.pid)
+            newLayer.pid = undefined;
+        if (newLayer.childIds)
+            newLayer.childIds = [];
+        layerConfigs[newLayer.id] = newLayer;
+        //生成新组件配置项数据
+        const oldCompController = compInstances[oldLayer.id!];
+        if (oldCompController) {
+            let newConfig = cloneDeep(oldCompController.getConfig());
+            newConfig.base.id = newLayer.id;
+            elemConfigs![newLayer.id] = newConfig;
+        }
+        newIds.push(newLayer.id);
+        newLayers.push(newLayer);
+        return newLayer;
+    }
+
     /**
+     * @see https://picss.sunbangyan.cn/2023/12/04/6d352450af32841a97f4784d2252eeb8.jpeg
      * 被复制的图层可以同时包含普通图层、分组图层和分组图层的子图层。
      * 1.普通图层和没有包含分组图层的子图层，则直接复制。
      * 2.对于分组图层和其下的子图层，复制时需要创建复制前后的映射关系，复制完毕后根据映射关系恢复新图层之前的层级关系。
@@ -275,69 +302,60 @@ class HistoryRecordOperateProxy {
         //next用于保存操作记录的下一个状态
         const next: IAddOperateData[] = [];
         const newLayouts: ILayerItem[] = [];
+        const layerIdMapOldToNew: Record<string, string> = {};
 
-        //区分图层类型， 普通图层和独立的子图层一类（可直接复制），分组图层及其下子图层一类（复制后重新建立关系）。
-        const groupIds: string[] = [];
-        const normalIds: string[] = [];
-        ids.forEach((id) => {
-            const {type, pid} = layerConfigs[id];
-            if ((type !== 'group' && !pid) || (pid && !ids.includes(pid)))
-                normalIds.push(id);
-            else
-                groupIds.push(id);
+        ids.forEach((oldLayerId) => {
+            const oldLayer = layerConfigs[oldLayerId];
+            if (!oldLayer) return;
+            const newLayer = this._copyLayer(oldLayer, newIds, newLayouts, maxLevel);
+            layerIdMapOldToNew[oldLayerId] = newLayer.id!;
+            maxLevel++;
         });
 
-        //复制normalIds
-        for (const id of normalIds) {
-            //获取被复制元素布局
-            const {[id]: layout} = layerConfigs;
-            if (layout) {
-                maxLevel++;
-                const newLayout = this._copyNormalLayer(layout, newLayouts, maxLevel, newIds);
-                //如果本图层是属于单独选中的分组图层的子图层（有pid，但pid对应的图层未被选中），则需要将新复制出来的图层id加入到pid对应图层的childIds中
-                if (newLayout.pid)
-                    layerConfigs[newLayout.pid].childIds!.push(newLayout.id!);
+        //根据oldLayer推断每个一被复制图层后的新图层的层级关系
+        for (let i = 0; i < ids.length; i++) {
+            const oldLayer = layerConfigs[ids[i]];
+            if (!oldLayer.pid && oldLayer.type !== 'group')
+                continue;
+            if (oldLayer.pid && !ids.includes(oldLayer.pid)) {
+                //存在pid，但pid对应图层不在被选中的图层列表中
+                if (oldLayer.type === 'group') {
+                    //分组图层（此时新复制出来的图层pid保持不变，但是需要更新childIds的内容，指向新复制出来的子图层）
+                    const newChildIds = oldLayer.childIds!.map((childId) => layerIdMapOldToNew[childId]);
+                    const newLayer = layerConfigs[layerIdMapOldToNew[oldLayer.id!]];
+                    newLayer.childIds = newChildIds;
+                    newLayer.pid = oldLayer.pid;
+                    //该分组的父图层childIds加入新复制出来的分组图层
+                    const parentLayer = layerConfigs[newLayer.pid!];
+                    parentLayer.childIds!.push(newLayer.id!);
+                } else {
+                    //普通图层(独立子图层的复制，加入原有分组图层即可）
+                    const newLayer = layerConfigs[layerIdMapOldToNew[oldLayer.id!]];
+                    newLayer.pid = oldLayer.pid;
+                    const parentLayer = layerConfigs[oldLayer.pid!];
+                    parentLayer.childIds!.push(layerIdMapOldToNew[oldLayer.id!]);
+                }
+            }
+            if (!oldLayer.pid && oldLayer.type === 'group') {
+                //分组图层的复制，需要更新childIds的内容，指向新复制出来的子图层
+                const newChildIds = oldLayer.childIds!.map((childId) => layerIdMapOldToNew[childId]);
+                const newLayer = layerConfigs[layerIdMapOldToNew[oldLayer.id!]];
+                newLayer.childIds = newChildIds;
+            }
+            if (oldLayer.pid && ids.includes(oldLayer.pid)) {
+                if (oldLayer.type === 'group') {
+                    //非独立子图层为分组图层时，要同时更新新复制出来的分组图层的pid和childIds
+                    const newLayer = layerConfigs[layerIdMapOldToNew[oldLayer.id!]];
+                    newLayer.pid = layerIdMapOldToNew[oldLayer.pid!];
+                    const newChildIds = oldLayer.childIds!.map((childId) => layerIdMapOldToNew[childId]);
+                    newLayer.childIds = newChildIds;
+                } else {
+                    //非独立子图层为普通图层时，只需要更新新复制出来图层的pid
+                    const newLayer = layerConfigs[layerIdMapOldToNew[oldLayer.id!]];
+                    newLayer.pid = layerIdMapOldToNew[oldLayer.pid!];
+                }
             }
         }
-
-        /**
-         * 复制分组图层及其下子图层
-         */
-        const groupIdOldToNew = new Map<string, string>(); //分组图层映射关系
-        const childIdNewToOld = new Map<string, string>(); //子图层映射关系
-        //复制分组图层下的子图层
-        const onlyChildIds = groupIds.filter((id) => layerConfigs[id].type !== 'group');
-        for (const id of onlyChildIds) {
-            //获取被复制元素布局
-            const {[id]: layout} = layerConfigs;
-            if (layout) {
-                maxLevel++;
-                const newLayout = this._copyNormalLayer(layout, newLayouts, maxLevel, newIds);
-                childIdNewToOld.set(newLayout.id!, id);
-            }
-        }
-
-        //复制type=group的图层
-        const onlyGroupIds = groupIds.filter((id) => layerConfigs[id].type === 'group');
-        for (const id of onlyGroupIds) {
-            //获取被复制元素布局
-            const {[id]: layout} = layerConfigs;
-            if (layout) {
-                maxLevel++;
-                const newLayout = this._copyGroupLayer(layout, newIds, newLayouts, maxLevel);
-                groupIdOldToNew.set(id, newLayout.id!);
-            }
-        }
-
-        //根据映射，重新建立分组图层和子图层的关系
-        childIdNewToOld.forEach((oldId, newId) => {
-            const newLayerItem = layerConfigs[newId];
-            //设置新子图层的pid
-            newLayerItem.pid = groupIdOldToNew.get(layerConfigs[oldId].pid!);
-            //设置新分组图层的childIds
-            layerConfigs[newLayerItem.pid!].childIds!.push(newId);
-        });
-
 
         //设置分组复制的操作记录信息
         newIds.forEach((id) => {
