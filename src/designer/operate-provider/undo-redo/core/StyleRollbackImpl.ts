@@ -8,8 +8,8 @@ export class StyleRollbackImpl extends AbstractRollback {
         const {next} = record;
         if (next) {
             const {id, data} = next as IUpdStyleOperateData;
-            const {compInstances} = designerStore;
-            const instance = compInstances[id];
+            const {compController} = designerStore;
+            const instance = compController[id];
             if (instance)
                 instance.update(data)
             const {visible, setContentVisible} = rightStore;
@@ -27,8 +27,8 @@ export class StyleRollbackImpl extends AbstractRollback {
         const {prev} = record;
         if (prev) {
             const {id, data} = prev as IUpdStyleOperateData;
-            const {compInstances} = designerStore;
-            const instance = compInstances[id];
+            const {compController} = designerStore;
+            const instance = compController[id];
             if (instance)
                 instance.update(data)
             const {visible, setContentVisible} = rightStore;

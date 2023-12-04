@@ -111,15 +111,15 @@ class HistoryRecordOperateProxy {
     }
 
     public doAdd(container: HTMLDivElement | null, layout: ILayerItem): void {
-        const {elemConfigs, compInstances} = designerStore;
+        const {elemConfigs, compController} = designerStore;
         let componentDefine: AbstractDefinition = DesignerLoaderFactory.getLoader().definitionMap[layout!.type + ''];
         if (componentDefine) {
             const AbsCompImpl = componentDefine.getComponent();
             if (AbsCompImpl) {
                 let config;
-                if (layout.id! in compInstances!) {
+                if (layout.id! in compController!) {
                     //重新编组后，被编组组件会重新渲染，需从之前的实例中获取原有数据
-                    config = compInstances![layout.id!].getConfig();
+                    config = compController![layout.id!].getConfig();
                 } else if (layout.id! in elemConfigs!) {
                     config = elemConfigs![layout.id!];
                 } else {
@@ -127,8 +127,8 @@ class HistoryRecordOperateProxy {
                     config.base.id = layout.id!;
                 }
                 new AbsCompImpl()!.create(container!, config).then((instance: any) => {
-                    const {compInstances} = designerStore;
-                    compInstances[layout.id + ''] = instance;
+                    const {compController} = designerStore;
+                    compController[layout.id + ''] = instance;
                 });
                 //如果addRecordCompId存在，说明是手动（拖拽、双击）新增组件，该组件的数据需要存储到历史记录中
                 const {addRecordCompId, setAddRecordCompId} = eventOperateStore;
@@ -152,7 +152,7 @@ class HistoryRecordOperateProxy {
 
     public doDelete(): void {
         let {targetIds, setTargetIds} = eventOperateStore;
-        const {delItem, layerConfigs, compInstances, updateLayer} = designerStore;
+        const {delItem, layerConfigs, compController, updateLayer} = designerStore;
         if (!targetIds || targetIds.length === 0) return;
         const {setContentVisible, activeConfig, activeElem} = rightStore;
         if (targetIds.includes(activeElem.id!)) {
@@ -182,7 +182,7 @@ class HistoryRecordOperateProxy {
             if (type === 'group') {
                 prev.push({id, data: {layerConfig: toJS(layerConfigs[id])}})
             } else {
-                const elemConfig = compInstances[id] && compInstances[id].getConfig();
+                const elemConfig = compController[id] && compController[id].getConfig();
                 prev.push({id, data: {layerConfig: toJS(layerConfigs[id]), elemConfig: elemConfig}})
             }
         })
@@ -206,7 +206,7 @@ class HistoryRecordOperateProxy {
                     updNext.push({id: pid!, childIds: toJS(groupLayer.childIds!)});
                 }
                 //构建子图层的操作记录
-                const elemConfig = compInstances[id] && compInstances[id].getConfig();
+                const elemConfig = compController[id] && compController[id].getConfig();
                 prev.push({id, data: {layerConfig: toJS(layerConfigs[id]), elemConfig: elemConfig}});
             }
         );
@@ -227,7 +227,7 @@ class HistoryRecordOperateProxy {
     }
 
     private _copyLayer = (oldLayer: ILayerItem, newIds: string[], newLayers: ILayerItem[], maxLevel: number): ILayerItem => {
-        const {layerConfigs, compInstances, elemConfigs} = designerStore;
+        const {layerConfigs, compController, elemConfigs} = designerStore;
         const newLayer = cloneDeep(oldLayer);
         newLayer.id = IdGenerate.generateId();
         newLayer.order = maxLevel;
@@ -241,7 +241,7 @@ class HistoryRecordOperateProxy {
             newLayer.childIds = [];
         layerConfigs[newLayer.id] = newLayer;
         //生成新组件配置项数据
-        const oldCompController = compInstances[oldLayer.id!];
+        const oldCompController = compController[oldLayer.id!];
         if (oldCompController) {
             let newConfig = cloneDeep(oldCompController.getConfig());
             newConfig.base.id = newLayer.id;

@@ -38,14 +38,14 @@ class ConfigContent extends Component {
     }
 
     buildConfigContent = () => {
-        const {compInstances} = designerStore;
+        const {compController} = designerStore;
         let {activeMenu, activeElem} = rightStore;
         let abstractConfigObj: AbstractDefinition = DesignerLoaderFactory.getLoader().definitionMap[activeElem.type + '']
         if (!abstractConfigObj) return;
         let configMapping = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp: React.ComponentType<ConfigType> = configMapping![activeMenu];
         //使用动态代理对象，监听属性变化
-        const controller = this.createProxy(compInstances[activeElem.id + '']);
+        const controller = this.createProxy(compController[activeElem.id + '']);
         return (
             <Suspense fallback={<Loading/>}>
                 <ConfigComp controller={controller}/>

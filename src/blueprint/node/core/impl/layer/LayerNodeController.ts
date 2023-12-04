@@ -29,8 +29,8 @@ export default class LayerNodeController extends AbstractBPNodeController<LayerN
         if (anchorType === AnchorPointType.INPUT) {
             //输入点，执行动作
             //1.获取当前组件的控制器实例
-            const {compInstances, layerConfigs} = designerStore;
-            const compInstance = compInstances[nodeId];
+            const {compController, layerConfigs} = designerStore;
+            const compInstance = compController[nodeId];
             if (!compInstance)
                 return;
             const {type} = layerConfigs[nodeId];

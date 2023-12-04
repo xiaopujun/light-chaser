@@ -77,7 +77,7 @@ class DesignerStore {
     /**
      * 画布上组件id与其实例对象的映射
      */
-    compInstances: { [key: string]: AbstractDesignerController } = {};
+    compController: { [key: string]: AbstractDesignerController } = {};
 
     /**
      * 布局配置
@@ -156,8 +156,8 @@ class DesignerStore {
      */
     getData(): ProjectDataType {
         let elemConfigs: { [key: string]: any } = {};
-        Object.keys(this.compInstances).forEach((key) => {
-            elemConfigs[key] = this.compInstances[key].getConfig();
+        Object.keys(this.compController).forEach((key) => {
+            elemConfigs[key] = this.compController[key].getConfig();
         });
         return {
             id: this.id,
@@ -213,7 +213,7 @@ class DesignerStore {
     delItem = (ids: string[]) => {
         for (const id of ids) {
             delete this.layerConfigs[id];
-            delete this.compInstances[id];
+            delete this.compController[id];
         }
     };
 
@@ -244,8 +244,8 @@ class DesignerStore {
     };
 
     flashGlobalTheme = (newTheme: ThemeItemType) => {
-        this.compInstances && Object.keys(this.compInstances).forEach((key: string) => {
-            let instance = this.compInstances[key];
+        this.compController && Object.keys(this.compController).forEach((key: string) => {
+            let instance = this.compController[key];
             if (instance)
                 instance.updateTheme(newTheme);
         });
