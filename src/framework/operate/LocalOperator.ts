@@ -1,5 +1,5 @@
 import designerStore from "../../designer/store/DesignerStore";
-import {ProjectDataType, SaveType} from "../../designer/DesignerType";
+import {IProjectInfo, ProjectDataType, SaveType} from "../../designer/DesignerType";
 import localforage from "localforage";
 import {ImgUtil} from "../../utils/ImgUtil";
 import eventOperateStore from "../../designer/operate-provider/EventOperateStore";
@@ -15,6 +15,9 @@ import IdGenerate from "../../utils/IdGenerate";
  * 本地项目数据操作实现
  */
 class LocalOperator extends AbstractOperator {
+    createProject(project: IProjectInfo): Promise<string> {
+        return Promise.resolve("");
+    }
 
     public getKey(): string {
         return SaveType.LOCAL;
@@ -133,7 +136,7 @@ class LocalOperator extends AbstractOperator {
         // 更新项目数据
         await localforage.setItem(projectData.id, projectData);
         //更新项目列表信息
-        this.getProjectSimpleInfoList().then((simpleInfoList) => {
+        this.getProjectList().then((simpleInfoList) => {
             let index = simpleInfoList.findIndex((project) => project.id === projectData.id);
             const {id, projectConfig} = projectData;
             const {name, des, state, updateTime, screenshot, saveType} = projectConfig!;
@@ -164,7 +167,7 @@ class LocalOperator extends AbstractOperator {
         //删除项目截图
         // ImgUtil.delImgFormLocal(LocalConstant.LOCAL_PROJECT_SCREENSHOT + id);
         //删除项目列表信息
-        this.getProjectSimpleInfoList().then((simpleInfoList) => {
+        this.getProjectList().then((simpleInfoList) => {
             let index = simpleInfoList.findIndex((project) => project.id === id);
             simpleInfoList.splice(index, 1);
             localforage.setItem(LocalConstant.LOCAL_SIMPLE_PROJECT_LIST, simpleInfoList).then(() => console.log('删除项目列表信息成功'));
@@ -189,7 +192,7 @@ class LocalOperator extends AbstractOperator {
         return {status: true, data: projectData as ProjectDataType, msg: '获取项目成功'};
     }
 
-    public async getProjectSimpleInfoList(): Promise<any[]> {
+    public async getProjectList(): Promise<any[]> {
         let simpleDataList = await localforage.getItem(LocalConstant.LOCAL_SIMPLE_PROJECT_LIST);
         if (simpleDataList && simpleDataList instanceof Array)
             return simpleDataList;
@@ -217,7 +220,7 @@ class LocalOperator extends AbstractOperator {
         //5. 存储新的项目数据到indexedDB
         await localforage.setItem(newId, newData);
         //6. 更新项目列表信息
-        const simpleInfoList = await this.getProjectSimpleInfoList();
+        const simpleInfoList = await this.getProjectList();
         simpleInfoList.push({
             id: newId,
             name: newData!.projectConfig!.name,

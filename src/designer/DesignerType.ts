@@ -122,7 +122,7 @@ export enum ProjectState {
 /**
  * 项目配置
  */
-export interface ProjectConfig {
+export interface IProjectInfo {
     //项目名称
     name?: string;
     //项目描述
@@ -208,7 +208,7 @@ export interface ProjectDataType {
     //画布设置
     canvasConfig?: CanvasConfig;
     //项目设置
-    projectConfig?: ProjectConfig;
+    projectConfig?: IProjectInfo;
     //元素样式
     elemConfigs?: { [key: string]: Record<string, any> };
     //图层信息

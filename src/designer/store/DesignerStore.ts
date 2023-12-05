@@ -4,7 +4,7 @@ import {
     CanvasConfig,
     IExtendParams,
     ILayerItem,
-    ProjectConfig,
+    IProjectInfo,
     ProjectDataType,
     ProjectState,
     SaveType,
@@ -63,7 +63,7 @@ class DesignerStore {
     /**
      * 项目设置
      */
-    projectConfig: ProjectConfig = {
+    projectConfig: IProjectInfo = {
         name: "", //项目名称
         des: "", //项目描述
         state: ProjectState.DRAFT, //项目状态
@@ -261,7 +261,7 @@ class DesignerStore {
     /**
      * 更新项目配置
      */
-    updateProjectConfig = (data: ProjectConfig) => {
+    updateProjectConfig = (data: IProjectInfo) => {
         this.projectConfig = {...this.projectConfig, ...data};
     };
 

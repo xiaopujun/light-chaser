@@ -3,7 +3,7 @@ import Dialog from "../../../../ui/dialog/Dialog";
 import headerStore from "../../HeaderStore";
 import './ProjectHdItemImpl.less';
 import designerStore from "../../../store/DesignerStore";
-import {ProjectConfig, ProjectState} from "../../../DesignerType";
+import {IProjectInfo, ProjectState} from "../../../DesignerType";
 import {Grid} from "../../../../ui/grid/Grid";
 import Input from "../../../../ui/input/Input";
 import Radio from "../../../../ui/radio/Radio";
@@ -12,7 +12,7 @@ import Button from "../../../../ui/button/Button";
 
 class ProjectHdItemImpl extends Component {
 
-    config: ProjectConfig | null = null;
+    config: IProjectInfo | null = null;
 
     constructor(props: any) {
         super(props);

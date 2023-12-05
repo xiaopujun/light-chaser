@@ -7,9 +7,10 @@ import {Login} from "./pages/login/Login";
 import LayerGroupItem from "./designer/float-configs/layer-list/item/LayerGroupItem";
 import DemoMain from "./test/DemoMain";
 
-const LightChaserList = lazy(() => import('./list/LightChaserList'));
+const LightChaserList = lazy(() => import('./pages/list/LightChaserList'));
 const Designer = lazy(() => import('./designer/Designer'));
 const DesignerView = lazy(() => import('./designer/view/DesignerView'));
+const Home = lazy(() => import('./pages/home/Home'));
 
 class App extends Component {
     render() {
@@ -23,6 +24,7 @@ class App extends Component {
                         <Route path={'/layer'} component={LayerGroupItem}/>
                         <Route path={'/list'} component={LightChaserList}/>
                         <Route path={'/login'} component={Login}/>
+                        <Route path={'/home'} component={Home}/>
                         <Route path={'/'} component={Login}/>
                     </Switch>
                 </Suspense>

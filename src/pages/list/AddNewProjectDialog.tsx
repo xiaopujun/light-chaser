@@ -1,16 +1,18 @@
 import {Component} from 'react';
 import './style/AddNewScreenDialog.less';
-import Dialog from "../ui/dialog/Dialog";
-import Button from "../ui/button/Button";
-import {Grid} from "../ui/grid/Grid";
-import Input from "../ui/input/Input";
-import Select from "../ui/select/Select";
+import Dialog from "../../ui/dialog/Dialog";
+import Button from "../../ui/button/Button";
+import {Grid} from "../../ui/grid/Grid";
+import Input from "../../ui/input/Input";
+import Select from "../../ui/select/Select";
+import {SaveType} from "../../designer/DesignerType";
 
 export interface NewProjectInfoType {
     name: string;
     description?: string;
     width: number;
     height: number;
+    saveType: SaveType;
 }
 
 interface AddNewScreenDialogProps {
@@ -19,13 +21,14 @@ interface AddNewScreenDialogProps {
     visible?: boolean;
 }
 
-class AddNewScreenDialog extends Component<AddNewScreenDialogProps> {
+class AddNewProjectDialog extends Component<AddNewScreenDialogProps> {
 
     projectInfo: NewProjectInfoType = {
         name: '',
         description: '',
         width: 500,
-        height: 300
+        height: 300,
+        saveType: SaveType.LOCAL
     }
 
     onOk = (e: any) => {
@@ -35,7 +38,6 @@ class AddNewScreenDialog extends Component<AddNewScreenDialogProps> {
     }
 
     onCancel = () => {
-        console.log('关闭')
         const {onCancel} = this.props;
         onCancel && onCancel();
     }
@@ -48,14 +50,18 @@ class AddNewScreenDialog extends Component<AddNewScreenDialogProps> {
                     <div className={'lc-add-new-screen'}>
                         <Grid gridGap={'15px'} columns={2}>
                             <Input label={'名称'} required={true} maxLength={20}
-                                   onChange={(name) => this.projectInfo.name = name as string}/>
+                                   onChange={(name: string | number) => this.projectInfo.name = name as string}/>
                             <Input label={'描述'} maxLength={20}
-                                   onChange={(description) => this.projectInfo.description = description as string}/>
+                                   onChange={(description: string | number) => this.projectInfo.description = description as string}/>
                             <Input label={'宽度'} type={'number'} min={300} required={true}
-                                   onChange={(width) => this.projectInfo.width = width as number}/>
+                                   onChange={(width: string | number) => this.projectInfo.width = Number(width)}/>
                             <Input label={'高度'} type={'number'} min={300} required={true}
-                                   onChange={(height) => this.projectInfo.height = height as number}/>
-                            <Select label={'存储'} options={[{value: '1', label: '本地存储'}]} defaultValue={'1'}/>
+                                   onChange={(height: number | string) => this.projectInfo.height = Number(height)}/>
+                            <Select label={'存储'} options={[
+                                {value: '0', label: '本地存储'},
+                                {value: '1', label: '服务器存储'}
+                            ]} defaultValue={SaveType.LOCAL}
+                                    onChange={(value: string) => this.projectInfo.saveType = value as SaveType}/>
                         </Grid>
                     </div>
                     <div className={'add-new-screen-explain'}>
@@ -73,4 +79,4 @@ class AddNewScreenDialog extends Component<AddNewScreenDialogProps> {
     }
 }
 
-export default AddNewScreenDialog;
+export default AddNewProjectDialog;

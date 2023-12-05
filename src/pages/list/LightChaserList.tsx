@@ -1,23 +1,25 @@
 import {Component} from 'react';
 import './style/LightChaserList.less';
-import AddNewScreenDialog, {NewProjectInfoType} from "./AddNewScreenDialog";
-import listBottom from './icon/list-bottom.svg';
-import templateMarket from './icon/template-market.svg';
-import datasource from './icon/datasource.svg';
-
-import listDelImg from './icon/list-del.svg';
-import listDisplay from './icon/list-display.svg';
-import listEdit from './icon/list-edit.svg';
-import listClone from './icon/list-clone.svg';
-import {ImgUtil} from "../utils/ImgUtil";
-import {ProjectState, SaveType} from "../designer/DesignerType";
-import designerStore from "../designer/store/DesignerStore";
-import EditorDesignerLoader from "../designer/loader/EditorDesignerLoader";
-import Dialog from "../ui/dialog/Dialog";
+import AddNewProjectDialog, {NewProjectInfoType} from "./AddNewProjectDialog";
+import {ImgUtil} from "../../utils/ImgUtil";
+import {IProjectInfo, ProjectState, SaveType} from "../../designer/DesignerType";
+import designerStore from "../../designer/store/DesignerStore";
+import EditorDesignerLoader from "../../designer/loader/EditorDesignerLoader";
+import Dialog from "../../ui/dialog/Dialog";
 import {message} from "antd";
-import Button from "../ui/button/Button";
-import Input from "../ui/input/Input";
-import URLUtil from "../utils/URLUtil";
+import Button from "../../ui/button/Button";
+import Input from "../../ui/input/Input";
+import URLUtil from "../../utils/URLUtil";
+import {
+    CodeSandboxSquareFilled,
+    CopyFilled,
+    DatabaseFilled,
+    DeleteFilled,
+    EditFilled,
+    EyeFilled,
+    HomeFilled,
+    ShopFilled
+} from "@ant-design/icons";
 
 class LightChaserList extends Component<any> {
 
@@ -40,7 +42,7 @@ class LightChaserList extends Component<any> {
     loadProjectList = () => {
         EditorDesignerLoader.getInstance().scannerProjectOperators();
         const {projectConfig: {saveType = SaveType.LOCAL}} = designerStore;
-        EditorDesignerLoader.getInstance().operatorMap[saveType].getProjectSimpleInfoList().then((data: any) => {
+        EditorDesignerLoader.getInstance().operatorMap[saveType].getProjectList().then((data: any) => {
             if (data && data.length > 0) {
                 this.setState({data});
                 let imageIds: any = [];
@@ -68,9 +70,20 @@ class LightChaserList extends Component<any> {
     }
 
     onOk = (data: NewProjectInfoType) => {
-        let urlParams = URLUtil.buildUrlParams({...data, ...{action: 'create'}});
-        this.setState({addNewScreen: false});
-        window.open(`/designer?${urlParams}`, '_blank');
+        if (data.saveType === SaveType.SERVER) {
+            //保存到服务器
+            const project: IProjectInfo = {
+                name: data.name,
+                des: data.description,
+                saveType: SaveType.SERVER,
+            };
+            EditorDesignerLoader.getInstance().operatorMap[SaveType.SERVER].createProject(project).then((id) => {
+                console.log('create project success, id: ', id);
+            });
+        }
+        // let urlParams = URLUtil.buildUrlParams({...data, ...{action: 'create'}});
+        // this.setState({addNewScreen: false});
+        // window.open(`/designer?${urlParams}`, '_blank');
     }
 
     onCancel = () => this.setState({addNewScreen: false});
@@ -92,11 +105,11 @@ class LightChaserList extends Component<any> {
                 break;
             case 'del':
                 this.toBeDelId = id;
-                this.setState({showDelDialog: true});
+                this.setState({delDialog: true});
                 break;
             case 'clone':
                 this.toBeCloneId = id;
-                this.setState({showCloneDialog: true});
+                this.setState({cloneDialog: true});
                 break;
             default:
                 break;
@@ -108,19 +121,19 @@ class LightChaserList extends Component<any> {
         EditorDesignerLoader.getInstance().operatorMap[SaveType.LOCAL].deleteProject(this.toBeDelId);
         let {data} = this.state;
         data = data.filter((item: any) => item.id !== this.toBeDelId);
-        this.setState({data, showDelDialog: false});
+        this.setState({data, delDialog: false});
     }
 
     cancelDel = () => {
-        this.setState({showDelDialog: false});
+        this.setState({delDialog: false});
     }
 
     confirmClone = (name: string) => {
         const operator = EditorDesignerLoader.getInstance().operatorMap[SaveType.LOCAL];
         operator.copyProject(this.toBeCloneId, name).then((id) => {
             //重新加载项目列表
-            operator.getProjectSimpleInfoList().then((simpleInfoList: any) => {
-                this.setState({data: simpleInfoList, showCloneDialog: false});
+            operator.getProjectList().then((simpleInfoList: any) => {
+                this.setState({data: simpleInfoList, cloneDialog: false});
                 message.success('克隆成功');
                 // ImgUtil.getImageFromLocalWithKey(newSimpleInfo[0].screenshot).then((obj: any) => {
                 //     this.setState({
@@ -134,7 +147,7 @@ class LightChaserList extends Component<any> {
     }
 
     cancelClone = () => {
-        this.setState({showCloneDialog: false});
+        this.setState({cloneDialog: false});
     }
 
     render() {
@@ -149,15 +162,19 @@ class LightChaserList extends Component<any> {
                 <div className={'console-body'}>
                     <div className={'console-list'}>
                         <div className={'console-list-item'}>
-                            <div className={'item-icon'}><img src={listBottom} alt={'项目列表'}/></div>
-                            <div className={'item-text'}>项目列表</div>
+                            <div className={'item-icon'}><HomeFilled/></div>
+                            <div className={'item-text'}>本地项目</div>
                         </div>
                         <div className={'console-list-item'}>
-                            <div className={'item-icon'}><img src={datasource} alt={'数据源管理'}/></div>
+                            <div className={'item-icon'}><DatabaseFilled/></div>
+                            <div className={'item-text'}>在线项目</div>
+                        </div>
+                        <div className={'console-list-item'}>
+                            <div className={'item-icon'}><CodeSandboxSquareFilled/></div>
                             <div className={'item-text'}>数据源管理</div>
                         </div>
                         <div className={'console-list-item'}>
-                            <div className={'item-icon'}><img src={templateMarket} alt={'模板市场'}/></div>
+                            <div className={'item-icon'}><ShopFilled/></div>
                             <div className={'item-text'}>模板市场</div>
                         </div>
                     </div>
@@ -192,17 +209,16 @@ class LightChaserList extends Component<any> {
                                                 <div className={'pro-content-title'}>{item?.name}</div>
                                                 <div className={'pro-content-operates'}>
                                                     <div className={'operate-item'} data-type={'edit'}>
-                                                        <img src={listEdit} alt={'编辑'}/>
+                                                        <EditFilled/>
                                                     </div>
                                                     <div className={'operate-item'} data-type={'show'}
-                                                         data-savetype={item.saveType}>
-                                                        <img src={listDisplay} alt={'展示'}/>
+                                                         data-savetype={item.saveType}><EyeFilled/>
                                                     </div>
                                                     <div className={'operate-item'} data-type={'del'}>
-                                                        <img src={listDelImg} alt={'删除'}/>
+                                                        <DeleteFilled/>
                                                     </div>
                                                     <div className={'operate-item'} data-type={'clone'}>
-                                                        <img src={listClone} alt={'克隆'}/>
+                                                        <CopyFilled/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -218,7 +234,7 @@ class LightChaserList extends Component<any> {
                         </div>
                     </div>
                 </div>
-                <AddNewScreenDialog onOk={this.onOk} onCancel={this.onCancel} visible={addNewScreen}/>
+                <AddNewProjectDialog onOk={this.onOk} onCancel={this.onCancel} visible={addNewScreen}/>
                 <DeleteDialog visible={showDelDialog} onOk={this.confirmDel} onCancel={this.cancelDel}/>
                 <CloneDialog onOk={(name) => this.confirmClone(name)} onCancel={this.cancelClone}
                              visible={showCloneDialog}/>
