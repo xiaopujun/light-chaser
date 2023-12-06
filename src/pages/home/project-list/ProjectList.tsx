@@ -5,7 +5,6 @@ import {message} from "antd";
 import {CopyFilled, DeleteFilled, EditFilled, EyeFilled} from "@ant-design/icons";
 import {ProjectState, SaveType} from "../../../designer/DesignerType";
 import {AddNewProjectDialog, INewProjectInfo} from "./AddNewProjectDialog";
-import URLUtil from "../../../utils/URLUtil";
 import Button from "../../../ui/button/Button";
 import Dialog from "../../../ui/dialog/Dialog";
 import operatorMap from "../../../framework/operate";
@@ -32,9 +31,8 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
     const onOk = (data: INewProjectInfo) => {
         const {saveType} = props;
         operatorMap[saveType].createProject(data).then((id) => {
-            let urlParams = URLUtil.buildUrlParams({...data, ...{action: 'create', id}});
             setAddDialog(false);
-            window.open(`/designer?${urlParams}`, '_blank');
+            window.open(`/designer?id=${id}saveType=${saveType}`, '_blank');
             getProjectList();
         });
     }
@@ -42,19 +40,16 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
     const onCancel = () => setAddDialog(false);
 
     const operateHandler = (e: any) => {
-        const {type, savetype} = e.target.dataset
+        const {saveType} = props;
+        const {type} = e.target.dataset
         if (!type) return;
         let id = e.currentTarget.id;
         switch (type) {
             case 'edit':
-                let params = URLUtil.buildUrlParams({
-                    id: id,
-                    action: 'edit'
-                });
-                window.open(`/designer?${params}`, '_blank');
+                window.open(`/designer?id=${id}&saveType=${saveType}`, '_blank');
                 break;
             case 'show':
-                window.open(`/view?id=${id}&saveType=${savetype}&action=view`, '_blank');
+                window.open(`/view?id=${id}&saveType=${saveType}&action=view`, '_blank');
                 break;
             case 'del':
                 delIdRef.current = id;
@@ -124,19 +119,10 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
                             <div className={'pro-list-content'} style={{zIndex: 1}}>
                                 <div className={'pro-content-title'}>{item?.name}</div>
                                 <div className={'pro-content-operates'}>
-                                    <div className={'operate-item'} data-type={'edit'}>
-                                        <EditFilled/>
-                                    </div>
-                                    <div className={'operate-item'} data-type={'show'}
-                                         data-savetype={item.saveType}>
-                                        <EyeFilled/>
-                                    </div>
-                                    <div className={'operate-item'} data-type={'del'}>
-                                        <DeleteFilled/>
-                                    </div>
-                                    <div className={'operate-item'} data-type={'clone'}>
-                                        <CopyFilled/>
-                                    </div>
+                                    <div className={'operate-item'} data-type={'edit'}><EditFilled/></div>
+                                    <div className={'operate-item'} data-type={'show'}><EyeFilled/></div>
+                                    <div className={'operate-item'} data-type={'del'}><DeleteFilled/></div>
+                                    <div className={'operate-item'} data-type={'clone'}><CopyFilled/></div>
                                 </div>
                             </div>
                             <div className={'pro-content-footer'}>

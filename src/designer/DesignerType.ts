@@ -123,6 +123,8 @@ export enum ProjectState {
  * 项目配置
  */
 export interface IProjectInfo {
+    //项目id
+    id?: string;
     //项目名称
     name?: string;
     //项目描述
@@ -137,6 +139,8 @@ export interface IProjectInfo {
     saveType?: SaveType;
     //项目截图
     screenshot?: string;
+    //项目数据json
+    dataJson?: string;
 }
 
 /**

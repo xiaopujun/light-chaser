@@ -1,7 +1,6 @@
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
 import AbstractConvert from "../../framework/convert/AbstractConvert";
-import {AbstractOperator} from "../../framework/operate/AbstractOperator";
 import designerStore from "../store/DesignerStore";
 import {SaveType} from "../DesignerType";
 import eventOperateStore from "../operate-provider/EventOperateStore";
@@ -12,6 +11,7 @@ import bpNodeControllerMap from "../../blueprint/node/core/impl/BPNodeController
 import {ClazzTemplate} from "../../comps/common-component/common-types";
 import URLUtil from "../../utils/URLUtil";
 import {message} from "antd";
+import operatorMap from "../../framework/operate";
 
 /**
  * 展示模式下的设计器加载器
@@ -28,7 +28,7 @@ export class ViewDesignerLoader extends AbstractDesignerLoader {
 
     protected scanComponents(): void {
         this.scannerCustomComponents();
-        this.scannerProjectOperators();
+        // this.scannerProjectOperators();
     }
 
     protected loadProjectData(): void {
@@ -63,19 +63,19 @@ export class ViewDesignerLoader extends AbstractDesignerLoader {
     }
 
     //扫描项目操作实现（数据保存，加载操作 -> 本地 | 远程）
-    public scannerProjectOperators(): void {
-        const compCtx: any = import.meta.glob('../../framework/*/*.ts', {
-            eager: true,
-        });
-        Object.keys(compCtx).forEach(key => {
-            const Clazz = compCtx[key]?.default;
-            if (Clazz && AbstractOperator.isPrototypeOf(Clazz)) {
-                let operatorInstance: AbstractOperator = new Clazz();
-                let operateEnv = operatorInstance.getKey();
-                this.operatorMap[operateEnv] = operatorInstance;
-            }
-        });
-    }
+    // public scannerProjectOperators(): void {
+    //     const compCtx: any = import.meta.glob('../../framework/*/*.ts', {
+    //         eager: true,
+    //     });
+    //     Object.keys(compCtx).forEach(key => {
+    //         const Clazz = compCtx[key]?.default;
+    //         if (Clazz && AbstractOperator.isPrototypeOf(Clazz)) {
+    //             let operatorInstance: AbstractOperator = new Clazz();
+    //             let operateEnv = operatorInstance.getKey();
+    //             operatorMap[operateEnv] = operatorInstance;
+    //         }
+    //     });
+    // }
 
     /**
      * 初始化以更新方式打开时项目信息
@@ -83,37 +83,35 @@ export class ViewDesignerLoader extends AbstractDesignerLoader {
     private initExistProject(): void {
         let urlParams = URLUtil.parseUrlParams();
         const {doInit, setLoaded} = designerStore;
-        this.operatorMap[SaveType.LOCAL].getProject(urlParams.id).then((res) => {
-            const {status, data: store, msg} = res;
-            if (status) {
+        operatorMap[SaveType.LOCAL].getProject(urlParams.id).then((data) => {
+            if (data) {
                 //初始化designerStore
                 doInit({
-                    id: store?.id,
-                    canvasConfig: store?.canvasConfig,
-                    projectConfig: store?.projectConfig,
-                    elemConfigs: store?.elemConfigs,
-                    layerConfigs: store?.layerConfigs,
-                    statisticInfo: store?.statisticInfo,
-                    themeConfig: store?.themeConfig,
-                    extendParams: store?.extendParams,
+                    id: data?.id,
+                    canvasConfig: data?.canvasConfig || {},
+                    elemConfigs: data?.elemConfigs || {},
+                    layerConfigs: data?.layerConfigs || {},
+                    statisticInfo: data?.statisticInfo || {},
+                    themeConfig: data?.themeConfig || [],
+                    extendParams: data?.extendParams || {},
                 })
                 //设置事件操作器的最大最小层级
                 const {setMinLevel, setMaxLevel} = eventOperateStore;
-                setMinLevel(store?.extendParams?.minLevel || 0);
-                setMaxLevel(store?.extendParams?.maxLevel || 0);
+                setMinLevel(data?.extendParams?.minLevel || 0);
+                setMaxLevel(data?.extendParams?.maxLevel || 0);
 
                 //初始化bpStore（蓝图状态） todo 是否可以以更规范的方式处理？
                 const {setAPMap, setLines, setAPLineMap, setBpNodeConfigMap, setBpNodeControllerInsMap} = bpStore;
-                setAPMap(store?.bpAPMap || {});
-                setLines(store?.bpLines || {});
-                setAPLineMap(store?.bpAPLineMap || {});
-                setBpNodeConfigMap(store?.bpNodeConfigMap || {});
+                setAPMap(data?.bpAPMap || {});
+                setLines(data?.bpLines || {});
+                setAPLineMap(data?.bpAPLineMap || {});
+                setBpNodeConfigMap(data?.bpNodeConfigMap || {});
                 //创建蓝图节点controller实例（这一点和编辑模式有区别，view模式下是不要渲染蓝图节点的，只需要蓝图节点controller实例）
                 const bpNodeControllerInsMap: Record<string, AbstractBPNodeController> = {};
-                Object.values(store?.bpNodeLayoutMap!).forEach(layout => {
+                Object.values(data?.bpNodeLayoutMap!).forEach((layout: any) => {
                     const {type, id} = layout;
                     const NodeController = bpNodeControllerMap.get(type!) as ClazzTemplate<AbstractBPNodeController>;
-                    const config = store?.bpNodeConfigMap![id!];
+                    const config = data?.bpNodeConfigMap![id!];
                     // @ts-ignore
                     bpNodeControllerInsMap[id!] = new NodeController!(config)!;
                 })
@@ -121,13 +119,13 @@ export class ViewDesignerLoader extends AbstractDesignerLoader {
                 //初始化蓝图左侧节点列表
                 const {initUsedLayerNodes} = bpLeftStore;
                 const usedLayerNodes: Record<string, boolean> = {};
-                Object.keys(store?.bpNodeLayoutMap || {}).forEach(key => {
+                Object.keys(data?.bpNodeLayoutMap || {}).forEach(key => {
                     usedLayerNodes[key] = true;
                 })
                 initUsedLayerNodes(usedLayerNodes);
                 setLoaded(true);
             } else {
-                message.error(msg);
+                message.error("项目不存在");
             }
         })
     }

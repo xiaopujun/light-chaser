@@ -1,5 +1,5 @@
 import React from 'react';
-import './style/AddNewScreenDialog.less';
+import './AddNewScreenDialog.less';
 import Dialog from "../../../ui/dialog/Dialog";
 import Button from "../../../ui/button/Button";
 import {Grid} from "../../../ui/grid/Grid";

@@ -1,6 +1,5 @@
 import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
 import {HeaderItemProps} from "../header/HeaderTypes";
-import {AbstractOperator} from "../../framework/operate/AbstractOperator";
 import AbstractConvert from "../../framework/convert/AbstractConvert";
 import AbstractLoader from "./AbstractLoader";
 
@@ -10,8 +9,6 @@ export abstract class AbstractDesignerLoader extends AbstractLoader {
     public definitionMap: Record<string, AbstractDefinition> = {};
     //头部操作菜单实例
     public headerItemInstances: HeaderItemProps[] = [];
-    //项目数据操作映射
-    public operatorMap: { [key: string]: AbstractOperator } = {};
     //数据转换器
     public convertMap: { [key: string]: AbstractConvert } = {};
 

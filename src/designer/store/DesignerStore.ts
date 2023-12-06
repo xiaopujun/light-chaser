@@ -162,7 +162,7 @@ class DesignerStore {
         return {
             id: this.id,
             canvasConfig: toJS(this.canvasConfig),
-            projectConfig: toJS(this.projectConfig),
+            // projectConfig: toJS(this.projectConfig),
             elemConfigs: elemConfigs,
             layerConfigs: toJS(this.layerConfigs),
             statisticInfo: toJS(this.statisticInfo),

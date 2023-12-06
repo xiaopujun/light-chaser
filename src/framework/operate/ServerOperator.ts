@@ -1,5 +1,5 @@
-import {AbstractOperator, OperateResult} from "./AbstractOperator";
-import {ProjectDataType, SaveType} from "../../designer/DesignerType";
+import {AbstractOperator} from "./AbstractOperator";
+import {IProjectInfo, ProjectDataType, SaveType} from "../../designer/DesignerType";
 import HttpUtil from "../../utils/HttpUtil";
 import {INewProjectInfo} from "../../pages/home/project-list/AddNewProjectDialog";
 
@@ -14,17 +14,13 @@ export default class ServerOperator extends AbstractOperator {
         });
     }
 
-    async copyProject(id: string): Promise<OperateResult<string>> {
-        const response = await fetch(`http://localhost:9000/api/project/copy/${id}`, {
-            method: 'get',
-        });
+    async copyProject(id: string): Promise<string> {
+        const response = await fetch(`http://localhost:9000/api/project/copy/${id}`, {method: 'get'});
         return await response.json();
     }
 
     async deleteProject(id: string): Promise<boolean> {
-        const response = await fetch(`http://localhost:9000/api/project/del/${id}`, {
-            method: 'get',
-        });
+        const response = await fetch(`http://localhost:9000/api/project/del/${id}`, {method: 'get'});
         return await response.json();
     }
 
@@ -32,31 +28,24 @@ export default class ServerOperator extends AbstractOperator {
         return SaveType.SERVER;
     }
 
-    getProject(id: string): Promise<OperateResult<ProjectDataType>> {
-        return Promise.resolve({});
+    async getProject(id: string): Promise<ProjectDataType> {
+        const response = await fetch(`http://localhost:9000/api/project/get/${id}`, {method: 'get'});
+        const projectInfo = await response.json();
+        return JSON.parse(projectInfo.dataJson);
     }
 
-    async getProjectList(): Promise<any[]> {
-        const response = await fetch('http://localhost:9000/api/project/list', {
-            method: 'get',
-        });
+    public async getProjectList(): Promise<any[]> {
+        const response = await fetch('http://localhost:9000/api/project/list', {method: 'get'});
         return await response.json();
     }
 
-    public async saveProject(data: ProjectDataType): Promise<OperateResult> {
-        const response = (await fetch('http://localhost:9000/project/createOrUpdate', {
+    public async updateProject(data: IProjectInfo): Promise<boolean> {
+        const response = await fetch('http://localhost:9000/api/project/update', {
             method: 'post',
-            body: JSON.stringify({
-                name: 'test',
-                des: 'test description',
-                saveType: 1,
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }));
-        const res = await response.json();
-        return {status: true, msg: '创建成功', data: res};
+            body: JSON.stringify(data),
+            headers: {'Content-Type': 'application/json'}
+        });
+        return await response.json();
     }
 
 }
