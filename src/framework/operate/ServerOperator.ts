@@ -1,22 +1,31 @@
 import {AbstractOperator, OperateResult} from "./AbstractOperator";
-import {IProjectInfo, ProjectDataType, SaveType} from "../../designer/DesignerType";
+import {ProjectDataType, SaveType} from "../../designer/DesignerType";
 import HttpUtil from "../../utils/HttpUtil";
+import {INewProjectInfo} from "../../pages/home/project-list/AddNewProjectDialog";
 
 export default class ServerOperator extends AbstractOperator {
-    async createProject(project: IProjectInfo): Promise<string> {
+    async createProject(project: INewProjectInfo): Promise<string> {
+        const {name, des, saveType, width, height} = project;
         return await HttpUtil.sendHttpRequest('http://localhost:9000/api/project/create', 'post', {}, {
-            name: project.name,
-            des: project.des,
-            saveType: project.saveType,
+            name,
+            des,
+            saveType,
+            dataJson: JSON.stringify({canvasConfig: {width, height}}),
         });
     }
 
-    copyProject(id: string, name?: string): Promise<OperateResult<string>> {
-        return Promise.resolve({});
+    async copyProject(id: string): Promise<OperateResult<string>> {
+        const response = await fetch(`http://localhost:9000/api/project/copy/${id}`, {
+            method: 'get',
+        });
+        return await response.json();
     }
 
-    deleteProject(id: string): Promise<boolean> {
-        return Promise.resolve(false);
+    async deleteProject(id: string): Promise<boolean> {
+        const response = await fetch(`http://localhost:9000/api/project/del/${id}`, {
+            method: 'get',
+        });
+        return await response.json();
     }
 
     getKey(): string {
@@ -27,8 +36,11 @@ export default class ServerOperator extends AbstractOperator {
         return Promise.resolve({});
     }
 
-    getProjectList(): Promise<any[]> {
-        return Promise.resolve([]);
+    async getProjectList(): Promise<any[]> {
+        const response = await fetch('http://localhost:9000/api/project/list', {
+            method: 'get',
+        });
+        return await response.json();
     }
 
     public async saveProject(data: ProjectDataType): Promise<OperateResult> {

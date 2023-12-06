@@ -1,51 +1,42 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import './ProjectList.less';
 import {message} from "antd";
 
 import {CopyFilled, DeleteFilled, EditFilled, EyeFilled} from "@ant-design/icons";
-import EditorDesignerLoader from "../../../designer/loader/EditorDesignerLoader";
-import {IProjectInfo, ProjectState, SaveType} from "../../../designer/DesignerType";
-import AddNewProjectDialog, {NewProjectInfoType} from "../../list/AddNewProjectDialog";
+import {ProjectState, SaveType} from "../../../designer/DesignerType";
+import {AddNewProjectDialog, INewProjectInfo} from "./AddNewProjectDialog";
 import URLUtil from "../../../utils/URLUtil";
 import Button from "../../../ui/button/Button";
 import Dialog from "../../../ui/dialog/Dialog";
-import Input from "../../../ui/input/Input";
-import homeStore from "../HomeStore";
 import operatorMap from "../../../framework/operate";
 
-export const ProjectList: React.FC = () => {
+export interface ProjectListProps {
+    saveType: SaveType;
+}
+
+export const ProjectList: React.FC<ProjectListProps> = (props) => {
 
     const [addDialog, setAddDialog] = React.useState(false);
     const [delDialog, setDelDialog] = React.useState(false);
     const [cloneDialog, setCloneDialog] = React.useState(false);
-    const [addNewData, setAddNewData] = React.useState({});
     const [data, setData] = React.useState([]);
-    let toBeDelId: string = '';
-    let toBeCloneId: string = '';
-    const {currentMenu} = homeStore;
-    const saveType = currentMenu === 'local' ? SaveType.LOCAL : SaveType.SERVER;
-    operatorMap[saveType].getProjectList().then((data: any) => {
-        if (data && data.length > 0)
-            setData(data);
-    })
+    let delIdRef = useRef<string>("");
+    let cloneIdRef = useRef<string>("");
 
-    const toggleNewProVisible = () => setAddDialog({addNewScreen: !addDialog});
+    useEffect(() => {
+        getProjectList();
+    }, []);
 
-    const onOk = (data: NewProjectInfoType) => {
-        if (data.saveType === SaveType.SERVER) {
-            //保存到服务器
-            const project: IProjectInfo = {
-                name: data.name,
-                des: data.description,
-                saveType: SaveType.SERVER,
-            };
-            EditorDesignerLoader.getInstance().operatorMap[SaveType.SERVER].createProject(project).then((id) => {
-                console.log('create project success, id: ', id);
-            });
-        }
-        // let urlParams = URLUtil.buildUrlParams({...data, ...{action: 'create'}});
-        // this.setState({addNewScreen: false});
-        // window.open(`/designer?${urlParams}`, '_blank');
+    const toggleNewProVisible = () => setAddDialog(!addDialog);
+
+    const onOk = (data: INewProjectInfo) => {
+        const {saveType} = props;
+        operatorMap[saveType].createProject(data).then((id) => {
+            let urlParams = URLUtil.buildUrlParams({...data, ...{action: 'create', id}});
+            setAddDialog(false);
+            window.open(`/designer?${urlParams}`, '_blank');
+            getProjectList();
+        });
     }
 
     const onCancel = () => setAddDialog(false);
@@ -66,11 +57,11 @@ export const ProjectList: React.FC = () => {
                 window.open(`/view?id=${id}&saveType=${savetype}&action=view`, '_blank');
                 break;
             case 'del':
-                toBeDelId = id;
+                delIdRef.current = id;
                 setDelDialog(true);
                 break;
             case 'clone':
-                toBeCloneId = id;
+                cloneIdRef.current = id;
                 setCloneDialog(true);
                 break;
         }
@@ -78,36 +69,43 @@ export const ProjectList: React.FC = () => {
 
     const cancelDel = () => setDelDialog(false);
 
-    const confirmClone = (name: string) => {
-        const operator = EditorDesignerLoader.getInstance().operatorMap[SaveType.LOCAL];
-        operator.copyProject(this.toBeCloneId, name).then((id) => {
-            //重新加载项目列表
-            operator.getProjectList().then((simpleInfoList: any) => {
-                setData(simpleInfoList);
+    const confirmClone = () => {
+        const {saveType} = props;
+        operatorMap[saveType].copyProject(cloneIdRef.current).then((id) => {
+            if (id) {
                 setCloneDialog(false);
+                getProjectList();
                 message.success('克隆成功');
-            })
+            }
         });
     }
 
     const cancelClone = () => setCloneDialog(false);
 
-    const confirmDel = () => {
-        operatorMap[SaveType.LOCAL].deleteProject(this.toBeDelId);
-        let {data} = this.state;
-        data = data.filter((item: any) => item.id !== this.toBeDelId);
-        setDelDialog(false);
-        setData(data);
+    const getProjectList = () => {
+        const {saveType} = props;
+        operatorMap[saveType].getProjectList().then((data: any) => setData(data));
     }
 
-    let width = (window.innerWidth - 230 - (5 * 20)) / 5;
-    let height = width * (9 / 16);
+    const confirmDel = () => {
+        const {saveType} = props;
+        operatorMap[saveType].deleteProject(delIdRef.current).then((res) => {
+            if (res) {
+                setDelDialog(false);
+                getProjectList();
+            } else {
+                message.error('删除失败');
+            }
+        });
+
+    }
+
     return (
         <>
             <div className={'project-list'}>
-                <div style={{width: width, height: height, margin: '0 20px 20px 0'}}>
+                <div style={{width: '100%', height: '100%'}} className={'create-new-btn'}>
                     <Button onClick={toggleNewProVisible}
-                            style={{width: width, height: height, fontSize: 20}}>+ 新建项目</Button>
+                            style={{fontSize: 20, width: '100%', height: '100%'}}>+ 新建项目</Button>
                 </div>
                 {data && data.map((item: any) => {
                     let stateText, stateColor;
@@ -120,11 +118,6 @@ export const ProjectList: React.FC = () => {
                     }
                     return (
                         <div key={item.id + ''}
-                             style={{
-                                 width: width,
-                                 height: height,
-                                 // backgroundImage: bgImgUrl && `url(${bgImgUrl})`,
-                             }}
                              onClick={operateHandler}
                              id={item.id + ''}
                              className={'project-item'}>
@@ -135,7 +128,8 @@ export const ProjectList: React.FC = () => {
                                         <EditFilled/>
                                     </div>
                                     <div className={'operate-item'} data-type={'show'}
-                                         data-savetype={item.saveType}><EyeFilled/>
+                                         data-savetype={item.saveType}>
+                                        <EyeFilled/>
                                     </div>
                                     <div className={'operate-item'} data-type={'del'}>
                                         <DeleteFilled/>
@@ -156,7 +150,7 @@ export const ProjectList: React.FC = () => {
             </div>
             <AddNewProjectDialog onOk={onOk} onCancel={onCancel} visible={addDialog}/>
             <DeleteDialog visible={delDialog} onOk={confirmDel} onCancel={cancelDel}/>
-            <CloneDialog onOk={(name) => confirmClone(name)} onCancel={cancelClone}
+            <CloneDialog onOk={() => confirmClone()} onCancel={cancelClone}
                          visible={cloneDialog}/>
         </>
     );
@@ -193,7 +187,7 @@ const DeleteDialog = (props: DelDialogProps) => {
 }
 
 interface CloneDialogProps {
-    onOk: (cloneName: string) => void;
+    onOk: () => void;
     onCancel: () => void;
     visible: boolean;
 }
@@ -202,29 +196,24 @@ const CloneDialog = (props: CloneDialogProps) => {
 
     const {onOk, onCancel, visible} = props;
 
-    let cloneName = "";
 
     const onSubmit = (event: any) => {
-        console.log(cloneName)
         event.preventDefault();
-        onOk(cloneName)
+        onOk()
     }
 
     return (
         <Dialog title={'克隆项目'} visible={visible} onClose={onCancel}>
-            <form onSubmit={onSubmit}>
-                <Input label={'项目名称'} required={true} defaultValue={cloneName}
-                       onChange={(name) => cloneName = name as string}/>
-                <div className={'del-pro-confirm'} style={{
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    borderTop: '2px solid #272b34',
-                    paddingTop: 10
-                }}>
-                    <Button type={'submit'}>确认</Button>
-                    <Button onClick={onCancel}>取消</Button>
-                </div>
-            </form>
+            <div style={{color: '#a7a7a7', padding: 10}}>确认复制吗？</div>
+            <div className={'del-pro-confirm'} style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                borderTop: '2px solid #272b34',
+                paddingTop: 10
+            }}>
+                <Button onClick={onSubmit}>确认</Button> &nbsp;&nbsp;
+                <Button onClick={onCancel}>取消</Button>
+            </div>
         </Dialog>
     )
 }

@@ -9,7 +9,6 @@ import Loading from "../../ui/loading/Loading";
 const Home: React.FC = observer(() => {
     const {currentMenu} = homeStore;
     const Content = homePageMap[currentMenu];
-    console.log('currentMenu', Content);
     return (
         <div className={'lc-home'}>
             <div className={'lc-home-header'}>

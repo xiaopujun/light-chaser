@@ -1,4 +1,5 @@
-import {IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
+import {ProjectDataType} from "../../designer/DesignerType";
+import {INewProjectInfo} from "../../pages/home/project-list/AddNewProjectDialog";
 
 export interface OperateResult<T = any> {
     status?: boolean;
@@ -10,7 +11,7 @@ export abstract class AbstractOperator {
 
     public abstract getKey(): string;
 
-    public abstract createProject(project: IProjectInfo): Promise<string>;
+    public abstract createProject(project: INewProjectInfo): Promise<string>;
 
     public abstract saveProject(projectData: ProjectDataType): Promise<OperateResult> ;
 
@@ -20,5 +21,5 @@ export abstract class AbstractOperator {
 
     public abstract getProject(id: string): Promise<OperateResult<ProjectDataType>>;
 
-    public abstract copyProject(id: string, name?: string): Promise<OperateResult<string>>;
+    public abstract copyProject(id: string): Promise<OperateResult<string>>;
 }

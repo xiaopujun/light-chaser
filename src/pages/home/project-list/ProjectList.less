@@ -1,11 +1,15 @@
 .project-list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 15px;
+
+  .create-new-btn {
+    aspect-ratio: 16/9;
+  }
 
   .project-item {
+    aspect-ratio: 16/9;
     border: 1px solid #3f3f3f;
-    margin-right: 20px;
-    margin-bottom: 20px;
     background-color: #002D6100;
     border-radius: 2px;
     align-items: center;
@@ -47,13 +51,10 @@
           border-radius: 15px;
           text-align: center;
 
-          img {
-            width: 16px;
-            position: relative;
-            top: 1px;
-            left: 0.6px;
-            pointer-events: none;
-          }
+        }
+
+        span {
+          pointer-events: none;
         }
       }
     }

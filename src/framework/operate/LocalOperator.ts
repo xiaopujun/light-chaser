@@ -1,5 +1,5 @@
 import designerStore from "../../designer/store/DesignerStore";
-import {IProjectInfo, ProjectDataType, SaveType} from "../../designer/DesignerType";
+import {ProjectDataType, SaveType} from "../../designer/DesignerType";
 import localforage from "localforage";
 import {ImgUtil} from "../../utils/ImgUtil";
 import eventOperateStore from "../../designer/operate-provider/EventOperateStore";
@@ -10,12 +10,13 @@ import {ComponentBaseProps} from "../../comps/common-component/common-types";
 import DesignerLoaderFactory from "../../designer/loader/DesignerLoaderFactory";
 import URLUtil from "../../utils/URLUtil";
 import IdGenerate from "../../utils/IdGenerate";
+import {INewProjectInfo} from "../../pages/home/project-list/AddNewProjectDialog";
 
 /**
  * 本地项目数据操作实现
  */
 class LocalOperator extends AbstractOperator {
-    createProject(project: IProjectInfo): Promise<string> {
+    createProject(project: INewProjectInfo): Promise<string> {
         return Promise.resolve("");
     }
 
