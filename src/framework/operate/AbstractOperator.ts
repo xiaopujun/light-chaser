@@ -10,7 +10,7 @@ export abstract class AbstractOperator {
 
     public abstract getProjectInfoList(): Promise<IProjectInfo[]>;
 
-    public abstract getProjectData(id: string): Promise<ProjectDataType>;
+    public abstract getProjectData(id: string): Promise<ProjectDataType | null>;
 
     public abstract copyProject(id: string): Promise<string>;
 }
