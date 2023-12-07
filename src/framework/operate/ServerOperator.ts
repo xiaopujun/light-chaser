@@ -1,17 +1,14 @@
 import {AbstractOperator} from "./AbstractOperator";
 import {IProjectInfo, ProjectDataType, SaveType} from "../../designer/DesignerType";
-import HttpUtil from "../../utils/HttpUtil";
-import {INewProjectInfo} from "../../pages/home/project-list/AddNewProjectDialog";
 
 export default class ServerOperator extends AbstractOperator {
-    async createProject(project: INewProjectInfo): Promise<string> {
-        const {name, des, saveType, width, height} = project;
-        return await HttpUtil.sendHttpRequest('http://localhost:9000/api/project/create', 'post', {}, {
-            name,
-            des,
-            saveType,
-            dataJson: JSON.stringify({canvasConfig: {width, height}}),
+    async createProject(project: IProjectInfo): Promise<string> {
+        const response = await fetch(`http://localhost:9000/api/project/create`, {
+            method: 'post',
+            body: JSON.stringify(project),
+            headers: {'Content-Type': 'application/json'}
         });
+        return await response.json();
     }
 
     async copyProject(id: string): Promise<string> {
@@ -22,10 +19,6 @@ export default class ServerOperator extends AbstractOperator {
     async deleteProject(id: string): Promise<boolean> {
         const response = await fetch(`http://localhost:9000/api/project/del/${id}`, {method: 'get'});
         return await response.json();
-    }
-
-    getKey(): string {
-        return SaveType.SERVER;
     }
 
     async getProject(id: string): Promise<ProjectDataType> {

@@ -28,23 +28,15 @@ export class ViewDesignerLoader extends AbstractDesignerLoader {
 
     protected scanComponents(): void {
         this.scannerCustomComponents();
-        // this.scannerProjectOperators();
     }
 
     protected loadProjectData(): void {
-        let urlParams = URLUtil.parseUrlParams();
-        const {action} = urlParams;
-        if ("view" === action)
-            this.initExistProject();
-        else
-            throw new Error('action is error')
+        this.initExistProject();
     }
 
     //扫描自定义组件
     private scannerCustomComponents(): void {
-        const compCtx: any = import.meta.glob('../../comps/*/*/*.ts', {
-            eager: true,
-        });
+        const compCtx: any = import.meta.glob('../../comps/**/*.ts', {eager: true});
         Object.keys(compCtx).forEach(key => {
             const Clazz = compCtx[key]?.default;
             if (Clazz && AbstractDefinition.isPrototypeOf(Clazz)) {
@@ -62,29 +54,14 @@ export class ViewDesignerLoader extends AbstractDesignerLoader {
         });
     }
 
-    //扫描项目操作实现（数据保存，加载操作 -> 本地 | 远程）
-    // public scannerProjectOperators(): void {
-    //     const compCtx: any = import.meta.glob('../../framework/*/*.ts', {
-    //         eager: true,
-    //     });
-    //     Object.keys(compCtx).forEach(key => {
-    //         const Clazz = compCtx[key]?.default;
-    //         if (Clazz && AbstractOperator.isPrototypeOf(Clazz)) {
-    //             let operatorInstance: AbstractOperator = new Clazz();
-    //             let operateEnv = operatorInstance.getKey();
-    //             operatorMap[operateEnv] = operatorInstance;
-    //         }
-    //     });
-    // }
-
     /**
      * 初始化以更新方式打开时项目信息
      */
     private initExistProject(): void {
-        let urlParams = URLUtil.parseUrlParams();
-        const {doInit, setLoaded} = designerStore;
-        operatorMap[SaveType.LOCAL].getProject(urlParams.id).then((data) => {
+        const {saveType, id} = URLUtil.parseUrlParams();
+        operatorMap[saveType as SaveType].getProject(id).then((data) => {
             if (data) {
+                const {doInit, setLoaded} = designerStore;
                 //初始化designerStore
                 doInit({
                     id: data?.id,

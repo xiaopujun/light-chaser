@@ -4,15 +4,12 @@ import Dialog from "../../../ui/dialog/Dialog";
 import Button from "../../../ui/button/Button";
 import {Grid} from "../../../ui/grid/Grid";
 import Input from "../../../ui/input/Input";
-import Select from "../../../ui/select/Select";
-import {SaveType} from "../../../designer/DesignerType";
 
 export interface INewProjectInfo {
     name: string;
     des?: string;
     width: number;
     height: number;
-    saveType: SaveType;
 }
 
 interface AddNewScreenDialogProps {
@@ -28,7 +25,6 @@ export const AddNewProjectDialog: React.FC<AddNewScreenDialogProps> = (props) =>
         des: '',
         width: 500,
         height: 300,
-        saveType: SaveType.LOCAL
     }
 
     const onOk = (e: any) => {
@@ -56,11 +52,6 @@ export const AddNewProjectDialog: React.FC<AddNewScreenDialogProps> = (props) =>
                                onChange={(width: string | number) => projectInfo.width = Number(width)}/>
                         <Input label={'高度'} type={'number'} min={300} required={true}
                                onChange={(height: number | string) => projectInfo.height = Number(height)}/>
-                        <Select label={'存储'} options={[
-                            {value: '0', label: '本地存储'},
-                            {value: '1', label: '服务器存储'}
-                        ]} defaultValue={SaveType.LOCAL}
-                                onChange={(value: string) => projectInfo.saveType = value as SaveType}/>
                     </Grid>
                 </div>
                 <div className={'add-new-screen-explain'}>

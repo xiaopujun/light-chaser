@@ -1,5 +1,4 @@
 import {IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
-import {INewProjectInfo} from "../../pages/home/project-list/AddNewProjectDialog";
 
 export interface OperateResult<T = any> {
     status?: boolean;
@@ -9,9 +8,7 @@ export interface OperateResult<T = any> {
 
 export abstract class AbstractOperator {
 
-    public abstract getKey(): string;
-
-    public abstract createProject(project: INewProjectInfo): Promise<string>;
+    public abstract createProject(project: IProjectInfo): Promise<string>;
 
     public abstract updateProject(projectData: IProjectInfo): Promise<boolean> ;
 

@@ -3,7 +3,7 @@ import './ProjectList.less';
 import {message} from "antd";
 
 import {CopyFilled, DeleteFilled, EditFilled, EyeFilled} from "@ant-design/icons";
-import {ProjectState, SaveType} from "../../../designer/DesignerType";
+import {IProjectInfo, ProjectState, SaveType} from "../../../designer/DesignerType";
 import {AddNewProjectDialog, INewProjectInfo} from "./AddNewProjectDialog";
 import Button from "../../../ui/button/Button";
 import Dialog from "../../../ui/dialog/Dialog";
@@ -30,9 +30,16 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
 
     const onOk = (data: INewProjectInfo) => {
         const {saveType} = props;
-        operatorMap[saveType].createProject(data).then((id) => {
+        const {name, des, width, height} = data;
+        const project: IProjectInfo = {
+            name: name,
+            des: des,
+            saveType: saveType,
+            dataJson: JSON.stringify({canvasConfig: {width, height}}),
+        }
+        operatorMap[saveType].createProject(project).then((id) => {
             setAddDialog(false);
-            window.open(`/designer?id=${id}saveType=${saveType}`, '_blank');
+            window.open(`/designer?id=${id}&saveType=${saveType}`, '_blank');
             getProjectList();
         });
     }
@@ -49,7 +56,7 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
                 window.open(`/designer?id=${id}&saveType=${saveType}`, '_blank');
                 break;
             case 'show':
-                window.open(`/view?id=${id}&saveType=${saveType}&action=view`, '_blank');
+                window.open(`/view?id=${id}&saveType=${saveType}`, '_blank');
                 break;
             case 'del':
                 delIdRef.current = id;

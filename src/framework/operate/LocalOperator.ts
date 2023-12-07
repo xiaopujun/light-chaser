@@ -1,4 +1,4 @@
-import {ProjectDataType, SaveType} from "../../designer/DesignerType";
+import {IProjectInfo, ProjectDataType, SaveType} from "../../designer/DesignerType";
 import localforage from "localforage";
 import {ImgUtil} from "../../utils/ImgUtil";
 import {AbstractOperator} from "./AbstractOperator";
@@ -7,18 +7,13 @@ import {cloneDeep} from "lodash";
 import {ComponentBaseProps} from "../../comps/common-component/common-types";
 import DesignerLoaderFactory from "../../designer/loader/DesignerLoaderFactory";
 import IdGenerate from "../../utils/IdGenerate";
-import {INewProjectInfo} from "../../pages/home/project-list/AddNewProjectDialog";
 
 /**
  * 本地项目数据操作实现
  */
 class LocalOperator extends AbstractOperator {
-    createProject(project: INewProjectInfo): Promise<string> {
+    createProject(project: IProjectInfo): Promise<string> {
         return Promise.resolve("");
-    }
-
-    public getKey(): string {
-        return SaveType.LOCAL;
     }
 
     /**
