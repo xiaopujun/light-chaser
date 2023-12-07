@@ -1,5 +1,5 @@
 import {AbstractOperator} from "./AbstractOperator";
-import {IProjectInfo, ProjectDataType, SaveType} from "../../designer/DesignerType";
+import {IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
 
 export default class ServerOperator extends AbstractOperator {
     async createProject(project: IProjectInfo): Promise<string> {
@@ -21,13 +21,13 @@ export default class ServerOperator extends AbstractOperator {
         return await response.json();
     }
 
-    async getProject(id: string): Promise<ProjectDataType> {
+    async getProjectData(id: string): Promise<ProjectDataType> {
         const response = await fetch(`http://localhost:9000/api/project/get/${id}`, {method: 'get'});
         const projectInfo = await response.json();
         return JSON.parse(projectInfo.dataJson);
     }
 
-    public async getProjectList(): Promise<any[]> {
+    public async getProjectInfoList(): Promise<IProjectInfo[]> {
         const response = await fetch('http://localhost:9000/api/project/list', {method: 'get'});
         return await response.json();
     }

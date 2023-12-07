@@ -1,6 +1,4 @@
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
-import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
-import AbstractConvert from "../../framework/convert/AbstractConvert";
 import designerStore from "../store/DesignerStore";
 import {SaveType} from "../DesignerType";
 import eventOperateStore from "../operate-provider/EventOperateStore";
@@ -30,41 +28,18 @@ export class ViewDesignerLoader extends AbstractDesignerLoader {
         this.scannerCustomComponents();
     }
 
-    protected loadProjectData(): void {
-        this.initExistProject();
-    }
-
-    //扫描自定义组件
-    private scannerCustomComponents(): void {
-        const compCtx: any = import.meta.glob('../../comps/**/*.ts', {eager: true});
-        Object.keys(compCtx).forEach(key => {
-            const Clazz = compCtx[key]?.default;
-            if (Clazz && AbstractDefinition.isPrototypeOf(Clazz)) {
-                let customComponentInfo: AbstractDefinition = new Clazz();
-                if (typeof customComponentInfo.getBaseInfo === "function") {
-                    let compKey = customComponentInfo.getBaseInfo().compKey;
-                    if (compKey)
-                        this.definitionMap[compKey] = customComponentInfo;
-                }
-            } else if (Clazz && AbstractConvert.isPrototypeOf(Clazz)) {
-                let convertInstance: AbstractConvert = new Clazz();
-                let convertKey = convertInstance.getKey();
-                this.convertMap[convertKey] = convertInstance;
-            }
-        });
-    }
-
     /**
+     * todo 使用模板方法模式细化初始化过程，达到代码结构的复用
      * 初始化以更新方式打开时项目信息
      */
-    private initExistProject(): void {
+    protected initProject(): void {
         const {saveType, id} = URLUtil.parseUrlParams();
-        operatorMap[saveType as SaveType].getProject(id).then((data) => {
+        operatorMap[saveType as SaveType].getProjectData(id).then((data) => {
             if (data) {
                 const {doInit, setLoaded} = designerStore;
                 //初始化designerStore
                 doInit({
-                    id: data?.id,
+                    id: id,
                     canvasConfig: data?.canvasConfig || {},
                     elemConfigs: data?.elemConfigs || {},
                     layerConfigs: data?.layerConfigs || {},

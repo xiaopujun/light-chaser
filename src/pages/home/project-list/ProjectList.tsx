@@ -18,7 +18,7 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
     const [addDialog, setAddDialog] = React.useState(false);
     const [delDialog, setDelDialog] = React.useState(false);
     const [cloneDialog, setCloneDialog] = React.useState(false);
-    const [data, setData] = React.useState([]);
+    const [data, setData] = React.useState<IProjectInfo[]>([]);
     let delIdRef = useRef<string>("");
     let cloneIdRef = useRef<string>("");
 
@@ -86,7 +86,7 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
 
     const getProjectList = () => {
         const {saveType} = props;
-        operatorMap[saveType].getProjectList().then((data: any) => setData(data));
+        operatorMap[saveType].getProjectInfoList().then((data: IProjectInfo[]) => setData(data));
     }
 
     const confirmDel = () => {

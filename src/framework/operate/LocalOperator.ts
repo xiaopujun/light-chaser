@@ -1,4 +1,4 @@
-import {IProjectInfo, ProjectDataType, SaveType} from "../../designer/DesignerType";
+import {IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
 import localforage from "localforage";
 import {ImgUtil} from "../../utils/ImgUtil";
 import {AbstractOperator} from "./AbstractOperator";
@@ -161,7 +161,7 @@ class LocalOperator extends AbstractOperator {
         //删除项目截图
         // ImgUtil.delImgFormLocal(LocalConstant.LOCAL_PROJECT_SCREENSHOT + id);
         //删除项目列表信息
-        this.getProjectList().then((simpleInfoList) => {
+        this.getProjectInfoList().then((simpleInfoList) => {
             let index = simpleInfoList.findIndex((project) => project.id === id);
             simpleInfoList.splice(index, 1);
             localforage.setItem(LocalConstant.LOCAL_SIMPLE_PROJECT_LIST, simpleInfoList).then(() => console.log('删除项目列表信息成功'));
@@ -169,7 +169,7 @@ class LocalOperator extends AbstractOperator {
         return true;
     }
 
-    public async getProject(id: string): Promise<ProjectDataType> {
+    public async getProjectData(id: string): Promise<ProjectDataType> {
         const projectData = await localforage.getItem(id);
         if (!projectData) return {};
         //处理数据转换(图片blob转换为url)
@@ -186,7 +186,7 @@ class LocalOperator extends AbstractOperator {
         return projectData;
     }
 
-    public async getProjectList(): Promise<any[]> {
+    public async getProjectInfoList(): Promise<IProjectInfo[]> {
         let simpleDataList = await localforage.getItem(LocalConstant.LOCAL_SIMPLE_PROJECT_LIST);
         if (simpleDataList && simpleDataList instanceof Array)
             return simpleDataList;
@@ -196,7 +196,7 @@ class LocalOperator extends AbstractOperator {
 
     public async copyProject(id: string, name?: string): Promise<string> {
         //1. 获取id对应的项目数据
-        const copiedData = await this.getProject(id)
+        const copiedData = await this.getProjectData(id)
         if (!copiedData)
             return "项目不存在";
         //3. 复制项目数据
@@ -213,7 +213,7 @@ class LocalOperator extends AbstractOperator {
         //5. 存储新的项目数据到indexedDB
         await localforage.setItem(newId, newData);
         //6. 更新项目列表信息
-        const simpleInfoList = await this.getProjectList();
+        const simpleInfoList = await this.getProjectInfoList();
         simpleInfoList.push({
             id: newId,
             name: newData!.projectConfig!.name,

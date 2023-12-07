@@ -135,9 +135,9 @@ class DesignerStore {
         this.canvasConfig = store.canvasConfig
             ? {...this.canvasConfig, ...store.canvasConfig}
             : this.canvasConfig;
-        this.projectConfig = store.projectConfig
-            ? {...this.projectConfig, ...store.projectConfig}
-            : this.projectConfig;
+        // this.projectConfig = store.projectConfig
+        //     ? {...this.projectConfig, ...store.projectConfig}
+        //     : this.projectConfig;
         this.elemConfigs = store.elemConfigs
             ? {...this.elemConfigs, ...store.elemConfigs}
             : this.elemConfigs;

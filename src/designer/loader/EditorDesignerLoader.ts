@@ -2,8 +2,6 @@ import designerStore from "../store/DesignerStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 import {AbstractHeaderItem, HeaderItemProps} from "../header/HeaderTypes";
-import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
-import AbstractConvert from "../../framework/convert/AbstractConvert";
 import bpStore from "../../blueprint/store/BPStore";
 import bpLeftStore from "../../blueprint/left/BPLeftStore";
 import URLUtil from "../../utils/URLUtil";
@@ -24,11 +22,6 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
     protected scanComponents(): void {
         this.scannerHeader();
         this.scannerCustomComponents();
-        // this.scannerProjectOperators();
-    }
-
-    protected loadProjectData(): void {
-        this.initProject();
     }
 
     //扫描头部组件
@@ -50,42 +43,18 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
         });
     }
 
-    //扫描自定义组件
-    private scannerCustomComponents(): void {
-        const compCtx: any = import.meta.glob('../../comps/**/*Definition.ts', {
-            eager: true,
-        });
-        Object.keys(compCtx).forEach(key => {
-            const Clazz = compCtx[key]?.default;
-            if (Clazz && AbstractDefinition.isPrototypeOf(Clazz)) {
-                let definition: AbstractDefinition = new Clazz();
-                if (typeof definition.getBaseInfo === "function") {
-                    let compKey = definition.getBaseInfo().compKey;
-                    if (compKey)
-                        this.definitionMap[compKey] = definition;
-                }
-            } else if (Clazz && AbstractConvert.isPrototypeOf(Clazz)) {
-                let convert: AbstractConvert = new Clazz();
-                let convertKey = convert.getKey();
-                this.convertMap[convertKey] = convert;
-            }
-        });
-    }
-
     /**
      * 初始化以更新方式打开时项目信息
      */
-    private initProject(): void {
-        let urlParams = URLUtil.parseUrlParams();
-        const {saveType, id} = urlParams;
-        const {doInit, setLoaded} = designerStore;
-        operatorMap[saveType as SaveType].getProject(id).then((data) => {
+    protected initProject(): void {
+        const {saveType, id} = URLUtil.parseUrlParams();
+        operatorMap[saveType as SaveType].getProjectData(id).then((data) => {
             if (data) {
+                const {doInit, setLoaded} = designerStore;
                 //初始化designerStore
                 doInit({
                     id: id,
                     canvasConfig: data?.canvasConfig || {},
-                    // projectConfig: data?.projectConfig || {},
                     elemConfigs: data?.elemConfigs || {},
                     layerConfigs: data?.layerConfigs || {},
                     statisticInfo: data?.statisticInfo || {},
@@ -113,7 +82,7 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
                 initUsedLayerNodes(usedLayerNodes);
                 setLoaded(true);
             } else {
-                message.error('项目不存在');
+                message.error("项目不存在");
             }
         })
     }
