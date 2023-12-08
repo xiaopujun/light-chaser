@@ -24,6 +24,8 @@ import IdGenerate from "../../../utils/IdGenerate";
 import {Component} from "react";
 import LayerUtil from "../../float-configs/layer-list/util/LayerUtil";
 import {ILayerItem} from "../../DesignerType";
+import URLUtil from "../../../utils/URLUtil";
+import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
 
 class HistoryRecordOperateProxy {
 
@@ -110,12 +112,13 @@ class HistoryRecordOperateProxy {
         historyOperator.put({actions: [data]});
     }
 
+    //todo 与展示模式要区分开，展示模式下不需要记录历史记录
     public doAdd(container: HTMLDivElement | null, layout: ILayerItem): void {
         const {elemConfigs, compController} = designerStore;
         let componentDefine: AbstractDefinition = DesignerLoaderFactory.getLoader().definitionMap[layout!.type + ''];
         if (componentDefine) {
-            const AbsCompImpl = componentDefine.getComponent();
-            if (AbsCompImpl) {
+            const Controller = componentDefine.getComponent();
+            if (Controller) {
                 let config;
                 if (layout.id! in compController!) {
                     //重新编组后，被编组组件会重新渲染，需从之前的实例中获取原有数据
@@ -126,10 +129,13 @@ class HistoryRecordOperateProxy {
                     config = componentDefine.getInitConfig();
                     config.base.id = layout.id!;
                 }
-                new AbsCompImpl()!.create(container!, config).then((instance: any) => {
-                    const {compController} = designerStore;
-                    compController[layout.id + ''] = instance;
-                });
+                const {action} = URLUtil.parseUrlParams();
+                const controller: AbstractDesignerController = new Controller()!;
+                compController[layout.id + ''] = controller;
+                controller.create(container!, config);
+                if (action === 'view')
+                    controller.loadComponentData();
+
                 //如果addRecordCompId存在，说明是手动（拖拽、双击）新增组件，该组件的数据需要存储到历史记录中
                 const {addRecordCompId, setAddRecordCompId} = eventOperateStore;
                 if (addRecordCompId && addRecordCompId === layout.id) {

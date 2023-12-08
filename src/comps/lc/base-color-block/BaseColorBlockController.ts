@@ -1,5 +1,5 @@
 import {ThemeItemType} from "../../../designer/DesignerType";
-import {UpdateType, UpdateOptions} from "../../../framework/core/AbstractController";
+import {UpdateOptions} from "../../../framework/core/AbstractController";
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
 import ComponentUtil from "../../../utils/ComponentUtil";
 import BaseColorBlockComponent, {BaseColorBlockComponentProps} from "./BaseColorBlockComponent";
@@ -25,7 +25,7 @@ export class BaseColorBlockController extends AbstractDesignerController<BaseCol
 
     update(config: BaseColorBlockComponentProps, upOp?: UpdateOptions | undefined): void {
         this.config = ObjectUtil.merge(this.config, config);
-        upOp = upOp || {reRender: true, updateType: UpdateType.OPTIONS};
+        upOp = upOp || {reRender: true};
         if (upOp.reRender)
             this.instance?.setState(this.config);
     }

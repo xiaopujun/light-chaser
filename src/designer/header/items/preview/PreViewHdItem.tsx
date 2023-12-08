@@ -13,7 +13,7 @@ export default class PreViewHdItem extends AbstractHeaderItem {
             order: 4,
             onClick: () => {
                 const {saveType, id} = URLUtil.parseUrlParams();
-                window.open(`/view?id=${id}&saveType=${saveType}`, '_blank');
+                window.open(`/view?id=${id}&saveType=${saveType}&action=view`, '_blank');
             }
         };
     }

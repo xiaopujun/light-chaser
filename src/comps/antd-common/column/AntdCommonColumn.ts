@@ -2,7 +2,7 @@ import {ComponentBaseProps} from "../../common-component/common-types";
 import {WritableColumnOptions} from "../types";
 import {Column} from "@antv/g2plot";
 import {ThemeItemType} from "../../../designer/DesignerType";
-import {UpdateType, UpdateOptions} from "../../../framework/core/AbstractController";
+import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {ShapeAttrs} from "@antv/g-base";
 import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 
@@ -81,6 +81,6 @@ export default class AntdCommonColumn extends AntdBaseDesignerController<Column,
         if ((styleConfig?.yAxis) && (styleConfig?.yAxis?.subTickLine?.style as ShapeAttrs))
             (styleConfig!.yAxis!.subTickLine!.style as ShapeAttrs).stroke = supplementSecond;
         //重新渲染
-        this.update({style: styleConfig}, {reRender: true, updateType: UpdateType.OPTIONS});
+        this.update({style: styleConfig}, {reRender: true});
     }
 }

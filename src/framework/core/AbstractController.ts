@@ -1,10 +1,4 @@
-export enum UpdateType {
-    OPTIONS,
-    DATA,
-}
-
 export interface UpdateOptions {
-    updateType?: UpdateType;
     reRender: boolean;
 }
 

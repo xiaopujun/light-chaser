@@ -1,6 +1,6 @@
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
 import URLUtil, {Mode} from "../../utils/URLUtil";
-import AbstractController, {UpdateType, UpdateOptions} from "../../framework/core/AbstractController";
+import {UpdateOptions} from "../../framework/core/AbstractController";
 import {ComponentBaseProps} from "../common-component/common-types";
 import {Options, Plot} from "@antv/g2plot";
 import ComponentUtil from "../../utils/ComponentUtil";
@@ -19,42 +19,28 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
     //是否为断开后重新连接
     protected reConnect: boolean = false;
 
-    /**
-     * 默认都按照antd组件的data设置方式,如果有特殊的组件需要特殊处理，则重写此方法
-     * @param data
-     */
-    setData(data: Object): void {
-        this.config!.style!.data = data;
+    changeData(data: any) {
+        this.instance?.changeData(data);
     }
 
-    /**
-     * 默认都读取静态数据设置中的data,如果有特殊的组件需要特殊处理，则重写此方法
-     */
-    getData(): Object {
-        return this.config?.data?.staticData?.data;
-    }
-
-    public commonLoadData(ins: AbstractController): void {
+    public commonLoadData(): void {
         //设计模式下，始终从data设置中读取数据。预览模式下则根据数据源类型读取数据
         let mode = URLUtil.getModeByUrl();
         if (mode === Mode.VIEW) {
             //预览模式
-            const {data} = ins.config!;
+            const {data} = this.config!;
             const {dataSource} = data!;
             switch (dataSource) {
                 case "static":
-                    this.setData(this.config?.data?.staticData?.data);
-                    this.update({} as C, {reRender: true, updateType: UpdateType.DATA})
+                    this.config!.style!.data = this.config?.data?.staticData?.data;
+                    this.update({} as C, {reRender: true})
                     break;
                 case "api":
                     const {url, method, params, header, flashFrequency = 5} = data?.apiData!;
                     this.interval = setInterval(() => {
                         HttpUtil.sendHttpRequest(url!, method!, header!, params!).then((data: any) => {
                             if (data) {
-                                this.update({data: {staticData: {data}}} as any, {
-                                    reRender: true,
-                                    updateType: UpdateType.DATA
-                                });
+                                this.update({data: {staticData: {data}}} as any, {reRender: true});
                                 if (!this.lastReqState) {
                                     this.lastReqState = true;
                                     //如果上一次连接失败，则本次为断线重连
@@ -74,8 +60,8 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
             }
         } else {
             //编辑模式
-            this.setData(this.config?.data?.staticData?.data!);
-            this.update({} as C, {reRender: true, updateType: UpdateType.DATA});
+            this.config!.style!.data = this.config?.data?.staticData?.data!;
+            this.update({} as C, {reRender: true});
             return;
         }
     }
@@ -107,11 +93,6 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
         this.container = container;
         this.instance = new Clazz(container, this.config?.style! as C);
         this.instance?.render();
-        //todo 这个地方因为数据的更新导致组件的重新渲染可能会导致组件动画的加载效果受到影响，后续需要优化
-        setTimeout(() => {
-            //5s后开始加载数据
-            this.commonLoadData(this);
-        }, 5000);
         this.registerEvent();
         return this;
     }
@@ -128,13 +109,9 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
                 this.instance.render();
             } else {
                 this.config = ObjectUtil.merge(this.config, config);
-                upOp = upOp || {reRender: true, updateType: UpdateType.OPTIONS};
-                if (upOp.reRender) {
-                    if (upOp.updateType === UpdateType.DATA)
-                        this.instance?.changeData(this.getData());
-                    else
-                        this.instance?.update(this.config?.style!);
-                }
+                upOp = upOp || {reRender: true};
+                if (upOp.reRender)
+                    this.instance?.update(this.config?.style!);
             }
         }
     }

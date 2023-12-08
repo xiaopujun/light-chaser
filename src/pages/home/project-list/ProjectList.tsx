@@ -53,10 +53,10 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
         let id = e.currentTarget.id;
         switch (type) {
             case 'edit':
-                window.open(`/designer?id=${id}&saveType=${saveType}`, '_blank');
+                window.open(`/designer?id=${id}&saveType=${saveType}&action=edit`, '_blank');
                 break;
             case 'show':
-                window.open(`/view?id=${id}&saveType=${saveType}`, '_blank');
+                window.open(`/view?id=${id}&saveType=${saveType}&action=view`, '_blank');
                 break;
             case 'del':
                 delIdRef.current = id;
