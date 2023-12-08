@@ -13,7 +13,7 @@ class LocalOperator extends AbstractOperator {
         //生成项目id
         project.id = IdGenerate.generateId();
         const projectData = project.dataJson;
-        let list = await localforage.getItem('light-chaser-project-list') || [];
+        let list: IProjectInfo[] = await localforage.getItem('light-chaser-project-list') || [];
         project.dataJson = undefined;
         list.push(project);
         await localforage.setItem('light-chaser-project-list', list);
@@ -25,19 +25,19 @@ class LocalOperator extends AbstractOperator {
         project = cloneDeep(project);
         const data = project.dataJson;
         delete project.dataJson;
-        let list = await localforage.getItem('light-chaser-project-list') || [];
+        let list: IProjectInfo[] = await localforage.getItem('light-chaser-project-list') || [];
         const index = list.findIndex((item: IProjectInfo) => item.id === project.id);
         if (index === -1) return false;
         const oldProject = list[index];
         project = ObjectUtil.merge(oldProject, project);
         list[index] = project;
         await localforage.setItem('light-chaser-project-list', list);
-        if (data) await localforage.setItem(project.id, data);
+        if (data) await localforage.setItem(project.id!, data);
         return true;
     }
 
     public async deleteProject(id: string): Promise<boolean> {
-        const list = await localforage.getItem('light-chaser-project-list') || [];
+        const list: IProjectInfo[] = await localforage.getItem('light-chaser-project-list') || [];
         const index = list.findIndex((item: IProjectInfo) => item.id === id);
         if (index === -1) return false;
         list.splice(index, 1);
@@ -49,7 +49,7 @@ class LocalOperator extends AbstractOperator {
     public async getProjectData(id: string): Promise<ProjectDataType | null> {
         const dataJson = await localforage.getItem(id);
         if (!dataJson) return null;
-        return JSON.parse(dataJson);
+        return JSON.parse(dataJson as string);
 
     }
 
@@ -58,15 +58,15 @@ class LocalOperator extends AbstractOperator {
     }
 
     public async copyProject(id: string, name?: string): Promise<string> {
-        const list = await localforage.getItem('light-chaser-project-list') || [];
+        const list: IProjectInfo[] = await localforage.getItem('light-chaser-project-list') || [];
         const index = list.findIndex((item: IProjectInfo) => item.id === id);
         if (index === -1) return '';
         const project = list[index];
         const newProject: IProjectInfo = cloneDeep(project);
         newProject.id = IdGenerate.generateId();
         newProject.name = name || newProject.name + '-副本';
-        newProject.createTime = new Date().getTime();
-        newProject.updateTime = new Date().getTime();
+        newProject.createTime = new Date().getTime() + '';
+        newProject.updateTime = new Date().getTime() + '';
         list.push(newProject);
         await localforage.setItem('light-chaser-project-list', list);
         const dataJson = await localforage.getItem(id);

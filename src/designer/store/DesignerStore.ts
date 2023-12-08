@@ -135,9 +135,6 @@ class DesignerStore {
         this.canvasConfig = store.canvasConfig
             ? {...this.canvasConfig, ...store.canvasConfig}
             : this.canvasConfig;
-        // this.projectConfig = store.projectConfig
-        //     ? {...this.projectConfig, ...store.projectConfig}
-        //     : this.projectConfig;
         this.elemConfigs = store.elemConfigs
             ? {...this.elemConfigs, ...store.elemConfigs}
             : this.elemConfigs;
@@ -160,9 +157,7 @@ class DesignerStore {
             elemConfigs[key] = this.compController[key].getConfig();
         });
         return {
-            id: this.id,
             canvasConfig: toJS(this.canvasConfig),
-            // projectConfig: toJS(this.projectConfig),
             elemConfigs: elemConfigs,
             layerConfigs: toJS(this.layerConfigs),
             statisticInfo: toJS(this.statisticInfo),

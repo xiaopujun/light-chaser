@@ -22,9 +22,8 @@ export default class ServerOperator extends AbstractOperator {
     }
 
     async getProjectData(id: string): Promise<ProjectDataType | null> {
-        const response = await fetch(`http://localhost:9000/api/project/get/${id}`, {method: 'get'});
-        const projectInfo = await response.json();
-        return JSON.parse(projectInfo.dataJson);
+        const response = await fetch(`http://localhost:9000/api/project/getProjectData/${id}`, {method: 'get'});
+        return await response.json();
     }
 
     public async getProjectInfoList(): Promise<IProjectInfo[]> {

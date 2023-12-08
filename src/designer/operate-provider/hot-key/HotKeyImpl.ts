@@ -120,7 +120,7 @@ export const doDelete = () => {
 export const doSave = throttle(() => {
     return new Promise(() => {
         let urlParams = URLUtil.parseUrlParams();
-        const {saveType} = urlParams;
+        const {saveType, id} = urlParams;
         const proData = designerStore.getData();
         //设置蓝图数据
         const {bpAPMap, bpLines, bpAPLineMap, getAllNodeConfig, bpNodeLayoutMap} = bpStore;
@@ -131,7 +131,7 @@ export const doSave = throttle(() => {
         proData.bpNodeLayoutMap = bpNodeLayoutMap;
         //转换为最终保存的数据格式
         const projectInfo: IProjectInfo = {
-            id: proData.id,
+            id,
             dataJson: JSON.stringify(proData),
         }
         operatorMap[saveType as SaveType].updateProject(projectInfo).then((res) => {
