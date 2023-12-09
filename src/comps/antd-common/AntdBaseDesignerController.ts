@@ -1,5 +1,5 @@
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
-import URLUtil, {Mode} from "../../utils/URLUtil";
+import URLUtil, {DesignerMode} from "../../utils/URLUtil";
 import {UpdateOptions} from "../../framework/core/AbstractController";
 import {ComponentBaseProps} from "../common-component/common-types";
 import {Options, Plot} from "@antv/g2plot";
@@ -25,8 +25,8 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
 
     public commonLoadData(): void {
         //设计模式下，始终从data设置中读取数据。预览模式下则根据数据源类型读取数据
-        let mode = URLUtil.getModeByUrl();
-        if (mode === Mode.VIEW) {
+        let {mode} = URLUtil.parseUrlParams();
+        if (mode as DesignerMode === DesignerMode.VIEW) {
             //预览模式
             const {data} = this.config!;
             const {dataSource} = data!;

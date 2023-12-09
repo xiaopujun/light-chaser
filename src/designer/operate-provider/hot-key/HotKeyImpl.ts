@@ -119,8 +119,7 @@ export const doDelete = () => {
 //保存函数节流5s, 5s内不可重复保存
 export const doSave = throttle(() => {
     return new Promise(() => {
-        let urlParams = URLUtil.parseUrlParams();
-        const {saveType, id} = urlParams;
+        const {saveType, id} = URLUtil.parseUrlParams();
         const proData = designerStore.getData();
         //设置蓝图数据
         const {bpAPMap, bpLines, bpAPLineMap, getAllNodeConfig, bpNodeLayoutMap} = bpStore;

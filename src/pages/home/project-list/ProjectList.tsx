@@ -8,6 +8,7 @@ import {AddNewProjectDialog, INewProjectInfo} from "./AddNewProjectDialog";
 import Button from "../../../ui/button/Button";
 import Dialog from "../../../ui/dialog/Dialog";
 import operatorMap from "../../../framework/operate";
+import {DesignerMode} from "../../../utils/URLUtil";
 
 export interface ProjectListProps {
     saveType: SaveType;
@@ -39,7 +40,7 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
         }
         operatorMap[saveType].createProject(project).then((id) => {
             setAddDialog(false);
-            window.open(`/designer?id=${id}&saveType=${saveType}`, '_blank');
+            window.open(`/designer?id=${id}&saveType=${saveType}&mode=${DesignerMode.EDIT}`, '_blank');
             getProjectList();
         });
     }
@@ -53,10 +54,10 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
         let id = e.currentTarget.id;
         switch (type) {
             case 'edit':
-                window.open(`/designer?id=${id}&saveType=${saveType}&action=edit`, '_blank');
+                window.open(`/designer?id=${id}&saveType=${saveType}&mode=${DesignerMode.EDIT}`, '_blank');
                 break;
             case 'show':
-                window.open(`/view?id=${id}&saveType=${saveType}&action=view`, '_blank');
+                window.open(`/view?id=${id}&saveType=${saveType}&mode=${DesignerMode.VIEW}`, '_blank');
                 break;
             case 'del':
                 delIdRef.current = id;

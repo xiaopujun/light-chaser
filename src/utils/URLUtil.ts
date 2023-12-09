@@ -2,13 +2,11 @@ export interface UrlParams {
     [key: string]: string;
 }
 
-export enum Mode {
-    //新建项目
-    CREATE,
+export enum DesignerMode {
     //编辑项目
-    EDIT,
+    EDIT = '0',
     //展示项目
-    VIEW,
+    VIEW = '1',
 }
 
 export default class URLUtil {
@@ -30,22 +28,6 @@ export default class URLUtil {
             }
         }
         return urlParams.toString();
-    }
-
-    public static getModeByUrl(): Mode | null {
-        let urlParams = URLUtil.parseUrlParams();
-        if ('action' in urlParams) {
-            switch (urlParams.action) {
-                case 'create':
-                    return Mode.CREATE;
-                case 'edit':
-                    return Mode.EDIT;
-                case 'view':
-                    return Mode.VIEW;
-            }
-            return null;
-        } else
-            return null;
     }
 
 }
