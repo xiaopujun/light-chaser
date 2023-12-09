@@ -196,10 +196,8 @@ class DesignerStore {
     /**
      * 添加元素
      */
-    addItem = (item: ILayerItem) => {
-        this.layerConfigs[item.id + ""] = item;
-        if (this.statisticInfo)
-            this.statisticInfo.count = Object.keys(this.layerConfigs).length;
+    addItem = (layer: ILayerItem) => {
+        historyRecordOperateProxy.doAdd(layer);
     };
 
     /**
