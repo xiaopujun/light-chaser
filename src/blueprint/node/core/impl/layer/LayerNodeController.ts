@@ -20,9 +20,6 @@ export default class LayerNodeController extends AbstractBPNodeController<LayerN
         ComponentUtil.createAndRender(container, BPNode, config).then((instance) => this.instance = instance);
     }
 
-    destroy(): void {
-    }
-
     execute(executeInfo: ExecuteInfoType, executor: BPExecutor, params: any): void {
         const {nodeId, apId, anchorType} = executeInfo;
         if (anchorType === AnchorPointType.INPUT) {

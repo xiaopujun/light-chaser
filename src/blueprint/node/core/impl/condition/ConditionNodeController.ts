@@ -21,9 +21,6 @@ export default class ConditionNodeController extends AbstractBPNodeController<Co
         ComponentUtil.createAndRender(container, BPNode, config).then((instance) => this.instance = instance);
     }
 
-    destroy(): void {
-    }
-
     execute(executeInfo: ExecuteInfoType, executor: BPExecutor, params: any): void {
         const {nodeId, anchorType} = executeInfo;
         //输出类型节点不执行

@@ -21,9 +21,6 @@ export default class LogicalProcessNodeController extends AbstractBPNodeControll
         ComponentUtil.createAndRender(container, BPNode, config).then((instance) => this.instance = instance);
     }
 
-    destroy(): void {
-    }
-
     execute(executeInfo: ExecuteInfoType, executor: BPExecutor, params: any): void {
         const {nodeId} = executeInfo;
         if (!this.handler) {
