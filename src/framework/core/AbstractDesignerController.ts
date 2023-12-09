@@ -1,6 +1,7 @@
 import {ThemeItemType} from "../../designer/DesignerType";
 import AbstractController from "./AbstractController";
 import HttpUtil from "../../utils/HttpUtil";
+import {ComponentBaseProps} from "../../comps/common-component/common-types";
 
 abstract class AbstractDesignerController<I = any, C = any> extends AbstractController<I, C> {
     //轮询请求定时器
@@ -23,7 +24,7 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
      */
     loadComponentData(): void {
         //预览模式
-        const {data} = this.config!;
+        const {data} = this.config! as ComponentBaseProps;
         const {dataSource} = data!;
         switch (dataSource) {
             case "static":

@@ -15,11 +15,10 @@ export default class ConditionNodeController extends AbstractBPNodeController<Co
 
     private handler: Function | null = null;
 
-    async create(container: HTMLElement, config: ConditionConfigType): Promise<this> {
+    create(container: HTMLElement, config: ConditionConfigType): void {
         this.config = config;
         this.container = container;
-        this.instance = await ComponentUtil.createAndRender(container, BPNode, config);
-        return this;
+        ComponentUtil.createAndRender(container, BPNode, config).then((instance) => this.instance = instance);
     }
 
     destroy(): void {

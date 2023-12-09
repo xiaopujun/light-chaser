@@ -14,11 +14,10 @@ export interface BaseImageComponentProps {
 
 export default class BaseImageController extends AbstractDesignerController<BaseImageComponent, BaseImageComponentProps> {
 
-    public async create(container: HTMLElement, config: BaseImageComponentProps): Promise<this> {
+    public create(container: HTMLElement, config: BaseImageComponentProps): void {
         this.config = config;
         this.container = container;
-        this.instance = await ComponentUtil.createAndRender(container, BaseImageComponent, config.style);
-        return this;
+        ComponentUtil.createAndRender<BaseImageComponent>(container, BaseImageComponent, config.style).then((instance) => this.instance = instance);
     }
 
     destroy(): void {

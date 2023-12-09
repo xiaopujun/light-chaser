@@ -130,7 +130,7 @@ class HistoryRecordOperateProxy {
                     config.base.id = layout.id!;
                 }
                 const {action} = URLUtil.parseUrlParams();
-                const controller: AbstractDesignerController = new Controller()!;
+                const controller = new Controller()! as AbstractDesignerController;
                 compController[layout.id + ''] = controller;
                 controller.create(container!, config);
                 if (action === 'view')

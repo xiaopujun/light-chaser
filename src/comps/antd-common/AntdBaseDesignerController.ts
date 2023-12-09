@@ -88,13 +88,12 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
         });
     }
 
-    public async commonCreate(container: HTMLElement, Clazz: new (...args: any[]) => I, config: C): Promise<this> {
+    public commonCreate(container: HTMLElement, Clazz: new (...args: any[]) => I, config: C): void {
         this.config = config;
         this.container = container;
         this.instance = new Clazz(container, this.config?.style! as C);
         this.instance?.render();
         this.registerEvent();
-        return this;
     }
 
     public commonUpdate(config: C, Clazz: new (...args: any[]) => I, upOp?: UpdateOptions,): void {

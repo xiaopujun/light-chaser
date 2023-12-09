@@ -26,9 +26,8 @@ export const BPNodeContainer: React.FC<BPNodeContainerProps> = React.memo(({layo
         let nodeInfo = bpNodeConfigMap[layout.id!];
         if (!nodeInfo)
             nodeInfo = ncIns.getNodeInfo(layout.id!);
-        ncIns.create(ref.current!, nodeInfo!).then(() => {
-            bpNodeControllerInsMap[layout.id!] = ncIns;
-        });
+        ncIns.create(ref.current!, nodeInfo!);
+        bpNodeControllerInsMap[layout.id!] = ncIns;
     }, [layout.id, layout.type]);
     const {position, id} = layout;
     return (

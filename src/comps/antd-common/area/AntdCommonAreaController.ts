@@ -12,8 +12,8 @@ export interface AntdAreaProps extends ComponentBaseProps {
 
 export default class AntdCommonAreaController extends AntdBaseDesignerController<Area, AntdAreaProps> {
 
-    async create(container: HTMLElement, config: AntdAreaProps): Promise<this> {
-        return super.commonCreate(container, Area, config);
+    create(container: HTMLElement, config: AntdAreaProps): void {
+        super.commonCreate(container, Area, config);
     }
 
     destroy(): void {

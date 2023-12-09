@@ -12,8 +12,8 @@ export interface AntdScatterProps extends ComponentBaseProps {
 
 export default class AntdCommonScatterController extends AntdBaseDesignerController<Scatter, AntdScatterProps> {
 
-    async create(container: HTMLElement, config: AntdScatterProps): Promise<this> {
-        return super.commonCreate(container, Scatter, config);
+    create(container: HTMLElement, config: AntdScatterProps): void {
+        super.commonCreate(container, Scatter, config);
     }
 
     destroy(): void {

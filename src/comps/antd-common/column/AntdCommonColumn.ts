@@ -12,8 +12,8 @@ export interface AntdColumnProps extends ComponentBaseProps {
 
 export default class AntdCommonColumn extends AntdBaseDesignerController<Column, AntdColumnProps> {
 
-    async create(container: HTMLElement, config: AntdColumnProps): Promise<this> {
-        return super.commonCreate(container, Column, config);
+    create(container: HTMLElement, config: AntdColumnProps): void {
+        super.commonCreate(container, Column, config);
     }
 
     destroy(): void {

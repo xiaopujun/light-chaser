@@ -11,8 +11,8 @@ export interface AntdLiquidProps extends ComponentBaseProps {
 
 export default class AntdLiquidController extends AntdBaseDesignerController<Liquid, AntdLiquidProps> {
 
-    async create(container: HTMLElement, config: AntdLiquidProps): Promise<this> {
-        return super.commonCreate(container, Liquid, config);
+    create(container: HTMLElement, config: AntdLiquidProps): void {
+        super.commonCreate(container, Liquid, config);
     }
 
     destroy(): void {

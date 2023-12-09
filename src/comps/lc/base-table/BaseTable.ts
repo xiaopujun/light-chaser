@@ -7,11 +7,10 @@ import ObjectUtil from "../../../utils/ObjectUtil";
 
 export class BaseTable extends AbstractDesignerController<BaseTableComponent, BaseTableComponentProps> {
 
-    async create(container: HTMLElement, config: any): Promise<this> {
+    create(container: HTMLElement, config: any): void {
         this.config = config;
         this.container = container;
-        this.instance = await ComponentUtil.createAndRender(container, BaseTableComponent, config);
-        return this;
+        ComponentUtil.createAndRender<BaseTableComponent>(container, BaseTableComponent, config).then((instance) => this.instance = instance);
     }
 
     destroy(): void {
