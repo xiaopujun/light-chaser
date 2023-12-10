@@ -40,12 +40,12 @@ export class ViewDesignerLoader extends AbstractDesignerLoader {
                 //初始化designerStore
                 doInit({
                     id: id,
-                    canvasConfig: data?.canvasConfig || {},
-                    elemConfigs: data?.elemConfigs || {},
-                    layerConfigs: data?.layerConfigs || {},
-                    statisticInfo: data?.statisticInfo || {},
-                    themeConfig: data?.themeConfig || [],
-                    extendParams: data?.extendParams || {},
+                    canvasConfig: data?.canvasConfig,
+                    elemConfigs: data?.elemConfigs,
+                    layerConfigs: data?.layerConfigs,
+                    statisticInfo: data?.statisticInfo,
+                    themeConfig: data?.themeConfig,
+                    extendParams: data?.extendParams,
                 })
                 //设置事件操作器的最大最小层级
                 const {setMinLevel, setMaxLevel} = eventOperateStore;
