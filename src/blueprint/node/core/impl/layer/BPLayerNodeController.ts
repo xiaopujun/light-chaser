@@ -12,7 +12,7 @@ export interface LayerNodeConfig extends NodeProps {
 
 }
 
-export default class LayerNodeController extends AbstractBPNodeController<LayerNodeConfig> {
+export default class BPLayerNodeController extends AbstractBPNodeController<LayerNodeConfig> {
 
     create(container: HTMLElement, config: LayerNodeConfig): void {
         this.config = config;

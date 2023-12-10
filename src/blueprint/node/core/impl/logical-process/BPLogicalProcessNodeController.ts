@@ -11,7 +11,7 @@ export interface LogicalProcessNodeConfigType extends NodeProps {
     handler?: string;
 }
 
-export default class LogicalProcessNodeController extends AbstractBPNodeController<LogicalProcessNodeConfigType> {
+export default class BPLogicalProcessNodeController extends AbstractBPNodeController<LogicalProcessNodeConfigType> {
 
     private handler: Function | null = null;
 

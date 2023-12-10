@@ -11,7 +11,7 @@ export interface ConditionConfigType extends NodeInfoType {
     handler?: string;
 }
 
-export default class ConditionNodeController extends AbstractBPNodeController<ConditionConfigType> {
+export default class BPConditionNodeController extends AbstractBPNodeController<ConditionConfigType> {
 
     private handler: Function | null = null;
 
