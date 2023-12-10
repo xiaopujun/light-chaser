@@ -28,7 +28,7 @@ export default class BaseColorBlockDefinition extends AbstractDefinition<BaseCol
         return baseColorBlockImg;
     }
 
-    getComponent(): ClazzTemplate<BaseColorBlockController> | null {
+    getController(): ClazzTemplate<BaseColorBlockController> | null {
         return BaseColorBlockController;
     }
 

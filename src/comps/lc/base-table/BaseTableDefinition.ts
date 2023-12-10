@@ -28,7 +28,7 @@ export default class BaseTableDefinition extends AbstractDefinition<BaseTable, B
         return baseTableImg;
     }
 
-    getComponent(): ClazzTemplate<BaseTable> | null {
+    getController(): ClazzTemplate<BaseTable> | null {
         return BaseTable;
     }
 

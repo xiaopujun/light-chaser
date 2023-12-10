@@ -15,7 +15,7 @@ const DataConfig = React.lazy(() => import("../../common-component/data-config/D
 
 abstract class AbstractColumnDefinition extends AntdCommonDefinition<AntdCommonColumn, AntdColumnProps> {
 
-    getComponent(): ClazzTemplate<AntdCommonColumn> | null {
+    getController(): ClazzTemplate<AntdCommonColumn> | null {
         return AntdCommonColumn;
     }
 

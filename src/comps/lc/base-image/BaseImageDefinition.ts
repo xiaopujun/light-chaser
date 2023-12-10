@@ -25,7 +25,7 @@ export default class BaseImageDefinition extends AbstractDefinition<BaseImageCon
         return baseImage;
     }
 
-    getComponent(): ClazzTemplate<BaseImageController> | null {
+    getController(): ClazzTemplate<BaseImageController> | null {
         return BaseImageController;
     }
 

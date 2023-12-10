@@ -15,7 +15,7 @@ const DataConfig = React.lazy(() => import("../../common-component/data-config/D
 
 abstract class AbstractRoseDefinition extends AntdCommonDefinition<AntdCommonRose, AntdRoseProps> {
 
-    getComponent(): ClazzTemplate<AntdCommonRose> | null {
+    getController(): ClazzTemplate<AntdCommonRose> | null {
         return AntdCommonRose;
     }
 

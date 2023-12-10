@@ -24,7 +24,7 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
         const {elemConfigs, compController} = designerStore;
         let componentDefine: AbstractDefinition = DesignerLoaderFactory.getLoader().definitionMap[layer!.type!];
         if (componentDefine) {
-            const Controller = componentDefine.getComponent();
+            const Controller = componentDefine.getController();
             if (Controller) {
                 let config;
                 if (layer.id! in compController!) {

@@ -20,7 +20,7 @@ export default class GroupLayerDefinition extends AbstractDefinition<GroupLayerC
         return null;
     }
 
-    getComponent(): ClazzTemplate<any> | null {
+    getController(): ClazzTemplate<any> | null {
         return null;
     }
 

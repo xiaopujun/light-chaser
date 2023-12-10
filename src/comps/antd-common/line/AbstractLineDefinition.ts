@@ -16,7 +16,7 @@ const DataConfig = React.lazy(() => import("../../common-component/data-config/D
 
 abstract class AbstractLineDefinition extends AntdCommonDefinition<AntdCommonLineController, AntdLineProps> {
 
-    getComponent(): ClazzTemplate<AntdCommonLineController> | null {
+    getController(): ClazzTemplate<AntdCommonLineController> | null {
         return AntdCommonLineController;
     }
 

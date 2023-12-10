@@ -30,7 +30,7 @@ export default class BaseTextDefinition extends AbstractDefinition<BaseTextContr
         return baseTextImg;
     }
 
-    getComponent(): ClazzTemplate<BaseTextController> | null {
+    getController(): ClazzTemplate<BaseTextController> | null {
         return BaseTextController;
     }
 

@@ -23,7 +23,7 @@ export default class BaseIframeDefinition extends AbstractDefinition<BaseIframeC
         return baseIframeImg;
     }
 
-    getComponent(): ClazzTemplate<BaseIframeController> | null {
+    getController(): ClazzTemplate<BaseIframeController> | null {
         return BaseIframeController;
     }
 

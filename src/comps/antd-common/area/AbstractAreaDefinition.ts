@@ -16,7 +16,7 @@ const DataConfig = React.lazy(() => import("../../common-component/data-config/D
 
 abstract class AbstractAreaDefinition extends AntdCommonDefinition<AntdCommonAreaController, AntdAreaProps> {
 
-    getComponent(): ClazzTemplate<AntdCommonAreaController> | null {
+    getController(): ClazzTemplate<AntdCommonAreaController> | null {
         return AntdCommonAreaController;
     }
 
