@@ -13,17 +13,15 @@ export interface TextAreaProps extends UIContainerProps {
  */
 export const TextArea: React.FC<TextAreaProps> = (props) => {
     const {value, defaultValue, ...rest} = props;
-    const control = value && !defaultValue;
+    const control = !!value && !defaultValue;
     const [text, setText] = useState(defaultValue);
 
     const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         event.stopPropagation();
-        if (control) {
-            const {onChange} = props;
-            onChange && onChange(event.target.value);
-        } else {
+        const {onChange} = props;
+        onChange && onChange(event.target.value);
+        if (!control)
             setText(event.target.value);
-        }
     }
 
     return (

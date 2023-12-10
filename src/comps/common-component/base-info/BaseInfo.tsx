@@ -64,6 +64,11 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
         setBaseConfigRef && setBaseConfigRef(this);
     }
 
+    componentWillUnmount() {
+        const {setBaseConfigRef} = baseInfoStore;
+        setBaseConfigRef && setBaseConfigRef(null);
+    }
+
     changeName = (value: string) => {
         const {controller} = this.props;
         controller.update({base: {name: value}}, {reRender: false});

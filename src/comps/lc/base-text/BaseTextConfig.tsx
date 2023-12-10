@@ -18,22 +18,6 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
         config: {columns: 2},
         children: [
             {
-                key: 'data',
-                children: [
-                    {
-                        key: 'staticData',
-                        children: [
-                            {
-                                key: 'data',
-                                type: 'input',
-                                label: '内容',
-                                value: data?.staticData?.data,
-                            },
-                        ]
-                    }
-                ]
-            },
-            {
                 key: 'style',
                 children: [
                     {
@@ -49,8 +33,8 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
                     {
                         key: 'fontWeight',
                         type: 'input',
-                        label: '粗细',
-                        value: style?.fontWeight,
+                        label: '加粗',
+                        value: style?.fontWeight || 400,
                         config: {
                             type: 'number',
                             min: 100,
@@ -71,6 +55,43 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
                             height: 16,
                             hideControls: true
                         }
+                    },
+                    {
+                        key: 'fontFamily',
+                        type: 'select',
+                        label: '字体',
+                        value: '',
+                        config: {
+                            options: [
+                                {label: '钉钉进步体', value: 'DingTalk JinBuTi'},
+                                {label: '点点像素体', value: 'DottedSongtiCircleRegular'},
+                                {label: '抖音美好体', value: 'DouyinSansBold'},
+                                {label: '优设标题黑', value: '优设标题黑'},
+                                {label: '字体传奇南安体', value: '字体传奇南安体-免费商用'},
+                                {label: '庞门正道标题', value: '庞门正道标题体免费版'},
+                                {label: '站酷文艺体', value: '站酷文艺体'},
+                                {label: 'LHTFONT', value: 'LHTFONT'},
+                            ],
+                        }
+                    }
+                ]
+            },
+            {
+                key: 'data',
+                children: [
+                    {
+                        key: 'staticData',
+                        children: [
+                            {
+                                key: 'data',
+                                type: 'text-area',
+                                label: '内容',
+                                value: data?.staticData?.data,
+                                config: {
+                                    gridColumn: '1/3',
+                                }
+                            },
+                        ]
                     }
                 ]
             }

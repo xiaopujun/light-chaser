@@ -15,6 +15,8 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
     protected reConnect: boolean = false;
 
     changeData(data: any) {
+        if (this.config?.style?.data)
+            this.config!.style!.data = data;
         this.instance?.changeData(data);
     }
 

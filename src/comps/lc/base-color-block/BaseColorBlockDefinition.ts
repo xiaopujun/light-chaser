@@ -41,6 +41,10 @@ export default class BaseColorBlockDefinition extends AbstractDefinition<BaseCol
             },
             style: {
                 background: '#009DFF33',
+                borderRadius: 0,
+                borderWidth: 0,
+                borderColor: '#74747400',
+                borderStyle: 'none',
             },
         };
     }

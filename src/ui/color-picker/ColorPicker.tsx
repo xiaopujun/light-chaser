@@ -66,7 +66,7 @@ class ColorPicker extends Component<ColorPickerProps> {
                         <GradientColorPicker value={color} onChange={this.onChangeComplete}
                                              hideControls={hideControls}/>
                     </div>)} trigger={'click'}>
-                    <div className={`${showBorder && 'color-picker-border'}`} style={{..._style}}>
+                    <div className={`${showBorder && 'color-picker-border'}`}>
                         <div style={{background: `${color}`, ..._style}}
                              className={'color-area'}>
                             {showText ? <span>{hex}</span> : null}
