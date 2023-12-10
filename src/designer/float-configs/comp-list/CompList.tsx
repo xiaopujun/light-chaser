@@ -63,7 +63,7 @@ class CompList extends Component {
         this.addItem(type, [x, y]);
     }
 
-    addItem = (compKey: string, position?: [number, number]) => {
+    addItem = (compKey: string, position = [0, 0]) => {
         const {addItem} = designerStore;
         let {maxLevel, setMaxLevel, setAddRecordCompId} = eventOperateStore;
         const {definitionMap} = EditorDesignerLoader.getInstance();
