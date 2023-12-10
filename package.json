@@ -1,7 +1,7 @@
 {
-  "name": "light-chaser-vite",
+  "name": "light-chaser",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.8",
   "type": "module",
   "scripts": {
     "dev": "vite",
