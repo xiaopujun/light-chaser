@@ -25,17 +25,17 @@ export default class ColorUtil {
     }
 
     public static rgbaToHex(rgba: string) {
-        let parts = rgba.substring(rgba.indexOf('(')).split(',');
-        let r = parseInt(parts[0].substring(1).trim());
-        let g = parseInt(parts[1].trim());
-        let b = parseInt(parts[2].trim());
-        let a = parseFloat(parts[3] ? parts[3].substring(0, parts[3].length - 1).trim() : '1');
+        const parts = rgba.substring(rgba.indexOf('(')).split(',');
+        const r = parseInt(parts[0].substring(1).trim());
+        const g = parseInt(parts[1].trim());
+        const b = parseInt(parts[2].trim());
+        const a = parseFloat(parts[3] ? parts[3].substring(0, parts[3].length - 1).trim() : '1');
 
-        let rr = r.toString(16).length === 1 ? "0" + r.toString(16) : r.toString(16);
-        let gg = g.toString(16).length === 1 ? "0" + g.toString(16) : g.toString(16);
-        let bb = b.toString(16).length === 1 ? "0" + b.toString(16) : b.toString(16);
+        const rr = r.toString(16).length === 1 ? "0" + r.toString(16) : r.toString(16);
+        const gg = g.toString(16).length === 1 ? "0" + g.toString(16) : g.toString(16);
+        const bb = b.toString(16).length === 1 ? "0" + b.toString(16) : b.toString(16);
 
-        let aa = Math.round(a * 255).toString(16).length === 1 ? "0" + Math.round(a * 255).toString(16) : Math.round(a * 255).toString(16);
+        const aa = Math.round(a * 255).toString(16).length === 1 ? "0" + Math.round(a * 255).toString(16) : Math.round(a * 255).toString(16);
         return "#" + rr + gg + bb + aa;
     }
 

@@ -30,7 +30,7 @@ export const CheckBox: React.FC<CheckBoxProps> = props => {
         <UIContainer className={'lc-checkbox'} {...rest}>
             <div style={{width: 18}}>
                 <label className="lc-checkbox-container">
-                    <input onChange={_onChange} checked={_value} type="checkbox"/>
+                    <input onChange={_onChange} checked={_value} disabled={disabled} type="checkbox"/>
                     <div className="checkmark"/>
                 </label>
             </div>

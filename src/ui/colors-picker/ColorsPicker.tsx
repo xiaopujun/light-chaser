@@ -1,4 +1,4 @@
-import  {Component} from 'react';
+import {Component} from 'react';
 import './ColorsPicker.less';
 import ColorPicker from "../color-picker/ColorPicker";
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
@@ -33,7 +33,7 @@ class ColorsPicker extends Component<ColorsPickerProp> {
 
 
     onChange = (color: string, id: number) => {
-        let {colors} = this.state;
+        const {colors} = this.state;
         colors[id] = color;
         this.setState({colors})
         const {onChange} = this.props;
@@ -41,7 +41,7 @@ class ColorsPicker extends Component<ColorsPickerProp> {
     }
 
     addColor = () => {
-        let {colors} = this.state;
+        const {colors} = this.state;
         if (colors.length >= this.max)
             return;
         colors.push('#a9a9a9');
@@ -54,7 +54,7 @@ class ColorsPicker extends Component<ColorsPickerProp> {
     }
 
     delColor = (id: number) => {
-        let {colors} = this.state;
+        const {colors} = this.state;
         colors.splice(id, 1);
         if (colors.length < this.max)
             this.setState({canAdd: true, colors});

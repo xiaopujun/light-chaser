@@ -1,4 +1,4 @@
-import  {Component} from 'react';
+import {Component} from 'react';
 import {Popover} from 'antd';
 import './ColorPicker.less';
 import {GradientColorPicker} from "./GradientColorPicker";
@@ -53,7 +53,7 @@ class ColorPicker extends Component<ColorPickerProps> {
         } else if (showText && color?.indexOf('#') !== -1) {
             hex = color;
         }
-        let _style = {
+        const _style = {
             width,
             height,
             borderRadius: radius,

@@ -20,8 +20,8 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
     const [delDialog, setDelDialog] = React.useState(false);
     const [cloneDialog, setCloneDialog] = React.useState(false);
     const [data, setData] = React.useState<IProjectInfo[]>([]);
-    let delIdRef = useRef<string>("");
-    let cloneIdRef = useRef<string>("");
+    const delIdRef = useRef<string>("");
+    const cloneIdRef = useRef<string>("");
 
     useEffect(() => {
         getProjectList();
@@ -51,7 +51,7 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
         const {saveType} = props;
         const {type} = e.target.dataset
         if (!type) return;
-        let id = e.currentTarget.id;
+        const id = e.currentTarget.id;
         switch (type) {
             case 'edit':
                 window.open(`/designer?id=${id}&saveType=${saveType}&mode=${DesignerMode.EDIT}`, '_blank');
