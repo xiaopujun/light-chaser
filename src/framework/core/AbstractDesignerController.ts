@@ -5,7 +5,7 @@ import {ComponentBaseProps} from "../../comps/common-component/common-types";
 
 abstract class AbstractDesignerController<I = any, C = any> extends AbstractController<I, C> {
     //轮询请求定时器
-    protected interval: NodeJS.Timer | null = null;
+    protected interval: NodeJS.Timeout | null = null;
     //上一次数据连接状态 true：成功 false：失败
     protected lastReqState: boolean = true;
     //是否为断开后重新连接

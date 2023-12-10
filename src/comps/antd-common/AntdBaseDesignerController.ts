@@ -13,7 +13,7 @@ import HttpUtil from "../../utils/HttpUtil";
 export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Options>,
     C extends ComponentBaseProps = ComponentBaseProps> extends AbstractDesignerController<I, C> {
 
-    protected interval: NodeJS.Timer | null = null;
+    protected interval: NodeJS.Timeout | null = null;
     //上一次数据连接状态 true：成功 false：失败
     protected lastReqState: boolean = true;
     //是否为断开后重新连接
