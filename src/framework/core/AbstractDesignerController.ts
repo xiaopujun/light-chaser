@@ -10,6 +10,8 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
     protected lastReqState: boolean = true;
     //是否为断开后重新连接
     protected reConnect: boolean = false;
+    //异常提示信息dom元素
+    private errMsgDom: HTMLElement | null = null;
 
     /**
      * 更新组件数据,且必须触发组件的重新渲染
@@ -25,6 +27,7 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
     loadComponentData(): void {
         //预览模式
         const {data} = this.config! as ComponentBaseProps;
+        if (!data) return;
         const {dataSource} = data!;
         switch (dataSource) {
             case "static":
@@ -35,18 +38,23 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
                 this.interval = setInterval(() => {
                     HttpUtil.sendHttpRequest(url!, method!, header!, params!).then((data: any) => {
                         if (data) {
-                            this.changeData(data);
                             if (!this.lastReqState) {
                                 this.lastReqState = true;
-                                //如果上一次连接失败，则本次为断线重连
-                                this.reConnect = true;
-                            } else {
-                                //上一次连接成功，则本次为正常连接
-                                this.reConnect = false;
+                                this.errMsgDom?.remove();
+                                this.errMsgDom = null;
+                                this.changeData(data);
                             }
+                            this.changeData(data);
                         }
                     }).catch(() => {
                         this.lastReqState = false;
+                        //请求失败，在原有容器的基础上添加异常提示信息的dom元素（此处直接操作dom元素，不适用react的api进行组件的反复挂载和卸载）
+                        if (!this.errMsgDom) {
+                            this.errMsgDom = document.createElement("div");
+                            this.errMsgDom.classList.add("view-error-message");
+                            this.errMsgDom.innerText = "数据加载失败...";
+                            this.container!.appendChild(this.errMsgDom);
+                        }
                     });
                 }, flashFrequency * 1000);
                 break;

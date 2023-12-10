@@ -8,4 +8,22 @@ html {
     position: relative;
     overflow: hidden;
   }
+
+  //大屏预览模式下，数据加载异常时样式
+  .view-error-message {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(255, 0, 0, 0.24);
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    color: #ff1e1e;
+    font-weight: 500;
+    border: 2px dashed red;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center
+  }
 }
