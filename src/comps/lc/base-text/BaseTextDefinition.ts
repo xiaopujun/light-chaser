@@ -21,8 +21,8 @@ export default class BaseTextDefinition extends AbstractDefinition<BaseTextContr
             compKey: "LcBaseText",
             type: "基础",
             typeKey: "base",
-            width: 64,
-            height: 26,
+            width: 80,
+            height: 32,
         };
     }
 
