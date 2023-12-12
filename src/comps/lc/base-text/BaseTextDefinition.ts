@@ -18,11 +18,11 @@ export default class BaseTextDefinition extends AbstractDefinition<BaseTextContr
     getBaseInfo(): BaseInfoType {
         return {
             compName: "基础文本",
-            compKey: "LcBaseText",
+            compKey: "BaseText",
             type: "基础",
             typeKey: "base",
-            width: 80,
-            height: 32,
+            width: 64,
+            height: 26,
         };
     }
 
@@ -39,7 +39,7 @@ export default class BaseTextDefinition extends AbstractDefinition<BaseTextContr
             base: {
                 id: "",
                 name: '基础文本',
-                type: 'LcBaseText',
+                type: 'BaseText',
             },
             style: {
                 color: '#a7a7a7',
