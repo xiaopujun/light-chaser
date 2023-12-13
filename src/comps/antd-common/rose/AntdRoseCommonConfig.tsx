@@ -2,7 +2,7 @@ import React, {Component, useState} from 'react';
 import {WritableRoseOptions} from "../types";
 import {RoseOptions} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
-import AntdCommonRose from "./AntdCommonRose";
+import AntdCommonRoseController from "./AntdCommonRoseController";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
 import AntdCommonUtil from "../AntdCommonUtil";
@@ -14,17 +14,17 @@ import {ConfigType} from "../../../designer/right/ConfigContent";
 export default class AntdRoseCommonStyleConfig extends Component<ConfigType> {
 
     roseGraphicsChange = (config: WritableRoseOptions) => {
-        const controller = this.props.controller as AntdCommonRose;
+        const controller = this.props.controller as AntdCommonRoseController;
         controller.update({style: config});
     }
 
     legendChange = (legend: Legend) => {
-        const controller = this.props.controller as AntdCommonRose;
+        const controller = this.props.controller as AntdCommonRoseController;
         controller.update({style: {legend}});
     }
 
     render() {
-        const controller = this.props.controller as AntdCommonRose;
+        const controller = this.props.controller as AntdCommonRoseController;
         const roseConfig = controller.getConfig()!.style as RoseOptions;
         return (
             <>
@@ -258,7 +258,7 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
 }
 
 
-export const AntdRoseFieldMapping: React.FC<ConfigType<AntdCommonRose>> = ({controller}) => {
+export const AntdRoseFieldMapping: React.FC<ConfigType<AntdCommonRoseController>> = ({controller}) => {
     const config = controller.getConfig()?.style;
     const options = AntdCommonUtil.getDataFieldOptions(controller);
     const schema: Control = {

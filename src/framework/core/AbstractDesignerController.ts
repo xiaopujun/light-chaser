@@ -21,7 +21,6 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
     }
 
     registerEvent(): void {
-        console.log("registerEvent", this.instance);
     }
 
     /**

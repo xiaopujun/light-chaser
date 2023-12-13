@@ -1,7 +1,7 @@
 import {BaseInfoType} from "../../../designer/DesignerType";
 import baseRoseImg from "./base-rose.png";
 import AbstractRoseDefinition from "../../antd-common/rose/AbstractRoseDefinition";
-import {AntdRoseProps} from "../../antd-common/rose/AntdCommonRose";
+import {AntdRoseProps} from "../../antd-common/rose/AntdCommonRoseController";
 
 class AntdBaseRoseDefinition extends AbstractRoseDefinition {
 

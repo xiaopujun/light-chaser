@@ -10,7 +10,7 @@ export interface AntdColumnProps extends ComponentBaseProps {
     style?: WritableColumnOptions;
 }
 
-export default class AntdCommonColumn extends AntdBaseDesignerController<Column, AntdColumnProps> {
+export default class AntdCommonColumnController extends AntdBaseDesignerController<Column, AntdColumnProps> {
 
     async create(container: HTMLElement, config: AntdColumnProps): Promise<void> {
         await super.commonCreate(container, Column, config);

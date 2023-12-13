@@ -10,7 +10,7 @@ export interface AntdRoseProps extends ComponentBaseProps {
     style?: WritableRoseOptions;
 }
 
-export default class AntdCommonRose extends AntdBaseDesignerController<Rose, AntdRoseProps> {
+export default class AntdCommonRoseController extends AntdBaseDesignerController<Rose, AntdRoseProps> {
 
     async create(container: HTMLElement, config: AntdRoseProps): Promise<void> {
         await super.commonCreate(container, Rose, config);

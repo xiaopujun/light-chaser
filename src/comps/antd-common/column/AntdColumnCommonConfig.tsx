@@ -3,7 +3,7 @@ import {AntdCartesianCoordinateSys} from "../config/AntdFragment";
 import {Column, ColumnOptions} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import AbstractController from "../../../framework/core/AbstractController";
-import {AntdColumnProps} from "./AntdCommonColumn";
+import {AntdColumnProps} from "./AntdCommonColumnController";
 import {WritableColumnOptions} from "../types";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";

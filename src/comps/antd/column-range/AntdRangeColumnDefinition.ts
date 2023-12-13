@@ -1,6 +1,6 @@
 import {BaseInfoType} from "../../../designer/DesignerType";
 import rangeColumnImg from "./range-column.png";
-import {AntdColumnProps} from "../../antd-common/column/AntdCommonColumn";
+import {AntdColumnProps} from "../../antd-common/column/AntdCommonColumnController";
 import AbstractColumnDefinition from "../../antd-common/column/AbstractColumnDefinition";
 
 class AntdRangeColumnDefinition extends AbstractColumnDefinition {
