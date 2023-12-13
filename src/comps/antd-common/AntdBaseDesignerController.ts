@@ -3,7 +3,7 @@ import {UpdateOptions} from "../../framework/core/AbstractController";
 import {ComponentBaseProps} from "../common-component/common-types";
 import {Options, Plot} from "@antv/g2plot";
 import ObjectUtil from "../../utils/ObjectUtil";
-import BPExecutor from "../../blueprint/core/BPExecutor";
+// import BPExecutor from "../../blueprint/core/BPExecutor";
 
 export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Options>,
     C extends ComponentBaseProps = ComponentBaseProps> extends AbstractDesignerController<I, C> {
@@ -20,27 +20,27 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
         this.instance?.changeData(data);
     }
 
-    private registerEvent(): void {
-        const nodeId = this.config?.base?.id!;
-        this.instance?.on('plot:click', (...args: any) => {
-            BPExecutor.triggerComponentEvent(nodeId!, "globalClick", {msg: '这是测试参数'})
-        });
-        this.instance?.on('element:click', (...args: any) => {
-            BPExecutor.triggerComponentEvent(nodeId!, "elementClick", {msg: '这是测试参数'})
-        });
-        // 图例添加点击事件
-        this.instance?.on('legend-item:click', (...args: any) => {
-            BPExecutor.triggerComponentEvent(nodeId!, "legendClick", {msg: '这是测试参数'})
-        });
-        // 图例名称添加点击事件
-        this.instance?.on('legend-item-name:click', (...args: any) => {
-            BPExecutor.triggerComponentEvent(nodeId!, "elementNameClick", {msg: '这是测试参数'})
-        });
-        // axis-label 添加点击事件
-        this.instance?.on('axis-label:click', (...args: any) => {
-            BPExecutor.triggerComponentEvent(nodeId!, "axisLabelClick", {msg: '这是测试参数'})
-        });
-    }
+    // private registerEvent(): void {
+    //     const nodeId = this.config?.base?.id!;
+    //     this.instance?.on('plot:click', (...args: any) => {
+    //         BPExecutor.triggerComponentEvent(nodeId!, "globalClick", {msg: '这是测试参数'})
+    //     });
+    //     this.instance?.on('element:click', (...args: any) => {
+    //         BPExecutor.triggerComponentEvent(nodeId!, "elementClick", {msg: '这是测试参数'})
+    //     });
+    //     // 图例添加点击事件
+    //     this.instance?.on('legend-item:click', (...args: any) => {
+    //         BPExecutor.triggerComponentEvent(nodeId!, "legendClick", {msg: '这是测试参数'})
+    //     });
+    //     // 图例名称添加点击事件
+    //     this.instance?.on('legend-item-name:click', (...args: any) => {
+    //         BPExecutor.triggerComponentEvent(nodeId!, "elementNameClick", {msg: '这是测试参数'})
+    //     });
+    //     // axis-label 添加点击事件
+    //     this.instance?.on('axis-label:click', (...args: any) => {
+    //         BPExecutor.triggerComponentEvent(nodeId!, "axisLabelClick", {msg: '这是测试参数'})
+    //     });
+    // }
 
     public commonCreate(container: HTMLElement, Clazz: new (...args: any[]) => I, config: C): void {
         this.config = config;

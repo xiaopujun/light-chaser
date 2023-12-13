@@ -12,8 +12,8 @@ export interface AntdRingProgressProps extends ComponentBaseProps {
 
 export default class AntdRingProgressController extends AntdBaseDesignerController<RingProgress, AntdRingProgressProps> {
 
-    create(container: HTMLElement, config: AntdRingProgressProps): void {
-        super.commonCreate(container, RingProgress, config);
+    async create(container: HTMLElement, config: AntdRingProgressProps): Promise<void> {
+        await super.commonCreate(container, RingProgress, config);
     }
 
     destroy(): void {

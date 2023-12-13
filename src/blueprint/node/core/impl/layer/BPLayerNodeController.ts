@@ -14,10 +14,10 @@ export interface LayerNodeConfig extends NodeProps {
 
 export default class BPLayerNodeController extends AbstractBPNodeController<LayerNodeConfig> {
 
-    create(container: HTMLElement, config: LayerNodeConfig): void {
+    async create(container: HTMLElement, config: LayerNodeConfig): Promise<void> {
         this.config = config;
         this.container = container;
-        ComponentUtil.createAndRender(container, BPNode, config).then((instance) => this.instance = instance);
+        this.instance = await ComponentUtil.createAndRender(container, BPNode, config);
     }
 
     execute(executeInfo: ExecuteInfoType, executor: BPExecutor, params: any): void {

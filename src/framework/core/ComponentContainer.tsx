@@ -39,9 +39,13 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
                 const {mode} = URLUtil.parseUrlParams();
                 const controller = new Controller()! as AbstractDesignerController;
                 compController[layer.id + ''] = controller;
-                controller.create(this.ref!, config);
-                if (mode as DesignerMode === DesignerMode.VIEW)
-                    controller.loadComponentData();
+                controller.create(this.ref!, config).then(() => {
+                    //在组件完全渲染完毕后进行数据的加载和事件的注册
+                    if (mode as DesignerMode === DesignerMode.VIEW) {
+                        controller.registerEvent();
+                        controller.loadComponentData();
+                    }
+                });
             }
         }
     }

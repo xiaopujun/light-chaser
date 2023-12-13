@@ -7,10 +7,10 @@ import ObjectUtil from "../../../utils/ObjectUtil";
 
 export class BaseIframeController extends AbstractDesignerController<BaseIframeComponent, BaseIframeComponentProps> {
 
-    create(container: HTMLElement, config: any): void {
+    async create(container: HTMLElement, config: any): Promise<void> {
         this.config = config;
         this.container = container;
-        ComponentUtil.createAndRender<BaseIframeComponent>(container, BaseIframeComponent, config).then((instance) => this.instance = instance);
+        this.instance = await ComponentUtil.createAndRender<BaseIframeComponent>(container, BaseIframeComponent, config);
     }
 
     destroy(): void {

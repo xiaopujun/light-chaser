@@ -10,10 +10,10 @@ import ObjectUtil from "../../../utils/ObjectUtil";
 
 export class BaseColorBlockController extends AbstractDesignerController<BaseColorBlockComponentRef, BaseColorBlockComponentProps> {
 
-    create(container: HTMLElement, config: any): void {
+    async create(container: HTMLElement, config: any): Promise<void> {
         this.config = config;
         this.container = container;
-        ComponentUtil.createAndRender<BaseColorBlockComponentRef>(container, BaseColorBlockComponent, config).then((instance) => this.instance = instance);
+        this.instance = await ComponentUtil.createAndRender<BaseColorBlockComponentRef>(container, BaseColorBlockComponent, config);
     }
 
     destroy(): void {

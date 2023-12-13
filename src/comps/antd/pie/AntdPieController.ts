@@ -13,8 +13,8 @@ export interface AntdPieProps extends ComponentBaseProps {
 
 export default class AntdPieController extends AntdBaseDesignerController<Pie, AntdPieProps> {
 
-    create(container: HTMLElement, config: AntdPieProps): void {
-        super.commonCreate(container, Pie, config);
+    async create(container: HTMLElement, config: AntdPieProps): Promise<void> {
+        await super.commonCreate(container, Pie, config);
     }
 
     destroy(): void {

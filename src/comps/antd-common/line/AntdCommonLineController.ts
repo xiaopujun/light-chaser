@@ -12,8 +12,8 @@ export interface AntdLineProps extends ComponentBaseProps {
 
 export default class AntdCommonLineController extends AntdBaseDesignerController<Line, AntdLineProps> {
 
-    create(container: HTMLElement, config: AntdLineProps): void {
-        super.commonCreate(container, Line, config);
+    async create(container: HTMLElement, config: AntdLineProps): Promise<void> {
+        await super.commonCreate(container, Line, config);
     }
 
     destroy(): void {

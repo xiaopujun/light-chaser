@@ -12,8 +12,8 @@ export interface AntdBarProps extends ComponentBaseProps {
 
 export default class AntdCommonBarController extends AntdBaseDesignerController<Bar, AntdBarProps> {
 
-    create(container: HTMLElement, config: AntdBarProps): void {
-        super.commonCreate(container, Bar, config);
+    async create(container: HTMLElement, config: AntdBarProps): Promise<void> {
+        await super.commonCreate(container, Bar, config);
     }
 
     destroy(): void {

@@ -15,10 +15,10 @@ export default class BPLogicalProcessNodeController extends AbstractBPNodeContro
 
     private handler: Function | null = null;
 
-    create(container: HTMLElement, config: LogicalProcessNodeConfigType): void {
+    async create(container: HTMLElement, config: LogicalProcessNodeConfigType): Promise<void> {
         this.config = config;
         this.container = container;
-        ComponentUtil.createAndRender(container, BPNode, config).then((instance) => this.instance = instance);
+        this.instance = await ComponentUtil.createAndRender(container, BPNode, config);
     }
 
     execute(executeInfo: ExecuteInfoType, executor: BPExecutor, params: any): void {

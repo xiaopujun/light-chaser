@@ -20,6 +20,10 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
     changeData(data: any): void {
     }
 
+    registerEvent(): void {
+        console.log("registerEvent", this.instance);
+    }
+
     /**
      * 加载组件数据，用于在预览（展示）模式下渲染完组件后根据当前组件的数据配置自动加载并更逊组件数组。
      * 注：若自定义组件有自己的数据加载方式，则需要覆写此方法

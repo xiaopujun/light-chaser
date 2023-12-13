@@ -16,7 +16,7 @@ export default class GroupLayerController extends AbstractDesignerController<Gro
         this.instance = instance;
     }
 
-    create(container: HTMLElement, config: GroupLayerProps): void {
+    async create(container: HTMLElement, config: GroupLayerProps): Promise<void> {
     }
 
     getConfig(): GroupLayerProps | null {
