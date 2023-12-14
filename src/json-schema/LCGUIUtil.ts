@@ -1,5 +1,5 @@
 import {Control, ControlValueType} from "./SchemaTypes";
-import {LCGUI, SchemaPathNode} from "./LCGUI";
+import {SchemaPathNode} from "./LCGUI";
 
 export default class LCGUIUtil {
     public static updateSchema(oldSchema: Control, path: SchemaPathNode[], value: ControlValueType) {
@@ -32,23 +32,23 @@ export default class LCGUIUtil {
 
     public static schemaStructureAssignment(data: object, template: Control): Control {
         if (typeof data !== 'object')
-            return;
+            return {};
         Object.keys(data).forEach(key => {
             //使用value对象的每一个key，去template中查找对应的key
-            if (typeof data[key] !== 'object') {
+            if (typeof data[key as keyof object] !== 'object') {
                 //在template当前层匹配
                 if (template.key === key) {
-                    template.value = data[key];
+                    template.value = data[key as keyof object];
                 } else if (template.children) {
                     template.children.forEach(childTemp => {
-                        LCGUIUtil.schemaStructureAssignment({[key]: data[key]}, childTemp);
+                        LCGUIUtil.schemaStructureAssignment({[key]: data[key as keyof object]}, childTemp);
                     })
                 }
             } else {
                 //在template的子层匹配
                 const childTemplate = LCGUIUtil.findChildSchemaByKey(key, template);
                 if (childTemplate) {
-                    LCGUIUtil.schemaStructureAssignment(data[key], childTemplate);
+                    LCGUIUtil.schemaStructureAssignment(data[key as keyof object], childTemplate);
                 }
             }
         });
@@ -65,11 +65,11 @@ export default class LCGUIUtil {
                     return result;
             }
         }
-        return null;
+        return {};
     }
 
     public static parseSchemaData(schema: Control): object {
-        const result = {};
+        const result: Record<string, any> = {};
         if (schema.children) {
             let tempRes = {};
             schema.children.forEach(child => {

@@ -2,9 +2,7 @@ import React from 'react';
 import {observer} from "mobx-react";
 import './DemoMain.less';
 import {Control} from "../json-schema/SchemaTypes";
-import ControlGroup from "../ui/control-group/ControlGroup";
 import {LCGUI} from "../json-schema/LCGUI";
-import LCGUIUtil from "../json-schema/LCGUIUtil";
 
 
 class MyComponent extends React.Component {

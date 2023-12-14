@@ -18,7 +18,7 @@ export interface ControlGroupProps {
 const ControlGroup = (props: ControlGroupProps) => {
     const {label, value = [], template, itemName} = props;
     const [toggle, setToggle] = React.useState<boolean>(false);
-    const templateData = LCGUIUtil.parseSchemaData(template);
+    const templateData = LCGUIUtil.parseSchemaData(template!);
     const initSchema: Control = {children: []};
     value.forEach((data, index) => {
         initSchema.children?.push({
@@ -43,7 +43,7 @@ const ControlGroup = (props: ControlGroupProps) => {
         setSchema({...schema});
         dataRef.current = [...dataRef.current, {...templateData}];
         const {onChange} = props;
-        onChange(dataRef.current);
+        onChange && onChange(dataRef.current);
     }
 
     const delGroup = () => {
@@ -51,15 +51,15 @@ const ControlGroup = (props: ControlGroupProps) => {
         setSchema({...schema});
         dataRef.current.pop();
         const {onChange} = props;
-        onChange(dataRef.current);
+        onChange && onChange(dataRef.current);
     }
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
         const {dataFragment} = fieldChangeData;
         const index = Number(Object.keys(dataFragment)[0]);
-        dataRef.current[index] = ObjectUtil.merge(dataRef.current[index], dataFragment[index]);
+        dataRef.current[index] = ObjectUtil.merge(dataRef.current[index], dataFragment[index as keyof object]);
         const {onChange} = props;
-        onChange(dataRef.current);
+        onChange && onChange(dataRef.current);
     }
     return (
         <div className="control-group">
