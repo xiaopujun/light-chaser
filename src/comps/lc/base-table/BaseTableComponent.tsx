@@ -1,5 +1,6 @@
 import {Component} from 'react';
 import {ComponentBaseProps} from "../../common-component/common-types";
+import './BaseTableComponent.less';
 
 export interface BaseTableComponentStyle {
 
@@ -18,7 +19,7 @@ class BaseTableComponent extends Component<BaseTableComponentProps, BaseTableCom
 
     render() {
         return (
-            <div style={{height: '100%', display: 'flex', color: 'white'}}>
+            <div className={'base-table'}>
                 <table>
                     <thead>
                     <tr>

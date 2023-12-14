@@ -5,7 +5,7 @@ import ComponentUtil from "../../../utils/ComponentUtil";
 import BaseTableComponent, {BaseTableComponentProps} from "./BaseTableComponent";
 import ObjectUtil from "../../../utils/ObjectUtil";
 
-export class BaseTable extends AbstractDesignerController<BaseTableComponent, BaseTableComponentProps> {
+export class BaseTableController extends AbstractDesignerController<BaseTableComponent, BaseTableComponentProps> {
 
     async create(container: HTMLElement, config: any): Promise<void> {
         this.config = config;

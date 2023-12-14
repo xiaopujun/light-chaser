@@ -1,17 +1,17 @@
-import {MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
+import {AbstractDefinition, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import {BaseInfoType} from "../../../designer/DesignerType";
 import {ClazzTemplate} from "../../common-component/common-types";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import baseTableImg from './base-table.png';
 import {getDefaultMenuList} from "../../../designer/right/util";
-import {BaseTable} from "./BaseTable";
+import {BaseTableController} from "./BaseTableController";
 import {BaseTableComponentProps} from "./BaseTableComponent";
 import BaseInfo from "../../common-component/base-info/BaseInfo";
 import AnimationConfig from "../../common-component/animation-config/AnimationConfig";
 import ThemeConfig from "../../common-component/theme-config/ThemeConfig";
 import {BaseTableStyleConfig} from "./BaseTableConfig";
 
-export default class BaseTableDefinition /*extends AbstractDefinition<BaseTable, BaseTableComponentProps>*/ {
+export default class BaseTableDefinition extends AbstractDefinition<BaseTableController, BaseTableComponentProps> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "基础表格",
@@ -25,8 +25,8 @@ export default class BaseTableDefinition /*extends AbstractDefinition<BaseTable,
         return baseTableImg;
     }
 
-    getController(): ClazzTemplate<BaseTable> | null {
-        return BaseTable;
+    getController(): ClazzTemplate<BaseTableController> | null {
+        return BaseTableController;
     }
 
     getInitConfig(): BaseTableComponentProps {

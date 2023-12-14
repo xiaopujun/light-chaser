@@ -21,6 +21,7 @@ export type UIType =
     "text-area" |
     "slider" |
     "group-button" |
+    "control-group" |
     "item-panel";
 
 export interface Control {
