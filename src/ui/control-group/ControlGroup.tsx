@@ -6,29 +6,30 @@ import {FieldChangeData, LCGUI} from "../../json-schema/LCGUI";
 import Loading from "../loading/Loading";
 import LCGUIUtil from "../../json-schema/LCGUIUtil";
 import ObjectUtil from "../../utils/ObjectUtil";
+import {cloneDeep} from "lodash";
 
 export interface ControlGroupProps {
     label?: string;
     itemName?: string;
     template?: Control;
-    value?: object[];
+    defaultValue?: object[];
     onChange?: (value: any) => void;
 }
 
 const ControlGroup = (props: ControlGroupProps) => {
-    const {label, value = [], template, itemName} = props;
+    const {label, defaultValue = [], template, itemName} = props;
     const [toggle, setToggle] = React.useState<boolean>(false);
     const templateData = LCGUIUtil.parseSchemaData(template!);
     const initSchema: Control = {children: []};
-    value.forEach((data, index) => {
+    defaultValue.forEach((data, index) => {
         initSchema.children?.push({
             type: 'accordion',
             key: index + '',
             label: (itemName || '系列') + (index + 1),
-            children: [{...LCGUIUtil.schemaStructureAssignment(data, {...template})}]
+            children: [{...LCGUIUtil.schemaStructureAssignment(data, cloneDeep(template))}]
         });
     });
-    const dataRef = useRef(value);
+    const dataRef = useRef(defaultValue);
     const [schema, setSchema] = React.useState<Control>(initSchema);
 
     const addNewGroup = () => {

@@ -2,8 +2,49 @@ import {Component} from 'react';
 import {ComponentBaseProps} from "../../common-component/common-types";
 import './BaseTableComponent.less';
 
-export interface BaseTableComponentStyle {
+export interface ITableColumn {
+    key: string;
+    label: string;
+    width?: number;
+    align?: 'left' | 'center' | 'right';
+}
 
+export interface ITableHeaderStyle {
+    height?: number;
+    background?: string;
+    color?: string;
+    fontSize?: number;
+    fontWeight?: number;
+    fontFamily?: string;
+}
+
+export enum CarouselMode {
+    //逐条
+    ABA,
+    //逐页
+    PBP,
+    //平滑连续
+    SAC,
+}
+
+export interface ITableBodyStyle {
+    background?: string;
+    color?: string;
+    fontSize?: number;
+    fontWeight?: number;
+    fontFamily?: string;
+    enableZebra?: boolean;
+    zebraColor?: string;
+    enableCarousel?: boolean;
+    carouselMode?: CarouselMode;
+    carouselSpeed?: number;
+}
+
+export interface BaseTableComponentStyle {
+    columns?: ITableColumn[];
+    data?: object[];
+    header?: ITableHeaderStyle;
+    body?: ITableBodyStyle;
 }
 
 export interface BaseTableComponentProps extends ComponentBaseProps {
@@ -18,32 +59,31 @@ class BaseTableComponent extends Component<BaseTableComponentProps, BaseTableCom
     }
 
     render() {
+        const {style: {columns, data, header, body}} = this.state;
+        console.log(data)
         return (
             <div className={'base-table'}>
                 <table>
-                    <thead>
+                    <thead style={{...header}}>
                     <tr>
-                        <th>姓名</th>
-                        <th>年龄</th>
-                        <th>性别</th>
+                        {columns && columns.map((column: ITableColumn, index: number) => {
+                            return <th key={index}
+                                       style={{width: column.width, fontWeight: header.fontWeight}}>{column.label}</th>
+                        })}
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>张三</td>
-                        <td>18</td>
-                        <td>男</td>
-                    </tr>
-                    <tr>
-                        <td>李四</td>
-                        <td>20</td>
-                        <td>女</td>
-                    </tr>
-                    <tr>
-                        <td>王五</td>
-                        <td>22</td>
-                        <td>男</td>
-                    </tr>
+                    <tbody style={{...body}}>
+                    {
+                        data && data.map((item: any, index: number) => {
+                            return (
+                                <tr key={index}>
+                                    {columns && columns.map((column: ITableColumn, i: number) => {
+                                        return <td key={i}>{item[column.key]}</td>
+                                    })}
+                                </tr>
+                            )
+                        })
+                    }
                     </tbody>
                 </table>
             </div>
