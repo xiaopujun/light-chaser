@@ -28,7 +28,7 @@ export class BaseTableController extends AbstractDesignerController<BaseTableCom
         this.instance?.setState(style);
     }
 
-    update(config: BaseTableComponentProps, upOp: UpdateOptions | undefined): void {
+    update(config: BaseTableComponentProps, upOp?: UpdateOptions | undefined): void {
         this.config = ObjectUtil.merge(this.config, config);
         upOp = upOp || {reRender: true};
         if (upOp.reRender)

@@ -1,12 +1,13 @@
 import {Component} from 'react';
 import {ComponentBaseProps} from "../../common-component/common-types";
 import './BaseTableComponent.less';
+import {debounce} from "lodash";
 
 export interface ITableColumn {
     key: string;
     label: string;
     width?: number;
-    align?: 'left' | 'center' | 'right';
+    textAlign?: 'left' | 'center' | 'right';
 }
 
 export interface ITableHeaderStyle {
@@ -18,15 +19,6 @@ export interface ITableHeaderStyle {
     fontFamily?: string;
 }
 
-export enum CarouselMode {
-    //逐条
-    ABA,
-    //逐页
-    PBP,
-    //平滑连续
-    SAC,
-}
-
 export interface ITableBodyStyle {
     background?: string;
     color?: string;
@@ -36,8 +28,8 @@ export interface ITableBodyStyle {
     enableZebra?: boolean;
     zebraColor?: string;
     enableCarousel?: boolean;
-    carouselMode?: CarouselMode;
     carouselSpeed?: number;
+    pageSize?: number;
 }
 
 export interface BaseTableComponentStyle {
@@ -53,32 +45,105 @@ export interface BaseTableComponentProps extends ComponentBaseProps {
 
 class BaseTableComponent extends Component<BaseTableComponentProps, BaseTableComponentProps> {
 
+    tableRef: HTMLDivElement | null = null;
+    theadRef: HTMLElement | null = null;
+    tbodyRef1: HTMLElement | null = null;
+    tbodyRef2: HTMLElement | null = null;
+    resizeObserver: ResizeObserver | null = null;
+    contentHeight: number | null = null;
+
     constructor(props: BaseTableComponentProps) {
         super(props);
         this.state = {...props};
     }
 
+    componentDidMount() {
+        if (this.tableRef) {
+            this.contentHeight = this.tableRef.clientHeight - this.theadRef!.clientHeight;
+            this.resizeObserver = new ResizeObserver(debounce((entries) => {
+                for (let entry of entries) {
+                    const {height} = entry.contentRect;
+                    this.contentHeight = height - this.theadRef!.clientHeight;
+                    this.tbodyRef1 && (this.tbodyRef1.style.height = `${this.contentHeight}px`);
+                    this.tbodyRef2 && (this.tbodyRef2.style.height = `${this.contentHeight}px`);
+                }
+                this.changeTableTrHeight();
+            }, 100));
+            // 开始观察
+            this.resizeObserver.observe(this.tableRef);
+            this.changeTableTrHeight();
+        }
+    }
+
+    componentWillUnmount() {
+        this.tableRef && (this.tableRef = null);
+        this.theadRef && (this.theadRef = null);
+        this.tbodyRef1 && (this.tbodyRef1 = null);
+        this.tbodyRef2 && (this.tbodyRef2 = null);
+        this.resizeObserver && this.resizeObserver.disconnect();
+    }
+
+    changeTableTrHeight = () => {
+        const {pageSize = 0} = this.state.style!.body!;
+        if (pageSize) {
+            const tableBodyTds = this.tableRef?.getElementsByClassName('base-table-tr') || [];
+            console.log(tableBodyTds)
+            const tdHeight = this.contentHeight! / pageSize;
+            for (let i = 0; i < tableBodyTds.length; i++) {
+                (tableBodyTds[i] as HTMLElement).style.height = `${tdHeight}px`;
+            }
+        }
+    }
+
     render() {
-        const {style: {columns, data, header, body}} = this.state;
-        console.log(data)
+        const {columns, data, header, body} = this.state.style!;
+        const {enableCarousel, carouselSpeed = 3, pageSize, ...bodyStyle} = body as ITableBodyStyle;
+        const carouselStyle = enableCarousel ? `scroll ${carouselSpeed}s linear infinite` : `none`;
+        if (pageSize)
+            this.changeTableTrHeight();
         return (
-            <div className={'base-table'}>
+            <div className={'base-table'} ref={ref => this.tableRef = ref}>
                 <table>
-                    <thead style={{...header}}>
+                    <thead style={{...header}} ref={ref => this.theadRef = ref}>
                     <tr>
                         {columns && columns.map((column: ITableColumn, index: number) => {
                             return <th key={index}
-                                       style={{width: column.width, fontWeight: header.fontWeight}}>{column.label}</th>
+                                       style={{
+                                           width: column.width,
+                                           fontWeight: header?.fontWeight,
+                                           textAlign: column.textAlign
+                                       }}>{column.label}</th>
                         })}
                     </tr>
                     </thead>
-                    <tbody style={{...body}}>
+                    <tbody style={{...bodyStyle, animation: carouselStyle}}
+                           className="scroll-body" ref={ref => this.tbodyRef1 = ref}>
                     {
                         data && data.map((item: any, index: number) => {
                             return (
-                                <tr key={index}>
+                                <tr key={index} className={'base-table-tr'}>
                                     {columns && columns.map((column: ITableColumn, i: number) => {
-                                        return <td key={i}>{item[column.key]}</td>
+                                        return <td key={i}
+                                                   style={{
+                                                       textAlign: column.textAlign
+                                                   }}>{item[column.key]}</td>
+                                    })}
+                                </tr>
+                            )
+                        })
+                    }
+                    </tbody>
+                    <tbody style={{...bodyStyle, animation: carouselStyle}} className="scroll-body"
+                           ref={ref => this.tbodyRef2 = ref}>
+                    {
+                        data && data.map((item: any, index: number) => {
+                            return (
+                                <tr key={index} className={'base-table-tr'}>
+                                    {columns && columns.map((column: ITableColumn, i: number) => {
+                                        return <td key={i}
+                                                   style={{
+                                                       textAlign: column.textAlign
+                                                   }}>{item[column.key]}</td>
                                     })}
                                 </tr>
                             )

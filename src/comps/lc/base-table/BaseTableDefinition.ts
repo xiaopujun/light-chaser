@@ -47,19 +47,19 @@ export default class BaseTableDefinition extends AbstractDefinition<BaseTableCon
                         key: 'name',
                         label: '姓名',
                         width: undefined,
-                        align: 'center',
+                        textAlign: 'center',
                     },
                     {
                         key: 'age',
                         label: '年龄',
                         width: undefined,
-                        align: 'center',
+                        textAlign: 'center',
                     },
                     {
                         key: 'sex',
                         label: '性别',
                         width: undefined,
-                        align: 'center',
+                        textAlign: 'center',
                     }
                 ],
                 data,
@@ -75,6 +75,8 @@ export default class BaseTableDefinition extends AbstractDefinition<BaseTableCon
                     color: '#acacac',
                     fontSize: 14,
                     fontWeight: 500,
+                    enableCarousel: false,
+                    carouselSpeed: 3,
                 }
             },
             data: {

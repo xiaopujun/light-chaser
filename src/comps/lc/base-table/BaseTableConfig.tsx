@@ -7,6 +7,7 @@ import {BaseTableController} from "./BaseTableController";
 export const BaseTableStyleConfig: React.FC<ConfigType<BaseTableController>> = ({controller}) => {
 
     const {columns, header, body} = controller.getConfig()?.style || {};
+    const [, setCount] = React.useState(0);
 
     const schema: Control = {
         key: 'style',
@@ -146,7 +147,38 @@ export const BaseTableStyleConfig: React.FC<ConfigType<BaseTableController>> = (
                                     max: 900,
                                     step: 100
                                 }
-                            }
+                            },
+                            {
+                                type: 'switch',
+                                label: '轮播',
+                                key: 'enableCarousel',
+                                reRender: true,
+                                value: body?.enableCarousel,
+                            },
+                            {
+                                rules: "{enableCarousel}==='true'",
+                                type: 'input',
+                                label: '速度',
+                                key: 'carouselSpeed',
+                                value: body?.carouselSpeed,
+                                config: {
+                                    type: 'number',
+                                    min: 0,
+                                    max: 100,
+                                    step: 0.1
+                                }
+                            },
+                            {
+                                type: 'input',
+                                label: '页行数',
+                                key: 'pageSize',
+                                value: body?.pageSize,
+                                config: {
+                                    type: 'number',
+                                    min: 0,
+                                    max: 100
+                                }
+                            },
                         ]
                     }
                 ]
@@ -186,7 +218,7 @@ export const BaseTableStyleConfig: React.FC<ConfigType<BaseTableController>> = (
                                 value: '新建字段',
                             },
                             {
-                                key: 'align',
+                                key: 'textAlign',
                                 type: 'select',
                                 label: '对齐',
                                 value: 'center',
@@ -206,9 +238,9 @@ export const BaseTableStyleConfig: React.FC<ConfigType<BaseTableController>> = (
     };
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
-        console.log(fieldChangeData.dataFragment);
-        const {dataFragment} = fieldChangeData;
+        const {dataFragment, reRender} = fieldChangeData;
         controller.update(dataFragment);
+        if (reRender) setCount(count => count + 1);
     }
     return (
         <LCGUI schema={schema} onFieldChange={onFieldChange}/>

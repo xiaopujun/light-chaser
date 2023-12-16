@@ -1,7 +1,8 @@
+@tdRowHeight: 0px;
+
 .base-table {
   width: 100%;
   height: 100%;
-  display: flex;
   overflow: hidden;
 
   table {
@@ -9,5 +10,28 @@
     height: 100%;
     text-align: center;
 
+    thead {
+      position: relative;
+      z-index: 1;
+    }
+
+    .scroll-body {
+      animation: scroll 10s linear infinite;
+
+      td {
+        height: @tdRowHeight;
+      }
+    }
+
+  }
+}
+
+
+@keyframes scroll {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
   }
 }

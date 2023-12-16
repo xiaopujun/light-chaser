@@ -26,7 +26,7 @@ const ControlGroup = (props: ControlGroupProps) => {
             type: 'accordion',
             key: index + '',
             label: (itemName || '系列') + (index + 1),
-            children: [{...LCGUIUtil.schemaStructureAssignment(data, cloneDeep(template))}]
+            children: [{...LCGUIUtil.schemaStructureAssignment(data, cloneDeep(template!))}]
         });
     });
     const dataRef = useRef(defaultValue);
