@@ -1,6 +1,10 @@
-import {Component} from 'react';
+import {Component, ReactNode} from 'react';
 
-class LcFoot extends Component {
+export interface LcFootProps {
+    children?: ReactNode;
+}
+
+class LcFoot extends Component<LcFootProps> {
     render() {
         return (
             <div className={'structure-foot'}>{this.props.children}</div>

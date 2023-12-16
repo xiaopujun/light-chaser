@@ -1,4 +1,4 @@
-import  {Component} from 'react';
+import {Component, ReactNode} from 'react';
 import ReactDOM from "react-dom";
 import './Dialog.less';
 import {LineOutlined} from "@ant-design/icons";
@@ -10,6 +10,7 @@ interface DialogProps {
     width?: number;
     height?: number;
     className?: string;
+    children?: ReactNode;
 }
 
 class Dialog extends Component<DialogProps> {

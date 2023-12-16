@@ -10,6 +10,7 @@ export interface FloatPanelProps {
     height?: number;
     onClose?: () => void;
     className?: string;
+    children?: React.ReactNode;
 }
 
 /**

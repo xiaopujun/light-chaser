@@ -1,12 +1,9 @@
-import ReactDOM from 'react-dom';
 import App from './App';
 import {BrowserRouter} from "react-router-dom";
+import {createRoot} from "react-dom/client";
 
-export let designerRouter: any = null;
-
-ReactDOM.render(
-    <BrowserRouter ref={ref => designerRouter = ref}>
+createRoot(document.getElementById('root')!).render(
+    <BrowserRouter>
         <App/>
-    </BrowserRouter>,
-    document.getElementById('root')
+    </BrowserRouter>
 );

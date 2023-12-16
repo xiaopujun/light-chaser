@@ -6,6 +6,7 @@ import {ILayerItem} from "../../designer/DesignerType";
 import designerStore from "../../designer/store/DesignerStore";
 
 export interface GroupLayerStyleProps {
+    children?: React.ReactNode;
     layer: ILayerItem;
 }
 

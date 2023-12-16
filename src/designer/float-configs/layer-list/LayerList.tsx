@@ -10,7 +10,11 @@ import layerBuilder from "./LayerBuilder";
 import LayerUtil from "./util/LayerUtil";
 import {ILayerItem} from "../../DesignerType";
 
-class LayerList extends Component {
+export interface LayerListProps {
+    children?: React.ReactNode;
+}
+
+class LayerList extends Component<LayerListProps> {
 
     floatPanelRef: FloatPanel | null = null;
 

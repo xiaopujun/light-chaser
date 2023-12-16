@@ -28,7 +28,11 @@ export function setControlPointLineColor(lock: boolean) {
     }
 }
 
-class DesignerSelectable extends Component {
+export interface DesignerSelectableProps {
+    children?: React.ReactNode;
+}
+
+class DesignerSelectable extends Component<DesignerSelectableProps> {
     selectorRef = React.createRef<Selecto>();
 
     componentDidMount() {

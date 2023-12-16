@@ -1,6 +1,10 @@
-import {Component} from 'react';
+import {Component, ReactNode} from 'react';
 
-class DesignerContainer extends Component {
+export interface DesignerContainerProps {
+    children?: ReactNode;
+}
+
+class DesignerContainer extends Component<DesignerContainerProps> {
 
     render() {
         return (

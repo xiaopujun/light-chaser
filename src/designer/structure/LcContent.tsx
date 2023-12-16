@@ -1,6 +1,10 @@
-import {Component} from 'react';
+import {Component, ReactNode} from 'react';
 
-class LcContent extends Component {
+export interface LcContentProps {
+    children?: ReactNode;
+}
+
+class LcContent extends Component<LcContentProps> {
     render() {
         return (
             <div id={'structureContent'} className={'structure-body-content'}>{this.props.children}</div>

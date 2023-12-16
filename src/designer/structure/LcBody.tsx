@@ -1,6 +1,10 @@
-import {Component} from 'react';
+import {Component, ReactNode} from 'react';
 
-class LcBody extends Component {
+export interface LcBodyProps {
+    children?: ReactNode;
+}
+
+class LcBody extends Component<LcBodyProps> {
     render() {
         return (
             <div className={'structure-body'}>{this.props.children}</div>
