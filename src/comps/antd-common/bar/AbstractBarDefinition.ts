@@ -15,7 +15,7 @@ const DataConfig = React.lazy(() => import("../../common-component/data-config/D
 
 abstract class AbstractBarDefinition extends AntdCommonDefinition<AntdCommonBarController, AntdBarProps> {
 
-    getComponent(): ClazzTemplate<AntdCommonBarController> | null {
+    getController(): ClazzTemplate<AntdCommonBarController> | null {
         return AntdCommonBarController;
     }
 

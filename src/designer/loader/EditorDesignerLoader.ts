@@ -1,15 +1,13 @@
 import designerStore from "../store/DesignerStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
-import {SaveType} from "../DesignerType";
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 import {AbstractHeaderItem, HeaderItemProps} from "../header/HeaderTypes";
-import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
-import {AbstractOperator} from "../../framework/operate/AbstractOperator";
-import AbstractConvert from "../../framework/convert/AbstractConvert";
 import bpStore from "../../blueprint/store/BPStore";
 import bpLeftStore from "../../blueprint/left/BPLeftStore";
 import URLUtil from "../../utils/URLUtil";
 import {message} from "antd";
+import operatorMap from "../../framework/operate";
+import {SaveType} from "../DesignerType";
 
 export default class EditorDesignerLoader extends AbstractDesignerLoader {
 
@@ -24,18 +22,6 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
     protected scanComponents(): void {
         this.scannerHeader();
         this.scannerCustomComponents();
-        this.scannerProjectOperators();
-    }
-
-    protected loadProjectData(): void {
-        let urlParams = URLUtil.parseUrlParams();
-        const {action} = urlParams;
-        if (['edit', 'view'].includes(action))
-            this.initExistProject();
-        else if (action === 'create')
-            this.initNewProject();
-        else
-            throw new Error('action is error')
     }
 
     //扫描头部组件
@@ -57,105 +43,46 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
         });
     }
 
-    //扫描自定义组件
-    private scannerCustomComponents(): void {
-        const compCtx: any = import.meta.glob('../../comps/**/*Definition.ts', {
-            eager: true,
-        });
-        Object.keys(compCtx).forEach(key => {
-            const Clazz = compCtx[key]?.default;
-            if (Clazz && AbstractDefinition.isPrototypeOf(Clazz)) {
-                let definition: AbstractDefinition = new Clazz();
-                if (typeof definition.getBaseInfo === "function") {
-                    let compKey = definition.getBaseInfo().compKey;
-                    if (compKey)
-                        this.definitionMap[compKey] = definition;
-                }
-            } else if (Clazz && AbstractConvert.isPrototypeOf(Clazz)) {
-                let convert: AbstractConvert = new Clazz();
-                let convertKey = convert.getKey();
-                this.convertMap[convertKey] = convert;
-            }
-        });
-    }
-
-    //扫描项目操作实现（数据保存，加载操作 -> 本地 | 远程）
-    public scannerProjectOperators(): void {
-        const compCtx: any = import.meta.glob('../../framework/*/*.ts', {
-            eager: true,
-        });
-        Object.keys(compCtx).forEach(key => {
-            const Clazz = compCtx[key]?.default;
-            if (Clazz && AbstractOperator.isPrototypeOf(Clazz)) {
-                let operator: AbstractOperator = new Clazz();
-                let operateEnv = operator.getKey();
-                this.operatorMap[operateEnv] = operator;
-            }
-        });
-    }
-
-    /**
-     * 初始化以创建方式打开时项目信息
-     */
-    private initNewProject(): void {
-        let urlParams = URLUtil.parseUrlParams();
-        const {width, height, name} = urlParams;
-        const {doInit} = designerStore;
-        doInit({
-            canvasConfig: {
-                width: parseInt(width),
-                height: parseInt(height),
-            },
-            projectConfig: {
-                name: name
-            },
-        })
-        const {setLoaded} = designerStore;
-        setLoaded(true);
-    }
-
     /**
      * 初始化以更新方式打开时项目信息
      */
-    private initExistProject(): void {
-        let urlParams = URLUtil.parseUrlParams();
-        const {doInit, setLoaded} = designerStore;
-        this.operatorMap[SaveType.LOCAL].getProject(urlParams.id).then((res) => {
-            const {status, data: store, msg} = res;
-            if (status) {
+    protected initProject(): void {
+        const {saveType, id} = URLUtil.parseUrlParams();
+        operatorMap[saveType as SaveType].getProjectData(id).then((data) => {
+            if (data) {
+                const {doInit, setLoaded} = designerStore;
                 //初始化designerStore
                 doInit({
-                    id: store?.id,
-                    canvasConfig: store?.canvasConfig,
-                    projectConfig: store?.projectConfig,
-                    elemConfigs: store?.elemConfigs,
-                    layerConfigs: store?.layerConfigs,
-                    statisticInfo: store?.statisticInfo,
-                    themeConfig: store?.themeConfig,
-                    extendParams: store?.extendParams,
+                    id: id,
+                    canvasConfig: data?.canvasConfig,
+                    elemConfigs: data?.elemConfigs,
+                    layerConfigs: data?.layerConfigs,
+                    statisticInfo: data?.statisticInfo,
+                    themeConfig: data?.themeConfig,
+                    extendParams: data?.extendParams,
                 })
                 //设置事件操作器的最大最小层级
                 const {setMinLevel, setMaxLevel} = eventOperateStore;
-                setMinLevel(store?.extendParams?.minLevel || 0);
-                setMaxLevel(store?.extendParams?.maxLevel || 0);
+                setMinLevel(data?.extendParams?.minLevel || 0);
+                setMaxLevel(data?.extendParams?.maxLevel || 0);
 
                 //初始化bpStore（蓝图状态） todo 是否可以以更规范的方式处理？
                 const {setAPMap, setLines, setAPLineMap, setBpNodeLayoutMap, setBpNodeConfigMap} = bpStore;
-                setAPMap(store?.bpAPMap || {});
-                setLines(store?.bpLines || {});
-                setAPLineMap(store?.bpAPLineMap || {});
-                setBpNodeLayoutMap(store?.bpNodeLayoutMap || {});
-                setBpNodeConfigMap(store?.bpNodeConfigMap || {});
+                setAPMap(data?.bpAPMap || {});
+                setLines(data?.bpLines || {});
+                setAPLineMap(data?.bpAPLineMap || {});
+                setBpNodeLayoutMap(data?.bpNodeLayoutMap || {});
+                setBpNodeConfigMap(data?.bpNodeConfigMap || {});
                 //初始化蓝图左侧节点列表
                 const {initUsedLayerNodes} = bpLeftStore;
                 const usedLayerNodes: Record<string, boolean> = {};
-                Object.keys(store?.bpNodeLayoutMap || {}).forEach(key => {
+                Object.keys(data?.bpNodeLayoutMap || {}).forEach(key => {
                     usedLayerNodes[key] = true;
                 })
                 initUsedLayerNodes(usedLayerNodes);
                 setLoaded(true);
             } else {
-                message.error(msg);
+                message.error("项目不存在");
             }
         })
     }

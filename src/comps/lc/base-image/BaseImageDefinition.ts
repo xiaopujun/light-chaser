@@ -15,7 +15,7 @@ export default class BaseImageDefinition extends AbstractDefinition<BaseImageCon
     getBaseInfo(): BaseInfoType {
         return {
             compName: "基础图片",
-            compKey: "LcBaseImage",
+            compKey: "BaseImage",
             type: "基础",
             typeKey: "base",
         };
@@ -25,7 +25,7 @@ export default class BaseImageDefinition extends AbstractDefinition<BaseImageCon
         return baseImage;
     }
 
-    getComponent(): ClazzTemplate<BaseImageController> | null {
+    getController(): ClazzTemplate<BaseImageController> | null {
         return BaseImageController;
     }
 
@@ -34,7 +34,7 @@ export default class BaseImageDefinition extends AbstractDefinition<BaseImageCon
             base: {
                 id: "",
                 name: '基础图片',
-                type: 'LcBaseImage',
+                type: 'BaseImage',
             },
             style: {
                 type: 'online',

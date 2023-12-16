@@ -13,13 +13,11 @@ import {
 } from "./OperateType";
 import {historyOperator} from "./HistoryOperator";
 import eventOperateStore from "../EventOperateStore";
-import {AbstractDefinition} from "../../../framework/core/AbstractDefinition";
 import {toJS} from "mobx";
 import rightStore from "../../right/RightStore";
 import {cloneDeep} from "lodash";
 import layerListStore from "../../float-configs/layer-list/LayerListStore";
 import {ConfigureObjectFragments} from "../../../utils/ObjectUtil";
-import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
 import IdGenerate from "../../../utils/IdGenerate";
 import {Component} from "react";
 import LayerUtil from "../../float-configs/layer-list/util/LayerUtil";
@@ -110,43 +108,29 @@ class HistoryRecordOperateProxy {
         historyOperator.put({actions: [data]});
     }
 
-    public doAdd(container: HTMLDivElement | null, layout: ILayerItem): void {
-        const {elemConfigs, compController} = designerStore;
-        let componentDefine: AbstractDefinition = DesignerLoaderFactory.getLoader().definitionMap[layout!.type + ''];
-        if (componentDefine) {
-            const AbsCompImpl = componentDefine.getComponent();
-            if (AbsCompImpl) {
-                let config;
-                if (layout.id! in compController!) {
-                    //重新编组后，被编组组件会重新渲染，需从之前的实例中获取原有数据
-                    config = compController![layout.id!].getConfig();
-                } else if (layout.id! in elemConfigs!) {
-                    config = elemConfigs![layout.id!];
-                } else {
-                    config = componentDefine.getInitConfig();
-                    config.base.id = layout.id!;
-                }
-                new AbsCompImpl()!.create(container!, config).then((instance: any) => {
-                    const {compController} = designerStore;
-                    compController[layout.id + ''] = instance;
-                });
-                //如果addRecordCompId存在，说明是手动（拖拽、双击）新增组件，该组件的数据需要存储到历史记录中
-                const {addRecordCompId, setAddRecordCompId} = eventOperateStore;
-                if (addRecordCompId && addRecordCompId === layout.id) {
-                    const data: IHistoryRecord = {
-                        type: OperateType.ADD,
-                        prev: null,
-                        next: [{
-                            id: layout.id, data: {
-                                layerConfig: toJS(layout),
-                                elemConfig: null
-                            }
-                        }]
+    public doAdd(layer: ILayerItem): void {
+        const {layerConfigs, statisticInfo} = designerStore;
+        layerConfigs[layer.id + ""] = layer;
+        if (statisticInfo)
+            statisticInfo.count = Object.keys(layerConfigs).length;
+        const {addRecordCompId, setAddRecordCompId} = eventOperateStore;
+        /**
+         * addRecordCompId为不为null，说明是从组件面板拖拽添加的组件要记录操作日志，反之其他操作导致的组件添加则不记录日志
+         */
+        if (addRecordCompId && addRecordCompId === layer.id) {
+            //记录操作日志
+            const data: IHistoryRecord = {
+                type: OperateType.ADD,
+                prev: null,
+                next: [{
+                    id: layer.id!, data: {
+                        layerConfig: toJS(layer),
+                        elemConfig: null
                     }
-                    historyOperator.put({actions: [data]});
-                    setAddRecordCompId(null);
-                }
+                }]
             }
+            historyOperator.put({actions: [data]});
+            setAddRecordCompId(null);
         }
     }
 

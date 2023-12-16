@@ -13,7 +13,7 @@ export default class BaseIframeDefinition extends AbstractDefinition<BaseIframeC
     getBaseInfo(): BaseInfoType {
         return {
             compName: "基础iframe",
-            compKey: "LcBaseIframe",
+            compKey: "BaseIframe",
             type: "基础",
             typeKey: "base",
         };
@@ -23,7 +23,7 @@ export default class BaseIframeDefinition extends AbstractDefinition<BaseIframeC
         return baseIframeImg;
     }
 
-    getComponent(): ClazzTemplate<BaseIframeController> | null {
+    getController(): ClazzTemplate<BaseIframeController> | null {
         return BaseIframeController;
     }
 
@@ -32,7 +32,7 @@ export default class BaseIframeDefinition extends AbstractDefinition<BaseIframeC
             base: {
                 id: "",
                 name: '基础iframe',
-                type: 'LcBaseIframe',
+                type: 'BaseIframe',
             },
             style: {
                 src: '',

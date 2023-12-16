@@ -1,10 +1,4 @@
-export enum UpdateType {
-    OPTIONS,
-    DATA,
-}
-
 export interface UpdateOptions {
-    updateType?: UpdateType;
     reRender: boolean;
 }
 
@@ -33,7 +27,7 @@ abstract class AbstractController<I = any, C = any> {
      * @param container 容器
      * @param config 组件配置
      */
-    public abstract create(container: HTMLElement, config: C): Promise<this>;
+    public abstract create(container: HTMLElement, config: C): Promise<void>;
 
     /**
      * 更新组件配置，并触发组件重新渲染

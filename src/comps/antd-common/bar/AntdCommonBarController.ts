@@ -1,7 +1,7 @@
 import {ComponentBaseProps} from "../../common-component/common-types";
 import {WritableBarOptions} from "../types";
 import {Bar} from "@antv/g2plot";
-import {UpdateType, UpdateOptions} from "../../../framework/core/AbstractController";
+import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
@@ -12,8 +12,8 @@ export interface AntdBarProps extends ComponentBaseProps {
 
 export default class AntdCommonBarController extends AntdBaseDesignerController<Bar, AntdBarProps> {
 
-    async create(container: HTMLElement, config: AntdBarProps): Promise<this> {
-        return super.commonCreate(container, Bar, config);
+    async create(container: HTMLElement, config: AntdBarProps): Promise<void> {
+        await super.commonCreate(container, Bar, config);
     }
 
     destroy(): void {
@@ -80,6 +80,6 @@ export default class AntdCommonBarController extends AntdBaseDesignerController<
         if ((styleConfig?.yAxis) && (styleConfig?.yAxis?.subTickLine?.style as ShapeAttrs))
             (styleConfig!.yAxis!.subTickLine!.style as ShapeAttrs).stroke = supplementSecond;
         //重新渲染
-        this.update({style: styleConfig} as any, {reRender: true, updateType: UpdateType.OPTIONS});
+        this.update({style: styleConfig} as any, {reRender: true});
     }
 }

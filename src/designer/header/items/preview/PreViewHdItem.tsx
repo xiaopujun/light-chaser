@@ -1,7 +1,6 @@
 import {AbstractHeaderItem, HeaderItemProps} from "../../HeaderTypes";
 import {EyeFilled} from "@ant-design/icons";
-import designerStore from "../../../store/DesignerStore";
-import {message} from "antd";
+import URLUtil, {DesignerMode} from "../../../../utils/URLUtil";
 
 /**
  * header-预览
@@ -12,13 +11,10 @@ export default class PreViewHdItem extends AbstractHeaderItem {
             icon: EyeFilled,
             name: '预览',
             order: 4,
-          onClick: () => {
-            if (!designerStore.id) {
-              message.error("项目未保存");
-              return;
+            onClick: () => {
+                const {saveType, id} = URLUtil.parseUrlParams();
+                window.open(`/view?id=${id}&saveType=${saveType}&mode=${DesignerMode.VIEW}`, '_blank');
             }
-            window.open(`/view?id=${designerStore.id}&saveType=${designerStore.projectConfig.saveType}&action=view`)
-          }
         };
     }
 }

@@ -1,7 +1,7 @@
 import eventOperateStore from "../EventOperateStore";
 import designerStore from "../../store/DesignerStore";
-import {ILayerItem, SaveType} from "../../DesignerType";
-import {cloneDeep, throttle} from "lodash";
+import {ILayerItem, IProjectInfo, SaveType} from "../../DesignerType";
+import {throttle} from "lodash";
 import {historyOperator} from "../undo-redo/HistoryOperator";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import undoRedoMap from "../undo-redo/core";
@@ -9,13 +9,12 @@ import runtimeConfigStore from "../../store/RuntimeConfigStore";
 import headerStore from "../../header/HeaderStore";
 import layerListStore from "../../float-configs/layer-list/LayerListStore";
 import footerStore from "../../footer/FooterStore";
-import DateUtil from "../../../utils/DateUtil";
 import bpStore from "../../../blueprint/store/BPStore";
 import {reRenderAllLine} from "../../../blueprint/drag/BPMovable";
 import bpLeftStore from "../../../blueprint/left/BPLeftStore";
-import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
-import {OperateResult} from "../../../framework/operate/AbstractOperator";
 import {message} from "antd";
+import operatorMap from "../../../framework/operate";
+import URLUtil from "../../../utils/URLUtil";
 
 export const selectAll = () => {
     const {layerConfigs} = designerStore;
@@ -120,28 +119,26 @@ export const doDelete = () => {
 //保存函数节流5s, 5s内不可重复保存
 export const doSave = throttle(() => {
     return new Promise(() => {
-        let {projectConfig: {saveType}} = designerStore;
-        if (saveType === SaveType.LOCAL) {
-            const {projectConfig: {saveType = SaveType.LOCAL}, updateProjectConfig} = designerStore;
-            updateProjectConfig({updateTime: DateUtil.format(new Date())})
-            const proData = designerStore.getData();
-            //设置蓝图数据
-            const {bpAPMap, bpLines, bpAPLineMap, getAllNodeConfig, bpNodeLayoutMap} = bpStore;
-            proData.bpAPMap = bpAPMap;
-            proData.bpLines = bpLines;
-            proData.bpAPLineMap = bpAPLineMap;
-            proData.bpNodeConfigMap = getAllNodeConfig();
-            proData.bpNodeLayoutMap = bpNodeLayoutMap;
-            DesignerLoaderFactory.getLoader().operatorMap[saveType].saveProject(cloneDeep(proData)).then((res: OperateResult) => {
-                const {status, msg} = res;
-                if (status)
-                    message.success(msg);
-                else
-                    message.error(msg);
-            });
-        } else if (saveType === SaveType.SERVER) {
-            alert("server save");
+        const {saveType, id} = URLUtil.parseUrlParams();
+        const proData = designerStore.getData();
+        //设置蓝图数据
+        const {bpAPMap, bpLines, bpAPLineMap, getAllNodeConfig, bpNodeLayoutMap} = bpStore;
+        proData.bpAPMap = bpAPMap;
+        proData.bpLines = bpLines;
+        proData.bpAPLineMap = bpAPLineMap;
+        proData.bpNodeConfigMap = getAllNodeConfig();
+        proData.bpNodeLayoutMap = bpNodeLayoutMap;
+        //转换为最终保存的数据格式
+        const projectInfo: IProjectInfo = {
+            id,
+            dataJson: JSON.stringify(proData),
         }
+        operatorMap[saveType as SaveType].updateProject(projectInfo).then((res) => {
+            if (res)
+                message.success('保存成功');
+            else
+                message.error('保存失败');
+        });
     });
 }, 5000);
 

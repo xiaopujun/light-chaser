@@ -1,0 +1,130 @@
+.project-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 15px;
+
+  .create-new-btn {
+    aspect-ratio: 16/9;
+  }
+
+  .project-item {
+    aspect-ratio: 16/9;
+    border: 1px solid #3f3f3f;
+    background-color: #002D6100;
+    border-radius: 2px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    color: whitesmoke;
+    position: relative;
+    overflow: hidden;
+    background-size: 100%;
+    background-position: center center;
+
+    .pro-list-content {
+      display: flex;
+      z-index: 1;
+      flex-direction: column;
+      align-items: center;
+
+      .pro-content-title {
+        font-size: 18px;
+        transform: translateY(20px);
+        transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      }
+
+      .pro-content-operates {
+        margin-top: 10px;
+        display: flex;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.5s;
+
+        .operate-item {
+          cursor: pointer;
+          width: 30px;
+          height: 30px;
+          margin: 0 10px;
+          padding-top: 3px;
+          background-color: rgba(0, 68, 88, 0.51);
+          border: 1px solid #0f7ba7;
+          border-radius: 15px;
+          text-align: center;
+
+        }
+
+        span {
+          pointer-events: none;
+        }
+      }
+    }
+
+    .pro-content-footer {
+      position: absolute;
+      bottom: 5px;
+      right: 10px;
+      display: flex;
+      align-items: center;
+
+      .state-point {
+        animation: fade 2s infinite;
+        width: 5px;
+        height: 5px;
+        border-radius: 5px;
+      }
+
+      .state-text {
+        opacity: 0.7;
+        transform-origin: center center;
+        transform: scale(0.8);
+      }
+    }
+  }
+
+  .project-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .project-item:hover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+
+  .project-item:hover {
+    background-size: 120%;
+    transition: background-size 0.5s;
+
+    .pro-list-content {
+      .pro-content-title {
+        transform: translateY(-10px);
+      }
+
+      .pro-content-operates {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  }
+
+  .project-item:not(:hover) {
+    background-size: 100%;
+    transition: background-size 0.5s;
+  }
+
+  .project-item:hover::before {
+    opacity: 1;
+  }
+}

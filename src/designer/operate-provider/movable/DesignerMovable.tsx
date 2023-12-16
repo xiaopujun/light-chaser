@@ -23,7 +23,11 @@ import './DesignerMovable.less';
 import baseInfoStore from "../../../comps/common-component/base-info/BaseInfoStore";
 import LayerUtil from "../../float-configs/layer-list/util/LayerUtil";
 
-class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }> {
+export interface DesignerMovableProps {
+    children?: React.ReactNode;
+}
+
+class DesignerMovable extends React.Component<DesignerMovableProps, { throttleDragRotate: number }> {
     movableRef = React.createRef<Moveable>();
 
     constructor(props: {}) {

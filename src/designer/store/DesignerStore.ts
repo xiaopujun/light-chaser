@@ -4,7 +4,7 @@ import {
     CanvasConfig,
     IExtendParams,
     ILayerItem,
-    ProjectConfig,
+    IProjectInfo,
     ProjectDataType,
     ProjectState,
     SaveType,
@@ -63,7 +63,7 @@ class DesignerStore {
     /**
      * 项目设置
      */
-    projectConfig: ProjectConfig = {
+    projectConfig: IProjectInfo = {
         name: "", //项目名称
         des: "", //项目描述
         state: ProjectState.DRAFT, //项目状态
@@ -135,9 +135,6 @@ class DesignerStore {
         this.canvasConfig = store.canvasConfig
             ? {...this.canvasConfig, ...store.canvasConfig}
             : this.canvasConfig;
-        this.projectConfig = store.projectConfig
-            ? {...this.projectConfig, ...store.projectConfig}
-            : this.projectConfig;
         this.elemConfigs = store.elemConfigs
             ? {...this.elemConfigs, ...store.elemConfigs}
             : this.elemConfigs;
@@ -160,9 +157,7 @@ class DesignerStore {
             elemConfigs[key] = this.compController[key].getConfig();
         });
         return {
-            id: this.id,
             canvasConfig: toJS(this.canvasConfig),
-            projectConfig: toJS(this.projectConfig),
             elemConfigs: elemConfigs,
             layerConfigs: toJS(this.layerConfigs),
             statisticInfo: toJS(this.statisticInfo),
@@ -201,10 +196,8 @@ class DesignerStore {
     /**
      * 添加元素
      */
-    addItem = (item: ILayerItem) => {
-        this.layerConfigs[item.id + ""] = item;
-        if (this.statisticInfo)
-            this.statisticInfo.count = Object.keys(this.layerConfigs).length;
+    addItem = (layer: ILayerItem) => {
+        historyRecordOperateProxy.doAdd(layer);
     };
 
     /**
@@ -261,7 +254,7 @@ class DesignerStore {
     /**
      * 更新项目配置
      */
-    updateProjectConfig = (data: ProjectConfig) => {
+    updateProjectConfig = (data: IProjectInfo) => {
         this.projectConfig = {...this.projectConfig, ...data};
     };
 

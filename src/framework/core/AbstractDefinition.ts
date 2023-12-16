@@ -19,8 +19,8 @@ export interface EventInfo {
 
 /**
  * 自动扫描抽象组件定义核心类。
- * 对于所有继承并实现了该抽象类的字类，都会被自动扫描到并注册到系统中。
- * 因此，所有要接入设计器的react组件都应该按照该类的约定实现所有的方法。
+ * 对于所有继承并实现了该抽象类的子类，都会被自动扫描到并注册到设计器中。
+ * 因此，所有要接入设计器的react组件都应该按照该类的约定实现其所有的方法。
  *
  * 泛型说明：
  * C: 组件控制器类，用于指定当前组件定义对应的控制器类
@@ -41,7 +41,7 @@ export abstract class AbstractDefinition<C extends AbstractController = Abstract
     /**
      * 返回React组件的类模板，在设计器拖拽创建组件实例时会使用到
      */
-    abstract getComponent(): ClazzTemplate<C> | null;
+    abstract getController(): ClazzTemplate<C> | null;
 
     /**
      * 返回组件图片缩略图，在组件列表中展示时使用。图片不要超过300kb,否则会影响设计器的加载速度

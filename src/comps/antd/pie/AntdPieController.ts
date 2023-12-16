@@ -1,7 +1,7 @@
 import {ComponentBaseProps} from "../../common-component/common-types";
 import {WritablePieOptions} from "../../antd-common/types";
 import {Pie, StatisticText} from "@antv/g2plot";
-import {UpdateType, UpdateOptions} from "../../../framework/core/AbstractController";
+import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
@@ -13,8 +13,8 @@ export interface AntdPieProps extends ComponentBaseProps {
 
 export default class AntdPieController extends AntdBaseDesignerController<Pie, AntdPieProps> {
 
-    async create(container: HTMLElement, config: AntdPieProps): Promise<this> {
-        return super.commonCreate(container, Pie, config);
+    async create(container: HTMLElement, config: AntdPieProps): Promise<void> {
+        await super.commonCreate(container, Pie, config);
     }
 
     destroy(): void {
@@ -56,6 +56,6 @@ export default class AntdPieController extends AntdBaseDesignerController<Pie, A
         if ((styleConfig?.statistic) && (styleConfig?.statistic?.content) && (styleConfig.statistic.content as StatisticText).style)
             ((styleConfig!.statistic!.content as StatisticText).style as CSSProperties)!.color = subText!;
         //重新渲染
-        this.update({style: styleConfig} as any, {reRender: true, updateType: UpdateType.OPTIONS});
+        this.update({style: styleConfig} as any, {reRender: true});
     }
 }

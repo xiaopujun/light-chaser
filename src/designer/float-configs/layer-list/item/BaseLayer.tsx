@@ -10,6 +10,7 @@ export interface LayerProps {
     hide?: boolean;
     selected?: boolean;
     inputMode?: boolean;
+    children?: React.ReactNode;
 }
 
 export abstract class BaseLayer extends React.PureComponent<LayerProps, LayerProps & { showContent?: boolean }> {

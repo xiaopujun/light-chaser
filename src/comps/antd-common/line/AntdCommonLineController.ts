@@ -1,7 +1,7 @@
 import {ComponentBaseProps} from "../../common-component/common-types";
 import {WritableLineOptions} from "../types";
 import {Line} from "@antv/g2plot";
-import {UpdateType, UpdateOptions} from "../../../framework/core/AbstractController";
+import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
@@ -12,8 +12,8 @@ export interface AntdLineProps extends ComponentBaseProps {
 
 export default class AntdCommonLineController extends AntdBaseDesignerController<Line, AntdLineProps> {
 
-    async create(container: HTMLElement, config: AntdLineProps): Promise<this> {
-        return super.commonCreate(container, Line, config);
+    async create(container: HTMLElement, config: AntdLineProps): Promise<void> {
+        await super.commonCreate(container, Line, config);
     }
 
     destroy(): void {
@@ -87,6 +87,6 @@ export default class AntdCommonLineController extends AntdBaseDesignerController
         if ((styleConfig?.yAxis) && (styleConfig?.yAxis?.subTickLine?.style as ShapeAttrs)?.stroke)
             (styleConfig!.yAxis!.subTickLine!.style as ShapeAttrs).stroke = subText;
         //重新渲染
-        this.update({style: styleConfig} as any, {reRender: true, updateType: UpdateType.OPTIONS});
+        this.update({style: styleConfig} as any, {reRender: true});
     }
 }

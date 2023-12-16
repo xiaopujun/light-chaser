@@ -1,6 +1,10 @@
-import {Component} from 'react';
+import {Component, ReactNode} from 'react';
 
-class LcRight extends Component {
+export interface LcRightProps {
+    children?: ReactNode;
+}
+
+class LcRight extends Component<LcRightProps> {
     render() {
         return (
             <div className={'structure-body-right'}>{this.props.children}</div>

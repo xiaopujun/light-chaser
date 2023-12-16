@@ -18,7 +18,7 @@ export default class BaseColorBlockDefinition extends AbstractDefinition<BaseCol
     getBaseInfo(): BaseInfoType {
         return {
             compName: "基础色块",
-            compKey: "LcBaseColorBlock",
+            compKey: "BaseColorBlock",
             type: "基础",
             typeKey: "base",
         };
@@ -28,7 +28,7 @@ export default class BaseColorBlockDefinition extends AbstractDefinition<BaseCol
         return baseColorBlockImg;
     }
 
-    getComponent(): ClazzTemplate<BaseColorBlockController> | null {
+    getController(): ClazzTemplate<BaseColorBlockController> | null {
         return BaseColorBlockController;
     }
 
@@ -37,10 +37,14 @@ export default class BaseColorBlockDefinition extends AbstractDefinition<BaseCol
             base: {
                 id: "",
                 name: '基础色块',
-                type: 'LcBaseColorBlock',
+                type: 'BaseColorBlock',
             },
             style: {
                 background: '#009DFF33',
+                borderRadius: 0,
+                borderWidth: 0,
+                borderColor: '#74747400',
+                borderStyle: 'none',
             },
         };
     }

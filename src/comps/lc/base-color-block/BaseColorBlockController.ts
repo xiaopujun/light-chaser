@@ -1,17 +1,19 @@
 import {ThemeItemType} from "../../../designer/DesignerType";
-import {UpdateType, UpdateOptions} from "../../../framework/core/AbstractController";
+import {UpdateOptions} from "../../../framework/core/AbstractController";
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
 import ComponentUtil from "../../../utils/ComponentUtil";
-import BaseColorBlockComponent, {BaseColorBlockComponentProps} from "./BaseColorBlockComponent";
+import BaseColorBlockComponent, {
+    BaseColorBlockComponentProps,
+    BaseColorBlockComponentRef
+} from "./BaseColorBlockComponent";
 import ObjectUtil from "../../../utils/ObjectUtil";
 
-export class BaseColorBlockController extends AbstractDesignerController<BaseColorBlockComponent, BaseColorBlockComponentProps> {
+export class BaseColorBlockController extends AbstractDesignerController<BaseColorBlockComponentRef, BaseColorBlockComponentProps> {
 
-    async create(container: HTMLElement, config: any): Promise<this> {
+    async create(container: HTMLElement, config: any): Promise<void> {
         this.config = config;
         this.container = container;
-        this.instance = await ComponentUtil.createAndRender(container, BaseColorBlockComponent, config);
-        return this;
+        this.instance = await ComponentUtil.createAndRender<BaseColorBlockComponentRef>(container, BaseColorBlockComponent, config);
     }
 
     destroy(): void {
@@ -25,9 +27,9 @@ export class BaseColorBlockController extends AbstractDesignerController<BaseCol
 
     update(config: BaseColorBlockComponentProps, upOp?: UpdateOptions | undefined): void {
         this.config = ObjectUtil.merge(this.config, config);
-        upOp = upOp || {reRender: true, updateType: UpdateType.OPTIONS};
+        upOp = upOp || {reRender: true};
         if (upOp.reRender)
-            this.instance?.setState(this.config);
+            this.instance?.updateConfig(this.config!);
     }
 
     updateTheme(newTheme: ThemeItemType): void {

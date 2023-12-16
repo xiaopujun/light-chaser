@@ -1,10 +1,12 @@
 import {Component} from 'react';
 import {ComponentBaseProps} from "../../common-component/common-types";
+import './FontGlobal.css';
 
 export interface BaseTextComponentStyle {
     color?: string;
     fontSize?: number;
     fontWeight?: number;
+    fontFamily?: string;
     alignItems?: string;
     justifyContent?: string;
 }

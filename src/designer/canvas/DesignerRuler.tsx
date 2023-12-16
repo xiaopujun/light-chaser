@@ -5,6 +5,7 @@ import {IPoint} from "../../blueprint/store/BPStore";
 
 interface DesignerRulerProps {
     offset?: IPoint;
+    children?: React.ReactNode;
 }
 
 /**

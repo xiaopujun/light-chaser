@@ -1,7 +1,11 @@
-import {Component} from 'react';
+import {Component, ReactNode} from 'react';
 import './structure.less';
 
-class LcStructure extends Component {
+export interface LcStructureProps {
+    children?: ReactNode;
+}
+
+class LcStructure extends Component<LcStructureProps> {
     render() {
         return (
             <div className={'lc-designer-structure'}>{this.props.children}</div>

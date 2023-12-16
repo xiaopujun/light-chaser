@@ -17,7 +17,7 @@ const DataConfig = React.lazy(() => import("../../common-component/data-config/D
 
 class AntdPieDefinition extends AntdCommonDefinition<AntdPieController, AntdPieProps> {
 
-    getComponent(): ClazzTemplate<AntdPieController> | null {
+    getController(): ClazzTemplate<AntdPieController> | null {
         return AntdPieController;
     }
 

@@ -1,7 +1,7 @@
 import {ComponentBaseProps} from "../../common-component/common-types";
 import {WritableScatterOptions} from "../types";
 import {Scatter} from "@antv/g2plot";
-import {UpdateType, UpdateOptions} from "../../../framework/core/AbstractController";
+import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
@@ -12,8 +12,8 @@ export interface AntdScatterProps extends ComponentBaseProps {
 
 export default class AntdCommonScatterController extends AntdBaseDesignerController<Scatter, AntdScatterProps> {
 
-    async create(container: HTMLElement, config: AntdScatterProps): Promise<this> {
-        return super.commonCreate(container, Scatter, config);
+    async create(container: HTMLElement, config: AntdScatterProps): Promise<void> {
+        await super.commonCreate(container, Scatter, config);
     }
 
     destroy(): void {
@@ -78,6 +78,6 @@ export default class AntdCommonScatterController extends AntdBaseDesignerControl
         if ((styleConfig?.yAxis) && (styleConfig?.yAxis?.subTickLine?.style as ShapeAttrs))
             (styleConfig!.yAxis!.subTickLine!.style as ShapeAttrs).stroke = supplementSecond;
         //重新渲染
-        this.update({style: styleConfig} as any, {reRender: true, updateType: UpdateType.OPTIONS});
+        this.update({style: styleConfig} as any, {reRender: true});
     }
 }

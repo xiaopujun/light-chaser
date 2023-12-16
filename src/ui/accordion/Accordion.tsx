@@ -1,4 +1,4 @@
-import  {Component} from 'react';
+import {Component, ReactNode} from 'react';
 import './Accordion.less';
 import {QuestionCircleOutlined, RightOutlined} from "@ant-design/icons";
 import Switch from "../switch/Switch";
@@ -16,6 +16,7 @@ interface AccordionProps {
     // 开关状态值（非受控）
     defaultValue?: boolean;
     tip?: string;
+    children?: ReactNode;
 }
 
 /**

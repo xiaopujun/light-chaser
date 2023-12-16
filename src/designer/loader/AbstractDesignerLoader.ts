@@ -1,6 +1,5 @@
 import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
 import {HeaderItemProps} from "../header/HeaderTypes";
-import {AbstractOperator} from "../../framework/operate/AbstractOperator";
 import AbstractConvert from "../../framework/convert/AbstractConvert";
 import AbstractLoader from "./AbstractLoader";
 
@@ -10,8 +9,6 @@ export abstract class AbstractDesignerLoader extends AbstractLoader {
     public definitionMap: Record<string, AbstractDefinition> = {};
     //头部操作菜单实例
     public headerItemInstances: HeaderItemProps[] = [];
-    //项目数据操作映射
-    public operatorMap: { [key: string]: AbstractOperator } = {};
     //数据转换器
     public convertMap: { [key: string]: AbstractConvert } = {};
 
@@ -19,8 +16,10 @@ export abstract class AbstractDesignerLoader extends AbstractLoader {
      * 加载设计器
      */
     public load(): void {
+        //扫描组件
         this.scanComponents();
-        this.loadProjectData();
+        //初始化项目
+        this.initProject();
     }
 
     /**
@@ -31,5 +30,27 @@ export abstract class AbstractDesignerLoader extends AbstractLoader {
     /**
      * 加载设计器项目数据
      */
-    protected abstract loadProjectData(): void;
+    protected abstract initProject(): void;
+
+    /**
+     * 扫描自定义组件
+     */
+    protected scannerCustomComponents(): void {
+        const compCtx: any = import.meta.glob('../../comps/**/*Definition.ts', {eager: true});
+        Object.keys(compCtx).forEach(key => {
+            const Clazz = compCtx[key]?.default;
+            if (Clazz && AbstractDefinition.isPrototypeOf(Clazz)) {
+                let definition: AbstractDefinition = new Clazz();
+                if (typeof definition.getBaseInfo === "function") {
+                    let compKey = definition.getBaseInfo().compKey;
+                    if (compKey)
+                        this.definitionMap[compKey] = definition;
+                }
+            } else if (Clazz && AbstractConvert.isPrototypeOf(Clazz)) {
+                let convert: AbstractConvert = new Clazz();
+                let convertKey = convert.getKey();
+                this.convertMap[convertKey] = convert;
+            }
+        });
+    }
 }

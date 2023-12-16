@@ -1,4 +1,4 @@
-import  {Component} from 'react';
+import {Component} from 'react';
 import {Popover} from 'antd';
 import './ColorPicker.less';
 import {GradientColorPicker} from "./GradientColorPicker";
@@ -53,7 +53,7 @@ class ColorPicker extends Component<ColorPickerProps> {
         } else if (showText && color?.indexOf('#') !== -1) {
             hex = color;
         }
-        let _style = {
+        const _style = {
             width,
             height,
             borderRadius: radius,
@@ -66,7 +66,7 @@ class ColorPicker extends Component<ColorPickerProps> {
                         <GradientColorPicker value={color} onChange={this.onChangeComplete}
                                              hideControls={hideControls}/>
                     </div>)} trigger={'click'}>
-                    <div className={`${showBorder && 'color-picker-border'}`} style={{..._style}}>
+                    <div className={`${showBorder && 'color-picker-border'}`}>
                         <div style={{background: `${color}`, ..._style}}
                              className={'color-area'}>
                             {showText ? <span>{hex}</span> : null}

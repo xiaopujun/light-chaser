@@ -12,7 +12,7 @@ export const Login: React.FC = props => {
 
     const login = () => {
         if (account === 'admin' && password === 'admin') {
-            window.location.href = '/list';
+            window.location.href = '/home';
         } else {
             message.warn('账户或密码错误');
         }

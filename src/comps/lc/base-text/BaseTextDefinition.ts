@@ -18,11 +18,11 @@ export default class BaseTextDefinition extends AbstractDefinition<BaseTextContr
     getBaseInfo(): BaseInfoType {
         return {
             compName: "基础文本",
-            compKey: "LcBaseText",
+            compKey: "BaseText",
             type: "基础",
             typeKey: "base",
-            width: 100,
-            height: 30,
+            width: 64,
+            height: 26,
         };
     }
 
@@ -30,7 +30,7 @@ export default class BaseTextDefinition extends AbstractDefinition<BaseTextContr
         return baseTextImg;
     }
 
-    getComponent(): ClazzTemplate<BaseTextController> | null {
+    getController(): ClazzTemplate<BaseTextController> | null {
         return BaseTextController;
     }
 
@@ -39,7 +39,7 @@ export default class BaseTextDefinition extends AbstractDefinition<BaseTextContr
             base: {
                 id: "",
                 name: '基础文本',
-                type: 'LcBaseText',
+                type: 'BaseText',
             },
             style: {
                 color: '#a7a7a7',

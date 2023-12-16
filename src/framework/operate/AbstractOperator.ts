@@ -1,22 +1,16 @@
-import {ProjectDataType} from "../../designer/DesignerType";
-
-export interface OperateResult<T = any> {
-    status: boolean;
-    msg?: string;
-    data?: T;
-}
+import {IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
 
 export abstract class AbstractOperator {
 
-    public abstract getKey(): string;
+    public abstract createProject(project: IProjectInfo): Promise<string>;
 
-    public abstract saveProject(projectData: ProjectDataType): Promise<OperateResult> ;
+    public abstract updateProject(projectData: IProjectInfo): Promise<boolean> ;
 
     public abstract deleteProject(id: string): Promise<boolean>;
 
-    public abstract getProjectSimpleInfoList(): Promise<any[]>;
+    public abstract getProjectInfoList(): Promise<IProjectInfo[]>;
 
-    public abstract getProject(id: string): Promise<OperateResult<ProjectDataType>>;
+    public abstract getProjectData(id: string): Promise<ProjectDataType | null>;
 
-    public abstract copyProject(id: string, name?: string): Promise<OperateResult<string>>;
+    public abstract copyProject(id: string): Promise<string>;
 }
