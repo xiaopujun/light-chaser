@@ -3,7 +3,7 @@
 <h2> LIGHT CHASER</h2>
 
 <p>
-    <img alt="" src="https://img.shields.io/badge/version-v0.0.3-blue">
+    <img alt="" src="https://img.shields.io/badge/version-v0.0.9-blue">
     <img alt="" src="https://img.shields.io/badge/language-typescript-blue">
     <img alt="" src="https://img.shields.io/badge/license-MIT-08CE5D?logoColor=08CE5D">
     <img alt="" src="https://img.shields.io/badge/framework-React-61daeb?logoColor=08CE5D">
