@@ -5,6 +5,7 @@ import {observer} from "mobx-react";
 import Loading from "../../ui/loading/Loading";
 import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
 import layerBuilder from "../float-configs/layer-list/LayerBuilder";
+import ScreenFit from "../../framework/screen-fit/ScreenFit";
 
 class DesignerView extends Component {
 
@@ -18,9 +19,11 @@ class DesignerView extends Component {
         if (!loaded)
             return <Loading/>;
         return (
-            <div style={{width, height, background: 'black', overflow: 'hidden', position: "relative"}}>
-                {layerBuilder.buildCanvasComponents(layerConfigs)}
-            </div>
+            <ScreenFit width={width!} height={height!}>
+                <div style={{width, height, background: 'black', overflow: 'hidden', position: "relative"}}>
+                    {layerBuilder.buildCanvasComponents(layerConfigs)}
+                </div>
+            </ScreenFit>
         );
     }
 }
