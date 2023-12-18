@@ -8,7 +8,7 @@ class HomeStore {
         })
     }
 
-    currentMenu: string = 'server';
+    currentMenu: string = 'local';
 
     setCurrentMenu = (menu: string) => this.currentMenu = menu;
 
