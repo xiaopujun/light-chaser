@@ -64,7 +64,6 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
                         config: {
                             options: [
                                 {label: '钉钉进步体', value: 'DingTalk JinBuTi'},
-                                {label: '点点像素体', value: 'DottedSongtiCircleRegular'},
                                 {label: '抖音美好体', value: 'DouyinSansBold'},
                                 {label: '优设标题黑', value: '优设标题黑'},
                                 {label: '字体传奇南安体', value: '字体传奇南安体-免费商用'},

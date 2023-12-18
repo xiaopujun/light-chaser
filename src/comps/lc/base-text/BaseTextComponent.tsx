@@ -25,7 +25,7 @@ class BaseTextComponent extends Component<BaseTextComponentProps, BaseTextCompon
     render() {
         const {style, data} = this.state;
         return (
-            <div style={{height: '100%', ...style}}>
+            <div style={{height: '100%', overflow: 'hidden', ...style}}>
                 {data?.staticData?.data}
             </div>
         );

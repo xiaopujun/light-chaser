@@ -70,7 +70,7 @@ class CanvasHdConfigImpl extends Component {
                     </div>
                     <p className={'canvas-config-desc'}>说明：修改画布设置，会对整体效果产生较大影响，建议先调试好画布设置后再进行大屏设计</p>
                     <div className={'lc-header-canvas-footer'}>
-                        <Button type={'submit'}>保存</Button>
+                        <Button type={'submit'}>保存</Button>&nbsp;&nbsp;
                         <Button type={'button'} onClick={this.onClose}>取消</Button>
                     </div>
                 </form>

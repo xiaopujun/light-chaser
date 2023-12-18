@@ -49,7 +49,7 @@ class BaseTableComponent extends Component<BaseTableComponentProps, BaseTableCom
     theadRef: HTMLElement | null = null;
     tbodyRef1: HTMLElement | null = null;
     tbodyRef2: HTMLElement | null = null;
-    resizeObserver: ResizeObserver | null = null;
+    resizeObserver: MutationObserver | null = null;
     contentHeight: number | null = null;
 
     constructor(props: BaseTableComponentProps) {
@@ -70,7 +70,11 @@ class BaseTableComponent extends Component<BaseTableComponentProps, BaseTableCom
                 this.changeTableTrHeight();
             }, 100));
             // 开始观察
-            this.resizeObserver.observe(this.tableRef);
+            this.resizeObserver!.observe(this.tableRef, {
+                attributes: true,
+                attributeFilter: ['style'],
+                attributeOldValue: true
+            });
             this.changeTableTrHeight();
         }
     }
@@ -87,7 +91,6 @@ class BaseTableComponent extends Component<BaseTableComponentProps, BaseTableCom
         const {pageSize = 0} = this.state.style!.body!;
         if (pageSize) {
             const tableBodyTds = this.tableRef?.getElementsByClassName('base-table-tr') || [];
-            console.log(tableBodyTds)
             const tdHeight = this.contentHeight! / pageSize;
             for (let i = 0; i < tableBodyTds.length; i++) {
                 (tableBodyTds[i] as HTMLElement).style.height = `${tdHeight}px`;
