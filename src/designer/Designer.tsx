@@ -1,4 +1,5 @@
 import {Component} from 'react';
+import './style/DesignerGlobalStyle.less';
 import LcHeader from "./structure/LcHeader";
 import LcBody from "./structure/LcBody";
 import LcLeft from "./structure/LcLeft";

@@ -1,5 +1,5 @@
 import {Component, lazy, Suspense} from 'react';
-import 'antd/dist/antd.min.css';
+import 'antd/dist/reset.css';
 import './App.less';
 import {Route, Routes} from "react-router-dom";
 import Loading from "./ui/loading/Loading";
