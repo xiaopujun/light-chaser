@@ -1,5 +1,4 @@
 import {lazy, Suspense} from 'react';
-import './App.less';
 import {Route, Routes} from "react-router-dom";
 import Loading from "./ui/loading/Loading";
 import {ConfigProvider, theme} from "antd";
@@ -10,7 +9,7 @@ const Designer = lazy(() => import('./designer/Designer'));
 const DesignerView = lazy(() => import('./designer/view/DesignerView'));
 const Home = lazy(() => import('./pages/home/Home'));
 
-export default function App() {
+export default function MainRouter() {
     return (
         <ConfigProvider theme={{algorithm: theme.darkAlgorithm}}>
             <Suspense fallback={<Loading/>}>
