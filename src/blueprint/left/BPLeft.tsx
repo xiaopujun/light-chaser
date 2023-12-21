@@ -85,7 +85,6 @@ const drop = (event: DragEvent) => {
         x: (event.clientX - (contentPos?.x || 0)) / canvasScale,
         y: (event.clientY - (contentPos?.y || 0)) / canvasScale
     };
-    console.log('position', position)
     if (type === 'layer-node') {
         const {setUsedLayerNodes} = bpLeftStore;
         setUsedLayerNodes(nodeId, true);

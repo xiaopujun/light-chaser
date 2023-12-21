@@ -8,8 +8,8 @@ export const BluePrintHdImpl: React.FC = () => {
             position: 'relative',
             top: -window.innerHeight,
             zIndex: 2,
-            width: window.innerWidth,
-            height: window.innerHeight,
+            width: '100%',
+            height: '100%',
             backgroundColor: '#151515'
         }}>
             <BluePrint/>
