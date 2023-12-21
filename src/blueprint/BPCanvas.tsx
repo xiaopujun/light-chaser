@@ -63,8 +63,8 @@ export const BPCanvas: React.FC = () => {
     return (
         <div className={'blue-print-canvas'} style={{
             overflow: "hidden",
-            width: window.innerWidth - 670,
-            height: window.innerHeight - 75,
+            width: '100%',
+            height: '100%',
         }}>
             <LineLayer/>
             <NodeLayer/>

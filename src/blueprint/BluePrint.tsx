@@ -12,6 +12,7 @@ export const BluePrint: React.FC = () => {
                      footer={<BPFooter/>}
                      left={<BPLeft/>}
                      right={<BPRight/>}
-                     content={<BPCanvas/>}/>
+                     content={<BPCanvas/>}
+        />
     )
 }

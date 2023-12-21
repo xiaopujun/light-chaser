@@ -1,12 +1,5 @@
 import {Component} from 'react';
 import './style/DesignerGlobalStyle.less';
-import LcHeader from "./structure/LcHeader";
-import LcBody from "./structure/LcBody";
-import LcLeft from "./structure/LcLeft";
-import LcContent from "./structure/LcContent";
-import LcRight from "./structure/LcRight";
-import LcStructure from "./structure/LcStructure";
-import LcFoot from "./structure/LcFoot";
 import DesignerLeft from "./left";
 import Right from "./right";
 import Footer from "./footer/Footer";
@@ -19,6 +12,7 @@ import DesignerCanvas from "./canvas/DesignerCanvas";
 import {observer} from "mobx-react";
 import Loading from "../ui/loading/Loading";
 import DesignerLoaderFactory from "./loader/DesignerLoaderFactory";
+import {FrameLayout} from "../ui/frame-layout/FrameLayout";
 
 class Designer extends Component {
 
@@ -39,20 +33,14 @@ class Designer extends Component {
         if (!loaded)
             return <Loading/>;
         return (
-            <LcStructure>
-                <LcHeader>
-                    <DesignerHeader/>
-                </LcHeader>
-                <LcBody>
-                    <LcLeft><DesignerLeft/></LcLeft>
-                    <LcContent><DesignerCanvas/></LcContent>
-                    <LcRight><Right/></LcRight>
-                </LcBody>
-                <LcFoot>
-                    <Footer/>
-                </LcFoot>
+            <div style={{backgroundColor: '#1f1f1f'}}>
+                <FrameLayout header={<DesignerHeader/>}
+                             left={<DesignerLeft/>}
+                             content={<DesignerCanvas/>}
+                             right={<Right/>}
+                             footer={<Footer/>}/>
                 <FloatConfigs/>
-            </LcStructure>
+            </div>
         );
     }
 }
