@@ -45,8 +45,8 @@ export const DesignerDragScaleContainer: React.FC<DesignerDragScaleContainerProp
         <div className={'designer-ds-container'} ref={containerRef}
              style={{
                  overflow: "hidden",
-                 height: window.innerHeight - 90,
-                 width: window.innerWidth - 95,
+                 height: window.innerHeight - 110,
+                 width: window.innerWidth - 115,
                  backgroundColor: '#434343',
                  position: 'relative'
              }}>
