@@ -12,9 +12,9 @@ import footerStore from "../../footer/FooterStore";
 import bpStore from "../../../blueprint/store/BPStore";
 import {reRenderAllLine} from "../../../blueprint/drag/BPMovable";
 import bpLeftStore from "../../../blueprint/left/BPLeftStore";
-import {message} from "antd";
 import operatorMap from "../../../framework/operate";
 import URLUtil from "../../../utils/URLUtil";
+import {globalMessage} from "../../../framework/message/GlobalMessage";
 
 export const selectAll = () => {
     const {layerConfigs} = designerStore;
@@ -135,9 +135,9 @@ export const doSave = throttle(() => {
         }
         operatorMap[saveType as SaveType].updateProject(projectInfo).then((res) => {
             if (res)
-                message.success('保存成功');
+                globalMessage.messageApi?.info('保存成功', 1);
             else
-                message.error('保存失败');
+                globalMessage.messageApi?.info('保存失败');
         });
     });
 }, 5000);

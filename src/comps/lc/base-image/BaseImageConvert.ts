@@ -6,7 +6,7 @@ import {BaseImageComponentProps} from "./BaseImageController";
  */
 export default class BaseImageConvert extends AbstractConvert<BaseImageComponentProps> {
 
-    private savedImgHash: string[] = []
+    // private savedImgHash: string[] = []
 
     getKey(): string {
         return "LcBaseImage";

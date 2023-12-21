@@ -49,7 +49,7 @@ class BaseTableComponent extends Component<BaseTableComponentProps, BaseTableCom
     theadRef: HTMLElement | null = null;
     tbodyRef1: HTMLElement | null = null;
     tbodyRef2: HTMLElement | null = null;
-    resizeObserver: MutationObserver | null = null;
+    resizeObserver: ResizeObserver | null = null;
     contentHeight: number | null = null;
 
     constructor(props: BaseTableComponentProps) {
@@ -70,11 +70,7 @@ class BaseTableComponent extends Component<BaseTableComponentProps, BaseTableCom
                 this.changeTableTrHeight();
             }, 100));
             // 开始观察
-            this.resizeObserver!.observe(this.tableRef, {
-                attributes: true,
-                attributeFilter: ['style'],
-                attributeOldValue: true
-            });
+            this.resizeObserver!.observe(this.tableRef);
             this.changeTableTrHeight();
         }
     }
