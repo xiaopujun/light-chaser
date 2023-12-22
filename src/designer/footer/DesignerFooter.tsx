@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import './Footer.less';
+import './DesignerFooter.less';
 import {observer} from "mobx-react";
 import designerStore from "../store/DesignerStore";
 import Dialog from "../../ui/dialog/Dialog";
@@ -10,7 +10,7 @@ import layerIcon from './layers-icon.svg';
 import footerStore from "./FooterStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 
-class Footer extends Component {
+class DesignerFooter extends Component {
 
     toggleHotKeyDes = () => {
         const {hotKeyVisible, setHotKeyVisible} = footerStore;
@@ -67,4 +67,4 @@ class Footer extends Component {
     }
 }
 
-export default observer(Footer);
+export default observer(DesignerFooter);

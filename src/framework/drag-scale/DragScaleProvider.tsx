@@ -11,7 +11,6 @@ export interface DragScaleProviderParams {
     container: HTMLDivElement | null;
     content: HTMLDivElement | null;
     position?: IPoint;
-    posOffset?: IPoint;
     dragCallback?: (dsData: DragScaleData, e: any) => void;
     dragStartCallback?: (dsData: DragScaleData, e: any) => void;
     dragEndCallback?: (dsData: DragScaleData, e: any) => void;
@@ -38,15 +37,13 @@ export default class DragScaleProvider {
 
     constructor(params: DragScaleProviderParams) {
         const {
-            container, content, position, posOffset,
+            container, content, position,
             dragCallback, scaleCallback, dragStartCallback, dragEndCallback
         } = params;
         this.container = container;
         this.content = content;
         if (position)
             this.position = position;
-        if (posOffset)
-            this.posOffset = posOffset;
         if (dragCallback)
             this.dragCallback = dragCallback;
         if (scaleCallback)
@@ -126,10 +123,11 @@ export default class DragScaleProvider {
             if (e.altKey && e.buttons !== 2) {
                 //计算缩放比例
                 this.scaleCore.compute(e.deltaY > 0 ? 0 : 1);
+                const {x: offSetX, y: offSetY} = this.container!.getBoundingClientRect();
                 //执行缩放
                 const {width, height} = this.content?.style!;
-                this.position.x = this.position.x - ((this.scaleCore.ratio - 1) * (e.clientX - this.posOffset.x - this.position.x - parseFloat(width) * 0.5));
-                this.position.y = this.position.y - ((this.scaleCore.ratio - 1) * (e.clientY - this.posOffset.y - this.position.y - parseFloat(height) * 0.5));
+                this.position.x = this.position.x - ((this.scaleCore.ratio - 1) * (e.clientX - offSetX - this.position.x - parseFloat(width) * 0.5));
+                this.position.y = this.position.y - ((this.scaleCore.ratio - 1) * (e.clientY - offSetY - this.position.y - parseFloat(height) * 0.5));
                 this.content!.style.transform = 'translate3d(' + this.position.x + 'px, ' + this.position.y + 'px, 0) scale(' + this.scaleCore.scale + ')';
                 //执行回调
                 if (this.scaleCallback) {

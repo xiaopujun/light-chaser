@@ -4,7 +4,7 @@ import ConfigContent from "./ConfigContent";
 import rightStore from "./RightStore";
 import {observer} from "mobx-react";
 
-class Right extends Component {
+class DesignerRight extends Component {
 
     render() {
         const {visible} = rightStore;
@@ -17,4 +17,4 @@ class Right extends Component {
     }
 }
 
-export default observer(Right);
+export default observer(DesignerRight);

@@ -22,6 +22,7 @@ class ScaleCore {
             _scale = this.min;
         }
         this.scale = _scale;
+        console.log('core', this.scale)
         this.ratio = _ratio;
     }
 }

@@ -23,13 +23,12 @@ export const DesignerDragScaleContainer: React.FC<DesignerDragScaleContainerProp
             const dragScaleProvider = new DragScaleProvider({
                 container,
                 content,
-                posOffset: {x: 80, y: 70},
                 scaleCallback: (dsData) => {
                     const {scale, ratio} = dsData;
                     const {setScale, setRatio, rulerRef} = eventOperateStore;
                     setScale(scale);
                     setRatio(ratio);
-                    rulerRef?.ruleWheel(scale);
+                    rulerRef?.ruleWheel();
                 },
                 dragCallback: () => {
                     const {rulerRef} = eventOperateStore;

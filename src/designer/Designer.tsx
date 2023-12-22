@@ -1,8 +1,8 @@
 import {Component} from 'react';
 import './style/DesignerGlobalStyle.less';
-import DesignerLeft from "./left";
-import Right from "./right";
-import Footer from "./footer/Footer";
+import DesignerLeft from "./left/DesignerLeft";
+import DesignerRight from "./right/DesignerRight";
+import DesignerFooter from "./footer/DesignerFooter";
 import FloatConfigs from "./float-configs/FloatConfigs";
 import contextMenuStore from "./operate-provider/right-click-menu/ContextMenuStore";
 import eventOperateStore from "./operate-provider/EventOperateStore";
@@ -37,8 +37,8 @@ class Designer extends Component {
                 <FrameLayout header={<DesignerHeader/>}
                              left={<DesignerLeft/>}
                              content={<DesignerCanvas/>}
-                             right={<Right/>}
-                             footer={<Footer/>}/>
+                             right={<DesignerRight/>}
+                             footer={<DesignerFooter/>}/>
                 <FloatConfigs/>
             </div>
         );

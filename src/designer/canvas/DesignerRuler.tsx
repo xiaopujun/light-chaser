@@ -2,6 +2,8 @@ import {PureComponent} from 'react';
 import Ruler, {RulerProps} from "@scena/react-ruler";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {IPoint} from "../../blueprint/store/BPStore";
+import designerLeftStore from "../left/DesignerLeftStore";
+import scaleCore from "../operate-provider/scale/ScaleCore";
 
 interface DesignerRulerProps {
     offset?: IPoint;
@@ -44,20 +46,26 @@ class DesignerRuler extends PureComponent<RulerProps & DesignerRulerProps> {
 
     baseOffset = 20;
 
-    ruleWheel = (scale: number) => {
+    ruleWheel = () => {
+        const {scale} = eventOperateStore;
         const {dsContentRef} = eventOperateStore;
+        const {designerLeftRef} = designerLeftStore;
         const {x, y} = dsContentRef?.getBoundingClientRect()!;
-        this.scrollPos.x = -(x - 80) / scale;
+        const {width} = designerLeftRef?.getBoundingClientRect()!;
+        this.scrollPos.x = -(x - width - 20) / scale;
         this.scrollPos.y = -(y - 70) / scale;
 
         this.unit = Math.floor(50 / scale);
         this.setState({render: this.state.render + 1})
     }
 
+    //todo 数字魔法值要统一公共变量处理
     ruleDrag = () => {
         const {dsContentRef, scale} = eventOperateStore;
+        const {designerLeftRef} = designerLeftStore;
         const {x, y} = dsContentRef?.getBoundingClientRect()!;
-        this.scrollPos.x = -(x - 80) / scale;
+        const {width} = designerLeftRef?.getBoundingClientRect()!;
+        this.scrollPos.x = -(x - width - 20) / scale;
         this.scrollPos.y = -(y - 70) / scale;
         this.rulerX && this.rulerX.scroll(this.scrollPos.x);
         this.rulerY && this.rulerY.scroll(this.scrollPos.y);
@@ -66,6 +74,11 @@ class DesignerRuler extends PureComponent<RulerProps & DesignerRulerProps> {
     componentDidMount() {
         const {setRuleRef} = eventOperateStore;
         setRuleRef(this);
+    }
+
+    componentWillUnmount() {
+        const {setRuleRef} = eventOperateStore;
+        setRuleRef(null);
     }
 
     render() {

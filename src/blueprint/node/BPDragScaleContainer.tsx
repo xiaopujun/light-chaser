@@ -22,7 +22,6 @@ export const BPDragScaleContainer: React.FC<BPDragScaleContainerContainerProps> 
             const dragScaleProvider = new DragScaleProvider({
                 container,
                 content,
-                posOffset: canvasOffset,
                 dragCallback: (dsData) => {
                     const {position} = dsData;
                     setCanvasTranslate(position);

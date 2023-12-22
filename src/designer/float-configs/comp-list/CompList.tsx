@@ -1,6 +1,6 @@
 import {Component} from 'react';
 import compListStore from "./CompListStore";
-import classifyListStore from "../../left/classify-list/ClassifyListStore";
+import classifyListStore from "../../left/designer-left-menus/LeftMenusStore";
 import './CompList.less';
 import {observer} from "mobx-react";
 import designerStore from "../../store/DesignerStore";
