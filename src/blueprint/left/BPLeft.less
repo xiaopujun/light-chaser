@@ -1,6 +1,6 @@
 .bp-left {
   display: flex;
-  height: 100%;
+  height: calc(100vh - 50px);
   background-color: #1a1a1a;
   border-right: 1px solid #2e2e2e;
 
@@ -54,12 +54,10 @@
     .bp-node-list-body {
       padding: 10px;
       color: #999999;
-      height: calc(100% - 100px);
-      overflow-y: hidden;
+      height: calc(100vh - 100px);
+      overflow-y: scroll;
 
       .bp-node-list-container {
-        height: calc(100% - 100px);
-        overflow-y: auto;
 
         .bp-node-list-item-used {
           background-color: #181818;
