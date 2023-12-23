@@ -4,11 +4,11 @@ import {observer} from "mobx-react";
 import designerStore from "../store/DesignerStore";
 import Dialog from "../../ui/dialog/Dialog";
 import HotKeyDes from "./HotKeyDes";
-import layerListStore from "../float-configs/layer-list/LayerListStore";
 import keyboardIcon from './keyboard-icon.svg';
 import layerIcon from './layers-icon.svg';
 import footerStore from "./FooterStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
+import layerListStore from "../left/layer-list/LayerListStore";
 
 class DesignerFooter extends Component {
 

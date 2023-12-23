@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import Selecto, {OnSelectEnd} from "react-selecto";
+import Selecto, {OnDragStart, OnSelectEnd} from "react-selecto";
 import eventOperateStore from "../EventOperateStore";
 import {observer} from "mobx-react";
 import Moveable from 'react-moveable';
 import designerStore from "../../store/DesignerStore";
-import layerListStore from "../../float-configs/layer-list/LayerListStore";
-import LayerUtil from "../../float-configs/layer-list/util/LayerUtil";
+import LayerUtil from "../../left/layer-list/util/LayerUtil";
+import layerListStore from "../../left/layer-list/LayerListStore";
 
 /**
  * 设置控制点和边框的颜色
@@ -100,7 +100,7 @@ class DesignerSelectable extends Component<DesignerSelectableProps> {
         setControlPointLineColor(lockState);
     }
 
-    onDragStart = (e: any) => {
+    onDragStart = (e: OnDragStart) => {
         const {movableRef, targets} = eventOperateStore;
         const movable: Moveable = movableRef!.current!;
         const target = e.inputEvent.target;

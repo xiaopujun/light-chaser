@@ -2,8 +2,8 @@ import {Component} from 'react';
 import {observer} from "mobx-react";
 import CompList from "./comp-list/CompList";
 import compListStore from "./comp-list/CompListStore";
-import layerListStore from "./layer-list/LayerListStore";
-import LayerList from "./layer-list/LayerList";
+import layerListStore from "../left/layer-list/LayerListStore";
+import LayerList from "../left/layer-list/LayerList";
 
 class FloatConfigs extends Component {
     render() {

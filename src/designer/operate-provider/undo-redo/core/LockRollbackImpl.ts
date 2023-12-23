@@ -1,8 +1,8 @@
 import AbstractRollback from "./AbstractRollback";
 import {IHistoryRecord, ILockOperateData} from "../OperateType";
 import designerStore from "../../../store/DesignerStore";
-import layerListStore from "../../../float-configs/layer-list/LayerListStore";
 import {Component} from "react";
+import layerListStore from "../../../left/layer-list/LayerListStore";
 
 /**
  * hide, lock, order的撤销与回滚操作实现

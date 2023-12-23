@@ -21,7 +21,7 @@ import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import {ILayerItem} from "../../DesignerType";
 import './DesignerMovable.less';
 import baseInfoStore from "../../../comps/common-component/base-info/BaseInfoStore";
-import LayerUtil from "../../float-configs/layer-list/util/LayerUtil";
+import LayerUtil from "../../left/layer-list/util/LayerUtil";
 
 export interface DesignerMovableProps {
     children?: React.ReactNode;

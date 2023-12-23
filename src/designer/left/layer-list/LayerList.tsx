@@ -1,3 +1,91 @@
-export const LayerList: React.FC = () => {
-    return <div style={{width: 200}}>图层列表</div>;
+import {Component} from 'react';
+import './LayerList.less';
+import layerListStore from "./LayerListStore";
+import designerStore from "../../store/DesignerStore";
+import {observer} from "mobx-react";
+import eventOperateStore from "../../operate-provider/EventOperateStore";
+import Input from "../../../ui/input/Input";
+import layerBuilder from "./LayerBuilder";
+import LayerUtil from "./util/LayerUtil";
+import {ILayerItem} from "../../DesignerType";
+
+export interface LayerListProps {
+    children?: React.ReactNode;
 }
+
+class LayerList extends Component<LayerListProps> {
+
+    layerListRef: HTMLElement | null = null;
+
+    layerItemsContainerRef: HTMLDivElement | null = null;
+
+    cancelSelected = (e: any) => {
+        if (!this.layerListRef)
+            return;
+        if (this.layerListRef.contains(e.target as Node)
+            && !this.layerItemsContainerRef?.contains(e.target as Node)) {
+            const {setTargetIds, targetIds} = eventOperateStore;
+            if (targetIds.length > 0)
+                setTargetIds([]);
+        }
+    }
+
+    onClose = () => {
+        const {setVisible} = layerListStore;
+        setVisible && setVisible(false);
+    }
+
+    searchLayer = (data: string | number) => {
+        const {setContent} = layerListStore;
+        setContent && setContent(data as string);
+    }
+
+    buildLayerList = () => {
+        const {layerConfigs} = designerStore;
+        const {searchContent} = layerListStore;
+        if (!searchContent || searchContent === '')
+            return layerBuilder.buildLayerList(layerConfigs);
+        let filterLayer: Record<string, any> = {};
+        if (searchContent === ':hide') {
+            //仅过展示隐藏的图层
+            Object.values(layerConfigs).forEach((item: ILayerItem) => {
+                if (item.hide && item.type !== 'group')
+                    filterLayer[item.id!] = item;
+            });
+        } else if (searchContent === ':lock') {
+            //仅过展示锁定的图层
+            Object.values(layerConfigs).forEach((item: ILayerItem) => {
+                if (item.lock && item.type !== 'group')
+                    filterLayer[item.id!] = item;
+            });
+        } else {
+            Object.values(layerConfigs).forEach((item: ILayerItem) => {
+                if (item.name?.includes(searchContent) && item.type !== 'group')
+                    filterLayer[item.id!] = item;
+            });
+        }
+        //补充分组图层
+        const groupLayerId = LayerUtil.findPathGroupLayer(Object.keys(filterLayer));
+        groupLayerId.forEach((id: string) => {
+            filterLayer[id] = layerConfigs[id];
+        });
+        return layerBuilder.buildLayerList(filterLayer);
+    }
+
+    render() {
+        return (
+            <div className={'layer-list'} ref={ref => this.layerListRef = ref}>
+                <div className={'list-search'}>
+                    <Input placeholder="搜索图层" onChange={this.searchLayer}/>
+                </div>
+                <div className={'layer-items'}>
+                    <div ref={ref => this.layerItemsContainerRef = ref}>
+                        {this.buildLayerList()}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+export default observer(LayerList);

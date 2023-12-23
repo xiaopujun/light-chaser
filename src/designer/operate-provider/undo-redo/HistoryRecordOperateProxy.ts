@@ -16,12 +16,13 @@ import eventOperateStore from "../EventOperateStore";
 import {toJS} from "mobx";
 import rightStore from "../../right/RightStore";
 import {cloneDeep} from "lodash";
-import layerListStore from "../../float-configs/layer-list/LayerListStore";
 import {ConfigureObjectFragments} from "../../../utils/ObjectUtil";
 import IdGenerate from "../../../utils/IdGenerate";
 import {Component} from "react";
-import LayerUtil from "../../float-configs/layer-list/util/LayerUtil";
 import {ILayerItem} from "../../DesignerType";
+import layerListStore from "../../left/layer-list/LayerListStore";
+import LayerUtil from "../../left/layer-list/util/LayerUtil";
+import designerLeftStore from "../../left/DesignerLeftStore";
 
 class HistoryRecordOperateProxy {
 
@@ -353,8 +354,9 @@ class HistoryRecordOperateProxy {
         //取消所有选中状态
         const {setTargetIds} = eventOperateStore;
         setTargetIds([]);
-        const {layerInstances, visible} = layerListStore;
-        if (visible) {
+        const {layerInstances} = layerListStore;
+        const {key} = designerLeftStore;
+        if (key === 'layer-list') {
             //更新图层列表
             items.forEach((item) => {
                 (layerInstances[item.id!] as Component)?.setState({hide: item.hide, selected: false})
@@ -375,8 +377,9 @@ class HistoryRecordOperateProxy {
         const data: IHistoryRecord = {type: OperateType.LOCK, prev, next}
         historyOperator.put({actions: [data]});
         updateLayer(items);
-        const {layerInstances, visible} = layerListStore;
-        if (visible) {
+        const {layerInstances} = layerListStore;
+        const {key} = designerLeftStore;
+        if (key === 'layer-list') {
             //更新图层列表
             items.forEach((item) => {
                 (layerInstances[item.id!] as Component)?.setState({lock: item.lock})

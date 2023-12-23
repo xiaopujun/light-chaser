@@ -4,8 +4,9 @@ import {Component, RefObject} from "react";
 import designerStore from "../store/DesignerStore";
 import ObjectUtil from "../../utils/ObjectUtil";
 import DesignerRuler from "../canvas/DesignerRuler";
-import layerListStore from "../float-configs/layer-list/LayerListStore";
 import {ILayerItem} from "../DesignerType";
+import layerListStore from "../left/layer-list/LayerListStore";
+import designerLeftStore from "../left/DesignerLeftStore";
 
 /**
  * 组件多选情况下的坐标值
@@ -159,8 +160,9 @@ class EventOperateStore {
         this.targets = _targets;
 
         //更新图层列表状态
-        const {visible, layerInstances} = layerListStore;
-        if (visible) {
+        const {layerInstances} = layerListStore;
+        const {key} = designerLeftStore;
+        if (key === 'layer-list') {
             //清除之前的选中
             oldTargetIds.forEach(id => {
                 const instance: Component = layerInstances[id];

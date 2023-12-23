@@ -1,7 +1,6 @@
 import {Component} from 'react';
 import './BaseInfo.less';
 import designerStore from "../../../designer/store/DesignerStore";
-import layerListStore from "../../../designer/float-configs/layer-list/LayerListStore";
 import {Control} from "../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {ConfigType} from "../../../designer/right/ConfigContent";
@@ -17,7 +16,8 @@ import eventOperateStore from "../../../designer/operate-provider/EventOperateSt
 import baseInfoStore from "./BaseInfoStore";
 import rightStore from "../../../designer/right/RightStore";
 import EditorDesignerLoader from "../../../designer/loader/EditorDesignerLoader";
-import LayerUtil from "../../../designer/float-configs/layer-list/util/LayerUtil";
+import layerListStore from "../../../designer/left/layer-list/LayerListStore";
+import LayerUtil from "../../../designer/left/layer-list/util/LayerUtil";
 
 /**
  * lc组件基础信息

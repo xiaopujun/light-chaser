@@ -7,7 +7,6 @@ import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import undoRedoMap from "../undo-redo/core";
 import runtimeConfigStore from "../../store/RuntimeConfigStore";
 import headerStore from "../../header/HeaderStore";
-import layerListStore from "../../float-configs/layer-list/LayerListStore";
 import footerStore from "../../footer/FooterStore";
 import bpStore from "../../../blueprint/store/BPStore";
 import {reRenderAllLine} from "../../../blueprint/drag/BPMovable";
@@ -15,6 +14,7 @@ import bpLeftStore from "../../../blueprint/left/BPLeftStore";
 import operatorMap from "../../../framework/operate";
 import URLUtil from "../../../utils/URLUtil";
 import {globalMessage} from "../../../framework/message/GlobalMessage";
+import layerListStore from "../../left/layer-list/LayerListStore";
 
 export const selectAll = () => {
     const {layerConfigs} = designerStore;
