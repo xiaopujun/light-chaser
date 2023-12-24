@@ -9,7 +9,7 @@ import {useEffect, useRef} from "react";
 
 export const DesignerLeft: React.FC = observer(() => {
 
-    const {key, setDesignerLeftRef} = designerLeftStore;
+    const {menu, setDesignerLeftRef} = designerLeftStore;
     const leftDomRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
         setDesignerLeftRef(leftDomRef.current);
@@ -18,9 +18,9 @@ export const DesignerLeft: React.FC = observer(() => {
     return (
         <div className={'designer-left'} ref={leftDomRef}>
             <LeftMenus/>
-            {key === 'components' && <ComponentList/>}
-            {key === 'layer-list' && <LayerList/>}
-            {key === 'source-list' && <SourceList/>}
+            {menu === 'components' && <ComponentList/>}
+            {menu === 'layer-list' && <LayerList/>}
+            {menu === 'source-list' && <SourceList/>}
         </div>
     );
 })

@@ -8,6 +8,8 @@ import Input from "../../../ui/input/Input";
 import layerBuilder from "./LayerBuilder";
 import LayerUtil from "./util/LayerUtil";
 import {ILayerItem} from "../../DesignerType";
+import {MinusOutlined} from "@ant-design/icons";
+import designerLeftStore from "../DesignerLeftStore";
 
 export interface LayerListProps {
     children?: React.ReactNode;
@@ -28,11 +30,6 @@ class LayerList extends Component<LayerListProps> {
             if (targetIds.length > 0)
                 setTargetIds([]);
         }
-    }
-
-    onClose = () => {
-        const {setVisible} = layerListStore;
-        setVisible && setVisible(false);
     }
 
     searchLayer = (data: string | number) => {
@@ -75,6 +72,15 @@ class LayerList extends Component<LayerListProps> {
     render() {
         return (
             <div className={'layer-list'} ref={ref => this.layerListRef = ref}>
+                <div className={'dl-ll-header'}>
+                    <div className={'dl-ll-header-title'}>图层列表</div>
+                    <div className={'dl-ll-header-operate'}><MinusOutlined onClick={() => {
+                        const {setMenu} = designerLeftStore;
+                        setMenu("");
+                        const {rulerRef} = eventOperateStore;
+                        rulerRef?.ruleWheel();
+                    }}/></div>
+                </div>
                 <div className={'list-search'}>
                     <Input placeholder="搜索图层" onChange={this.searchLayer}/>
                 </div>

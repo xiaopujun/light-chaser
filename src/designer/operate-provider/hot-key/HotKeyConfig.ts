@@ -26,7 +26,6 @@ import {
     toggleCanvasConfig,
     toggleGlobalThemeConfig,
     toggleHotKeyDes,
-    toggleLayer,
     toggleProjectConfig,
     toggleSecondaryBorder,
     toTop,
@@ -86,9 +85,6 @@ export const hotkeyConfigs: HotKeyConfigType = {
     },
     'control + 4': {
         handler: toggleHotKeyDes,
-    },
-    'control + 5': {
-        handler: toggleLayer,
     },
     'arrowup': {
         handler: doMoveUp,

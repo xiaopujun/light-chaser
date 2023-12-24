@@ -14,7 +14,6 @@ import bpLeftStore from "../../../blueprint/left/BPLeftStore";
 import operatorMap from "../../../framework/operate";
 import URLUtil from "../../../utils/URLUtil";
 import {globalMessage} from "../../../framework/message/GlobalMessage";
-import layerListStore from "../../left/layer-list/LayerListStore";
 
 export const selectAll = () => {
     const {layerConfigs} = designerStore;
@@ -449,14 +448,6 @@ export const toggleGlobalThemeConfig = () => {
 export const toggleHotKeyDes = () => {
     const {hotKeyVisible, setHotKeyVisible} = footerStore;
     setHotKeyVisible(!hotKeyVisible)
-}
-
-/**
- * 切换组件库弹框
- */
-export const toggleLayer = () => {
-    const {setVisible, visible} = layerListStore;
-    setVisible && setVisible(!visible);
 }
 
 /*************************蓝图快捷键实现*************************/

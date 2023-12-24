@@ -1,7 +1,6 @@
 import {Component} from 'react';
 import {observer} from "mobx-react";
 import './LeftMenus.less';
-import classifyListStore from "./LeftMenusStore";
 import designerLeftStore from "../DesignerLeftStore";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 
@@ -11,11 +10,11 @@ class LeftMenus extends Component {
         super(props);
     }
 
-    changeMenu = (key: string) => {
-        if (!key || key === '')
+    changeMenu = (menu: string) => {
+        if (!menu || menu === '')
             return;
-        const {setKey} = designerLeftStore;
-        setKey(key);
+        const {setMenu} = designerLeftStore;
+        setMenu(menu);
         //更新标尺位置
         const {rulerRef} = eventOperateStore;
         if (rulerRef)
@@ -23,12 +22,13 @@ class LeftMenus extends Component {
     }
 
     buildClassifyList = () => {
-        const {classifies} = classifyListStore;
+        const {menus, menu} = designerLeftStore;
         let classifyArr = [];
-        for (let i = 0; i < classifies.length; i++) {
-            const {icon: Icon, name, key} = classifies[i];
+        for (let i = 0; i < menus.length; i++) {
+            const {icon: Icon, name, key} = menus[i];
             classifyArr.push(
-                <div key={i + ''} className={'menu-item'} onClick={() => this.changeMenu(key)}>
+                <div key={i + ''} className={`menu-item ${key === menu ? "menu-item-active" : ""}`}
+                     onClick={() => this.changeMenu(key)}>
                     <div className={'menu-item-icon'}><Icon/></div>
                     <span className={'menu-item-content'}>{name}</span>
                 </div>

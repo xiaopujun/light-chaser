@@ -32,8 +32,7 @@ class HotKeyDes extends Component {
         {name: '打开/关闭项目设置', key: 'ctrl + 1'},
         {name: '打开/关闭画布设置', key: 'ctrl + 2'},
         {name: '打开/关闭全局主题设置', key: 'ctrl + 3'},
-        {name: '打开/关闭图层', key: 'ctrl + 4'},
-        {name: '打开/关闭快捷键说明', key: 'ctrl + 5'},
+        {name: '打开/关闭快捷键说明', key: 'ctrl + 4'},
         {name: '编组', key: 'ctrl + g'},
         {name: '解除编组', key: 'ctrl + shift + g'},
     ]

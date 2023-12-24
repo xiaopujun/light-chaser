@@ -9,20 +9,14 @@ import designerStore from "../../store/DesignerStore";
 class LayerListStore {
     constructor() {
         makeObservable(this, {
-            visible: observable,
             searchContent: observable,
-            setVisible: action,
             setContent: action,
         });
     }
 
-    visible = false;
-
     layerInstances: Record<string, Component> = {};
 
     searchContent = "";
-
-    setVisible = (visible: boolean) => this.visible = visible;
 
     setContent = (content: string) => this.searchContent = content;
 

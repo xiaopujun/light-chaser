@@ -19,8 +19,8 @@ export const componentCategorize: ICategorize[] = [
         icon: PieChartOutlined,
     },
     {
-        key: "text",
-        name: "文字",
+        key: "info",
+        name: "信息",
         icon: FontSizeOutlined,
     },
     {

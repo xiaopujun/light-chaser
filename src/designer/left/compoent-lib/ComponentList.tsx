@@ -14,8 +14,8 @@ export const ComponentList: React.FC = observer(() => {
         <div className={'dl-cl-header'}>
             <div className={'dl-cl-header-title'}>组件列表</div>
             <div className={'dl-cl-header-operate'}><MinusOutlined onClick={() => {
-                const {setKey} = designerLeftStore;
-                setKey("");
+                const {setMenu} = designerLeftStore;
+                setMenu("");
                 const {rulerRef} = eventOperateStore;
                 rulerRef?.ruleWheel();
             }}/></div>

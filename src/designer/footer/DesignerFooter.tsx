@@ -5,21 +5,14 @@ import designerStore from "../store/DesignerStore";
 import Dialog from "../../ui/dialog/Dialog";
 import HotKeyDes from "./HotKeyDes";
 import keyboardIcon from './keyboard-icon.svg';
-import layerIcon from './layers-icon.svg';
 import footerStore from "./FooterStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
-import layerListStore from "../left/layer-list/LayerListStore";
 
 class DesignerFooter extends Component {
 
     toggleHotKeyDes = () => {
         const {hotKeyVisible, setHotKeyVisible} = footerStore;
         setHotKeyVisible(!hotKeyVisible)
-    }
-
-    toggleLayerList = () => {
-        const {setVisible, visible} = layerListStore;
-        setVisible && setVisible(!visible);
     }
 
     render() {
@@ -46,11 +39,6 @@ class DesignerFooter extends Component {
                              src={keyboardIcon}/>
                         &nbsp;
                         <span style={{position: 'relative', top: 2}}>快捷键</span>
-                    </div>
-                    <div className={'footer-item'} onClick={this.toggleLayerList}>
-                        <img width={16} alt={'图层'} src={layerIcon}/>
-                        &nbsp;
-                        <span style={{position: 'relative', top: 2}}>图层</span>
                     </div>
                 </div>
                 <div className={'footer-right'}>

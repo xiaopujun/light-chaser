@@ -109,9 +109,7 @@ class CompList extends Component {
             chartDom.push(
                 <div key={i + ''} className={'list-item droppable-element'} draggable={true}
                      onDoubleClick={() => this.addItem(compKey)}
-                     data-type={compKey}
-                    //todo 想想办法，中文变量值能否不放在这里
-                     data-name={compName}>
+                     data-type={compKey}>
                     <div style={{pointerEvents: 'none'}}>
                         <div className={'item-header'} ref={'drag-target'}>
                             <div className={'item-name'}>{compName}</div>
@@ -137,7 +135,7 @@ class CompList extends Component {
         return (
             <>
                 <div className={'list-search'}>
-                    <Input placeholder="搜索图层" onChange={this.searchChart}/>
+                    <Input placeholder="搜索组件" onChange={this.searchChart}/>
                 </div>
                 <div className={'list-items'} id={'component-drag-container'}>
                     {this.getChartDom()}

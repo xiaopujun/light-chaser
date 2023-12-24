@@ -3,6 +3,7 @@ import {IHistoryRecord, ILockOperateData} from "../OperateType";
 import designerStore from "../../../store/DesignerStore";
 import {Component} from "react";
 import layerListStore from "../../../left/layer-list/LayerListStore";
+import designerLeftStore from "../../../left/DesignerLeftStore";
 
 /**
  * hide, lock, order的撤销与回滚操作实现
@@ -13,8 +14,9 @@ export class LockRollbackImpl extends AbstractRollback {
         const {updateLayer} = designerStore;
         if (next)
             updateLayer(next as ILockOperateData[]);
-        const {visible, layerInstances} = layerListStore;
-        if (visible) {
+        const {layerInstances} = layerListStore;
+        const {menu} = designerLeftStore;
+        if (menu === 'layer-list') {
             //图层列表若显示，则需要更新图层列表的组件状态
             (next as ILockOperateData[])?.forEach((item) => {
                 const {id, lock} = item;
@@ -28,8 +30,9 @@ export class LockRollbackImpl extends AbstractRollback {
         const {updateLayer} = designerStore;
         if (prev)
             updateLayer(prev as ILockOperateData[]);
-        const {visible, layerInstances} = layerListStore;
-        if (visible) {
+        const {layerInstances} = layerListStore;
+        const {menu} = designerLeftStore;
+        if (menu === 'layer-list') {
             //图层列表若显示，则需要更新图层列表的组件状态
             (prev as ILockOperateData[])?.forEach((item) => {
                 const {id, lock} = item;

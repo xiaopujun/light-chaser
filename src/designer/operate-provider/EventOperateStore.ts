@@ -161,8 +161,8 @@ class EventOperateStore {
 
         //更新图层列表状态
         const {layerInstances} = layerListStore;
-        const {key} = designerLeftStore;
-        if (key === 'layer-list') {
+        const {menu} = designerLeftStore;
+        if (menu === 'layer-list') {
             //清除之前的选中
             oldTargetIds.forEach(id => {
                 const instance: Component = layerInstances[id];

@@ -355,8 +355,8 @@ class HistoryRecordOperateProxy {
         const {setTargetIds} = eventOperateStore;
         setTargetIds([]);
         const {layerInstances} = layerListStore;
-        const {key} = designerLeftStore;
-        if (key === 'layer-list') {
+        const {menu} = designerLeftStore;
+        if (menu === 'layer-list') {
             //更新图层列表
             items.forEach((item) => {
                 (layerInstances[item.id!] as Component)?.setState({hide: item.hide, selected: false})
@@ -378,8 +378,8 @@ class HistoryRecordOperateProxy {
         historyOperator.put({actions: [data]});
         updateLayer(items);
         const {layerInstances} = layerListStore;
-        const {key} = designerLeftStore;
-        if (key === 'layer-list') {
+        const {menu} = designerLeftStore;
+        if (menu === 'layer-list') {
             //更新图层列表
             items.forEach((item) => {
                 (layerInstances[item.id!] as Component)?.setState({lock: item.lock})

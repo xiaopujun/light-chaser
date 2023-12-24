@@ -6,6 +6,7 @@ import Moveable from 'react-moveable';
 import designerStore from "../../store/DesignerStore";
 import LayerUtil from "../../left/layer-list/util/LayerUtil";
 import layerListStore from "../../left/layer-list/LayerListStore";
+import designerLeftStore from "../../left/DesignerLeftStore";
 
 /**
  * 设置控制点和边框的颜色
@@ -89,8 +90,9 @@ class DesignerSelectable extends Component<DesignerSelectableProps> {
         //更新选中的组件id
         setTargetIds(layerIds);
         //更新图层列表状态
-        const {visible, layerInstances} = layerListStore;
-        if (visible) {
+        const {layerInstances} = layerListStore;
+        const {menu} = designerLeftStore;
+        if (menu === 'layer-list') {
             layerIds.forEach((id) => {
                 (layerInstances[id] as Component)?.setState({selected: true});
             });

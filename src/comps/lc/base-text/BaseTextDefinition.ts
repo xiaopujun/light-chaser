@@ -19,7 +19,7 @@ export default class BaseTextDefinition extends AbstractDefinition<BaseTextContr
         return {
             compName: "基础文本",
             compKey: "BaseText",
-            categorize: "text",
+            categorize: "info",
             width: 64,
             height: 26,
         };
