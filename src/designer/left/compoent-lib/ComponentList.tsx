@@ -1,5 +1,5 @@
 import './ComponentList.less';
-import {FileTextFilled, InsertRowAboveOutlined, MinusOutlined, PieChartFilled} from "@ant-design/icons";
+import {MinusOutlined} from "@ant-design/icons";
 import {Tooltip} from "antd";
 import CompList from "./list/CompList";
 import designerLeftStore from "../DesignerLeftStore";
@@ -7,44 +7,6 @@ import eventOperateStore from "../../operate-provider/EventOperateStore";
 import {componentCategorize, componentSubCategorize} from "./ComponentCategorize";
 import componentListStore from "./ComponentListStore";
 import {observer} from "mobx-react";
-
-const classifyLevelOne = [
-    {
-        icon: <PieChartFilled/>,
-        name: '图表'
-    },
-    {
-        icon: <FileTextFilled/>,
-        name: '文本'
-    },
-    {
-        icon: <InsertRowAboveOutlined/>,
-        name: '表格'
-    }
-]
-
-const classifyLevelTwo = [
-    {
-        key: '1',
-        name: '柱状图'
-    },
-    {
-        key: '2',
-        name: '折线图'
-    },
-    {
-        key: '3',
-        name: '饼图'
-    },
-    {
-        key: '4',
-        name: '散点图'
-    },
-    {
-        key: '5',
-        name: '雷达图'
-    }
-]
 
 export const ComponentList: React.FC = observer(() => {
     const {categories, subCategories, setCategories, setSubCategories} = componentListStore;
@@ -62,7 +24,8 @@ export const ComponentList: React.FC = observer(() => {
             <div className={'classify-level-one'}>
                 {
                     componentCategorize.map((item, index) => {
-                        const {icon: Icon, name, key} = item;
+                        const {icon, name, key} = item;
+                        const Icon = icon as any;
                         return <Tooltip key={index}
                                         className={`clo-item ${categories === key ? "clo-item-active" : ""}`}
                                         placement={'right'}

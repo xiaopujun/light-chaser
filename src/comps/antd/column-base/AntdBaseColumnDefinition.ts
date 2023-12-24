@@ -9,8 +9,8 @@ class AntdBaseColumnDefinition extends AbstractColumnDefinition {
         return {
             compName: "Antd基础柱状图",
             compKey: "AntdBaseColumn",
-            type: "柱状图",
-            typeKey: "column",
+            categorize: "chart",
+            subCategorize: "column",
         };
     }
 

@@ -9,8 +9,8 @@ class AntdStackAreaDefinition extends AbstractAreaDefinition {
         return {
             compName: "Antd堆叠面积图",
             compKey: "AntdStackArea",
-            type: "条形图",
-            typeKey: "area",
+            categorize: "chart",
+            subCategorize: "area",
         };
     }
 

@@ -19,8 +19,7 @@ export default class BaseColorBlockDefinition extends AbstractDefinition<BaseCol
         return {
             compName: "基础色块",
             compKey: "BaseColorBlock",
-            type: "基础",
-            typeKey: "base",
+            categorize: "ornament",
         };
     }
 

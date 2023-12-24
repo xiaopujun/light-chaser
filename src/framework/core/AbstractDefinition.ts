@@ -1,7 +1,7 @@
 import {MenuInfo} from "../../designer/right/MenuType";
 import {BaseInfoType} from "../../designer/DesignerType";
 import AbstractController from "./AbstractController";
-import React, {ReactNode} from "react";
+import React from "react";
 import {ClazzTemplate} from "../../comps/common-component/common-types";
 
 export type MenuToConfigMappingType = { [key: string]: React.ComponentType<any> };
@@ -20,7 +20,7 @@ export interface EventInfo {
 export interface ICategorize {
     key: string;
     name: string;
-    icon?: ReactNode;
+    icon?: React.ComponentType;
     parentKey?: string;
 }
 

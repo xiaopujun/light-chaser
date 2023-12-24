@@ -16,8 +16,7 @@ export default class BaseImageDefinition extends AbstractDefinition<BaseImageCon
         return {
             compName: "基础图片",
             compKey: "BaseImage",
-            type: "基础",
-            typeKey: "base",
+            categorize: "media",
         };
     }
 

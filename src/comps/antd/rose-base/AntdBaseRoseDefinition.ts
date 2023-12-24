@@ -9,8 +9,8 @@ class AntdBaseRoseDefinition extends AbstractRoseDefinition {
         return {
             compName: "Antd基础玫瑰图",
             compKey: "AntdBaseRose",
-            type: "玫瑰图",
-            typeKey: "rose",
+            categorize: "chart",
+            subCategorize: "rose",
         };
     }
 

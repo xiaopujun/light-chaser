@@ -9,8 +9,8 @@ class AntdGroupColumnDefinition extends AbstractColumnDefinition {
         return {
             compName: "Antd分组柱状图",
             compKey: "AntdGroupColumn",
-            type: "柱状图",
-            typeKey: "column",
+            categorize: "chart",
+            subCategorize: "column",
         };
     }
 

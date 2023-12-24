@@ -11,8 +11,6 @@ export default class GroupLayerDefinition extends AbstractDefinition<GroupLayerC
         return {
             compName: "",
             compKey: "group",
-            type: "",
-            typeKey: "",
         };
     }
 

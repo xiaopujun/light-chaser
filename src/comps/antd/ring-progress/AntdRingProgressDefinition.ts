@@ -39,8 +39,8 @@ class AntdRingProgressDefinition extends AntdCommonDefinition<AntdRingProgressCo
         return {
             compName: "Antd迷你环图",
             compKey: "AntdRingProgress",
-            type: "进度图",
-            typeKey: "progress",
+            categorize: "chart",
+            subCategorize: "progress",
         };
     }
 

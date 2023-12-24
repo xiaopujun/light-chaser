@@ -9,8 +9,8 @@ class AntdStackColumnDefinition extends AbstractColumnDefinition {
         return {
             compName: "Antd堆叠柱状图",
             compKey: "AntdStackColumn",
-            type: "柱状图",
-            typeKey: "column",
+            categorize: "chart",
+            subCategorize: "column",
         };
     }
 

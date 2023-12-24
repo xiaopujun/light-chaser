@@ -40,8 +40,8 @@ class AntdPieDefinition extends AntdCommonDefinition<AntdPieController, AntdPieP
         return {
             compName: "Antd饼图",
             compKey: "AntdPie",
-            type: "饼图",
-            typeKey: "pie",
+            categorize: "chart",
+            subCategorize: "pie",
         };
     }
 

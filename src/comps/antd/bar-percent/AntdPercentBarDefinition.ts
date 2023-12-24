@@ -9,8 +9,8 @@ class AntdPercentBarDefinition extends AbstractBarDefinition {
         return {
             compName: "Antd百分比条形图",
             compKey: "AntdPercentBar",
-            type: "条形图",
-            typeKey: "bar",
+            categorize: "chart",
+            subCategorize: "bar",
         };
     }
 

@@ -27,7 +27,6 @@ export default class DragScaleProvider {
     private container: HTMLDivElement | null = null;
     private content: HTMLDivElement | null = null;
     private readonly position: IPoint = {x: 0, y: 0};
-    private posOffset: IPoint = {x: 0, y: 0};
     private readonly dragCallback?: (dsData: DragScaleData, e: any) => void;
     private readonly scaleCallback?: (dsData: DragScaleData, e: any) => void;
     private readonly dragStartCallback?: (dsData: DragScaleData, e: any) => void;

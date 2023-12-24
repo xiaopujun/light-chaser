@@ -9,8 +9,8 @@ class AntdPercentAreaDefinition extends AbstractAreaDefinition {
         return {
             compName: "Antd百分比面积图",
             compKey: "AntdPercentArea",
-            type: "条形图",
-            typeKey: "area",
+            categorize: "chart",
+            subCategorize: "area",
         };
     }
 

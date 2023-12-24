@@ -9,8 +9,8 @@ class AntdStackBarDefinition extends AbstractBarDefinition {
         return {
             compName: "Antd堆叠条形图",
             compKey: "AntdStackBar",
-            type: "条形图",
-            typeKey: "bar",
+            categorize: "chart",
+            subCategorize: "bar",
         };
     }
 

@@ -9,8 +9,8 @@ class AntdScatterBubbleDefinition extends AbstractScatterDefinition {
         return {
             compName: "Antd气泡图",
             compKey: "AntdScatterBubble",
-            type: "散点图",
-            typeKey: "scatter",
+            categorize: "chart",
+            subCategorize: "scatter",
         };
     }
 

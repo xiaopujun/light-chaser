@@ -9,8 +9,8 @@ class AntdRangeBarDefinition extends AbstractBarDefinition {
         return {
             compName: "Antd区间条形图",
             compKey: "AntdRangeBar",
-            type: "条形图",
-            typeKey: "bar",
+            categorize: "chart",
+            subCategorize: "bar",
         };
     }
 

@@ -14,8 +14,7 @@ export default class BaseIframeDefinition extends AbstractDefinition<BaseIframeC
         return {
             compName: "基础iframe",
             compKey: "BaseIframe",
-            type: "基础",
-            typeKey: "base",
+            categorize: "web",
         };
     }
 

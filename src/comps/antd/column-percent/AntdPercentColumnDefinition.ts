@@ -9,8 +9,8 @@ class AntdPercentColumnDefinition extends AbstractColumnDefinition {
         return {
             compName: "Antd百分比柱状图",
             compKey: "AntdPercentColumn",
-            type: "柱状图",
-            typeKey: "column",
+            categorize: "chart",
+            subCategorize: "column",
         };
     }
 

@@ -14,8 +14,8 @@ class AntdStepLineDefinition extends AbstractLineDefinition {
         return {
             compName: "Antd阶梯折线图",
             compKey: "AntdStepLine",
-            type: "折线图",
-            typeKey: "line",
+            categorize: "chart",
+            subCategorize: "line",
         };
     }
 

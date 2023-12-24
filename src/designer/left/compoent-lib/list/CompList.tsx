@@ -1,6 +1,4 @@
 import {Component} from 'react';
-import compListStore from "./CompListStore";
-import classifyListStore from "../../../left/designer-left-menus/LeftMenusStore";
 import './CompList.less';
 import {observer} from "mobx-react";
 import designerStore from "../../../store/DesignerStore";
@@ -10,12 +8,13 @@ import Input from "../../../../ui/input/Input";
 import DesignerLoaderFactory from "../../../loader/DesignerLoaderFactory";
 import IdGenerate from "../../../../utils/IdGenerate";
 import EditorDesignerLoader from "../../../loader/EditorDesignerLoader";
+import componentListStore from "../ComponentListStore";
 
 class CompList extends Component {
 
     constructor(props: any) {
         super(props);
-        const {doInit} = compListStore;
+        const {doInit} = componentListStore;
         doInit && doInit();
     }
 
@@ -86,16 +85,20 @@ class CompList extends Component {
 
     getChartDom = () => {
         let chartDom = [];
-        let {classifyKey} = classifyListStore
-        let {compInfoArr, compKey} = compListStore;
-        if (classifyKey !== 'all') {
+        let {compInfoArr, search, categories, subCategories} = componentListStore;
+        if (categories !== "all") {
             compInfoArr = compInfoArr.filter((item: BaseInfoType) => {
-                return item.typeKey === classifyKey;
+                return item.categorize === categories;
             })
         }
-        if (compKey !== '') {
+        if (subCategories !== "all") {
             compInfoArr = compInfoArr.filter((item: BaseInfoType) => {
-                return item.compName.indexOf(compKey) >= 0;
+                return item.subCategorize === subCategories;
+            })
+        }
+        if (search !== '') {
+            compInfoArr = compInfoArr.filter((item: BaseInfoType) => {
+                return item.compName.indexOf(search) >= 0;
             })
         }
         for (let i = 0; i < compInfoArr.length; i++) {
@@ -124,14 +127,10 @@ class CompList extends Component {
         return chartDom;
     }
 
-    onClose = () => {
-        const {setVisible} = compListStore;
-        setVisible && setVisible(false);
-    }
 
     searchChart = (data: string | number) => {
-        const {setCompKey} = compListStore;
-        setCompKey && setCompKey(data as string);
+        const {setSearch} = componentListStore;
+        setSearch && setSearch(data as string);
     }
 
     render() {

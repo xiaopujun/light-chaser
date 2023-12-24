@@ -9,8 +9,8 @@ class AntdMultiLineDefinition extends AbstractLineDefinition {
         return {
             compName: "Antd多折线图",
             compKey: "AntdMultiLine",
-            type: "折线图",
-            typeKey: "line",
+            categorize: "chart",
+            subCategorize: "line",
         };
     }
 

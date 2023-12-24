@@ -9,8 +9,8 @@ class AntdGroupBarDefinition extends AbstractBarDefinition {
         return {
             compName: "Antd分组条形图",
             compKey: "AntdGroupBar",
-            type: "条形图",
-            typeKey: "bar",
+            categorize: "chart",
+            subCategorize: "bar",
         };
     }
 

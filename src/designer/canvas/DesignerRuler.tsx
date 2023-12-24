@@ -3,7 +3,6 @@ import Ruler, {RulerProps} from "@scena/react-ruler";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {IPoint} from "../../blueprint/store/BPStore";
 import designerLeftStore from "../left/DesignerLeftStore";
-import scaleCore from "../operate-provider/scale/ScaleCore";
 
 interface DesignerRulerProps {
     offset?: IPoint;

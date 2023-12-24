@@ -2,7 +2,6 @@
  * 主题
  */
 import {BPNodeLayoutType, IBPLine} from "../blueprint/store/BPStore";
-import {ReactNode} from "react";
 
 export interface ThemeColors {
     //主体色
@@ -182,14 +181,6 @@ export interface BaseInfoType {
      * 组件标识
      */
     compKey: string;
-    /**
-     * 类型名称
-     */
-    type: string;
-    /**
-     * 类型标识
-     */
-    typeKey: string;
     /**
      * 主分类
      */

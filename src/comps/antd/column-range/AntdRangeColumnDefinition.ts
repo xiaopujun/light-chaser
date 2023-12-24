@@ -9,8 +9,8 @@ class AntdRangeColumnDefinition extends AbstractColumnDefinition {
         return {
             compName: "Antd区间柱状图",
             compKey: "AntdRangeColumn",
-            type: "柱状图",
-            typeKey: "column",
+            categorize: "chart",
+            subCategorize: "column",
         };
     }
 

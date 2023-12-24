@@ -9,8 +9,8 @@ class AntdScatterPointDefinition extends AbstractScatterDefinition {
         return {
             compName: "Antd散点图",
             compKey: "AntdScatterPoint",
-            type: "散点图",
-            typeKey: "scatter",
+            categorize: "chart",
+            subCategorize: "scatter",
         };
     }
 

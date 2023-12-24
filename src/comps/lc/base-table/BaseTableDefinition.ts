@@ -16,8 +16,7 @@ export default class BaseTableDefinition extends AbstractDefinition<BaseTableCon
         return {
             compName: "基础表格",
             compKey: "LcBaseTable",
-            type: "基础",
-            typeKey: "base",
+            categorize: "web",
         };
     }
 

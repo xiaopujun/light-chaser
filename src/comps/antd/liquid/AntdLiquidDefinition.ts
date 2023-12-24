@@ -37,8 +37,8 @@ class AntdLiquidDefinition /*extends AbstractDefinition<AntdLiquid, BaseMenuMapp
         return {
             compName: "Antd水波图",
             compKey: "AntdLiquid",
-            type: "水波图",
-            typeKey: "liquid",
+            categorize: "chart",
+            subCategorize: "liquid",
         };
     }
 

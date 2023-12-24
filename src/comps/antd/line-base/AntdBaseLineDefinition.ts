@@ -13,8 +13,8 @@ class AntdBaseLineDefinition extends AbstractLineDefinition {
         return {
             compName: "Antd基础折线图",
             compKey: "AntdBaseLine",
-            type: "折线图",
-            typeKey: "line",
+            categorize: "chart",
+            subCategorize: "line",
         };
     }
 

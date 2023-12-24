@@ -9,8 +9,8 @@ class AntdBaseBarDefinition extends AbstractBarDefinition {
         return {
             compName: "Antd基础条形图",
             compKey: "AntdBaseBar",
-            type: "条形图",
-            typeKey: "bar",
+            categorize: "chart",
+            subCategorize: "bar",
         };
     }
 

@@ -9,8 +9,8 @@ class AntdGroupRoseDefinition extends AbstractRoseDefinition {
         return {
             compName: "Antd分组玫瑰图",
             compKey: "AntdGroupRose",
-            type: "玫瑰图",
-            typeKey: "rose",
+            categorize: "chart",
+            subCategorize: "rose",
         };
     }
 

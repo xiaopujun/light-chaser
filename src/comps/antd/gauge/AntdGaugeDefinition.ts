@@ -37,8 +37,8 @@ class AntdGaugeDefinition /*extends AbstractDefinition<AntdGauge, BaseMenuMappin
         return {
             compName: "Antd仪表盘",
             compKey: "AntdGauge",
-            type: "仪表盘",
-            typeKey: "gauge",
+            categorize: "chart",
+            subCategorize: "gauge",
         };
     }
 

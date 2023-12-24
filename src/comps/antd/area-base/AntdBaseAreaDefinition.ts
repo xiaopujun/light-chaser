@@ -14,9 +14,8 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
         return {
             compName: "Antd基础面积图",
             compKey: "AntdBaseArea",
-            categorize: {},
-            type: "条形图",
-            typeKey: "area",
+            categorize: "chart",
+            subCategorize: "area"
         };
     }
 

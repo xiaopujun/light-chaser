@@ -3,7 +3,6 @@ import './style/DesignerGlobalStyle.less';
 import DesignerLeft from "./left/DesignerLeft";
 import DesignerRight from "./right/DesignerRight";
 import DesignerFooter from "./footer/DesignerFooter";
-import FloatConfigs from "./float-configs/FloatConfigs";
 import contextMenuStore from "./operate-provider/right-click-menu/ContextMenuStore";
 import eventOperateStore from "./operate-provider/EventOperateStore";
 import designerStore from "./store/DesignerStore";
@@ -39,7 +38,6 @@ class Designer extends Component {
                              content={<DesignerCanvas/>}
                              right={<DesignerRight/>}
                              footer={<DesignerFooter/>}/>
-                <FloatConfigs/>
             </div>
         );
     }
