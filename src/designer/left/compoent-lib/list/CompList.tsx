@@ -1,16 +1,15 @@
 import {Component} from 'react';
 import compListStore from "./CompListStore";
-import classifyListStore from "../../left/designer-left-menus/LeftMenusStore";
+import classifyListStore from "../../../left/designer-left-menus/LeftMenusStore";
 import './CompList.less';
 import {observer} from "mobx-react";
-import designerStore from "../../store/DesignerStore";
-import eventOperateStore from "../../operate-provider/EventOperateStore";
-import FloatPanel from "../common/FloatPanel";
-import {BaseInfoType, ILayerItem} from "../../DesignerType";
-import Input from "../../../ui/input/Input";
-import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
-import IdGenerate from "../../../utils/IdGenerate";
-import EditorDesignerLoader from "../../loader/EditorDesignerLoader";
+import designerStore from "../../../store/DesignerStore";
+import eventOperateStore from "../../../operate-provider/EventOperateStore";
+import {BaseInfoType, ILayerItem} from "../../../DesignerType";
+import Input from "../../../../ui/input/Input";
+import DesignerLoaderFactory from "../../../loader/DesignerLoaderFactory";
+import IdGenerate from "../../../../utils/IdGenerate";
+import EditorDesignerLoader from "../../../loader/EditorDesignerLoader";
 
 class CompList extends Component {
 
@@ -137,15 +136,14 @@ class CompList extends Component {
 
     render() {
         return (
-            <FloatPanel className={'comp-list'} title={'组件列表'} onClose={this.onClose}
-                        initPosition={{x: 60, y: -window.innerHeight + 50}} width={190}>
+            <>
                 <div className={'list-search'}>
                     <Input placeholder="搜索图层" onChange={this.searchChart}/>
                 </div>
                 <div className={'list-items'} id={'component-drag-container'}>
                     {this.getChartDom()}
                 </div>
-            </FloatPanel>
+            </>
         );
     }
 }

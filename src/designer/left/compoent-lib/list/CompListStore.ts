@@ -1,6 +1,6 @@
 import {action, makeObservable, observable} from "mobx";
-import {BaseInfoType} from "../../DesignerType";
-import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
+import {BaseInfoType} from "../../../DesignerType";
+import DesignerLoaderFactory from "../../../loader/DesignerLoaderFactory";
 
 /**
  * 设计器左侧列表组件的状态管理类。

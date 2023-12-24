@@ -1,3 +1,3 @@
 export const SourceList: React.FC = () => {
-    return <div style={{width: 200}}>资源列表</div>;
+    return <div style={{width: 250}}>开发中...</div>;
 }

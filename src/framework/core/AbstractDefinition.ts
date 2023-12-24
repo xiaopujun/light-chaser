@@ -1,7 +1,7 @@
 import {MenuInfo} from "../../designer/right/MenuType";
 import {BaseInfoType} from "../../designer/DesignerType";
 import AbstractController from "./AbstractController";
-import React from "react";
+import React, {ReactNode} from "react";
 import {ClazzTemplate} from "../../comps/common-component/common-types";
 
 export type MenuToConfigMappingType = { [key: string]: React.ComponentType<any> };
@@ -15,6 +15,13 @@ export interface ActionInfo {
 export interface EventInfo {
     id?: string;
     name?: string;
+}
+
+export interface ICategorize {
+    key: string;
+    name: string;
+    icon?: ReactNode;
+    parentKey?: string;
 }
 
 /**
@@ -71,6 +78,21 @@ export abstract class AbstractDefinition<C extends AbstractController = Abstract
     getActionList(): ActionInfo[] {
         return [];
     }
+
+    /**
+     * 定义组件主分类
+     */
+    getCategorize(): ICategorize | null {
+        return null;
+    }
+
+    /**
+     * 定义组件子分类
+     */
+    getSubCategorize(): ICategorize | null {
+        return null;
+    }
+
 
 }
 
