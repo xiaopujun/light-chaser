@@ -28,7 +28,7 @@ class LineLayer extends React.Component {
     keyMove: boolean = false;
 
     componentDidMount() {
-        const {setUpCtx, setDownCtx, canvasOffset} = bpStore;
+        const {setUpCtx, setDownCtx} = bpStore;
         setUpCtx(this.upLayer!.getContext('2d')!);
         setDownCtx(this.downLayer!.getContext('2d')!);
         document.addEventListener('mousedown', this.bpMouseDown);
@@ -42,7 +42,7 @@ class LineLayer extends React.Component {
         document.removeEventListener('mousemove', this.bpMouseMove);
     }
 
-    bpMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    bpMouseDown = (e: MouseEvent) => {
         const {target} = e;
         if (!target || !(target as HTMLElement).classList.contains('ap-circle')) return;
         const pointDom = e.target as HTMLElement;
@@ -57,7 +57,7 @@ class LineLayer extends React.Component {
         this.keyDown = true;
     }
 
-    bpMouseUp = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    bpMouseUp = (e: MouseEvent) => {
         const {nodeContainerRef, upCtx} = bpStore;
         const {width: canvasW, height: canvasH} = nodeContainerRef?.getBoundingClientRect()!;
         const endElem = e.target as HTMLElement;
@@ -107,7 +107,7 @@ class LineLayer extends React.Component {
         addAPLineMap(this.currentLine.endAnchorId!, this.currentLine.id!);
     }
 
-    bpMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    bpMouseMove = (e: MouseEvent) => {
         if (!this.keyDown) return;
         this.keyMove = true;
         const {startPoint, endPoint} = this.currentLine;

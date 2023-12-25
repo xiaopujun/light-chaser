@@ -4,7 +4,6 @@ import {observer} from "mobx-react";
 import designerStore from "../store/DesignerStore";
 import Dialog from "../../ui/dialog/Dialog";
 import HotKeyDes from "./HotKeyDes";
-import keyboardIcon from './keyboard-icon.svg';
 import footerStore from "./FooterStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {LaptopOutlined} from "@ant-design/icons";

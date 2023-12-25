@@ -1,4 +1,4 @@
-import  {Component} from 'react';
+import {Component} from 'react';
 import './ColorMode.less';
 import ColorPicker from "../color-picker/ColorPicker";
 import Select from "../select/Select";
@@ -87,8 +87,6 @@ class ColorMode extends Component<ColorModeProps> {
                             onChange={this.colorChange}
                             width={100}
                             height={16}
-                            showBorder={true}
-                            radius={2}
                             showText={true}/>
                     }
                     {mode === 'multi' &&

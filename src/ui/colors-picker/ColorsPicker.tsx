@@ -74,7 +74,6 @@ class ColorsPicker extends Component<ColorsPickerProp> {
                         return (
                             <div className={"colors-item"} key={i + ''}>
                                 <ColorPicker value={item}
-                                             hideControls={true}
                                              onChange={(color: string) => this.onChange(color, i)}/>
                                 <span onClick={() => this.delColor(i)}><label>×</label></span>
                             </div>

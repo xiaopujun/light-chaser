@@ -73,7 +73,7 @@ class RightStore {
                     break;
                 }
             }
-            if (setNewActiveMenu)
+            if (setNewActiveMenu && this.visible)
                 this.activeMenu = this.menus[0].key;
         }
         this.activeElem = {id, type};

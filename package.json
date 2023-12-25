@@ -23,7 +23,6 @@
     "monaco-editor": "^0.44.0",
     "nanoid": "3",
     "react": "^18.2.0",
-    "react-best-gradient-color-picker": "^2.2.23",
     "react-dom": "^18.2.0",
     "react-moveable": "^0.54.1",
     "react-refresh": "^0.8.3",

@@ -30,7 +30,6 @@ class MenuList extends Component<LcConfigMenusProps | any> {
                 }}><InfoCircleFilled style={{fontSize: 15, position: "relative", left: 2, marginBottom: 7}}/>双击组件激活...
             </div>
         return menus.map((item: MenuInfo) => {
-            console.log(item.key, activeMenu)
             const Icon: any = item.icon;
             return (
                 <div className={`menu-item ${activeMenu === item.key ? "menu-item-active" : ""}`} key={item.key}
