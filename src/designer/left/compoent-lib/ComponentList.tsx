@@ -21,7 +21,7 @@ export const ComponentList: React.FC = observer(() => {
             }}/></div>
         </div>
         <div className={'dl-cl-body'}>
-            <div className={'classify-level-one'}>
+            <div className={'main-categories'}>
                 {
                     componentCategorize.map((item, index) => {
                         const {icon, name, key} = item;
@@ -36,7 +36,7 @@ export const ComponentList: React.FC = observer(() => {
                     })
                 }
             </div>
-            <div className={'classify-level-two'}>
+            <div className={'sub-categories'}>
                 {
                     componentSubCategorize.map((item, index) => {
                         const {name, key, parentKey} = item;

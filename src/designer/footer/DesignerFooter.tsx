@@ -7,6 +7,7 @@ import HotKeyDes from "./HotKeyDes";
 import keyboardIcon from './keyboard-icon.svg';
 import footerStore from "./FooterStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
+import {LaptopOutlined} from "@ant-design/icons";
 
 class DesignerFooter extends Component {
 
@@ -35,10 +36,8 @@ class DesignerFooter extends Component {
             <div className={'lc-designer-footer'}>
                 <div className={'footer-left'}>
                     <div className={'footer-item'} onClick={this.toggleHotKeyDes}>
-                        <img width={16} alt={'快捷键'}
-                             src={keyboardIcon}/>
-                        &nbsp;
-                        <span style={{position: 'relative', top: 2}}>快捷键</span>
+                        <LaptopOutlined/>
+                        <span>快捷键</span>
                     </div>
                 </div>
                 <div className={'footer-right'}>

@@ -50,7 +50,11 @@ class RightStore {
         this.activeMenu = menu;
     }
 
-    setContentVisible = (visible: boolean) => this.visible = visible;
+    setContentVisible = (visible: boolean) => {
+        this.visible = visible;
+        if (!visible)
+            this.activeMenu = '';
+    }
 
     activeConfig = (id: string | null, type: string | null) => {
         if (!id || !type) {

@@ -7,30 +7,20 @@
   justify-content: space-between;
 
   .footer-left {
-    display: flex;
+    padding-left: 10px;
 
     .footer-item {
-      height: 100%;
-      font-size: 12px;
-      line-height: 37px;
-      color: @footer-item-color;
-      padding: 0 10px;
       cursor: pointer;
-      border-top-style: solid;
-      border-top-width: 3px;
-      border-top-color: rgba(255, 28, 28, 0);
-      transition: color 0.5s, background-color 0.5s, border-top-color 0.5s;
+      color: #bababa;
 
-      .item-content {
-        position: relative;
-        bottom: 3px;
+      &:hover {
+        transition: all 0.2s;
+        color: #0095db;
       }
-    }
 
-    .footer-item:hover {
-      color: #62f0ff;
-      border-top-color: #62f0ff;
-      background-color: rgba(44, 246, 255, 0.27);
+      span {
+        padding: 2px;
+      }
     }
   }
 

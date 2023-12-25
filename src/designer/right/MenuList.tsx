@@ -18,21 +18,23 @@ class MenuList extends Component<LcConfigMenusProps | any> {
     }
 
     buildMenuList = () => {
-        const {menus} = rightStore;
+        const {menus, activeMenu} = rightStore;
         if (menus.length === 0)
             return <div
                 style={{
                     writingMode: 'vertical-rl',
-                    color: '#ced2d8',
+                    color: '#bababa',
                     letterSpacing: '8px',
                     padding: 7,
                     fontSize: 12,
                 }}><InfoCircleFilled style={{fontSize: 15, position: "relative", left: 2, marginBottom: 7}}/>双击组件激活...
             </div>
         return menus.map((item: MenuInfo) => {
+            console.log(item.key, activeMenu)
             const Icon: any = item.icon;
             return (
-                <div className={'menu-item'} key={item.key} id={item.key} onClick={this.menuChange}>
+                <div className={`menu-item ${activeMenu === item.key ? "menu-item-active" : ""}`} key={item.key}
+                     id={item.key} onClick={this.menuChange}>
                     <div className={'item-icon'}><Icon/></div>
                     <div className={'item-content'}>{item.name}</div>
                 </div>

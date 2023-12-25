@@ -1,9 +1,10 @@
 .layerItemStyle {
   color: #b6b6b6ff;
-  padding: 3px 10px;
+  padding: 5px;
   font-size: 10px;
   height: 25px;
-  background: #363636;
+  margin: 3px 0;
+  //background: #363636;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -51,7 +52,6 @@
 
     .layer-item {
       .layerItemStyle();
-      margin-bottom: 5px;
 
       .layer-name {
         white-space: nowrap;
@@ -70,7 +70,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        color: #c0c0c0;
+        color: #9a9a9a;
 
         .layer-operator {
           padding: 2px;
@@ -113,7 +113,7 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
-          color: #c0c0c0;
+          color: #9a9a9a;
 
           .group-operator {
             padding: 2px;
@@ -123,11 +123,12 @@
       }
 
       .group-content {
-        padding: 5px 0 0 3px;
+        padding: 0 0 0 5px;
       }
     }
 
     .layer-item:hover, .group-header:hover {
+      transition: all 0.2s;
       background: #00aeff54;
     }
 

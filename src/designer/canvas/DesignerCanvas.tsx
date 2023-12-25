@@ -19,15 +19,18 @@ import LayerUtil from "../left/layer-list/util/LayerUtil";
  */
 class DesignerCanvas extends PureComponent<DesignerStore | any> {
 
-    updateActive = (e: MouseEvent<HTMLDivElement>) => {
+    updateActive = () => {
         const {targetIds} = eventOperateStore;
+        const {activeElem, activeConfig} = rightStore;
+        if (targetIds.length === 0) {
+            activeConfig(null, "");
+            return;
+        }
         const {layerConfigs} = designerStore!;
-        if (targetIds.length === 0) return;
         const layerIds = LayerUtil.findTopGroupLayer(targetIds, true);
         if (layerIds.length !== 1) return;
         const layerId = layerIds[0];
         const layer = layerConfigs[layerId];
-        const {activeElem, activeConfig} = rightStore;
         if (layerId === activeElem.id) return;
         activeConfig(layerId, layer.type!);
     }

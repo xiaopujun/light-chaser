@@ -37,7 +37,7 @@ class DesignerLeftStore {
         },
     ];
 
-    menu: string = 'components';
+    menu: string = '';
 
     setMenu = (menu: string) => this.menu = menu;
 
