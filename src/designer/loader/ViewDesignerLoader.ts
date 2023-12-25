@@ -52,7 +52,7 @@ export class ViewDesignerLoader extends AbstractDesignerLoader {
                 setMinLevel(data?.extendParams?.minLevel || 0);
                 setMaxLevel(data?.extendParams?.maxLevel || 0);
 
-                //初始化bpStore（蓝图状态） todo 是否可以以更规范的方式处理？
+                //初始化bpStore（蓝图状态）
                 const {setAPMap, setLines, setAPLineMap, setBpNodeConfigMap, setBpNodeControllerInsMap} = bpStore;
                 setAPMap(data?.bpAPMap || {});
                 setLines(data?.bpLines || {});
