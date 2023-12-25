@@ -60,6 +60,9 @@ git clone https://gitee.com/xiaopujun/light-chaser.git
 
 - Install project dependencies
 
+> Note: This project uses pnpm as the package management tool, so you need to install [pnpm](https://pnpm.io/) first 
+> ,if you have installed pnpm, you can skip this step
+
 ```shell
 pnpm install
 ```
@@ -73,7 +76,7 @@ pnpm dev
 - Access the project
 
 ```shell
-http://localhost:3000
+http://localhost:5173
 ```
 
 - Build the project

@@ -53,6 +53,9 @@ git clone https://gitee.com/xiaopujun/light-chaser.git
 
 - 安装项目依赖
 
+> 注意：本项目使用 pnpm 作为包管理工具，因此需要先安装pnpm，安装步骤参考 [pnpm](https://pnpm.io/zh/)
+> ，如果已安装 pnpm，则可以跳过此步骤
+
 ```shell
 pnpm install
 ```
