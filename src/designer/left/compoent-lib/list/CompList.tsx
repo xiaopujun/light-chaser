@@ -116,7 +116,7 @@ class CompList extends Component {
                             <div className={'item-type'}>Antd</div>
                         </div>
                         <div className={'item-content'}>
-                            <img src={chartImg} alt={'组件预览图'}/>
+                            <img src={chartImg} alt={compName}/>
                         </div>
                     </div>
                 </div>

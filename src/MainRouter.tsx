@@ -24,7 +24,15 @@ export const studioDarkAlgorithm: MappingAlgorithm = (seedToken, mapToken) => {
 
 export default function MainRouter() {
     return (
-        <ConfigProvider theme={{algorithm: studioDarkAlgorithm}}>
+        <ConfigProvider theme={{
+            algorithm: studioDarkAlgorithm,
+            components: {
+                Menu: {
+                    itemBg: 'none',
+                    itemColor: '#bfbfbf',
+                }
+            }
+        }}>
             <Suspense fallback={<Loading/>}>
                 <Routes>
                     <Route path={'/designer'} element={<Designer/>}/>

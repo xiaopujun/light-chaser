@@ -2,15 +2,7 @@ import {action, makeObservable, observable, runInAction} from "mobx";
 import {MenuInfo} from "./MenuType";
 import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
 import {ActiveElem} from "../DesignerType";
-import {PictureFilled} from "@ant-design/icons";
 import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
-
-
-export const bgMenu: MenuInfo[] = [{
-    icon: PictureFilled,
-    name: '背景',
-    key: 'background',
-}];
 
 /**
  * 设计器。右侧组件配置状态管理类
@@ -61,6 +53,8 @@ class RightStore {
             this.activeMenu = '';
             this.activeElem = {};
             this.menus = [];
+            if (this.visible)
+                this.visible = false;
             return;
         }
         //更新菜单列表

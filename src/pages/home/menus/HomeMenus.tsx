@@ -1,7 +1,9 @@
 import React from "react";
-import './HomeMenus.less';
-import {CodeSandboxSquareFilled, DatabaseFilled, HomeFilled, ShopFilled} from "@ant-design/icons";
+import {CloudServerOutlined, DatabaseOutlined, HomeOutlined, ShoppingOutlined} from "@ant-design/icons";
 import homeStore from "../HomeStore";
+import {Menu} from "antd";
+import {MenuItemType} from "antd/es/menu/hooks/useItems";
+import {MenuInfo} from "../../../designer/right/MenuType";
 
 export interface IHomeMenu {
     key: string;
@@ -9,48 +11,44 @@ export interface IHomeMenu {
     text: string;
 }
 
-const menus: IHomeMenu[] = [
+const menus: MenuItemType[] = [
     {
         key: 'local',
-        icon: <HomeFilled/>,
-        text: '本地项目'
+        icon: <HomeOutlined/>,
+        label: '本地项目'
     },
     {
         key: 'server',
-        icon: <DatabaseFilled/>,
-        text: '在线项目'
+        icon: <CloudServerOutlined/>,
+        label: '在线项目'
     },
     {
         key: 'datasource',
-        icon: <CodeSandboxSquareFilled/>,
-        text: '数据源管理'
+        icon: <DatabaseOutlined/>,
+        label: '数据源管理'
     },
     {
         key: 'template',
-        icon: <ShopFilled/>,
-        text: '模板市场'
+        icon: <ShoppingOutlined/>,
+        label: '模板市场'
     }
 ]
 
 export const HomeMenus: React.FC = () => {
 
-    const changeMenu = (key: string) => {
+    const changeMenu = (menu: MenuInfo) => {
         const {setCurrentMenu} = homeStore;
-        setCurrentMenu(key);
+        setCurrentMenu(menu.key);
     }
 
     return (
         <div className={'lc-home-menus'}>
-            {
-                menus.map((menu, index) => {
-                    return (
-                        <div className={'lc-home-menu'} key={index} onClick={() => changeMenu(menu.key)}>
-                            <div className={'lc-home-menu-icon'}>{menu.icon}</div>
-                            <div className={'lc-home-menu-text'}>{menu.text}</div>
-                        </div>
-                    );
-                })
-            }
+            <Menu onClick={changeMenu}
+                  style={{width: 256}}
+                  defaultSelectedKeys={['local']}
+                  mode="inline"
+                  items={menus}
+            />
         </div>
     );
 }

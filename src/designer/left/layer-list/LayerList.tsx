@@ -21,9 +21,18 @@ class LayerList extends Component<LayerListProps> {
 
     layerItemsContainerRef: HTMLDivElement | null = null;
 
+    componentDidMount() {
+        this.layerListRef?.addEventListener("click", this.cancelSelected);
+    }
+
+    componentWillUnmount() {
+        this.layerListRef?.removeEventListener("click", this.cancelSelected);
+    }
+
     cancelSelected = (e: any) => {
         if (!this.layerListRef)
             return;
+        console.log(e.target)
         if (this.layerListRef.contains(e.target as Node)
             && !this.layerItemsContainerRef?.contains(e.target as Node)) {
             const {setTargetIds, targetIds} = eventOperateStore;
