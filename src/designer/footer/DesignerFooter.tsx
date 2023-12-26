@@ -16,21 +16,9 @@ class DesignerFooter extends Component {
     }
 
     render() {
-        const {layerConfigs, projectConfig: {name, state}} = designerStore;
+        const {layerConfigs} = designerStore;
         const {hotKeyVisible} = footerStore;
         const {scale} = eventOperateStore;
-        let stateStr = '';
-        switch (state) {
-            case '0':
-                stateStr = '草稿';
-                break;
-            case '1':
-                stateStr = '发布';
-                break;
-            case '2':
-                stateStr = '封存';
-                break;
-        }
         return (
             <div className={'lc-designer-footer'}>
                 <div className={'footer-left'}>

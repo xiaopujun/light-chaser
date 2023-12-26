@@ -3,13 +3,6 @@ import {CloudServerOutlined, DatabaseOutlined, HomeOutlined, ShoppingOutlined} f
 import homeStore from "../HomeStore";
 import {Menu} from "antd";
 import {MenuItemType} from "antd/es/menu/hooks/useItems";
-import {MenuInfo} from "../../../designer/right/MenuType";
-
-export interface IHomeMenu {
-    key: string;
-    icon: React.ReactNode;
-    text: string;
-}
 
 const menus: MenuItemType[] = [
     {
@@ -36,9 +29,9 @@ const menus: MenuItemType[] = [
 
 export const HomeMenus: React.FC = () => {
 
-    const changeMenu = (menu: MenuInfo) => {
+    const changeMenu = (menu: MenuItemType) => {
         const {setCurrentMenu} = homeStore;
-        setCurrentMenu(menu.key);
+        setCurrentMenu(menu.key as string);
     }
 
     return (
