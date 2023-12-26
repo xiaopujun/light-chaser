@@ -76,7 +76,7 @@ class ColorMode extends Component<ColorModeProps> {
                         <Select value={mode || 'general'}
                                 onChange={(mode: string) => this.modeChange(mode as ColorModeType)}
                                 options={[
-                                    {value: 'general', label: '单色&渐变'},
+                                    {value: 'general', label: '单色'},
                                     {value: 'multi', label: '多色'},
                                 ]}/>
                     </div>

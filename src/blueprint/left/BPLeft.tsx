@@ -22,7 +22,8 @@ export const BPLeft: React.FC = () => {
     )
 }
 
-export const BPNodeSortList = () => {
+export const BPNodeSortList = observer(() => {
+    const {activeMenu} = bpLeftStore;
     const nodeSortList = [
         {
             icon: <CodeSandboxOutlined/>,
@@ -50,7 +51,8 @@ export const BPNodeSortList = () => {
             {
                 nodeSortList.map((item, index) => {
                     return (
-                        <div className={'bp-left-item'} key={index} onClick={() => {
+                        <div className={`bp-left-item ${activeMenu === item.key ? "bp-left-item-active" : ""}`}
+                             key={index} onClick={() => {
                             bpLeftStore.setActiveMenu(item.key)
                         }}>
                             <div className={'bp-item-icon'}>{item.icon}</div>
@@ -61,7 +63,7 @@ export const BPNodeSortList = () => {
             }
         </div>
     )
-}
+})
 
 //拖拽开始
 const dragStart = (event: any, element: Element) => {

@@ -1,15 +1,16 @@
 import React, {useEffect, useRef} from 'react';
 import './ProjectList.less';
-import {Card, message, Popover} from "antd";
+import {Card} from "antd";
 import defaultSnapshot from '../image/default-snapshot.jpg';
 
-import {CopyFilled, DeleteFilled, EditFilled, EllipsisOutlined, EyeFilled} from "@ant-design/icons";
+import {CopyFilled, DeleteFilled, EditFilled, EyeFilled} from "@ant-design/icons";
 import {IProjectInfo, SaveType} from "../../../designer/DesignerType";
 import {AddNewProjectDialog, INewProjectInfo} from "./AddNewProjectDialog";
 import Button from "../../../ui/button/Button";
 import Dialog from "../../../ui/dialog/Dialog";
 import operatorMap from "../../../framework/operate";
 import {DesignerMode} from "../../../utils/URLUtil";
+import {globalMessage} from "../../../framework/message/GlobalMessage";
 
 export interface ProjectListProps {
     saveType: SaveType;
@@ -76,7 +77,7 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
             if (id) {
                 setCloneDialog(false);
                 getProjectList();
-                message.success('克隆成功');
+                globalMessage.messageApi?.success('克隆成功');
             }
         });
     }
@@ -95,7 +96,7 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
                 setDelDialog(false);
                 getProjectList();
             } else {
-                message.error('删除失败');
+                globalMessage.messageApi?.error('删除失败');
             }
         });
 
@@ -162,7 +163,7 @@ const DeleteDialog = (props: DelDialogProps) => {
                 borderTop: '2px solid #272b34',
                 paddingTop: 5
             }}>
-                <Button onClick={onOk}>确认</Button>
+                <Button onClick={onOk}>确认</Button>&nbsp;&nbsp;
                 <Button onClick={onCancel}>取消</Button>
             </div>
         </Dialog>

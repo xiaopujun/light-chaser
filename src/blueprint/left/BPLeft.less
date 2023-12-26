@@ -10,8 +10,9 @@
     border-right: 1px solid #2e2e2e;
 
     .bp-left-item:hover {
+      transition: all 0.3s ease-in-out;
       background-color: #3d3d3d;
-      color: #9ed4ff;
+      color: #0095db;
       cursor: pointer;
     }
 
@@ -31,6 +32,10 @@
       .bp-item-icon {
         font-size: 20px;
       }
+    }
+
+    .bp-left-item-active {
+      color: #0095db;
     }
   }
 
@@ -90,7 +95,6 @@
 
             span {
               position: relative;
-              top: -3px;
             }
           }
         }
