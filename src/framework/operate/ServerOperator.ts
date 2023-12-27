@@ -1,7 +1,20 @@
-import {AbstractOperator} from "./AbstractOperator";
+import {AbstractOperator, IImageData} from "./AbstractOperator";
 import {IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
+import URLUtil from "../../utils/URLUtil";
 
 export default class ServerOperator extends AbstractOperator {
+    public async uploadImage(file: File): Promise<IImageData> {
+        const {id} = URLUtil.parseUrlParams();
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('projectId', id);
+        const response = await fetch(`/api/file/image/upload`, {
+            method: 'post',
+            body: formData,
+        });
+        return await response.json();
+    }
+
     async createProject(project: IProjectInfo): Promise<string> {
         const response = await fetch(`/api/project/create`, {
             method: 'post',

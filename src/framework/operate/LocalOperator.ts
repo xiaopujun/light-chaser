@@ -1,6 +1,6 @@
 import {IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
 import localforage from "localforage";
-import {AbstractOperator} from "./AbstractOperator";
+import {AbstractOperator, IImageData} from "./AbstractOperator";
 import {cloneDeep} from "lodash";
 import IdGenerate from "../../utils/IdGenerate";
 import ObjectUtil from "../../utils/ObjectUtil";
@@ -9,6 +9,10 @@ import ObjectUtil from "../../utils/ObjectUtil";
  * 本地项目数据操作实现
  */
 class LocalOperator extends AbstractOperator {
+    public async uploadImage(file: File): Promise<IImageData> {
+        return Promise.resolve(undefined);
+    }
+
     public async createProject(project: IProjectInfo): Promise<string> {
         //生成项目id
         project.id = IdGenerate.generateId();

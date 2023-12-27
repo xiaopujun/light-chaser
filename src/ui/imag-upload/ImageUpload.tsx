@@ -4,7 +4,10 @@ import {PlusOutlined} from "@ant-design/icons";
 import ImageCache from "../../framework/cache/ImageCache";
 import './ImageUpload.less';
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
-import { UploadFile } from "antd/lib/upload/interface";
+import {UploadFile} from "antd/lib/upload/interface";
+import operatorMap from "../../framework/operate/index";
+import URLUtil from "../../utils/URLUtil";
+import {AbstractOperator} from "../../framework/operate/AbstractOperator";
 
 export interface UploadDataType {
     value: string;
@@ -34,6 +37,8 @@ export const ImageUpload: React.FC<UploadProps> = (props) => {
     }
 
     const beforeUpload = (file: any) => {
+        const {saveType} = URLUtil.parseUrlParams();
+        (operatorMap[saveType] as AbstractOperator).uploadImage(file);
         fileHash(file).then((hashCode) => {
             if (ImageCache.isExistImageCache(hashCode)) {
                 const url = ImageCache.getImageCache(hashCode);
