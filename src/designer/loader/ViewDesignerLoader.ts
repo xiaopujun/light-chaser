@@ -14,15 +14,7 @@ import operatorMap from "../../framework/operate";
 /**
  * 展示模式下的设计器加载器
  */
-export class ViewDesignerLoader extends AbstractDesignerLoader {
-
-    private static instance: ViewDesignerLoader | null = null;
-
-    public static getInstance(): ViewDesignerLoader {
-        if (!this.instance)
-            this.instance = new ViewDesignerLoader();
-        return this.instance;
-    }
+class ViewDesignerLoader extends AbstractDesignerLoader {
 
     protected scanComponents(): void {
         this.scannerCustomComponents();
@@ -83,3 +75,6 @@ export class ViewDesignerLoader extends AbstractDesignerLoader {
     }
 
 }
+
+const viewDesignerLoader = new ViewDesignerLoader();
+export default viewDesignerLoader;

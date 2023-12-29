@@ -6,7 +6,7 @@ import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
 import {UploadFile} from "antd/lib/upload/interface";
 import operatorMap from "../../framework/operate/index";
 import URLUtil from "../../utils/URLUtil";
-import {AbstractOperator} from "../../framework/operate/AbstractOperator";
+import {AbstractOperator, IImageData} from "../../framework/operate/AbstractOperator";
 import {globalMessage} from "../../framework/message/GlobalMessage";
 import {SaveType} from "../../designer/DesignerType";
 import {RcFile} from "antd/es/upload";
@@ -36,7 +36,7 @@ export const ImageUpload: React.FC<UploadProps> = (props) => {
             if (!data) {
                 globalMessage.messageApi?.error('上传失败');
             } else {
-                const {url, hash} = data;
+                const {url, hash} = data as IImageData;
                 onChange && onChange({url, hash});
                 setFileList([{...fileInfo, url}]);
             }

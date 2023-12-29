@@ -15,7 +15,7 @@ import {ILayerItem} from "../../../designer/DesignerType";
 import eventOperateStore from "../../../designer/operate-provider/EventOperateStore";
 import baseInfoStore from "./BaseInfoStore";
 import rightStore from "../../../designer/right/RightStore";
-import EditorDesignerLoader from "../../../designer/loader/EditorDesignerLoader";
+import editorDesignerLoader from "../../../designer/loader/EditorDesignerLoader";
 import layerListStore from "../../../designer/left/layer-list/LayerListStore";
 import LayerUtil from "../../../designer/left/layer-list/util/LayerUtil";
 
@@ -41,7 +41,7 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
             this.state = {...layer, ...rect};
         } else {
             //普通组件
-            const baseInfo = EditorDesignerLoader.getInstance().definitionMap[layer.type!]?.getBaseInfo();
+            const baseInfo = editorDesignerLoader.definitionMap[layer.type!]?.getBaseInfo();
             this.state = {...layer, version: baseInfo?.version};
         }
     }

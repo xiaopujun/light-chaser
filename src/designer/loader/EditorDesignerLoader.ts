@@ -8,15 +8,7 @@ import {message} from "antd";
 import operatorMap from "../../framework/operate";
 import {SaveType} from "../DesignerType";
 
-export default class EditorDesignerLoader extends AbstractDesignerLoader {
-
-    private static instance: EditorDesignerLoader | null = null;
-
-    public static getInstance(): EditorDesignerLoader {
-        if (!this.instance)
-            this.instance = new EditorDesignerLoader();
-        return this.instance;
-    }
+class EditorDesignerLoader extends AbstractDesignerLoader {
 
     protected scanComponents(): void {
         this.scannerCustomComponents();
@@ -66,3 +58,6 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
         })
     }
 }
+
+const editorDesignerLoader = new EditorDesignerLoader();
+export default editorDesignerLoader;

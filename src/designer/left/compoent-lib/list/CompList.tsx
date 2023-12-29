@@ -7,7 +7,7 @@ import {BaseInfoType, ILayerItem} from "../../../DesignerType";
 import Input from "../../../../ui/input/Input";
 import DesignerLoaderFactory from "../../../loader/DesignerLoaderFactory";
 import IdGenerate from "../../../../utils/IdGenerate";
-import EditorDesignerLoader from "../../../loader/EditorDesignerLoader";
+import editorDesignerLoader from "../../../loader/EditorDesignerLoader";
 import componentListStore from "../ComponentListStore";
 
 class CompList extends Component {
@@ -64,7 +64,7 @@ class CompList extends Component {
     addItem = (compKey: string, position = [0, 0]) => {
         const {addItem} = designerStore;
         let {maxLevel, setMaxLevel, setAddRecordCompId} = eventOperateStore;
-        const {definitionMap} = EditorDesignerLoader.getInstance();
+        const {definitionMap} = editorDesignerLoader;
         const {compName, width = 320, height = 200} = definitionMap[compKey].getBaseInfo();
         let movableItem: ILayerItem = {
             name: compName,

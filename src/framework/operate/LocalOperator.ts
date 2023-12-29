@@ -21,7 +21,7 @@ class LocalOperator extends AbstractOperator {
                 if (ImageCache.isExistImageCache(hashCode)) {
                     url = ImageCache.getImageCache(hashCode);
                     if (!url && url !== '')
-                        resolve({url, hash: hashCode});
+                        resolve({url: url!, hash: hashCode});
                     else
                         resolve(false);
                 } else {
@@ -91,7 +91,7 @@ class LocalOperator extends AbstractOperator {
         const projectData = JSON.parse(dataJson as string) as ProjectDataType;
         const {elemConfigs} = projectData;
         const {convertMap} = DesignerLoaderFactory.getLoader();
-        for (const item of Object.values(elemConfigs)) {
+        for (const item of Object.values(elemConfigs!)) {
             const {type} = item?.base;
             if (type && convertMap[type]) {
                 const convert = convertMap[type] as AbstractConvert;
