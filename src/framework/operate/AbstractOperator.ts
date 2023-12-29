@@ -1,7 +1,7 @@
 import {IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
 
 export interface IImageData {
-    id?: string;
+    hash?: string;
     url: string;
 }
 
@@ -9,7 +9,7 @@ export abstract class AbstractOperator {
 
     public abstract createProject(project: IProjectInfo): Promise<string>;
 
-    public abstract updateProject(projectData: IProjectInfo): Promise<boolean> ;
+    public abstract updateProject(projectData: IProjectInfo): Promise<void> ;
 
     public abstract deleteProject(id: string): Promise<boolean>;
 
@@ -19,5 +19,5 @@ export abstract class AbstractOperator {
 
     public abstract copyProject(id: string): Promise<string>;
 
-    public abstract uploadImage(file: File): Promise<IImageData>;
+    public abstract uploadImage(file: File): Promise<IImageData | boolean>;
 }

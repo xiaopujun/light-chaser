@@ -13,7 +13,6 @@ import {reRenderAllLine} from "../../../blueprint/drag/BPMovable";
 import bpLeftStore from "../../../blueprint/left/BPLeftStore";
 import operatorMap from "../../../framework/operate";
 import URLUtil from "../../../utils/URLUtil";
-import {globalMessage} from "../../../framework/message/GlobalMessage";
 
 export const selectAll = () => {
     const {layerConfigs} = designerStore;
@@ -135,12 +134,7 @@ export const doSave = throttle(() => {
             id,
             dataJson: JSON.stringify(proData),
         }
-        operatorMap[saveType as SaveType].updateProject(projectInfo).then((res) => {
-            if (res)
-                globalMessage.messageApi?.info('保存成功', 1);
-            else
-                globalMessage.messageApi?.info('保存失败');
-        });
+        operatorMap[saveType as SaveType].updateProject(projectInfo);
     });
 }, 5000);
 

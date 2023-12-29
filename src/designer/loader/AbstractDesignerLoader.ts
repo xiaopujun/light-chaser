@@ -37,7 +37,7 @@ export abstract class AbstractDesignerLoader extends AbstractLoader {
      * 扫描自定义组件
      */
     protected scannerCustomComponents(): void {
-        const compCtx: any = import.meta.glob('../../comps/**/*Definition.ts', {eager: true});
+        const compCtx: any = import.meta.glob('../../comps/**/*.ts', {eager: true});
         Object.keys(compCtx).forEach(key => {
             const Clazz = compCtx[key]?.default;
             if (Clazz && AbstractDefinition.isPrototypeOf(Clazz)) {

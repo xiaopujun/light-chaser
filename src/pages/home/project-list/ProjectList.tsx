@@ -41,9 +41,13 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
             dataJson: JSON.stringify({canvasConfig: {width, height}}),
         }
         operatorMap[saveType].createProject(project).then((id) => {
-            setAddDialog(false);
-            window.open(`/designer?id=${id}&saveType=${saveType}&mode=${DesignerMode.EDIT}`, '_blank');
-            getProjectList();
+            if (id === "")
+                globalMessage.messageApi?.error('创建失败');
+            else {
+                setAddDialog(false);
+                window.open(`/designer?id=${id}&saveType=${saveType}&mode=${DesignerMode.EDIT}`, '_blank');
+                getProjectList();
+            }
         });
     }
 
@@ -74,10 +78,12 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
     const confirmClone = () => {
         const {saveType} = props;
         operatorMap[saveType].copyProject(cloneIdRef.current).then((id) => {
-            if (id) {
+            if (id !== "") {
                 setCloneDialog(false);
                 getProjectList();
                 globalMessage.messageApi?.success('克隆成功');
+            } else {
+                globalMessage.messageApi?.error('克隆失败');
             }
         });
     }

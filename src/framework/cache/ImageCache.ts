@@ -6,7 +6,6 @@ export default class ImageCache {
     }
 
     public static getImageCache(key: string): string | null {
-        console.log('命中缓存')
         return ImageCache.imageCachePool.get(key) || null;
     }
 

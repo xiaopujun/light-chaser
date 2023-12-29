@@ -1,5 +1,7 @@
 import AbstractConvert from "../../../framework/convert/AbstractConvert";
 import {BaseImageComponentProps} from "./BaseImageController";
+import {ImgUtil} from "../../../utils/ImgUtil";
+import ImageCache from "../../../framework/cache/ImageCache";
 
 /**
  * 图片转换器，用于将图片资源地址转换为唯一id，图片资源使用blob存入indexDB
@@ -9,11 +11,11 @@ export default class BaseImageConvert extends AbstractConvert<BaseImageComponent
     // private savedImgHash: string[] = []
 
     getKey(): string {
-        return "LcBaseImage";
+        return "BaseImage";
     }
 
     convert(data: BaseImageComponentProps): void {
-        //将本地上传的图片数据以blob形式存入indexDB，并替换localUrl属性为blobId
+        // 将本地上传的图片数据以blob形式存入indexDB，并替换localUrl属性为blobId
         // const {hashCode, localUrl} = data.style!;
         // if (this.savedImgHash.includes(hashCode!)) return;
         // if (hashCode && localUrl) {
@@ -22,11 +24,13 @@ export default class BaseImageConvert extends AbstractConvert<BaseImageComponent
     }
 
     async convertBack(data: BaseImageComponentProps): Promise<void> {
-        // const {hashCode} = data.style!;
-        // const obj = await ImgUtil.getImageFromLocalWithKey(hashCode!);
-        // data.style!.localUrl = obj[hashCode!];
-        // //设置好缓存
-        // ImageCache.addImageCache(hashCode!, obj[hashCode!]);
+        const {hash, type} = data.style!;
+        if (type === 'local') {
+            const obj = await ImgUtil.getImageFromLocalWithKey(hash!);
+            data.style!.localUrl = obj[hash!];
+            //设置好缓存
+            ImageCache.addImageCache(hash!, obj[hash!]);
+        }
     }
 
 }

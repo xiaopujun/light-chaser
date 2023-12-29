@@ -1,3 +1,5 @@
+import localforage from "localforage";
+
 export class ImgUtil {
     // static async htmlToImgWithUrl(dom: HTMLElement, options?: any): Promise<string> {
     //     try {
@@ -57,19 +59,19 @@ export class ImgUtil {
     //     });
     // }
     //
-    // static async getImageFromLocalWithKey(key: string): Promise<{ [key: string]: string }> {
-    //     try {
-    //         const blob = await localforage.getItem(key);
-    //         if (blob)
-    //             return {[key]: URL.createObjectURL(blob as Blob)};
-    //         else
-    //             return {[key]: ""};
-    //     } catch (error) {
-    //         console.log("get bgImg error", error);
-    //         return {[key]: ""};
-    //     }
-    // }
-    //
+    static async getImageFromLocalWithKey(key: string): Promise<{ [key: string]: string }> {
+        try {
+            const blob = await localforage.getItem(key);
+            if (blob)
+                return {[key]: URL.createObjectURL(blob as Blob)};
+            else
+                return {[key]: ""};
+        } catch (error) {
+            console.log("get bgImg error", error);
+            return {[key]: ""};
+        }
+    }
+
     // static async getImgFromLocal(key: string | any): Promise<string> {
     //     const imageObj = await ImgUtil.getImageFromLocalWithKey(key)
     //     return imageObj[key];

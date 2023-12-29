@@ -13,8 +13,8 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImageController>> = (
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
         const {id, data, dataFragment, reRender} = fieldChangeData;
         if (id === 'localUrl') {
-            const {hashCode, value} = data as Record<string, any>;
-            controller.update({style: {localUrl: value, hashCode}});
+            const {hash, url} = data as Record<string, any>;
+            controller.update({style: {localUrl: url, hash}});
         } else {
             controller.update(dataFragment);
         }
@@ -27,7 +27,6 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImageController>> = (
         type: 'grid',
         children: [
             {
-                id: 'imageType',
                 key: 'type',
                 type: 'radio',
                 label: '来源',
@@ -45,7 +44,7 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImageController>> = (
                 rules: "{type} === 'online'",
                 type: 'input',
                 label: '链接',
-                value: localUrl
+                value: onLineUrl
             },
             {
                 id: 'localUrl',
@@ -53,7 +52,7 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImageController>> = (
                 rules: "{type} === 'local'",
                 type: 'image-upload',
                 label: '上传',
-                value: onLineUrl
+                value: localUrl
             }
         ]
     }
