@@ -36,17 +36,9 @@ class RightStore {
      */
     visible: boolean = false;
 
-    setActiveMenu = (menu: string, newMenus?: string[]) => {
-        if (newMenus && newMenus.includes(this.activeMenu))
-            return;
-        this.activeMenu = menu;
-    }
+    setActiveMenu = (menu: string) => this.activeMenu = menu;
 
-    setContentVisible = (visible: boolean) => {
-        this.visible = visible;
-        if (!visible)
-            this.activeMenu = '';
-    }
+    setContentVisible = (visible: boolean) => this.visible = visible;
 
     activeConfig = (id: string | null, type: string | null) => {
         if (!id || !type) {
