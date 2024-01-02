@@ -32,7 +32,6 @@ class LayerList extends Component<LayerListProps> {
     cancelSelected = (e: any) => {
         if (!this.layerListRef)
             return;
-        console.log(e.target)
         if (this.layerListRef.contains(e.target as Node)
             && !this.layerItemsContainerRef?.contains(e.target as Node)) {
             const {setTargetIds, targetIds} = eventOperateStore;

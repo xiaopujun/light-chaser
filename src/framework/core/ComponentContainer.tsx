@@ -45,6 +45,8 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
                         controller.registerEvent();
                         controller.loadComponentData();
                     }
+                    //渲染后删除elemConfigs中的映射关系（需要观察是否会造成其他问题）
+                    delete elemConfigs![layer.id!];
                 });
             }
         }

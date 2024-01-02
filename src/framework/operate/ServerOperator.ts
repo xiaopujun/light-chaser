@@ -4,18 +4,6 @@ import URLUtil from "../../utils/URLUtil";
 import {globalMessage} from "../message/GlobalMessage";
 
 export default class ServerOperator extends AbstractOperator {
-    public async uploadImage(file: File): Promise<IImageData | boolean> {
-        const {id} = URLUtil.parseUrlParams();
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('projectId', id);
-        const response = await fetch(`/api/file/image/upload`, {
-            method: 'post',
-            body: formData,
-        });
-        const res = await response.json();
-        return res.code === 200 ? {url: res.data} : false;
-    }
 
     async createProject(project: IProjectInfo): Promise<string> {
         const response = await fetch(`/api/project/create`, {
@@ -72,6 +60,30 @@ export default class ServerOperator extends AbstractOperator {
             globalMessage.messageApi?.success('保存成功');
         else
             globalMessage.messageApi?.error(res.msg);
+    }
+
+    public async uploadImage(file: File): Promise<IImageData | boolean> {
+        const {id} = URLUtil.parseUrlParams();
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('projectId', id);
+        const response = await fetch(`/api/file/image/upload`, {
+            method: 'post',
+            body: formData,
+        });
+        const res = await response.json();
+        return res.code === 200 ? {url: res.data} : false;
+    }
+
+    async getImageSourceList(projectId: string): Promise<any[]> {
+        const response = await fetch(`/api/file/getImageList/${projectId}`, {method: 'get'});
+        const res = await response.json();
+        if (res.code === 200)
+            return res.data;
+        else {
+            globalMessage.messageApi?.error(res.msg);
+            return [];
+        }
     }
 
 }

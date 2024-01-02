@@ -20,4 +20,6 @@ export abstract class AbstractOperator {
     public abstract copyProject(id: string): Promise<string>;
 
     public abstract uploadImage(file: File): Promise<IImageData | boolean>;
+
+    public abstract getImageSourceList(projectId: string): Promise<any[]>;
 }

@@ -1,0 +1,35 @@
+.source-library {
+  width: 250px;
+  color: #9d9d9d;
+  display: flex;
+
+  .source-categorize {
+    width: 60px;
+    height: calc(100vh - 50px);
+    background-color: #181818;
+
+    .categorize-item {
+
+      &:hover {
+        color: #0080ff;
+      }
+
+      transition: all 0.2s;
+      text-align: center;
+      color: #0080ff;
+      font-size: 12px;
+      padding: 10px 5px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .categorize-item-active {
+      color: #0080ff;
+    }
+  }
+
+  .source-library-content {
+    flex-grow: 1;
+    height: calc(100vh - 50px);
+  }
+}

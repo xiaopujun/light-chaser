@@ -14,6 +14,10 @@ import DesignerLoaderFactory from "../../designer/loader/DesignerLoaderFactory";
  * 本地项目数据操作实现
  */
 class LocalOperator extends AbstractOperator {
+    getImageSourceList(projectId: string): Promise<any[]> {
+        return Promise.resolve([]);
+    }
+
     public async uploadImage(file: File): Promise<IImageData | boolean> {
         return new Promise<IImageData | boolean>(resolve => {
             let url = null;
