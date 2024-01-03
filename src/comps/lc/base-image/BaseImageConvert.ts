@@ -1,14 +1,12 @@
 import AbstractConvert from "../../../framework/convert/AbstractConvert";
 import {BaseImageComponentProps} from "./BaseImageController";
-import {ImgUtil} from "../../../utils/ImgUtil";
-import ImageCache from "../../../framework/cache/ImageCache";
+import imageSourceCache from "../../../framework/cache/ImageSourceCache";
+import {IImageData} from "../../../framework/operate/AbstractOperator";
 
 /**
  * 图片转换器，用于将图片资源地址转换为唯一id，图片资源使用blob存入indexDB
  */
 export default class BaseImageConvert extends AbstractConvert<BaseImageComponentProps> {
-
-    // private savedImgHash: string[] = []
 
     getKey(): string {
         return "BaseImage";
@@ -26,10 +24,9 @@ export default class BaseImageConvert extends AbstractConvert<BaseImageComponent
     async convertBack(data: BaseImageComponentProps): Promise<void> {
         const {hash, type} = data.style!;
         if (type === 'local') {
-            const obj = await ImgUtil.getImageFromLocalWithKey(hash!);
-            data.style!.localUrl = obj[hash!];
-            //设置好缓存
-            ImageCache.addImageCache(hash!, obj[hash!]);
+            const imageInfo: IImageData = await imageSourceCache.getCache(hash!);
+            if (!imageInfo) return;
+            data.style!.localUrl = imageInfo.url;
         }
     }
 

@@ -87,13 +87,13 @@ export const ImageSource: React.FC = () => {
         const initConfig: BaseImageComponentProps = definition.getInitConfig();
         initConfig.style!.type = 'local';
         initConfig.style!.localUrl = url;
-        elemConfigs[id] = initConfig;
+        elemConfigs![id] = initConfig;
     }
 
     useEffect(() => {
         const {saveType, id} = URLUtil.parseUrlParams();
         (operatorMap[saveType as SaveType] as AbstractOperator).getImageSourceList(id).then((data) => {
-            setImageList(data);
+            setImageList(data as any);
         });
 
         registerDrag();

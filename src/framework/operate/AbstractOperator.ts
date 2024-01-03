@@ -2,6 +2,8 @@ import {IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
 
 export interface IImageData {
     hash?: string;
+    name?: string;
+    blob?: Blob;
     url: string;
 }
 
