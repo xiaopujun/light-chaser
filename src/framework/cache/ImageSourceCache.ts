@@ -1,5 +1,5 @@
 import AbstractCache from "./AbstractCache";
-import {IImageData} from "../operate/AbstractOperator";
+import {IImageData} from "../../comps/lc/base-image/BaseImageComponent";
 
 class ImageSourceCache extends AbstractCache<any> {
     public getAllImageCache(): IImageData[] {

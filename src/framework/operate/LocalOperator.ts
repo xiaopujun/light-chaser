@@ -1,6 +1,6 @@
 import {IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
 import localforage from "localforage";
-import {AbstractOperator, IImageData} from "./AbstractOperator";
+import {AbstractOperator} from "./AbstractOperator";
 import {cloneDeep} from "lodash";
 import IdGenerate from "../../utils/IdGenerate";
 import ObjectUtil from "../../utils/ObjectUtil";
@@ -10,6 +10,7 @@ import imageSourceCache from "../cache/ImageSourceCache";
 import AbstractConvert from "../convert/AbstractConvert";
 import DesignerLoaderFactory from "../../designer/loader/DesignerLoaderFactory";
 import URLUtil from "../../utils/URLUtil";
+import {IImageData} from "../../comps/lc/base-image/BaseImageComponent";
 
 /**
  * 本地项目数据操作实现
@@ -67,13 +68,13 @@ class LocalOperator extends AbstractOperator {
          * 包括如下数据：
          * 1.图片资源数据
          */
-        const imageHashList = await localforage.getItem('image-source-' + id) || [];
+        const imageHashList: any[] = await localforage.getItem('image-source-' + id) || [];
         for (const hash of imageHashList) {
-            const imageInfo: IImageData = await localforage.getItem(hash);
+            const imageInfo: IImageData | null = await localforage.getItem(hash);
             if (imageInfo) {
                 const {blob, name} = imageInfo;
-                const url = URL.createObjectURL(blob);
-                imageSourceCache.addCache(hash, {url, name});
+                const url = URL.createObjectURL(blob!);
+                imageSourceCache.addCache(hash, {url, name, hash});
             }
         }
         const projectData = JSON.parse(dataJson as string) as ProjectDataType;
@@ -119,8 +120,8 @@ class LocalOperator extends AbstractOperator {
             let url = null;
             FileUtil.getFileHash(file).then(hashCode => {
                 if (imageSourceCache.isExistCache(hashCode)) {
-                    url = imageSourceCache.getCache(hashCode);
-                    if (!url && url !== '')
+                    url = imageSourceCache.getCache(hashCode)?.url;
+                    if (url && url !== '')
                         resolve({url: url!, hash: hashCode});
                     else
                         resolve(false);
@@ -132,12 +133,12 @@ class LocalOperator extends AbstractOperator {
                         localforage.setItem(hashCode, {name: file.name, blob});
                         const {id} = URLUtil.parseUrlParams();
                         const imageSourceKey = "image-source-" + id;
-                        const imageSourceMap = await localforage.getItem(imageSourceKey) || [];
+                        const imageSourceMap: any[] = await localforage.getItem(imageSourceKey) || [];
                         imageSourceMap.push(hashCode);
                         localforage.setItem(imageSourceKey, imageSourceMap);
                         url = URL.createObjectURL(blob);
                         //设置图片缓存
-                        imageSourceCache.addCache(hashCode, {url, name: file.name});
+                        imageSourceCache.addCache(hashCode, {url, name: file.name, hash: hashCode});
                         resolve({url, hash: hashCode});
                         //默认情况下，URL.createObjectURL(blob)创建的资源链接所关联的内存，默认生命周期是跟随页面的，页面关闭后，内存才会被释放。
                         //手动调用URL.revokeObjectURL可直接释放对应资源的内存空间，因此请适当合理的调用该方法
@@ -159,7 +160,7 @@ class LocalOperator extends AbstractOperator {
      *
      * 其涉及的典型场景为：本地项目的资源库列表
      */
-    getImageSourceList(projectId: string): Promise<any[]> {
+    getImageSourceList(projectId: string): Promise<IImageData[]> {
         return new Promise<any[]>(resolve => {
             resolve(imageSourceCache.getAllImageCache());
         })

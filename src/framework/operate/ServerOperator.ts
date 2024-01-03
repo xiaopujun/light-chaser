@@ -1,7 +1,8 @@
-import {AbstractOperator, IImageData} from "./AbstractOperator";
+import {AbstractOperator} from "./AbstractOperator";
 import {IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
 import URLUtil from "../../utils/URLUtil";
 import {globalMessage} from "../message/GlobalMessage";
+import {IImageData} from "../../comps/lc/base-image/BaseImageComponent";
 
 export default class ServerOperator extends AbstractOperator {
 
@@ -75,7 +76,7 @@ export default class ServerOperator extends AbstractOperator {
         return res.code === 200 ? {url: res.data} : false;
     }
 
-    async getImageSourceList(projectId: string): Promise<any[]> {
+    async getImageSourceList(projectId: string): Promise<IImageData[]> {
         const response = await fetch(`/api/file/getImageList/${projectId}`, {method: 'get'});
         const res = await response.json();
         if (res.code === 200)

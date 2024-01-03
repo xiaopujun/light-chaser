@@ -10,11 +10,12 @@ import designerStore from "../../../store/DesignerStore";
 import editorDesignerLoader from "../../../loader/EditorDesignerLoader";
 import IdGenerate from "../../../../utils/IdGenerate";
 import {BaseImageComponentProps} from "../../../../comps/lc/base-image/BaseImageController";
+import {IImageData} from "../../../../comps/lc/base-image/BaseImageComponent";
 
 
 export const ImageSource: React.FC = () => {
 
-    const [imageList, setImageList] = useState([]);
+    const [imageList, setImageList] = useState<IImageData[]>([]);
 
     const registerDrag = () => {
         //处理拖拽元素到画布中
@@ -34,33 +35,34 @@ export const ImageSource: React.FC = () => {
     }
 
     //拖拽开始
-    const dragStart = (event: any) => {
+    const dragStart = (event: DragEvent) => {
         // 设置拖拽数据
-        if (event.target.classList.contains('droppable-element')) {
+        if ((event.target as HTMLElement).classList.contains('droppable-element')) {
             const element = event.target;
-            (event as any).dataTransfer.setData('imageUrl', element.getAttribute('data-url'));
+            event.dataTransfer.setData('imageUrl', element.getAttribute('data-url'));
+            event.dataTransfer.setData('imageHash', element.getAttribute('data-hash'));
         }
     }
 
     //拖拽覆盖
-    const dragover = (event: any) => {
+    const dragover = (event: DragEvent) => {
         event.preventDefault(); // 阻止默认行为以允许拖放
     }
     //释放拖拽元素
-    const drop = (event: any) => {
+    const drop = (event: DragEvent) => {
         event.preventDefault();
-        const url = (event as any).dataTransfer.getData('imageUrl');
-        console.log("dragStart", url);
+        const url = event.dataTransfer.getData('imageUrl');
+        const hash = event.dataTransfer.getData('imageHash');
         if (!url) return;
         //获取鼠标位置,添加元素
         const {scale, dsContentRef} = eventOperateStore;
         const contentPos = dsContentRef?.getBoundingClientRect();
         const x = (event.clientX - (contentPos?.x || 0)) / scale;
         const y = (event.clientY - (contentPos?.y || 0)) / scale;
-        addItem("BaseImage", [x, y], url);
+        addItem("BaseImage", [x, y], url, hash);
     }
 
-    const addItem = (compKey: string, position = [0, 0], url: string) => {
+    const addItem = (compKey: string, position = [0, 0], url: string, hash: string) => {
         const {addItem, elemConfigs} = designerStore;
         let {maxLevel, setMaxLevel, setAddRecordCompId} = eventOperateStore;
         const {definitionMap} = editorDesignerLoader;
@@ -87,13 +89,14 @@ export const ImageSource: React.FC = () => {
         const initConfig: BaseImageComponentProps = definition.getInitConfig();
         initConfig.style!.type = 'local';
         initConfig.style!.localUrl = url;
+        initConfig.style!.hash = hash;
         elemConfigs![id] = initConfig;
     }
 
     useEffect(() => {
         const {saveType, id} = URLUtil.parseUrlParams();
         (operatorMap[saveType as SaveType] as AbstractOperator).getImageSourceList(id).then((data) => {
-            setImageList(data as any);
+            setImageList(data);
         });
 
         registerDrag();
@@ -106,9 +109,11 @@ export const ImageSource: React.FC = () => {
         </div>
         <div className={'image-source-list'} id={'image-source-list'}>
             {
-                imageList.map((item: any, index: number) => {
+                imageList.map((item: IImageData, index: number) => {
+                    console.log("item", item)
                     return <div className={'image-source-item droppable-element'} key={index}
-                                draggable={true} data-url={item.url}>
+                                draggable={true} data-url={item.url}
+                                data-hash={item.hash}>
                         <div className={'image-source-item-header'}>{item.name || '无名称信息'}</div>
                         <div className={'image-source-item-body'}>
                             <div className={'item-bg-image'} style={{backgroundImage: `url(${item.url})`}}/>

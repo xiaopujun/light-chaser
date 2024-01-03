@@ -1,7 +1,7 @@
 import AbstractConvert from "../../../framework/convert/AbstractConvert";
 import {BaseImageComponentProps} from "./BaseImageController";
 import imageSourceCache from "../../../framework/cache/ImageSourceCache";
-import {IImageData} from "../../../framework/operate/AbstractOperator";
+import {IImageData} from "./BaseImageComponent";
 
 /**
  * 图片转换器，用于将图片资源地址转换为唯一id，图片资源使用blob存入indexDB

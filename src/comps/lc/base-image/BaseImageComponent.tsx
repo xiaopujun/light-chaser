@@ -1,5 +1,24 @@
 import {Component} from 'react';
 
+export interface IImageData {
+    /**
+     * 图片文件的hash码，用于判断图片是否重复，节省内存和磁盘空间
+     */
+    hash?: string;
+    /**
+     * 图片名称，默认取文件名
+     */
+    name?: string;
+    /**
+     * 图片文件源数据，用于本地项目中做图片与可访问资源链接的转换
+     */
+    blob?: Blob;
+    /**
+     * 图片url地址，在线项目取图片的可访问资源链接。本地项目中通过blob和URL.createObjectURL(blob)生成
+     */
+    url: string;
+}
+
 export interface BaseImageComponentStyle {
     type?: 'online' | 'local';
     onLineUrl?: string;
