@@ -82,23 +82,23 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
 
     handleMap: Record<string, Function> = {
         "name": this.changeName,
-        "width": (value: number) => eventOperateStore.movableRef?.current?.request("resizable", {
+        "width": (value: number) => eventOperateStore.movableRef?.request("resizable", {
             offsetWidth: value as number,
             direction: [1, 1]
         }, true),
-        "height": (value: number) => eventOperateStore.movableRef?.current?.request("resizable", {
+        "height": (value: number) => eventOperateStore.movableRef?.request("resizable", {
             offsetHeight: value as number,
             direction: [1, 1]
         }, true),
-        "posX": (value: number) => eventOperateStore.movableRef?.current?.request("draggable", {x: value as number}, true),
-        "posY": (value: number) => eventOperateStore.movableRef?.current?.request("draggable", {y: value as number}, true),
+        "posX": (value: number) => eventOperateStore.movableRef?.request("draggable", {x: value as number}, true),
+        "posY": (value: number) => eventOperateStore.movableRef?.request("draggable", {y: value as number}, true),
         "align": (align: string) => this.handleMap[align](),
-        "left": () => eventOperateStore.movableRef?.current?.request("draggable", {x: 0}, true),
-        "horizontally": () => eventOperateStore.movableRef?.current?.request("draggable", {x: designerStore.canvasConfig.width! / 2 - this.state.width! / 2}, true),
-        "right": () => eventOperateStore.movableRef?.current?.request("draggable", {x: designerStore.canvasConfig.width! - this.state.width!}, true),
-        "top": () => eventOperateStore.movableRef?.current?.request("draggable", {y: 0}, true),
-        "vertically": () => eventOperateStore.movableRef?.current?.request("draggable", {y: designerStore.canvasConfig.height! / 2 - this.state.height! / 2}, true),
-        "bottom": () => eventOperateStore.movableRef?.current?.request("draggable", {y: designerStore.canvasConfig.height! - this.state.height!}, true),
+        "left": () => eventOperateStore.movableRef?.request("draggable", {x: 0}, true),
+        "horizontally": () => eventOperateStore.movableRef?.request("draggable", {x: designerStore.canvasConfig.width! / 2 - this.state.width! / 2}, true),
+        "right": () => eventOperateStore.movableRef?.request("draggable", {x: designerStore.canvasConfig.width! - this.state.width!}, true),
+        "top": () => eventOperateStore.movableRef?.request("draggable", {y: 0}, true),
+        "vertically": () => eventOperateStore.movableRef?.request("draggable", {y: designerStore.canvasConfig.height! / 2 - this.state.height! / 2}, true),
+        "bottom": () => eventOperateStore.movableRef?.request("draggable", {y: designerStore.canvasConfig.height! - this.state.height!}, true),
     }
 
     onFieldChange = (fieldChangeData: FieldChangeData) => {

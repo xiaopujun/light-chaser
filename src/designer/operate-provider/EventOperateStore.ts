@@ -1,12 +1,13 @@
 import {action, makeObservable, observable} from "mobx";
 import Moveable from "react-moveable";
-import {Component, RefObject} from "react";
+import {Component} from "react";
 import designerStore from "../store/DesignerStore";
 import ObjectUtil from "../../utils/ObjectUtil";
 import DesignerRuler from "../canvas/DesignerRuler";
 import {ILayerItem} from "../DesignerType";
 import layerListStore from "../left/layer-list/LayerListStore";
 import designerLeftStore from "../left/DesignerLeftStore";
+import Selecto from "react-selecto";
 
 /**
  * 组件多选情况下的坐标值
@@ -58,12 +59,12 @@ class EventOperateStore {
      * 拖拽框架实例引用
      * Drag and drop framework instance reference
      */
-    movableRef: RefObject<Moveable> | null = null;
+    movableRef: Moveable | null = null;
     /**
      * 选择器框架实例引用
      * Selector framework instance reference
      */
-    selectorRef: any = null;
+    selectorRef: Selecto | null = null;
     /**
      * 设计器标尺组件实例引用
      */
@@ -96,7 +97,7 @@ class EventOperateStore {
     /**
      * 用于记录鼠标右键点击时的目标元素，用于快捷键操作时的目标元素的范围筛选
      */
-    pointerTarget: any = null;
+    pointerTarget: EventTarget | null = null;
 
     /**
      * 组合框选时的坐标信息
@@ -144,9 +145,9 @@ class EventOperateStore {
 
     setMinLevel = (order: number) => this.minLevel = order;
 
-    setMovableRef = (ref: any) => this.movableRef = ref;
+    setMovableRef = (ref: Moveable) => this.movableRef = ref;
 
-    setSelectorRef = (ref: any) => this.selectorRef = ref;
+    setSelectorRef = (ref: Selecto) => this.selectorRef = ref;
 
     setTargetIds = (ids: string[]) => {
         //存储之前一次的选中组件id，用于清空图层列表的上一次选中状态
@@ -184,7 +185,7 @@ class EventOperateStore {
         }
     }
 
-    setPointerTarget = (target: any) => this.pointerTarget = target;
+    setPointerTarget = (target: EventTarget) => this.pointerTarget = target;
 
     setGroupCoordinate = (coordinate: GroupCoordinateType) => {
         this.groupCoordinate = ObjectUtil.merge(this.groupCoordinate, coordinate);
@@ -194,7 +195,7 @@ class EventOperateStore {
      * 计算组件多选时的左上角坐标
      * @param compArr
      */
-    calculateGroupCoordinate = (compArr: any[]) => {
+    calculateGroupCoordinate = (compArr: HTMLElement[]) => {
         const {layerConfigs} = designerStore;
         let groupCoordinate: GroupCoordinateType = {
             minX: Infinity,
@@ -202,7 +203,7 @@ class EventOperateStore {
             maxX: -Infinity,
             maxY: -Infinity
         };
-        compArr.forEach((item: any) => {
+        compArr.forEach((item: HTMLElement) => {
             const layerConfig: ILayerItem = layerConfigs[item.id];
             let {x = 0, y = 0, width, height} = layerConfig!;
             if (x < groupCoordinate.minX!)
@@ -225,7 +226,7 @@ class EventOperateStore {
     focusDesignerCanvas = () => {
         const enforcementCap = document.querySelector('.lc-ruler-content');
         //删除组件后，重新聚焦鼠标指针到容器上，避免鼠标失去焦点导致其他快捷键失效。
-        this.setPointerTarget(enforcementCap);
+        this.setPointerTarget(enforcementCap! as HTMLElement);
     }
 
 }

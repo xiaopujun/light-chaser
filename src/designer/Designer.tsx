@@ -101,5 +101,5 @@ const pointerUpHandler = (event: PointerEvent) => {
     const {setMouseUpTime} = contextMenuStore;
     setMouseUpTime(Date.now());
     const {setPointerTarget} = eventOperateStore;
-    setPointerTarget(event.target);
+    setPointerTarget(event.target as HTMLElement);
 }

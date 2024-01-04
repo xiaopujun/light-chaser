@@ -38,14 +38,14 @@ class DesignerSelectable extends Component<DesignerSelectableProps> {
 
     componentDidMount() {
         const {setSelectorRef} = eventOperateStore;
-        setSelectorRef(this.selectorRef);
+        setSelectorRef(this.selectorRef.current!);
     }
 
     onSelectEnd = (e: OnSelectEnd) => {
         let {selected} = e;
         const {movableRef, setTargetIds} = eventOperateStore;
         if (!movableRef) return;
-        const movable: Moveable = movableRef!.current!;
+        const movable: Moveable = movableRef!;
         //如果为拖拽，则将当前的整个dom事件传递给movable，确保选中元素后可以立马拖拽
         if (e.isDragStart) {
             e.inputEvent.preventDefault();
@@ -104,7 +104,7 @@ class DesignerSelectable extends Component<DesignerSelectableProps> {
 
     onDragStart = (e: OnDragStart) => {
         const {movableRef, targets} = eventOperateStore;
-        const movable: Moveable = movableRef!.current!;
+        const movable: Moveable = movableRef!;
         const target = e.inputEvent.target;
         if ((movable.isMoveableElement(target))
             || targets.some((t: HTMLElement) => t === target || t.contains(target))

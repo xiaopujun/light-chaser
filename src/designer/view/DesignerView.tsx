@@ -9,7 +9,7 @@ import layerBuilder from "../left/layer-list/LayerBuilder";
 
 class DesignerView extends Component {
 
-    constructor(props: any) {
+    constructor(props: {}) {
         super(props);
         DesignerLoaderFactory.getLoader().load();
     }

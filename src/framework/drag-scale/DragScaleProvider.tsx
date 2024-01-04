@@ -79,7 +79,7 @@ export default class DragScaleProvider {
     /*********************拖拽事件**********************/
 
     private onDragEnd = (): void => {
-        this.container?.addEventListener('pointerup', (e: any) => {
+        this.container?.addEventListener('pointerup', (e: PointerEvent) => {
             if (e.button === 2) {
                 this.container?.releasePointerCapture(e.pointerId);
                 this.container?.removeEventListener('pointermove', this.onDragMove);

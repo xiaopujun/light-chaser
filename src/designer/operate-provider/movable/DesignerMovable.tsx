@@ -1,6 +1,7 @@
 import * as React from "react";
 import Moveable, {
-    MoveableManagerInterface, OnClickGroup,
+    MoveableManagerInterface,
+    OnClickGroup,
     OnDrag,
     OnDragEnd,
     OnDragGroup,
@@ -22,7 +23,6 @@ import {ILayerItem} from "../../DesignerType";
 import './DesignerMovable.less';
 import baseInfoStore from "../../../comps/common-component/base-info/BaseInfoStore";
 import LayerUtil from "../../left/layer-list/util/LayerUtil";
-import Selecto from "react-selecto";
 
 export interface DesignerMovableProps {
     children?: React.ReactNode;
@@ -40,7 +40,7 @@ class DesignerMovable extends React.Component<DesignerMovableProps, { throttleDr
 
     componentDidMount() {
         const {setMovableRef} = eventOperateStore;
-        setMovableRef(this.movableRef);
+        setMovableRef(this.movableRef.current!);
     }
 
     onDragStart = (e: OnDragStart) => {
@@ -324,7 +324,7 @@ class DesignerMovable extends React.Component<DesignerMovableProps, { throttleDr
 
                     throttleDrag={rasterize ? dragStep : 1}
                     throttleResize={rasterize ? resizeStep : 1}
-                    onClickGroup={(e: OnClickGroup) => (selectorRef.current as Selecto)?.clickTarget(e.inputEvent, e.inputTarget)}
+                    onClickGroup={(e: OnClickGroup) => selectorRef?.clickTarget(e.inputEvent, e.inputTarget)}
                     onDrag={this.onDrag}
                     onDragStart={this.onDragStart}
                     onDragEnd={this.onDragEnd}

@@ -5,7 +5,7 @@ import {MessageInstance} from "antd/es/message/interface";
 class GMessage {
     public messageApi: MessageInstance | null = null;
 
-    public setMessageApi(messageApi: any) {
+    public setMessageApi(messageApi: MessageInstance | null) {
         this.messageApi = messageApi;
     }
 

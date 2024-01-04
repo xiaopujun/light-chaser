@@ -39,7 +39,7 @@ class ThemeEditor extends Component {
         themeConfig: this.initThemeConfig
     }
 
-    constructor(props: any) {
+    constructor(props: {}) {
         super(props);
         const themeList = designerStore.themeConfig;
         this.state.data = cloneDeep(themeList) || [];
@@ -135,7 +135,7 @@ class ThemeEditor extends Component {
 
     onDel = (id: string) => {
         const {data} = this.state;
-        let newData = data.filter((item: any) => item.id !== id);
+        let newData = data.filter((item: ThemeItemType) => item.id !== id);
         this.setState({data: newData});
     }
 

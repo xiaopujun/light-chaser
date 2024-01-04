@@ -68,7 +68,7 @@ class LocalOperator extends AbstractOperator {
          * 包括如下数据：
          * 1.图片资源数据
          */
-        const imageHashList: any[] = await localforage.getItem('image-source-' + id) || [];
+        const imageHashList: string[] = await localforage.getItem('image-source-' + id) || [];
         for (const hash of imageHashList) {
             const imageInfo: IImageData | null = await localforage.getItem(hash);
             if (imageInfo) {

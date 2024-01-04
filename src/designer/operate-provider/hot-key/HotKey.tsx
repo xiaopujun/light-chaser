@@ -67,7 +67,7 @@ class HotKey extends Component<HotKeyProps> {
                 if (range) {
                     //先从缓存中获取dom元素，如果没有则从document中获取并缓存
                     const targetDom = this.getSpecialDomCache(range);
-                    if (!targetDom || !targetDom.contains(pointerTarget))
+                    if (!targetDom || !targetDom.contains(pointerTarget as Node))
                         return;
                 }
                 //其余情况均执行快捷键，如果是数组则遍历执行，反之直接执行
