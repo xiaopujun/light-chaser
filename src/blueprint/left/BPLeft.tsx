@@ -105,6 +105,7 @@ export const BPNodeList = observer(() => {
     useEffect(() => {
         const dropContainer = document.getElementById("bp-ds-container");
         const dragElements = document.getElementsByClassName("bp-node-list-item");
+        //todo 需要优化，不必每一个元素都单独添加事件监听
         Array.from(dragElements).forEach((element) => {
             element.removeEventListener('dragstart', event => dragStart(event as DragEvent, element));
             element.addEventListener('dragstart', event => dragStart(event as DragEvent, element));
@@ -113,6 +114,14 @@ export const BPNodeList = observer(() => {
         dropContainer && dropContainer.addEventListener('dragover', dragover);
         dropContainer && dropContainer.removeEventListener('drop', drop);
         dropContainer && dropContainer.addEventListener('drop', drop);
+
+        return () => {
+            Array.from(dragElements).forEach((element) => {
+                element.removeEventListener('dragstart', event => dragStart(event as DragEvent, element));
+            });
+            dropContainer && dropContainer.removeEventListener('dragover', dragover);
+            dropContainer && dropContainer.removeEventListener('drop', drop);
+        }
     }, [activeMenu])
     return (
         <div className={'bp-node-list'}>

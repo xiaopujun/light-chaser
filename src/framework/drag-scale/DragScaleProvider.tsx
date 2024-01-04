@@ -52,44 +52,45 @@ export default class DragScaleProvider {
         if (dragEndCallback)
             this.dragEndCallback = dragEndCallback;
         this.registerDrag();
-        this.registerScale();
+        this.registerWheel();
     }
 
     public destroy() {
-        this.container?.removeEventListener('pointerdown', this.onDragStart);
-        this.container?.removeEventListener('pointerup', this.onDragEnd);
-        this.container?.removeEventListener('wheel', this.onWheel);
+        this.container?.removeEventListener('pointerdown', this.pointerDown);
+        this.container?.removeEventListener('pointerup', this.pointerUp);
+        this.container?.removeEventListener('wheel', this.doWheel);
+        this.container?.removeEventListener('contextmenu', this.contextMenu);
     }
 
     /************************注册拖拽事件************************/
+    private contextMenu = (e: MouseEvent): void => e.preventDefault();
+
     private registerDrag() {
         //初始化被拖拽对象位置
         this.content!.style.transform = 'translate3d(' + this.position.x + 'px, ' + this.position.y + 'px, 0) scale(' + this.scaleCore.scale + ')';
         //阻止系统右键菜单显示
-        this.container?.addEventListener("contextmenu", (e) => e.preventDefault())
+        this.container?.addEventListener("contextmenu", this.contextMenu)
         this.onDragStart();
         this.onDragEnd();
     }
 
     /************************注册缩放事件************************/
-    private registerScale() {
-        this.onWheel();
-    }
+    private registerWheel = (): void => this.container?.addEventListener('wheel', this.doWheel);
 
     /*********************拖拽事件**********************/
 
-    private onDragEnd = (): void => {
-        this.container?.addEventListener('pointerup', (e: PointerEvent) => {
-            if (e.button === 2) {
-                this.container?.releasePointerCapture(e.pointerId);
-                this.container?.removeEventListener('pointermove', this.onDragMove);
-                if (this.dragEndCallback) {
-                    const {scale, ratio} = this.scaleCore;
-                    this.dragEndCallback({scale, ratio, position: this.position}, e);
-                }
+    private pointerUp = (e: PointerEvent): void => {
+        if (e.button === 2) {
+            this.container?.releasePointerCapture(e.pointerId);
+            this.container?.removeEventListener('pointermove', this.onDragMove);
+            if (this.dragEndCallback) {
+                const {scale, ratio} = this.scaleCore;
+                this.dragEndCallback({scale, ratio, position: this.position}, e);
             }
-        });
+        }
     }
+
+    private onDragEnd = (): void => this.container?.addEventListener('pointerup', this.pointerUp);
 
     private onDragMove = (e: PointerEvent): void => {
         if (e.buttons === 2) {
@@ -103,39 +104,40 @@ export default class DragScaleProvider {
         }
     }
 
-    private onDragStart = (): void => {
-        this.container?.addEventListener('pointerdown', (e: any) => {
-            if (e.button === 2) {
-                this.container?.setPointerCapture(e.pointerId);
-                this.container?.addEventListener('pointermove', this.onDragMove);
-                if (this.dragStartCallback) {
-                    const {scale, ratio} = this.scaleCore;
-                    this.dragStartCallback({scale, ratio, position: this.position}, e);
-                }
+    private pointerDown = (e: PointerEvent): void => {
+        if (e.button === 2) {
+            this.container?.setPointerCapture(e.pointerId);
+            this.container?.addEventListener('pointermove', this.onDragMove);
+            if (this.dragStartCallback) {
+                const {scale, ratio} = this.scaleCore;
+                this.dragStartCallback({scale, ratio, position: this.position}, e);
             }
-        });
+        }
     }
 
+    private onDragStart = (): void => this.container?.addEventListener('pointerdown', this.pointerDown);
+
     /*********************缩放事件**********************/
-    private onWheel = (): void => {
-        this.container?.addEventListener('wheel', (e: any) => {
-            if (e.altKey && e.buttons !== 2) {
-                //计算缩放比例
-                this.scaleCore.compute(e.deltaY > 0 ? 0 : 1);
-                const {x: offSetX, y: offSetY} = this.container!.getBoundingClientRect();
-                //执行缩放
-                const {width, height} = this.content?.style!;
-                this.position.x = this.position.x - ((this.scaleCore.ratio - 1) * (e.clientX - offSetX - this.position.x - parseFloat(width) * 0.5));
-                this.position.y = this.position.y - ((this.scaleCore.ratio - 1) * (e.clientY - offSetY - this.position.y - parseFloat(height) * 0.5));
-                this.content!.style.transform = 'translate3d(' + this.position.x + 'px, ' + this.position.y + 'px, 0) scale(' + this.scaleCore.scale + ')';
-                //执行回调
-                if (this.scaleCallback) {
-                    const {scale, ratio} = this.scaleCore;
-                    this.scaleCallback({scale, ratio, position: this.position}, e);
-                }
+
+    private doWheel = (e: WheelEvent): void => {
+        if (e.altKey && e.buttons !== 2) {
+            //计算缩放比例
+            this.scaleCore.compute(e.deltaY > 0 ? 0 : 1);
+            const {x: offSetX, y: offSetY} = this.container!.getBoundingClientRect();
+            //执行缩放
+            const {width, height} = this.content?.style!;
+            this.position.x = this.position.x - ((this.scaleCore.ratio - 1) * (e.clientX - offSetX - this.position.x - parseFloat(width) * 0.5));
+            this.position.y = this.position.y - ((this.scaleCore.ratio - 1) * (e.clientY - offSetY - this.position.y - parseFloat(height) * 0.5));
+            this.content!.style.transform = 'translate3d(' + this.position.x + 'px, ' + this.position.y + 'px, 0) scale(' + this.scaleCore.scale + ')';
+            //执行回调
+            if (this.scaleCallback) {
+                const {scale, ratio} = this.scaleCore;
+                this.scaleCallback({scale, ratio, position: this.position}, e);
             }
-        });
+        }
     }
+
+
 }
 
 

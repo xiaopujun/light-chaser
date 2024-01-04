@@ -59,6 +59,7 @@ export const BPCanvas: React.FC = () => {
         }, 50);
         const {nodeContainerRef} = bpStore;
         nodeContainerRef?.addEventListener('click', lineSegmentCollisions);
+        return () => nodeContainerRef?.removeEventListener('click', lineSegmentCollisions);
     }, [])
     return (
         <div className={'blue-print-canvas'} style={{

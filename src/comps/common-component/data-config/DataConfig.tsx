@@ -200,14 +200,6 @@ class DataConfig extends Component<DataConfigProps> {
         }
     }
 
-    dataSourcesChange = (value: any) => {
-        const {controller} = this.props;
-        controller.update({data: {dataSource: value}}, {reRender: false});
-        this.setState({
-            dataSource: value,
-        });
-    }
-
     validate = () => {
         if (!this.dataConfig.apiData?.url) {
             message.error('接口地址不能为空');
@@ -274,7 +266,6 @@ class DataConfig extends Component<DataConfigProps> {
         if (reRender)
             this.setState({renderCount: this.state.renderCount + 1})
     }
-
 
     render() {
         return (
