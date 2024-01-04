@@ -37,9 +37,9 @@ export abstract class AbstractDesignerLoader extends AbstractLoader {
      * 扫描自定义组件
      */
     protected scannerCustomComponents(): void {
-        const compCtx: any = import.meta.glob('../../comps/**/*.ts', {eager: true});
-        Object.keys(compCtx).forEach(key => {
-            const Clazz = compCtx[key]?.default;
+        const glob = import.meta.glob('../../comps/**/*.ts', {eager: true}) as Record<string, any>;
+        Object.keys(glob).forEach(key => {
+            const Clazz = glob[key]?.default;
             if (Clazz && AbstractDefinition.isPrototypeOf(Clazz)) {
                 let definition: AbstractDefinition = new Clazz();
                 //获取组件的基础信息

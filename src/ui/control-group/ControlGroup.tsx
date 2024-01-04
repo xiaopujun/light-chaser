@@ -13,7 +13,7 @@ export interface ControlGroupProps {
     itemName?: string;
     template?: Control;
     defaultValue?: object[];
-    onChange?: (value: any) => void;
+    onChange?: (value: unknown) => void;
 }
 
 const ControlGroup = (props: ControlGroupProps) => {

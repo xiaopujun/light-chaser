@@ -11,10 +11,10 @@ export interface DragScaleProviderParams {
     container: HTMLDivElement | null;
     content: HTMLDivElement | null;
     position?: IPoint;
-    dragCallback?: (dsData: DragScaleData, e: any) => void;
-    dragStartCallback?: (dsData: DragScaleData, e: any) => void;
-    dragEndCallback?: (dsData: DragScaleData, e: any) => void;
-    scaleCallback?: (dsData: DragScaleData, e: any) => void;
+    dragCallback?: (dsData: DragScaleData, e: PointerEvent) => void;
+    dragStartCallback?: (dsData: DragScaleData, e: PointerEvent) => void;
+    dragEndCallback?: (dsData: DragScaleData, e: PointerEvent) => void;
+    scaleCallback?: (dsData: DragScaleData, e: WheelEvent) => void;
 }
 
 /**
@@ -27,10 +27,10 @@ export default class DragScaleProvider {
     private container: HTMLDivElement | null = null;
     private content: HTMLDivElement | null = null;
     private readonly position: IPoint = {x: 0, y: 0};
-    private readonly dragCallback?: (dsData: DragScaleData, e: any) => void;
-    private readonly scaleCallback?: (dsData: DragScaleData, e: any) => void;
-    private readonly dragStartCallback?: (dsData: DragScaleData, e: any) => void;
-    private readonly dragEndCallback?: (dsData: DragScaleData, e: any) => void;
+    private readonly dragCallback?: (dsData: DragScaleData, e: PointerEvent) => void;
+    private readonly scaleCallback?: (dsData: DragScaleData, e: WheelEvent) => void;
+    private readonly dragStartCallback?: (dsData: DragScaleData, e: PointerEvent) => void;
+    private readonly dragEndCallback?: (dsData: DragScaleData, e: PointerEvent) => void;
 
     public scaleCore: ScaleCore = new ScaleCore();
 
@@ -91,7 +91,7 @@ export default class DragScaleProvider {
         });
     }
 
-    private onDragMove = (e: any): void => {
+    private onDragMove = (e: PointerEvent): void => {
         if (e.buttons === 2) {
             this.position.x += e.movementX;
             this.position.y += e.movementY;

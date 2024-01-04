@@ -4,7 +4,7 @@ import React from "react";
  * 设计器头部item props
  */
 export interface HeaderItemProps {
-    icon: React.Component | React.FC | any;
+    icon: React.ComponentType;
     name: string;
     onClick?: () => void;
     order?: number;

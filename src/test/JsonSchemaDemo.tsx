@@ -9,7 +9,6 @@ import {CheckBox} from "../ui/checkbox/CheckBox";
 
 class JsonSchemaDemo extends Component {
 
-    monacoContainer: any = null;
     schema: Control = {
         key: "style",
         children: [

@@ -20,8 +20,8 @@ export default class LCGUIUtil {
     }
 
     public static createObjectFromArray(keyPath: string[], value: ControlValueType): object {
-        let result = {};
-        let current: any = result;
+        let result: Record<string, any> = {};
+        let current: Record<string, any> = result;
         for (let i = 0; i < keyPath.length; i++) {
             const key = keyPath[i];
             current[key] = i === keyPath.length - 1 ? value : {};
@@ -69,7 +69,7 @@ export default class LCGUIUtil {
     }
 
     public static parseSchemaData(schema: Control): object {
-        const result: Record<string, any> = {};
+        const result: Record<string, unknown> = {};
         if (schema.children) {
             let tempRes = {};
             schema.children.forEach(child => {

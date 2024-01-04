@@ -9,10 +9,11 @@ import DesignerLoaderFactory from "../../../loader/DesignerLoaderFactory";
 import IdGenerate from "../../../../utils/IdGenerate";
 import editorDesignerLoader from "../../../loader/EditorDesignerLoader";
 import componentListStore from "../ComponentListStore";
+import {AbstractDefinition} from "../../../../framework/core/AbstractDefinition";
 
 class CompList extends Component {
 
-    constructor(props: any) {
+    constructor(props: {}) {
         super(props);
         const {doInit} = componentListStore;
         doInit && doInit();
@@ -37,21 +38,21 @@ class CompList extends Component {
     }
 
     //拖拽开始
-    dragStart = (event: any) => {
+    dragStart = (event: DragEvent) => {
         // 设置拖拽数据
-        if (event.target.classList.contains('droppable-element')) {
-            const element = event.target;
-            (event as any).dataTransfer.setData('type', element.getAttribute('data-type'));
+        if ((event.target as HTMLElement).classList.contains('droppable-element')) {
+            const element = event.target as HTMLElement;
+            event.dataTransfer?.setData('type', element.getAttribute('data-type')!);
         }
     }
     //拖拽覆盖
-    dragover = (event: any) => {
+    dragover = (event: DragEvent) => {
         event.preventDefault(); // 阻止默认行为以允许拖放
     }
     //释放拖拽元素
-    drop = (event: any) => {
+    drop = (event: DragEvent) => {
         event.preventDefault();
-        const type = (event as any).dataTransfer.getData('type');
+        const type = event.dataTransfer?.getData('type');
         if (!type) return;
         //获取鼠标位置,添加元素
         const {scale, dsContentRef} = eventOperateStore;
@@ -102,10 +103,10 @@ class CompList extends Component {
             })
         }
         for (let i = 0; i < compInfoArr.length; i++) {
-            let compInfo: any = compInfoArr[i];
+            let compInfo: BaseInfoType = compInfoArr[i];
             const {compName, compKey} = compInfo;
-            let lcCompInit: any = DesignerLoaderFactory.getLoader().definitionMap[compKey];
-            let chartImg = lcCompInit.getChartImg();
+            let definition: AbstractDefinition = DesignerLoaderFactory.getLoader().definitionMap[compKey];
+            let chartImg = definition.getChartImg();
             chartDom.push(
                 <div key={i + ''} className={'list-item droppable-element'} draggable={true}
                      onDoubleClick={() => this.addItem(compKey)}
@@ -116,7 +117,7 @@ class CompList extends Component {
                             <div className={'item-type'}>Antd</div>
                         </div>
                         <div className={'item-content'}>
-                            <img src={chartImg} alt={compName}/>
+                            <img src={chartImg!} alt={compName}/>
                         </div>
                     </div>
                 </div>

@@ -76,7 +76,7 @@ class EventOperateStore {
      * 被框选中的目标元素，用于框选后移动、缩放操作
      * The target element selected by the frame, used for moving and scaling operations after the frame is selected
      */
-    targets: any[] = [];
+    targets: HTMLElement[] = [];
     /**
      * 被框选中的目标元素ID，用于框选后右键操作菜单的继续操作
      * The ID of the target element selected by the frame, used for the subsequent operation of the right-click operation menu after the frame is selected

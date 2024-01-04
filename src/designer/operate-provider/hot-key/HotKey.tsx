@@ -58,7 +58,7 @@ class HotKey extends Component<HotKeyProps> {
      * @param e 鼠标事件对象
      * @param hotKey 当前按下的快捷键
      */
-    doHandler = (e: any, hotKey: string) => {
+    doHandler = (e: KeyboardEvent, hotKey: string) => {
         const {handler, triggerType = TriggerType.SINGLE, range} = this.handlerMapping[hotKey] || {};
         if (handler) {
             if ((triggerType === TriggerType.SINGLE && this.existHandlerKey !== hotKey) || triggerType === TriggerType.COILED) {
@@ -80,7 +80,7 @@ class HotKey extends Component<HotKeyProps> {
         }
     }
 
-    keyDown = (e: any) => {
+    keyDown = (e: KeyboardEvent) => {
         const key = e.key.toLowerCase();
         if (!this.currHotKey.some(item => item === key))
             this.currHotKey.push(key);
@@ -90,7 +90,7 @@ class HotKey extends Component<HotKeyProps> {
         this.doHandler(e, hotKey);
     };
 
-    keyUp = (e: any) => {
+    keyUp = (e: KeyboardEvent) => {
         const key = e.key.toLowerCase();
         if (this.currHotKey.some(item => item === key)) {
             this.currHotKey = this.currHotKey.filter(item => item !== key);

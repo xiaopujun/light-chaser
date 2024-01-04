@@ -115,7 +115,7 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
                     <Button onClick={toggleNewProVisible}
                             style={{fontSize: 20, width: '100%', height: '100%'}}>+ 新建项目</Button>
                 </div>
-                {data && data.map((item: any, index) => {
+                {data && data.map((item: IProjectInfo, index) => {
                     return (
                         <div key={index} className={'project-item'}>
                             <Card cover={<div className={'project-cover'}
@@ -129,10 +129,10 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
                                   hoverable={true}
                                   size={'small'}
                                   actions={[
-                                      <EditFilled key={'edit'} onClick={() => operateHandler(item.id, "edit")}/>,
-                                      <EyeFilled key={'show'} onClick={() => operateHandler(item.id, "show")}/>,
-                                      <DeleteFilled key={'del'} onClick={() => operateHandler(item.id, "del")}/>,
-                                      <CopyFilled key={'clone'} onClick={() => operateHandler(item.id, "clone")}/>,
+                                      <EditFilled key={'edit'} onClick={() => operateHandler(item.id!, "edit")}/>,
+                                      <EyeFilled key={'show'} onClick={() => operateHandler(item.id!, "show")}/>,
+                                      <DeleteFilled key={'del'} onClick={() => operateHandler(item.id!, "del")}/>,
+                                      <CopyFilled key={'clone'} onClick={() => operateHandler(item.id!, "clone")}/>,
                                   ]}>
                             </Card>
                         </div>
@@ -187,9 +187,9 @@ const CloneDialog = (props: CloneDialogProps) => {
     const {onOk, onCancel, visible} = props;
 
 
-    const onSubmit = (event: any) => {
+    const onClick = (event: React.MouseEvent): void => {
         event.preventDefault();
-        onOk()
+        onOk();
     }
 
     return (
@@ -201,7 +201,7 @@ const CloneDialog = (props: CloneDialogProps) => {
                 borderTop: '2px solid #272b34',
                 paddingTop: 10
             }}>
-                <Button onClick={onSubmit}>确认</Button> &nbsp;&nbsp;
+                <Button onClick={onClick}>确认</Button> &nbsp;&nbsp;
                 <Button onClick={onCancel}>取消</Button>
             </div>
         </Dialog>

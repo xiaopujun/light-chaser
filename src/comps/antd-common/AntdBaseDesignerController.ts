@@ -22,22 +22,22 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
 
     registerEvent(): void {
         const nodeId = this.config?.base?.id!;
-        this.instance?.on('plot:click', (...args: any) => {
+        this.instance?.on('plot:click', (...args: object[]) => {
             BPExecutor.triggerComponentEvent(nodeId!, "globalClick", {msg: '这是测试参数'})
         });
-        this.instance?.on('element:click', (...args: any) => {
+        this.instance?.on('element:click', (...args: object[]) => {
             BPExecutor.triggerComponentEvent(nodeId!, "elementClick", {msg: '这是测试参数'})
         });
         // 图例添加点击事件
-        this.instance?.on('legend-item:click', (...args: any) => {
+        this.instance?.on('legend-item:click', (...args: object[]) => {
             BPExecutor.triggerComponentEvent(nodeId!, "legendClick", {msg: '这是测试参数'})
         });
         // 图例名称添加点击事件
-        this.instance?.on('legend-item-name:click', (...args: any) => {
+        this.instance?.on('legend-item-name:click', (...args: object[]) => {
             BPExecutor.triggerComponentEvent(nodeId!, "elementNameClick", {msg: '这是测试参数'})
         });
         // axis-label 添加点击事件
-        this.instance?.on('axis-label:click', (...args: any) => {
+        this.instance?.on('axis-label:click', (...args: object[]) => {
             BPExecutor.triggerComponentEvent(nodeId!, "axisLabelClick", {msg: '这是测试参数'})
         });
     }

@@ -7,7 +7,7 @@ import ObjectUtil from "../../../utils/ObjectUtil";
 
 export class BaseTextController extends AbstractDesignerController<BaseTextComponent, BaseTextComponentProps> {
 
-    async create(container: HTMLElement, config: any): Promise<void> {
+    async create(container: HTMLElement, config: BaseTextComponentProps): Promise<void> {
         this.config = config;
         this.container = container;
         this.instance = await ComponentUtil.createAndRender<BaseTextComponent>(container, BaseTextComponent, config);

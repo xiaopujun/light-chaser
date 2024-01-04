@@ -34,21 +34,21 @@ export abstract class AntdCommonDefinition<C extends AbstractController = Abstra
             {
                 name: "显示",
                 id: "show",
-                handler: (controller: AbstractController, params?: any) => {
+                handler: (controller: AbstractController, params?: object) => {
                     controller.container!.style.display = "block";
                 }
             },
             {
                 name: "隐藏",
                 id: "hide",
-                handler: (controller: AbstractController, params?: any) => {
+                handler: (controller: AbstractController, params?: object) => {
                     controller.container!.style.display = "none";
                 }
             },
             {
                 name: "更新组件配置",
                 id: "updateConfig",
-                handler: (controller: AbstractController, params?: any) => {
+                handler: (controller: AbstractController, params?: object) => {
                     controller.update(params);
                 }
             }

@@ -112,9 +112,9 @@ export default class CssStyleUtil {
      * 解析border配置项目。 例如：border: 1px solid #000000
      * @param border
      */
-    public static parseBorder(border: any) {
-        const [width, type, color] = border.match(/(\d+(?:\.\d+)?(?:px)?)[ ]*([a-z]+)[ ]*([#a-z0-9]+)/i).slice(1);
-        return {width: parseInt(width), type, color};
-    }
+    // public static parseBorder(border: string) {
+    //     const [width = '', type = '', color = ''] = border.match(/(\d+(?:\.\d+)?(?:px)?)[ ]*([a-z]+)[ ]*([#a-z0-9]+)/i)?.slice(1) || [];
+    //     return {width: parseInt(width), type, color};
+    // }
 
 }

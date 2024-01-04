@@ -118,7 +118,7 @@ class BaseTableComponent extends Component<BaseTableComponentProps, BaseTableCom
                     <tbody style={{...bodyStyle, animation: carouselStyle}}
                            className="scroll-body" ref={ref => this.tbodyRef1 = ref}>
                     {
-                        data && data.map((item: any, index: number) => {
+                        data && data.map((item: Record<string, any>, index: number) => {
                             return (
                                 <tr key={index} className={'base-table-tr'}>
                                     {columns && columns.map((column: ITableColumn, i: number) => {
@@ -135,7 +135,7 @@ class BaseTableComponent extends Component<BaseTableComponentProps, BaseTableCom
                     <tbody style={{...bodyStyle, animation: carouselStyle}} className="scroll-body"
                            ref={ref => this.tbodyRef2 = ref}>
                     {
-                        data && data.map((item: any, index: number) => {
+                        data && data.map((item: Record<string, any>, index: number) => {
                             return (
                                 <tr key={index} className={'base-table-tr'}>
                                     {columns && columns.map((column: ITableColumn, i: number) => {

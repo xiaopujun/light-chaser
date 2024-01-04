@@ -43,7 +43,7 @@ export default class BPLogicalProcessNodeController extends AbstractBPNodeContro
         return this.config;
     }
 
-    update(config: any, upOp: UpdateOptions | undefined): void {
+    update(config: LogicalProcessNodeConfigType, upOp: UpdateOptions | undefined): void {
         this.config = ObjectUtil.merge(this.config, config);
     }
 

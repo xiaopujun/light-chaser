@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import Moveable, {OnDrag, OnResize, OnResizeGroup} from "react-moveable";
+import Moveable, {OnDrag, OnDragGroup, OnResize, OnResizeGroup} from "react-moveable";
 import {observer} from "mobx-react";
 import layerDemoStore from "./LayerDemoStore";
 
@@ -21,8 +21,8 @@ export const MovableDemo = observer((props: BPMovableProps) => {
             target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
         }
 
-        const onDragGroup = (e: any) => {
-            e.events.forEach((ev: any) => ev.target.style.transform = ev.transform);
+        const onDragGroup = (e: OnDragGroup) => {
+            e.events.forEach((ev: OnDrag) => ev.target.style.transform = ev.transform);
         }
 
         const onResize = (e: OnResize) => {

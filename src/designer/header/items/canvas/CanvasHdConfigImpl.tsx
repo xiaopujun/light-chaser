@@ -21,7 +21,7 @@ class CanvasHdConfigImpl extends Component {
         _rasterize: false,
     }
 
-    constructor(props: any) {
+    constructor(props: {}) {
         super(props);
         const {canvasConfig} = designerStore;
         this.config = {...canvasConfig};

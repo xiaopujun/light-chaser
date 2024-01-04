@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import {Component, FormEvent} from 'react';
 import Dialog from "../../../../ui/dialog/Dialog";
 import headerStore from "../../HeaderStore";
 import './ProjectHdItemImpl.less';
@@ -14,7 +14,7 @@ class ProjectHdItemImpl extends Component {
 
     config: IProjectInfo | null = null;
 
-    constructor(props: any) {
+    constructor(props: {}) {
         super(props);
         const {projectConfig} = designerStore;
         //使用副本而不是原对象
@@ -30,7 +30,7 @@ class ProjectHdItemImpl extends Component {
         setProjectVisible(false);
     }
 
-    doSave = (e: any) => {
+    doSave = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const {updateProjectConfig} = designerStore;
         console.log(this.config)

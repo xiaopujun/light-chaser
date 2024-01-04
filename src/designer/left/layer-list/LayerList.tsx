@@ -29,7 +29,7 @@ class LayerList extends Component<LayerListProps> {
         this.layerListRef?.removeEventListener("click", this.cancelSelected);
     }
 
-    cancelSelected = (e: any) => {
+    cancelSelected = (e: MouseEvent) => {
         if (!this.layerListRef)
             return;
         if (this.layerListRef.contains(e.target as Node)

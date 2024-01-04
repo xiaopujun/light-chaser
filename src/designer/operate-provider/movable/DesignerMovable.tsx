@@ -1,6 +1,6 @@
 import * as React from "react";
 import Moveable, {
-    MoveableManagerInterface,
+    MoveableManagerInterface, OnClickGroup,
     OnDrag,
     OnDragEnd,
     OnDragGroup,
@@ -22,6 +22,7 @@ import {ILayerItem} from "../../DesignerType";
 import './DesignerMovable.less';
 import baseInfoStore from "../../../comps/common-component/base-info/BaseInfoStore";
 import LayerUtil from "../../left/layer-list/util/LayerUtil";
+import Selecto from "react-selecto";
 
 export interface DesignerMovableProps {
     children?: React.ReactNode;
@@ -113,14 +114,14 @@ class DesignerMovable extends React.Component<DesignerMovableProps, { throttleDr
 
         let {backoff, setBackoff, setGroupCoordinate, groupCoordinate, targetIds} = eventOperateStore;
         let data: ILayerItem[] = [];
-        e.events.forEach((ev: any) => {
+        e.events.forEach((ev: OnDragEnd) => {
             const {target, lastEvent} = ev;
             if (lastEvent) {
                 const {beforeTranslate} = lastEvent;
                 data.push({
                     id: target.id,
-                    width: target.offsetWidth,
-                    height: target.offsetHeight,
+                    width: (target as HTMLElement).offsetWidth,
+                    height: (target as HTMLElement).offsetHeight,
                     type: target.dataset.type,
                     x: beforeTranslate[0],
                     y: beforeTranslate[1]
@@ -216,14 +217,14 @@ class DesignerMovable extends React.Component<DesignerMovableProps, { throttleDr
         const {updateLayer} = designerStore;
         let {backoff, setBackoff, targetIds} = eventOperateStore;
         let data: ILayerItem[] = [];
-        e.events.forEach((ev: any) => {
+        e.events.forEach((ev: OnResizeEnd) => {
             const {target, lastEvent} = ev;
             if (lastEvent) {
                 const {drag: {translate}} = lastEvent;
                 data.push({
                     id: target.id,
-                    width: target.offsetWidth,
-                    height: target.offsetHeight,
+                    width: (target as HTMLElement).offsetWidth,
+                    height: (target as HTMLElement).offsetHeight,
                     type: target.dataset.type,
                     x: translate[0],
                     y: translate[1]
@@ -323,7 +324,7 @@ class DesignerMovable extends React.Component<DesignerMovableProps, { throttleDr
 
                     throttleDrag={rasterize ? dragStep : 1}
                     throttleResize={rasterize ? resizeStep : 1}
-                    onClickGroup={e => (selectorRef.current as any)?.clickTarget(e.inputEvent, e.inputTarget)}
+                    onClickGroup={(e: OnClickGroup) => (selectorRef.current as Selecto)?.clickTarget(e.inputEvent, e.inputTarget)}
                     onDrag={this.onDrag}
                     onDragStart={this.onDragStart}
                     onDragEnd={this.onDragEnd}

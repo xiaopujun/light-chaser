@@ -133,7 +133,7 @@ class LocalOperator extends AbstractOperator {
                         localforage.setItem(hashCode, {name: file.name, blob});
                         const {id} = URLUtil.parseUrlParams();
                         const imageSourceKey = "image-source-" + id;
-                        const imageSourceMap: any[] = await localforage.getItem(imageSourceKey) || [];
+                        const imageSourceMap: string[] = await localforage.getItem(imageSourceKey) || [];
                         imageSourceMap.push(hashCode);
                         localforage.setItem(imageSourceKey, imageSourceMap);
                         url = URL.createObjectURL(blob);
@@ -161,7 +161,7 @@ class LocalOperator extends AbstractOperator {
      * 其涉及的典型场景为：本地项目的资源库列表
      */
     getImageSourceList(projectId: string): Promise<IImageData[]> {
-        return new Promise<any[]>(resolve => {
+        return new Promise<IImageData[]>(resolve => {
             resolve(imageSourceCache.getAllImageCache());
         })
     }

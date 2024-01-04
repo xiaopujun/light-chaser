@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import Moveable, {OnDrag, OnDragEnd, OnDragStart} from "react-moveable";
+import Moveable, {OnDrag, OnDragEnd, OnDragGroup, OnDragGroupEnd, OnDragStart} from "react-moveable";
 import bpStore, {IBPLine, IPoint} from "../store/BPStore";
 import {observer} from "mobx-react";
 import CanvasUtil from "../util/CanvasUtil";
@@ -120,14 +120,14 @@ export const BPMovable = observer((props: BPMovableProps) => {
             CanvasUtil.updSegmentSamplingPoint();
         }
 
-        const onDragGroup = (e: any) => {
-            e.events.forEach((ev: any) => ev.target.style.transform = ev.transform);
+        const onDragGroup = (e: OnDragGroup) => {
+            e.events.forEach((ev: OnDrag) => ev.target.style.transform = ev.transform);
             //重绘连线
             reRenderAllLine();
         }
 
-        const onDragGroupEnd = (e: any) => {
-            e.events.forEach((ev: any) => {
+        const onDragGroupEnd = (e: OnDragGroupEnd) => {
+            e.events.forEach((ev: OnDragEnd) => {
                 const {target, lastEvent} = ev;
                 if (lastEvent) {
                     const nodeId = target.id.split(':')[1];

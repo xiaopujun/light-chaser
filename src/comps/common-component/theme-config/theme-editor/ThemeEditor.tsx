@@ -11,6 +11,11 @@ import {UIContainer} from "../../../../ui/ui-container/UIContainer";
 import {Grid} from "../../../../ui/grid/Grid";
 import Button from "../../../../ui/button/Button";
 
+type ThemeEditorStateType = {
+    data: ThemeItemType[],
+    themeConfig: ThemeItemType
+}
+
 /**
  * 主题编辑器
  */
@@ -29,7 +34,7 @@ class ThemeEditor extends Component {
         }
     }
 
-    state: any = {
+    state: ThemeEditorStateType = {
         data: [],
         themeConfig: this.initThemeConfig
     }
@@ -111,7 +116,7 @@ class ThemeEditor extends Component {
                     return;
                 }
             }
-            themeConfig.id = this.state.data.length + 1;
+            themeConfig.id = this.state.data.length + 1 + '';
             data.push({...themeConfig});
         } else {
             for (let i = 0; i < data.length; i++) {

@@ -10,14 +10,19 @@ interface ColorsPickerProp extends UIContainerProps {
     onChange?: (data: string[]) => void;
 }
 
+type ColorsPickerState = {
+    colors: string[];
+    canAdd?: boolean;
+}
+
 /**
  * 组合颜色选择器，可以同时渲染多个颜色选择器。色值结果以数组返回
  */
-class ColorsPicker extends Component<ColorsPickerProp> {
+class ColorsPicker extends Component<ColorsPickerProp, ColorsPickerState> {
 
     max: number = 5;
 
-    state: any = {
+    state: ColorsPickerState = {
         colors: []
     }
 

@@ -66,20 +66,20 @@ export const BPNodeSortList = observer(() => {
 })
 
 //拖拽开始
-const dragStart = (event: any, element: Element) => {
+const dragStart = (event: DragEvent, element: Element) => {
     // 设置拖拽数据
-    (event as any).dataTransfer.setData('nodeId', element.getAttribute('data-id'));
-    (event as any).dataTransfer.setData('type', element.getAttribute('data-type'));
+    event.dataTransfer?.setData('nodeId', element.getAttribute('data-id')!);
+    event.dataTransfer?.setData('type', element.getAttribute('data-type')!);
 }
 //拖拽覆盖
-const dragover = (event: any) => {
+const dragover = (event: DragEvent) => {
     event.preventDefault(); // 阻止默认行为以允许拖放
 }
 //释放拖拽元素
 const drop = (event: DragEvent) => {
     event.preventDefault();
-    let nodeId = (event as any).dataTransfer.getData('nodeId');
-    const type = (event as any).dataTransfer.getData('type');
+    let nodeId = event.dataTransfer?.getData('nodeId');
+    const type = event.dataTransfer?.getData('type');
     const {bpDragContentRef, canvasScale} = bpStore;
     const contentPos = bpDragContentRef?.getBoundingClientRect();
     //获取鼠标位置
@@ -89,7 +89,7 @@ const drop = (event: DragEvent) => {
     };
     if (type === 'layer-node') {
         const {setUsedLayerNodes} = bpLeftStore;
-        setUsedLayerNodes(nodeId, true);
+        setUsedLayerNodes(nodeId!, true);
     } else {
         //非图层节点，需要单独生成一个唯一节点id
         nodeId = IdGenerate.generateId();
@@ -106,8 +106,8 @@ export const BPNodeList = observer(() => {
         const dropContainer = document.getElementById("bp-ds-container");
         const dragElements = document.getElementsByClassName("bp-node-list-item");
         Array.from(dragElements).forEach((element) => {
-            element.removeEventListener('dragstart', (event) => dragStart(event, element));
-            element.addEventListener('dragstart', (event) => dragStart(event, element));
+            element.removeEventListener('dragstart', event => dragStart(event as DragEvent, element));
+            element.addEventListener('dragstart', event => dragStart(event as DragEvent, element));
         });
         dropContainer && dropContainer.removeEventListener('dragover', dragover);
         dropContainer && dropContainer.addEventListener('dragover', dragover);

@@ -63,5 +63,5 @@ export abstract class AbstractBPNodeController<C = any> extends AbstractControll
      */
     public abstract getNodeInfo(nodeId?: string): NodeInfoType | null;
 
-    public abstract getConfigComponent(): React.ComponentType<any> | null;
+    public abstract getConfigComponent(): React.ComponentType | null;
 }

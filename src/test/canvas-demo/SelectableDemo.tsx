@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import Selecto, {OnSelectEnd} from "react-selecto";
+import Selecto, {OnDragStart, OnSelectEnd} from "react-selecto";
 import layerDemoStore from "./LayerDemoStore";
 import {observer} from "mobx-react";
 
@@ -34,11 +34,11 @@ export const SelectableDemo: React.FC<BPSelectableProps> = observer((props) => {
         }
     }
 
-    const onDragStart = (e: any) => {
+    const onDragStart = (e: OnDragStart) => {
         const {movableRef: movable, targets} = layerDemoStore;
         const target = e.inputEvent.target;
-        if ((movable.isMoveableElement(target))
-            || targets.some((t: any) => t === target || t.contains(target))
+        if ((movable?.isMoveableElement(target))
+            || targets.some((t: HTMLElement) => t === target || t.contains(target))
         ) {
             e.stop();
         }

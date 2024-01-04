@@ -85,7 +85,7 @@ export class LCGUI extends React.Component<LCGUIProps> {
         return eval(analyze(control, variable, rules));
     }
 
-    buildConfigUI = (control: Control, schemaKeyPath: SchemaPathNode[], dataKeyPath: string[], childIndex: number): any => {
+    buildConfigUI = (control: Control, schemaKeyPath: SchemaPathNode[], dataKeyPath: string[], childIndex: number): ReactNode[] => {
         const nodes: ReactNode[] = [];
         if (!control) return nodes;
         if ("children" in control) {

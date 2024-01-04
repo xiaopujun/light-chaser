@@ -18,11 +18,11 @@ export default class GroupLayerDefinition extends AbstractDefinition<GroupLayerC
         return null;
     }
 
-    getController(): ClazzTemplate<any> | null {
+    getController(): ClazzTemplate<GroupLayerController> | null {
         return null;
     }
 
-    getInitConfig(): any {
+    getInitConfig(): GroupLayerProps {
         return {
             base: {
                 id: "",

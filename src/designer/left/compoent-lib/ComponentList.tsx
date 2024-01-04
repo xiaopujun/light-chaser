@@ -34,7 +34,7 @@ export const CategoryList: React.FC = observer(() => {
             {
                 componentCategorize.map((item, index) => {
                     const {icon, name, key} = item;
-                    const Icon = icon as any;
+                    const Icon = icon as React.ComponentType<React.SVGProps<SVGSVGElement>>;
                     return <Tooltip key={index}
                                     className={`clo-item ${categories === key ? "clo-item-active" : ""}`}
                                     placement={'right'}

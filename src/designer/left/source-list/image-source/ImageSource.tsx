@@ -38,9 +38,9 @@ export const ImageSource: React.FC = () => {
     const dragStart = (event: DragEvent) => {
         // 设置拖拽数据
         if ((event.target as HTMLElement).classList.contains('droppable-element')) {
-            const element = event.target;
-            event.dataTransfer.setData('imageUrl', element.getAttribute('data-url'));
-            event.dataTransfer.setData('imageHash', element.getAttribute('data-hash'));
+            const element = event.target as HTMLElement;
+            event.dataTransfer?.setData('imageUrl', element.getAttribute('data-url')!);
+            event.dataTransfer?.setData('imageHash', element.getAttribute('data-hash')!);
         }
     }
 
@@ -51,8 +51,8 @@ export const ImageSource: React.FC = () => {
     //释放拖拽元素
     const drop = (event: DragEvent) => {
         event.preventDefault();
-        const url = event.dataTransfer.getData('imageUrl');
-        const hash = event.dataTransfer.getData('imageHash');
+        const url = event.dataTransfer?.getData('imageUrl');
+        const hash = event.dataTransfer?.getData('imageHash');
         if (!url) return;
         //获取鼠标位置,添加元素
         const {scale, dsContentRef} = eventOperateStore;
@@ -62,7 +62,7 @@ export const ImageSource: React.FC = () => {
         addItem("BaseImage", [x, y], url, hash);
     }
 
-    const addItem = (compKey: string, position = [0, 0], url: string, hash: string) => {
+    const addItem = (compKey: string, position = [0, 0], url: string, hash?: string) => {
         const {addItem, elemConfigs} = designerStore;
         let {maxLevel, setMaxLevel, setAddRecordCompId} = eventOperateStore;
         const {definitionMap} = editorDesignerLoader;

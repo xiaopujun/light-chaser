@@ -56,6 +56,6 @@ export default class AntdPieController extends AntdBaseDesignerController<Pie, A
         if ((styleConfig?.statistic) && (styleConfig?.statistic?.content) && (styleConfig.statistic.content as StatisticText).style)
             ((styleConfig!.statistic!.content as StatisticText).style as CSSProperties)!.color = subText!;
         //重新渲染
-        this.update({style: styleConfig} as any, {reRender: true});
+        this.update({style: styleConfig} as AntdPieProps, {reRender: true});
     }
 }

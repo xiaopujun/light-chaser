@@ -19,7 +19,7 @@ export const BPSelectable: React.FC<BPSelectableProps> = (props) => {
         const {bpMovableRef, selectedNodes} = bpStore;
         const target = e.inputEvent.target;
         if ((bpMovableRef!.isMoveableElement(target))
-            || selectedNodes.some((t: any) => t === target || t.contains(target))
+            || selectedNodes.some((t: HTMLElement) => t === target || t.contains(target))
         ) {
             e.stop();
         }

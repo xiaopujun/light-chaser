@@ -31,8 +31,6 @@ export interface ThemeItemType {
 export interface Statistic {
     //元素个数
     count?: number;
-    //历史记录
-    history?: any;
 }
 
 /**
@@ -93,8 +91,6 @@ export interface DataConfigType {
     //静态数据(除了存放静态数据外，该属性还有动态数据的中转站的作用），其他动态数据获取到后统一都存放在静态数据中，需要使用到的时候再从静态数据中获取
     staticData?: StaticConfig;
     apiData?: APIConfig;
-    databaseData?: any;
-    excelData?: any;
 }
 
 /**

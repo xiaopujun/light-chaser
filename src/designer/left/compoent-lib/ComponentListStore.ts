@@ -33,7 +33,7 @@ class ComponentListStore {
     setSearch = (search: string) => this.search = search;
 
     doInit = () => {
-        const comps: Array<any> = [];
+        const comps: Array<BaseInfoType> = [];
         const {definitionMap} = DesignerLoaderFactory.getLoader();
         if (definitionMap) {
             Object.keys(definitionMap).forEach(key => {

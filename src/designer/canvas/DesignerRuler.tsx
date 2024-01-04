@@ -36,8 +36,8 @@ class DesignerRuler extends PureComponent<RulerProps & DesignerRulerProps> {
         render: 0
     }
 
-    rulerX: any = null;
-    rulerY: any = null;
+    rulerX: Ruler | null = null;
+    rulerY: Ruler | null = null;
 
     unit = 50;
 

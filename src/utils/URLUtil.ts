@@ -20,14 +20,4 @@ export default class URLUtil {
         return params;
     }
 
-    public static buildUrlParams(obj: any) {
-        const urlParams = new URLSearchParams();
-        for (const key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                urlParams.append(key, obj[key]);
-            }
-        }
-        return urlParams.toString();
-    }
-
 }

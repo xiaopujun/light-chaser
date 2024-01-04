@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FormEvent} from 'react';
 import './AddNewScreenDialog.less';
 import Dialog from "../../../ui/dialog/Dialog";
 import Button from "../../../ui/button/Button";
@@ -27,7 +27,7 @@ export const AddNewProjectDialog: React.FC<AddNewScreenDialogProps> = (props) =>
         height: 300,
     }
 
-    const onOk = (e: any) => {
+    const onOk = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const {onOk} = props;
         onOk && onOk(projectInfo);

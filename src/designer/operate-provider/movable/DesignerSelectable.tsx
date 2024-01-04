@@ -107,7 +107,7 @@ class DesignerSelectable extends Component<DesignerSelectableProps> {
         const movable: Moveable = movableRef!.current!;
         const target = e.inputEvent.target;
         if ((movable.isMoveableElement(target))
-            || targets.some((t: any) => t === target || t.contains(target))
+            || targets.some((t: HTMLElement) => t === target || t.contains(target))
         ) {
             e.stop();
         }

@@ -2,7 +2,7 @@ import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 import designerStore from "../store/DesignerStore";
 import {SaveType} from "../DesignerType";
 import eventOperateStore from "../operate-provider/EventOperateStore";
-import bpStore from "../../blueprint/store/BPStore";
+import bpStore, {BPNodeLayoutType} from "../../blueprint/store/BPStore";
 import bpLeftStore from "../../blueprint/left/BPLeftStore";
 import {AbstractBPNodeController} from "../../blueprint/node/core/AbstractBPNodeController";
 import bpNodeControllerMap from "../../blueprint/node/core/impl/BPNodeControllerMap";
@@ -10,6 +10,7 @@ import {ClazzTemplate} from "../../comps/common-component/common-types";
 import URLUtil from "../../utils/URLUtil";
 import {message} from "antd";
 import operatorMap from "../../framework/operate";
+import {AbstractOperator} from "../../framework/operate/AbstractOperator";
 
 /**
  * 展示模式下的设计器加载器
@@ -26,7 +27,7 @@ class ViewDesignerLoader extends AbstractDesignerLoader {
      */
     protected initProject(): void {
         const {saveType, id} = URLUtil.parseUrlParams();
-        operatorMap[saveType as SaveType].getProjectData(id).then((data) => {
+        (operatorMap[saveType as SaveType] as AbstractOperator).getProjectData(id).then((data) => {
             if (data) {
                 const {doInit, setLoaded} = designerStore;
                 //初始化designerStore
@@ -52,7 +53,7 @@ class ViewDesignerLoader extends AbstractDesignerLoader {
                 setBpNodeConfigMap(data?.bpNodeConfigMap || {});
                 //创建蓝图节点controller实例（这一点和编辑模式有区别，view模式下是不要渲染蓝图节点的，只需要蓝图节点controller实例）
                 const bpNodeControllerInsMap: Record<string, AbstractBPNodeController> = {};
-                Object.values(data?.bpNodeLayoutMap!).forEach((layout: any) => {
+                Object.values(data?.bpNodeLayoutMap!).forEach((layout: BPNodeLayoutType) => {
                     const {type, id} = layout;
                     const NodeController = bpNodeControllerMap.get(type!) as ClazzTemplate<AbstractBPNodeController>;
                     const config = data?.bpNodeConfigMap![id!];

@@ -11,11 +11,15 @@ interface SwitchProps extends UIContainerProps {
     disabled?: boolean;
 }
 
-class Switch extends Component<SwitchProps> {
+type SwitchState = {
+    value: boolean;
+}
+
+class Switch extends Component<SwitchProps, SwitchState> {
 
     valueControl: boolean = true;
 
-    state: any = {
+    state: SwitchState = {
         value: false,
     }
 

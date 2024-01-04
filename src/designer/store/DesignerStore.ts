@@ -232,7 +232,7 @@ class DesignerStore {
         }
     }
 
-    updateThemeConfig = (data: any) => {
+    updateThemeConfig = (data: Array<ThemeItemType>) => {
         this.themeConfig = data;
     };
 
