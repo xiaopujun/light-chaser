@@ -22,6 +22,8 @@ export interface DragScaleProviderParams {
  * 1.拖拽画布统一操作方式为长按鼠标右键
  * 2.缩放画布统一操作方式alt+鼠标滚轮
  * 上述两种操作的相关事件均在此组件内部完成（除缩放逻辑外，缩放逻辑调用外部方法获取scale比例）
+ *
+ * 主编辑器、蓝图编辑器均使用该类提供拖拽缩放功能
  */
 export default class DragScaleProvider {
     private container: HTMLDivElement | null = null;
@@ -51,46 +53,37 @@ export default class DragScaleProvider {
             this.dragStartCallback = dragStartCallback;
         if (dragEndCallback)
             this.dragEndCallback = dragEndCallback;
+        //注册拖拽
         this.registerDrag();
-        this.registerWheel();
+        //注册缩放
+        this.registerScale();
     }
 
+    /************************事件、变量销毁************************/
     public destroy() {
         this.container?.removeEventListener('pointerdown', this.pointerDown);
         this.container?.removeEventListener('pointerup', this.pointerUp);
         this.container?.removeEventListener('wheel', this.doWheel);
         this.container?.removeEventListener('contextmenu', this.contextMenu);
+        this.container = null;
+        this.content = null;
     }
 
     /************************注册拖拽事件************************/
-    private contextMenu = (e: MouseEvent): void => e.preventDefault();
-
     private registerDrag() {
         //初始化被拖拽对象位置
         this.content!.style.transform = 'translate3d(' + this.position.x + 'px, ' + this.position.y + 'px, 0) scale(' + this.scaleCore.scale + ')';
         //阻止系统右键菜单显示
         this.container?.addEventListener("contextmenu", this.contextMenu)
+        //监听拖拽开始
         this.onDragStart();
+        //监听拖拽结束
         this.onDragEnd();
     }
 
-    /************************注册缩放事件************************/
-    private registerWheel = (): void => this.container?.addEventListener('wheel', this.doWheel);
+    private contextMenu = (e: MouseEvent): void => e.preventDefault();
 
-    /*********************拖拽事件**********************/
-
-    private pointerUp = (e: PointerEvent): void => {
-        if (e.button === 2) {
-            this.container?.releasePointerCapture(e.pointerId);
-            this.container?.removeEventListener('pointermove', this.onDragMove);
-            if (this.dragEndCallback) {
-                const {scale, ratio} = this.scaleCore;
-                this.dragEndCallback({scale, ratio, position: this.position}, e);
-            }
-        }
-    }
-
-    private onDragEnd = (): void => this.container?.addEventListener('pointerup', this.pointerUp);
+    private onDragStart = (): void => this.container?.addEventListener('pointerdown', this.pointerDown);
 
     private onDragMove = (e: PointerEvent): void => {
         if (e.buttons === 2) {
@@ -104,9 +97,13 @@ export default class DragScaleProvider {
         }
     }
 
+    private onDragEnd = (): void => this.container?.addEventListener('pointerup', this.pointerUp);
+
     private pointerDown = (e: PointerEvent): void => {
         if (e.button === 2) {
+            //设置鼠标捕获，当鼠标移出视口外时，仍然能够监听到鼠标移动事件
             this.container?.setPointerCapture(e.pointerId);
+            //监听拖拽移动
             this.container?.addEventListener('pointermove', this.onDragMove);
             if (this.dragStartCallback) {
                 const {scale, ratio} = this.scaleCore;
@@ -115,9 +112,21 @@ export default class DragScaleProvider {
         }
     }
 
-    private onDragStart = (): void => this.container?.addEventListener('pointerdown', this.pointerDown);
+    private pointerUp = (e: PointerEvent): void => {
+        if (e.button === 2) {
+            this.container?.releasePointerCapture(e.pointerId);
+            //取消拖拽移动监听
+            this.container?.removeEventListener('pointermove', this.onDragMove);
+            if (this.dragEndCallback) {
+                const {scale, ratio} = this.scaleCore;
+                this.dragEndCallback({scale, ratio, position: this.position}, e);
+            }
+        }
+    }
 
-    /*********************缩放事件**********************/
+
+    /************************注册缩放事件************************/
+    private registerScale = (): void => this.container?.addEventListener('wheel', this.doWheel);
 
     private doWheel = (e: WheelEvent): void => {
         if (e.altKey && e.buttons !== 2) {
@@ -136,7 +145,6 @@ export default class DragScaleProvider {
             }
         }
     }
-
 
 }
 
