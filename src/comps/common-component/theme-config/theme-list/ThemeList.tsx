@@ -11,16 +11,20 @@ interface ThemeListProps {
     onDel?: (id: string) => void;
 }
 
-class ThemeList extends Component<ThemeListProps> {
+type ThemeListState = {
+    activeId: string;
+}
 
-    state: any = {
+class ThemeList extends Component<ThemeListProps, ThemeListState> {
+
+    state: ThemeListState = {
         activeId: '',
     }
 
     onDel = (id: string) => {
         const {onDel} = this.props;
         const {themeConfig, updateThemeConfig} = designerStore;
-        let newThemes = themeConfig!.filter((item: any) => item.id !== id);
+        let newThemes = themeConfig!.filter((item: ThemeItemType) => item.id !== id);
         updateThemeConfig(newThemes);
         onDel && onDel(id);
     }
