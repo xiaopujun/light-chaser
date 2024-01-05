@@ -10,8 +10,11 @@ import IdGenerate from "../../../../utils/IdGenerate";
 import editorDesignerLoader from "../../../loader/EditorDesignerLoader";
 import componentListStore from "../ComponentListStore";
 import {AbstractDefinition} from "../../../../framework/core/AbstractDefinition";
+import DragAddProvider from "../../../../framework/drag-scale/DragAddProvider";
 
 class CompList extends Component {
+
+    private dragAddProvider: DragAddProvider | null = null;
 
     constructor(props: {}) {
         super(props);
@@ -22,19 +25,17 @@ class CompList extends Component {
 
     componentDidMount() {
         //处理拖拽元素到画布中
-        const dragContainer = document.getElementById("designer-ds-content");
-        const dragElements = document.getElementById("component-drag-container");
-        dragElements && dragElements.addEventListener('dragstart', this.dragStart);
-        dragContainer && dragContainer.addEventListener('dragover', this.dragover);
-        dragContainer && dragContainer.addEventListener('drop', this.drop);
+        this.dragAddProvider = new DragAddProvider(
+            document.getElementById("component-drag-container")!,
+            document.getElementById("designer-ds-content")!,
+            this.dragStart,
+            this.dragover,
+            this.drop
+        );
     }
 
     componentWillUnmount() {
-        const dragContainer = document.getElementById("designer-ds-content");
-        const dragElements = document.getElementById("component-drag-container");
-        dragElements && dragElements.removeEventListener('dragstart', this.dragStart);
-        dragContainer && dragContainer.removeEventListener('dragover', this.dragover);
-        dragContainer && dragContainer.removeEventListener('drop', this.drop);
+        this.dragAddProvider?.destroy();
     }
 
     //拖拽开始

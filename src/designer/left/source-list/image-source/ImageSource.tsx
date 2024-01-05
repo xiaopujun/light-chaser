@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import URLUtil from "../../../../utils/URLUtil";
 import {ILayerItem, SaveType} from "../../../DesignerType";
 import operatorMap from "../../../../framework/operate/index";
@@ -11,28 +11,13 @@ import editorDesignerLoader from "../../../loader/EditorDesignerLoader";
 import IdGenerate from "../../../../utils/IdGenerate";
 import {BaseImageComponentProps} from "../../../../comps/lc/base-image/BaseImageController";
 import {IImageData} from "../../../../comps/lc/base-image/BaseImageComponent";
+import DragAddProvider from "../../../../framework/drag-scale/DragAddProvider";
 
 
 export const ImageSource: React.FC = () => {
 
     const [imageList, setImageList] = useState<IImageData[]>([]);
-
-    const registerDrag = () => {
-        //处理拖拽元素到画布中
-        const dragContainer = document.getElementById("designer-ds-content");
-        const dragElements = document.getElementById("image-source-list");
-        dragElements && dragElements.addEventListener('dragstart', dragStart);
-        dragContainer && dragContainer.addEventListener('dragover', dragover);
-        dragContainer && dragContainer.addEventListener('drop', drop);
-    }
-
-    const unregisterDrag = () => {
-        const dragContainer = document.getElementById("designer-ds-content");
-        const dragElements = document.getElementById("image-source-list");
-        dragElements && dragElements.addEventListener('dragstart', dragStart);
-        dragContainer && dragContainer.removeEventListener('dragover', dragover);
-        dragContainer && dragContainer.removeEventListener('drop', drop);
-    }
+    const dragAddProvider = useRef<DragAddProvider | null>(null);
 
     //拖拽开始
     const dragStart = (event: DragEvent) => {
@@ -99,8 +84,15 @@ export const ImageSource: React.FC = () => {
             setImageList(data);
         });
 
-        registerDrag();
-        return () => unregisterDrag();
+        //处理拖拽元素到画布中
+        dragAddProvider.current = new DragAddProvider(
+            document.getElementById("image-source-list")!,
+            document.getElementById("designer-ds-content")!,
+            dragStart,
+            dragover,
+            drop
+        );
+        return () => dragAddProvider.current?.destroy();
     }, []);
 
     return <div className={'image-source'}>
@@ -110,7 +102,6 @@ export const ImageSource: React.FC = () => {
         <div className={'image-source-list'} id={'image-source-list'}>
             {
                 imageList.map((item: IImageData, index: number) => {
-                    console.log("item", item)
                     return <div className={'image-source-item droppable-element'} key={index}
                                 draggable={true} data-url={item.url}
                                 data-hash={item.hash}>

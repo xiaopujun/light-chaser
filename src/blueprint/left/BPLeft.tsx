@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useRef} from "react";
 import './BPLeft.less';
 import {
     ApartmentOutlined,
@@ -12,6 +12,7 @@ import bpLeftStore from "./BPLeftStore";
 import {observer} from "mobx-react";
 import designerStore from "../../designer/store/DesignerStore";
 import IdGenerate from "../../utils/IdGenerate";
+import DragAddProvider from "../../framework/drag-scale/DragAddProvider";
 
 export const BPLeft: React.FC = () => {
     return (
@@ -104,20 +105,18 @@ const drop = (event: DragEvent) => {
 export const BPNodeList = observer(() => {
     const {activeMenu} = bpLeftStore;
     const NodeList = nodeListMapping[activeMenu];
+    const dragAddProvider = useRef<DragAddProvider | null>(null);
 
     useEffect(() => {
-        const dropContainer = document.getElementById("bp-ds-container");
-        const bpNodeDraggable = document.getElementById("bp-node-draggable");
+        dragAddProvider.current = new DragAddProvider(
+            document.getElementById("bp-node-draggable")!,
+            document.getElementById("bp-ds-container")!,
+            dragStart,
+            dragover,
+            drop
+        );
 
-        bpNodeDraggable && bpNodeDraggable.addEventListener('dragstart', dragStart);
-        dropContainer && dropContainer.addEventListener('dragover', dragover);
-        dropContainer && dropContainer.addEventListener('drop', drop);
-
-        return () => {
-            bpNodeDraggable && bpNodeDraggable.removeEventListener('dragstart', dragStart);
-            dropContainer && dropContainer.removeEventListener('dragover', dragover);
-            dropContainer && dropContainer.removeEventListener('drop', drop);
-        }
+        return () => dragAddProvider.current?.destroy();
     }, [activeMenu])
     return (
         <div className={'bp-node-list'}>
