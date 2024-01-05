@@ -4,8 +4,8 @@ import {
     ApartmentOutlined,
     BlockOutlined,
     BranchesOutlined,
-    CodeSandboxOutlined,
-    FunctionOutlined
+    CodeSandboxOutlined, FilterOutlined,
+    FunctionOutlined, GatewayOutlined
 } from "@ant-design/icons";
 import bpStore from "../store/BPStore";
 import bpLeftStore from "./BPLeftStore";
@@ -35,16 +35,16 @@ export const BPNodeSortList = observer(() => {
             label: '逻辑节点',
             key: 'logical'
         },
-        // {
-        //     icon: <GatewayOutlined/>,
-        //     label: '全局变量',
-        //     key: 'global'
-        // },
-        // {
-        //     icon: <FilterOutlined/>,
-        //     label: '过滤器',
-        //     key: 'filter'
-        // }
+        {
+            icon: <GatewayOutlined/>,
+            label: '全局变量',
+            key: 'global'
+        },
+        {
+            icon: <FilterOutlined/>,
+            label: '过滤器',
+            key: 'filter'
+        }
     ]
     return (
         <div className={'bp-node-sort-list'}>
@@ -66,10 +66,13 @@ export const BPNodeSortList = observer(() => {
 })
 
 //拖拽开始
-const dragStart = (event: DragEvent, element: Element) => {
-    // 设置拖拽数据
-    event.dataTransfer?.setData('nodeId', element.getAttribute('data-id')!);
-    event.dataTransfer?.setData('type', element.getAttribute('data-type')!);
+const dragStart = (event: DragEvent) => {
+    if ((event.target as HTMLElement).classList.contains('bp-drag-node')) {
+        const element = event.target as HTMLElement;
+        // 设置拖拽数据
+        event.dataTransfer?.setData('nodeId', element.getAttribute('data-id')!);
+        event.dataTransfer?.setData('type', element.getAttribute('data-type')!);
+    }
 }
 //拖拽覆盖
 const dragover = (event: DragEvent) => {
@@ -104,21 +107,14 @@ export const BPNodeList = observer(() => {
 
     useEffect(() => {
         const dropContainer = document.getElementById("bp-ds-container");
-        const dragElements = document.getElementsByClassName("bp-node-list-item");
-        //todo 需要优化，不必每一个元素都单独添加事件监听
-        Array.from(dragElements).forEach((element) => {
-            element.removeEventListener('dragstart', event => dragStart(event as DragEvent, element));
-            element.addEventListener('dragstart', event => dragStart(event as DragEvent, element));
-        });
-        dropContainer && dropContainer.removeEventListener('dragover', dragover);
+        const bpNodeDraggable = document.getElementById("bp-node-draggable");
+
+        bpNodeDraggable && bpNodeDraggable.addEventListener('dragstart', dragStart);
         dropContainer && dropContainer.addEventListener('dragover', dragover);
-        dropContainer && dropContainer.removeEventListener('drop', drop);
         dropContainer && dropContainer.addEventListener('drop', drop);
 
         return () => {
-            Array.from(dragElements).forEach((element) => {
-                element.removeEventListener('dragstart', event => dragStart(event as DragEvent, element));
-            });
+            bpNodeDraggable && bpNodeDraggable.removeEventListener('dragstart', dragStart);
             dropContainer && dropContainer.removeEventListener('dragover', dragover);
             dropContainer && dropContainer.removeEventListener('drop', drop);
         }
@@ -129,7 +125,7 @@ export const BPNodeList = observer(() => {
                 <div className={'bp-node-list-header-label'}>图层节点(取自画布已有组件)</div>
             </div>
             <div className={'bp-node-list-body'}>
-                <div className={'bp-node-list-container'} style={{overflow: "scroll"}}>
+                <div className={'bp-node-list-container'} id={'bp-node-draggable'} style={{overflow: "scroll"}}>
                     {NodeList && <NodeList/>}
                 </div>
             </div>
@@ -148,7 +144,7 @@ export const BPLayerNodeList = observer(() => {
                     const item = layerConfigs[key];
                     const used = usedLayerNodes[key];
                     return (
-                        <div className={`bp-node-list-item ${used ? 'bp-node-list-item-used' : ''}`}
+                        <div className={`bp-node-list-item bp-drag-node ${used ? 'bp-node-list-item-used' : ''}`}
                              data-id={item.id}
                              data-type={'layer-node'}
                              draggable={!used} key={index}>
@@ -174,7 +170,7 @@ export const BPLogicalNodeList = () => {
             {
                 logicalNodeList.map((item, index) => {
                     return (
-                        <div className={`bp-node-list-item`}
+                        <div className={`bp-node-list-item bp-drag-node`}
                              data-type={item.type}
                              draggable={true} key={index}>
                             <div className={'bpn-li-icon'}>
@@ -191,14 +187,14 @@ export const BPLogicalNodeList = () => {
 
 export const BPGlobalVariablesNodeList = () => {
     return (
-        <div>全局变量</div>
+        <div>开发中...</div>
     )
 
 }
 
 export const BPFilterNodeList = () => {
     return (
-        <div>过滤器</div>
+        <div>开发中...</div>
     )
 
 }
