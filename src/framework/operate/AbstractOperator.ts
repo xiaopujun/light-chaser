@@ -48,4 +48,10 @@ export abstract class AbstractOperator {
      * @param projectId
      */
     public abstract getImageSourceList(projectId: string): Promise<IImageData[]>;
+
+    /**
+     * 删除图片资源
+     * @param imageId
+     */
+    public abstract delImageSource(imageId: string): Promise<boolean>;
 }

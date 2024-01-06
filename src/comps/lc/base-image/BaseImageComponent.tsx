@@ -2,6 +2,10 @@ import {Component} from 'react';
 
 export interface IImageData {
     /**
+     * 图片id，在线项目为数据库中的id值，本地项目为图片的hash值
+     */
+    id?: string;
+    /**
      * 图片文件的hash码，用于判断图片是否重复，节省内存和磁盘空间
      */
     hash?: string;

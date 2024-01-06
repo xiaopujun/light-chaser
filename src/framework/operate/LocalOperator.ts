@@ -74,7 +74,7 @@ class LocalOperator extends AbstractOperator {
             if (imageInfo) {
                 const {blob, name} = imageInfo;
                 const url = URL.createObjectURL(blob!);
-                imageSourceCache.addCache(hash, {url, name, hash});
+                imageSourceCache.addCache(hash, {url, name, hash, id: hash});
             }
         }
         const projectData = JSON.parse(dataJson as string) as ProjectDataType;
@@ -138,7 +138,7 @@ class LocalOperator extends AbstractOperator {
                         localforage.setItem(imageSourceKey, imageSourceMap);
                         url = URL.createObjectURL(blob);
                         //设置图片缓存
-                        imageSourceCache.addCache(hashCode, {url, name: file.name, hash: hashCode});
+                        imageSourceCache.addCache(hashCode, {url, name: file.name, hash: hashCode, id: hashCode});
                         resolve({url, hash: hashCode});
                         //默认情况下，URL.createObjectURL(blob)创建的资源链接所关联的内存，默认生命周期是跟随页面的，页面关闭后，内存才会被释放。
                         //手动调用URL.revokeObjectURL可直接释放对应资源的内存空间，因此请适当合理的调用该方法
@@ -160,10 +160,28 @@ class LocalOperator extends AbstractOperator {
      *
      * 其涉及的典型场景为：本地项目的资源库列表
      */
-    getImageSourceList(projectId: string): Promise<IImageData[]> {
+    public async getImageSourceList(projectId: string): Promise<IImageData[]> {
         return new Promise<IImageData[]>(resolve => {
             resolve(imageSourceCache.getAllImageCache());
         })
+    }
+
+    public async delImageSource(imageId: string): Promise<boolean> {
+        //删除indexDB中的blob数据
+        await localforage.removeItem(imageId);
+        //删除indexDB中的引用数据
+        const {id} = URLUtil.parseUrlParams();
+        const imageSourceKey = "image-source-" + id;
+        const imageSourceMap: string[] = await localforage.getItem(imageSourceKey) || [];
+        const index = imageSourceMap.findIndex(item => item === imageId);
+        if (index !== -1) {
+            imageSourceMap.splice(index, 1);
+            await localforage.setItem(imageSourceKey, imageSourceMap);
+        } else
+            return false;
+        //删除缓存中的数据
+        imageSourceCache.removeCache(imageId);
+        return true;
     }
 
 }

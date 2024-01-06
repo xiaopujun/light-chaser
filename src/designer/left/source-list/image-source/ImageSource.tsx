@@ -12,6 +12,8 @@ import IdGenerate from "../../../../utils/IdGenerate";
 import {BaseImageComponentProps} from "../../../../comps/lc/base-image/BaseImageController";
 import {IImageData} from "../../../../comps/lc/base-image/BaseImageComponent";
 import DragAddProvider from "../../../../framework/drag-scale/DragAddProvider";
+import {MinusOutlined, QuestionCircleOutlined} from "@ant-design/icons";
+import {Popconfirm} from "antd";
 
 
 export const ImageSource: React.FC = () => {
@@ -78,11 +80,15 @@ export const ImageSource: React.FC = () => {
         elemConfigs![id] = initConfig;
     }
 
-    useEffect(() => {
+    const getImageList = () => {
         const {saveType, id} = URLUtil.parseUrlParams();
         (operatorMap[saveType as SaveType] as AbstractOperator).getImageSourceList(id).then((data) => {
             setImageList(data);
         });
+    }
+
+    useEffect(() => {
+        getImageList();
 
         //处理拖拽元素到画布中
         dragAddProvider.current = new DragAddProvider(
@@ -95,6 +101,14 @@ export const ImageSource: React.FC = () => {
         return () => dragAddProvider.current?.destroy();
     }, []);
 
+    const confirmDel = (imageId: string) => {
+        const {saveType} = URLUtil.parseUrlParams();
+        (operatorMap[saveType as SaveType] as AbstractOperator).delImageSource(imageId).then((data) => {
+            if (data)
+                getImageList();
+        });
+    }
+
     return <div className={'image-source'}>
         <div className={'image-source-search'}>
             <Input placeholder="搜索图片"/>
@@ -105,7 +119,19 @@ export const ImageSource: React.FC = () => {
                     return <div className={'image-source-item droppable-element'} key={index}
                                 draggable={true} data-url={item.url}
                                 data-hash={item.hash}>
-                        <div className={'image-source-item-header'}>{item.name || '无名称信息'}</div>
+                        <div className={'image-source-item-header'}>
+                            <div className={'isi-title'}>{item.name || '无名称信息'}</div>
+                            <div className={'isi-operate'}>
+                                <Popconfirm title="确认删除吗?"
+                                            icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
+                                            description="可能会导致已经使用的图片组件失效!"
+                                            onConfirm={() => confirmDel(item.id)}
+                                            okText="是"
+                                            cancelText="否">
+                                    <MinusOutlined/>
+                                </Popconfirm>
+                            </div>
+                        </div>
                         <div className={'image-source-item-body'}>
                             <div className={'item-bg-image'} style={{backgroundImage: `url(${item.url})`}}/>
                         </div>

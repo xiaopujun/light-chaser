@@ -68,7 +68,7 @@ export default class ServerOperator extends AbstractOperator {
         const formData = new FormData();
         formData.append('file', file);
         formData.append('projectId', id);
-        const response = await fetch(`/api/file/image/upload`, {
+        const response = await fetch(`/api/sourceImage/upload`, {
             method: 'post',
             body: formData,
         });
@@ -77,7 +77,7 @@ export default class ServerOperator extends AbstractOperator {
     }
 
     async getImageSourceList(projectId: string): Promise<IImageData[]> {
-        const response = await fetch(`/api/file/getImageList/${projectId}`, {method: 'get'});
+        const response = await fetch(`/api/sourceImage/getList/${projectId}`, {method: 'get'});
         const res = await response.json();
         if (res.code === 200)
             return res.data;
@@ -87,4 +87,13 @@ export default class ServerOperator extends AbstractOperator {
         }
     }
 
+    public async delImageSource(imageId: string): Promise<boolean> {
+        const response = await fetch(`/api/sourceImage/del/${imageId}`, {method: 'get'});
+        const res = await response.json();
+        if (res.code === 200) return true
+        else {
+            globalMessage.messageApi?.error(res.msg);
+            return false;
+        }
+    }
 }
