@@ -11,6 +11,7 @@ import AbstractConvert from "../convert/AbstractConvert";
 import DesignerLoaderFactory from "../../designer/loader/DesignerLoaderFactory";
 import URLUtil from "../../utils/URLUtil";
 import {IImageData} from "../../comps/lc/base-image/BaseImageComponent";
+import localCoverCache from "../cache/ImageSourceCache";
 
 /**
  * 本地项目数据操作实现
@@ -52,8 +53,14 @@ class LocalOperator extends AbstractOperator {
         const list: IProjectInfo[] = await localforage.getItem('light-chaser-project-list') || [];
         const index = list.findIndex((item: IProjectInfo) => item.id === id);
         if (index === -1) return false;
+        //若存在封面，则删除封面
+        const info = list[index];
+        if (info.cover)
+            await localforage.removeItem(info.cover);
+        //删除项目基础信息
         list.splice(index, 1);
         await localforage.setItem('light-chaser-project-list', list);
+        //删除项目数据
         await localforage.removeItem(id);
         return true;
     }
@@ -94,7 +101,23 @@ class LocalOperator extends AbstractOperator {
     }
 
     public async getProjectInfoList(): Promise<IProjectInfo[]> {
-        return await localforage.getItem('light-chaser-project-list') || [];
+        const projects: IProjectInfo = await localforage.getItem('light-chaser-project-list') || [];
+        //封面图片转换
+        for (const project of projects) {
+            const {cover} = project;
+            if (cover) {
+                const coverBlob = await localforage.getItem(cover);
+                console.log('本地加载', coverBlob);
+                if (coverBlob) {
+                    project.cover = URL.createObjectURL(coverBlob);
+                    //存入本地缓存，为了切换页面时及时释放内存
+                    localCoverCache.addCache(project.id, project.cover);
+                } else {
+                    project.cover = null;
+                }
+            }
+        }
+        return projects;
     }
 
     public async copyProject(id: string, name?: string): Promise<string> {
@@ -181,6 +204,27 @@ class LocalOperator extends AbstractOperator {
             return false;
         //删除缓存中的数据
         imageSourceCache.removeCache(imageId);
+        return true;
+    }
+
+    public async uploadCover(file: File): Promise<boolean> {
+        //将file抓换为blob
+        const fileReader = new FileReader();
+        const {id} = URLUtil.parseUrlParams();
+        const coverKey = "cover-" + id;
+        fileReader.onload = async (event: ProgressEvent<FileReader>) => {
+            const blob = new Blob([event.target!.result!], {type: file.type});
+            //将blob存储到indexDB中
+            await localforage.setItem(coverKey, blob);
+        }
+        fileReader.readAsArrayBuffer(file);
+        //更新本地项目信息
+        const list: IProjectInfo[] = await localforage.getItem('light-chaser-project-list') || [];
+        const index = list.findIndex((item: IProjectInfo) => item.id === id);
+        if (index === -1) return false;
+        const project = list[index];
+        project.cover = coverKey;
+        await localforage.setItem('light-chaser-project-list', list);
         return true;
     }
 

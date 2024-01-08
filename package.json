@@ -16,6 +16,7 @@
     "@monaco-editor/react": "^4.6.0",
     "@scena/react-ruler": "^0.17.1",
     "antd": "^5.12.2",
+    "html2canvas": "^1.4.1",
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
     "mobx": "^6.7.0",

@@ -96,4 +96,17 @@ export default class ServerOperator extends AbstractOperator {
             return false;
         }
     }
+
+    public async uploadCover(file: File): Promise<boolean> {
+        const {id} = URLUtil.parseUrlParams();
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('id', id);
+        const response = await fetch(`/api/project/cover`, {
+            method: 'post',
+            body: formData,
+        });
+        const res = await response.json();
+        return res.code === 200;
+    }
 }

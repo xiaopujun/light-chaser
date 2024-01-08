@@ -133,8 +133,8 @@ export interface IProjectInfo {
     updateTime?: string;
     //存储类型
     saveType?: SaveType;
-    //项目截图
-    screenshot?: string;
+    //项目封面
+    cover?: string;
     //项目数据json
     dataJson?: string;
 }

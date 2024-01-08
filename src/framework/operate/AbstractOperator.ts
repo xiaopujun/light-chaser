@@ -45,13 +45,19 @@ export abstract class AbstractOperator {
 
     /**
      * 获取图片资源列表
-     * @param projectId
+     * @param projectId 项目id
      */
     public abstract getImageSourceList(projectId: string): Promise<IImageData[]>;
 
     /**
      * 删除图片资源
-     * @param imageId
+     * @param imageId 图片id
      */
     public abstract delImageSource(imageId: string): Promise<boolean>;
+
+    /**
+     * 上传封面快照
+     * @param file 图片文件
+     */
+    public abstract uploadCover(file: File): Promise<boolean>;
 }

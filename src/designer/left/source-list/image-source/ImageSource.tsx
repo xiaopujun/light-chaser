@@ -125,7 +125,7 @@ export const ImageSource: React.FC = () => {
                                 <Popconfirm title="确认删除吗?"
                                             icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
                                             description="可能会导致已经使用的图片组件失效!"
-                                            onConfirm={() => confirmDel(item.id)}
+                                            onConfirm={() => confirmDel(item.id!)}
                                             okText="是"
                                             cancelText="否">
                                     <MinusOutlined/>
