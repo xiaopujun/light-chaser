@@ -1,10 +1,9 @@
 import React from "react";
-import {MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
+import {BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {ClazzTemplate} from "../../common-component/common-types";
 import pieImg from './pie.png';
-import {BaseInfoType} from "../../../designer/DesignerType";
 import AntdPieController, {AntdPieProps} from "./AntdPieController";
 import {AntdCommonDefinition} from "../../antd-common/AntdCommonDefinition";
 

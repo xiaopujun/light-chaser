@@ -1,9 +1,8 @@
 import {
-    AbstractDefinition,
+    AbstractDefinition, BaseInfoType,
     MenuToConfigMappingType
 } from "../../../framework/core/AbstractDefinition";
 import BaseImageController, {BaseImageComponentProps} from "./BaseImageController";
-import {BaseInfoType} from "../../../designer/DesignerType";
 import baseImage from './baseImage.png';
 import {ClazzTemplate} from "../../common-component/common-types";
 import {MenuInfo} from "../../../designer/right/MenuType";

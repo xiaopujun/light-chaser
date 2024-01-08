@@ -8,7 +8,7 @@ import ComponentContainer from "../../../framework/core/ComponentContainer";
 import {ILayerItem} from "../../DesignerType";
 import GroupLayer from "../../../comps/group-layer/GroupLayer";
 
-export enum RenderOrder {
+export enum LayerOrder {
     ASC,
     DESC,
 }
@@ -18,10 +18,10 @@ class LayerBuilder {
     /**
      * 解析函数
      */
-    public parser = (layerMap: Record<string, ILayerItem>, order: RenderOrder = RenderOrder.DESC): ILayerItem[] => {
+    public parser = (layerMap: Record<string, ILayerItem>, order: LayerOrder = LayerOrder.DESC): ILayerItem[] => {
         layerMap = cloneDeep(layerMap);
         let sourceLayerArr;
-        if (order === RenderOrder.DESC)
+        if (order === LayerOrder.DESC)
             sourceLayerArr = Object.values(layerMap).sort((a, b) => b.order! - a.order!);
         else
             sourceLayerArr = Object.values(layerMap).sort((a, b) => a.order! - b.order!);
@@ -49,7 +49,7 @@ class LayerBuilder {
      */
     public buildLayerList = (layerMap: Record<string, ILayerItem>): ReactElement[] => {
         const res: ReactElement[] = [];
-        this.parser(layerMap, RenderOrder.DESC).forEach((item: ILayerItem) => {
+        this.parser(layerMap, LayerOrder.DESC).forEach((item: ILayerItem) => {
             res.push(this.buildLayer(item));
         });
         return res;
@@ -90,7 +90,7 @@ class LayerBuilder {
      */
     public buildCanvasComponents = (layerMap: Record<string, ILayerItem>): ReactElement[] => {
         const res: ReactElement[] = [];
-        this.parser(layerMap, RenderOrder.ASC).forEach((item: ILayerItem) => {
+        this.parser(layerMap, LayerOrder.ASC).forEach((item: ILayerItem) => {
             res.push(this.buildComponents(item));
         });
         return res;

@@ -1,7 +1,7 @@
-import {BaseInfoType} from "../../../designer/DesignerType";
 import scatterBubble from "./scatter-bubble.png";
 import AbstractScatterDefinition from "../../antd-common/scatter/AbstractScatterDefinition";
 import {AntdScatterProps} from "../../antd-common/scatter/AntdCommonScatterController";
+import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
 
 class AntdScatterBubbleDefinition extends AbstractScatterDefinition {
 

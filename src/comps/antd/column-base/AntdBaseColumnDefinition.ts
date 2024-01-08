@@ -1,7 +1,7 @@
-import {BaseInfoType} from "../../../designer/DesignerType";
 import baseColumnImg from "./base-column.png";
 import {AntdColumnProps} from "../../antd-common/column/AntdCommonColumnController";
 import AbstractColumnDefinition from "../../antd-common/column/AbstractColumnDefinition";
+import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
 
 class AntdBaseColumnDefinition extends AbstractColumnDefinition {
 

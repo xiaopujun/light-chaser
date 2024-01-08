@@ -7,7 +7,8 @@ import Loading from "../../ui/loading/Loading";
 import {AlertOutlined, CompressOutlined, EyeOutlined, PartitionOutlined, SaveOutlined} from "@ant-design/icons";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {doSave} from "../operate-provider/hot-key/HotKeyImpl";
-import URLUtil, {DesignerMode} from "../../utils/URLUtil";
+import URLUtil from "../../utils/URLUtil";
+import {DesignerMode} from "../DesignerType";
 
 const ProjectHdItemImpl = React.lazy(() => import('./items/project/ProjectHdItemImpl'));
 const CanvasHdConfigImpl = React.lazy(() => import('./items/canvas/CanvasHdConfigImpl'));

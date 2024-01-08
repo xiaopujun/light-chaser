@@ -1,8 +1,18 @@
 import {action, makeObservable, observable, runInAction} from "mobx";
 import {MenuInfo} from "./MenuType";
 import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
-import {ActiveElem} from "../DesignerType";
 import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
+
+/**
+ * 激活元素
+ */
+export interface ActiveElem {
+    //元素id
+    id?: string;
+    //元素类型
+    type?: string;
+}
+
 
 /**
  * 设计器。右侧组件配置状态管理类

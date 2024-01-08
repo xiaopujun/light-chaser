@@ -1,8 +1,7 @@
 import {
-    AbstractDefinition,
+    AbstractDefinition, BaseInfoType,
     MenuToConfigMappingType
 } from "../../../framework/core/AbstractDefinition";
-import {BaseInfoType} from "../../../designer/DesignerType";
 import {ClazzTemplate} from "../../common-component/common-types";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import baseColorBlockImg from './base-color-block.png';

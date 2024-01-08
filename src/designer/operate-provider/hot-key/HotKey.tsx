@@ -1,7 +1,7 @@
 import {Component} from 'react';
 import eventOperateStore from "../EventOperateStore";
 
-export enum TriggerType {
+export enum HotKeyTriggerType {
     //单次触发
     SINGLE,
     //连续触发
@@ -15,7 +15,7 @@ export interface HotKeyConfigType {
         //快捷键生效范围，布设置（默认）所有范围内可用。值为css选择器
         range?: string,
         //快捷键触发类型
-        triggerType?: TriggerType
+        triggerType?: HotKeyTriggerType
     }
 }
 
@@ -59,9 +59,9 @@ class HotKey extends Component<HotKeyProps> {
      * @param hotKey 当前按下的快捷键
      */
     doHandler = (e: KeyboardEvent, hotKey: string) => {
-        const {handler, triggerType = TriggerType.SINGLE, range} = this.handlerMapping[hotKey] || {};
+        const {handler, triggerType = HotKeyTriggerType.SINGLE, range} = this.handlerMapping[hotKey] || {};
         if (handler) {
-            if ((triggerType === TriggerType.SINGLE && this.existHandlerKey !== hotKey) || triggerType === TriggerType.COILED) {
+            if ((triggerType === HotKeyTriggerType.SINGLE && this.existHandlerKey !== hotKey) || triggerType === HotKeyTriggerType.COILED) {
                 const {pointerTarget} = eventOperateStore;
                 //如果设定了指定范围并且不在范围内则不执行
                 if (range) {

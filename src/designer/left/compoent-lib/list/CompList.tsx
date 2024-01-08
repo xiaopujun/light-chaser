@@ -3,13 +3,13 @@ import './CompList.less';
 import {observer} from "mobx-react";
 import designerStore from "../../../store/DesignerStore";
 import eventOperateStore from "../../../operate-provider/EventOperateStore";
-import {BaseInfoType, ILayerItem} from "../../../DesignerType";
+import {ILayerItem} from "../../../DesignerType";
 import Input from "../../../../ui/input/Input";
 import DesignerLoaderFactory from "../../../loader/DesignerLoaderFactory";
 import IdGenerate from "../../../../utils/IdGenerate";
 import editorDesignerLoader from "../../../loader/EditorDesignerLoader";
 import componentListStore from "../ComponentListStore";
-import {AbstractDefinition} from "../../../../framework/core/AbstractDefinition";
+import {AbstractDefinition, BaseInfoType} from "../../../../framework/core/AbstractDefinition";
 import DragAddProvider from "../../../../framework/drag-scale/DragAddProvider";
 
 class CompList extends Component {

@@ -12,6 +12,7 @@ import DesignerLoaderFactory from "../../designer/loader/DesignerLoaderFactory";
 import URLUtil from "../../utils/URLUtil";
 import {IImageData} from "../../comps/lc/base-image/BaseImageComponent";
 import localCoverCache from "../cache/LocalCoverCache";
+import {COVER_PREFIX, IMAGE_SOURCE_PREFIX, LIGHT_CHASER_PROJECT_LIST} from "../../global/GlobalConstants";
 
 /**
  * 本地项目数据操作实现
@@ -22,10 +23,10 @@ class LocalOperator extends AbstractOperator {
         //生成项目id
         project.id = IdGenerate.generateId();
         const projectData = project.dataJson;
-        let list: IProjectInfo[] = await localforage.getItem('light-chaser-project-list') || [];
+        let list: IProjectInfo[] = await localforage.getItem(LIGHT_CHASER_PROJECT_LIST) || [];
         project.dataJson = undefined;
         list.push(project);
-        await localforage.setItem('light-chaser-project-list', list);
+        await localforage.setItem(LIGHT_CHASER_PROJECT_LIST, list);
         await localforage.setItem(project.id, projectData);
         return Promise.resolve(project.id);
     }
@@ -34,7 +35,7 @@ class LocalOperator extends AbstractOperator {
         project = cloneDeep(project);
         const data = project.dataJson;
         delete project.dataJson;
-        let list: IProjectInfo[] = await localforage.getItem('light-chaser-project-list') || [];
+        let list: IProjectInfo[] = await localforage.getItem(LIGHT_CHASER_PROJECT_LIST) || [];
         const index = list.findIndex((item: IProjectInfo) => item.id === project.id);
         if (index === -1) {
             globalMessage.messageApi?.error('项目不存在');
@@ -43,14 +44,14 @@ class LocalOperator extends AbstractOperator {
         const oldProject = list[index];
         project = ObjectUtil.merge(oldProject, project);
         list[index] = project;
-        await localforage.setItem('light-chaser-project-list', list);
+        await localforage.setItem(LIGHT_CHASER_PROJECT_LIST, list);
         if (data)
             await localforage.setItem(project.id!, data);
         globalMessage.messageApi?.success('保存成功');
     }
 
     public async deleteProject(id: string): Promise<boolean> {
-        const list: IProjectInfo[] = await localforage.getItem('light-chaser-project-list') || [];
+        const list: IProjectInfo[] = await localforage.getItem(LIGHT_CHASER_PROJECT_LIST) || [];
         const index = list.findIndex((item: IProjectInfo) => item.id === id);
         if (index === -1) return false;
         //若存在封面，则删除封面
@@ -59,7 +60,7 @@ class LocalOperator extends AbstractOperator {
             await localforage.removeItem(info.cover);
         //删除项目基础信息
         list.splice(index, 1);
-        await localforage.setItem('light-chaser-project-list', list);
+        await localforage.setItem(LIGHT_CHASER_PROJECT_LIST, list);
         //删除项目数据
         await localforage.removeItem(id);
         return true;
@@ -75,7 +76,7 @@ class LocalOperator extends AbstractOperator {
          * 包括如下数据：
          * 1.图片资源数据
          */
-        const imageHashList: string[] = await localforage.getItem('image-source-' + id) || [];
+        const imageHashList: string[] = await localforage.getItem(IMAGE_SOURCE_PREFIX + id) || [];
         for (const hash of imageHashList) {
             const imageInfo: IImageData | null = await localforage.getItem(hash);
             if (imageInfo) {
@@ -101,7 +102,7 @@ class LocalOperator extends AbstractOperator {
     }
 
     public async getProjectInfoList(): Promise<IProjectInfo[]> {
-        const projects: IProjectInfo[] = await localforage.getItem('light-chaser-project-list') || [];
+        const projects: IProjectInfo[] = await localforage.getItem(LIGHT_CHASER_PROJECT_LIST) || [];
         //封面图片转换
         for (const project of projects) {
             const {cover} = project;
@@ -120,7 +121,7 @@ class LocalOperator extends AbstractOperator {
     }
 
     public async copyProject(id: string, name?: string): Promise<string> {
-        const list: IProjectInfo[] = await localforage.getItem('light-chaser-project-list') || [];
+        const list: IProjectInfo[] = await localforage.getItem(LIGHT_CHASER_PROJECT_LIST) || [];
         const index = list.findIndex((item: IProjectInfo) => item.id === id);
         if (index === -1) return '';
         const project = list[index];
@@ -130,7 +131,7 @@ class LocalOperator extends AbstractOperator {
         newProject.createTime = new Date().getTime() + '';
         newProject.updateTime = new Date().getTime() + '';
         list.push(newProject);
-        await localforage.setItem('light-chaser-project-list', list);
+        await localforage.setItem(LIGHT_CHASER_PROJECT_LIST, list);
         const dataJson = await localforage.getItem(id);
         if (dataJson)
             await localforage.setItem(newProject.id, dataJson);
@@ -154,7 +155,7 @@ class LocalOperator extends AbstractOperator {
                         const blob = new Blob([event.target!.result!], {type: file.type});
                         localforage.setItem(hashCode, {name: file.name, blob});
                         const {id} = URLUtil.parseUrlParams();
-                        const imageSourceKey = "image-source-" + id;
+                        const imageSourceKey = IMAGE_SOURCE_PREFIX + id;
                         const imageSourceMap: string[] = await localforage.getItem(imageSourceKey) || [];
                         imageSourceMap.push(hashCode);
                         localforage.setItem(imageSourceKey, imageSourceMap);
@@ -193,7 +194,7 @@ class LocalOperator extends AbstractOperator {
         await localforage.removeItem(imageId);
         //删除indexDB中的引用数据
         const {id} = URLUtil.parseUrlParams();
-        const imageSourceKey = "image-source-" + id;
+        const imageSourceKey = IMAGE_SOURCE_PREFIX + id;
         const imageSourceMap: string[] = await localforage.getItem(imageSourceKey) || [];
         const index = imageSourceMap.findIndex(item => item === imageId);
         if (index !== -1) {
@@ -210,7 +211,7 @@ class LocalOperator extends AbstractOperator {
         //将file抓换为blob
         const fileReader = new FileReader();
         const {id} = URLUtil.parseUrlParams();
-        const coverKey = "cover-" + id;
+        const coverKey = COVER_PREFIX + id;
         fileReader.onload = async (event: ProgressEvent<FileReader>) => {
             const blob = new Blob([event.target!.result!], {type: file.type});
             //将blob存储到indexDB中
@@ -218,12 +219,12 @@ class LocalOperator extends AbstractOperator {
         }
         fileReader.readAsArrayBuffer(file);
         //更新本地项目信息
-        const list: IProjectInfo[] = await localforage.getItem('light-chaser-project-list') || [];
+        const list: IProjectInfo[] = await localforage.getItem(LIGHT_CHASER_PROJECT_LIST) || [];
         const index = list.findIndex((item: IProjectInfo) => item.id === id);
         if (index === -1) return false;
         const project = list[index];
         project.cover = coverKey;
-        await localforage.setItem('light-chaser-project-list', list);
+        await localforage.setItem(LIGHT_CHASER_PROJECT_LIST, list);
         return true;
     }
 

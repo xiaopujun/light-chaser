@@ -4,12 +4,11 @@ import {Card} from "antd";
 import defaultSnapshot from '../image/default-snapshot.jpg';
 
 import {CopyFilled, DeleteFilled, EditFilled, EyeFilled} from "@ant-design/icons";
-import {IProjectInfo, SaveType} from "../../../designer/DesignerType";
+import {DesignerMode, IProjectInfo, SaveType} from "../../../designer/DesignerType";
 import {AddNewProjectDialog, INewProjectInfo} from "./AddNewProjectDialog";
 import Button from "../../../ui/button/Button";
 import Dialog from "../../../ui/dialog/Dialog";
 import operatorMap from "../../../framework/operate";
-import {DesignerMode} from "../../../utils/URLUtil";
 import {globalMessage} from "../../../framework/message/GlobalMessage";
 
 export interface ProjectListProps {

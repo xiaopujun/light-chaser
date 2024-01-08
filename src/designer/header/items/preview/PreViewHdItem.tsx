@@ -1,6 +1,7 @@
 import {AbstractHeaderItem, HeaderItemProps} from "../../HeaderTypes";
 import {EyeFilled} from "@ant-design/icons";
-import URLUtil, {DesignerMode} from "../../../../utils/URLUtil";
+import URLUtil from "../../../../utils/URLUtil";
+import {DesignerMode} from "../../../DesignerType";
 
 /**
  * header-预览

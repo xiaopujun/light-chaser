@@ -4,7 +4,7 @@ import {getDefaultMenuList} from "../../../designer/right/util";
 import {BaseMenuMapping, ClazzTemplate} from "../../common-component/common-types";
 import AntdGaugeController, {AntdGaugeProps} from "./AntdGaugeController";
 import gaugeImg from './gauge.png';
-import {BaseInfoType} from "../../../designer/DesignerType";
+import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const AntdGaugeConfig = React.lazy(() => import("./AntdGaugeConfig").then((module) => ({default: module.AntdGaugeConfig})));

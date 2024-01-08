@@ -1,5 +1,4 @@
 import {MenuInfo} from "../../designer/right/MenuType";
-import {BaseInfoType} from "../../designer/DesignerType";
 import AbstractController from "./AbstractController";
 import React from "react";
 import {ClazzTemplate} from "../../comps/common-component/common-types";
@@ -22,6 +21,40 @@ export interface ICategorize {
     name: string;
     icon?: React.ComponentType;
     parentKey?: string;
+}
+
+/**
+ * 组件基础信息
+ */
+export interface BaseInfoType {
+    /**
+     * 组件显示名称
+     */
+    compName: string;
+    /**
+     * 组件标识
+     */
+    compKey: string;
+    /**
+     * 主分类
+     */
+    categorize?: string;
+    /**
+     * 子分类
+     */
+    subCategorize?: string;
+    /**
+     * 版本
+     */
+    version?: string;
+    /**
+     * 初始宽度
+     */
+    width?: number;
+    /**
+     * 初始高度
+     */
+    height?: number;
 }
 
 /**

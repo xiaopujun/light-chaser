@@ -29,28 +29,8 @@ export interface ThemeItemType {
  * 统计信息
  */
 export interface Statistic {
-    //元素个数
+    //图层个数
     count?: number;
-}
-
-/**
- * 基础样式
- */
-export interface BaseStyle {
-    //内边距
-    padding?: string;
-    //背景颜色
-    backgroundColor?: string;
-    //边框
-    border?: string;
-    //边框样式
-    borderStyle?: string;
-    //边框颜色
-    borderColor?: string;
-    //边框圆角
-    borderRadius?: string;
-    //边框宽度
-    borderWidth?: string;
 }
 
 export interface APIConfig {
@@ -104,6 +84,16 @@ export enum SaveType {
 }
 
 /**
+ * 设计器模式
+ */
+export enum DesignerMode {
+    //编辑模式
+    EDIT = '0',
+    //展示模式
+    VIEW = '1',
+}
+
+/**
  * 项目状态
  */
 export enum ProjectState {
@@ -140,16 +130,6 @@ export interface IProjectInfo {
 }
 
 /**
- * 激活元素
- */
-export interface ActiveElem {
-    //元素id
-    id?: string;
-    //元素类型
-    type?: string;
-}
-
-/**
  * 画布配置
  */
 export interface CanvasConfig {
@@ -162,40 +142,6 @@ export interface CanvasConfig {
     //画布宽
     width?: number;
     //画布高
-    height?: number;
-}
-
-/**
- * 组件基础信息
- */
-export interface BaseInfoType {
-    /**
-     * 组件显示名称
-     */
-    compName: string;
-    /**
-     * 组件标识
-     */
-    compKey: string;
-    /**
-     * 主分类
-     */
-    categorize?: string;
-    /**
-     * 子分类
-     */
-    subCategorize?: string;
-    /**
-     * 版本
-     */
-    version?: string;
-    /**
-     * 初始宽度
-     */
-    width?: number;
-    /**
-     * 初始高度
-     */
     height?: number;
 }
 
