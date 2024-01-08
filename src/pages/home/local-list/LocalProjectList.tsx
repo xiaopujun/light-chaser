@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import ProjectList from "../project-list/ProjectList";
 import {SaveType} from "../../../designer/DesignerType";
-import localCoverCache from "../../../framework/cache/ImageSourceCache";
+import localCoverCache from "../../../framework/cache/LocalCoverCache";
 
 export const LocalProjectList: React.FC = () => {
 

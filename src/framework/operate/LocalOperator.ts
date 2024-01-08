@@ -11,7 +11,7 @@ import AbstractConvert from "../convert/AbstractConvert";
 import DesignerLoaderFactory from "../../designer/loader/DesignerLoaderFactory";
 import URLUtil from "../../utils/URLUtil";
 import {IImageData} from "../../comps/lc/base-image/BaseImageComponent";
-import localCoverCache from "../cache/ImageSourceCache";
+import localCoverCache from "../cache/LocalCoverCache";
 
 /**
  * 本地项目数据操作实现
@@ -101,19 +101,18 @@ class LocalOperator extends AbstractOperator {
     }
 
     public async getProjectInfoList(): Promise<IProjectInfo[]> {
-        const projects: IProjectInfo = await localforage.getItem('light-chaser-project-list') || [];
+        const projects: IProjectInfo[] = await localforage.getItem('light-chaser-project-list') || [];
         //封面图片转换
         for (const project of projects) {
             const {cover} = project;
             if (cover) {
-                const coverBlob = await localforage.getItem(cover);
-                console.log('本地加载', coverBlob);
+                const coverBlob: Blob | null = await localforage.getItem(cover);
                 if (coverBlob) {
                     project.cover = URL.createObjectURL(coverBlob);
                     //存入本地缓存，为了切换页面时及时释放内存
-                    localCoverCache.addCache(project.id, project.cover);
+                    localCoverCache.addCache(project.id!, project.cover);
                 } else {
-                    project.cover = null;
+                    project.cover = undefined;
                 }
             }
         }

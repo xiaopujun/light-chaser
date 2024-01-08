@@ -23,7 +23,7 @@ export const SnapshotConfig = (prop: SnapshotConfigProps) => {
     const imageBlob = useRef<Blob | null>(null);
 
     const {canvasConfig: {width, height}} = designerStore;
-    const imageStyle = width > height ? {width: '100%'} : {height: '100%'};
+    const imageStyle = width! > height! ? {width: '100%'} : {height: '100%'};
 
     const generate = () => {
         if (!url) {

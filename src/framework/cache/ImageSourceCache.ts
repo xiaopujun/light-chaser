@@ -1,17 +1,12 @@
 import AbstractCache from "./AbstractCache";
+import {IImageData} from "../../comps/lc/base-image/BaseImageComponent";
 
-class LocalCoverCache extends AbstractCache<any> {
-    public getAllCoverCache(): string[] {
+class ImageSourceCache extends AbstractCache<any> {
+    public getAllImageCache(): IImageData[] {
         return Array.from(this.getCachePool().values()) || [];
-    }
-
-    public clearCoverCache(): void {
-        this.getAllCoverCache().forEach((url: string) => {
-            URL.revokeObjectURL(url);
-        });
     }
 }
 
-const localCoverCache = new LocalCoverCache();
-export default localCoverCache;
+const imageSourceCache = new ImageSourceCache();
+export default imageSourceCache;
 
