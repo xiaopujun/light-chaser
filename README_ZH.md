@@ -93,5 +93,5 @@ light chaser遵守《贡献者公约行为准则》。
 ## 社区
 
 <div style="display: flex">
-    <div  style="padding: 20px"><img alt="group" src="https://picdm.sunbangyan.cn/2024/01/02/89b9a016221112c9a56f752f9cc0010c.jpeg"></div>
+    <div  style="padding: 20px"><img alt="group" src="https://picdm.sunbangyan.cn/2024/01/09/2fbcc44edeb0c6a6644801bb4eed6cd9.jpeg"></div>
 </div>
