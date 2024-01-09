@@ -20,17 +20,21 @@
         background-position: center;
         background-size: cover;
         position: relative;
+        border: 2px solid #282c34;
 
         .project-info {
-          padding-left: 10px;
-          width: 100%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          padding: 0 10px;
+          width: calc(100% - 20px);
           height: 40px;
+          line-height: 40px;
+          box-sizing: content-box;
           background-color: rgba(43, 43, 43, 0.57);
           backdrop-filter: blur(5px);
           position: absolute;
           bottom: 0;
-          display: flex;
-          align-items: center;
           font-weight: 800;
           color: #bcbcbc;
         }

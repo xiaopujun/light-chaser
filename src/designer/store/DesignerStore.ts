@@ -205,6 +205,9 @@ class DesignerStore {
      */
     delItem = (ids: string[]) => {
         for (const id of ids) {
+            const controller = this.compController[id];
+            if (controller)
+                controller.destroy();
             delete this.layerConfigs[id];
             delete this.compController[id];
         }

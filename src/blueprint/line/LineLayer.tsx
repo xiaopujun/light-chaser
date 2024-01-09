@@ -133,7 +133,7 @@ class LineLayer extends React.Component {
     }
 
     render() {
-        const width = window.innerWidth - 670, height = window.innerHeight - 75;
+        const width = window.innerWidth - 670, height = window.innerHeight - 85;
         const _canvasStyle: CSSProperties = {position: "inherit", top: 0, left: 0};
         return (
             <div style={{position: "absolute"}}>

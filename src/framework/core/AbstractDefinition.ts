@@ -102,14 +102,41 @@ export abstract class AbstractDefinition<C extends AbstractController = Abstract
      * 返回当前组件能触发的事件列表
      */
     getEventList(): EventInfo[] {
-        return [];
+        return [
+            {
+                id: "loaded",
+                name: "组件加载完成时",
+            }
+        ];
     }
 
     /**
      * 返回当前组件能接受的动作列表
      */
     getActionList(): ActionInfo[] {
-        return [];
+        return [
+            {
+                name: "显示",
+                id: "show",
+                handler: (controller: AbstractController, params?: object) => {
+                    controller.container!.style.display = "block";
+                }
+            },
+            {
+                name: "隐藏",
+                id: "hide",
+                handler: (controller: AbstractController, params?: object) => {
+                    controller.container!.style.display = "none";
+                }
+            },
+            {
+                name: "更新组件配置",
+                id: "updateConfig",
+                handler: (controller: AbstractController, params?: object) => {
+                    controller.update(params);
+                }
+            }
+        ];
     }
 
     /**

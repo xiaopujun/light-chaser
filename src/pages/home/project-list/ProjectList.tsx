@@ -117,8 +117,8 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
                 {data && data.map((item: IProjectInfo, index) => {
                     return (
                         <div key={index} className={'project-item'}>
-                            <Card cover={<div className={'project-cover'}
-                                              style={{backgroundImage: `url(${item.cover || defaultSnapshot})`}}>
+                            <Card style={{padding: 2}} cover={<div className={'project-cover'}
+                                                                   style={{backgroundImage: `url(${item.cover || defaultSnapshot})`}}>
                                 <div className={'project-info'}>
                                     项目名称：{item.name}
                                 </div>
