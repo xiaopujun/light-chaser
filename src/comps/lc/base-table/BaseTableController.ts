@@ -1,4 +1,3 @@
-import {ThemeItemType} from "../../../designer/DesignerType";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
 import ComponentUtil from "../../../utils/ComponentUtil";
@@ -22,7 +21,6 @@ export class BaseTableController extends AbstractDesignerController<BaseTableCom
         return this.config;
     }
 
-
     changeData(data: any) {
         const style = ObjectUtil.merge(this.config?.style, {data});
         this.instance?.setState(style);
@@ -35,7 +33,4 @@ export class BaseTableController extends AbstractDesignerController<BaseTableCom
             this.instance?.setState(this.config);
     }
 
-    updateTheme(newTheme: ThemeItemType): void {
-
-    }
 }

@@ -1,5 +1,5 @@
 import {
-    AbstractDefinition, BaseInfoType,
+    AbstractDefinition, BaseInfoType, EventInfo,
     MenuToConfigMappingType
 } from "../../../framework/core/AbstractDefinition";
 import {ClazzTemplate} from "../../common-component/common-types";
@@ -65,5 +65,16 @@ export default class BaseTextDefinition extends AbstractDefinition<BaseTextContr
             animation: AnimationConfig,
             theme: ThemeConfig
         };
+    }
+
+
+    getEventList(): EventInfo[] {
+        const events = super.getEventList();
+        return events.concat([
+            {
+                id: "click",
+                name: "点击时",
+            }
+        ]);
     }
 }

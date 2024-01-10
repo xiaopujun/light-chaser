@@ -37,11 +37,18 @@ class BaseImageComponent extends Component<BaseImageComponentStyle, BaseImageCom
         this.state = {...props}
     }
 
+    eventHandlerMap: Record<string, Function> = {};
+
+    onClick = () => {
+        if ('click' in this.eventHandlerMap)
+            this.eventHandlerMap['click']();
+    }
+
     render() {
         const {type, onLineUrl, localUrl} = this.state;
         const src = type === 'online' ? onLineUrl : localUrl;
         return (
-            <div style={{width: '100%', height: '100%'}}>
+            <div style={{width: '100%', height: '100%'}} onClick={this.onClick}>
                 {!src ? <div style={{
                         color: '#9a9a9a',
                         height: '100%',

@@ -1,4 +1,9 @@
-import {AbstractDefinition, BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
+import {
+    AbstractDefinition,
+    BaseInfoType,
+    EventInfo,
+    MenuToConfigMappingType
+} from "../../../framework/core/AbstractDefinition";
 import {ClazzTemplate} from "../../common-component/common-types";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import baseIframeImg from './base-iframe.png';
@@ -58,5 +63,15 @@ export default class BaseIframeDefinition extends AbstractDefinition<BaseIframeC
             base: BaseInfo,
             style: BaseIframeStyleConfig,
         };
+    }
+
+    getEventList(): EventInfo[] {
+        const events = super.getEventList();
+        return events.concat([
+            {
+                id: "load",
+                name: "ifram加载完成时",
+            }
+        ]);
     }
 }

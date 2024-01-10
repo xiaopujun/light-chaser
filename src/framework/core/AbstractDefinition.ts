@@ -118,14 +118,14 @@ export abstract class AbstractDefinition<C extends AbstractController = Abstract
             {
                 name: "显示",
                 id: "show",
-                handler: (controller: AbstractController, params?: object) => {
+                handler: (controller: AbstractController) => {
                     controller.container!.style.display = "block";
                 }
             },
             {
                 name: "隐藏",
                 id: "hide",
-                handler: (controller: AbstractController, params?: object) => {
+                handler: (controller: AbstractController) => {
                     controller.container!.style.display = "none";
                 }
             },

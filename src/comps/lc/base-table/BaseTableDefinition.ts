@@ -1,4 +1,9 @@
-import {AbstractDefinition, BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
+import {
+    AbstractDefinition,
+    BaseInfoType,
+    EventInfo,
+    MenuToConfigMappingType
+} from "../../../framework/core/AbstractDefinition";
 import {ClazzTemplate} from "../../common-component/common-types";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import baseTableImg from './base-table.png';
@@ -97,5 +102,16 @@ export default class BaseTableDefinition extends AbstractDefinition<BaseTableCon
             animation: AnimationConfig,
             data: DataConfig,
         };
+    }
+
+    getEventList(): Array<EventInfo> {
+        const eventList = super.getEventList();
+        eventList.push(...[
+            {
+                id: "dataChange",
+                name: "数据变更时",
+            }
+        ])
+        return eventList;
     }
 }

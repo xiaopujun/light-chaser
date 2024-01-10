@@ -4,6 +4,7 @@ import AbstractDesignerController from "../../../framework/core/AbstractDesigner
 import ComponentUtil from "../../../utils/ComponentUtil";
 import BaseTextComponent, {BaseTextComponentProps} from "./BaseTextComponent";
 import ObjectUtil from "../../../utils/ObjectUtil";
+import BPExecutor from "../../../blueprint/core/BPExecutor";
 
 export class BaseTextController extends AbstractDesignerController<BaseTextComponent, BaseTextComponentProps> {
 
@@ -33,4 +34,15 @@ export class BaseTextController extends AbstractDesignerController<BaseTextCompo
     updateTheme(newTheme: ThemeItemType): void {
 
     }
+
+    registerEvent() {
+        if (this.instance) {
+            const nodeId = this.config?.base?.id!;
+            this.instance.eventHandlerMap = {
+                click: () => BPExecutor.triggerComponentEvent(nodeId!, "click", this.config)
+            }
+        }
+    }
+
+
 }

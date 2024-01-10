@@ -16,6 +16,13 @@ class BaseIframeComponent extends Component<BaseIframeComponentProps, BaseIframe
         this.state = {...props};
     }
 
+    eventHandlerMap: Record<string, Function> = {};
+
+    onLoad = () => {
+        if ('load' in this.eventHandlerMap)
+            this.eventHandlerMap['load']();
+    }
+
     render() {
         const {src} = this.state.style!;
         return (
@@ -29,7 +36,8 @@ class BaseIframeComponent extends Component<BaseIframeComponentProps, BaseIframe
                 }}>
                     <div>请设置iframe地址</div>
                 </div> : <div style={{height: '100%', display: 'flex'}}>
-                    <iframe title={'lc标准iframe组件'} src={src} style={{width: '100%', height: '100%', border: 'none'}}/>
+                    <iframe title={'lc标准iframe组件'} src={src} onLoad={this.onLoad}
+                            style={{width: '100%', height: '100%', border: 'none'}}/>
                 </div>}
             </>
         );

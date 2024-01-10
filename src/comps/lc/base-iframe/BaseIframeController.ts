@@ -1,9 +1,9 @@
-import {ThemeItemType} from "../../../designer/DesignerType";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
 import ComponentUtil from "../../../utils/ComponentUtil";
 import BaseIframeComponent, {BaseIframeComponentProps} from "./BaseIframeComponent";
 import ObjectUtil from "../../../utils/ObjectUtil";
+import BPExecutor from "../../../blueprint/core/BPExecutor";
 
 export class BaseIframeController extends AbstractDesignerController<BaseIframeComponent, BaseIframeComponentProps> {
 
@@ -29,7 +29,12 @@ export class BaseIframeController extends AbstractDesignerController<BaseIframeC
             this.instance?.setState(this.config);
     }
 
-    updateTheme(newTheme: ThemeItemType): void {
-
+    registerEvent() {
+        if (this.instance) {
+            const nodeId = this.config?.base?.id!;
+            this.instance.eventHandlerMap = {
+                load: () => BPExecutor.triggerComponentEvent(nodeId!, "load", this.config)
+            }
+        }
     }
 }

@@ -17,7 +17,7 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
      * 更新组件数据,且必须触发组件的重新渲染
      * @param data
      */
-    changeData(data: any): void {
+    public changeData(data: any): void {
     }
 
     registerEvent(): void {
@@ -27,7 +27,7 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
      * 加载组件数据，用于在预览（展示）模式下渲染完组件后根据当前组件的数据配置自动加载并更逊组件数组。
      * 注：若自定义组件有自己的数据加载方式，则需要覆写此方法
      */
-    loadComponentData(): void {
+    public loadComponentData(): void {
         //预览模式
         const {data} = this.config! as ComponentBaseProps;
         if (!data) return;
@@ -68,7 +68,7 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
      * 更新本组件的主题样式方法，用于在全局切换主题时使用
      * @param newTheme 新主题
      */
-    updateTheme(newTheme: ThemeItemType): void {
+    public updateTheme(newTheme: ThemeItemType): void {
     }
 
 }

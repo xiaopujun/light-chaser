@@ -1,5 +1,5 @@
 import {
-    AbstractDefinition, BaseInfoType,
+    AbstractDefinition, BaseInfoType, EventInfo,
     MenuToConfigMappingType
 } from "../../../framework/core/AbstractDefinition";
 import BaseImageController, {BaseImageComponentProps} from "./BaseImageController";
@@ -53,5 +53,14 @@ export default class BaseImageDefinition extends AbstractDefinition<BaseImageCon
         };
     }
 
+    getEventList(): EventInfo[] {
+        const events = super.getEventList();
+        return events.concat([
+            {
+                id: "click",
+                name: "点击时",
+            }
+        ]);
+    }
 
 }

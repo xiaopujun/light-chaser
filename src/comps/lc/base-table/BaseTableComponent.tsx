@@ -57,6 +57,13 @@ class BaseTableComponent extends Component<BaseTableComponentProps, BaseTableCom
         this.state = {...props};
     }
 
+    eventHandlerMap: Record<string, Function> = {};
+
+    onClick = () => {
+        if ('dataChange' in this.eventHandlerMap)
+            this.eventHandlerMap['dataChange']();
+    }
+
     componentDidMount() {
         if (this.tableRef) {
             this.contentHeight = this.tableRef.clientHeight - this.theadRef!.clientHeight;
