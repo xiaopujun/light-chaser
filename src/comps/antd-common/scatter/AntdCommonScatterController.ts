@@ -78,6 +78,6 @@ export default class AntdCommonScatterController extends AntdBaseDesignerControl
         if ((styleConfig?.yAxis) && (styleConfig?.yAxis?.subTickLine?.style as ShapeAttrs))
             (styleConfig!.yAxis!.subTickLine!.style as ShapeAttrs).stroke = supplementSecond;
         //重新渲染
-        this.update({style: styleConfig} as any, {reRender: true});
+        this.update({style: styleConfig} as AntdScatterProps, {reRender: true});
     }
 }

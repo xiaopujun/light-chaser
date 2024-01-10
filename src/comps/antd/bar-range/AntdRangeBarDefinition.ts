@@ -1,7 +1,7 @@
-import {BaseInfoType} from "../../../designer/DesignerType";
 import rangeBarImg from "./range-bar.png";
 import {AntdBarProps} from "../../antd-common/bar/AntdCommonBarController";
 import AbstractBarDefinition from "../../antd-common/bar/AbstractBarDefinition";
+import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
 
 class AntdRangeBarDefinition extends AbstractBarDefinition {
 
@@ -9,8 +9,8 @@ class AntdRangeBarDefinition extends AbstractBarDefinition {
         return {
             compName: "Antd区间条形图",
             compKey: "AntdRangeBar",
-            type: "条形图",
-            typeKey: "bar",
+            categorize: "chart",
+            subCategorize: "bar",
         };
     }
 

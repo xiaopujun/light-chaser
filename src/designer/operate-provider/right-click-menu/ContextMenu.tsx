@@ -23,7 +23,7 @@ import {
 } from "../hot-key/HotKeyImpl";
 import eventOperateStore from "../EventOperateStore";
 import designerStore from "../../store/DesignerStore";
-import LayerUtil from "../../float-configs/layer-list/util/LayerUtil";
+import LayerUtil from "../../left/layer-list/util/LayerUtil";
 
 class ContextMenu extends Component {
 

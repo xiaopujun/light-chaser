@@ -1,7 +1,7 @@
-import {BaseInfoType} from "../../../designer/DesignerType";
 import stackAreaImg from "./stack-area.png";
 import AbstractAreaDefinition from "../../antd-common/area/AbstractAreaDefinition";
 import {AntdAreaProps} from "../../antd-common/area/AntdCommonAreaController";
+import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
 
 class AntdStackAreaDefinition extends AbstractAreaDefinition {
 
@@ -9,8 +9,8 @@ class AntdStackAreaDefinition extends AbstractAreaDefinition {
         return {
             compName: "Antd堆叠面积图",
             compKey: "AntdStackArea",
-            type: "条形图",
-            typeKey: "area",
+            categorize: "chart",
+            subCategorize: "area",
         };
     }
 

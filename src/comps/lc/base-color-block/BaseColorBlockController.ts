@@ -7,10 +7,11 @@ import BaseColorBlockComponent, {
     BaseColorBlockComponentRef
 } from "./BaseColorBlockComponent";
 import ObjectUtil from "../../../utils/ObjectUtil";
+import BPExecutor from "../../../blueprint/core/BPExecutor";
 
 export class BaseColorBlockController extends AbstractDesignerController<BaseColorBlockComponentRef, BaseColorBlockComponentProps> {
 
-    async create(container: HTMLElement, config: any): Promise<void> {
+    async create(container: HTMLElement, config: BaseColorBlockComponentProps): Promise<void> {
         this.config = config;
         this.container = container;
         this.instance = await ComponentUtil.createAndRender<BaseColorBlockComponentRef>(container, BaseColorBlockComponent, config);
@@ -34,5 +35,13 @@ export class BaseColorBlockController extends AbstractDesignerController<BaseCol
 
     updateTheme(newTheme: ThemeItemType): void {
 
+    }
+
+
+    registerEvent() {
+        const nodeId = this.config?.base?.id!;
+        this.instance?.setEventHandler({
+            click: () => BPExecutor.triggerComponentEvent(nodeId!, "click", this.config),
+        })
     }
 }

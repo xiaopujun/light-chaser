@@ -4,10 +4,11 @@ import AbstractDesignerController from "../../../framework/core/AbstractDesigner
 import ComponentUtil from "../../../utils/ComponentUtil";
 import BaseTextComponent, {BaseTextComponentProps} from "./BaseTextComponent";
 import ObjectUtil from "../../../utils/ObjectUtil";
+import BPExecutor from "../../../blueprint/core/BPExecutor";
 
 export class BaseTextController extends AbstractDesignerController<BaseTextComponent, BaseTextComponentProps> {
 
-    async create(container: HTMLElement, config: any): Promise<void> {
+    async create(container: HTMLElement, config: BaseTextComponentProps): Promise<void> {
         this.config = config;
         this.container = container;
         this.instance = await ComponentUtil.createAndRender<BaseTextComponent>(container, BaseTextComponent, config);
@@ -33,4 +34,15 @@ export class BaseTextController extends AbstractDesignerController<BaseTextCompo
     updateTheme(newTheme: ThemeItemType): void {
 
     }
+
+    registerEvent() {
+        if (this.instance) {
+            const nodeId = this.config?.base?.id!;
+            this.instance.eventHandlerMap = {
+                click: () => BPExecutor.triggerComponentEvent(nodeId!, "click", this.config)
+            }
+        }
+    }
+
+
 }

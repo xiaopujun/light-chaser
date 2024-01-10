@@ -1,7 +1,7 @@
-import {BaseInfoType} from "../../../designer/DesignerType";
 import stackBarImg from "./stack-bar.png";
 import {AntdBarProps} from "../../antd-common/bar/AntdCommonBarController";
 import AbstractBarDefinition from "../../antd-common/bar/AbstractBarDefinition";
+import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
 
 class AntdStackBarDefinition extends AbstractBarDefinition {
 
@@ -9,8 +9,8 @@ class AntdStackBarDefinition extends AbstractBarDefinition {
         return {
             compName: "Antd堆叠条形图",
             compKey: "AntdStackBar",
-            type: "条形图",
-            typeKey: "bar",
+            categorize: "chart",
+            subCategorize: "bar",
         };
     }
 

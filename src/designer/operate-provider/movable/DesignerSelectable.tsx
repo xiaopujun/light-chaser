@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import Selecto, {OnSelectEnd} from "react-selecto";
+import Selecto, {OnDragStart, OnSelectEnd} from "react-selecto";
 import eventOperateStore from "../EventOperateStore";
 import {observer} from "mobx-react";
 import Moveable from 'react-moveable';
 import designerStore from "../../store/DesignerStore";
-import layerListStore from "../../float-configs/layer-list/LayerListStore";
-import LayerUtil from "../../float-configs/layer-list/util/LayerUtil";
+import LayerUtil from "../../left/layer-list/util/LayerUtil";
+import layerListStore from "../../left/layer-list/LayerListStore";
+import designerLeftStore from "../../left/DesignerLeftStore";
 
 /**
  * 设置控制点和边框的颜色
@@ -37,14 +38,14 @@ class DesignerSelectable extends Component<DesignerSelectableProps> {
 
     componentDidMount() {
         const {setSelectorRef} = eventOperateStore;
-        setSelectorRef(this.selectorRef);
+        setSelectorRef(this.selectorRef.current!);
     }
 
     onSelectEnd = (e: OnSelectEnd) => {
         let {selected} = e;
         const {movableRef, setTargetIds} = eventOperateStore;
         if (!movableRef) return;
-        const movable: Moveable = movableRef!.current!;
+        const movable: Moveable = movableRef!;
         //如果为拖拽，则将当前的整个dom事件传递给movable，确保选中元素后可以立马拖拽
         if (e.isDragStart) {
             e.inputEvent.preventDefault();
@@ -89,8 +90,9 @@ class DesignerSelectable extends Component<DesignerSelectableProps> {
         //更新选中的组件id
         setTargetIds(layerIds);
         //更新图层列表状态
-        const {visible, layerInstances} = layerListStore;
-        if (visible) {
+        const {layerInstances} = layerListStore;
+        const {menu} = designerLeftStore;
+        if (menu === 'layer-list') {
             layerIds.forEach((id) => {
                 (layerInstances[id] as Component)?.setState({selected: true});
             });
@@ -100,12 +102,12 @@ class DesignerSelectable extends Component<DesignerSelectableProps> {
         setControlPointLineColor(lockState);
     }
 
-    onDragStart = (e: any) => {
+    onDragStart = (e: OnDragStart) => {
         const {movableRef, targets} = eventOperateStore;
-        const movable: Moveable = movableRef!.current!;
+        const movable: Moveable = movableRef!;
         const target = e.inputEvent.target;
         if ((movable.isMoveableElement(target))
-            || targets.some((t: any) => t === target || t.contains(target))
+            || targets.some((t: HTMLElement) => t === target || t.contains(target))
         ) {
             e.stop();
         }

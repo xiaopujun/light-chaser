@@ -27,3 +27,4 @@ export const FrameLayout: React.FC<FrameLayoutProps> = (props) => {
         </div>
     )
 }
+

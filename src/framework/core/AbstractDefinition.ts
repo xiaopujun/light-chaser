@@ -1,5 +1,4 @@
 import {MenuInfo} from "../../designer/right/MenuType";
-import {BaseInfoType} from "../../designer/DesignerType";
 import AbstractController from "./AbstractController";
 import React from "react";
 import {ClazzTemplate} from "../../comps/common-component/common-types";
@@ -15,6 +14,47 @@ export interface ActionInfo {
 export interface EventInfo {
     id?: string;
     name?: string;
+}
+
+export interface ICategorize {
+    key: string;
+    name: string;
+    icon?: React.ComponentType;
+    parentKey?: string;
+}
+
+/**
+ * 组件基础信息
+ */
+export interface BaseInfoType {
+    /**
+     * 组件显示名称
+     */
+    compName: string;
+    /**
+     * 组件标识
+     */
+    compKey: string;
+    /**
+     * 主分类
+     */
+    categorize?: string;
+    /**
+     * 子分类
+     */
+    subCategorize?: string;
+    /**
+     * 版本
+     */
+    version?: string;
+    /**
+     * 初始宽度
+     */
+    width?: number;
+    /**
+     * 初始高度
+     */
+    height?: number;
 }
 
 /**
@@ -62,15 +102,57 @@ export abstract class AbstractDefinition<C extends AbstractController = Abstract
      * 返回当前组件能触发的事件列表
      */
     getEventList(): EventInfo[] {
-        return [];
+        return [
+            {
+                id: "loaded",
+                name: "组件加载完成时",
+            }
+        ];
     }
 
     /**
      * 返回当前组件能接受的动作列表
      */
     getActionList(): ActionInfo[] {
-        return [];
+        return [
+            {
+                name: "显示",
+                id: "show",
+                handler: (controller: AbstractController) => {
+                    controller.container!.style.display = "block";
+                }
+            },
+            {
+                name: "隐藏",
+                id: "hide",
+                handler: (controller: AbstractController) => {
+                    controller.container!.style.display = "none";
+                }
+            },
+            {
+                name: "更新组件配置",
+                id: "updateConfig",
+                handler: (controller: AbstractController, params?: object) => {
+                    controller.update(params);
+                }
+            }
+        ];
     }
+
+    /**
+     * 定义组件主分类
+     */
+    getCategorize(): ICategorize | null {
+        return null;
+    }
+
+    /**
+     * 定义组件子分类
+     */
+    getSubCategorize(): ICategorize | null {
+        return null;
+    }
+
 
 }
 

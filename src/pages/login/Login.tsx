@@ -3,7 +3,7 @@ import './Login.less';
 import Input from "../../ui/input/Input";
 import Button from "../../ui/button/Button";
 import {CheckBox} from "../../ui/checkbox/CheckBox";
-import {message} from "antd";
+import {globalMessage} from "../../framework/message/GlobalMessage";
 
 export const Login: React.FC = props => {
 
@@ -14,7 +14,7 @@ export const Login: React.FC = props => {
         if (account === 'admin' && password === 'admin') {
             window.location.href = '/home';
         } else {
-            message.warn('账户或密码错误');
+            globalMessage.messageApi?.warning('账户或密码错误');
         }
     }
 

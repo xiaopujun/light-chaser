@@ -5,7 +5,6 @@ export interface ConfigureObjectFragments {
     [key: string]: ConfigureObjectFragments | string | number | null | undefined;
 }
 
-
 export default class ObjectUtil {
     /**
      * 合并两个对象，将newData中的属性合并到originalData中
@@ -38,7 +37,9 @@ export default class ObjectUtil {
     /**
      * 将字符串转换为js对象
      */
-    public static stringToJsObj(code: string): any {
+    public static stringToJsObj(code: string): object | boolean {
+        if (typeof code === 'undefined' || code == null || code === '')
+            return false;
         code = code.replace(/[\s+\n]+/g, '').replace(/'/g, '"');
         try {
             return JSON.parse(code);

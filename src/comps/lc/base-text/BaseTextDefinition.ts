@@ -1,8 +1,7 @@
 import {
-    AbstractDefinition,
+    AbstractDefinition, BaseInfoType, EventInfo,
     MenuToConfigMappingType
 } from "../../../framework/core/AbstractDefinition";
-import {BaseInfoType} from "../../../designer/DesignerType";
 import {ClazzTemplate} from "../../common-component/common-types";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import baseTextImg from './base-text.png';
@@ -19,8 +18,7 @@ export default class BaseTextDefinition extends AbstractDefinition<BaseTextContr
         return {
             compName: "基础文本",
             compKey: "BaseText",
-            type: "基础",
-            typeKey: "base",
+            categorize: "info",
             width: 64,
             height: 26,
         };
@@ -67,5 +65,16 @@ export default class BaseTextDefinition extends AbstractDefinition<BaseTextContr
             animation: AnimationConfig,
             theme: ThemeConfig
         };
+    }
+
+
+    getEventList(): EventInfo[] {
+        const events = super.getEventList();
+        return events.concat([
+            {
+                id: "click",
+                name: "点击时",
+            }
+        ]);
     }
 }

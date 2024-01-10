@@ -87,6 +87,6 @@ export default class AntdCommonLineController extends AntdBaseDesignerController
         if ((styleConfig?.yAxis) && (styleConfig?.yAxis?.subTickLine?.style as ShapeAttrs)?.stroke)
             (styleConfig!.yAxis!.subTickLine!.style as ShapeAttrs).stroke = subText;
         //重新渲染
-        this.update({style: styleConfig} as any, {reRender: true});
+        this.update({style: styleConfig} as AntdLineProps, {reRender: true});
     }
 }

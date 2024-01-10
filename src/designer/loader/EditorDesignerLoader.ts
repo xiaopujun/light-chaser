@@ -1,7 +1,6 @@
 import designerStore from "../store/DesignerStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
-import {AbstractHeaderItem, HeaderItemProps} from "../header/HeaderTypes";
 import bpStore from "../../blueprint/store/BPStore";
 import bpLeftStore from "../../blueprint/left/BPLeftStore";
 import URLUtil from "../../utils/URLUtil";
@@ -9,38 +8,10 @@ import {message} from "antd";
 import operatorMap from "../../framework/operate";
 import {SaveType} from "../DesignerType";
 
-export default class EditorDesignerLoader extends AbstractDesignerLoader {
-
-    private static instance: EditorDesignerLoader | null = null;
-
-    public static getInstance(): EditorDesignerLoader {
-        if (!this.instance)
-            this.instance = new EditorDesignerLoader();
-        return this.instance;
-    }
+class EditorDesignerLoader extends AbstractDesignerLoader {
 
     protected scanComponents(): void {
-        this.scannerHeader();
         this.scannerCustomComponents();
-    }
-
-    //扫描头部组件
-    private scannerHeader(): void {
-        const headerCtx: any = import.meta.glob(['/src/designer/header/items/*/*.tsx', '/src/designer/header/items/*/*.ts'], {
-            eager: true,
-        });
-        let tempHeaderItemInstances: HeaderItemProps[] = [];
-        Object.keys(headerCtx).forEach(key => {
-            const HeaderClazz = headerCtx[key]?.default;
-            if (HeaderClazz && AbstractHeaderItem.isPrototypeOf(HeaderClazz)) {
-                let headerItemIns = new HeaderClazz();
-                tempHeaderItemInstances.push(headerItemIns.getHeaderItemInfo());
-            }
-        });
-        this.headerItemInstances = tempHeaderItemInstances.sort((a, b) => {
-            const aOrder = a.order || 0, bOrder = b.order || 0;
-            return aOrder - bOrder
-        });
     }
 
     /**
@@ -66,7 +37,7 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
                 setMinLevel(data?.extendParams?.minLevel || 0);
                 setMaxLevel(data?.extendParams?.maxLevel || 0);
 
-                //初始化bpStore（蓝图状态） todo 是否可以以更规范的方式处理？
+                //初始化bpStore（蓝图状态）
                 const {setAPMap, setLines, setAPLineMap, setBpNodeLayoutMap, setBpNodeConfigMap} = bpStore;
                 setAPMap(data?.bpAPMap || {});
                 setLines(data?.bpLines || {});
@@ -87,3 +58,6 @@ export default class EditorDesignerLoader extends AbstractDesignerLoader {
         })
     }
 }
+
+const editorDesignerLoader = new EditorDesignerLoader();
+export default editorDesignerLoader;

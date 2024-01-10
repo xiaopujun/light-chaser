@@ -49,6 +49,6 @@ export default class AntdCommonRoseController extends AntdBaseDesignerController
         if ((styleConfig?.label) && (styleConfig?.label?.style as ShapeAttrs))
             (styleConfig!.label!.style as ShapeAttrs).fill = mainText;
         //重新渲染
-        this.update({style: styleConfig} as any, {reRender: true});
+        this.update({style: styleConfig} as AntdRoseProps, {reRender: true});
     }
 }

@@ -4,7 +4,7 @@ import {getDefaultMenuList} from "../../../designer/right/util";
 import {BaseMenuMapping, ClazzTemplate} from "../../common-component/common-types";
 import AntdGaugeController, {AntdGaugeProps} from "./AntdGaugeController";
 import gaugeImg from './gauge.png';
-import {BaseInfoType} from "../../../designer/DesignerType";
+import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const AntdGaugeConfig = React.lazy(() => import("./AntdGaugeConfig").then((module) => ({default: module.AntdGaugeConfig})));
@@ -37,8 +37,8 @@ class AntdGaugeDefinition /*extends AbstractDefinition<AntdGauge, BaseMenuMappin
         return {
             compName: "Antd仪表盘",
             compKey: "AntdGauge",
-            type: "仪表盘",
-            typeKey: "gauge",
+            categorize: "chart",
+            subCategorize: "gauge",
         };
     }
 

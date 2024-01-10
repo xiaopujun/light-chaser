@@ -8,11 +8,15 @@ import designerStore from "../../../store/DesignerStore";
 import ThemeEditor from "../../../../comps/common-component/theme-config/theme-editor/ThemeEditor";
 import Button from "../../../../ui/button/Button";
 
+type ThemeHdItemState = {
+    openEditor: boolean;
+}
+
 class ThemeHdItemImpl extends Component {
 
     selectedTheme: ThemeItemType | undefined;
 
-    state: any = {
+    state: ThemeHdItemState = {
         openEditor: false,
     }
 

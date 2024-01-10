@@ -7,12 +7,10 @@ import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import undoRedoMap from "../undo-redo/core";
 import runtimeConfigStore from "../../store/RuntimeConfigStore";
 import headerStore from "../../header/HeaderStore";
-import layerListStore from "../../float-configs/layer-list/LayerListStore";
 import footerStore from "../../footer/FooterStore";
 import bpStore from "../../../blueprint/store/BPStore";
 import {reRenderAllLine} from "../../../blueprint/drag/BPMovable";
 import bpLeftStore from "../../../blueprint/left/BPLeftStore";
-import {message} from "antd";
 import operatorMap from "../../../framework/operate";
 import URLUtil from "../../../utils/URLUtil";
 
@@ -26,7 +24,7 @@ export const selectAll = () => {
     setTargetIds(selected as string[]);
 
     if (selected.length > 0)
-        calculateGroupCoordinate(selected.map((id: string | undefined) => document.getElementById(id!))?.filter((item: HTMLElement | null) => !!item));
+        calculateGroupCoordinate(selected.map((id: string | undefined) => document.getElementById(id!))?.filter((item: HTMLElement | null) => !!item) as HTMLElement[]);
 }
 
 /**
@@ -98,7 +96,6 @@ export const toBottom = () => {
 }
 
 export const doDelete = () => {
-    //todo 考虑这段逻辑是否可以独立？
     //如果蓝图中使用了当前要被删除的组件，则需要先删除蓝图中的组件和连线，且蓝图中的删除操作目前无法回退
     const {targetIds} = eventOperateStore;
     if (targetIds && targetIds.length > 0) {
@@ -121,6 +118,10 @@ export const doSave = throttle(() => {
     return new Promise(() => {
         const {saveType, id} = URLUtil.parseUrlParams();
         const proData = designerStore.getData();
+        //设置图层层级统计
+        const {maxLevel, minLevel} = eventOperateStore;
+        proData.extendParams!.maxLevel = maxLevel;
+        proData.extendParams!.minLevel = minLevel;
         //设置蓝图数据
         const {bpAPMap, bpLines, bpAPLineMap, getAllNodeConfig, bpNodeLayoutMap} = bpStore;
         proData.bpAPMap = bpAPMap;
@@ -133,12 +134,7 @@ export const doSave = throttle(() => {
             id,
             dataJson: JSON.stringify(proData),
         }
-        operatorMap[saveType as SaveType].updateProject(projectInfo).then((res) => {
-            if (res)
-                message.success('保存成功');
-            else
-                message.error('保存失败');
-        });
+        operatorMap[saveType as SaveType].updateProject(projectInfo);
     });
 }, 5000);
 
@@ -179,10 +175,10 @@ export const doMoveUp = () => {
     if (targets.length === 1) {
         let id = targets[0].id;
         let yPos = layerConfigs[id].y! - dragStep;
-        movableRef?.current?.request("draggable", {y: yPos}, true);
+        movableRef?.request("draggable", {y: yPos}, true);
     } else {
         const yPos = groupCoordinate?.minY! - dragStep;
-        movableRef?.current?.request("draggable", {y: yPos}, true);
+        movableRef?.request("draggable", {y: yPos}, true);
     }
 }
 
@@ -193,10 +189,10 @@ export const doMoveDown = () => {
     if (targets.length === 1) {
         let id = targets[0].id;
         let yPos = layerConfigs[id].y! + dragStep;
-        movableRef?.current?.request("draggable", {y: yPos}, true);
+        movableRef?.request("draggable", {y: yPos}, true);
     } else {
         const yPos = groupCoordinate?.minY! + dragStep;
-        movableRef?.current?.request("draggable", {y: yPos}, true);
+        movableRef?.request("draggable", {y: yPos}, true);
     }
 }
 
@@ -207,10 +203,10 @@ export const doMoveLeft = () => {
     if (targets.length === 1) {
         let id = targets[0].id;
         let xPos = layerConfigs[id].x!;
-        movableRef?.current?.request("draggable", {x: xPos - dragStep}, true);
+        movableRef?.request("draggable", {x: xPos - dragStep}, true);
     } else {
         const xPos = groupCoordinate?.minX! - dragStep;
-        movableRef?.current?.request("draggable", {x: xPos}, true);
+        movableRef?.request("draggable", {x: xPos}, true);
     }
 }
 
@@ -221,10 +217,10 @@ export const doMoveRight = () => {
     if (targets.length === 1) {
         let id = targets[0].id;
         let xPos = layerConfigs[id].x!;
-        movableRef?.current?.request("draggable", {x: xPos + dragStep}, true);
+        movableRef?.request("draggable", {x: xPos + dragStep}, true);
     } else {
         const xPos = groupCoordinate?.minX! + dragStep;
-        movableRef?.current?.request("draggable", {x: xPos}, true);
+        movableRef?.request("draggable", {x: xPos}, true);
     }
 }
 
@@ -244,7 +240,7 @@ export const doBaseBottomEnlargeUp = () => {
     } else {
         height = groupCoordinate.groupHeight! + resizeStep;
     }
-    movableRef?.current?.request("resizable", {offsetHeight: height, direction: [1, -1]}, true);
+    movableRef?.request("resizable", {offsetHeight: height, direction: [1, -1]}, true);
 }
 
 /**
@@ -261,7 +257,7 @@ export const doBaseUpEnlargeDown = () => {
     } else {
         height = groupCoordinate.groupHeight! + resizeStep;
     }
-    movableRef?.current?.request("resizable", {offsetHeight: height, direction: [1, 1]}, true);
+    movableRef?.request("resizable", {offsetHeight: height, direction: [1, 1]}, true);
 }
 
 /**
@@ -278,7 +274,7 @@ export const doBaseRightEnlargeLeft = () => {
     } else {
         width = groupCoordinate.groupWidth! + resizeStep;
     }
-    movableRef?.current?.request("resizable", {offsetWidth: width, direction: [-1, 1]}, true);
+    movableRef?.request("resizable", {offsetWidth: width, direction: [-1, 1]}, true);
 }
 
 /**
@@ -295,7 +291,7 @@ export const doBaseLeftEnlargeRight = () => {
     } else {
         width = groupCoordinate.groupWidth! + resizeStep;
     }
-    movableRef?.current?.request("resizable", {offsetWidth: width, direction: [1, 1]}, true);
+    movableRef?.request("resizable", {offsetWidth: width, direction: [1, 1]}, true);
 }
 
 
@@ -312,7 +308,7 @@ export const doBaseBottomDecreaseUp = () => {
     } else {
         height = groupCoordinate.groupHeight! - resizeStep;
     }
-    movableRef?.current?.request("resizable", {offsetHeight: height, direction: [1, -1]}, true);
+    movableRef?.request("resizable", {offsetHeight: height, direction: [1, -1]}, true);
 }
 
 /**
@@ -329,7 +325,7 @@ export const doBaseUpDecreaseDown = () => {
     } else {
         height = groupCoordinate.groupHeight! - resizeStep;
     }
-    movableRef?.current?.request("resizable", {offsetHeight: height, direction: [1, 1]}, true);
+    movableRef?.request("resizable", {offsetHeight: height, direction: [1, 1]}, true);
 }
 
 /**
@@ -346,7 +342,7 @@ export const doBaseRightDecreaseLeft = () => {
     } else {
         width = groupCoordinate.groupWidth! - resizeStep;
     }
-    movableRef?.current?.request("resizable", {offsetWidth: width, direction: [-1, 1]}, true);
+    movableRef?.request("resizable", {offsetWidth: width, direction: [-1, 1]}, true);
 }
 
 /**
@@ -363,7 +359,7 @@ export const doBaseLeftDecreaseRight = () => {
     } else {
         width = groupCoordinate.groupWidth! - resizeStep;
     }
-    movableRef?.current?.request("resizable", {offsetWidth: width, direction: [1, 1]}, true);
+    movableRef?.request("resizable", {offsetWidth: width, direction: [1, 1]}, true);
 }
 
 
@@ -405,14 +401,14 @@ export const toggleSecondaryBorder = () => {
     if (newValue) {
         //展示辅助线
         const compContainers = document.getElementsByClassName('lc-comp-item')
-        compContainers && Array.from(compContainers).forEach((compContainer: any) => {
-            compContainer.style.border = '1px solid #65eafc';
+        compContainers && Array.from(compContainers).forEach((compContainer: Element) => {
+            (compContainer as HTMLElement).style.border = '1px solid #65eafc';
         });
     } else {
         //隐藏辅助线
         const compContainers = document.getElementsByClassName('lc-comp-item')
-        compContainers && Array.from(compContainers).forEach((compContainer: any) => {
-            compContainer.style.border = 'none';
+        compContainers && Array.from(compContainers).forEach((compContainer: Element) => {
+            (compContainer as HTMLElement).style.border = 'none';
         });
     }
     setAuxiliaryBorder(!auxiliaryBorder);
@@ -449,14 +445,6 @@ export const toggleGlobalThemeConfig = () => {
 export const toggleHotKeyDes = () => {
     const {hotKeyVisible, setHotKeyVisible} = footerStore;
     setHotKeyVisible(!hotKeyVisible)
-}
-
-/**
- * 切换组件库弹框
- */
-export const toggleLayer = () => {
-    const {setVisible, visible} = layerListStore;
-    setVisible && setVisible(!visible);
 }
 
 /*************************蓝图快捷键实现*************************/

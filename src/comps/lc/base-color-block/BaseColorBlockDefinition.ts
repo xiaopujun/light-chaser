@@ -1,8 +1,7 @@
 import {
-    AbstractDefinition,
+    AbstractDefinition, BaseInfoType, EventInfo,
     MenuToConfigMappingType
 } from "../../../framework/core/AbstractDefinition";
-import {BaseInfoType} from "../../../designer/DesignerType";
 import {ClazzTemplate} from "../../common-component/common-types";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import baseColorBlockImg from './base-color-block.png';
@@ -19,8 +18,7 @@ export default class BaseColorBlockDefinition extends AbstractDefinition<BaseCol
         return {
             compName: "基础色块",
             compKey: "BaseColorBlock",
-            type: "基础",
-            typeKey: "base",
+            categorize: "ornament",
         };
     }
 
@@ -60,5 +58,16 @@ export default class BaseColorBlockDefinition extends AbstractDefinition<BaseCol
             animation: AnimationConfig,
             theme: ThemeConfig
         };
+    }
+
+
+    getEventList(): EventInfo[] {
+        const events = super.getEventList();
+        return events.concat([
+            {
+                id: "click",
+                name: "点击时",
+            }
+        ]);
     }
 }

@@ -57,6 +57,13 @@ class BaseTableComponent extends Component<BaseTableComponentProps, BaseTableCom
         this.state = {...props};
     }
 
+    eventHandlerMap: Record<string, Function> = {};
+
+    onClick = () => {
+        if ('dataChange' in this.eventHandlerMap)
+            this.eventHandlerMap['dataChange']();
+    }
+
     componentDidMount() {
         if (this.tableRef) {
             this.contentHeight = this.tableRef.clientHeight - this.theadRef!.clientHeight;
@@ -70,7 +77,7 @@ class BaseTableComponent extends Component<BaseTableComponentProps, BaseTableCom
                 this.changeTableTrHeight();
             }, 100));
             // 开始观察
-            this.resizeObserver.observe(this.tableRef);
+            this.resizeObserver!.observe(this.tableRef);
             this.changeTableTrHeight();
         }
     }
@@ -87,7 +94,6 @@ class BaseTableComponent extends Component<BaseTableComponentProps, BaseTableCom
         const {pageSize = 0} = this.state.style!.body!;
         if (pageSize) {
             const tableBodyTds = this.tableRef?.getElementsByClassName('base-table-tr') || [];
-            console.log(tableBodyTds)
             const tdHeight = this.contentHeight! / pageSize;
             for (let i = 0; i < tableBodyTds.length; i++) {
                 (tableBodyTds[i] as HTMLElement).style.height = `${tdHeight}px`;
@@ -119,7 +125,7 @@ class BaseTableComponent extends Component<BaseTableComponentProps, BaseTableCom
                     <tbody style={{...bodyStyle, animation: carouselStyle}}
                            className="scroll-body" ref={ref => this.tbodyRef1 = ref}>
                     {
-                        data && data.map((item: any, index: number) => {
+                        data && data.map((item: Record<string, any>, index: number) => {
                             return (
                                 <tr key={index} className={'base-table-tr'}>
                                     {columns && columns.map((column: ITableColumn, i: number) => {
@@ -136,7 +142,7 @@ class BaseTableComponent extends Component<BaseTableComponentProps, BaseTableCom
                     <tbody style={{...bodyStyle, animation: carouselStyle}} className="scroll-body"
                            ref={ref => this.tbodyRef2 = ref}>
                     {
-                        data && data.map((item: any, index: number) => {
+                        data && data.map((item: Record<string, any>, index: number) => {
                             return (
                                 <tr key={index} className={'base-table-tr'}>
                                     {columns && columns.map((column: ITableColumn, i: number) => {

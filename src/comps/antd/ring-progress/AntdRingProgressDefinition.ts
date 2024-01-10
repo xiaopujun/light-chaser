@@ -1,11 +1,10 @@
 import React from "react";
-import {MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
+import {BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {ClazzTemplate} from "../../common-component/common-types";
 import AntdRingProgressController, {AntdRingProgressProps} from "./AntdRingProgressController";
 import ringProgressImg from './ring-progress.png';
-import {BaseInfoType} from "../../../designer/DesignerType";
 import {AntdCommonDefinition} from "../../antd-common/AntdCommonDefinition";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
@@ -39,8 +38,8 @@ class AntdRingProgressDefinition extends AntdCommonDefinition<AntdRingProgressCo
         return {
             compName: "Antd迷你环图",
             compKey: "AntdRingProgress",
-            type: "进度图",
-            typeKey: "progress",
+            categorize: "chart",
+            subCategorize: "progress",
         };
     }
 

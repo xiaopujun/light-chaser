@@ -4,7 +4,7 @@ import {getDefaultMenuList} from "../../../designer/right/util";
 import {BaseMenuMapping, ClazzTemplate} from "../../common-component/common-types";
 import AntdLiquidController, {AntdLiquidProps} from "./AntdLiquidController";
 import liquidImg from './liquid.png';
-import {BaseInfoType} from "../../../designer/DesignerType";
+import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const AntdLiquidConfig = React.lazy(() => import("./AntdLiquidConfig").then((module) => ({default: module.AntdLiquidConfig})));
@@ -37,8 +37,8 @@ class AntdLiquidDefinition /*extends AbstractDefinition<AntdLiquid, BaseMenuMapp
         return {
             compName: "Antd水波图",
             compKey: "AntdLiquid",
-            type: "水波图",
-            typeKey: "liquid",
+            categorize: "chart",
+            subCategorize: "liquid",
         };
     }
 

@@ -1,5 +1,9 @@
-import {AbstractDefinition, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
-import {BaseInfoType} from "../../../designer/DesignerType";
+import {
+    AbstractDefinition,
+    BaseInfoType,
+    EventInfo,
+    MenuToConfigMappingType
+} from "../../../framework/core/AbstractDefinition";
 import {ClazzTemplate} from "../../common-component/common-types";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import baseTableImg from './base-table.png';
@@ -16,8 +20,7 @@ export default class BaseTableDefinition extends AbstractDefinition<BaseTableCon
         return {
             compName: "基础表格",
             compKey: "LcBaseTable",
-            type: "基础",
-            typeKey: "base",
+            categorize: "web",
         };
     }
 
@@ -99,5 +102,16 @@ export default class BaseTableDefinition extends AbstractDefinition<BaseTableCon
             animation: AnimationConfig,
             data: DataConfig,
         };
+    }
+
+    getEventList(): Array<EventInfo> {
+        const eventList = super.getEventList();
+        eventList.push(...[
+            {
+                id: "dataChange",
+                name: "数据变更时",
+            }
+        ])
+        return eventList;
     }
 }

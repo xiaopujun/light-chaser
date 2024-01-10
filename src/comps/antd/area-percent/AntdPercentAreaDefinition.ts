@@ -1,7 +1,7 @@
-import {BaseInfoType} from "../../../designer/DesignerType";
 import percentAreaImg from "./percent-area.png";
 import AbstractAreaDefinition from "../../antd-common/area/AbstractAreaDefinition";
 import {AntdAreaProps} from "../../antd-common/area/AntdCommonAreaController";
+import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
 
 class AntdPercentAreaDefinition extends AbstractAreaDefinition {
 
@@ -9,8 +9,8 @@ class AntdPercentAreaDefinition extends AbstractAreaDefinition {
         return {
             compName: "Antd百分比面积图",
             compKey: "AntdPercentArea",
-            type: "条形图",
-            typeKey: "area",
+            categorize: "chart",
+            subCategorize: "area",
         };
     }
 

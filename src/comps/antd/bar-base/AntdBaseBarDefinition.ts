@@ -1,7 +1,7 @@
-import {BaseInfoType} from "../../../designer/DesignerType";
 import baseBarImg from "./base-bar.png";
 import {AntdBarProps} from "../../antd-common/bar/AntdCommonBarController";
 import AbstractBarDefinition from "../../antd-common/bar/AbstractBarDefinition";
+import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
 
 class AntdBaseBarDefinition extends AbstractBarDefinition {
 
@@ -9,8 +9,8 @@ class AntdBaseBarDefinition extends AbstractBarDefinition {
         return {
             compName: "Antd基础条形图",
             compKey: "AntdBaseBar",
-            type: "条形图",
-            typeKey: "bar",
+            categorize: "chart",
+            subCategorize: "bar",
         };
     }
 

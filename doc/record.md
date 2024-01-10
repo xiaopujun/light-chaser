@@ -16,7 +16,7 @@ DesignerStarter
 DesignerStore
 HeaderStore
 CompListStore
-ClassifyListStore
+LeftMenusStore
 RightStore
 EventOperateStore
 ContextMenuStore

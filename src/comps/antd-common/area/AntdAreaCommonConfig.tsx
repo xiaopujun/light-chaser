@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {AntdCartesianCoordinateSys} from "../config/AntdFragment";
-import {Area, AreaOptions} from "@antv/g2plot";
+import {Area, AreaOptions, ColorAttr} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import AbstractController from "../../../framework/core/AbstractController";
 import AntdCommonAreaController, {AntdAreaProps} from "./AntdCommonAreaController";
@@ -58,7 +58,7 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
         console.log(id, data, dataFragment);
         if (id === 'areaColor') {
             if (data && Array.isArray(data)) {
-                onChange({color: data as any, areaStyle: {fill: undefined}});
+                onChange({color: data as ColorAttr, areaStyle: {fill: undefined}});
             } else if (data && typeof data === 'string' && data.indexOf('gradient') !== -1) {
                 //渐变
             } else {

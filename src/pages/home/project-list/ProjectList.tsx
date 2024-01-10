@@ -1,14 +1,15 @@
 import React, {useEffect, useRef} from 'react';
 import './ProjectList.less';
-import {message} from "antd";
+import {Card} from "antd";
+import defaultSnapshot from '../image/default-snapshot.jpg';
 
 import {CopyFilled, DeleteFilled, EditFilled, EyeFilled} from "@ant-design/icons";
-import {IProjectInfo, ProjectState, SaveType} from "../../../designer/DesignerType";
+import {DesignerMode, IProjectInfo, SaveType} from "../../../designer/DesignerType";
 import {AddNewProjectDialog, INewProjectInfo} from "./AddNewProjectDialog";
 import Button from "../../../ui/button/Button";
 import Dialog from "../../../ui/dialog/Dialog";
 import operatorMap from "../../../framework/operate";
-import {DesignerMode} from "../../../utils/URLUtil";
+import {globalMessage} from "../../../framework/message/GlobalMessage";
 
 export interface ProjectListProps {
     saveType: SaveType;
@@ -39,19 +40,20 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
             dataJson: JSON.stringify({canvasConfig: {width, height}}),
         }
         operatorMap[saveType].createProject(project).then((id) => {
-            setAddDialog(false);
-            window.open(`/designer?id=${id}&saveType=${saveType}&mode=${DesignerMode.EDIT}`, '_blank');
-            getProjectList();
+            if (id === "")
+                globalMessage.messageApi?.error('创建失败');
+            else {
+                setAddDialog(false);
+                window.open(`/designer?id=${id}&saveType=${saveType}&mode=${DesignerMode.EDIT}`, '_blank');
+                getProjectList();
+            }
         });
     }
 
     const onCancel = () => setAddDialog(false);
 
-    const operateHandler = (e: any) => {
+    const operateHandler = (id: string, type: string) => {
         const {saveType} = props;
-        const {type} = e.target.dataset
-        if (!type) return;
-        const id = e.currentTarget.id;
         switch (type) {
             case 'edit':
                 window.open(`/designer?id=${id}&saveType=${saveType}&mode=${DesignerMode.EDIT}`, '_blank');
@@ -75,10 +77,12 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
     const confirmClone = () => {
         const {saveType} = props;
         operatorMap[saveType].copyProject(cloneIdRef.current).then((id) => {
-            if (id) {
+            if (id !== "") {
                 setCloneDialog(false);
                 getProjectList();
-                message.success('克隆成功');
+                globalMessage.messageApi?.success('克隆成功');
+            } else {
+                globalMessage.messageApi?.error('克隆失败');
             }
         });
     }
@@ -97,47 +101,39 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
                 setDelDialog(false);
                 getProjectList();
             } else {
-                message.error('删除失败');
+                globalMessage.messageApi?.error('删除失败');
             }
         });
 
     }
 
     return (
-        <>
+        <div className={'project-list-container'}>
             <div className={'project-list'}>
-                <div style={{width: '100%', height: '100%'}} className={'create-new-btn'}>
+                <div className={'create-new-btn'}>
                     <Button onClick={toggleNewProVisible}
                             style={{fontSize: 20, width: '100%', height: '100%'}}>+ 新建项目</Button>
                 </div>
-                {data && data.map((item: any) => {
-                    let stateText, stateColor;
-                    if (item.state === ProjectState.DRAFT) {
-                        stateText = '草稿';
-                        stateColor = '#FFB800';
-                    } else if (item.state === ProjectState.PUBLISH) {
-                        stateText = '已发布';
-                        stateColor = '#00CC66';
-                    }
+                {data && data.map((item: IProjectInfo, index) => {
                     return (
-                        <div key={item.id + ''}
-                             onClick={operateHandler}
-                             id={item.id + ''}
-                             className={'project-item'}>
-                            <div className={'pro-list-content'} style={{zIndex: 1}}>
-                                <div className={'pro-content-title'}>{item?.name}</div>
-                                <div className={'pro-content-operates'}>
-                                    <div className={'operate-item'} data-type={'edit'}><EditFilled/></div>
-                                    <div className={'operate-item'} data-type={'show'}><EyeFilled/></div>
-                                    <div className={'operate-item'} data-type={'del'}><DeleteFilled/></div>
-                                    <div className={'operate-item'} data-type={'clone'}><CopyFilled/></div>
+                        <div key={index} className={'project-item'}>
+                            <Card style={{padding: 2}} cover={<div className={'project-cover'}
+                                                                   style={{backgroundImage: `url(${item.cover || defaultSnapshot})`}}>
+                                <div className={'project-info'}>
+                                    项目名称：{item.name}
                                 </div>
-                            </div>
-                            <div className={'pro-content-footer'}>
-                                <div className={'state-point'} style={{backgroundColor: stateColor}}/>
-                                <div className={'state-text'}
-                                     style={{color: stateColor}}>{stateText}</div>
-                            </div>
+                            </div>}
+                                  bodyStyle={{padding: 0}}
+                                  bordered={true}
+                                  hoverable={true}
+                                  size={'small'}
+                                  actions={[
+                                      <EditFilled key={'edit'} onClick={() => operateHandler(item.id!, "edit")}/>,
+                                      <EyeFilled key={'show'} onClick={() => operateHandler(item.id!, "show")}/>,
+                                      <DeleteFilled key={'del'} onClick={() => operateHandler(item.id!, "del")}/>,
+                                      <CopyFilled key={'clone'} onClick={() => operateHandler(item.id!, "clone")}/>,
+                                  ]}>
+                            </Card>
                         </div>
                     )
                 })}
@@ -146,9 +142,8 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
             <DeleteDialog visible={delDialog} onOk={confirmDel} onCancel={cancelDel}/>
             <CloneDialog onOk={() => confirmClone()} onCancel={cancelClone}
                          visible={cloneDialog}/>
-        </>
+        </div>
     );
-
 }
 
 export default ProjectList;
@@ -173,7 +168,7 @@ const DeleteDialog = (props: DelDialogProps) => {
                 borderTop: '2px solid #272b34',
                 paddingTop: 5
             }}>
-                <Button onClick={onOk}>确认</Button>
+                <Button onClick={onOk}>确认</Button>&nbsp;&nbsp;
                 <Button onClick={onCancel}>取消</Button>
             </div>
         </Dialog>
@@ -191,9 +186,9 @@ const CloneDialog = (props: CloneDialogProps) => {
     const {onOk, onCancel, visible} = props;
 
 
-    const onSubmit = (event: any) => {
+    const onClick = (event: React.MouseEvent): void => {
         event.preventDefault();
-        onOk()
+        onOk();
     }
 
     return (
@@ -205,7 +200,7 @@ const CloneDialog = (props: CloneDialogProps) => {
                 borderTop: '2px solid #272b34',
                 paddingTop: 10
             }}>
-                <Button onClick={onSubmit}>确认</Button> &nbsp;&nbsp;
+                <Button onClick={onClick}>确认</Button> &nbsp;&nbsp;
                 <Button onClick={onCancel}>取消</Button>
             </div>
         </Dialog>

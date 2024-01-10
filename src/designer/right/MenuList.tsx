@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import React, {Component} from 'react';
 import './MenuList.less';
 import {MenuInfo} from "./MenuType";
 import rightStore from "./RightStore";
@@ -11,28 +11,29 @@ interface LcConfigMenusProps {
 
 class MenuList extends Component<LcConfigMenusProps | any> {
 
-    menuChange = (e: any) => {
+    menuChange = (e: React.MouseEvent) => {
         const {setActiveMenu, setContentVisible} = rightStore;
-        setActiveMenu && setActiveMenu(e.currentTarget.id);
+        setActiveMenu && setActiveMenu((e.currentTarget as HTMLElement).id);
         setContentVisible && setContentVisible(true);
     }
 
     buildMenuList = () => {
-        const {menus} = rightStore;
+        const {menus, activeMenu} = rightStore;
         if (menus.length === 0)
             return <div
                 style={{
                     writingMode: 'vertical-rl',
-                    color: '#ced2d8',
+                    color: '#bababa',
                     letterSpacing: '8px',
                     padding: 7,
                     fontSize: 12,
                 }}><InfoCircleFilled style={{fontSize: 15, position: "relative", left: 2, marginBottom: 7}}/>双击组件激活...
             </div>
         return menus.map((item: MenuInfo) => {
-            const Icon: any = item.icon;
+            const Icon = item.icon as React.ComponentType;
             return (
-                <div className={'menu-item'} key={item.key} id={item.key} onClick={this.menuChange}>
+                <div className={`menu-item ${activeMenu === item.key ? "menu-item-active" : ""}`} key={item.key}
+                     id={item.key} onClick={this.menuChange}>
                     <div className={'item-icon'}><Icon/></div>
                     <div className={'item-content'}>{item.name}</div>
                 </div>

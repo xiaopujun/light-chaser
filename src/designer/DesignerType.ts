@@ -29,30 +29,8 @@ export interface ThemeItemType {
  * 统计信息
  */
 export interface Statistic {
-    //元素个数
+    //图层个数
     count?: number;
-    //历史记录
-    history?: any;
-}
-
-/**
- * 基础样式
- */
-export interface BaseStyle {
-    //内边距
-    padding?: string;
-    //背景颜色
-    backgroundColor?: string;
-    //边框
-    border?: string;
-    //边框样式
-    borderStyle?: string;
-    //边框颜色
-    borderColor?: string;
-    //边框圆角
-    borderRadius?: string;
-    //边框宽度
-    borderWidth?: string;
 }
 
 export interface APIConfig {
@@ -93,8 +71,6 @@ export interface DataConfigType {
     //静态数据(除了存放静态数据外，该属性还有动态数据的中转站的作用），其他动态数据获取到后统一都存放在静态数据中，需要使用到的时候再从静态数据中获取
     staticData?: StaticConfig;
     apiData?: APIConfig;
-    databaseData?: any;
-    excelData?: any;
 }
 
 /**
@@ -105,6 +81,16 @@ export enum SaveType {
     LOCAL = '0',
     //服务器存储
     SERVER = '1'
+}
+
+/**
+ * 设计器模式
+ */
+export enum DesignerMode {
+    //编辑模式
+    EDIT = '0',
+    //展示模式
+    VIEW = '1',
 }
 
 /**
@@ -137,20 +123,10 @@ export interface IProjectInfo {
     updateTime?: string;
     //存储类型
     saveType?: SaveType;
-    //项目截图
-    screenshot?: string;
+    //项目封面
+    cover?: string;
     //项目数据json
     dataJson?: string;
-}
-
-/**
- * 激活元素
- */
-export interface ActiveElem {
-    //元素id
-    id?: string;
-    //元素类型
-    type?: string;
 }
 
 /**
@@ -166,40 +142,6 @@ export interface CanvasConfig {
     //画布宽
     width?: number;
     //画布高
-    height?: number;
-}
-
-/**
- * 组件基础信息
- */
-export interface BaseInfoType {
-    /**
-     * 组件显示名称
-     */
-    compName: string;
-    /**
-     * 组件标识
-     */
-    compKey: string;
-    /**
-     * 类型名称
-     */
-    type: string;
-    /**
-     * 类型标识
-     */
-    typeKey: string;
-    /**
-     * 版本
-     */
-    version?: string;
-    /**
-     * 初始宽度
-     */
-    width?: number;
-    /**
-     * 初始高度
-     */
     height?: number;
 }
 

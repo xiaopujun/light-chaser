@@ -1,11 +1,12 @@
-import EditorDesignerLoader from "./EditorDesignerLoader";
-import {ViewDesignerLoader} from "./ViewDesignerLoader";
+import editorDesignerLoader from "./EditorDesignerLoader";
+import viewDesignerLoader from "./ViewDesignerLoader";
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
-import URLUtil, {DesignerMode} from "../../utils/URLUtil";
+import URLUtil from "../../utils/URLUtil";
+import {DesignerMode} from "../DesignerType";
 
 const loaderMap = new Map<DesignerMode, AbstractDesignerLoader>();
-loaderMap.set(DesignerMode.EDIT, EditorDesignerLoader.getInstance());
-loaderMap.set(DesignerMode.VIEW, ViewDesignerLoader.getInstance());
+loaderMap.set(DesignerMode.EDIT, editorDesignerLoader);
+loaderMap.set(DesignerMode.VIEW, viewDesignerLoader);
 
 export default class DesignerLoaderFactory {
     public static getLoader(): AbstractDesignerLoader {
@@ -13,7 +14,7 @@ export default class DesignerLoaderFactory {
         if (mode && loaderMap.has(mode as DesignerMode)) {
             return loaderMap.get(mode as DesignerMode)!;
         } else {
-            return EditorDesignerLoader.getInstance();
+            return editorDesignerLoader;
         }
     }
 }

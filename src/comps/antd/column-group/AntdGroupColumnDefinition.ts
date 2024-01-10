@@ -1,7 +1,7 @@
-import {BaseInfoType} from "../../../designer/DesignerType";
 import groupColumnImg from "./group-column.png";
 import AbstractColumnDefinition from "../../antd-common/column/AbstractColumnDefinition";
 import {AntdColumnProps} from "../../antd-common/column/AntdCommonColumnController";
+import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
 
 class AntdGroupColumnDefinition extends AbstractColumnDefinition {
 
@@ -9,8 +9,8 @@ class AntdGroupColumnDefinition extends AbstractColumnDefinition {
         return {
             compName: "Antd分组柱状图",
             compKey: "AntdGroupColumn",
-            type: "柱状图",
-            typeKey: "column",
+            categorize: "chart",
+            subCategorize: "column",
         };
     }
 

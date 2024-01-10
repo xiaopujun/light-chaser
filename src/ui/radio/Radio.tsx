@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import {ChangeEvent, Component} from 'react';
 
 import './Radio.less';
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
@@ -10,8 +10,8 @@ export interface Option {
 
 export interface RadioProps extends UIContainerProps {
     options?: Option[];
-    value?: string | any
-    defaultValue?: string | any;
+    value?: string;
+    defaultValue?: string;
     onChange?: (value: string) => void;
     disabled?: boolean;
 }
@@ -33,7 +33,7 @@ class Radio extends Component<RadioProps> {
         }
     }
 
-    onChange = (event: any) => {
+    onChange = (event: ChangeEvent<HTMLInputElement>) => {
         const {onChange} = this.props;
         onChange && onChange(event.target.value);
         if (!this.valueControl) {

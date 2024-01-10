@@ -72,17 +72,17 @@ class DesignerStore {
         saveType: SaveType.LOCAL, //存储类型
     };
 
-    elemConfigs: { [key: string]: any } | null = {};
+    elemConfigs: Record<string, any> | null = {};
 
     /**
      * 画布上组件id与其实例对象的映射
      */
-    compController: { [key: string]: AbstractDesignerController } = {};
+    compController: Record<string, AbstractDesignerController> = {};
 
     /**
      * 布局配置
      */
-    layerConfigs: { [key: string]: ILayerItem } = {};
+    layerConfigs: Record<string, ILayerItem> = {};
 
     /**
      * 统计信息
@@ -205,6 +205,9 @@ class DesignerStore {
      */
     delItem = (ids: string[]) => {
         for (const id of ids) {
+            const controller = this.compController[id];
+            if (controller)
+                controller.destroy();
             delete this.layerConfigs[id];
             delete this.compController[id];
         }
@@ -232,7 +235,7 @@ class DesignerStore {
         }
     }
 
-    updateThemeConfig = (data: any) => {
+    updateThemeConfig = (data: Array<ThemeItemType>) => {
         this.themeConfig = data;
     };
 

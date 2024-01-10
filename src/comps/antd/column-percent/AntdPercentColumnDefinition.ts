@@ -1,7 +1,7 @@
-import {BaseInfoType} from "../../../designer/DesignerType";
 import percentColumnImg from "./percent-column.png";
 import AbstractColumnDefinition from "../../antd-common/column/AbstractColumnDefinition";
 import {AntdColumnProps} from "../../antd-common/column/AntdCommonColumnController";
+import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
 
 class AntdPercentColumnDefinition extends AbstractColumnDefinition {
 
@@ -9,8 +9,8 @@ class AntdPercentColumnDefinition extends AbstractColumnDefinition {
         return {
             compName: "Antd百分比柱状图",
             compKey: "AntdPercentColumn",
-            type: "柱状图",
-            typeKey: "column",
+            categorize: "chart",
+            subCategorize: "column",
         };
     }
 

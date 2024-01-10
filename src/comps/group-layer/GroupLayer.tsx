@@ -32,6 +32,8 @@ export default class GroupLayer extends React.PureComponent<GroupLayerStyleProps
             config.base.id = layer.id!;
         }
         compController![layer.id!] = new GroupLayerController(this.groupLayerRef!, config, this);
+        //渲染后删除elemConfigs中的映射关系（需要观察是否会造成其他问题）
+        delete elemConfigs![layer.id!];
     }
 
     render() {

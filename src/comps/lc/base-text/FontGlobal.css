@@ -6,13 +6,6 @@
 }
 
 @font-face {
-    font-family: "DottedSongtiCircleRegular";
-    src: url('font/DottedSongtiCircleRegular.ttf');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
     font-family: "DouyinSansBold";
     src: url('font/DouyinSansBold.ttf');
     font-weight: normal;

@@ -1,7 +1,7 @@
-import {BaseInfoType} from "../../../designer/DesignerType";
 import stackRoseImg from "./stack-rose.png";
 import AbstractRoseDefinition from "../../antd-common/rose/AbstractRoseDefinition";
 import {AntdRoseProps} from "../../antd-common/rose/AntdCommonRoseController";
+import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
 
 class AntdStackRoseDefinition extends AbstractRoseDefinition {
 
@@ -9,8 +9,8 @@ class AntdStackRoseDefinition extends AbstractRoseDefinition {
         return {
             compName: "Antd堆叠玫瑰图",
             compKey: "AntdStackRose",
-            type: "玫瑰图",
-            typeKey: "rose",
+            categorize: "chart",
+            subCategorize: "rose",
         };
     }
 

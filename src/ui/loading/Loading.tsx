@@ -1,4 +1,4 @@
-import  {Component} from 'react';
+import {Component} from 'react';
 import {Spin} from "antd";
 
 interface LoadingProps {
@@ -23,7 +23,7 @@ class Loading extends Component<LoadingProps> {
         }
         return (
             <div style={style}>
-                <Spin tip={'loading...'}/>
+                <Spin>Loading...</Spin>
             </div>
         );
     }

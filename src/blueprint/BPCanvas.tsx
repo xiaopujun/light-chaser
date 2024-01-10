@@ -51,7 +51,7 @@ const lineSegmentCollisions = (event: MouseEvent) => {
 export const BPCanvas: React.FC = () => {
     useEffect(() => {
         //加载完毕后绘制链接线（由于节点组件的创建与渲染都是异步的，需要等节点的锚点都渲染完毕后才能确定连线的位置，因此暂时使用异步延时连线的渲染时机）
-        // todo 后续要调整为更精确的时机
+        // todo  要调整为更精确的时机
         const renderLineTimer = setTimeout(() => {
             reRenderAllLine();
             CanvasUtil.updSegmentSamplingPoint();
@@ -59,12 +59,13 @@ export const BPCanvas: React.FC = () => {
         }, 50);
         const {nodeContainerRef} = bpStore;
         nodeContainerRef?.addEventListener('click', lineSegmentCollisions);
+        return () => nodeContainerRef?.removeEventListener('click', lineSegmentCollisions);
     }, [])
     return (
         <div className={'blue-print-canvas'} style={{
             overflow: "hidden",
-            width: window.innerWidth - 670,
-            height: window.innerHeight - 75,
+            width: '100%',
+            height: '100%',
         }}>
             <LineLayer/>
             <NodeLayer/>

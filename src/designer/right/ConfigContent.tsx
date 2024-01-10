@@ -46,6 +46,7 @@ class ConfigContent extends Component {
         const ConfigComp: React.ComponentType<ConfigType> = configMapping![activeMenu];
         //使用动态代理对象，监听属性变化
         const controller = this.createProxy(compController[activeElem.id + '']);
+        if (!ConfigComp) return;
         return (
             <Suspense fallback={<Loading/>}>
                 <ConfigComp controller={controller}/>
@@ -55,8 +56,9 @@ class ConfigContent extends Component {
     }
 
     onClose = () => {
-        const {setContentVisible} = rightStore;
+        const {setContentVisible, setActiveMenu} = rightStore;
         setContentVisible && setContentVisible(false);
+        setActiveMenu && setActiveMenu('');
     }
 
     render() {

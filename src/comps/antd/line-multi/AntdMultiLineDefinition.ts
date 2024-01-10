@@ -1,7 +1,7 @@
-import {BaseInfoType} from "../../../designer/DesignerType";
 import multiLineImg from "./multi-line.png";
 import AbstractLineDefinition from "../../antd-common/line/AbstractLineDefinition";
 import {AntdLineProps} from "../../antd-common/line/AntdCommonLineController";
+import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
 
 class AntdMultiLineDefinition extends AbstractLineDefinition {
 
@@ -9,8 +9,8 @@ class AntdMultiLineDefinition extends AbstractLineDefinition {
         return {
             compName: "Antd多折线图",
             compKey: "AntdMultiLine",
-            type: "折线图",
-            typeKey: "line",
+            categorize: "chart",
+            subCategorize: "line",
         };
     }
 

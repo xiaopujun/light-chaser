@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {AntdCartesianCoordinateSys} from "../config/AntdFragment";
-import {BarOptions} from "@antv/g2plot";
+import {BarOptions, ColorAttr} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import AntdCommonBarController from "./AntdCommonBarController";
 import {Control} from "../../../json-schema/SchemaTypes";
@@ -50,7 +50,7 @@ export const AntdBarGraphics: React.FC<ConfigType<AntdCommonBarController>> = ({
         const {id, data, dataFragment} = fieldChangeData;
         if (id === 'barColor') {
             if (data && Array.isArray(data)) {
-                controller.update({style: {color: data as any, barStyle: {fill: undefined}}});
+                controller.update({style: {color: data as ColorAttr, barStyle: {fill: undefined}}});
             } else if (data && typeof data === 'string' && data.indexOf('gradient') !== -1) {
                 //渐变
             } else {

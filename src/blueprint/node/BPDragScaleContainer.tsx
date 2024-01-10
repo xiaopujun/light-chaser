@@ -14,7 +14,7 @@ export const BPDragScaleContainer: React.FC<BPDragScaleContainerContainerProps> 
     const containerRef = React.useRef<HTMLDivElement>(null);
     const contentRef = React.useRef<HTMLDivElement>(null);
     useEffect(() => {
-        const {canvasOffset, setCanvasTranslate, setCanvasScale, setBpDragContentRef} = bpStore;
+        const {setCanvasTranslate, setCanvasScale, setBpDragContentRef} = bpStore;
         const container = containerRef.current;
         const content = contentRef.current;
         setBpDragContentRef(content!);
@@ -22,7 +22,6 @@ export const BPDragScaleContainer: React.FC<BPDragScaleContainerContainerProps> 
             const dragScaleProvider = new DragScaleProvider({
                 container,
                 content,
-                posOffset: canvasOffset,
                 dragCallback: (dsData) => {
                     const {position} = dsData;
                     setCanvasTranslate(position);

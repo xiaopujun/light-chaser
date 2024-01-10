@@ -22,10 +22,17 @@ class BaseTextComponent extends Component<BaseTextComponentProps, BaseTextCompon
         this.state = {...props};
     }
 
+    eventHandlerMap: Record<string, Function> = {};
+
+    onClick = () => {
+        if ('click' in this.eventHandlerMap)
+            this.eventHandlerMap['click']();
+    }
+
     render() {
         const {style, data} = this.state;
         return (
-            <div style={{height: '100%', ...style}}>
+            <div style={{height: '100%', overflow: 'hidden', ...style}} onClick={this.onClick}>
                 {data?.staticData?.data}
             </div>
         );

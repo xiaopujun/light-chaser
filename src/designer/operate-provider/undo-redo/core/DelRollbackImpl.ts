@@ -32,8 +32,8 @@ export class DelRollbackImpl extends AbstractRollback {
             elemConfigs![item.id] = item.data.elemConfig;
             targetIds.push(item.id!);
         });
-        //选中目标元素
-        setTargetIds(targetIds);
+        //选中目标元素，React18推出了新的批处理和并发执行机制，导致之前17版本中部分逻辑代码的执行顺序发生了变化，因此这里需要将反向执行操作放到下一个事件循环中执行
+        Promise.resolve().then(() => setTargetIds(targetIds));
     }
 
 }

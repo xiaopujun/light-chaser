@@ -1,12 +1,13 @@
 import React, {Suspense} from "react";
 import runtimeConfigStore from "../../designer/store/RuntimeConfigStore";
 import Loading from "../../ui/loading/Loading";
-import URLUtil, {DesignerMode} from "../../utils/URLUtil";
-import {ILayerItem} from "../../designer/DesignerType";
+import URLUtil from "../../utils/URLUtil";
+import {DesignerMode, ILayerItem} from "../../designer/DesignerType";
 import designerStore from "../../designer/store/DesignerStore";
 import {AbstractDefinition} from "./AbstractDefinition";
 import DesignerLoaderFactory from "../../designer/loader/DesignerLoaderFactory";
 import AbstractDesignerController from "./AbstractDesignerController";
+import BPExecutor from "../../blueprint/core/BPExecutor";
 
 export interface ComponentContainerProps {
     layer: ILayerItem;
@@ -38,14 +39,20 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
                 }
                 const {mode} = URLUtil.parseUrlParams();
                 const controller = new Controller()! as AbstractDesignerController;
-                compController[layer.id + ''] = controller;
+                //todo 此处逻辑应该使用设计模式优化，而非写死
+                //view模式下使用动态代理对象，监听属性变化
+                if (mode as DesignerMode === DesignerMode.VIEW)
+                    registerProxy(layer.id!, controller);
                 controller.create(this.ref!, config).then(() => {
                     //在组件完全渲染完毕后进行数据的加载和事件的注册
                     if (mode as DesignerMode === DesignerMode.VIEW) {
                         controller.registerEvent();
                         controller.loadComponentData();
                     }
+                    //渲染后删除elemConfigs中的映射关系（需要观察是否会造成其他问题）
+                    delete elemConfigs![layer.id!];
                 });
+                compController[layer.id + ''] = controller;
             }
         }
     }
@@ -83,3 +90,19 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
 
 
 export default ComponentContainer;
+
+const registerProxy = (compId: string, controller: AbstractDesignerController) => {
+    controller.create = new Proxy(controller.create, {
+        apply(target, thisArg, argus) {
+            const proxy = target.apply(thisArg, argus as any);
+            BPExecutor.triggerComponentEvent(compId, "loaded", controller.config);
+            return proxy;
+        }
+    });
+    controller.changeData = new Proxy(controller.changeData, {
+        apply(target, thisArg, argus) {
+            BPExecutor.triggerComponentEvent(compId, "dataChange", argus[0]);
+            return target.apply(thisArg, argus as any);
+        }
+    });
+}

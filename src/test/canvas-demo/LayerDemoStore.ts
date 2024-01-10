@@ -1,4 +1,6 @@
 import {makeAutoObservable} from "mobx";
+import Moveable from "react-moveable";
+import Selecto from "react-selecto";
 
 class LayerDemoStore {
 
@@ -6,13 +8,13 @@ class LayerDemoStore {
         makeAutoObservable(this);
     }
 
-    targets: any[] = [];
-    movableRef: any = null;
-    selectableRef: any = null;
+    targets: HTMLElement[] = [];
+    movableRef: Moveable | null = null;
+    selectableRef: Selecto | null = null;
 
-    setMovableRef = (ref: any) => this.movableRef = ref;
-    setSelectableRef = (ref: any) => this.selectableRef = ref;
-    setTargets = (targets: any[]) => this.targets = targets;
+    setMovableRef = (ref: Moveable) => this.movableRef = ref;
+    setSelectableRef = (ref: Selecto) => this.selectableRef = ref;
+    setTargets = (targets: HTMLElement[]) => this.targets = targets;
 
 }
 

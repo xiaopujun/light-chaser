@@ -1,9 +1,8 @@
 import {
-    AbstractDefinition,
+    AbstractDefinition, BaseInfoType, EventInfo,
     MenuToConfigMappingType
 } from "../../../framework/core/AbstractDefinition";
 import BaseImageController, {BaseImageComponentProps} from "./BaseImageController";
-import {BaseInfoType} from "../../../designer/DesignerType";
 import baseImage from './baseImage.png';
 import {ClazzTemplate} from "../../common-component/common-types";
 import {MenuInfo} from "../../../designer/right/MenuType";
@@ -16,8 +15,7 @@ export default class BaseImageDefinition extends AbstractDefinition<BaseImageCon
         return {
             compName: "基础图片",
             compKey: "BaseImage",
-            type: "基础",
-            typeKey: "base",
+            categorize: "media",
         };
     }
 
@@ -55,5 +53,14 @@ export default class BaseImageDefinition extends AbstractDefinition<BaseImageCon
         };
     }
 
+    getEventList(): EventInfo[] {
+        const events = super.getEventList();
+        return events.concat([
+            {
+                id: "click",
+                name: "点击时",
+            }
+        ]);
+    }
 
 }

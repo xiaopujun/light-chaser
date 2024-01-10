@@ -1,6 +1,6 @@
 .bp-left {
   display: flex;
-  height: 100%;
+  height: calc(100vh - 50px);
   background-color: #1a1a1a;
   border-right: 1px solid #2e2e2e;
 
@@ -10,8 +10,9 @@
     border-right: 1px solid #2e2e2e;
 
     .bp-left-item:hover {
+      transition: all 0.3s ease-in-out;
       background-color: #3d3d3d;
-      color: #9ed4ff;
+      color: #0095db;
       cursor: pointer;
     }
 
@@ -31,6 +32,10 @@
       .bp-item-icon {
         font-size: 20px;
       }
+    }
+
+    .bp-left-item-active {
+      color: #0095db;
     }
   }
 
@@ -55,11 +60,9 @@
       padding: 10px;
       color: #999999;
       height: calc(100vh - 100px);
-      overflow-y: hidden;
+      overflow-y: scroll;
 
       .bp-node-list-container {
-        height: calc(100vh - 100px);
-        overflow-y: auto;
 
         .bp-node-list-item-used {
           background-color: #181818;
@@ -92,7 +95,6 @@
 
             span {
               position: relative;
-              top: -3px;
             }
           }
         }

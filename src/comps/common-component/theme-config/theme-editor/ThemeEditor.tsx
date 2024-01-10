@@ -11,6 +11,11 @@ import {UIContainer} from "../../../../ui/ui-container/UIContainer";
 import {Grid} from "../../../../ui/grid/Grid";
 import Button from "../../../../ui/button/Button";
 
+type ThemeEditorStateType = {
+    data: ThemeItemType[],
+    themeConfig: ThemeItemType
+}
+
 /**
  * 主题编辑器
  */
@@ -29,12 +34,12 @@ class ThemeEditor extends Component {
         }
     }
 
-    state: any = {
+    state: ThemeEditorStateType = {
         data: [],
         themeConfig: this.initThemeConfig
     }
 
-    constructor(props: any) {
+    constructor(props: {}) {
         super(props);
         const themeList = designerStore.themeConfig;
         this.state.data = cloneDeep(themeList) || [];
@@ -111,7 +116,7 @@ class ThemeEditor extends Component {
                     return;
                 }
             }
-            themeConfig.id = this.state.data.length + 1;
+            themeConfig.id = this.state.data.length + 1 + '';
             data.push({...themeConfig});
         } else {
             for (let i = 0; i < data.length; i++) {
@@ -130,7 +135,7 @@ class ThemeEditor extends Component {
 
     onDel = (id: string) => {
         const {data} = this.state;
-        let newData = data.filter((item: any) => item.id !== id);
+        let newData = data.filter((item: ThemeItemType) => item.id !== id);
         this.setState({data: newData});
     }
 
@@ -157,32 +162,32 @@ class ThemeEditor extends Component {
                             <Grid columns={3} gridGap={'15px'}>
                                 <UIContainer label={'主体色'}>
                                     <ColorPicker onChange={this.mainColorChanged}
-                                                 width={'100%'} showBorder={true} showText={true} radius={2}
+                                                 width={'100%'} showText={true}
                                                  value={themeConfig.colors.main}/>
                                 </UIContainer>
                                 <UIContainer label={'主文字'}>
                                     <ColorPicker onChange={this.mainTextChanged}
-                                                 width={'100%'} showBorder={true} showText={true} radius={2}
+                                                 width={'100%'} showText={true}
                                                  value={themeConfig.colors.mainText}/>
                                 </UIContainer>
                                 <UIContainer label={'辅文字'}>
                                     <ColorPicker onChange={this.subTextChanged}
-                                                 width={'100%'} showBorder={true} showText={true} radius={2}
+                                                 width={'100%'} showText={true}
                                                  value={themeConfig.colors.subText}/>
                                 </UIContainer>
                                 <UIContainer label={'背景色'}>
                                     <ColorPicker onChange={this.backgroundChanged}
-                                                 width={'100%'} showBorder={true} showText={true} radius={2}
+                                                 width={'100%'} showText={true}
                                                  value={themeConfig.colors.background}/>
                                 </UIContainer>
                                 <UIContainer label={'补充一'}>
                                     <ColorPicker onChange={this.supplementFirstChanged}
-                                                 width={'100%'} showBorder={true} showText={true} radius={2}
+                                                 width={'100%'} showText={true}
                                                  value={themeConfig.colors.supplementFirst}/>
                                 </UIContainer>
                                 <UIContainer label={'补充二'}>
                                     <ColorPicker onChange={this.supplementSecondChanged}
-                                                 width={'100%'} showBorder={true} showText={true} radius={2}
+                                                 width={'100%'} showText={true}
                                                  value={themeConfig.colors.supplementSecond}/>
                                 </UIContainer>
                             </Grid>
