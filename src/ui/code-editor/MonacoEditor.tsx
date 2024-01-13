@@ -1,6 +1,7 @@
 import React from "react";
 import Loading from "../loading/Loading";
 import Editor from "@monaco-editor/react";
+import './MonacoEditor.less';
 
 import {loader} from '@monaco-editor/react';
 
@@ -25,18 +26,16 @@ export interface MonacoEditorProps {
     value?: string;
     defaultValue?: string;
     onChange?: (value?: string) => void;
+    readonly?: boolean;
     language?: 'javascript' | 'json';
     width?: string | number;
     height?: string | number;
-    readonly?: boolean;
-    style?: React.CSSProperties;
 }
 
 export const MonacoEditor: React.FC<MonacoEditorProps> = (props) => {
-    const {value, defaultValue, onChange, language, width, height, readonly = false, style} = props;
-
+    const {value, defaultValue, onChange, language, width, height, readonly} = props;
     return (
-        <div style={{width, height, border: '1px solid #414141', ...style}} className={'monaco-editor-container'}>
+        <div style={{width, height}} className={'monaco-editor-container'}>
             <Editor defaultLanguage={language || 'json'}
                     theme="vs-dark"
                     onChange={onChange}
@@ -46,7 +45,7 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = (props) => {
                         minimap: {enabled: false},
                         quickSuggestions: false,
                         folding: false,
-                        readOnly: readonly,
+                        readOnly: readonly || false,
                     }}
                     loading={<Loading/>}
                     value={value}

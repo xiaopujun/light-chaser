@@ -38,24 +38,27 @@ export default function Accordion(props: AccordionProps) {
     const accordionBodyRef = useRef<HTMLDivElement | null>(null);
     const headerRef = useRef<HTMLDivElement | null>(null);
     const controlled = value !== undefined && defaultValue === undefined;
-    const [stateValue, setStateValue] = useState(controlled ? value : defaultValue);
+    const [stateValue, setStateValue] = useState(controlled ? !!value : !!defaultValue);
+    const finalValue = controlled ? value : stateValue;
 
-    const titleClickMode = () => calculateFold(controlled ? value : stateValue);
+    const titleClickMode = () => {
+        calculateFold(!headerRef?.current?.classList.contains("accordion-active"));
+    };
 
-    const calculateFold = (value: boolean) => {
+    const calculateFold = (_value: boolean) => {
         if (!headerRef.current || !accordionBodyRef.current) return;
         if (!showSwitch)
             headerRef?.current?.classList.toggle("accordion-active");
-        if (value)
+        if (_value)
             accordionBodyRef.current!.style.display = 'block';
         else
             accordionBodyRef.current!.style.display = 'none';
     }
 
-    const switchChange = (value: boolean) => {
-        calculateFold(value);
-        onChange && onChange(value);
-        if (!controlled) setStateValue(value);
+    const switchChange = (_value: boolean) => {
+        calculateFold(_value);
+        onChange && onChange(_value);
+        if (!controlled) setStateValue(_value);
     }
 
     useEffect(() => {
@@ -64,7 +67,7 @@ export default function Accordion(props: AccordionProps) {
             headerRef?.current?.addEventListener("click", titleClickMode);
             accordionBodyRef!.current!.style.display = 'none';
         }
-        if (showSwitch && value)
+        if (showSwitch && finalValue)
             accordionBodyRef!.current!.style.display = 'block';  //开关模式处于开启
         else
             accordionBodyRef!.current!.style.display = 'none'; //开关模式处于关闭
@@ -78,8 +81,7 @@ export default function Accordion(props: AccordionProps) {
                 <div className={'title-content'}>{label} &nbsp;
                     {tip && <Tooltip title={tip}><QuestionCircleOutlined/>&nbsp;&nbsp;</Tooltip>}</div>
                 <div className={'title-switch'}>{showSwitch ?
-                    <Switch value={controlled ? value
-                        : stateValue} onChange={switchChange}/>
+                    <Switch value={finalValue} onChange={switchChange}/>
                     : <RightOutlined className={'accordion-icon'}/>}</div>
             </div>
             <div className="lc-accordion-body" ref={accordionBodyRef}>{children}</div>

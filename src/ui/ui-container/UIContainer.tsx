@@ -7,16 +7,14 @@ export interface UIContainerProps {
     label?: string;
     tip?: string;
     className?: string;
+    containerStyle?: React.CSSProperties;
     children?: React.ReactNode;
-    padding?: string | number;
-    margin?: string | number;
-    gridColumn?: string;
 }
 
 export const UIContainer: React.FC<UIContainerProps> = (props) => {
-    const {label, tip, children, className, ...rest} = props;
+    const {label, tip, children, className, containerStyle} = props;
     return (
-        <div className={`ui-container ${className || ''}`} style={{...rest}}>
+        <div className={`ui-container ${className || ''}`} style={{...containerStyle}}>
             {label &&
             <div className={'ui-container-label'}>
                 <div>{label}</div>
