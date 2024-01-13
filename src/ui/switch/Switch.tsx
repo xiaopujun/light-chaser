@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import "./Switch.less";
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
 
@@ -11,49 +11,29 @@ interface SwitchProps extends UIContainerProps {
     disabled?: boolean;
 }
 
-type SwitchState = {
-    value: boolean;
-}
+export default function Switch(props: SwitchProps) {
+    const {value, defaultValue, disabled, onChange, ...containerProps} = props;
+    const controlled: boolean = value !== undefined && defaultValue === undefined;
+    const [stateValue, setStateValue] = useState<boolean>(controlled ? value : defaultValue);
+    const finalValue: boolean = controlled ? value : stateValue;
 
-class Switch extends Component<SwitchProps, SwitchState> {
-
-    valueControl: boolean = true;
-
-    state: SwitchState = {
-        value: false,
-    }
-
-    constructor(props: SwitchProps) {
-        super(props);
-        const {value, defaultValue} = this.props;
-        if (defaultValue !== undefined && value === undefined)
-            this.valueControl = false;
-        this.state = {value: value || defaultValue || false};
-    }
-
-    handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const _onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {checked} = e.target;
-        const {onChange} = this.props;
         onChange && onChange(checked);
-        if (!this.valueControl)
-            this.setState({value: checked});
+        if (!controlled)
+            setStateValue(checked);
     };
 
-    render() {
-        const {disabled = false, tip, label, gridColumn} = this.props;
-        return (
-            <UIContainer tip={tip} label={label} gridColumn={gridColumn} className={'lc-switch'}>
-                <div style={{display: 'flex'}}>
-                    <label className="lc-switch-body">
-                        <input disabled={disabled}
-                               checked={this.valueControl ? this.props.value || false : this.state.value || false}
-                               onChange={this.handleChange} type="checkbox"/>
-                        <span/>
-                    </label>
-                </div>
-            </UIContainer>
-        );
-    }
+    return (
+        <UIContainer {...containerProps} className={'lc-switch'}>
+            <div style={{display: 'flex'}}>
+                <label className="lc-switch-body">
+                    <input disabled={disabled}
+                           checked={finalValue}
+                           onChange={_onChange} type="checkbox"/>
+                    <span/>
+                </label>
+            </div>
+        </UIContainer>
+    );
 }
-
-export default Switch;

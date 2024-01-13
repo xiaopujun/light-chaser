@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import {useRef, useState} from 'react';
 import './ColorsPicker.less';
 import ColorPicker from "../color-picker/ColorPicker";
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
@@ -10,86 +10,57 @@ interface ColorsPickerProp extends UIContainerProps {
     onChange?: (data: string[]) => void;
 }
 
-type ColorsPickerState = {
-    colors: string[];
-    canAdd?: boolean;
-}
+export default function ColorsPicker(props: ColorsPickerProp) {
+    const {value, defaultValue, canAdd, onChange, ...containerProps} = props;
+    const controlled = value !== undefined && defaultValue === undefined;
+    const [stateValue, setStateValue] = useState(controlled ? value : defaultValue);
+    const [stateCanAdd, setStateCanAdd] = useState(!!canAdd);
+    const finalValue = controlled ? value : stateValue;
+    const maxRef = useRef<number>(5);
 
-/**
- * 组合颜色选择器，可以同时渲染多个颜色选择器。色值结果以数组返回
- */
-class ColorsPicker extends Component<ColorsPickerProp, ColorsPickerState> {
-
-    max: number = 5;
-
-    state: ColorsPickerState = {
-        colors: []
+    const _onChange = (color: string, id: number) => {
+        const tempValue = [...finalValue];
+        tempValue[id] = color;
+        onChange && onChange(tempValue);
+        if (!controlled)
+            setStateValue(tempValue);
     }
 
-    constructor(props: ColorsPickerProp) {
-        super(props);
-        const {value = [], canAdd} = props;
-        if (value.length === 0) {
-            this.state = {colors: ['#a9a9a9']};
+    const addColor = () => {
+        const tempValue = [...finalValue];
+        if (tempValue?.length >= maxRef.current)
             return;
-        }
-        this.state = {colors: [...value], canAdd: canAdd && value.length < this.max};
+        tempValue.push('#a9a9a9');
+        if (tempValue.length === maxRef.current)
+            setStateCanAdd(false);
+        setStateValue(tempValue);
+        onChange && onChange(tempValue);
     }
 
-
-    onChange = (color: string, id: number) => {
-        const {colors} = this.state;
-        colors[id] = color;
-        this.setState({colors})
-        const {onChange} = this.props;
-        onChange && onChange([...colors]);
+    const delColor = (id: number) => {
+        const tempValue = [...finalValue];
+        tempValue.splice(id, 1);
+        if (tempValue.length < maxRef.current)
+            setStateCanAdd(true);
+        setStateValue(tempValue);
+        onChange && onChange(tempValue);
     }
 
-    addColor = () => {
-        const {colors} = this.state;
-        if (colors.length >= this.max)
-            return;
-        colors.push('#a9a9a9');
-        if (colors.length === this.max)
-            this.setState({canAdd: false, colors});
-        else
-            this.setState({colors});
-        const {onChange} = this.props;
-        onChange && onChange([...colors]);
-    }
-
-    delColor = (id: number) => {
-        const {colors} = this.state;
-        colors.splice(id, 1);
-        if (colors.length < this.max)
-            this.setState({canAdd: true, colors});
-        else
-            this.setState({colors});
-        const {onChange} = this.props;
-        onChange && onChange([...colors]);
-    }
-
-    render() {
-        const {colors = [], canAdd = false} = this.state;
-        const {label, tip} = this.props;
-        return (
-            <UIContainer tip={tip} label={label}>
-                <div className={'colors-picker'}>
-                    {colors.map((item: string, i: number) => {
-                        return (
-                            <div className={"colors-item"} key={i + ''}>
-                                <ColorPicker value={item}
-                                             onChange={(color: string) => this.onChange(color, i)}/>
-                                <span onClick={() => this.delColor(i)}><label>×</label></span>
-                            </div>
-                        )
-                    })}
-                    {canAdd &&
-                    <div onClick={this.addColor} className={'colors-pick-add-btn'}><span>+</span></div>}
-                </div>
-            </UIContainer>
-        )
-    }
+    return (
+        <UIContainer {...containerProps}>
+            <div className={'colors-picker'}>
+                {finalValue?.map((item: string, i: number) => {
+                    return (
+                        <div className={"colors-item"} key={i + ''}>
+                            <ColorPicker value={item}
+                                         onChange={(color: string) => _onChange(color, i)}/>
+                            <span onClick={() => delColor(i)}><label>×</label></span>
+                        </div>
+                    )
+                })}
+                {stateCanAdd &&
+                <div onClick={addColor} className={'colors-pick-add-btn'}><span>+</span></div>}
+            </div>
+        </UIContainer>
+    )
 }
-
-export default ColorsPicker;
