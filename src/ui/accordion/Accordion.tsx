@@ -1,28 +1,29 @@
-import {Component, ReactNode} from 'react';
+import {ReactNode, useEffect, useRef, useState} from 'react';
 import './Accordion.less';
 import {QuestionCircleOutlined, RightOutlined} from "@ant-design/icons";
 import Switch from "../switch/Switch";
 import {Tooltip} from "antd";
 
 interface AccordionProps {
-    // 标题（非受控）
+    /**
+     * 标题
+     */
     label?: string;
-    // 是否显示开关（非受控）
+    /**
+     * 说明文字
+     */
+    tip?: string;
+    /**
+     * 是否显示开关
+     */
     showSwitch?: boolean;
-    // 开关变化回调
+    // 开关值变化回调
     onChange?: (data: boolean) => void;
     // 开关状态值（受控）
     value?: boolean;
     // 开关状态值（非受控）
     defaultValue?: boolean;
-    tip?: string;
     children?: ReactNode;
-}
-
-type AccordionState = {
-    value: boolean;
-    label?: string;
-    showSwitch?: boolean;
 }
 
 /**
@@ -32,101 +33,56 @@ type AccordionState = {
  * 则这个组件的值是受控的。 可以通过外部控制来更新这个组件的状态值。 如果你使用的是defaultValue属性，则这个组件的值是非受控的。
  * 操作这个组件的时候。 组件值，由本组件自身维护，不受外部控制。
  */
-class Accordion extends Component<AccordionProps, AccordionState> {
+export default function Accordion(props: AccordionProps) {
+    const {label, tip, showSwitch, value, defaultValue, onChange, children} = props;
+    const accordionBodyRef = useRef<HTMLDivElement | null>(null);
+    const headerRef = useRef<HTMLDivElement | null>(null);
+    const controlled = value !== undefined && defaultValue === undefined;
+    const [stateValue, setStateValue] = useState(controlled ? value : defaultValue);
 
-    accordionBodyRef: HTMLDivElement | null = null;
-    headerRef: HTMLDivElement | null = null;
-    valueControl: boolean = true;
-    pendingTimer: NodeJS.Timer | null = null;
+    const titleClickMode = () => calculateFold(controlled ? value : stateValue);
 
-    state: AccordionState = {
-        value: false,
-        label: '',
-        showSwitch: false,
+    const calculateFold = (value: boolean) => {
+        if (!headerRef.current || !accordionBodyRef.current) return;
+        if (!showSwitch)
+            headerRef?.current?.classList.toggle("accordion-active");
+        if (value)
+            accordionBodyRef.current!.style.display = 'block';
+        else
+            accordionBodyRef.current!.style.display = 'none';
     }
 
-    constructor(props: AccordionProps) {
-        super(props);
-        let {value, label, showSwitch, defaultValue} = this.props;
-        if (defaultValue !== undefined && value === undefined)
-            this.valueControl = false;
-        value = !!(value || defaultValue);
-        this.state = {value, label, showSwitch};
+    const switchChange = (value: boolean) => {
+        calculateFold(value);
+        onChange && onChange(value);
+        if (!controlled) setStateValue(value);
     }
 
-    componentDidMount() {
-        const {showSwitch = false, value} = this.state;
+    useEffect(() => {
         if (!showSwitch) {
             //普通模式
-            this.headerRef!.addEventListener("click", this.titleClickMode);
-            this.accordionBodyRef!.style.display = 'none';
+            headerRef?.current?.addEventListener("click", titleClickMode);
+            accordionBodyRef!.current!.style.display = 'none';
         }
-        if (showSwitch && value) {
-            //开关模式处于开启
-            this.accordionBodyRef!.style.display = 'block';
-        } else {
-            //开关模式处于关闭
-            this.accordionBodyRef!.style.display = 'none';
-        }
-    }
+        if (showSwitch && value)
+            accordionBodyRef!.current!.style.display = 'block';  //开关模式处于开启
+        else
+            accordionBodyRef!.current!.style.display = 'none'; //开关模式处于关闭
 
-    componentWillUnmount() {
-        this.headerRef?.removeEventListener("click", this.titleClickMode);
-    }
+        return () => headerRef?.current?.removeEventListener("click", titleClickMode);
+    }, []);
 
-    calculateFold = (value: boolean) => {
-        const {showSwitch} = this.state;
-        if (!this.headerRef || !this.accordionBodyRef) return;
-        if (!showSwitch)
-            this.headerRef!.classList.toggle("accordion-active");
-        if (value) {
-            this.accordionBodyRef!.style.display = 'block';
-        } else {
-            this.accordionBodyRef!.style.display = 'none';
-        }
-    }
-
-
-    /**
-     * 标题点击模式，点击标题，展开内容
-     */
-    titleClickMode = () => {
-        const value = !this.state.value;
-        this.setState({value});
-        this.calculateFold(value);
-    }
-
-    /**
-     * 手风琴标题开关变化
-     */
-    switchChange = (value: boolean) => {
-        this.calculateFold(value);
-        const {onChange} = this.props;
-        onChange && onChange(value);
-        if (!this.valueControl)
-            this.setState({value});
-    }
-
-    render() {
-        const {label, showSwitch} = this.state;
-        const {tip} = this.props;
-        return (
-            <div className={'lc-accordion'}>
-                <div className="accordion-header" ref={ref => this.headerRef = ref}>
-                    <div className={'title-content'}>{label} &nbsp;
-                        {tip && <Tooltip title={tip}><QuestionCircleOutlined/>&nbsp;&nbsp;</Tooltip>}</div>
-                    <div className={'title-switch'}>{showSwitch ?
-                        <Switch
-                            value={this.valueControl ? this.props.value : this.state.value}
-                            onChange={this.switchChange}/> :
-                        <RightOutlined className={'accordion-icon'}/>}</div>
-                </div>
-                <div className="lc-accordion-body" ref={ref => this.accordionBodyRef = ref}>
-                    {this.props.children}
-                </div>
+    return (
+        <div className={'lc-accordion'}>
+            <div className="accordion-header" ref={headerRef}>
+                <div className={'title-content'}>{label} &nbsp;
+                    {tip && <Tooltip title={tip}><QuestionCircleOutlined/>&nbsp;&nbsp;</Tooltip>}</div>
+                <div className={'title-switch'}>{showSwitch ?
+                    <Switch value={controlled ? value
+                        : stateValue} onChange={switchChange}/>
+                    : <RightOutlined className={'accordion-icon'}/>}</div>
             </div>
-        );
-    }
+            <div className="lc-accordion-body" ref={accordionBodyRef}>{children}</div>
+        </div>
+    );
 }
-
-export default Accordion;
