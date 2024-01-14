@@ -1,4 +1,4 @@
-import {PureComponent} from 'react';
+import React, {PureComponent} from 'react';
 import {observer} from "mobx-react";
 import designerStore, {DesignerStore} from "../store/DesignerStore";
 import rightStore from "../right/RightStore";
@@ -19,7 +19,7 @@ import LayerUtil from "../left/layer-list/util/LayerUtil";
  */
 class DesignerCanvas extends PureComponent<DesignerStore | any> {
 
-    updateActive = (e: MouseEvent) => {
+    updateActive = (e: React.MouseEvent) => {
         let {targetIds} = eventOperateStore;
         const {activeElem, activeConfig} = rightStore;
         if (targetIds.length === 0) {
