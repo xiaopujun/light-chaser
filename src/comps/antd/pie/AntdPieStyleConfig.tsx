@@ -186,7 +186,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                 label: '颜色',
                                 value: '#1c1c1c',
                                 config: {
-                                    gridColumn: '1 / 3',
+                                    containerStyle: {gridColumn: '1 / 3',},
                                 }
                             },
                         ]

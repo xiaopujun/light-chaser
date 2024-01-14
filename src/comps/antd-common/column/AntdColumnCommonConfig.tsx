@@ -87,12 +87,6 @@ export const AntdColumnGraphics: React.FC<AntdColumnGraphicsProps> = ({config, o
                             max: 100,
                         }
                     },
-
-                ]
-            },
-            {
-                type: 'grid',
-                children: [
                     {
                         id: 'columnColor',
                         type: 'color-mode',
@@ -104,11 +98,14 @@ export const AntdColumnGraphics: React.FC<AntdColumnGraphicsProps> = ({config, o
                             showBorder: true,
                             showText: true,
                             height: 16,
-                            hideControls: true
+                            hideControls: true,
+                            containerStyle: {
+                                gridColumn: '1/3'
+                            }
                         }
                     }
                 ]
-            }
+            },
         ]
     }
 

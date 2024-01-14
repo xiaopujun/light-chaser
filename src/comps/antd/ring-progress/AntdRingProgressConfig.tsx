@@ -147,7 +147,7 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                                 label: '颜色',
                                 value: _config?.color || '#5B8FF9',
                                 config: {
-                                    gridColumn: '1/3',
+                                    containerStyle: {gridColumn: '1 / 3'},
                                 }
                             },
                         ]
