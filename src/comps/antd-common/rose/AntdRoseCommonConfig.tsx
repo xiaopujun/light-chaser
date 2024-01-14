@@ -151,7 +151,7 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                                 label: '颜色',
                                 value: '#1c1c1c',
                                 config: {
-                                    gridColumn: '1 / 3',
+                                    containerStyle: {gridColumn: '1 / 3'},
                                 }
                             },
                         ]

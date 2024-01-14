@@ -18,7 +18,7 @@ const TextArea = React.lazy(() => import('./text-area/TextArea'));
 const GroupButton = React.lazy(() => import('./group-button/GroupButton').then(({GroupButton}) => ({default: GroupButton})));
 const ItemPanel = React.lazy(() => import('./item-panel/ItemPanel').then(({ItemPanel}) => ({default: ItemPanel})));
 const NumberInput = React.lazy(() => import('./number-input/NumberInput'));
-const ControlGroup = React.lazy(() => import('./number-input/NumberInput'));
+const ControlGroup = React.lazy(() => import('./control-group/ControlGroup'));
 
 const UIMap = new Map();
 

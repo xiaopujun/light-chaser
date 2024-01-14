@@ -126,7 +126,7 @@ export const AntdCommonScatterGraphics: React.FC<AntdCommonScatterGraphicsProps>
                         label: '颜色',
                         value: config?.color,
                         config: {
-                            gridColumn: '1/3',
+                            containerStyle: {gridColumn: '1 / 3'},
                         }
                     },
                 ]
