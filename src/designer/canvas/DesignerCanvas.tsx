@@ -19,17 +19,19 @@ import LayerUtil from "../left/layer-list/util/LayerUtil";
  */
 class DesignerCanvas extends PureComponent<DesignerStore | any> {
 
-    updateActive = () => {
-        const {targetIds} = eventOperateStore;
+    updateActive = (e: MouseEvent) => {
+        let {targetIds} = eventOperateStore;
         const {activeElem, activeConfig} = rightStore;
         if (targetIds.length === 0) {
             activeConfig(null, "");
             return;
         }
+        // 如果没有按下shift键，则进行分组场景下的计算，反之则直接选中激活组件配置
+        if (!e.shiftKey)
+            targetIds = LayerUtil.findTopGroupLayer(targetIds, true);
+        if (targetIds.length !== 1) return;
+        const layerId = targetIds[0];
         const {layerConfigs} = designerStore!;
-        const layerIds = LayerUtil.findTopGroupLayer(targetIds, true);
-        if (layerIds.length !== 1) return;
-        const layerId = layerIds[0];
         const layer = layerConfigs[layerId];
         if (layerId === activeElem.id) return;
         activeConfig(layerId, layer.type!);
