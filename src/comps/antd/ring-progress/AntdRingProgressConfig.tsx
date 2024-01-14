@@ -92,11 +92,10 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                         children: [
                             {
                                 key: 'radius',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '外径',
                                 value: _config?.radius || 0.8,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 1,
                                     step: 0.01
@@ -104,11 +103,10 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                             },
                             {
                                 key: 'innerRadius',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '内径',
                                 value: _config?.innerRadius || 0.75,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 1,
                                     step: 0.01
@@ -119,11 +117,10 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                                 children: [
                                     {
                                         key: 'lineWidth',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: '描边',
                                         value: (_config.progressStyle as ShapeAttrs)?.lineWidth || 1,
                                         config: {
-                                            type: 'number',
                                             min: 0,
                                             max: 10,
                                         }
@@ -188,22 +185,20 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                                         children: [
                                             {
                                                 key: 'fontSize',
-                                                type: 'input',
+                                                type: 'number-input',
                                                 label: '字号',
                                                 value: ((_config.statistic?.title as StatisticText)?.style as ShapeAttrs)?.fontSize || 12,
                                                 config: {
-                                                    type: 'number',
                                                     min: 0,
                                                     max: 100,
                                                 }
                                             },
                                             {
                                                 key: 'fontWeight',
-                                                type: 'input',
+                                                type: 'number-input',
                                                 label: '加粗',
                                                 value: ((_config.statistic?.title as StatisticText)?.style as ShapeAttrs)?.fontWeight || 500,
                                                 config: {
-                                                    type: 'number',
                                                     min: 100,
                                                     max: 900,
                                                     step: 100
@@ -227,21 +222,15 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                                     },
                                     {
                                         key: 'offsetX',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: 'x偏移',
                                         value: (_config.statistic?.title as StatisticText)?.offsetX || 0,
-                                        config: {
-                                            type: 'number',
-                                        }
                                     },
                                     {
                                         key: 'offsetY',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: 'y偏移',
                                         value: (_config.statistic?.title as StatisticText)?.offsetY || 0,
-                                        config: {
-                                            type: 'number',
-                                        }
                                     },
                                 ]
                             }
@@ -280,22 +269,20 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                                         children: [
                                             {
                                                 key: 'fontSize',
-                                                type: 'input',
+                                                type: 'number-input',
                                                 label: '字号',
                                                 value: ((_config.statistic?.content as StatisticText)?.style as ShapeAttrs)?.fontSize || 12,
                                                 config: {
-                                                    type: 'number',
                                                     min: 0,
                                                     max: 100,
                                                 }
                                             },
                                             {
                                                 key: 'fontWeight',
-                                                type: 'input',
+                                                type: 'number-input',
                                                 label: '加粗',
                                                 value: ((_config.statistic?.content as StatisticText)?.style as ShapeAttrs)?.fontWeight || 500,
                                                 config: {
-                                                    type: 'number',
                                                     min: 100,
                                                     max: 900,
                                                     step: 100
@@ -319,21 +306,15 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                                     },
                                     {
                                         key: 'offsetX',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: 'x偏移',
                                         value: (_config.statistic?.content as StatisticText)?.offsetX || 0,
-                                        config: {
-                                            type: 'number',
-                                        }
                                     },
                                     {
                                         key: 'offsetY',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: 'y偏移',
                                         value: (_config.statistic?.content as StatisticText)?.offsetY || 0,
-                                        config: {
-                                            type: 'number',
-                                        }
                                     },
                                 ]
                             }

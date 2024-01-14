@@ -61,8 +61,9 @@ class AxisConfig extends Component<AxisConfigProps> {
                                this.emptyData)
                        }}>
 
-                <Radio padding={'7px 0 10px 0'} label={'位置'}
+                <Radio label={'位置'}
                        defaultValue={(config as any)?.position || 'right'}
+                       containerStyle={{marginBottom: 10}}
                        onChange={(value => onChange({position: value as any["position"]}))}
                        options={[{label: '上', value: 'top'},
                            {label: '下', value: 'bottom'},
@@ -129,11 +130,10 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
                     {
                         rules: "{subTickLineSwitch}==='true'",
                         key: 'count',
-                        type: 'input',
+                        type: 'number-input',
                         label: '数量',
                         value: _config?.count,
                         config: {
-                            type: 'number',
                             min: 0,
                             max: 100,
                         }
@@ -141,11 +141,10 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
                     {
                         rules: "{subTickLineSwitch}==='true'",
                         key: 'length',
-                        type: 'input',
+                        type: 'number-input',
                         label: '长度',
                         value: _config?.length,
                         config: {
-                            type: 'number',
                             min: 0,
                             max: 10,
                         }
@@ -156,11 +155,10 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
                         children: [
                             {
                                 key: 'lineWidth',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '宽度',
                                 value: (_config?.style as ShapeAttrs)?.lineWidth,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 10,
                                 }
@@ -246,11 +244,10 @@ export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) =>
                     {
                         key: 'length',
                         rules: "{tickLineSwitch}==='true'",
-                        type: 'input',
+                        type: 'number-input',
                         label: '长度',
                         value: (_config as any)?.length,
                         config: {
-                            type: 'number',
                             min: 0,
                             max: 10,
                         }
@@ -261,11 +258,10 @@ export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) =>
                         children: [
                             {
                                 key: 'lineWidth',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '宽度',
                                 value: (_config?.style as ShapeAttrs)?.lineWidth,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 10,
                                 }
@@ -356,11 +352,10 @@ export const AxisGridLine: React.FC<AxisGridLineProps> = ({config, onChange}) =>
                                 children: [
                                     {
                                         key: 'lineWidth',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: '宽度',
                                         value: (_config?.line?.style as ShapeAttrs)?.lineWidth,
                                         config: {
-                                            type: 'number',
                                             min: 0,
                                             max: 10,
                                         }
@@ -439,11 +434,10 @@ export const AxisLine: React.FC<AxisLIneProps> = ({config, onChange}) => {
                         children: [
                             {
                                 key: 'lineWidth',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '宽度',
                                 value: _config?.style?.lineWidth || 1,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 10,
                                 }
@@ -538,23 +532,19 @@ export const AxisTitle: React.FC<AxisTitleProps> = ({config, onChange}) => {
                             },
                             {
                                 key: 'offset',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '偏移',
                                 value: _config?.offset || 0,
-                                config: {
-                                    type: 'number'
-                                }
                             },
                             {
                                 key: 'style',
                                 children: [
                                     {
                                         key: 'fontSize',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: '字号',
                                         value: 12,
                                         config: {
-                                            type: 'number',
                                             min: 1,
                                             max: 50,
                                         }
@@ -610,34 +600,29 @@ export const AxisText: React.FC<AxisTextProps> = ({config, onChange}) => {
                 children: [
                     {
                         key: 'rotate',
-                        type: 'input',
+                        type: 'number-input',
                         label: '角度',
                         value: rotate || 0,
                         config: {
-                            type: 'number',
                             min: 0,
                             max: 360,
                         }
                     },
                     {
                         key: 'offset',
-                        type: 'input',
+                        type: 'number-input',
                         label: '偏移',
                         value: offset || 0,
-                        config: {
-                            type: 'number'
-                        }
                     },
                     {
                         key: 'style',
                         children: [
                             {
                                 key: 'fontSize',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '字号',
                                 value: (style as ShapeAttrs)?.fontSize || 12,
                                 config: {
-                                    type: 'number',
                                     min: 1,
                                     max: 50,
                                 }

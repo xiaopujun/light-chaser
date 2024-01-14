@@ -79,11 +79,10 @@ export const AntdColumnGraphics: React.FC<AntdColumnGraphicsProps> = ({config, o
                 children: [
                     {
                         key: 'maxColumnWidth',
-                        type: 'input',
+                        type: 'number-input',
                         label: '宽度',
                         value: 12,
                         config: {
-                            type: 'number',
                             min: 0,
                             max: 100,
                         }

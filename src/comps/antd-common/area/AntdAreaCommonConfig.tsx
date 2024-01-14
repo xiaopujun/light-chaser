@@ -84,11 +84,10 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
                         children: [
                             {
                                 key: 'size',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '尺寸',
                                 value: config?.point?.size || 0,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 100
                                 }
@@ -153,11 +152,10 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
                                         children: [
                                             {
                                                 key: 'lineWidth',
-                                                type: 'input',
+                                                type: 'number-input',
                                                 label: '宽度',
                                                 value: (config?.line?.style as ShapeAttrs)?.lineWidth || 0,
                                                 config: {
-                                                    type: 'number',
                                                     min: 0,
                                                     max: 100
                                                 }

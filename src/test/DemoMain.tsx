@@ -1,4 +1,3 @@
-import React from 'react';
 import './DemoMain.less';
 import Select from "../ui/select/Select";
 import Switch from "../ui/switch/Switch";

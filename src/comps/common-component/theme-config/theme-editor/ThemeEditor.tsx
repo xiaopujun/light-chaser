@@ -155,39 +155,39 @@ class ThemeEditor extends Component {
                     <form onSubmit={this.doSaveOrUpd}>
                         <ItemPanel label={'主题信息'}>
                             <UIContainer label={'名称'}>
-                                <Input value={themeConfig.name} onChange={this.nameChanged} required={true}/>
+                                <Input value={themeConfig.name} onChange={this.nameChanged}/>
                             </UIContainer>
                         </ItemPanel>
                         <ItemPanel label={'颜色定义'}>
                             <Grid columns={3} gridGap={'15px'}>
                                 <UIContainer label={'主体色'}>
                                     <ColorPicker onChange={this.mainColorChanged}
-                                                 width={'100%'} showText={true}
+                                                 showText={true}
                                                  value={themeConfig.colors.main}/>
                                 </UIContainer>
                                 <UIContainer label={'主文字'}>
                                     <ColorPicker onChange={this.mainTextChanged}
-                                                 width={'100%'} showText={true}
+                                                 showText={true}
                                                  value={themeConfig.colors.mainText}/>
                                 </UIContainer>
                                 <UIContainer label={'辅文字'}>
                                     <ColorPicker onChange={this.subTextChanged}
-                                                 width={'100%'} showText={true}
+                                                 showText={true}
                                                  value={themeConfig.colors.subText}/>
                                 </UIContainer>
                                 <UIContainer label={'背景色'}>
                                     <ColorPicker onChange={this.backgroundChanged}
-                                                 width={'100%'} showText={true}
+                                                 showText={true}
                                                  value={themeConfig.colors.background}/>
                                 </UIContainer>
                                 <UIContainer label={'补充一'}>
                                     <ColorPicker onChange={this.supplementFirstChanged}
-                                                 width={'100%'} showText={true}
+                                                 showText={true}
                                                  value={themeConfig.colors.supplementFirst}/>
                                 </UIContainer>
                                 <UIContainer label={'补充二'}>
                                     <ColorPicker onChange={this.supplementSecondChanged}
-                                                 width={'100%'} showText={true}
+                                                 showText={true}
                                                  value={themeConfig.colors.supplementSecond}/>
                                 </UIContainer>
                             </Grid>

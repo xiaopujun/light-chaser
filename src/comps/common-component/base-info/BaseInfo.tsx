@@ -124,9 +124,7 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
         const {name, width, height, x, y} = this.state;
         return {
             type: 'grid',
-            config: {
-                columns: 2
-            },
+            config: {columns: 2},
             children: [
                 {
                     id: "name",
@@ -135,38 +133,36 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
                     type: "input",
                     value: name,
                     config: {
-                        gridColumn: '1/3'
+                        containerStyle: {
+                            gridColumn: '1/3'
+                        }
                     }
                 },
                 {
                     type: 'grid',
                     label: '尺寸',
                     config: {
-                        gridColumn: '1/3',
-                        columns: 2
+                        columns: 2,
+                        containerStyle: {
+                            gridColumn: '1/3',
+                        }
                     },
                     children: [
                         {
                             id: "width",
                             key: "width",
-                            type: "input",
+                            type: "number-input",
                             label: "宽度",
                             value: width,
                             reRender: true,
-                            config: {
-                                type: "number",
-                            }
                         },
                         {
                             id: "height",
                             key: "height",
-                            type: "input",
+                            type: "number-input",
                             label: "高度",
                             value: height,
                             reRender: true,
-                            config: {
-                                type: "number",
-                            }
                         },
                     ]
                 },
@@ -174,31 +170,27 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
                     type: 'grid',
                     label: '位置',
                     config: {
-                        gridColumn: '1/3',
-                        columns: 2
+                        columns: 2,
+                        containerStyle: {
+                            gridColumn: '1/3',
+                        }
                     },
                     children: [
                         {
                             id: "posX",
                             key: "posX",
-                            type: "input",
+                            type: "number-input",
                             label: "X轴",
                             reRender: true,
                             value: x,
-                            config: {
-                                type: "number",
-                            }
                         },
                         {
                             id: "posY",
                             key: "posY",
-                            type: "input",
+                            type: "number-input",
                             label: "Y轴",
                             reRender: true,
                             value: y,
-                            config: {
-                                type: "number",
-                            }
                         },
                     ]
                 },
@@ -207,7 +199,9 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
                     label: '对齐',
                     type: 'group-button',
                     config: {
-                        gridColumn: '1/3',
+                        containerStyle: {
+                            gridColumn: '1/3',
+                        },
                         items: [
                             {
                                 value: 'left',

@@ -34,12 +34,11 @@ export const BaseColorBlockConfig: React.FC<ConfigType<BaseColorBlockController>
             },
             {
                 key: 'borderWidth',
-                type: 'input',
+                type: 'number-input',
                 label: '边框宽',
                 value: borderWidth,
                 config: {
                     width: '100%',
-                    type: 'number',
                     min: 0,
                     max: 10,
                     step: 1
@@ -80,12 +79,11 @@ export const BaseColorBlockConfig: React.FC<ConfigType<BaseColorBlockController>
             },
             {
                 key: 'borderRadius',
-                type: 'input',
+                type: 'number-input',
                 label: '圆角',
                 value: borderRadius,
                 config: {
                     width: '100%',
-                    type: 'number',
                     min: 0,
                 }
             },

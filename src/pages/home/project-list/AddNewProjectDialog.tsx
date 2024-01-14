@@ -3,6 +3,7 @@ import './AddNewScreenDialog.less';
 import Dialog from "../../../ui/dialog/Dialog";
 import Button from "../../../ui/button/Button";
 import {Grid} from "../../../ui/grid/Grid";
+import NumberInput from "../../../ui/number-input/NumberInput";
 import Input from "../../../ui/input/Input";
 
 export interface INewProjectInfo {
@@ -44,14 +45,14 @@ export const AddNewProjectDialog: React.FC<AddNewScreenDialogProps> = (props) =>
             <form onSubmit={onOk}>
                 <div className={'lc-add-new-screen'}>
                     <Grid gridGap={'15px'} columns={2}>
-                        <Input label={'名称'} required={true} maxLength={20}
+                        <Input label={'名称'} maxLength={20}
                                onChange={(name: string | number) => projectInfo.name = name as string}/>
                         <Input label={'描述'} maxLength={20}
                                onChange={(description: string | number) => projectInfo.des = description as string}/>
-                        <Input label={'宽度'} type={'number'} min={300} required={true}
-                               onChange={(width: string | number) => projectInfo.width = Number(width)}/>
-                        <Input label={'高度'} type={'number'} min={300} required={true}
-                               onChange={(height: number | string) => projectInfo.height = Number(height)}/>
+                        <NumberInput label={'宽度'} min={300}
+                                     onChange={(width: string | number) => projectInfo.width = Number(width)}/>
+                        <NumberInput label={'高度'} min={300}
+                                     onChange={(height: number | string) => projectInfo.height = Number(height)}/>
                     </Grid>
                 </div>
                 <div className={'add-new-screen-explain'}>

@@ -19,7 +19,7 @@ export default function ColorsPicker(props: ColorsPickerProp) {
     const maxRef = useRef<number>(5);
 
     const _onChange = (color: string, id: number) => {
-        const tempValue = [...finalValue];
+        const tempValue = [...finalValue!];
         tempValue[id] = color;
         onChange && onChange(tempValue);
         if (!controlled)
@@ -27,7 +27,7 @@ export default function ColorsPicker(props: ColorsPickerProp) {
     }
 
     const addColor = () => {
-        const tempValue = [...finalValue];
+        const tempValue = [...finalValue!];
         if (tempValue?.length >= maxRef.current)
             return;
         tempValue.push('#a9a9a9');
@@ -38,7 +38,7 @@ export default function ColorsPicker(props: ColorsPickerProp) {
     }
 
     const delColor = (id: number) => {
-        const tempValue = [...finalValue];
+        const tempValue = [...finalValue!];
         tempValue.splice(id, 1);
         if (tempValue.length < maxRef.current)
             setStateCanAdd(true);

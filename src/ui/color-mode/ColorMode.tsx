@@ -61,8 +61,6 @@ export default function ColorMode(props: ColorModeProps) {
                     <ColorPicker
                         value={finalValue as string}
                         onChange={colorChange}
-                        width={100}
-                        height={16}
                         showText={true}/>
                 }
                 {mode === 'multi' &&

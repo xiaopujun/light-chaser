@@ -72,11 +72,10 @@ export const AntdLegend = (props: ConfigType) => {
                                 children: [
                                     {
                                         key: 'fontSize',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: '字号',
                                         value: 12,
                                         config: {
-                                            type: 'number',
                                             min: 0,
                                             max: 100,
                                         }

@@ -21,7 +21,6 @@ export default function NumberInput(props: NumberInputProps) {
     } = props;
 
     const _onChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const {onChange} = this.props;
         onChange && onChange(Number(event.target.value));
     }
 
@@ -37,7 +36,7 @@ export default function NumberInput(props: NumberInputProps) {
                            max={max}
                            step={step}
                            type={'number'}
-                           className={'lc-input'}
+                           className={'lc-number-input'}
                            onChange={_onChange}/>
                 </div>
                 {suffix && <div>&nbsp;{suffix}</div>}

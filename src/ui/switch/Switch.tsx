@@ -14,8 +14,8 @@ interface SwitchProps extends UIContainerProps {
 export default function Switch(props: SwitchProps) {
     const {value, defaultValue, disabled, onChange, ...containerProps} = props;
     const controlled: boolean = value !== undefined && defaultValue === undefined;
-    const [stateValue, setStateValue] = useState<boolean>(controlled ? value : defaultValue);
-    const finalValue: boolean = controlled ? value : stateValue;
+    const [stateValue, setStateValue] = useState<boolean>(!!(controlled ? value : defaultValue));
+    const finalValue: boolean = !!(controlled ? value : stateValue);
 
     const _onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {checked} = e.target;

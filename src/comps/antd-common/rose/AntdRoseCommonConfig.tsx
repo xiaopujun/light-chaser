@@ -70,11 +70,10 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                         children: [
                             {
                                 key: 'radius',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '外径',
                                 value: config.radius,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 1,
                                     step: 0.01
@@ -83,12 +82,11 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                             {
                                 id: 'startAngle',
                                 key: 'startAngle',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '起始角',
                                 value: (config.startAngle || 0) / Math.PI,
                                 config: {
                                     suffix: 'Π',
-                                    type: 'number',
                                     min: 0,
                                     max: 2,
                                     step: 0.01
@@ -96,11 +94,10 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                             },
                             {
                                 key: 'innerRadius',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '内径',
                                 value: config.innerRadius,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 1,
                                     step: 0.01
@@ -109,12 +106,11 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                             {
                                 id: 'endAngle',
                                 key: 'endAngle',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '结束角',
                                 value: (config.endAngle || 2 * Math.PI) / Math.PI,
                                 config: {
                                     suffix: 'Π',
-                                    type: 'number',
                                     min: 0,
                                     max: 2,
                                     step: 0.01
@@ -139,11 +135,10 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                                     },
                                     {
                                         key: 'lineWidth',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: '描边宽',
                                         value: 0,
                                         config: {
-                                            type: 'number',
                                             min: 0,
                                             max: 30,
                                         }
@@ -174,34 +169,29 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                         children: [
                             {
                                 key: 'offset',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '偏移',
                                 value: _config.label?.offset || 0,
-                                config: {
-                                    type: 'number',
-                                }
                             },
                             {
                                 key: 'style',
                                 children: [
                                     {
                                         key: 'fontSize',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: '字号',
                                         value: (_config.label?.style as ShapeAttrs)?.fontSize || 12,
                                         config: {
-                                            type: 'number',
                                             min: 0,
                                             max: 100,
                                         }
                                     },
                                     {
                                         key: 'fontWeight',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: '加粗',
                                         value: (_config.label?.style as ShapeAttrs)?.fontWeight || 500,
                                         config: {
-                                            type: 'number',
                                             min: 100,
                                             max: 900,
                                             step: 100
@@ -233,12 +223,11 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                             {
                                 id: 'labelRotate',
                                 key: 'rotate',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '旋转角度',
                                 rules: "{autoRotate} === 'false'",
                                 value: _config.label?.rotate || 0,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 2,
                                     step: 0.01
