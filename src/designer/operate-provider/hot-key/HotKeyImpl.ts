@@ -37,7 +37,10 @@ export const doCopy = () => {
     const {copyItem} = designerStore;
     let newIds = copyItem(targetIds);
     //延迟10毫秒，等待dom元素渲染完毕后再获取。
-    setTimeout(() => setTargetIds(newIds), 10);
+    const tempTimer = setTimeout(() => {
+        setTargetIds(newIds);
+        clearTimeout(tempTimer);
+    }, 10);
 }
 
 export const doLock = () => {
