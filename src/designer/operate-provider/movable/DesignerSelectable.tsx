@@ -60,13 +60,17 @@ class DesignerSelectable extends Component<DesignerSelectableProps> {
         let layerIds = selected.map((item) => item.id);
         let lockState = !!layerConfigs[layerIds[0]]?.lock;
         if (layerIds.length === 1) {
-            //点选
-            const pid = layerConfigs[layerIds[0]].pid;
-            if (!pid) {
-                //普通图层--不管是否锁定，都可以选中
-            } else {
-                //分组图层--选中这个分组下的所有未锁定、未隐藏的组件
-                layerIds = LayerUtil.findAllChildLayerBySubId(layerIds);
+            /**
+             * 点选
+             * 普通图层--不管是否锁定，都可以选中
+             * 分组图层--选中这个分组下的所有未锁定、未隐藏的组件
+             *
+             * 按住shift键点选时，仅选中当前图层，不做分组场景下的计算
+             */
+            if (!e.inputEvent.shiftKey) {
+                const pid = layerConfigs[layerIds[0]].pid;
+                if (pid)
+                    layerIds = LayerUtil.findAllChildLayerBySubId(layerIds);
             }
         } else if (layerIds.length > 1) {
             /**
