@@ -22,21 +22,17 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
                 children: [
                     {
                         key: 'fontSize',
-                        type: 'input',
+                        type: 'number-input',
                         label: '字号',
                         value: style?.fontSize,
-                        config: {
-                            type: 'number',
-                            min: 1,
-                        }
+                        config: {min: 1}
                     },
                     {
                         key: 'fontWeight',
-                        type: 'input',
+                        type: 'number-input',
                         label: '加粗',
                         value: style?.fontWeight || 400,
                         config: {
-                            type: 'number',
                             min: 100,
                             max: 900,
                             step: 100

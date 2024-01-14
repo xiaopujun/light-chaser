@@ -80,7 +80,10 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
                         key: 'startOnZero',
                         value: !!config?.startOnZero,
                         config: {
-                            margin: '0 0 10px 0'
+                            margin: '0 0 10px 0',
+                            containerStyle: {
+                                marginBottom: 10
+                            }
                         }
                     },
                 ]
@@ -100,11 +103,10 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
                                 children: [
                                     {
                                         label: '尺寸',
-                                        type: 'input',
+                                        type: 'number-input',
                                         key: 'size',
                                         value: (config?.point as MappingOptions)?.size as number || 0,
                                         config: {
-                                            type: 'number',
                                             min: 0,
                                             max: 10,
                                         }
@@ -170,11 +172,10 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
                                 key: 'line',
                                 children: [{
                                     key: 'size',
-                                    type: 'input',
+                                    type: 'number-input',
                                     label: '宽度',
                                     value: config?.line?.size as number || 0,
                                     config: {
-                                        type: 'number',
                                         min: 0,
                                         max: 10,
                                     }

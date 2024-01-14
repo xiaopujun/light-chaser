@@ -25,11 +25,10 @@ export const BaseTableStyleConfig: React.FC<ConfigType<BaseTableController>> = (
                         children: [
                             {
                                 key: 'height',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '高度',
                                 value: header?.height,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                 }
                             },
@@ -63,21 +62,19 @@ export const BaseTableStyleConfig: React.FC<ConfigType<BaseTableController>> = (
                             },
                             {
                                 key: 'fontSize',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '字号',
                                 value: header?.fontSize,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                 }
                             },
                             {
                                 key: 'fontWeight',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '加粗',
                                 value: header?.fontWeight,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 900,
                                     step: 100
@@ -128,21 +125,19 @@ export const BaseTableStyleConfig: React.FC<ConfigType<BaseTableController>> = (
                             },
                             {
                                 key: 'fontSize',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '字号',
                                 value: body?.fontSize,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                 }
                             },
                             {
                                 key: 'fontWeight',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '加粗',
                                 value: body?.fontWeight,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 900,
                                     step: 100
@@ -157,24 +152,22 @@ export const BaseTableStyleConfig: React.FC<ConfigType<BaseTableController>> = (
                             },
                             {
                                 rules: "{enableCarousel}==='true'",
-                                type: 'input',
+                                type: 'number-input',
                                 label: '速度',
                                 key: 'carouselSpeed',
                                 value: body?.carouselSpeed,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 100,
                                     step: 0.1
                                 }
                             },
                             {
-                                type: 'input',
+                                type: 'number-input',
                                 label: '页行数',
                                 key: 'pageSize',
                                 value: body?.pageSize,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 100
                                 }
@@ -204,10 +197,9 @@ export const BaseTableStyleConfig: React.FC<ConfigType<BaseTableController>> = (
                             },
                             {
                                 key: 'width',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '列宽',
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                 }
                             },

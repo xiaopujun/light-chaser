@@ -110,10 +110,9 @@ class DataConfig extends Component<DataConfigProps> {
                         {
                             key: 'flashFrequency',
                             label: '刷新频率',
-                            type: 'input',
+                            type: 'number-input',
                             config: {
                                 prefix: '每',
-                                type: 'number',
                                 suffix: '秒',
                                 min: 5
                             },

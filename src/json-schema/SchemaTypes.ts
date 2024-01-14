@@ -22,6 +22,7 @@ export type UIType =
     "slider" |
     "group-button" |
     "control-group" |
+    "number-input" |
     "item-panel";
 
 export interface Control {

@@ -29,19 +29,15 @@ export const Login: React.FC = props => {
                     </div>
                     <div className={'login-body'}>
                         <div className={'login-item'}>
-                            <Input required={true}
-                                   onChange={value => account = value as string}
+                            <Input onChange={value => account = value as string}
                                    defaultValue={account}
-                                   label={'账户'}
-                                   placeholder={'Username'}/>
+                                   label={'账户'}/>
                         </div>
                         <div className={'login-item'}>
-                            <Input required={true}
-                                   onChange={value => password = value as string}
+                            <Input onChange={value => password = value as string}
                                    defaultValue={password}
                                    label={'密码'}
-                                   type={'password'}
-                                   placeholder={'Password'}/>
+                                   type={'password'}/>
                         </div>
                         <div className={'login-item remember-me'}><CheckBox label={'记住我'} defaultValue={false}/></div>
                         <div className={'login-item'}><Button onClick={login}>登录</Button></div>

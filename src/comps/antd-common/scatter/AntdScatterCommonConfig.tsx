@@ -68,11 +68,10 @@ export const AntdCommonScatterGraphics: React.FC<AntdCommonScatterGraphicsProps>
                 children: [
                     {
                         key: 'size',
-                        type: 'input',
+                        type: 'number-input',
                         label: '尺寸',
                         value: config?.size,
                         config: {
-                            type: 'number',
                             min: 0,
                             max: 100,
                         }
@@ -97,11 +96,10 @@ export const AntdCommonScatterGraphics: React.FC<AntdCommonScatterGraphicsProps>
                         children: [
                             {
                                 key: 'lineWidth',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '线宽',
                                 value: (config?.pointStyle as ShapeAttrs)?.lineWidth,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 10,
                                 }

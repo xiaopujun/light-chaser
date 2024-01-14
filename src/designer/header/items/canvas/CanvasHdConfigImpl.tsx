@@ -6,9 +6,9 @@ import designerStore from "../../../store/DesignerStore";
 import headerStore from "../../HeaderStore";
 import './CanvasHdConfigImpl.less';
 import {Grid} from "../../../../ui/grid/Grid";
-import Input from "../../../../ui/input/Input";
 import Switch from "../../../../ui/switch/Switch";
 import Button from "../../../../ui/button/Button";
+import NumberInput from "../../../../ui/number-input/NumberInput";
 
 /**
  * 画布设置React组件实现
@@ -52,20 +52,21 @@ class CanvasHdConfigImpl extends Component {
                 <form onSubmit={this.doSave}>
                     <div style={{display: 'flex', flexWrap: 'wrap'}}>
                         <Grid gridGap={'15px'} columns={3}>
-                            <Input label={'宽度'} required={true} type={'number'} defaultValue={width} min={500}
-                                   onChange={(width) => this.config!.width = width as number}/>
-                            <Input label={'高度'} required={true} type={'number'} defaultValue={height} min={300}
-                                   onChange={(height) => this.config!.height = height as number}/>
-                            <Switch label={'栅格化'} defaultValue={rasterize} gridColumn={'1/2'} onChange={value => {
-                                this.config!.rasterize = value;
-                                this.setState({_rasterize: value})
-                            }}/>
-                            <Input label={'拖拽'} disabled={!_rasterize} type={'number'}
-                                   defaultValue={dragStep} min={1}
-                                   onChange={(dragStep) => this.config!.dragStep = dragStep as number}/>
-                            <Input label={'缩放'} disabled={!_rasterize} type={'number'}
-                                   defaultValue={resizeStep} min={1}
-                                   onChange={(resizeStep) => this.config!.resizeStep = resizeStep as number}/>
+                            <NumberInput label={'宽度'} defaultValue={width} min={500}
+                                         onChange={(width) => this.config!.width = width as number}/>
+                            <NumberInput label={'高度'} defaultValue={height} min={300}
+                                         onChange={(height) => this.config!.height = height as number}/>
+                            <Switch label={'栅格化'} defaultValue={rasterize} containerStyle={{gridColumn: '1/2'}}
+                                    onChange={value => {
+                                        this.config!.rasterize = value;
+                                        this.setState({_rasterize: value})
+                                    }}/>
+                            <NumberInput label={'拖拽'} disabled={!_rasterize}
+                                         defaultValue={dragStep} min={1}
+                                         onChange={(dragStep) => this.config!.dragStep = dragStep as number}/>
+                            <NumberInput label={'缩放'} disabled={!_rasterize}
+                                         defaultValue={resizeStep} min={1}
+                                         onChange={(resizeStep) => this.config!.resizeStep = resizeStep as number}/>
                         </Grid>
                     </div>
                     <p className={'canvas-config-desc'}>说明：修改画布设置，会对整体效果产生较大影响，建议先调试好画布设置后再进行大屏设计</p>
