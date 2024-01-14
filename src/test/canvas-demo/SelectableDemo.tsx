@@ -28,8 +28,9 @@ export const SelectableDemo: React.FC<BPSelectableProps> = observer((props) => {
         //如果为拖拽，则将当前的整个dom事件传递给movable，确保选中元素后可以立马拖拽
         if (e.isDragStart) {
             e.inputEvent.preventDefault();
-            setTimeout(() => {
+            const tempTimer = setTimeout(() => {
                 movableRef!.dragStart(e.inputEvent);
+                clearTimeout(tempTimer);
             });
         }
     }

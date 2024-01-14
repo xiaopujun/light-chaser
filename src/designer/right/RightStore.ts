@@ -76,8 +76,9 @@ class RightStore {
         //重新挂载配置面板
         if (this.visible) {
             this.visible = false;
-            setTimeout(() => {
+            const tempTimer = setTimeout(() => {
                 runInAction(() => this.visible = true);
+                clearTimeout(tempTimer);
             }, 0);
         }
     }
