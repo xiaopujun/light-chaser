@@ -3,7 +3,7 @@ import AbstractController from "./AbstractController";
 import React from "react";
 import {ClazzTemplate} from "../../comps/common-component/common-types";
 
-export type MenuToConfigMappingType = { [key: string]: React.ComponentType<any> };
+export type MenuToConfigMappingType = Record<string, React.ComponentType<any>>;
 
 export interface ActionInfo {
     name: string;
@@ -74,32 +74,33 @@ export abstract class AbstractDefinition<C extends AbstractController = Abstract
     abstract getBaseInfo(): BaseInfoType ;
 
     /**
-     * 返回组件的初始配置，用于在设计器拖拽创建组件实例时使用
+     * 返回组件的初始配置，用于在画布渲染组件时的初始化组件数据
      */
     abstract getInitConfig(): P;
 
     /**
-     * 返回React组件的类模板，在设计器拖拽创建组件实例时会使用到
+     * 返回React组件Controller控制器的类模板，在画布中创建组件实例时会根据该方法的返回值实例化组件控制器并保存。
+     * 后续将通过该控制器的实例对象来控制组件的生命周期
      */
     abstract getController(): ClazzTemplate<C> | null;
 
     /**
-     * 返回组件图片缩略图，在组件列表中展示时使用。图片不要超过300kb,否则会影响设计器的加载速度
+     * 返回组件图片缩略图，在组件列表中展示时使用。图片尺寸越小越好
      */
     abstract getChartImg(): string | null;
 
     /**
-     * 返回右侧菜单列表，双击组件时需要展示菜单列表
+     * 返回右侧配置菜单列表，双击组件时需要展示该菜单列表
      */
     abstract getMenuList(): Array<MenuInfo> | null;
 
     /**
-     * 返回右侧菜单对应的具体配置内容。这个返回结果是一个映射关系。以对象形式返回
+     * 返回右侧菜单与对应配置内容组件的映射关系
      */
     abstract getMenuToConfigContentMap(): MenuToConfigMappingType | null;
 
     /**
-     * 返回当前组件能触发的事件列表
+     * 返回当前组件能触发的事件列表, 在蓝图图层节点中使用
      */
     getEventList(): EventInfo[] {
         return [
@@ -111,7 +112,7 @@ export abstract class AbstractDefinition<C extends AbstractController = Abstract
     }
 
     /**
-     * 返回当前组件能接受的动作列表
+     * 返回当前组件能接受的动作列表，在蓝图图层节点中使用。可据此实现对组件的操作
      */
     getActionList(): ActionInfo[] {
         return [
@@ -140,19 +141,17 @@ export abstract class AbstractDefinition<C extends AbstractController = Abstract
     }
 
     /**
-     * 定义组件主分类
+     * 自定义组件主分类，如需要创建一个设计器没有提供的主分类，则实现该方法
      */
     getCategorize(): ICategorize | null {
         return null;
     }
 
     /**
-     * 定义组件子分类
+     * 自定义组件子分类,如需要创建一个设计器没有提供的子分类，则实现该方法
      */
     getSubCategorize(): ICategorize | null {
         return null;
     }
-
-
 }
 

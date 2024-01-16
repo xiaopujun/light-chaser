@@ -3,12 +3,16 @@ import AbstractController from "./AbstractController";
 import HttpUtil from "../../utils/HttpUtil";
 import {ComponentBaseProps} from "../../comps/common-component/common-types";
 
+/**
+ * AbstractDesignerController继承自AbstractController，在泛型的定义和约束上和AbstractController完全保持一致。
+ * 此外，AbstractDesignerController扩展了一些自定义组件所需的特有方法，如：修改组件数据、注册蓝图事件等
+ */
 abstract class AbstractDesignerController<I = any, C = any> extends AbstractController<I, C> {
     //轮询请求定时器
     protected interval: NodeJS.Timeout | null = null;
     //上一次数据连接状态 true：成功 false：失败
     protected lastReqState: boolean = true;
-    //是否为断开后重新连接
+    //断线重连标识
     protected reConnect: boolean = false;
     //异常提示信息dom元素
     private errMsgDom: HTMLElement | null = null;
@@ -20,11 +24,14 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
     public changeData(data: any): void {
     }
 
-    registerEvent(): void {
+    /**
+     * 用于注册组件事件，在组件接入蓝图事件系统时使用
+     */
+    public registerEvent(): void {
     }
 
     /**
-     * 加载组件数据，用于在预览（展示）模式下渲染完组件后根据当前组件的数据配置自动加载并更逊组件数组。
+     * 加载组件数据，用于在预览（展示）模式下渲染完组件后根据当前组件的数据配置自动加载并更新组件数组。
      * 注：若自定义组件有自己的数据加载方式，则需要覆写此方法
      */
     public loadComponentData(): void {
