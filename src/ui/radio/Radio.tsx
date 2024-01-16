@@ -3,7 +3,7 @@ import {ChangeEvent, useRef, useState} from 'react';
 import './Radio.less';
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
 
-export interface Option {
+export interface RadioOption {
     label: string;
     value: string;
 }
@@ -12,7 +12,7 @@ export interface RadioProps extends UIContainerProps {
     value?: string;
     defaultValue?: string;
     disabled?: boolean;
-    options?: Option[];
+    options?: RadioOption[];
     onChange?: (value: string) => void;
 }
 
@@ -31,7 +31,7 @@ export default function Radio(props: RadioProps) {
     }
 
     const generateOptions = () => {
-        return options?.map((option: Option, index: number) => {
+        return options?.map((option: RadioOption, index: number) => {
             let checked = false;
             if (option.value === finalValue)
                 checked = true;
