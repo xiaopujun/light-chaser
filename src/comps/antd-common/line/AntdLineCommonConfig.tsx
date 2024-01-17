@@ -109,7 +109,7 @@ export const AntdLineCommonGraphics: React.FC<AntdLineCommonGraphicsProps> = ({c
         label: '图形',
         children: [
             {
-                type: 'item-panel',
+                type: 'card-panel',
                 label: '线条',
                 children: [
                     {
@@ -156,7 +156,7 @@ export const AntdLineCommonGraphics: React.FC<AntdLineCommonGraphicsProps> = ({c
                 ]
             },
             {
-                type: 'item-panel',
+                type: 'card-panel',
                 label: '数据点',
                 children: [
                     {

@@ -74,7 +74,7 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
         label: '图形',
         children: [
             {
-                type: 'item-panel',
+                type: 'card-panel',
                 label: '数据点',
                 key: 'point',
                 children: [
@@ -131,7 +131,7 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
                 ]
             },
             {
-                type: 'item-panel',
+                type: 'card-panel',
                 label: '数据线',
                 children: [
                     {
@@ -169,7 +169,7 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
                 ]
             },
             {
-                type: 'item-panel',
+                type: 'card-panel',
                 label: '数据面',
                 children: [
                     {

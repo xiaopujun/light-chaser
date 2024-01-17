@@ -113,7 +113,7 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
     }
 
     const schema: Control = {
-        type: 'item-panel',
+        type: 'card-panel',
         label: '子刻度',
         children: [
             {
@@ -220,7 +220,7 @@ export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) =>
         }
     }
     const schema: Control = {
-        type: 'item-panel',
+        type: 'card-panel',
         label: '刻度线',
         children: [
             {
@@ -322,7 +322,7 @@ export const AxisGridLine: React.FC<AxisGridLineProps> = ({config, onChange}) =>
     }
 
     const schema: Control = {
-        type: 'item-panel',
+        type: 'card-panel',
         label: '网格线',
         children: [
             {
@@ -414,7 +414,7 @@ export const AxisLine: React.FC<AxisLIneProps> = ({config, onChange}) => {
     }
 
     const schema: Control = {
-        type: 'item-panel',
+        type: 'card-panel',
         label: '轴线',
         children: [
             {
@@ -494,7 +494,7 @@ export const AxisTitle: React.FC<AxisTitleProps> = ({config, onChange}) => {
     }
 
     const schema: Control = {
-        type: 'item-panel',
+        type: 'card-panel',
         label: '标题',
         children: [
             {
@@ -591,7 +591,7 @@ export const AxisText: React.FC<AxisTextProps> = ({config, onChange}) => {
     }
 
     const schema: Control = {
-        type: 'item-panel',
+        type: 'card-panel',
         label: '文本',
         children: [
             {

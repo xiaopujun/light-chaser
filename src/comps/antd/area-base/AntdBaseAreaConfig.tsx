@@ -90,7 +90,7 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
             },
             {
                 label: '数据点',
-                type: 'item-panel',
+                type: 'card-panel',
                 children: [
                     {
                         type: 'grid',
@@ -153,7 +153,7 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
             },
             {
                 label: '数据线',
-                type: 'item-panel',
+                type: 'card-panel',
                 children: [
                     {
                         type: 'grid',
@@ -201,7 +201,7 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
             },
             {
                 label: '数据面',
-                type: 'item-panel',
+                type: 'card-panel',
                 children: [
                     {
                         key: 'areaStyle',
