@@ -23,7 +23,7 @@ export type UIType =
     "group-button" |
     "control-group" |
     "number-input" |
-    "item-panel";
+    "card-panel";
 
 export interface Control {
     id?: string;

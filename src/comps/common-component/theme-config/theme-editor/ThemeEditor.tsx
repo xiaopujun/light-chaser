@@ -5,7 +5,7 @@ import designerStore from "../../../../designer/store/DesignerStore";
 import ThemeList from "../theme-list/ThemeList";
 import {cloneDeep} from "lodash";
 import ColorPicker from "../../../../ui/color-picker/ColorPicker";
-import {ItemPanel} from "../../../../ui/item-panel/ItemPanel";
+import {CardPanel} from "../../../../ui/card-panel/CardPanel";
 import Input from "../../../../ui/input/Input";
 import {UIContainer} from "../../../../ui/ui-container/UIContainer";
 import {Grid} from "../../../../ui/grid/Grid";
@@ -153,12 +153,12 @@ class ThemeEditor extends Component {
             <div className={'lc-theme-editor'}>
                 <div className={'editor-left'}>
                     <form onSubmit={this.doSaveOrUpd}>
-                        <ItemPanel label={'主题信息'}>
+                        <CardPanel label={'主题信息'}>
                             <UIContainer label={'名称'}>
                                 <Input value={themeConfig.name} onChange={this.nameChanged}/>
                             </UIContainer>
-                        </ItemPanel>
-                        <ItemPanel label={'颜色定义'}>
+                        </CardPanel>
+                        <CardPanel label={'颜色定义'}>
                             <Grid columns={3} gridGap={'15px'}>
                                 <UIContainer label={'主体色'}>
                                     <ColorPicker onChange={this.mainColorChanged}
@@ -191,7 +191,7 @@ class ThemeEditor extends Component {
                                                  value={themeConfig.colors.supplementSecond}/>
                                 </UIContainer>
                             </Grid>
-                        </ItemPanel>
+                        </CardPanel>
                         <p style={{color: '#6e6e6e'}}>说明：自定义主题色的色值应该保持在同一色系。以确保整体统一的风格。主题色占据主要面积</p>
                         <br/>
                         <div className={'theme-operate-btn'}>
@@ -200,9 +200,9 @@ class ThemeEditor extends Component {
                     </form>
                 </div>
                 <div className={'editor-right'}>
-                    <ItemPanel label={'主题列表'}>
+                    <CardPanel label={'主题列表'}>
                         <ThemeList showOperator={true} onSelected={this.onSelected} onDel={this.onDel}/>
-                    </ItemPanel>
+                    </CardPanel>
                 </div>
             </div>
         );

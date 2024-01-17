@@ -16,7 +16,7 @@ const ColorMode = React.lazy(() => import('./color-mode/ColorMode'));
 const TextOnly = React.lazy(() => import('./text-only/TextOnly').then(({TextOnly}) => ({default: TextOnly})));
 const TextArea = React.lazy(() => import('./text-area/TextArea'));
 const GroupButton = React.lazy(() => import('./group-button/GroupButton').then(({GroupButton}) => ({default: GroupButton})));
-const ItemPanel = React.lazy(() => import('./item-panel/ItemPanel').then(({ItemPanel}) => ({default: ItemPanel})));
+const CardPanel = React.lazy(() => import('./card-panel/CardPanel').then(({CardPanel}) => ({default: CardPanel})));
 const NumberInput = React.lazy(() => import('./number-input/NumberInput'));
 const ControlGroup = React.lazy(() => import('./control-group/ControlGroup'));
 
@@ -33,7 +33,7 @@ UIMap.set('code-editor', MonacoEditor);
 UIMap.set('color-picker', ColorPicker);
 UIMap.set('colors-picker', ColorsPicker);
 UIMap.set('color-mode', ColorMode);
-UIMap.set('item-panel', ItemPanel);
+UIMap.set('card-panel', CardPanel);
 UIMap.set('slider', Slider);
 UIMap.set('image-upload', ImageUpload);
 UIMap.set('text-only', TextOnly);

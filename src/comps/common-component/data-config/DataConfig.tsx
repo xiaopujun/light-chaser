@@ -120,7 +120,7 @@ class DataConfig extends Component<DataConfigProps> {
                         },
                         {
 
-                            type: 'item-panel',
+                            type: 'card-panel',
                             label: '请求头',
                             tip: '请求头信息，json格式',
                             children: [
@@ -136,7 +136,7 @@ class DataConfig extends Component<DataConfigProps> {
                         },
                         {
 
-                            type: 'item-panel',
+                            type: 'card-panel',
                             tip: '请求参数，json格式',
                             label: '请求参数',
                             children: [
@@ -151,7 +151,7 @@ class DataConfig extends Component<DataConfigProps> {
                             ]
                         },
                         {
-                            type: 'item-panel',
+                            type: 'card-panel',
                             label: '响应结果',
                             children: [
                                 {

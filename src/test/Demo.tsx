@@ -5,7 +5,7 @@ import {FieldChangeData, LCGUI} from "../json-schema/LCGUI";
 export default function Demo() {
 
     const schema: Control = {
-        type: 'item-panel',
+        type: 'card-panel',
         label: '卡片面板',
         tip: '这是一个卡片面板',
         children: [

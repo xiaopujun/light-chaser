@@ -1,5 +1,5 @@
 import React from "react";
-import "./ItemPanel.less";
+import "./CardPanel.less";
 import {QuestionCircleOutlined} from "@ant-design/icons";
 import {Tooltip} from "antd";
 
@@ -9,14 +9,14 @@ export interface ItemPanelProps {
     children: React.ReactNode;
 }
 
-export const ItemPanel: React.FC<ItemPanelProps> = (props) => {
+export const CardPanel: React.FC<ItemPanelProps> = (props) => {
     const {label, tip, children} = props;
     return (
-        <div className={"item-panel"}>
-            <div className={"item-panel-label"}>
+        <div className={"card-panel"}>
+            <div className={"card-panel-label"}>
                 {label} {tip && <Tooltip title={tip}>&nbsp;<QuestionCircleOutlined/>&nbsp;</Tooltip>}
             </div>
-            <div className={"item-panel-content"}>{children}</div>
+            <div className={"card-panel-content"}>{children}</div>
         </div>
     )
 }
