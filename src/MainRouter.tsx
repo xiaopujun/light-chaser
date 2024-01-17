@@ -4,7 +4,7 @@ import Loading from "./ui/loading/Loading";
 import {ConfigProvider, MappingAlgorithm, theme} from "antd";
 import GlobalMessage from "./framework/message/GlobalMessage";
 
-const DemoMain = lazy(() => import('./test/DemoMain'));
+const Demo = lazy(() => import('./test/Demo.tsx'));
 const Login = lazy(() => import('./pages/login/Login').then(module => ({default: module.Login})));
 const Designer = lazy(() => import('./designer/Designer'));
 const DesignerView = lazy(() => import('./designer/view/DesignerView'));
@@ -37,7 +37,7 @@ export default function MainRouter() {
                 <Routes>
                     <Route path={'/designer'} element={<Designer/>}/>
                     <Route path={'/view'} element={<DesignerView/>}/>
-                    <Route path={'/test'} element={<DemoMain/>}/>
+                    <Route path={'/test'} element={<Demo/>}/>
                     <Route path={'/login'} element={<Login/>}/>
                     <Route path={'/home'} element={<Home/>}/>
                     <Route path={'/'} element={<Login/>}/>
