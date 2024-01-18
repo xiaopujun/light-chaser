@@ -1,11 +1,11 @@
 import {Component} from 'react';
-import Dialog from "../../../ui/dialog/Dialog";
+import Dialog from "../../../json-schema/ui/dialog/Dialog";
 import ThemeEditor from "./theme-editor/ThemeEditor";
 import ThemeList from "./theme-list/ThemeList";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import rightStore from "../../../designer/right/RightStore";
 import designerStore from "../../../designer/store/DesignerStore";
-import Button from "../../../ui/button/Button";
+import Button from "../../../json-schema/ui/button/Button";
 import {ConfigType} from "../../../designer/right/ConfigContent";
 
 class ThemeConfig extends Component<ConfigType> {

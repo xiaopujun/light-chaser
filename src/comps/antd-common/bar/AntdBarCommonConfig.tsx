@@ -7,7 +7,7 @@ import {Control} from "../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {AntdLegend} from "../config/legend/AntdLegend";
 import {ConfigType} from "../../../designer/right/ConfigContent";
-import {ISelectOption} from "../../../ui/select/Select";
+import {ISelectOption} from "../../../json-schema/ui/select/Select";
 
 class AntdBarCommonStyleConfig extends Component<ConfigType<AntdCommonBarController>> {
 

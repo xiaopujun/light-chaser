@@ -4,7 +4,7 @@ import layerListStore from "./LayerListStore";
 import designerStore from "../../store/DesignerStore";
 import {observer} from "mobx-react";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
-import Input from "../../../ui/input/Input";
+import Input from "../../../json-schema/ui/input/Input";
 import layerBuilder from "./LayerBuilder";
 import LayerUtil from "./util/LayerUtil";
 import {ILayerItem} from "../../DesignerType";

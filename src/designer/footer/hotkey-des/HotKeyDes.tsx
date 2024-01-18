@@ -1,5 +1,5 @@
 import './HotKeyDes.less';
-import Dialog from "../../../ui/dialog/Dialog";
+import Dialog from "../../../json-schema/ui/dialog/Dialog";
 
 const hotkeys = [
     {name: '保存项目', key: 'ctrl + s'},

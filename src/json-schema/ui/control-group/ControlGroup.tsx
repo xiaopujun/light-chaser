@@ -1,11 +1,11 @@
 import React, {Suspense, useRef} from "react";
-import {Control} from "../../json-schema/SchemaTypes";
+import {Control} from "../../SchemaTypes";
 import {CaretDownFilled, CaretRightFilled, DeleteFilled, PlusCircleFilled} from "@ant-design/icons";
 import './ControlGroup.less';
-import {FieldChangeData, LCGUI} from "../../json-schema/LCGUI";
+import {FieldChangeData, LCGUI} from "../../LCGUI";
 import Loading from "../loading/Loading";
-import LCGUIUtil from "../../json-schema/LCGUIUtil";
-import ObjectUtil from "../../utils/ObjectUtil";
+import LCGUIUtil from "../../LCGUIUtil";
+import ObjectUtil from "../../../utils/ObjectUtil";
 import {cloneDeep} from "lodash";
 
 export interface ControlGroupProps {

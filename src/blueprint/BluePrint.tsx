@@ -4,7 +4,7 @@ import {BPFooter} from "./footer/BPFooter";
 import {BPLeft} from "./left/BPLeft";
 import {BPRight} from "./right/BPRight";
 import {BPCanvas} from "./BPCanvas";
-import {FrameLayout} from "../ui/frame-layout/FrameLayout";
+import {FrameLayout} from "../json-schema/ui/frame-layout/FrameLayout";
 
 export const BluePrint: React.FC = () => {
     return (

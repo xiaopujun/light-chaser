@@ -1,8 +1,8 @@
 import React from "react";
 import './Login.less';
-import Input from "../../ui/input/Input";
-import Button from "../../ui/button/Button";
-import {CheckBox} from "../../ui/checkbox/CheckBox";
+import Input from "../../json-schema/ui/input/Input";
+import Button from "../../json-schema/ui/button/Button";
+import {CheckBox} from "../../json-schema/ui/checkbox/CheckBox";
 import {globalMessage} from "../../framework/message/GlobalMessage";
 
 export const Login: React.FC = props => {

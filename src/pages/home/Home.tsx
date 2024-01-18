@@ -4,7 +4,7 @@ import {HomeMenus} from "./menus/HomeMenus";
 import homeStore from "./HomeStore";
 import {homePageMap} from "./index";
 import {observer} from "mobx-react";
-import Loading from "../../ui/loading/Loading";
+import Loading from "../../json-schema/ui/loading/Loading";
 
 const Home: React.FC = observer(() => {
     const {currentMenu} = homeStore;

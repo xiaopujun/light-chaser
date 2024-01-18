@@ -4,8 +4,8 @@ import {Axis} from "@antv/g2plot";
 import {isEqual} from "lodash";
 import {Control} from "../../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI";
-import Accordion from "../../../../ui/accordion/Accordion";
-import Radio from "../../../../ui/radio/Radio";
+import Accordion from "../../../../json-schema/ui/accordion/Accordion";
+import Radio from "../../../../json-schema/ui/radio/Radio";
 import {ShapeAttrs} from "@antv/g-base";
 
 

@@ -1,6 +1,6 @@
-import Dialog from "../../../ui/dialog/Dialog";
+import Dialog from "../../../json-schema/ui/dialog/Dialog";
 import './SnapshotConfig.less';
-import Button from "../../../ui/button/Button";
+import Button from "../../../json-schema/ui/button/Button";
 import html2canvas from "html2canvas";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 import {useRef, useState} from "react";

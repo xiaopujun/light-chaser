@@ -9,9 +9,9 @@ import designerStore from "./store/DesignerStore";
 import DesignerHeader from "./header/DesignerHeader";
 import DesignerCanvas from "./canvas/DesignerCanvas";
 import {observer} from "mobx-react";
-import Loading from "../ui/loading/Loading";
+import Loading from "../json-schema/ui/loading/Loading";
 import DesignerLoaderFactory from "./loader/DesignerLoaderFactory";
-import {FrameLayout} from "../ui/frame-layout/FrameLayout";
+import {FrameLayout} from "../json-schema/ui/frame-layout/FrameLayout";
 
 class Designer extends Component {
 

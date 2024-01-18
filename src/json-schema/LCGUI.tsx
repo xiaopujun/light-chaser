@@ -1,7 +1,7 @@
 import {Control, ControlValueType} from "./SchemaTypes";
 import React, {ReactNode} from "react";
 import LCGUIUtil from "./LCGUIUtil";
-import UIMap from "../ui";
+import UIMap from "./ui";
 
 export interface FieldChangeData {
     id?: string;

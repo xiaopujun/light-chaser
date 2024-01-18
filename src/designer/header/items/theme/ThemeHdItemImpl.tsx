@@ -1,12 +1,12 @@
 import {Component} from 'react';
-import Dialog from "../../../../ui/dialog/Dialog";
+import Dialog from "../../../../json-schema/ui/dialog/Dialog";
 import './ThemeHdItem.less';
 import headerStore from "../../HeaderStore";
 import ThemeList from "../../../../comps/common-component/theme-config/theme-list/ThemeList";
 import {ThemeItemType} from "../../../DesignerType";
 import designerStore from "../../../store/DesignerStore";
 import ThemeEditor from "../../../../comps/common-component/theme-config/theme-editor/ThemeEditor";
-import Button from "../../../../ui/button/Button";
+import Button from "../../../../json-schema/ui/button/Button";
 
 type ThemeHdItemState = {
     openEditor: boolean;
