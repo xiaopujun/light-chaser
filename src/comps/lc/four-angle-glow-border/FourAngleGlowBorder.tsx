@@ -15,7 +15,7 @@ export interface FourAngleGlowBorderRef {
 }
 
 const FourAngleGlowBorder = forwardRef((props: FourAngleGlowProps, ref: ForwardedRef<FourAngleGlowBorderRef>) => {
-    const [config, setConfig] = useState<FourAngleGlowProps>({...props});
+    const [config] = useState<FourAngleGlowProps>({...props});
     const fourAngleGlowRef = useRef<HTMLDivElement | null>(null);
     const eventHandlerMap = useRef<Record<string, Function>>({});
 
