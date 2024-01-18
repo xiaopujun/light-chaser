@@ -1,5 +1,5 @@
 import React from "react";
-import {MonacoEditor} from "../../../../../ui/code-editor/MonacoEditor";
+import {MonacoEditor} from "../../../../../json-schema/ui/code-editor/MonacoEditor";
 import {BPRightConfigProps} from "../../../../right/BPRight";
 import {debounce} from "lodash";
 

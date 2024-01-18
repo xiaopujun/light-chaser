@@ -1,14 +1,14 @@
 import {Component, FormEvent} from 'react';
-import Dialog from "../../../../ui/dialog/Dialog";
+import Dialog from "../../../../json-schema/ui/dialog/Dialog";
 import headerStore from "../../HeaderStore";
 import './ProjectHdItemImpl.less';
 import designerStore from "../../../store/DesignerStore";
 import {IProjectInfo, ProjectState} from "../../../DesignerType";
-import {Grid} from "../../../../ui/grid/Grid";
-import Input from "../../../../ui/input/Input";
-import Radio from "../../../../ui/radio/Radio";
-import Select from "../../../../ui/select/Select";
-import Button from "../../../../ui/button/Button";
+import {Grid} from "../../../../json-schema/ui/grid/Grid";
+import Input from "../../../../json-schema/ui/input/Input";
+import Radio from "../../../../json-schema/ui/radio/Radio";
+import Select from "../../../../json-schema/ui/select/Select";
+import Button from "../../../../json-schema/ui/button/Button";
 
 class ProjectHdItemImpl extends Component {
 

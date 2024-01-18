@@ -1,10 +1,10 @@
 import React, {FormEvent} from 'react';
 import './AddNewScreenDialog.less';
-import Dialog from "../../../ui/dialog/Dialog";
-import Button from "../../../ui/button/Button";
-import {Grid} from "../../../ui/grid/Grid";
-import NumberInput from "../../../ui/number-input/NumberInput";
-import Input from "../../../ui/input/Input";
+import Dialog from "../../../json-schema/ui/dialog/Dialog";
+import Button from "../../../json-schema/ui/button/Button";
+import {Grid} from "../../../json-schema/ui/grid/Grid";
+import NumberInput from "../../../json-schema/ui/number-input/NumberInput";
+import Input from "../../../json-schema/ui/input/Input";
 
 export interface INewProjectInfo {
     name: string;

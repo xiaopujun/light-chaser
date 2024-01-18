@@ -4,12 +4,12 @@ import {ThemeItemType} from "../../../../designer/DesignerType";
 import designerStore from "../../../../designer/store/DesignerStore";
 import ThemeList from "../theme-list/ThemeList";
 import {cloneDeep} from "lodash";
-import ColorPicker from "../../../../ui/color-picker/ColorPicker";
-import {CardPanel} from "../../../../ui/card-panel/CardPanel";
-import Input from "../../../../ui/input/Input";
-import {UIContainer} from "../../../../ui/ui-container/UIContainer";
-import {Grid} from "../../../../ui/grid/Grid";
-import Button from "../../../../ui/button/Button";
+import ColorPicker from "../../../../json-schema/ui/color-picker/ColorPicker";
+import {CardPanel} from "../../../../json-schema/ui/card-panel/CardPanel";
+import Input from "../../../../json-schema/ui/input/Input";
+import {UIContainer} from "../../../../json-schema/ui/ui-container/UIContainer";
+import {Grid} from "../../../../json-schema/ui/grid/Grid";
+import Button from "../../../../json-schema/ui/button/Button";
 
 type ThemeEditorStateType = {
     data: ThemeItemType[],

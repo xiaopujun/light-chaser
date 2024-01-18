@@ -1,14 +1,14 @@
 import {observer} from "mobx-react";
 import {Component, FormEvent} from 'react';
-import Dialog from "../../../../ui/dialog/Dialog";
+import Dialog from "../../../../json-schema/ui/dialog/Dialog";
 import {CanvasConfig} from "../../../DesignerType";
 import designerStore from "../../../store/DesignerStore";
 import headerStore from "../../HeaderStore";
 import './CanvasHdConfigImpl.less';
-import {Grid} from "../../../../ui/grid/Grid";
-import Switch from "../../../../ui/switch/Switch";
-import Button from "../../../../ui/button/Button";
-import NumberInput from "../../../../ui/number-input/NumberInput";
+import {Grid} from "../../../../json-schema/ui/grid/Grid";
+import Switch from "../../../../json-schema/ui/switch/Switch";
+import Button from "../../../../json-schema/ui/button/Button";
+import NumberInput from "../../../../json-schema/ui/number-input/NumberInput";
 
 /**
  * 画布设置React组件实现

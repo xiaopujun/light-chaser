@@ -2,7 +2,7 @@ import {Component} from 'react';
 import './DesignerView.less';
 import designerStore from "../store/DesignerStore";
 import {observer} from "mobx-react";
-import Loading from "../../ui/loading/Loading";
+import Loading from "../../json-schema/ui/loading/Loading";
 import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
 import ScreenFit from "../../framework/screen-fit/ScreenFit";
 import layerBuilder from "../left/layer-list/LayerBuilder";

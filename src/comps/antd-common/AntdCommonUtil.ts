@@ -1,5 +1,5 @@
 import AbstractController from "../../framework/core/AbstractController";
-import {ISelectOption} from "../../ui/select/Select";
+import {ISelectOption} from "../../json-schema/ui/select/Select";
 
 export default class AntdCommonUtil {
     public static getDataFieldOptions(controller: AbstractController) {

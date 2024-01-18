@@ -4,7 +4,7 @@ import {observer} from "mobx-react";
 import designerStore from "../../../store/DesignerStore";
 import eventOperateStore from "../../../operate-provider/EventOperateStore";
 import {ILayerItem} from "../../../DesignerType";
-import Input from "../../../../ui/input/Input";
+import Input from "../../../../json-schema/ui/input/Input";
 import DesignerLoaderFactory from "../../../loader/DesignerLoaderFactory";
 import IdGenerate from "../../../../utils/IdGenerate";
 import editorDesignerLoader from "../../../loader/EditorDesignerLoader";

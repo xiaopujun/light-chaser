@@ -4,13 +4,13 @@ import {PlusOutlined} from "@ant-design/icons";
 import './ImageUpload.less';
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
 import {UploadFile} from "antd/lib/upload/interface";
-import operatorMap from "../../framework/operate/index";
-import URLUtil from "../../utils/URLUtil";
-import {AbstractOperator} from "../../framework/operate/AbstractOperator";
-import {globalMessage} from "../../framework/message/GlobalMessage";
-import {SaveType} from "../../designer/DesignerType";
+import operatorMap from "../../../framework/operate/index";
+import URLUtil from "../../../utils/URLUtil";
+import {AbstractOperator} from "../../../framework/operate/AbstractOperator";
+import {globalMessage} from "../../../framework/message/GlobalMessage";
+import {SaveType} from "../../../designer/DesignerType";
 import {RcFile} from "antd/es/upload";
-import {IImageData} from "../../comps/lc/base-image/BaseImageComponent";
+import {IImageData} from "../../../comps/lc/base-image/BaseImageComponent";
 
 export interface UploadDataType {
     url?: string;

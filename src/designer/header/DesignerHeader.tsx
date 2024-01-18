@@ -3,7 +3,7 @@ import './DesignerHeader.less';
 import headerStore from "./HeaderStore";
 import {observer} from "mobx-react";
 import {BluePrintHdImpl} from "./items/blue-print/BluePrintHdImpl";
-import Loading from "../../ui/loading/Loading";
+import Loading from "../../json-schema/ui/loading/Loading";
 import {AlertOutlined, CompressOutlined, EyeOutlined, PartitionOutlined, SaveOutlined} from "@ant-design/icons";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {doSave} from "../operate-provider/hot-key/HotKeyImpl";

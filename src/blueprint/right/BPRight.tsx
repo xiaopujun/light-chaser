@@ -3,7 +3,7 @@ import './BPRight.less';
 import {observer} from "mobx-react";
 import bpStore from "../store/BPStore";
 import bpRightStore from "./BPRightStore";
-import Accordion from "../../ui/accordion/Accordion";
+import Accordion from "../../json-schema/ui/accordion/Accordion";
 import {AbstractBPNodeController} from "../node/core/AbstractBPNodeController";
 
 export interface BPRightConfigProps {

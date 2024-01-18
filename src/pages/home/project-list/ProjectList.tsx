@@ -6,8 +6,8 @@ import defaultSnapshot from '../image/default-snapshot.jpg';
 import {CopyFilled, DeleteFilled, EditFilled, EyeFilled} from "@ant-design/icons";
 import {DesignerMode, IProjectInfo, SaveType} from "../../../designer/DesignerType";
 import {AddNewProjectDialog, INewProjectInfo} from "./AddNewProjectDialog";
-import Button from "../../../ui/button/Button";
-import Dialog from "../../../ui/dialog/Dialog";
+import Button from "../../../json-schema/ui/button/Button";
+import Dialog from "../../../json-schema/ui/dialog/Dialog";
 import operatorMap from "../../../framework/operate";
 import {globalMessage} from "../../../framework/message/GlobalMessage";
 

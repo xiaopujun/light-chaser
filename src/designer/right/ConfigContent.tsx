@@ -8,7 +8,7 @@ import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
 import ObjectUtil from "../../utils/ObjectUtil";
 import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryRecordOperateProxy";
-import Loading from "../../ui/loading/Loading";
+import Loading from "../../json-schema/ui/loading/Loading";
 import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
 import AbstractController from "../../framework/core/AbstractController";
 

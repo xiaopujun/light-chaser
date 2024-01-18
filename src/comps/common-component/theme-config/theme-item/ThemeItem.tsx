@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './ThemeItem.less';
 import {ThemeColors, ThemeItemType} from "../../../../designer/DesignerType";
 import closeIcon from './close.svg';
-import ColorPicker from "../../../../ui/color-picker/ColorPicker";
+import ColorPicker from "../../../../json-schema/ui/color-picker/ColorPicker";
 
 
 interface ThemeItemProps extends ThemeColors {
