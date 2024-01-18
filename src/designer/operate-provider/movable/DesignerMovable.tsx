@@ -28,13 +28,19 @@ export interface DesignerMovableProps {
     children?: React.ReactNode;
 }
 
-class DesignerMovable extends React.Component<DesignerMovableProps, { throttleDragRotate: number }> {
+export interface DesignerMovableState {
+    throttleDragRotate: number;
+    keepRatio: boolean;
+}
+
+class DesignerMovable extends React.Component<DesignerMovableProps, DesignerMovableState> {
     movableRef = React.createRef<Moveable>();
 
     constructor(props: {}) {
         super(props);
         this.state = {
-            throttleDragRotate: 0
+            throttleDragRotate: 0,
+            keepRatio: false
         };
     }
 
@@ -157,10 +163,12 @@ class DesignerMovable extends React.Component<DesignerMovableProps, { throttleDr
     }
 
     onResizeStart = (e: OnResizeStart) => {
-        const {target} = e;
+        const {target, inputEvent} = e;
         const {layerConfigs} = designerStore;
         const {lock} = layerConfigs[target.id];
         if (lock) return false;
+        if (inputEvent && inputEvent.ctrlKey)
+            this.setState({keepRatio: true});
     }
 
     onResize = (e: OnResize) => {
@@ -196,13 +204,18 @@ class DesignerMovable extends React.Component<DesignerMovableProps, { throttleDr
             const {updateBaseConfig} = baseInfoStore;
             updateBaseConfig(data[0]);
         }
+        const {keepRatio} = this.state;
+        if (keepRatio)
+            this.setState({keepRatio: false});
     }
 
     onResizeGroupStart = (e: OnResizeGroupStart) => {
-        const {targets} = e;
+        const {targets, inputEvent} = e;
         const {layerConfigs} = designerStore;
         const firstLock = layerConfigs[targets[0].id].lock;
         if (firstLock) return false;
+        if (inputEvent && inputEvent.ctrlKey)
+            this.setState({keepRatio: true});
     }
 
     onResizeGroup = (e: OnResizeGroup) => {
@@ -270,10 +283,13 @@ class DesignerMovable extends React.Component<DesignerMovableProps, { throttleDr
                 });
             }
         }
+        const {keepRatio} = this.state;
+        if (keepRatio)
+            this.setState({keepRatio: false});
     }
 
     render() {
-        const {throttleDragRotate} = this.state;
+        const {throttleDragRotate, keepRatio} = this.state;
         const {selectorRef, targets} = eventOperateStore;
         const {canvasConfig: {rasterize, dragStep, resizeStep}} = designerStore;
         //获取需要辅助线导航的元素
@@ -287,7 +303,7 @@ class DesignerMovable extends React.Component<DesignerMovableProps, { throttleDr
                     draggable={true}
                     resizable={true}
                     //保持尺寸比例
-                    keepRatio={false}
+                    keepRatio={keepRatio}
                     //辅助线可捕捉显示的最大距离
                     throttleDragRotate={throttleDragRotate}
                     maxSnapElementGuidelineDistance={300}
