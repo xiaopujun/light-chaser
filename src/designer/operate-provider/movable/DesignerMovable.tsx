@@ -307,6 +307,7 @@ class DesignerMovable extends React.Component<DesignerMovableProps, DesignerMova
                     throttleDragRotate={throttleDragRotate}
 
                     //辅助线设置
+                    hideChildMoveableDefaultLines={true}
                     maxSnapElementGuidelineDistance={200}
                     isDisplaySnapDigit={true}
                     snappable={true}
