@@ -292,8 +292,9 @@ class DesignerMovable extends React.Component<DesignerMovableProps, DesignerMova
         const {throttleDragRotate, keepRatio} = this.state;
         const {selectorRef, targets} = eventOperateStore;
         const {canvasConfig: {rasterize, dragStep, resizeStep}} = designerStore;
-        //获取需要辅助线导航的元素
-        const selectedTargets = document.getElementsByClassName("lc-comp-item");
+        //获取需要辅助线导航的元素 todo 思考是否可以优化？是否每次都要进行一次过滤
+        const selectedTargets = Array.from(document.getElementsByClassName("lc-comp-item"))
+            .filter((item: HTMLElement) => !targets.includes(item));
         return (
             <>
                 {this.props.children}
