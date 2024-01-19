@@ -304,14 +304,14 @@ class DesignerMovable extends React.Component<DesignerMovableProps, DesignerMova
                     resizable={true}
                     //保持尺寸比例
                     keepRatio={keepRatio}
-                    //辅助线可捕捉显示的最大距离
                     throttleDragRotate={throttleDragRotate}
-                    maxSnapElementGuidelineDistance={300}
+
+                    //辅助线设置
+                    maxSnapElementGuidelineDistance={200}
+                    isDisplaySnapDigit={true}
                     snappable={true}
                     snapGap={false}
                     snapThreshold={5}
-                    //显示辅助线距离
-                    isDisplaySnapDigit={true}
                     snapDirections={{
                         top: true,
                         right: true,
@@ -328,16 +328,14 @@ class DesignerMovable extends React.Component<DesignerMovableProps, DesignerMova
                         center: true,
                         middle: true
                     }}
+                    verticalGuidelines={['0', '50%', '100%']}
+                    horizontalGuidelines={['0', '50%', '100%']}
+                    isDisplayInnerSnapDigit={true} //控件内部显示辅助线
+                    elementGuidelines={Array.from(selectedTargets!)} //可拖拽元素辅助线
+
                     //外挂dom元素
                     ables={[DimensionViewable as any]}
                     dimensionViewable={true}
-
-                    verticalGuidelines={['0', '50%', '100%']}
-                    horizontalGuidelines={['0', '50%', '100%']}
-                    //控件内部显示辅助线
-                    isDisplayInnerSnapDigit={true}
-                    elementGuidelines={Array.from(selectedTargets!)}
-
                     throttleDrag={rasterize ? dragStep : 1}
                     throttleResize={rasterize ? resizeStep : 1}
                     onClickGroup={(e: OnClickGroup) => selectorRef?.clickTarget(e.inputEvent, e.inputTarget)}
