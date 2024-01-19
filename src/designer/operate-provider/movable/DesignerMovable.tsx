@@ -328,8 +328,8 @@ class DesignerMovable extends React.Component<DesignerMovableProps, DesignerMova
                         center: true,
                         middle: true
                     }}
-                    verticalGuidelines={['0', '50%', '100%']}
-                    horizontalGuidelines={['0', '50%', '100%']}
+                    verticalGuidelines={['0', '100%']}
+                    horizontalGuidelines={['0', '100%']}
                     isDisplayInnerSnapDigit={true} //控件内部显示辅助线
                     elementGuidelines={Array.from(selectedTargets!)} //可拖拽元素辅助线
 
