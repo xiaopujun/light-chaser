@@ -1,6 +1,7 @@
 import {Component} from 'react';
 import {ComponentBaseProps} from "../../common-component/common-types";
 import './FontGlobal.css';
+import './BaseTextComponent.less';
 
 export interface BaseTextComponentStyle {
     color?: string;
@@ -15,7 +16,11 @@ export interface BaseTextComponentProps extends ComponentBaseProps {
     style?: BaseTextComponentStyle;
 }
 
-class BaseTextComponent extends Component<BaseTextComponentProps, BaseTextComponentProps> {
+export interface BaseTextComponentState extends BaseTextComponentProps {
+    edit: boolean;
+}
+
+class BaseTextComponent extends Component<BaseTextComponentProps, BaseTextComponentState> {
 
     constructor(props: BaseTextComponentProps) {
         super(props);
@@ -30,10 +35,19 @@ class BaseTextComponent extends Component<BaseTextComponentProps, BaseTextCompon
     }
 
     render() {
-        const {style, data} = this.state;
+        const {style, data, edit} = this.state;
         return (
-            <div style={{height: '100%', overflow: 'hidden', ...style}} onClick={this.onClick}>
-                {data?.staticData?.data}
+            <div onDoubleClick={() => this.setState({edit: true})}
+                 className={'base-text-component'}
+                 style={{...style}}
+                 onClick={this.onClick}>
+                {edit ? <input
+                    ref={(ref) => ref?.select()}
+                    onChange={(e) => data!.staticData!.data = e.target.value}
+                    onBlur={() => this.setState({edit: false})}
+                    autoFocus={true}
+                    type={'text'}
+                    defaultValue={data?.staticData?.data}/> : data?.staticData?.data}
             </div>
         );
     }

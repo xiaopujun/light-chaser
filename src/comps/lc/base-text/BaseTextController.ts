@@ -1,10 +1,11 @@
-import {ThemeItemType} from "../../../designer/DesignerType";
+import {DesignerMode, ThemeItemType} from "../../../designer/DesignerType";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
 import ComponentUtil from "../../../utils/ComponentUtil";
 import BaseTextComponent, {BaseTextComponentProps} from "./BaseTextComponent";
 import ObjectUtil from "../../../utils/ObjectUtil";
 import BPExecutor from "../../../blueprint/core/BPExecutor";
+import URLUtil from "../../../utils/URLUtil";
 
 export class BaseTextController extends AbstractDesignerController<BaseTextComponent, BaseTextComponentProps> {
 
@@ -12,6 +13,10 @@ export class BaseTextController extends AbstractDesignerController<BaseTextCompo
         this.config = config;
         this.container = container;
         this.instance = await ComponentUtil.createAndRender<BaseTextComponent>(container, BaseTextComponent, config);
+        const {mode} = URLUtil.parseUrlParams();
+        //基础文本在编辑模式下放开事件，以实现双击直接进入编辑状态
+        if (mode === DesignerMode.EDIT)
+            this.container!.style!.pointerEvents = "auto";
     }
 
     destroy(): void {
