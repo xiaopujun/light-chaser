@@ -42,8 +42,8 @@ export default class BaseTextDefinition extends AbstractDefinition<BaseTextContr
             style: {
                 color: '#a7a7a7',
                 fontSize: 16,
-                alignItems: 'left',
-                justifyContent: 'space-around',
+                alignItems: 'center',
+                justifyContent: 'center',
             },
             data: {
                 dataSource: 'static',
