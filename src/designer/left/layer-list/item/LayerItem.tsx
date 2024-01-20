@@ -11,6 +11,7 @@ class LayerItem extends BaseLayer {
                  onDoubleClick={this.openInput}>
                 <div className={'layer-name'}>
                     {inputMode ? <input type="text" defaultValue={name} autoFocus={true} onChange={this.changeLayerName}
+                                        ref={ref => ref?.select()}
                                         onKeyDown={(e) => {
                                             if (e.code === "Enter")
                                                 this.closeInput();

@@ -110,9 +110,9 @@ export const ImageSource: React.FC = () => {
     }
 
     return <div className={'image-source'}>
-        <div className={'image-source-search'}>
-            <Input placeholder="搜索图片"/>
-        </div>
+        {/*<div className={'image-source-search'}>*/}
+        {/*    <Input placeholder="搜索图片"/>*/}
+        {/*</div>*/}
         <div className={'image-source-list'} id={'image-source-list'}>
             {
                 imageList.map((item: IImageData, index: number) => {
