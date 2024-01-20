@@ -17,6 +17,7 @@ export default class LayerGroupItem extends BaseLayer {
                             <FolderOpenFilled/></div>
                         <div className={'group-name'}>{inputMode ?
                             <input type="text" defaultValue={name} autoFocus={true} onChange={this.changeLayerName}
+                                   ref={ref => ref?.select()}
                                    onKeyDown={(e) => {
                                        if (e.code === "Enter")
                                            this.closeInput();
