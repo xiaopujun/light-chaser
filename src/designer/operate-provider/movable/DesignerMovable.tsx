@@ -294,7 +294,7 @@ class DesignerMovable extends React.Component<DesignerMovableProps, DesignerMova
         const {canvasConfig: {rasterize, dragStep, resizeStep}} = designerStore;
         //获取需要辅助线导航的元素 todo 思考是否可以优化？是否每次都要进行一次过滤
         const selectedTargets = Array.from(document.getElementsByClassName("lc-comp-item"))
-            .filter((item: HTMLElement) => !targets.includes(item));
+            .filter((item) => !targets.includes(item as HTMLElement));
         return (
             <>
                 {this.props.children}
