@@ -24,7 +24,7 @@ class BaseTextComponent extends Component<BaseTextComponentProps, BaseTextCompon
 
     constructor(props: BaseTextComponentProps) {
         super(props);
-        this.state = {...props};
+        this.state = {...props, edit: false};
     }
 
     eventHandlerMap: Record<string, Function> = {};

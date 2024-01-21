@@ -3,7 +3,7 @@ import URLUtil from "../../../../utils/URLUtil";
 import {ILayerItem, SaveType} from "../../../DesignerType";
 import operatorMap from "../../../../framework/operate/index";
 import {AbstractOperator} from "../../../../framework/operate/AbstractOperator";
-import Input from "../../../../json-schema/ui/input/Input";
+// import Input from "../../../../json-schema/ui/input/Input";
 import './ImageSource.less';
 import eventOperateStore from "../../../operate-provider/EventOperateStore";
 import designerStore from "../../../store/DesignerStore";
