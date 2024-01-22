@@ -3,6 +3,8 @@ import {Route, Routes} from "react-router-dom";
 import Loading from "./json-schema/ui/loading/Loading";
 import {ConfigProvider, MappingAlgorithm, theme} from "antd";
 import GlobalMessage from "./framework/message/GlobalMessage";
+//加载全局字体，这个需要考量一下，在此处加载是否合适
+import './designer/resource/font/FontGlobal.css';
 
 const Demo = lazy(() => import('./test/Demo.tsx'));
 const Login = lazy(() => import('./pages/login/Login').then(module => ({default: module.Login})));
