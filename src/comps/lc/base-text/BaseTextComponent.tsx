@@ -1,6 +1,5 @@
 import {Component} from 'react';
 import {ComponentBaseProps} from "../../common-component/common-types";
-import './FontGlobal.css';
 import './BaseTextComponent.less';
 
 export interface BaseTextComponentStyle {

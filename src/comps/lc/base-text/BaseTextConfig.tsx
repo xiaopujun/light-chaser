@@ -62,10 +62,7 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
                                 {label: '钉钉进步体', value: 'DingTalk JinBuTi'},
                                 {label: '抖音美好体', value: 'DouyinSansBold'},
                                 {label: '优设标题黑', value: '优设标题黑'},
-                                {label: '字体传奇南安体', value: '字体传奇南安体-免费商用'},
                                 {label: '庞门正道标题', value: '庞门正道标题体免费版'},
-                                {label: '站酷文艺体', value: '站酷文艺体'},
-                                {label: 'LHTFONT', value: 'LHTFONT'},
                             ],
                         }
                     }
