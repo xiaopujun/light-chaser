@@ -116,12 +116,7 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
                                         label: '颜色',
                                         value: (config?.point?.style as ShapeAttrs)?.fill || '#1c1c1c',
                                         config: {
-                                            width: '100%',
-                                            radius: 3,
-                                            showBorder: true,
                                             showText: true,
-                                            height: 16,
-                                            hideControls: true
                                         }
                                     }
                                 ]
@@ -180,14 +175,6 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
                                 type: 'color-mode',
                                 label: '颜色',
                                 value: (config?.areaStyle as ShapeAttrs)?.fill || '#1c1c1c',
-                                config: {
-                                    width: '100%',
-                                    radius: 3,
-                                    showBorder: true,
-                                    showText: true,
-                                    height: 16,
-                                    hideControls: true
-                                }
                             }
                         ]
                     }

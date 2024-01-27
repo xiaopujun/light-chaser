@@ -131,12 +131,7 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                                         label: '描边色',
                                         value: (_config.progressStyle as ShapeAttrs)?.stroke || '#555555',
                                         config: {
-                                            width: '90%',
-                                            radius: 3,
-                                            showBorder: true,
                                             showText: true,
-                                            height: 16,
-                                            hideControls: true
                                         }
                                     },
                                 ]
@@ -210,12 +205,7 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                                                 label: '颜色',
                                                 value: ((_config.statistic?.title as StatisticText)?.style as ShapeAttrs)?.color,
                                                 config: {
-                                                    width: '100%',
-                                                    radius: 3,
-                                                    showBorder: true,
                                                     showText: true,
-                                                    height: 16,
-                                                    hideControls: true
                                                 }
                                             }
                                         ]
@@ -294,12 +284,7 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                                                 label: '颜色',
                                                 value: ((_config.statistic?.content as StatisticText)?.style as ShapeAttrs)?.color,
                                                 config: {
-                                                    width: '100%',
-                                                    radius: 3,
-                                                    showBorder: true,
                                                     showText: true,
-                                                    height: 16,
-                                                    hideControls: true
                                                 }
                                             }
                                         ]

@@ -38,12 +38,7 @@ export const BaseTableStyleConfig: React.FC<ConfigType<BaseTableController>> = (
                                 label: '背景',
                                 value: header?.background,
                                 config: {
-                                    width: '100%',
-                                    radius: 3,
-                                    showBorder: true,
                                     showText: true,
-                                    height: 16,
-                                    hideControls: true
                                 }
                             },
                             {
@@ -52,12 +47,7 @@ export const BaseTableStyleConfig: React.FC<ConfigType<BaseTableController>> = (
                                 label: '字色',
                                 value: header?.color,
                                 config: {
-                                    width: '100%',
-                                    radius: 3,
-                                    showBorder: true,
                                     showText: true,
-                                    height: 16,
-                                    hideControls: true
                                 }
                             },
                             {
@@ -101,12 +91,7 @@ export const BaseTableStyleConfig: React.FC<ConfigType<BaseTableController>> = (
                                 label: '背景',
                                 value: body?.background,
                                 config: {
-                                    width: '100%',
-                                    radius: 3,
-                                    showBorder: true,
                                     showText: true,
-                                    height: 16,
-                                    hideControls: true
                                 }
                             },
                             {
@@ -115,12 +100,7 @@ export const BaseTableStyleConfig: React.FC<ConfigType<BaseTableController>> = (
                                 label: '字色',
                                 value: body?.color,
                                 config: {
-                                    width: '100%',
-                                    radius: 3,
-                                    showBorder: true,
                                     showText: true,
-                                    height: 16,
-                                    hideControls: true
                                 }
                             },
                             {

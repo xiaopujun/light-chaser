@@ -125,12 +125,7 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                                         label: '描边色',
                                         value: '#1c1c1c',
                                         config: {
-                                            width: '100%',
-                                            radius: 3,
-                                            showBorder: true,
                                             showText: true,
-                                            height: 16,
-                                            hideControls: true
                                         }
                                     },
                                     {
@@ -203,12 +198,7 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                                         label: '颜色',
                                         value: (_config.label?.style as ShapeAttrs)?.fill,
                                         config: {
-                                            width: '100%',
-                                            radius: 3,
-                                            showBorder: true,
                                             showText: true,
-                                            height: 16,
-                                            hideControls: true
                                         }
                                     }
                                 ]

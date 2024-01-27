@@ -169,12 +169,7 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
                                 label: '颜色',
                                 value: (_config?.style as ShapeAttrs)?.stroke,
                                 config: {
-                                    width: '100%',
-                                    radius: 3,
-                                    showBorder: true,
                                     showText: true,
-                                    height: 16,
-                                    hideControls: true
                                 }
                             }
                         ]
@@ -272,12 +267,7 @@ export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) =>
                                 label: '颜色',
                                 value: (_config?.style as ShapeAttrs)?.stroke,
                                 config: {
-                                    width: '100%',
-                                    radius: 3,
-                                    showBorder: true,
                                     showText: true,
-                                    height: 16,
-                                    hideControls: true
                                 }
                             }
                         ]
@@ -366,12 +356,7 @@ export const AxisGridLine: React.FC<AxisGridLineProps> = ({config, onChange}) =>
                                         label: '颜色',
                                         value: (_config?.line?.style as ShapeAttrs)?.stroke,
                                         config: {
-                                            width: '100%',
-                                            radius: 3,
-                                            showBorder: true,
                                             showText: true,
-                                            height: 16,
-                                            hideControls: true
                                         }
                                     }
                                 ]
@@ -448,12 +433,7 @@ export const AxisLine: React.FC<AxisLIneProps> = ({config, onChange}) => {
                                 label: '颜色',
                                 value: _config?.style?.stroke || '#595959',
                                 config: {
-                                    width: '100%',
-                                    radius: 3,
-                                    showBorder: true,
                                     showText: true,
-                                    height: 16,
-                                    hideControls: true
                                 }
                             }
                         ]
@@ -555,12 +535,7 @@ export const AxisTitle: React.FC<AxisTitleProps> = ({config, onChange}) => {
                                         label: '颜色',
                                         value: '#1c1c1c',
                                         config: {
-                                            width: '100%',
-                                            radius: 3,
-                                            showBorder: true,
                                             showText: true,
-                                            height: 16,
-                                            hideControls: true
                                         }
                                     }
                                 ]
@@ -633,12 +608,7 @@ export const AxisText: React.FC<AxisTextProps> = ({config, onChange}) => {
                                 label: '颜色',
                                 value: (style as ShapeAttrs)?.fill || '#1c1c1c',
                                 config: {
-                                    width: '100%',
-                                    radius: 3,
-                                    showBorder: true,
                                     showText: true,
-                                    height: 16,
-                                    hideControls: true
                                 }
                             }
                         ]

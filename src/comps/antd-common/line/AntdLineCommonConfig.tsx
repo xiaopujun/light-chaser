@@ -141,12 +141,7 @@ export const AntdLineCommonGraphics: React.FC<AntdLineCommonGraphicsProps> = ({c
                                         label: '颜色',
                                         value: (config?.lineStyle as ShapeAttrs)?.stroke,
                                         config: {
-                                            width: '100%',
-                                            radius: 3,
-                                            showBorder: true,
                                             showText: true,
-                                            height: 16,
-                                            hideControls: true
                                         }
                                     }
                                 ]
@@ -195,12 +190,7 @@ export const AntdLineCommonGraphics: React.FC<AntdLineCommonGraphicsProps> = ({c
                                 label: '颜色',
                                 value: (config?.point as ShapeAttrs)?.color,
                                 config: {
-                                    width: '100%',
-                                    radius: 3,
-                                    showBorder: true,
                                     showText: true,
-                                    height: 16,
-                                    hideControls: true
                                 }
                             },
                         ]
