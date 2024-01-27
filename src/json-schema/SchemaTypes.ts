@@ -11,13 +11,11 @@ export type ControlValueType = BaseDataType | BaseDataType[];
 
 export interface BaseSchemaType {
     id?: string;
-    type?: string;
     key?: string;
     label?: string;
     tip?: string;
     value?: ControlValueType;
     rules?: string;
-    config?: Record<string, unknown>;
     reRender?: boolean;
     children?: Control[];
     parent?: Control;
@@ -33,6 +31,7 @@ export interface AccordionConfigType extends BaseSchemaType {
 export interface ButtonConfigType extends BaseSchemaType {
     type: "button";
     config?: {
+        style?: React.CSSProperties;
         children?: React.ReactNode;
     }
 }
@@ -189,12 +188,12 @@ export interface TextOnlyConfigType extends BaseSchemaType {
 }
 
 export interface SimpleSchemaType extends BaseSchemaType {
-    type: "card-panel";
+    type?: "card-panel";
+    config?: Record<string, unknown>;
 }
 
 export type Control =
-    BaseSchemaType
-    | ButtonConfigType
+    ButtonConfigType
     | AccordionConfigType
     | CheckboxConfigType
     | CodeEditorConfigType
