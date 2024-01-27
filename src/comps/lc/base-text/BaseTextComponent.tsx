@@ -39,6 +39,7 @@ class BaseTextComponent extends Component<BaseTextComponentProps, BaseTextCompon
             <div onDoubleClick={() => this.setState({edit: true})}
                  className={'base-text-component'}
                  style={{...style}}
+                 onKeyDown={(e) => e.stopPropagation()}
                  onClick={this.onClick}>
                 {edit ? <input
                     ref={(ref) => ref?.select()}
