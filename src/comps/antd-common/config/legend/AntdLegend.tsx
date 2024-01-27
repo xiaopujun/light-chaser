@@ -86,12 +86,7 @@ export const AntdLegend = (props: ConfigType) => {
                                         label: '颜色',
                                         value: '#1c1c1c',
                                         config: {
-                                            width: '100%',
-                                            radius: 3,
-                                            showBorder: true,
                                             showText: true,
-                                            height: 16,
-                                            hideControls: true
                                         }
                                     }
                                 ]

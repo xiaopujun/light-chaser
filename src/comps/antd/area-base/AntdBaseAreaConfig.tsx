@@ -71,7 +71,9 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
             {
                 type: 'grid',
                 config: {
-                    margin: '0 0 15px 0',
+                    containerStyle: {
+                        marginBottom: 10
+                    }
                 },
                 children: [
                     {
@@ -80,7 +82,6 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
                         key: 'startOnZero',
                         value: !!config?.startOnZero,
                         config: {
-                            margin: '0 0 10px 0',
                             containerStyle: {
                                 marginBottom: 10
                             }
@@ -120,12 +121,7 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
                                                 label: '颜色',
                                                 value: (config?.point?.style as ShapeStyle)?.fill || '#fff',
                                                 config: {
-                                                    width: '100%',
-                                                    radius: 3,
-                                                    showBorder: true,
                                                     showText: true,
-                                                    height: 16,
-                                                    hideControls: true
                                                 }
                                             }
                                         ]
@@ -186,12 +182,7 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
                                         label: '颜色',
                                         value: config?.line?.color as string || '#fff',
                                         config: {
-                                            width: '100%',
-                                            radius: 3,
-                                            showBorder: true,
                                             showText: true,
-                                            height: 16,
-                                            hideControls: true
                                         }
                                     }]
                             }
@@ -218,11 +209,7 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
                                     label: '颜色',
                                     value: (config?.point?.style as ShapeStyle)?.fill || '#fff',
                                     config: {
-                                        width: '100%',
-                                        radius: 3,
-                                        showBorder: true,
                                         showText: true,
-                                        height: 16
                                     }
                                 }]
                             }

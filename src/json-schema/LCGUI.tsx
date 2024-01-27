@@ -125,7 +125,7 @@ export class LCGUI extends React.Component<LCGUIProps> {
             }
         } else {
             //解析叶子节点
-            const {label, type, tip, config, value, rules, id, reRender} = control;
+            const {label, type, tip, config = {}, value, rules, id, reRender} = control;
             if (!type) return [];
             if (rules && !this.analyzeRules(rules, control))
                 return nodes;

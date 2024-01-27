@@ -76,7 +76,6 @@ export const AntdBarGraphics: React.FC<ConfigType<AntdCommonBarController>> = ({
                         label: '宽度',
                         value: config?.maxBarWidth,
                         config: {
-                            width: 80,
                             min: 1,
                             max: 100,
                         }

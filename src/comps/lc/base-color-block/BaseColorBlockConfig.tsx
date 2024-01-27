@@ -24,12 +24,7 @@ export const BaseColorBlockConfig: React.FC<ConfigType<BaseColorBlockController>
                 label: '背景色',
                 value: background,
                 config: {
-                    width: '100%',
-                    radius: 3,
-                    showBorder: true,
                     showText: true,
-                    height: 16,
-                    hideControls: true
                 }
             },
             {
@@ -38,7 +33,6 @@ export const BaseColorBlockConfig: React.FC<ConfigType<BaseColorBlockController>
                 label: '边框宽',
                 value: borderWidth,
                 config: {
-                    width: '100%',
                     min: 0,
                     max: 10,
                     step: 1
@@ -50,12 +44,7 @@ export const BaseColorBlockConfig: React.FC<ConfigType<BaseColorBlockController>
                 label: '边框色',
                 value: borderColor,
                 config: {
-                    width: '100%',
-                    radius: 3,
-                    showBorder: true,
                     showText: true,
-                    height: 16,
-                    hideControls: true
                 }
             },
             {
@@ -83,7 +72,6 @@ export const BaseColorBlockConfig: React.FC<ConfigType<BaseColorBlockController>
                 label: '圆角',
                 value: borderRadius,
                 config: {
-                    width: '100%',
                     min: 0,
                 }
             },

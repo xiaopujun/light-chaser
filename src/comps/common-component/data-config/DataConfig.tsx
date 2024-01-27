@@ -78,9 +78,6 @@ class DataConfig extends Component<DataConfigProps> {
                             type: 'button',
                             config: {
                                 children: '保存并刷新数据',
-                                style: {
-                                    width: '100%'
-                                }
                             }
                         }
                     ]
@@ -176,9 +173,6 @@ class DataConfig extends Component<DataConfigProps> {
                                     type: 'button',
                                     config: {
                                         children: '测试接口',
-                                        style: {
-                                            width: '100%'
-                                        }
                                     }
                                 },
                                 {
@@ -186,9 +180,6 @@ class DataConfig extends Component<DataConfigProps> {
                                     type: 'button',
                                     config: {
                                         children: '保存',
-                                        style: {
-                                            width: '100%'
-                                        }
                                     }
                                 },
                             ]

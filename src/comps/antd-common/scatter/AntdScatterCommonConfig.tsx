@@ -110,12 +110,7 @@ export const AntdCommonScatterGraphics: React.FC<AntdCommonScatterGraphicsProps>
                                 label: '描边色',
                                 value: (config?.pointStyle as ShapeAttrs)?.stroke,
                                 config: {
-                                    width: '100%',
-                                    radius: 3,
-                                    showBorder: true,
                                     showText: true,
-                                    height: 16,
-                                    hideControls: true
                                 }
                             }
                         ]

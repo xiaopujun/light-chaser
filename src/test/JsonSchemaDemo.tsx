@@ -15,9 +15,6 @@ class JsonSchemaDemo extends Component {
             {
                 key: "xAxis",
                 type: "accordion",
-                config: {
-                    title: "X轴"
-                },
                 children: [
                     {
                         key: "grid",
@@ -30,17 +27,13 @@ class JsonSchemaDemo extends Component {
                             {
                                 label: "开启",
                                 type: "switch",
-                                config: {
-                                    value: true,
-                                }
+                                value: true,
                             },
                             {
                                 key: "alignTick",
                                 label: "对齐",
                                 type: "switch",
-                                config: {
-                                    value: true
-                                }
+                                value: true
                             },
                             {
                                 key: "line",
@@ -52,17 +45,13 @@ class JsonSchemaDemo extends Component {
                                                 key: "lineWidth",
                                                 label: "线宽",
                                                 type: "input",
-                                                config: {
-                                                    value: 1
-                                                }
+                                                value: 1
                                             },
                                             {
                                                 key: "stroke",
                                                 label: "颜色",
                                                 type: "color-picker",
-                                                config: {
-                                                    value: "#878787ff",
-                                                }
+                                                value: "#878787ff",
                                             }
                                         ]
                                     }
@@ -85,17 +74,13 @@ class JsonSchemaDemo extends Component {
                                         key: "fill",
                                         label: "颜色",
                                         type: "color-picker",
-                                        config: {
-                                            value: "#878787ff"
-                                        }
+                                        value: "#878787ff"
                                     },
                                     {
                                         key: "fontSize",
                                         label: "字号",
                                         type: "input",
-                                        config: {
-                                            value: 10
-                                        }
+                                        value: 10,
                                     }
                                 ]
                             }
