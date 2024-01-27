@@ -46,7 +46,7 @@ export default class DigitalFlipperDefinition extends AbstractDefinition<Digital
                 fontWeight: 500,
                 fontFamily: 'Microsoft YaHei',
                 color: '#ffffff',
-                type: 'slide',
+                type: 'caper',
             },
             data: {
                 staticData: {

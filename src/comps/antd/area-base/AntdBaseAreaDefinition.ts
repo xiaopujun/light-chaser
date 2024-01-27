@@ -103,7 +103,9 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
                 point: {
                     size: 4,
                     style: {
-                        fill: "#00ddffff"
+                        fill: "#00ddffff",
+                        stroke: "#ffffff",
+                        lineWidth: 0
                     }
                 },
                 line: {

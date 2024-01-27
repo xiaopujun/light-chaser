@@ -56,33 +56,38 @@ class AntdRingProgressDefinition extends AntdCommonDefinition<AntdRingProgressCo
             },
             style: {
                 percent: 0.7,
-                color: ["#00b5ffff", "#c5ebfbff"],
+                color: [
+                    "#3cc2f8bd",
+                    "#66d2ff3e"
+                ],
                 statistic: {
                     content: {
                         style: {
                             fill: "#fff",
-                            fontSize: "24px",
-                            fontWeight: 400,
+                            fontSize: '24',
+                            fontWeight: 900,
+                            color: "#57c6ff"
                         },
-                        offsetY: -7,
+                        offsetY: 7,
+                        offsetX: 0
                     },
                     title: {
                         style: {
-                            fontSize: "14px",
-                            fontWeight: 400,
-                            color: "#fff",
+                            fontSize: '21',
+                            fontWeight: 900,
+                            color: "#6ad1ff"
                         },
-                        content: "当前进度",
-                        offsetY: -11,
-                    },
+                        content: "指标1",
+                        offsetY: -11
+                    }
                 },
                 animation: {
                     appear: {
                         animation: "wave-in",
-                        duration: 3000,
-                    },
+                        duration: 3000
+                    }
                 },
-                progressStyle: {},
+                progressStyle: {}
             },
             data: {
                 dataSource: 'static',

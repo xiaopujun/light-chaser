@@ -1,34 +1,32 @@
 import React from "react";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import {BaseMenuMapping, ClazzTemplate} from "../../common-component/common-types";
+import {ClazzTemplate} from "../../common-component/common-types";
 import AntdLiquidController, {AntdLiquidProps} from "./AntdLiquidController";
 import liquidImg from './liquid.png';
-import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
+import {AbstractDefinition, BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 
-const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
-const AntdLiquidConfig = React.lazy(() => import("./AntdLiquidConfig").then((module) => ({default: module.AntdLiquidConfig})));
+const AntdLiquidConfig = React.lazy(() => import("./AntdLiquidConfig"));
 const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig"));
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
 
-class AntdLiquidDefinition /*extends AbstractDefinition<AntdLiquid, BaseMenuMapping, AntdLiquidProps>*/ {
+class AntdLiquidDefinition extends AbstractDefinition<AntdLiquidController, AntdLiquidProps> {
 
-    getComponent(): ClazzTemplate<AntdLiquidController> | null {
+    getController(): ClazzTemplate<AntdLiquidController> | null {
         return AntdLiquidController;
     }
 
     getMenuList(): Array<MenuInfo> {
-        return getDefaultMenuList();
+        return getDefaultMenuList().filter((item) => item.key !== 'mapping');
     }
 
-    getMenuToConfigContentMap(): BaseMenuMapping | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
             base: BaseInfo,
             data: DataConfig,
             style: AntdLiquidConfig,
-            animation: AnimationConfig,
             theme: ThemeConfig
         };
     }
@@ -38,7 +36,7 @@ class AntdLiquidDefinition /*extends AbstractDefinition<AntdLiquid, BaseMenuMapp
             compName: "Antd水波图",
             compKey: "AntdLiquid",
             categorize: "chart",
-            subCategorize: "liquid",
+            subCategorize: "progress",
         };
     }
 
@@ -54,27 +52,47 @@ class AntdLiquidDefinition /*extends AbstractDefinition<AntdLiquid, BaseMenuMapp
                 type: 'AntdLiquid',
             },
             style: {
-                percent: 0.25,
+                shape: "circle",
+                percent: 0.65,
+                radius: 0.9,
+                liquidStyle: {
+                    fill: "#2399ffea",
+                    stroke: "#1a75c8d6"
+                },
+                shapeStyle: {
+                    fill: "#00fff716"
+                },
                 outline: {
-                    border: 4,
+                    border: 0,
+                    distance: 0
                 },
                 wave: {
-                    length: 128,
+                    length: 150,
+                    count: 5
                 },
                 statistic: {
                     content: {
                         style: {
-                            fill: '#7de0ff',
-                            fontSize: '16px'
+                            fill: "#7de0ff",
+                            fontSize: '20',
+                            color: "#81d8ff"
                         }
+                    },
+                    title: {
+                        content: "指标1",
+                        style: {
+                            fontSize: '22',
+                            color: "#61a0f9c2",
+                            fontWeight: 900
+                        },
+                        offsetY: -10
                     }
                 }
-
             },
             data: {
                 dataSource: 'static',
                 staticData: {
-                    data: []
+                    data: 0.65
                 },
             },
         };
