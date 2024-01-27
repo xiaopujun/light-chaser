@@ -119,11 +119,29 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
                                                 key: 'fill',
                                                 type: 'color-picker',
                                                 label: '颜色',
-                                                value: (config?.point?.style as ShapeStyle)?.fill || '#fff',
+                                                value: (config?.point?.style as ShapeStyle)?.fill,
                                                 config: {
                                                     showText: true,
                                                 }
-                                            }
+                                            },
+                                            {
+                                                key: 'lineWidth',
+                                                type: 'number-input',
+                                                label: '描边宽',
+                                                value: (config?.point?.style as ShapeStyle)?.lineWidth,
+                                                config: {
+                                                    min: 0
+                                                }
+                                            },
+                                            {
+                                                key: 'stroke',
+                                                type: 'color-picker',
+                                                label: '描边色',
+                                                value: (config?.point?.style as ShapeStyle)?.stroke,
+                                                config: {
+                                                    showText: true,
+                                                }
+                                            },
                                         ]
                                     },
                                     {

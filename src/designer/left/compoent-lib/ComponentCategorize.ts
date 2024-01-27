@@ -112,7 +112,7 @@ export const componentSubCategorize: ICategorize[] = [
     },
     {
         key: "progress",
-        name: "进度条",
+        name: "进度图",
         parentKey: "chart"
     },
     {
