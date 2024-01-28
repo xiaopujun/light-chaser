@@ -13,6 +13,7 @@ import {reRenderAllLine} from "../../../blueprint/drag/BPMovable";
 import bpLeftStore from "../../../blueprint/left/BPLeftStore";
 import operatorMap from "../../../framework/operate";
 import URLUtil from "../../../utils/URLUtil";
+import LayerUtil from "../../left/layer-list/util/LayerUtil.ts";
 
 export const selectAll = () => {
     const {layerConfigs} = designerStore;
@@ -166,6 +167,21 @@ export const doGrouping = () => {
 }
 
 export const doUnGrouping = () => {
+    //如果蓝图中使用了分组图层节点，则需要先删除蓝图中的组件和连线，且蓝图中的删除操作目前无法回退
+    let {targetIds} = eventOperateStore;
+    let targetIdSet = new Set<string>();
+    LayerUtil.findTopGroupLayer(targetIds, false).forEach((id: string) => targetIdSet.add(id));
+    targetIds = Array.from(targetIdSet);
+    if (targetIds && targetIds.length > 0) {
+        const {delNode, bpNodeLayoutMap} = bpStore;
+        const preDelNodeIds: string[] = [];
+        targetIds.forEach((id: string) => {
+            if (bpNodeLayoutMap[id])
+                preDelNodeIds.push(id);
+        });
+        if (preDelNodeIds.length > 0)
+            delNode(preDelNodeIds);
+    }
     historyRecordOperateProxy.doUnGrouping();
 }
 
