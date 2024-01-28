@@ -106,11 +106,6 @@ export const componentSubCategorize: ICategorize[] = [
         parentKey: "chart"
     },
     {
-        key: "gauge",
-        name: "仪表盘",
-        parentKey: "chart"
-    },
-    {
         key: "progress",
         name: "进度图",
         parentKey: "chart"
