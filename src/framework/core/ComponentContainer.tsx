@@ -39,10 +39,19 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
                 }
                 const {mode} = URLUtil.parseUrlParams();
                 const controller = new Controller()! as AbstractDesignerController;
+                /**
+                 * 此处注意，执行顺序尤为重要！！！
+                 * 第一步：动态代理绑定在前，
+                 * 第二步：赋值controller在后，
+                 * 第三步：最后才是执行create方法。
+                 * 否则导致蓝图事件执行时，获取controller实例为undefined
+                 */
                 //todo 此处逻辑应该使用设计模式优化，而非写死
-                //view模式下使用动态代理对象，监听属性变化
-                if (mode as DesignerMode === DesignerMode.VIEW)
+                if (mode as DesignerMode === DesignerMode.VIEW) {
+                    //view模式下使用动态代理对象，执行蓝图事件
                     registerProxy(layer.id!, controller);
+                }
+                compController[layer.id + ''] = controller;
                 controller.create(this.ref!, config).then(() => {
                     //在组件完全渲染完毕后进行数据的加载和事件的注册
                     if (mode as DesignerMode === DesignerMode.VIEW) {
@@ -52,7 +61,7 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
                     //渲染后删除elemConfigs中的映射关系（需要观察是否会造成其他问题）
                     delete elemConfigs![layer.id!];
                 });
-                compController[layer.id + ''] = controller;
+
             }
         }
     }
