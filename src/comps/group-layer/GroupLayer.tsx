@@ -14,6 +14,10 @@ export default class GroupLayer extends React.PureComponent<GroupLayerStyleProps
 
     groupLayerRef: HTMLDivElement | null = null;
 
+    state = {
+        load: true
+    }
+
     /**
      * 渲染分组组件时不记录操作日志。已在快捷键处记录
      */
@@ -37,7 +41,15 @@ export default class GroupLayer extends React.PureComponent<GroupLayerStyleProps
     }
 
     render() {
-        return <div className={'component-group'} ref={ref => this.groupLayerRef = ref!}
-                    style={{position: 'absolute'}}>{this.props.children}</div>;
+        const {load} = this.state;
+        return (
+            <>
+                {
+                    load && <div className={'component-group'} ref={ref => this.groupLayerRef = ref!}
+                                 style={{position: 'absolute'}}>{this.props.children}</div>
+
+                }
+            </>
+        )
     }
 }
