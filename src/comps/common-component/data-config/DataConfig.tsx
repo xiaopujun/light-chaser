@@ -99,7 +99,7 @@ class DataConfig extends Component<DataConfigProps> {
                             key: 'method',
                             label: '请求方式',
                             type: 'select',
-                            value: data?.apiData?.method || 'get',
+                            value: data?.apiData?.method,
                             config: {
                                 options: [
                                     {value: 'get', label: 'GET'},
@@ -176,6 +176,9 @@ class DataConfig extends Component<DataConfigProps> {
                                     type: 'button',
                                     config: {
                                         children: '测试接口',
+                                        style: {
+                                            width: '100%'
+                                        }
                                     }
                                 },
                                 {
@@ -183,6 +186,9 @@ class DataConfig extends Component<DataConfigProps> {
                                     type: 'button',
                                     config: {
                                         children: '保存',
+                                        style: {
+                                            width: '100%'
+                                        }
                                     }
                                 },
                             ]

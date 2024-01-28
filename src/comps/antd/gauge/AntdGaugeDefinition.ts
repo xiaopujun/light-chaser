@@ -1,29 +1,28 @@
 import React from "react";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import {BaseMenuMapping, ClazzTemplate} from "../../common-component/common-types";
+import {ClazzTemplate} from "../../common-component/common-types";
 import AntdGaugeController, {AntdGaugeProps} from "./AntdGaugeController";
 import gaugeImg from './gauge.png';
-import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
+import {AbstractDefinition, BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
-const AntdGaugeConfig = React.lazy(() => import("./AntdGaugeConfig").then((module) => ({default: module.AntdGaugeConfig})));
+const AntdGaugeConfig = React.lazy(() => import("./AntdGaugeConfig"));
 const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig"));
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
 
-class AntdGaugeDefinition /*extends AbstractDefinition<AntdGauge, BaseMenuMapping, AntdGaugeProps>*/ {
-
-    getComponent(): ClazzTemplate<AntdGaugeController> | null {
+class AntdGaugeDefinition extends AbstractDefinition<AntdGaugeController, AntdGaugeProps> {
+    getController(): ClazzTemplate<AntdGaugeController> | null {
         return AntdGaugeController;
     }
 
     getMenuList(): Array<MenuInfo> {
-        return getDefaultMenuList();
+        return getDefaultMenuList().filter((menu) => menu.key !== 'mapping');
     }
 
-    getMenuToConfigContentMap(): BaseMenuMapping | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
         return {
             base: BaseInfo,
             data: DataConfig,
@@ -38,7 +37,7 @@ class AntdGaugeDefinition /*extends AbstractDefinition<AntdGauge, BaseMenuMappin
             compName: "Antd仪表盘",
             compKey: "AntdGauge",
             categorize: "chart",
-            subCategorize: "gauge",
+            subCategorize: "progress",
         };
     }
 
@@ -55,45 +54,77 @@ class AntdGaugeDefinition /*extends AbstractDefinition<AntdGauge, BaseMenuMappin
             },
             style: {
                 percent: 0.75,
+                radius: 0.75,
+                innerRadius: 0.95,
+                startAngle: 2.6,
+                endAngle: 0.5,
                 range: {
-                    color: '#30BF78',
+                    color: ["#6bc2ff", "#5d9eff59"]
                 },
                 indicator: {
                     pointer: {
                         style: {
-                            stroke: '#D0D0D0',
-                        },
+                            stroke: "#37b3ff",
+                            lineWidth: 2
+                        }
                     },
                     pin: {
                         style: {
-                            stroke: '#D0D0D0',
-                        },
-                    },
+                            stroke: "#37b3ff",
+                            fill: "#053b5d",
+                            r: 2,
+                            lineWidth: 2
+                        }
+                    }
                 },
                 axis: {
-                    label: {
-                        formatter(v) {
-                            return Number(v) * 100;
+                    tickLine: {
+                        style: {
+                            stroke: "#89d2ff",
+                            lineWidth: 1
                         },
+                        length: -4
                     },
                     subTickLine: {
-                        count: 3,
+                        count: 11,
+                        style: {
+                            stroke: "#2caaff",
+                            lineWidth: 1
+                        },
+                        length: -2
                     },
+                    label: {
+                        style: {
+                            fill: "#69c6ff",
+                            fontSize: 12,
+                            textAlign: "center",
+                            textBaseline: "middle"
+                        }
+                    }
                 },
                 statistic: {
                     content: {
-                        formatter: ({percent}: any) => `Rate: ${(percent * 100).toFixed(0)}%`,
                         style: {
-                            color: 'rgba(0,0,0,0.65)',
-                            fontSize: '16px',
-                        },
+                            color: "#49c1ff",
+                            fontSize: '11px'
+                        }
+                    }
+                },
+                animation: {
+                    appear: {
+                        animation: "grow-in-x",
+                        duration: 3000
                     },
+                    update: {
+                        animation: 'grow-in-x',
+                        duration: 3000
+                    }
                 },
             },
             data: {
                 dataSource: 'static',
                 staticData: {
-                    data: []
+                    data: 0.75
                 },
             },
         };

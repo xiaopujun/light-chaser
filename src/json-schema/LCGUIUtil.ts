@@ -30,6 +30,11 @@ export default class LCGUIUtil {
         return result;
     }
 
+    /**
+     * 根据schema模板，将数据结构赋值到模板中生成完整的schema
+     * @param data 数据结构
+     * @param template schema模板
+     */
     public static schemaStructureAssignment(data: object, template: Control): Control {
         if (typeof data !== 'object')
             return {};

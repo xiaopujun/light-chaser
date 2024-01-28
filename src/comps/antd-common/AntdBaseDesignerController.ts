@@ -51,9 +51,7 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
     }
 
     public commonUpdate(config: C, Clazz: new (...args: any[]) => I, upOp?: UpdateOptions,): void {
-        console.log("commonUpdate", config);
         this.config = ObjectUtil.merge(this.config, config);
-        console.log("commonUpdate after", this.config);
         upOp = upOp || {reRender: true};
         if (upOp.reRender)
             this.instance?.update(this.config?.style!);
