@@ -35,9 +35,9 @@ export default class CanvasUtil {
             secondCP.x = endPos.x - (boxWidth * 0.5);
             secondCP.y = endPos.y;
         } else {
-            firstCP.x = startPos.x + (boxWidth * 0.3);
+            firstCP.x = startPos.x + (boxWidth * 0.8);
             firstCP.y = startPos.y;
-            secondCP.x = endPos.x - (boxWidth * 0.3);
+            secondCP.x = endPos.x - (boxWidth * 0.8);
             secondCP.y = endPos.y;
         }
         return {firstCP, secondCP};
@@ -76,8 +76,8 @@ export default class CanvasUtil {
         if (rectEnd.x < rectStart.x) {
             //结束点在起始点左边,注：0.05这个比例只是一个估计值，非精确值。在保证起始点在结束点左边的情况下，能正确判定鼠标点是否在控制点包围盒内即可。
             //这个比例值和计算贝塞尔曲线的控制点所用到的比例是相关的：代码位置：light-chaser/src/blueprint/util/CanvasUtil.ts:38
-            x1 = Math.min(rectStart.x + (boxWidth * 0.05), rectEnd.x - (boxWidth * 0.05));
-            x2 = Math.max(rectStart.x + (boxWidth * 0.05), rectEnd.x - (boxWidth * 0.05));
+            x1 = Math.min(rectStart.x + (boxWidth * 0.2), rectEnd.x - (boxWidth * 0.2));
+            x2 = Math.max(rectStart.x + (boxWidth * 0.2), rectEnd.x - (boxWidth * 0.2));
         } else {
             //结束点在起始点右边
             x1 = Math.min(rectStart.x, rectEnd.x);
