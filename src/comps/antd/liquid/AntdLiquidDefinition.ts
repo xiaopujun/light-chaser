@@ -87,6 +87,15 @@ class AntdLiquidDefinition extends AbstractDefinition<AntdLiquidController, Antd
                         },
                         offsetY: -10
                     }
+                },
+                animation: {
+                    appear: {
+                        animation: 'wave-in',
+                        duration: 3000
+                    },
+                    update: {
+                        duration: 2000
+                    }
                 }
             },
             data: {
