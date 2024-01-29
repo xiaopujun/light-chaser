@@ -48,7 +48,6 @@ class EventOperateStore {
     constructor() {
         makeObservable(this, {
             targets: observable,
-            targetIds: observable,
             scale: observable,
             setScale: action,
             setTargetIds: action,
