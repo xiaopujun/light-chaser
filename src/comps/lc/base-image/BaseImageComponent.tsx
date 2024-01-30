@@ -28,6 +28,7 @@ export interface BaseImageComponentStyle {
     onLineUrl?: string;
     localUrl?: string;
     hash?: string;
+    opacity?: number;
 }
 
 class BaseImageComponent extends Component<BaseImageComponentStyle, BaseImageComponentStyle> {
@@ -45,7 +46,7 @@ class BaseImageComponent extends Component<BaseImageComponentStyle, BaseImageCom
     }
 
     render() {
-        const {type, onLineUrl, localUrl} = this.state;
+        const {type, onLineUrl, localUrl, opacity} = this.state;
         const src = type === 'online' ? onLineUrl : localUrl;
         return (
             <div style={{width: '100%', height: '100%'}} onClick={this.onClick}>
@@ -58,7 +59,7 @@ class BaseImageComponent extends Component<BaseImageComponentStyle, BaseImageCom
                     }}>
                         <div>请配置图片连接或上传图片</div>
                     </div> :
-                    <img alt={'图片组件'} width={'100%'} height={'100%'} src={src}/>}
+                    <img alt={'图片组件'} style={{opacity}} width={'100%'} height={'100%'} src={src}/>}
             </div>
         );
     }

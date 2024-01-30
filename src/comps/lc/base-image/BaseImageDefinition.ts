@@ -38,6 +38,7 @@ export default class BaseImageDefinition extends AbstractDefinition<BaseImageCon
                 type: 'online',
                 localUrl: '',
                 onLineUrl: '',
+                opacity: 1,
             },
         };
     }
