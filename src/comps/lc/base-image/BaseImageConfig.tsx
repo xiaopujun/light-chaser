@@ -6,7 +6,7 @@ import {ConfigType} from "../../../designer/right/ConfigContent";
 
 export const BaseImageStyleConfig: React.FC<ConfigType<BaseImageController>> = ({controller}) => {
     const {style} = controller.getConfig()!;
-    const {type, onLineUrl, localUrl} = style!;
+    const {type, onLineUrl, localUrl, opacity} = style!;
 
     const [, setCount] = useState(0);
 
@@ -25,6 +25,7 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImageController>> = (
     const schema: Control = {
         key: 'style',
         type: 'grid',
+        config: {columns: 2},
         children: [
             {
                 key: 'type',
@@ -36,7 +37,10 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImageController>> = (
                     options: [
                         {label: '本地', value: 'local'},
                         {label: '在线', value: 'online'},
-                    ]
+                    ],
+                    containerStyle: {
+                        gridColumn: '1/3'
+                    }
                 }
             },
             {
@@ -44,7 +48,12 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImageController>> = (
                 rules: "{type} === 'online'",
                 type: 'input',
                 label: '链接',
-                value: onLineUrl
+                value: onLineUrl,
+                config: {
+                    containerStyle: {
+                        gridColumn: '1/3'
+                    }
+                }
             },
             {
                 id: 'localUrl',
@@ -52,7 +61,25 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImageController>> = (
                 rules: "{type} === 'local'",
                 type: 'image-upload',
                 label: '上传',
-                value: localUrl
+                value: localUrl,
+                config: {
+                    accept: 'image/*',
+                    size: 3,
+                    containerStyle: {
+                        gridColumn: '1/3'
+                    }
+                }
+            },
+            {
+                key: 'opacity',
+                type: 'number-input',
+                label: '透明度',
+                value: opacity,
+                config: {
+                    min: 0,
+                    max: 1,
+                    step: 0.1
+                }
             }
         ]
     }

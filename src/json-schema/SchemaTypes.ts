@@ -107,6 +107,8 @@ export interface ImageUploadConfigType extends BaseSchemaType {
     type: "image-upload";
     config?: {
         containerStyle?: React.CSSProperties;
+        accept?: string;
+        size?: number;
     }
 }
 

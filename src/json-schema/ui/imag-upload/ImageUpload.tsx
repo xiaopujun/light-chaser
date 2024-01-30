@@ -17,12 +17,14 @@ export interface UploadDataType {
 }
 
 export interface UploadProps extends UIContainerProps {
-    onChange?: (data: UploadDataType) => void;
     defaultValue?: string;
+    accept?: string;
+    size?: number;
+    onChange?: (data: UploadDataType) => void;
 }
 
 export const ImageUpload: React.FC<UploadProps> = (props) => {
-    const {onChange, defaultValue, ...uiProp} = props;
+    const {onChange, defaultValue, accept, size, ...uiProp} = props;
     const fileInfo = {
         uid: '-1',
         name: 'image.png',
@@ -31,12 +33,17 @@ export const ImageUpload: React.FC<UploadProps> = (props) => {
     const [fileList, setFileList] = useState(defaultValue ? [{...fileInfo, url: defaultValue}] : []);
 
     const beforeUpload = (file: RcFile) => {
+        if (size && file.size > size * 1024 * 1024) {
+            globalMessage.messageApi?.warning(`文件大小不能超过${size}M`);
+            return false;
+        }
         const {saveType} = URLUtil.parseUrlParams();
         (operatorMap[saveType as SaveType] as AbstractOperator).uploadImage(file).then((data) => {
             if (!data) {
                 globalMessage.messageApi?.error('上传失败');
             } else {
                 const {url, hash} = data as IImageData;
+                console.log(url)
                 onChange && onChange({url, hash});
                 setFileList([{...fileInfo, url}]);
             }
@@ -48,10 +55,10 @@ export const ImageUpload: React.FC<UploadProps> = (props) => {
         <UIContainer {...uiProp} className={'image-upload'}>
             <AntdUpLoad name={'file'} beforeUpload={beforeUpload} listType={'picture-card'}
                         fileList={fileList as Array<UploadFile>}
+                        accept={accept}
                         onRemove={() => {
                             setFileList([]);
                             onChange && onChange({url: '', hash: ''});
-                            //todo 要加上定时清理缓存
                         }}
                         onPreview={() => window.open(fileList[0].url)}>
                 {fileList.length > 0 ? null : <div className={'upload-btn'}>
