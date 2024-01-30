@@ -1,32 +1,91 @@
 import './DemoMain.less';
-import {useEffect, useRef} from "react";
-import {CountUp} from "countup.js";
-import {Odometer} from "odometer_countup";
+import {FieldChangeData, LCGUI} from "../json-schema/LCGUI.tsx";
+import {Control} from "../json-schema/SchemaTypes.ts";
 
 export default function Demo() {
 
-    const countUpRef = useRef(null);
-    let countUpAnim: CountUp;
 
-    useEffect(() => {
-        countUpAnim = new CountUp(countUpRef.current!, 21548125415, {
-            startVal: 0,
-            plugin: new Odometer({duration: 1, lastDigitDelay: 0}),
-            duration: 1,
-            enableScrollSpy: true
-        });
-        if (!countUpAnim.error) {
-            countUpAnim.start();
-        } else {
-            console.error(countUpAnim.error);
+    const schema: Control[] = [
+        {
+            key: 'style',
+            type: 'grid',
+            config: {
+                columns: 2,
+                containerStyle: {
+                    marginBottom: 10,
+                    width: 400,
+                }
+            },
+            children: [
+                {
+                    key: 'name',
+                    type: 'input',
+                    value: '123',
+                    label: '姓名',
+                },
+                {
+                    key: 'sex',
+                    type: 'radio',
+                    value: 'man',
+                    label: '性别',
+                    config: {
+                        options: [
+                            {label: '男', value: 'man'},
+                            {label: '女', value: 'woman'}
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            type: 'grid',
+            config: {
+                columns: 2,
+            },
+            children: [
+                {
+                    type: 'input',
+                    value: '123',
+                    label: '姓名',
+                },
+                {
+                    type: 'radio',
+                    value: 'man',
+                    label: '性别',
+                    config: {
+                        options: [
+                            {label: '男', value: 'man'},
+                            {label: '女', value: 'woman'}
+                        ]
+                    }
+                }, {
+                    type: 'input',
+                    value: '123',
+                    label: '姓名',
+                },
+                {
+                    type: 'radio',
+                    value: 'man',
+                    label: '性别',
+                    config: {
+                        options: [
+                            {label: '男', value: 'man'},
+                            {label: '女', value: 'woman'}
+                        ]
+                    }
+                },
+            ]
         }
-    }, []);
+    ]
+
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+        console.log(fieldChangeData);
+    }
 
     return (
-        <div style={{fontSize: '60px', fontWeight: 700}} ref={countUpRef} onClick={() => {
-            countUpAnim.reset();
-            countUpAnim.start();
-        }}>0
+        <div style={{width: 400}}>
+            <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+
         </div>
     );
 }
