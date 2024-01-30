@@ -84,7 +84,7 @@ class HotKey extends Component<HotKeyProps> {
         const key = e.key.toLowerCase();
         if (!this.currHotKey.some(item => item === key))
             this.currHotKey.push(key);
-        let hotKey = this.currHotKey.join(' + ');
+        const hotKey = this.currHotKey.join(' + ');
         if (shieldKeyList.some(item => item === hotKey))
             e.preventDefault();
         this.doHandler(e, hotKey);

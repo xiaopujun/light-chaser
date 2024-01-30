@@ -16,7 +16,7 @@ class CompList extends Component {
 
     private dragAddProvider: DragAddProvider | null = null;
 
-    constructor(props: {}) {
+    constructor(props: any) {
         super(props);
         const {doInit} = componentListStore;
         doInit && doInit();
@@ -68,7 +68,7 @@ class CompList extends Component {
         let {maxLevel, setMaxLevel, setAddRecordCompId} = eventOperateStore;
         const {definitionMap} = editorDesignerLoader;
         const {compName, width = 320, height = 200} = definitionMap[compKey].getBaseInfo();
-        let movableItem: ILayerItem = {
+        const movableItem: ILayerItem = {
             name: compName,
             type: compKey,
             x: Math.round(position![0]),
@@ -86,7 +86,7 @@ class CompList extends Component {
     }
 
     getChartDom = () => {
-        let chartDom = [];
+        const chartDom = [];
         let {compInfoArr, search, categories, subCategories} = componentListStore;
         if (categories !== "all") {
             compInfoArr = compInfoArr.filter((item: BaseInfoType) => {
@@ -104,10 +104,10 @@ class CompList extends Component {
             })
         }
         for (let i = 0; i < compInfoArr.length; i++) {
-            let compInfo: BaseInfoType = compInfoArr[i];
+            const compInfo: BaseInfoType = compInfoArr[i];
             const {compName, compKey} = compInfo;
-            let definition: AbstractDefinition = DesignerLoaderFactory.getLoader().definitionMap[compKey];
-            let chartImg = definition.getChartImg();
+            const definition: AbstractDefinition = DesignerLoaderFactory.getLoader().definitionMap[compKey];
+            const chartImg = definition.getChartImg();
             chartDom.push(
                 <div key={i + ''} className={'list-item droppable-element'} draggable={true}
                      onDoubleClick={() => this.addItem(compKey)}

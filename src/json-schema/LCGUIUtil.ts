@@ -20,7 +20,7 @@ export default class LCGUIUtil {
     }
 
     public static createObjectFromArray(keyPath: string[], value: ControlValueType): object {
-        let result: Record<string, any> = {};
+        const result: Record<string, any> = {};
         let current: Record<string, any> = result;
         for (let i = 0; i < keyPath.length; i++) {
             const key = keyPath[i];

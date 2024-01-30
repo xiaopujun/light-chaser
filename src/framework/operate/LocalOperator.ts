@@ -23,7 +23,7 @@ class LocalOperator extends AbstractOperator {
         //生成项目id
         project.id = IdGenerate.generateId();
         const projectData = project.dataJson;
-        let list: IProjectInfo[] = await localforage.getItem(LIGHT_CHASER_PROJECT_LIST) || [];
+        const list: IProjectInfo[] = await localforage.getItem(LIGHT_CHASER_PROJECT_LIST) || [];
         project.dataJson = undefined;
         list.push(project);
         await localforage.setItem(LIGHT_CHASER_PROJECT_LIST, list);
@@ -35,7 +35,7 @@ class LocalOperator extends AbstractOperator {
         project = cloneDeep(project);
         const data = project.dataJson;
         delete project.dataJson;
-        let list: IProjectInfo[] = await localforage.getItem(LIGHT_CHASER_PROJECT_LIST) || [];
+        const list: IProjectInfo[] = await localforage.getItem(LIGHT_CHASER_PROJECT_LIST) || [];
         const index = list.findIndex((item: IProjectInfo) => item.id === project.id);
         if (index === -1) {
             globalMessage.messageApi?.error('项目不存在');

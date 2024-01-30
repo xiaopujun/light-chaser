@@ -42,7 +42,7 @@ class DesignerSelectable extends Component<DesignerSelectableProps> {
     }
 
     onSelectEnd = (e: OnSelectEnd) => {
-        let {selected} = e;
+        const {selected} = e;
         const {movableRef, setTargetIds} = eventOperateStore;
         if (!movableRef) return;
         const movable: Moveable = movableRef!;
@@ -78,7 +78,7 @@ class DesignerSelectable extends Component<DesignerSelectableProps> {
              * 框选多个组件时，不能同时包含锁定和非锁定的组件。在同时包含锁定和未锁定状态下的组件时，只选中未锁定状态的组件。
              * 对于框选组件中存在分组的。 要选中分组内的所有相同锁定状态的组件。
              */
-            let allChildLayerId = LayerUtil.findAllChildLayerBySubId(layerIds, true);
+            const allChildLayerId = LayerUtil.findAllChildLayerBySubId(layerIds, true);
             //检测是否同时包含锁定和非锁定的组件
             for (let i = 0; i < allChildLayerId.length; i++) {
                 const layer = layerConfigs[allChildLayerId[i]];

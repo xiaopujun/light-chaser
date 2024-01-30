@@ -68,7 +68,7 @@ class BaseTableComponent extends Component<BaseTableComponentProps, BaseTableCom
         if (this.tableRef) {
             this.contentHeight = this.tableRef.clientHeight - this.theadRef!.clientHeight;
             this.resizeObserver = new ResizeObserver(debounce((entries) => {
-                for (let entry of entries) {
+                for (const entry of entries) {
                     const {height} = entry.contentRect;
                     this.contentHeight = height - this.theadRef!.clientHeight;
                     this.tbodyRef1 && (this.tbodyRef1.style.height = `${this.contentHeight}px`);

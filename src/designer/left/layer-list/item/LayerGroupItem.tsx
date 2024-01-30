@@ -43,4 +43,4 @@ export default class LayerGroupItem extends BaseLayer {
             </div>
         );
     }
-};
+}

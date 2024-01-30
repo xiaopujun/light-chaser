@@ -92,7 +92,7 @@ class JsonSchemaDemo extends Component {
     }
 
     onChange = (fieldChangeData: FieldChangeData) => {
-
+        console.log('fieldChangeData', fieldChangeData);
     }
 
     render() {

@@ -22,7 +22,7 @@ class AntdBaseLineDefinition extends AbstractLineDefinition {
     }
 
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {
-        let menuToConfigContentMap = super.getMenuToConfigContentMap();
+        const menuToConfigContentMap = super.getMenuToConfigContentMap();
         menuToConfigContentMap!['style'] = AntdBaseLineStyleConfig;
         return menuToConfigContentMap;
     }

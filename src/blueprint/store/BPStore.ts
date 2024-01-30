@@ -279,7 +279,7 @@ class BPStore {
                 bpNodeController = this.bpNodeControllerInsMap[id];
             }
             if (bpNodeController) {
-                let nodeConfig = bpNodeController.getConfig();
+                const nodeConfig = bpNodeController.getConfig();
                 //获取当前节点下的所有锚点
                 const aps: AnchorPointInfoType[] = [...nodeConfig.input!, ...nodeConfig.output!];
                 aps.forEach(ap => {

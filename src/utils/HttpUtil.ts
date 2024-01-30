@@ -13,5 +13,5 @@ export default class HttpUtil {
         }
         const response = await fetch(url, requestOptions);
         return await response.json();
-    };
+    }
 }

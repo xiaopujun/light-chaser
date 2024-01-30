@@ -6,7 +6,7 @@ import {ConfigType} from "../../../designer/right/ConfigContent";
 
 export const BaseImageStyleConfig: React.FC<ConfigType<BaseImageController>> = ({controller}) => {
     const {style} = controller.getConfig()!;
-    let {type, onLineUrl, localUrl} = style!;
+    const {type, onLineUrl, localUrl} = style!;
 
     const [, setCount] = useState(0);
 

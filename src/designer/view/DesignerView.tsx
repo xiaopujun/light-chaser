@@ -9,13 +9,13 @@ import layerBuilder from "../left/layer-list/LayerBuilder";
 
 class DesignerView extends Component {
 
-    constructor(props: {}) {
+    constructor(props: any) {
         super(props);
         DesignerLoaderFactory.getLoader().load();
     }
 
     render() {
-        let {loaded, canvasConfig: {width, height}, layerConfigs} = designerStore!;
+        const {loaded, canvasConfig: {width, height}, layerConfigs} = designerStore!;
         if (!loaded)
             return <Loading/>;
         return (

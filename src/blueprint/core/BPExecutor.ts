@@ -40,7 +40,7 @@ export default class BPExecutor {
 
         if (!apId || apId === "")
             return;
-        let anchorInfoArr = apId.split(":");
+        const anchorInfoArr = apId.split(":");
         if (anchorInfoArr.length !== 3)
             return;
         const {bpAPMap} = bpStore;

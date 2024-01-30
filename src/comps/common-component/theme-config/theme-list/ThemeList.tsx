@@ -24,7 +24,7 @@ class ThemeList extends Component<ThemeListProps, ThemeListState> {
     onDel = (id: string) => {
         const {onDel} = this.props;
         const {themeConfig, updateThemeConfig} = designerStore;
-        let newThemes = themeConfig!.filter((item: ThemeItemType) => item.id !== id);
+        const newThemes = themeConfig!.filter((item: ThemeItemType) => item.id !== id);
         updateThemeConfig(newThemes);
         onDel && onDel(id);
     }
@@ -40,7 +40,7 @@ class ThemeList extends Component<ThemeListProps, ThemeListState> {
         const {activeId} = this.state;
         const {showOperator} = this.props;
         const themeConfig = designerStore.themeConfig;
-        let themeList = [];
+        const themeList = [];
         for (let i = 0; i < themeConfig!.length; i++) {
             themeList.push(<ThemeItem key={i} id={themeConfig![i].id} selected={themeConfig![i].id === activeId}
                                       name={themeConfig![i].name}

@@ -3,7 +3,7 @@ import {SelectableDemo} from "./SelectableDemo";
 import {MovableDemo} from "./MovableDemo";
 import './LayerDemo.less';
 
-export const LayerDemo: React.FC<{}> = props => {
+export const LayerDemo: React.FC = () => {
 
     return (
         <div style={{width: '100%', height: '100%', background: 'black', position: 'relative'}}

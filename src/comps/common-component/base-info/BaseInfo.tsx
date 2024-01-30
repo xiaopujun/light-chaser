@@ -76,7 +76,7 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
         updateLayer && updateLayer([{id: this.state.id!, name: value as string}]);
         //如果显示图层,则更新图层名称
         const {layerInstances} = layerListStore;
-        let layerInstance = layerInstances[this.state.id!];
+        const layerInstance = layerInstances[this.state.id!];
         layerInstance && (layerInstance as Component).setState({name: value});
     }
 

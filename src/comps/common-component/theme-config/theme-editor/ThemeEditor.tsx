@@ -135,7 +135,7 @@ class ThemeEditor extends Component {
 
     onDel = (id: string) => {
         const {data} = this.state;
-        let newData = data.filter((item: ThemeItemType) => item.id !== id);
+        const newData = data.filter((item: ThemeItemType) => item.id !== id);
         this.setState({data: newData});
     }
 

@@ -55,8 +55,8 @@ export default function ScreenFit(props: ScreenFitProps) {
         const domHeight = elRef.current!.clientHeight
         const currentWidth = document.body.clientWidth
         const currentHeight = document.body.clientHeight
-        let mx = Math.max((currentWidth - domWidth * scale) / 2, 0)
-        let my = Math.max((currentHeight - domHeight * scale) / 2, 0)
+        const mx = Math.max((currentWidth - domWidth * scale) / 2, 0)
+        const my = Math.max((currentHeight - domHeight * scale) / 2, 0)
         elRef.current!.style.margin = `${my}px ${mx}px`
     }
 

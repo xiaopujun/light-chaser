@@ -1,9 +1,8 @@
 import React, {useState} from "react";
-import {Upload as AntdUpLoad} from "antd";
+import {Upload as AntdUpLoad, UploadFile} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
 import './ImageUpload.less';
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
-import {UploadFile} from "antd/lib/upload/interface";
 import operatorMap from "../../../framework/operate/index";
 import URLUtil from "../../../utils/URLUtil";
 import {AbstractOperator} from "../../../framework/operate/AbstractOperator";

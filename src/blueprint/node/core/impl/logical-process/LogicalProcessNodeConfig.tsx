@@ -6,7 +6,7 @@ import {debounce} from "lodash";
 export const LogicalProcessNodeConfig: React.FC<BPRightConfigProps> = (props) => {
     const {controller} = props;
     const config = controller?.getConfig();
-    let handleCode = config.handler || "function handle(data) { \n \n }";
+    const handleCode = config.handler || "function handle(data) { \n \n }";
     const onCodeChange = debounce((value: string | undefined) => {
         if (!value) return;
         controller?.update({handler: value});

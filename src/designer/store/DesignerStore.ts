@@ -152,7 +152,7 @@ class DesignerStore {
      * 获取store数据
      */
     getData(): ProjectDataType {
-        let elemConfigs: { [key: string]: any } = {};
+        const elemConfigs: { [key: string]: any } = {};
         Object.keys(this.compController).forEach((key) => {
             elemConfigs[key] = this.compController[key].getConfig();
         });
@@ -218,7 +218,7 @@ class DesignerStore {
      */
     updateLayer = (items: ILayerItem[], reRender: boolean = true) => {
         for (const item of items) {
-            let oldItem = this.layerConfigs[item.id + ""];
+            const oldItem = this.layerConfigs[item.id + ""];
             if (!isEqual(oldItem, item))
                 this.layerConfigs[item.id + ""] = reRender ? {...ObjectUtil.merge(oldItem, item)} : ObjectUtil.merge(oldItem, item);
         }
@@ -241,7 +241,7 @@ class DesignerStore {
 
     flashGlobalTheme = (newTheme: ThemeItemType) => {
         this.compController && Object.keys(this.compController).forEach((key: string) => {
-            let instance = this.compController[key];
+            const instance = this.compController[key];
             if (instance)
                 instance.updateTheme(newTheme);
         });

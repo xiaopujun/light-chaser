@@ -50,7 +50,7 @@ class LayerList extends Component<LayerListProps> {
         const {searchContent} = layerListStore;
         if (!searchContent || searchContent === '')
             return layerBuilder.buildLayerList(layerConfigs);
-        let filterLayer: Record<string, any> = {};
+        const filterLayer: Record<string, any> = {};
         if (searchContent === ':hide') {
             //仅过展示隐藏的图层
             Object.values(layerConfigs).forEach((item: ILayerItem) => {

@@ -56,7 +56,7 @@ export const ImageSource: React.FC = () => {
         const definition = definitionMap[compKey];
         const {compName, width = 320, height = 200} = definition.getBaseInfo();
         const id = IdGenerate.generateId();
-        let movableItem: ILayerItem = {
+        const movableItem: ILayerItem = {
             name: compName,
             type: compKey,
             x: Math.round(position![0]),

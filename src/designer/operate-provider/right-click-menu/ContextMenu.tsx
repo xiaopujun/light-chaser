@@ -98,8 +98,8 @@ class ContextMenu extends Component {
         const menuListDom = [];
         const menus = this.calculateMenus();
         for (let i = 0; i < menus.length; i++) {
-            let menuItem = menus[i];
-            let Icon = menuItem.icon;
+            const menuItem = menus[i];
+            const Icon = menuItem.icon;
             menuListDom.push(
                 <div key={i + ''} className={'menu-item'} onClick={menuItem.onClick}>
                     <label><Icon/></label>

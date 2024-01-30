@@ -17,7 +17,7 @@ export class AddRollbackImpl extends AbstractRollback {
         if (!record) return;
         const {setTargetIds, focusDesignerCanvas} = eventOperateStore;
         const {next} = record!;
-        let nextAddData = next! as IAddOperateData[];
+        const nextAddData = next! as IAddOperateData[];
         //执行反向操作删除元素
         const {delItem} = designerStore;
         const delIds: string[] = [];

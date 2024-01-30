@@ -82,7 +82,7 @@ const contextMenuHandler = (event: MouseEvent) => {
     event.preventDefault();
     const {mouseDownTime, mouseUpTime, setPosition, updateVisible} = contextMenuStore;
     const {targetIds} = eventOperateStore;
-    let targetArr = ['lc-comp-item', 'moveable-area', 'layer-item', 'layer-name', 'group-header', 'group-left', 'group-icon', 'group-name'];
+    const targetArr = ['lc-comp-item', 'moveable-area', 'layer-item', 'layer-name', 'group-header', 'group-left', 'group-icon', 'group-name'];
     if (targetIds && targetIds.length > 0
         && targetArr.some((item: string) => (event.target as HTMLElement)?.classList.contains(item))
         && mouseUpTime - mouseDownTime < 200) {
