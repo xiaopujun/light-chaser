@@ -55,11 +55,14 @@ export class LCGUI extends React.Component<LCGUIProps> {
         }
         //从control本层级开始逐级向上匹配，直到所有变量都匹配结束
         const analyze = (control: Control, variable: string[], rules: string): string => {
+            if (variable.length === 0)
+                return rules;
             const {parent} = control;
             if (parent && "children" in parent) {
                 //解析parent的所有子节点control(与当前control同级)
                 const {children} = parent;
                 for (let i = 0; i < children!.length; i++) {
+                    if (variable.length === 0) break;
                     const child = children![i];
                     const matchIndex = variable.indexOf(child.key!);
                     if (child.key && matchIndex !== -1) {
@@ -69,9 +72,10 @@ export class LCGUI extends React.Component<LCGUIProps> {
                 }
             }
             if (variable.length > 0 && parent) {
-                //解析parent的其他非children属性
+                //解析parent层级的key是否匹配
                 const matchIndex = variable.indexOf(parent!.key!);
-                if (parent!.key && matchIndex !== -1) {
+                if (parent!.key && parent.value && matchIndex !== -1) {
+                    //parent层级在同时匹配上key，同时value属性有值，同时variable中有匹配项时，才进行替换
                     rules = rules.replace(`{${parent!.key}}`, `'${parent.value}'`)
                     variable.splice(matchIndex, 1);
                 }
