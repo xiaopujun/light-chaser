@@ -5,7 +5,7 @@ import Button from "../../json-schema/ui/button/Button";
 import {CheckBox} from "../../json-schema/ui/checkbox/CheckBox";
 import {globalMessage} from "../../framework/message/GlobalMessage";
 
-export const Login: React.FC = props => {
+export const Login: React.FC = () => {
 
     let account = 'admin';
     let password = 'admin';
@@ -39,7 +39,8 @@ export const Login: React.FC = props => {
                                    label={'密码'}
                                    type={'password'}/>
                         </div>
-                        <div className={'login-item remember-me'}><CheckBox label={'记住我'} defaultValue={false}/></div>
+                        <div className={'login-item remember-me'}><CheckBox label={'记住我'} defaultValue={false}/>
+                        </div>
                         <div className={'login-item'}><Button onClick={login}>登录</Button></div>
                     </div>
                 </div>

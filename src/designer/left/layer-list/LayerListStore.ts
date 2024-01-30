@@ -107,7 +107,7 @@ class LayerListStore {
         }, 0)
 
         //更新选中组件的边框颜色（锁定状态组件为红色，非锁定状态组件为蓝色）
-        let finalLock = layerConfigs[selectedLayerIds[0]]?.lock;
+        const finalLock = layerConfigs[selectedLayerIds[0]]?.lock;
         const tempTimer = setTimeout(() => {
             setControlPointLineColor(finalLock!);
             clearTimeout(tempTimer);

@@ -1,8 +1,8 @@
-import React from "react";
 import ReactDOM from "react-dom";
 import {BluePrint} from "../../../../blueprint/BluePrint";
+import {ReactElement} from "react";
 
-export const BluePrintHdImpl: React.FC = () => {
+export const BluePrintHdImpl = () => {
     return ReactDOM.createPortal(
         <div style={{
             position: 'relative',
@@ -13,5 +13,5 @@ export const BluePrintHdImpl: React.FC = () => {
             backgroundColor: '#151515'
         }}>
             <BluePrint/>
-        </div>, document.body)
+        </div>, document.body)! as ReactElement;
 }

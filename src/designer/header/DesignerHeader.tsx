@@ -76,7 +76,7 @@ const leftItems: Array<IHeaderItem> = [
 const Header: React.FC = observer(() => {
 
         const buildHeaderItemUI = (items: Array<IHeaderItem>): Array<ReactElement> => {
-            let headerItems: Array<ReactElement> = [];
+            const headerItems: Array<ReactElement> = [];
             for (let i = 0; i < items.length; i++) {
                 const {icon: Icon, name, key, onClick} = items[i];
                 headerItems.push(

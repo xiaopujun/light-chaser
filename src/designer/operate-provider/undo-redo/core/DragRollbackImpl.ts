@@ -7,7 +7,7 @@ export class DragRollbackImpl extends AbstractRollback {
         if (!record) return;
         const {movableRef, setBackoff, setTargetIds} = eventOperateStore;
         const {next} = record!;
-        let nextRecordData = next! as IDragOperateData;
+        const nextRecordData = next! as IDragOperateData;
         //选中目标元素
         setTargetIds(nextRecordData.ids);
         setBackoff(true);
@@ -24,7 +24,7 @@ export class DragRollbackImpl extends AbstractRollback {
         if (!record) return;
         const {movableRef, setBackoff, setTargetIds} = eventOperateStore;
         const {prev} = record!;
-        let prevRecordData = prev! as IDragOperateData;
+        const prevRecordData = prev! as IDragOperateData;
         //选中目标元素
         setTargetIds(prevRecordData.ids);
         setBackoff(true);

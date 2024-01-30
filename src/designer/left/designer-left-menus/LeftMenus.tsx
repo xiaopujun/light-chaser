@@ -23,7 +23,7 @@ class LeftMenus extends Component {
 
     buildClassifyList = () => {
         const {menus, menu} = designerLeftStore;
-        let classifyArr = [];
+        const classifyArr = [];
         for (let i = 0; i < menus.length; i++) {
             const {icon: Icon, name, key} = menus[i];
             classifyArr.push(

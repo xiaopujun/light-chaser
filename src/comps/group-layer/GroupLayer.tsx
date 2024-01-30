@@ -24,7 +24,7 @@ export default class GroupLayer extends React.PureComponent<GroupLayerStyleProps
     componentDidMount(): void {
         const {layer} = this.props;
         const {elemConfigs, compController} = designerStore;
-        let groupDefinition: AbstractDefinition = DesignerLoaderFactory.getLoader().definitionMap['group'];
+        const groupDefinition: AbstractDefinition = DesignerLoaderFactory.getLoader().definitionMap['group'];
         let config;
         if (layer.id! in compController!) {
             //重新编组后，被编组组件会重新渲染，需从之前的实例中获取原有数据

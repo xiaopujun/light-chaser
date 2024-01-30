@@ -37,7 +37,7 @@ class ComponentListStore {
         const {definitionMap} = DesignerLoaderFactory.getLoader();
         if (definitionMap) {
             Object.keys(definitionMap).forEach(key => {
-                let baseInfo = definitionMap[key].getBaseInfo();
+                const baseInfo = definitionMap[key].getBaseInfo();
                 if (baseInfo.compKey !== 'group') comps.push(baseInfo);
             });
         }

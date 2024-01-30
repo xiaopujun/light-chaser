@@ -7,7 +7,7 @@ export class ResizeRollbackImpl extends AbstractRollback {
         if (!record) return;
         const {movableRef, setBackoff, setTargetIds} = eventOperateStore;
         const {next} = record!;
-        let nextResizeData = next! as IResizeOperateData;
+        const nextResizeData = next! as IResizeOperateData;
         //选中目标元素
         setTargetIds(nextResizeData.ids);
         setBackoff(true);
@@ -25,7 +25,7 @@ export class ResizeRollbackImpl extends AbstractRollback {
         if (!record) return;
         const {movableRef, setBackoff, setTargetIds} = eventOperateStore;
         const {prev} = record!;
-        let prevResizeData = prev! as IResizeOperateData;
+        const prevResizeData = prev! as IResizeOperateData;
         //选中目标元素
         setTargetIds(prevResizeData.ids);
         setBackoff(true);

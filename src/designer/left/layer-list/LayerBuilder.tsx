@@ -60,7 +60,7 @@ class LayerBuilder {
         const {type, children} = layer;
         const {targetIds} = eventOperateStore;
         const {layerInstances} = layerListStore;
-        let _props = {
+        const _props = {
             key: layer.id,
             name: layer.name,
             lock: layer.lock,

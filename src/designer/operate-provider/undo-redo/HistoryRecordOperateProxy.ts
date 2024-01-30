@@ -65,7 +65,7 @@ class HistoryRecordOperateProxy {
         updateLayer(items, false);
         //历史记录入队
         historyOperator.put({actions: [data]});
-    };
+    }
 
     public doResize(items: ILayerItem[], direction: [number, number]): void {
         //构建历史记录数据
@@ -227,7 +227,7 @@ class HistoryRecordOperateProxy {
         //生成新组件配置项数据
         const oldCompController = compController[oldLayer.id!];
         if (oldCompController) {
-            let newConfig = cloneDeep(oldCompController.getConfig());
+            const newConfig = cloneDeep(oldCompController.getConfig());
             newConfig.base.id = newLayer.id;
             elemConfigs![newLayer.id] = newConfig;
         }
@@ -244,7 +244,7 @@ class HistoryRecordOperateProxy {
      * @param ids
      */
     public doCopy(ids: string[]): string[] {
-        let newIds: string[] = [];
+        const newIds: string[] = [];
         const {layerConfigs, elemConfigs} = designerStore;
         let {maxLevel, setMaxLevel} = eventOperateStore;
         //next用于保存操作记录的下一个状态
@@ -334,11 +334,11 @@ class HistoryRecordOperateProxy {
             setGroupCoordinate({minX: groupCoordinate.minX! + 10, minY: groupCoordinate.minY! + 10})
         }
         return newIds;
-    };
+    }
 
     public doHideUpd(items: ILayerItem[]): void {
-        let prev: IHideOperateData[] = [];
-        let next: IHideOperateData[] = [];
+        const prev: IHideOperateData[] = [];
+        const next: IHideOperateData[] = [];
         const {layerConfigs, updateLayer} = designerStore;
         items.forEach((item) => {
             const {id, hide} = item;
@@ -364,8 +364,8 @@ class HistoryRecordOperateProxy {
     }
 
     public doLockUpd(items: ILayerItem[]): void {
-        let prev: ILockOperateData[] = [];
-        let next: ILockOperateData[] = [];
+        const prev: ILockOperateData[] = [];
+        const next: ILockOperateData[] = [];
         const {layerConfigs, updateLayer} = designerStore;
         items.forEach((item) => {
             const {id, lock} = item;
@@ -387,8 +387,8 @@ class HistoryRecordOperateProxy {
     }
 
     public doOrderUpd(items: ILayerItem[]): void {
-        let prev: IOrderOperateData[] = [];
-        let next: IOrderOperateData[] = [];
+        const prev: IOrderOperateData[] = [];
+        const next: IOrderOperateData[] = [];
         const {layerConfigs, updateLayer} = designerStore;
         items.forEach((item) => {
             const {id, order} = item;
@@ -497,10 +497,10 @@ class HistoryRecordOperateProxy {
         const childNext: ILayerItem[] = [];
         const groupPrev: IDelOperateData[] = [];
         groupIds.forEach((groupId: string) => {
-            let item = layerConfigs[groupId];
+            const item = layerConfigs[groupId];
             //记录被删除的分组图层
             groupPrev.push({id: groupId, data: {layerConfig: item}});
-            let childIds = item.childIds;
+            const childIds = item.childIds;
             const updateItems: ILayerItem[] = [];
             childIds && childIds.forEach((childId: string) => {
                 childPrev.push({id: childId, pid: groupId});

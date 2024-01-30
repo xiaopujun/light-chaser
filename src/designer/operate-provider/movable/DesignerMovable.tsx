@@ -65,7 +65,7 @@ class DesignerMovable extends React.Component<DesignerMovableProps, DesignerMova
 
     onDragEnd = (e: OnDragEnd) => {
         const {updateLayer} = designerStore;
-        let {backoff, setBackoff} = eventOperateStore;
+        const {backoff, setBackoff} = eventOperateStore;
         const {lastEvent, target} = e;
         if (lastEvent) {
             const {beforeTranslate} = lastEvent;
@@ -118,8 +118,8 @@ class DesignerMovable extends React.Component<DesignerMovableProps, DesignerMova
         const firstLock = layerConfigs[targets[0].id].lock;
         if (firstLock) return false;
 
-        let {backoff, setBackoff, setGroupCoordinate, groupCoordinate, targetIds} = eventOperateStore;
-        let data: ILayerItem[] = [];
+        const {backoff, setBackoff, setGroupCoordinate, groupCoordinate, targetIds} = eventOperateStore;
+        const data: ILayerItem[] = [];
         e.events.forEach((ev: OnDragEnd) => {
             const {target, lastEvent} = ev;
             if (lastEvent) {
@@ -180,7 +180,7 @@ class DesignerMovable extends React.Component<DesignerMovableProps, DesignerMova
 
     onResizeEnd = (e: OnResizeEnd) => {
         const {updateLayer} = designerStore;
-        let {backoff, setBackoff} = eventOperateStore;
+        const {backoff, setBackoff} = eventOperateStore;
         const {target, lastEvent} = e;
         if (lastEvent) {
             const {width, height, drag: {translate}, direction} = lastEvent;
@@ -228,8 +228,8 @@ class DesignerMovable extends React.Component<DesignerMovableProps, DesignerMova
 
     onResizeGroupEnd = (e: OnResizeGroupEnd) => {
         const {updateLayer} = designerStore;
-        let {backoff, setBackoff, targetIds} = eventOperateStore;
-        let data: ILayerItem[] = [];
+        const {backoff, setBackoff, targetIds} = eventOperateStore;
+        const data: ILayerItem[] = [];
         e.events.forEach((ev: OnResizeEnd) => {
             const {target, lastEvent} = ev;
             if (lastEvent) {

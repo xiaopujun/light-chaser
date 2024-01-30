@@ -87,7 +87,7 @@ export default class LayerUtil {
         const {layerConfigs} = designerStore;
         groupLayerIds.forEach((id) => {
             if (layerConfigs[id]) {
-                let {childIds} = layerConfigs[id];
+                const {childIds} = layerConfigs[id];
                 if (childIds && childIds.length > 0) {
                     res.push(...childIds);
                     LayerUtil._findAllChildLayer(childIds, res);

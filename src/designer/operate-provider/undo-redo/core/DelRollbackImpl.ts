@@ -23,7 +23,7 @@ export class DelRollbackImpl extends AbstractRollback {
         if (!record) return;
         const {setTargetIds} = eventOperateStore;
         const {prev} = record!;
-        let prevDelData = prev! as IDelOperateData[];
+        const prevDelData = prev! as IDelOperateData[];
         //执行反向操作添加元素
         const {addItem, elemConfigs} = designerStore;
         const targetIds: string[] = [];

@@ -46,7 +46,7 @@ export default class ColorUtil {
 
         // 提取颜色和位置
         const colors = gradient.match(/rgba?\([^)]+\) \d+(\.\d+)?%?/g);
-        const parsedColors = colors?.map((color, index) => {
+        const parsedColors = colors?.map((color) => {
             const cutPos = color.lastIndexOf(' ');
             return {
                 color: color.substring(0, cutPos),

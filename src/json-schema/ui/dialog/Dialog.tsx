@@ -37,7 +37,7 @@ class Dialog extends Component<DialogProps> {
                 </div>
             </div>,
             document.body
-        );
+        ) as ReactNode;
     }
 }
 

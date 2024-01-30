@@ -112,7 +112,7 @@ export class LCGUI extends React.Component<LCGUIProps> {
                 nodes.push([...tempNodes]);
             } else {
                 const {type, config, value, id, reRender, label, tip} = control;
-                let Component = UIMap.get(type);
+                const Component = UIMap.get(type);
                 schemaKeyPath.pop();
                 schemaKeyPath.push({key: "value"});
                 //非叶子节点不解析label
@@ -138,7 +138,7 @@ export class LCGUI extends React.Component<LCGUIProps> {
                 ...config, ...controlVal, label, tip,
                 onChange: (data: any) => this.onControlChange(data, schemaKeyPath, dataKeyPath, reRender, id)
             };
-            let Component = UIMap.get(type);
+            const Component = UIMap.get(type);
             if (!Component) return [];
             nodes.push(<Component key={childIndex} {..._props} />);
         }

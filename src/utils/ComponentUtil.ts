@@ -3,7 +3,7 @@ import {createRoot} from "react-dom/client";
 
 class ComponentUtil {
 
-    public static async createAndRender<T, P = {}>(container: HTMLElement, clazzTemp: ClassType<P, any, any>, props?: {}): Promise<T | null> {
+    public static async createAndRender<T, P = any>(container: HTMLElement, clazzTemp: ClassType<P, any, any>, props?: any): Promise<T | null> {
         if (!container)
             throw new Error("create react node failed, container is null");
         return await new Promise<T | null>((resolve) => {

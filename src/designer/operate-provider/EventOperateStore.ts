@@ -166,20 +166,20 @@ class EventOperateStore {
             //清除之前的选中
             oldTargetIds.forEach(id => {
                 const instance: Component = layerInstances[id];
-                if (!!instance)
+                if (instance)
                     instance.setState({selected: false});
             });
             //设置本次选中的组件id
             this.targetIds.forEach(id => {
                 const instance: Component = layerInstances[id];
-                if (!!instance)
+                if (instance)
                     instance.setState({selected: true});
             })
         }
 
         //若选中多个组件，计算更新组件多选时的左上角坐标
         if (this.targets.length > 1) {
-            let {calculateGroupCoordinate} = eventOperateStore;
+            const {calculateGroupCoordinate} = eventOperateStore;
             calculateGroupCoordinate(this.targets);
         }
     }
@@ -196,7 +196,7 @@ class EventOperateStore {
      */
     calculateGroupCoordinate = (compArr: HTMLElement[]) => {
         const {layerConfigs} = designerStore;
-        let groupCoordinate: GroupCoordinateType = {
+        const groupCoordinate: GroupCoordinateType = {
             minX: Infinity,
             minY: Infinity,
             maxX: -Infinity,
@@ -204,7 +204,7 @@ class EventOperateStore {
         };
         compArr.forEach((item: HTMLElement) => {
             const layerConfig: ILayerItem = layerConfigs[item.id];
-            let {x = 0, y = 0, width, height} = layerConfig!;
+            const {x = 0, y = 0, width, height} = layerConfig!;
             if (x < groupCoordinate.minX!)
                 groupCoordinate.minX = x;
             if (y < groupCoordinate.minY!)

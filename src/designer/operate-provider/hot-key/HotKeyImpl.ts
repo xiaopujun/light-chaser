@@ -32,11 +32,11 @@ export const selectAll = () => {
  * 普通复制，只复制非分组图层
  */
 export const doCopy = () => {
-    let {targetIds, setTargetIds} = eventOperateStore;
+    const {targetIds, setTargetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
 
     const {copyItem} = designerStore;
-    let newIds = copyItem(targetIds);
+    const newIds = copyItem(targetIds);
     //延迟10毫秒，等待dom元素渲染完毕后再获取。
     const tempTimer = setTimeout(() => {
         setTargetIds(newIds);
@@ -48,9 +48,9 @@ export const doLock = () => {
     const {targetIds, setTargetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
     const {layerConfigs} = designerStore;
-    let toBeUpdate = [];
+    const toBeUpdate = [];
     for (const targetId of targetIds) {
-        let item = layerConfigs[targetId];
+        const item = layerConfigs[targetId];
         toBeUpdate.push({...item, lock: true})
     }
     historyRecordOperateProxy.doLockUpd(toBeUpdate);
@@ -62,7 +62,7 @@ export const doUnLock = () => {
     const {setTargetIds, targetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
     const {layerConfigs} = designerStore;
-    let toUpdate: ILayerItem[] = [];
+    const toUpdate: ILayerItem[] = [];
     targetIds.filter(id => {
         //过滤出被锁定的组件
         return layerConfigs[id].lock;
@@ -77,9 +77,9 @@ export const toTop = () => {
     let {maxLevel, setMaxLevel, targetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
     const {layerConfigs} = designerStore;
-    let toBeUpdate: ILayerItem[] = [];
+    const toBeUpdate: ILayerItem[] = [];
     targetIds.forEach((id: string) => {
-        let item = layerConfigs[id];
+        const item = layerConfigs[id];
         toBeUpdate.push({...item, order: ++maxLevel});
     });
     setMaxLevel(maxLevel)
@@ -90,9 +90,9 @@ export const toBottom = () => {
     let {minLevel, setMinLevel, targetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
     const {layerConfigs} = designerStore;
-    let toBeUpdate: ILayerItem[] = [];
+    const toBeUpdate: ILayerItem[] = [];
     targetIds.forEach((id: string) => {
-        let item = layerConfigs[id];
+        const item = layerConfigs[id];
         toBeUpdate.push({...item, order: --minLevel});
     });
     setMinLevel(minLevel)
@@ -146,9 +146,9 @@ export const doHide = () => {
     const {targetIds, setTargetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
     const {layerConfigs} = designerStore;
-    let toBeUpdate: ILayerItem[] = [];
+    const toBeUpdate: ILayerItem[] = [];
     targetIds.forEach((id: string) => {
-        let item = layerConfigs[id];
+        const item = layerConfigs[id];
         toBeUpdate.push({...item, hide: true});
     });
     historyRecordOperateProxy.doHideUpd(toBeUpdate);
@@ -169,7 +169,7 @@ export const doGrouping = () => {
 export const doUnGrouping = () => {
     //如果蓝图中使用了分组图层节点，则需要先删除蓝图中的组件和连线，且蓝图中的删除操作目前无法回退
     let {targetIds} = eventOperateStore;
-    let targetIdSet = new Set<string>();
+    const targetIdSet = new Set<string>();
     LayerUtil.findTopGroupLayer(targetIds, false).forEach((id: string) => targetIdSet.add(id));
     targetIds = Array.from(targetIdSet);
     if (targetIds && targetIds.length > 0) {
@@ -196,14 +196,14 @@ export const doMoveUp = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
     const {layerConfigs, canvasConfig: {dragStep = 1}} = designerStore;
+    let yPos;
     if (targets.length === 1) {
-        let id = targets[0].id;
-        let yPos = layerConfigs[id].y! - dragStep;
-        movableRef?.request("draggable", {y: yPos}, true);
+        const id = targets[0].id;
+        yPos = (layerConfigs[id].y || 0) - dragStep;
     } else {
-        const yPos = groupCoordinate?.minY! - dragStep;
-        movableRef?.request("draggable", {y: yPos}, true);
+        yPos = (groupCoordinate?.minY || 0) - dragStep;
     }
+    movableRef?.request("draggable", {y: yPos}, true);
 }
 
 export const doMoveDown = () => {
@@ -211,8 +211,8 @@ export const doMoveDown = () => {
     if (!targets || targets.length === 0) return;
     const {layerConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (targets.length === 1) {
-        let id = targets[0].id;
-        let yPos = layerConfigs[id].y! + dragStep;
+        const id = targets[0].id;
+        const yPos = layerConfigs[id].y! + dragStep;
         movableRef?.request("draggable", {y: yPos}, true);
     } else {
         const yPos = groupCoordinate?.minY! + dragStep;
@@ -225,8 +225,8 @@ export const doMoveLeft = () => {
     if (!targets || targets.length === 0) return;
     const {layerConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (targets.length === 1) {
-        let id = targets[0].id;
-        let xPos = layerConfigs[id].x!;
+        const id = targets[0].id;
+        const xPos = layerConfigs[id].x!;
         movableRef?.request("draggable", {x: xPos - dragStep}, true);
     } else {
         const xPos = groupCoordinate?.minX! - dragStep;
@@ -239,8 +239,8 @@ export const doMoveRight = () => {
     if (!targets || targets.length === 0) return;
     const {layerConfigs, canvasConfig: {dragStep = 1}} = designerStore;
     if (targets.length === 1) {
-        let id = targets[0].id;
-        let xPos = layerConfigs[id].x!;
+        const id = targets[0].id;
+        const xPos = layerConfigs[id].x!;
         movableRef?.request("draggable", {x: xPos + dragStep}, true);
     } else {
         const xPos = groupCoordinate?.minX! + dragStep;
@@ -259,7 +259,7 @@ export const doBaseBottomEnlargeUp = () => {
     const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     let height;
     if (targets.length === 1) {
-        let id = targets[0].id;
+        const id = targets[0].id;
         height = layerConfigs[id].height! + resizeStep;
     } else {
         height = groupCoordinate.groupHeight! + resizeStep;
@@ -276,7 +276,7 @@ export const doBaseUpEnlargeDown = () => {
     const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     let height;
     if (targets.length === 1) {
-        let id = targets[0].id;
+        const id = targets[0].id;
         height = layerConfigs[id].height! + resizeStep;
     } else {
         height = groupCoordinate.groupHeight! + resizeStep;
@@ -293,7 +293,7 @@ export const doBaseRightEnlargeLeft = () => {
     const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     let width;
     if (targets.length === 1) {
-        let id = targets[0].id;
+        const id = targets[0].id;
         width = layerConfigs[id].width! + resizeStep;
     } else {
         width = groupCoordinate.groupWidth! + resizeStep;
@@ -310,7 +310,7 @@ export const doBaseLeftEnlargeRight = () => {
     const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     let width;
     if (targets.length === 1) {
-        let id = targets[0].id;
+        const id = targets[0].id;
         width = layerConfigs[id].width! + resizeStep;
     } else {
         width = groupCoordinate.groupWidth! + resizeStep;
@@ -344,7 +344,7 @@ export const doBaseUpDecreaseDown = () => {
     const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     let height;
     if (targets.length === 1) {
-        let id = targets[0].id;
+        const id = targets[0].id;
         height = layerConfigs[id].height! - resizeStep;
     } else {
         height = groupCoordinate.groupHeight! - resizeStep;
@@ -361,7 +361,7 @@ export const doBaseRightDecreaseLeft = () => {
     const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     let width;
     if (targets.length === 1) {
-        let id = targets[0].id;
+        const id = targets[0].id;
         width = layerConfigs[id].width! - resizeStep;
     } else {
         width = groupCoordinate.groupWidth! - resizeStep;
@@ -378,7 +378,7 @@ export const doBaseLeftDecreaseRight = () => {
     const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
     let width;
     if (targets.length === 1) {
-        let id = targets[0].id;
+        const id = targets[0].id;
         width = layerConfigs[id].width! - resizeStep;
     } else {
         width = groupCoordinate.groupWidth! - resizeStep;
@@ -391,7 +391,7 @@ export const doBaseLeftDecreaseRight = () => {
  * 撤销
  */
 export const undo = () => {
-    let history = historyOperator.backoff();
+    const history = historyOperator.backoff();
     if (!history) return;
     const {actions} = history!;
     actions.forEach(action => {
@@ -404,7 +404,7 @@ export const undo = () => {
  * 重做
  */
 export const redo = () => {
-    let history = historyOperator.forward();
+    const history = historyOperator.forward();
     if (!history) return;
     const {actions} = history!;
     actions.forEach(action => {

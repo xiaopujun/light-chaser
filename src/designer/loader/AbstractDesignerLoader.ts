@@ -41,16 +41,16 @@ export abstract class AbstractDesignerLoader extends AbstractLoader {
         Object.keys(glob).forEach(key => {
             const Clazz = glob[key]?.default;
             if (Clazz && AbstractDefinition.isPrototypeOf(Clazz)) {
-                let definition: AbstractDefinition = new Clazz();
+                const definition: AbstractDefinition = new Clazz();
                 //获取组件的基础信息
                 if (typeof definition.getBaseInfo === "function") {
-                    let compKey = definition.getBaseInfo().compKey;
+                    const compKey = definition.getBaseInfo().compKey;
                     if (compKey)
                         this.definitionMap[compKey] = definition;
                 }
                 //获取自定义分类
                 if (typeof definition.getCategorize === "function") {
-                    let categorize = definition.getCategorize();
+                    const categorize = definition.getCategorize();
                     if (categorize) {
                         if (!categorize.icon) {
                             console.error("自定义组件的分类必须指定icon");
@@ -61,7 +61,7 @@ export abstract class AbstractDesignerLoader extends AbstractLoader {
                 }
                 //获取自定义子类型
                 if (typeof definition.getSubCategorize === "function") {
-                    let subCategorize = definition.getSubCategorize();
+                    const subCategorize = definition.getSubCategorize();
                     if (subCategorize) {
                         if (!subCategorize.parentKey) {
                             console.error("自定义组件的子类型必须指定parentKey");
@@ -71,8 +71,8 @@ export abstract class AbstractDesignerLoader extends AbstractLoader {
                     }
                 }
             } else if (Clazz && AbstractConvert.isPrototypeOf(Clazz)) {
-                let convert: AbstractConvert = new Clazz();
-                let convertKey = convert.getKey();
+                const convert: AbstractConvert = new Clazz();
+                const convertKey = convert.getKey();
                 this.convertMap[convertKey] = convert;
             }
         });
