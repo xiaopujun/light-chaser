@@ -38,10 +38,6 @@ export enum OperateType {
      */
     LOCK,
     /**
-     * 组件编组
-     */
-    GROUP,
-    /**
      * 更新图层分组
      */
     UPD_LAYER_GROUP,

@@ -295,8 +295,7 @@ class HistoryRecordOperateProxy {
                     //非独立子图层为分组图层时，要同时更新新复制出来的分组图层的pid和childIds
                     const newLayer = layerConfigs[layerIdMapOldToNew[oldLayer.id!]];
                     newLayer.pid = layerIdMapOldToNew[oldLayer.pid!];
-                    const newChildIds = oldLayer.childIds!.map((childId) => layerIdMapOldToNew[childId]);
-                    newLayer.childIds = newChildIds;
+                    newLayer.childIds = oldLayer.childIds!.map((childId) => layerIdMapOldToNew[childId]);
                 } else {
                     //非独立子图层为普通图层时，只需要更新新复制出来图层的pid
                     const newLayer = layerConfigs[layerIdMapOldToNew[oldLayer.id!]];
@@ -527,6 +526,49 @@ class HistoryRecordOperateProxy {
             setContentVisible(false);
             activeConfig(null, "");
         }
+    }
+
+    public doRemoveFromGroup() {
+        const {targetIds} = eventOperateStore;
+        if (!targetIds || targetIds.length === 0)
+            return;
+        //若存在分组图层，先过滤掉分组图层下的所有子图层
+        const {layerConfigs, updateLayer} = designerStore;
+        const groupLayerIds = targetIds.filter(id => layerConfigs[id].type === 'group');
+        const toBeRemoveChildIds = LayerUtil.findAllChildLayer(groupLayerIds, false);
+        //过滤掉分组图层下的所有子图层
+        const finalTargetIds = targetIds.filter(id => !toBeRemoveChildIds.includes(id));
+        if (finalTargetIds.length === 0) return;
+
+
+        //构建历史操作记录
+        const actions: IHistoryRecord[] = [];
+        const prev: ILayerItem[] = [];
+        const next: ILayerItem[] = [];
+
+        /**
+         * 从分组中移除理论上分为如下场景：
+         * 1. 单个普通图层移出
+         * 2. 单个分组图层移出
+         * 3. 多个普通图层移出
+         * 4. 多个分组图层移出
+         * 5. 多个普通图层和分组图层同时移出
+         *
+         * 以上5种情况，均可以使用如下代码进行操作
+         */
+        finalTargetIds.forEach(id => {
+            const pid = layerConfigs[id].pid;
+            if (pid === undefined || pid === '')
+                return;
+            const childIds = layerConfigs[pid!].childIds;
+            prev.push(...[{id: pid!, childIds: [...childIds!]}, {id, pid}]);
+            const finalChildIds = childIds?.filter(_id => _id !== id);
+            next.push(...[{id: pid!, childIds: finalChildIds}, {id, pid: undefined}]);
+        });
+        updateLayer(next);
+        //记录操作日志
+        actions.push({type: OperateType.UPD_LAYER_GROUP, prev, next});
+        historyOperator.put({actions});
     }
 
 }

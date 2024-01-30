@@ -11,16 +11,19 @@ import {
     doBaseUpDecreaseDown,
     doBaseUpEnlargeDown,
     doCopy,
-    doDelete, doGrouping,
+    doDelete,
+    doGrouping,
     doHide,
     doLock,
     doMoveDown,
     doMoveLeft,
     doMoveRight,
     doMoveUp,
-    doSave, doUnGrouping,
+    doSave,
+    doUnGrouping,
     doUnLock,
     redo,
+    removeFromGroup,
     selectAll,
     toBottom,
     toggleCanvasConfig,
@@ -151,5 +154,8 @@ export const hotkeyConfigs: HotKeyConfigType = {
     },
     'control + shift + g': {
         handler: doUnGrouping,
+    },
+    'alt + shift + g': {
+        handler: removeFromGroup,
     }
 }
