@@ -13,7 +13,7 @@ export interface FieldChangeData {
 }
 
 export interface LCGUIProps {
-    schema: Control;
+    schema: Control | Control[];
     onFieldChange?: (fieldChangeData: FieldChangeData) => void;
 }
 
@@ -103,7 +103,6 @@ export class LCGUI extends React.Component<LCGUIProps> {
             children && children.forEach((child: Control, index: number) => {
                 childLevel.index = index;
                 child.parent = control;
-                //todo 优化当前的序列化产生新对象的方式，找一种更好的方式生成新的对象
                 tempNodes.push(this.buildConfigUI(child, JSON.parse(JSON.stringify(schemaKeyPath)), [...dataKeyPath], index));
             })
             //构建本级schema路径下的ReactNode
@@ -145,10 +144,19 @@ export class LCGUI extends React.Component<LCGUIProps> {
         return nodes;
     }
 
+    init = (): ReactNode[] => {
+        const nodes: ReactNode[] = [];
+        let {schema} = this.props;
+        schema = Array.isArray(schema) ? schema : [schema];
+        schema.forEach((control: Control) => {
+            nodes.push(this.buildConfigUI(control, [], [], 0));
+        })
+        return nodes;
+    }
+
     render() {
-        const {schema} = this.props;
         return (
-            <>{this.buildConfigUI(schema, [], [], 0)}</>
+            <>{this.init()}</>
         );
     }
 }
