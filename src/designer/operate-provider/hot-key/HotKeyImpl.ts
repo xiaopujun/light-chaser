@@ -185,6 +185,11 @@ export const doUnGrouping = () => {
     historyRecordOperateProxy.doUnGrouping();
 }
 
+
+export const removeFromGroup = () => {
+    historyRecordOperateProxy.doRemoveFromGroup();
+}
+
 /*************************快捷键控制移动组件的位置*************************/
 
 export const doMoveUp = () => {

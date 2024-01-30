@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import React, {Component} from 'react';
 import './LayerList.less';
 import layerListStore from "./LayerListStore";
 import designerStore from "../../store/DesignerStore";

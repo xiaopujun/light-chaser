@@ -67,17 +67,23 @@ export default class LayerUtil {
 
     /**
      * 查找分组图层下的所有子图层id，包括分组图层本身id.
-     * 是否包含锁定图层通过参数控制。
-     * 不包含隐藏图层
      * @param layerIds 分组图层ids
+     * @param hasSelf 是否包含自身id
      */
-    public static findAllChildLayer = (layerIds: string[]): string[] => {
+    public static findAllChildLayer = (layerIds: string[], hasSelf: boolean = true): string[] => {
         const layerIdArr: string[] = [];
-        LayerUtil._findAllChildLayer(layerIds, layerIdArr);
+        LayerUtil._findAllChildLayer(layerIds, layerIdArr, hasSelf);
         return [...new Set(layerIdArr)];
     }
 
-    private static _findAllChildLayer(groupLayerIds: string[], res: string[]) {
+    /**
+     * 递归向下查找所有子图层id
+     * @param groupLayerIds 分组图层ids
+     * @param res 结果数组
+     * @param hasSelf 是否包含自身id
+     * @private
+     */
+    private static _findAllChildLayer(groupLayerIds: string[], res: string[], hasSelf: boolean = true) {
         const {layerConfigs} = designerStore;
         groupLayerIds.forEach((id) => {
             if (layerConfigs[id]) {
@@ -86,14 +92,15 @@ export default class LayerUtil {
                     res.push(...childIds);
                     LayerUtil._findAllChildLayer(childIds, res);
                 }
-                res.push(id);
+                if (hasSelf)
+                    res.push(id);
             }
         });
     }
 
 
     /**
-     * 判断layerIds中的图层是否处于同一个图层 -- 用于判断是否可以进行图层编组
+     * 判断layerIds中的图层是否已经处于同一个分组下 -- 用于判断是否可以进行图层编组
      * @param layerIds 图层id
      */
     public static hasSameGroup = (layerIds: string[]): boolean => {
