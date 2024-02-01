@@ -23,6 +23,8 @@ interface AccordionProps {
     value?: boolean;
     // 开关状态值（非受控）
     defaultValue?: boolean;
+    titleStyle?: React.CSSProperties;
+    bodyStyle?: React.CSSProperties;
     children?: ReactNode;
 }
 
@@ -34,7 +36,10 @@ interface AccordionProps {
  * 操作这个组件的时候。 组件值，由本组件自身维护，不受外部控制。
  */
 export default function Accordion(props: AccordionProps) {
-    const {label, tip, showSwitch, value, defaultValue, onChange, children} = props;
+    const {
+        label, tip, showSwitch, value, defaultValue,
+        titleStyle, bodyStyle, onChange, children
+    } = props;
     const accordionBodyRef = useRef<HTMLDivElement | null>(null);
     const headerRef = useRef<HTMLDivElement | null>(null);
     const controlled = value !== undefined && defaultValue === undefined;
@@ -77,14 +82,14 @@ export default function Accordion(props: AccordionProps) {
 
     return (
         <div className={'lc-accordion'}>
-            <div className="accordion-header" ref={headerRef}>
+            <div className="accordion-header" ref={headerRef} style={{...titleStyle}}>
                 <div className={'title-content'}>{label} &nbsp;
                     {tip && <Tooltip title={tip}><QuestionCircleOutlined/>&nbsp;&nbsp;</Tooltip>}</div>
                 <div className={'title-switch'}>{showSwitch ?
                     <Switch value={finalValue} onChange={switchChange}/>
                     : <RightOutlined className={'accordion-icon'}/>}</div>
             </div>
-            <div className="lc-accordion-body" ref={accordionBodyRef}>{children}</div>
+            <div className="lc-accordion-body" style={{...bodyStyle}} ref={accordionBodyRef}>{children}</div>
         </div>
     );
 }

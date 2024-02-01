@@ -25,6 +25,8 @@ export interface AccordionConfigType extends BaseSchemaType {
     type: "accordion";
     config?: {
         showSwitch?: boolean;
+        titleStyle?: React.CSSProperties;
+        bodyStyle?: React.CSSProperties;
     }
 }
 
