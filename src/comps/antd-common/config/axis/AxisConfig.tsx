@@ -298,7 +298,7 @@ export const AxisGridLine: React.FC<AxisGridLineProps> = ({config, onChange}) =>
             if (data) {
                 const defaultConfig = {
                     alignTick: true,
-                    line: {style: {stroke: '#5c5c5c', lineWidth: 1} as ShapeAttrs}
+                    line: {style: {stroke: '#5c5c5c', lineWidth: 1} as ShapeAttrs, type: 'line'}
                 }
                 onChange(defaultConfig);
                 setConfig(defaultConfig);
