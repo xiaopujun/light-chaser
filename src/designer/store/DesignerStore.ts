@@ -1,4 +1,4 @@
-import {action, makeObservable, observable, runInAction, toJS} from "mobx";
+import {action, makeObservable, observable, toJS} from "mobx";
 import {isEqual} from "lodash";
 import {
     CanvasConfig,
@@ -8,7 +8,6 @@ import {
     ProjectDataType,
     ProjectState,
     SaveType,
-    Statistic,
     ThemeItemType,
 } from "../DesignerType";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
@@ -24,7 +23,6 @@ class DesignerStore {
             canvasConfig: observable,
             projectConfig: observable,
             layerConfigs: observable.shallow,
-            statisticInfo: observable,
             themeConfig: observable,
             extendParams: observable,
             loaded: observable,
@@ -85,14 +83,6 @@ class DesignerStore {
     layerConfigs: Record<string, ILayerItem> = {};
 
     /**
-     * 统计信息
-     */
-    statisticInfo: Statistic = {
-        //元素个数
-        count: 0,
-    };
-
-    /**
      * 主题
      */
     themeConfig: Array<ThemeItemType> | null = [
@@ -119,15 +109,6 @@ class DesignerStore {
     };
 
     /**
-     * 保存的事件间隔
-     */
-    lastTimeSave: number = Date.now();
-
-    setLastTimeSave = (time: number) => {
-        this.lastTimeSave = time;
-    }
-
-    /**
      * 初始化store
      */
     doInit = (store: ProjectDataType) => {
@@ -139,9 +120,6 @@ class DesignerStore {
             ? {...this.elemConfigs, ...store.elemConfigs}
             : this.elemConfigs;
         this.layerConfigs = store.layerConfigs || this.layerConfigs;
-        this.statisticInfo = store.statisticInfo
-            ? {...this.statisticInfo, ...store.statisticInfo}
-            : this.statisticInfo;
         this.themeConfig = store.themeConfig || this.themeConfig;
         this.extendParams = store.extendParams
             ? {...this.extendParams, ...store.extendParams}
@@ -160,34 +138,11 @@ class DesignerStore {
             canvasConfig: toJS(this.canvasConfig),
             elemConfigs: elemConfigs,
             layerConfigs: toJS(this.layerConfigs),
-            statisticInfo: toJS(this.statisticInfo),
             themeConfig: toJS(this.themeConfig)!,
             extendParams: toJS(this.extendParams),
         };
     }
 
-    /**
-     * 清空store
-     */
-    doDestroy = () => {
-        this.id = "";
-        this.canvasConfig = {};
-        this.projectConfig = {};
-        this.elemConfigs = {};
-        this.layerConfigs = {};
-        this.statisticInfo = {};
-        this.themeConfig = null;
-        this.extendParams = {};
-    };
-
-    /**
-     * 设置布局id
-     */
-    setId = (id: string) => {
-        runInAction(() => {
-            this.id = id;
-        });
-    };
 
     setLoaded = (loaded: boolean) => {
         this.loaded = loaded;
