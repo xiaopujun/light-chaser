@@ -110,10 +110,8 @@ class HistoryRecordOperateProxy {
     }
 
     public doAdd(layer: ILayerItem): void {
-        const {layerConfigs, statisticInfo} = designerStore;
+        const {layerConfigs} = designerStore;
         layerConfigs[layer.id + ""] = layer;
-        if (statisticInfo)
-            statisticInfo.count = Object.keys(layerConfigs).length;
         const {addRecordCompId, setAddRecordCompId} = eventOperateStore;
         /**
          * addRecordCompId为不为null，说明是从组件面板拖拽添加的组件要记录操作日志，反之其他操作导致的组件添加则不记录日志
