@@ -10,7 +10,7 @@ export class AddRollbackImpl extends AbstractRollback {
         const {next} = record!;
         //执行正向操作添加元素
         const {addItem} = designerStore;
-        (next as IAddOperateData[]).forEach((item) => addItem(item.data.layerConfig!));
+        (next as IAddOperateData[]).forEach((item) => addItem(item.layerConfig!));
     }
 
     undo(record: IHistoryRecord): void {

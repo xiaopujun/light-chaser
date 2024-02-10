@@ -28,8 +28,8 @@ export class DelRollbackImpl extends AbstractRollback {
         const {addItem, elemConfigs} = designerStore;
         const targetIds: string[] = [];
         prevDelData.forEach((item) => {
-            addItem(item.data.layerConfig);
-            elemConfigs![item.id] = item.data.elemConfig;
+            addItem(item.layerConfig);
+            elemConfigs![item.id] = item.elemConfig;
             targetIds.push(item.id!);
         });
         //选中目标元素，React18推出了新的批处理和并发执行机制，导致之前17版本中部分逻辑代码的执行顺序发生了变化，因此这里需要将反向执行操作放到下一个事件循环中执行
