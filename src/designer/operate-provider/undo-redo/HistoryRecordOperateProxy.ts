@@ -122,10 +122,9 @@ class HistoryRecordOperateProxy {
                 type: OperateType.ADD,
                 prev: null,
                 next: [{
-                    id: layer.id!, data: {
-                        layerConfig: toJS(layer),
-                        elemConfig: null
-                    }
+                    id: layer.id!,
+                    layerConfig: layer,
+                    elemConfig: undefined
                 }]
             }
             historyOperator.put({actions: [data]});
@@ -163,10 +162,10 @@ class HistoryRecordOperateProxy {
         directDelIds.forEach((id) => {
             const {type} = layerConfigs[id];
             if (type === 'group') {
-                prev.push({id, data: {layerConfig: toJS(layerConfigs[id])}})
+                prev.push({id, layerConfig: toJS(layerConfigs[id])})
             } else {
                 const elemConfig = compController[id] && compController[id].getConfig();
-                prev.push({id, data: {layerConfig: toJS(layerConfigs[id]), elemConfig: elemConfig}})
+                prev.push({id, layerConfig: toJS(layerConfigs[id]), elemConfig: elemConfig})
             }
         })
         //需要维护图层关系的数据--构建操作记录
@@ -177,7 +176,7 @@ class HistoryRecordOperateProxy {
                 const groupLayer = layerConfigs[pid!];
                 if (groupLayer.childIds!.length === 1 && groupLayer.childIds![0] === id) {
                     //说明该分组下只有一个图层，且本次需要删除。这种场景下，将分组图层一起删除
-                    prev.push({id: pid!, data: {layerConfig: toJS(layerConfigs[pid!])}});
+                    prev.push({id: pid!, layerConfig: toJS(layerConfigs[pid!])});
                     targetIds = [...targetIds, pid!];
                 } else {
                     //否则，只需要更新分组图层的childIds字段即可
@@ -190,13 +189,13 @@ class HistoryRecordOperateProxy {
                 }
                 //构建子图层的操作记录
                 const elemConfig = compController[id] && compController[id].getConfig();
-                prev.push({id, data: {layerConfig: toJS(layerConfigs[id]), elemConfig: elemConfig}});
+                prev.push({id, layerConfig: toJS(layerConfigs[id]), elemConfig: elemConfig});
             }
         );
 
         const actions: IHistoryRecord[] = [{type: OperateType.DEL, prev, next: null}];
         if (updPrev.length > 0 || updNext.length > 0)
-            actions.push({type: OperateType.UPD_LAYER_GROUP, prev: updPrev, next: updNext});
+            actions.push({type: OperateType.UPDATE_LAYER, prev: updPrev, next: updNext});
 
         historyOperator.put({actions});
 
@@ -309,17 +308,13 @@ class HistoryRecordOperateProxy {
             if (newLayout.type === 'group') {
                 next.push({
                     id: id,
-                    data: {
-                        layerConfig: toJS(newLayout),
-                    }
+                    layerConfig: toJS(newLayout),
                 })
             } else {
                 next.push({
                     id: id,
-                    data: {
-                        layerConfig: toJS(newLayout),
-                        elemConfig: toJS(newConfig)
-                    }
+                    layerConfig: toJS(newLayout),
+                    elemConfig: toJS(newConfig)
                 })
             }
         })
@@ -452,7 +447,7 @@ class HistoryRecordOperateProxy {
         };
 
         //操作记录-新增分组图层
-        actions.push({type: OperateType.ADD, prev: null, next: [{id: pid, data: {layerConfig: groupItem}}]});
+        actions.push({type: OperateType.ADD, prev: null, next: [{id: pid, layerConfig: groupItem}]});
 
         //操作记录-更新子图层的pid
         const childPrev: ILayerItem[] = [];
@@ -470,7 +465,7 @@ class HistoryRecordOperateProxy {
         addItem(groupItem);
         setMaxLevel(order);
         setTargetIds([]);
-        actions.push({type: OperateType.UPD_LAYER_GROUP, prev: childPrev, next: childNext});
+        actions.push({type: OperateType.UPDATE_LAYER, prev: childPrev, next: childNext});
         historyOperator.put({actions});
         //特殊场景处理，如果编组时，所有的子图层都处于锁定状态，则编组后，编组图层也处于锁定状态
         if (allLock) {
@@ -497,7 +492,7 @@ class HistoryRecordOperateProxy {
         groupIds.forEach((groupId: string) => {
             const item = layerConfigs[groupId];
             //记录被删除的分组图层
-            groupPrev.push({id: groupId, data: {layerConfig: item}});
+            groupPrev.push({id: groupId, layerConfig: item});
             const childIds = item.childIds;
             const updateItems: ILayerItem[] = [];
             childIds && childIds.forEach((childId: string) => {
@@ -507,9 +502,9 @@ class HistoryRecordOperateProxy {
                 childNext.push({id: childId, pid: undefined});
             });
             updateLayer(updateItems, false);
-            groupPrev.push({id: groupId, data: {layerConfig: item}});
+            groupPrev.push({id: groupId, layerConfig: item});
         });
-        actions.push({type: OperateType.UPD_LAYER_GROUP, prev: childPrev, next: childNext});
+        actions.push({type: OperateType.UPDATE_LAYER, prev: childPrev, next: childNext});
         //操作记录--被删除的分组图层
         actions.push({type: OperateType.DEL, prev: groupPrev, next: null});
         //执行操作记录入队
@@ -565,7 +560,7 @@ class HistoryRecordOperateProxy {
         });
         updateLayer(next);
         //记录操作日志
-        actions.push({type: OperateType.UPD_LAYER_GROUP, prev, next});
+        actions.push({type: OperateType.UPDATE_LAYER, prev, next});
         historyOperator.put({actions});
     }
 

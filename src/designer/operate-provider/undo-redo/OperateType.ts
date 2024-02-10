@@ -40,20 +40,29 @@ export enum OperateType {
     /**
      * 更新图层分组
      */
-    UPD_LAYER_GROUP,
+    UPDATE_LAYER,
 }
 
 /**
  * 记录操作对应的数据类型
  */
-type RecordDataType = IDragOperateData | IResizeOperateData | IUpdStyleOperateData | IAddOperateData[] |
-    IDelOperateData[] | IHideOperateData[] | IOrderOperateData[] | ILockOperateData[] | ILayerItem[] | ILayerItem;
+type RecordDataType = IDragOperateData
+    | IResizeOperateData
+    | IUpdStyleOperateData
+    | IAddOperateData[]
+    | IDelOperateData[]
+    | IHideOperateData[]
+    | IOrderOperateData[]
+    | ILockOperateData[]
+    | ILayerItem[]
+    | ILayerItem
+    ;
 
 /**
  * 使用HistoriesRecordType，因为一次操作可能会涉及到多个不同维度的更新。比如：删除图层时，如果存在分组，还需要更新分组的子图层id
  * 此场景同时要删除图层和更新图层。视为两个动作
  */
-export interface IHistoriesRecord {
+export interface IHistoryRecords {
     actions: IHistoryRecord[];
 }
 
@@ -106,10 +115,8 @@ export interface IResizeOperateData {
  */
 export interface IAddOperateData {
     id: string;
-    data: {
-        layerConfig?: ILayerItem;
-        elemConfig?: any;
-    };
+    layerConfig?: ILayerItem;
+    elemConfig?: Record<string, any>;
 }
 
 /**
@@ -117,10 +124,8 @@ export interface IAddOperateData {
  */
 export interface IDelOperateData {
     id: string;
-    data: {
-        layerConfig: ILayerItem;
-        elemConfig?: any;
-    };
+    layerConfig: ILayerItem;
+    elemConfig?: Record<string, any>;
 }
 
 /**
