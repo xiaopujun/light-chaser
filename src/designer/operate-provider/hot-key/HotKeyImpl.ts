@@ -74,29 +74,11 @@ export const doUnLock = () => {
 }
 
 export const toTop = () => {
-    let {maxLevel, setMaxLevel, targetIds} = eventOperateStore;
-    if (!targetIds || targetIds.length === 0) return;
-    const {layerConfigs} = designerStore;
-    const toBeUpdate: ILayerItem[] = [];
-    targetIds.forEach((id: string) => {
-        const item = layerConfigs[id];
-        toBeUpdate.push({...item, order: ++maxLevel});
-    });
-    setMaxLevel(maxLevel)
-    historyRecordOperateProxy.doOrderUpd(toBeUpdate);
+    historyRecordOperateProxy.doLayerToTop();
 }
 
 export const toBottom = () => {
-    let {minLevel, setMinLevel, targetIds} = eventOperateStore;
-    if (!targetIds || targetIds.length === 0) return;
-    const {layerConfigs} = designerStore;
-    const toBeUpdate: ILayerItem[] = [];
-    targetIds.forEach((id: string) => {
-        const item = layerConfigs[id];
-        toBeUpdate.push({...item, order: --minLevel});
-    });
-    setMinLevel(minLevel)
-    historyRecordOperateProxy.doOrderUpd(toBeUpdate);
+    historyRecordOperateProxy.doLayerToBottom();
 }
 
 export const doDelete = () => {

@@ -3,6 +3,7 @@ import eventOperateStore from "../../EventOperateStore";
 import {IAddOperateData, IHistoryRecord} from "../OperateType";
 import designerStore from "../../../store/DesignerStore";
 import rightStore from "../../../right/RightStore";
+import {cloneDeep} from "lodash";
 
 export class AddRollbackImpl extends AbstractRollback {
     redo(record: IHistoryRecord): void {
@@ -10,19 +11,34 @@ export class AddRollbackImpl extends AbstractRollback {
         const {next} = record!;
         //执行正向操作添加元素
         const {addItem} = designerStore;
-        (next as IAddOperateData[]).forEach((item) => addItem(item.layerConfig!));
+        (next as IAddOperateData[]).forEach((item) => {
+            if ('id' in item)
+                addItem(cloneDeep(item.layerConfig!));
+            if ('layerHeader' in item)
+                designerStore.layerHeader = item.layerHeader;
+            if ('layerTail' in item)
+                designerStore.layerTail = item.layerTail;
+        });
     }
 
     undo(record: IHistoryRecord): void {
-        if (!record) return;
+        if (!record)
+            return;
         const {setTargetIds, focusDesignerCanvas} = eventOperateStore;
-        const {next} = record!;
-        const nextAddData = next! as IAddOperateData[];
+        const {prev, next} = record!;
         //执行反向操作删除元素
         const {delItem} = designerStore;
         const delIds: string[] = [];
-        nextAddData.forEach((item) => delIds.push(item.id));
+        (next! as IAddOperateData[]).forEach((item) => delIds.push(item.id!));
         delItem(delIds);
+        (prev as IAddOperateData[]).forEach((item) => {
+            if ('layerHeader' in item!)
+                designerStore.layerHeader = item.layerHeader;
+            if ('layerTail' in item!)
+                designerStore.layerTail = item.layerTail;
+        });
+
+
         //清空框选状态,避免空框选
         setTargetIds([]);
         //如果右侧属性面板展示的设置项对应的组件，正是当前被删除的组件，则卸载属性面板

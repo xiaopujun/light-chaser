@@ -54,8 +54,8 @@ type RecordDataType = IDragOperateData
     | IHideOperateData[]
     | IOrderOperateData[]
     | ILockOperateData[]
-    | ILayerItem[]
-    | ILayerItem
+    | IUpdLayerOperateData[]
+    | IUpdLayerOperateData
     ;
 
 /**
@@ -74,6 +74,7 @@ export interface IHistoryRecord {
     prev: RecordDataType | null;
     next: RecordDataType | null;
 }
+
 
 /**
  * 拖拽数据类型
@@ -114,18 +115,22 @@ export interface IResizeOperateData {
  * 添加数据类型
  */
 export interface IAddOperateData {
-    id: string;
+    id?: string;
     layerConfig?: ILayerItem;
     elemConfig?: Record<string, any>;
+    layerHeader?: string;
+    layerTail?: string;
 }
 
 /**
  * 删除数据类型
  */
 export interface IDelOperateData {
-    id: string;
-    layerConfig: ILayerItem;
+    id?: string;
+    layerConfig?: ILayerItem;
     elemConfig?: Record<string, any>;
+    layerHeader?: string;
+    layerTail?: string;
 }
 
 /**
@@ -134,4 +139,9 @@ export interface IDelOperateData {
 export interface IUpdStyleOperateData {
     id: string;
     data: ConfigureObjectFragments;
+}
+
+export interface IUpdLayerOperateData extends ILayerItem {
+    layerHeader?: string;
+    layerTail?: string;
 }

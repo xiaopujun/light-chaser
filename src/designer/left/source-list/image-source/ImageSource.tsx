@@ -14,6 +14,7 @@ import {IImageData} from "../../../../comps/lc/base-image/BaseImageComponent";
 import DragAddProvider from "../../../../framework/drag-scale/DragAddProvider";
 import {MinusOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import {Popconfirm} from "antd";
+import historyRecordOperateProxy from "../../../operate-provider/undo-redo/HistoryRecordOperateProxy.ts";
 
 
 export const ImageSource: React.FC = () => {
@@ -50,7 +51,7 @@ export const ImageSource: React.FC = () => {
     }
 
     const addItem = (compKey: string, position = [0, 0], url: string, hash?: string) => {
-        const {addItem, elemConfigs} = designerStore;
+        const {elemConfigs} = designerStore;
         let {maxLevel, setMaxLevel, setAddRecordCompId} = eventOperateStore;
         const {definitionMap} = editorDesignerLoader;
         const definition = definitionMap[compKey];
@@ -70,7 +71,7 @@ export const ImageSource: React.FC = () => {
         }
         setAddRecordCompId(movableItem.id!)
         setMaxLevel && setMaxLevel(maxLevel);
-        addItem && addItem(movableItem);
+        historyRecordOperateProxy.doAdd(movableItem);
 
         //图片资源拖拽要提前设置好图片地址
         const initConfig: BaseImageComponentProps = definition.getInitConfig();
