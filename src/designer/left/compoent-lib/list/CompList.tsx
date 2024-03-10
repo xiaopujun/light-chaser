@@ -1,7 +1,6 @@
 import {Component} from 'react';
 import './CompList.less';
 import {observer} from "mobx-react";
-import designerStore from "../../../store/DesignerStore";
 import eventOperateStore from "../../../operate-provider/EventOperateStore";
 import {ILayerItem} from "../../../DesignerType";
 import Input from "../../../../json-schema/ui/input/Input";
@@ -11,6 +10,7 @@ import editorDesignerLoader from "../../../loader/EditorDesignerLoader";
 import componentListStore from "../ComponentListStore";
 import {AbstractDefinition, BaseInfoType} from "../../../../framework/core/AbstractDefinition";
 import DragAddProvider from "../../../../framework/drag-scale/DragAddProvider";
+import historyRecordOperateProxy from "../../../operate-provider/undo-redo/HistoryRecordOperateProxy.ts";
 
 class CompList extends Component {
 
@@ -64,7 +64,6 @@ class CompList extends Component {
     }
 
     addItem = (compKey: string, position = [0, 0]) => {
-        const {addItem} = designerStore;
         let {maxLevel, setMaxLevel, setAddRecordCompId} = eventOperateStore;
         const {definitionMap} = editorDesignerLoader;
         const {compName, width = 320, height = 200} = definitionMap[compKey].getBaseInfo();
@@ -80,9 +79,10 @@ class CompList extends Component {
             width,
             height,
         }
+        //标识本次操作为手动添加组件，与回滚撤销区分开
         setAddRecordCompId(movableItem.id!)
         setMaxLevel && setMaxLevel(maxLevel);
-        addItem && addItem(movableItem);
+        historyRecordOperateProxy.doAdd(movableItem);
     }
 
     getChartDom = () => {

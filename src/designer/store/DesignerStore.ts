@@ -108,6 +108,9 @@ class DesignerStore {
         minLevel: 0,
     };
 
+    layerHeader: string | undefined = undefined;
+    layerTail: string | undefined = undefined;
+
     /**
      * 初始化store
      */
@@ -124,6 +127,8 @@ class DesignerStore {
         this.extendParams = store.extendParams
             ? {...this.extendParams, ...store.extendParams}
             : this.extendParams;
+        this.layerHeader = store.layerHeader || this.layerHeader;
+        this.layerTail = store.layerTail || this.layerTail;
     };
 
     /**
@@ -140,6 +145,8 @@ class DesignerStore {
             layerConfigs: toJS(this.layerConfigs),
             themeConfig: toJS(this.themeConfig)!,
             extendParams: toJS(this.extendParams),
+            layerHeader: this.layerHeader,
+            layerTail: this.layerTail,
         };
     }
 
@@ -152,7 +159,7 @@ class DesignerStore {
      * 添加元素
      */
     addItem = (layer: ILayerItem) => {
-        historyRecordOperateProxy.doAdd(layer);
+        this.layerConfigs[layer.id + ""] = layer;
     };
 
     /**

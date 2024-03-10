@@ -7,6 +7,7 @@ import layerListStore from "./LayerListStore";
 import ComponentContainer from "../../../framework/core/ComponentContainer";
 import {ILayerItem} from "../../DesignerType";
 import GroupLayer from "../../../comps/group-layer/GroupLayer";
+import designerStore from "../../store/DesignerStore.ts";
 
 export enum LayerOrder {
     ASC,
@@ -20,11 +21,27 @@ class LayerBuilder {
      */
     public parser = (layerMap: Record<string, ILayerItem>, order: LayerOrder = LayerOrder.DESC): ILayerItem[] => {
         layerMap = cloneDeep(layerMap);
-        let sourceLayerArr;
-        if (order === LayerOrder.DESC)
-            sourceLayerArr = Object.values(layerMap).sort((a, b) => b.order! - a.order!);
-        else
-            sourceLayerArr = Object.values(layerMap).sort((a, b) => a.order! - b.order!);
+        let sourceLayerArr = [];
+        const {layerHeader, layerTail} = designerStore;
+        if (order === LayerOrder.DESC) {
+            let layer = layerMap[layerHeader!];
+            if (layer) {
+                sourceLayerArr.push(layer);
+                while (layer?.next) {
+                    layer = layerMap[layer.next];
+                    sourceLayerArr.push(layer);
+                }
+            }
+        } else {
+            let layer = layerMap[layerTail!];
+            if (layer) {
+                sourceLayerArr.push(layer);
+                while (layer?.prev) {
+                    layer = layerMap[layer.prev];
+                    sourceLayerArr.push(layer);
+                }
+            }
+        }
         // 构建树结构
         const resData: ILayerItem[] = [];
         for (const layerItem of sourceLayerArr) {

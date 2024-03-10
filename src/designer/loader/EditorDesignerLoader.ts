@@ -31,6 +31,8 @@ class EditorDesignerLoader extends AbstractDesignerLoader {
                     statisticInfo: data?.statisticInfo,
                     themeConfig: data?.themeConfig,
                     extendParams: data?.extendParams,
+                    layerHeader: data?.layerHeader,
+                    layerTail: data?.layerTail,
                 })
                 //设置事件操作器的最大最小层级
                 const {setMinLevel, setMaxLevel} = eventOperateStore;

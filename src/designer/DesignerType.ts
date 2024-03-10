@@ -165,6 +165,10 @@ export interface ProjectDataType {
     themeConfig?: Array<ThemeItemType>;
     //扩展参数
     extendParams?: IExtendParams;
+    //图层头指针
+    layerHeader?: string;
+    //图层尾指针
+    layerTail?: string;
 
     //蓝图节点布局
     bpNodeLayoutMap?: Record<string, BPNodeLayoutType>;
@@ -205,4 +209,8 @@ export interface ILayerItem {
     children?: ILayerItem[];
     //子图层id
     childIds?: string[];
+    //前指针
+    prev?: string;
+    //后指针
+    next?: string;
 }

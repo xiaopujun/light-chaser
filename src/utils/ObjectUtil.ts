@@ -12,6 +12,8 @@ export default class ObjectUtil {
      * @param newData
      */
     public static merge(originalData: any, newData: any): any {
+        if (!originalData)
+            return originalData
         Object.keys(newData).forEach(key => {
             const newValue = newData[key];
             if (originalData.hasOwnProperty(key)) {
