@@ -73,12 +73,20 @@ export const doUnLock = () => {
     setTargetIds([]);
 }
 
-export const toTop = () => {
+export const layerToTop = () => {
     historyRecordOperateProxy.doLayerToTop();
 }
 
-export const toBottom = () => {
+export const layerToBottom = () => {
     historyRecordOperateProxy.doLayerToBottom();
+}
+
+export const layerMoveUp = () => {
+    historyRecordOperateProxy.doLayerMoveUp();
+}
+
+export const layerMoveDown = () => {
+    historyRecordOperateProxy.doLayerMoveDown();
 }
 
 export const doDelete = () => {

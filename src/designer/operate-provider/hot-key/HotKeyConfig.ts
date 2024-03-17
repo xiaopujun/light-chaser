@@ -21,17 +21,17 @@ import {
     doMoveUp,
     doSave,
     doUnGrouping,
-    doUnLock,
+    doUnLock, layerMoveDown, layerMoveUp,
     redo,
     removeFromGroup,
     selectAll,
-    toBottom,
+    layerToBottom,
     toggleCanvasConfig,
     toggleGlobalThemeConfig,
     toggleHotKeyDes,
     toggleProjectConfig,
     toggleSecondaryBorder,
-    toTop,
+    layerToTop,
     undo
 } from "./HotKeyImpl";
 
@@ -55,10 +55,16 @@ export const hotkeyConfigs: HotKeyConfigType = {
         handler: doHide,
     },
     'control + arrowup': {
-        handler: toTop,
+        handler: layerToTop,
     },
     'control + arrowdown': {
-        handler: toBottom,
+        handler: layerToBottom,
+    },
+    'alt + arrowup': {
+        handler: layerMoveUp,
+    },
+    'alt + arrowdown': {
+        handler: layerMoveDown,
     },
     'control + s': {
         handler: doSave,

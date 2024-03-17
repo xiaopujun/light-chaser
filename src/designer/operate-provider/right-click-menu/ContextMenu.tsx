@@ -18,8 +18,8 @@ import {
     doLock,
     doUnGrouping,
     doUnLock,
-    toBottom,
-    toTop
+    layerToBottom,
+    layerToTop
 } from "../hot-key/HotKeyImpl";
 import eventOperateStore from "../EventOperateStore";
 import designerStore from "../../store/DesignerStore";
@@ -36,12 +36,12 @@ class ContextMenu extends Component {
         {
             name: '置顶',
             icon: VerticalAlignTopOutlined,
-            onClick: toTop,
+            onClick: layerToTop,
         },
         {
             name: '置底',
             icon: VerticalAlignBottomOutlined,
-            onClick: toBottom,
+            onClick: layerToBottom,
         },
         {
             name: '删除',

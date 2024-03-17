@@ -29,7 +29,6 @@ export class UpdLayerGroupRollbackImpl extends AbstractRollback {
     undo(record: IHistoryRecord): void {
         const {prev} = record;
         if (prev) {
-            console.log('UpdLayerGroupRollbackImpl before', prev, designerStore.layerHeader, designerStore.layerTail);
             const updData: ILayerItem[] = [];
             (prev as ILayerItem[]).forEach((item) => {
                 if ('id' in item)
@@ -42,7 +41,6 @@ export class UpdLayerGroupRollbackImpl extends AbstractRollback {
             });
             const {updateLayer} = designerStore;
             updateLayer(updData);
-            console.log('UpdLayerGroupRollbackImpl', toJS(designerStore.layerConfigs), designerStore.layerHeader, designerStore.layerTail);
         }
     }
 

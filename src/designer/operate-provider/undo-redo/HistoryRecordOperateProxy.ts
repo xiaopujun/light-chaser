@@ -6,7 +6,6 @@ import {
     IHideOperateData,
     IHistoryRecord,
     ILockOperateData,
-    IOrderOperateData,
     IResizeOperateData,
     IUpdLayerOperateData,
     IUpdStyleOperateData,
@@ -560,19 +559,117 @@ class HistoryRecordOperateProxy {
         historyOperator.put({actions: [{type: OperateType.UPDATE_LAYER, prev, next}]});
     }
 
-    public doOrderUpd(items: ILayerItem[]): void {
-        const prev: IOrderOperateData[] = [];
-        const next: IOrderOperateData[] = [];
+    public doLayerMoveUp(): void {
+        const prev: IUpdLayerOperateData[] = [];
+        const next: IUpdLayerOperateData[] = [];
         const {layerConfigs, updateLayer} = designerStore;
-        items.forEach((item) => {
-            const {id, order} = item;
-            next.push({id: id!, order: order!});
-            const oldOrderData = layerConfigs[id!];
-            prev.push({id: id!, order: oldOrderData.order!});
-        })
-        const data: IHistoryRecord = {type: OperateType.ORDER, prev, next}
-        historyOperator.put({actions: [data]});
-        updateLayer(items);
+        let {targetIds} = eventOperateStore;
+
+        if (targetIds.length === 0)
+            return;
+
+        //收集相关的图层id
+        const relatedLayerIds: Set<string> = new Set();
+        targetIds.forEach((id) => {
+            const layer = layerConfigs[id];
+            const prevLayer = layerConfigs[layer.prev!];
+            relatedLayerIds.add(id);
+            if (layer.next)
+                relatedLayerIds.add(layer.next);
+            if (layer.prev)
+                relatedLayerIds.add(layer.prev);
+            if (prevLayer.prev)
+                relatedLayerIds.add(prevLayer.prev!);
+        });
+
+        //记录上一个状态
+        prev.push({layerHeader: designerStore.layerHeader, layerTail: designerStore.layerTail})
+        relatedLayerIds.forEach((id) => {
+            const layer = layerConfigs[id];
+            prev.push({id, prev: layer.prev, next: layer.next})
+        });
+
+        for (let i = 0; i < targetIds.length; i++) {
+            const id = targetIds[i];
+            if (id === designerStore.layerHeader)
+                continue;
+            const tempNext: IUpdLayerOperateData[] = [];
+            const oldLayer = layerConfigs[id];
+            const oldPrev = layerConfigs[oldLayer.prev!];
+            const oldPrevPrev = layerConfigs[oldPrev.prev!];
+            const oldNext = layerConfigs[oldLayer.next!];
+
+            //调整双向链表数据指针，将图层移动到上一层
+            oldLayer && tempNext.push({id: oldLayer.id!, prev: oldPrevPrev?.id, next: oldPrev?.id})
+            oldPrev && tempNext.push({id: oldPrev.id!, prev: oldLayer?.id, next: oldNext?.id})
+            oldNext && tempNext.push({id: oldNext.id!, prev: oldPrev?.id})
+            oldPrevPrev && tempNext.push({id: oldPrevPrev.id!, next: oldLayer?.id})
+            if (designerStore.layerHeader === oldPrev.id)
+                designerStore.layerHeader = oldLayer.id;
+            if (id === designerStore.layerTail)
+                designerStore.layerTail = oldLayer.prev;
+            updateLayer(tempNext);
+            next.push(...tempNext);
+        }
+        next.push({layerHeader: designerStore.layerHeader, layerTail: designerStore.layerTail})
+        historyOperator.put({actions: [{type: OperateType.UPDATE_LAYER, prev, next}]});
+    }
+
+    public doLayerMoveDown(): void {
+        const prev: IUpdLayerOperateData[] = [];
+        const next: IUpdLayerOperateData[] = [];
+        const {layerConfigs, updateLayer} = designerStore;
+        let {targetIds} = eventOperateStore;
+
+        if (targetIds.length === 0)
+            return;
+
+        //收集相关的图层id
+        const relatedLayerIds: Set<string> = new Set();
+        targetIds.forEach((id) => {
+            const layer = layerConfigs[id];
+            const nextLayer = layerConfigs[layer.next!];
+            relatedLayerIds.add(id);
+            if (layer.prev)
+                relatedLayerIds.add(layer.prev);
+            if (layer.next)
+                relatedLayerIds.add(layer.next);
+            if (nextLayer.next)
+                relatedLayerIds.add(nextLayer.next!);
+        });
+
+        //记录上一个状态
+        prev.push({layerHeader: designerStore.layerHeader, layerTail: designerStore.layerTail})
+        relatedLayerIds.forEach((id) => {
+            const layer = layerConfigs[id];
+            prev.push({id, prev: layer.prev, next: layer.next})
+        });
+
+        for (let i = 0; i < targetIds.length; i++) {
+            const id = targetIds[i];
+            if (id === designerStore.layerTail)
+                continue;
+            const tempNext: IUpdLayerOperateData[] = [];
+            const oldLayer = layerConfigs[id];
+            const oldPrev = layerConfigs[oldLayer.prev!];
+            const oldNext = layerConfigs[oldLayer.next!];
+            const oldNextNext = layerConfigs[oldNext.next!];
+
+            //调整双向链表数据指针，将图层移动到上一层
+            oldLayer && tempNext.push({id: oldLayer.id!, next: oldNextNext?.id, prev: oldNext?.id})
+            oldPrev && tempNext.push({id: oldPrev.id!, next: oldNext?.id})
+            oldNext && tempNext.push({id: oldNext.id!, prev: oldPrev?.id, next: oldLayer?.id})
+            oldNextNext && tempNext.push({id: oldNextNext.id!, prev: oldLayer?.id})
+            if (designerStore.layerTail === oldNext.id)
+                designerStore.layerTail = oldLayer.id;
+            if (id === designerStore.layerHeader)
+                designerStore.layerHeader = oldLayer.next;
+            updateLayer(tempNext);
+            next.push(...tempNext);
+        }
+        next.push({layerHeader: designerStore.layerHeader, layerTail: designerStore.layerTail})
+        historyOperator.put({actions: [{type: OperateType.UPDATE_LAYER, prev, next}]});
+        console.log('doLayerMoveDown', toJS(designerStore.layerConfigs), designerStore.layerHeader, designerStore.layerTail)
     }
 
     /**
@@ -594,17 +691,18 @@ class HistoryRecordOperateProxy {
      * 图层编组
      */
     public doGrouping() {
-        const {targetIds, maxLevel, setMaxLevel, setTargetIds} = eventOperateStore;
-        if (!targetIds || targetIds.length <= 1) return;
-        if (LayerUtil.hasSameGroup(targetIds)) return;
-        //查找当前选中的图层的所有父级图层
-        const layerIdSet = LayerUtil.findTopGroupLayer(targetIds, true);
-        //新建编组
-        const {updateLayer, layerConfigs} = designerStore;
-        const order = maxLevel + 1;
+        const {targetIds, setTargetIds} = eventOperateStore;
+        if (!targetIds || targetIds.length <= 1)
+            return;
+        //被选中图层如已处于相同分组下，则无需进行分组操作
+        if (LayerUtil.hasSameGroup(targetIds))
+            return;
+        //查找当前选中的图层的所有最上层的分组图层,作为本次分组的子图层
+        const childIds = LayerUtil.findTopGroupLayer(targetIds, true);
+        //构建新的分组数据
+        const {updateLayer, layerConfigs, addItem} = designerStore;
         const pid = IdGenerate.generateId();
-        const childIds = Array.from(layerIdSet);
-        //计算分组的锁定状态
+        //计算新分组的锁定状态
         let allLock = layerConfigs[childIds[0]].lock;
         for (let i = 1; i < childIds.length; i++) {
             if (allLock !== layerConfigs[childIds[i]].lock) {
@@ -612,11 +710,7 @@ class HistoryRecordOperateProxy {
                 break;
             }
         }
-
-        //构建操作记录
-        const actions: IHistoryRecord[] = [];
-
-        //构建分组数据
+        //构建新的分组数据
         const groupItem: ILayerItem = {
             id: pid,
             type: 'group',
@@ -624,30 +718,41 @@ class HistoryRecordOperateProxy {
             hide: false,
             lock: allLock,
             childIds,
-            order,
         };
 
-        //操作记录-新增分组图层
-        actions.push({type: OperateType.ADD, prev: null, next: [{id: pid, layerConfig: groupItem}]});
+        //构建操作记录
+        const updPrev: IUpdLayerOperateData[] = [];
+        const updNext: IUpdLayerOperateData[] = [];
+        const addNext: IAddOperateData[] = [];
 
-        //操作记录-更新子图层的pid
-        const childPrev: IUpdLayerOperateData[] = [];
-        const childNext: IUpdLayerOperateData[] = [];
-
-        //设置子图层的pid
-        const updateItems: ILayerItem[] = [];
+        /**
+         * 记录操作前状态
+         * 分组前状态设计当前链表的头指针、尾指针、被选中图层的prev、next指针、pid指针
+         *
+         * 修改图层数据
+         *
+         * 记录操作后状态
+         */
+        const headerLayer = layerConfigs[designerStore.layerHeader!];
+        updPrev.push({layerHeader: designerStore.layerHeader});
+        updPrev.push({id: headerLayer.id, prev: undefined, next: headerLayer.next});
         childIds.forEach((id: string) => {
-            childPrev.push({id, pid: undefined});
-            updateItems.push({id, pid});
-            childNext.push({id, pid});
+            updPrev.push({id, pid: undefined});
+            updNext.push({id, pid});
         });
-        updateLayer(updateItems, false);
-        //添加分组并渲染
-        historyRecordOperateProxy.doAdd(groupItem);
-        setMaxLevel(order);
-        setTargetIds([]);
-        actions.push({type: OperateType.UPDATE_LAYER, prev: childPrev, next: childNext});
+        addNext.push({id: pid, layerConfig: groupItem});
+        updNext.push({id: headerLayer.id, prev: pid});
+        updNext.push({id: pid, prev: undefined, next: headerLayer.id});
+        addItem(groupItem);
+        updateLayer(updNext, false);
+        designerStore.layerHeader = pid;
+        updNext.push({layerHeader: pid});
+        const actions: IHistoryRecord[] = [
+            {type: OperateType.ADD, prev: null, next: addNext},
+            {type: OperateType.UPDATE_LAYER, prev: updPrev, next: updNext}
+        ];
         historyOperator.put({actions});
+        setTargetIds([]);
         //特殊场景处理，如果编组时，所有的子图层都处于锁定状态，则编组后，编组图层也处于锁定状态
         if (allLock) {
             const {layerInstances} = layerListStore;
@@ -660,38 +765,48 @@ class HistoryRecordOperateProxy {
 
     public doUnGrouping() {
         const {targetIds, setTargetIds} = eventOperateStore;
+        if (targetIds.length === 0)
+            return;
         //找出当前选中的图层中，最顶层的分组图层
         let groupIds = LayerUtil.findTopGroupLayer(targetIds, true);
         //过滤掉其中分组等于自身的图层（即非分组图层）
         const {layerConfigs, updateLayer, delLayout} = designerStore;
         groupIds = groupIds.filter((id: string) => layerConfigs[id].type === 'group');
         //对每个分组图层进行解组
-        const actions: IHistoryRecord[] = [];
-        const childPrev: IUpdLayerOperateData[] = [];
-        const childNext: IUpdLayerOperateData[] = [];
-        const groupPrev: IDelOperateData[] = [];
+        const updPrev: IUpdLayerOperateData[] = [];
+        const updNext: IUpdLayerOperateData[] = [];
+        const delPrev: IDelOperateData[] = [];
+
+        updPrev.push({layerHeader: designerStore.layerHeader, layerTail: designerStore.layerTail});
+
         groupIds.forEach((groupId: string) => {
-            const item = layerConfigs[groupId];
-            //记录被删除的分组图层
-            groupPrev.push({id: groupId, layerConfig: item});
-            const childIds = item.childIds;
-            const updateItems: ILayerItem[] = [];
-            childIds && childIds.forEach((childId: string) => {
-                childPrev.push({id: childId, pid: groupId});
-                //更新每个分组图层的子图层的pid为null
-                updateItems.push({id: childId, pid: undefined});
-                childNext.push({id: childId, pid: undefined});
+            const layer = layerConfigs[groupId];
+            const prevLayer = layerConfigs[layer.prev!];
+            const nextLayer = layerConfigs[layer.next!];
+
+            prevLayer && updPrev.push({id: prevLayer.id, next: layer.next});
+            nextLayer && updPrev.push({id: nextLayer.id, prev: layer.prev});
+            delPrev.push({id: groupId, layerConfig: layer});
+            layer.childIds && layer.childIds.forEach((childId: string) => {
+                updPrev.push({id: childId, pid: groupId});
+                updNext.push({id: childId, pid: undefined});
             });
-            updateLayer(updateItems, false);
-            groupPrev.push({id: groupId, layerConfig: item});
+            prevLayer && updNext.push({id: prevLayer.id, next: layer.next});
+            nextLayer && updNext.push({id: nextLayer.id, prev: layer.prev});
+            updateLayer(updNext, false);
+            if (groupId === designerStore.layerHeader)
+                designerStore.layerHeader = layer.next;
+            if (groupId === designerStore.layerTail)
+                designerStore.layerTail = layer.prev;
         });
-        actions.push({type: OperateType.UPDATE_LAYER, prev: childPrev, next: childNext});
-        //操作记录--被删除的分组图层
-        actions.push({type: OperateType.DEL, prev: groupPrev, next: null});
-        //执行操作记录入队
-        historyOperator.put({actions});
-        //2.删除分组图层
+        //删除分组图层
         delLayout(groupIds);
+        updNext.push({layerHeader: designerStore.layerHeader, layerTail: designerStore.layerTail});
+        const actions: IHistoryRecord[] = [
+            {type: OperateType.UPDATE_LAYER, prev: updPrev, next: updNext},
+            {type: OperateType.DEL, prev: delPrev, next: null}
+        ];
+        historyOperator.put({actions});
         //清空组件选中状态
         setTargetIds([]);
         //处理右侧设置项，如果为当前选中的分组图层，则卸载该设置项（因为分组图层已经被删除）
