@@ -484,6 +484,13 @@ class HistoryRecordOperateProxy {
             prev.push({id, prev: layer.prev, next: layer.next})
         });
 
+        //将被操作图层排序
+        targetIds = targetIds.sort((prev, next) => {
+            const prevLayer = layerConfigs[prev];
+            const nextLayer = layerConfigs[next];
+            return prevLayer.order! - nextLayer.order!;
+        });
+
         for (let i = 0; i < targetIds.length; i++) {
             const id = targetIds[i];
             if (id === designerStore.layerHeader)
@@ -534,6 +541,13 @@ class HistoryRecordOperateProxy {
             prev.push({id, prev: layer.prev, next: layer.next})
         });
 
+        //将被操作图层排序
+        targetIds = targetIds.sort((prev, next) => {
+            const prevLayer = layerConfigs[prev];
+            const nextLayer = layerConfigs[next];
+            return nextLayer.order! - prevLayer.order!;
+        });
+
         for (let i = 0; i < targetIds.length; i++) {
             const id = targetIds[i];
             if (id === designerStore.layerTail)
@@ -574,12 +588,19 @@ class HistoryRecordOperateProxy {
             const layer = layerConfigs[id];
             const prevLayer = layerConfigs[layer.prev!];
             relatedLayerIds.add(id);
-            if (layer.next)
+            if (layer && layer.next)
                 relatedLayerIds.add(layer.next);
-            if (layer.prev)
+            if (layer && layer.prev)
                 relatedLayerIds.add(layer.prev);
-            if (prevLayer.prev)
+            if (prevLayer && prevLayer.prev)
                 relatedLayerIds.add(prevLayer.prev!);
+        });
+
+        //将被操作图层排序
+        targetIds = targetIds.sort((prev, next) => {
+            const prevLayer = layerConfigs[prev];
+            const nextLayer = layerConfigs[next];
+            return nextLayer.order! - prevLayer.order!;
         });
 
         //记录上一个状态
@@ -630,11 +651,11 @@ class HistoryRecordOperateProxy {
             const layer = layerConfigs[id];
             const nextLayer = layerConfigs[layer.next!];
             relatedLayerIds.add(id);
-            if (layer.prev)
+            if (layer && layer.prev)
                 relatedLayerIds.add(layer.prev);
-            if (layer.next)
+            if (layer && layer.next)
                 relatedLayerIds.add(layer.next);
-            if (nextLayer.next)
+            if (nextLayer && nextLayer.next)
                 relatedLayerIds.add(nextLayer.next!);
         });
 
@@ -643,6 +664,13 @@ class HistoryRecordOperateProxy {
         relatedLayerIds.forEach((id) => {
             const layer = layerConfigs[id];
             prev.push({id, prev: layer.prev, next: layer.next})
+        });
+
+        //将被操作图层排序
+        targetIds = targetIds.sort((prev, next) => {
+            const prevLayer = layerConfigs[prev];
+            const nextLayer = layerConfigs[next];
+            return prevLayer.order! - nextLayer.order!;
         });
 
         for (let i = 0; i < targetIds.length; i++) {
@@ -669,7 +697,6 @@ class HistoryRecordOperateProxy {
         }
         next.push({layerHeader: designerStore.layerHeader, layerTail: designerStore.layerTail})
         historyOperator.put({actions: [{type: OperateType.UPDATE_LAYER, prev, next}]});
-        console.log('doLayerMoveDown', toJS(designerStore.layerConfigs), designerStore.layerHeader, designerStore.layerTail)
     }
 
     /**
