@@ -101,6 +101,8 @@ class LayerBuilder {
         }
     }
 
+    private order: number = 1;
+
     /**
      * 构建设计器主画布组件
      * @param layerMap
@@ -110,11 +112,18 @@ class LayerBuilder {
         this.parser(layerMap, LayerOrder.ASC).forEach((item: ILayerItem) => {
             res.push(this.buildComponents(item));
         });
+        //重置排序编号
+        this.order = 1;
         return res;
     }
 
     private buildComponents = (layer: ILayerItem): ReactElement => {
         const {type, children} = layer;
+        const {layerConfigs} = designerStore;
+        const targetLayer = layerConfigs[layer.id!];
+        //给每个图层重新设置排序编号,用于在图层移动的过程中提供更好的体验
+        if (targetLayer)
+            targetLayer.order = this.order++;
         if (type === 'group') {
             //先生成子元素再包裹groupItem
             const childDomArr: ReactElement[] = [];

@@ -29,9 +29,9 @@ export class AddRollbackImpl extends AbstractRollback {
         //执行反向操作删除元素
         const {delItem} = designerStore;
         const delIds: string[] = [];
-        (next! as IAddOperateData[]).forEach((item) => delIds.push(item.id!));
+        next && (next! as IAddOperateData[]).forEach((item) => delIds.push(item.id!));
         delItem(delIds);
-        (prev as IAddOperateData[]).forEach((item) => {
+        prev && (prev as IAddOperateData[]).forEach((item) => {
             if ('layerHeader' in item!)
                 designerStore.layerHeader = item.layerHeader;
             if ('layerTail' in item!)

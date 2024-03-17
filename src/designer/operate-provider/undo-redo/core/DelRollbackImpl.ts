@@ -19,10 +19,9 @@ export class DelRollbackImpl extends AbstractRollback {
         const {delItem} = designerStore;
         const delIds: string[] = [];
         layerData.forEach((item) => delIds.push(item.id!));
-        console.log('del redo delIds', delIds);
         delItem(delIds);
         //恢复下一个状态的头尾指针指向
-        (next as IDelOperateData[]).forEach((item) => {
+        next && (next as IDelOperateData[]).forEach((item) => {
             if ('layerHeader' in item)
                 designerStore.layerHeader = item.layerHeader;
             if ('layerTail' in item)
