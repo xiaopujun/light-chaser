@@ -112,10 +112,7 @@ export const doSave = throttle(() => {
     return new Promise(() => {
         const {saveType, id} = URLUtil.parseUrlParams();
         const proData = designerStore.getData();
-        //设置图层层级统计
-        const {maxLevel, minLevel} = eventOperateStore;
-        proData.extendParams!.maxLevel = maxLevel;
-        proData.extendParams!.minLevel = minLevel;
+
         //设置蓝图数据
         const {bpAPMap, bpLines, bpAPLineMap, getAllNodeConfig, bpNodeLayoutMap} = bpStore;
         proData.bpAPMap = bpAPMap;

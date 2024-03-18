@@ -82,16 +82,6 @@ class EventOperateStore {
      * The ID of the target element selected by the frame, used for the subsequent operation of the right-click operation menu after the frame is selected
      */
     targetIds: string[] = [];
-    /**
-     * 拖拽框架的最大层级，用于操作菜单的置顶操作
-     * The maximum level of the drag and drop framework, used for the top operation of the operation menu
-     */
-    maxLevel = 0;
-    /**
-     * 拖拽框架的最小层级，用于操作菜单的置底操作
-     * The minimum level of the drag and drop framework, used for the bottom operation of the operation menu
-     */
-    minLevel = 0;
 
     /**
      * 用于记录鼠标右键点击时的目标元素，用于快捷键操作时的目标元素的范围筛选
@@ -139,10 +129,6 @@ class EventOperateStore {
     setAddRecordCompId = (id: string | null) => this.addRecordCompId = id;
 
     setBackoff = (backoff: boolean) => this.backoff = backoff;
-
-    setMaxLevel = (order: number) => this.maxLevel = order;
-
-    setMinLevel = (order: number) => this.minLevel = order;
 
     setMovableRef = (ref: Moveable) => this.movableRef = ref;
 

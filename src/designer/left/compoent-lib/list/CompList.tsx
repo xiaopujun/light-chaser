@@ -64,7 +64,7 @@ class CompList extends Component {
     }
 
     addItem = (compKey: string, position = [0, 0]) => {
-        let {maxLevel, setMaxLevel, setAddRecordCompId} = eventOperateStore;
+        let {setAddRecordCompId} = eventOperateStore;
         const {definitionMap} = editorDesignerLoader;
         const {compName, width = 320, height = 200} = definitionMap[compKey].getBaseInfo();
         const movableItem: ILayerItem = {
@@ -75,13 +75,11 @@ class CompList extends Component {
             id: IdGenerate.generateId(),
             lock: false,
             hide: false,
-            order: ++maxLevel,
             width,
             height,
         }
         //标识本次操作为手动添加组件，与回滚撤销区分开
         setAddRecordCompId(movableItem.id!)
-        setMaxLevel && setMaxLevel(maxLevel);
         historyRecordOperateProxy.doAdd(movableItem);
     }
 

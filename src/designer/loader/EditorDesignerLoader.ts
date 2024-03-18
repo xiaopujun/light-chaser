@@ -1,5 +1,4 @@
 import designerStore from "../store/DesignerStore";
-import eventOperateStore from "../operate-provider/EventOperateStore";
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 import bpStore from "../../blueprint/store/BPStore";
 import bpLeftStore from "../../blueprint/left/BPLeftStore";
@@ -30,14 +29,9 @@ class EditorDesignerLoader extends AbstractDesignerLoader {
                     layerConfigs: data?.layerConfigs,
                     statisticInfo: data?.statisticInfo,
                     themeConfig: data?.themeConfig,
-                    extendParams: data?.extendParams,
                     layerHeader: data?.layerHeader,
                     layerTail: data?.layerTail,
                 })
-                //设置事件操作器的最大最小层级
-                const {setMinLevel, setMaxLevel} = eventOperateStore;
-                setMinLevel(data?.extendParams?.minLevel || 0);
-                setMaxLevel(data?.extendParams?.maxLevel || 0);
 
                 //初始化bpStore（蓝图状态）
                 const {setAPMap, setLines, setAPLineMap, setBpNodeLayoutMap, setBpNodeConfigMap} = bpStore;
