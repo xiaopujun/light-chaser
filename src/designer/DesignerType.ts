@@ -55,14 +55,6 @@ export interface StaticConfig {
 }
 
 /**
- * 扩展参数
- */
-export interface IExtendParams {
-    maxLevel?: number;
-    minLevel?: number;
-}
-
-/**
  * 数据配置项
  */
 export interface DataConfigType {
@@ -163,8 +155,6 @@ export interface ProjectDataType {
     statisticInfo?: Statistic;
     //全局主题
     themeConfig?: Array<ThemeItemType>;
-    //扩展参数
-    extendParams?: IExtendParams;
     //图层头指针
     layerHeader?: string;
     //图层尾指针

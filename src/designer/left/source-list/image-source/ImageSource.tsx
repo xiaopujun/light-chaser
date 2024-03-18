@@ -52,7 +52,7 @@ export const ImageSource: React.FC = () => {
 
     const addItem = (compKey: string, position = [0, 0], url: string, hash?: string) => {
         const {elemConfigs} = designerStore;
-        let {maxLevel, setMaxLevel, setAddRecordCompId} = eventOperateStore;
+        let {setAddRecordCompId} = eventOperateStore;
         const {definitionMap} = editorDesignerLoader;
         const definition = definitionMap[compKey];
         const {compName, width = 320, height = 200} = definition.getBaseInfo();
@@ -65,12 +65,10 @@ export const ImageSource: React.FC = () => {
             id,
             lock: false,
             hide: false,
-            order: ++maxLevel,
             width,
             height,
         }
         setAddRecordCompId(movableItem.id!)
-        setMaxLevel && setMaxLevel(maxLevel);
         historyRecordOperateProxy.doAdd(movableItem);
 
         //图片资源拖拽要提前设置好图片地址

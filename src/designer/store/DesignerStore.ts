@@ -2,7 +2,6 @@ import {action, makeObservable, observable, toJS} from "mobx";
 import {isEqual} from "lodash";
 import {
     CanvasConfig,
-    IExtendParams,
     ILayerItem,
     IProjectInfo,
     ProjectDataType,
@@ -24,7 +23,6 @@ class DesignerStore {
             projectConfig: observable,
             layerConfigs: observable.shallow,
             themeConfig: observable,
-            extendParams: observable,
             loaded: observable,
             doInit: action,
             addItem: action,
@@ -100,14 +98,6 @@ class DesignerStore {
         },
     ];
 
-    /**
-     * 扩展参数
-     */
-    extendParams: IExtendParams = {
-        maxLevel: 0,
-        minLevel: 0,
-    };
-
     layerHeader: string | undefined = undefined;
     layerTail: string | undefined = undefined;
 
@@ -124,9 +114,6 @@ class DesignerStore {
             : this.elemConfigs;
         this.layerConfigs = store.layerConfigs || this.layerConfigs;
         this.themeConfig = store.themeConfig || this.themeConfig;
-        this.extendParams = store.extendParams
-            ? {...this.extendParams, ...store.extendParams}
-            : this.extendParams;
         this.layerHeader = store.layerHeader || this.layerHeader;
         this.layerTail = store.layerTail || this.layerTail;
     };
@@ -144,7 +131,6 @@ class DesignerStore {
             elemConfigs: elemConfigs,
             layerConfigs: toJS(this.layerConfigs),
             themeConfig: toJS(this.themeConfig)!,
-            extendParams: toJS(this.extendParams),
             layerHeader: this.layerHeader,
             layerTail: this.layerTail,
         };
