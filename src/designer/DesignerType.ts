@@ -197,8 +197,10 @@ export interface ILayerItem {
     pid?: string;
     //子图层列表
     children?: ILayerItem[];
-    //子图层id
-    childIds?: string[];
+    //子图层头指针
+    childHeader?: string;
+    //子图层尾指针
+    childTail?: string;
     //前指针
     prev?: string;
     //后指针

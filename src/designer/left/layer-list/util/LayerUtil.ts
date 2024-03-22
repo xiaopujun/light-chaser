@@ -1,4 +1,5 @@
 import designerStore from "../../../store/DesignerStore";
+import {ILayerItem} from "../../../DesignerType.ts";
 
 export default class LayerUtil {
 
@@ -67,35 +68,44 @@ export default class LayerUtil {
 
     /**
      * 查找分组图层下的所有子图层id，包括分组图层本身id.
-     * @param layerIds 分组图层ids
+     * @param  分组图层ids
      * @param hasSelf 是否包含自身id
      */
-    public static findAllChildLayer = (layerIds: string[], hasSelf: boolean = true): string[] => {
-        const layerIdArr: string[] = [];
-        LayerUtil._findAllChildLayer(layerIds, layerIdArr, hasSelf);
+    public static findAllChildLayer = (groupIds: string[], hasSelf: boolean = true): string[] => {
+        let layerIdArr: string[] = [];
+        const {layerConfigs} = designerStore;
+        groupIds.forEach((id) => {
+            layerIdArr.push(id);
+            let layer: ILayerItem = layerConfigs[id];
+            if (layer.childHeader)
+                LayerUtil.iterateLayerLink(layer.childHeader, layerIdArr);
+        });
+        if (!hasSelf)
+            layerIdArr = layerIdArr.filter((id) => !groupIds.includes(id));
         return [...new Set(layerIdArr)];
     }
 
     /**
      * 递归向下查找所有子图层id
-     * @param groupLayerIds 分组图层ids
+     * @param layerHeader 分组图层ids
      * @param res 结果数组
-     * @param hasSelf 是否包含自身id
      * @private
      */
-    private static _findAllChildLayer(groupLayerIds: string[], res: string[], hasSelf: boolean = true) {
+    public static iterateLayerLink(layerHeader: string, res: string[]) {
         const {layerConfigs} = designerStore;
-        groupLayerIds.forEach((id) => {
-            if (layerConfigs[id]) {
-                const {childIds} = layerConfigs[id];
-                if (childIds && childIds.length > 0) {
-                    res.push(...childIds);
-                    LayerUtil._findAllChildLayer(childIds, res);
-                }
-                if (hasSelf)
-                    res.push(id);
+        let layer: ILayerItem = layerConfigs[layerHeader];
+        if (layer) {
+            res.push(layer.id!);
+            if (layer.childHeader)
+                LayerUtil.iterateLayerLink(layer.childHeader, res);
+            let nextLayer = layerConfigs[layer.next!];
+            while (nextLayer) {
+                if (nextLayer.childHeader)
+                    LayerUtil.iterateLayerLink(nextLayer.childHeader, res);
+                res.push(nextLayer.id!);
+                nextLayer = layerConfigs[nextLayer.next!];
             }
-        });
+        }
     }
 
 

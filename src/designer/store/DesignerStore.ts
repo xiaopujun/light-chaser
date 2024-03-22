@@ -1,4 +1,4 @@
-import {action, makeObservable, observable, toJS} from "mobx";
+import {action, makeObservable, observable, runInAction, toJS} from "mobx";
 import {isEqual} from "lodash";
 import {
     CanvasConfig,
@@ -171,6 +171,10 @@ class DesignerStore {
                 this.layerConfigs[item.id + ""] = reRender ? {...ObjectUtil.merge(oldItem, item)} : ObjectUtil.merge(oldItem, item);
         }
     };
+
+    reRenderLayer = () => {
+        runInAction(() => this.layerConfigs = {...this.layerConfigs})
+    }
 
     /**
      * 直接删除只能删除type = group的图层数据，要同时删除组件布局数据，需要调用delItem

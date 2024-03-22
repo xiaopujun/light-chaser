@@ -21,27 +21,32 @@ class LayerBuilder {
      */
     public parser = (layerMap: Record<string, ILayerItem>, order: LayerOrder = LayerOrder.DESC): ILayerItem[] => {
         layerMap = cloneDeep(layerMap);
-        let sourceLayerArr = [];
-        const {layerHeader, layerTail} = designerStore;
-        if (order === LayerOrder.DESC) {
-            let layer = layerMap[layerHeader!];
-            if (layer) {
-                sourceLayerArr.push(layer);
-                while (layer?.next) {
-                    layer = layerMap[layer.next];
-                    sourceLayerArr.push(layer);
+        let sourceLayerArr: ILayerItem[] = [];
+        const {layerHeader} = designerStore;
+
+        const iterateLayers = (currentLayer: ILayerItem, res: ILayerItem[]): void => {
+            if (currentLayer) {
+                res.push(currentLayer);
+                if (currentLayer.childHeader) {
+                    let childLayer = layerMap[currentLayer.childHeader];
+                    iterateLayers(childLayer, res);
                 }
-            }
-        } else {
-            let layer = layerMap[layerTail!];
-            if (layer) {
-                sourceLayerArr.push(layer);
-                while (layer?.prev) {
-                    layer = layerMap[layer.prev];
-                    sourceLayerArr.push(layer);
+                let next = currentLayer.next;
+                while (next) {
+                    const nextLayer = layerMap[next!];
+                    if (nextLayer.childHeader)
+                        iterateLayers(layerMap[nextLayer.childHeader], res);
+                    res.push(nextLayer);
+                    next = nextLayer?.next;
                 }
             }
         }
+
+        iterateLayers(layerMap[layerHeader!], sourceLayerArr);
+
+        if (order === LayerOrder.ASC)
+            sourceLayerArr = sourceLayerArr.reverse();
+
         // 构建树结构
         const resData: ILayerItem[] = [];
         for (const layerItem of sourceLayerArr) {
