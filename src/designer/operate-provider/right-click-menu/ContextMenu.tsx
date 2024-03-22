@@ -4,9 +4,9 @@ import contextMenuStore from "./ContextMenuStore";
 import './OperateMenu.less';
 import {
     CopyOutlined,
-    DeleteOutlined,
+    DeleteOutlined, DownOutlined,
     EyeInvisibleOutlined, GroupOutlined,
-    LockOutlined, UngroupOutlined,
+    LockOutlined, LogoutOutlined, UngroupOutlined, UpOutlined,
     VerticalAlignBottomOutlined,
     VerticalAlignTopOutlined
 } from "@ant-design/icons";
@@ -15,11 +15,11 @@ import {
     doDelete,
     doGrouping,
     doHide,
-    doLock,
+    doLock, doMoveDown, doMoveUp,
     doUnGrouping,
     doUnLock,
     layerToBottom,
-    layerToTop
+    layerToTop, removeFromGroup
 } from "../hot-key/HotKeyImpl";
 import eventOperateStore from "../EventOperateStore";
 import designerStore from "../../store/DesignerStore";
@@ -32,6 +32,16 @@ class ContextMenu extends Component {
             name: '复制',
             icon: CopyOutlined,
             onClick: doCopy,
+        },
+        {
+            name: '上移',
+            icon: UpOutlined,
+            onClick: doMoveUp,
+        },
+        {
+            name: '下移',
+            icon: DownOutlined,
+            onClick: doMoveDown,
         },
         {
             name: '置顶',
@@ -91,6 +101,13 @@ class ContextMenu extends Component {
                 onClick: doUnGrouping,
             })
         }
+        const noGroup = targetIds.some((id: string) => !layerConfigs[id].pid);
+        if (!noGroup)
+            menus.push({
+                name: '移出分组',
+                icon: LogoutOutlined,
+                onClick: removeFromGroup
+            })
         return menus;
     }
 
@@ -115,13 +132,13 @@ class ContextMenu extends Component {
         return (
             <>
                 {visible &&
-                <div className={'context-menu'} style={{
-                    position: 'fixed',
-                    top: position[1],
-                    left: position[0]
-                }}>
-                    {this.buildMenuList()}
-                </div>}
+                    <div className={'context-menu'} style={{
+                        position: 'fixed',
+                        top: position[1],
+                        left: position[0]
+                    }}>
+                        {this.buildMenuList()}
+                    </div>}
             </>
         );
     }
