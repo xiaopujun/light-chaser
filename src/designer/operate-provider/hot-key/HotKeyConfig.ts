@@ -35,8 +35,7 @@ import {
     undo
 } from "./HotKeyImpl";
 
-
-export const hotkeyConfigs: HotKeyConfigType = {
+const commonHotKeyConfigs: HotKeyConfigType = {
     'control + a': {
         handler: selectAll,
         range: ".lc-ruler-content"
@@ -45,6 +44,8 @@ export const hotkeyConfigs: HotKeyConfigType = {
         handler: doCopy,
         range: ".lc-ruler-content"
     },
+
+
     'control + l': {
         handler: doLock,
     },
@@ -68,9 +69,6 @@ export const hotkeyConfigs: HotKeyConfigType = {
     },
     'control + s': {
         handler: doSave,
-    },
-    'delete': {
-        handler: [delBPLine, delBPNode, doDelete],
     },
     'control + z': {
         handler: undo,
@@ -165,3 +163,22 @@ export const hotkeyConfigs: HotKeyConfigType = {
         handler: removeFromGroup,
     }
 }
+
+const isMac = /macintosh|mac os x/i.test(navigator.userAgent);
+
+const winHotKey: HotKeyConfigType = {
+    'delete': {
+        handler: [delBPLine, delBPNode, doDelete],
+    },
+    ...commonHotKeyConfigs
+}
+
+const macHotKey: HotKeyConfigType = {
+    'meta + backspace': {
+        handler: [delBPLine, delBPNode, doDelete],
+    },
+    ...commonHotKeyConfigs
+}
+
+
+export const hotkeyConfigs: HotKeyConfigType = isMac ? macHotKey : winHotKey;
