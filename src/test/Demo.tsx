@@ -1,85 +1,39 @@
 import './DemoMain.less';
 import {FieldChangeData, LCGUI} from "../json-schema/LCGUI.tsx";
 import {Control} from "../json-schema/SchemaTypes.ts";
+import {useRef, useState} from "react";
 
 export default function Demo() {
 
+    const [count, setCount] = useState(0)
+    const codeRef = useRef<string>('function test() {\n    console.log("test");\n}')
 
     const schema: Control[] = [
         {
-            key: 'style',
-            type: 'grid',
-            config: {
-                columns: 2,
-                containerStyle: {
-                    marginBottom: 10,
-                    width: 400,
-                }
-            },
-            children: [
-                {
-                    key: 'name',
-                    type: 'input',
-                    value: '123',
-                    label: '姓名',
-                },
-                {
-                    key: 'sex',
-                    type: 'radio',
-                    value: 'man',
-                    label: '性别',
-                    config: {
-                        options: [
-                            {label: '男', value: 'man'},
-                            {label: '女', value: 'woman'}
-                        ]
-                    }
-                }
-            ]
+            id: 'btnTest',
+            type: 'button'
         },
         {
-            type: 'grid',
+            id: 'code',
+            type: 'code-editor',
+            value: codeRef.current,
+            reRender: true,
             config: {
-                columns: 2,
-            },
-            children: [
-                {
-                    type: 'input',
-                    value: '123',
-                    label: '姓名',
-                },
-                {
-                    type: 'radio',
-                    value: 'man',
-                    label: '性别',
-                    config: {
-                        options: [
-                            {label: '男', value: 'man'},
-                            {label: '女', value: 'woman'}
-                        ]
-                    }
-                }, {
-                    type: 'input',
-                    value: '123',
-                    label: '姓名',
-                },
-                {
-                    type: 'radio',
-                    value: 'man',
-                    label: '性别',
-                    config: {
-                        options: [
-                            {label: '男', value: 'man'},
-                            {label: '女', value: 'woman'}
-                        ]
-                    }
-                },
-            ]
+                readonly: true,
+                height: 160,
+            }
         }
+
+
     ]
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
-        console.log(fieldChangeData);
+        const {id, reRender} = fieldChangeData;
+        if (id === 'btnTest') {
+            codeRef.current = `const test = "niubi"`
+        }
+        if (reRender)
+            setCount(count + 1)
     }
 
     return (

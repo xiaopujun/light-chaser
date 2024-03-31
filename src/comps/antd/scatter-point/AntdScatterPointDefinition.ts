@@ -117,10 +117,8 @@ class AntdScatterPointDefinition extends AbstractScatterDefinition {
                 color: ["#00b7ffff", "#006d98ff"],
             },
             data: {
-                dataSource: 'static',
-                staticData: {
-                    data: data
-                },
+                sourceType: 'static',
+                staticData: data
             },
         };
     }

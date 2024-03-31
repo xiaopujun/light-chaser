@@ -165,10 +165,8 @@ class AntdScatterBubbleDefinition extends AbstractScatterDefinition {
                 },
             },
             data: {
-                dataSource: 'static',
-                staticData: {
-                    data: data
-                },
+                sourceType: 'static',
+                staticData: data
             },
         };
     }

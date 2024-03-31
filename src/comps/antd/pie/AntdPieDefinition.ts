@@ -127,10 +127,8 @@ class AntdPieDefinition extends AntdCommonDefinition<AntdPieController, AntdPieP
                 color: ["#0087ffff", "#339effff", "#87c5ffff", "#4687c3ff"],
             },
             data: {
-                dataSource: 'static',
-                staticData: {
-                    data
-                },
+                sourceType: 'static',
+                staticData: data,
             },
         };
     }

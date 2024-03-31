@@ -93,10 +93,8 @@ class AntdGroupRoseDefinition extends AbstractRoseDefinition {
                 },
             },
             data: {
-                dataSource: 'static',
-                staticData: {
-                    data: data
-                },
+                sourceType: 'static',
+                staticData: data
             },
         };
     }

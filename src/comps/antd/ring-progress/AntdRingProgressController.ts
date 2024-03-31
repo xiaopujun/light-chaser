@@ -29,7 +29,6 @@ export default class AntdRingProgressController extends AntdBaseDesignerControll
 
     update(config: AntdRingProgressProps, upOp?: UpdateOptions): void {
         super.commonUpdate(config, RingProgress, upOp);
-        console.log(this.config?.style)
     }
 
     updateTheme(newTheme: ThemeItemType): void {

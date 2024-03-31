@@ -27,7 +27,6 @@ class EditorDesignerLoader extends AbstractDesignerLoader {
                     canvasConfig: data?.canvasConfig,
                     elemConfigs: data?.elemConfigs,
                     layerConfigs: data?.layerConfigs,
-                    statisticInfo: data?.statisticInfo,
                     themeConfig: data?.themeConfig,
                     layerHeader: data?.layerHeader,
                     layerTail: data?.layerTail,

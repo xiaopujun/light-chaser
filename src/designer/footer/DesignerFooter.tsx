@@ -33,7 +33,7 @@ class DesignerFooter extends Component {
                     </div>
                     <div className={'footer-item'} onClick={this.toggleSnapShot}>
                         <CameraOutlined/>
-                        <span>快照</span>
+                        <span>封面</span>
                     </div>
                 </div>
                 <div className={'footer-right'}>

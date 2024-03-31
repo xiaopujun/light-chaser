@@ -24,15 +24,6 @@ export interface ThemeItemType {
     id: string;
 }
 
-
-/**
- * 统计信息
- */
-export interface Statistic {
-    //图层个数
-    count?: number;
-}
-
 export interface APIConfig {
     //地址
     url?: string;
@@ -43,15 +34,7 @@ export interface APIConfig {
     //请求参数
     params?: any;
     //刷新频率
-    flashFrequency?: number;
-}
-
-/**
- * 静态数据配置
- */
-export interface StaticConfig {
-    //数据
-    data?: any;
+    frequency?: number;
 }
 
 /**
@@ -59,9 +42,9 @@ export interface StaticConfig {
  */
 export interface DataConfigType {
     //数据来源方式
-    dataSource?: 'static' | 'api' | 'database' | 'excel';
+    sourceType?: 'static' | 'api' | 'database' | 'excel';
     //静态数据(除了存放静态数据外，该属性还有动态数据的中转站的作用），其他动态数据获取到后统一都存放在静态数据中，需要使用到的时候再从静态数据中获取
-    staticData?: StaticConfig;
+    staticData?: any;
     apiData?: APIConfig;
 }
 
@@ -151,8 +134,6 @@ export interface ProjectDataType {
     elemConfigs?: { [key: string]: Record<string, any> };
     //图层信息
     layerConfigs?: { [key: string]: ILayerItem };
-    //统计信息
-    statisticInfo?: Statistic;
     //全局主题
     themeConfig?: Array<ThemeItemType>;
     //图层头指针

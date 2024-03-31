@@ -92,10 +92,8 @@ class AntdRangeBarDefinition extends AbstractBarDefinition {
                 },
             },
             data: {
-                dataSource: 'static',
-                staticData: {
-                    data: data
-                },
+                sourceType: 'static',
+                staticData: data
             },
         };
     }

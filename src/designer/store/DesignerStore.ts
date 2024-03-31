@@ -137,16 +137,12 @@ class DesignerStore {
     }
 
 
-    setLoaded = (loaded: boolean) => {
-        this.loaded = loaded;
-    }
+    setLoaded = (loaded: boolean) => this.loaded = loaded;
 
     /**
      * 添加元素
      */
-    addItem = (layer: ILayerItem) => {
-        this.layerConfigs[layer.id + ""] = layer;
-    };
+    addItem = (layer: ILayerItem) => this.layerConfigs[layer.id + ""] = layer;
 
     /**
      * 删除元素
@@ -172,9 +168,7 @@ class DesignerStore {
         }
     };
 
-    reRenderLayer = () => {
-        runInAction(() => this.layerConfigs = {...this.layerConfigs})
-    }
+    reRenderLayer = () => runInAction(() => this.layerConfigs = {...this.layerConfigs});
 
     /**
      * 直接删除只能删除type = group的图层数据，要同时删除组件布局数据，需要调用delItem
@@ -187,9 +181,7 @@ class DesignerStore {
         }
     }
 
-    updateThemeConfig = (data: Array<ThemeItemType>) => {
-        this.themeConfig = data;
-    };
+    updateThemeConfig = (data: Array<ThemeItemType>) => this.themeConfig = data;
 
     flashGlobalTheme = (newTheme: ThemeItemType) => {
         this.compController && Object.keys(this.compController).forEach((key: string) => {
@@ -202,23 +194,16 @@ class DesignerStore {
     /**
      * 更新画布设置
      */
-    updateCanvasConfig = (data: CanvasConfig) => {
-        this.canvasConfig = {...this.canvasConfig, ...data}
-    }
+    updateCanvasConfig = (data: CanvasConfig) => this.canvasConfig = {...this.canvasConfig, ...data};
 
     /**
      * 更新项目配置
      */
-    updateProjectConfig = (data: IProjectInfo) => {
-        this.projectConfig = {...this.projectConfig, ...data};
-    };
+    updateProjectConfig = (data: IProjectInfo) => this.projectConfig = {...this.projectConfig, ...data};
 
-    copyItem = (ids: string[]) => {
-        return historyRecordOperateProxy.doCopy(ids);
-    };
+    copyItem = (ids: string[]) => historyRecordOperateProxy.doCopy(ids);
 }
 
 const designerStore = new DesignerStore();
 
 export default designerStore;
-export {DesignerStore};
