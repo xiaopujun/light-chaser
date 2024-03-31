@@ -277,7 +277,6 @@ const DataConfig = (props: DataConfigProps) => {
             }
         ]
     }
-    console.log(dataRef.current.apiData)
     return (
         <LCGUI schema={schema} onFieldChange={onFieldChange}/>
     );

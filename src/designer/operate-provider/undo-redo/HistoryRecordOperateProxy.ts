@@ -626,9 +626,23 @@ class HistoryRecordOperateProxy {
         if (targetIds.length === 0)
             return;
 
+        const {layerConfigs} = designerStore;
+        //判断本次操作是否需要变更数据
+        if (targetIds.includes(designerStore.layerHeader!)) {
+            let count = 1;
+            let layer = layerConfigs[designerStore.layerHeader!]
+            while (layer.next) {
+                layer = layerConfigs[layer.next];
+                if (targetIds.includes(layer.id!))
+                    count++;
+                else break;
+            }
+            if (count >= targetIds.length)
+                return;
+        }
+
         const prev: IUpdLayerOperateData[] = [];
         const next: IUpdLayerOperateData[] = [];
-        const {layerConfigs} = designerStore;
 
         //收集相关的图层id
         const relatedLayerIds: Set<string> = new Set();
@@ -720,9 +734,23 @@ class HistoryRecordOperateProxy {
         if (targetIds.length === 0)
             return;
 
+        const {layerConfigs} = designerStore;
+        //判断本次操作是否需要变更数据
+        if (targetIds.includes(designerStore.layerTail!)) {
+            let count = 1;
+            let layer = layerConfigs[designerStore.layerTail!]
+            while (layer.prev) {
+                layer = layerConfigs[layer.prev];
+                if (targetIds.includes(layer.id!))
+                    count++;
+                else break;
+            }
+            if (count >= targetIds.length)
+                return;
+        }
+
         const prev: IUpdLayerOperateData[] = [];
         const next: IUpdLayerOperateData[] = [];
-        const {layerConfigs} = designerStore;
 
         //收集相关的图层id
         const relatedLayerIds: Set<string> = new Set();
