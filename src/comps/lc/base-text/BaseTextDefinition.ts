@@ -46,10 +46,8 @@ export default class BaseTextDefinition extends AbstractDefinition<BaseTextContr
                 justifyContent: 'center',
             },
             data: {
-                dataSource: 'static',
-                staticData: {
-                    data: "基础文本"
-                },
+                sourceType: 'static',
+                staticData: "基础文本"
             },
         };
     }

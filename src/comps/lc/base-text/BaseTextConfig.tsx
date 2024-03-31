@@ -73,7 +73,7 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
                                 key: 'data',
                                 type: 'text-area',
                                 label: '内容',
-                                value: data?.staticData?.data,
+                                value: data?.staticData,
                                 config: {
                                     containerStyle: {gridColumn: '1 / 3'},
                                 }

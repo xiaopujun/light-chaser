@@ -30,7 +30,7 @@ const DigitalFlipperComponent = React.forwardRef((props: DigitalFlipperComponent
     let countUpAnim: CountUp;
 
     useEffect(() => {
-        countUpAnim = new CountUp(countUpRef.current!, config.data?.staticData?.data, {
+        countUpAnim = new CountUp(countUpRef.current!, config.data?.staticData, {
             plugin: config.style?.type === 'slide' ? new Odometer({duration: 1, lastDigitDelay: 0}) : undefined,
             duration: 1,
         });

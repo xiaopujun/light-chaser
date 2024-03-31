@@ -122,10 +122,8 @@ class AntdGaugeDefinition extends AbstractDefinition<AntdGaugeController, AntdGa
                 },
             },
             data: {
-                dataSource: 'static',
-                staticData: {
-                    data: 0.75
-                },
+                sourceType: 'static',
+                staticData: 0.75
             },
         };
     }

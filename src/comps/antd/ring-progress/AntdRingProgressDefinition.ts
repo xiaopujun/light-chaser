@@ -90,10 +90,8 @@ class AntdRingProgressDefinition extends AntdCommonDefinition<AntdRingProgressCo
                 progressStyle: {}
             },
             data: {
-                dataSource: 'static',
-                staticData: {
-                    data: 0.7,
-                },
+                sourceType: 'static',
+                staticData: 0.7,
             },
         };
     }

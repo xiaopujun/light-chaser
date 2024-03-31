@@ -28,7 +28,7 @@ export class DigitalFlipperController extends AbstractDesignerController<Digital
 
 
     changeData(data: number) {
-        this.config!.data!.staticData!.data = data;
+        this.config!.data!.staticData = data;
         this.instance?.changeData(data);
     }
 

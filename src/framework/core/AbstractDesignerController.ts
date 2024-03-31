@@ -38,13 +38,13 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
         //预览模式
         const {data} = this.config! as ComponentBaseProps;
         if (!data) return;
-        const {dataSource} = data!;
-        switch (dataSource) {
+        const {sourceType} = data!;
+        switch (sourceType) {
             case "static":
                 //静态数据不做处理，组件首次渲染时默认读取静态数据
                 break;
             case "api":
-                const {url, method, params, header, flashFrequency = 5} = data?.apiData!;
+                const {url, method, params, header, frequency = 5} = data?.apiData!;
                 this.interval = setInterval(() => {
                     HttpUtil.sendHttpRequest(url!, method!, header!, params!).then((data: any) => {
                         if (data) {
@@ -66,7 +66,7 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
                             this.container!.appendChild(this.errMsgDom);
                         }
                     });
-                }, flashFrequency * 1000);
+                }, frequency * 1000);
                 break;
         }
     }

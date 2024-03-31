@@ -49,9 +49,7 @@ export default class DigitalFlipperDefinition extends AbstractDefinition<Digital
                 type: 'caper',
             },
             data: {
-                staticData: {
-                    data: 123456789,
-                }
+                staticData: 123456789
             }
         };
     }

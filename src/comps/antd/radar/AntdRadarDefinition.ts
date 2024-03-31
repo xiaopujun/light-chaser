@@ -162,10 +162,8 @@ class AntdRadarDefinition extends AntdCommonDefinition<AntdRadarController, Antd
                 },
             },
             data: {
-                dataSource: 'static',
-                staticData: {
-                    data
-                },
+                sourceType: 'static',
+                staticData: data
             },
         };
     }

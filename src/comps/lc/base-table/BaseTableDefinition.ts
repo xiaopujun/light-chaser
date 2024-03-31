@@ -83,10 +83,8 @@ export default class BaseTableDefinition extends AbstractDefinition<BaseTableCon
                 }
             },
             data: {
-                dataSource: 'static',
-                staticData: {
-                    data
-                },
+                sourceType: 'static',
+                staticData: data
             },
         };
     }

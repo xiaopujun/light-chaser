@@ -99,10 +99,8 @@ class AntdLiquidDefinition extends AbstractDefinition<AntdLiquidController, Antd
                 }
             },
             data: {
-                dataSource: 'static',
-                staticData: {
-                    data: 0.65
-                },
+                sourceType: 'static',
+                staticData: 0.65
             },
         };
     }

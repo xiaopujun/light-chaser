@@ -6,7 +6,7 @@ import {HotKeyDes} from "./hotkey-des/HotKeyDes";
 import footerStore from "./FooterStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {CameraOutlined, LaptopOutlined} from "@ant-design/icons";
-import {SnapshotConfig} from "./snapshot/SnapshotConfig";
+import {CoverConfig} from "./cover/CoverConfig.tsx";
 
 class DesignerFooter extends Component {
 
@@ -33,7 +33,7 @@ class DesignerFooter extends Component {
                     </div>
                     <div className={'footer-item'} onClick={this.toggleSnapShot}>
                         <CameraOutlined/>
-                        <span>快照</span>
+                        <span>封面</span>
                     </div>
                 </div>
                 <div className={'footer-right'}>
@@ -41,7 +41,7 @@ class DesignerFooter extends Component {
                     <div className={'right-info-item'}>图层 : {Object.keys(layerConfigs).length}</div>
                 </div>
                 {hotKeyVisible && <HotKeyDes onClose={this.toggleHotKeyDes}/>}
-                {snapShotVisible && <SnapshotConfig onClose={this.toggleSnapShot}/>}
+                {snapShotVisible && <CoverConfig onClose={this.toggleSnapShot}/>}
             </div>
         );
     }

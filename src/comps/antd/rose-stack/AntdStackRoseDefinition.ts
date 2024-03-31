@@ -112,10 +112,8 @@ class AntdStackRoseDefinition extends AbstractRoseDefinition {
                 radius: 1,
             },
             data: {
-                dataSource: 'static',
-                staticData: {
-                    data: data
-                },
+                sourceType: 'static',
+                staticData: data
             },
         };
     }

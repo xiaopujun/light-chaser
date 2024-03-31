@@ -47,7 +47,7 @@ class BaseTextComponent extends Component<BaseTextComponentProps, BaseTextCompon
                     onBlur={() => this.setState({edit: false})}
                     autoFocus={true}
                     type={'text'}
-                    defaultValue={data?.staticData?.data}/> : data?.staticData?.data}
+                    defaultValue={data?.staticData}/> : data?.staticData}
             </div>
         );
     }

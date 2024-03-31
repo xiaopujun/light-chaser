@@ -69,10 +69,8 @@ class AntdBaseRoseDefinition extends AbstractRoseDefinition {
                 color: ["#0091ffff", "#68beffff", "#b4e0ffff", "#408ec9ff"],
             },
             data: {
-                dataSource: 'static',
-                staticData: {
-                    data: data
-                },
+                sourceType: 'static',
+                staticData: data
             },
         };
     }
