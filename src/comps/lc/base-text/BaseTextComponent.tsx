@@ -43,7 +43,7 @@ class BaseTextComponent extends Component<BaseTextComponentProps, BaseTextCompon
                  onClick={this.onClick}>
                 {edit ? <input
                     ref={(ref) => ref?.select()}
-                    onChange={(e) => data!.staticData!.data = e.target.value}
+                    onChange={(e) => data!.staticData = e.target.value}
                     onBlur={() => this.setState({edit: false})}
                     autoFocus={true}
                     type={'text'}
