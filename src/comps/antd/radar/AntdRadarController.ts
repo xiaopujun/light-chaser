@@ -27,7 +27,7 @@ export default class AntdRadarController extends AntdBaseDesignerController<Rada
     }
 
     changeData(data: any) {
-        this.config!.data!.staticData!.data = data;
+        this.config!.data!.staticData = data;
         this.config!.style!.data = data;
         this.instance?.changeData(data);
     }

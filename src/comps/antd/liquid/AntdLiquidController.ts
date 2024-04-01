@@ -27,7 +27,7 @@ export default class AntdLiquidController extends AntdBaseDesignerController<Liq
     }
 
     changeData(data: any) {
-        this.config!.data!.staticData!.data = data;
+        this.config!.data!.staticData = data;
         this.config!.style!.percent = data;
         this.instance?.changeData(data);
     }

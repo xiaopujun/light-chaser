@@ -28,7 +28,7 @@ export default class AntdGaugeController extends AntdBaseDesignerController<Gaug
 
 
     changeData(data: any) {
-        this.config!.data!.staticData!.data = data;
+        this.config!.data!.staticData = data;
         this.config!.style!.percent = data;
         this.instance?.changeData(data);
     }
