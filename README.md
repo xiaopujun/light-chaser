@@ -43,9 +43,9 @@ launch it locally with the code to experience it!
 
 preview image：
 
-![lightchaser1](https://picss.sunbangyan.cn/2023/11/03/9cbcb42f4c6d7bc12ffb79f4ad0ef9dd.png)
+![lightchaser1](https://i.072333.xyz/file/8ff8361817216f2fb1c47.png)
 
-![lightchaser blueprint](https://picss.sunbangyan.cn/2023/11/03/59ff17df602ce90d6ba7885037860449.png)
+![lightchaser blueprint](https://i.072333.xyz/file/7a8f56103f631d784172a.png)
 
 # Usage & Deployment
 
