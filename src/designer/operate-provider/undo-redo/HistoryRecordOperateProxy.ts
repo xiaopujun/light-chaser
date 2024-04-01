@@ -445,14 +445,110 @@ class HistoryRecordOperateProxy {
         }
     }
 
+    /**
+     * 判断是否可以上移图层
+     * @param targetIds
+     * @private
+     */
+    private canMoveUp(targetIds: string[]): boolean {
+        const {layerConfigs} = designerStore;
+        const layerHeaderMap: Record<string, string[]> = {};
+
+        targetIds.forEach((id) => {
+            const layer = layerConfigs[id];
+            if (layer.pid) {
+                const parentLayer = layerConfigs[layer.pid]
+                if (parentLayer.childHeader) {
+                    if (!layerHeaderMap[parentLayer.childHeader])
+                        layerHeaderMap[parentLayer.childHeader] = [id];
+                    else
+                        layerHeaderMap[parentLayer.childHeader].push(id);
+                }
+            } else {
+                if (!layerHeaderMap[designerStore.layerHeader!])
+                    layerHeaderMap[designerStore.layerHeader!] = [id];
+                else
+                    layerHeaderMap[designerStore.layerHeader!].push(id);
+            }
+        })
+
+        for (const [header, layerIds] of Object.entries(layerHeaderMap)) {
+            if (layerIds.includes(header!)) {
+                let count = 1;
+                let layer = layerConfigs[header]
+                while (layer.next) {
+                    layer = layerConfigs[layer.next];
+                    if (targetIds.includes(layer.id!))
+                        count++;
+                    else
+                        break;
+                }
+                if (count >= layerIds.length)
+                    targetIds = targetIds.filter(id => !layerIds.includes(id))
+            }
+        }
+
+        return targetIds.length !== 0;
+    }
+
+    /**
+     * 判断图层是否可以下移
+     * @param targetIds
+     * @private
+     */
+    private canMoveDown(targetIds: string[]): boolean {
+        const {layerConfigs} = designerStore;
+        const layerTailMap: Record<string, string[]> = {};
+
+        targetIds.forEach((id) => {
+            const layer = layerConfigs[id];
+            if (layer.pid) {
+                const parentLayer = layerConfigs[layer.pid]
+                if (parentLayer.childTail) {
+                    if (!layerTailMap[parentLayer.childTail])
+                        layerTailMap[parentLayer.childTail] = [id];
+                    else
+                        layerTailMap[parentLayer.childTail].push(id);
+                }
+            } else {
+                if (!layerTailMap[designerStore.layerTail!])
+                    layerTailMap[designerStore.layerTail!] = [id];
+                else
+                    layerTailMap[designerStore.layerTail!].push(id);
+            }
+        })
+
+
+        for (const [tail, layerIds] of Object.entries(layerTailMap)) {
+            if (layerIds.includes(tail!)) {
+                let count = 1;
+                let layer = layerConfigs[tail]
+                while (layer.prev) {
+                    layer = layerConfigs[layer.prev];
+                    if (targetIds.includes(layer.id!))
+                        count++;
+                    else
+                        break;
+                }
+                if (count >= layerIds.length)
+                    targetIds = targetIds.filter(id => !layerIds.includes(id))
+            }
+        }
+
+        return targetIds.length !== 0;
+    }
+
     public doLayerToTop(): void {
-        const {targetIds} = eventOperateStore;
+        let {targetIds} = eventOperateStore;
         if (targetIds.length === 0)
             return;
 
+        if (!this.canMoveUp(targetIds))
+            return;
+
+        const {layerConfigs} = designerStore;
         const updPrev: IUpdLayerOperateData[] = [];
         const updNext: IUpdLayerOperateData[] = [];
-        const {layerConfigs} = designerStore;
 
         let finalTargetIds = targetIds.filter((id) => {
             const layer = layerConfigs[id];
@@ -535,7 +631,7 @@ class HistoryRecordOperateProxy {
 
     public doLayerToBottom(): void {
         const {targetIds} = eventOperateStore;
-        if (targetIds.length === 0)
+        if (targetIds.length === 0 || !this.canMoveDown(targetIds))
             return;
 
         const updPrev: IUpdLayerOperateData[] = [];
@@ -626,21 +722,10 @@ class HistoryRecordOperateProxy {
         if (targetIds.length === 0)
             return;
 
-        const {layerConfigs} = designerStore;
-        //判断本次操作是否需要变更数据
-        if (targetIds.includes(designerStore.layerHeader!)) {
-            let count = 1;
-            let layer = layerConfigs[designerStore.layerHeader!]
-            while (layer.next) {
-                layer = layerConfigs[layer.next];
-                if (targetIds.includes(layer.id!))
-                    count++;
-                else break;
-            }
-            if (count >= targetIds.length)
-                return;
-        }
+        if (!this.canMoveUp(targetIds))
+            return;
 
+        const {layerConfigs} = designerStore;
         const prev: IUpdLayerOperateData[] = [];
         const next: IUpdLayerOperateData[] = [];
 
@@ -726,29 +811,14 @@ class HistoryRecordOperateProxy {
         });
         historyOperator.put({actions: [{type: OperateType.UPDATE_LAYER, prev, next}]});
         designerStore.reRenderLayer();
-
     }
 
     public doLayerMoveDown(): void {
         let {targetIds} = eventOperateStore;
-        if (targetIds.length === 0)
+        if (targetIds.length === 0 || !this.canMoveDown(targetIds))
             return;
 
         const {layerConfigs} = designerStore;
-        //判断本次操作是否需要变更数据
-        if (targetIds.includes(designerStore.layerTail!)) {
-            let count = 1;
-            let layer = layerConfigs[designerStore.layerTail!]
-            while (layer.prev) {
-                layer = layerConfigs[layer.prev];
-                if (targetIds.includes(layer.id!))
-                    count++;
-                else break;
-            }
-            if (count >= targetIds.length)
-                return;
-        }
-
         const prev: IUpdLayerOperateData[] = [];
         const next: IUpdLayerOperateData[] = [];
 
@@ -803,7 +873,7 @@ class HistoryRecordOperateProxy {
                             nextLayer.next = layer.id
                         }
                         prevLayer && (prevLayer.next = nextLayer?.id)
-                        nextNextLayer && (nextLayer.prev = layer?.id)
+                        nextNextLayer && (nextNextLayer.prev = layer?.id)
                     }
                 } else {
                     //不再分组内
@@ -924,8 +994,10 @@ class HistoryRecordOperateProxy {
 
                 if (designerStore.layerHeader === id)
                     designerStore.layerHeader = layer.next;
-                if (designerStore.layerTail === id)
-                    designerStore.layerTail = layer.prev;
+                if (designerStore.layerTail === id) {
+                    //如果当前图层加入分组前layer.prev指向为undefine，则说明所有图层都加入了分组，则最新的designerStore.layerTail指向本次分组的id
+                    designerStore.layerTail = layer.prev || groupItem.id;
+                }
 
                 layer.pid = groupId;
                 //prev图层和next图层建立联系
