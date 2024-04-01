@@ -45,7 +45,7 @@ preview image：
 
 ![lightchaser1](https://i.072333.xyz/file/8ff8361817216f2fb1c47.png)
 
-![lightchaser blueprint](https://i.072333.xyz/file/7a8f56103f631d784172a.png)
+![lightchaser](https://i.072333.xyz/file/3cacaaa9edc640ce64536.png)
 
 # Usage & Deployment
 
