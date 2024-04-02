@@ -18,12 +18,12 @@ class Loading extends Component<LoadingProps> {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            fontSize: '20px',
+            fontSize: '16px',
             fontWeight: '300'
         }
         return (
             <div style={style}>
-                <Spin>Loading...</Spin>
+                <Spin/> &nbsp; 加载中...
             </div>
         );
     }

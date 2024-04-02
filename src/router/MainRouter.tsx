@@ -1,22 +1,21 @@
-import {lazy, Suspense} from 'react';
+import {lazy, memo} from 'react';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import Loading from "../json-schema/ui/loading/Loading.tsx";
 import {ConfigProvider, MappingAlgorithm, theme} from "antd";
 import GlobalMessage from "../framework/message/GlobalMessage.tsx";
 //加载全局字体，这个需要考量一下，在此处加载是否合适
 import '../designer/resource/font/FontGlobal.css';
 import URLUtil from "../utils/URLUtil.ts";
 import {SaveType} from "../designer/DesignerType.ts";
-import {LocalProjectList} from "../pages/home/local-list/LocalProjectList.tsx";
-import {ServerProjectList} from "../pages/home/server-list/ServerProjectList.tsx";
-import {DatasourceManager} from "../pages/home/datasource/DatasourceManager.tsx";
-import {TemplateMarket} from "../pages/home/template-market/TemplateMarket.tsx";
 
-const Demo = lazy(() => import('../test/Demo.tsx'));
-const Login = lazy(() => import('../pages/login/Login.tsx').then(module => ({default: module.Login})));
-const Designer = lazy(() => import('../designer/Designer.tsx'));
-const DesignerView = lazy(() => import('../designer/view/DesignerView.tsx'));
-const Home = lazy(() => import('../pages/home/Home.tsx'));
+const Login = lazy(() => import('../pages/login/Login'));
+const Designer = lazy(() => import('../designer/Designer'));
+const DesignerView = lazy(() => import('../designer/view/DesignerView'));
+const Home = lazy(() => import('../pages/home/Home'));
+const LocalProjectList = lazy(() => import('../pages/home/local-list/LocalProjectList.tsx'));
+const ServerProjectList = lazy(() => import('../pages/home/server-list/ServerProjectList.tsx'));
+const DatasourceManager = lazy(() => import('../pages/home/datasource/DatasourceManager.tsx'));
+const TemplateMarket = lazy(() => import('../pages/home/template-market/TemplateMarket.tsx'));
+const Demo = lazy(() => import('../test/Demo'));
 
 
 export const DesignerRouter = () => {
@@ -84,7 +83,7 @@ const router = createBrowserRouter([
     }
 ])
 
-export default function MainRouter() {
+const MainRouter = memo(() => {
     return (
         <ConfigProvider theme={{
             algorithm: studioDarkAlgorithm,
@@ -95,11 +94,10 @@ export default function MainRouter() {
                 }
             }
         }}>
-            <Suspense fallback={<Loading/>}>
-                <RouterProvider router={router}/>
-            </Suspense>
+            <RouterProvider router={router}/>
             <GlobalMessage/>
         </ConfigProvider>
     );
-}
+})
 
+export default MainRouter

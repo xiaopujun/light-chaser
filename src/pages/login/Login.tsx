@@ -5,7 +5,7 @@ import {CheckBox} from "../../json-schema/ui/checkbox/CheckBox";
 import {globalMessage} from "../../framework/message/GlobalMessage";
 import {useNavigate} from "react-router-dom";
 
-export const Login = () => {
+const Login = () => {
 
     const navigate = useNavigate();
 
@@ -50,3 +50,5 @@ export const Login = () => {
         </div>
     );
 };
+
+export default Login;

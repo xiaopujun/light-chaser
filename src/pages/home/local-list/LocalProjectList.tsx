@@ -3,7 +3,7 @@ import ProjectList from "../project-list/ProjectList";
 import {SaveType} from "../../../designer/DesignerType";
 import localCoverCache from "../../../framework/cache/LocalCoverCache";
 
-export const LocalProjectList: React.FC = () => {
+const LocalProjectList: React.FC = () => {
 
     useEffect(() => {
         return () => {
@@ -16,3 +16,5 @@ export const LocalProjectList: React.FC = () => {
         <ProjectList saveType={SaveType.LOCAL}/>
     )
 }
+
+export default LocalProjectList
