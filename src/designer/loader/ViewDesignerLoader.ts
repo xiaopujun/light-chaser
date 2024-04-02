@@ -6,10 +6,9 @@ import bpLeftStore from "../../blueprint/left/BPLeftStore";
 import {AbstractBPNodeController} from "../../blueprint/node/core/AbstractBPNodeController";
 import bpNodeControllerMap from "../../blueprint/node/core/impl/BPNodeControllerMap";
 import {ClazzTemplate} from "../../comps/common-component/common-types";
-import URLUtil from "../../utils/URLUtil";
-import {message} from "antd";
 import operatorMap from "../../framework/operate";
 import {AbstractOperator} from "../../framework/operate/AbstractOperator";
+import {globalMessage} from "../../framework/message/GlobalMessage.tsx";
 
 /**
  * 展示模式下的设计器加载器
@@ -24,9 +23,8 @@ class ViewDesignerLoader extends AbstractDesignerLoader {
      * todo 使用模板方法模式细化初始化过程，达到代码结构的复用
      * 初始化以更新方式打开时项目信息
      */
-    protected initProject(): void {
-        const {saveType, id} = URLUtil.parseUrlParams();
-        (operatorMap[saveType as SaveType] as AbstractOperator).getProjectData(id).then((data) => {
+    protected initProject(id: string, type: SaveType): void {
+        (operatorMap[type] as AbstractOperator).getProjectData(id).then((data) => {
             if (data) {
                 const {doInit, setLoaded} = designerStore;
                 //初始化designerStore
@@ -65,7 +63,7 @@ class ViewDesignerLoader extends AbstractDesignerLoader {
                 initUsedLayerNodes(usedLayerNodes);
                 setLoaded(true);
             } else {
-                message.error("项目不存在");
+                globalMessage?.messageApi?.error("项目不存在");
             }
         })
     }

@@ -1,18 +1,20 @@
-import React from "react";
 import './Login.less';
 import Input from "../../json-schema/ui/input/Input";
 import Button from "../../json-schema/ui/button/Button";
 import {CheckBox} from "../../json-schema/ui/checkbox/CheckBox";
 import {globalMessage} from "../../framework/message/GlobalMessage";
+import {useNavigate} from "react-router-dom";
 
-export const Login: React.FC = () => {
+export const Login = () => {
+
+    const navigate = useNavigate();
 
     let account = 'admin';
     let password = 'admin';
 
     const login = () => {
         if (account === 'admin' && password === 'admin') {
-            window.location.href = '/home';
+            navigate('home/local');
         } else {
             globalMessage.messageApi?.warning('账户或密码错误');
         }

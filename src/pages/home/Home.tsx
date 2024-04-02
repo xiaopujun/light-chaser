@@ -1,14 +1,10 @@
 import React from 'react';
 import './Home.less';
 import {HomeMenus} from "./menus/HomeMenus";
-import homeStore from "./HomeStore";
-import {homePageMap} from "./index";
 import {observer} from "mobx-react";
-import Loading from "../../json-schema/ui/loading/Loading";
+import {Outlet} from 'react-router-dom';
 
 const Home: React.FC = observer(() => {
-    const {currentMenu} = homeStore;
-    const Content = homePageMap[currentMenu];
     return (
         <div className={'lc-home'}>
             <div className={'lc-home-header'}>
@@ -17,9 +13,7 @@ const Home: React.FC = observer(() => {
             <div className={'lc-home-body'}>
                 <div className={'lc-home-body-left'}><HomeMenus/></div>
                 <div className={'lc-home-body-right'}>
-                    <React.Suspense fallback={<Loading/>}>
-                        {Content && <Content/>}
-                    </React.Suspense>
+                    <Outlet/>
                 </div>
             </div>
         </div>

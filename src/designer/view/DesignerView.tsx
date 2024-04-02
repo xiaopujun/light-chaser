@@ -6,13 +6,15 @@ import Loading from "../../json-schema/ui/loading/Loading";
 import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
 import ScreenFit from "../../framework/screen-fit/ScreenFit";
 import layerBuilder from "../left/layer-list/LayerBuilder";
-import {DesignerMode} from "../DesignerType.ts";
+import {DesignerMode, SaveType} from "../DesignerType.ts";
+import URLUtil from "../../utils/URLUtil.ts";
 
 class DesignerView extends Component {
 
     constructor(props: any) {
         super(props);
-        DesignerLoaderFactory.getLoader(DesignerMode.VIEW).load();
+        const {saveType, id} = URLUtil.parseUrlParams();
+        DesignerLoaderFactory.getLoader(DesignerMode.VIEW).load(id, saveType as SaveType);
     }
 
     render() {

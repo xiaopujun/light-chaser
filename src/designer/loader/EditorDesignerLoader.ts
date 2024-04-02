@@ -2,10 +2,9 @@ import designerStore from "../store/DesignerStore";
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 import bpStore from "../../blueprint/store/BPStore";
 import bpLeftStore from "../../blueprint/left/BPLeftStore";
-import URLUtil from "../../utils/URLUtil";
-import {message} from "antd";
 import operatorMap from "../../framework/operate";
 import {SaveType} from "../DesignerType";
+import {globalMessage} from "../../framework/message/GlobalMessage.tsx";
 
 class EditorDesignerLoader extends AbstractDesignerLoader {
 
@@ -16,9 +15,8 @@ class EditorDesignerLoader extends AbstractDesignerLoader {
     /**
      * 初始化以更新方式打开时项目信息
      */
-    protected initProject(): void {
-        const {saveType, id} = URLUtil.parseUrlParams();
-        operatorMap[saveType as SaveType].getProjectData(id).then((data) => {
+    protected initProject(id: string, type: SaveType): void {
+        operatorMap[type].getProjectData(id).then((data) => {
             if (data) {
                 const {doInit, setLoaded} = designerStore;
                 //初始化designerStore
@@ -48,7 +46,7 @@ class EditorDesignerLoader extends AbstractDesignerLoader {
                 initUsedLayerNodes(usedLayerNodes);
                 setLoaded(true);
             } else {
-                message.error("项目不存在");
+                globalMessage?.messageApi?.error("项目不存在");
             }
         })
     }

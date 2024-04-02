@@ -12,7 +12,7 @@ import {observer} from "mobx-react";
 import Loading from "../json-schema/ui/loading/Loading";
 import DesignerLoaderFactory from "./loader/DesignerLoaderFactory";
 import {FrameLayout} from "../json-schema/ui/frame-layout/FrameLayout";
-import {DesignerMode} from "./DesignerType.ts";
+import {DesignerMode, SaveType} from "./DesignerType.ts";
 
 
 /**
@@ -76,15 +76,17 @@ const pointerUpHandler = (event: PointerEvent) => {
 
 
 export interface DesignerProps {
-    id?: string;
-    type?: string;
+    id: string;
+    type: SaveType;
 }
 
 export const Designer = (props: DesignerProps) => {
 
+    const {id, type} = props;
+
     useEffect(() => {
         //加载设计器
-        DesignerLoaderFactory.getLoader(DesignerMode.EDIT).load();
+        DesignerLoaderFactory.getLoader(DesignerMode.EDIT).load(id, type);
         //绑定事件到dom元素
         bindEventToDom();
         return () => unbindEventToDom();//卸载dom元素上的事件

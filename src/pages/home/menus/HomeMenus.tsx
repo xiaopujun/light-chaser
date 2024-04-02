@@ -1,8 +1,7 @@
-import React from "react";
 import {CloudServerOutlined, DatabaseOutlined, HomeOutlined, ShoppingOutlined} from "@ant-design/icons";
-import homeStore from "../HomeStore";
 import {Menu} from "antd";
 import {MenuItemType} from "antd/es/menu/hooks/useItems";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const menus: MenuItemType[] = [
     {
@@ -27,18 +26,20 @@ const menus: MenuItemType[] = [
     }
 ]
 
-export const HomeMenus: React.FC = () => {
+export const HomeMenus = () => {
 
+    const navigate = useNavigate();
+    const location = useLocation();
     const changeMenu = (menu: MenuItemType) => {
-        const {setCurrentMenu} = homeStore;
-        setCurrentMenu(menu.key as string);
+        navigate(`${menu.key}`);
     }
-
+    const {pathname} = location;
+    const currentMenu = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length);
     return (
         <div className={'lc-home-menus'}>
             <Menu onClick={changeMenu}
                   style={{width: 256}}
-                  defaultSelectedKeys={['local']}
+                  defaultSelectedKeys={[currentMenu]}
                   mode="inline"
                   items={menus}
             />
