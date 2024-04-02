@@ -1,8 +1,8 @@
+import {BPNodeLayoutType, IBPLine} from "../blueprint/store/BPStore";
+
 /**
  * 主题
  */
-import {BPNodeLayoutType, IBPLine} from "../blueprint/store/BPStore";
-
 export interface ThemeColors {
     //主体色
     main?: string;

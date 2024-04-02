@@ -2,6 +2,7 @@ import {action, makeObservable, observable, runInAction} from "mobx";
 import {MenuInfo} from "./MenuType";
 import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
 import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
+import {DesignerMode} from "../DesignerType.ts";
 
 /**
  * 激活元素
@@ -60,7 +61,7 @@ class RightStore {
             return;
         }
         //更新菜单列表
-        this.menus = (DesignerLoaderFactory.getLoader()?.definitionMap[type] as AbstractDefinition)?.getMenuList() || [];
+        this.menus = (DesignerLoaderFactory.getLoader(DesignerMode.EDIT)?.definitionMap[type] as AbstractDefinition)?.getMenuList() || [];
         if (this.menus.length > 0) {
             let setNewActiveMenu = true;
             for (let i = 0; i < this.menus.length; i++) {

@@ -1,4 +1,4 @@
-import {IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
+import {DesignerMode, IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
 import localforage from "localforage";
 import {AbstractOperator} from "./AbstractOperator";
 import {cloneDeep} from "lodash";
@@ -87,7 +87,8 @@ class LocalOperator extends AbstractOperator {
         }
         const projectData = JSON.parse(dataJson as string) as ProjectDataType;
         const {elemConfigs} = projectData;
-        const {convertMap} = DesignerLoaderFactory.getLoader();
+        const mode: DesignerMode = URLUtil.parseUrlParams()?.mode as DesignerMode || DesignerMode.EDIT;
+        const {convertMap} = DesignerLoaderFactory.getLoader(mode);
         //特殊配置数据转换
         if (elemConfigs) {
             for (const item of Object.values(elemConfigs!)) {

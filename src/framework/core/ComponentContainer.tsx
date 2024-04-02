@@ -23,7 +23,7 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
         //通过ref创建组件，并将组件实例存入Map中。后续通过Map匹配到具体实例，调用实例的对象方法进行组件的更新操作
         const {layer} = this.props;
         const {elemConfigs, compController} = designerStore;
-        const componentDefine: AbstractDefinition = DesignerLoaderFactory.getLoader().definitionMap[layer!.type!];
+        const componentDefine: AbstractDefinition = DesignerLoaderFactory.getLoader(this.mode).definitionMap[layer!.type!];
         if (componentDefine) {
             const Controller = componentDefine.getController();
             if (Controller) {

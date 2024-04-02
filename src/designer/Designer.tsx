@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import {useEffect} from 'react';
 import './style/DesignerGlobalStyle.less';
 import DesignerLeft from "./left/DesignerLeft";
 import DesignerRight from "./right/DesignerRight";
@@ -12,38 +12,7 @@ import {observer} from "mobx-react";
 import Loading from "../json-schema/ui/loading/Loading";
 import DesignerLoaderFactory from "./loader/DesignerLoaderFactory";
 import {FrameLayout} from "../json-schema/ui/frame-layout/FrameLayout";
-
-class Designer extends Component {
-
-    componentDidMount() {
-        //加载设计器
-        DesignerLoaderFactory.getLoader().load();
-        //绑定事件到dom元素
-        bindEventToDom();
-    }
-
-    componentWillUnmount() {
-        //卸载dom元素上的事件
-        unbindEventToDom();
-    }
-
-    render() {
-        const {loaded} = designerStore;
-        if (!loaded)
-            return <Loading/>;
-        return (
-            <div style={{backgroundColor: '#1f1f1f'}}>
-                <FrameLayout header={<DesignerHeader/>}
-                             left={<DesignerLeft/>}
-                             content={<DesignerCanvas/>}
-                             right={<DesignerRight/>}
-                             footer={<DesignerFooter/>}/>
-            </div>
-        );
-    }
-}
-
-export default observer(Designer);
+import {DesignerMode} from "./DesignerType.ts";
 
 
 /**
@@ -104,3 +73,36 @@ const pointerUpHandler = (event: PointerEvent) => {
     const {setPointerTarget} = eventOperateStore;
     setPointerTarget(event.target as HTMLElement);
 }
+
+
+export interface DesignerProps {
+    id?: string;
+    type?: string;
+}
+
+export const Designer = (props: DesignerProps) => {
+
+    useEffect(() => {
+        //加载设计器
+        DesignerLoaderFactory.getLoader(DesignerMode.EDIT).load();
+        //绑定事件到dom元素
+        bindEventToDom();
+        return () => unbindEventToDom();//卸载dom元素上的事件
+    }, []);
+
+    const {loaded} = designerStore;
+    if (!loaded)
+        return <Loading/>;
+    return (
+        <div style={{backgroundColor: '#1f1f1f'}}>
+            <FrameLayout header={<DesignerHeader/>}
+                         left={<DesignerLeft/>}
+                         content={<DesignerCanvas/>}
+                         right={<DesignerRight/>}
+                         footer={<DesignerFooter/>}/>
+        </div>
+    );
+}
+
+export default observer(Designer);
+

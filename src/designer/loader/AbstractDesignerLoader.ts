@@ -1,5 +1,4 @@
 import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
-import {HeaderItemProps} from "../header/HeaderTypes";
 import AbstractConvert from "../../framework/convert/AbstractConvert";
 import AbstractLoader from "./AbstractLoader";
 import {componentCategorize} from "../left/compoent-lib/ComponentCategorize";
@@ -8,8 +7,6 @@ export abstract class AbstractDesignerLoader extends AbstractLoader {
 
     //自定义组件信息映射
     public definitionMap: Record<string, AbstractDefinition> = {};
-    //头部操作菜单实例
-    public headerItemInstances: HeaderItemProps[] = [];
     //数据转换器
     public convertMap: { [key: string]: AbstractConvert } = {};
 

@@ -7,6 +7,7 @@ import React from "react";
 import {ActionInfo} from "../../../../../framework/core/AbstractDefinition";
 import BPExecutor from "../../../../core/BPExecutor";
 import DesignerLoaderFactory from "../../../../../designer/loader/DesignerLoaderFactory";
+import {DesignerMode} from "../../../../../designer/DesignerType.ts";
 
 export interface LayerNodeConfig extends NodeProps {
 
@@ -30,7 +31,7 @@ export default class BPLayerNodeController extends AbstractBPNodeController<Laye
             if (!compInstance)
                 return;
             const {type} = layerConfigs[nodeId];
-            const {definitionMap} = DesignerLoaderFactory.getLoader();
+            const {definitionMap} = DesignerLoaderFactory.getLoader(DesignerMode.EDIT);
             const actionList = definitionMap[type!].getActionList();
             //2.获取当前组件可执行的动作列表
             const action = actionList.find((action: ActionInfo) => action.id === apId);
@@ -52,7 +53,7 @@ export default class BPLayerNodeController extends AbstractBPNodeController<Laye
     getNodeInfo(nodeId: string): NodeInfoType | null {
         const {layerConfigs} = designerStore;
         const compLayout = layerConfigs[nodeId];
-        const {definitionMap} = DesignerLoaderFactory.getLoader();
+        const {definitionMap} = DesignerLoaderFactory.getLoader(DesignerMode.EDIT);
         const output = definitionMap[compLayout.type!].getEventList().map((item) => {
             return {
                 id: nodeId + ':' + item.id + ':' + AnchorPointType.OUTPUT,

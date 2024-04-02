@@ -11,6 +11,7 @@ import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryReco
 import Loading from "../../json-schema/ui/loading/Loading";
 import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
 import AbstractController from "../../framework/core/AbstractController";
+import {DesignerMode} from "../DesignerType.ts";
 
 export interface ConfigType<T extends AbstractController = AbstractDesignerController> {
     controller: T;
@@ -40,7 +41,7 @@ class ConfigContent extends Component {
     buildConfigContent = () => {
         const {compController} = designerStore;
         const {activeMenu, activeElem} = rightStore;
-        const abstractConfigObj: AbstractDefinition = DesignerLoaderFactory.getLoader().definitionMap[activeElem.type + '']
+        const abstractConfigObj: AbstractDefinition = DesignerLoaderFactory.getLoader(DesignerMode.EDIT).definitionMap[activeElem.type + '']
         if (!abstractConfigObj) return;
         const configMapping = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp: React.ComponentType<ConfigType> = configMapping![activeMenu];
