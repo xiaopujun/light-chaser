@@ -120,9 +120,6 @@ export const BPNodeList = observer(() => {
     }, [activeMenu])
     return (
         <div className={'bp-node-list'}>
-            <div className={'bp-node-list-header'}>
-                <div className={'bp-node-list-header-label'}>图层节点(取自画布已有组件)</div>
-            </div>
             <div className={'bp-node-list-body'}>
                 <div className={'bp-node-list-container'} id={'bp-node-draggable'} style={{overflow: "scroll"}}>
                     {NodeList && <NodeList/>}
