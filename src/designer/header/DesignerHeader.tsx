@@ -102,10 +102,12 @@ const Header: React.FC = observer(() => {
                     <div className={'header-right'}>
                         {buildHeaderItemUI(leftItems)}
                     </div>
-                    {canvasVisible && <Suspense fallback={<Loading/>}><CanvasHdConfigImpl/></Suspense>}
-                    {projectVisible && <Suspense fallback={<Loading/>}><ProjectHdItemImpl/></Suspense>}
-                    {themeVisible && <Suspense fallback={<Loading/>}><ThemeHdItemImpl/></Suspense>}
-                    {bluePrintVisible && <Suspense fallback={<Loading/>}><BluePrintHdImpl/></Suspense>}
+                    <Suspense fallback={<Loading/>}>
+                        {canvasVisible && <CanvasHdConfigImpl/>}
+                        {projectVisible && <ProjectHdItemImpl/>}
+                        {themeVisible && <ThemeHdItemImpl/>}
+                        {bluePrintVisible && <BluePrintHdImpl/>}
+                    </Suspense>
                 </div>
             </>
         );

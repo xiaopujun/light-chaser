@@ -1,4 +1,4 @@
-import React, {Component, Suspense} from 'react';
+import React, {Suspense} from 'react';
 import {LineOutlined} from "@ant-design/icons";
 import rightStore from "./RightStore";
 import {observer} from "mobx-react";
@@ -17,9 +17,8 @@ export interface ConfigType<T extends AbstractController = AbstractDesignerContr
     controller: T;
 }
 
-class ConfigContent extends Component {
-
-    createProxy = (controller: AbstractDesignerController) => {
+const ConfigContent = () => {
+    const createProxy = (controller: AbstractDesignerController) => {
         return new Proxy(controller, {
             get(target, prop) {
                 const originalMethod = target[prop as keyof AbstractDesignerController];
@@ -38,7 +37,7 @@ class ConfigContent extends Component {
         });
     }
 
-    buildConfigContent = () => {
+    const buildConfigContent = () => {
         const {compController} = designerStore;
         const {activeMenu, activeElem} = rightStore;
         const abstractConfigObj: AbstractDefinition = DesignerLoaderFactory.getLoader(DesignerMode.EDIT).definitionMap[activeElem.type + '']
@@ -46,7 +45,7 @@ class ConfigContent extends Component {
         const configMapping = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp: React.ComponentType<ConfigType> = configMapping![activeMenu];
         //使用动态代理对象，监听属性变化
-        const controller = this.createProxy(compController[activeElem.id + '']);
+        const controller = createProxy(compController[activeElem.id + '']);
         if (!ConfigComp) return;
         return (
             <Suspense fallback={<Loading/>}>
@@ -56,34 +55,33 @@ class ConfigContent extends Component {
 
     }
 
-    onClose = () => {
+    const onClose = () => {
         const {setContentVisible, setActiveMenu} = rightStore;
         setContentVisible && setContentVisible(false);
         setActiveMenu && setActiveMenu('');
     }
 
-    render() {
-        const {activeMenu, menus} = rightStore;
-        let activeMenuName = '';
-        for (let i = 0; i < menus.length; i++) {
-            if (menus[i].key === activeMenu) {
-                activeMenuName = menus[i].name;
-                break;
-            }
+
+    const {activeMenu, menus} = rightStore;
+    let activeMenuName = '';
+    for (let i = 0; i < menus.length; i++) {
+        if (menus[i].key === activeMenu) {
+            activeMenuName = menus[i].name;
+            break;
         }
-        return (
-            <div className={'lc-config-panel'}>
-                <div className={'lc-panel-top'}>
-                    <div className={'panel-title'}>
-                        <span>{activeMenuName}</span></div>
-                    <div className={'panel-operate'} onClick={this.onClose}><LineOutlined/></div>
-                </div>
-                <div className={'lc-panel-content'}>
-                    {this.buildConfigContent()}
-                </div>
-            </div>
-        );
     }
+    return (
+        <div className={'lc-config-panel'}>
+            <div className={'lc-panel-top'}>
+                <div className={'panel-title'}>
+                    <span>{activeMenuName}</span></div>
+                <div className={'panel-operate'} onClick={onClose}><LineOutlined/></div>
+            </div>
+            <div className={'lc-panel-content'}>
+                {buildConfigContent()}
+            </div>
+        </div>
+    );
 }
 
 export default observer(ConfigContent);

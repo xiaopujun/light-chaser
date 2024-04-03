@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import {useEffect} from 'react';
 import './DesignerView.less';
 import designerStore from "../store/DesignerStore";
 import {observer} from "mobx-react";
@@ -9,26 +9,23 @@ import layerBuilder from "../left/layer-list/LayerBuilder";
 import {DesignerMode, SaveType} from "../DesignerType.ts";
 import URLUtil from "../../utils/URLUtil.ts";
 
-class DesignerView extends Component {
+const DesignerView = observer(() => {
 
-    constructor(props: any) {
-        super(props);
+    useEffect(() => {
         const {saveType, id} = URLUtil.parseUrlParams();
         DesignerLoaderFactory.getLoader(DesignerMode.VIEW).load(id, saveType as SaveType);
-    }
+    }, []);
 
-    render() {
-        const {loaded, canvasConfig: {width, height}, layerConfigs} = designerStore!;
-        if (!loaded)
-            return <Loading/>;
-        return (
-            <ScreenFit width={width!} height={height!}>
-                <div style={{width, height, background: 'black', overflow: 'hidden', position: "relative"}}>
-                    {layerBuilder.buildCanvasComponents(layerConfigs)}
-                </div>
-            </ScreenFit>
-        );
-    }
-}
+    const {loaded, canvasConfig: {width, height}, layerConfigs} = designerStore!;
+    if (!loaded)
+        return <Loading/>;
+    return (
+        <ScreenFit width={width!} height={height!}>
+            <div style={{width, height, background: 'black', overflow: 'hidden', position: "relative"}}>
+                {layerBuilder.buildCanvasComponents(layerConfigs)}
+            </div>
+        </ScreenFit>
+    );
+});
 
-export default observer(DesignerView);
+export default DesignerView;
