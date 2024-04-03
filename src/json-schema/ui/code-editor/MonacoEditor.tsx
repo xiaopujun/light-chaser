@@ -1,9 +1,6 @@
-import React from "react";
 import Loading from "../loading/Loading";
-import Editor from "@monaco-editor/react";
+import Editor, {loader} from "@monaco-editor/react";
 import './MonacoEditor.less';
-
-import {loader} from '@monaco-editor/react';
 
 import * as monaco from 'monaco-editor';
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
@@ -32,7 +29,7 @@ export interface MonacoEditorProps {
     height?: string | number;
 }
 
-export const MonacoEditor: React.FC<MonacoEditorProps> = (props) => {
+export default function MonacoEditor(props: MonacoEditorProps) {
     const {value, defaultValue, onChange, language, width, height, readonly} = props;
     return (
         <div style={{width, height}} className={'monaco-editor-container'}>

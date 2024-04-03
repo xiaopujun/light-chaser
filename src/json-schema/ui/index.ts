@@ -2,7 +2,7 @@ import React from "react";
 
 const Accordion = React.lazy(() => import('./accordion/Accordion'));
 const Button = React.lazy(() => import('./button/Button'));
-const MonacoEditor = React.lazy(() => import('./code-editor/MonacoEditor').then(({MonacoEditor}) => ({default: MonacoEditor})));
+const MonacoEditor = React.lazy(() => import('./code-editor/MonacoEditor'));
 const ColorPicker = React.lazy(() => import('./color-picker/ColorPicker'));
 const ColorsPicker = React.lazy(() => import('./colors-picker/ColorsPicker'));
 const Grid = React.lazy(() => import('./grid/Grid').then(({Grid}) => ({default: Grid})));

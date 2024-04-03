@@ -11,7 +11,7 @@ import DesignerCanvas from "./canvas/DesignerCanvas";
 import {observer} from "mobx-react";
 import Loading from "../json-schema/ui/loading/Loading";
 import DesignerLoaderFactory from "./loader/DesignerLoaderFactory";
-import {FrameLayout} from "../json-schema/ui/frame-layout/FrameLayout";
+import FrameLayout from "../json-schema/ui/frame-layout/FrameLayout";
 import {DesignerMode, SaveType} from "./DesignerType.ts";
 
 

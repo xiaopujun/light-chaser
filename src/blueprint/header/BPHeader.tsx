@@ -4,8 +4,7 @@ import {LineOutlined} from "@ant-design/icons";
 import headerStore from "../../designer/header/HeaderStore";
 import bpStore from "../store/BPStore";
 
-
-export const BPHeader: React.FC = () => {
+const BPHeader: React.FC = () => {
     return (
         <div className={'bp-header'}>
             <div className={'bp-header-title'}>蓝图编辑器</div>
@@ -19,3 +18,5 @@ export const BPHeader: React.FC = () => {
         </div>
     )
 }
+
+export default BPHeader;

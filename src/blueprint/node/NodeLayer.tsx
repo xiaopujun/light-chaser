@@ -6,7 +6,7 @@ import {BPDragScaleContainer} from "./BPDragScaleContainer";
 import {BPNodeContainer} from "./core/node-container/BPNodeContainer";
 import {useEffect, useRef} from "react";
 
-export const NodeLayer = observer(() => {
+const NodeLayer = observer(() => {
     const {bpNodeLayoutMap} = bpStore;
     const _npNodeConRef = useRef(null);
 
@@ -30,3 +30,5 @@ export const NodeLayer = observer(() => {
         </div>
     )
 })
+
+export default NodeLayer;

@@ -1,18 +1,20 @@
-import React, {memo} from 'react';
+import React, {lazy, memo, Suspense} from 'react';
 import {observer} from "mobx-react";
 import designerStore from "../store/DesignerStore";
 import rightStore from "../right/RightStore";
-import DesignerRuler from "./DesignerRuler";
-import DesignerContainer from "../operate-provider/DesignerContainer";
-import GroupMovable from "../operate-provider/movable/DesignerMovable";
-import GroupSelectable from "../operate-provider/movable/DesignerSelectable";
-import ContextMenu from "../operate-provider/right-click-menu/ContextMenu";
-import HotKey from "../operate-provider/hot-key/HotKey";
-import {hotkeyConfigs} from "../operate-provider/hot-key/HotKeyConfig";
-import {DesignerDragScaleContainer} from "./DesignerDragScaleContainer";
 import eventOperateStore from "../operate-provider/EventOperateStore";
+import {hotkeyConfigs} from "../operate-provider/hot-key/HotKeyConfig";
 import layerBuilder from "../left/layer-list/LayerBuilder";
 import LayerUtil from "../left/layer-list/util/LayerUtil";
+import DesignerMovable from "../operate-provider/movable/DesignerMovable.tsx";
+import Loading from "../../json-schema/ui/loading/Loading.tsx";
+
+const DesignerContainer = lazy(() => import('../operate-provider/DesignerContainer'));
+const DesignerRuler = lazy(() => import('./DesignerRuler'));
+const GroupSelectable = lazy(() => import('../operate-provider/movable/DesignerSelectable'));
+const ContextMenu = lazy(() => import('../operate-provider/right-click-menu/ContextMenu'));
+const HotKey = lazy(() => import('../operate-provider/hot-key/HotKey'));
+const DesignerDragScaleContainer = lazy(() => import('./DesignerDragScaleContainer'));
 
 
 const DesignerCanvas = memo(observer(() => {
@@ -37,21 +39,21 @@ const DesignerCanvas = memo(observer(() => {
 
     const {layerConfigs} = designerStore!;
     return (
-        <>
+        <Suspense fallback={<Loading/>}>
             <DesignerContainer>
                 <GroupSelectable>
                     <DesignerRuler>
                         <DesignerDragScaleContainer onDoubleClick={updateActive}>
-                            <GroupMovable>
+                            <DesignerMovable>
                                 {layerBuilder.buildCanvasComponents(layerConfigs)}
-                            </GroupMovable>
+                            </DesignerMovable>
                         </DesignerDragScaleContainer>
                     </DesignerRuler>
                 </GroupSelectable>
             </DesignerContainer>
             <ContextMenu/>
             <HotKey handlerMapping={hotkeyConfigs}/>
-        </>
+        </Suspense>
     );
 }))
 

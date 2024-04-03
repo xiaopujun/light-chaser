@@ -3,7 +3,7 @@ import './BPFooter.less';
 import bpStore from "../store/BPStore";
 import {observer} from "mobx-react";
 
-export const BPFooter: React.FC = observer(() => {
+const BPFooter: React.FC = observer(() => {
     const {canvasScale} = bpStore;
     return (
         <div className={'bp-footer'}>
@@ -11,3 +11,5 @@ export const BPFooter: React.FC = observer(() => {
         </div>
     )
 })
+
+export default BPFooter;

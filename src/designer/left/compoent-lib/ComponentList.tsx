@@ -1,33 +1,17 @@
 import './ComponentList.less';
 import {MinusOutlined} from "@ant-design/icons";
 import {Tooltip} from "antd";
-import CompList from "./list/CompList";
 import designerLeftStore from "../DesignerLeftStore";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 import {componentCategorize, componentSubCategorize} from "./ComponentCategorize";
 import componentListStore from "./ComponentListStore";
 import {observer} from "mobx-react";
+import {lazy, Suspense} from "react";
+import Loading from "../../../json-schema/ui/loading/Loading.tsx";
 
-export const ComponentList: React.FC = () => {
-    return <div className={'dl-component-list'}>
-        <div className={'dl-cl-header'}>
-            <div className={'dl-cl-header-title'}>组件列表</div>
-            <div className={'dl-cl-header-operate'}><MinusOutlined onClick={() => {
-                const {setMenu} = designerLeftStore;
-                setMenu("");
-                const {rulerRef} = eventOperateStore;
-                rulerRef?.ruleWheel();
-            }}/></div>
-        </div>
-        <div className={'dl-cl-body'}>
-            <div className={'main-categories'}><CategoryList/></div>
-            <div className={'sub-categories'}><SubCategoryList/></div>
-            <div className={'component-list'}><CompList/></div>
-        </div>
-    </div>;
-}
+const CompList = lazy(() => import('./list/CompList'));
 
-export const CategoryList: React.FC = observer(() => {
+export const CategoryList = observer(() => {
     const {categories, setCategories, setSubCategories} = componentListStore;
     return (
         <>
@@ -65,3 +49,25 @@ export const SubCategoryList: React.FC = observer(() => {
         </>
     )
 });
+
+
+export const ComponentList = () => {
+    return <div className={'dl-component-list'}>
+        <div className={'dl-cl-header'}>
+            <div className={'dl-cl-header-title'}>组件列表</div>
+            <div className={'dl-cl-header-operate'}><MinusOutlined onClick={() => {
+                const {setMenu} = designerLeftStore;
+                setMenu("");
+                const {rulerRef} = eventOperateStore;
+                rulerRef?.ruleWheel();
+            }}/></div>
+        </div>
+        <div className={'dl-cl-body'}>
+            <Suspense fallback={<Loading/>}>
+                <div className={'main-categories'}><CategoryList/></div>
+                <div className={'sub-categories'}><SubCategoryList/></div>
+                <div className={'component-list'}><CompList/></div>
+            </Suspense>
+        </div>
+    </div>;
+}

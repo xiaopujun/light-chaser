@@ -1,13 +1,13 @@
-import LeftMenus from "./designer-left-menus/LeftMenus";
 import {observer} from "mobx-react";
 import designerLeftStore from "./DesignerLeftStore";
-import {ComponentList} from "./compoent-lib/ComponentList";
 import './DesignerLeft.less';
-import LayerList from "./layer-list/LayerList";
-import {SourceList} from "./source-list/SourceList";
 import {useEffect, useRef} from "react";
+import LeftMenus from "./designer-left-menus/LeftMenus.tsx";
+import {ComponentList} from "./compoent-lib/ComponentList.tsx";
+import LayerList from "./layer-list/LayerList.tsx";
+import SourceList from "./source-list/SourceList.tsx";
 
-export const DesignerLeft: React.FC = observer(() => {
+export const DesignerLeft = observer(() => {
 
     const {menu, setDesignerLeftRef} = designerLeftStore;
     const leftDomRef = useRef<HTMLDivElement>(null);

@@ -9,7 +9,7 @@ export interface FrameLayoutProps {
     content?: ReactNode;
 }
 
-export const FrameLayout: React.FC<FrameLayoutProps> = (props) => {
+const FrameLayout: React.FC<FrameLayoutProps> = (props) => {
     const {header, footer, left, right, content} = props;
     return (
         <div className={'frame-layout'}>
@@ -28,3 +28,4 @@ export const FrameLayout: React.FC<FrameLayoutProps> = (props) => {
     )
 }
 
+export default FrameLayout;

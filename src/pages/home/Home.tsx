@@ -1,7 +1,8 @@
-import {memo} from 'react';
+import {Suspense, memo} from 'react';
 import './Home.less';
 import {HomeMenus} from "./menus/HomeMenus";
 import {Outlet} from 'react-router-dom';
+import Loading from "../../json-schema/ui/loading/Loading.tsx";
 
 const Home = memo(() => {
     return (
@@ -12,7 +13,9 @@ const Home = memo(() => {
             <div className={'lc-home-body'}>
                 <div className={'lc-home-body-left'}><HomeMenus/></div>
                 <div className={'lc-home-body-right'}>
-                    <Outlet/>
+                    <Suspense fallback={<Loading/>}>
+                        <Outlet/>
+                    </Suspense>
                 </div>
             </div>
         </div>

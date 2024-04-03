@@ -10,7 +10,7 @@ export interface BPRightConfigProps {
     controller?: AbstractBPNodeController;
 }
 
-export const BPRight: React.FC = observer(() => {
+const BPRight: React.FC = observer(() => {
     const {bpNodeControllerInsMap} = bpStore;
     const {activeNode} = bpRightStore;
     const activeNodeController = bpNodeControllerInsMap[activeNode!];
@@ -50,3 +50,5 @@ export const BPRight: React.FC = observer(() => {
         </div>
     )
 })
+
+export default BPRight;

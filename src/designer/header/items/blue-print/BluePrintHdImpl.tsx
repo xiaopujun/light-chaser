@@ -2,7 +2,7 @@ import ReactDOM from "react-dom";
 import {BluePrint} from "../../../../blueprint/BluePrint";
 import {ReactElement} from "react";
 
-export const BluePrintHdImpl = () => {
+export default function BluePrintHdImpl() {
     return ReactDOM.createPortal(
         <div style={{
             position: 'relative',

@@ -17,7 +17,7 @@ import {Popconfirm} from "antd";
 import historyRecordOperateProxy from "../../../operate-provider/undo-redo/HistoryRecordOperateProxy.ts";
 
 
-export const ImageSource: React.FC = () => {
+export default function ImageSource() {
 
     const [imageList, setImageList] = useState<IImageData[]>([]);
     const dragAddProvider = useRef<DragAddProvider | null>(null);

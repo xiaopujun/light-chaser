@@ -1,9 +1,11 @@
-import React, {useEffect} from "react";
-import LineLayer from "./line/LineLayer";
-import {NodeLayer} from "./node/NodeLayer";
+import React, {lazy, Suspense, useEffect} from "react";
 import {reRenderAllLine} from "./drag/BPMovable";
 import bpStore, {IBPLine} from "./store/BPStore";
 import CanvasUtil from "./util/CanvasUtil";
+import Loading from "../json-schema/ui/loading/Loading.tsx";
+
+const LineLayer = lazy(() => import('./line/LineLayer'));
+const NodeLayer = lazy(() => import('./node/NodeLayer'));
 
 /**
  * todo 该方法要做性能优化，考虑防抖避免频繁采样和线段重复绘制，用算法做好碰撞检测
@@ -48,7 +50,7 @@ const lineSegmentCollisions = (event: MouseEvent) => {
     setSelectedLines(hitLines);
 }
 
-export const BPCanvas: React.FC = () => {
+const BPCanvas: React.FC = () => {
     useEffect(() => {
         //加载完毕后绘制链接线（由于节点组件的创建与渲染都是异步的，需要等节点的锚点都渲染完毕后才能确定连线的位置，因此暂时使用异步延时连线的渲染时机）
         // todo  要调整为更精确的时机
@@ -67,8 +69,11 @@ export const BPCanvas: React.FC = () => {
             width: '100%',
             height: '100%',
         }}>
-            <LineLayer/>
-            <NodeLayer/>
+            <Suspense fallback={<Loading/>}>
+                <LineLayer/>
+                <NodeLayer/>
+            </Suspense>
         </div>
     )
 }
+export default BPCanvas;

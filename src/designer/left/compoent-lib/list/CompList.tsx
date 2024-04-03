@@ -10,7 +10,7 @@ import editorDesignerLoader from "../../../loader/EditorDesignerLoader";
 import componentListStore from "../ComponentListStore";
 import {AbstractDefinition, BaseInfoType} from "../../../../framework/core/AbstractDefinition";
 import DragAddProvider from "../../../../framework/drag-scale/DragAddProvider";
-import historyRecordOperateProxy from "../../../operate-provider/undo-redo/HistoryRecordOperateProxy.ts";
+import historyRecordOperateProxy from "../../../operate-provider/undo-redo/HistoryRecordOperateProxy";
 
 class CompList extends Component {
 

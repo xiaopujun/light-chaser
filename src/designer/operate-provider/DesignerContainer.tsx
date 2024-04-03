@@ -1,18 +1,13 @@
-import {Component, ReactNode} from 'react';
+import {ReactNode} from 'react';
 
 export interface DesignerContainerProps {
     children?: ReactNode;
 }
 
-class DesignerContainer extends Component<DesignerContainerProps> {
-
-    render() {
-        return (
-            <div style={{outline: 'none'}} className={'lc-event-container'}>
-                {this.props.children}
-            </div>
-        );
-    }
+export default function DesignerContainer(props: DesignerContainerProps) {
+    return (
+        <div style={{outline: 'none'}} className={'lc-event-container'}>
+            {props.children}
+        </div>
+    );
 }
-
-export default DesignerContainer;

@@ -1,7 +1,9 @@
-import React from "react";
-import {MonacoEditor} from "../../../../../json-schema/ui/code-editor/MonacoEditor";
+import React, {Suspense, lazy} from "react";
 import {BPRightConfigProps} from "../../../../right/BPRight";
 import {debounce} from "lodash";
+import Loading from "../../../../../json-schema/ui/loading/Loading.tsx";
+
+const MonacoEditor = lazy(() => import("../../../../../json-schema/ui/code-editor/MonacoEditor"));
 
 export const LogicalProcessNodeConfig: React.FC<BPRightConfigProps> = (props) => {
     const {controller} = props;
@@ -13,8 +15,10 @@ export const LogicalProcessNodeConfig: React.FC<BPRightConfigProps> = (props) =>
     }, 500);
     return (
         <div className={'logical-process-node-config'}>
-            <MonacoEditor value={handleCode} onChange={onCodeChange} height={400}
-                          language={'javascript'}/>
+            <Suspense fallback={<Loading/>}>
+                <MonacoEditor value={handleCode} onChange={onCodeChange} height={400}
+                              language={'javascript'}/>
+            </Suspense>
         </div>
     )
 }

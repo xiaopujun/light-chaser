@@ -14,7 +14,7 @@ import designerStore from "../../designer/store/DesignerStore";
 import IdGenerate from "../../utils/IdGenerate";
 import DragAddProvider from "../../framework/drag-scale/DragAddProvider";
 
-export const BPLeft: React.FC = () => {
+const BPLeft: React.FC = () => {
     return (
         <div className={'bp-left'}>
             <BPNodeSortList/>
@@ -22,6 +22,7 @@ export const BPLeft: React.FC = () => {
         </div>
     )
 }
+export default BPLeft;
 
 export const BPNodeSortList = observer(() => {
     const {activeMenu} = bpLeftStore;
