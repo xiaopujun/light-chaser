@@ -3,7 +3,7 @@ import Moveable from "react-moveable";
 import {Component} from "react";
 import designerStore from "../store/DesignerStore";
 import ObjectUtil from "../../utils/ObjectUtil";
-import DesignerRuler from "../canvas/DesignerRuler";
+import {DesignerRulerRef} from "../canvas/DesignerRuler";
 import {ILayerItem} from "../DesignerType";
 import layerListStore from "../left/layer-list/LayerListStore";
 import designerLeftStore from "../left/DesignerLeftStore";
@@ -67,7 +67,7 @@ class EventOperateStore {
     /**
      * 设计器标尺组件实例引用
      */
-    rulerRef: DesignerRuler | null = null;
+    rulerRef: DesignerRulerRef | null = null;
     /**
      * 设计器画布拖拽缩放内容dom实例引用（用于同步标尺的缩放）
      */
@@ -120,7 +120,7 @@ class EventOperateStore {
 
     setDsContentRef = (ref: HTMLDivElement | null) => this.dsContentRef = ref;
 
-    setRuleRef = (ref: DesignerRuler | null) => this.rulerRef = ref;
+    setRuleRef = (ref: DesignerRulerRef | null) => this.rulerRef = ref;
 
     setRatio = (ratio: number) => this.ratio = ratio;
 

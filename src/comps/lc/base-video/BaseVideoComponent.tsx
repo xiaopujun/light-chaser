@@ -21,7 +21,6 @@ const BaseVideoComponent = forwardRef((props: BaseVideoComponentProps, ref: Ref<
         setEventHandler: (eventMap) => eventHandlerMap.current = eventMap,
     }));
 
-    console.log('config', config)
     return (
         <div style={{width: '100%', height: '100%'}}>
             {!config?.style?.src ? <div style={{
