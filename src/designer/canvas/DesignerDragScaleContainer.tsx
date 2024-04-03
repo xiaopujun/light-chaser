@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {memo, useEffect} from "react";
 import DragScaleProvider from "../../framework/drag-scale/DragScaleProvider";
 import designerStore from "../store/DesignerStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
@@ -9,7 +9,7 @@ export interface DesignerDragScaleContainerProps {
     onDoubleClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
-export const DesignerDragScaleContainer: React.FC<DesignerDragScaleContainerProps> = observer((props) => {
+export const DesignerDragScaleContainer = memo(observer((props: DesignerDragScaleContainerProps) => {
     const {children, onDoubleClick} = props;
     const containerRef = React.useRef<HTMLDivElement>(null);
     const contentRef = React.useRef<HTMLDivElement>(null);
@@ -63,4 +63,4 @@ export const DesignerDragScaleContainer: React.FC<DesignerDragScaleContainerProp
             </div>
         </div>
     )
-})
+}))

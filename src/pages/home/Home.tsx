@@ -1,10 +1,9 @@
-import React from 'react';
+import {memo} from 'react';
 import './Home.less';
 import {HomeMenus} from "./menus/HomeMenus";
-import {observer} from "mobx-react";
 import {Outlet} from 'react-router-dom';
 
-const Home: React.FC = observer(() => {
+const Home = memo(() => {
     return (
         <div className={'lc-home'}>
             <div className={'lc-home-header'}>

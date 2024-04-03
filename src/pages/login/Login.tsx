@@ -4,8 +4,9 @@ import Button from "../../json-schema/ui/button/Button";
 import {CheckBox} from "../../json-schema/ui/checkbox/CheckBox";
 import {globalMessage} from "../../framework/message/GlobalMessage";
 import {useNavigate} from "react-router-dom";
+import {memo} from "react";
 
-const Login = () => {
+const Login = memo(() => {
 
     const navigate = useNavigate();
 
@@ -49,6 +50,6 @@ const Login = () => {
             </div>
         </div>
     );
-};
+})
 
 export default Login;

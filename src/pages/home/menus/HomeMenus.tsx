@@ -2,6 +2,7 @@ import {CloudServerOutlined, DatabaseOutlined, HomeOutlined, ShoppingOutlined} f
 import {Menu} from "antd";
 import {MenuItemType} from "antd/es/menu/hooks/useItems";
 import {useLocation, useNavigate} from "react-router-dom";
+import {memo} from "react";
 
 const menus: MenuItemType[] = [
     {
@@ -26,7 +27,7 @@ const menus: MenuItemType[] = [
     }
 ]
 
-export const HomeMenus = () => {
+export const HomeMenus = memo(() => {
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -45,4 +46,4 @@ export const HomeMenus = () => {
             />
         </div>
     );
-}
+})

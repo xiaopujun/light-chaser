@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {memo, useEffect, useRef} from 'react';
 import './ProjectList.less';
 import {Card} from "antd";
 import defaultSnapshot from '../image/default-snapshot.jpg';
@@ -15,7 +15,7 @@ export interface ProjectListProps {
     saveType: SaveType;
 }
 
-export const ProjectList: React.FC<ProjectListProps> = (props) => {
+export const ProjectList = memo((props: ProjectListProps) => {
 
     const [addDialog, setAddDialog] = React.useState(false);
     const [delDialog, setDelDialog] = React.useState(false);
@@ -144,7 +144,7 @@ export const ProjectList: React.FC<ProjectListProps> = (props) => {
                          visible={cloneDialog}/>
         </div>
     );
-}
+})
 
 export default ProjectList;
 
@@ -155,7 +155,7 @@ interface DelDialogProps {
     visible: boolean;
 }
 
-const DeleteDialog = (props: DelDialogProps) => {
+const DeleteDialog = memo((props: DelDialogProps) => {
 
     const {onOk, onCancel, visible} = props;
 
@@ -173,7 +173,7 @@ const DeleteDialog = (props: DelDialogProps) => {
             </div>
         </Dialog>
     )
-}
+})
 
 interface CloneDialogProps {
     onOk: () => void;

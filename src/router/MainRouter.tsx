@@ -1,12 +1,11 @@
 import {lazy, memo} from 'react';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {ConfigProvider, MappingAlgorithm, theme} from "antd";
-import GlobalMessage from "../framework/message/GlobalMessage.tsx";
-//加载全局字体，这个需要考量一下，在此处加载是否合适
 import '../designer/resource/font/FontGlobal.css';
 import URLUtil from "../utils/URLUtil.ts";
 import {SaveType} from "../designer/DesignerType.ts";
 
+const GlobalMessage = lazy(() => import('../framework/message/GlobalMessage.tsx'));
 const Login = lazy(() => import('../pages/login/Login'));
 const Designer = lazy(() => import('../designer/Designer'));
 const DesignerView = lazy(() => import('../designer/view/DesignerView'));

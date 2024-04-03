@@ -1,9 +1,9 @@
-import React, {useEffect} from "react";
+import {memo, useEffect} from "react";
 import ProjectList from "../project-list/ProjectList";
 import {SaveType} from "../../../designer/DesignerType";
 import localCoverCache from "../../../framework/cache/LocalCoverCache";
 
-const LocalProjectList: React.FC = () => {
+const LocalProjectList = memo(() => {
 
     useEffect(() => {
         return () => {
@@ -15,6 +15,6 @@ const LocalProjectList: React.FC = () => {
     return (
         <ProjectList saveType={SaveType.LOCAL}/>
     )
-}
+})
 
 export default LocalProjectList

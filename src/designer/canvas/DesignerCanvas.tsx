@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {memo} from 'react';
 import {observer} from "mobx-react";
 import designerStore from "../store/DesignerStore";
 import rightStore from "../right/RightStore";
@@ -14,12 +14,10 @@ import eventOperateStore from "../operate-provider/EventOperateStore";
 import layerBuilder from "../left/layer-list/LayerBuilder";
 import LayerUtil from "../left/layer-list/util/LayerUtil";
 
-/**
- * 设计器画布
- */
-class DesignerCanvas extends PureComponent {
 
-    updateActive = (e: React.MouseEvent) => {
+const DesignerCanvas = memo(observer(() => {
+
+    const updateActive = (e: React.MouseEvent) => {
         let {targetIds} = eventOperateStore;
         const {activeElem, activeConfig} = rightStore;
         if (targetIds.length === 0) {
@@ -37,27 +35,26 @@ class DesignerCanvas extends PureComponent {
         activeConfig(layerId, layer.type!);
     }
 
-    render() {
-        const {layerConfigs} = designerStore!;
-        return (
-            <>
-                <DesignerContainer>
-                    <GroupSelectable>
-                        <DesignerRuler>
-                            <DesignerDragScaleContainer onDoubleClick={this.updateActive}>
-                                <GroupMovable>
-                                    {layerBuilder.buildCanvasComponents(layerConfigs)}
-                                </GroupMovable>
-                            </DesignerDragScaleContainer>
-                        </DesignerRuler>
-                    </GroupSelectable>
-                </DesignerContainer>
-                <ContextMenu/>
-                <HotKey handlerMapping={hotkeyConfigs}/>
-            </>
-        );
-    }
-}
+    const {layerConfigs} = designerStore!;
+    return (
+        <>
+            <DesignerContainer>
+                <GroupSelectable>
+                    <DesignerRuler>
+                        <DesignerDragScaleContainer onDoubleClick={updateActive}>
+                            <GroupMovable>
+                                {layerBuilder.buildCanvasComponents(layerConfigs)}
+                            </GroupMovable>
+                        </DesignerDragScaleContainer>
+                    </DesignerRuler>
+                </GroupSelectable>
+            </DesignerContainer>
+            <ContextMenu/>
+            <HotKey handlerMapping={hotkeyConfigs}/>
+        </>
+    );
+}))
 
-export default observer(DesignerCanvas);
+
+export default DesignerCanvas;
 
