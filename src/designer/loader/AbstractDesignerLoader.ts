@@ -23,17 +23,7 @@ export abstract class AbstractDesignerLoader {
     /**
      * 扫描设计器组件
      */
-    protected abstract scanComponents(): void;
-
-    /**
-     * 加载设计器项目数据
-     */
-    protected abstract initProject(id: string, type: SaveType): void;
-
-    /**
-     * 扫描自定义组件
-     */
-    protected scannerCustomComponents(): void {
+    protected scanComponents(): void {
         const glob = import.meta.glob('../../comps/**/*.ts', {eager: true}) as Record<string, any>;
         Object.keys(glob).forEach(key => {
             const Clazz = glob[key]?.default;
@@ -74,4 +64,9 @@ export abstract class AbstractDesignerLoader {
             }
         });
     }
+
+    /**
+     * 加载设计器项目数据
+     */
+    protected abstract initProject(id: string, type: SaveType): void;
 }

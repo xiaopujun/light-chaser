@@ -1,9 +1,12 @@
-import {action, makeObservable, observable} from "mobx";
+import {action, makeObservable, observable, runInAction} from "mobx";
 import Moveable from "react-moveable";
 import Selecto from "react-selecto";
 import ObjectUtil from "../../utils/ObjectUtil";
 import {AbstractBPNodeController, AnchorPointInfoType} from "../node/core/AbstractBPNodeController";
 import bpNodeControllerMap from "../node/core/impl/BPNodeControllerMap";
+import {DesignerMode, ProjectDataType} from "../../designer/DesignerType.ts";
+import {ClazzTemplate} from "../../comps/common-component/common-types.ts";
+import bpLeftStore from "../left/BPLeftStore.ts";
 
 export interface IBPLine {
     id?: string;
@@ -29,6 +32,8 @@ export interface BPNodeLayoutType {
     type?: string;
     position?: IPoint;
 }
+
+export type BPInitDataType = Pick<ProjectDataType, 'bpNodeLayoutMap' | 'bpNodeConfigMap' | 'bpLines' | 'bpAPMap' | 'bpAPLineMap'>;
 
 class BPStore {
     constructor() {
@@ -96,10 +101,6 @@ class BPStore {
 
     setBpDragContentRef = (ref: HTMLDivElement) => this.bpDragContentRef = ref;
 
-    setBpNodeControllerInsMap = (insMap: Record<string, AbstractBPNodeController>) => {
-        this.bpNodeControllerInsMap = insMap;
-    }
-
     //获取所有节点信息及配置
     getAllNodeConfig = (): Record<string, any> => {
         if (!this.bpNodeLayoutMap)
@@ -120,14 +121,6 @@ class BPStore {
             // 2. 蓝图数据保存过，也产生过节点实例，但是重新打开后没有编辑过蓝图，此时不会产生新的蓝图数据，直接返回之前的数据即可
             return this.bpNodeConfigMap;
         }
-    }
-
-    setBpNodeLayoutMap = (layoutMap: Record<string, BPNodeLayoutType>) => {
-        this.bpNodeLayoutMap = layoutMap;
-    }
-
-    setBpNodeConfigMap = (configMap: Record<string, any>) => {
-        this.bpNodeConfigMap = configMap;
     }
 
     addBPNodeLayout = (layout: BPNodeLayoutType) => {
@@ -179,18 +172,6 @@ class BPStore {
             oldLine.startPoint = line.startPoint;
             oldLine.endPoint = line.endPoint;
         }
-    }
-
-    setAPLineMap = (anchorRelationship: Record<string, string[]>) => {
-        this.bpAPLineMap = anchorRelationship;
-    }
-
-    setAPMap = (anchorRelationship: Record<string, string[]>) => {
-        this.bpAPMap = anchorRelationship;
-    }
-
-    setLines = (connectedLines: Record<string, IBPLine>) => {
-        this.bpLines = connectedLines;
     }
 
     addAPMap = (startAnchorId: string, endAnchorId: string) => {
@@ -322,6 +303,35 @@ class BPStore {
             this.delAPLineMap(line.endAnchorId!, id);
         });
         this.setSelectedLines([]);
+    }
+
+    doBPInit = (data: BPInitDataType, mode: DesignerMode) => {
+        runInAction(() => {
+            this.bpAPMap = data.bpAPMap || {};
+            this.bpLines = data.bpLines || {};
+            this.bpAPLineMap = data.bpAPLineMap || {};
+            this.bpNodeConfigMap = data.bpNodeConfigMap || {};
+            if (mode === DesignerMode.EDIT) {
+                this.bpNodeLayoutMap = data.bpNodeLayoutMap || {};
+                //初始化蓝图左侧节点列表
+                const {initUsedLayerNodes} = bpLeftStore;
+                const usedLayerNodes: Record<string, boolean> = {};
+                Object.keys(data?.bpNodeLayoutMap || {}).forEach(key => {
+                    usedLayerNodes[key] = true;
+                })
+                initUsedLayerNodes(usedLayerNodes);
+            } else {
+                const bpNodeControllerInsMap: Record<string, AbstractBPNodeController> = {};
+                Object.values(data?.bpNodeLayoutMap!).forEach((layout: BPNodeLayoutType) => {
+                    const {type, id} = layout;
+                    const NodeController = bpNodeControllerMap.get(type!) as ClazzTemplate<AbstractBPNodeController>;
+                    const config = data?.bpNodeConfigMap![id!];
+                    // @ts-ignore
+                    bpNodeControllerInsMap[id!] = new NodeController!(config)!;
+                })
+                this.bpNodeControllerInsMap = bpNodeControllerInsMap;
+            }
+        });
     }
 
 }

@@ -1,16 +1,11 @@
 import designerStore from "../store/DesignerStore";
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 import bpStore from "../../blueprint/store/BPStore";
-import bpLeftStore from "../../blueprint/left/BPLeftStore";
 import operatorMap from "../../framework/operate";
-import {SaveType} from "../DesignerType";
+import {DesignerMode, SaveType} from "../DesignerType";
 import {globalMessage} from "../../framework/message/GlobalMessage.tsx";
 
 class EditorDesignerLoader extends AbstractDesignerLoader {
-
-    protected scanComponents(): void {
-        this.scannerCustomComponents();
-    }
 
     /**
      * 初始化以更新方式打开时项目信息
@@ -31,19 +26,15 @@ class EditorDesignerLoader extends AbstractDesignerLoader {
                 })
 
                 //初始化bpStore（蓝图状态）
-                const {setAPMap, setLines, setAPLineMap, setBpNodeLayoutMap, setBpNodeConfigMap} = bpStore;
-                setAPMap(data?.bpAPMap || {});
-                setLines(data?.bpLines || {});
-                setAPLineMap(data?.bpAPLineMap || {});
-                setBpNodeLayoutMap(data?.bpNodeLayoutMap || {});
-                setBpNodeConfigMap(data?.bpNodeConfigMap || {});
-                //初始化蓝图左侧节点列表
-                const {initUsedLayerNodes} = bpLeftStore;
-                const usedLayerNodes: Record<string, boolean> = {};
-                Object.keys(data?.bpNodeLayoutMap || {}).forEach(key => {
-                    usedLayerNodes[key] = true;
-                })
-                initUsedLayerNodes(usedLayerNodes);
+                const {doBPInit} = bpStore;
+                doBPInit({
+                    bpAPMap: data?.bpAPMap,
+                    bpLines: data?.bpLines,
+                    bpAPLineMap: data?.bpAPLineMap,
+                    bpNodeLayoutMap: data?.bpNodeLayoutMap,
+                    bpNodeConfigMap: data?.bpNodeConfigMap,
+                }, DesignerMode.EDIT)
+
                 setLoaded(true);
             } else {
                 globalMessage?.messageApi?.error("项目不存在");
