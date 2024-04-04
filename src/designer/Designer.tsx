@@ -80,10 +80,8 @@ export interface DesignerProps {
     type: SaveType;
 }
 
-export const Designer = (props: DesignerProps) => {
-
+const Designer = (props: DesignerProps) => {
     const {id, type} = props;
-
     useEffect(() => {
         //加载设计器
         DesignerLoaderFactory.getLoader(DesignerMode.EDIT).load(id, type);

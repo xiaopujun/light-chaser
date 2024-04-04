@@ -1,5 +1,4 @@
 import {Component} from 'react';
-import {Spin} from "antd";
 
 interface LoadingProps {
     width?: string | number;
@@ -12,7 +11,7 @@ class Loading extends Component<LoadingProps> {
         const style = {
             width,
             height,
-            backgroundColor: '#4b6cb7',
+            backgroundColor: '#374f85',
             background: 'linear-gradient(to right, #182848, #1a2848)',
             color: '#1db3ff',
             display: 'flex',
@@ -22,9 +21,7 @@ class Loading extends Component<LoadingProps> {
             fontWeight: '300'
         }
         return (
-            <div style={style}>
-                <Spin/> &nbsp; 加载中...
-            </div>
+            <div style={style}>加 载 中 . . . . . .</div>
         );
     }
 }

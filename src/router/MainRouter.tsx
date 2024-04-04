@@ -2,13 +2,11 @@ import {lazy, memo} from 'react';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {ConfigProvider, MappingAlgorithm, theme} from "antd";
 import '../designer/resource/font/FontGlobal.css';
-import URLUtil from "../utils/URLUtil.ts";
-import {SaveType} from "../designer/DesignerType.ts";
 
+const DesignerViewPage = lazy(() => import('../pages/view/DesignerViewPage.tsx'));
+const DesignerPage = lazy(() => import('../pages/designer/DesignerPage.tsx'));
 const GlobalMessage = lazy(() => import('../framework/message/GlobalMessage.tsx'));
 const Login = lazy(() => import('../pages/login/Login'));
-const Designer = lazy(() => import('../designer/Designer'));
-const DesignerView = lazy(() => import('../designer/view/DesignerView'));
 const Home = lazy(() => import('../pages/home/Home'));
 const LocalProjectList = lazy(() => import('../pages/home/local-list/LocalProjectList.tsx'));
 const ServerProjectList = lazy(() => import('../pages/home/server-list/ServerProjectList.tsx'));
@@ -16,13 +14,7 @@ const DatasourceManager = lazy(() => import('../pages/home/datasource/Datasource
 const TemplateMarket = lazy(() => import('../pages/home/template-market/TemplateMarket.tsx'));
 const Demo = lazy(() => import('../test/Demo'));
 
-
-export const DesignerRouter = () => {
-    const {saveType, id} = URLUtil.parseUrlParams();
-    return <Designer id={id} type={saveType as SaveType}/>
-}
-
-export const studioDarkAlgorithm: MappingAlgorithm = (seedToken, mapToken) => {
+const studioDarkAlgorithm: MappingAlgorithm = (seedToken, mapToken) => {
     // 使用 antd 默认的暗色算法生成基础token，这样其他不需要定制的部分则保持原样
     const baseToken = theme.darkAlgorithm(seedToken, mapToken);
     return {
@@ -33,14 +25,29 @@ export const studioDarkAlgorithm: MappingAlgorithm = (seedToken, mapToken) => {
     };
 };
 
+const antdComponentTheme = {
+    Menu: {
+        itemBg: 'none',
+        itemColor: '#bfbfbf',
+    }
+}
+
 const router = createBrowserRouter([
     {
         path: '/view',
-        element: <DesignerView/>
+        element: <DesignerViewPage/>
     },
     {
         path: '/login',
         element: <Login/>
+    },
+    {
+        path: '/test',
+        element: <Demo/>
+    },
+    {
+        path: '/designer',
+        element: <DesignerPage/>
     },
     {
         path: '/home',
@@ -65,14 +72,6 @@ const router = createBrowserRouter([
         ]
     },
     {
-        path: '/test',
-        element: <Demo/>
-    },
-    {
-        path: '/designer',
-        element: <DesignerRouter/>
-    },
-    {
         path: '/',
         element: <Login/>
     },
@@ -86,12 +85,7 @@ const MainRouter = memo(() => {
     return (
         <ConfigProvider theme={{
             algorithm: studioDarkAlgorithm,
-            components: {
-                Menu: {
-                    itemBg: 'none',
-                    itemColor: '#bfbfbf',
-                }
-            }
+            components: antdComponentTheme
         }}>
             <RouterProvider router={router}/>
             <GlobalMessage/>

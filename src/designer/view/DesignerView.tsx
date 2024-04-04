@@ -6,15 +6,20 @@ import Loading from "../../json-schema/ui/loading/Loading";
 import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
 import layerBuilder from "../left/layer-list/LayerBuilder";
 import {DesignerMode, SaveType} from "../DesignerType.ts";
-import URLUtil from "../../utils/URLUtil.ts";
 
 const ScreenFit = lazy(() => import('../../framework/screen-fit/ScreenFit.tsx'));
 
-const DesignerView = observer(() => {
+export interface DesignerViewProps {
+    id: string;
+    type: SaveType;
+}
+
+const DesignerView = observer((props: DesignerViewProps) => {
+
+    const {id, type} = props;
 
     useEffect(() => {
-        const {saveType, id} = URLUtil.parseUrlParams();
-        DesignerLoaderFactory.getLoader(DesignerMode.VIEW).load(id, saveType as SaveType);
+        DesignerLoaderFactory.getLoader(DesignerMode.VIEW).load(id, type);
     }, []);
 
     const {loaded, canvasConfig: {width, height}, layerConfigs} = designerStore!;
