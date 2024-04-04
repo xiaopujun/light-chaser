@@ -37,9 +37,9 @@ light chaser 专为数据可视化而设计，并将不断发展和完善！
 
 预览图：
 
-![lightchaser1](https://picss.sunbangyan.cn/2023/11/03/9cbcb42f4c6d7bc12ffb79f4ad0ef9dd.png)
+![lightchaser1](https://i.072333.xyz/file/8ff8361817216f2fb1c47.png)
 
-![lightchaser blueprint](https://picss.sunbangyan.cn/2023/11/03/59ff17df602ce90d6ba7885037860449.png)
+![lightchaser](https://i.072333.xyz/file/3cacaaa9edc640ce64536.png)
 
 # 部署和使用
 
