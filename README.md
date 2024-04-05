@@ -93,6 +93,6 @@ light chaser follows the Contributor Covenant Code of Conduct.
 
 # License
 
-[MIT](LICENSE) © xiaopujun
+[Apache-2.0 license](LICENSE) © xiaopujun
 
 Thank you to every developer and person who contributed to this project!
