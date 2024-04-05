@@ -1,10 +1,10 @@
 import {AbstractBPNodeController, AnchorPointType, ExecuteInfoType, NodeInfoType} from "../../AbstractBPNodeController";
-import ComponentUtil from "../../../../../utils/ComponentUtil";
-import {UpdateOptions} from "../../../../../framework/core/AbstractController";
+import ComponentUtil from "../../../../../../utils/ComponentUtil";
+import {UpdateOptions} from "../../../../../../framework/core/AbstractController";
 import BPNode from "../../../BPNode";
 import React from "react";
 import {ConditionNodeConfig} from "./ConditionNodeConfig";
-import ObjectUtil from "../../../../../utils/ObjectUtil";
+import ObjectUtil from "../../../../../../utils/ObjectUtil";
 import BPExecutor from "../../../../core/BPExecutor";
 
 export interface ConditionConfigType extends NodeInfoType {

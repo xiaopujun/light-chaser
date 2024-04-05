@@ -1,4 +1,4 @@
-import AbstractController from "../../../framework/core/AbstractController";
+import AbstractController from "../../../../framework/core/AbstractController";
 import React from "react";
 import BPExecutor from "../../core/BPExecutor";
 

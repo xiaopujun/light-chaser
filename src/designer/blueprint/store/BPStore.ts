@@ -1,11 +1,11 @@
 import {action, makeObservable, observable, runInAction} from "mobx";
 import Moveable from "react-moveable";
 import Selecto from "react-selecto";
-import ObjectUtil from "../../utils/ObjectUtil";
+import ObjectUtil from "../../../utils/ObjectUtil";
 import {AbstractBPNodeController, AnchorPointInfoType} from "../node/core/AbstractBPNodeController";
 import bpNodeControllerMap from "../node/core/impl/BPNodeControllerMap";
-import {DesignerMode, ProjectDataType} from "../../designer/DesignerType.ts";
-import {ClazzTemplate} from "../../comps/common-component/common-types.ts";
+import {DesignerMode, ProjectDataType} from "../../DesignerType.ts";
+import {ClazzTemplate} from "../../../comps/common-component/common-types.ts";
 import bpLeftStore from "../left/BPLeftStore.ts";
 
 export interface IBPLine {

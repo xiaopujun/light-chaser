@@ -1,20 +1,20 @@
-import React, {Suspense} from "react";
+import React, {Suspense, lazy} from "react";
 import {BPRightConfigProps} from "../../../../right/BPRight";
 import {debounce} from "lodash";
-import Loading from "../../../../../json-schema/ui/loading/Loading.tsx";
+import Loading from "../../../../../../json-schema/ui/loading/Loading.tsx";
 
-const MonacoEditor = React.lazy(() => import("../../../../../json-schema/ui/code-editor/MonacoEditor"));
+const MonacoEditor = lazy(() => import("../../../../../../json-schema/ui/code-editor/MonacoEditor"));
 
-export const ConditionNodeConfig: React.FC<BPRightConfigProps> = (props) => {
+export const LogicalProcessNodeConfig: React.FC<BPRightConfigProps> = (props) => {
     const {controller} = props;
     const config = controller?.getConfig();
-    const handleCode = config.handler || "function handler(data) { \n \n }";
+    const handleCode = config.handler || "function handle(data) { \n \n }";
     const onCodeChange = debounce((value: string | undefined) => {
         if (!value) return;
         controller?.update({handler: value});
     }, 500);
     return (
-        <div className={'condition-node-config'}>
+        <div className={'logical-process-node-config'}>
             <Suspense fallback={<Loading/>}>
                 <MonacoEditor value={handleCode} onChange={onCodeChange} height={400}
                               language={'javascript'}/>

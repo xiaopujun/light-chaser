@@ -3,7 +3,7 @@ import AbstractDesignerController from "../../../framework/core/AbstractDesigner
 import ComponentUtil from "../../../utils/ComponentUtil";
 import BaseIframeComponent, {BaseIframeComponentProps} from "./BaseIframeComponent";
 import ObjectUtil from "../../../utils/ObjectUtil";
-import BPExecutor from "../../../blueprint/core/BPExecutor";
+import BPExecutor from "../../../designer/blueprint/core/BPExecutor";
 
 export class BaseIframeController extends AbstractDesignerController<BaseIframeComponent, BaseIframeComponentProps> {
 

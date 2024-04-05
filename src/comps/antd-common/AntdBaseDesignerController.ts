@@ -3,7 +3,7 @@ import {UpdateOptions} from "../../framework/core/AbstractController";
 import {ComponentBaseProps} from "../common-component/common-types";
 import {Options, Plot} from "@antv/g2plot";
 import ObjectUtil from "../../utils/ObjectUtil";
-import BPExecutor from "../../blueprint/core/BPExecutor";
+import BPExecutor from "../../designer/blueprint/core/BPExecutor";
 
 export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Options>,
     C extends ComponentBaseProps = ComponentBaseProps> extends AbstractDesignerController<I, C> {

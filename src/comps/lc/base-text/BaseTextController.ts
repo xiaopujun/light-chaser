@@ -4,7 +4,7 @@ import AbstractDesignerController from "../../../framework/core/AbstractDesigner
 import ComponentUtil from "../../../utils/ComponentUtil";
 import BaseTextComponent, {BaseTextComponentProps} from "./BaseTextComponent";
 import ObjectUtil from "../../../utils/ObjectUtil";
-import BPExecutor from "../../../blueprint/core/BPExecutor";
+import BPExecutor from "../../../designer/blueprint/core/BPExecutor";
 import URLUtil from "../../../utils/URLUtil";
 
 export class BaseTextController extends AbstractDesignerController<BaseTextComponent, BaseTextComponentProps> {

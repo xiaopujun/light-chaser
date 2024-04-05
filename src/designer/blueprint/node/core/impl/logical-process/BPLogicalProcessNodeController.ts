@@ -1,9 +1,9 @@
 import {AbstractBPNodeController, AnchorPointType, ExecuteInfoType, NodeInfoType} from "../../AbstractBPNodeController";
-import {UpdateOptions} from "../../../../../framework/core/AbstractController";
-import ComponentUtil from "../../../../../utils/ComponentUtil";
+import {UpdateOptions} from "../../../../../../framework/core/AbstractController";
+import ComponentUtil from "../../../../../../utils/ComponentUtil";
 import BPNode, {NodeProps} from "../../../BPNode";
 import React from "react";
-import ObjectUtil from "../../../../../utils/ObjectUtil";
+import ObjectUtil from "../../../../../../utils/ObjectUtil";
 import {LogicalProcessNodeConfig} from "./LogicalProcessNodeConfig";
 import BPExecutor from "../../../../core/BPExecutor";
 

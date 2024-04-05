@@ -3,7 +3,7 @@ import {UpdateOptions} from "../../../framework/core/AbstractController";
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
 import ComponentUtil from "../../../utils/ComponentUtil";
 import ObjectUtil from "../../../utils/ObjectUtil";
-import BPExecutor from "../../../blueprint/core/BPExecutor";
+import BPExecutor from "../../../designer/blueprint/core/BPExecutor";
 import FourAngleGlowBorder, {FourAngleGlowBorderRef, FourAngleGlowBorderStyle} from "./FourAngleGlowBorder";
 import {ComponentInfoType} from "../../common-component/common-types";
 

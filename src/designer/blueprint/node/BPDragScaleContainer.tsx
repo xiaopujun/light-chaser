@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import DragScaleProvider from "../../framework/drag-scale/DragScaleProvider";
+import DragScaleProvider from "../../../framework/drag-scale/DragScaleProvider";
 import bpStore from "../store/BPStore";
 import {reRenderAllLine} from "../drag/BPMovable";
 import CanvasUtil from "../util/CanvasUtil";

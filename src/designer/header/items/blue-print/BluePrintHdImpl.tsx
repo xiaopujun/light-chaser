@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import {BluePrint} from "../../../../blueprint/BluePrint";
+import {BluePrint} from "../../../blueprint/BluePrint.tsx";
 import {ReactElement} from "react";
 
 export default function BluePrintHdImpl() {

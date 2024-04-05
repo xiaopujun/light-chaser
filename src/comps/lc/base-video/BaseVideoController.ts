@@ -5,7 +5,7 @@ import ComponentUtil from "../../../utils/ComponentUtil";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import ObjectUtil from "../../../utils/ObjectUtil";
 import {ThemeItemType} from "../../../designer/DesignerType";
-import BPExecutor from "../../../blueprint/core/BPExecutor";
+import BPExecutor from "../../../designer/blueprint/core/BPExecutor";
 
 export interface BaseVideoComponentProps {
     base?: ComponentInfoType;

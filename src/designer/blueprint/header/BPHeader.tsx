@@ -1,7 +1,7 @@
 import React from "react";
 import './BPHeader.less';
 import {LineOutlined} from "@ant-design/icons";
-import headerStore from "../../designer/header/HeaderStore";
+import headerStore from "../../../designer/header/HeaderStore";
 import bpStore from "../store/BPStore";
 
 const BPHeader: React.FC = () => {

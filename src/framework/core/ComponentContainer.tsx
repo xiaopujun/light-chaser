@@ -7,7 +7,7 @@ import designerStore from "../../designer/store/DesignerStore";
 import {AbstractDefinition} from "./AbstractDefinition";
 import DesignerLoaderFactory from "../../designer/loader/DesignerLoaderFactory";
 import AbstractDesignerController from "./AbstractDesignerController";
-import BPExecutor from "../../blueprint/core/BPExecutor";
+import BPExecutor from "../../designer/blueprint/core/BPExecutor";
 
 export interface ComponentContainerProps {
     layer: ILayerItem;

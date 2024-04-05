@@ -1,6 +1,6 @@
 import designerStore from "../store/DesignerStore";
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
-import bpStore from "../../blueprint/store/BPStore";
+import bpStore from "../../designer/blueprint/store/BPStore";
 import operatorMap from "../../framework/operate";
 import {DesignerMode, SaveType} from "../DesignerType";
 import {globalMessage} from "../../framework/message/GlobalMessage.tsx";

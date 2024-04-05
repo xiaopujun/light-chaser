@@ -10,9 +10,9 @@ import {
 import bpStore from "../store/BPStore";
 import bpLeftStore from "./BPLeftStore";
 import {observer} from "mobx-react";
-import designerStore from "../../designer/store/DesignerStore";
-import IdGenerate from "../../utils/IdGenerate";
-import DragAddProvider from "../../framework/drag-scale/DragAddProvider";
+import designerStore from "../../../designer/store/DesignerStore";
+import IdGenerate from "../../../utils/IdGenerate";
+import DragAddProvider from "../../../framework/drag-scale/DragAddProvider";
 
 const BPLeft: React.FC = () => {
     return (

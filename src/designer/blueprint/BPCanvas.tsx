@@ -2,7 +2,7 @@ import React, {lazy, Suspense, useEffect} from "react";
 import {reRenderAllLine} from "./drag/BPMovable";
 import bpStore, {IBPLine} from "./store/BPStore";
 import CanvasUtil from "./util/CanvasUtil";
-import Loading from "../json-schema/ui/loading/Loading.tsx";
+import Loading from "../../json-schema/ui/loading/Loading.tsx";
 
 const LineLayer = lazy(() => import('./line/LineLayer'));
 const NodeLayer = lazy(() => import('./node/NodeLayer'));

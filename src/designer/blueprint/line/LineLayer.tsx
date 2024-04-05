@@ -3,7 +3,7 @@ import './LineLayer.less';
 import CanvasUtil from "../util/CanvasUtil";
 import bpStore, {IBPLine} from "../store/BPStore";
 import {AnchorPointType} from "../node/core/AbstractBPNodeController";
-import IdGenerate from "../../utils/IdGenerate";
+import IdGenerate from "../../../utils/IdGenerate";
 
 class LineLayer extends React.Component {
 

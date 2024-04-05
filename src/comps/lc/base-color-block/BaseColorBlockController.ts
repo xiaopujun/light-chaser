@@ -7,7 +7,7 @@ import BaseColorBlockComponent, {
     BaseColorBlockComponentRef
 } from "./BaseColorBlockComponent";
 import ObjectUtil from "../../../utils/ObjectUtil";
-import BPExecutor from "../../../blueprint/core/BPExecutor";
+import BPExecutor from "../../../designer/blueprint/core/BPExecutor";
 
 export class BaseColorBlockController extends AbstractDesignerController<BaseColorBlockComponentRef, BaseColorBlockComponentProps> {
 
