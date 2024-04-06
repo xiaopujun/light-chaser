@@ -1,18 +1,18 @@
 import {FormEvent, useRef} from 'react';
 import Dialog from "../../../../json-schema/ui/dialog/Dialog";
 import './ProjectHdItemImpl.less';
-import designerStore from "../../../store/DesignerStore";
 import {IProjectInfo, ProjectState} from "../../../DesignerType";
 import {Grid} from "../../../../json-schema/ui/grid/Grid";
 import Input from "../../../../json-schema/ui/input/Input";
 import Radio from "../../../../json-schema/ui/radio/Radio";
 import Select from "../../../../json-schema/ui/select/Select";
 import Button from "../../../../json-schema/ui/button/Button";
-import projectHdStore from "./ProjectHdStore.ts";
+import projectHdStore from "./ProjecManager.ts";
+import projecManager from "./ProjecManager.ts";
 
 
 const ProjectHdItemImpl = () => {
-    const configRef = useRef<IProjectInfo | null>({...designerStore.projectConfig});
+    const configRef = useRef<IProjectInfo | null>({...projecManager.projectConfig});
     const {projectVisible, setProjectVisible} = projectHdStore;
     const {name, des, state, saveType} = configRef.current!;
 
@@ -20,7 +20,7 @@ const ProjectHdItemImpl = () => {
 
     const doSave = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const {updateProjectConfig} = designerStore;
+        const {updateProjectConfig} = projecManager;
         updateProjectConfig(configRef.current!);
         onClose();
     }

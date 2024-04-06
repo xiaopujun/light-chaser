@@ -1,6 +1,6 @@
 import {action, makeObservable, observable, runInAction, toJS} from "mobx";
 import {isEqual} from "lodash";
-import {ILayerItem, IProjectInfo, ProjectDataType, ProjectState, SaveType, ThemeItemType,} from "../DesignerType";
+import {ILayerItem, ProjectDataType, ThemeItemType,} from "../DesignerType";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
 import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryRecordOperateProxy";
 import ObjectUtil from "../../utils/ObjectUtil";
@@ -13,7 +13,6 @@ import themeManager from "../header/items/theme/ThemeManager.ts";
 class DesignerStore {
     constructor() {
         makeObservable(this, {
-            projectConfig: observable,
             layerConfigs: observable.shallow,
             loaded: observable,
             doInit: action,
@@ -22,7 +21,6 @@ class DesignerStore {
             setLoaded: action,
             updateLayer: action,
             flashGlobalTheme: action,
-            updateProjectConfig: action,
             copyItem: action,
             delLayout: action,
         });
@@ -35,17 +33,7 @@ class DesignerStore {
 
     loaded: boolean = false;
 
-    /**
-     * 项目设置
-     */
-    projectConfig: IProjectInfo = {
-        name: "", //项目名称
-        des: "", //项目描述
-        state: ProjectState.DRAFT, //项目状态
-        createTime: "", //创建时间
-        updateTime: "", //更新时间
-        saveType: SaveType.LOCAL, //存储类型
-    };
+
 
     elemConfigs: Record<string, any> | null = {};
 
@@ -146,10 +134,7 @@ class DesignerStore {
         });
     };
 
-    /**
-     * 更新项目配置
-     */
-    updateProjectConfig = (data: IProjectInfo) => this.projectConfig = {...this.projectConfig, ...data};
+
 
     copyItem = (ids: string[]) => historyRecordOperateProxy.doCopy(ids);
 }

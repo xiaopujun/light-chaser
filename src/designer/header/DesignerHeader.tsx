@@ -7,7 +7,7 @@ import {doSave} from "../operate-provider/hot-key/HotKeyImpl";
 import URLUtil from "../../utils/URLUtil";
 import {DesignerMode} from "../DesignerType";
 import canvasHdStore from "./items/canvas/CanvasManager.ts";
-import projectHdStore from "./items/project/ProjectHdStore.ts";
+import projectHdStore from "./items/project/ProjecManager.ts";
 import themeHdStore from "./items/theme/ThemeManager.ts";
 import bluePrintHdStore from "./items/blue-print/BluePrintHdStore.ts";
 import CanvasHdConfigImpl from "./items/canvas/CanvasHdConfigImpl.tsx";
