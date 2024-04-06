@@ -5,6 +5,7 @@ import bpStore from "../../designer/blueprint/store/BPStore";
 import operatorMap from "../../framework/operate";
 import {AbstractOperator} from "../../framework/operate/AbstractOperator";
 import {globalMessage} from "../../framework/message/GlobalMessage.tsx";
+import designerManager from "../manager/DesignerManager.ts";
 
 /**
  * 展示模式下的设计器加载器
@@ -18,7 +19,7 @@ class ViewDesignerLoader extends AbstractDesignerLoader {
     protected initProject(id: string, type: SaveType): void {
         (operatorMap[type] as AbstractOperator).getProjectData(id).then((data) => {
             if (data) {
-                const {doInit, setLoaded} = designerStore;
+                const {doInit} = designerStore;
                 //初始化designerStore
                 doInit({
                     id: id,
@@ -40,7 +41,7 @@ class ViewDesignerLoader extends AbstractDesignerLoader {
                     bpNodeConfigMap: data?.bpNodeConfigMap,
                 }, DesignerMode.VIEW)
 
-                setLoaded(true);
+                designerManager.setLoaded(true);
             } else {
                 globalMessage?.messageApi?.error("项目不存在");
             }

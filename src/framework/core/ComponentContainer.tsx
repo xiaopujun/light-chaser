@@ -1,5 +1,5 @@
 import React, {Suspense} from "react";
-import runtimeConfigStore from "../../designer/store/RuntimeConfigStore";
+import runtimeConfigStore from "../../designer/store/RuntimeStore.ts";
 import Loading from "../../json-schema/ui/loading/Loading";
 import URLUtil from "../../utils/URLUtil";
 import {DesignerMode, ILayerItem} from "../../designer/DesignerType";

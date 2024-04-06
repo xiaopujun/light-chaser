@@ -14,25 +14,15 @@ class DesignerStore {
     constructor() {
         makeObservable(this, {
             layerConfigs: observable.shallow,
-            loaded: observable,
             doInit: action,
             addItem: action,
             delItem: action,
-            setLoaded: action,
             updateLayer: action,
             flashGlobalTheme: action,
             copyItem: action,
             delLayout: action,
         });
     }
-
-    /**
-     * 大屏id
-     */
-    id: string = "";
-
-    loaded: boolean = false;
-
 
 
     elemConfigs: Record<string, any> | null = {};
@@ -54,7 +44,6 @@ class DesignerStore {
      * 初始化store
      */
     doInit = (store: ProjectDataType) => {
-        this.id = store.id ?? this.id;
         this.elemConfigs = store.elemConfigs
             ? {...this.elemConfigs, ...store.elemConfigs}
             : this.elemConfigs;
@@ -81,8 +70,6 @@ class DesignerStore {
         };
     }
 
-
-    setLoaded = (loaded: boolean) => this.loaded = loaded;
 
     /**
      * 添加元素
@@ -133,7 +120,6 @@ class DesignerStore {
                 instance.updateTheme(newTheme);
         });
     };
-
 
 
     copyItem = (ids: string[]) => historyRecordOperateProxy.doCopy(ids);

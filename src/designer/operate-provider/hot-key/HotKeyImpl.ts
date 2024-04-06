@@ -5,7 +5,7 @@ import {throttle} from "lodash";
 import {historyOperator} from "../undo-redo/HistoryOperator";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import undoRedoMap from "../undo-redo/core";
-import runtimeConfigStore from "../../store/RuntimeConfigStore";
+import runtimeConfigStore from "../../store/RuntimeStore.ts";
 import footerStore from "../../footer/FooterStore";
 import bpStore from "../../../designer/blueprint/store/BPStore";
 import {reRenderAllLine} from "../../blueprint/drag/BPMovable.tsx";

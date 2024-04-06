@@ -6,6 +6,7 @@ import {DesignerMode, SaveType} from "../DesignerType";
 import {globalMessage} from "../../framework/message/GlobalMessage.tsx";
 import canvasManager from "../header/items/canvas/CanvasManager.ts";
 import themeManager from "../header/items/theme/ThemeManager.ts";
+import designerManager from "../manager/DesignerManager.ts";
 
 class EditorDesignerLoader extends AbstractDesignerLoader {
 
@@ -15,7 +16,7 @@ class EditorDesignerLoader extends AbstractDesignerLoader {
     protected initProject(id: string, type: SaveType): void {
         operatorMap[type].getProjectData(id).then((data) => {
             if (data) {
-                const {doInit, setLoaded} = designerStore;
+                const {doInit} = designerStore;
                 canvasManager.init(data?.canvasConfig!)
                 themeManager.init(data?.themeConfig!)
                 //初始化designerStore
@@ -39,7 +40,7 @@ class EditorDesignerLoader extends AbstractDesignerLoader {
                     bpNodeConfigMap: data?.bpNodeConfigMap,
                 }, DesignerMode.EDIT)
 
-                setLoaded(true);
+                designerManager.setLoaded(true);
             } else {
                 globalMessage?.messageApi?.error("项目不存在");
             }

@@ -1,6 +1,6 @@
 import {action, makeObservable, observable} from "mobx";
 
-class RuntimeConfigStore {
+class RuntimeStore {
 
     constructor() {
         makeObservable(this, {
@@ -17,5 +17,5 @@ class RuntimeConfigStore {
 
 }
 
-const runtimeConfigStore = new RuntimeConfigStore();
+const runtimeConfigStore = new RuntimeStore();
 export default runtimeConfigStore;
