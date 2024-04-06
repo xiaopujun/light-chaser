@@ -1,7 +1,7 @@
 import React, {memo, useEffect, useRef, useState} from 'react';
 import Ruler, {RulerProps} from "@scena/react-ruler";
 import eventOperateStore from "../operate-provider/EventOperateStore";
-import {IPoint} from "../blueprint/store/BPStore.ts";
+import {IPoint} from "../blueprint/manager/BluePrintManager.ts";
 import designerLeftStore from "../left/DesignerLeftStore";
 
 export interface DesignerRulerRef {

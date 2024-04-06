@@ -1,7 +1,7 @@
 import React, {CSSProperties} from 'react';
 import './LineLayer.less';
 import CanvasUtil from "../util/CanvasUtil";
-import bpStore, {IBPLine} from "../store/BPStore";
+import bluePrintManager, {IBPLine} from "../manager/BluePrintManager.ts";
 import {AnchorPointType} from "../node/core/AbstractBPNodeController";
 import IdGenerate from "../../../utils/IdGenerate";
 
@@ -28,7 +28,7 @@ class LineLayer extends React.Component {
     keyMove: boolean = false;
 
     componentDidMount() {
-        const {setUpCtx, setDownCtx} = bpStore;
+        const {setUpCtx, setDownCtx} = bluePrintManager;
         setUpCtx(this.upLayer!.getContext('2d')!);
         setDownCtx(this.downLayer!.getContext('2d')!);
         document.addEventListener('mousedown', this.bpMouseDown);
@@ -49,7 +49,7 @@ class LineLayer extends React.Component {
         const pointInfoArr = pointDom.id.split(":");
         if (pointInfoArr && pointInfoArr.length === 3 && pointInfoArr[2] === AnchorPointType.INPUT.toString())
             return;
-        const {canvasOffset} = bpStore;
+        const {canvasOffset} = bluePrintManager;
         //设置起始点坐标
         const {x, y, width, height} = pointDom.getBoundingClientRect();
         this.currentLine.startPoint = {x: x + width / 2 - canvasOffset.x, y: y + height / 2 - canvasOffset.y}
@@ -58,7 +58,7 @@ class LineLayer extends React.Component {
     }
 
     bpMouseUp = (e: MouseEvent) => {
-        const {nodeContainerRef, upCtx} = bpStore;
+        const {nodeContainerRef, upCtx} = bluePrintManager;
         const {width: canvasW, height: canvasH} = nodeContainerRef?.getBoundingClientRect()!;
         const endElem = e.target as HTMLElement;
         if (!this.keyMove || !endElem || !endElem.classList.contains('ap-circle')
@@ -68,10 +68,10 @@ class LineLayer extends React.Component {
             this.keyDown = false;
             return;
         }
-        const {canvasOffset} = bpStore;
+        const {canvasOffset} = bluePrintManager;
         this.keyMove = false;
         this.keyDown = false;
-        bpStore.upCtx!.clearRect(0, 0, canvasW, canvasH)
+        bluePrintManager.upCtx!.clearRect(0, 0, canvasW, canvasH)
         //在下层绘制当前操作的线条
         this.currentLine.id = IdGenerate.generateId();
         this.currentLine.lineDash = [];
@@ -80,14 +80,14 @@ class LineLayer extends React.Component {
         this.currentLine.endAnchorId = (e!.target as HTMLElement).id;
         const {x, y, width: apw, height: aph} = (e.target as HTMLElement)?.getBoundingClientRect();
         this.currentLine.endPoint = {x: x + apw / 2 - canvasOffset.x, y: y + aph / 2 - canvasOffset.y}
-        CanvasUtil.drawBezierCurves(bpStore.downCtx!, [this.currentLine])
+        CanvasUtil.drawBezierCurves(bluePrintManager.downCtx!, [this.currentLine])
         //计算线条的采样点，用于计算线条是否被选中
         const {
             id, startPoint, endPoint, firstCP, secondCP, lineDash,
             startAnchorId, endAnchorId, color, lineWidth
         } = this.currentLine;
         const samplePointArr = CanvasUtil.sampleBezierCurve(startPoint!, firstCP!, secondCP!, endPoint, 20);
-        const {addAPMap, addLine, addAPLineMap} = bpStore;
+        const {addAPMap, addLine, addAPLineMap} = bluePrintManager;
         addLine({
             id: id!,
             color: color,
@@ -111,7 +111,7 @@ class LineLayer extends React.Component {
         if (!this.keyDown) return;
         this.keyMove = true;
         const {startPoint, endPoint} = this.currentLine;
-        const {nodeContainerRef, canvasOffset} = bpStore;
+        const {nodeContainerRef, canvasOffset} = bluePrintManager;
         const {width: canvasW, height: canvasH} = nodeContainerRef?.getBoundingClientRect()!;
         //设置鼠标坐标
         this.currentLine.endPoint = {x: e.clientX - canvasOffset.x, y: e.clientY - canvasOffset.y}
@@ -120,8 +120,8 @@ class LineLayer extends React.Component {
         this.currentLine.firstCP = contPoi.firstCP
         this.currentLine.secondCP = contPoi.secondCP
         //清空画布
-        bpStore.upCtx!.clearRect(0, 0, canvasW, canvasH)
-        CanvasUtil.drawBezierCurves(bpStore.upCtx!, [{
+        bluePrintManager.upCtx!.clearRect(0, 0, canvasW, canvasH)
+        CanvasUtil.drawBezierCurves(bluePrintManager.upCtx!, [{
             color: "#c0c0c0",
             lineWidth: 1,
             lineDash: [10, 10],

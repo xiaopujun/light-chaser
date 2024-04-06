@@ -7,7 +7,7 @@ import {
     CodeSandboxOutlined, FilterOutlined,
     FunctionOutlined, GatewayOutlined
 } from "@ant-design/icons";
-import bpStore from "../store/BPStore";
+import bluePrintManager from "../manager/BluePrintManager.ts";
 import bpLeftStore from "./BPLeftStore";
 import {observer} from "mobx-react";
 import layerManager from "../../manager/LayerManager.ts";
@@ -85,7 +85,7 @@ const drop = (event: DragEvent) => {
     event.preventDefault();
     let nodeId = event.dataTransfer?.getData('nodeId');
     const type = event.dataTransfer?.getData('type');
-    const {bpDragContentRef, canvasScale} = bpStore;
+    const {bpDragContentRef, canvasScale} = bluePrintManager;
     const contentPos = bpDragContentRef?.getBoundingClientRect();
     //获取鼠标位置
     const position = {
@@ -99,7 +99,7 @@ const drop = (event: DragEvent) => {
         //非图层节点，需要单独生成一个唯一节点id
         nodeId = IdGenerate.generateId();
     }
-    const {addBPNodeLayout} = bpStore;
+    const {addBPNodeLayout} = bluePrintManager;
     addBPNodeLayout({id: nodeId, type, position});
 }
 

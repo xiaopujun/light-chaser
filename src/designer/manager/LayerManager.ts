@@ -1,6 +1,6 @@
 import {action, makeObservable, observable, runInAction, toJS} from "mobx";
 import {isEqual} from "lodash";
-import {ILayerItem, ProjectDataType, ThemeItemType,} from "../DesignerType.ts";
+import {ILayerItem, ThemeItemType,} from "../DesignerType.ts";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController.ts";
 import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryRecordOperateProxy.ts";
 import ObjectUtil from "../../utils/ObjectUtil.ts";
@@ -120,7 +120,7 @@ class LayerManager extends AbstractManager<LayerManagerDataType> {
     /**
      * 获取store数据
      */
-    getData(): ProjectDataType {
+    getData(): LayerManagerDataType {
         const elemConfigs: { [key: string]: any } = {};
         Object.keys(this.compController).forEach((key) => {
             elemConfigs[key] = this.compController[key].getConfig();

@@ -1,7 +1,7 @@
 import React from "react";
 import './BPRight.less';
 import {observer} from "mobx-react";
-import bpStore from "../store/BPStore";
+import bluePrintManager from "../manager/BluePrintManager.ts";
 import bpRightStore from "./BPRightStore";
 import Accordion from "../../../json-schema/ui/accordion/Accordion";
 import {AbstractBPNodeController} from "../node/core/AbstractBPNodeController";
@@ -11,7 +11,7 @@ export interface BPRightConfigProps {
 }
 
 const BPRight: React.FC = observer(() => {
-    const {bpNodeControllerInsMap} = bpStore;
+    const {bpNodeControllerInsMap} = bluePrintManager;
     const {activeNode} = bpRightStore;
     const activeNodeController = bpNodeControllerInsMap[activeNode!];
     const nodeConfig = activeNodeController?.getConfig();

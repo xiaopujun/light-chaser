@@ -1,5 +1,4 @@
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
-import bpStore from "../../designer/blueprint/store/BPStore";
 import operatorMap from "../../framework/operate";
 import {DesignerMode, SaveType} from "../DesignerType";
 import {globalMessage} from "../../framework/message/GlobalMessage.tsx";
@@ -13,18 +12,7 @@ class EditorDesignerLoader extends AbstractDesignerLoader {
     protected initProject(id: string, type: SaveType): void {
         operatorMap[type].getProjectData(id).then((data) => {
             if (data) {
-                designerManager.init(data);
-
-                //初始化bpStore（蓝图状态）
-                const {doBPInit} = bpStore;
-                doBPInit({
-                    bpAPMap: data?.bpAPMap,
-                    bpLines: data?.bpLines,
-                    bpAPLineMap: data?.bpAPLineMap,
-                    bpNodeLayoutMap: data?.bpNodeLayoutMap,
-                    bpNodeConfigMap: data?.bpNodeConfigMap,
-                }, DesignerMode.EDIT)
-
+                designerManager.init(data, DesignerMode.EDIT);
                 designerManager.setLoaded(true);
             } else {
                 globalMessage?.messageApi?.error("项目不存在");

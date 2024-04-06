@@ -7,7 +7,7 @@ import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import undoRedoMap from "../undo-redo/core";
 import runtimeConfigStore from "../../store/RuntimeStore.ts";
 import footerStore from "../../footer/FooterStore";
-import bpStore from "../../../designer/blueprint/store/BPStore";
+import bluePrintManager from "../../blueprint/manager/BluePrintManager.ts";
 import {reRenderAllLine} from "../../blueprint/drag/BPMovable.tsx";
 import bpLeftStore from "../../../designer/blueprint/left/BPLeftStore";
 import operatorMap from "../../../framework/operate";
@@ -18,6 +18,7 @@ import themeHdStore from "../../header/items/theme/ThemeManager.ts";
 import canvasHdStore from "../../header/items/canvas/CanvasManager.ts";
 import projectHdStore from "../../header/items/project/ProjecManager.ts";
 import canvasManager from "../../header/items/canvas/CanvasManager.ts";
+import designerManager from "../../manager/DesignerManager.ts";
 
 export const selectAll = () => {
     const {layerConfigs} = layerManager;
@@ -97,7 +98,7 @@ export const doDelete = () => {
     //如果蓝图中使用了当前要被删除的组件，则需要先删除蓝图中的组件和连线，且蓝图中的删除操作目前无法回退
     const {targetIds} = eventOperateStore;
     if (targetIds && targetIds.length > 0) {
-        const {delNode, bpNodeLayoutMap} = bpStore;
+        const {delNode, bpNodeLayoutMap} = bluePrintManager;
         const preDelNodeIds: string[] = [];
         targetIds.forEach((id: string) => {
             if (bpNodeLayoutMap[id])
@@ -115,15 +116,8 @@ export const doDelete = () => {
 export const doSave = throttle(() => {
     return new Promise(() => {
         const {saveType, id} = URLUtil.parseUrlParams();
-        const proData = layerManager.getData();
+        const proData = designerManager.getData();
 
-        //设置蓝图数据
-        const {bpAPMap, bpLines, bpAPLineMap, getAllNodeConfig, bpNodeLayoutMap} = bpStore;
-        proData.bpAPMap = bpAPMap;
-        proData.bpLines = bpLines;
-        proData.bpAPLineMap = bpAPLineMap;
-        proData.bpNodeConfigMap = getAllNodeConfig();
-        proData.bpNodeLayoutMap = bpNodeLayoutMap;
         //转换为最终保存的数据格式
         const projectInfo: IProjectInfo = {
             id,
@@ -164,7 +158,7 @@ export const doUnGrouping = () => {
     LayerUtil.findTopGroupLayer(targetIds, false).forEach((id: string) => targetIdSet.add(id));
     targetIds = Array.from(targetIdSet);
     if (targetIds && targetIds.length > 0) {
-        const {delNode, bpNodeLayoutMap} = bpStore;
+        const {delNode, bpNodeLayoutMap} = bluePrintManager;
         const preDelNodeIds: string[] = [];
         targetIds.forEach((id: string) => {
             if (bpNodeLayoutMap[id])
@@ -481,7 +475,7 @@ export const toggleHotKeyDes = () => {
  */
 export const delBPNode = () => {
     if (!bluePrintHdStore.bluePrintVisible) return;
-    const {selectedNodes, delNode} = bpStore;
+    const {selectedNodes, delNode} = bluePrintManager;
     if (selectedNodes.length === 0) return;
     const selectedNodeIds = selectedNodes.map(node => node.id.split(':')[1]!);
     delNode(selectedNodeIds);
@@ -499,7 +493,7 @@ export const delBPNode = () => {
  */
 export const delBPLine = () => {
     if (!bluePrintHdStore.bluePrintVisible) return;
-    const {selectedLines, delLine} = bpStore;
+    const {selectedLines, delLine} = bluePrintManager;
     if (selectedLines.length === 0) return;
     const selectedLineIds = selectedLines.map(line => line.id!);
     delLine(selectedLineIds);

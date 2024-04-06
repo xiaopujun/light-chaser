@@ -7,6 +7,7 @@ import bpNodeControllerMap from "../node/core/impl/BPNodeControllerMap";
 import {DesignerMode, ProjectDataType} from "../../DesignerType.ts";
 import {ClazzTemplate} from "../../../comps/common-component/common-types.ts";
 import bpLeftStore from "../left/BPLeftStore.ts";
+import AbstractManager from "../../manager/core/AbstractManager.ts";
 
 export interface IBPLine {
     id?: string;
@@ -35,8 +36,10 @@ export interface BPNodeLayoutType {
 
 export type BPInitDataType = Pick<ProjectDataType, 'bpNodeLayoutMap' | 'bpNodeConfigMap' | 'bpLines' | 'bpAPMap' | 'bpAPLineMap'>;
 
-class BPStore {
+class BluePrintManager extends AbstractManager<BPInitDataType> {
+
     constructor() {
+        super();
         makeObservable(this, {
             selectedNodes: observable,
             bpNodeLayoutMap: observable,
@@ -305,7 +308,7 @@ class BPStore {
         this.setSelectedLines([]);
     }
 
-    doBPInit = (data: BPInitDataType, mode: DesignerMode) => {
+    public init(data: BPInitDataType, mode: DesignerMode): void {
         runInAction(() => {
             this.bpAPMap = data.bpAPMap || {};
             this.bpLines = data.bpLines || {};
@@ -334,7 +337,26 @@ class BPStore {
         });
     }
 
+    public getData(): BPInitDataType {
+        return {
+            bpAPMap: this.bpAPMap,
+            bpLines: this.bpLines,
+            bpAPLineMap: this.bpAPLineMap,
+            bpNodeConfigMap: this.getAllNodeConfig(),
+            bpNodeLayoutMap: this.bpNodeLayoutMap,
+        }
+    }
+
+    public destroy(): void {
+        this.bpAPMap = {};
+        this.bpLines = {};
+        this.bpAPLineMap = {};
+        this.bpNodeLayoutMap = {};
+        this.bpNodeControllerInsMap = {};
+        this.bpNodeConfigMap = {};
+    }
+
 }
 
-const bpStore = new BPStore();
-export default bpStore;
+const bluePrintManager = new BluePrintManager();
+export default bluePrintManager;

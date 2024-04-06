@@ -1,6 +1,6 @@
 import React, {Suspense, useEffect} from "react";
 import {reRenderAllLine} from "./drag/BPMovable";
-import bpStore, {IBPLine} from "./store/BPStore";
+import bluePrintManager, {IBPLine} from "./manager/BluePrintManager.ts";
 import CanvasUtil from "./util/CanvasUtil";
 import Loading from "../../json-schema/ui/loading/Loading.tsx";
 import LineLayer from "./line/LineLayer.tsx";
@@ -14,7 +14,7 @@ import NodeLayer from "./node/NodeLayer.tsx";
  */
 const lineSegmentCollisions = (event: MouseEvent) => {
     const {clientX, clientY, shiftKey} = event;
-    const {selectedLines, setSelectedLines, downCtx} = bpStore;
+    const {selectedLines, setSelectedLines, downCtx} = bluePrintManager;
     //清除之前的选中线
     if (selectedLines.length > 0) {
         selectedLines.forEach((line) => {
@@ -26,7 +26,7 @@ const lineSegmentCollisions = (event: MouseEvent) => {
         setSelectedLines([]);
     }
     if (!shiftKey) return;
-    const {bpLines, canvasOffset} = bpStore;
+    const {bpLines, canvasOffset} = bluePrintManager;
     const targetLines: IBPLine[] = [];
     const mousePoint = {x: clientX - canvasOffset.x, y: clientY - canvasOffset.y};
     Object.values(bpLines).forEach((line) => {
@@ -59,7 +59,7 @@ const BPCanvas: React.FC = () => {
             CanvasUtil.updSegmentSamplingPoint();
             clearTimeout(renderLineTimer);
         }, 50);
-        const {nodeContainerRef} = bpStore;
+        const {nodeContainerRef} = bluePrintManager;
         nodeContainerRef?.addEventListener('click', lineSegmentCollisions);
         return () => nodeContainerRef?.removeEventListener('click', lineSegmentCollisions);
     }, [])

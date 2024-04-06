@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import Selecto, {OnDragStart, OnSelectEnd} from "react-selecto";
-import bpStore from "../store/BPStore";
+import bluePrintManager from "../manager/BluePrintManager.ts";
 
 export interface BPSelectableProps {
     children?: React.ReactNode;
@@ -11,12 +11,12 @@ export const BPSelectable: React.FC<BPSelectableProps> = (props) => {
     const selectorRef = React.createRef<Selecto>();
 
     useEffect(() => {
-        const {setBpSelectRef} = bpStore;
+        const {setBpSelectRef} = bluePrintManager;
         setBpSelectRef(selectorRef.current!);
     })
 
     const onDragStart = (e: OnDragStart) => {
-        const {bpMovableRef, selectedNodes} = bpStore;
+        const {bpMovableRef, selectedNodes} = bluePrintManager;
         const target = e.inputEvent.target;
         if ((bpMovableRef!.isMoveableElement(target))
             || selectedNodes.some((t: HTMLElement) => t === target || t.contains(target))
@@ -27,7 +27,7 @@ export const BPSelectable: React.FC<BPSelectableProps> = (props) => {
 
     const onSelectEnd = (e: OnSelectEnd) => {
         let {selected} = e;
-        const {bpMovableRef, setSelectedNodes} = bpStore;
+        const {bpMovableRef, setSelectedNodes} = bluePrintManager;
         selected = selected.filter((item) => item.classList.contains('bp-node-container'));
         //更新选中的组件
         setSelectedNodes(selected as HTMLElement[]);

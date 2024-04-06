@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import Moveable, {OnDrag, OnDragEnd, OnDragGroup, OnDragGroupEnd, OnDragStart} from "react-moveable";
-import bpStore, {IBPLine, IPoint} from "../store/BPStore";
+import bluePrintManager, {IBPLine, IPoint} from "../manager/BluePrintManager.ts";
 import {observer} from "mobx-react";
 import CanvasUtil from "../util/CanvasUtil";
 
@@ -9,12 +9,12 @@ export interface BPMovableProps {
 }
 
 export const reRenderAllLine = () => {
-    const {bpLines} = bpStore;
+    const {bpLines} = bluePrintManager;
     reRenderLine(Object.values(bpLines));
 }
 
 export const reRenderLine = (lines: IBPLine[]) => {
-    const {downCtx, canvasOffset, nodeContainerRef} = bpStore;
+    const {downCtx, canvasOffset, nodeContainerRef} = bluePrintManager;
     const {width: canvasW, height: canvasH} = nodeContainerRef?.getBoundingClientRect()!;
     //更新每条线的起始点和终点
     lines.forEach((line: IBPLine) => {
@@ -48,7 +48,7 @@ export const updNodeAndLinePos = (nodeId: string, position: IPoint) => {
     const {
         bpNodeControllerInsMap, bpAPLineMap, bpLines,
         updLinePos, updBpNodeLayout, canvasOffset
-    } = bpStore;
+    } = bluePrintManager;
     //更新节点位置
     updBpNodeLayout({
         id: nodeId,
@@ -93,7 +93,7 @@ export const BPMovable = observer((props: BPMovableProps) => {
         const movableRef = React.createRef<Moveable>();
 
         useEffect(() => {
-            const {setBpMovableRef} = bpStore;
+            const {setBpMovableRef} = bluePrintManager;
             setBpMovableRef(movableRef.current!);
         })
 
@@ -138,7 +138,7 @@ export const BPMovable = observer((props: BPMovableProps) => {
             CanvasUtil.updSegmentSamplingPoint();
         }
 
-        const {selectedNodes} = bpStore;
+        const {selectedNodes} = bluePrintManager;
         return (
             <>
                 {children}

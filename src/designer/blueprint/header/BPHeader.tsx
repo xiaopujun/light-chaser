@@ -1,7 +1,7 @@
 import React from "react";
 import './BPHeader.less';
 import {LineOutlined} from "@ant-design/icons";
-import bpStore from "../store/BPStore";
+import bluePrintManager from "../manager/BluePrintManager.ts";
 import bluePrintHdStore from "../../header/items/blue-print/BluePrintHdStore.ts";
 
 const BPHeader: React.FC = () => {
@@ -11,7 +11,7 @@ const BPHeader: React.FC = () => {
             <div className={'bp-header-menu'}><LineOutlined onClick={() => {
                 const {setBluePrintVisible} = bluePrintHdStore;
                 setBluePrintVisible(false);
-                const {setCanvasTranslate, setCanvasScale} = bpStore;
+                const {setCanvasTranslate, setCanvasScale} = bluePrintManager;
                 setCanvasTranslate({x: 0, y: 0});
                 setCanvasScale(1);
             }}/></div>

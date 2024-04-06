@@ -2,7 +2,7 @@
  * 蓝图执行器
  * 说明：蓝图设计器中编辑的事件路径统一通过蓝图执行器进行执行，包括事件的触发、事件的执行、事件的终止等
  */
-import bpStore from "../store/BPStore";
+import bluePrintManager from "../manager/BluePrintManager.ts";
 import {AnchorPointType} from "../node/core/AbstractBPNodeController";
 
 export default class BPExecutor {
@@ -43,14 +43,14 @@ export default class BPExecutor {
         const anchorInfoArr = apId.split(":");
         if (anchorInfoArr.length !== 3)
             return;
-        const {bpAPMap} = bpStore;
+        const {bpAPMap} = bluePrintManager;
         const nextAnchorIds = bpAPMap[apId];
         if (!nextAnchorIds)
             return;
         //分发执行已链接的下一个节点
         nextAnchorIds.forEach((nextAnchorId: string) => {
             const [nodeId, apId, anchorType] = nextAnchorId.split(":");
-            const {bpNodeControllerInsMap} = bpStore;
+            const {bpNodeControllerInsMap} = bluePrintManager;
             const nodeController = bpNodeControllerInsMap[nodeId!];
             nodeController && nodeController.execute({
                 nodeId, apId,

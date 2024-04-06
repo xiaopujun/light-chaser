@@ -1,4 +1,4 @@
-import {BPNodeLayoutType, IBPLine} from "./blueprint/store/BPStore";
+import {BPNodeLayoutType, IBPLine} from "./blueprint/manager/BluePrintManager.ts";
 
 /**
  * 主题

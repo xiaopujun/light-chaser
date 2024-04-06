@@ -3,7 +3,7 @@ import './BPNode.less';
 import {AnchorPointType, NodeInfoType} from "./core/AbstractBPNodeController";
 import nodeIconMap from "./NodeIconMap";
 import {CodeSandboxOutlined} from "@ant-design/icons";
-import {IPoint} from "../store/BPStore";
+import {IPoint} from "../manager/BluePrintManager.ts";
 
 export interface NodeProps extends NodeInfoType {
     position?: IPoint;
