@@ -86,7 +86,7 @@ light chaser遵守《贡献者公约行为准则》。
 
 # License
 
-[Apache-2.0 license](LICENSE) © xiaopujun
+[MIT](LICENSE) © xiaopujun
 
 感谢为本项目做出贡献的每一位开发人员和个人！
 
