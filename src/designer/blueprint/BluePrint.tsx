@@ -1,4 +1,4 @@
-import React, {lazy} from "react";
+import {lazy} from "react";
 
 const BPHeader = lazy(() => import("./header/BPHeader"));
 const BPFooter = lazy(() => import("./footer/BPFooter"));
@@ -8,7 +8,7 @@ const BPCanvas = lazy(() => import("./BPCanvas"));
 const FrameLayout = lazy(() => import("../../json-schema/ui/frame-layout/FrameLayout"));
 
 
-export const BluePrint: React.FC = () => {
+export default function BluePrint() {
     return (
         <FrameLayout header={<BPHeader/>}
                      footer={<BPFooter/>}

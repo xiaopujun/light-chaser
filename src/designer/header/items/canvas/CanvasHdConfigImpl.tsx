@@ -2,29 +2,27 @@ import {observer} from "mobx-react";
 import {FormEvent, useRef, useState} from 'react';
 import Dialog from "../../../../json-schema/ui/dialog/Dialog";
 import {CanvasConfig} from "../../../DesignerType";
-import designerStore from "../../../store/DesignerStore";
-import headerStore from "../../HeaderStore";
 import './CanvasHdConfigImpl.less';
 import {Grid} from "../../../../json-schema/ui/grid/Grid";
 import Switch from "../../../../json-schema/ui/switch/Switch";
 import Button from "../../../../json-schema/ui/button/Button";
 import NumberInput from "../../../../json-schema/ui/number-input/NumberInput";
+import canvasHdStore from "./CanvasManager.ts";
+import canvasManager from "./CanvasManager.ts";
 
 
 const CanvasHdConfigImpl = () => {
-    const configRef = useRef<CanvasConfig | null>({...designerStore.canvasConfig});
-    const [_rasterize, setRasterize] = useState(designerStore.canvasConfig.rasterize || false);
-    const {canvasVisible} = headerStore;
+    const configRef = useRef<CanvasConfig | null>({...canvasManager.canvasConfig});
+    const [_rasterize, setRasterize] = useState(canvasManager.canvasConfig.rasterize || false);
+    const {canvasVisible, setCanvasVisible} = canvasHdStore;
     const {width, height, rasterize, dragStep, resizeStep} = configRef.current!;
 
     const onClose = () => {
-        const {setCanvasVisible} = headerStore;
         setCanvasVisible(false);
     }
 
     const doSave = (e: FormEvent<HTMLFormElement>) => {
-        const {updateCanvasConfig} = designerStore;
-        updateCanvasConfig(configRef.current!);
+        canvasManager.updateCanvasConfig(configRef.current!);
         e.preventDefault();
         onClose();
     }

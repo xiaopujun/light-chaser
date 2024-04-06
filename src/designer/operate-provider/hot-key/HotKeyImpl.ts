@@ -6,7 +6,6 @@ import {historyOperator} from "../undo-redo/HistoryOperator";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import undoRedoMap from "../undo-redo/core";
 import runtimeConfigStore from "../../store/RuntimeConfigStore";
-import headerStore from "../../header/HeaderStore";
 import footerStore from "../../footer/FooterStore";
 import bpStore from "../../../designer/blueprint/store/BPStore";
 import {reRenderAllLine} from "../../blueprint/drag/BPMovable.tsx";
@@ -14,6 +13,11 @@ import bpLeftStore from "../../../designer/blueprint/left/BPLeftStore";
 import operatorMap from "../../../framework/operate";
 import URLUtil from "../../../utils/URLUtil";
 import LayerUtil from "../../left/layer-list/util/LayerUtil.ts";
+import bluePrintHdStore from "../../header/items/blue-print/BluePrintHdStore.ts";
+import themeHdStore from "../../header/items/theme/ThemeHdStore.ts";
+import canvasHdStore from "../../header/items/canvas/CanvasManager.ts";
+import projectHdStore from "../../header/items/project/ProjectHdStore.ts";
+import canvasManager from "../../header/items/canvas/CanvasManager.ts";
 
 export const selectAll = () => {
     const {layerConfigs} = designerStore;
@@ -182,7 +186,8 @@ export const removeFromGroup = () => {
 export const doMoveUp = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {dragStep = 1}} = designerStore;
+    const {layerConfigs} = designerStore;
+    const {canvasConfig: {dragStep = 1}} = canvasManager;
     let yPos;
     if (targets.length === 1) {
         const id = targets[0].id;
@@ -196,7 +201,8 @@ export const doMoveUp = () => {
 export const doMoveDown = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {dragStep = 1}} = designerStore;
+    const {layerConfigs} = designerStore;
+    const {canvasConfig: {dragStep = 1}} = canvasManager;
     if (targets.length === 1) {
         const id = targets[0].id;
         const yPos = layerConfigs[id].y! + dragStep;
@@ -210,7 +216,8 @@ export const doMoveDown = () => {
 export const doMoveLeft = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {dragStep = 1}} = designerStore;
+    const {layerConfigs} = designerStore;
+    const {canvasConfig: {dragStep = 1}} = canvasManager;
     if (targets.length === 1) {
         const id = targets[0].id;
         const xPos = layerConfigs[id].x!;
@@ -224,7 +231,8 @@ export const doMoveLeft = () => {
 export const doMoveRight = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {dragStep = 1}} = designerStore;
+    const {layerConfigs} = designerStore;
+    const {canvasConfig: {dragStep = 1}} = canvasManager;
     if (targets.length === 1) {
         const id = targets[0].id;
         const xPos = layerConfigs[id].x!;
@@ -243,7 +251,8 @@ export const doMoveRight = () => {
 export const doBaseBottomEnlargeUp = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
+    const {layerConfigs} = designerStore;
+    const {canvasConfig: {resizeStep = 1}} = canvasManager;
     let height;
     if (targets.length === 1) {
         const id = targets[0].id;
@@ -260,7 +269,8 @@ export const doBaseBottomEnlargeUp = () => {
 export const doBaseUpEnlargeDown = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
+    const {layerConfigs} = designerStore;
+    const {canvasConfig: {resizeStep = 1}} = canvasManager;
     let height;
     if (targets.length === 1) {
         const id = targets[0].id;
@@ -277,7 +287,8 @@ export const doBaseUpEnlargeDown = () => {
 export const doBaseRightEnlargeLeft = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
+    const {layerConfigs} = designerStore;
+    const {canvasConfig: {resizeStep = 1}} = canvasManager;
     let width;
     if (targets.length === 1) {
         const id = targets[0].id;
@@ -294,7 +305,8 @@ export const doBaseRightEnlargeLeft = () => {
 export const doBaseLeftEnlargeRight = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
+    const {layerConfigs} = designerStore;
+    const {canvasConfig: {resizeStep = 1}} = canvasManager;
     let width;
     if (targets.length === 1) {
         const id = targets[0].id;
@@ -312,7 +324,8 @@ export const doBaseLeftEnlargeRight = () => {
 export const doBaseBottomDecreaseUp = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
+    const {layerConfigs} = designerStore;
+    const {canvasConfig: {resizeStep = 1}} = canvasManager;
     let height;
     if (targets.length === 1) {
         height = layerConfigs[targets[0].id].height! - resizeStep;
@@ -328,7 +341,8 @@ export const doBaseBottomDecreaseUp = () => {
 export const doBaseUpDecreaseDown = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
+    const {layerConfigs} = designerStore;
+    const {canvasConfig: {resizeStep = 1}} = canvasManager;
     let height;
     if (targets.length === 1) {
         const id = targets[0].id;
@@ -345,7 +359,8 @@ export const doBaseUpDecreaseDown = () => {
 export const doBaseRightDecreaseLeft = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
+    const {layerConfigs} = designerStore;
+    const {canvasConfig: {resizeStep = 1}} = canvasManager;
     let width;
     if (targets.length === 1) {
         const id = targets[0].id;
@@ -362,7 +377,8 @@ export const doBaseRightDecreaseLeft = () => {
 export const doBaseLeftDecreaseRight = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
+    const {layerConfigs} = designerStore;
+    const {canvasConfig: {resizeStep = 1}} = canvasManager;
     let width;
     if (targets.length === 1) {
         const id = targets[0].id;
@@ -429,7 +445,7 @@ export const toggleSecondaryBorder = () => {
  * 切换项目设置弹框
  */
 export const toggleProjectConfig = () => {
-    const {projectVisible, setProjectVisible} = headerStore;
+    const {projectVisible, setProjectVisible} = projectHdStore;
     console.log(projectVisible)
     setProjectVisible(!projectVisible);
 }
@@ -438,7 +454,7 @@ export const toggleProjectConfig = () => {
  * 切换画布设置弹框
  */
 export const toggleCanvasConfig = () => {
-    const {canvasVisible, setCanvasVisible} = headerStore;
+    const {canvasVisible, setCanvasVisible} = canvasHdStore;
     setCanvasVisible(!canvasVisible);
 }
 
@@ -446,7 +462,7 @@ export const toggleCanvasConfig = () => {
  * 切换全局主题设置弹框
  */
 export const toggleGlobalThemeConfig = () => {
-    const {themeVisible, setThemeVisible} = headerStore;
+    const {themeVisible, setThemeVisible} = themeHdStore;
     setThemeVisible(!themeVisible);
 }
 
@@ -464,8 +480,7 @@ export const toggleHotKeyDes = () => {
  * 删除蓝图中选中的节点
  */
 export const delBPNode = () => {
-    const {bluePrintVisible} = headerStore;
-    if (!bluePrintVisible) return;
+    if (!bluePrintHdStore.bluePrintVisible) return;
     const {selectedNodes, delNode} = bpStore;
     if (selectedNodes.length === 0) return;
     const selectedNodeIds = selectedNodes.map(node => node.id.split(':')[1]!);
@@ -483,8 +498,7 @@ export const delBPNode = () => {
  * 删除蓝图中选中的连线
  */
 export const delBPLine = () => {
-    const {bluePrintVisible} = headerStore;
-    if (!bluePrintVisible) return;
+    if (!bluePrintHdStore.bluePrintVisible) return;
     const {selectedLines, delLine} = bpStore;
     if (selectedLines.length === 0) return;
     const selectedLineIds = selectedLines.map(line => line.id!);

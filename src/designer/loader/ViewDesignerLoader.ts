@@ -22,7 +22,7 @@ class ViewDesignerLoader extends AbstractDesignerLoader {
                 //初始化designerStore
                 doInit({
                     id: id,
-                    canvasConfig: data?.canvasConfig,
+                    // canvasConfig: data?.canvasConfig,
                     elemConfigs: data?.elemConfigs,
                     layerConfigs: data?.layerConfigs,
                     themeConfig: data?.themeConfig,

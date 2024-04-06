@@ -1,8 +1,8 @@
 import React, {memo, useEffect} from "react";
 import DragScaleProvider from "../../framework/drag-scale/DragScaleProvider";
-import designerStore from "../store/DesignerStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {observer} from "mobx-react";
+import canvasManager from "../header/items/canvas/CanvasManager.ts";
 
 export interface DesignerDragScaleContainerProps {
     children?: React.ReactNode;
@@ -13,7 +13,7 @@ const DesignerDragScaleContainer = memo(observer((props: DesignerDragScaleContai
     const {children, onDoubleClick} = props;
     const containerRef = React.useRef<HTMLDivElement>(null);
     const contentRef = React.useRef<HTMLDivElement>(null);
-    const {canvasConfig} = designerStore!;
+    const {canvasConfig} = canvasManager!;
     useEffect(() => {
         const container = containerRef.current;
         const content = contentRef.current;

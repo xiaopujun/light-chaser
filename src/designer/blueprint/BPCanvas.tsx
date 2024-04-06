@@ -1,11 +1,11 @@
-import React, {lazy, Suspense, useEffect} from "react";
+import React, {Suspense, useEffect} from "react";
 import {reRenderAllLine} from "./drag/BPMovable";
 import bpStore, {IBPLine} from "./store/BPStore";
 import CanvasUtil from "./util/CanvasUtil";
 import Loading from "../../json-schema/ui/loading/Loading.tsx";
+import LineLayer from "./line/LineLayer.tsx";
+import NodeLayer from "./node/NodeLayer.tsx";
 
-const LineLayer = lazy(() => import('./line/LineLayer'));
-const NodeLayer = lazy(() => import('./node/NodeLayer'));
 
 /**
  * todo 该方法要做性能优化，考虑防抖避免频繁采样和线段重复绘制，用算法做好碰撞检测

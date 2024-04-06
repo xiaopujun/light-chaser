@@ -1,6 +1,8 @@
 import ReactDOM from "react-dom";
-import {BluePrint} from "../../../blueprint/BluePrint.tsx";
-import {ReactElement} from "react";
+import {lazy, ReactElement, Suspense} from "react";
+import Loading from "../../../../json-schema/ui/loading/Loading.tsx";
+
+const BluePrint = lazy(() => import("../../../blueprint/BluePrint.tsx"));
 
 export default function BluePrintHdImpl() {
     return ReactDOM.createPortal(
@@ -12,6 +14,8 @@ export default function BluePrintHdImpl() {
             height: '100%',
             backgroundColor: '#151515'
         }}>
-            <BluePrint/>
+            <Suspense fallback={<Loading/>}>
+                <BluePrint/>
+            </Suspense>
         </div>, document.body)! as ReactElement;
 }

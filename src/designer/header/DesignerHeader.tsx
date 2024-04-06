@@ -1,18 +1,20 @@
-import React, {ComponentType, ReactElement, Suspense} from 'react';
+import React, {ComponentType, ReactElement} from 'react';
 import './DesignerHeader.less';
-import headerStore from "./HeaderStore";
 import {observer} from "mobx-react";
-import Loading from "../../json-schema/ui/loading/Loading";
 import {AlertOutlined, CompressOutlined, EyeOutlined, PartitionOutlined, SaveOutlined} from "@ant-design/icons";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {doSave} from "../operate-provider/hot-key/HotKeyImpl";
 import URLUtil from "../../utils/URLUtil";
 import {DesignerMode} from "../DesignerType";
+import canvasHdStore from "./items/canvas/CanvasManager.ts";
+import projectHdStore from "./items/project/ProjectHdStore.ts";
+import themeHdStore from "./items/theme/ThemeHdStore.ts";
+import bluePrintHdStore from "./items/blue-print/BluePrintHdStore.ts";
+import CanvasHdConfigImpl from "./items/canvas/CanvasHdConfigImpl.tsx";
+import ProjectHdItemImpl from "./items/project/ProjectHdItemImpl.tsx";
+import ThemeHdItemImpl from "./items/theme/ThemeHdItemImpl.tsx";
+import BluePrintHdImpl from "./items/blue-print/BluePrintHdImpl.tsx";
 
-const ProjectHdItemImpl = React.lazy(() => import('./items/project/ProjectHdItemImpl'));
-const CanvasHdConfigImpl = React.lazy(() => import('./items/canvas/CanvasHdConfigImpl'));
-const ThemeHdItemImpl = React.lazy(() => import('./items/theme/ThemeHdItemImpl'));
-const BluePrintHdImpl = React.lazy(() => import('./items/blue-print/BluePrintHdImpl'));
 
 export interface IHeaderItem {
     icon: ComponentType;
@@ -28,29 +30,22 @@ const centerItems: Array<IHeaderItem> = [
         key: 'blue-print',
         onClick: () => {
             //打开蓝图前清空画布中已经选中的组件,避免删除蓝图节点时，误删画布中的组件
-            const {setBluePrintVisible} = headerStore;
             const {setTargetIds} = eventOperateStore;
             setTargetIds([]);
-            setBluePrintVisible(true);
+            bluePrintHdStore.setBluePrintVisible(true);
         }
     },
     {
         icon: CompressOutlined,
         name: '画布',
         key: 'canvas',
-        onClick: () => {
-            const {setCanvasVisible} = headerStore;
-            setCanvasVisible(true);
-        }
+        onClick: () => canvasHdStore.setCanvasVisible(true)
     },
     {
         icon: AlertOutlined,
         name: '主题',
         key: 'theme',
-        onClick: () => {
-            const {setThemeVisible} = headerStore;
-            setThemeVisible(true);
-        }
+        onClick: () => themeHdStore.setThemeVisible(true)
     }
 ];
 
@@ -89,7 +84,6 @@ const Header: React.FC = observer(() => {
             return headerItems;
         }
 
-        const {canvasVisible, projectVisible, themeVisible, bluePrintVisible} = headerStore;
         return (
             <>
                 <div className={'designer-header'}>
@@ -102,12 +96,10 @@ const Header: React.FC = observer(() => {
                     <div className={'header-right'}>
                         {buildHeaderItemUI(leftItems)}
                     </div>
-                    <Suspense fallback={<Loading/>}>
-                        {canvasVisible && <CanvasHdConfigImpl/>}
-                        {projectVisible && <ProjectHdItemImpl/>}
-                        {themeVisible && <ThemeHdItemImpl/>}
-                        {bluePrintVisible && <BluePrintHdImpl/>}
-                    </Suspense>
+                    {canvasHdStore.canvasVisible && <CanvasHdConfigImpl/>}
+                    {projectHdStore.projectVisible && <ProjectHdItemImpl/>}
+                    {themeHdStore.themeVisible && <ThemeHdItemImpl/>}
+                    {bluePrintHdStore.bluePrintVisible && <BluePrintHdImpl/>}
                 </div>
             </>
         );

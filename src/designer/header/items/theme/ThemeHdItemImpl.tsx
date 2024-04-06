@@ -1,19 +1,19 @@
 import {useRef, useState} from 'react';
 import Dialog from "../../../../json-schema/ui/dialog/Dialog";
 import './ThemeHdItem.less';
-import headerStore from "../../HeaderStore";
 import ThemeList from "../../../../comps/common-component/theme-config/theme-list/ThemeList";
 import {ThemeItemType} from "../../../DesignerType";
 import designerStore from "../../../store/DesignerStore";
 import ThemeEditor from "../../../../comps/common-component/theme-config/theme-editor/ThemeEditor";
 import Button from "../../../../json-schema/ui/button/Button";
+import themeHdStore from "./ThemeHdStore.ts";
 
 const ThemeHdItemImpl = () => {
     const selectedThemeRef = useRef<ThemeItemType>();
     const [openEditor, setOpenEditor] = useState(false);
-    const {themeVisible} = headerStore;
+    const {themeVisible, setThemeVisible} = themeHdStore;
 
-    const onClose = () => headerStore.setThemeVisible(false);
+    const onClose = () => setThemeVisible(false);
 
     const updateGlobalTheme = () => {
         const {flashGlobalTheme} = designerStore;

@@ -1,17 +1,10 @@
 import {action, makeObservable, observable, runInAction, toJS} from "mobx";
 import {isEqual} from "lodash";
-import {
-    CanvasConfig,
-    ILayerItem,
-    IProjectInfo,
-    ProjectDataType,
-    ProjectState,
-    SaveType,
-    ThemeItemType,
-} from "../DesignerType";
+import {ILayerItem, IProjectInfo, ProjectDataType, ProjectState, SaveType, ThemeItemType,} from "../DesignerType";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
 import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryRecordOperateProxy";
 import ObjectUtil from "../../utils/ObjectUtil";
+import canvasManager from "../header/items/canvas/CanvasManager.ts";
 
 /**
  * 设计器核心状态管理类，记录了设计器中的核心数据。包括组件配置，组件布局。 全局设置等。
@@ -19,7 +12,7 @@ import ObjectUtil from "../../utils/ObjectUtil";
 class DesignerStore {
     constructor() {
         makeObservable(this, {
-            canvasConfig: observable,
+            // canvasConfig: observable,
             projectConfig: observable,
             layerConfigs: observable.shallow,
             themeConfig: observable,
@@ -31,7 +24,7 @@ class DesignerStore {
             updateLayer: action,
             updateThemeConfig: action,
             flashGlobalTheme: action,
-            updateCanvasConfig: action,
+            // updateCanvasConfig: action,
             updateProjectConfig: action,
             copyItem: action,
             delLayout: action,
@@ -45,16 +38,16 @@ class DesignerStore {
 
     loaded: boolean = false;
 
-    /**
-     * 画布设置
-     */
-    canvasConfig: CanvasConfig = {
-        rasterize: false, //是否栅格化
-        dragStep: 1, //栅格化拖拽步长
-        resizeStep: 1, //栅格化缩放步长
-        width: 1920, //画布宽
-        height: 1080, //画布高
-    };
+    // /**
+    //  * 画布设置
+    //  */
+    // canvasConfig: CanvasConfig = {
+    //     rasterize: false, //是否栅格化
+    //     dragStep: 1, //栅格化拖拽步长
+    //     resizeStep: 1, //栅格化缩放步长
+    //     width: 1920, //画布宽
+    //     height: 1080, //画布高
+    // };
 
     /**
      * 项目设置
@@ -106,9 +99,9 @@ class DesignerStore {
      */
     doInit = (store: ProjectDataType) => {
         this.id = store.id ?? this.id;
-        this.canvasConfig = store.canvasConfig
-            ? {...this.canvasConfig, ...store.canvasConfig}
-            : this.canvasConfig;
+        // this.canvasConfig = store.canvasConfig
+        //     ? {...this.canvasConfig, ...store.canvasConfig}
+        //     : this.canvasConfig;
         this.elemConfigs = store.elemConfigs
             ? {...this.elemConfigs, ...store.elemConfigs}
             : this.elemConfigs;
@@ -127,7 +120,7 @@ class DesignerStore {
             elemConfigs[key] = this.compController[key].getConfig();
         });
         return {
-            canvasConfig: toJS(this.canvasConfig),
+            canvasConfig: canvasManager.getData(),
             elemConfigs: elemConfigs,
             layerConfigs: toJS(this.layerConfigs),
             themeConfig: toJS(this.themeConfig)!,
@@ -194,7 +187,7 @@ class DesignerStore {
     /**
      * 更新画布设置
      */
-    updateCanvasConfig = (data: CanvasConfig) => this.canvasConfig = {...this.canvasConfig, ...data};
+    // updateCanvasConfig = (data: CanvasConfig) => this.canvasConfig = {...this.canvasConfig, ...data};
 
     /**
      * 更新项目配置

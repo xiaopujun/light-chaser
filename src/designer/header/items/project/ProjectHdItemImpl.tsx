@@ -1,6 +1,5 @@
 import {FormEvent, useRef} from 'react';
 import Dialog from "../../../../json-schema/ui/dialog/Dialog";
-import headerStore from "../../HeaderStore";
 import './ProjectHdItemImpl.less';
 import designerStore from "../../../store/DesignerStore";
 import {IProjectInfo, ProjectState} from "../../../DesignerType";
@@ -9,14 +8,15 @@ import Input from "../../../../json-schema/ui/input/Input";
 import Radio from "../../../../json-schema/ui/radio/Radio";
 import Select from "../../../../json-schema/ui/select/Select";
 import Button from "../../../../json-schema/ui/button/Button";
+import projectHdStore from "./ProjectHdStore.ts";
 
 
 const ProjectHdItemImpl = () => {
     const configRef = useRef<IProjectInfo | null>({...designerStore.projectConfig});
-    const {projectVisible} = headerStore;
+    const {projectVisible, setProjectVisible} = projectHdStore;
     const {name, des, state, saveType} = configRef.current!;
 
-    const onClose = () => headerStore.setProjectVisible(false);
+    const onClose = () => setProjectVisible(false);
 
     const doSave = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();

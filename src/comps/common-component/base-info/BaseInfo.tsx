@@ -18,6 +18,7 @@ import rightStore from "../../../designer/right/RightStore";
 import editorDesignerLoader from "../../../designer/loader/EditorDesignerLoader";
 import layerListStore from "../../../designer/left/layer-list/LayerListStore";
 import LayerUtil from "../../../designer/left/layer-list/util/LayerUtil";
+import canvasManager from "../../../designer/header/items/canvas/CanvasManager.ts";
 
 /**
  * lc组件基础信息
@@ -94,11 +95,11 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
         "posY": (value: number) => eventOperateStore.movableRef?.request("draggable", {y: value as number}, true),
         "align": (align: string) => this.handleMap[align](),
         "left": () => eventOperateStore.movableRef?.request("draggable", {x: 0}, true),
-        "horizontally": () => eventOperateStore.movableRef?.request("draggable", {x: designerStore.canvasConfig.width! / 2 - this.state.width! / 2}, true),
-        "right": () => eventOperateStore.movableRef?.request("draggable", {x: designerStore.canvasConfig.width! - this.state.width!}, true),
+        "horizontally": () => eventOperateStore.movableRef?.request("draggable", {x: canvasManager.canvasConfig.width! / 2 - this.state.width! / 2}, true),
+        "right": () => eventOperateStore.movableRef?.request("draggable", {x: canvasManager.canvasConfig.width! - this.state.width!}, true),
         "top": () => eventOperateStore.movableRef?.request("draggable", {y: 0}, true),
-        "vertically": () => eventOperateStore.movableRef?.request("draggable", {y: designerStore.canvasConfig.height! / 2 - this.state.height! / 2}, true),
-        "bottom": () => eventOperateStore.movableRef?.request("draggable", {y: designerStore.canvasConfig.height! - this.state.height!}, true),
+        "vertically": () => eventOperateStore.movableRef?.request("draggable", {y: canvasManager.canvasConfig.height! / 2 - this.state.height! / 2}, true),
+        "bottom": () => eventOperateStore.movableRef?.request("draggable", {y: canvasManager.canvasConfig.height! - this.state.height!}, true),
     }
 
     onFieldChange = (fieldChangeData: FieldChangeData) => {

@@ -6,6 +6,7 @@ import Loading from "../../json-schema/ui/loading/Loading";
 import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
 import layerBuilder from "../left/layer-list/LayerBuilder";
 import {DesignerMode, SaveType} from "../DesignerType.ts";
+import canvasManager from "../header/items/canvas/CanvasManager.ts";
 
 const ScreenFit = lazy(() => import('../../framework/screen-fit/ScreenFit.tsx'));
 
@@ -22,7 +23,8 @@ const DesignerView = observer((props: DesignerViewProps) => {
         DesignerLoaderFactory.getLoader(DesignerMode.VIEW).load(id, type);
     }, []);
 
-    const {loaded, canvasConfig: {width, height}, layerConfigs} = designerStore!;
+    const {loaded, layerConfigs} = designerStore!;
+    const {canvasConfig: {width, height}} = canvasManager
     if (!loaded)
         return <Loading/>;
     return (

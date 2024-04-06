@@ -4,6 +4,7 @@ import bpStore from "../../designer/blueprint/store/BPStore";
 import operatorMap from "../../framework/operate";
 import {DesignerMode, SaveType} from "../DesignerType";
 import {globalMessage} from "../../framework/message/GlobalMessage.tsx";
+import canvasManager from "../header/items/canvas/CanvasManager.ts";
 
 class EditorDesignerLoader extends AbstractDesignerLoader {
 
@@ -14,10 +15,11 @@ class EditorDesignerLoader extends AbstractDesignerLoader {
         operatorMap[type].getProjectData(id).then((data) => {
             if (data) {
                 const {doInit, setLoaded} = designerStore;
+                canvasManager.init(data?.canvasConfig!)
                 //初始化designerStore
                 doInit({
                     id: id,
-                    canvasConfig: data?.canvasConfig,
+                    // canvasConfig: data?.canvasConfig,
                     elemConfigs: data?.elemConfigs,
                     layerConfigs: data?.layerConfigs,
                     themeConfig: data?.themeConfig,
