@@ -8,7 +8,7 @@ import URLUtil from "../../utils/URLUtil";
 import {DesignerMode} from "../DesignerType";
 import canvasHdStore from "./items/canvas/CanvasManager.ts";
 import projectHdStore from "./items/project/ProjectHdStore.ts";
-import themeHdStore from "./items/theme/ThemeHdStore.ts";
+import themeHdStore from "./items/theme/ThemeManager.ts";
 import bluePrintHdStore from "./items/blue-print/BluePrintHdStore.ts";
 import CanvasHdConfigImpl from "./items/canvas/CanvasHdConfigImpl.tsx";
 import ProjectHdItemImpl from "./items/project/ProjectHdItemImpl.tsx";

@@ -5,6 +5,7 @@ import operatorMap from "../../framework/operate";
 import {DesignerMode, SaveType} from "../DesignerType";
 import {globalMessage} from "../../framework/message/GlobalMessage.tsx";
 import canvasManager from "../header/items/canvas/CanvasManager.ts";
+import themeManager from "../header/items/theme/ThemeManager.ts";
 
 class EditorDesignerLoader extends AbstractDesignerLoader {
 
@@ -16,6 +17,7 @@ class EditorDesignerLoader extends AbstractDesignerLoader {
             if (data) {
                 const {doInit, setLoaded} = designerStore;
                 canvasManager.init(data?.canvasConfig!)
+                themeManager.init(data?.themeConfig!)
                 //初始化designerStore
                 doInit({
                     id: id,

@@ -14,7 +14,7 @@ import operatorMap from "../../../framework/operate";
 import URLUtil from "../../../utils/URLUtil";
 import LayerUtil from "../../left/layer-list/util/LayerUtil.ts";
 import bluePrintHdStore from "../../header/items/blue-print/BluePrintHdStore.ts";
-import themeHdStore from "../../header/items/theme/ThemeHdStore.ts";
+import themeHdStore from "../../header/items/theme/ThemeManager.ts";
 import canvasHdStore from "../../header/items/canvas/CanvasManager.ts";
 import projectHdStore from "../../header/items/project/ProjectHdStore.ts";
 import canvasManager from "../../header/items/canvas/CanvasManager.ts";

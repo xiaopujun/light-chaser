@@ -1,7 +1,6 @@
 import {FormEvent, useRef, useState} from 'react';
 import './ThemeEditor.less';
 import {ThemeItemType} from "../../../../designer/DesignerType";
-import designerStore from "../../../../designer/store/DesignerStore";
 import ThemeList from "../theme-list/ThemeList";
 import {cloneDeep} from "lodash";
 import ColorPicker from "../../../../json-schema/ui/color-picker/ColorPicker";
@@ -10,6 +9,7 @@ import Input from "../../../../json-schema/ui/input/Input";
 import {UIContainer} from "../../../../json-schema/ui/ui-container/UIContainer";
 import {Grid} from "../../../../json-schema/ui/grid/Grid";
 import Button from "../../../../json-schema/ui/button/Button";
+import themeManager from "../../../../designer/header/items/theme/ThemeManager.ts";
 
 
 const ThemeEditor = () => {
@@ -25,7 +25,7 @@ const ThemeEditor = () => {
             supplementSecond: '#000000'
         }
     });
-    const [data, setDate] = useState<ThemeItemType[]>(cloneDeep(designerStore.themeConfig) || []);
+    const [data, setDate] = useState<ThemeItemType[]>(cloneDeep(themeManager.themeConfig) || []);
     const [themeConfig, setThemeConfig] = useState<ThemeItemType>(initConfigRef.current);
 
     const nameChanged = (name: string) => {
@@ -99,7 +99,7 @@ const ThemeEditor = () => {
         setDate(data)
         setThemeConfig(initConfigRef.current);
         //保存到数据库
-        const {updateThemeConfig} = designerStore;
+        const {updateThemeConfig} = themeManager;
         updateThemeConfig(data);
     }
 

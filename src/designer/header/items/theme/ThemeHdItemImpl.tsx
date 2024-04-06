@@ -6,7 +6,7 @@ import {ThemeItemType} from "../../../DesignerType";
 import designerStore from "../../../store/DesignerStore";
 import ThemeEditor from "../../../../comps/common-component/theme-config/theme-editor/ThemeEditor";
 import Button from "../../../../json-schema/ui/button/Button";
-import themeHdStore from "./ThemeHdStore.ts";
+import themeHdStore from "./ThemeManager.ts";
 
 const ThemeHdItemImpl = () => {
     const selectedThemeRef = useRef<ThemeItemType>();

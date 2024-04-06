@@ -5,6 +5,7 @@ import AbstractDesignerController from "../../framework/core/AbstractDesignerCon
 import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryRecordOperateProxy";
 import ObjectUtil from "../../utils/ObjectUtil";
 import canvasManager from "../header/items/canvas/CanvasManager.ts";
+import themeManager from "../header/items/theme/ThemeManager.ts";
 
 /**
  * 设计器核心状态管理类，记录了设计器中的核心数据。包括组件配置，组件布局。 全局设置等。
@@ -12,19 +13,15 @@ import canvasManager from "../header/items/canvas/CanvasManager.ts";
 class DesignerStore {
     constructor() {
         makeObservable(this, {
-            // canvasConfig: observable,
             projectConfig: observable,
             layerConfigs: observable.shallow,
-            themeConfig: observable,
             loaded: observable,
             doInit: action,
             addItem: action,
             delItem: action,
             setLoaded: action,
             updateLayer: action,
-            updateThemeConfig: action,
             flashGlobalTheme: action,
-            // updateCanvasConfig: action,
             updateProjectConfig: action,
             copyItem: action,
             delLayout: action,
@@ -37,17 +34,6 @@ class DesignerStore {
     id: string = "";
 
     loaded: boolean = false;
-
-    // /**
-    //  * 画布设置
-    //  */
-    // canvasConfig: CanvasConfig = {
-    //     rasterize: false, //是否栅格化
-    //     dragStep: 1, //栅格化拖拽步长
-    //     resizeStep: 1, //栅格化缩放步长
-    //     width: 1920, //画布宽
-    //     height: 1080, //画布高
-    // };
 
     /**
      * 项目设置
@@ -73,24 +59,6 @@ class DesignerStore {
      */
     layerConfigs: Record<string, ILayerItem> = {};
 
-    /**
-     * 主题
-     */
-    themeConfig: Array<ThemeItemType> | null = [
-        {
-            id: "0",
-            name: "科技风格(默认主题)",
-            colors: {
-                main: "#00dfff",
-                mainText: "#62edff",
-                subText: "#4ca4b1",
-                background: "#00dfff33",
-                supplementFirst: "#38929f",
-                supplementSecond: "#1790a2",
-            },
-        },
-    ];
-
     layerHeader: string | undefined = undefined;
     layerTail: string | undefined = undefined;
 
@@ -99,14 +67,10 @@ class DesignerStore {
      */
     doInit = (store: ProjectDataType) => {
         this.id = store.id ?? this.id;
-        // this.canvasConfig = store.canvasConfig
-        //     ? {...this.canvasConfig, ...store.canvasConfig}
-        //     : this.canvasConfig;
         this.elemConfigs = store.elemConfigs
             ? {...this.elemConfigs, ...store.elemConfigs}
             : this.elemConfigs;
         this.layerConfigs = store.layerConfigs || this.layerConfigs;
-        this.themeConfig = store.themeConfig || this.themeConfig;
         this.layerHeader = store.layerHeader || this.layerHeader;
         this.layerTail = store.layerTail || this.layerTail;
     };
@@ -123,7 +87,7 @@ class DesignerStore {
             canvasConfig: canvasManager.getData(),
             elemConfigs: elemConfigs,
             layerConfigs: toJS(this.layerConfigs),
-            themeConfig: toJS(this.themeConfig)!,
+            themeConfig: themeManager.getData()!,
             layerHeader: this.layerHeader,
             layerTail: this.layerTail,
         };
@@ -174,8 +138,6 @@ class DesignerStore {
         }
     }
 
-    updateThemeConfig = (data: Array<ThemeItemType>) => this.themeConfig = data;
-
     flashGlobalTheme = (newTheme: ThemeItemType) => {
         this.compController && Object.keys(this.compController).forEach((key: string) => {
             const instance = this.compController[key];
@@ -183,11 +145,6 @@ class DesignerStore {
                 instance.updateTheme(newTheme);
         });
     };
-
-    /**
-     * 更新画布设置
-     */
-    // updateCanvasConfig = (data: CanvasConfig) => this.canvasConfig = {...this.canvasConfig, ...data};
 
     /**
      * 更新项目配置

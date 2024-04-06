@@ -1,8 +1,8 @@
 import {Component} from 'react';
 import {ThemeColors, ThemeItemType} from "../../../../designer/DesignerType";
 import ThemeItem from "../theme-item/ThemeItem";
-import designerStore from "../../../../designer/store/DesignerStore";
 import {observer} from "mobx-react";
+import themeManager from "../../../../designer/header/items/theme/ThemeManager.ts";
 
 interface ThemeListProps {
     data?: ThemeItemType[];
@@ -23,7 +23,7 @@ class ThemeList extends Component<ThemeListProps, ThemeListState> {
 
     onDel = (id: string) => {
         const {onDel} = this.props;
-        const {themeConfig, updateThemeConfig} = designerStore;
+        const {themeConfig, updateThemeConfig} = themeManager;
         const newThemes = themeConfig!.filter((item: ThemeItemType) => item.id !== id);
         updateThemeConfig(newThemes);
         onDel && onDel(id);
@@ -39,7 +39,7 @@ class ThemeList extends Component<ThemeListProps, ThemeListState> {
     render() {
         const {activeId} = this.state;
         const {showOperator} = this.props;
-        const themeConfig = designerStore.themeConfig;
+        const {themeConfig} = themeManager;
         const themeList = [];
         for (let i = 0; i < themeConfig!.length; i++) {
             themeList.push(<ThemeItem key={i} id={themeConfig![i].id} selected={themeConfig![i].id === activeId}
