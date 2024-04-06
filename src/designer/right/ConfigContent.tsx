@@ -3,7 +3,7 @@ import {LineOutlined} from "@ant-design/icons";
 import rightStore from "./RightStore";
 import {observer} from "mobx-react";
 import './ConfigContent.less';
-import designerStore from "../store/DesignerStore";
+import layerManager from "../manager/LayerManager.ts";
 import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
 import ObjectUtil from "../../utils/ObjectUtil";
@@ -38,7 +38,7 @@ const ConfigContent = () => {
     }
 
     const buildConfigContent = () => {
-        const {compController} = designerStore;
+        const {compController} = layerManager;
         const {activeMenu, activeElem} = rightStore;
         const abstractConfigObj: AbstractDefinition = DesignerLoaderFactory.getLoader(DesignerMode.EDIT).definitionMap[activeElem.type + '']
         if (!abstractConfigObj) return;

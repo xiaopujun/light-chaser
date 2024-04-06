@@ -3,7 +3,7 @@ import Dialog from "../../../../json-schema/ui/dialog/Dialog";
 import './ThemeHdItem.less';
 import ThemeList from "../../../../comps/common-component/theme-config/theme-list/ThemeList";
 import {ThemeItemType} from "../../../DesignerType";
-import designerStore from "../../../store/DesignerStore";
+import layerManager from "../../../manager/LayerManager.ts";
 import ThemeEditor from "../../../../comps/common-component/theme-config/theme-editor/ThemeEditor";
 import Button from "../../../../json-schema/ui/button/Button";
 import themeHdStore from "./ThemeManager.ts";
@@ -16,7 +16,7 @@ const ThemeHdItemImpl = () => {
     const onClose = () => setThemeVisible(false);
 
     const updateGlobalTheme = () => {
-        const {flashGlobalTheme} = designerStore;
+        const {flashGlobalTheme} = layerManager;
         if (selectedThemeRef.current) {
             flashGlobalTheme(selectedThemeRef.current);
             onClose();

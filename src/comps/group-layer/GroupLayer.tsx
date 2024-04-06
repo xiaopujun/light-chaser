@@ -3,7 +3,7 @@ import GroupLayerController from "./GroupLayerController";
 import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
 import DesignerLoaderFactory from "../../designer/loader/DesignerLoaderFactory";
 import {DesignerMode, ILayerItem} from "../../designer/DesignerType";
-import designerStore from "../../designer/store/DesignerStore";
+import layerManager from "../../designer/manager/LayerManager.ts";
 
 export interface GroupLayerStyleProps {
     children?: React.ReactNode;
@@ -23,7 +23,7 @@ export default class GroupLayer extends React.PureComponent<GroupLayerStyleProps
      */
     componentDidMount(): void {
         const {layer} = this.props;
-        const {elemConfigs, compController} = designerStore;
+        const {elemConfigs, compController} = layerManager;
         const groupDefinition: AbstractDefinition = DesignerLoaderFactory.getLoader(DesignerMode.EDIT).definitionMap['group'];
         let config;
         if (layer.id! in compController!) {

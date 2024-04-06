@@ -1,7 +1,7 @@
 import AbstractRollback from "./AbstractRollback";
 import eventOperateStore from "../../EventOperateStore";
 import {IAddOperateData, IHistoryRecord} from "../OperateType";
-import designerStore from "../../../store/DesignerStore";
+import layerManager from "../../../manager/LayerManager.ts";
 import rightStore from "../../../right/RightStore";
 import {cloneDeep} from "lodash";
 
@@ -10,14 +10,14 @@ export class AddRollbackImpl extends AbstractRollback {
         if (!record) return;
         const {next} = record!;
         //执行正向操作添加元素
-        const {addItem} = designerStore;
+        const {addItem} = layerManager;
         (next as IAddOperateData[]).forEach((item) => {
             if ('id' in item)
                 addItem(cloneDeep(item.layerConfig!));
             if ('layerHeader' in item)
-                designerStore.layerHeader = item.layerHeader;
+                layerManager.layerHeader = item.layerHeader;
             if ('layerTail' in item)
-                designerStore.layerTail = item.layerTail;
+                layerManager.layerTail = item.layerTail;
         });
     }
 
@@ -27,15 +27,15 @@ export class AddRollbackImpl extends AbstractRollback {
         const {setTargetIds, focusDesignerCanvas} = eventOperateStore;
         const {prev, next} = record!;
         //执行反向操作删除元素
-        const {delItem} = designerStore;
+        const {delItem} = layerManager;
         const delIds: string[] = [];
         next && (next! as IAddOperateData[]).forEach((item) => delIds.push(item.id!));
         delItem(delIds);
         prev && (prev as IAddOperateData[]).forEach((item) => {
             if ('layerHeader' in item!)
-                designerStore.layerHeader = item.layerHeader;
+                layerManager.layerHeader = item.layerHeader;
             if ('layerTail' in item!)
-                designerStore.layerTail = item.layerTail;
+                layerManager.layerTail = item.layerTail;
         });
 
 

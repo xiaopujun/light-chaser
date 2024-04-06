@@ -2,7 +2,7 @@ import {AbstractBPNodeController, AnchorPointType, ExecuteInfoType, NodeInfoType
 import {UpdateOptions} from "../../../../../../framework/core/AbstractController";
 import ComponentUtil from "../../../../../../utils/ComponentUtil";
 import BPNode, {NodeProps} from "../../../BPNode";
-import designerStore from "../../../../../../designer/store/DesignerStore";
+import layerManager from "../../../../../manager/LayerManager.ts";
 import React from "react";
 import {ActionInfo} from "../../../../../../framework/core/AbstractDefinition";
 import BPExecutor from "../../../../core/BPExecutor";
@@ -26,7 +26,7 @@ export default class BPLayerNodeController extends AbstractBPNodeController<Laye
         if (anchorType === AnchorPointType.INPUT) {
             //输入点，执行动作
             //1.获取当前组件的控制器实例
-            const {compController, layerConfigs} = designerStore;
+            const {compController, layerConfigs} = layerManager;
             const compInstance = compController[nodeId];
             if (!compInstance)
                 return;
@@ -51,7 +51,7 @@ export default class BPLayerNodeController extends AbstractBPNodeController<Laye
     }
 
     getNodeInfo(nodeId: string): NodeInfoType | null {
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         const compLayout = layerConfigs[nodeId];
         const {definitionMap} = DesignerLoaderFactory.getLoader(DesignerMode.EDIT);
         const output = definitionMap[compLayout.type!].getEventList().map((item) => {

@@ -1,6 +1,6 @@
 import {Component} from 'react';
 import './BaseInfo.less';
-import designerStore from "../../../designer/store/DesignerStore";
+import layerManager from "../../../designer/manager/LayerManager.ts";
 import {Control} from "../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {ConfigType} from "../../../designer/right/ConfigContent";
@@ -32,7 +32,7 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
 
     init = () => {
         const {activeElem} = rightStore;
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         const layer: ILayerItem = layerConfigs[activeElem.id!];
         if (!layer) return;
         if (layer.type === 'group') {
@@ -48,7 +48,7 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
     }
 
     calculateGroupRect = (childLayerIds: string[]) => {
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         let minX = +Infinity, minY = +Infinity, maxX = -Infinity, maxY = -Infinity;
         childLayerIds.forEach((layerId: string) => {
             const {x = 0, y = 0, width = 0, height = 0} = layerConfigs[layerId];
@@ -73,7 +73,7 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
     changeName = (value: string) => {
         const {controller} = this.props;
         controller.update({base: {name: value}}, {reRender: false});
-        const {updateLayer} = designerStore;
+        const {updateLayer} = layerManager;
         updateLayer && updateLayer([{id: this.state.id!, name: value as string}]);
         //如果显示图层,则更新图层名称
         const {layerInstances} = layerListStore;
@@ -108,7 +108,7 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
         if (!targetIds.includes(this.state.id as string)) {
             const {type} = this.state;
             if (type === 'group') {
-                const {layerConfigs} = designerStore;
+                const {layerConfigs} = layerManager;
                 const childIds = LayerUtil.findAllChildLayer([this.state.id!]).filter((id: string) => layerConfigs[id].type !== 'group');
                 setTargetIds(childIds!);
             } else {

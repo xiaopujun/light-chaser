@@ -6,7 +6,7 @@ import {AbstractOperator} from "../../../../framework/operate/AbstractOperator";
 // import Input from "../../../../json-schema/ui/input/Input";
 import './ImageSource.less';
 import eventOperateStore from "../../../operate-provider/EventOperateStore";
-import designerStore from "../../../store/DesignerStore";
+import layerManager from "../../../manager/LayerManager.ts";
 import editorDesignerLoader from "../../../loader/EditorDesignerLoader";
 import IdGenerate from "../../../../utils/IdGenerate";
 import {BaseImageComponentProps} from "../../../../comps/lc/base-image/BaseImageController";
@@ -51,7 +51,7 @@ export default function ImageSource() {
     }
 
     const addItem = (compKey: string, position = [0, 0], url: string, hash?: string) => {
-        const {elemConfigs} = designerStore;
+        const {elemConfigs} = layerManager;
         let {setAddRecordCompId} = eventOperateStore;
         const {definitionMap} = editorDesignerLoader;
         const definition = definitionMap[compKey];

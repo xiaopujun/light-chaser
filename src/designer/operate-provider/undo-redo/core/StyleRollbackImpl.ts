@@ -1,6 +1,6 @@
 import AbstractRollback from "./AbstractRollback";
 import {IHistoryRecord, IUpdStyleOperateData} from "../OperateType";
-import designerStore from "../../../store/DesignerStore";
+import layerManager from "../../../manager/LayerManager.ts";
 import rightStore from "../../../right/RightStore";
 
 export class StyleRollbackImpl extends AbstractRollback {
@@ -8,7 +8,7 @@ export class StyleRollbackImpl extends AbstractRollback {
         const {next} = record;
         if (next) {
             const {id, data} = next as IUpdStyleOperateData;
-            const {compController} = designerStore;
+            const {compController} = layerManager;
             const instance = compController[id];
             if (instance)
                 instance.update(data)
@@ -28,7 +28,7 @@ export class StyleRollbackImpl extends AbstractRollback {
         const {prev} = record;
         if (prev) {
             const {id, data} = prev as IUpdStyleOperateData;
-            const {compController} = designerStore;
+            const {compController} = layerManager;
             const instance = compController[id];
             if (instance)
                 instance.update(data)

@@ -1,6 +1,6 @@
 import AbstractRollback from "./AbstractRollback";
 import {IHistoryRecord, ILockOperateData} from "../OperateType";
-import designerStore from "../../../store/DesignerStore";
+import layerManager from "../../../manager/LayerManager.ts";
 import {Component} from "react";
 import layerListStore from "../../../left/layer-list/LayerListStore";
 import designerLeftStore from "../../../left/DesignerLeftStore";
@@ -11,7 +11,7 @@ import designerLeftStore from "../../../left/DesignerLeftStore";
 export class LockRollbackImpl extends AbstractRollback {
     redo(record: IHistoryRecord): void {
         const {next} = record;
-        const {updateLayer} = designerStore;
+        const {updateLayer} = layerManager;
         if (next)
             updateLayer(next as ILockOperateData[]);
         const {layerInstances} = layerListStore;
@@ -27,7 +27,7 @@ export class LockRollbackImpl extends AbstractRollback {
 
     undo(record: IHistoryRecord): void {
         const {prev} = record;
-        const {updateLayer} = designerStore;
+        const {updateLayer} = layerManager;
         if (prev)
             updateLayer(prev as ILockOperateData[]);
         const {layerInstances} = layerListStore;

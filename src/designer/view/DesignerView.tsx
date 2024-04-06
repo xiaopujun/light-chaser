@@ -1,6 +1,6 @@
 import {lazy, Suspense, useEffect} from 'react';
 import './DesignerView.less';
-import designerStore from "../store/DesignerStore";
+import layerManager from "../manager/LayerManager.ts";
 import {observer} from "mobx-react";
 import Loading from "../../json-schema/ui/loading/Loading";
 import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
@@ -24,7 +24,7 @@ const DesignerView = observer((props: DesignerViewProps) => {
         DesignerLoaderFactory.getLoader(DesignerMode.VIEW).load(id, type);
     }, []);
 
-    const {layerConfigs} = designerStore!;
+    const {layerConfigs} = layerManager!;
     const {loaded} = designerManager;
     const {canvasConfig: {width, height}} = canvasManager
     if (!loaded)

@@ -1,11 +1,8 @@
-import designerStore from "../store/DesignerStore";
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 import bpStore from "../../designer/blueprint/store/BPStore";
 import operatorMap from "../../framework/operate";
 import {DesignerMode, SaveType} from "../DesignerType";
 import {globalMessage} from "../../framework/message/GlobalMessage.tsx";
-import canvasManager from "../header/items/canvas/CanvasManager.ts";
-import themeManager from "../header/items/theme/ThemeManager.ts";
 import designerManager from "../manager/DesignerManager.ts";
 
 class EditorDesignerLoader extends AbstractDesignerLoader {
@@ -16,19 +13,7 @@ class EditorDesignerLoader extends AbstractDesignerLoader {
     protected initProject(id: string, type: SaveType): void {
         operatorMap[type].getProjectData(id).then((data) => {
             if (data) {
-                const {doInit} = designerStore;
-                canvasManager.init(data?.canvasConfig!)
-                themeManager.init(data?.themeConfig!)
-                //初始化designerStore
-                doInit({
-                    id: id,
-                    // canvasConfig: data?.canvasConfig,
-                    elemConfigs: data?.elemConfigs,
-                    layerConfigs: data?.layerConfigs,
-                    themeConfig: data?.themeConfig,
-                    layerHeader: data?.layerHeader,
-                    layerTail: data?.layerTail,
-                })
+                designerManager.init(data);
 
                 //初始化bpStore（蓝图状态）
                 const {doBPInit} = bpStore;

@@ -1,6 +1,6 @@
 import React, {lazy, memo, Suspense} from 'react';
 import {observer} from "mobx-react";
-import designerStore from "../store/DesignerStore";
+import layerManager from "../manager/LayerManager.ts";
 import rightStore from "../right/RightStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {hotkeyConfigs} from "../operate-provider/hot-key/HotKeyConfig";
@@ -31,13 +31,13 @@ const DesignerCanvas = memo(observer(() => {
             targetIds = LayerUtil.findTopGroupLayer(targetIds, true);
         if (targetIds.length !== 1) return;
         const layerId = targetIds[0];
-        const {layerConfigs} = designerStore!;
+        const {layerConfigs} = layerManager!;
         const layer = layerConfigs[layerId];
         if (layerId === activeElem.id) return;
         activeConfig(layerId, layer.type!);
     }
 
-    const {layerConfigs} = designerStore!;
+    const {layerConfigs} = layerManager!;
     return (
         <Suspense fallback={<Loading/>}>
             <DesignerContainer>

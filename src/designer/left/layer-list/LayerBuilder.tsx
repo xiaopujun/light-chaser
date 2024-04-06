@@ -7,7 +7,7 @@ import layerListStore from "./LayerListStore";
 import ComponentContainer from "../../../framework/core/ComponentContainer";
 import {ILayerItem} from "../../DesignerType";
 import GroupLayer from "../../../comps/group-layer/GroupLayer";
-import designerStore from "../../store/DesignerStore.ts";
+import layerManager from "../../manager/LayerManager.ts";
 
 export enum LayerOrder {
     ASC,
@@ -22,7 +22,7 @@ class LayerBuilder {
     public parser = (layerMap: Record<string, ILayerItem>, order: LayerOrder = LayerOrder.DESC): ILayerItem[] => {
         layerMap = cloneDeep(layerMap);
         let sourceLayerArr: ILayerItem[] = [];
-        const {layerHeader} = designerStore;
+        const {layerHeader} = layerManager;
 
         const iterateLayers = (currentLayer: ILayerItem, res: ILayerItem[]): void => {
             if (currentLayer) {
@@ -124,7 +124,7 @@ class LayerBuilder {
 
     private buildComponents = (layer: ILayerItem): ReactElement => {
         const {type, children} = layer;
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         const targetLayer = layerConfigs[layer.id!];
         //给每个图层重新设置排序编号,用于在图层移动的过程中提供更好的体验
         if (targetLayer)

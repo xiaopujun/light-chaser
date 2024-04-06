@@ -1,7 +1,7 @@
 import {action, makeObservable, observable} from "mobx";
 import Moveable from "react-moveable";
 import {Component} from "react";
-import designerStore from "../store/DesignerStore";
+import layerManager from "../manager/LayerManager.ts";
 import ObjectUtil from "../../utils/ObjectUtil";
 import {DesignerRulerRef} from "../canvas/DesignerRuler";
 import {ILayerItem} from "../DesignerType";
@@ -181,7 +181,7 @@ class EventOperateStore {
      * @param compArr
      */
     calculateGroupCoordinate = (compArr: HTMLElement[]) => {
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         const groupCoordinate: GroupCoordinateType = {
             minX: Infinity,
             minY: Infinity,

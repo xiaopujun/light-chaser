@@ -4,7 +4,7 @@ import {Component, MouseEvent} from "react";
 import {setControlPointLineColor} from "../../operate-provider/movable/DesignerSelectable";
 import historyRecordOperateProxy from "../../operate-provider/undo-redo/HistoryRecordOperateProxy";
 import LayerUtil from "./util/LayerUtil";
-import designerStore from "../../store/DesignerStore";
+import layerManager from "../../manager/LayerManager.ts";
 
 class LayerListStore {
     constructor() {
@@ -26,7 +26,7 @@ class LayerListStore {
      */
     lockChange = (id: string, lock: boolean) => {
         const updData = [];
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         const {type} = layerConfigs[id];
         if (type === 'group') {
             //分组图层
@@ -49,7 +49,7 @@ class LayerListStore {
      */
     selectedChange = (id: string, event: MouseEvent) => {
         const {targetIds, setTargetIds} = eventOperateStore;
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         const {type, lock} = layerConfigs[id];
         if (!type) return;
         const groupLayer = type === 'group';
@@ -117,7 +117,7 @@ class LayerListStore {
 
     hideChange = (id: string, hide: boolean) => {
         const updData = [];
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         const {type} = layerConfigs[id];
         if (type === 'group') {
             //分组图层

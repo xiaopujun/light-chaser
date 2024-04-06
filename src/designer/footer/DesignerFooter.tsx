@@ -1,6 +1,6 @@
 import './DesignerFooter.less';
 import {observer} from "mobx-react";
-import designerStore from "../store/DesignerStore";
+import layerManager from "../manager/LayerManager.ts";
 import {HotKeyDes} from "./hotkey-des/HotKeyDes";
 import footerStore from "./FooterStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
@@ -20,7 +20,7 @@ const DesignerFooter = () => {
         setSnapShotVisible(!snapShotVisible)
     }
 
-    const {layerConfigs} = designerStore;
+    const {layerConfigs} = layerManager;
     const {hotKeyVisible, snapShotVisible} = footerStore;
     const {scale} = eventOperateStore;
     return (

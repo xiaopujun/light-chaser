@@ -10,7 +10,7 @@ import {
 import bpStore from "../store/BPStore";
 import bpLeftStore from "./BPLeftStore";
 import {observer} from "mobx-react";
-import designerStore from "../../../designer/store/DesignerStore";
+import layerManager from "../../manager/LayerManager.ts";
 import IdGenerate from "../../../utils/IdGenerate";
 import DragAddProvider from "../../../framework/drag-scale/DragAddProvider";
 
@@ -131,7 +131,7 @@ export const BPNodeList = observer(() => {
 })
 
 export const BPLayerNodeList = observer(() => {
-    const {layerConfigs} = designerStore;
+    const {layerConfigs} = layerManager;
     const {usedLayerNodes} = bpLeftStore;
 
     return (

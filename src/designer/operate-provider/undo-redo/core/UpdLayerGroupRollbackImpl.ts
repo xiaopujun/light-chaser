@@ -1,6 +1,6 @@
 import AbstractRollback from "./AbstractRollback";
 import {IHistoryRecord} from "../OperateType";
-import designerStore from "../../../store/DesignerStore";
+import layerManager from "../../../manager/LayerManager.ts";
 import {ILayerItem} from "../../../DesignerType";
 import {cloneDeep} from "lodash";
 
@@ -16,11 +16,11 @@ export class UpdLayerGroupRollbackImpl extends AbstractRollback {
                 if ('id' in item)
                     updData.push(cloneDeep(item));
                 if ('layerHeader' in item)
-                    designerStore.layerHeader = item.layerHeader as string;
+                    layerManager.layerHeader = item.layerHeader as string;
                 if ('layerTail' in item)
-                    designerStore.layerTail = item.layerTail as string;
+                    layerManager.layerTail = item.layerTail as string;
             });
-            const {updateLayer} = designerStore;
+            const {updateLayer} = layerManager;
             updateLayer(updData);
         }
     }
@@ -33,12 +33,12 @@ export class UpdLayerGroupRollbackImpl extends AbstractRollback {
                 if ('id' in item)
                     updData.push(cloneDeep(item));
                 if ('layerHeader' in item)
-                    designerStore.layerHeader = item.layerHeader as string;
+                    layerManager.layerHeader = item.layerHeader as string;
                 if ('layerTail' in item)
-                    designerStore.layerTail = item.layerTail as string;
+                    layerManager.layerTail = item.layerTail as string;
 
             });
-            const {updateLayer} = designerStore;
+            const {updateLayer} = layerManager;
             updateLayer(updData);
         }
     }

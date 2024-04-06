@@ -3,7 +3,7 @@ import Selecto, {OnDragStart, OnSelectEnd} from "react-selecto";
 import eventOperateStore from "../EventOperateStore";
 import {observer} from "mobx-react";
 import Moveable from 'react-moveable';
-import designerStore from "../../store/DesignerStore";
+import layerManager from "../../manager/LayerManager.ts";
 import LayerUtil from "../../left/layer-list/util/LayerUtil";
 import layerListStore from "../../left/layer-list/LayerListStore";
 import designerLeftStore from "../../left/DesignerLeftStore";
@@ -56,7 +56,7 @@ class DesignerSelectable extends Component<DesignerSelectableProps> {
             });
         }
 
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         let layerIds = selected.map((item) => item.id);
         let lockState = !!layerConfigs[layerIds[0]]?.lock;
         if (layerIds.length === 1) {

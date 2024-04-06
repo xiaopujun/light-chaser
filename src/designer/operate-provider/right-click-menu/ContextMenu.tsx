@@ -29,7 +29,7 @@ import {
     removeFromGroup
 } from "../hot-key/HotKeyImpl";
 import eventOperateStore from "../EventOperateStore";
-import designerStore from "../../store/DesignerStore";
+import layerManager from "../../manager/LayerManager.ts";
 import LayerUtil from "../../left/layer-list/util/LayerUtil";
 
 
@@ -77,7 +77,7 @@ const ContextMenu = () => {
         const menus = [...menuList];
         const {targetIds} = eventOperateStore;
         if (targetIds.length === 0) return menus;
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         const lockState = !!layerConfigs[targetIds[0]]?.lock;
         if (lockState) {
             menus.push({

@@ -1,5 +1,4 @@
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
-import designerStore from "../store/DesignerStore";
 import {DesignerMode, SaveType} from "../DesignerType";
 import bpStore from "../../designer/blueprint/store/BPStore";
 import operatorMap from "../../framework/operate";
@@ -19,17 +18,7 @@ class ViewDesignerLoader extends AbstractDesignerLoader {
     protected initProject(id: string, type: SaveType): void {
         (operatorMap[type] as AbstractOperator).getProjectData(id).then((data) => {
             if (data) {
-                const {doInit} = designerStore;
-                //初始化designerStore
-                doInit({
-                    id: id,
-                    // canvasConfig: data?.canvasConfig,
-                    elemConfigs: data?.elemConfigs,
-                    layerConfigs: data?.layerConfigs,
-                    themeConfig: data?.themeConfig,
-                    layerHeader: data?.layerHeader,
-                    layerTail: data?.layerTail,
-                })
+                designerManager.init(data);
 
                 //初始化bpStore（蓝图状态）
                 const {doBPInit} = bpStore;

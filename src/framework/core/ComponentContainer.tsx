@@ -3,7 +3,7 @@ import runtimeConfigStore from "../../designer/store/RuntimeStore.ts";
 import Loading from "../../json-schema/ui/loading/Loading";
 import URLUtil from "../../utils/URLUtil";
 import {DesignerMode, ILayerItem} from "../../designer/DesignerType";
-import designerStore from "../../designer/store/DesignerStore";
+import layerManager from "../../designer/manager/LayerManager.ts";
 import {AbstractDefinition} from "./AbstractDefinition";
 import DesignerLoaderFactory from "../../designer/loader/DesignerLoaderFactory";
 import AbstractDesignerController from "./AbstractDesignerController";
@@ -22,7 +22,7 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
     componentDidMount(): void {
         //通过ref创建组件，并将组件实例存入Map中。后续通过Map匹配到具体实例，调用实例的对象方法进行组件的更新操作
         const {layer} = this.props;
-        const {elemConfigs, compController} = designerStore;
+        const {elemConfigs, compController} = layerManager;
         const componentDefine: AbstractDefinition = DesignerLoaderFactory.getLoader(this.mode).definitionMap[layer!.type!];
         if (componentDefine) {
             const Controller = componentDefine.getController();

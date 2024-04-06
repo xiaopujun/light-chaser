@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './LayerList.less';
 import layerListStore from "./LayerListStore";
-import designerStore from "../../store/DesignerStore";
+import layerManager from "../../manager/LayerManager.ts";
 import {observer} from "mobx-react";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 import Input from "../../../json-schema/ui/input/Input";
@@ -46,7 +46,7 @@ class LayerList extends Component<LayerListProps> {
     }
 
     buildLayerList = () => {
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         const {searchContent} = layerListStore;
         if (!searchContent || searchContent === '')
             return layerBuilder.buildLayerList(layerConfigs);

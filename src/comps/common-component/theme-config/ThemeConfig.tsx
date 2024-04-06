@@ -4,7 +4,7 @@ import ThemeEditor from "./theme-editor/ThemeEditor";
 import ThemeList from "./theme-list/ThemeList";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import rightStore from "../../../designer/right/RightStore";
-import designerStore from "../../../designer/store/DesignerStore";
+import layerManager from "../../../designer/manager/LayerManager.ts";
 import Button from "../../../json-schema/ui/button/Button";
 import {ConfigType} from "../../../designer/right/ConfigContent";
 
@@ -20,7 +20,7 @@ class ThemeConfig extends Component<ConfigType> {
     themeChange = (theme: ThemeItemType) => {
         if (!theme) return;
         const {activeElem: {id}} = rightStore;
-        const {compController} = designerStore;
+        const {compController} = layerManager;
         const instance = compController[id + ''];
         instance && instance.updateTheme(theme);
     }

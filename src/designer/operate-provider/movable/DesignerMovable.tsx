@@ -17,7 +17,7 @@ import Moveable, {
 } from "react-moveable";
 import {observer} from "mobx-react";
 import eventOperateStore from "../EventOperateStore";
-import designerStore from "../../store/DesignerStore";
+import layerManager from "../../manager/LayerManager.ts";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import {ILayerItem} from "../../DesignerType";
 import './DesignerMovable.less';
@@ -52,7 +52,7 @@ class DesignerMovable extends React.Component<DesignerMovableProps, DesignerMova
 
     onDragStart = (e: OnDragStart) => {
         const {target, inputEvent} = e;
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         const {lock} = layerConfigs[target.id];
         if (lock) return false;
         if (inputEvent && inputEvent.shiftKey)
@@ -65,7 +65,7 @@ class DesignerMovable extends React.Component<DesignerMovableProps, DesignerMova
     }
 
     onDragEnd = (e: OnDragEnd) => {
-        const {updateLayer} = designerStore;
+        const {updateLayer} = layerManager;
         const {backoff, setBackoff} = eventOperateStore;
         const {lastEvent, target} = e;
         if (lastEvent) {
@@ -103,7 +103,7 @@ class DesignerMovable extends React.Component<DesignerMovableProps, DesignerMova
 
     onDragGroup = (e: OnDragGroup) => {
         const {targets} = e;
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         //通过第一个元素来判断。 框选的所有组件是否处于锁定状态，处于锁定状态，则不允许拖拽和缩放。
         const firstLock = layerConfigs[targets[0].id].lock;
         if (firstLock)
@@ -115,7 +115,7 @@ class DesignerMovable extends React.Component<DesignerMovableProps, DesignerMova
     onDragGroupEnd = (e: OnDragGroupEnd) => {
         const {targets} = e;
         //通过第一个元素来判断。 框选的所有组件是否处于锁定状态，处于锁定状态，则不允许拖拽和缩放。
-        const {updateLayer, layerConfigs} = designerStore;
+        const {updateLayer, layerConfigs} = layerManager;
         const firstLock = layerConfigs[targets[0].id].lock;
         if (firstLock) return false;
 
@@ -165,7 +165,7 @@ class DesignerMovable extends React.Component<DesignerMovableProps, DesignerMova
 
     onResizeStart = (e: OnResizeStart) => {
         const {target, inputEvent} = e;
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         const {lock} = layerConfigs[target.id];
         if (lock) return false;
         if (inputEvent && inputEvent.ctrlKey)
@@ -180,7 +180,7 @@ class DesignerMovable extends React.Component<DesignerMovableProps, DesignerMova
     }
 
     onResizeEnd = (e: OnResizeEnd) => {
-        const {updateLayer} = designerStore;
+        const {updateLayer} = layerManager;
         const {backoff, setBackoff} = eventOperateStore;
         const {target, lastEvent} = e;
         if (lastEvent) {
@@ -212,7 +212,7 @@ class DesignerMovable extends React.Component<DesignerMovableProps, DesignerMova
 
     onResizeGroupStart = (e: OnResizeGroupStart) => {
         const {targets, inputEvent} = e;
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         const firstLock = layerConfigs[targets[0].id].lock;
         if (firstLock) return false;
         if (inputEvent && inputEvent.ctrlKey)
@@ -228,7 +228,7 @@ class DesignerMovable extends React.Component<DesignerMovableProps, DesignerMova
     }
 
     onResizeGroupEnd = (e: OnResizeGroupEnd) => {
-        const {updateLayer} = designerStore;
+        const {updateLayer} = layerManager;
         const {backoff, setBackoff, targetIds} = eventOperateStore;
         const data: ILayerItem[] = [];
         e.events.forEach((ev: OnResizeEnd) => {

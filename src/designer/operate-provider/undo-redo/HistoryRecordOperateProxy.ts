@@ -1,4 +1,4 @@
-import designerStore from "../../store/DesignerStore";
+import layerManager from "../../manager/LayerManager.ts";
 import {
     IAddOperateData,
     IDelOperateData,
@@ -28,7 +28,7 @@ class HistoryRecordOperateProxy {
 
     public doDrag(items: ILayerItem[]): void {
         //构建历史记录数据
-        const {layerConfigs, updateLayer} = designerStore;
+        const {layerConfigs, updateLayer} = layerManager;
         const ids: string[] = [];
         let prev: IDragOperateData | null;
         let next: IDragOperateData | null;
@@ -69,7 +69,7 @@ class HistoryRecordOperateProxy {
 
     public doResize(items: ILayerItem[], direction: [number, number]): void {
         //构建历史记录数据
-        const {layerConfigs, updateLayer} = designerStore;
+        const {layerConfigs, updateLayer} = layerManager;
         const ids: string[] = [];
         let prev: IResizeOperateData | null;
         let next: IResizeOperateData | null;
@@ -114,29 +114,29 @@ class HistoryRecordOperateProxy {
         const addNext: IAddOperateData[] = [];
         const updLayerPrev: IUpdLayerOperateData[] = [];
         const updLayerNext: IUpdLayerOperateData[] = [];
-        const {layerConfigs, updateLayer} = designerStore;
+        const {layerConfigs, updateLayer} = layerManager;
 
         //头插法建立双向链表
-        if (!designerStore.layerHeader) {
+        if (!layerManager.layerHeader) {
             //首次插入
             addPrev.push({layerHeader: undefined, layerTail: undefined})
-            designerStore.layerHeader = layer.id;
-            designerStore.layerTail = layer.id;
+            layerManager.layerHeader = layer.id;
+            layerManager.layerTail = layer.id;
         } else {
             //非首次插入
-            addPrev.push({layerHeader: designerStore.layerHeader})
-            const oldHeaderLayer = layerConfigs[designerStore.layerHeader];
+            addPrev.push({layerHeader: layerManager.layerHeader})
+            const oldHeaderLayer = layerConfigs[layerManager.layerHeader];
             updLayerPrev.push({id: oldHeaderLayer.id, prev: oldHeaderLayer.prev})
             oldHeaderLayer.prev = layer.id;
             layer.next = oldHeaderLayer.id;
-            designerStore.layerHeader = layer.id;
+            layerManager.layerHeader = layer.id;
             updLayerNext.push({id: oldHeaderLayer.id, prev: layer.id})
         }
         addNext.push({
             id: layer.id,
             layerConfig: cloneDeep(layer),
-            layerHeader: designerStore.layerHeader,
-            layerTail: designerStore.layerTail
+            layerHeader: layerManager.layerHeader,
+            layerTail: layerManager.layerTail
         });
 
         const {addRecordCompId, setAddRecordCompId} = eventOperateStore;
@@ -161,7 +161,7 @@ class HistoryRecordOperateProxy {
         if (targetIds.length === 0)
             return;
 
-        const {delItem, layerConfigs, compController} = designerStore;
+        const {delItem, layerConfigs, compController} = layerManager;
         const {setContentVisible, activeConfig, activeElem} = rightStore;
         //若被删除元素处于配置项的激活状态，则取消激活状态（关闭右侧配置项）
         if (targetIds.includes(activeElem.id!)) {
@@ -200,7 +200,7 @@ class HistoryRecordOperateProxy {
             const elemConfig = compController[id] && compController[id].getConfig();
             delPrev.push({id, layerConfig: cloneDeep(layer), elemConfig: elemConfig})
         });
-        updPrev.push({layerHeader: designerStore.layerHeader, layerTail: designerStore.layerTail})
+        updPrev.push({layerHeader: layerManager.layerHeader, layerTail: layerManager.layerTail})
         toBeUpd.forEach((id) => {
             const layer = layerConfigs[id];
             const {next, prev, childHeader, childTail, pid} = layer;
@@ -214,10 +214,10 @@ class HistoryRecordOperateProxy {
                 const prevLayer = layerConfigs[layer.prev!];
                 const nextLayer = layerConfigs[layer.next!];
 
-                if (layer.id === designerStore.layerHeader)
-                    designerStore.layerHeader = layer.next;
-                if (layer.id === designerStore.layerTail)
-                    designerStore.layerTail = layer.prev;
+                if (layer.id === layerManager.layerHeader)
+                    layerManager.layerHeader = layer.next;
+                if (layer.id === layerManager.layerTail)
+                    layerManager.layerTail = layer.prev;
 
                 prevLayer && (prevLayer.next = layer?.next);
                 nextLayer && (nextLayer.prev = layer?.prev);
@@ -238,7 +238,7 @@ class HistoryRecordOperateProxy {
             const {next, prev, childHeader, childTail, pid} = layer;
             updNext.push({id, next, prev, childHeader, childTail, pid});
         });
-        delNext.push({layerHeader: designerStore.layerHeader, layerTail: designerStore.layerTail})
+        delNext.push({layerHeader: layerManager.layerHeader, layerTail: layerManager.layerTail})
 
         historyOperator.put({
             actions: [
@@ -274,12 +274,12 @@ class HistoryRecordOperateProxy {
         //计算复制操作所涉及的所有图层
         const relatedLayerIds: Set<string> = new Set();
         ids.forEach((id) => {
-            const layer = designerStore.layerConfigs[id];
+            const layer = layerManager.layerConfigs[id];
             relatedLayerIds.add(id)
             if (layer.prev)
                 relatedLayerIds.add(layer.prev);
             if (layer.pid) {
-                const parentLayer = designerStore.layerConfigs[layer.pid];
+                const parentLayer = layerManager.layerConfigs[layer.pid];
                 if (parentLayer) {
                     relatedLayerIds.add(parentLayer.id!);
                     relatedLayerIds.add(parentLayer.childHeader!);
@@ -288,16 +288,16 @@ class HistoryRecordOperateProxy {
         });
 
         //记录操作前状态
-        updPrev.push({layerHeader: designerStore.layerHeader, layerTail: designerStore.layerTail})
+        updPrev.push({layerHeader: layerManager.layerHeader, layerTail: layerManager.layerTail})
         relatedLayerIds.forEach((id) => {
-            const layer = designerStore.layerConfigs[id];
+            const layer = layerManager.layerConfigs[id];
             const {prev, next, childHeader, childTail, pid} = layer;
             updPrev.push({id, prev, next, childHeader, childTail, pid})
         })
 
         //执行复制操作
         runInAction(() => {
-            const {layerConfigs, compController, elemConfigs} = designerStore;
+            const {layerConfigs, compController, elemConfigs} = layerManager;
 
             //复制数据
             ids.forEach((oldLayerId) => {
@@ -342,8 +342,8 @@ class HistoryRecordOperateProxy {
                     newLayer.next = oldLayer?.id;
                     oldLayer && (oldLayer.prev = newLayer.id);
                     oldPrevLayer && (oldPrevLayer.next = newLayer.id);
-                    if (oldLayer.id === designerStore.layerHeader)
-                        designerStore.layerHeader = newLayer.id;
+                    if (oldLayer.id === layerManager.layerHeader)
+                        layerManager.layerHeader = newLayer.id;
                 } else {
                     //在分组内的图层，且整个分组都需要复制
                     if (oldLayer.pid && ids.includes(oldLayer.pid)) {
@@ -366,15 +366,15 @@ class HistoryRecordOperateProxy {
         });
 
         //记录操作后数据
-        updNext.push({layerHeader: designerStore.layerHeader, layerTail: designerStore.layerTail})
+        updNext.push({layerHeader: layerManager.layerHeader, layerTail: layerManager.layerTail})
         relatedLayerIds.forEach((id) => {
-            const layer = designerStore.layerConfigs[id];
+            const layer = layerManager.layerConfigs[id];
             const {prev, next, childHeader, childTail, pid} = layer;
             updNext.push({id, prev, next, childHeader, childTail, pid})
         })
         newIds.forEach((id) => {
-            const newLayer = designerStore.layerConfigs[id];
-            const newConfig = designerStore.elemConfigs![id];
+            const newLayer = layerManager.layerConfigs[id];
+            const newConfig = layerManager.elemConfigs![id];
             if (newLayer.type === 'group')
                 addNext.push({id: id, layerConfig: cloneDeep(newLayer)})
             else
@@ -398,7 +398,7 @@ class HistoryRecordOperateProxy {
     public doHideUpd(items: ILayerItem[]): void {
         const prev: IHideOperateData[] = [];
         const next: IHideOperateData[] = [];
-        const {layerConfigs, updateLayer} = designerStore;
+        const {layerConfigs, updateLayer} = layerManager;
         items.forEach((item) => {
             const {id, hide} = item;
             next.push({id: id!, hide: hide!});
@@ -425,7 +425,7 @@ class HistoryRecordOperateProxy {
     public doLockUpd(items: ILayerItem[]): void {
         const prev: ILockOperateData[] = [];
         const next: ILockOperateData[] = [];
-        const {layerConfigs, updateLayer} = designerStore;
+        const {layerConfigs, updateLayer} = layerManager;
         items.forEach((item) => {
             const {id, lock} = item;
             next.push({id: id!, lock: lock!});
@@ -451,7 +451,7 @@ class HistoryRecordOperateProxy {
      * @private
      */
     private canMoveUp(targetIds: string[]): boolean {
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         const layerHeaderMap: Record<string, string[]> = {};
 
         targetIds.forEach((id) => {
@@ -465,10 +465,10 @@ class HistoryRecordOperateProxy {
                         layerHeaderMap[parentLayer.childHeader].push(id);
                 }
             } else {
-                if (!layerHeaderMap[designerStore.layerHeader!])
-                    layerHeaderMap[designerStore.layerHeader!] = [id];
+                if (!layerHeaderMap[layerManager.layerHeader!])
+                    layerHeaderMap[layerManager.layerHeader!] = [id];
                 else
-                    layerHeaderMap[designerStore.layerHeader!].push(id);
+                    layerHeaderMap[layerManager.layerHeader!].push(id);
             }
         })
 
@@ -497,7 +497,7 @@ class HistoryRecordOperateProxy {
      * @private
      */
     private canMoveDown(targetIds: string[]): boolean {
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         const layerTailMap: Record<string, string[]> = {};
 
         targetIds.forEach((id) => {
@@ -511,10 +511,10 @@ class HistoryRecordOperateProxy {
                         layerTailMap[parentLayer.childTail].push(id);
                 }
             } else {
-                if (!layerTailMap[designerStore.layerTail!])
-                    layerTailMap[designerStore.layerTail!] = [id];
+                if (!layerTailMap[layerManager.layerTail!])
+                    layerTailMap[layerManager.layerTail!] = [id];
                 else
-                    layerTailMap[designerStore.layerTail!].push(id);
+                    layerTailMap[layerManager.layerTail!].push(id);
             }
         })
 
@@ -546,7 +546,7 @@ class HistoryRecordOperateProxy {
         if (!this.canMoveUp(targetIds))
             return;
 
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         const updPrev: IUpdLayerOperateData[] = [];
         const updNext: IUpdLayerOperateData[] = [];
 
@@ -557,7 +557,7 @@ class HistoryRecordOperateProxy {
 
         //计算相关的图层id
         const relatedLayerIds: Set<string> = new Set();
-        relatedLayerIds.add(designerStore.layerHeader!);
+        relatedLayerIds.add(layerManager.layerHeader!);
         finalTargetIds.forEach((id) => {
             const layer = layerConfigs[id];
             relatedLayerIds.add(id);
@@ -567,7 +567,7 @@ class HistoryRecordOperateProxy {
         });
 
         //记录数据修改前状态
-        updPrev.push({layerHeader: designerStore.layerHeader, layerTail: designerStore.layerTail})
+        updPrev.push({layerHeader: layerManager.layerHeader, layerTail: layerManager.layerTail})
         relatedLayerIds.forEach((id) => {
             const {prev, next, childHeader, childTail} = layerConfigs[id];
             updPrev.push({id, prev, next, childHeader, childTail})
@@ -603,30 +603,30 @@ class HistoryRecordOperateProxy {
                         parentLayer.childTail = prevLayer?.id;
                 } else {
                     //组外元素
-                    if (designerStore.layerHeader === id)
+                    if (layerManager.layerHeader === id)
                         continue;
                     layer.prev = undefined;
-                    layer.next = designerStore.layerHeader;
+                    layer.next = layerManager.layerHeader;
                     prevLayer && (prevLayer.next = nextLayer?.id);
                     nextLayer && (nextLayer.prev = prevLayer?.id);
-                    const oldHeaderLayer = layerConfigs[designerStore.layerHeader!];
+                    const oldHeaderLayer = layerConfigs[layerManager.layerHeader!];
                     oldHeaderLayer && (oldHeaderLayer.prev = id);
-                    designerStore.layerHeader = id;
-                    if (id === designerStore.layerTail)
-                        designerStore.layerTail = prevLayer?.id;
+                    layerManager.layerHeader = id;
+                    if (id === layerManager.layerTail)
+                        layerManager.layerTail = prevLayer?.id;
                 }
             }
         })
 
         //记录数据修改后状态
-        updNext.push({layerHeader: designerStore.layerHeader, layerTail: designerStore.layerTail})
+        updNext.push({layerHeader: layerManager.layerHeader, layerTail: layerManager.layerTail})
         relatedLayerIds.forEach((id) => {
             const {prev, next, childHeader, childTail} = layerConfigs[id];
             updNext.push({id, prev, next, childHeader, childTail})
         });
 
         historyOperator.put({actions: [{type: OperateType.UPDATE_LAYER, prev: updPrev, next: updNext}]});
-        designerStore.reRenderLayer();
+        layerManager.reRenderLayer();
     }
 
     public doLayerToBottom(): void {
@@ -636,7 +636,7 @@ class HistoryRecordOperateProxy {
 
         const updPrev: IUpdLayerOperateData[] = [];
         const updNext: IUpdLayerOperateData[] = [];
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
 
         let finalTargetIds = targetIds.filter((id) => {
             const layer = layerConfigs[id];
@@ -645,7 +645,7 @@ class HistoryRecordOperateProxy {
 
         //计算相关的图层id
         const relatedLayerIds: Set<string> = new Set();
-        relatedLayerIds.add(designerStore.layerTail!)
+        relatedLayerIds.add(layerManager.layerTail!)
         finalTargetIds.forEach((id) => {
             const layer = layerConfigs[id];
             relatedLayerIds.add(id);
@@ -655,7 +655,7 @@ class HistoryRecordOperateProxy {
         });
 
         //记录数据修改前状态
-        updPrev.push({layerHeader: designerStore.layerHeader, layerTail: designerStore.layerTail})
+        updPrev.push({layerHeader: layerManager.layerHeader, layerTail: layerManager.layerTail})
         relatedLayerIds.forEach((id) => {
             const {prev, next, childHeader, childTail} = layerConfigs[id];
             updPrev.push({id, prev, next, childHeader, childTail})
@@ -691,30 +691,30 @@ class HistoryRecordOperateProxy {
                         parentLayer.childHeader = nextLayer?.id;
                 } else {
                     //组外元素
-                    if (designerStore.layerTail === id)
+                    if (layerManager.layerTail === id)
                         continue;
-                    layer.prev = designerStore.layerTail;
+                    layer.prev = layerManager.layerTail;
                     layer.next = undefined;
                     prevLayer && (prevLayer.next = nextLayer?.id);
                     nextLayer && (nextLayer.prev = prevLayer?.id);
-                    const oldTailLayer = layerConfigs[designerStore.layerTail!];
+                    const oldTailLayer = layerConfigs[layerManager.layerTail!];
                     oldTailLayer && (oldTailLayer.next = id);
-                    designerStore.layerTail = id;
-                    if (id === designerStore.layerHeader)
-                        designerStore.layerHeader = nextLayer?.id;
+                    layerManager.layerTail = id;
+                    if (id === layerManager.layerHeader)
+                        layerManager.layerHeader = nextLayer?.id;
                 }
             }
         })
 
         //记录数据修改后状态
-        updNext.push({layerHeader: designerStore.layerHeader, layerTail: designerStore.layerTail})
+        updNext.push({layerHeader: layerManager.layerHeader, layerTail: layerManager.layerTail})
         relatedLayerIds.forEach((id) => {
             const {prev, next, childHeader, childTail} = layerConfigs[id];
             updNext.push({id, prev, next, childHeader, childTail})
         });
 
         historyOperator.put({actions: [{type: OperateType.UPDATE_LAYER, prev: updPrev, next: updNext}]});
-        designerStore.reRenderLayer();
+        layerManager.reRenderLayer();
     }
 
     public doLayerMoveUp(): void {
@@ -725,7 +725,7 @@ class HistoryRecordOperateProxy {
         if (!this.canMoveUp(targetIds))
             return;
 
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         const prev: IUpdLayerOperateData[] = [];
         const next: IUpdLayerOperateData[] = [];
 
@@ -751,7 +751,7 @@ class HistoryRecordOperateProxy {
         });
 
         //记录数据变更前状态
-        prev.push({layerHeader: designerStore.layerHeader, layerTail: designerStore.layerTail})
+        prev.push({layerHeader: layerManager.layerHeader, layerTail: layerManager.layerTail})
         relatedLayerIds.forEach((id) => {
             const layer = layerConfigs[id];
             const {childTail, childHeader} = layer;
@@ -784,11 +784,11 @@ class HistoryRecordOperateProxy {
                     }
                 } else {
                     //不再分组内
-                    if (id !== designerStore.layerHeader) {
-                        if (layer.prev === designerStore.layerHeader)
-                            designerStore.layerHeader = id;
-                        if (id === designerStore.layerTail)
-                            designerStore.layerTail = layer.prev!;
+                    if (id !== layerManager.layerHeader) {
+                        if (layer.prev === layerManager.layerHeader)
+                            layerManager.layerHeader = id;
+                        if (id === layerManager.layerTail)
+                            layerManager.layerTail = layer.prev!;
                         layer.prev = prevPrevLayer?.id;
                         layer.next = prevLayer?.id;
                         if (prevLayer) {
@@ -803,14 +803,14 @@ class HistoryRecordOperateProxy {
         })
 
         //记录数据变更后状态
-        next.push({layerHeader: designerStore.layerHeader, layerTail: designerStore.layerTail})
+        next.push({layerHeader: layerManager.layerHeader, layerTail: layerManager.layerTail})
         relatedLayerIds.forEach((id) => {
             const layer = layerConfigs[id];
             const {childTail, childHeader} = layer;
             next.push({id, prev: layer.prev, next: layer.next, childHeader, childTail})
         });
         historyOperator.put({actions: [{type: OperateType.UPDATE_LAYER, prev, next}]});
-        designerStore.reRenderLayer();
+        layerManager.reRenderLayer();
     }
 
     public doLayerMoveDown(): void {
@@ -818,7 +818,7 @@ class HistoryRecordOperateProxy {
         if (targetIds.length === 0 || !this.canMoveDown(targetIds))
             return;
 
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         const prev: IUpdLayerOperateData[] = [];
         const next: IUpdLayerOperateData[] = [];
 
@@ -844,7 +844,7 @@ class HistoryRecordOperateProxy {
         });
 
         //记录数据变更前状态
-        prev.push({layerHeader: designerStore.layerHeader, layerTail: designerStore.layerTail})
+        prev.push({layerHeader: layerManager.layerHeader, layerTail: layerManager.layerTail})
         relatedLayerIds.forEach((id) => {
             const layer = layerConfigs[id];
             const {childTail, childHeader} = layer;
@@ -877,11 +877,11 @@ class HistoryRecordOperateProxy {
                     }
                 } else {
                     //不再分组内
-                    if (id !== designerStore.layerTail) {
-                        if (layer.next === designerStore.layerTail)
-                            designerStore.layerTail = id;
-                        if (id === designerStore.layerHeader)
-                            designerStore.layerHeader = layer.next!;
+                    if (id !== layerManager.layerTail) {
+                        if (layer.next === layerManager.layerTail)
+                            layerManager.layerTail = id;
+                        if (id === layerManager.layerHeader)
+                            layerManager.layerHeader = layer.next!;
                         layer.prev = nextLayer?.id;
                         layer.next = nextNextLayer?.id;
                         if (nextLayer) {
@@ -896,14 +896,14 @@ class HistoryRecordOperateProxy {
         })
 
         //记录数据变更后状态
-        next.push({layerHeader: designerStore.layerHeader, layerTail: designerStore.layerTail})
+        next.push({layerHeader: layerManager.layerHeader, layerTail: layerManager.layerTail})
         relatedLayerIds.forEach((id) => {
             const layer = layerConfigs[id];
             const {childTail, childHeader} = layer;
             next.push({id, prev: layer.prev, next: layer.next, childHeader, childTail})
         });
         historyOperator.put({actions: [{type: OperateType.UPDATE_LAYER, prev, next}]});
-        designerStore.reRenderLayer();
+        layerManager.reRenderLayer();
     }
 
     /**
@@ -934,7 +934,7 @@ class HistoryRecordOperateProxy {
         //查找当前选中的图层的所有最上层的分组图层,作为本次分组的子图层
         let beGroupIds = LayerUtil.findTopGroupLayer(targetIds, true);
         //构建新的分组数据
-        const {layerConfigs, addItem} = designerStore;
+        const {layerConfigs, addItem} = layerManager;
         const groupId = IdGenerate.generateId();
         //计算新分组的锁定状态
         let allLock = layerConfigs[beGroupIds[0]].lock;
@@ -955,7 +955,7 @@ class HistoryRecordOperateProxy {
 
         //计算相关图层
         const relatedLayerIds: Set<string> = new Set();
-        relatedLayerIds.add(designerStore.layerHeader!);
+        relatedLayerIds.add(layerManager.layerHeader!);
         beGroupIds.forEach((id) => {
             const layer = layerConfigs[id];
             relatedLayerIds.add(id);
@@ -971,7 +971,7 @@ class HistoryRecordOperateProxy {
         const addNext: IAddOperateData[] = [];
 
         //记录操作前状态
-        updPrev.push({layerHeader: designerStore.layerHeader});
+        updPrev.push({layerHeader: layerManager.layerHeader});
         relatedLayerIds.forEach((id) => {
             const layer = layerConfigs[id];
             updPrev.push({id, pid: layer.pid, prev: layer.prev, next: layer.next});
@@ -992,11 +992,11 @@ class HistoryRecordOperateProxy {
                 const prevLayer = layerConfigs[layer.prev!];
                 const nextLayer = layerConfigs[layer.next!];
 
-                if (designerStore.layerHeader === id)
-                    designerStore.layerHeader = layer.next;
-                if (designerStore.layerTail === id) {
+                if (layerManager.layerHeader === id)
+                    layerManager.layerHeader = layer.next;
+                if (layerManager.layerTail === id) {
                     //如果当前图层加入分组前layer.prev指向为undefine，则说明所有图层都加入了分组，则最新的designerStore.layerTail指向本次分组的id
-                    designerStore.layerTail = layer.prev || groupItem.id;
+                    layerManager.layerTail = layer.prev || groupItem.id;
                 }
 
                 layer.pid = groupId;
@@ -1020,13 +1020,13 @@ class HistoryRecordOperateProxy {
         });
         groupItem.childHeader = chileHeader;
         groupItem.childTail = chileTail;
-        groupItem.next = designerStore.layerHeader;
-        const oldHeader = layerConfigs[designerStore.layerHeader!];
+        groupItem.next = layerManager.layerHeader;
+        const oldHeader = layerConfigs[layerManager.layerHeader!];
         oldHeader && (oldHeader.prev = groupId)
         addItem(groupItem);
 
         //记录操作后状态
-        designerStore.layerHeader = groupId;
+        layerManager.layerHeader = groupId;
         updNext.push({layerHeader: groupId});
         relatedLayerIds.forEach((id) => {
             const layer = layerConfigs[id];
@@ -1056,7 +1056,7 @@ class HistoryRecordOperateProxy {
         //找出当前选中的图层中，最顶层的分组图层
         let groupIds = LayerUtil.findTopGroupLayer(targetIds, true);
         //过滤掉其中分组等于自身的图层（即非分组图层）
-        const {layerConfigs, delLayout} = designerStore;
+        const {layerConfigs, delLayout} = layerManager;
         groupIds = groupIds.filter((id: string) => layerConfigs[id].type === 'group');
         //对每个分组图层进行解组
         const updPrev: IUpdLayerOperateData[] = [];
@@ -1084,7 +1084,7 @@ class HistoryRecordOperateProxy {
         });
 
         //记录操作前状态
-        updPrev.push({layerHeader: designerStore.layerHeader, layerTail: designerStore.layerTail});
+        updPrev.push({layerHeader: layerManager.layerHeader, layerTail: layerManager.layerTail});
         relatedLayerIds.forEach((id) => {
             const layer = layerConfigs[id];
             const {prev, next, pid, childHeader, childTail} = layer;
@@ -1114,16 +1114,16 @@ class HistoryRecordOperateProxy {
                     childNext = childLayer?.next;
                 }
 
-                if (groupId === designerStore.layerHeader)
-                    designerStore.layerHeader = layer.childHeader;
-                if (groupId === designerStore.layerTail)
-                    designerStore.layerTail = layer.childTail;
+                if (groupId === layerManager.layerHeader)
+                    layerManager.layerHeader = layer.childHeader;
+                if (groupId === layerManager.layerTail)
+                    layerManager.layerTail = layer.childTail;
             });
             delLayout(groupIds);
         });
 
         //记录操作后数据
-        updNext.push({layerHeader: designerStore.layerHeader, layerTail: designerStore.layerTail});
+        updNext.push({layerHeader: layerManager.layerHeader, layerTail: layerManager.layerTail});
         relatedLayerIds.forEach((id) => {
             const layer = layerConfigs[id];
             const {prev, next, pid, childHeader, childTail} = layer;
@@ -1150,7 +1150,7 @@ class HistoryRecordOperateProxy {
         if (targetIds.length === 0)
             return;
         //筛选出目标图层
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         const finalTargetIds = targetIds.filter(id => {
             const layer = layerConfigs[id];
             return layer.pid && !targetIds.includes(layer.pid)
@@ -1161,7 +1161,7 @@ class HistoryRecordOperateProxy {
 
         //计算关联图层id
         const relateIds = new Set<string>();
-        relateIds.add(designerStore.layerHeader!);
+        relateIds.add(layerManager.layerHeader!);
         finalTargetIds.forEach(id => {
             const layer = layerConfigs[id];
             const parent = layerConfigs[layer.pid!];
@@ -1175,7 +1175,7 @@ class HistoryRecordOperateProxy {
         })
 
         //记录数据变更前状态
-        updPrev.push({layerHeader: designerStore.layerHeader!, layerTail: designerStore.layerTail!})
+        updPrev.push({layerHeader: layerManager.layerHeader!, layerTail: layerManager.layerTail!})
         relateIds.forEach((id) => {
             const layer = layerConfigs[id];
             const {prev, next, pid, childHeader, childTail} = layer;
@@ -1189,7 +1189,7 @@ class HistoryRecordOperateProxy {
                 const prevLayer = layerConfigs[layer.prev!];
                 const nextLayer = layerConfigs[layer.next!];
                 const parentLayer = layerConfigs[layer.pid!];
-                const oldHeaderLayer = layerConfigs[designerStore.layerHeader!];
+                const oldHeaderLayer = layerConfigs[layerManager.layerHeader!];
 
                 if (parentLayer.childHeader === id)
                     parentLayer.childHeader = nextLayer?.id!;
@@ -1198,9 +1198,9 @@ class HistoryRecordOperateProxy {
 
                 layer.pid = undefined;
                 layer.prev = undefined;
-                layer.next = designerStore.layerHeader;
+                layer.next = layerManager.layerHeader;
                 oldHeaderLayer.prev = layer.id;
-                designerStore.layerHeader = layer.id;
+                layerManager.layerHeader = layer.id;
 
                 prevLayer && (prevLayer.next = nextLayer?.next)
                 nextLayer && (nextLayer.prev = prevLayer?.prev)
@@ -1208,7 +1208,7 @@ class HistoryRecordOperateProxy {
         })
 
         //记录数据变更后状态
-        updNext.push({layerHeader: designerStore.layerHeader!, layerTail: designerStore.layerTail!})
+        updNext.push({layerHeader: layerManager.layerHeader!, layerTail: layerManager.layerTail!})
         relateIds.forEach((id) => {
             const layer = layerConfigs[id];
             const {prev, next, pid, childHeader, childTail} = layer;
@@ -1216,7 +1216,7 @@ class HistoryRecordOperateProxy {
         });
 
         historyOperator.put({actions: [{type: OperateType.UPDATE_LAYER, prev: updPrev, next: updNext}]});
-        designerStore.reRenderLayer();
+        layerManager.reRenderLayer();
     }
 
 }
