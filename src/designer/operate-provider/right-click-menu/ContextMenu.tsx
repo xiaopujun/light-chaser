@@ -20,10 +20,10 @@ import {
     doGrouping,
     doHide,
     doLock,
-    doMoveDown,
-    doMoveUp,
     doUnGrouping,
     doUnLock,
+    layerMoveDown,
+    layerMoveUp,
     layerToBottom,
     layerToTop,
     removeFromGroup
@@ -42,12 +42,12 @@ const menuList = [
     {
         name: '上移',
         icon: UpOutlined,
-        onClick: doMoveUp,
+        onClick: layerMoveUp,
     },
     {
         name: '下移',
         icon: DownOutlined,
-        onClick: doMoveDown,
+        onClick: layerMoveDown,
     },
     {
         name: '置顶',
