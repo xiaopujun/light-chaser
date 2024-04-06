@@ -4,7 +4,7 @@ import Selecto from "react-selecto";
 import ObjectUtil from "../../../utils/ObjectUtil";
 import {AbstractBPNodeController, AnchorPointInfoType} from "../node/core/AbstractBPNodeController";
 import bpNodeControllerMap from "../node/core/impl/BPNodeControllerMap";
-import {DesignerMode, ProjectDataType} from "../../DesignerType.ts";
+import {BluePrintManagerDataType, DesignerMode} from "../../DesignerType.ts";
 import {ClazzTemplate} from "../../../comps/common-component/common-types.ts";
 import bpLeftStore from "../left/BPLeftStore.ts";
 import AbstractManager from "../../manager/core/AbstractManager.ts";
@@ -34,9 +34,7 @@ export interface BPNodeLayoutType {
     position?: IPoint;
 }
 
-export type BPInitDataType = Pick<ProjectDataType, 'bpNodeLayoutMap' | 'bpNodeConfigMap' | 'bpLines' | 'bpAPMap' | 'bpAPLineMap'>;
-
-class BluePrintManager extends AbstractManager<BPInitDataType> {
+class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
 
     constructor() {
         super();
@@ -308,7 +306,7 @@ class BluePrintManager extends AbstractManager<BPInitDataType> {
         this.setSelectedLines([]);
     }
 
-    public init(data: BPInitDataType, mode: DesignerMode): void {
+    public init(data: BluePrintManagerDataType, mode: DesignerMode): void {
         runInAction(() => {
             this.bpAPMap = data.bpAPMap || {};
             this.bpLines = data.bpLines || {};
@@ -337,7 +335,7 @@ class BluePrintManager extends AbstractManager<BPInitDataType> {
         });
     }
 
-    public getData(): BPInitDataType {
+    public getData(): BluePrintManagerDataType {
         return {
             bpAPMap: this.bpAPMap,
             bpLines: this.bpLines,

@@ -1,23 +1,10 @@
 import {action, makeObservable, observable, runInAction, toJS} from "mobx";
 import {isEqual} from "lodash";
-import {ILayerItem, ThemeItemType,} from "../DesignerType.ts";
+import {ILayerItem, LayerManagerDataType, ThemeItemType,} from "../DesignerType.ts";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController.ts";
 import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryRecordOperateProxy.ts";
 import ObjectUtil from "../../utils/ObjectUtil.ts";
 import AbstractManager from "./core/AbstractManager.ts";
-
-
-export interface LayerManagerDataType {
-    //元素样式
-    elemConfigs?: { [key: string]: Record<string, any> };
-    //图层信息
-    layerConfigs?: { [key: string]: ILayerItem };
-    //图层头指针
-    layerHeader?: string;
-    //图层尾指针
-    layerTail?: string;
-}
-
 
 /**
  * 设计器核心状态管理类，记录了设计器中的核心数据。包括组件配置，组件布局。 全局设置等。
@@ -134,9 +121,7 @@ class LayerManager extends AbstractManager<LayerManagerDataType> {
     }
 
     public init(data: LayerManagerDataType): void {
-        this.elemConfigs = data.elemConfigs
-            ? {...this.elemConfigs, ...data.elemConfigs}
-            : this.elemConfigs;
+        this.elemConfigs = data.elemConfigs || this.elemConfigs;
         this.layerConfigs = data.layerConfigs || this.layerConfigs;
         this.layerHeader = data.layerHeader || this.layerHeader;
         this.layerTail = data.layerTail || this.layerTail;

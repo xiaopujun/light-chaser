@@ -38,37 +38,19 @@ class DesignerManager extends AbstractManager<ProjectDataType> {
     getData(): ProjectDataType {
         return {
             id: this.id,
-            canvasConfig: canvasManager.getData(),
-            themeConfig: themeManager.getData()!,
-            elemConfigs: layerManager.getData().elemConfigs,
-            layerConfigs: layerManager.getData().layerConfigs,
-            layerHeader: layerManager.getData().layerHeader,
-            layerTail: layerManager.getData().layerTail,
-            bpAPMap: bluePrintManager.getData().bpAPMap,
-            bpLines: bluePrintManager.getData().bpLines,
-            bpAPLineMap: bluePrintManager.getData().bpAPLineMap,
-            bpNodeConfigMap: bluePrintManager.getData().bpNodeConfigMap,
-            bpNodeLayoutMap: bluePrintManager.getData().bpNodeLayoutMap,
+            canvasManager: canvasManager.getData(),
+            themeManager: themeManager.getData()!,
+            layerManager: layerManager.getData(),
+            bluePrintManager: bluePrintManager.getData(),
         };
     }
 
     init(data: ProjectDataType, mode: DesignerMode): void {
         this.id = data.id!;
-        canvasManager.init(data.canvasConfig!);
-        themeManager.init(data.themeConfig!);
-        layerManager.init({
-            elemConfigs: data.elemConfigs,
-            layerConfigs: data.layerConfigs,
-            layerHeader: data.layerHeader,
-            layerTail: data.layerTail,
-        });
-        bluePrintManager.init({
-            bpAPMap: data?.bpAPMap,
-            bpLines: data?.bpLines,
-            bpAPLineMap: data?.bpAPLineMap,
-            bpNodeLayoutMap: data?.bpNodeLayoutMap,
-            bpNodeConfigMap: data?.bpNodeConfigMap,
-        }, mode)
+        data.canvasManager && canvasManager.init(data.canvasManager!);
+        data.themeManager && themeManager.init(data.themeManager!);
+        data.layerManager && layerManager.init(data.layerManager!);
+        data.bluePrintManager && bluePrintManager.init(data.bluePrintManager!, mode)
     }
 
 }

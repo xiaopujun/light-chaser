@@ -120,27 +120,19 @@ export interface CanvasConfig {
     height?: number;
 }
 
-/**
- * lc设计器配置
- */
-export interface ProjectDataType {
-    //项目id
-    id?: string;
-    //画布设置
-    canvasConfig?: CanvasConfig;
-    //项目设置
-    projectConfig?: IProjectInfo;
+
+export interface LayerManagerDataType {
     //元素样式
     elemConfigs?: { [key: string]: Record<string, any> };
     //图层信息
     layerConfigs?: { [key: string]: ILayerItem };
-    //全局主题
-    themeConfig?: Array<ThemeItemType>;
     //图层头指针
     layerHeader?: string;
     //图层尾指针
     layerTail?: string;
+}
 
+export interface BluePrintManagerDataType {
     //蓝图节点布局
     bpNodeLayoutMap?: Record<string, BPNodeLayoutType>;
     //蓝图节点配置
@@ -151,6 +143,24 @@ export interface ProjectDataType {
     bpAPMap?: Record<string, string[]>;
     //蓝图锚点与线条之间的关系映射
     bpAPLineMap?: Record<string, string[]>;
+}
+
+/**
+ * lc设计器配置
+ */
+export interface ProjectDataType {
+    //项目id
+    id?: string;
+    //画布设置
+    canvasManager?: CanvasConfig;
+    //项目设置
+    projectManager?: IProjectInfo;
+    //全局主题
+    themeManager?: Array<ThemeItemType>;
+    //图层管理
+    layerManager?: LayerManagerDataType;
+    //蓝图管理
+    bluePrintManager?: BluePrintManagerDataType;
 }
 
 export interface ILayerItem {

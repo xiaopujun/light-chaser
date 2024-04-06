@@ -86,16 +86,18 @@ class LocalOperator extends AbstractOperator {
             }
         }
         const projectData = JSON.parse(dataJson as string) as ProjectDataType;
-        const {elemConfigs} = projectData;
-        const mode: DesignerMode = URLUtil.parseUrlParams()?.mode as DesignerMode || DesignerMode.EDIT;
-        const {convertMap} = DesignerLoaderFactory.getLoader(mode);
-        //特殊配置数据转换
-        if (elemConfigs) {
-            for (const item of Object.values(elemConfigs!)) {
-                const {type} = item?.base;
-                if (type && convertMap[type]) {
-                    const convert = convertMap[type] as AbstractConvert;
-                    await convert.convertBack(item);
+        if (projectData && projectData.layerManager) {
+            const {elemConfigs} = projectData.layerManager;
+            //特殊配置数据转换
+            if (elemConfigs) {
+                const mode: DesignerMode = URLUtil.parseUrlParams()?.mode as DesignerMode || DesignerMode.EDIT;
+                const {convertMap} = DesignerLoaderFactory.getLoader(mode);
+                for (const item of Object.values(elemConfigs!)) {
+                    const {type} = item?.base;
+                    if (type && convertMap[type]) {
+                        const convert = convertMap[type] as AbstractConvert;
+                        await convert.convertBack(item);
+                    }
                 }
             }
         }
