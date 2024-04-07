@@ -14,7 +14,7 @@ export interface AntdPieProps extends ComponentBaseProps {
 export default class AntdPieController extends AntdBaseDesignerController<Pie, AntdPieProps> {
 
     async create(container: HTMLElement, config: AntdPieProps): Promise<void> {
-        await super.commonCreate(container, Pie, config);
+        super.commonCreate(container, Pie, config);
     }
 
     destroy(): void {

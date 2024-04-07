@@ -10,7 +10,7 @@ import {
     RadarOptions,
     RingProgressOptions,
     RoseOptions,
-    ScatterOptions
+    ScatterOptions, WordCloudOptions
 } from "@antv/g2plot";
 
 export type WritableBarOptions = {
@@ -55,6 +55,10 @@ export type WritableRingProgressOptions = {
 
 export type WritableRadarOptions = {
     -readonly [K in keyof RadarOptions]?: RadarOptions[K];
+};
+
+export type WritableWordCloudOptions = {
+    -readonly [K in keyof WordCloudOptions]?: WordCloudOptions[K];
 };
 
 
