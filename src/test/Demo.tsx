@@ -1,6 +1,6 @@
 import './DemoMain.less';
-import {useEffect, useState} from "react";
 import {Button} from "antd";
+import {RangeSlider, Slider} from "../json-schema/ui/slider/Slider.tsx";
 
 
 export class TestRef {
@@ -23,21 +23,13 @@ export function Demo2() {
 
 
 export default function Demo() {
-
-    const [count, setCount] = useState(1);
-
-    const testFun = () => {
-        setCount(count + 1)
-        console.log(count)
+    const rangeChange = (data: number[]) => {
+        console.log(data)
     }
-
-    useEffect(() => {
-        testRef.targetRef = testFun
-    }, []);
-
     return (
         <div style={{width: 400}}>
-            <Demo2/>
+            <Slider defaultValue={23} min={1} max={100}/>
+            <RangeSlider onChange={rangeChange} defaultValue={[23, 39]} min={1} max={100}/>
         </div>
     );
 }

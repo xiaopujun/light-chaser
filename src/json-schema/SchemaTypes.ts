@@ -169,6 +169,16 @@ export interface SliderConfigType extends BaseSchemaType {
     }
 }
 
+export interface RangeSliderConfigType extends BaseSchemaType {
+    type: "range-slider";
+    config?: {
+        max?: number;
+        min?: number;
+        step?: number;
+        containerStyle?: React.CSSProperties;
+    }
+}
+
 export interface SwitchConfigType extends BaseSchemaType {
     type: "switch";
     config?: {
@@ -213,6 +223,7 @@ export type Control =
     | RadioConfigType
     | SelectConfigType
     | SliderConfigType
+    | RangeSliderConfigType
     | SwitchConfigType
     | TextAreaConfigType
     | TextOnlyConfigType
