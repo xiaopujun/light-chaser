@@ -37,7 +37,7 @@ export const ProjectList = memo((props: ProjectListProps) => {
             name: name,
             des: des,
             saveType: saveType,
-            dataJson: JSON.stringify({canvasConfig: {width, height}}),
+            dataJson: JSON.stringify({canvasManager: {width, height}}),
         }
         operatorMap[saveType].createProject(project).then((id) => {
             if (id === "")
