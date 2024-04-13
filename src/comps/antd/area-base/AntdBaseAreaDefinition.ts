@@ -1,8 +1,7 @@
-import {BaseInfoType} from "../../../designer/DesignerType";
 import baseAreaImg from "./base-area.png";
 import AbstractAreaDefinition from "../../antd-common/area/AbstractAreaDefinition";
 import {AntdAreaProps} from "../../antd-common/area/AntdCommonAreaController";
-import {MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
+import {BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import React from "react";
 
 const AntdBaseAreaStyleConfig = React.lazy(() => import("./AntdBaseAreaConfig").then((module) => ({default: module.AntdBaseAreaStyleConfig})));
@@ -14,8 +13,8 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
         return {
             compName: "Antd基础面积图",
             compKey: "AntdBaseArea",
-            type: "条形图",
-            typeKey: "area",
+            categorize: "chart",
+            subCategorize: "area"
         };
     }
 
@@ -24,7 +23,7 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
     }
 
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {
-        let menuToConfigContentMap = super.getMenuToConfigContentMap();
+        const menuToConfigContentMap = super.getMenuToConfigContentMap();
         menuToConfigContentMap!['style'] = AntdBaseAreaStyleConfig;
         menuToConfigContentMap!['mapping'] = AntdBaseAreaFieldMapping;
         return menuToConfigContentMap;
@@ -104,7 +103,9 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
                 point: {
                     size: 4,
                     style: {
-                        fill: "#00ddffff"
+                        fill: "#00ddffff",
+                        stroke: "#ffffff",
+                        lineWidth: 0
                     }
                 },
                 line: {
@@ -112,10 +113,8 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
                 }
             },
             data: {
-                dataSource: 'static',
-                staticData: {
-                    data: data
-                },
+                sourceType: 'static',
+                staticData: data
             },
         };
     }

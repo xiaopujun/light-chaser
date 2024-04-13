@@ -1,7 +1,7 @@
-import {BaseInfoType} from "../../../designer/DesignerType";
 import stackColumnImg from "./stack-column.png";
 import AbstractColumnDefinition from "../../antd-common/column/AbstractColumnDefinition";
-import {AntdColumnProps} from "../../antd-common/column/AntdCommonColumn";
+import {AntdColumnProps} from "../../antd-common/column/AntdCommonColumnController";
+import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
 
 class AntdStackColumnDefinition extends AbstractColumnDefinition {
 
@@ -9,8 +9,8 @@ class AntdStackColumnDefinition extends AbstractColumnDefinition {
         return {
             compName: "Antd堆叠柱状图",
             compKey: "AntdStackColumn",
-            type: "柱状图",
-            typeKey: "column",
+            categorize: "chart",
+            subCategorize: "column",
         };
     }
 
@@ -118,10 +118,8 @@ class AntdStackColumnDefinition extends AbstractColumnDefinition {
                 },
             },
             data: {
-                dataSource: 'static',
-                staticData: {
-                    data: data
-                },
+                sourceType: 'static',
+                staticData: data
             },
         };
     }

@@ -4,8 +4,8 @@ import {Axis} from "@antv/g2plot";
 import {isEqual} from "lodash";
 import {Control} from "../../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI";
-import Accordion from "../../../../ui/accordion/Accordion";
-import Radio from "../../../../ui/radio/Radio";
+import Accordion from "../../../../json-schema/ui/accordion/Accordion";
+import Radio from "../../../../json-schema/ui/radio/Radio";
 import {ShapeAttrs} from "@antv/g-base";
 
 
@@ -61,8 +61,9 @@ class AxisConfig extends Component<AxisConfigProps> {
                                this.emptyData)
                        }}>
 
-                <Radio padding={'7px 0 10px 0'} label={'位置'}
+                <Radio label={'位置'}
                        defaultValue={(config as any)?.position || 'right'}
+                       containerStyle={{marginBottom: 10}}
                        onChange={(value => onChange({position: value as any["position"]}))}
                        options={[{label: '上', value: 'top'},
                            {label: '下', value: 'bottom'},
@@ -112,7 +113,7 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
     }
 
     const schema: Control = {
-        type: 'item-panel',
+        type: 'card-panel',
         label: '子刻度',
         children: [
             {
@@ -129,11 +130,10 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
                     {
                         rules: "{subTickLineSwitch}==='true'",
                         key: 'count',
-                        type: 'input',
+                        type: 'number-input',
                         label: '数量',
                         value: _config?.count,
                         config: {
-                            type: 'number',
                             min: 0,
                             max: 100,
                         }
@@ -141,11 +141,10 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
                     {
                         rules: "{subTickLineSwitch}==='true'",
                         key: 'length',
-                        type: 'input',
+                        type: 'number-input',
                         label: '长度',
                         value: _config?.length,
                         config: {
-                            type: 'number',
                             min: 0,
                             max: 10,
                         }
@@ -156,11 +155,10 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
                         children: [
                             {
                                 key: 'lineWidth',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '宽度',
                                 value: (_config?.style as ShapeAttrs)?.lineWidth,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 10,
                                 }
@@ -171,12 +169,7 @@ export const AxisSubTickLine: React.FC<AxisSubTickLineProps> = ({config, onChang
                                 label: '颜色',
                                 value: (_config?.style as ShapeAttrs)?.stroke,
                                 config: {
-                                    width: '100%',
-                                    radius: 3,
-                                    showBorder: true,
                                     showText: true,
-                                    height: 16,
-                                    hideControls: true
                                 }
                             }
                         ]
@@ -222,7 +215,7 @@ export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) =>
         }
     }
     const schema: Control = {
-        type: 'item-panel',
+        type: 'card-panel',
         label: '刻度线',
         children: [
             {
@@ -246,11 +239,10 @@ export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) =>
                     {
                         key: 'length',
                         rules: "{tickLineSwitch}==='true'",
-                        type: 'input',
+                        type: 'number-input',
                         label: '长度',
                         value: (_config as any)?.length,
                         config: {
-                            type: 'number',
                             min: 0,
                             max: 10,
                         }
@@ -261,11 +253,10 @@ export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) =>
                         children: [
                             {
                                 key: 'lineWidth',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '宽度',
                                 value: (_config?.style as ShapeAttrs)?.lineWidth,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 10,
                                 }
@@ -276,12 +267,7 @@ export const AxisTickLine: React.FC<AxisTickLineProps> = ({config, onChange}) =>
                                 label: '颜色',
                                 value: (_config?.style as ShapeAttrs)?.stroke,
                                 config: {
-                                    width: '100%',
-                                    radius: 3,
-                                    showBorder: true,
                                     showText: true,
-                                    height: 16,
-                                    hideControls: true
                                 }
                             }
                         ]
@@ -312,7 +298,7 @@ export const AxisGridLine: React.FC<AxisGridLineProps> = ({config, onChange}) =>
             if (data) {
                 const defaultConfig = {
                     alignTick: true,
-                    line: {style: {stroke: '#5c5c5c', lineWidth: 1} as ShapeAttrs}
+                    line: {style: {stroke: '#5c5c5c', lineWidth: 1} as ShapeAttrs, type: 'line'}
                 }
                 onChange(defaultConfig);
                 setConfig(defaultConfig);
@@ -326,7 +312,7 @@ export const AxisGridLine: React.FC<AxisGridLineProps> = ({config, onChange}) =>
     }
 
     const schema: Control = {
-        type: 'item-panel',
+        type: 'card-panel',
         label: '网格线',
         children: [
             {
@@ -356,11 +342,10 @@ export const AxisGridLine: React.FC<AxisGridLineProps> = ({config, onChange}) =>
                                 children: [
                                     {
                                         key: 'lineWidth',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: '宽度',
                                         value: (_config?.line?.style as ShapeAttrs)?.lineWidth,
                                         config: {
-                                            type: 'number',
                                             min: 0,
                                             max: 10,
                                         }
@@ -371,12 +356,7 @@ export const AxisGridLine: React.FC<AxisGridLineProps> = ({config, onChange}) =>
                                         label: '颜色',
                                         value: (_config?.line?.style as ShapeAttrs)?.stroke,
                                         config: {
-                                            width: '100%',
-                                            radius: 3,
-                                            showBorder: true,
                                             showText: true,
-                                            height: 16,
-                                            hideControls: true
                                         }
                                     }
                                 ]
@@ -419,7 +399,7 @@ export const AxisLine: React.FC<AxisLIneProps> = ({config, onChange}) => {
     }
 
     const schema: Control = {
-        type: 'item-panel',
+        type: 'card-panel',
         label: '轴线',
         children: [
             {
@@ -439,11 +419,10 @@ export const AxisLine: React.FC<AxisLIneProps> = ({config, onChange}) => {
                         children: [
                             {
                                 key: 'lineWidth',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '宽度',
                                 value: _config?.style?.lineWidth || 1,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 10,
                                 }
@@ -454,12 +433,7 @@ export const AxisLine: React.FC<AxisLIneProps> = ({config, onChange}) => {
                                 label: '颜色',
                                 value: _config?.style?.stroke || '#595959',
                                 config: {
-                                    width: '100%',
-                                    radius: 3,
-                                    showBorder: true,
                                     showText: true,
-                                    height: 16,
-                                    hideControls: true
                                 }
                             }
                         ]
@@ -500,7 +474,7 @@ export const AxisTitle: React.FC<AxisTitleProps> = ({config, onChange}) => {
     }
 
     const schema: Control = {
-        type: 'item-panel',
+        type: 'card-panel',
         label: '标题',
         children: [
             {
@@ -538,23 +512,19 @@ export const AxisTitle: React.FC<AxisTitleProps> = ({config, onChange}) => {
                             },
                             {
                                 key: 'offset',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '偏移',
                                 value: _config?.offset || 0,
-                                config: {
-                                    type: 'number'
-                                }
                             },
                             {
                                 key: 'style',
                                 children: [
                                     {
                                         key: 'fontSize',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: '字号',
                                         value: 12,
                                         config: {
-                                            type: 'number',
                                             min: 1,
                                             max: 50,
                                         }
@@ -565,12 +535,7 @@ export const AxisTitle: React.FC<AxisTitleProps> = ({config, onChange}) => {
                                         label: '颜色',
                                         value: '#1c1c1c',
                                         config: {
-                                            width: '100%',
-                                            radius: 3,
-                                            showBorder: true,
                                             showText: true,
-                                            height: 16,
-                                            hideControls: true
                                         }
                                     }
                                 ]
@@ -601,7 +566,7 @@ export const AxisText: React.FC<AxisTextProps> = ({config, onChange}) => {
     }
 
     const schema: Control = {
-        type: 'item-panel',
+        type: 'card-panel',
         label: '文本',
         children: [
             {
@@ -610,34 +575,29 @@ export const AxisText: React.FC<AxisTextProps> = ({config, onChange}) => {
                 children: [
                     {
                         key: 'rotate',
-                        type: 'input',
+                        type: 'number-input',
                         label: '角度',
                         value: rotate || 0,
                         config: {
-                            type: 'number',
                             min: 0,
                             max: 360,
                         }
                     },
                     {
                         key: 'offset',
-                        type: 'input',
+                        type: 'number-input',
                         label: '偏移',
                         value: offset || 0,
-                        config: {
-                            type: 'number'
-                        }
                     },
                     {
                         key: 'style',
                         children: [
                             {
                                 key: 'fontSize',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '字号',
                                 value: (style as ShapeAttrs)?.fontSize || 12,
                                 config: {
-                                    type: 'number',
                                     min: 1,
                                     max: 50,
                                 }
@@ -648,12 +608,7 @@ export const AxisText: React.FC<AxisTextProps> = ({config, onChange}) => {
                                 label: '颜色',
                                 value: (style as ShapeAttrs)?.fill || '#1c1c1c',
                                 config: {
-                                    width: '100%',
-                                    radius: 3,
-                                    showBorder: true,
                                     showText: true,
-                                    height: 16,
-                                    hideControls: true
                                 }
                             }
                         ]

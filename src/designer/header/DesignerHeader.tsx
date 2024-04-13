@@ -1,50 +1,109 @@
-import React, {Component, ReactElement, Suspense} from 'react';
+import React, {ComponentType, ReactElement} from 'react';
 import './DesignerHeader.less';
-import headerStore from "./HeaderStore";
 import {observer} from "mobx-react";
-import {BluePrintHdImpl} from "./items/blue-print/BluePrintHdImpl";
-import Loading from "../../ui/loading/Loading";
-import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
+import {AlertOutlined, CompressOutlined, EyeOutlined, PartitionOutlined, SaveOutlined} from "@ant-design/icons";
+import eventOperateStore from "../operate-provider/EventOperateStore";
+import {doSave} from "../operate-provider/hot-key/HotKeyImpl";
+import URLUtil from "../../utils/URLUtil";
+import {DesignerMode} from "../DesignerType";
+import canvasHdStore from "./items/canvas/CanvasManager.ts";
+import projectHdStore from "./items/project/ProjecManager.ts";
+import themeHdStore from "./items/theme/ThemeManager.ts";
+import bluePrintHdStore from "./items/blue-print/BluePrintHdStore.ts";
+import CanvasHdConfigImpl from "./items/canvas/CanvasHdConfigImpl.tsx";
+import ProjectHdItemImpl from "./items/project/ProjectHdItemImpl.tsx";
+import ThemeHdItemImpl from "./items/theme/ThemeHdItemImpl.tsx";
+import BluePrintHdImpl from "./items/blue-print/BluePrintHdImpl.tsx";
 
-const ProjectHdItemImpl = React.lazy(() => import('./items/project/ProjectHdItemImpl'));
-const CanvasHdConfigImpl = React.lazy(() => import('./items/canvas/CanvasHdConfigImpl'));
-const ThemeHdItemImpl = React.lazy(() => import('./items/theme/ThemeHdItemImpl'));
 
-class Header extends Component<any> {
-
-    buildHeaderList = (): Array<ReactElement> => {
-        let items: Array<ReactElement> = [];
-        const {headerItemInstances} = DesignerLoaderFactory.getLoader();
-        for (let i = 0; i < headerItemInstances.length; i++) {
-            const {icon: Icon, name, onClick} = headerItemInstances[i];
-            items.push(
-                <div key={i + ''} className={'right-item'} onClick={onClick}>
-                    <span className={'item-span'}><Icon/>&nbsp;{name}</span>
-                </div>
-            );
-        }
-        return items;
-    }
-
-    render() {
-        const {canvasVisible, projectVisible, themeVisible, bluePrintVisible} = headerStore;
-        const items = this.buildHeaderList();
-        return (
-            <div className={'designer-header'}>
-                <div className={'header-left'}>
-                    <div className={'header-title'}>LIGHT CHASER</div>
-                </div>
-                <div className={'header-right'}>
-                    {items}
-                </div>
-                {/*todo 想办法让这两个组件不要在这里写死*/}
-                {canvasVisible && <Suspense fallback={<Loading/>}><CanvasHdConfigImpl/></Suspense>}
-                {projectVisible && <Suspense fallback={<Loading/>}><ProjectHdItemImpl/></Suspense>}
-                {themeVisible && <Suspense fallback={<Loading/>}><ThemeHdItemImpl/></Suspense>}
-                {bluePrintVisible && <Suspense fallback={<Loading/>}><BluePrintHdImpl/></Suspense>}
-            </div>
-        );
-    }
+export interface IHeaderItem {
+    icon: ComponentType;
+    name: string;
+    key: string;
+    onClick?: () => void;
 }
 
-export default observer(Header);
+const centerItems: Array<IHeaderItem> = [
+    {
+        icon: PartitionOutlined,
+        name: '蓝图',
+        key: 'blue-print',
+        onClick: () => {
+            //打开蓝图前清空画布中已经选中的组件,避免删除蓝图节点时，误删画布中的组件
+            const {setTargetIds} = eventOperateStore;
+            setTargetIds([]);
+            bluePrintHdStore.setBluePrintVisible(true);
+        }
+    },
+    {
+        icon: CompressOutlined,
+        name: '画布',
+        key: 'canvas',
+        onClick: () => canvasHdStore.setCanvasVisible(true)
+    },
+    {
+        icon: AlertOutlined,
+        name: '主题',
+        key: 'theme',
+        onClick: () => themeHdStore.setThemeVisible(true)
+    }
+];
+
+const leftItems: Array<IHeaderItem> = [
+    {
+        icon: SaveOutlined,
+        name: '保存',
+        key: 'save',
+        onClick: () => doSave()
+    },
+    {
+        icon: EyeOutlined,
+        name: '预览',
+        key: 'preview',
+        onClick: () => {
+            const {saveType, id} = URLUtil.parseUrlParams();
+            window.open(`/view?id=${id}&saveType=${saveType}&mode=${DesignerMode.VIEW}`, '_blank');
+        }
+    }
+];
+
+
+const Header: React.FC = observer(() => {
+
+        const buildHeaderItemUI = (items: Array<IHeaderItem>): Array<ReactElement> => {
+            const headerItems: Array<ReactElement> = [];
+            for (let i = 0; i < items.length; i++) {
+                const {icon: Icon, name, key, onClick} = items[i];
+                headerItems.push(
+                    <div key={key} className={'header-item'} onClick={onClick}>
+                        <Icon/>
+                        <span className={'item-span'}>{name}</span>
+                    </div>
+                );
+            }
+            return headerItems;
+        }
+
+        return (
+            <>
+                <div className={'designer-header'}>
+                    <div className={'header-left'}>
+                        <div className={'header-title'}>LIGHT CHASER</div>
+                    </div>
+                    <div className={'header-center'}>
+                        {buildHeaderItemUI(centerItems)}
+                    </div>
+                    <div className={'header-right'}>
+                        {buildHeaderItemUI(leftItems)}
+                    </div>
+                    {canvasHdStore.canvasVisible && <CanvasHdConfigImpl/>}
+                    {projectHdStore.projectVisible && <ProjectHdItemImpl/>}
+                    {themeHdStore.themeVisible && <ThemeHdItemImpl/>}
+                    {bluePrintHdStore.bluePrintVisible && <BluePrintHdImpl/>}
+                </div>
+            </>
+        );
+    }
+);
+
+export default Header;

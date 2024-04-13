@@ -16,7 +16,7 @@ const DataConfig = React.lazy(() => import("../../common-component/data-config/D
 
 abstract class AbstractScatterDefinition extends AntdCommonDefinition<AntdCommonScatterController, AntdScatterProps> {
 
-    getComponent(): ClazzTemplate<AntdCommonScatterController> | null {
+    getController(): ClazzTemplate<AntdCommonScatterController> | null {
         return AntdCommonScatterController;
     }
 

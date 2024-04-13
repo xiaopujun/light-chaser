@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {AntdCartesianCoordinateSys} from "../config/AntdFragment";
-import {Area, AreaOptions} from "@antv/g2plot";
+import {Area, AreaOptions, ColorAttr} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import AbstractController from "../../../framework/core/AbstractController";
 import AntdCommonAreaController, {AntdAreaProps} from "./AntdCommonAreaController";
@@ -58,7 +58,7 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
         console.log(id, data, dataFragment);
         if (id === 'areaColor') {
             if (data && Array.isArray(data)) {
-                onChange({color: data as any, areaStyle: {fill: undefined}});
+                onChange({color: data as ColorAttr, areaStyle: {fill: undefined}});
             } else if (data && typeof data === 'string' && data.indexOf('gradient') !== -1) {
                 //渐变
             } else {
@@ -74,7 +74,7 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
         label: '图形',
         children: [
             {
-                type: 'item-panel',
+                type: 'card-panel',
                 label: '数据点',
                 key: 'point',
                 children: [
@@ -84,11 +84,10 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
                         children: [
                             {
                                 key: 'size',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '尺寸',
                                 value: config?.point?.size || 0,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 100
                                 }
@@ -117,12 +116,7 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
                                         label: '颜色',
                                         value: (config?.point?.style as ShapeAttrs)?.fill || '#1c1c1c',
                                         config: {
-                                            width: '100%',
-                                            radius: 3,
-                                            showBorder: true,
                                             showText: true,
-                                            height: 16,
-                                            hideControls: true
                                         }
                                     }
                                 ]
@@ -132,7 +126,7 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
                 ]
             },
             {
-                type: 'item-panel',
+                type: 'card-panel',
                 label: '数据线',
                 children: [
                     {
@@ -153,11 +147,10 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
                                         children: [
                                             {
                                                 key: 'lineWidth',
-                                                type: 'input',
+                                                type: 'number-input',
                                                 label: '宽度',
                                                 value: (config?.line?.style as ShapeAttrs)?.lineWidth || 0,
                                                 config: {
-                                                    type: 'number',
                                                     min: 0,
                                                     max: 100
                                                 }
@@ -171,7 +164,7 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
                 ]
             },
             {
-                type: 'item-panel',
+                type: 'card-panel',
                 label: '数据面',
                 children: [
                     {
@@ -182,14 +175,6 @@ export const AntdCommonAreaGraphics: React.FC<AntdCommonAreaGraphicsProps> = ({c
                                 type: 'color-mode',
                                 label: '颜色',
                                 value: (config?.areaStyle as ShapeAttrs)?.fill || '#1c1c1c',
-                                config: {
-                                    width: '100%',
-                                    radius: 3,
-                                    showBorder: true,
-                                    showText: true,
-                                    height: 16,
-                                    hideControls: true
-                                }
                             }
                         ]
                     }

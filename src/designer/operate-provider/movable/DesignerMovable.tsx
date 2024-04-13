@@ -1,6 +1,7 @@
 import * as React from "react";
 import Moveable, {
     MoveableManagerInterface,
+    OnClickGroup,
     OnDrag,
     OnDragEnd,
     OnDragGroup,
@@ -16,31 +17,42 @@ import Moveable, {
 } from "react-moveable";
 import {observer} from "mobx-react";
 import eventOperateStore from "../EventOperateStore";
-import designerStore from "../../store/DesignerStore";
+import layerManager from "../../manager/LayerManager.ts";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import {ILayerItem} from "../../DesignerType";
 import './DesignerMovable.less';
 import baseInfoStore from "../../../comps/common-component/base-info/BaseInfoStore";
-import LayerUtil from "../../float-configs/layer-list/util/LayerUtil";
+import LayerUtil from "../../left/layer-list/util/LayerUtil";
+import canvasManager from "../../header/items/canvas/CanvasManager.ts";
 
-class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }> {
+export interface DesignerMovableProps {
+    children?: React.ReactNode;
+}
+
+export interface DesignerMovableState {
+    throttleDragRotate: number;
+    keepRatio: boolean;
+}
+
+class DesignerMovable extends React.Component<DesignerMovableProps, DesignerMovableState> {
     movableRef = React.createRef<Moveable>();
 
     constructor(props: {}) {
         super(props);
         this.state = {
-            throttleDragRotate: 0
+            throttleDragRotate: 0,
+            keepRatio: false
         };
     }
 
     componentDidMount() {
         const {setMovableRef} = eventOperateStore;
-        setMovableRef(this.movableRef);
+        setMovableRef(this.movableRef.current!);
     }
 
     onDragStart = (e: OnDragStart) => {
         const {target, inputEvent} = e;
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         const {lock} = layerConfigs[target.id];
         if (lock) return false;
         if (inputEvent && inputEvent.shiftKey)
@@ -53,8 +65,8 @@ class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }
     }
 
     onDragEnd = (e: OnDragEnd) => {
-        const {updateLayer} = designerStore;
-        let {backoff, setBackoff} = eventOperateStore;
+        const {updateLayer} = layerManager;
+        const {backoff, setBackoff} = eventOperateStore;
         const {lastEvent, target} = e;
         if (lastEvent) {
             const {beforeTranslate} = lastEvent;
@@ -91,7 +103,7 @@ class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }
 
     onDragGroup = (e: OnDragGroup) => {
         const {targets} = e;
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         //通过第一个元素来判断。 框选的所有组件是否处于锁定状态，处于锁定状态，则不允许拖拽和缩放。
         const firstLock = layerConfigs[targets[0].id].lock;
         if (firstLock)
@@ -103,20 +115,20 @@ class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }
     onDragGroupEnd = (e: OnDragGroupEnd) => {
         const {targets} = e;
         //通过第一个元素来判断。 框选的所有组件是否处于锁定状态，处于锁定状态，则不允许拖拽和缩放。
-        const {updateLayer, layerConfigs} = designerStore;
+        const {updateLayer, layerConfigs} = layerManager;
         const firstLock = layerConfigs[targets[0].id].lock;
         if (firstLock) return false;
 
-        let {backoff, setBackoff, setGroupCoordinate, groupCoordinate, targetIds} = eventOperateStore;
-        let data: ILayerItem[] = [];
-        e.events.forEach((ev: any) => {
+        const {backoff, setBackoff, setGroupCoordinate, groupCoordinate, targetIds} = eventOperateStore;
+        const data: ILayerItem[] = [];
+        e.events.forEach((ev: OnDragEnd) => {
             const {target, lastEvent} = ev;
             if (lastEvent) {
                 const {beforeTranslate} = lastEvent;
                 data.push({
                     id: target.id,
-                    width: target.offsetWidth,
-                    height: target.offsetHeight,
+                    width: (target as HTMLElement).offsetWidth,
+                    height: (target as HTMLElement).offsetHeight,
                     type: target.dataset.type,
                     x: beforeTranslate[0],
                     y: beforeTranslate[1]
@@ -152,10 +164,12 @@ class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }
     }
 
     onResizeStart = (e: OnResizeStart) => {
-        const {target} = e;
-        const {layerConfigs} = designerStore;
+        const {target, inputEvent} = e;
+        const {layerConfigs} = layerManager;
         const {lock} = layerConfigs[target.id];
         if (lock) return false;
+        if (inputEvent && inputEvent.ctrlKey)
+            this.setState({keepRatio: true});
     }
 
     onResize = (e: OnResize) => {
@@ -166,8 +180,8 @@ class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }
     }
 
     onResizeEnd = (e: OnResizeEnd) => {
-        const {updateLayer} = designerStore;
-        let {backoff, setBackoff} = eventOperateStore;
+        const {updateLayer} = layerManager;
+        const {backoff, setBackoff} = eventOperateStore;
         const {target, lastEvent} = e;
         if (lastEvent) {
             const {width, height, drag: {translate}, direction} = lastEvent;
@@ -191,13 +205,18 @@ class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }
             const {updateBaseConfig} = baseInfoStore;
             updateBaseConfig(data[0]);
         }
+        const {keepRatio} = this.state;
+        if (keepRatio)
+            this.setState({keepRatio: false});
     }
 
     onResizeGroupStart = (e: OnResizeGroupStart) => {
-        const {targets} = e;
-        const {layerConfigs} = designerStore;
+        const {targets, inputEvent} = e;
+        const {layerConfigs} = layerManager;
         const firstLock = layerConfigs[targets[0].id].lock;
         if (firstLock) return false;
+        if (inputEvent && inputEvent.ctrlKey)
+            this.setState({keepRatio: true});
     }
 
     onResizeGroup = (e: OnResizeGroup) => {
@@ -209,17 +228,17 @@ class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }
     }
 
     onResizeGroupEnd = (e: OnResizeGroupEnd) => {
-        const {updateLayer} = designerStore;
-        let {backoff, setBackoff, targetIds} = eventOperateStore;
-        let data: ILayerItem[] = [];
-        e.events.forEach((ev: any) => {
+        const {updateLayer} = layerManager;
+        const {backoff, setBackoff, targetIds} = eventOperateStore;
+        const data: ILayerItem[] = [];
+        e.events.forEach((ev: OnResizeEnd) => {
             const {target, lastEvent} = ev;
             if (lastEvent) {
                 const {drag: {translate}} = lastEvent;
                 data.push({
                     id: target.id,
-                    width: target.offsetWidth,
-                    height: target.offsetHeight,
+                    width: (target as HTMLElement).offsetWidth,
+                    height: (target as HTMLElement).offsetHeight,
                     type: target.dataset.type,
                     x: translate[0],
                     y: translate[1]
@@ -265,14 +284,18 @@ class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }
                 });
             }
         }
+        const {keepRatio} = this.state;
+        if (keepRatio)
+            this.setState({keepRatio: false});
     }
 
     render() {
-        const {throttleDragRotate} = this.state;
+        const {throttleDragRotate, keepRatio} = this.state;
         const {selectorRef, targets} = eventOperateStore;
-        const {canvasConfig: {rasterize, dragStep, resizeStep}} = designerStore;
-        //获取需要辅助线导航的元素
-        const selectedTargets = document.getElementsByClassName("lc-comp-item");
+        const {canvasConfig: {rasterize, dragStep, resizeStep}} = canvasManager;
+        //获取需要辅助线导航的元素 todo 思考是否可以优化？是否每次都要进行一次过滤
+        const selectedTargets = Array.from(document.getElementsByClassName("lc-comp-item"))
+            .filter((item) => !targets.includes(item as HTMLElement));
         return (
             <>
                 {this.props.children}
@@ -282,15 +305,16 @@ class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }
                     draggable={true}
                     resizable={true}
                     //保持尺寸比例
-                    keepRatio={false}
-                    //辅助线可捕捉显示的最大距离
+                    keepRatio={keepRatio}
                     throttleDragRotate={throttleDragRotate}
-                    maxSnapElementGuidelineDistance={300}
+
+                    //辅助线设置
+                    hideChildMoveableDefaultLines={true}
+                    maxSnapElementGuidelineDistance={200}
+                    isDisplaySnapDigit={true}
                     snappable={true}
                     snapGap={false}
                     snapThreshold={5}
-                    //显示辅助线距离
-                    isDisplaySnapDigit={true}
                     snapDirections={{
                         top: true,
                         right: true,
@@ -307,19 +331,17 @@ class DesignerMovable extends React.Component<{}, { throttleDragRotate: number }
                         center: true,
                         middle: true
                     }}
+                    verticalGuidelines={['0', '100%']}
+                    horizontalGuidelines={['0', '100%']}
+                    isDisplayInnerSnapDigit={true} //控件内部显示辅助线
+                    elementGuidelines={Array.from(selectedTargets!)} //可拖拽元素辅助线
+
                     //外挂dom元素
                     ables={[DimensionViewable as any]}
                     dimensionViewable={true}
-
-                    verticalGuidelines={['0', '50%', '100%']}
-                    horizontalGuidelines={['0', '50%', '100%']}
-                    //控件内部显示辅助线
-                    isDisplayInnerSnapDigit={true}
-                    elementGuidelines={Array.from(selectedTargets!)}
-
                     throttleDrag={rasterize ? dragStep : 1}
                     throttleResize={rasterize ? resizeStep : 1}
-                    onClickGroup={e => (selectorRef.current as any)?.clickTarget(e.inputEvent, e.inputTarget)}
+                    onClickGroup={(e: OnClickGroup) => selectorRef?.clickTarget(e.inputEvent, e.inputTarget)}
                     onDrag={this.onDrag}
                     onDragStart={this.onDragStart}
                     onDragEnd={this.onDragEnd}

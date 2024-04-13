@@ -11,8 +11,8 @@ export interface AntdLiquidProps extends ComponentBaseProps {
 
 export default class AntdLiquidController extends AntdBaseDesignerController<Liquid, AntdLiquidProps> {
 
-    async create(container: HTMLElement, config: AntdLiquidProps): Promise<this> {
-        return super.commonCreate(container, Liquid, config);
+    async create(container: HTMLElement, config: AntdLiquidProps): Promise<void> {
+        super.commonCreate(container, Liquid, config);
     }
 
     destroy(): void {
@@ -24,6 +24,12 @@ export default class AntdLiquidController extends AntdBaseDesignerController<Liq
 
     getConfig(): AntdLiquidProps | null {
         return this.config;
+    }
+
+    changeData(data: any) {
+        this.config!.data!.staticData = data;
+        this.config!.style!.percent = data;
+        this.instance?.changeData(data);
     }
 
     update(config: AntdLiquidProps, upOp?: UpdateOptions): void {

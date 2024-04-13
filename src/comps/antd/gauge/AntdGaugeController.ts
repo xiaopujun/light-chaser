@@ -11,8 +11,8 @@ export interface AntdGaugeProps extends ComponentBaseProps {
 
 export default class AntdGaugeController extends AntdBaseDesignerController<Gauge, AntdGaugeProps> {
 
-    async create(container: HTMLElement, config: AntdGaugeProps): Promise<this> {
-        return super.commonCreate(container, Gauge, config);
+    async create(container: HTMLElement, config: AntdGaugeProps): Promise<void> {
+        super.commonCreate(container, Gauge, config);
     }
 
     destroy(): void {
@@ -24,6 +24,13 @@ export default class AntdGaugeController extends AntdBaseDesignerController<Gaug
 
     getConfig(): AntdGaugeProps | null {
         return this.config;
+    }
+
+
+    changeData(data: any) {
+        this.config!.data!.staticData = data;
+        this.config!.style!.percent = data;
+        this.instance?.changeData(data);
     }
 
     update(config: AntdGaugeProps, upOp?: UpdateOptions): void {

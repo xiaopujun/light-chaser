@@ -3,7 +3,7 @@
 <h2> LIGHT CHASER</h2>
 
 <p>
-    <img alt="" src="https://img.shields.io/badge/version-v0.0.3-blue">
+    <img alt="" src="https://img.shields.io/badge/version-v0.0.9-blue">
     <img alt="" src="https://img.shields.io/badge/language-typescript-blue">
     <img alt="" src="https://img.shields.io/badge/license-MIT-08CE5D?logoColor=08CE5D">
     <img alt="" src="https://img.shields.io/badge/framework-React-61daeb?logoColor=08CE5D">
@@ -43,9 +43,9 @@ launch it locally with the code to experience it!
 
 preview image：
 
-![lightchaser1](https://picss.sunbangyan.cn/2023/11/03/9cbcb42f4c6d7bc12ffb79f4ad0ef9dd.png)
+![lightchaser1](https://i.072333.xyz/file/8ff8361817216f2fb1c47.png)
 
-![lightchaser blueprint](https://picss.sunbangyan.cn/2023/11/03/59ff17df602ce90d6ba7885037860449.png)
+![lightchaser](https://i.072333.xyz/file/3cacaaa9edc640ce64536.png)
 
 # Usage & Deployment
 
@@ -60,6 +60,9 @@ git clone https://gitee.com/xiaopujun/light-chaser.git
 
 - Install project dependencies
 
+> Note: This project uses pnpm as the package management tool, so you need to install [pnpm](https://pnpm.io/) first 
+> ,if you have installed pnpm, you can skip this step
+
 ```shell
 pnpm install
 ```
@@ -73,7 +76,7 @@ pnpm dev
 - Access the project
 
 ```shell
-http://localhost:3000
+http://localhost:5173
 ```
 
 - Build the project

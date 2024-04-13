@@ -109,7 +109,7 @@ export const AntdLineCommonGraphics: React.FC<AntdLineCommonGraphicsProps> = ({c
         label: '图形',
         children: [
             {
-                type: 'item-panel',
+                type: 'card-panel',
                 label: '线条',
                 children: [
                     {
@@ -127,11 +127,10 @@ export const AntdLineCommonGraphics: React.FC<AntdLineCommonGraphicsProps> = ({c
                                 children: [
                                     {
                                         key: 'lineWidth',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: '宽度',
                                         value: (config?.lineStyle as ShapeAttrs)?.lineWidth,
                                         config: {
-                                            type: 'number',
                                             min: 0,
                                             max: 10,
                                         }
@@ -142,12 +141,7 @@ export const AntdLineCommonGraphics: React.FC<AntdLineCommonGraphicsProps> = ({c
                                         label: '颜色',
                                         value: (config?.lineStyle as ShapeAttrs)?.stroke,
                                         config: {
-                                            width: '100%',
-                                            radius: 3,
-                                            showBorder: true,
                                             showText: true,
-                                            height: 16,
-                                            hideControls: true
                                         }
                                     }
                                 ]
@@ -157,7 +151,7 @@ export const AntdLineCommonGraphics: React.FC<AntdLineCommonGraphicsProps> = ({c
                 ]
             },
             {
-                type: 'item-panel',
+                type: 'card-panel',
                 label: '数据点',
                 children: [
                     {
@@ -167,11 +161,10 @@ export const AntdLineCommonGraphics: React.FC<AntdLineCommonGraphicsProps> = ({c
                         children: [
                             {
                                 key: 'size',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '尺寸',
                                 value: config?.point?.size,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 10,
                                 }
@@ -197,12 +190,7 @@ export const AntdLineCommonGraphics: React.FC<AntdLineCommonGraphicsProps> = ({c
                                 label: '颜色',
                                 value: (config?.point as ShapeAttrs)?.color,
                                 config: {
-                                    width: '100%',
-                                    radius: 3,
-                                    showBorder: true,
                                     showText: true,
-                                    height: 16,
-                                    hideControls: true
                                 }
                             },
                         ]

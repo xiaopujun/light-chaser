@@ -1,6 +1,6 @@
 import AbstractRollback from "./AbstractRollback";
 import {IHistoryRecord, IUpdStyleOperateData} from "../OperateType";
-import designerStore from "../../../store/DesignerStore";
+import layerManager from "../../../manager/LayerManager.ts";
 import rightStore from "../../../right/RightStore";
 
 export class StyleRollbackImpl extends AbstractRollback {
@@ -8,16 +8,17 @@ export class StyleRollbackImpl extends AbstractRollback {
         const {next} = record;
         if (next) {
             const {id, data} = next as IUpdStyleOperateData;
-            const {compInstances} = designerStore;
-            const instance = compInstances[id];
+            const {compController} = layerManager;
+            const instance = compController[id];
             if (instance)
                 instance.update(data)
             const {visible, setContentVisible} = rightStore;
             //回滚时，若配置项开启，则关闭
             if (visible) {
                 setContentVisible(false)
-                setTimeout(() => {
-                    setContentVisible(true)
+                const tempTimer = setTimeout(() => {
+                    setContentVisible(true);
+                    clearTimeout(tempTimer);
                 }, 1)
             }
         }
@@ -27,16 +28,17 @@ export class StyleRollbackImpl extends AbstractRollback {
         const {prev} = record;
         if (prev) {
             const {id, data} = prev as IUpdStyleOperateData;
-            const {compInstances} = designerStore;
-            const instance = compInstances[id];
+            const {compController} = layerManager;
+            const instance = compController[id];
             if (instance)
                 instance.update(data)
             const {visible, setContentVisible} = rightStore;
             //回滚时，若配置项开启，则关闭
             if (visible) {
                 setContentVisible(false)
-                setTimeout(() => {
-                    setContentVisible(true)
+                const tempTimer = setTimeout(() => {
+                    setContentVisible(true);
+                    clearTimeout(tempTimer);
                 }, 1)
             }
         }

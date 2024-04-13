@@ -1,7 +1,7 @@
 import {ComponentBaseProps} from "../../common-component/common-types";
 import {WritableRingProgressOptions} from "../../antd-common/types";
 import {RingProgress, StatisticText} from "@antv/g2plot";
-import {UpdateType, UpdateOptions} from "../../../framework/core/AbstractController";
+import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {CSSProperties} from "react";
@@ -12,8 +12,8 @@ export interface AntdRingProgressProps extends ComponentBaseProps {
 
 export default class AntdRingProgressController extends AntdBaseDesignerController<RingProgress, AntdRingProgressProps> {
 
-    async create(container: HTMLElement, config: AntdRingProgressProps): Promise<this> {
-        return super.commonCreate(container, RingProgress, config);
+    async create(container: HTMLElement, config: AntdRingProgressProps): Promise<void> {
+        super.commonCreate(container, RingProgress, config);
     }
 
     destroy(): void {
@@ -29,6 +29,7 @@ export default class AntdRingProgressController extends AntdBaseDesignerControll
 
     update(config: AntdRingProgressProps, upOp?: UpdateOptions): void {
         super.commonUpdate(config, RingProgress, upOp);
+        console.log(this.config?.style)
     }
 
     updateTheme(newTheme: ThemeItemType): void {
@@ -46,6 +47,6 @@ export default class AntdRingProgressController extends AntdBaseDesignerControll
         if ((styleConfig?.statistic) && (styleConfig?.statistic?.content) && (styleConfig.statistic.content as StatisticText).style)
             ((styleConfig!.statistic!.content as StatisticText).style as CSSProperties)!.color = subText!;
         //重新渲染
-        this.update({style: styleConfig} as any, {reRender: true, updateType: UpdateType.OPTIONS});
+        this.update({style: styleConfig} as AntdRingProgressProps, {reRender: true});
     }
 }

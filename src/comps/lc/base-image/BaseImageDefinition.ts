@@ -1,9 +1,8 @@
 import {
-    AbstractDefinition,
+    AbstractDefinition, BaseInfoType, EventInfo,
     MenuToConfigMappingType
 } from "../../../framework/core/AbstractDefinition";
 import BaseImageController, {BaseImageComponentProps} from "./BaseImageController";
-import {BaseInfoType} from "../../../designer/DesignerType";
 import baseImage from './baseImage.png';
 import {ClazzTemplate} from "../../common-component/common-types";
 import {MenuInfo} from "../../../designer/right/MenuType";
@@ -15,9 +14,8 @@ export default class BaseImageDefinition extends AbstractDefinition<BaseImageCon
     getBaseInfo(): BaseInfoType {
         return {
             compName: "基础图片",
-            compKey: "LcBaseImage",
-            type: "基础",
-            typeKey: "base",
+            compKey: "BaseImage",
+            categorize: "media",
         };
     }
 
@@ -25,7 +23,7 @@ export default class BaseImageDefinition extends AbstractDefinition<BaseImageCon
         return baseImage;
     }
 
-    getComponent(): ClazzTemplate<BaseImageController> | null {
+    getController(): ClazzTemplate<BaseImageController> | null {
         return BaseImageController;
     }
 
@@ -34,12 +32,13 @@ export default class BaseImageDefinition extends AbstractDefinition<BaseImageCon
             base: {
                 id: "",
                 name: '基础图片',
-                type: 'LcBaseImage',
+                type: 'BaseImage',
             },
             style: {
                 type: 'online',
                 localUrl: '',
                 onLineUrl: '',
+                opacity: 1,
             },
         };
     }
@@ -55,5 +54,14 @@ export default class BaseImageDefinition extends AbstractDefinition<BaseImageCon
         };
     }
 
+    getEventList(): EventInfo[] {
+        const events = super.getEventList();
+        return events.concat([
+            {
+                id: "click",
+                name: "点击时",
+            }
+        ]);
+    }
 
 }

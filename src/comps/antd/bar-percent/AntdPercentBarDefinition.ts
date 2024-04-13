@@ -1,7 +1,7 @@
-import {BaseInfoType} from "../../../designer/DesignerType";
 import percentBarImg from "./percent-bar.png";
 import {AntdBarProps} from "../../antd-common/bar/AntdCommonBarController";
 import AbstractBarDefinition from "../../antd-common/bar/AbstractBarDefinition";
+import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
 
 class AntdPercentBarDefinition extends AbstractBarDefinition {
 
@@ -9,8 +9,8 @@ class AntdPercentBarDefinition extends AbstractBarDefinition {
         return {
             compName: "Antd百分比条形图",
             compKey: "AntdPercentBar",
-            type: "条形图",
-            typeKey: "bar",
+            categorize: "chart",
+            subCategorize: "bar",
         };
     }
 
@@ -134,10 +134,8 @@ class AntdPercentBarDefinition extends AbstractBarDefinition {
                 },
             },
             data: {
-                dataSource: 'static',
-                staticData: {
-                    data: data
-                },
+                sourceType: 'static',
+                staticData: data
             },
         };
     }

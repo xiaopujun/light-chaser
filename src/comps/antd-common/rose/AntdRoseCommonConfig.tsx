@@ -2,7 +2,7 @@ import React, {Component, useState} from 'react';
 import {WritableRoseOptions} from "../types";
 import {RoseOptions} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
-import AntdCommonRose from "./AntdCommonRose";
+import AntdCommonRoseController from "./AntdCommonRoseController";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
 import AntdCommonUtil from "../AntdCommonUtil";
@@ -14,17 +14,17 @@ import {ConfigType} from "../../../designer/right/ConfigContent";
 export default class AntdRoseCommonStyleConfig extends Component<ConfigType> {
 
     roseGraphicsChange = (config: WritableRoseOptions) => {
-        const controller = this.props.controller as AntdCommonRose;
+        const controller = this.props.controller as AntdCommonRoseController;
         controller.update({style: config});
     }
 
     legendChange = (legend: Legend) => {
-        const controller = this.props.controller as AntdCommonRose;
+        const controller = this.props.controller as AntdCommonRoseController;
         controller.update({style: {legend}});
     }
 
     render() {
-        const controller = this.props.controller as AntdCommonRose;
+        const controller = this.props.controller as AntdCommonRoseController;
         const roseConfig = controller.getConfig()!.style as RoseOptions;
         return (
             <>
@@ -70,11 +70,10 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                         children: [
                             {
                                 key: 'radius',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '外径',
                                 value: config.radius,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 1,
                                     step: 0.01
@@ -83,12 +82,11 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                             {
                                 id: 'startAngle',
                                 key: 'startAngle',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '起始角',
                                 value: (config.startAngle || 0) / Math.PI,
                                 config: {
                                     suffix: 'Π',
-                                    type: 'number',
                                     min: 0,
                                     max: 2,
                                     step: 0.01
@@ -96,11 +94,10 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                             },
                             {
                                 key: 'innerRadius',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '内径',
                                 value: config.innerRadius,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 1,
                                     step: 0.01
@@ -109,12 +106,11 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                             {
                                 id: 'endAngle',
                                 key: 'endAngle',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '结束角',
                                 value: (config.endAngle || 2 * Math.PI) / Math.PI,
                                 config: {
                                     suffix: 'Π',
-                                    type: 'number',
                                     min: 0,
                                     max: 2,
                                     step: 0.01
@@ -129,21 +125,15 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                                         label: '描边色',
                                         value: '#1c1c1c',
                                         config: {
-                                            width: '100%',
-                                            radius: 3,
-                                            showBorder: true,
                                             showText: true,
-                                            height: 16,
-                                            hideControls: true
                                         }
                                     },
                                     {
                                         key: 'lineWidth',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: '描边宽',
                                         value: 0,
                                         config: {
-                                            type: 'number',
                                             min: 0,
                                             max: 30,
                                         }
@@ -156,7 +146,7 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                                 label: '颜色',
                                 value: '#1c1c1c',
                                 config: {
-                                    gridColumn: '1 / 3',
+                                    containerStyle: {gridColumn: '1 / 3'},
                                 }
                             },
                         ]
@@ -174,34 +164,29 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                         children: [
                             {
                                 key: 'offset',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '偏移',
                                 value: _config.label?.offset || 0,
-                                config: {
-                                    type: 'number',
-                                }
                             },
                             {
                                 key: 'style',
                                 children: [
                                     {
                                         key: 'fontSize',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: '字号',
                                         value: (_config.label?.style as ShapeAttrs)?.fontSize || 12,
                                         config: {
-                                            type: 'number',
                                             min: 0,
                                             max: 100,
                                         }
                                     },
                                     {
                                         key: 'fontWeight',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: '加粗',
                                         value: (_config.label?.style as ShapeAttrs)?.fontWeight || 500,
                                         config: {
-                                            type: 'number',
                                             min: 100,
                                             max: 900,
                                             step: 100
@@ -213,12 +198,7 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                                         label: '颜色',
                                         value: (_config.label?.style as ShapeAttrs)?.fill,
                                         config: {
-                                            width: '100%',
-                                            radius: 3,
-                                            showBorder: true,
                                             showText: true,
-                                            height: 16,
-                                            hideControls: true
                                         }
                                     }
                                 ]
@@ -233,12 +213,11 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                             {
                                 id: 'labelRotate',
                                 key: 'rotate',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '旋转角度',
                                 rules: "{autoRotate} === 'false'",
                                 value: _config.label?.rotate || 0,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 2,
                                     step: 0.01
@@ -258,7 +237,7 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
 }
 
 
-export const AntdRoseFieldMapping: React.FC<ConfigType<AntdCommonRose>> = ({controller}) => {
+export const AntdRoseFieldMapping: React.FC<ConfigType<AntdCommonRoseController>> = ({controller}) => {
     const config = controller.getConfig()?.style;
     const options = AntdCommonUtil.getDataFieldOptions(controller);
     const schema: Control = {

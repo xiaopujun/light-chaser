@@ -1,7 +1,7 @@
-import {BaseInfoType} from "../../../designer/DesignerType";
 import rangeColumnImg from "./range-column.png";
-import {AntdColumnProps} from "../../antd-common/column/AntdCommonColumn";
+import {AntdColumnProps} from "../../antd-common/column/AntdCommonColumnController";
 import AbstractColumnDefinition from "../../antd-common/column/AbstractColumnDefinition";
+import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
 
 class AntdRangeColumnDefinition extends AbstractColumnDefinition {
 
@@ -9,8 +9,8 @@ class AntdRangeColumnDefinition extends AbstractColumnDefinition {
         return {
             compName: "Antd区间柱状图",
             compKey: "AntdRangeColumn",
-            type: "柱状图",
-            typeKey: "column",
+            categorize: "chart",
+            subCategorize: "column",
         };
     }
 
@@ -94,10 +94,8 @@ class AntdRangeColumnDefinition extends AbstractColumnDefinition {
                 },
             },
             data: {
-                dataSource: 'static',
-                staticData: {
-                    data: data
-                },
+                sourceType: 'static',
+                staticData: data
             },
         };
     }

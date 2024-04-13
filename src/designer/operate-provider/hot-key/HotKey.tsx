@@ -1,7 +1,7 @@
 import {Component} from 'react';
 import eventOperateStore from "../EventOperateStore";
 
-export enum TriggerType {
+export enum HotKeyTriggerType {
     //单次触发
     SINGLE,
     //连续触发
@@ -15,7 +15,7 @@ export interface HotKeyConfigType {
         //快捷键生效范围，布设置（默认）所有范围内可用。值为css选择器
         range?: string,
         //快捷键触发类型
-        triggerType?: TriggerType
+        triggerType?: HotKeyTriggerType
     }
 }
 
@@ -58,16 +58,16 @@ class HotKey extends Component<HotKeyProps> {
      * @param e 鼠标事件对象
      * @param hotKey 当前按下的快捷键
      */
-    doHandler = (e: any, hotKey: string) => {
-        const {handler, triggerType = TriggerType.SINGLE, range} = this.handlerMapping[hotKey] || {};
+    doHandler = (e: KeyboardEvent, hotKey: string) => {
+        const {handler, triggerType = HotKeyTriggerType.SINGLE, range} = this.handlerMapping[hotKey] || {};
         if (handler) {
-            if ((triggerType === TriggerType.SINGLE && this.existHandlerKey !== hotKey) || triggerType === TriggerType.COILED) {
+            if ((triggerType === HotKeyTriggerType.SINGLE && this.existHandlerKey !== hotKey) || triggerType === HotKeyTriggerType.COILED) {
                 const {pointerTarget} = eventOperateStore;
                 //如果设定了指定范围并且不在范围内则不执行
                 if (range) {
                     //先从缓存中获取dom元素，如果没有则从document中获取并缓存
                     const targetDom = this.getSpecialDomCache(range);
-                    if (!targetDom || !targetDom.contains(pointerTarget))
+                    if (!targetDom || !targetDom.contains(pointerTarget as Node))
                         return;
                 }
                 //其余情况均执行快捷键，如果是数组则遍历执行，反之直接执行
@@ -80,17 +80,17 @@ class HotKey extends Component<HotKeyProps> {
         }
     }
 
-    keyDown = (e: any) => {
+    keyDown = (e: KeyboardEvent) => {
         const key = e.key.toLowerCase();
         if (!this.currHotKey.some(item => item === key))
             this.currHotKey.push(key);
-        let hotKey = this.currHotKey.join(' + ');
+        const hotKey = this.currHotKey.join(' + ');
         if (shieldKeyList.some(item => item === hotKey))
             e.preventDefault();
         this.doHandler(e, hotKey);
     };
 
-    keyUp = (e: any) => {
+    keyUp = (e: KeyboardEvent) => {
         const key = e.key.toLowerCase();
         if (this.currHotKey.some(item => item === key)) {
             this.currHotKey = this.currHotKey.filter(item => item !== key);

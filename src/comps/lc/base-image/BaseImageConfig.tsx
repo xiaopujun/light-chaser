@@ -6,15 +6,15 @@ import {ConfigType} from "../../../designer/right/ConfigContent";
 
 export const BaseImageStyleConfig: React.FC<ConfigType<BaseImageController>> = ({controller}) => {
     const {style} = controller.getConfig()!;
-    let {type, onLineUrl, localUrl} = style!;
+    const {type, onLineUrl, localUrl, opacity} = style!;
 
     const [, setCount] = useState(0);
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
         const {id, data, dataFragment, reRender} = fieldChangeData;
         if (id === 'localUrl') {
-            const {hashCode, value} = data as Record<string, any>;
-            controller.update({style: {localUrl: value, hashCode}});
+            const {hash, url} = data as Record<string, any>;
+            controller.update({style: {localUrl: url, hash}});
         } else {
             controller.update(dataFragment);
         }
@@ -25,9 +25,9 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImageController>> = (
     const schema: Control = {
         key: 'style',
         type: 'grid',
+        config: {columns: 2},
         children: [
             {
-                id: 'imageType',
                 key: 'type',
                 type: 'radio',
                 label: '来源',
@@ -37,7 +37,10 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImageController>> = (
                     options: [
                         {label: '本地', value: 'local'},
                         {label: '在线', value: 'online'},
-                    ]
+                    ],
+                    containerStyle: {
+                        gridColumn: '1/3'
+                    }
                 }
             },
             {
@@ -45,7 +48,12 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImageController>> = (
                 rules: "{type} === 'online'",
                 type: 'input',
                 label: '链接',
-                value: localUrl
+                value: onLineUrl,
+                config: {
+                    containerStyle: {
+                        gridColumn: '1/3'
+                    }
+                }
             },
             {
                 id: 'localUrl',
@@ -53,7 +61,25 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImageController>> = (
                 rules: "{type} === 'local'",
                 type: 'image-upload',
                 label: '上传',
-                value: onLineUrl
+                value: localUrl,
+                config: {
+                    accept: 'image/*',
+                    size: 3,
+                    containerStyle: {
+                        gridColumn: '1/3'
+                    }
+                }
+            },
+            {
+                key: 'opacity',
+                type: 'number-input',
+                label: '透明度',
+                value: opacity,
+                config: {
+                    min: 0,
+                    max: 1,
+                    step: 0.1
+                }
             }
         ]
     }

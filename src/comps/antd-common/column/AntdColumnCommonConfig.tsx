@@ -3,7 +3,7 @@ import {AntdCartesianCoordinateSys} from "../config/AntdFragment";
 import {Column, ColumnOptions} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import AbstractController from "../../../framework/core/AbstractController";
-import {AntdColumnProps} from "./AntdCommonColumn";
+import {AntdColumnProps} from "./AntdCommonColumnController";
 import {WritableColumnOptions} from "../types";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
@@ -79,37 +79,27 @@ export const AntdColumnGraphics: React.FC<AntdColumnGraphicsProps> = ({config, o
                 children: [
                     {
                         key: 'maxColumnWidth',
-                        type: 'input',
+                        type: 'number-input',
                         label: '宽度',
                         value: 12,
                         config: {
-                            type: 'number',
                             min: 0,
                             max: 100,
                         }
                     },
-
-                ]
-            },
-            {
-                type: 'grid',
-                children: [
                     {
                         id: 'columnColor',
                         type: 'color-mode',
                         label: '颜色',
                         value: '#1c1c1c',
                         config: {
-                            width: '100%',
-                            radius: 3,
-                            showBorder: true,
-                            showText: true,
-                            height: 16,
-                            hideControls: true
+                            containerStyle: {
+                                gridColumn: '1/3'
+                            }
                         }
                     }
                 ]
-            }
+            },
         ]
     }
 

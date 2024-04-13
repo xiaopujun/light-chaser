@@ -1,0 +1,50 @@
+@import "../../../designer/style/DesignerStyle.less";
+
+.lc-accordion {
+  color: @lc-config-title;
+  background-color: rgba(0, 0, 0, 0);
+
+  .accordion-header {
+    font-size: @lc-font-ml;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: @lc-config-title;
+    cursor: pointer;
+    padding: 10px 0;
+    width: 100%;
+    text-align: left;
+    border-bottom: none;
+    outline: none;
+    transition: 0.4s;
+
+    .title-switch {
+      .accordion-icon {
+        transition: transform 0.2s;
+        transform: rotate(0deg);
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+    }
+  }
+
+  .accordion-active, .accordion-header:hover {
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  .accordion-active {
+    .title-switch {
+      .accordion-icon {
+        transition: transform 0.2s;
+        transform: rotate(90deg);
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+    }
+  }
+
+  .lc-accordion-body {
+    padding: 0 5px;
+    background-color: rgba(0, 0, 0, 0);
+  }
+}
+

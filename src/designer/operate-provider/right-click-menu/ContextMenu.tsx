@@ -1,12 +1,16 @@
-import {Component} from 'react';
 import {observer} from "mobx-react";
 import contextMenuStore from "./ContextMenuStore";
 import './OperateMenu.less';
 import {
     CopyOutlined,
     DeleteOutlined,
-    EyeInvisibleOutlined, GroupOutlined,
-    LockOutlined, UngroupOutlined,
+    DownOutlined,
+    EyeInvisibleOutlined,
+    GroupOutlined,
+    LockOutlined,
+    LogoutOutlined,
+    UngroupOutlined,
+    UpOutlined,
     VerticalAlignBottomOutlined,
     VerticalAlignTopOutlined
 } from "@ant-design/icons";
@@ -18,48 +22,62 @@ import {
     doLock,
     doUnGrouping,
     doUnLock,
-    toBottom,
-    toTop
+    layerMoveDown,
+    layerMoveUp,
+    layerToBottom,
+    layerToTop,
+    removeFromGroup
 } from "../hot-key/HotKeyImpl";
 import eventOperateStore from "../EventOperateStore";
-import designerStore from "../../store/DesignerStore";
-import LayerUtil from "../../float-configs/layer-list/util/LayerUtil";
+import layerManager from "../../manager/LayerManager.ts";
+import LayerUtil from "../../left/layer-list/util/LayerUtil";
 
-class ContextMenu extends Component {
 
-    menuList = [
-        {
-            name: '复制',
-            icon: CopyOutlined,
-            onClick: doCopy,
-        },
-        {
-            name: '置顶',
-            icon: VerticalAlignTopOutlined,
-            onClick: toTop,
-        },
-        {
-            name: '置底',
-            icon: VerticalAlignBottomOutlined,
-            onClick: toBottom,
-        },
-        {
-            name: '删除',
-            icon: DeleteOutlined,
-            onClick: doDelete,
-        },
-        {
-            name: '隐藏',
-            icon: EyeInvisibleOutlined,
-            onClick: doHide,
-        },
-    ];
+const menuList = [
+    {
+        name: '复制',
+        icon: CopyOutlined,
+        onClick: doCopy,
+    },
+    {
+        name: '上移',
+        icon: UpOutlined,
+        onClick: layerMoveUp,
+    },
+    {
+        name: '下移',
+        icon: DownOutlined,
+        onClick: layerMoveDown,
+    },
+    {
+        name: '置顶',
+        icon: VerticalAlignTopOutlined,
+        onClick: layerToTop,
+    },
+    {
+        name: '置底',
+        icon: VerticalAlignBottomOutlined,
+        onClick: layerToBottom,
+    },
+    {
+        name: '删除',
+        icon: DeleteOutlined,
+        onClick: doDelete,
+    },
+    {
+        name: '隐藏',
+        icon: EyeInvisibleOutlined,
+        onClick: doHide,
+    },
+];
 
-    calculateMenus = () => {
-        const menus = [...this.menuList];
+const ContextMenu = () => {
+
+    const calculateMenus = () => {
+        const menus = [...menuList];
         const {targetIds} = eventOperateStore;
         if (targetIds.length === 0) return menus;
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         const lockState = !!layerConfigs[targetIds[0]]?.lock;
         if (lockState) {
             menus.push({
@@ -91,15 +109,22 @@ class ContextMenu extends Component {
                 onClick: doUnGrouping,
             })
         }
+        const noGroup = targetIds.some((id: string) => !layerConfigs[id].pid);
+        if (!noGroup)
+            menus.push({
+                name: '移出分组',
+                icon: LogoutOutlined,
+                onClick: removeFromGroup
+            })
         return menus;
     }
 
-    buildMenuList = () => {
+    const buildMenuList = () => {
         const menuListDom = [];
-        const menus = this.calculateMenus();
+        const menus = calculateMenus();
         for (let i = 0; i < menus.length; i++) {
-            let menuItem = menus[i];
-            let Icon = menuItem.icon;
+            const menuItem = menus[i];
+            const Icon = menuItem.icon;
             menuListDom.push(
                 <div key={i + ''} className={'menu-item'} onClick={menuItem.onClick}>
                     <label><Icon/></label>
@@ -110,21 +135,20 @@ class ContextMenu extends Component {
         return menuListDom;
     }
 
-    render() {
-        const {visible, position = [0, 0]} = contextMenuStore;
-        return (
-            <>
-                {visible &&
+    const {visible, position = [0, 0]} = contextMenuStore;
+    return (
+        <>
+            {visible &&
                 <div className={'context-menu'} style={{
                     position: 'fixed',
                     top: position[1],
                     left: position[0]
                 }}>
-                    {this.buildMenuList()}
+                    {buildMenuList()}
                 </div>}
-            </>
-        );
-    }
+        </>
+    );
+
 }
 
 export default observer(ContextMenu);

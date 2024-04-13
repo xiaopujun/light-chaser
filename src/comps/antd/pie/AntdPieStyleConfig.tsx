@@ -63,7 +63,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                     }
                 };
                 onChange(defaultTitleConfig);
-                  setConfig({...ObjectUtil.merge(_config, defaultTitleConfig)});
+                setConfig({...ObjectUtil.merge(_config, defaultTitleConfig)});
             } else {
                 onChange({statistic: {content: false}});
                 setConfig({...ObjectUtil.merge(_config, {statistic: {title: false}})});
@@ -105,11 +105,10 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                         children: [
                             {
                                 key: 'radius',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '外径',
                                 value: config.radius,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 1,
                                     step: 0.01
@@ -118,12 +117,11 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                             {
                                 id: 'startAngle',
                                 key: 'startAngle',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '起始角',
                                 value: (config.startAngle || 0) / Math.PI,
                                 config: {
                                     suffix: 'Π',
-                                    type: 'number',
                                     min: 0,
                                     max: 2,
                                     step: 0.01
@@ -131,11 +129,10 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                             },
                             {
                                 key: 'innerRadius',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '内径',
                                 value: config.innerRadius,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 1,
                                     step: 0.01
@@ -144,12 +141,11 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                             {
                                 id: 'endAngle',
                                 key: 'endAngle',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '结束角',
                                 value: (config.endAngle || 2 * Math.PI) / Math.PI,
                                 config: {
                                     suffix: 'Π',
-                                    type: 'number',
                                     min: 0,
                                     max: 2,
                                     step: 0.01
@@ -164,21 +160,15 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                         label: '描边色',
                                         value: '#1c1c1c',
                                         config: {
-                                            width: '100%',
-                                            radius: 3,
-                                            showBorder: true,
                                             showText: true,
-                                            height: 16,
-                                            hideControls: true
                                         }
                                     },
                                     {
                                         key: 'lineWidth',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: '描边宽',
                                         value: 0,
                                         config: {
-                                            type: 'number',
                                             min: 0,
                                             max: 30,
                                         }
@@ -191,7 +181,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                 label: '颜色',
                                 value: '#1c1c1c',
                                 config: {
-                                    gridColumn: '1 / 3',
+                                    containerStyle: {gridColumn: '1 / 3',},
                                 }
                             },
                         ]
@@ -229,22 +219,20 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                         children: [
                                             {
                                                 key: 'fontSize',
-                                                type: 'input',
+                                                type: 'number-input',
                                                 label: '字号',
                                                 value: ((_config.statistic?.title as StatisticText)?.style as ShapeAttrs)?.fontSize || 12,
                                                 config: {
-                                                    type: 'number',
                                                     min: 0,
                                                     max: 100,
                                                 }
                                             },
                                             {
                                                 key: 'fontWeight',
-                                                type: 'input',
+                                                type: 'number-input',
                                                 label: '加粗',
                                                 value: ((_config.statistic?.title as StatisticText)?.style as ShapeAttrs)?.fontWeight || 500,
                                                 config: {
-                                                    type: 'number',
                                                     min: 100,
                                                     max: 900,
                                                     step: 100
@@ -256,33 +244,22 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                                 label: '颜色',
                                                 value: ((_config.statistic?.title as StatisticText)?.style as ShapeAttrs)?.color,
                                                 config: {
-                                                    width: '100%',
-                                                    radius: 3,
-                                                    showBorder: true,
                                                     showText: true,
-                                                    height: 16,
-                                                    hideControls: true
                                                 }
                                             }
                                         ]
                                     },
                                     {
                                         key: 'offsetX',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: 'x偏移',
                                         value: (_config.statistic?.title as StatisticText)?.offsetX || 0,
-                                        config: {
-                                            type: 'number',
-                                        }
                                     },
                                     {
                                         key: 'offsetY',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: 'y偏移',
                                         value: (_config.statistic?.title as StatisticText)?.offsetY || 0,
-                                        config: {
-                                            type: 'number',
-                                        }
                                     },
                                 ]
                             }
@@ -321,22 +298,20 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                         children: [
                                             {
                                                 key: 'fontSize',
-                                                type: 'input',
+                                                type: 'number-input',
                                                 label: '字号',
                                                 value: ((_config.statistic?.content as StatisticText)?.style as ShapeAttrs)?.fontSize || 12,
                                                 config: {
-                                                    type: 'number',
                                                     min: 0,
                                                     max: 100,
                                                 }
                                             },
                                             {
                                                 key: 'fontWeight',
-                                                type: 'input',
+                                                type: 'number-input',
                                                 label: '加粗',
                                                 value: ((_config.statistic?.content as StatisticText)?.style as ShapeAttrs)?.fontWeight || 500,
                                                 config: {
-                                                    type: 'number',
                                                     min: 100,
                                                     max: 900,
                                                     step: 100
@@ -348,33 +323,22 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                                 label: '颜色',
                                                 value: ((_config.statistic?.content as StatisticText)?.style as ShapeAttrs)?.color,
                                                 config: {
-                                                    width: '100%',
-                                                    radius: 3,
-                                                    showBorder: true,
                                                     showText: true,
-                                                    height: 16,
-                                                    hideControls: true
                                                 }
                                             }
                                         ]
                                     },
                                     {
                                         key: 'offsetX',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: 'x偏移',
                                         value: (_config.statistic?.content as StatisticText)?.offsetX || 0,
-                                        config: {
-                                            type: 'number',
-                                        }
                                     },
                                     {
                                         key: 'offsetY',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: 'y偏移',
                                         value: (_config.statistic?.content as StatisticText)?.offsetY || 0,
-                                        config: {
-                                            type: 'number',
-                                        }
                                     },
                                 ]
                             }
@@ -404,11 +368,10 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                             },
                             {
                                 key: 'offset',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '偏移',
                                 value: _config.label?.offset || 0,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 100,
                                 }
@@ -418,22 +381,20 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                 children: [
                                     {
                                         key: 'fontSize',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: '字号',
                                         value: (_config.label?.style as ShapeAttrs)?.fontSize || 12,
                                         config: {
-                                            type: 'number',
                                             min: 0,
                                             max: 100,
                                         }
                                     },
                                     {
                                         key: 'fontWeight',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: '加粗',
                                         value: (_config.label?.style as ShapeAttrs)?.fontWeight || 500,
                                         config: {
-                                            type: 'number',
                                             min: 100,
                                             max: 900,
                                             step: 100
@@ -445,12 +406,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                         label: '颜色',
                                         value: (_config.label?.style as ShapeAttrs)?.fill,
                                         config: {
-                                            width: '100%',
-                                            radius: 3,
-                                            showBorder: true,
                                             showText: true,
-                                            height: 16,
-                                            hideControls: true
                                         }
                                     }
                                 ]
@@ -465,12 +421,11 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                             {
                                 id: 'labelRotate',
                                 key: 'rotate',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '旋转角度',
                                 rules: "{autoRotate} === 'false'",
                                 value: _config.label?.rotate || 0,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 2,
                                     step: 0.01

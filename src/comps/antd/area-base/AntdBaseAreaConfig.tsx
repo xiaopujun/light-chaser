@@ -71,7 +71,9 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
             {
                 type: 'grid',
                 config: {
-                    margin: '0 0 15px 0',
+                    containerStyle: {
+                        marginBottom: 10
+                    }
                 },
                 children: [
                     {
@@ -80,14 +82,16 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
                         key: 'startOnZero',
                         value: !!config?.startOnZero,
                         config: {
-                            margin: '0 0 10px 0'
+                            containerStyle: {
+                                marginBottom: 10
+                            }
                         }
                     },
                 ]
             },
             {
                 label: '数据点',
-                type: 'item-panel',
+                type: 'card-panel',
                 children: [
                     {
                         type: 'grid',
@@ -100,11 +104,10 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
                                 children: [
                                     {
                                         label: '尺寸',
-                                        type: 'input',
+                                        type: 'number-input',
                                         key: 'size',
                                         value: (config?.point as MappingOptions)?.size as number || 0,
                                         config: {
-                                            type: 'number',
                                             min: 0,
                                             max: 10,
                                         }
@@ -116,16 +119,29 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
                                                 key: 'fill',
                                                 type: 'color-picker',
                                                 label: '颜色',
-                                                value: (config?.point?.style as ShapeStyle)?.fill || '#fff',
+                                                value: (config?.point?.style as ShapeStyle)?.fill,
                                                 config: {
-                                                    width: '100%',
-                                                    radius: 3,
-                                                    showBorder: true,
                                                     showText: true,
-                                                    height: 16,
-                                                    hideControls: true
                                                 }
-                                            }
+                                            },
+                                            {
+                                                key: 'lineWidth',
+                                                type: 'number-input',
+                                                label: '描边宽',
+                                                value: (config?.point?.style as ShapeStyle)?.lineWidth,
+                                                config: {
+                                                    min: 0
+                                                }
+                                            },
+                                            {
+                                                key: 'stroke',
+                                                type: 'color-picker',
+                                                label: '描边色',
+                                                value: (config?.point?.style as ShapeStyle)?.stroke,
+                                                config: {
+                                                    showText: true,
+                                                }
+                                            },
                                         ]
                                     },
                                     {
@@ -151,7 +167,7 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
             },
             {
                 label: '数据线',
-                type: 'item-panel',
+                type: 'card-panel',
                 children: [
                     {
                         type: 'grid',
@@ -170,11 +186,10 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
                                 key: 'line',
                                 children: [{
                                     key: 'size',
-                                    type: 'input',
+                                    type: 'number-input',
                                     label: '宽度',
                                     value: config?.line?.size as number || 0,
                                     config: {
-                                        type: 'number',
                                         min: 0,
                                         max: 10,
                                     }
@@ -185,12 +200,7 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
                                         label: '颜色',
                                         value: config?.line?.color as string || '#fff',
                                         config: {
-                                            width: '100%',
-                                            radius: 3,
-                                            showBorder: true,
                                             showText: true,
-                                            height: 16,
-                                            hideControls: true
                                         }
                                     }]
                             }
@@ -200,7 +210,7 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
             },
             {
                 label: '数据面',
-                type: 'item-panel',
+                type: 'card-panel',
                 children: [
                     {
                         key: 'areaStyle',
@@ -217,11 +227,7 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
                                     label: '颜色',
                                     value: (config?.point?.style as ShapeStyle)?.fill || '#fff',
                                     config: {
-                                        width: '100%',
-                                        radius: 3,
-                                        showBorder: true,
                                         showText: true,
-                                        height: 16
                                     }
                                 }]
                             }

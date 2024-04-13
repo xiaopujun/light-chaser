@@ -1,10 +1,17 @@
-import {PureComponent} from 'react';
+import React, {memo, useEffect, useRef, useState} from 'react';
 import Ruler, {RulerProps} from "@scena/react-ruler";
 import eventOperateStore from "../operate-provider/EventOperateStore";
-import {IPoint} from "../../blueprint/store/BPStore";
+import {IPoint} from "../blueprint/manager/BluePrintManager.ts";
+import designerLeftStore from "../left/DesignerLeftStore";
+
+export interface DesignerRulerRef {
+    ruleWheel: () => void;
+    ruleDrag: () => void;
+}
 
 interface DesignerRulerProps {
     offset?: IPoint;
+    children?: React.ReactNode;
 }
 
 /**
@@ -28,107 +35,108 @@ interface DesignerRulerProps {
  * 则鼠标指针在当前缩放系数下的位置为：rulerP = startP + (mouOffset / scale)
  * 鼠标移动后的标尺起始位置为：scrollPos = startP + (mouOffset / scale)
  */
-class DesignerRuler extends PureComponent<RulerProps & DesignerRulerProps> {
+const DesignerRuler = memo((props: RulerProps & DesignerRulerProps) => {
+    const [, setCount] = useState(0);
+    const rulerXRef = useRef<Ruler | null>(null);
+    const rulerYRef = useRef<Ruler | null>(null);
+    const unitRef = useRef(50);
+    const scrollPosRef = useRef<IPoint>({x: 0, y: 0});
+    const baseOffsetRef = useRef(20);
 
-    state = {
-        render: 0
-    }
-
-    rulerX: any = null;
-    rulerY: any = null;
-
-    unit = 50;
-
-    scrollPos: IPoint = {x: 0, y: 0};
-
-    baseOffset = 20;
-
-    ruleWheel = (scale: number) => {
-        const {dsContentRef} = eventOperateStore;
-        const {x, y} = dsContentRef?.getBoundingClientRect()!;
-        this.scrollPos.x = -(x - 80) / scale;
-        this.scrollPos.y = -(y - 70) / scale;
-
-        this.unit = Math.floor(50 / scale);
-        this.setState({render: this.state.render + 1})
-    }
-
-    ruleDrag = () => {
-        const {dsContentRef, scale} = eventOperateStore;
-        const {x, y} = dsContentRef?.getBoundingClientRect()!;
-        this.scrollPos.x = -(x - 80) / scale;
-        this.scrollPos.y = -(y - 70) / scale;
-        this.rulerX && this.rulerX.scroll(this.scrollPos.x);
-        this.rulerY && this.rulerY.scroll(this.scrollPos.y);
-    }
-
-    componentDidMount() {
-        const {setRuleRef} = eventOperateStore;
-        setRuleRef(this);
-    }
-
-    render() {
+    const ruleWheel = () => {
         const {scale} = eventOperateStore;
-        return (
-            <div className={'lc-ruler'} style={{position: 'relative'}}>
-                <div style={{
-                    position: 'absolute',
-                    width: 20,
-                    height: 20,
-                    color: '#838383',
-                    textAlign: 'center',
-                    fontSize: 12,
-                    top: -1
-                }}>px
-                </div>
-                <div className={'lc-ruler-horizontal'}
-                     style={{
-                         height: this.baseOffset,
-                         width: `calc(100% - ${this.baseOffset}px)`,
-                         position: 'relative',
-                         left: this.baseOffset
-                     }}>
-                    <Ruler ref={ref => this.rulerX = ref}
-                           scrollPos={this.scrollPos.x}
-                           zoom={scale}
-                           lineColor={'#444b4d'}
-                           textColor={'#a6a6a6'}
-                           segment={2}
-                           negativeRuler={true}
-                           textOffset={[0, 10]}
-                           backgroundColor={'#1f1f1f'}
-                           unit={this.unit}/>
-                </div>
-                <div className={'lc-ruler-vertical'}
-                     style={{
-                         width: this.baseOffset,
-                         height: window.innerHeight - this.baseOffset - 90,
-                         position: 'relative',
-                         overflow: 'hidden'
-                     }}>
-                    <Ruler ref={ref => this.rulerY = ref}
-                           type={'vertical'}
-                           scrollPos={this.scrollPos.y}
-                           lineColor={'#444b4d'}
-                           textColor={'#a6a6a6'}
-                           zoom={scale}
-                           segment={2}
-                           negativeRuler={true}
-                           textOffset={[10, 0]}
-                           backgroundColor={'#1f1f1f'}
-                           unit={this.unit}/>
-                </div>
-                <div className={'lc-ruler-content'} style={{
-                    position: 'absolute',
-                    overflow: 'hidden',
-                    top: this.baseOffset,
-                    left: this.baseOffset,
-                }}>
-                    {this.props.children}
-                </div>
-            </div>
-        );
+        const {dsContentRef} = eventOperateStore;
+        const {designerLeftRef} = designerLeftStore;
+        const {x, y} = dsContentRef?.getBoundingClientRect()!;
+        const {width} = designerLeftRef?.getBoundingClientRect()!;
+        scrollPosRef.current.x = -(x - width - 20) / scale;
+        scrollPosRef.current.y = -(y - 70) / scale;
+
+        unitRef.current = Math.floor(50 / scale);
+        setCount(Date.now());
     }
-}
+
+    //todo 数字魔法值要统一公共变量处理
+    const ruleDrag = () => {
+        const {dsContentRef, scale} = eventOperateStore;
+        const {designerLeftRef} = designerLeftStore;
+        const {x, y} = dsContentRef?.getBoundingClientRect()!;
+        const {width} = designerLeftRef?.getBoundingClientRect()!;
+        scrollPosRef.current.x = -(x - width - 20) / scale;
+        scrollPosRef.current.y = -(y - 70) / scale;
+        rulerXRef.current && rulerXRef.current.scroll(scrollPosRef.current.x);
+        rulerYRef.current && rulerYRef.current.scroll(scrollPosRef.current.y);
+    }
+
+    useEffect(() => {
+        const {setRuleRef} = eventOperateStore;
+        setRuleRef({ruleWheel, ruleDrag});
+        return () => {
+            setRuleRef(null);
+        }
+    }, []);
+
+    const {scale} = eventOperateStore;
+
+    return (
+        <div className={'lc-ruler'} style={{position: 'relative'}}>
+            <div style={{
+                position: 'absolute',
+                width: 20,
+                height: 20,
+                color: '#838383',
+                textAlign: 'center',
+                fontSize: 12,
+                top: -1
+            }}>px
+            </div>
+            <div className={'lc-ruler-horizontal'}
+                 style={{
+                     height: baseOffsetRef.current,
+                     width: `calc(100% - ${baseOffsetRef.current}px)`,
+                     position: 'relative',
+                     left: baseOffsetRef.current
+                 }}>
+                <Ruler ref={rulerXRef}
+                       scrollPos={scrollPosRef.current.x}
+                       zoom={scale}
+                       lineColor={'#444b4d'}
+                       textColor={'#a6a6a6'}
+                       segment={2}
+                       negativeRuler={true}
+                       textOffset={[0, 10]}
+                       backgroundColor={'#1f1f1f'}
+                       unit={unitRef.current}/>
+            </div>
+            <div className={'lc-ruler-vertical'}
+                 style={{
+                     width: baseOffsetRef.current,
+                     height: window.innerHeight - baseOffsetRef.current - 90,
+                     position: 'relative',
+                     overflow: 'hidden'
+                 }}>
+                <Ruler ref={rulerYRef}
+                       type={'vertical'}
+                       scrollPos={scrollPosRef.current.y}
+                       lineColor={'#444b4d'}
+                       textColor={'#a6a6a6'}
+                       zoom={scale}
+                       segment={2}
+                       negativeRuler={true}
+                       textOffset={[10, 0]}
+                       backgroundColor={'#1f1f1f'}
+                       unit={unitRef.current}/>
+            </div>
+            <div className={'lc-ruler-content'} style={{
+                position: 'absolute',
+                overflow: 'hidden',
+                top: baseOffsetRef.current,
+                left: baseOffsetRef.current,
+            }}>
+                {props.children}
+            </div>
+        </div>
+    );
+})
 
 export default DesignerRuler;

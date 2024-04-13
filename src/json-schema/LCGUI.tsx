@@ -1,7 +1,7 @@
 import {Control, ControlValueType} from "./SchemaTypes";
 import React, {ReactNode} from "react";
 import LCGUIUtil from "./LCGUIUtil";
-import UIMap from "../ui";
+import UIMap from "./ui";
 
 export interface FieldChangeData {
     id?: string;
@@ -13,7 +13,7 @@ export interface FieldChangeData {
 }
 
 export interface LCGUIProps {
-    schema: Control;
+    schema: Control | Control[];
     onFieldChange?: (fieldChangeData: FieldChangeData) => void;
 }
 
@@ -55,11 +55,14 @@ export class LCGUI extends React.Component<LCGUIProps> {
         }
         //从control本层级开始逐级向上匹配，直到所有变量都匹配结束
         const analyze = (control: Control, variable: string[], rules: string): string => {
+            if (variable.length === 0)
+                return rules;
             const {parent} = control;
             if (parent && "children" in parent) {
                 //解析parent的所有子节点control(与当前control同级)
                 const {children} = parent;
                 for (let i = 0; i < children!.length; i++) {
+                    if (variable.length === 0) break;
                     const child = children![i];
                     const matchIndex = variable.indexOf(child.key!);
                     if (child.key && matchIndex !== -1) {
@@ -69,9 +72,10 @@ export class LCGUI extends React.Component<LCGUIProps> {
                 }
             }
             if (variable.length > 0 && parent) {
-                //解析parent的其他非children属性
+                //解析parent层级的key是否匹配
                 const matchIndex = variable.indexOf(parent!.key!);
-                if (parent!.key && matchIndex !== -1) {
+                if (parent!.key && parent.value && matchIndex !== -1) {
+                    //parent层级在同时匹配上key，同时value属性有值，同时variable中有匹配项时，才进行替换
                     rules = rules.replace(`{${parent!.key}}`, `'${parent.value}'`)
                     variable.splice(matchIndex, 1);
                 }
@@ -85,7 +89,7 @@ export class LCGUI extends React.Component<LCGUIProps> {
         return eval(analyze(control, variable, rules));
     }
 
-    buildConfigUI = (control: Control, schemaKeyPath: SchemaPathNode[], dataKeyPath: string[], childIndex: number): any => {
+    buildConfigUI = (control: Control, schemaKeyPath: SchemaPathNode[], dataKeyPath: string[], childIndex: number): ReactNode[] => {
         const nodes: ReactNode[] = [];
         if (!control) return nodes;
         if ("children" in control) {
@@ -103,7 +107,6 @@ export class LCGUI extends React.Component<LCGUIProps> {
             children && children.forEach((child: Control, index: number) => {
                 childLevel.index = index;
                 child.parent = control;
-                //todo 优化当前的序列化产生新对象的方式，找一种更好的方式生成新的对象
                 tempNodes.push(this.buildConfigUI(child, JSON.parse(JSON.stringify(schemaKeyPath)), [...dataKeyPath], index));
             })
             //构建本级schema路径下的ReactNode
@@ -112,7 +115,7 @@ export class LCGUI extends React.Component<LCGUIProps> {
                 nodes.push([...tempNodes]);
             } else {
                 const {type, config, value, id, reRender, label, tip} = control;
-                let Component = UIMap.get(type);
+                const Component = UIMap.get(type);
                 schemaKeyPath.pop();
                 schemaKeyPath.push({key: "value"});
                 //非叶子节点不解析label
@@ -138,17 +141,26 @@ export class LCGUI extends React.Component<LCGUIProps> {
                 ...config, ...controlVal, label, tip,
                 onChange: (data: any) => this.onControlChange(data, schemaKeyPath, dataKeyPath, reRender, id)
             };
-            let Component = UIMap.get(type);
+            const Component = UIMap.get(type);
             if (!Component) return [];
             nodes.push(<Component key={childIndex} {..._props} />);
         }
         return nodes;
     }
 
+    init = (): ReactNode[] => {
+        const nodes: ReactNode[] = [];
+        let {schema} = this.props;
+        schema = Array.isArray(schema) ? schema : [schema];
+        schema.forEach((control: Control) => {
+            nodes.push(this.buildConfigUI(control, [], [], 0));
+        })
+        return nodes;
+    }
+
     render() {
-        const {schema} = this.props;
         return (
-            <>{this.buildConfigUI(schema, [], [], 0)}</>
+            <>{this.init()}</>
         );
     }
 }

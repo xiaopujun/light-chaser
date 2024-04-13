@@ -1,11 +1,10 @@
 import React from "react";
-import {MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
+import {BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {ClazzTemplate} from "../../common-component/common-types";
 import AntdRingProgressController, {AntdRingProgressProps} from "./AntdRingProgressController";
 import ringProgressImg from './ring-progress.png';
-import {BaseInfoType} from "../../../designer/DesignerType";
 import {AntdCommonDefinition} from "../../antd-common/AntdCommonDefinition";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
@@ -17,7 +16,7 @@ const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseI
 
 class AntdRingProgressDefinition extends AntdCommonDefinition<AntdRingProgressController, AntdRingProgressProps> {
 
-    getComponent(): ClazzTemplate<AntdRingProgressController> | null {
+    getController(): ClazzTemplate<AntdRingProgressController> | null {
         return AntdRingProgressController;
     }
 
@@ -39,8 +38,8 @@ class AntdRingProgressDefinition extends AntdCommonDefinition<AntdRingProgressCo
         return {
             compName: "Antd迷你环图",
             compKey: "AntdRingProgress",
-            type: "进度图",
-            typeKey: "progress",
+            categorize: "chart",
+            subCategorize: "progress",
         };
     }
 
@@ -57,39 +56,42 @@ class AntdRingProgressDefinition extends AntdCommonDefinition<AntdRingProgressCo
             },
             style: {
                 percent: 0.7,
-                color: ["#00b5ffff", "#c5ebfbff"],
+                color: [
+                    "#3cc2f8bd",
+                    "#66d2ff3e"
+                ],
                 statistic: {
                     content: {
                         style: {
                             fill: "#fff",
-                            fontSize: "24px",
-                            fontWeight: 400,
+                            fontSize: '24',
+                            fontWeight: 900,
+                            color: "#57c6ff"
                         },
-                        offsetY: -7,
+                        offsetY: 7,
+                        offsetX: 0
                     },
                     title: {
                         style: {
-                            fontSize: "14px",
-                            fontWeight: 400,
-                            color: "#fff",
+                            fontSize: '21',
+                            fontWeight: 900,
+                            color: "#6ad1ff"
                         },
-                        content: "当前进度",
-                        offsetY: -11,
-                    },
+                        content: "指标1",
+                        offsetY: -11
+                    }
                 },
                 animation: {
                     appear: {
                         animation: "wave-in",
-                        duration: 3000,
-                    },
+                        duration: 3000
+                    }
                 },
-                progressStyle: {},
+                progressStyle: {}
             },
             data: {
-                dataSource: 'static',
-                staticData: {
-                    data: 0.7,
-                },
+                sourceType: 'static',
+                staticData: 0.7,
             },
         };
     }

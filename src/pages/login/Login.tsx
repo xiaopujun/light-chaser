@@ -1,20 +1,23 @@
-import React from "react";
 import './Login.less';
-import Input from "../../ui/input/Input";
-import Button from "../../ui/button/Button";
-import {CheckBox} from "../../ui/checkbox/CheckBox";
-import {message} from "antd";
+import Input from "../../json-schema/ui/input/Input";
+import Button from "../../json-schema/ui/button/Button";
+import {CheckBox} from "../../json-schema/ui/checkbox/CheckBox";
+import {globalMessage} from "../../framework/message/GlobalMessage";
+import {useNavigate} from "react-router-dom";
+import {memo} from "react";
 
-export const Login: React.FC = props => {
+const Login = memo(() => {
+
+    const navigate = useNavigate();
 
     let account = 'admin';
     let password = 'admin';
 
     const login = () => {
         if (account === 'admin' && password === 'admin') {
-            window.location.href = '/list';
+            navigate('home/local');
         } else {
-            message.warn('账户或密码错误');
+            globalMessage.messageApi?.warning('账户或密码错误');
         }
     }
 
@@ -29,25 +32,24 @@ export const Login: React.FC = props => {
                     </div>
                     <div className={'login-body'}>
                         <div className={'login-item'}>
-                            <Input required={true}
-                                   onChange={value => account = value as string}
+                            <Input onChange={value => account = value as string}
                                    defaultValue={account}
-                                   label={'账户'}
-                                   placeholder={'Username'}/>
+                                   label={'账户'}/>
                         </div>
                         <div className={'login-item'}>
-                            <Input required={true}
-                                   onChange={value => password = value as string}
+                            <Input onChange={value => password = value as string}
                                    defaultValue={password}
                                    label={'密码'}
-                                   type={'password'}
-                                   placeholder={'Password'}/>
+                                   type={'password'}/>
                         </div>
-                        <div className={'login-item remember-me'}><CheckBox label={'记住我'} defaultValue={false}/></div>
+                        <div className={'login-item remember-me'}><CheckBox label={'记住我'} defaultValue={false}/>
+                        </div>
                         <div className={'login-item'}><Button onClick={login}>登录</Button></div>
                     </div>
                 </div>
             </div>
         </div>
     );
-};
+})
+
+export default Login;

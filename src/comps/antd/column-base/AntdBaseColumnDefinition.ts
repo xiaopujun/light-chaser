@@ -1,7 +1,7 @@
-import {BaseInfoType} from "../../../designer/DesignerType";
 import baseColumnImg from "./base-column.png";
-import {AntdColumnProps} from "../../antd-common/column/AntdCommonColumn";
+import {AntdColumnProps} from "../../antd-common/column/AntdCommonColumnController";
 import AbstractColumnDefinition from "../../antd-common/column/AbstractColumnDefinition";
+import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
 
 class AntdBaseColumnDefinition extends AbstractColumnDefinition {
 
@@ -9,8 +9,8 @@ class AntdBaseColumnDefinition extends AbstractColumnDefinition {
         return {
             compName: "Antd基础柱状图",
             compKey: "AntdBaseColumn",
-            type: "柱状图",
-            typeKey: "column",
+            categorize: "chart",
+            subCategorize: "column",
         };
     }
 
@@ -101,10 +101,8 @@ class AntdBaseColumnDefinition extends AbstractColumnDefinition {
                 },
             },
             data: {
-                dataSource: 'static',
-                staticData: {
-                    data: data
-                },
+                sourceType: 'static',
+                staticData: data
             },
         };
     }

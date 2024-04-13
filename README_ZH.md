@@ -1,7 +1,7 @@
 <h2> LIGHT CHASER</h2>
 
 <p>
-    <img alt="" src="https://img.shields.io/badge/version-v0.0.3-blue">
+    <img alt="" src="https://img.shields.io/badge/version-v0.0.9-blue">
     <img alt="" src="https://img.shields.io/badge/language-typescript-blue">
     <img alt="" src="https://img.shields.io/badge/license-MIT-08CE5D?logoColor=08CE5D">
     <img alt="" src="https://img.shields.io/badge/framework-React-61daeb?logoColor=08CE5D">
@@ -9,7 +9,7 @@
 
 <p>数据可视化工具</p>
 
-light chaser 是一款开源免费的数据可视化设计工具，基于 React 技术栈实现。 通过它，你可以简单快速地制作数据可视化相关内容。它可用于大屏幕数据 可视化展示、数据报告、数据分析等场景。
+light chaser 是一款开源免费的数据可视化设计工具，基于 React18、Vite5、TypeScript5 技术栈实现。 通过它，你可以简单快速地制作数据可视化相关内容。它可用于大屏幕数据 可视化展示、数据报告、数据分析等场景。
 
 这个项目包含:
 
@@ -37,9 +37,9 @@ light chaser 专为数据可视化而设计，并将不断发展和完善！
 
 预览图：
 
-![lightchaser1](https://picss.sunbangyan.cn/2023/11/03/9cbcb42f4c6d7bc12ffb79f4ad0ef9dd.png)
+![lightchaser1](https://i.072333.xyz/file/8ff8361817216f2fb1c47.png)
 
-![lightchaser blueprint](https://picss.sunbangyan.cn/2023/11/03/59ff17df602ce90d6ba7885037860449.png)
+![lightchaser](https://i.072333.xyz/file/3cacaaa9edc640ce64536.png)
 
 # 部署和使用
 
@@ -52,6 +52,9 @@ git clone https://gitee.com/xiaopujun/light-chaser.git
 ```
 
 - 安装项目依赖
+
+> 注意：本项目使用 pnpm 作为包管理工具，因此需要先安装pnpm，安装步骤参考 [pnpm](https://pnpm.io/zh/)
+> ，如果已安装 pnpm，则可以跳过此步骤
 
 ```shell
 pnpm install
@@ -66,7 +69,7 @@ pnpm start
 - 访问链接
 
 ```shell
-http://localhost:3000
+http://localhost:5173
 ```
 
 - 构建项目
@@ -90,5 +93,5 @@ light chaser遵守《贡献者公约行为准则》。
 ## 社区
 
 <div style="display: flex">
-    <div  style="padding: 20px"><img alt="group" src="https://picst.sunbangyan.cn/2023/11/26/b9f9593d1d8aaf055523f3acbf089bd1.jpeg"></div>
+    <div  style="padding: 20px"><img alt="group" src="https://i.072333.xyz/file/8b4b56b773a55d3888a12.jpg"></div>
 </div>

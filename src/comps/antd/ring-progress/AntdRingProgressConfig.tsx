@@ -1,6 +1,6 @@
 import React, {Component, useState} from 'react';
 import {WritableRoseOptions} from "../../antd-common/types";
-import AntdCommonRose from "../../antd-common/rose/AntdCommonRose";
+import AntdCommonRoseController from "../../antd-common/rose/AntdCommonRoseController";
 import {ColorAttr, RingProgressOptions, StatisticText} from "@antv/g2plot";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
@@ -11,7 +11,7 @@ import {ConfigType} from "../../../designer/right/ConfigContent";
 export class AntdRingProgressStyleConfig extends Component<ConfigType> {
 
     ringProgressGraphicsChange = (config: WritableRoseOptions) => {
-        const controller = this.props.controller as AntdCommonRose;
+        const controller = this.props.controller as AntdCommonRoseController;
         controller.update({style: config});
     }
 
@@ -92,11 +92,10 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                         children: [
                             {
                                 key: 'radius',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '外径',
                                 value: _config?.radius || 0.8,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 1,
                                     step: 0.01
@@ -104,11 +103,10 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                             },
                             {
                                 key: 'innerRadius',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '内径',
                                 value: _config?.innerRadius || 0.75,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 1,
                                     step: 0.01
@@ -119,11 +117,10 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                                 children: [
                                     {
                                         key: 'lineWidth',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: '描边',
                                         value: (_config.progressStyle as ShapeAttrs)?.lineWidth || 1,
                                         config: {
-                                            type: 'number',
                                             min: 0,
                                             max: 10,
                                         }
@@ -134,12 +131,7 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                                         label: '描边色',
                                         value: (_config.progressStyle as ShapeAttrs)?.stroke || '#555555',
                                         config: {
-                                            width: '90%',
-                                            radius: 3,
-                                            showBorder: true,
                                             showText: true,
-                                            height: 16,
-                                            hideControls: true
                                         }
                                     },
                                 ]
@@ -150,7 +142,7 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                                 label: '颜色',
                                 value: _config?.color || '#5B8FF9',
                                 config: {
-                                    gridColumn: '1/3',
+                                    containerStyle: {gridColumn: '1 / 3'},
                                 }
                             },
                         ]
@@ -188,22 +180,20 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                                         children: [
                                             {
                                                 key: 'fontSize',
-                                                type: 'input',
+                                                type: 'number-input',
                                                 label: '字号',
                                                 value: ((_config.statistic?.title as StatisticText)?.style as ShapeAttrs)?.fontSize || 12,
                                                 config: {
-                                                    type: 'number',
                                                     min: 0,
                                                     max: 100,
                                                 }
                                             },
                                             {
                                                 key: 'fontWeight',
-                                                type: 'input',
+                                                type: 'number-input',
                                                 label: '加粗',
                                                 value: ((_config.statistic?.title as StatisticText)?.style as ShapeAttrs)?.fontWeight || 500,
                                                 config: {
-                                                    type: 'number',
                                                     min: 100,
                                                     max: 900,
                                                     step: 100
@@ -215,33 +205,22 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                                                 label: '颜色',
                                                 value: ((_config.statistic?.title as StatisticText)?.style as ShapeAttrs)?.color,
                                                 config: {
-                                                    width: '100%',
-                                                    radius: 3,
-                                                    showBorder: true,
                                                     showText: true,
-                                                    height: 16,
-                                                    hideControls: true
                                                 }
                                             }
                                         ]
                                     },
                                     {
                                         key: 'offsetX',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: 'x偏移',
                                         value: (_config.statistic?.title as StatisticText)?.offsetX || 0,
-                                        config: {
-                                            type: 'number',
-                                        }
                                     },
                                     {
                                         key: 'offsetY',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: 'y偏移',
                                         value: (_config.statistic?.title as StatisticText)?.offsetY || 0,
-                                        config: {
-                                            type: 'number',
-                                        }
                                     },
                                 ]
                             }
@@ -280,22 +259,20 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                                         children: [
                                             {
                                                 key: 'fontSize',
-                                                type: 'input',
+                                                type: 'number-input',
                                                 label: '字号',
                                                 value: ((_config.statistic?.content as StatisticText)?.style as ShapeAttrs)?.fontSize || 12,
                                                 config: {
-                                                    type: 'number',
                                                     min: 0,
                                                     max: 100,
                                                 }
                                             },
                                             {
                                                 key: 'fontWeight',
-                                                type: 'input',
+                                                type: 'number-input',
                                                 label: '加粗',
                                                 value: ((_config.statistic?.content as StatisticText)?.style as ShapeAttrs)?.fontWeight || 500,
                                                 config: {
-                                                    type: 'number',
                                                     min: 100,
                                                     max: 900,
                                                     step: 100
@@ -307,33 +284,22 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                                                 label: '颜色',
                                                 value: ((_config.statistic?.content as StatisticText)?.style as ShapeAttrs)?.color,
                                                 config: {
-                                                    width: '100%',
-                                                    radius: 3,
-                                                    showBorder: true,
                                                     showText: true,
-                                                    height: 16,
-                                                    hideControls: true
                                                 }
                                             }
                                         ]
                                     },
                                     {
                                         key: 'offsetX',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: 'x偏移',
                                         value: (_config.statistic?.content as StatisticText)?.offsetX || 0,
-                                        config: {
-                                            type: 'number',
-                                        }
                                     },
                                     {
                                         key: 'offsetY',
-                                        type: 'input',
+                                        type: 'number-input',
                                         label: 'y偏移',
                                         value: (_config.statistic?.content as StatisticText)?.offsetY || 0,
-                                        config: {
-                                            type: 'number',
-                                        }
                                     },
                                 ]
                             }

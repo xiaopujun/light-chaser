@@ -3,7 +3,7 @@ import {MenuToConfigMappingType} from "../../../framework/core/AbstractDefinitio
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {ClazzTemplate} from "../../common-component/common-types";
-import AntdCommonRose, {AntdRoseProps} from "./AntdCommonRose";
+import AntdCommonRoseController, {AntdRoseProps} from "./AntdCommonRoseController";
 import {AntdRoseFieldMapping} from "./AntdRoseCommonConfig";
 import {AntdCommonDefinition} from "../AntdCommonDefinition";
 
@@ -13,10 +13,10 @@ const ThemeConfig = React.lazy(() => import("../../common-component/theme-config
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
-abstract class AbstractRoseDefinition extends AntdCommonDefinition<AntdCommonRose, AntdRoseProps> {
+abstract class AbstractRoseDefinition extends AntdCommonDefinition<AntdCommonRoseController, AntdRoseProps> {
 
-    getComponent(): ClazzTemplate<AntdCommonRose> | null {
-        return AntdCommonRose;
+    getController(): ClazzTemplate<AntdCommonRoseController> | null {
+        return AntdCommonRoseController;
     }
 
     getMenuList(): Array<MenuInfo> {

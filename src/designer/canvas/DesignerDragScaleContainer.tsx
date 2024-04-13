@@ -1,19 +1,19 @@
-import React, {useEffect} from "react";
+import React, {memo, useEffect} from "react";
 import DragScaleProvider from "../../framework/drag-scale/DragScaleProvider";
-import designerStore from "../store/DesignerStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {observer} from "mobx-react";
+import canvasManager from "../header/items/canvas/CanvasManager.ts";
 
 export interface DesignerDragScaleContainerProps {
     children?: React.ReactNode;
     onDoubleClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
-export const DesignerDragScaleContainer: React.FC<DesignerDragScaleContainerProps> = observer((props) => {
+const DesignerDragScaleContainer = memo(observer((props: DesignerDragScaleContainerProps) => {
     const {children, onDoubleClick} = props;
     const containerRef = React.useRef<HTMLDivElement>(null);
     const contentRef = React.useRef<HTMLDivElement>(null);
-    const {canvasConfig} = designerStore!;
+    const {canvasConfig} = canvasManager!;
     useEffect(() => {
         const container = containerRef.current;
         const content = contentRef.current;
@@ -23,13 +23,12 @@ export const DesignerDragScaleContainer: React.FC<DesignerDragScaleContainerProp
             const dragScaleProvider = new DragScaleProvider({
                 container,
                 content,
-                posOffset: {x: 80, y: 70},
                 scaleCallback: (dsData) => {
                     const {scale, ratio} = dsData;
                     const {setScale, setRatio, rulerRef} = eventOperateStore;
                     setScale(scale);
                     setRatio(ratio);
-                    rulerRef?.ruleWheel(scale);
+                    rulerRef?.ruleWheel();
                 },
                 dragCallback: () => {
                     const {rulerRef} = eventOperateStore;
@@ -45,8 +44,8 @@ export const DesignerDragScaleContainer: React.FC<DesignerDragScaleContainerProp
         <div className={'designer-ds-container'} ref={containerRef}
              style={{
                  overflow: "hidden",
-                 height: window.innerHeight - 90,
-                 width: window.innerWidth - 95,
+                 height: window.innerHeight - 110,
+                 width: window.innerWidth - 115,
                  backgroundColor: '#434343',
                  position: 'relative'
              }}>
@@ -64,4 +63,6 @@ export const DesignerDragScaleContainer: React.FC<DesignerDragScaleContainerProp
             </div>
         </div>
     )
-})
+}))
+
+export default DesignerDragScaleContainer;

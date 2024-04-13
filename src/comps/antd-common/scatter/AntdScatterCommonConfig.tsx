@@ -68,11 +68,10 @@ export const AntdCommonScatterGraphics: React.FC<AntdCommonScatterGraphicsProps>
                 children: [
                     {
                         key: 'size',
-                        type: 'input',
+                        type: 'number-input',
                         label: '尺寸',
                         value: config?.size,
                         config: {
-                            type: 'number',
                             min: 0,
                             max: 100,
                         }
@@ -97,11 +96,10 @@ export const AntdCommonScatterGraphics: React.FC<AntdCommonScatterGraphicsProps>
                         children: [
                             {
                                 key: 'lineWidth',
-                                type: 'input',
+                                type: 'number-input',
                                 label: '线宽',
                                 value: (config?.pointStyle as ShapeAttrs)?.lineWidth,
                                 config: {
-                                    type: 'number',
                                     min: 0,
                                     max: 10,
                                 }
@@ -112,12 +110,7 @@ export const AntdCommonScatterGraphics: React.FC<AntdCommonScatterGraphicsProps>
                                 label: '描边色',
                                 value: (config?.pointStyle as ShapeAttrs)?.stroke,
                                 config: {
-                                    width: '100%',
-                                    radius: 3,
-                                    showBorder: true,
                                     showText: true,
-                                    height: 16,
-                                    hideControls: true
                                 }
                             }
                         ]
@@ -128,7 +121,7 @@ export const AntdCommonScatterGraphics: React.FC<AntdCommonScatterGraphicsProps>
                         label: '颜色',
                         value: config?.color,
                         config: {
-                            gridColumn: '1/3',
+                            containerStyle: {gridColumn: '1 / 3'},
                         }
                     },
                 ]

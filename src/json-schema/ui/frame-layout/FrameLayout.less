@@ -1,0 +1,36 @@
+.frame-layout {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .fl-header {
+    width: 100%;
+  }
+
+  .fl-body {
+    display: flex;
+    flex-grow: 1;
+    overflow: auto;
+
+    .fl-crf-box {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+
+      .fl-cr-box {
+        display: flex;
+        flex-grow: 1;
+
+        .fl-content {
+          flex-grow: 1;
+          overflow: hidden;
+        }
+      }
+
+      .fl-footer {
+        width: 100%;
+      }
+    }
+  }
+}

@@ -2,23 +2,19 @@ import {Component} from 'react';
 import {Control} from "../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../json-schema/LCGUI";
 import './DemoMain.less'
-import {ImageUpload} from "../ui/imag-upload/ImageUpload";
-import ColorMode from "../ui/color-mode/ColorMode";
-import {CheckBox} from "../ui/checkbox/CheckBox";
+import {ImageUpload} from "../json-schema/ui/imag-upload/ImageUpload";
+import ColorMode from "../json-schema/ui/color-mode/ColorMode";
+import {CheckBox} from "../json-schema/ui/checkbox/CheckBox";
 
 
 class JsonSchemaDemo extends Component {
 
-    monacoContainer: any = null;
     schema: Control = {
         key: "style",
         children: [
             {
                 key: "xAxis",
                 type: "accordion",
-                config: {
-                    title: "X轴"
-                },
                 children: [
                     {
                         key: "grid",
@@ -31,17 +27,13 @@ class JsonSchemaDemo extends Component {
                             {
                                 label: "开启",
                                 type: "switch",
-                                config: {
-                                    value: true,
-                                }
+                                value: true,
                             },
                             {
                                 key: "alignTick",
                                 label: "对齐",
                                 type: "switch",
-                                config: {
-                                    value: true
-                                }
+                                value: true
                             },
                             {
                                 key: "line",
@@ -53,17 +45,13 @@ class JsonSchemaDemo extends Component {
                                                 key: "lineWidth",
                                                 label: "线宽",
                                                 type: "input",
-                                                config: {
-                                                    value: 1
-                                                }
+                                                value: 1
                                             },
                                             {
                                                 key: "stroke",
                                                 label: "颜色",
                                                 type: "color-picker",
-                                                config: {
-                                                    value: "#878787ff",
-                                                }
+                                                value: "#878787ff",
                                             }
                                         ]
                                     }
@@ -86,17 +74,13 @@ class JsonSchemaDemo extends Component {
                                         key: "fill",
                                         label: "颜色",
                                         type: "color-picker",
-                                        config: {
-                                            value: "#878787ff"
-                                        }
+                                        value: "#878787ff"
                                     },
                                     {
                                         key: "fontSize",
                                         label: "字号",
                                         type: "input",
-                                        config: {
-                                            value: 10
-                                        }
+                                        value: 10,
                                     }
                                 ]
                             }
@@ -108,7 +92,7 @@ class JsonSchemaDemo extends Component {
     }
 
     onChange = (fieldChangeData: FieldChangeData) => {
-
+        console.log('fieldChangeData', fieldChangeData);
     }
 
     render() {

@@ -1,8 +1,8 @@
+import {BPNodeLayoutType, IBPLine} from "./blueprint/manager/BluePrintManager.ts";
+
 /**
  * 主题
  */
-import {BPNodeLayoutType, IBPLine} from "../blueprint/store/BPStore";
-
 export interface ThemeColors {
     //主体色
     main?: string;
@@ -24,37 +24,6 @@ export interface ThemeItemType {
     id: string;
 }
 
-
-/**
- * 统计信息
- */
-export interface Statistic {
-    //元素个数
-    count?: number;
-    //历史记录
-    history?: any;
-}
-
-/**
- * 基础样式
- */
-export interface BaseStyle {
-    //内边距
-    padding?: string;
-    //背景颜色
-    backgroundColor?: string;
-    //边框
-    border?: string;
-    //边框样式
-    borderStyle?: string;
-    //边框颜色
-    borderColor?: string;
-    //边框圆角
-    borderRadius?: string;
-    //边框宽度
-    borderWidth?: string;
-}
-
 export interface APIConfig {
     //地址
     url?: string;
@@ -65,23 +34,7 @@ export interface APIConfig {
     //请求参数
     params?: any;
     //刷新频率
-    flashFrequency?: number;
-}
-
-/**
- * 静态数据配置
- */
-export interface StaticConfig {
-    //数据
-    data?: any;
-}
-
-/**
- * 扩展参数
- */
-export interface IExtendParams {
-    maxLevel?: number;
-    minLevel?: number;
+    frequency?: number;
 }
 
 /**
@@ -89,12 +42,10 @@ export interface IExtendParams {
  */
 export interface DataConfigType {
     //数据来源方式
-    dataSource?: 'static' | 'api' | 'database' | 'excel';
+    sourceType?: 'static' | 'api' | 'database' | 'excel';
     //静态数据(除了存放静态数据外，该属性还有动态数据的中转站的作用），其他动态数据获取到后统一都存放在静态数据中，需要使用到的时候再从静态数据中获取
-    staticData?: StaticConfig;
+    staticData?: any;
     apiData?: APIConfig;
-    databaseData?: any;
-    excelData?: any;
 }
 
 /**
@@ -105,6 +56,16 @@ export enum SaveType {
     LOCAL = '0',
     //服务器存储
     SERVER = '1'
+}
+
+/**
+ * 设计器模式
+ */
+export enum DesignerMode {
+    //编辑模式
+    EDIT = '0',
+    //展示模式
+    VIEW = '1',
 }
 
 /**
@@ -122,7 +83,9 @@ export enum ProjectState {
 /**
  * 项目配置
  */
-export interface ProjectConfig {
+export interface IProjectInfo {
+    //项目id
+    id?: string;
     //项目名称
     name?: string;
     //项目描述
@@ -135,18 +98,10 @@ export interface ProjectConfig {
     updateTime?: string;
     //存储类型
     saveType?: SaveType;
-    //项目截图
-    screenshot?: string;
-}
-
-/**
- * 激活元素
- */
-export interface ActiveElem {
-    //元素id
-    id?: string;
-    //元素类型
-    type?: string;
+    //项目封面
+    cover?: string;
+    //项目数据json
+    dataJson?: string;
 }
 
 /**
@@ -165,61 +120,19 @@ export interface CanvasConfig {
     height?: number;
 }
 
-/**
- * 组件基础信息
- */
-export interface BaseInfoType {
-    /**
-     * 组件显示名称
-     */
-    compName: string;
-    /**
-     * 组件标识
-     */
-    compKey: string;
-    /**
-     * 类型名称
-     */
-    type: string;
-    /**
-     * 类型标识
-     */
-    typeKey: string;
-    /**
-     * 版本
-     */
-    version?: string;
-    /**
-     * 初始宽度
-     */
-    width?: number;
-    /**
-     * 初始高度
-     */
-    height?: number;
-}
 
-/**
- * lc设计器配置
- */
-export interface ProjectDataType {
-    //项目id
-    id?: string;
-    //画布设置
-    canvasConfig?: CanvasConfig;
-    //项目设置
-    projectConfig?: ProjectConfig;
+export interface LayerManagerDataType {
     //元素样式
     elemConfigs?: { [key: string]: Record<string, any> };
     //图层信息
     layerConfigs?: { [key: string]: ILayerItem };
-    //统计信息
-    statisticInfo?: Statistic;
-    //全局主题
-    themeConfig?: Array<ThemeItemType>;
-    //扩展参数
-    extendParams?: IExtendParams;
+    //图层头指针
+    layerHeader?: string;
+    //图层尾指针
+    layerTail?: string;
+}
 
+export interface BluePrintManagerDataType {
     //蓝图节点布局
     bpNodeLayoutMap?: Record<string, BPNodeLayoutType>;
     //蓝图节点配置
@@ -230,6 +143,24 @@ export interface ProjectDataType {
     bpAPMap?: Record<string, string[]>;
     //蓝图锚点与线条之间的关系映射
     bpAPLineMap?: Record<string, string[]>;
+}
+
+/**
+ * lc设计器配置
+ */
+export interface ProjectDataType {
+    //项目id
+    id?: string;
+    //画布设置
+    canvasManager?: CanvasConfig;
+    //项目设置
+    projectManager?: IProjectInfo;
+    //全局主题
+    themeManager?: Array<ThemeItemType>;
+    //图层管理
+    layerManager?: LayerManagerDataType;
+    //蓝图管理
+    bluePrintManager?: BluePrintManagerDataType;
 }
 
 export interface ILayerItem {
@@ -257,6 +188,12 @@ export interface ILayerItem {
     pid?: string;
     //子图层列表
     children?: ILayerItem[];
-    //子图层id
-    childIds?: string[];
+    //子图层头指针
+    childHeader?: string;
+    //子图层尾指针
+    childTail?: string;
+    //前指针
+    prev?: string;
+    //后指针
+    next?: string;
 }

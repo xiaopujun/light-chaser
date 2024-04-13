@@ -1,7 +1,7 @@
-import {BaseInfoType} from "../../../designer/DesignerType";
 import groupBarImg from "./group-bar.png";
 import {AntdBarProps} from "../../antd-common/bar/AntdCommonBarController";
 import AbstractBarDefinition from "../../antd-common/bar/AbstractBarDefinition";
+import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
 
 class AntdGroupBarDefinition extends AbstractBarDefinition {
 
@@ -9,8 +9,8 @@ class AntdGroupBarDefinition extends AbstractBarDefinition {
         return {
             compName: "Antd分组条形图",
             compKey: "AntdGroupBar",
-            type: "条形图",
-            typeKey: "bar",
+            categorize: "chart",
+            subCategorize: "bar",
         };
     }
 
@@ -118,10 +118,8 @@ class AntdGroupBarDefinition extends AbstractBarDefinition {
                 },
             },
             data: {
-                dataSource: 'static',
-                staticData: {
-                    data: data
-                },
+                sourceType: 'static',
+                staticData: data
             },
         };
     }

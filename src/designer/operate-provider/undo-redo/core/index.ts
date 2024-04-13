@@ -19,6 +19,6 @@ undoRedoMap.set(OperateType.UPD_STYLE, styleRollbackImpl);
 undoRedoMap.set(OperateType.HIDE, hideRollbackImpl);
 undoRedoMap.set(OperateType.LOCK, lockRollbackImpl);
 undoRedoMap.set(OperateType.ORDER, orderRollBackImpl);
-undoRedoMap.set(OperateType.UPD_LAYER_GROUP, updLayerGroupRollbackImpl);
+undoRedoMap.set(OperateType.UPDATE_LAYER, updLayerGroupRollbackImpl);
 
 export default undoRedoMap;

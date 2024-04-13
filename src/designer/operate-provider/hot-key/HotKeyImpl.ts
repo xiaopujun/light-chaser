@@ -1,24 +1,27 @@
 import eventOperateStore from "../EventOperateStore";
-import designerStore from "../../store/DesignerStore";
-import {ILayerItem, SaveType} from "../../DesignerType";
-import {cloneDeep, throttle} from "lodash";
+import layerManager from "../../manager/LayerManager.ts";
+import {ILayerItem, IProjectInfo, SaveType} from "../../DesignerType";
+import {throttle} from "lodash";
 import {historyOperator} from "../undo-redo/HistoryOperator";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import undoRedoMap from "../undo-redo/core";
-import runtimeConfigStore from "../../store/RuntimeConfigStore";
-import headerStore from "../../header/HeaderStore";
-import layerListStore from "../../float-configs/layer-list/LayerListStore";
+import runtimeConfigStore from "../../store/RuntimeStore.ts";
 import footerStore from "../../footer/FooterStore";
-import DateUtil from "../../../utils/DateUtil";
-import bpStore from "../../../blueprint/store/BPStore";
-import {reRenderAllLine} from "../../../blueprint/drag/BPMovable";
-import bpLeftStore from "../../../blueprint/left/BPLeftStore";
-import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
-import {OperateResult} from "../../../framework/operate/AbstractOperator";
-import {message} from "antd";
+import bluePrintManager from "../../blueprint/manager/BluePrintManager.ts";
+import {reRenderAllLine} from "../../blueprint/drag/BPMovable.tsx";
+import bpLeftStore from "../../../designer/blueprint/left/BPLeftStore";
+import operatorMap from "../../../framework/operate";
+import URLUtil from "../../../utils/URLUtil";
+import LayerUtil from "../../left/layer-list/util/LayerUtil.ts";
+import bluePrintHdStore from "../../header/items/blue-print/BluePrintHdStore.ts";
+import themeHdStore from "../../header/items/theme/ThemeManager.ts";
+import canvasHdStore from "../../header/items/canvas/CanvasManager.ts";
+import projectHdStore from "../../header/items/project/ProjecManager.ts";
+import canvasManager from "../../header/items/canvas/CanvasManager.ts";
+import designerManager from "../../manager/DesignerManager.ts";
 
 export const selectAll = () => {
-    const {layerConfigs} = designerStore;
+    const {layerConfigs} = layerManager;
     const {setTargetIds, calculateGroupCoordinate} = eventOperateStore;
     const selected = Object.values(layerConfigs).map((item: ILayerItem) => {
         if (!item.lock && !item.hide)
@@ -27,29 +30,32 @@ export const selectAll = () => {
     setTargetIds(selected as string[]);
 
     if (selected.length > 0)
-        calculateGroupCoordinate(selected.map((id: string | undefined) => document.getElementById(id!))?.filter((item: HTMLElement | null) => !!item));
+        calculateGroupCoordinate(selected.map((id: string | undefined) => document.getElementById(id!))?.filter((item: HTMLElement | null) => !!item) as HTMLElement[]);
 }
 
 /**
  * 普通复制，只复制非分组图层
  */
 export const doCopy = () => {
-    let {targetIds, setTargetIds} = eventOperateStore;
+    const {targetIds, setTargetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
 
-    const {copyItem} = designerStore;
-    let newIds = copyItem(targetIds);
+    const {copyItem} = layerManager;
+    const newIds = copyItem(targetIds);
     //延迟10毫秒，等待dom元素渲染完毕后再获取。
-    setTimeout(() => setTargetIds(newIds), 10);
+    const tempTimer = setTimeout(() => {
+        setTargetIds(newIds);
+        clearTimeout(tempTimer);
+    }, 10);
 }
 
 export const doLock = () => {
     const {targetIds, setTargetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
-    const {layerConfigs} = designerStore;
-    let toBeUpdate = [];
+    const {layerConfigs} = layerManager;
+    const toBeUpdate = [];
     for (const targetId of targetIds) {
-        let item = layerConfigs[targetId];
+        const item = layerConfigs[targetId];
         toBeUpdate.push({...item, lock: true})
     }
     historyRecordOperateProxy.doLockUpd(toBeUpdate);
@@ -60,8 +66,8 @@ export const doLock = () => {
 export const doUnLock = () => {
     const {setTargetIds, targetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
-    const {layerConfigs} = designerStore;
-    let toUpdate: ILayerItem[] = [];
+    const {layerConfigs} = layerManager;
+    const toUpdate: ILayerItem[] = [];
     targetIds.filter(id => {
         //过滤出被锁定的组件
         return layerConfigs[id].lock;
@@ -72,38 +78,27 @@ export const doUnLock = () => {
     setTargetIds([]);
 }
 
-export const toTop = () => {
-    let {maxLevel, setMaxLevel, targetIds} = eventOperateStore;
-    if (!targetIds || targetIds.length === 0) return;
-    const {layerConfigs} = designerStore;
-    let toBeUpdate: ILayerItem[] = [];
-    targetIds.forEach((id: string) => {
-        let item = layerConfigs[id];
-        toBeUpdate.push({...item, order: ++maxLevel});
-    });
-    setMaxLevel(maxLevel)
-    historyRecordOperateProxy.doOrderUpd(toBeUpdate);
+export const layerToTop = () => {
+    historyRecordOperateProxy.doLayerToTop();
 }
 
-export const toBottom = () => {
-    let {minLevel, setMinLevel, targetIds} = eventOperateStore;
-    if (!targetIds || targetIds.length === 0) return;
-    const {layerConfigs} = designerStore;
-    let toBeUpdate: ILayerItem[] = [];
-    targetIds.forEach((id: string) => {
-        let item = layerConfigs[id];
-        toBeUpdate.push({...item, order: --minLevel});
-    });
-    setMinLevel(minLevel)
-    historyRecordOperateProxy.doOrderUpd(toBeUpdate);
+export const layerToBottom = () => {
+    historyRecordOperateProxy.doLayerToBottom();
+}
+
+export const layerMoveUp = () => {
+    historyRecordOperateProxy.doLayerMoveUp();
+}
+
+export const layerMoveDown = () => {
+    historyRecordOperateProxy.doLayerMoveDown();
 }
 
 export const doDelete = () => {
-    //todo 考虑这段逻辑是否可以独立？
     //如果蓝图中使用了当前要被删除的组件，则需要先删除蓝图中的组件和连线，且蓝图中的删除操作目前无法回退
     const {targetIds} = eventOperateStore;
     if (targetIds && targetIds.length > 0) {
-        const {delNode, bpNodeLayoutMap} = bpStore;
+        const {delNode, bpNodeLayoutMap} = bluePrintManager;
         const preDelNodeIds: string[] = [];
         targetIds.forEach((id: string) => {
             if (bpNodeLayoutMap[id])
@@ -120,38 +115,25 @@ export const doDelete = () => {
 //保存函数节流5s, 5s内不可重复保存
 export const doSave = throttle(() => {
     return new Promise(() => {
-        let {projectConfig: {saveType}} = designerStore;
-        if (saveType === SaveType.LOCAL) {
-            const {projectConfig: {saveType = SaveType.LOCAL}, updateProjectConfig} = designerStore;
-            updateProjectConfig({updateTime: DateUtil.format(new Date())})
-            const proData = designerStore.getData();
-            //设置蓝图数据
-            const {bpAPMap, bpLines, bpAPLineMap, getAllNodeConfig, bpNodeLayoutMap} = bpStore;
-            proData.bpAPMap = bpAPMap;
-            proData.bpLines = bpLines;
-            proData.bpAPLineMap = bpAPLineMap;
-            proData.bpNodeConfigMap = getAllNodeConfig();
-            proData.bpNodeLayoutMap = bpNodeLayoutMap;
-            DesignerLoaderFactory.getLoader().operatorMap[saveType].saveProject(cloneDeep(proData)).then((res: OperateResult) => {
-                const {status, msg} = res;
-                if (status)
-                    message.success(msg);
-                else
-                    message.error(msg);
-            });
-        } else if (saveType === SaveType.SERVER) {
-            alert("server save");
+        const {saveType, id} = URLUtil.parseUrlParams();
+        const proData = designerManager.getData();
+
+        //转换为最终保存的数据格式
+        const projectInfo: IProjectInfo = {
+            id,
+            dataJson: JSON.stringify(proData),
         }
+        operatorMap[saveType as SaveType].updateProject(projectInfo);
     });
 }, 5000);
 
 export const doHide = () => {
     const {targetIds, setTargetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
-    const {layerConfigs} = designerStore;
-    let toBeUpdate: ILayerItem[] = [];
+    const {layerConfigs} = layerManager;
+    const toBeUpdate: ILayerItem[] = [];
     targetIds.forEach((id: string) => {
-        let item = layerConfigs[id];
+        const item = layerConfigs[id];
         toBeUpdate.push({...item, hide: true});
     });
     historyRecordOperateProxy.doHideUpd(toBeUpdate);
@@ -170,7 +152,27 @@ export const doGrouping = () => {
 }
 
 export const doUnGrouping = () => {
+    //如果蓝图中使用了分组图层节点，则需要先删除蓝图中的组件和连线，且蓝图中的删除操作目前无法回退
+    let {targetIds} = eventOperateStore;
+    const targetIdSet = new Set<string>();
+    LayerUtil.findTopGroupLayer(targetIds, false).forEach((id: string) => targetIdSet.add(id));
+    targetIds = Array.from(targetIdSet);
+    if (targetIds && targetIds.length > 0) {
+        const {delNode, bpNodeLayoutMap} = bluePrintManager;
+        const preDelNodeIds: string[] = [];
+        targetIds.forEach((id: string) => {
+            if (bpNodeLayoutMap[id])
+                preDelNodeIds.push(id);
+        });
+        if (preDelNodeIds.length > 0)
+            delNode(preDelNodeIds);
+    }
     historyRecordOperateProxy.doUnGrouping();
+}
+
+
+export const removeFromGroup = () => {
+    historyRecordOperateProxy.doRemoveFromGroup();
 }
 
 /*************************快捷键控制移动组件的位置*************************/
@@ -178,56 +180,60 @@ export const doUnGrouping = () => {
 export const doMoveUp = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {dragStep = 1}} = designerStore;
+    const {layerConfigs} = layerManager;
+    const {canvasConfig: {dragStep = 1}} = canvasManager;
+    let yPos;
     if (targets.length === 1) {
-        let id = targets[0].id;
-        let yPos = layerConfigs[id].y! - dragStep;
-        movableRef?.current?.request("draggable", {y: yPos}, true);
+        const id = targets[0].id;
+        yPos = (layerConfigs[id].y || 0) - dragStep;
     } else {
-        const yPos = groupCoordinate?.minY! - dragStep;
-        movableRef?.current?.request("draggable", {y: yPos}, true);
+        yPos = (groupCoordinate?.minY || 0) - dragStep;
     }
+    movableRef?.request("draggable", {y: yPos}, true);
 }
 
 export const doMoveDown = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {dragStep = 1}} = designerStore;
+    const {layerConfigs} = layerManager;
+    const {canvasConfig: {dragStep = 1}} = canvasManager;
     if (targets.length === 1) {
-        let id = targets[0].id;
-        let yPos = layerConfigs[id].y! + dragStep;
-        movableRef?.current?.request("draggable", {y: yPos}, true);
+        const id = targets[0].id;
+        const yPos = layerConfigs[id].y! + dragStep;
+        movableRef?.request("draggable", {y: yPos}, true);
     } else {
         const yPos = groupCoordinate?.minY! + dragStep;
-        movableRef?.current?.request("draggable", {y: yPos}, true);
+        movableRef?.request("draggable", {y: yPos}, true);
     }
 }
 
 export const doMoveLeft = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {dragStep = 1}} = designerStore;
+    const {layerConfigs} = layerManager;
+    const {canvasConfig: {dragStep = 1}} = canvasManager;
     if (targets.length === 1) {
-        let id = targets[0].id;
-        let xPos = layerConfigs[id].x!;
-        movableRef?.current?.request("draggable", {x: xPos - dragStep}, true);
+        const id = targets[0].id;
+        const xPos = layerConfigs[id].x!;
+        movableRef?.request("draggable", {x: xPos - dragStep}, true);
     } else {
         const xPos = groupCoordinate?.minX! - dragStep;
-        movableRef?.current?.request("draggable", {x: xPos}, true);
+        movableRef?.request("draggable", {x: xPos}, true);
     }
 }
 
 export const doMoveRight = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {dragStep = 1}} = designerStore;
+    const {layerConfigs} = layerManager;
+    const {canvasConfig: {dragStep = 1}} = canvasManager;
     if (targets.length === 1) {
-        let id = targets[0].id;
-        let xPos = layerConfigs[id].x!;
-        movableRef?.current?.request("draggable", {x: xPos + dragStep}, true);
+        const id = targets[0].id;
+        const xPos = layerConfigs[id].x!;
+        movableRef?.request("draggable", {x: xPos + dragStep}, true);
     } else {
         const xPos = groupCoordinate?.minX! + dragStep;
-        movableRef?.current?.request("draggable", {x: xPos}, true);
+        movableRef?.request("draggable", {x: xPos}, true);
     }
 }
 
@@ -239,15 +245,16 @@ export const doMoveRight = () => {
 export const doBaseBottomEnlargeUp = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
+    const {layerConfigs} = layerManager;
+    const {canvasConfig: {resizeStep = 1}} = canvasManager;
     let height;
     if (targets.length === 1) {
-        let id = targets[0].id;
+        const id = targets[0].id;
         height = layerConfigs[id].height! + resizeStep;
     } else {
         height = groupCoordinate.groupHeight! + resizeStep;
     }
-    movableRef?.current?.request("resizable", {offsetHeight: height, direction: [1, -1]}, true);
+    movableRef?.request("resizable", {offsetHeight: height, direction: [1, -1]}, true);
 }
 
 /**
@@ -256,15 +263,16 @@ export const doBaseBottomEnlargeUp = () => {
 export const doBaseUpEnlargeDown = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
+    const {layerConfigs} = layerManager;
+    const {canvasConfig: {resizeStep = 1}} = canvasManager;
     let height;
     if (targets.length === 1) {
-        let id = targets[0].id;
+        const id = targets[0].id;
         height = layerConfigs[id].height! + resizeStep;
     } else {
         height = groupCoordinate.groupHeight! + resizeStep;
     }
-    movableRef?.current?.request("resizable", {offsetHeight: height, direction: [1, 1]}, true);
+    movableRef?.request("resizable", {offsetHeight: height, direction: [1, 1]}, true);
 }
 
 /**
@@ -273,15 +281,16 @@ export const doBaseUpEnlargeDown = () => {
 export const doBaseRightEnlargeLeft = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
+    const {layerConfigs} = layerManager;
+    const {canvasConfig: {resizeStep = 1}} = canvasManager;
     let width;
     if (targets.length === 1) {
-        let id = targets[0].id;
+        const id = targets[0].id;
         width = layerConfigs[id].width! + resizeStep;
     } else {
         width = groupCoordinate.groupWidth! + resizeStep;
     }
-    movableRef?.current?.request("resizable", {offsetWidth: width, direction: [-1, 1]}, true);
+    movableRef?.request("resizable", {offsetWidth: width, direction: [-1, 1]}, true);
 }
 
 /**
@@ -290,15 +299,16 @@ export const doBaseRightEnlargeLeft = () => {
 export const doBaseLeftEnlargeRight = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
+    const {layerConfigs} = layerManager;
+    const {canvasConfig: {resizeStep = 1}} = canvasManager;
     let width;
     if (targets.length === 1) {
-        let id = targets[0].id;
+        const id = targets[0].id;
         width = layerConfigs[id].width! + resizeStep;
     } else {
         width = groupCoordinate.groupWidth! + resizeStep;
     }
-    movableRef?.current?.request("resizable", {offsetWidth: width, direction: [1, 1]}, true);
+    movableRef?.request("resizable", {offsetWidth: width, direction: [1, 1]}, true);
 }
 
 
@@ -308,14 +318,15 @@ export const doBaseLeftEnlargeRight = () => {
 export const doBaseBottomDecreaseUp = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
+    const {layerConfigs} = layerManager;
+    const {canvasConfig: {resizeStep = 1}} = canvasManager;
     let height;
     if (targets.length === 1) {
         height = layerConfigs[targets[0].id].height! - resizeStep;
     } else {
         height = groupCoordinate.groupHeight! - resizeStep;
     }
-    movableRef?.current?.request("resizable", {offsetHeight: height, direction: [1, -1]}, true);
+    movableRef?.request("resizable", {offsetHeight: height, direction: [1, -1]}, true);
 }
 
 /**
@@ -324,15 +335,16 @@ export const doBaseBottomDecreaseUp = () => {
 export const doBaseUpDecreaseDown = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
+    const {layerConfigs} = layerManager;
+    const {canvasConfig: {resizeStep = 1}} = canvasManager;
     let height;
     if (targets.length === 1) {
-        let id = targets[0].id;
+        const id = targets[0].id;
         height = layerConfigs[id].height! - resizeStep;
     } else {
         height = groupCoordinate.groupHeight! - resizeStep;
     }
-    movableRef?.current?.request("resizable", {offsetHeight: height, direction: [1, 1]}, true);
+    movableRef?.request("resizable", {offsetHeight: height, direction: [1, 1]}, true);
 }
 
 /**
@@ -341,15 +353,16 @@ export const doBaseUpDecreaseDown = () => {
 export const doBaseRightDecreaseLeft = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
+    const {layerConfigs} = layerManager;
+    const {canvasConfig: {resizeStep = 1}} = canvasManager;
     let width;
     if (targets.length === 1) {
-        let id = targets[0].id;
+        const id = targets[0].id;
         width = layerConfigs[id].width! - resizeStep;
     } else {
         width = groupCoordinate.groupWidth! - resizeStep;
     }
-    movableRef?.current?.request("resizable", {offsetWidth: width, direction: [-1, 1]}, true);
+    movableRef?.request("resizable", {offsetWidth: width, direction: [-1, 1]}, true);
 }
 
 /**
@@ -358,15 +371,16 @@ export const doBaseRightDecreaseLeft = () => {
 export const doBaseLeftDecreaseRight = () => {
     const {targets, movableRef, groupCoordinate} = eventOperateStore;
     if (!targets || targets.length === 0) return;
-    const {layerConfigs, canvasConfig: {resizeStep = 1}} = designerStore;
+    const {layerConfigs} = layerManager;
+    const {canvasConfig: {resizeStep = 1}} = canvasManager;
     let width;
     if (targets.length === 1) {
-        let id = targets[0].id;
+        const id = targets[0].id;
         width = layerConfigs[id].width! - resizeStep;
     } else {
         width = groupCoordinate.groupWidth! - resizeStep;
     }
-    movableRef?.current?.request("resizable", {offsetWidth: width, direction: [1, 1]}, true);
+    movableRef?.request("resizable", {offsetWidth: width, direction: [1, 1]}, true);
 }
 
 
@@ -374,7 +388,7 @@ export const doBaseLeftDecreaseRight = () => {
  * 撤销
  */
 export const undo = () => {
-    let history = historyOperator.backoff();
+    const history = historyOperator.backoff();
     if (!history) return;
     const {actions} = history!;
     actions.forEach(action => {
@@ -387,7 +401,7 @@ export const undo = () => {
  * 重做
  */
 export const redo = () => {
-    let history = historyOperator.forward();
+    const history = historyOperator.forward();
     if (!history) return;
     const {actions} = history!;
     actions.forEach(action => {
@@ -408,14 +422,14 @@ export const toggleSecondaryBorder = () => {
     if (newValue) {
         //展示辅助线
         const compContainers = document.getElementsByClassName('lc-comp-item')
-        compContainers && Array.from(compContainers).forEach((compContainer: any) => {
-            compContainer.style.border = '1px solid #65eafc';
+        compContainers && Array.from(compContainers).forEach((compContainer: Element) => {
+            (compContainer as HTMLElement).style.border = '1px solid #65eafc';
         });
     } else {
         //隐藏辅助线
         const compContainers = document.getElementsByClassName('lc-comp-item')
-        compContainers && Array.from(compContainers).forEach((compContainer: any) => {
-            compContainer.style.border = 'none';
+        compContainers && Array.from(compContainers).forEach((compContainer: Element) => {
+            (compContainer as HTMLElement).style.border = 'none';
         });
     }
     setAuxiliaryBorder(!auxiliaryBorder);
@@ -425,7 +439,7 @@ export const toggleSecondaryBorder = () => {
  * 切换项目设置弹框
  */
 export const toggleProjectConfig = () => {
-    const {projectVisible, setProjectVisible} = headerStore;
+    const {projectVisible, setProjectVisible} = projectHdStore;
     console.log(projectVisible)
     setProjectVisible(!projectVisible);
 }
@@ -434,7 +448,7 @@ export const toggleProjectConfig = () => {
  * 切换画布设置弹框
  */
 export const toggleCanvasConfig = () => {
-    const {canvasVisible, setCanvasVisible} = headerStore;
+    const {canvasVisible, setCanvasVisible} = canvasHdStore;
     setCanvasVisible(!canvasVisible);
 }
 
@@ -442,7 +456,7 @@ export const toggleCanvasConfig = () => {
  * 切换全局主题设置弹框
  */
 export const toggleGlobalThemeConfig = () => {
-    const {themeVisible, setThemeVisible} = headerStore;
+    const {themeVisible, setThemeVisible} = themeHdStore;
     setThemeVisible(!themeVisible);
 }
 
@@ -454,23 +468,14 @@ export const toggleHotKeyDes = () => {
     setHotKeyVisible(!hotKeyVisible)
 }
 
-/**
- * 切换组件库弹框
- */
-export const toggleLayer = () => {
-    const {setVisible, visible} = layerListStore;
-    setVisible && setVisible(!visible);
-}
-
 /*************************蓝图快捷键实现*************************/
 
 /**
  * 删除蓝图中选中的节点
  */
 export const delBPNode = () => {
-    const {bluePrintVisible} = headerStore;
-    if (!bluePrintVisible) return;
-    const {selectedNodes, delNode} = bpStore;
+    if (!bluePrintHdStore.bluePrintVisible) return;
+    const {selectedNodes, delNode} = bluePrintManager;
     if (selectedNodes.length === 0) return;
     const selectedNodeIds = selectedNodes.map(node => node.id.split(':')[1]!);
     delNode(selectedNodeIds);
@@ -487,9 +492,8 @@ export const delBPNode = () => {
  * 删除蓝图中选中的连线
  */
 export const delBPLine = () => {
-    const {bluePrintVisible} = headerStore;
-    if (!bluePrintVisible) return;
-    const {selectedLines, delLine} = bpStore;
+    if (!bluePrintHdStore.bluePrintVisible) return;
+    const {selectedLines, delLine} = bluePrintManager;
     if (selectedLines.length === 0) return;
     const selectedLineIds = selectedLines.map(line => line.id!);
     delLine(selectedLineIds);

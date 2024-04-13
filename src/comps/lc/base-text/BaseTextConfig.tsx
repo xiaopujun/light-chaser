@@ -18,41 +18,21 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
         config: {columns: 2},
         children: [
             {
-                key: 'data',
-                children: [
-                    {
-                        key: 'staticData',
-                        children: [
-                            {
-                                key: 'data',
-                                type: 'input',
-                                label: '内容',
-                                value: data?.staticData?.data,
-                            },
-                        ]
-                    }
-                ]
-            },
-            {
                 key: 'style',
                 children: [
                     {
                         key: 'fontSize',
-                        type: 'input',
+                        type: 'number-input',
                         label: '字号',
                         value: style?.fontSize,
-                        config: {
-                            type: 'number',
-                            min: 1,
-                        }
+                        config: {min: 1}
                     },
                     {
                         key: 'fontWeight',
-                        type: 'input',
-                        label: '粗细',
-                        value: style?.fontWeight,
+                        type: 'number-input',
+                        label: '加粗',
+                        value: style?.fontWeight || 400,
                         config: {
-                            type: 'number',
                             min: 100,
                             max: 900,
                             step: 100
@@ -64,13 +44,41 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
                         label: '颜色',
                         value: '#1c1c1c',
                         config: {
-                            width: '100%',
-                            radius: 3,
-                            showBorder: true,
                             showText: true,
-                            height: 16,
-                            hideControls: true
                         }
+                    },
+                    {
+                        key: 'fontFamily',
+                        type: 'select',
+                        label: '字体',
+                        value: '',
+                        config: {
+                            options: [
+                                {label: '钉钉进步体', value: 'DingTalk JinBuTi'},
+                                {label: '抖音美好体', value: 'DouyinSansBold'},
+                                {label: '优设标题黑', value: '优设标题黑'},
+                                {label: '庞门正道标题', value: '庞门正道标题体免费版'},
+                            ],
+                        }
+                    }
+                ]
+            },
+            {
+                key: 'data',
+                children: [
+                    {
+                        key: 'staticData',
+                        children: [
+                            {
+                                key: 'data',
+                                type: 'text-area',
+                                label: '内容',
+                                value: data?.staticData,
+                                config: {
+                                    containerStyle: {gridColumn: '1 / 3'},
+                                }
+                            },
+                        ]
                     }
                 ]
             }

@@ -1,12 +1,12 @@
-import ReactDOM from 'react-dom';
-import App from './App';
-import {BrowserRouter} from "react-router-dom";
+import {createRoot} from "react-dom/client";
+import './index.less';
+import {lazy, Suspense} from "react";
+import Loading from "./json-schema/ui/loading/Loading.tsx";
 
-export let designerRouter: any = null;
+const MainRouter = lazy(() => import('./router/MainRouter.tsx'))
 
-ReactDOM.render(
-    <BrowserRouter ref={ref => designerRouter = ref}>
-        <App/>
-    </BrowserRouter>,
-    document.getElementById('root')
+createRoot(document.getElementById('root')!).render(
+    <Suspense fallback={<Loading/>}>
+        <MainRouter/>
+    </Suspense>
 );

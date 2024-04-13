@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import Selecto, {OnSelectEnd} from "react-selecto";
+import Selecto, {OnDragStart, OnSelectEnd} from "react-selecto";
 import eventOperateStore from "../EventOperateStore";
 import {observer} from "mobx-react";
 import Moveable from 'react-moveable';
-import designerStore from "../../store/DesignerStore";
-import layerListStore from "../../float-configs/layer-list/LayerListStore";
-import LayerUtil from "../../float-configs/layer-list/util/LayerUtil";
+import layerManager from "../../manager/LayerManager.ts";
+import LayerUtil from "../../left/layer-list/util/LayerUtil";
+import layerListStore from "../../left/layer-list/LayerListStore";
+import designerLeftStore from "../../left/DesignerLeftStore";
 
 /**
  * 设置控制点和边框的颜色
@@ -28,19 +29,23 @@ export function setControlPointLineColor(lock: boolean) {
     }
 }
 
-class DesignerSelectable extends Component {
+export interface DesignerSelectableProps {
+    children?: React.ReactNode;
+}
+
+class DesignerSelectable extends Component<DesignerSelectableProps> {
     selectorRef = React.createRef<Selecto>();
 
     componentDidMount() {
         const {setSelectorRef} = eventOperateStore;
-        setSelectorRef(this.selectorRef);
+        setSelectorRef(this.selectorRef.current!);
     }
 
     onSelectEnd = (e: OnSelectEnd) => {
-        let {selected} = e;
+        const {selected} = e;
         const {movableRef, setTargetIds} = eventOperateStore;
         if (!movableRef) return;
-        const movable: Moveable = movableRef!.current!;
+        const movable: Moveable = movableRef!;
         //如果为拖拽，则将当前的整个dom事件传递给movable，确保选中元素后可以立马拖拽
         if (e.isDragStart) {
             e.inputEvent.preventDefault();
@@ -51,17 +56,21 @@ class DesignerSelectable extends Component {
             });
         }
 
-        const {layerConfigs} = designerStore;
+        const {layerConfigs} = layerManager;
         let layerIds = selected.map((item) => item.id);
         let lockState = !!layerConfigs[layerIds[0]]?.lock;
         if (layerIds.length === 1) {
-            //点选
-            const pid = layerConfigs[layerIds[0]].pid;
-            if (!pid) {
-                //普通图层--不管是否锁定，都可以选中
-            } else {
-                //分组图层--选中这个分组下的所有未锁定、未隐藏的组件
-                layerIds = LayerUtil.findAllChildLayerBySubId(layerIds);
+            /**
+             * 点选
+             * 普通图层--不管是否锁定，都可以选中
+             * 分组图层--选中这个分组下的所有未锁定、未隐藏的组件
+             *
+             * 按住shift键点选时，仅选中当前图层，不做分组场景下的计算
+             */
+            if (!e.inputEvent.shiftKey) {
+                const pid = layerConfigs[layerIds[0]].pid;
+                if (pid)
+                    layerIds = LayerUtil.findAllChildLayerBySubId(layerIds);
             }
         } else if (layerIds.length > 1) {
             /**
@@ -69,7 +78,7 @@ class DesignerSelectable extends Component {
              * 框选多个组件时，不能同时包含锁定和非锁定的组件。在同时包含锁定和未锁定状态下的组件时，只选中未锁定状态的组件。
              * 对于框选组件中存在分组的。 要选中分组内的所有相同锁定状态的组件。
              */
-            let allChildLayerId = LayerUtil.findAllChildLayerBySubId(layerIds, true);
+            const allChildLayerId = LayerUtil.findAllChildLayerBySubId(layerIds, true);
             //检测是否同时包含锁定和非锁定的组件
             for (let i = 0; i < allChildLayerId.length; i++) {
                 const layer = layerConfigs[allChildLayerId[i]];
@@ -85,8 +94,9 @@ class DesignerSelectable extends Component {
         //更新选中的组件id
         setTargetIds(layerIds);
         //更新图层列表状态
-        const {visible, layerInstances} = layerListStore;
-        if (visible) {
+        const {layerInstances} = layerListStore;
+        const {menu} = designerLeftStore;
+        if (menu === 'layer-list') {
             layerIds.forEach((id) => {
                 (layerInstances[id] as Component)?.setState({selected: true});
             });
@@ -96,12 +106,12 @@ class DesignerSelectable extends Component {
         setControlPointLineColor(lockState);
     }
 
-    onDragStart = (e: any) => {
+    onDragStart = (e: OnDragStart) => {
         const {movableRef, targets} = eventOperateStore;
-        const movable: Moveable = movableRef!.current!;
+        const movable: Moveable = movableRef!;
         const target = e.inputEvent.target;
         if ((movable.isMoveableElement(target))
-            || targets.some((t: any) => t === target || t.contains(target))
+            || targets.some((t: HTMLElement) => t === target || t.contains(target))
         ) {
             e.stop();
         }

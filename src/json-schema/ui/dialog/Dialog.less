@@ -1,0 +1,31 @@
+@import "../../../designer/style/DesignerStyle.less";
+
+.lc-dialog {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.64);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 3px;
+
+  .dialog-body {
+    .dialog-header {
+      background: #26292e;
+      height: 35px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: @lc-config-sub-title;
+      padding: 0 10px;
+    }
+
+    .dialog-content {
+      background: #1b1e23;
+      padding: 5px;
+    }
+  }
+}

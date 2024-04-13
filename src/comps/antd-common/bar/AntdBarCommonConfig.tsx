@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {AntdCartesianCoordinateSys} from "../config/AntdFragment";
-import {BarOptions} from "@antv/g2plot";
+import {BarOptions, ColorAttr} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
 import AntdCommonBarController from "./AntdCommonBarController";
 import {Control} from "../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {AntdLegend} from "../config/legend/AntdLegend";
-import {Option} from "../../../ui/select/SelectType";
 import {ConfigType} from "../../../designer/right/ConfigContent";
+import {ISelectOption} from "../../../json-schema/ui/select/Select";
 
 class AntdBarCommonStyleConfig extends Component<ConfigType<AntdCommonBarController>> {
 
@@ -50,7 +50,7 @@ export const AntdBarGraphics: React.FC<ConfigType<AntdCommonBarController>> = ({
         const {id, data, dataFragment} = fieldChangeData;
         if (id === 'barColor') {
             if (data && Array.isArray(data)) {
-                controller.update({style: {color: data as any, barStyle: {fill: undefined}}});
+                controller.update({style: {color: data as ColorAttr, barStyle: {fill: undefined}}});
             } else if (data && typeof data === 'string' && data.indexOf('gradient') !== -1) {
                 //渐变
             } else {
@@ -68,33 +68,31 @@ export const AntdBarGraphics: React.FC<ConfigType<AntdCommonBarController>> = ({
         children: [
             {
                 type: 'grid',
-                config: {columns: 2, margin: '0 0 7px 0'},
+                config: {columns: 2},
                 children: [
                     {
                         key: 'maxBarWidth',
-                        type: 'input',
+                        type: 'number-input',
                         label: '宽度',
                         value: config?.maxBarWidth,
                         config: {
-                            width: 80,
-                            type: 'number',
                             min: 1,
                             max: 100,
                         }
                     },
-                ]
-            },
-            {
-                type: 'grid',
-                children: [
                     {
                         id: 'barColor',
                         type: 'color-mode',
                         label: '颜色',
                         value: '#1c1c1c',
+                        config: {
+                            containerStyle: {
+                                gridColumn: '1/3'
+                            }
+                        }
                     }
                 ]
-            }
+            },
         ]
     }
 
@@ -107,7 +105,7 @@ export const AntdBarGraphics: React.FC<ConfigType<AntdCommonBarController>> = ({
 export const AntdBarFieldMapping: React.FC<ConfigType<AntdCommonBarController>> = ({controller}) => {
     const config = controller.getConfig()!.style;
     const {data, xField, yField, seriesField} = config!;
-    const options: Option[] = [];
+    const options: ISelectOption[] = [];
     if (data && data.length >= 1) {
         const dataObj = data[0];
         Object.keys(dataObj).forEach(key => options.push({label: key, value: key}))

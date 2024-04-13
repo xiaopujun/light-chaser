@@ -35,9 +35,9 @@ class ContextMenuStore {
 
     setPosition = (position: number[]) => this.position = position;
 
-    setMouseDownTime = (time: any) => this.mouseDownTime = time;
+    setMouseDownTime = (time: number) => this.mouseDownTime = time;
 
-    setMouseUpTime = (time: any) => this.mouseUpTime = time;
+    setMouseUpTime = (time: number) => this.mouseUpTime = time;
 
 }
 

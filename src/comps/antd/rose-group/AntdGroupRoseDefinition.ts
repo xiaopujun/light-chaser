@@ -1,7 +1,7 @@
-import {BaseInfoType} from "../../../designer/DesignerType";
 import groupRoseImg from "./group-rose.png";
 import AbstractRoseDefinition from "../../antd-common/rose/AbstractRoseDefinition";
-import {AntdRoseProps} from "../../antd-common/rose/AntdCommonRose";
+import {AntdRoseProps} from "../../antd-common/rose/AntdCommonRoseController";
+import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
 
 class AntdGroupRoseDefinition extends AbstractRoseDefinition {
 
@@ -9,8 +9,8 @@ class AntdGroupRoseDefinition extends AbstractRoseDefinition {
         return {
             compName: "Antd分组玫瑰图",
             compKey: "AntdGroupRose",
-            type: "玫瑰图",
-            typeKey: "rose",
+            categorize: "chart",
+            subCategorize: "rose",
         };
     }
 
@@ -93,10 +93,8 @@ class AntdGroupRoseDefinition extends AbstractRoseDefinition {
                 },
             },
             data: {
-                dataSource: 'static',
-                staticData: {
-                    data: data
-                },
+                sourceType: 'static',
+                staticData: data
             },
         };
     }

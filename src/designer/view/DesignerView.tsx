@@ -1,28 +1,43 @@
-import {Component} from 'react';
+import {lazy, Suspense, useEffect} from 'react';
 import './DesignerView.less';
-import designerStore from "../store/DesignerStore";
+import layerManager from "../manager/LayerManager.ts";
 import {observer} from "mobx-react";
-import Loading from "../../ui/loading/Loading";
+import Loading from "../../json-schema/ui/loading/Loading";
 import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
-import layerBuilder from "../float-configs/layer-list/LayerBuilder";
+import layerBuilder from "../left/layer-list/LayerBuilder";
+import {DesignerMode, SaveType} from "../DesignerType.ts";
+import canvasManager from "../header/items/canvas/CanvasManager.ts";
+import designerManager from "../manager/DesignerManager.ts";
 
-class DesignerView extends Component {
+const ScreenFit = lazy(() => import('../../framework/screen-fit/ScreenFit.tsx'));
 
-    constructor(props: any) {
-        super(props);
-        DesignerLoaderFactory.getLoader().load();
-    }
-
-    render() {
-        let {loaded, canvasConfig: {width, height}, layerConfigs} = designerStore!;
-        if (!loaded)
-            return <Loading/>;
-        return (
-            <div style={{width, height, background: 'black', overflow: 'hidden', position: "relative"}}>
-                {layerBuilder.buildCanvasComponents(layerConfigs)}
-            </div>
-        );
-    }
+export interface DesignerViewProps {
+    id: string;
+    type: SaveType;
 }
 
-export default observer(DesignerView);
+const DesignerView = observer((props: DesignerViewProps) => {
+
+    const {id, type} = props;
+
+    useEffect(() => {
+        DesignerLoaderFactory.getLoader(DesignerMode.VIEW).load(id, type);
+    }, []);
+
+    const {layerConfigs} = layerManager!;
+    const {loaded} = designerManager;
+    const {canvasConfig: {width, height}} = canvasManager
+    if (!loaded)
+        return <Loading/>;
+    return (
+        <Suspense fallback={<Loading/>}>
+            <ScreenFit width={width!} height={height!}>
+                <div style={{width, height, background: 'black', overflow: 'hidden', position: "relative"}}>
+                    {layerBuilder.buildCanvasComponents(layerConfigs)}
+                </div>
+            </ScreenFit>
+        </Suspense>
+    );
+});
+
+export default DesignerView;

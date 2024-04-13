@@ -1,4 +1,4 @@
-import {HotKeyConfigType, TriggerType} from "./HotKey";
+import {HotKeyConfigType, HotKeyTriggerType} from "./HotKey";
 import {
     delBPLine,
     delBPNode,
@@ -11,30 +11,31 @@ import {
     doBaseUpDecreaseDown,
     doBaseUpEnlargeDown,
     doCopy,
-    doDelete, doGrouping,
+    doDelete,
+    doGrouping,
     doHide,
     doLock,
     doMoveDown,
     doMoveLeft,
     doMoveRight,
     doMoveUp,
-    doSave, doUnGrouping,
-    doUnLock,
+    doSave,
+    doUnGrouping,
+    doUnLock, layerMoveDown, layerMoveUp,
     redo,
+    removeFromGroup,
     selectAll,
-    toBottom,
+    layerToBottom,
     toggleCanvasConfig,
     toggleGlobalThemeConfig,
     toggleHotKeyDes,
-    toggleLayer,
     toggleProjectConfig,
     toggleSecondaryBorder,
-    toTop,
+    layerToTop,
     undo
 } from "./HotKeyImpl";
 
-
-export const hotkeyConfigs: HotKeyConfigType = {
+const commonHotKeyConfigs: HotKeyConfigType = {
     'control + a': {
         handler: selectAll,
         range: ".lc-ruler-content"
@@ -43,6 +44,8 @@ export const hotkeyConfigs: HotKeyConfigType = {
         handler: doCopy,
         range: ".lc-ruler-content"
     },
+
+
     'control + l': {
         handler: doLock,
     },
@@ -53,16 +56,19 @@ export const hotkeyConfigs: HotKeyConfigType = {
         handler: doHide,
     },
     'control + arrowup': {
-        handler: toTop,
+        handler: layerToTop,
     },
     'control + arrowdown': {
-        handler: toBottom,
+        handler: layerToBottom,
+    },
+    'alt + arrowup': {
+        handler: layerMoveUp,
+    },
+    'alt + arrowdown': {
+        handler: layerMoveDown,
     },
     'control + s': {
         handler: doSave,
-    },
-    'delete': {
-        handler: [delBPLine, delBPNode, doDelete],
     },
     'control + z': {
         handler: undo,
@@ -87,67 +93,64 @@ export const hotkeyConfigs: HotKeyConfigType = {
     'control + 4': {
         handler: toggleHotKeyDes,
     },
-    'control + 5': {
-        handler: toggleLayer,
-    },
     'arrowup': {
         handler: doMoveUp,
-        triggerType: TriggerType.COILED,
+        triggerType: HotKeyTriggerType.COILED,
         range: ".lc-ruler-content"
     },
     'arrowdown': {
         handler: doMoveDown,
-        triggerType: TriggerType.COILED,
+        triggerType: HotKeyTriggerType.COILED,
         range: ".lc-ruler-content"
     },
     'arrowleft': {
         handler: doMoveLeft,
-        triggerType: TriggerType.COILED,
+        triggerType: HotKeyTriggerType.COILED,
         range: ".lc-ruler-content"
     },
     'arrowright': {
         handler: doMoveRight,
-        triggerType: TriggerType.COILED,
+        triggerType: HotKeyTriggerType.COILED,
         range: ".lc-ruler-content"
     },
     'control + shift + arrowup': {
         handler: doBaseBottomEnlargeUp,
-        triggerType: TriggerType.COILED,
+        triggerType: HotKeyTriggerType.COILED,
         range: ".lc-ruler-content"
     },
     'control + shift + arrowdown': {
         handler: doBaseUpEnlargeDown,
-        triggerType: TriggerType.COILED,
+        triggerType: HotKeyTriggerType.COILED,
         range: ".lc-ruler-content"
     },
     'control + shift + arrowleft': {
         handler: doBaseRightEnlargeLeft,
-        triggerType: TriggerType.COILED,
+        triggerType: HotKeyTriggerType.COILED,
         range: ".lc-ruler-content"
     },
     'control + shift + arrowright': {
         handler: doBaseLeftEnlargeRight,
-        triggerType: TriggerType.COILED,
+        triggerType: HotKeyTriggerType.COILED,
         range: ".lc-ruler-content"
     },
     'control + alt + arrowup': {
         handler: doBaseBottomDecreaseUp,
-        triggerType: TriggerType.COILED,
+        triggerType: HotKeyTriggerType.COILED,
         range: ".lc-ruler-content"
     },
     'control + alt + arrowdown': {
         handler: doBaseUpDecreaseDown,
-        triggerType: TriggerType.COILED,
+        triggerType: HotKeyTriggerType.COILED,
         range: ".lc-ruler-content"
     },
     'control + alt + arrowleft': {
         handler: doBaseRightDecreaseLeft,
-        triggerType: TriggerType.COILED,
+        triggerType: HotKeyTriggerType.COILED,
         range: ".lc-ruler-content"
     },
     'control + alt + arrowright': {
         handler: doBaseLeftDecreaseRight,
-        triggerType: TriggerType.COILED,
+        triggerType: HotKeyTriggerType.COILED,
         range: ".lc-ruler-content"
     },
     'control + g': {
@@ -155,5 +158,27 @@ export const hotkeyConfigs: HotKeyConfigType = {
     },
     'control + shift + g': {
         handler: doUnGrouping,
+    },
+    'alt + shift + g': {
+        handler: removeFromGroup,
     }
 }
+
+const isMac = /macintosh|mac os x/i.test(navigator.userAgent);
+
+const winHotKey: HotKeyConfigType = {
+    'delete': {
+        handler: [delBPLine, delBPNode, doDelete],
+    },
+    ...commonHotKeyConfigs
+}
+
+const macHotKey: HotKeyConfigType = {
+    'meta + backspace': {
+        handler: [delBPLine, delBPNode, doDelete],
+    },
+    ...commonHotKeyConfigs
+}
+
+
+export const hotkeyConfigs: HotKeyConfigType = isMac ? macHotKey : winHotKey;
