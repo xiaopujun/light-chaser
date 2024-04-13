@@ -2,13 +2,14 @@ import {MenuInfo} from "../../designer/right/MenuType";
 import AbstractController from "./AbstractController";
 import React from "react";
 import {ClazzTemplate} from "../../comps/common-component/common-types";
+import AbstractDesignerController from "./AbstractDesignerController";
 
 export type MenuToConfigMappingType = Record<string, React.ComponentType<any>>;
 
 export interface ActionInfo {
     name: string;
     id: string;
-    handler: (controller: AbstractController, params?: any) => void;
+    handler: (controller: AbstractDesignerController, params?: any) => void;
 }
 
 export interface EventInfo {
@@ -119,22 +120,29 @@ export abstract class AbstractDefinition<C extends AbstractController = Abstract
             {
                 name: "显示",
                 id: "show",
-                handler: (controller: AbstractController) => {
+                handler: (controller: AbstractDesignerController) => {
                     controller.container!.style.display = "block";
                 }
             },
             {
                 name: "隐藏",
                 id: "hide",
-                handler: (controller: AbstractController) => {
+                handler: (controller: AbstractDesignerController) => {
                     controller.container!.style.display = "none";
                 }
             },
             {
-                name: "更新组件配置",
+                name: "更新组件样式",
                 id: "updateConfig",
-                handler: (controller: AbstractController, params?: object) => {
+                handler: (controller: AbstractDesignerController, params?: object) => {
                     controller.update(params);
+                }
+            },
+            {
+                name: "更新组件数据",
+                id: "updateData",
+                handler: (controller: AbstractDesignerController, params?: object) => {
+                    controller.changeData(params);
                 }
             }
         ];

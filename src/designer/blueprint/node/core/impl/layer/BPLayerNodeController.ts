@@ -31,7 +31,7 @@ export default class BPLayerNodeController extends AbstractBPNodeController<Laye
             if (!compInstance)
                 return;
             const {type} = layerConfigs[nodeId];
-            const {definitionMap} = DesignerLoaderFactory.getLoader(DesignerMode.EDIT);
+            const {definitionMap} = DesignerLoaderFactory.getLoader(DesignerMode.VIEW);
             const actionList = definitionMap[type!].getActionList();
             //2.获取当前组件可执行的动作列表
             const action = actionList.find((action: ActionInfo) => action.id === apId);

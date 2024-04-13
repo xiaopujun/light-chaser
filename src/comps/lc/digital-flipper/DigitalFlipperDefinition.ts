@@ -74,6 +74,10 @@ export default class DigitalFlipperDefinition extends AbstractDefinition<Digital
             {
                 id: "click",
                 name: "点击时",
+            },
+            {
+                id: "dataChange",
+                name: "数据变化时"
             }
         ]);
     }

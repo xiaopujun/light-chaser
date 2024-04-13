@@ -120,6 +120,7 @@ export interface InputConfigType extends BaseSchemaType {
         prefix?: string;
         suffix?: string;
         placeholder?: string;
+        type?: string;
         minLength?: number;
         maxLength?: number;
         disabled?: boolean;
