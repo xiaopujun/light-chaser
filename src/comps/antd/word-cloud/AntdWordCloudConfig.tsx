@@ -34,12 +34,78 @@ export const AntdWordCloudStyle = (props: ConfigType<AntdWordCloudController>) =
                         gridColumn: '1/3'
                     }
                 }
+            },
+            {
+                id: 'randomPosition',
+                type: 'switch',
+                key: 'random',
+                label: '随机',
+                tip: '开启后词云图每次更新数据，词语位置随机展示',
+                value: typeof style?.random !== 'number',
+            },
+            {
+                key: 'spiral',
+                type: 'select',
+                label: '形状',
+                value: style?.spiral,
+                config: {
+                    options: [
+                        {label: '椭圆', value: 'archimedean'},
+                        {label: '矩形', value: 'rectangular'},
+                    ]
+
+                },
+            },
+            {
+                key: 'wordStyle',
+                children: [
+                    {
+                        type: 'select',
+                        key: 'fontFamily',
+                        label: '字体',
+                        value: style?.wordStyle?.fontFamily,
+                        config: {
+                            options: [
+                                {label: '钉钉进步体', value: 'DingTalk JinBuTi'},
+                                {label: '抖音美好体', value: 'DouyinSansBold'},
+                                {label: '优设标题黑', value: '优设标题黑'},
+                                {label: '庞门正道标题', value: '庞门正道标题体免费版'},
+                            ]
+                        }
+                    },
+                    {
+                        key: 'fontWeight',
+                        type: 'number-input',
+                        label: '粗细',
+                        value: style?.wordStyle?.fontWeight || 500,
+                        config: {min: 100, max: 900, step: 100},
+                    },
+                    {
+                        key: 'fontSize',
+                        type: 'range-slider',
+                        label: '字号',
+                        value: style?.wordStyle?.fontSize,
+                        config: {min: 0},
+                    },
+                    {
+                        key: 'padding',
+                        type: 'number-input',
+                        label: '间距',
+                        value: style?.wordStyle?.padding,
+                        config: {min: 0},
+                    },
+                ]
             }
         ]
     }
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
-        const {dataFragment} = fieldChangeData;
-        controller.update(dataFragment);
+        const {dataFragment, data, id} = fieldChangeData;
+        if (id === 'randomPosition') {
+            const random = data ? undefined : 0.5;
+            controller.update({style: {random}})
+        } else {
+            controller.update(dataFragment);
+        }
     }
 
     return <LCGUI schema={schema} onFieldChange={onFieldChange}/>

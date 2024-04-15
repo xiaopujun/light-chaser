@@ -126,10 +126,13 @@ class AntdWordCloudDefinition extends AbstractDefinition<AntdWordCloudController
                 wordField: 'name',
                 weightField: 'value',
                 colorField: 'name',
+                spiral: 'rectangular',
                 wordStyle: {
-                    fontFamily: 'Verdana',
+                    fontFamily: '优设标题黑',
+                    fontWeight: 500,
                     fontSize: [8, 32],
                     rotation: 0,
+                    padding: 1,
                 },
             },
             data: {
