@@ -13,6 +13,7 @@ import {observer} from "mobx-react";
 import layerManager from "../../manager/LayerManager.ts";
 import IdGenerate from "../../../utils/IdGenerate";
 import DragAddProvider from "../../../framework/drag-scale/DragAddProvider";
+import Input from "../../../json-schema/ui/input/Input.tsx";
 
 const BPLeft: React.FC = () => {
     return (
@@ -104,7 +105,7 @@ const drop = (event: DragEvent) => {
 }
 
 export const BPNodeList = observer(() => {
-    const {activeMenu} = bpLeftStore;
+    const {activeMenu, setSearchValue} = bpLeftStore;
     const NodeList = nodeListMapping[activeMenu];
     const dragAddProvider = useRef<DragAddProvider | null>(null);
 
@@ -121,6 +122,12 @@ export const BPNodeList = observer(() => {
     }, [activeMenu])
     return (
         <div className={'bp-node-list'}>
+            <div className={'bp-node-list-header'}>
+                <div className={'bp-node-list-search'}>
+                    <Input placeholder={'搜索节点'} containerStyle={{width: '100%'}}
+                           onChange={(value) => setSearchValue(value)}/>
+                </div>
+            </div>
             <div className={'bp-node-list-body'}>
                 <div className={'bp-node-list-container'} id={'bp-node-draggable'} style={{overflow: "scroll"}}>
                     {NodeList && <NodeList/>}
@@ -132,12 +139,18 @@ export const BPNodeList = observer(() => {
 
 export const BPLayerNodeList = observer(() => {
     const {layerConfigs} = layerManager;
-    const {usedLayerNodes} = bpLeftStore;
-
+    const {usedLayerNodes, searchValue} = bpLeftStore;
+    let layerIdList = layerConfigs ? Object.keys(layerConfigs) : [];
+    if (searchValue !== '') {
+        layerIdList = layerIdList.filter((key) => {
+            const item = layerConfigs[key];
+            return item.name?.indexOf(bpLeftStore.searchValue) !== -1
+        })
+    }
     return (
         <>
             {
-                layerConfigs && Object.keys(layerConfigs).map((key, index) => {
+                layerIdList.map((key, index) => {
                     const item = layerConfigs[key];
                     const used = usedLayerNodes[key];
                     return (
@@ -155,12 +168,12 @@ export const BPLayerNodeList = observer(() => {
     )
 })
 
-export const BPLogicalNodeList = () => {
+export const BPLogicalNodeList = observer(() => {
 
     const logicalNodeList = [
         {name: '条件判断', icon: BranchesOutlined, type: 'condition-node'},
         {name: '逻辑处理', icon: FunctionOutlined, type: 'logical-process-node'},
-    ]
+    ].filter((item) => item.name.indexOf(bpLeftStore.searchValue) !== -1)
 
     return (
         <>
@@ -180,7 +193,7 @@ export const BPLogicalNodeList = () => {
             }
         </>
     )
-}
+})
 
 export const BPGlobalVariablesNodeList = () => {
     return (

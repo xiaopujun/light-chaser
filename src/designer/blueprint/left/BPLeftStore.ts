@@ -7,6 +7,8 @@ class BPLeftStore {
             setActiveMenu: action,
             usedLayerNodes: observable,
             setUsedLayerNodes: action,
+            searchValue: observable,
+            setSearchValue: action,
         })
     }
 
@@ -14,17 +16,15 @@ class BPLeftStore {
 
     usedLayerNodes: Record<string, boolean> = {};
 
-    setActiveMenu = (menu: string) => {
-        this.activeMenu = menu;
-    }
+    searchValue = '';
 
-    setUsedLayerNodes = (node: string, used: boolean) => {
-        this.usedLayerNodes[node] = used;
-    }
+    setSearchValue = (value: string) => this.searchValue = value;
 
-    initUsedLayerNodes = (usedNodes: Record<string, boolean>) => {
-        this.usedLayerNodes = usedNodes;
-    }
+    setActiveMenu = (menu: string) => this.activeMenu = menu;
+
+    setUsedLayerNodes = (node: string, used: boolean) => this.usedLayerNodes[node] = used;
+
+    initUsedLayerNodes = (usedNodes: Record<string, boolean>) => this.usedLayerNodes = usedNodes;
 }
 
 const bpLeftStore = new BPLeftStore();
