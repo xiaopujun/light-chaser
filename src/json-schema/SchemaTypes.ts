@@ -50,7 +50,7 @@ export interface CodeEditorConfigType extends BaseSchemaType {
     type: "code-editor";
     config?: {
         readonly?: boolean;
-        language?: 'json' | 'javascript';
+        language?: 'json' | 'javascript' | 'sql';
         width?: string | number;
         height?: string | number;
     }

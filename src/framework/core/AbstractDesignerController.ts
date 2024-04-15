@@ -12,8 +12,6 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
     protected interval: NodeJS.Timeout | null = null;
     //上一次数据连接状态 true：成功 false：失败
     protected lastReqState: boolean = true;
-    //断线重连标识
-    protected reConnect: boolean = false;
     //异常提示信息dom元素
     private errMsgDom: HTMLElement | null = null;
 
@@ -67,6 +65,36 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
                         }
                     });
                 }, frequency * 1000);
+                break;
+            case 'database':
+                const {sql, targetDb} = data?.database!;
+                this.interval = setInterval(() => {
+                    fetch(`/api/db/executor/execute`, {
+                        method: 'post',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({id: targetDb, sql})
+                    }).then(response => response.json()).then(res => {
+                        const {data, code} = res;
+                        if (code === 200) {
+                            if (!this.lastReqState) {
+                                this.lastReqState = true;
+                                this.errMsgDom?.remove();
+                                this.errMsgDom = null;
+                                this.changeData(data);
+                            }
+                            this.changeData(data);
+                        }
+                    }).catch(() => {
+                        this.lastReqState = false;
+                        //请求失败，在原有容器的基础上添加异常提示信息的dom元素（此处直接操作dom元素，不适用react的api进行组件的反复挂载和卸载）
+                        if (!this.errMsgDom) {
+                            this.errMsgDom = document.createElement("div");
+                            this.errMsgDom.classList.add("view-error-message");
+                            this.errMsgDom.innerText = "数据加载失败...";
+                            this.container!.appendChild(this.errMsgDom);
+                        }
+                    })
+                }, data?.database?.frequency || 5 * 1000);
                 break;
         }
     }
