@@ -115,4 +115,9 @@ export const componentSubCategorize: ICategorize[] = [
         name: "玫瑰图",
         parentKey: "chart"
     },
+    {
+        key: "radial",
+        name: "玉珏图",
+        parentKey: "chart"
+    },
 ];

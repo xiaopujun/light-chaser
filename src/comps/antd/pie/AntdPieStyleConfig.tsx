@@ -3,7 +3,6 @@ import AntdPieController from "./AntdPieController";
 import {WritablePieOptions} from "../../antd-common/types";
 import {PieOptions, StatisticText} from "@antv/g2plot";
 import {Legend} from "@antv/g2plot/lib/types/legend";
-import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
 import AntdCommonUtil from "../../antd-common/AntdCommonUtil";
@@ -444,24 +443,28 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
 }
 
 
-export const AntdPieFieldMapping: React.FC<ConfigType<AntdBaseDesignerController>> = ({controller}) => {
+export const AntdPieFieldMapping: React.FC<ConfigType<AntdPieController>> = ({controller}) => {
+    const config = controller.config?.style;
     const options = AntdCommonUtil.getDataFieldOptions(controller);
     const schema: Control = {
         type: 'grid',
-        config: {
-            columns: 2,
-        },
+        key: 'style',
+        config: {columns: 2},
         children: [
             {
                 type: 'select',
+                key: 'angleField',
                 label: '角度字段',
+                value: config?.angleField,
                 config: {
                     options,
                 }
             },
             {
                 type: 'select',
+                key: 'colorField',
                 label: '颜色字段',
+                value: config?.colorField,
                 config: {
                     options,
                 }
@@ -470,7 +473,7 @@ export const AntdPieFieldMapping: React.FC<ConfigType<AntdBaseDesignerController
     }
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
-
+        controller.update(fieldChangeData.dataFragment);
     }
 
     return <LCGUI schema={schema} onFieldChange={onFieldChange}/>

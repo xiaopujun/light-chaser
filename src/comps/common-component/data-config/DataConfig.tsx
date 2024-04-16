@@ -62,7 +62,7 @@ const DataConfig = (props: DataConfigProps) => {
             <LCGUI schema={schema} onFieldChange={onFieldChange}/>
             {sourceType === 'static' && <StaticDataConfig controller={controller} data={dataSource.staticData}/>}
             {sourceType === 'api' && <ApiDataConfig controller={controller} data={dataSource.apiData!}/>}
-            {sourceType === 'database' && <DatabaseDataConfig controller={controller} data={dataSource.database}/>}
+            {sourceType === 'database' && <DatabaseDataConfig controller={controller} data={dataSource.database!}/>}
         </div>
     );
 }
