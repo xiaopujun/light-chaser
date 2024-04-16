@@ -6,6 +6,7 @@ import LeftMenus from "./designer-left-menus/LeftMenus.tsx";
 import {ComponentList} from "./compoent-lib/ComponentList.tsx";
 import LayerList from "./layer-list/LayerList.tsx";
 import SourceList from "./source-list/SourceList.tsx";
+import {FilterList} from "./filter-lilst/FilterList.tsx";
 
 export const DesignerLeft = observer(() => {
 
@@ -21,6 +22,7 @@ export const DesignerLeft = observer(() => {
             {menu === 'components' && <ComponentList/>}
             {menu === 'layer-list' && <LayerList/>}
             {menu === 'source-list' && <SourceList/>}
+            {menu === 'filter-list' && <FilterList/>}
         </div>
     );
 })

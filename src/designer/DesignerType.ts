@@ -1,4 +1,5 @@
 import {BPNodeLayoutType, IBPLine} from "./blueprint/manager/BluePrintManager.ts";
+import {IFilter} from "./manager/FilterManager.ts";
 
 /**
  * 主题
@@ -35,15 +36,19 @@ export interface APIConfig {
     params?: any;
     //刷新频率
     frequency?: number;
+    //过滤器
+    filter?: string;
 }
 
 export interface IDatabase {
     //数据库类型
-    targetDb ?: string;
+    targetDb?: string;
     //查询sql语句
     sql?: string;
     //刷新频率
     frequency?: number;
+    //过滤器
+    filter?: string;
 }
 
 /**
@@ -142,6 +147,11 @@ export interface LayerManagerDataType {
     layerTail?: string;
 }
 
+
+export interface FilterManagerDataType {
+    filters: Record<string, IFilter>;
+}
+
 export interface BluePrintManagerDataType {
     //蓝图节点布局
     bpNodeLayoutMap?: Record<string, BPNodeLayoutType>;
@@ -171,6 +181,8 @@ export interface ProjectDataType {
     layerManager?: LayerManagerDataType;
     //蓝图管理
     bluePrintManager?: BluePrintManagerDataType;
+    //过滤器管理
+    filterManager?: FilterManagerDataType;
 }
 
 export interface ILayerItem {

@@ -42,7 +42,7 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
                 //静态数据不做处理，组件首次渲染时默认读取静态数据
                 break;
             case "api":
-                const {url, method, params, header, frequency = 5} = data?.apiData!;
+                const {url, method, params, header, frequency = 5, filter: apiFilter} = data?.apiData!;
                 this.interval = setInterval(() => {
                     HttpUtil.sendHttpRequest(url!, method!, header!, params!).then((data: any) => {
                         if (data) {
@@ -50,7 +50,10 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
                                 this.lastReqState = true;
                                 this.errMsgDom?.remove();
                                 this.errMsgDom = null;
-                                this.changeData(data);
+                            }
+                            if (apiFilter && apiFilter !== '') {
+                                const func = eval(`(${apiFilter})`);
+                                data = typeof func === 'function' ? func(data) : data;
                             }
                             this.changeData(data);
                         }
@@ -67,20 +70,23 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
                 }, frequency * 1000);
                 break;
             case 'database':
-                const {sql, targetDb} = data?.database!;
+                const {sql, targetDb, filter: dbFilter} = data?.database!;
                 this.interval = setInterval(() => {
                     fetch(`/api/db/executor/execute`, {
                         method: 'post',
                         headers: {'Content-Type': 'application/json'},
                         body: JSON.stringify({id: targetDb, sql})
                     }).then(response => response.json()).then(res => {
-                        const {data, code} = res;
+                        let {data, code} = res;
                         if (code === 200) {
                             if (!this.lastReqState) {
                                 this.lastReqState = true;
                                 this.errMsgDom?.remove();
                                 this.errMsgDom = null;
-                                this.changeData(data);
+                            }
+                            if (dbFilter && dbFilter !== '') {
+                                const func = eval(`(${dbFilter})`);
+                                data = typeof func === 'function' ? func(data) : data;
                             }
                             this.changeData(data);
                         }

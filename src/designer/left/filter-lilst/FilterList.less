@@ -1,0 +1,76 @@
+.dl-filter-list {
+  width: 250px;
+  border-right: 1px solid #404040;
+
+  .dl-fl-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 13px 10px;
+    font-size: 12px;
+    border-bottom: 1px solid #404040;
+    color: #bababa;
+  }
+
+  .dl-fl-body {
+    padding: 5px;
+    height: calc(100% - 41px);
+
+    .filter-item {
+      width: 100%;
+      height: 30px;
+      background-color: #2d2d2d;
+      border-radius: 3px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 3px 5px;
+      font-size: 12px;
+      color: #b7b7b7;
+
+      .filter-name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 155px;
+      }
+
+      .filter-operate {
+        font-size: 11px;
+
+        span {
+          color: #4493c0;
+          cursor: pointer;
+        }
+
+        span:hover {
+          color: #6eb7e5;
+        }
+      }
+    }
+  }
+}
+
+.add-filter-dialog {
+  .dialog-content {
+    padding: 10px !important;
+
+    code {
+      font-size: 14px;
+    }
+  }
+
+  .add-filter-dialog-footer {
+    margin-top: 10px;
+    border-top: 2px solid #272b34;
+    display: flex;
+    flex-direction: row-reverse;
+
+    .lc-button {
+      font-size: 12px;
+      color: #a3a3a3;
+      width: 85px;
+      height: 30px;
+      margin: 6px 0 0 0;
+    }
+  }
+}

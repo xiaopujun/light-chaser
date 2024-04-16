@@ -14,12 +14,13 @@ export interface ApiDataConfigProps {
 
 export function ApiDataConfig(props: ApiDataConfigProps) {
     const {data, controller} = props;
-    const dataRef = useRef(ObjectUtil.merge({
+    const dataRef = useRef<APIConfig>(ObjectUtil.merge({
         url: '',
         method: 'get',
         header: {},
         params: {},
-        frequency: 5
+        frequency: 5,
+        filter: undefined
     }, data));
     const apiTestResRef = useRef<string>("")
     const [count, setCount] = useState(0);
@@ -87,6 +88,21 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
                             height: 100,
                         },
                         value: JSON.stringify(dataRef.current?.params, null, 2) || '',
+                    }
+                ]
+            },
+            {
+                type: 'card-panel',
+                label: '过滤器',
+                children: [
+                    {
+                        key: 'filter',
+                        type: 'code-editor',
+                        config: {
+                            height: 200,
+                            language: 'javascript'
+                        },
+                        value: dataRef.current?.filter || "function filter(data){\n\n\n\n}",
                     }
                 ]
             },
@@ -170,8 +186,12 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
     const testApi = () => {
         if (!validate())
             return;
-        let {params, header, url, method} = dataRef.current!;
+        let {params, header, url, method,filter} = dataRef.current!;
         HttpUtil.sendHttpRequest(url!, method!, header, params).then(res => {
+            if (filter && filter !== '') {
+                const func = eval(`(${filter})`);
+                res.data = typeof func === 'function' ? func(res.data) : res.data;
+            }
             apiTestResRef.current = JSON.stringify(res, null, 2);
         }).catch(() => {
             apiTestResRef.current = JSON.stringify({msg: '请求错误'}, null, 2);

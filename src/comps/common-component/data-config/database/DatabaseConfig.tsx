@@ -54,7 +54,7 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
     const doTest = () => {
         if (!validate())
             return;
-        const {targetDb, sql} = dataRef.current;
+        const {targetDb, sql, filter} = dataRef.current;
         fetch(`/api/db/executor/execute`, {
             method: 'post',
             headers: {
@@ -64,8 +64,11 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
         }).then(response => response.json())
             .then(res => {
                 if (res.code === 200) {
+                    if (filter && filter !== '') {
+                        const func = eval(`(${filter})`);
+                        res.data = typeof func === 'function' ? func(res.data) : res.data;
+                    }
                     setTestRes(JSON.stringify(res.data, null, 2));
-                    controller.changeData(res.data);
                 } else {
                     globalMessage.messageApi?.error(res.msg);
                 }
@@ -80,6 +83,9 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
             if (!validate())
                 return;
             controller.update({data: {database: dataRef.current}})
+            const finalData = ObjectUtil.stringToJsObj(testRes)
+            if (finalData)
+                controller.changeData(finalData);
         } else {
             dataRef.current = ObjectUtil.merge(dataRef.current, dataFragment);
         }
@@ -124,6 +130,21 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
                             language: 'sql'
                         },
                         value: dataRef.current?.sql,
+                    }
+                ]
+            },
+            {
+                type: 'card-panel',
+                label: '过滤器',
+                children: [
+                    {
+                        key: 'filter',
+                        type: 'code-editor',
+                        config: {
+                            height: 200,
+                            language: 'javascript'
+                        },
+                        value: dataRef.current?.filter || "function filter(data){\n\n\n\n}",
                     }
                 ]
             },

@@ -1,5 +1,5 @@
 import {action, makeObservable, observable} from "mobx";
-import {AppstoreAddOutlined, BlockOutlined, UngroupOutlined} from "@ant-design/icons";
+import {AppstoreAddOutlined, BlockOutlined, FilterOutlined, UngroupOutlined} from "@ant-design/icons";
 import {ComponentType} from "react";
 
 export interface ILeftMenu {
@@ -34,6 +34,11 @@ class DesignerLeftStore {
             icon: UngroupOutlined,
             name: "资源库",
             key: 'source-list',
+        },
+        {
+            icon: FilterOutlined,
+            name: "过滤器",
+            key: 'filter-list',
         },
     ];
 
