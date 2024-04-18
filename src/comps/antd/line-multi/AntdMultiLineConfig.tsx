@@ -1,16 +1,17 @@
-import React from 'react';
-import {AntdCartesianCoordinateSys} from "../config/AntdFragment";
-import {LineOptions} from "@antv/g2plot";
-import AntdCommonLineController from "./AntdCommonLineController";
-import AntdCommonUtil from "../AntdCommonUtil";
-import {Control} from "../../../json-schema/SchemaTypes";
-import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
+import React from "react";
+import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI.tsx";
+import {Control} from "../../../json-schema/SchemaTypes.ts";
 import {ShapeAttrs} from "@antv/g-base";
-import {ConfigType} from "../../../designer/right/ConfigContent";
-import {AntdBaseDesignerController} from "../AntdBaseDesignerController.ts";
+import {ConfigType} from "../../../designer/right/ConfigContent.tsx";
+import AntdCommonLineController from "../../antd-common/line/AntdCommonLineController.ts";
+import {LineOptions} from "@antv/g2plot";
+import {AntdCartesianCoordinateSys} from "../../antd-common/config/AntdFragment.tsx";
+import {AntdLegend} from "../../antd-common/config/legend/AntdLegend.tsx";
+import AntdCommonUtil from "../../antd-common/AntdCommonUtil.ts";
 
 
-export function AntdLineCommonStyleConfig(props: ConfigType<AntdCommonLineController>) {
+export default function AntdMultiLineStyleConfig(props: ConfigType<AntdCommonLineController>) {
+
     const {controller} = props;
     const config = controller.getConfig()!.style!;
 
@@ -20,53 +21,17 @@ export function AntdLineCommonStyleConfig(props: ConfigType<AntdCommonLineContro
 
     return (
         <>
-            <AntdLineCommonGraphics controller={controller}/>
+            <AntdMultiLineGraphics controller={controller}/>
+            <AntdLegend controller={controller}/>
             <AntdCartesianCoordinateSys onChange={lineCoordinateSysChange} config={config}/>
         </>
     );
 }
 
-export const AntdLineCommonFieldMapping: React.FC<ConfigType<AntdBaseDesignerController>> = ({controller}) => {
-    const options = AntdCommonUtil.getDataFieldOptions(controller);
-    const config = controller.getConfig()?.style;
-    const schema: Control = {
-        type: 'grid',
-        key: 'style',
-        config: {columns: 2},
-        children: [
-            {
-                type: 'select',
-                label: 'X字段',
-                key: 'xField',
-                value: config?.xField,
-                config: {
-                    options,
-                }
-            },
-            {
-                type: 'select',
-                label: 'Y字段',
-                key: 'yField',
-                value: config?.yField,
-                config: {
-                    options,
-                }
-            },
-        ]
-    }
-
-    const onFieldChange = (fieldChangeData: FieldChangeData) => {
-        controller.update(fieldChangeData.dataFragment);
-    }
-
-    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
-}
-
-export function AntdLineCommonGraphics(props: ConfigType<AntdCommonLineController>) {
+export const AntdMultiLineGraphics = (props: ConfigType<AntdCommonLineController>) => {
 
     const {controller} = props;
-    const config = controller.getConfig()?.style;
-
+    const config = controller.getConfig()!.style!;
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
         const {dataFragment} = fieldChangeData;
         controller.update(dataFragment);
@@ -90,7 +55,6 @@ export function AntdLineCommonGraphics(props: ConfigType<AntdCommonLineControlle
                                 key: 'smooth',
                                 type: 'switch',
                                 label: '平滑',
-                                tip: '对阶梯图无效',
                                 value: config?.smooth,
                             },
                             {
@@ -110,11 +74,13 @@ export function AntdLineCommonGraphics(props: ConfigType<AntdCommonLineControlle
                             },
                             {
                                 key: 'color',
-                                type: 'color-picker',
+                                type: 'color-mode',
                                 label: '颜色',
                                 value: config?.color,
                                 config: {
-                                    showText: true
+                                    containerStyle: {
+                                        gridColumn: '1/3',
+                                    }
                                 }
                             }
                         ]
@@ -157,11 +123,13 @@ export function AntdLineCommonGraphics(props: ConfigType<AntdCommonLineControlle
                             },
                             {
                                 key: 'color',
-                                type: 'color-picker',
+                                type: 'color-mode',
                                 label: '颜色',
                                 value: (config?.point as ShapeAttrs)?.color,
                                 config: {
-                                    showText: true
+                                    containerStyle: {
+                                        gridColumn: '1/3',
+                                    }
                                 }
                             },
                         ]
@@ -175,4 +143,51 @@ export function AntdLineCommonGraphics(props: ConfigType<AntdCommonLineControlle
     return (
         <LCGUI schema={schema} onFieldChange={onFieldChange}/>
     )
+}
+
+
+export const AntdMultiLineFieldMapping: React.FC<ConfigType<AntdCommonLineController>> = ({controller}) => {
+    const options = AntdCommonUtil.getDataFieldOptions(controller);
+    const {xField, yField, seriesField} = controller.getConfig()?.style!;
+    const schema: Control = {
+        type: 'grid',
+        key: 'style',
+        config: {columns: 2},
+        children: [
+            {
+                key: 'xField',
+                value: xField,
+                type: 'select',
+                label: 'X字段',
+                config: {
+                    options,
+                }
+            },
+            {
+                value: yField,
+                key: 'yField',
+                type: 'select',
+                label: 'Y字段',
+                config: {
+                    options,
+                }
+            },
+            {
+                value: seriesField,
+                key: 'seriesField',
+                type: 'select',
+                label: '分组字段',
+                config: {
+                    options,
+                }
+            }
+        ]
+    }
+
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+        const {dataFragment} = fieldChangeData;
+        controller.update(dataFragment);
+    }
+
+    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
 }
