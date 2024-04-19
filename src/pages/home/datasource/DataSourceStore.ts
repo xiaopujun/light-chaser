@@ -2,6 +2,13 @@ import {action, makeObservable, observable} from "mobx";
 import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
 import {DataSourceConfigType} from "./edit/EditDataSourceDialog.tsx";
 
+export const DataSourceMapping = {
+    "0": "MySQL",
+    "1": "PostgresSQL",
+    "2": "Oracle",
+    "3": "SQL Server",
+}
+
 export class DataSourceStore {
     constructor() {
         makeObservable(this, {
@@ -90,7 +97,10 @@ export class DataSourceStore {
             .then(response => response.json())
             .then(res => {
                 if (res.code === 200) {
-                    (res.data as Array<DataSourceConfigType>).forEach((item) => item.key = item.id)
+                    (res.data as Array<DataSourceConfigType>).forEach((item) => {
+                        item.key = item.id;
+                        item.type = DataSourceMapping[item.type];
+                    })
                     this.setDataSourceList(res.data);
                 } else
                     globalMessage.messageApi?.error(res.msg);

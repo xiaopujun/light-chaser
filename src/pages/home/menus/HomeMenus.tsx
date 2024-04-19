@@ -39,7 +39,7 @@ export const HomeMenus = memo(() => {
     return (
         <div className={'lc-home-menus'}>
             <Menu onClick={changeMenu}
-                  style={{width: 256}}
+                  style={{width: 220}}
                   defaultSelectedKeys={[currentMenu]}
                   mode="inline"
                   items={menus}

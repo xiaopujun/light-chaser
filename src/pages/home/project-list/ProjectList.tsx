@@ -10,6 +10,7 @@ import Button from "../../../json-schema/ui/button/Button";
 import Dialog from "../../../json-schema/ui/dialog/Dialog";
 import operatorMap from "../../../framework/operate";
 import {globalMessage} from "../../../framework/message/GlobalMessage";
+import Input from "../../../json-schema/ui/input/Input.tsx";
 
 export interface ProjectListProps {
     saveType: SaveType;
@@ -109,11 +110,15 @@ export const ProjectList = memo((props: ProjectListProps) => {
 
     return (
         <div className={'project-list-container'}>
-            <div className={'project-list'}>
-                <div className={'create-new-btn'}>
-                    <Button onClick={toggleNewProVisible}
-                            style={{fontSize: 20, width: '100%', height: '100%'}}>+ 新建项目</Button>
+            <div className={'project-list-header'}>
+                <div className={'project-list-header-left'}>
+                    <Input className={'list-search'} placeholder={'搜索项目'}/>
                 </div>
+                <div className={'project-list-header-right'}>
+                    <Button onClick={toggleNewProVisible}>+ 创建</Button>
+                </div>
+            </div>
+            <div className={'project-list'}>
                 {data && data.map((item: IProjectInfo, index) => {
                     return (
                         <div key={index} className={'project-item'}>
