@@ -1,4 +1,4 @@
-import {ChangeEvent} from 'react';
+import {ChangeEvent, KeyboardEvent} from 'react';
 import './Input.less';
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
 
@@ -13,12 +13,14 @@ export interface InputProps extends UIContainerProps {
     maxLength?: number;
     disabled?: boolean;
     onChange?: (data: string) => void;
+    onKeyDown?: (event: KeyboardEvent) => void;
 }
 
 export default function Input(props: InputProps) {
     const {
         value, defaultValue, prefix, suffix, type, placeholder,
-        minLength, maxLength, disabled, onChange, ...containerProps
+        minLength, maxLength, disabled, onChange, onKeyDown,
+        ...containerProps
     } = props;
 
     const _onChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -38,6 +40,7 @@ export default function Input(props: InputProps) {
                            placeholder={placeholder}
                            type={type}
                            className={'lc-input'}
+                           onKeyDown={onKeyDown}
                            onChange={_onChange}/>
                 </div>
                 {suffix && <div className={'lc-input-suffix'}>&nbsp;{suffix}</div>}

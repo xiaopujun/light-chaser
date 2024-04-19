@@ -7,6 +7,7 @@ import {globalMessage} from "../../../../framework/message/GlobalMessage.tsx";
 import {ISelectOption} from "../../../../json-schema/ui/select/Select.tsx";
 import ObjectUtil from "../../../../utils/ObjectUtil.ts";
 import {IDatabase} from "../../../../designer/DesignerType.ts";
+import FetchUtil from "../../../../utils/FetchUtil.ts";
 
 export interface DatabaseDataConfigProps {
     controller: AbstractDesignerController;
@@ -21,17 +22,15 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
     const [count, setCount] = useState(0);
 
     useEffect(() => {
-        fetch(`/api/datasource/list`, {method: 'get'})
-            .then(response => response.json())
-            .then(res => {
-                if (res.code === 200) {
-                    const options = (res.data as Array<DataSourceConfigType>).map(item => {
-                        return {label: item.name, value: item.id}
-                    })
-                    setDataSourceList(options as ISelectOption[]);
-                } else
-                    globalMessage.messageApi?.error(res.msg);
-            })
+        FetchUtil.get(`/api/datasource/list`).then(res => {
+            if (res.code === 200) {
+                const options = (res.data as Array<DataSourceConfigType>).map(item => {
+                    return {label: item.name, value: item.id}
+                })
+                setDataSourceList(options as ISelectOption[]);
+            } else
+                globalMessage.messageApi?.error(res.msg);
+        })
     }, []);
 
     const validate = () => {
@@ -55,24 +54,17 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
         if (!validate())
             return;
         const {targetDb, sql, filter} = dataRef.current;
-        fetch(`/api/db/executor/execute`, {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({id: targetDb, sql})
-        }).then(response => response.json())
-            .then(res => {
-                if (res.code === 200) {
-                    if (filter && filter !== '') {
-                        const func = eval(`(${filter})`);
-                        res.data = typeof func === 'function' ? func(res.data) : res.data;
-                    }
-                    setTestRes(JSON.stringify(res.data, null, 2));
-                } else {
-                    globalMessage.messageApi?.error(res.msg);
+        FetchUtil.post(`/api/db/executor/execute`, {id: targetDb, sql}).then(res => {
+            if (res.code === 200) {
+                if (filter && filter !== '') {
+                    const func = eval(`(${filter})`);
+                    res.data = typeof func === 'function' ? func(res.data) : res.data;
                 }
-            })
+                setTestRes(JSON.stringify(res.data, null, 2));
+            } else {
+                globalMessage.messageApi?.error(res.msg);
+            }
+        })
     }
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {

@@ -4,8 +4,8 @@ import {useRef, useState} from "react";
 import ObjectUtil from "../../../../utils/ObjectUtil.ts";
 import {Control} from "../../../../json-schema/SchemaTypes.ts";
 import {globalMessage} from "../../../../framework/message/GlobalMessage.tsx";
-import HttpUtil from "../../../../utils/HttpUtil.ts";
 import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI.tsx";
+import FetchUtil from "../../../../utils/FetchUtil.ts";
 
 export interface ApiDataConfigProps {
     controller: AbstractDesignerController;
@@ -186,8 +186,8 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
     const testApi = () => {
         if (!validate())
             return;
-        let {params, header, url, method,filter} = dataRef.current!;
-        HttpUtil.sendHttpRequest(url!, method!, header, params).then(res => {
+        let {params, header, url, method, filter} = dataRef.current!;
+        FetchUtil.doRequest(url!, method!, header, params).then(res => {
             if (filter && filter !== '') {
                 const func = eval(`(${filter})`);
                 res.data = typeof func === 'function' ? func(res.data) : res.data;

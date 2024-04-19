@@ -1,6 +1,7 @@
 import {action, makeObservable, observable} from "mobx";
 import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
 import {DataSourceConfigType} from "./edit/EditDataSourceDialog.tsx";
+import FetchUtil from "../../../utils/FetchUtil.ts";
 
 export interface Page<T> {
     records: T[];
@@ -61,123 +62,95 @@ export class DataSourceStore {
 
     setDataSource = (dataSource: DataSourceConfigType) => this.dataSource = dataSource;
 
-    testDataSource = (id: string) => {
-        fetch(`/api/datasource/connect/${id}`, {method: 'get'})
-            .then(response => response.json())
-            .then(res => {
-                if (res.code === 200)
-                    globalMessage.messageApi?.success(res.msg);
-                else
-                    globalMessage.messageApi?.error(res.msg);
-            })
-    }
-
     changeCurrentPage = (page: number) => {
         this.dataSourcePageData.current = page;
         this.getDataSourceList();
     }
 
+    testDataSource = (id: string) => {
+        FetchUtil.get(`/api/datasource/test/${id}`).then(res => {
+            if (res.code === 200)
+                globalMessage.messageApi?.success(res.msg);
+            else
+                globalMessage.messageApi?.error(res.msg);
+        })
+    }
+
+
     deleteDataSource = (id: string) => {
-        fetch(`/api/datasource/del/${id}`, {method: 'get'})
-            .then(response => response.json())
-            .then(res => {
-                if (res.code === 200) {
-                    globalMessage.messageApi?.success(res.msg);
-                    this.getDataSourceList();
-                } else
-                    globalMessage.messageApi?.error(res.msg);
-            })
+        FetchUtil.get(`/api/datasource/del/${id}`).then(res => {
+            if (res.code === 200) {
+                globalMessage.messageApi?.success(res.msg);
+                this.getDataSourceList();
+            } else
+                globalMessage.messageApi?.error(res.msg);
+        })
     }
 
     copyDataSource = (id: string) => {
-        fetch(`/api/datasource/copy/${id}`, {method: 'get'})
-            .then(response => response.json())
-            .then(res => {
-                if (res.code === 200) {
-                    globalMessage.messageApi?.success(res.msg);
-                    this.getDataSourceList();
-                } else
-                    globalMessage.messageApi?.error(res.msg);
-            })
+        FetchUtil.get(`/api/datasource/copy/${id}`).then(res => {
+            if (res.code === 200) {
+                globalMessage.messageApi?.success(res.msg);
+                this.getDataSourceList();
+            } else
+                globalMessage.messageApi?.error(res.msg);
+        })
     }
 
     openDataSourceEditor = (id: string) => {
-        fetch(`/api/datasource/get/${id}`, {method: 'get'})
-            .then(response => response.json())
-            .then(res => {
-                if (res.code === 200) {
-                    this.setDataSource(res.data);
-                    this.setEditVisible(true);
-                } else
-                    globalMessage.messageApi?.error(res.msg);
-            })
+        FetchUtil.get(`/api/datasource/get/${id}`).then(res => {
+            if (res.code === 200) {
+                this.setDataSource(res.data);
+                this.setEditVisible(true);
+            } else
+                globalMessage.messageApi?.error(res.msg);
+        })
     }
 
     getDataSourceList = () => {
-        fetch(`/api/datasource/pageList`,
-            {
-                method: 'post',
-                body: JSON.stringify({
-                    current: this.dataSourcePageData.current,
-                    size: this.dataSourcePageData.size,
-                    searchValue: this.searchValue
-                }),
-                headers: {'Content-Type': 'application/json'}
-            })
-            .then(response => response.json())
-            .then(res => {
-                const {code, data, msg} = res;
-                if (code === 200) {
-                    (data.records as Array<DataSourceConfigType>).forEach((item) => {
-                        item.key = item.id;
-                        item.type = DataSourceMapping[item!.type as keyof typeof DataSourceMapping];
-                    })
-                    this.setDataSourceList({
-                        records: data.records,
-                        total: data.total,
-                        size: data.size,
-                        current: data.current
-                    });
-                    this.searchValue = null;
-                } else
-                    globalMessage.messageApi?.error(msg);
-            })
+        FetchUtil.post(`/api/datasource/pageList`, {
+            current: this.dataSourcePageData.current,
+            size: this.dataSourcePageData.size,
+            searchValue: this.searchValue
+        }).then(res => {
+            const {code, data, msg} = res;
+            if (code === 200) {
+                (data.records as Array<DataSourceConfigType>).forEach((item) => {
+                    item.key = item.id;
+                    item.type = DataSourceMapping[item!.type as keyof typeof DataSourceMapping];
+                })
+                this.setDataSourceList({
+                    records: data.records,
+                    total: data.total,
+                    size: data.size,
+                    current: data.current
+                });
+                this.searchValue = null;
+            } else
+                globalMessage.messageApi?.error(msg);
+        })
     }
 
     updateDataSource = (data: DataSourceConfigType) => {
-        fetch(`/api/datasource/update`,
-            {
-                method: 'post',
-                body: JSON.stringify(data),
-                headers: {'Content-Type': 'application/json'}
-            })
-            .then(response => response.json())
-            .then(res => {
-                if (res.code === 200) {
-                    globalMessage.messageApi?.success(res.msg);
-                    this.getDataSourceList();
-                    this.setEditVisible(false);
-                } else
-                    globalMessage.messageApi?.error(res.msg);
-            })
+        FetchUtil.post(`/api/datasource/update`, data).then(res => {
+            if (res.code === 200) {
+                globalMessage.messageApi?.success(res.msg);
+                this.getDataSourceList();
+                this.setEditVisible(false);
+            } else
+                globalMessage.messageApi?.error(res.msg);
+        })
     }
 
     createDataSource = (data: DataSourceConfigType) => {
-        fetch(`/api/datasource/add`,
-            {
-                method: 'post',
-                body: JSON.stringify(data),
-                headers: {'Content-Type': 'application/json'}
-            })
-            .then(response => response.json())
-            .then(res => {
-                if (res.code === 200) {
-                    globalMessage.messageApi?.success(res.msg);
-                    this.getDataSourceList();
-                    this.setCreateVisible(false);
-                } else
-                    globalMessage.messageApi?.error(res.msg);
-            })
+        FetchUtil.post(`/api/datasource/add`, data).then(res => {
+            if (res.code === 200) {
+                globalMessage.messageApi?.success(res.msg);
+                this.getDataSourceList();
+                this.setCreateVisible(false);
+            } else
+                globalMessage.messageApi?.error(res.msg);
+        })
     }
 
 }

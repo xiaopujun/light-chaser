@@ -1,11 +1,12 @@
 import {useEffect} from "react";
 import dataSourceStore from "./DataSourceStore.ts";
-import {Input, Table} from "antd";
+import {Table} from "antd";
 import EditDataSourceDialog, {DataSourceConfigType} from "./edit/EditDataSourceDialog.tsx";
 import {observer} from "mobx-react";
 import {ColumnsType} from "antd/es/table";
 import './DataSourceList.less';
 import Button from "../../../json-schema/ui/button/Button.tsx";
+import Input from "../../../json-schema/ui/input/Input.tsx";
 
 const columns: ColumnsType<object> = [
     {
@@ -66,7 +67,7 @@ const DataSourceList = observer(() => {
                 <div className={'datasource-list-header-left'}>
                     <Input className={'list-search'} placeholder={'搜索数据源'} onKeyDown={(e) => {
                         if (e.code === 'Enter') {
-                            dataSourceStore.searchValue = e.currentTarget.value;
+                            dataSourceStore.searchValue = (e.currentTarget as HTMLInputElement).value;
                             dataSourceStore.getDataSourceList();
                         }
                     }}/>

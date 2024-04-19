@@ -1,7 +1,7 @@
 import {ThemeItemType} from "../../designer/DesignerType";
 import AbstractController from "./AbstractController";
-import HttpUtil from "../../utils/HttpUtil";
 import {ComponentBaseProps} from "../../comps/common-component/common-types";
+import FetchUtil from "../../utils/FetchUtil.ts";
 
 /**
  * AbstractDesignerController继承自AbstractController，在泛型的定义和约束上和AbstractController完全保持一致。
@@ -44,8 +44,9 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
             case "api":
                 const {url, method, params, header, frequency = 5, filter: apiFilter} = data?.apiData!;
                 this.interval = setInterval(() => {
-                    HttpUtil.sendHttpRequest(url!, method!, header!, params!).then((data: any) => {
-                        if (data) {
+                    FetchUtil.doRequest(url!, method!, header, params).then((res) => {
+                        let {code, data} = res;
+                        if (code === 200) {
                             if (!this.lastReqState) {
                                 this.lastReqState = true;
                                 this.errMsgDom?.remove();
@@ -55,6 +56,7 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
                                 const func = eval(`(${apiFilter})`);
                                 data = typeof func === 'function' ? func(data) : data;
                             }
+                            console.log(data);
                             this.changeData(data);
                         }
                     }).catch(() => {
@@ -72,11 +74,7 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
             case 'database':
                 const {sql, targetDb, filter: dbFilter} = data?.database!;
                 this.interval = setInterval(() => {
-                    fetch(`/api/db/executor/execute`, {
-                        method: 'post',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({id: targetDb, sql})
-                    }).then(response => response.json()).then(res => {
+                    FetchUtil.post(`/api/db/executor/execute`, {id: targetDb, sql}).then(res => {
                         let {data, code} = res;
                         if (code === 200) {
                             if (!this.lastReqState) {
