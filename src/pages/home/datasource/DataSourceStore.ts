@@ -2,6 +2,13 @@ import {action, makeObservable, observable} from "mobx";
 import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
 import {DataSourceConfigType} from "./edit/EditDataSourceDialog.tsx";
 
+export interface Page<T> {
+    records: T[];
+    total: number;
+    size: number;
+    current: number;
+}
+
 export const DataSourceMapping = {
     "0": "MySQL",
     "1": "PostgresSQL",
@@ -14,18 +21,27 @@ export class DataSourceStore {
         makeObservable(this, {
             createVisible: observable,
             editVisible: observable,
-            dataSourceList: observable,
+            dataSourcePageData: observable,
             setCreateVisible: action,
             setEditVisible: action,
             setDataSourceList: action,
             setDataSource: action,
+            changeCurrentPage: action,
         })
     }
 
     createVisible = false;
+
     editVisible = false;
 
-    dataSourceList: DataSourceConfigType[] = [];
+    searchValue: string | null = null;
+
+    dataSourcePageData: Page<DataSourceConfigType[]> = {
+        records: [],
+        total: 0,
+        size: 8,
+        current: 1
+    };
 
     dataSource: DataSourceConfigType = {
         id: "",
@@ -41,7 +57,7 @@ export class DataSourceStore {
 
     setEditVisible = (visible: boolean) => this.editVisible = visible;
 
-    setDataSourceList = (dataSourceList: any) => this.dataSourceList = dataSourceList;
+    setDataSourceList = (dataSourcePageData: Page<DataSourceConfigType[]>) => this.dataSourcePageData = dataSourcePageData;
 
     setDataSource = (dataSource: DataSourceConfigType) => this.dataSource = dataSource;
 
@@ -54,6 +70,11 @@ export class DataSourceStore {
                 else
                     globalMessage.messageApi?.error(res.msg);
             })
+    }
+
+    changeCurrentPage = (page: number) => {
+        this.dataSourcePageData.current = page;
+        this.getDataSourceList();
     }
 
     deleteDataSource = (id: string) => {
@@ -93,17 +114,33 @@ export class DataSourceStore {
     }
 
     getDataSourceList = () => {
-        fetch(`/api/datasource/list`, {method: 'get'})
+        fetch(`/api/datasource/pageList`,
+            {
+                method: 'post',
+                body: JSON.stringify({
+                    current: this.dataSourcePageData.current,
+                    size: this.dataSourcePageData.size,
+                    searchValue: this.searchValue
+                }),
+                headers: {'Content-Type': 'application/json'}
+            })
             .then(response => response.json())
             .then(res => {
-                if (res.code === 200) {
-                    (res.data as Array<DataSourceConfigType>).forEach((item) => {
+                const {code, data, msg} = res;
+                if (code === 200) {
+                    (data.records as Array<DataSourceConfigType>).forEach((item) => {
                         item.key = item.id;
-                        item.type = DataSourceMapping[item.type];
+                        item.type = DataSourceMapping[item!.type as keyof typeof DataSourceMapping];
                     })
-                    this.setDataSourceList(res.data);
+                    this.setDataSourceList({
+                        records: data.records,
+                        total: data.total,
+                        size: data.size,
+                        current: data.current
+                    });
+                    this.searchValue = null;
                 } else
-                    globalMessage.messageApi?.error(res.msg);
+                    globalMessage.messageApi?.error(msg);
             })
     }
 
