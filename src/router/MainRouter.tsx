@@ -12,6 +12,7 @@ const LocalProjectList = lazy(() => import('../pages/home/local-list/LocalProjec
 const ServerProjectList = lazy(() => import('../pages/home/server-list/ServerProjectList.tsx'));
 const DataSourceList = lazy(() => import('../pages/home/datasource/DataSourceList.tsx'));
 const TemplateMarket = lazy(() => import('../pages/home/template-market/TemplateMarket.tsx'));
+const MoreInfo = lazy(() => import('../pages/home/more-info/MoreInfo.tsx'));
 const Demo = lazy(() => import('../test/Demo'));
 
 const studioDarkAlgorithm: MappingAlgorithm = (seedToken, mapToken) => {
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
             {
                 path: 'template',
                 element: <TemplateMarket/>,
+            },
+            {
+                path: 'more',
+                element: <MoreInfo/>
             }
         ]
     },

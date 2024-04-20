@@ -21,11 +21,6 @@ export abstract class AbstractOperator {
     public abstract deleteProject(id: string): Promise<boolean>;
 
     /**
-     * 获取项目列表
-     */
-    public abstract getProjectInfoList(): Promise<IProjectInfo[]>;
-
-    /**
      * 获取项目分页列表
      * @param pageParam
      */

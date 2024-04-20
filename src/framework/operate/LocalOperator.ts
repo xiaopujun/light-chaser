@@ -136,25 +136,6 @@ class LocalOperator extends AbstractOperator {
         return {total, records, current, size};
     }
 
-    public async getProjectInfoList(): Promise<IProjectInfo[]> {
-        const projects: IProjectInfo[] = await localforage.getItem(LIGHT_CHASER_PROJECT_LIST) || [];
-        //封面图片转换
-        for (const project of projects) {
-            const {cover} = project;
-            if (cover) {
-                const coverBlob: Blob | null = await localforage.getItem(cover);
-                if (coverBlob) {
-                    project.cover = URL.createObjectURL(coverBlob);
-                    //存入本地缓存，为了切换页面时及时释放内存
-                    localCoverCache.addCache(project.id!, project.cover);
-                } else {
-                    project.cover = undefined;
-                }
-            }
-        }
-        return projects;
-    }
-
     public async copyProject(id: string, name?: string): Promise<string> {
         const list: IProjectInfo[] = await localforage.getItem(LIGHT_CHASER_PROJECT_LIST) || [];
         const index = list.findIndex((item: IProjectInfo) => item.id === id);

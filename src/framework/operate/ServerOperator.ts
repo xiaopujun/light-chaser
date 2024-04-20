@@ -32,16 +32,6 @@ export default class ServerOperator extends AbstractOperator {
         }
     }
 
-    public async getProjectInfoList(): Promise<IProjectInfo[]> {
-        const res = await FetchUtil.get('/api/project/list');
-        if (res.code === 200)
-            return res.data;
-        else {
-            globalMessage.messageApi?.error(res.msg);
-            return [];
-        }
-    }
-
     /**
      * 获取项目分页列表
      */

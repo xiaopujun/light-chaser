@@ -1,4 +1,4 @@
-import {CloudServerOutlined, DatabaseOutlined, HomeOutlined} from "@ant-design/icons";
+import {AlertOutlined, CloudServerOutlined, DatabaseOutlined, HomeOutlined} from "@ant-design/icons";
 import {Menu} from "antd";
 import {MenuItemType} from "antd/es/menu/hooks/useItems";
 import {useLocation, useNavigate} from "react-router-dom";
@@ -6,19 +6,24 @@ import {memo} from "react";
 
 const menus: MenuItemType[] = [
     {
-        key: 'local',
-        icon: <HomeOutlined/>,
-        label: '本地项目'
-    },
-    {
         key: 'server',
         icon: <CloudServerOutlined/>,
         label: '在线项目'
     },
     {
+        key: 'local',
+        icon: <HomeOutlined/>,
+        label: '本地项目'
+    },
+    {
         key: 'datasource',
         icon: <DatabaseOutlined/>,
         label: '数据源管理'
+    },
+    {
+        key: 'more',
+        icon: <AlertOutlined/>,
+        label: '更多'
     },
     // {
     //     key: 'template',
