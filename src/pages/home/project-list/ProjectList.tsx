@@ -1,10 +1,10 @@
 import React, {memo, useEffect, useRef} from 'react';
 import './ProjectList.less';
-import {Card} from "antd";
+import {Card, Pagination} from "antd";
 import defaultSnapshot from '../image/default-snapshot.jpg';
 
 import {CopyFilled, DeleteFilled, EditFilled, EyeFilled} from "@ant-design/icons";
-import {DesignerMode, IProjectInfo, SaveType} from "../../../designer/DesignerType";
+import {DesignerMode, IPage, IProjectInfo, SaveType} from "../../../designer/DesignerType";
 import {AddNewProjectDialog, INewProjectInfo} from "./AddNewProjectDialog";
 import Button from "../../../json-schema/ui/button/Button";
 import Dialog from "../../../json-schema/ui/dialog/Dialog";
@@ -21,7 +21,12 @@ export const ProjectList = memo((props: ProjectListProps) => {
     const [addDialog, setAddDialog] = React.useState(false);
     const [delDialog, setDelDialog] = React.useState(false);
     const [cloneDialog, setCloneDialog] = React.useState(false);
-    const [data, setData] = React.useState<IProjectInfo[]>([]);
+    const [pageData, setPageData] = React.useState<IPage<IProjectInfo>>({
+        records: [],
+        total: 0,
+        current: 1,
+        size: 24
+    });
     const delIdRef = useRef<string>("");
     const cloneIdRef = useRef<string>("");
 
@@ -92,7 +97,10 @@ export const ProjectList = memo((props: ProjectListProps) => {
 
     const getProjectList = () => {
         const {saveType} = props;
-        operatorMap[saveType].getProjectInfoList().then((data: IProjectInfo[]) => setData(data));
+        operatorMap[saveType].getProjectInfoPageList({
+            current: pageData.current,
+            size: pageData.size
+        }).then((data: IPage<IProjectInfo>) => setPageData(data));
     }
 
     const confirmDel = () => {
@@ -108,24 +116,43 @@ export const ProjectList = memo((props: ProjectListProps) => {
 
     }
 
+    const pageChange = (page: number, size: number) => {
+        const {saveType} = props;
+        operatorMap[saveType].getProjectInfoPageList({
+            current: page,
+            size: size
+        }).then((data: IPage<IProjectInfo>) => setPageData(data));
+    }
+
+    const doSearch = (event: React.KeyboardEvent) => {
+        if (event.key !== 'Enter')
+            return;
+        const {saveType} = props;
+        operatorMap[saveType].getProjectInfoPageList({
+            current: pageData.current,
+            size: pageData.size,
+            searchValue: (event.target as HTMLInputElement).value
+        }).then((data: IPage<IProjectInfo>) => setPageData(data));
+    }
+
     return (
         <div className={'project-list-container'}>
             <div className={'project-list-header'}>
                 <div className={'project-list-header-left'}>
-                    <Input className={'list-search'} placeholder={'搜索项目'}/>
+                    <Input className={'list-search'} placeholder={'搜索项目'} onKeyDown={doSearch}/>
                 </div>
                 <div className={'project-list-header-right'}>
                     <Button onClick={toggleNewProVisible}>+ 创建</Button>
                 </div>
             </div>
             <div className={'project-list'}>
-                {data && data.map((item: IProjectInfo, index) => {
+                {pageData && pageData.records.map((item: IProjectInfo, index) => {
                     return (
                         <div key={index} className={'project-item'}>
                             <Card style={{padding: 2}} cover={<div className={'project-cover'}
                                                                    style={{backgroundImage: `url(${item.cover || defaultSnapshot})`}}>
                                 <div className={'project-info'}>
-                                    项目名称：{item.name}
+                                    {item.name}
                                 </div>
                             </div>}
                                   bodyStyle={{padding: 0}}
@@ -143,6 +170,8 @@ export const ProjectList = memo((props: ProjectListProps) => {
                     )
                 })}
             </div>
+            <Pagination rootClassName={'project-list-page'} defaultCurrent={pageData?.current}
+                        pageSize={pageData?.size} total={pageData?.total} onChange={pageChange}/>
             <AddNewProjectDialog onOk={onOk} onCancel={onCancel} visible={addDialog}/>
             <DeleteDialog visible={delDialog} onOk={confirmDel} onCancel={cancelDel}/>
             <CloneDialog onOk={() => confirmClone()} onCancel={cancelClone}

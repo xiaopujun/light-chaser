@@ -1,5 +1,5 @@
 .project-list-container {
-  height: calc(100vh - 90px);
+  height: calc(100vh - 60px);
   overflow: scroll;
 
   .project-list-header {
@@ -23,6 +23,8 @@
     padding: 13px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    max-height: calc(100% - 135px);
+    overflow-y: scroll;
     grid-gap: 25px;
 
     .project-item {
@@ -47,7 +49,6 @@
           backdrop-filter: blur(5px);
           position: absolute;
           bottom: 0;
-          font-weight: 800;
           color: #bcbcbc;
         }
       }
@@ -56,5 +57,10 @@
         margin: 3px 0 !important;
       }
     }
+  }
+
+  .project-list-page {
+    text-align: right;
+    margin: 30px 10px 0 0;
   }
 }

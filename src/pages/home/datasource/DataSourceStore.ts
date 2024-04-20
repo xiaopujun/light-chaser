@@ -2,13 +2,7 @@ import {action, makeObservable, observable} from "mobx";
 import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
 import {DataSourceConfigType} from "./edit/EditDataSourceDialog.tsx";
 import FetchUtil from "../../../utils/FetchUtil.ts";
-
-export interface Page<T> {
-    records: T[];
-    total: number;
-    size: number;
-    current: number;
-}
+import {IPage} from "../../../designer/DesignerType.ts";
 
 export const DataSourceMapping = {
     "0": "MySQL",
@@ -37,7 +31,7 @@ export class DataSourceStore {
 
     searchValue: string | null = null;
 
-    dataSourcePageData: Page<DataSourceConfigType[]> = {
+    dataSourcePageData: IPage<DataSourceConfigType[]> = {
         records: [],
         total: 0,
         size: 8,
@@ -58,7 +52,7 @@ export class DataSourceStore {
 
     setEditVisible = (visible: boolean) => this.editVisible = visible;
 
-    setDataSourceList = (dataSourcePageData: Page<DataSourceConfigType[]>) => this.dataSourcePageData = dataSourcePageData;
+    setDataSourceList = (dataSourcePageData: IPage<DataSourceConfigType[]>) => this.dataSourcePageData = dataSourcePageData;
 
     setDataSource = (dataSource: DataSourceConfigType) => this.dataSource = dataSource;
 

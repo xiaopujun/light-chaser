@@ -219,3 +219,19 @@ export interface ILayerItem {
     //后指针
     next?: string;
 }
+
+/**
+ * 分页数据
+ */
+export interface IPage<T = {}> {
+    records: T[];
+    total: number;
+    size: number;
+    current: number;
+}
+
+export interface IPageParam {
+    current: number;
+    size: number;
+    searchValue?: string;
+}

@@ -1,4 +1,4 @@
-import {DesignerMode, IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
+import {DesignerMode, IPage, IPageParam, IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
 import localforage from "localforage";
 import {AbstractOperator} from "./AbstractOperator";
 import {cloneDeep} from "lodash";
@@ -102,6 +102,38 @@ class LocalOperator extends AbstractOperator {
             }
         }
         return projectData;
+    }
+
+    public async getProjectInfoPageList(pageParam: IPageParam): Promise<IPage<IProjectInfo>> {
+        const {current, size, searchValue} = pageParam;
+        let projects: IProjectInfo[] = await localforage.getItem(LIGHT_CHASER_PROJECT_LIST) || [];
+
+        //搜索
+        if (searchValue)
+            projects = projects.filter(item => item.name?.includes(searchValue));
+
+        //封面图片转换
+        for (const project of projects) {
+            const {cover} = project;
+            if (cover) {
+                const coverBlob: Blob | null = await localforage.getItem(cover);
+                if (coverBlob) {
+                    project.cover = URL.createObjectURL(coverBlob);
+                    //存入本地缓存，为了切换页面时及时释放内存
+                    localCoverCache.addCache(project.id!, project.cover);
+                } else {
+                    project.cover = undefined;
+                }
+            }
+        }
+
+        //分页
+
+        const start = (current - 1) * size;
+        const end = start + size;
+        const total = projects.length;
+        const records = projects.slice(start, end);
+        return {total, records, current, size};
     }
 
     public async getProjectInfoList(): Promise<IProjectInfo[]> {

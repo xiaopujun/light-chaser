@@ -1,5 +1,5 @@
 import {AbstractOperator} from "./AbstractOperator";
-import {IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
+import {IPage, IPageParam, IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
 import URLUtil from "../../utils/URLUtil";
 import {globalMessage} from "../message/GlobalMessage";
 import {IImageData} from "../../comps/lc/base-image/BaseImageComponent";
@@ -39,6 +39,19 @@ export default class ServerOperator extends AbstractOperator {
         else {
             globalMessage.messageApi?.error(res.msg);
             return [];
+        }
+    }
+
+    /**
+     * 获取项目分页列表
+     */
+    public async getProjectInfoPageList(pageParam: IPageParam): Promise<IPage<IProjectInfo>> {
+        const res = await FetchUtil.post('/api/project/pageList', pageParam);
+        if (res.code === 200)
+            return res.data;
+        else {
+            globalMessage.messageApi?.error(res.msg);
+            return {records: [], total: 0, current: 1, size: 10};
         }
     }
 
