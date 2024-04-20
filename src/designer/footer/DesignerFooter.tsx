@@ -4,7 +4,7 @@ import layerManager from "../manager/LayerManager.ts";
 import {HotKeyDes} from "./hotkey-des/HotKeyDes";
 import footerStore from "./FooterStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
-import {CameraOutlined, FileMarkdownOutlined, GithubOutlined, LaptopOutlined} from "@ant-design/icons";
+import {CameraOutlined, LaptopOutlined} from "@ant-design/icons";
 import {CoverConfig} from "./cover/CoverConfig.tsx";
 
 //将DesignerFooter调整为hook组件
@@ -33,15 +33,6 @@ const DesignerFooter = () => {
                 <div className={'footer-item'} onClick={toggleSnapShot}>
                     <CameraOutlined/>
                     <span>封面</span>
-                </div>
-                <div className={'footer-item'}
-                     onClick={() => window.open('https://xiaopujun.github.io/light-chaser-doc')}>
-                    <FileMarkdownOutlined/>
-                    <span>文档</span>
-                </div>
-                <div className={'footer-item'} onClick={() => window.open("https://github.com/xiaopujun/light-chaser")}>
-                    <GithubOutlined/>
-                    <span>GitHub</span>
                 </div>
             </div>
             <div className={'footer-right'}>

@@ -17,27 +17,31 @@ export interface ProjectListProps {
 }
 
 export const ProjectList = memo((props: ProjectListProps) => {
-
+    const {saveType} = props;
     const [addDialog, setAddDialog] = React.useState(false);
     const [delDialog, setDelDialog] = React.useState(false);
     const [cloneDialog, setCloneDialog] = React.useState(false);
+    const delIdRef = useRef<string>("");
+    const cloneIdRef = useRef<string>("");
     const [pageData, setPageData] = React.useState<IPage<IProjectInfo>>({
         records: [],
         total: 0,
         current: 1,
         size: 24
     });
-    const delIdRef = useRef<string>("");
-    const cloneIdRef = useRef<string>("");
 
-    useEffect(() => {
-        getProjectList();
-    }, []);
+    const getProjectPageList = (current: number, size: number, searchValue?: string) => {
+        operatorMap[saveType].getProjectInfoPageList({
+            current,
+            size,
+            searchValue
+        }).then((data: IPage<IProjectInfo>) => setPageData(data));
+    }
+
 
     const toggleNewProVisible = () => setAddDialog(!addDialog);
 
     const onOk = (data: INewProjectInfo) => {
-        const {saveType} = props;
         const {name, des, width, height} = data;
         const project: IProjectInfo = {
             name: name,
@@ -51,7 +55,7 @@ export const ProjectList = memo((props: ProjectListProps) => {
             else {
                 setAddDialog(false);
                 window.open(`/designer?id=${id}&saveType=${saveType}&mode=${DesignerMode.EDIT}`, '_blank');
-                getProjectList();
+                getProjectPageList(pageData.current, pageData.size)
             }
         });
     }
@@ -59,7 +63,6 @@ export const ProjectList = memo((props: ProjectListProps) => {
     const onCancel = () => setAddDialog(false);
 
     const operateHandler = (id: string, type: string) => {
-        const {saveType} = props;
         switch (type) {
             case 'edit':
                 window.open(`/designer?id=${id}&saveType=${saveType}&mode=${DesignerMode.EDIT}`, '_blank');
@@ -81,11 +84,10 @@ export const ProjectList = memo((props: ProjectListProps) => {
     const cancelDel = () => setDelDialog(false);
 
     const confirmClone = () => {
-        const {saveType} = props;
         operatorMap[saveType].copyProject(cloneIdRef.current).then((id) => {
             if (id !== "") {
                 setCloneDialog(false);
-                getProjectList();
+                getProjectPageList(pageData.current, pageData.size);
                 globalMessage.messageApi?.success('克隆成功');
             } else {
                 globalMessage.messageApi?.error('克隆失败');
@@ -95,20 +97,11 @@ export const ProjectList = memo((props: ProjectListProps) => {
 
     const cancelClone = () => setCloneDialog(false);
 
-    const getProjectList = () => {
-        const {saveType} = props;
-        operatorMap[saveType].getProjectInfoPageList({
-            current: pageData.current,
-            size: pageData.size
-        }).then((data: IPage<IProjectInfo>) => setPageData(data));
-    }
-
     const confirmDel = () => {
-        const {saveType} = props;
         operatorMap[saveType].deleteProject(delIdRef.current).then((res) => {
             if (res) {
                 setDelDialog(false);
-                getProjectList();
+                getProjectPageList(pageData.current, pageData.size);
             } else {
                 globalMessage.messageApi?.error('删除失败');
             }
@@ -117,7 +110,6 @@ export const ProjectList = memo((props: ProjectListProps) => {
     }
 
     const pageChange = (page: number, size: number) => {
-        const {saveType} = props;
         operatorMap[saveType].getProjectInfoPageList({
             current: page,
             size: size
@@ -127,13 +119,16 @@ export const ProjectList = memo((props: ProjectListProps) => {
     const doSearch = (event: React.KeyboardEvent) => {
         if (event.key !== 'Enter')
             return;
-        const {saveType} = props;
         operatorMap[saveType].getProjectInfoPageList({
             current: pageData.current,
             size: pageData.size,
             searchValue: (event.target as HTMLInputElement).value
         }).then((data: IPage<IProjectInfo>) => setPageData(data));
     }
+
+    useEffect(() => {
+        getProjectPageList(pageData.current, pageData.size);
+    }, []);
 
     return (
         <div className={'project-list-container'}>
