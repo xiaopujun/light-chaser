@@ -45,6 +45,10 @@ class AntdBaseLineDefinition extends AbstractLineDefinition {
                     size: 4,
                     color: "#00d7ff",
                     shape: "circle",
+                    style: {
+                        lineWidth: 0,
+                        stroke: "#00d7ff"
+                    }
                 },
                 lineStyle: {
                     lineWidth: 2,
@@ -60,7 +64,7 @@ class AntdBaseLineDefinition extends AbstractLineDefinition {
                     line: null,
                     tickLine: null,
                     subTickLine: null,
-                    position: "left",
+                    position: "bottom",
                     title: null,
                 },
                 yAxis: {
@@ -79,7 +83,7 @@ class AntdBaseLineDefinition extends AbstractLineDefinition {
                     },
                     tickLine: null,
                     subTickLine: null,
-                    position: "bottom",
+                    position: "left",
                     title: null,
                 },
                 animation: {

@@ -56,8 +56,8 @@ class AntdGaugeDefinition extends AbstractDefinition<AntdGaugeController, AntdGa
                 percent: 0.75,
                 radius: 0.75,
                 innerRadius: 0.95,
-                startAngle: 2.6,
-                endAngle: 0.5,
+                startAngle: (-7 / 6) * Math.PI,
+                endAngle: (1 / 6) * Math.PI,
                 range: {
                     color: ["#6bc2ff", "#5d9eff59"]
                 },

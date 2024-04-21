@@ -51,6 +51,10 @@ class AntdStepLineDefinition extends AbstractLineDefinition {
                     size: 3,
                     color: "#00d7ff",
                     shape: "bowtie",
+                    style: {
+                        lineWidth: 0,
+                        stroke: "#00d7ff"
+                    }
                 },
                 lineStyle: {
                     stroke: undefined,

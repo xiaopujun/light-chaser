@@ -87,6 +87,10 @@ class AntdMultiLineDefinition extends AbstractLineDefinition {
                     color: ["#00a8ff", "#00ffc9"],
                     size: 3,
                     shape: "circle",
+                    style: {
+                        stroke: "#00a8ff",
+                        lineWidth: 0
+                    }
                 },
                 lineStyle: {
                     lineWidth: 2,

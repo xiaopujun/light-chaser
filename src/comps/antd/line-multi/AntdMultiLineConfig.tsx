@@ -4,7 +4,7 @@ import {Control} from "../../../json-schema/SchemaTypes.ts";
 import {ShapeAttrs} from "@antv/g-base";
 import {ConfigType} from "../../../designer/right/ConfigContent.tsx";
 import AntdCommonLineController from "../../antd-common/line/AntdCommonLineController.ts";
-import {LineOptions} from "@antv/g2plot";
+import {LineOptions, ShapeStyle} from "@antv/g2plot";
 import {AntdCartesianCoordinateSys} from "../../antd-common/config/AntdFragment.tsx";
 import {AntdLegend} from "../../antd-common/config/legend/AntdLegend.tsx";
 import AntdCommonUtil from "../../antd-common/AntdCommonUtil.ts";
@@ -107,6 +107,40 @@ export const AntdMultiLineGraphics = (props: ConfigType<AntdCommonLineController
                                 }
                             },
                             {
+                                key: 'color',
+                                type: 'color-mode',
+                                label: '颜色',
+                                value: (config?.point as ShapeAttrs)?.color,
+                                config: {
+                                    containerStyle: {
+                                        gridColumn: '1/3',
+                                    }
+                                }
+                            },
+                            {
+                                key: 'style',
+                                children: [
+                                    {
+                                        key: 'lineWidth',
+                                        type: 'number-input',
+                                        label: '描边宽',
+                                        value: (config?.point?.style as ShapeStyle)?.lineWidth,
+                                        config: {
+                                            min: 0
+                                        }
+                                    },
+                                    {
+                                        key: 'stroke',
+                                        type: 'color-picker',
+                                        label: '描边色',
+                                        value: (config?.point?.style as ShapeStyle)?.stroke,
+                                        config: {
+                                            showText: true,
+                                        }
+                                    },
+                                ]
+                            },
+                            {
                                 key: 'shape',
                                 type: 'select',
                                 label: '形状',
@@ -119,17 +153,6 @@ export const AntdMultiLineGraphics = (props: ConfigType<AntdCommonLineController
                                         {value: 'diamond', label: '钻石'},
                                         {value: 'hexagon', label: '六角形'},
                                         {value: 'triangle', label: '三角形'}]
-                                }
-                            },
-                            {
-                                key: 'color',
-                                type: 'color-mode',
-                                label: '颜色',
-                                value: (config?.point as ShapeAttrs)?.color,
-                                config: {
-                                    containerStyle: {
-                                        gridColumn: '1/3',
-                                    }
                                 }
                             },
                         ]

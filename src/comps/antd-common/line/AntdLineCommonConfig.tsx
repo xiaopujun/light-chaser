@@ -1,6 +1,6 @@
 import React from 'react';
 import {AntdCartesianCoordinateSys} from "../config/AntdFragment";
-import {LineOptions} from "@antv/g2plot";
+import {LineOptions, ShapeStyle} from "@antv/g2plot";
 import AntdCommonLineController from "./AntdCommonLineController";
 import AntdCommonUtil from "../AntdCommonUtil";
 import {Control} from "../../../json-schema/SchemaTypes";
@@ -141,6 +141,38 @@ export function AntdLineCommonGraphics(props: ConfigType<AntdCommonLineControlle
                                 }
                             },
                             {
+                                key: 'color',
+                                type: 'color-picker',
+                                label: '颜色',
+                                value: (config?.point as ShapeAttrs)?.color,
+                                config: {
+                                    showText: true
+                                }
+                            },
+                            {
+                                key: 'style',
+                                children: [
+                                    {
+                                        key: 'lineWidth',
+                                        type: 'number-input',
+                                        label: '描边宽',
+                                        value: (config?.point?.style as ShapeStyle)?.lineWidth,
+                                        config: {
+                                            min: 0
+                                        }
+                                    },
+                                    {
+                                        key: 'stroke',
+                                        type: 'color-picker',
+                                        label: '描边色',
+                                        value: (config?.point?.style as ShapeStyle)?.stroke,
+                                        config: {
+                                            showText: true,
+                                        }
+                                    },
+                                ]
+                            },
+                            {
                                 key: 'shape',
                                 type: 'select',
                                 label: '形状',
@@ -153,15 +185,6 @@ export function AntdLineCommonGraphics(props: ConfigType<AntdCommonLineControlle
                                         {value: 'diamond', label: '钻石'},
                                         {value: 'hexagon', label: '六角形'},
                                         {value: 'triangle', label: '三角形'}]
-                                }
-                            },
-                            {
-                                key: 'color',
-                                type: 'color-picker',
-                                label: '颜色',
-                                value: (config?.point as ShapeAttrs)?.color,
-                                config: {
-                                    showText: true
                                 }
                             },
                         ]
