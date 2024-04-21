@@ -81,10 +81,26 @@ export const AntdBarGraphics: React.FC<ConfigType<AntdCommonBarController>> = ({
                         }
                     },
                     {
+                        key: 'barStyle',
+                        children: [
+                            {
+                                key: 'radius',
+                                type: 'number-input',
+                                label: '圆角',
+                                value: (config?.barStyle as any)?.radius,
+                                config: {
+                                    min: 1,
+                                    max: 100,
+                                }
+                            }
+                        ]
+
+                    },
+                    {
                         id: 'barColor',
                         type: 'color-mode',
                         label: '颜色',
-                        value: '#1c1c1c',
+                        value: config?.color,
                         config: {
                             containerStyle: {
                                 gridColumn: '1/3'

@@ -80,7 +80,9 @@ class AntdPercentBarDefinition extends AbstractBarDefinition {
                 isPercent: true,
                 isStack: true,
                 color: ["#59bfff", "#298aff", "#004294"],
-                barStyle: {},
+                barStyle: {
+                    radius: 0,
+                },
                 xAxis: {
                     grid: null,
                     label: {
