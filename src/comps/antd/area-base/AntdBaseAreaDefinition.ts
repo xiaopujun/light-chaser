@@ -46,10 +46,25 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
                 data: data,
                 xField: "name",
                 yField: "value",
-                color: "#00d7ff",
                 smooth: false,
                 supportCSSTransform: true,
                 isStack: false,
+                startOnZero: false,
+                point: {
+                    size: 4,
+                    style: {
+                        fill: "#00ddffff",
+                        stroke: "#ffffff",
+                        lineWidth: 0
+                    }
+                },
+                line: {
+                    size: 0
+                },
+                areaStyle: {
+                    fillOpacity: 1,
+                    fill: "#00DAFF72"
+                },
                 xAxis: {
                     range: [0, 1],
                     grid: null,
@@ -98,18 +113,6 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
                         animation: "wave-in",
                         duration: 3000
                     }
-                },
-                startOnZero: false,
-                point: {
-                    size: 4,
-                    style: {
-                        fill: "#00ddffff",
-                        stroke: "#ffffff",
-                        lineWidth: 0
-                    }
-                },
-                line: {
-                    size: 0
                 }
             },
             data: {

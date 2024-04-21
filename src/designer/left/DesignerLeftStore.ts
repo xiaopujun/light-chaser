@@ -21,11 +21,6 @@ class DesignerLeftStore {
      */
     menus: Array<ILeftMenu> = [
         {
-            icon: BlockOutlined,
-            name: "图层",
-            key: 'layer-list',
-        },
-        {
             icon: AppstoreAddOutlined,
             name: "组件库",
             key: 'components',
@@ -39,6 +34,11 @@ class DesignerLeftStore {
             icon: FilterOutlined,
             name: "过滤器",
             key: 'filter-list',
+        },
+        {
+            icon: BlockOutlined,
+            name: "图层",
+            key: 'layer-list',
         },
     ];
 

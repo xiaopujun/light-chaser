@@ -23,6 +23,8 @@ export default class TextScrollerDefinition extends AbstractDefinition<TextScrol
             compKey: "TextScroller",
             categorize: "info",
             subCategorize: "text",
+            width: 320,
+            height: 26,
         };
     }
 
