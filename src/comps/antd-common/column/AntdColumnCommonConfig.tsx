@@ -88,6 +88,22 @@ export const AntdColumnGraphics: React.FC<AntdColumnGraphicsProps> = ({config, o
                         }
                     },
                     {
+                        key: 'columnStyle',
+                        children: [
+                            {
+                                key: 'radius',
+                                type: 'number-input',
+                                label: '圆角',
+                                value: (config?.columnStyle as any)?.radius,
+                                config: {
+                                    min: 1,
+                                    max: 100,
+                                }
+                            }
+                        ]
+
+                    },
+                    {
                         id: 'columnColor',
                         type: 'color-mode',
                         label: '颜色',
