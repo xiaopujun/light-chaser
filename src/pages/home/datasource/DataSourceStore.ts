@@ -107,7 +107,7 @@ export class DataSourceStore {
             size: this.dataSourcePageData.size,
             searchValue: this.searchValue
         }).then(res => {
-            const {code, data, msg} = res;
+            let {code, data, msg} = res;
             if (code === 200) {
                 (data.records as Array<DataSourceConfigType>).forEach((item) => {
                     item.key = item.id;
@@ -120,8 +120,11 @@ export class DataSourceStore {
                     current: data.current
                 });
                 this.searchValue = null;
-            } else
+            } else {
+                if (code === 500)
+                    msg = "服务器链接失败";
                 globalMessage.messageApi?.error(msg);
+            }
         })
     }
 
