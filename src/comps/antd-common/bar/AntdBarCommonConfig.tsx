@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {AntdCartesianCoordinateSys} from "../config/AntdFragment";
 import {BarOptions, ColorAttr} from "@antv/g2plot";
-import {Legend} from "@antv/g2plot/lib/types/legend";
 import AntdCommonBarController from "./AntdCommonBarController";
 import {Control} from "../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
@@ -10,16 +9,6 @@ import {ConfigType} from "../../../designer/right/ConfigContent";
 import {ISelectOption} from "../../../json-schema/ui/select/Select";
 
 class AntdBarCommonStyleConfig extends Component<ConfigType<AntdCommonBarController>> {
-
-    legendChange = (legend: Legend) => {
-        const controller = this.props.controller as AntdCommonBarController;
-        controller.update({style: {legend}});
-    }
-
-    barGraphicsChange = (config: BarOptions) => {
-        const controller = this.props.controller as AntdCommonBarController;
-        controller.update({style: config});
-    }
 
     barCoordinateSysChange = (config: BarOptions) => {
         const controller = this.props.controller as AntdCommonBarController;

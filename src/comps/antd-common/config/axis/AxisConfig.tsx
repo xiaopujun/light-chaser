@@ -580,6 +580,7 @@ export const AxisText: React.FC<AxisTextProps> = ({config, onChange}) => {
                         value: rotate || 0,
                         config: {
                             min: 0,
+                            step: 0.1,
                             max: 360,
                         }
                     },

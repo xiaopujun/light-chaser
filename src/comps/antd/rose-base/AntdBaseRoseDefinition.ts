@@ -37,6 +37,7 @@ class AntdBaseRoseDefinition extends AbstractRoseDefinition {
                 yField: "value",
                 seriesField: "type",
                 radius: 0.8,
+                innerRadius: 0,
                 padding: [50, 0, 0, 0],
                 supportCSSTransform: true,
                 sectorStyle: {

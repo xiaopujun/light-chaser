@@ -64,6 +64,10 @@ class AntdGroupRoseDefinition extends AbstractRoseDefinition {
                 isGroup: true,
                 seriesField: "user",
                 padding: [60, 0, 0, 0],
+                radius: 0.8,
+                innerRadius: 0,
+                startAngle: 0,
+                endAngle: 2 * Math.PI,
                 label: {
                     offset: 14,
                     style: {

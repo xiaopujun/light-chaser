@@ -83,6 +83,14 @@ class AntdStackRoseDefinition extends AbstractRoseDefinition {
                 yField: "value",
                 isStack: true,
                 seriesField: "user",
+                color: ["#00b7ffff", "#8ed2ffff"],
+                radius: 1,
+                innerRadius: 0,
+                supportCSSTransform: true,
+                sectorStyle: {
+                    stroke: "#fff",
+                    lineWidth: 0,
+                },
                 label: {
                     offset: -12,
                     style: {
@@ -101,15 +109,13 @@ class AntdStackRoseDefinition extends AbstractRoseDefinition {
                         },
                     },
                 },
-                supportCSSTransform: true,
                 animation: {
                     appear: {
                         animation: "wave-in",
                         duration: 3000,
                     },
                 },
-                color: ["#00b7ffff", "#8ed2ffff"],
-                radius: 1,
+
             },
             data: {
                 sourceType: 'static',

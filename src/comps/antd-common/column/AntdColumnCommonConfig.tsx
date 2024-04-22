@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {AntdCartesianCoordinateSys} from "../config/AntdFragment";
 import {Column, ColumnOptions} from "@antv/g2plot";
-import {Legend} from "@antv/g2plot/lib/types/legend";
 import AbstractController from "../../../framework/core/AbstractController";
 import {AntdColumnProps} from "./AntdCommonColumnController";
 import {WritableColumnOptions} from "../types";
@@ -12,11 +11,6 @@ import {AntdLegend} from "../config/legend/AntdLegend";
 import {ConfigType} from "../../../designer/right/ConfigContent";
 
 class AntdColumnCommonStyleConfig extends Component<ConfigType> {
-
-    legendChange = (legend: Legend) => {
-        const controller: AbstractController<Column, AntdColumnProps> = this.props.controller;
-        controller.update({style: {legend}});
-    }
 
     barGraphicsChange = (config: ColumnOptions) => {
         const controller: AbstractController<Column, AntdColumnProps> = this.props.controller;
