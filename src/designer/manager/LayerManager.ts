@@ -52,6 +52,17 @@ class LayerManager extends AbstractManager<LayerManagerDataType> {
     layerTail: string | undefined = undefined;
 
     /**
+     * 是否开启图层原有事件
+     */
+    enableEvent: boolean = false;
+
+    setEnableEvent = (enable: boolean) => {
+        this.enableEvent = enable;
+        //重新渲染所有图层
+        this.reRenderLayer();
+    };
+
+    /**
      * 添加元素
      */
     addItem = (layer: ILayerItem) => this.layerConfigs[layer.id + ""] = layer;

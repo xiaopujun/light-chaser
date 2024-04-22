@@ -69,6 +69,7 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
     render() {
         const {layer} = this.props;
         const {auxiliaryBorder} = runtimeConfigStore;
+        const enableEvent = this.mode !== DesignerMode.VIEW && layerManager.enableEvent;
         return (
             <Suspense fallback={<Loading/>}>
                 <div
@@ -88,7 +89,7 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
                     <div ref={(ref) => this.ref = ref} style={{
                         width: '100%',
                         height: '100%',
-                        pointerEvents: `${this.mode === DesignerMode.VIEW ? 'auto' : 'none'}`,
+                        pointerEvents: enableEvent ? 'auto' : 'none',
                         position: 'relative'
                     }}/>
                 </div>

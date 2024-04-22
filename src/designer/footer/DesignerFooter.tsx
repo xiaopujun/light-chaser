@@ -4,11 +4,14 @@ import layerManager from "../manager/LayerManager.ts";
 import {HotKeyDes} from "./hotkey-des/HotKeyDes";
 import footerStore from "./FooterStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
-import {CameraOutlined, LaptopOutlined} from "@ant-design/icons";
+import {CameraOutlined, FunctionOutlined, LaptopOutlined} from "@ant-design/icons";
 import {CoverConfig} from "./cover/CoverConfig.tsx";
+import {useState} from "react";
 
 //将DesignerFooter调整为hook组件
 const DesignerFooter = () => {
+
+    const [enableEvent, setEnableEvent] = useState(false);
 
     const toggleHotKeyDes = () => {
         const {hotKeyVisible, setHotKeyVisible} = footerStore;
@@ -18,6 +21,11 @@ const DesignerFooter = () => {
     const toggleSnapShot = () => {
         const {snapShotVisible, setSnapShotVisible} = footerStore;
         setSnapShotVisible(!snapShotVisible)
+    }
+
+    const toggleEnableEvent = () => {
+        layerManager.setEnableEvent(!enableEvent)
+        setEnableEvent(!enableEvent)
     }
 
     const {layerConfigs} = layerManager;
@@ -33,6 +41,12 @@ const DesignerFooter = () => {
                 <div className={'footer-item'} onClick={toggleSnapShot}>
                     <CameraOutlined/>
                     <span>封面</span>
+                </div>
+            </div>
+            <div className={'footer-center'}>
+                <div className={`footer-center-item ${enableEvent ? 'footer-center-item-active' : ''}`}
+                     onClick={toggleEnableEvent}>
+                    <FunctionOutlined/>
                 </div>
             </div>
             <div className={'footer-right'}>
