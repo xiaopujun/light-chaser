@@ -67,6 +67,8 @@ class AntdPieDefinition extends AntdCommonDefinition<AntdPieController, AntdPieP
                 colorField: "type",
                 radius: 0.7,
                 innerRadius: 0.6,
+                startAngle: 0,
+                endAngle: Math.PI * 2,
                 pieStyle: {
                     stroke: "#fff",
                     lineWidth: 0,

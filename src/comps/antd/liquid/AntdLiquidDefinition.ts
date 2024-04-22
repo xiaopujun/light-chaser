@@ -64,7 +64,10 @@ class AntdLiquidDefinition extends AbstractDefinition<AntdLiquidController, Antd
                 },
                 outline: {
                     border: 0,
-                    distance: 0
+                    distance: 0,
+                    style: {
+                        stroke: "#2B7DD35F"
+                    }
                 },
                 wave: {
                     length: 150,
@@ -92,9 +95,6 @@ class AntdLiquidDefinition extends AbstractDefinition<AntdLiquidController, Antd
                     appear: {
                         animation: 'wave-in',
                         duration: 3000
-                    },
-                    update: {
-                        duration: 2000
                     }
                 }
             },

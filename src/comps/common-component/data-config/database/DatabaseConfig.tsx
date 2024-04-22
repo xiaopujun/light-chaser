@@ -136,7 +136,7 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
                             height: 200,
                             language: 'javascript'
                         },
-                        value: dataRef.current?.filter || "function filter(data){\n\n\n\n}",
+                        value: dataRef.current?.filter || "function filter(data){\n\n\n\treturn data\n}",
                     }
                 ]
             },
