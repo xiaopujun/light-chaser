@@ -192,7 +192,7 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
                 const func = eval(`(${filter})`);
                 res.data = typeof func === 'function' ? func(res.data) : res.data;
             }
-            apiTestResRef.current = JSON.stringify(res, null, 2);
+            apiTestResRef.current = JSON.stringify(res.data, null, 2);
         }).catch(() => {
             apiTestResRef.current = JSON.stringify({msg: '请求错误'}, null, 2);
         }).finally(() => setCount(count + 1))

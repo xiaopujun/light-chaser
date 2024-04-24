@@ -33,7 +33,7 @@ export default class FetchUtil {
             const contentType = response.headers.get('content-type');
             if (contentType && contentType.includes('application/json')) {
                 const res = await response.json();
-                if ('code' in res && 'msg' in res && 'data' in res)
+                if (typeof res === 'object' && 'code' in res && 'msg' in res && 'data' in res)
                     return res;
                 else
                     return {code: 200, msg: 'success', data: res};
