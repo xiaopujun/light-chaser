@@ -69,7 +69,7 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
     render() {
         const {layer} = this.props;
         const {auxiliaryBorder} = runtimeConfigStore;
-        const enableEvent = this.mode !== DesignerMode.VIEW && layerManager.enableEvent;
+        const enableEvent = this.mode === DesignerMode.VIEW || layerManager.enableEvent;
         return (
             <Suspense fallback={<Loading/>}>
                 <div

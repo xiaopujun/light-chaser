@@ -56,17 +56,16 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
                                 const func = eval(`(${apiFilter})`);
                                 data = typeof func === 'function' ? func(data) : data;
                             }
-                            console.log(data);
                             this.changeData(data);
-                        }
-                    }).catch(() => {
-                        this.lastReqState = false;
-                        //请求失败，在原有容器的基础上添加异常提示信息的dom元素（此处直接操作dom元素，不适用react的api进行组件的反复挂载和卸载）
-                        if (!this.errMsgDom) {
-                            this.errMsgDom = document.createElement("div");
-                            this.errMsgDom.classList.add("view-error-message");
-                            this.errMsgDom.innerText = "数据加载失败...";
-                            this.container!.appendChild(this.errMsgDom);
+                        } else {
+                            this.lastReqState = false;
+                            //请求失败，在原有容器的基础上添加异常提示信息的dom元素（此处直接操作dom元素，不适用react的api进行组件的反复挂载和卸载）
+                            if (!this.errMsgDom) {
+                                this.errMsgDom = document.createElement("div");
+                                this.errMsgDom.classList.add("view-error-message");
+                                this.errMsgDom.innerText = "数据加载失败...";
+                                this.container!.appendChild(this.errMsgDom);
+                            }
                         }
                     });
                 }, frequency * 1000);
@@ -87,17 +86,17 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
                                 data = typeof func === 'function' ? func(data) : data;
                             }
                             this.changeData(data);
+                        } else {
+                            this.lastReqState = false;
+                            //请求失败，在原有容器的基础上添加异常提示信息的dom元素（此处直接操作dom元素，不适用react的api进行组件的反复挂载和卸载）
+                            if (!this.errMsgDom) {
+                                this.errMsgDom = document.createElement("div");
+                                this.errMsgDom.classList.add("view-error-message");
+                                this.errMsgDom.innerText = "数据加载失败...";
+                                this.container!.appendChild(this.errMsgDom);
+                            }
                         }
-                    }).catch(() => {
-                        this.lastReqState = false;
-                        //请求失败，在原有容器的基础上添加异常提示信息的dom元素（此处直接操作dom元素，不适用react的api进行组件的反复挂载和卸载）
-                        if (!this.errMsgDom) {
-                            this.errMsgDom = document.createElement("div");
-                            this.errMsgDom.classList.add("view-error-message");
-                            this.errMsgDom.innerText = "数据加载失败...";
-                            this.container!.appendChild(this.errMsgDom);
-                        }
-                    })
+                    });
                 }, data?.database?.frequency || 5 * 1000);
                 break;
         }
