@@ -1202,8 +1202,8 @@ class HistoryRecordOperateProxy {
                 oldHeaderLayer.prev = layer.id;
                 layerManager.layerHeader = layer.id;
 
-                prevLayer && (prevLayer.next = nextLayer?.next)
-                nextLayer && (nextLayer.prev = prevLayer?.prev)
+                prevLayer && (prevLayer.next = nextLayer?.id)
+                nextLayer && (nextLayer.prev = prevLayer?.id)
             })
         })
 
