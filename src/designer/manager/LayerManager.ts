@@ -15,6 +15,8 @@ class LayerManager extends AbstractManager<LayerManagerDataType> {
         super();
         makeObservable(this, {
             layerConfigs: observable.shallow,
+            enableAdsorption: observable,
+            setEnableAdsorption: action,
             init: action,
             destroy: action,
             addItem: action,
@@ -55,6 +57,15 @@ class LayerManager extends AbstractManager<LayerManagerDataType> {
      * 是否开启图层原有事件
      */
     enableEvent: boolean = false;
+
+    /**
+     * 是否开启吸附效果
+     */
+    enableAdsorption: boolean = true;
+
+    setEnableAdsorption = (enable: boolean) => {
+        this.enableAdsorption = enable;
+    }
 
     setEnableEvent = (enable: boolean) => {
         this.enableEvent = enable;
