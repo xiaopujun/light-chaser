@@ -64,14 +64,14 @@ class LineLayer extends React.Component {
         if (!this.keyMove || !endElem || !endElem.classList.contains('ap-circle')
             || endElem.id?.split(":")[2] !== AnchorPointType.INPUT.toString()) {
             //清空画布
-            upCtx?.clearRect(0, 0, canvasW, canvasH);
+            upCtx?.clearRect(0, 0, canvasW + 10, canvasH + 10);
             this.keyDown = false;
             return;
         }
         const {canvasOffset} = bluePrintManager;
         this.keyMove = false;
         this.keyDown = false;
-        bluePrintManager.upCtx!.clearRect(0, 0, canvasW, canvasH)
+        bluePrintManager.upCtx!.clearRect(0, 0, canvasW + 10, canvasH + 10)
         //在下层绘制当前操作的线条
         this.currentLine.id = IdGenerate.generateId();
         this.currentLine.lineDash = [];
@@ -120,7 +120,7 @@ class LineLayer extends React.Component {
         this.currentLine.firstCP = contPoi.firstCP
         this.currentLine.secondCP = contPoi.secondCP
         //清空画布
-        bluePrintManager.upCtx!.clearRect(0, 0, canvasW, canvasH)
+        bluePrintManager.upCtx!.clearRect(0, 0, canvasW + 10, canvasH + 10)
         CanvasUtil.drawBezierCurves(bluePrintManager.upCtx!, [{
             color: "#c0c0c0",
             lineWidth: 1,
