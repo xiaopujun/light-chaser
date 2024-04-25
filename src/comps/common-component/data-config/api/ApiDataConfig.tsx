@@ -203,8 +203,10 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
             return;
         controller.update({data: {apiData: dataRef.current}}, {reRender: false});
         const finalData = ObjectUtil.stringToJsObj(apiTestResRef.current)
-        if (finalData)
+        if (finalData) {
             controller.changeData(finalData);
+            controller.update({data: {staticData: finalData}})
+        }
     }
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
