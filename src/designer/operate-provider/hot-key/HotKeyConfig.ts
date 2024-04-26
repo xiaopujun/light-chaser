@@ -72,11 +72,9 @@ const commonHotKeyConfigs: HotKeyConfigType = {
     },
     'control + z': {
         handler: undo,
-        range: ".lc-ruler-content"
     },
     'control + shift + z': {
         handler: redo,
-        range: ".lc-ruler-content"
     },
     'control + k': {
         handler: toggleSecondaryBorder,
