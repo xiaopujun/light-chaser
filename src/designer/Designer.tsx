@@ -53,8 +53,9 @@ const contextMenuHandler = (event: MouseEvent) => {
     const {targetIds} = eventOperateStore;
     //由于mac端下 setPointerCapture(e.pointerId); 会导致事件target指向发生变化，进而导致右键菜单失效，因此调整为只要选中了元素，且在主画布范围内均可显示右键菜单
     const eventContainer = document.querySelector('.lc-event-container');
+    const layerListContainer = document.querySelector('.layer-items');
     if (targetIds && targetIds.length > 0
-        && eventContainer?.contains(event.target as HTMLElement)
+        && (eventContainer?.contains(event.target as HTMLElement) || layerListContainer?.contains(event.target as HTMLElement))
         && mouseUpTime - mouseDownTime < 200) {
         updateVisible && updateVisible(true);
         setPosition([event.clientX, event.clientY]);

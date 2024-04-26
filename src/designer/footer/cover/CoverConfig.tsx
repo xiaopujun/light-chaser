@@ -33,8 +33,10 @@ export const CoverConfig = (prop: CoverConfigProps) => {
         }
         const {saveType} = URLUtil.parseUrlParams();
         (operatorMap[saveType as SaveType] as AbstractOperator).uploadCover(imageFileRef.current!).then((data) => {
-            if (data) globalMessage.messageApi?.info('封面生成成功！');
-            else globalMessage.messageApi?.error('封面生成失败！');
+            if (data) {
+                globalMessage.messageApi?.info('封面生成成功！');
+                _onClose();
+            } else globalMessage.messageApi?.error('封面生成失败！');
         });
     }
 
