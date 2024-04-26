@@ -126,6 +126,7 @@ class AntdWordCloudDefinition extends AbstractDefinition<AntdWordCloudController
                 wordField: 'name',
                 weightField: 'value',
                 colorField: 'name',
+                supportCSSTransform: true,
                 spiral: 'rectangular',
                 wordStyle: {
                     fontFamily: '优设标题黑',

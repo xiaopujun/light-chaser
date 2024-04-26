@@ -26,12 +26,12 @@ const DesignerView = observer((props: DesignerViewProps) => {
 
     const {layerConfigs} = layerManager!;
     const {loaded} = designerManager;
-    const {canvasConfig: {width, height}} = canvasManager
+    const {canvasConfig: {width, height, adaptationType}} = canvasManager
     if (!loaded)
         return <Loading/>;
     return (
         <Suspense fallback={<Loading/>}>
-            <ScreenFit width={width!} height={height!}>
+            <ScreenFit width={width!} height={height!} mode={adaptationType}>
                 <div style={{width, height, background: 'black', overflow: 'hidden', position: "relative"}}>
                     {layerBuilder.buildCanvasComponents(layerConfigs)}
                 </div>

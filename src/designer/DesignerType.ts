@@ -119,6 +119,8 @@ export interface IProjectInfo {
     dataJson?: string;
 }
 
+export type AdaptationType = 'scale' | 'full-screen' | 'full-x' | 'full-y';
+
 /**
  * 画布配置
  */
@@ -133,6 +135,8 @@ export interface CanvasConfig {
     width?: number;
     //画布高
     height?: number;
+    //屏幕适配
+    adaptationType?: AdaptationType;
 }
 
 

@@ -24,6 +24,7 @@ class CanvasManager extends AbstractManager<CanvasConfig> {
         resizeStep: 1, //栅格化缩放步长
         width: 1920, //画布宽
         height: 1080, //画布高
+        adaptationType: 'scale' //屏幕适配
     };
 
     updateCanvasConfig = (data: CanvasConfig) => this.canvasConfig = {...this.canvasConfig, ...data};
