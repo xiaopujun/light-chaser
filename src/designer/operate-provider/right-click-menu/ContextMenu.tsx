@@ -135,7 +135,31 @@ const ContextMenu = () => {
         return menuListDom;
     }
 
-    const {visible, position = [0, 0]} = contextMenuStore;
+    /**
+     * 计算菜单位置
+     */
+    const calculatePosition = (offsetW: number, offsetY: number) => {
+        const [clientX, clientY] = contextMenuStore.position;
+        const {innerWidth, innerHeight} = window;
+        let left = clientX;
+        let top = clientY;
+        if (clientX + offsetW > innerWidth)
+            left = innerWidth - offsetW;
+        if (clientY + offsetY > innerHeight)
+            top = innerHeight - offsetY;
+        return [left, top];
+    }
+
+    //todo 位置计算应需寻找更加合适优雅的方式
+    const calculateMenuSize = (menuCount: number) => {
+        const menuHeight = 33;
+        return [130, menuCount * menuHeight];
+    }
+
+    const {visible} = contextMenuStore;
+    const menus = buildMenuList();
+    const [offsetW, offsetH] = calculateMenuSize(menus.length);
+    const position = calculatePosition(offsetW, offsetH);
     return (
         <>
             {visible &&
