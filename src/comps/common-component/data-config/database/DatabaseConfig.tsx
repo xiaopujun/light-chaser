@@ -18,7 +18,7 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
     const {data, controller} = props;
     const dataRef = useRef(data);
     const [dataSourceList, setDataSourceList] = useState<ISelectOption[]>([]);
-    const [testRes, setTestRes] = useState<string>("");
+    const [testRes, setTestRes] = useState<string | null>(null);
     const [count, setCount] = useState(0);
 
     useEffect(() => {
@@ -50,37 +50,36 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
         return true;
     }
 
-    const doTest = () => {
+    const testAndSave = () => {
         if (!validate())
             return;
+
         const {targetDb, sql, filter} = dataRef.current;
         FetchUtil.post(`/api/db/executor/execute`, {id: targetDb, sql}).then(res => {
-            if (res.code === 200) {
+            let {data, code, msg} = res;
+            if (code === 200) {
                 if (filter && filter !== '') {
                     const func = eval(`(${filter})`);
-                    res.data = typeof func === 'function' ? func(res.data) : res.data;
+                    data = typeof func === 'function' ? func(data) : data;
                 }
-                setTestRes(JSON.stringify(res.data, null, 2));
+                setTestRes(JSON.stringify(data, null, 2));
+
+                controller.update({data: {database: dataRef.current, staticData: data}})
+                controller.changeData(data);
             } else {
-                globalMessage.messageApi?.error(res.msg);
+                setTestRes(JSON.stringify({msg}, null, 2));
+                controller.update({data: {database: dataRef.current}}, {reRender: false})
+                globalMessage.messageApi?.warning('配置项已保存，但数据未成功刷新 ' + msg);
             }
         })
     }
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
         const {reRender, id, dataFragment} = fieldChangeData;
-        if (id === 'doTest') {
-            doTest();
-        } else if (id === 'doSave') {
-            if (!validate())
-                return;
-            controller.update({data: {database: dataRef.current}})
-            const finalData = ObjectUtil.stringToJsObj(testRes)
-            if (finalData)
-                controller.changeData(finalData);
-        } else {
+        if (id === 'testAndSave')
+            testAndSave();
+        else
             dataRef.current = ObjectUtil.merge(dataRef.current, dataFragment);
-        }
         if (reRender)
             setCount(count + 1);
     }
@@ -112,7 +111,10 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
             },
             {
                 type: 'card-panel',
-                label: 'SQL',
+                label: 'SQL语句',
+                config: {
+                    contentStyle: {padding: 0}
+                },
                 children: [
                     {
                         key: 'sql',
@@ -128,6 +130,9 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
             {
                 type: 'card-panel',
                 label: '过滤器',
+                config: {
+                    contentStyle: {padding: 0}
+                },
                 children: [
                     {
                         key: 'filter',
@@ -144,6 +149,9 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
                 id: 'databaseTestRes',
                 type: 'card-panel',
                 label: '响应结果',
+                config: {
+                    contentStyle: {padding: 0}
+                },
                 children: [
                     {
                         id: 'databaseTestRes',
@@ -159,30 +167,17 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
             },
             {
                 type: 'grid',
-                config: {
-                    columns: 2
-                },
                 children: [
                     {
-                        id: 'doTest',
+                        id: 'testAndSave',
                         type: 'button',
                         config: {
-                            children: '测试SQL',
+                            children: '测试SQL并保存',
                             style: {
                                 width: '100%'
                             }
                         }
-                    },
-                    {
-                        id: 'doSave',
-                        type: 'button',
-                        config: {
-                            children: '保存',
-                            style: {
-                                width: '100%'
-                            }
-                        }
-                    },
+                    }
                 ]
             },
         ]

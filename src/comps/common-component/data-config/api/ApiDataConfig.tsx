@@ -63,6 +63,9 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
                 type: 'card-panel',
                 label: '请求头',
                 tip: '请求头信息，json格式',
+                config: {
+                    contentStyle: {padding: 0}
+                },
                 children: [
                     {
                         id: 'header',
@@ -79,6 +82,9 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
                 type: 'card-panel',
                 tip: '请求参数，json格式',
                 label: '请求参数',
+                config: {
+                    contentStyle: {padding: 0}
+                },
                 children: [
                     {
                         id: 'params',
@@ -94,6 +100,9 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
             {
                 type: 'card-panel',
                 label: '过滤器',
+                config: {
+                    contentStyle: {padding: 0}
+                },
                 children: [
                     {
                         key: 'filter',
@@ -109,6 +118,9 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
             {
                 type: 'card-panel',
                 label: '响应结果',
+                config: {
+                    contentStyle: {padding: 0}
+                },
                 children: [
                     {
                         id: 'apiTestRes',
@@ -124,30 +136,27 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
             },
             {
                 type: 'grid',
-                config: {
-                    columns: 2
-                },
                 children: [
                     {
-                        id: 'doTest',
+                        id: 'testAndSave',
                         type: 'button',
                         config: {
-                            children: '测试接口',
+                            children: '测试接口并保存',
                             style: {
                                 width: '100%'
                             }
                         }
                     },
-                    {
-                        id: 'doSave',
-                        type: 'button',
-                        config: {
-                            children: '保存',
-                            style: {
-                                width: '100%'
-                            }
-                        }
-                    },
+                    // {
+                    //     id: 'doSave',
+                    //     type: 'button',
+                    //     config: {
+                    //         children: '保存',
+                    //         style: {
+                    //             width: '100%'
+                    //         }
+                    //     }
+                    // },
                 ]
             },
         ]
@@ -183,38 +192,34 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
         return true;
     }
 
-    const testApi = () => {
+    const testAndSave = () => {
         if (!validate())
             return;
         let {params, header, url, method, filter} = dataRef.current!;
         FetchUtil.doRequest(url!, method!, header, params).then(res => {
-            if (filter && filter !== '') {
-                const func = eval(`(${filter})`);
-                res.data = typeof func === 'function' ? func(res.data) : res.data;
+            let {data, code} = res;
+            if (code === 200) {
+                if (filter && filter !== '') {
+                    const func = eval(`(${filter})`);
+                    data = typeof func === 'function' ? func(data) : data;
+                }
+                apiTestResRef.current = JSON.stringify(data, null, 2);
+                controller.update({data: {apiData: dataRef.current, staticData: data}}, {reRender: false});
+                controller.changeData(data);
+            } else {
+                apiTestResRef.current = JSON.stringify({msg: '请求错误'}, null, 2);
+                controller.update({data: {apiData: dataRef.current}}, {reRender: false});
+                globalMessage.messageApi?.warning('配置项已保存，但数据未成功刷新');
             }
-            apiTestResRef.current = JSON.stringify(res.data, null, 2);
-        }).catch(() => {
-            apiTestResRef.current = JSON.stringify({msg: '请求错误'}, null, 2);
-        }).finally(() => setCount(count + 1))
-    }
-
-    const saveApi = () => {
-        if (!validate())
-            return;
-        controller.update({data: {apiData: dataRef.current}}, {reRender: false});
-        const finalData = ObjectUtil.stringToJsObj(apiTestResRef.current)
-        if (finalData) {
-            controller.changeData(finalData);
-            controller.update({data: {staticData: finalData}})
-        }
+        }).finally(() => {
+            setCount(count + 1);
+        })
     }
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
         const {reRender, id, dataFragment} = fieldChangeData;
-        if (id === 'doTest')
-            testApi();
-        else if (id === 'doSave')
-            saveApi();
+        if (id === 'testAndSave')
+            testAndSave();
         else if (id === 'apiTestRes')
             return
         else {

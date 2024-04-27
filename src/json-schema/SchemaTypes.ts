@@ -1,4 +1,4 @@
-import React from "react";
+import React, {CSSProperties} from "react";
 import {BtnItemType} from "./ui/group-button/GroupButton.tsx";
 import {RadioOption} from "./ui/radio/Radio.tsx";
 import {ISelectOption} from "./ui/select/Select.tsx";
@@ -204,7 +204,9 @@ export interface TextOnlyConfigType extends BaseSchemaType {
 
 export interface SimpleSchemaType extends BaseSchemaType {
     type?: "card-panel";
-    config?: Record<string, unknown>;
+    config?: {
+        contentStyle?: CSSProperties;
+    };
 }
 
 export type Control =
