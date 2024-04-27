@@ -1,6 +1,7 @@
 import './DemoMain.less';
 import {useEffect} from "react";
 import FetchUtil from "../utils/FetchUtil.ts";
+import CheckBox from "../json-schema/ui/checkbox/CheckBox.tsx";
 
 
 export default function Demo() {
@@ -14,11 +15,7 @@ export default function Demo() {
 
     return (
         <div style={{width: 500, height: 200}}>
-            <div className="text-scroller-container">
-                <div className="text-scroller">
-                    数据库的发的是开发商的交锋是点击发送的
-                </div>
-            </div>
+            <CheckBox value={true} onChange={console.log}/>
         </div>
 
     );

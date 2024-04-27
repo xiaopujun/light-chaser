@@ -43,6 +43,8 @@ export interface CheckboxConfigType extends BaseSchemaType {
     config?: {
         disabled?: boolean;
         containerStyle?: React.CSSProperties;
+        labelStyle?: React.CSSProperties;
+        contentStyle?: React.CSSProperties;
     }
 }
 

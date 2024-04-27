@@ -1,4 +1,4 @@
-import {ThemeItemType} from "../../designer/DesignerType";
+import {APIConfig, IDatabase, ThemeItemType} from "../../designer/DesignerType";
 import AbstractController from "./AbstractController";
 import {ComponentBaseProps} from "../../comps/common-component/common-types";
 import FetchUtil from "../../utils/FetchUtil.ts";
@@ -28,6 +28,76 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
     public registerEvent(): void {
     }
 
+
+    private doApi = (config: APIConfig) => {
+        const {url, method, params, header, frequency = 5, filter, autoFlush} = config;
+        const request = () => {
+            FetchUtil.doRequest(url!, method!, header, params).then((res) => {
+                let {code, data} = res;
+                if (code === 200) {
+                    if (!this.lastReqState) {
+                        this.lastReqState = true;
+                        this.errMsgDom?.remove();
+                        this.errMsgDom = null;
+                    }
+                    if (filter && filter !== '') {
+                        const func = eval(`(${filter})`);
+                        data = typeof func === 'function' ? func(data) : data;
+                    }
+                    this.changeData(data);
+                } else {
+                    this.lastReqState = false;
+                    //请求失败，在原有容器的基础上添加异常提示信息的dom元素（此处直接操作dom元素，不适用react的api进行组件的反复挂载和卸载）
+                    if (!this.errMsgDom) {
+                        this.errMsgDom = document.createElement("div");
+                        this.errMsgDom.classList.add("view-error-message");
+                        this.errMsgDom.innerText = "数据加载失败...";
+                        this.container!.appendChild(this.errMsgDom);
+                    }
+                }
+            });
+        }
+        if (autoFlush)
+            this.interval = setInterval(() => request(), frequency * 1000);
+        else
+            request();
+    }
+
+    private doDatabase = (config: IDatabase) => {
+        const {sql, targetDb, filter, frequency, autoFlush} = config;
+        const request = () => {
+            FetchUtil.post(`/api/db/executor/execute`, {id: targetDb, sql}).then(res => {
+                let {data, code} = res;
+                if (code === 200) {
+                    if (!this.lastReqState) {
+                        this.lastReqState = true;
+                        this.errMsgDom?.remove();
+                        this.errMsgDom = null;
+                    }
+                    if (filter && filter !== '') {
+                        const func = eval(`(${filter})`);
+                        data = typeof func === 'function' ? func(data) : data;
+                    }
+                    this.changeData(data);
+                } else {
+                    this.lastReqState = false;
+                    //请求失败，在原有容器的基础上添加异常提示信息的dom元素（此处直接操作dom元素，不适用react的api进行组件的反复挂载和卸载）
+                    if (!this.errMsgDom) {
+                        this.errMsgDom = document.createElement("div");
+                        this.errMsgDom.classList.add("view-error-message");
+                        this.errMsgDom.innerText = "数据加载失败...";
+                        this.container!.appendChild(this.errMsgDom);
+                    }
+                }
+            });
+        }
+
+        if (autoFlush)
+            this.interval = setInterval(() => request(), (frequency || 5) * 1000);
+        else
+            request();
+    }
+
     /**
      * 加载组件数据，用于在预览（展示）模式下渲染完组件后根据当前组件的数据配置自动加载并更新组件数组。
      * 注：若自定义组件有自己的数据加载方式，则需要覆写此方法
@@ -42,62 +112,10 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
                 //静态数据不做处理，组件首次渲染时默认读取静态数据
                 break;
             case "api":
-                const {url, method, params, header, frequency = 5, filter: apiFilter} = data?.apiData!;
-                this.interval = setInterval(() => {
-                    FetchUtil.doRequest(url!, method!, header, params).then((res) => {
-                        let {code, data} = res;
-                        if (code === 200) {
-                            if (!this.lastReqState) {
-                                this.lastReqState = true;
-                                this.errMsgDom?.remove();
-                                this.errMsgDom = null;
-                            }
-                            if (apiFilter && apiFilter !== '') {
-                                const func = eval(`(${apiFilter})`);
-                                data = typeof func === 'function' ? func(data) : data;
-                            }
-                            this.changeData(data);
-                        } else {
-                            this.lastReqState = false;
-                            //请求失败，在原有容器的基础上添加异常提示信息的dom元素（此处直接操作dom元素，不适用react的api进行组件的反复挂载和卸载）
-                            if (!this.errMsgDom) {
-                                this.errMsgDom = document.createElement("div");
-                                this.errMsgDom.classList.add("view-error-message");
-                                this.errMsgDom.innerText = "数据加载失败...";
-                                this.container!.appendChild(this.errMsgDom);
-                            }
-                        }
-                    });
-                }, frequency * 1000);
+                this.doApi(data?.apiData!);
                 break;
             case 'database':
-                const {sql, targetDb, filter: dbFilter} = data?.database!;
-                this.interval = setInterval(() => {
-                    FetchUtil.post(`/api/db/executor/execute`, {id: targetDb, sql}).then(res => {
-                        let {data, code} = res;
-                        if (code === 200) {
-                            if (!this.lastReqState) {
-                                this.lastReqState = true;
-                                this.errMsgDom?.remove();
-                                this.errMsgDom = null;
-                            }
-                            if (dbFilter && dbFilter !== '') {
-                                const func = eval(`(${dbFilter})`);
-                                data = typeof func === 'function' ? func(data) : data;
-                            }
-                            this.changeData(data);
-                        } else {
-                            this.lastReqState = false;
-                            //请求失败，在原有容器的基础上添加异常提示信息的dom元素（此处直接操作dom元素，不适用react的api进行组件的反复挂载和卸载）
-                            if (!this.errMsgDom) {
-                                this.errMsgDom = document.createElement("div");
-                                this.errMsgDom.classList.add("view-error-message");
-                                this.errMsgDom.innerText = "数据加载失败...";
-                                this.container!.appendChild(this.errMsgDom);
-                            }
-                        }
-                    });
-                }, data?.database?.frequency || 5 * 1000);
+                this.doDatabase(data?.database!);
                 break;
         }
     }

@@ -8,20 +8,22 @@ export interface UIContainerProps {
     tip?: string;
     className?: string;
     containerStyle?: React.CSSProperties;
+    labelStyle?: React.CSSProperties;
+    contentStyle?: React.CSSProperties;
     children?: React.ReactNode;
 }
 
 export const UIContainer: React.FC<UIContainerProps> = (props) => {
-    const {label, tip, children, className, containerStyle} = props;
+    const {label, tip, children, className, containerStyle, contentStyle, labelStyle} = props;
     return (
         <div className={`ui-container ${className || ''}`} style={{...containerStyle}}>
             {label &&
-            <div className={'ui-container-label'}>
-                <div>{label}</div>
-                {tip && <div className={'ui-container-tip'}>
-                    <Tooltip title={tip} style={{marginLeft: 1}}><QuestionCircleOutlined/></Tooltip></div>}
-            </div>}
-            <div className={'ui-container-content'}>{children}</div>
+                <div className={'ui-container-label'} style={{...labelStyle}}>
+                    <div>{label}</div>
+                    {tip && <div className={'ui-container-tip'}>
+                        <Tooltip title={tip} style={{marginLeft: 1}}><QuestionCircleOutlined/></Tooltip></div>}
+                </div>}
+            <div className={'ui-container-content'} style={{...contentStyle}}>{children}</div>
         </div>
     )
 }

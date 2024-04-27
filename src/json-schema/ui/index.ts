@@ -20,6 +20,7 @@ const GroupButton = React.lazy(() => import('./group-button/GroupButton').then((
 const CardPanel = React.lazy(() => import('./card-panel/CardPanel').then(({CardPanel}) => ({default: CardPanel})));
 const NumberInput = React.lazy(() => import('./number-input/NumberInput'));
 const ControlGroup = React.lazy(() => import('./control-group/ControlGroup'));
+const CheckBox = React.lazy(() => import('./checkbox/CheckBox.tsx'));
 
 const UIMap = new Map();
 
@@ -43,5 +44,6 @@ UIMap.set('text-area', TextArea);
 UIMap.set('group-button', GroupButton);
 UIMap.set('control-group', ControlGroup);
 UIMap.set('number-input', NumberInput);
+UIMap.set('checkbox', CheckBox);
 
 export default UIMap;

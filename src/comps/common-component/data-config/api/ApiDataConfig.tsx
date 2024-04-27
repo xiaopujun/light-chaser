@@ -19,8 +19,9 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
         method: 'get',
         header: {},
         params: {},
+        autoFlush: false,
         frequency: 5,
-        filter: undefined
+        filter: undefined,
     }, data));
     const apiTestResRef = useRef<string>("")
     const [count, setCount] = useState(0);
@@ -48,15 +49,32 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
                 }
             },
             {
-                key: 'frequency',
-                label: '刷新频率',
-                type: 'number-input',
-                config: {
-                    prefix: '每',
-                    suffix: '秒',
-                    min: 5
-                },
-                value: dataRef.current?.frequency || 5,
+                type: 'grid',
+                label: '自动更新',
+                config: {columns: 8},
+                children: [
+                    {
+                        key: 'autoFlush',
+                        type: 'checkbox',
+                        value: !!dataRef.current?.autoFlush,
+                        config: {
+                            contentStyle: {marginLeft: 4}
+                        }
+                    },
+                    {
+                        key: 'frequency',
+                        type: 'number-input',
+                        config: {
+                            prefix: '每',
+                            suffix: '秒',
+                            min: 5,
+                            containerStyle: {
+                                gridColumn: '2/9',
+                            }
+                        },
+                        value: dataRef.current?.frequency || 5,
+                    },
+                ]
             },
             {
 
@@ -146,17 +164,7 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
                                 width: '100%'
                             }
                         }
-                    },
-                    // {
-                    //     id: 'doSave',
-                    //     type: 'button',
-                    //     config: {
-                    //         children: '保存',
-                    //         style: {
-                    //             width: '100%'
-                    //         }
-                    //     }
-                    // },
+                    }
                 ]
             },
         ]

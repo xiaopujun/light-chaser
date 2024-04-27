@@ -9,7 +9,7 @@ export interface CheckBoxProps extends UIContainerProps {
     onChange?: (value: boolean) => void;
 }
 
-export const CheckBox: React.FC<CheckBoxProps> = props => {
+const CheckBox: React.FC<CheckBoxProps> = props => {
     const {value, defaultValue, disabled, onChange, ...containerProps} = props;
     const controlled = value !== undefined && defaultValue === undefined;
     const [stateValue, setStateValue] = useState(controlled ? value : defaultValue);
@@ -33,3 +33,5 @@ export const CheckBox: React.FC<CheckBoxProps> = props => {
         </UIContainer>
     );
 };
+
+export default CheckBox;

@@ -34,6 +34,8 @@ export interface APIConfig {
     header?: any;
     //请求参数
     params?: any;
+    //自动刷新
+    autoFlush?: boolean;
     //刷新频率
     frequency?: number;
     //过滤器
@@ -45,6 +47,8 @@ export interface IDatabase {
     targetDb?: string;
     //查询sql语句
     sql?: string;
+    //自动刷新
+    autoFlush?: boolean;
     //刷新频率
     frequency?: number;
     //过滤器

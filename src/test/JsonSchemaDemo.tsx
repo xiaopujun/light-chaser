@@ -4,7 +4,7 @@ import {FieldChangeData, LCGUI} from "../json-schema/LCGUI";
 import './DemoMain.less'
 import {ImageUpload} from "../json-schema/ui/imag-upload/ImageUpload";
 import ColorMode from "../json-schema/ui/color-mode/ColorMode";
-import {CheckBox} from "../json-schema/ui/checkbox/CheckBox";
+import CheckBox from "../json-schema/ui/checkbox/CheckBox";
 
 
 class JsonSchemaDemo extends Component {

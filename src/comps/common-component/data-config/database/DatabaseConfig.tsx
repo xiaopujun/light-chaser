@@ -99,15 +99,32 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
                 }
             },
             {
-                key: 'frequency',
-                label: '刷新率',
-                type: 'number-input',
-                config: {
-                    prefix: '每',
-                    suffix: '秒',
-                    min: 5
-                },
-                value: dataRef.current?.frequency || 5,
+                type: 'grid',
+                label: '自动更新',
+                config: {columns: 8},
+                children: [
+                    {
+                        key: 'autoFlush',
+                        type: 'checkbox',
+                        value: !!dataRef.current?.autoFlush,
+                        config: {
+                            contentStyle: {marginLeft: 4}
+                        }
+                    },
+                    {
+                        key: 'frequency',
+                        type: 'number-input',
+                        config: {
+                            prefix: '每',
+                            suffix: '秒',
+                            min: 5,
+                            containerStyle: {
+                                gridColumn: '2/9',
+                            }
+                        },
+                        value: dataRef.current?.frequency || 5,
+                    },
+                ]
             },
             {
                 type: 'card-panel',
