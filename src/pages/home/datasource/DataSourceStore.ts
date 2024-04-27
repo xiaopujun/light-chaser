@@ -121,8 +121,7 @@ export class DataSourceStore {
                 });
                 this.searchValue = null;
             } else {
-                if (code === 500)
-                    msg = "服务器链接失败";
+                msg = "服务器链接失败";
                 globalMessage.messageApi?.error(msg);
             }
         })
