@@ -44,6 +44,13 @@ export default function MonacoEditor(props: MonacoEditorProps) {
                         quickSuggestions: false,
                         folding: false,
                         readOnly: readonly || false,
+                        renderValidationDecorations: 'off',
+                        mouseWheelZoom: true,
+                        scrollBeyondLastLine: false,
+                        renderLineHighlight: 'none',
+                        hideCursorInOverviewRuler: true,
+                        overviewRulerLanes: 0,
+                        overviewRulerBorder: false,
                     }}
                     loading={<Loading/>}
                     value={value}
