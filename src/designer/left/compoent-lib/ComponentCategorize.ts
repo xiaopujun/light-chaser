@@ -1,58 +1,51 @@
 import {ICategorize} from "../../../framework/core/AbstractDefinition";
-import {
-    AppstoreOutlined, CodeSandboxOutlined,
-    DeploymentUnitOutlined, EnvironmentOutlined,
-    FontSizeOutlined,
-    FormatPainterOutlined, GoldOutlined,
-    PieChartOutlined, VideoCameraOutlined
-} from "@ant-design/icons";
 
 export const componentCategorize: ICategorize[] = [
-    {
-        key: "all",
-        name: "所有",
-        icon: AppstoreOutlined,
-    },
-    {
-        key: "chart",
-        name: "图表",
-        icon: PieChartOutlined,
-    },
-    {
-        key: "info",
-        name: "信息",
-        icon: FontSizeOutlined,
-    },
-    {
-        key: "map",
-        name: "地图",
-        icon: EnvironmentOutlined,
-    },
-    {
-        key: "ornament",
-        name: "装饰",
-        icon: FormatPainterOutlined,
-    },
-    {
-        key: "model",
-        name: "模型",
-        icon: DeploymentUnitOutlined,
-    },
-    {
-        key: "media",
-        name: "媒体",
-        icon: VideoCameraOutlined,
-    },
-    {
-        key: "web",
-        name: "web元素",
-        icon: CodeSandboxOutlined,
-    },
-    {
-        key: "other",
-        name: "其他",
-        icon: GoldOutlined
-    }
+    // {
+    //     key: "all",
+    //     name: "所有",
+    //     icon: AppstoreOutlined,
+    // },
+    // {
+    //     key: "chart",
+    //     name: "图表",
+    //     icon: PieChartOutlined,
+    // },
+    // {
+    //     key: "info",
+    //     name: "信息",
+    //     icon: FontSizeOutlined,
+    // },
+    // {
+    //     key: "map",
+    //     name: "地图",
+    //     icon: EnvironmentOutlined,
+    // },
+    // {
+    //     key: "ornament",
+    //     name: "装饰",
+    //     icon: FormatPainterOutlined,
+    // },
+    // {
+    //     key: "model",
+    //     name: "模型",
+    //     icon: DeploymentUnitOutlined,
+    // },
+    // {
+    //     key: "media",
+    //     name: "媒体",
+    //     icon: VideoCameraOutlined,
+    // },
+    // {
+    //     key: "web",
+    //     name: "web元素",
+    //     icon: CodeSandboxOutlined,
+    // },
+    // {
+    //     key: "other",
+    //     name: "其他",
+    //     icon: GoldOutlined
+    // }
 ];
 
 export const componentSubCategorize: ICategorize[] = [

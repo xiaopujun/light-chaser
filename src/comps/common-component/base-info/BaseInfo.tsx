@@ -5,12 +5,6 @@ import {Control} from "../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {ConfigType} from "../../../designer/right/ConfigContent";
 import {InfoCircleOutlined} from "@ant-design/icons";
-import alignLeft from './icon/align-left.svg';
-import alignHorizontally from './icon/align-horizontally.svg';
-import alignRight from './icon/align-right.svg';
-import alignTop from './icon/align-top.svg';
-import alignVertically from './icon/align-vertically.svg';
-import alignBottom from './icon/align-bottom.svg';
 import {ILayerItem} from "../../../designer/DesignerType";
 import eventOperateStore from "../../../designer/operate-provider/EventOperateStore";
 import baseInfoStore from "./BaseInfoStore";
@@ -19,6 +13,14 @@ import editorDesignerLoader from "../../../designer/loader/EditorDesignerLoader"
 import layerListStore from "../../../designer/left/layer-list/LayerListStore";
 import LayerUtil from "../../../designer/left/layer-list/util/LayerUtil";
 import canvasManager from "../../../designer/header/items/canvas/CanvasManager.ts";
+import {
+    AlignBottomTwo,
+    AlignHorizontalCenterTwo,
+    AlignLeftTwo,
+    AlignRightTwo,
+    AlignTopTwo,
+    AlignVerticalCenterTwo
+} from "@icon-park/react";
 
 /**
  * lc组件基础信息
@@ -206,27 +208,33 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
                         items: [
                             {
                                 value: 'left',
-                                content: <img src={alignLeft} alt={'left'}/>
+                                content: <AlignLeftTwo theme="filled" size="16" fill="#858585" strokeWidth={2}
+                                                       strokeLinecap="square"/>
                             },
                             {
                                 value: 'horizontally',
-                                content: <img src={alignHorizontally} alt={'horizontally'}/>
+                                content: <AlignHorizontalCenterTwo theme="filled" size="16" fill="#858585"
+                                                                   strokeWidth={2} strokeLinecap="square"/>
                             },
                             {
                                 value: 'right',
-                                content: <img src={alignRight} alt={'right'}/>
+                                content: <AlignRightTwo theme="filled" size="16" fill="#858585" strokeWidth={2}
+                                                        strokeLinecap="square"/>
                             },
                             {
                                 value: 'top',
-                                content: <img src={alignTop} alt={'top'}/>
+                                content: <AlignTopTwo theme="filled" size="16" fill="#858585" strokeWidth={2}
+                                                      strokeLinecap="square"/>
                             },
                             {
                                 value: 'vertically',
-                                content: <img src={alignVertically} alt={'vertically'}/>
+                                content: <AlignVerticalCenterTwo theme="filled" size="16" fill="#858585"
+                                                                 strokeWidth={2} strokeLinecap="square"/>
                             },
                             {
                                 value: 'bottom',
-                                content: <img src={alignBottom} alt={'bottom'}/>
+                                content: <AlignBottomTwo theme="filled" size="16" fill="#858585" strokeWidth={2}
+                                                         strokeLinecap="square"/>
                             }
                         ]
                     }

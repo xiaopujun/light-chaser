@@ -11,6 +11,8 @@ import Loading from "../../../json-schema/ui/loading/Loading.tsx";
 
 const CompList = lazy(() => import('./list/CompList'));
 
+
+
 export const CategoryList = observer(() => {
     const {categories, setCategories, setSubCategories} = componentListStore;
     return (

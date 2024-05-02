@@ -3,6 +3,14 @@ import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
 import {BaseTextController} from "./BaseTextController";
 import {ConfigType} from "../../../designer/right/ConfigContent";
+import {
+    AlignBottomTwo,
+    AlignHorizontalCenterTwo,
+    AlignLeftTwo,
+    AlignRightTwo,
+    AlignTopTwo,
+    AlignVerticalCenterTwo
+} from "@icon-park/react";
 
 export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({controller}) => {
 
@@ -17,6 +25,20 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
         type: 'grid',
         config: {columns: 2},
         children: [
+            {
+                key: 'data',
+                children: [
+                    {
+                        key: 'staticData',
+                        type: 'text-area',
+                        label: '内容',
+                        value: data?.staticData,
+                        config: {
+                            containerStyle: {gridColumn: '1 / 3'},
+                        }
+                    },
+                ]
+            },
             {
                 key: 'style',
                 children: [
@@ -60,23 +82,52 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
                                 {label: '庞门正道标题', value: '庞门正道标题体免费版'},
                             ],
                         }
+                    },
+                    {
+                        id: 'align',
+                        label: '对齐',
+                        type: 'group-button',
+                        config: {
+                            containerStyle: {
+                                gridColumn: '1/3',
+                            },
+                            items: [
+                                {
+                                    value: 'left',
+                                    content: <AlignLeftTwo theme="filled" size="16" fill="#858585" strokeWidth={2}
+                                                           strokeLinecap="square"/>
+                                },
+                                {
+                                    value: 'horizontally',
+                                    content: <AlignHorizontalCenterTwo theme="filled" size="16" fill="#858585"
+                                                                       strokeWidth={2} strokeLinecap="square"/>
+                                },
+                                {
+                                    value: 'right',
+                                    content: <AlignRightTwo theme="filled" size="16" fill="#858585" strokeWidth={2}
+                                                            strokeLinecap="square"/>
+                                },
+                                {
+                                    value: 'top',
+                                    content: <AlignTopTwo theme="filled" size="16" fill="#858585" strokeWidth={2}
+                                                          strokeLinecap="square"/>
+                                },
+                                {
+                                    value: 'vertically',
+                                    content: <AlignVerticalCenterTwo theme="filled" size="16" fill="#858585"
+                                                                     strokeWidth={2} strokeLinecap="square"/>
+                                },
+                                {
+                                    value: 'bottom',
+                                    content: <AlignBottomTwo theme="filled" size="16" fill="#858585" strokeWidth={2}
+                                                             strokeLinecap="square"/>
+                                }
+                            ]
+                        }
                     }
                 ]
             },
-            {
-                key: 'data',
-                children: [
-                    {
-                        key: 'staticData',
-                        type: 'text-area',
-                        label: '内容',
-                        value: data?.staticData,
-                        config: {
-                            containerStyle: {gridColumn: '1 / 3'},
-                        }
-                    },
-                ]
-            }
+
         ]
     }
 

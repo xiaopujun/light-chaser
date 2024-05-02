@@ -1,11 +1,8 @@
-import React, {ComponentType, ReactElement} from 'react';
+import React, {ReactElement, ReactNode} from 'react';
 import './DesignerHeader.less';
 import {observer} from "mobx-react";
-import {AlertOutlined, CompressOutlined, EyeOutlined, PartitionOutlined, SaveOutlined} from "@ant-design/icons";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {doSave} from "../operate-provider/hot-key/HotKeyImpl";
-import URLUtil from "../../utils/URLUtil";
-import {DesignerMode} from "../DesignerType";
 import canvasHdStore from "./items/canvas/CanvasManager.ts";
 import projectHdStore from "./items/project/ProjecManager.ts";
 import themeHdStore from "./items/theme/ThemeManager.ts";
@@ -14,10 +11,13 @@ import CanvasHdConfigImpl from "./items/canvas/CanvasHdConfigImpl.tsx";
 import ProjectHdItemImpl from "./items/project/ProjectHdItemImpl.tsx";
 import ThemeHdItemImpl from "./items/theme/ThemeHdItemImpl.tsx";
 import BluePrintHdImpl from "./items/blue-print/BluePrintHdImpl.tsx";
+import {ConnectionPointTwo, Eyes, HardDiskOne, PageTemplate, Theme} from "@icon-park/react";
+import URLUtil from "../../utils/URLUtil.ts";
+import {DesignerMode} from "../DesignerType.ts";
 
 
 export interface IHeaderItem {
-    icon: ComponentType;
+    icon: ReactNode;
     name: string;
     key: string;
     onClick?: () => void;
@@ -25,7 +25,7 @@ export interface IHeaderItem {
 
 const centerItems: Array<IHeaderItem> = [
     {
-        icon: PartitionOutlined,
+        icon: <ConnectionPointTwo theme="filled" style={{marginTop: 2}} strokeWidth={4} strokeLinecap="square"/>,
         name: '蓝图',
         key: 'blue-print',
         onClick: () => {
@@ -36,13 +36,13 @@ const centerItems: Array<IHeaderItem> = [
         }
     },
     {
-        icon: CompressOutlined,
+        icon: <PageTemplate theme="filled" style={{marginTop: 2}} strokeWidth={3} strokeLinecap="square"/>,
         name: '画布',
         key: 'canvas',
         onClick: () => canvasHdStore.setCanvasVisible(true)
     },
     {
-        icon: AlertOutlined,
+        icon: <Theme theme="filled" style={{marginTop: 2}} strokeWidth={4} strokeLinecap="square"/>,
         name: '主题',
         key: 'theme',
         onClick: () => themeHdStore.setThemeVisible(true)
@@ -51,13 +51,13 @@ const centerItems: Array<IHeaderItem> = [
 
 const leftItems: Array<IHeaderItem> = [
     {
-        icon: SaveOutlined,
+        icon: <HardDiskOne theme="filled" style={{marginTop: 2}} strokeLinecap="square"/>,
         name: '保存',
         key: 'save',
         onClick: () => doSave()
     },
     {
-        icon: EyeOutlined,
+        icon: <Eyes theme="outline" style={{marginTop: 2}} strokeWidth={4} strokeLinecap="square"/>,
         name: '预览',
         key: 'preview',
         onClick: () => {
@@ -76,7 +76,7 @@ const Header: React.FC = observer(() => {
                 const {icon: Icon, name, key, onClick} = items[i];
                 headerItems.push(
                     <div key={key} className={'header-item'} onClick={onClick}>
-                        <Icon/>
+                        {Icon}
                         <span className={'item-span'}>{name}</span>
                     </div>
                 );
