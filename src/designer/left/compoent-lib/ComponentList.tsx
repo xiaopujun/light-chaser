@@ -6,11 +6,11 @@ import eventOperateStore from "../../operate-provider/EventOperateStore";
 import {componentCategorize, componentSubCategorize} from "./ComponentCategorize";
 import componentListStore from "./ComponentListStore";
 import {observer} from "mobx-react";
-import {lazy, Suspense} from "react";
+import {ComponentType, lazy, Suspense} from "react";
 import Loading from "../../../json-schema/ui/loading/Loading.tsx";
+import {IIconProps} from "@icon-park/react/lib/runtime";
 
 const CompList = lazy(() => import('./list/CompList'));
-
 
 
 export const CategoryList = observer(() => {
@@ -20,14 +20,17 @@ export const CategoryList = observer(() => {
             {
                 componentCategorize.map((item, index) => {
                     const {icon, name, key} = item;
-                    const Icon = icon as React.ComponentType<React.SVGProps<SVGSVGElement>>;
+                    const Icon = icon as ComponentType<IIconProps>;
                     return <Tooltip key={index}
                                     className={`clo-item ${categories === key ? "clo-item-active" : ""}`}
                                     placement={'right'}
-                                    title={name}><Icon onClick={() => {
-                        setCategories(key);
-                        setSubCategories('all');
-                    }}/></Tooltip>
+                                    title={name}>
+                        <Icon theme="outline" strokeWidth={4}
+                              onClick={() => {
+                                  setCategories(key);
+                                  setSubCategories('all');
+                              }}/>
+                    </Tooltip>
                 })
             }
         </>
@@ -44,7 +47,7 @@ export const SubCategoryList: React.FC = observer(() => {
                     if (categories === 'all' || key === 'all' || parentKey === categories) {
                         return <div key={index}
                                     onClick={() => setSubCategories(key)}
-                                    className={`clt-item ${subCategories === key ? "clt-item-active" : ""}`}>{name}</div>
+                                    className={`clt-item ${subCategories === key ? " clt-item-active" : ""}`}>{name}</div>
                     }
                 })
             }

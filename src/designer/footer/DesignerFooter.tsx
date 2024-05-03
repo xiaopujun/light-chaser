@@ -4,10 +4,10 @@ import layerManager from "../manager/LayerManager.ts";
 import {HotKeyDes} from "./hotkey-des/HotKeyDes";
 import footerStore from "./FooterStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
-import {CameraOutlined, LaptopOutlined, LayoutOutlined, ThunderboltOutlined} from "@ant-design/icons";
 import {CoverConfig} from "./cover/CoverConfig.tsx";
 import {useState} from "react";
 import {Tooltip} from "antd";
+import {Keyboard, Lightning, Magnet, MaterialThree} from "@icon-park/react";
 
 //将DesignerFooter调整为hook组件
 const DesignerFooter = () => {
@@ -40,11 +40,11 @@ const DesignerFooter = () => {
         <div className={'lc-designer-footer'}>
             <div className={'footer-left'}>
                 <div className={'footer-item'} onClick={toggleHotKeyDes}>
-                    <LaptopOutlined/>
+                    <Keyboard/>
                     <span>快捷键</span>
                 </div>
                 <div className={'footer-item'} onClick={toggleSnapShot}>
-                    <CameraOutlined/>
+                    <MaterialThree/>
                     <span>封面</span>
                 </div>
             </div>
@@ -52,13 +52,13 @@ const DesignerFooter = () => {
                 <div className={`footer-center-item ${enableEvent ? 'footer-center-item-active' : ''}`}
                      onClick={toggleEnableEvent}>
                     <Tooltip mouseEnterDelay={1} title={'编辑模式下允许触发组件原生事件'}>
-                        <ThunderboltOutlined/></Tooltip>
+                        <Lightning/></Tooltip>
 
                 </div>
                 <div className={`footer-center-item ${enableAdsorption ? 'footer-center-item-active' : ''}`}
                      onClick={toggleAdsorption}>
                     <Tooltip mouseEnterDelay={1} title={'开启后排版会有吸附效果'}>
-                        <LayoutOutlined/></Tooltip>
+                        <Magnet/></Tooltip>
 
                 </div>
             </div>

@@ -4,7 +4,6 @@ import layerManager from "../../../designer/manager/LayerManager.ts";
 import {Control} from "../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {ConfigType} from "../../../designer/right/ConfigContent";
-import {InfoCircleOutlined} from "@ant-design/icons";
 import {ILayerItem} from "../../../designer/DesignerType";
 import eventOperateStore from "../../../designer/operate-provider/EventOperateStore";
 import baseInfoStore from "./BaseInfoStore";
@@ -19,7 +18,8 @@ import {
     AlignLeftTwo,
     AlignRightTwo,
     AlignTopTwo,
-    AlignVerticalCenterTwo
+    AlignVerticalCenterTwo,
+    Info
 } from "@icon-park/react";
 
 /**
@@ -249,7 +249,7 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
         return (
             <div className={'base-info-config'}>
                 <div className={'version-info'}>
-                    <span><InfoCircleOutlined/> {type} | {version ? `版本: ${version}` : '无版本信息'}</span>
+                    <span><Info/> {type} | {version ? `版本: ${version}` : '无版本信息'}</span>
                 </div>
                 <LCGUI schema={schema} onFieldChange={this.onFieldChange}/>
             </div>

@@ -11,6 +11,7 @@ import Dialog from "../../../json-schema/ui/dialog/Dialog";
 import operatorMap from "../../../framework/operate";
 import {globalMessage} from "../../../framework/message/GlobalMessage";
 import Input from "../../../json-schema/ui/input/Input.tsx";
+import {Copy, CopyOne, Delete, Edit, PreviewOpen} from "@icon-park/react";
 
 export interface ProjectListProps {
     saveType: SaveType;
@@ -155,10 +156,10 @@ export const ProjectList = memo((props: ProjectListProps) => {
                                   hoverable={true}
                                   size={'small'}
                                   actions={[
-                                      <EditFilled key={'edit'} onClick={() => operateHandler(item.id!, "edit")}/>,
-                                      <EyeFilled key={'show'} onClick={() => operateHandler(item.id!, "show")}/>,
-                                      <DeleteFilled key={'del'} onClick={() => operateHandler(item.id!, "del")}/>,
-                                      <CopyFilled key={'clone'} onClick={() => operateHandler(item.id!, "clone")}/>,
+                                      <Edit key={'edit'} onClick={() => operateHandler(item.id!, "edit")}/>,
+                                      <PreviewOpen key={'show'} onClick={() => operateHandler(item.id!, "show")}/>,
+                                      <Delete key={'del'} onClick={() => operateHandler(item.id!, "del")}/>,
+                                      <Copy key={'clone'} onClick={() => operateHandler(item.id!, "clone")}/>,
                                   ]}>
                             </Card>
                         </div>

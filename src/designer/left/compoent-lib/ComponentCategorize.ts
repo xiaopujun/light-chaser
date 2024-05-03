@@ -1,51 +1,52 @@
 import {ICategorize} from "../../../framework/core/AbstractDefinition";
+import {AllApplication, Browser, Cube, MapDraw, Monitor, Other, PieThree, Platte, Text} from "@icon-park/react";
 
 export const componentCategorize: ICategorize[] = [
-    // {
-    //     key: "all",
-    //     name: "所有",
-    //     icon: AppstoreOutlined,
-    // },
-    // {
-    //     key: "chart",
-    //     name: "图表",
-    //     icon: PieChartOutlined,
-    // },
-    // {
-    //     key: "info",
-    //     name: "信息",
-    //     icon: FontSizeOutlined,
-    // },
-    // {
-    //     key: "map",
-    //     name: "地图",
-    //     icon: EnvironmentOutlined,
-    // },
-    // {
-    //     key: "ornament",
-    //     name: "装饰",
-    //     icon: FormatPainterOutlined,
-    // },
-    // {
-    //     key: "model",
-    //     name: "模型",
-    //     icon: DeploymentUnitOutlined,
-    // },
-    // {
-    //     key: "media",
-    //     name: "媒体",
-    //     icon: VideoCameraOutlined,
-    // },
-    // {
-    //     key: "web",
-    //     name: "web元素",
-    //     icon: CodeSandboxOutlined,
-    // },
-    // {
-    //     key: "other",
-    //     name: "其他",
-    //     icon: GoldOutlined
-    // }
+    {
+        key: "all",
+        name: "所有",
+        icon: AllApplication,
+    },
+    {
+        key: "chart",
+        name: "图表",
+        icon: PieThree,
+    },
+    {
+        key: "info",
+        name: "信息",
+        icon: Text,
+    },
+    {
+        key: "map",
+        name: "地图",
+        icon: MapDraw,
+    },
+    {
+        key: "ornament",
+        name: "装饰",
+        icon: Platte,
+    },
+    {
+        key: "model",
+        name: "模型",
+        icon: Cube,
+    },
+    {
+        key: "media",
+        name: "媒体",
+        icon: Monitor,
+    },
+    {
+        key: "web",
+        name: "web元素",
+        icon: Browser,
+    },
+    {
+        key: "other",
+        name: "其他",
+        icon: Other
+    }
 ];
 
 export const componentSubCategorize: ICategorize[] = [

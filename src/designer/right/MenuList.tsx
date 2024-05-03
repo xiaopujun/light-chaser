@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
+import React, {Component, ComponentType} from 'react';
 import './MenuList.less';
 import {MenuInfo} from "./MenuType";
 import rightStore from "./RightStore";
 import {observer} from "mobx-react";
-import {InfoCircleFilled} from "@ant-design/icons";
+import {Info} from "@icon-park/react";
+import {IIconProps} from "@icon-park/react/lib/runtime";
 
 interface LcConfigMenusProps {
     onChange?: (menu: string) => void;
@@ -27,14 +28,16 @@ class MenuList extends Component<LcConfigMenusProps | any> {
                     letterSpacing: '8px',
                     padding: 7,
                     fontSize: 12,
-                }}><InfoCircleFilled style={{fontSize: 15, position: "relative", left: 2, marginBottom: 7}}/>双击组件激活...
+                }}><Info theme={"filled"} style={{fontSize: 16, position: "relative", left: -1, marginBottom: 7}}/>双击组件激活...
             </div>
         return menus.map((item: MenuInfo) => {
-            const Icon = item.icon as React.ComponentType;
+            const Icon = item.icon as ComponentType<IIconProps>;
             return (
                 <div className={`menu-item ${activeMenu === item.key ? "menu-item-active" : ""}`} key={item.key}
                      id={item.key} onClick={this.menuChange}>
-                    <div className={'item-icon'}><Icon/></div>
+                    <div className={'item-icon'}>
+                        <Icon theme="filled"/>
+                    </div>
                     <div className={'item-content'}>{item.name}</div>
                 </div>
             );
