@@ -5,9 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@ant-design/icons':
-    specifier: ^4.7.0
-    version: registry.npmmirror.com/@ant-design/icons@4.7.0(react-dom@18.2.0)(react@18.2.0)
   '@antv/g-base':
     specifier: ^0.5.15
     version: registry.npmmirror.com/@antv/g-base@0.5.15
@@ -2884,14 +2881,6 @@ packages:
       '@jridgewell/trace-mapping': registry.npmmirror.com/@jridgewell/trace-mapping@0.3.20
     dev: true
 
-  registry.npmmirror.com/@ant-design/colors@6.0.0:
-    resolution: {integrity: sha512-qAZRvPzfdWHtfameEGP2Qvuf838NhergR35o+EuVyB5XvSA98xod5r4utvi4TJ3ywmevm290g9nsCG5MryrdWQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@ant-design/colors/-/colors-6.0.0.tgz}
-    name: '@ant-design/colors'
-    version: 6.0.0
-    dependencies:
-      '@ctrl/tinycolor': registry.npmmirror.com/@ctrl/tinycolor@3.6.1
-    dev: false
-
   registry.npmmirror.com/@ant-design/colors@7.0.0:
     resolution: {integrity: sha512-iVm/9PfGCbC0dSMBrz7oiEXZaaGH7ceU40OJEfKmyuzR9R5CRimJYPlRiFtMQGQcbNMea/ePcoIebi4ASGYXtg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@ant-design/colors/-/colors-7.0.0.tgz}
     name: '@ant-design/colors'
@@ -2924,25 +2913,6 @@ packages:
     resolution: {integrity: sha512-4QBZg8ccyC6LPIRii7A0bZUk3+lEDCLnhB+FVsflGdcWPPmV+j3fire4AwwoqHV/BibgvBmR9ZIo4s867smv+g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@ant-design/icons-svg/-/icons-svg-4.3.1.tgz}
     name: '@ant-design/icons-svg'
     version: 4.3.1
-    dev: false
-
-  registry.npmmirror.com/@ant-design/icons@4.7.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-aoB4Z7JA431rt6d4u+8xcNPPCrdufSRMUOpxa1ab6mz1JCQZOEVolj2WVs/tDFmN62zzK30mNelEsprLYsSF3g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@ant-design/icons/-/icons-4.7.0.tgz}
-    id: registry.npmmirror.com/@ant-design/icons/4.7.0
-    name: '@ant-design/icons'
-    version: 4.7.0
-    engines: {node: '>=8'}
-    peerDependencies:
-      react: '>=16.0.0'
-      react-dom: '>=16.0.0'
-    dependencies:
-      '@ant-design/colors': registry.npmmirror.com/@ant-design/colors@6.0.0
-      '@ant-design/icons-svg': registry.npmmirror.com/@ant-design/icons-svg@4.3.1
-      '@babel/runtime': registry.npmmirror.com/@babel/runtime@7.23.2
-      classnames: registry.npmmirror.com/classnames@2.3.2
-      rc-util: registry.npmmirror.com/rc-util@5.38.1(react-dom@18.2.0)(react@18.2.0)
-      react: registry.npmmirror.com/react@18.2.0
-      react-dom: registry.npmmirror.com/react-dom@18.2.0(react@18.2.0)
     dev: false
 
   registry.npmmirror.com/@ant-design/icons@5.2.6(react-dom@18.2.0)(react@18.2.0):
@@ -3428,15 +3398,6 @@ packages:
       '@babel/core': registry.npmmirror.com/@babel/core@7.23.5
       '@babel/helper-plugin-utils': registry.npmmirror.com/@babel/helper-plugin-utils@7.22.5
     dev: true
-
-  registry.npmmirror.com/@babel/runtime@7.23.2:
-    resolution: {integrity: sha512-mM8eg4yl5D6i3lu2QKPuPH4FArvJ8KhTofbE7jwMUv9KX5mBvwPAqnV3MlyBNqdp9RyRKP6Yck8TrfYrPvX3bg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@babel/runtime/-/runtime-7.23.2.tgz}
-    name: '@babel/runtime'
-    version: 7.23.2
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      regenerator-runtime: registry.npmmirror.com/regenerator-runtime@0.14.0
-    dev: false
 
   registry.npmmirror.com/@babel/runtime@7.23.6:
     resolution: {integrity: sha512-zHd0eUrf5GZoOWVCXp6koAKQTfZV07eit6bGPmJgnZdnSAvvZee6zniW2XMF7Cmc4ISOOnPy3QaSiIJGJkVEDQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@babel/runtime/-/runtime-7.23.6.tgz}

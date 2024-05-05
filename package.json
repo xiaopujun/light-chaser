@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@ant-design/icons": "^4.7.0",
     "@antv/g-base": "^0.5.15",
     "@antv/g2plot": "^2.4.31",
     "@icon-park/react": "^1.4.2",
