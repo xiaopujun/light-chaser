@@ -2,19 +2,6 @@ import {observer} from "mobx-react";
 import contextMenuStore from "./ContextMenuStore";
 import './OperateMenu.less';
 import {
-    CopyOutlined,
-    DeleteOutlined,
-    DownOutlined,
-    EyeInvisibleOutlined,
-    GroupOutlined,
-    LockOutlined,
-    LogoutOutlined,
-    UngroupOutlined,
-    UpOutlined,
-    VerticalAlignBottomOutlined,
-    VerticalAlignTopOutlined
-} from "@ant-design/icons";
-import {
     doCopy,
     doDelete,
     doGrouping,
@@ -31,42 +18,56 @@ import {
 import eventOperateStore from "../EventOperateStore";
 import layerManager from "../../manager/LayerManager.ts";
 import LayerUtil from "../../left/layer-list/util/LayerUtil";
+import {
+    ApplicationTwo,
+    CopyOne,
+    DeleteOne,
+    Down,
+    GraphicStitchingThree,
+    LinkRight,
+    Lock,
+    PreviewClose,
+    ToBottomOne,
+    ToTopOne,
+    Unlock,
+    Up
+} from "@icon-park/react";
 
 
 const menuList = [
     {
         name: '复制',
-        icon: CopyOutlined,
+        icon: CopyOne,
         onClick: doCopy,
     },
     {
         name: '上移',
-        icon: UpOutlined,
+        icon: Up,
         onClick: layerMoveUp,
     },
     {
         name: '下移',
-        icon: DownOutlined,
+        icon: Down,
         onClick: layerMoveDown,
     },
     {
         name: '置顶',
-        icon: VerticalAlignTopOutlined,
+        icon: ToTopOne,
         onClick: layerToTop,
     },
     {
         name: '置底',
-        icon: VerticalAlignBottomOutlined,
+        icon: ToBottomOne,
         onClick: layerToBottom,
     },
     {
         name: '删除',
-        icon: DeleteOutlined,
+        icon: DeleteOne,
         onClick: doDelete,
     },
     {
         name: '隐藏',
-        icon: EyeInvisibleOutlined,
+        icon: PreviewClose,
         onClick: doHide,
     },
 ];
@@ -82,20 +83,20 @@ const ContextMenu = () => {
         if (lockState) {
             menus.push({
                 name: '解锁',
-                icon: LockOutlined,
+                icon: Unlock,
                 onClick: doUnLock,
             })
         } else {
             menus.push({
                 name: '锁定',
-                icon: LockOutlined,
+                icon: Lock,
                 onClick: doLock,
             })
         }
         if (targetIds.length > 1 && !LayerUtil.hasSameGroup(targetIds)) {
             menus.push({
                 name: '编组',
-                icon: GroupOutlined,
+                icon: GraphicStitchingThree,
                 onClick: doGrouping,
             })
         }
@@ -105,7 +106,7 @@ const ContextMenu = () => {
         if (groupIds.length > 0) {
             menus.push({
                 name: '解组',
-                icon: UngroupOutlined,
+                icon: ApplicationTwo,
                 onClick: doUnGrouping,
             })
         }
@@ -113,7 +114,7 @@ const ContextMenu = () => {
         if (!noGroup)
             menus.push({
                 name: '移出分组',
-                icon: LogoutOutlined,
+                icon: LinkRight,
                 onClick: removeFromGroup
             })
         return menus;

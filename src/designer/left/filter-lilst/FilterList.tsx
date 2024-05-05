@@ -1,11 +1,11 @@
 import './FilterList.less';
-import {MinusOutlined, PlusOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import designerLeftStore from "../DesignerLeftStore.ts";
 import eventOperateStore from "../../operate-provider/EventOperateStore.ts";
 import {observer} from "mobx-react";
 import filterManager from "../../manager/FilterManager.ts";
 import AddFilterDialog from "./AddFilterDialog.tsx";
 import {Popconfirm} from "antd";
+import {Close, Help, Plus} from "@icon-park/react";
 
 export const FilterList = observer(() => {
     const {filters, setEditFilter, delFilter, setVisibility} = filterManager;
@@ -14,10 +14,10 @@ export const FilterList = observer(() => {
         <div className={'dl-filter-list'}>
             <div className={'dl-fl-header'}>
                 <div>全局过滤器</div>
-                <div>
-                    <PlusOutlined onClick={() => setVisibility(true)}/>
+                <div className="oerate-btn">
+                    <Plus className='add' size={16} onClick={() => setVisibility(true)}/>
                     &nbsp;&nbsp;
-                    <MinusOutlined onClick={() => {
+                    <Close className="close" onClick={() => {
                         const {setMenu} = designerLeftStore;
                         setMenu("");
                         const {rulerRef} = eventOperateStore;
@@ -37,7 +37,7 @@ export const FilterList = observer(() => {
                                 }}>编辑</span>
                                 &nbsp;&nbsp;
                                 <Popconfirm title="提示信息"
-                                            icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
+                                            icon={<Help style={{color: 'red'}}/>}
                                             description="删除后无法撤销，确认删除嘛？"
                                             onConfirm={() => delFilter(filter.id)}
                                             okText="是"

@@ -1,5 +1,4 @@
 import React, {Suspense} from 'react';
-import {LineOutlined} from "@ant-design/icons";
 import rightStore from "./RightStore";
 import {observer} from "mobx-react";
 import './ConfigContent.less';
@@ -12,6 +11,7 @@ import Loading from "../../json-schema/ui/loading/Loading";
 import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
 import AbstractController from "../../framework/core/AbstractController";
 import {DesignerMode} from "../DesignerType.ts";
+import {Close} from "@icon-park/react";
 
 export interface ConfigType<T extends AbstractController = AbstractDesignerController> {
     controller: T;
@@ -75,7 +75,7 @@ const ConfigContent = () => {
             <div className={'lc-panel-top'}>
                 <div className={'panel-title'}>
                     <span>{activeMenuName}</span></div>
-                <div className={'panel-operate'} onClick={onClose}><LineOutlined/></div>
+                <div className={'panel-operate'} onClick={onClose}><Close/></div>
             </div>
             <div className={'lc-panel-content'}>
                 {buildConfigContent()}

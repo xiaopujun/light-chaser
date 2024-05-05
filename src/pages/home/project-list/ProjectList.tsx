@@ -2,8 +2,6 @@ import React, {memo, useEffect, useRef} from 'react';
 import './ProjectList.less';
 import {Card, Pagination} from "antd";
 import defaultSnapshot from '../image/default-snapshot.jpg';
-
-import {CopyFilled, DeleteFilled, EditFilled, EyeFilled} from "@ant-design/icons";
 import {DesignerMode, IPage, IProjectInfo, SaveType} from "../../../designer/DesignerType";
 import {AddNewProjectDialog, INewProjectInfo} from "./AddNewProjectDialog";
 import Button from "../../../json-schema/ui/button/Button";
@@ -11,7 +9,7 @@ import Dialog from "../../../json-schema/ui/dialog/Dialog";
 import operatorMap from "../../../framework/operate";
 import {globalMessage} from "../../../framework/message/GlobalMessage";
 import Input from "../../../json-schema/ui/input/Input.tsx";
-import {Copy, CopyOne, Delete, Edit, PreviewOpen} from "@icon-park/react";
+import {Copy, Delete, Edit, PreviewOpen} from "@icon-park/react";
 
 export interface ProjectListProps {
     saveType: SaveType;

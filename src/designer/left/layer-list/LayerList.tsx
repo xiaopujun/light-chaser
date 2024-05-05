@@ -1,4 +1,4 @@
-import  React, {Component} from 'react';
+import React, {Component} from 'react';
 import './LayerList.less';
 import layerListStore from "./LayerListStore";
 import layerManager from "../../manager/LayerManager.ts";
@@ -8,8 +8,8 @@ import Input from "../../../json-schema/ui/input/Input";
 import layerBuilder from "./LayerBuilder";
 import LayerUtil from "./util/LayerUtil";
 import {ILayerItem} from "../../DesignerType";
-import {MinusOutlined} from "@ant-design/icons";
 import designerLeftStore from "../DesignerLeftStore";
+import {Close} from "@icon-park/react";
 
 export interface LayerListProps {
     children?: React.ReactNode;
@@ -82,7 +82,7 @@ class LayerList extends Component<LayerListProps> {
             <div className={'layer-list'} ref={ref => this.layerListRef = ref}>
                 <div className={'dl-ll-header'}>
                     <div className={'dl-ll-header-title'}>图层列表</div>
-                    <div className={'dl-ll-header-operate'}><MinusOutlined onClick={() => {
+                    <div className={'dl-ll-header-operate'}><Close style={{cursor: 'pointer'}} onClick={() => {
                         const {setMenu} = designerLeftStore;
                         setMenu("");
                         const {rulerRef} = eventOperateStore;

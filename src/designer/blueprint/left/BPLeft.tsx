@@ -1,6 +1,5 @@
 import React, {useEffect, useRef} from "react";
 import './BPLeft.less';
-import {BlockOutlined} from "@ant-design/icons";
 import bluePrintManager from "../manager/BluePrintManager.ts";
 import bpLeftStore from "./BPLeftStore";
 import {observer} from "mobx-react";
@@ -8,7 +7,7 @@ import layerManager from "../../manager/LayerManager.ts";
 import IdGenerate from "../../../utils/IdGenerate";
 import DragAddProvider from "../../../framework/drag-scale/DragAddProvider";
 import Input from "../../../json-schema/ui/input/Input.tsx";
-import {AddSubset, ApplicationOne, BytedanceMiniApp, Calculator, Filter, MindmapMap} from "@icon-park/react";
+import {AddSubset, ApplicationOne, BytedanceMiniApp, Calculator, CardTwo, Filter, MindmapMap} from "@icon-park/react";
 
 const BPLeft: React.FC = () => {
     return (
@@ -153,7 +152,7 @@ export const BPLayerNodeList = observer(() => {
                              data-id={item.id}
                              data-type={'layer-node'}
                              draggable={!used} key={index}>
-                            <div className={'bpn-li-icon'}><BlockOutlined/></div>
+                            <div className={'bpn-li-icon'}><CardTwo/></div>
                             <div className={'bpn-li-label'}>{item.name}</div>
                         </div>
                     )

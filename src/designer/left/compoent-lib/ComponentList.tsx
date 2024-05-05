@@ -1,5 +1,4 @@
 import './ComponentList.less';
-import {MinusOutlined} from "@ant-design/icons";
 import {Tooltip} from "antd";
 import designerLeftStore from "../DesignerLeftStore";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
@@ -9,6 +8,7 @@ import {observer} from "mobx-react";
 import {ComponentType, lazy, Suspense} from "react";
 import Loading from "../../../json-schema/ui/loading/Loading.tsx";
 import {IIconProps} from "@icon-park/react/lib/runtime";
+import {Close} from "@icon-park/react";
 
 const CompList = lazy(() => import('./list/CompList'));
 
@@ -60,7 +60,7 @@ export const ComponentList = () => {
     return <div className={'dl-component-list'}>
         <div className={'dl-cl-header'}>
             <div className={'dl-cl-header-title'}>组件列表</div>
-            <div className={'dl-cl-header-operate'}><MinusOutlined onClick={() => {
+            <div className={'dl-cl-header-operate'}><Close style={{cursor: 'pointer'}} onClick={() => {
                 const {setMenu} = designerLeftStore;
                 setMenu("");
                 const {rulerRef} = eventOperateStore;
