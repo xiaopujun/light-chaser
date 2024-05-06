@@ -44,6 +44,10 @@ export default class BaseTextDefinition extends AbstractDefinition<BaseTextContr
                 fontSize: 16,
                 alignItems: 'center',
                 justifyContent: 'center',
+                strokeColor: '#ffffff',
+                strokeWidth: 0,
+                lineHeight: 1,
+                letterSpacing: 0,
             },
             data: {
                 sourceType: 'static',

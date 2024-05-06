@@ -84,6 +84,28 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
                         }
                     },
                     {
+                        key: 'letterSpacing',
+                        type: 'number-input',
+                        label: '字距',
+                        value: style?.letterSpacing,
+                        config: {
+                            min: 0,
+                            max: 10,
+                            step: 1
+                        }
+                    },
+                    {
+                        key: 'lineHeight',
+                        type: 'number-input',
+                        label: '行距',
+                        value: style?.lineHeight,
+                        config: {
+                            min: 0,
+                            max: 10,
+                            step: 0.1
+                        }
+                    },
+                    {
                         type: "grid",
                         label: "对齐",
                         config: {
@@ -147,6 +169,39 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
                             }
                         ]
                     },
+                    {
+                        type: 'grid',
+                        label: '描边',
+                        config: {
+                            columns: 2,
+                            containerStyle: {
+                                gridColumn: '1/3',
+                            },
+                        },
+                        children: [
+                            {
+                                key: 'strokeColor',
+                                type: 'color-picker',
+                                label: '颜色',
+                                value: style?.strokeColor,
+                                config: {
+                                    showText: true,
+                                }
+                            },
+                            {
+                                key: 'strokeWidth',
+                                type: 'number-input',
+                                label: '宽度',
+                                value: style?.strokeWidth,
+                                config: {
+                                    min: 0,
+                                    max: 10,
+                                    step: 1
+                                }
+                            },
+
+                        ]
+                    }
                 ]
             },
 
