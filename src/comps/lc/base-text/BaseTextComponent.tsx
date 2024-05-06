@@ -32,7 +32,7 @@ export const BaseTextComponent = forwardRef((props: BaseTextComponentProps, ref:
     const textRef = useRef<HTMLInputElement>(null);
 
     useImperativeHandle(ref, () => ({
-        updateConfig: (newConfig) => setConfig(newConfig),
+        updateConfig: (newConfig) => setConfig({...newConfig}),
         setEventHandler: (eventMap) => eventHandlerMap.current = eventMap,
     }));
 
