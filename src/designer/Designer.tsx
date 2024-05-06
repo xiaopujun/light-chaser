@@ -13,6 +13,7 @@ import DesignerLoaderFactory from "./loader/DesignerLoaderFactory";
 import FrameLayout from "../json-schema/ui/frame-layout/FrameLayout";
 import {DesignerMode, SaveType} from "./DesignerType.ts";
 import designerManager from "./manager/DesignerManager.ts";
+import '../designer/resource/font/FontGlobal.css';
 
 
 /**

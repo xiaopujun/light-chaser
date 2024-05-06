@@ -1,7 +1,7 @@
 import {lazy, memo} from 'react';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {ConfigProvider, MappingAlgorithm, theme} from "antd";
-import '../designer/resource/font/FontGlobal.css';
+
 
 const DesignerViewPage = lazy(() => import('../pages/view/DesignerViewPage.tsx'));
 const DesignerPage = lazy(() => import('../pages/designer/DesignerPage.tsx'));

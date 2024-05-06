@@ -8,6 +8,7 @@ import layerBuilder from "../left/layer-list/LayerBuilder";
 import {DesignerMode, SaveType} from "../DesignerType.ts";
 import canvasManager from "../header/items/canvas/CanvasManager.ts";
 import designerManager from "../manager/DesignerManager.ts";
+import '../../designer/resource/font/FontGlobal.css';
 
 const ScreenFit = lazy(() => import('../../framework/screen-fit/ScreenFit.tsx'));
 
