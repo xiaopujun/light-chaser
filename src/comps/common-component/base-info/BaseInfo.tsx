@@ -208,32 +208,44 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
                         items: [
                             {
                                 value: 'left',
-                                content: <AlignLeftTwo theme="filled" size="16" fill="#858585" strokeWidth={2}
+                                content: <AlignLeftTwo theme="filled"
+                                                       size="16"
+                                                       strokeWidth={2}
                                                        strokeLinecap="square"/>
                             },
                             {
                                 value: 'horizontally',
-                                content: <AlignHorizontalCenterTwo theme="filled" size="16" fill="#858585"
-                                                                   strokeWidth={2} strokeLinecap="square"/>
+                                content: <AlignHorizontalCenterTwo theme="filled"
+                                                                   size="16"
+                                                                   strokeWidth={2}
+                                                                   strokeLinecap="square"/>
                             },
                             {
                                 value: 'right',
-                                content: <AlignRightTwo theme="filled" size="16" fill="#858585" strokeWidth={2}
+                                content: <AlignRightTwo theme="filled"
+                                                        size="16"
+                                                        strokeWidth={2}
                                                         strokeLinecap="square"/>
                             },
                             {
                                 value: 'top',
-                                content: <AlignTopTwo theme="filled" size="16" fill="#858585" strokeWidth={2}
+                                content: <AlignTopTwo theme="filled"
+                                                      size="16"
+                                                      strokeWidth={2}
                                                       strokeLinecap="square"/>
                             },
                             {
                                 value: 'vertically',
-                                content: <AlignVerticalCenterTwo theme="filled" size="16" fill="#858585"
-                                                                 strokeWidth={2} strokeLinecap="square"/>
+                                content: <AlignVerticalCenterTwo theme="filled"
+                                                                 size="16"
+                                                                 strokeWidth={2}
+                                                                 strokeLinecap="square"/>
                             },
                             {
                                 value: 'bottom',
-                                content: <AlignBottomTwo theme="filled" size="16" fill="#858585" strokeWidth={2}
+                                content: <AlignBottomTwo theme="filled"
+                                                         size="16"
+                                                         strokeWidth={2}
                                                          strokeLinecap="square"/>
                             }
                         ]

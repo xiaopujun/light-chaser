@@ -64,7 +64,7 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
                         key: 'color',
                         type: 'color-picker',
                         label: '颜色',
-                        value: '#1c1c1c',
+                        value: style?.color,
                         config: {
                             showText: true,
                         }
@@ -73,7 +73,7 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
                         key: 'fontFamily',
                         type: 'select',
                         label: '字体',
-                        value: '',
+                        value: style?.fontFamily,
                         config: {
                             options: [
                                 {label: '钉钉进步体', value: 'DingTalk JinBuTi'},
@@ -84,47 +84,69 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
                         }
                     },
                     {
-                        id: 'align',
-                        label: '对齐',
-                        type: 'group-button',
+                        type: "grid",
+                        label: "对齐",
                         config: {
+                            columns: 2,
                             containerStyle: {
                                 gridColumn: '1/3',
                             },
-                            items: [
-                                {
-                                    value: 'left',
-                                    content: <AlignLeftTwo theme="filled" size="16" fill="#858585" strokeWidth={2}
-                                                           strokeLinecap="square"/>
-                                },
-                                {
-                                    value: 'horizontally',
-                                    content: <AlignHorizontalCenterTwo theme="filled" size="16" fill="#858585"
-                                                                       strokeWidth={2} strokeLinecap="square"/>
-                                },
-                                {
-                                    value: 'right',
-                                    content: <AlignRightTwo theme="filled" size="16" fill="#858585" strokeWidth={2}
-                                                            strokeLinecap="square"/>
-                                },
-                                {
-                                    value: 'top',
-                                    content: <AlignTopTwo theme="filled" size="16" fill="#858585" strokeWidth={2}
-                                                          strokeLinecap="square"/>
-                                },
-                                {
-                                    value: 'vertically',
-                                    content: <AlignVerticalCenterTwo theme="filled" size="16" fill="#858585"
-                                                                     strokeWidth={2} strokeLinecap="square"/>
-                                },
-                                {
-                                    value: 'bottom',
-                                    content: <AlignBottomTwo theme="filled" size="16" fill="#858585" strokeWidth={2}
-                                                             strokeLinecap="square"/>
+                        },
+                        children: [
+                            {
+                                type: 'group-button',
+                                key: 'justifyContent',
+                                value: style?.justifyContent,
+                                config: {
+                                    items: [
+                                        {
+                                            value: 'flex-start',
+                                            content: <AlignLeftTwo theme="filled" size="16"
+                                                                   strokeWidth={2}
+                                                                   strokeLinecap="square"/>
+                                        },
+                                        {
+                                            value: 'center',
+                                            content: <AlignHorizontalCenterTwo theme="filled" size="16"
+                                                                               strokeWidth={2} strokeLinecap="square"/>
+                                        },
+                                        {
+                                            value: 'flex-end',
+                                            content: <AlignRightTwo theme="filled" size="16"
+                                                                    strokeWidth={2}
+                                                                    strokeLinecap="square"/>
+                                        }
+                                    ]
                                 }
-                            ]
-                        }
-                    }
+                            },
+                            {
+                                type: 'group-button',
+                                key: 'alignItems',
+                                value: style?.alignItems,
+                                config: {
+                                    items: [
+                                        {
+                                            value: 'flex-start',
+                                            content: <AlignTopTwo theme="filled" size="16"
+                                                                  strokeWidth={2}
+                                                                  strokeLinecap="square"/>
+                                        },
+                                        {
+                                            value: 'center',
+                                            content: <AlignVerticalCenterTwo theme="filled" size="16"
+                                                                             strokeWidth={2} strokeLinecap="square"/>
+                                        },
+                                        {
+                                            value: 'flex-end',
+                                            content: <AlignBottomTwo theme="filled" size="16"
+                                                                     strokeWidth={2}
+                                                                     strokeLinecap="square"/>
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
                 ]
             },
 
