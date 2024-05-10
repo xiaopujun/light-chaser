@@ -63,7 +63,7 @@ pnpm install
 - 启动项目
 
 ```shell
-pnpm start
+pnpm dev
 ```
 
 - 访问链接
