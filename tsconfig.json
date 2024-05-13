@@ -28,8 +28,6 @@
   "include": [
     "src",
     "node_modules/.pnpm/@amap+amap-jsapi-loader@1.0.1/node_modules/@amap/amap-jsapi-loader/src/global.d.ts",
-    "node_modules/.pnpm/@amap+amap-jsapi-loader@1.0.1/node_modules/@amap/amap-jsapi-loader/src/global.d.ts",
-    "node_modules/.pnpm/@amap+amap-jsapi-loader@1.0.1/node_modules/@amap/amap-jsapi-loader/src/global.d.ts"
   ],
   "exclude": [
     "node_modules"
