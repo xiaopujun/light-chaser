@@ -9,9 +9,12 @@ import {MenuInfo} from "../../../designer/right/MenuType";
 import baseIframeImg from './base-iframe.png';
 import {BaseIframeController} from "./BaseIframeController";
 import {BaseIframeComponentProps} from "./BaseIframeComponent";
-import BaseInfo from "../../common-component/base-info/BaseInfo";
 import {BaseIframeStyleConfig} from "./BaseIframeConfig";
 import {getDefaultMenuList} from "../../../designer/right/util.ts";
+import React from "react";
+
+const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
+
 
 export default class BaseIframeDefinition extends AbstractDefinition<BaseIframeController, BaseIframeComponentProps> {
     getBaseInfo(): BaseInfoType {

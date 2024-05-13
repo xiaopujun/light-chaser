@@ -1,5 +1,7 @@
 import {
-    AbstractDefinition, BaseInfoType, EventInfo,
+    AbstractDefinition,
+    BaseInfoType,
+    EventInfo,
     MenuToConfigMappingType
 } from "../../../framework/core/AbstractDefinition";
 import BaseImageController, {BaseImageComponentProps} from "./BaseImageController";
@@ -7,8 +9,11 @@ import baseImage from './baseImage.png';
 import {ClazzTemplate} from "../../common-component/common-types";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import BaseInfo from "../../common-component/base-info/BaseInfo";
 import {BaseImageStyleConfig} from "./BaseImageConfig";
+import React from "react";
+
+const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
+
 
 export default class BaseImageDefinition extends AbstractDefinition<BaseImageController, BaseImageComponentProps> {
     getBaseInfo(): BaseInfoType {

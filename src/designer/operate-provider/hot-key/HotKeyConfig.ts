@@ -1,4 +1,4 @@
-import {HotKeyConfigType, HotKeyTriggerType} from "./HotKey";
+import {HotKeyConfigType, HotKeyTriggerType} from "./HotKeyType";
 import {
     delBPLine,
     delBPNode,

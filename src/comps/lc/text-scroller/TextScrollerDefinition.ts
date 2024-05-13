@@ -10,11 +10,14 @@ import textScrollerImg from './text-scroller.png';
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {TextScrollerController} from "./TextScrollerController.ts";
 import {TextScrollerComponentProps} from "./TextScrollerComponent.tsx";
-import BaseInfo from "../../common-component/base-info/BaseInfo";
-import AnimationConfig from "../../common-component/animation-config/AnimationConfig";
-import ThemeConfig from "../../common-component/theme-config/ThemeConfig";
 import {TextScrollerConfig} from "./TextScrollerConfig.tsx";
-import DataConfig from "../../common-component/data-config/DataConfig.tsx";
+import React from "react";
+
+const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
+const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig.tsx"));
+const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig.tsx"));
+const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig.tsx"));
+
 
 export default class TextScrollerDefinition extends AbstractDefinition<TextScrollerController, TextScrollerComponentProps> {
     getBaseInfo(): BaseInfoType {

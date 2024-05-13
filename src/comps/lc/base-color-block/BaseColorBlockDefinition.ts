@@ -1,5 +1,7 @@
 import {
-    AbstractDefinition, BaseInfoType, EventInfo,
+    AbstractDefinition,
+    BaseInfoType,
+    EventInfo,
     MenuToConfigMappingType
 } from "../../../framework/core/AbstractDefinition";
 import {ClazzTemplate} from "../../common-component/common-types";
@@ -8,10 +10,13 @@ import baseColorBlockImg from './base-color-block.png';
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {BaseColorBlockController} from "./BaseColorBlockController";
 import {BaseColorBlockComponentProps} from "./BaseColorBlockComponent";
-import BaseInfo from "../../common-component/base-info/BaseInfo";
-import AnimationConfig from "../../common-component/animation-config/AnimationConfig";
-import ThemeConfig from "../../common-component/theme-config/ThemeConfig";
 import {BaseColorBlockConfig} from "./BaseColorBlockConfig";
+import React from "react";
+
+const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
+const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig.tsx"));
+const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig.tsx"));
+
 
 export default class BaseColorBlockDefinition extends AbstractDefinition<BaseColorBlockController, BaseColorBlockComponentProps> {
     getBaseInfo(): BaseInfoType {

@@ -11,9 +11,12 @@ import {AMapComponentProps} from "./AMapComponent.tsx";
 import {ClazzTemplate} from "../common-component/common-types.ts";
 import {MenuInfo} from "../../designer/right/MenuType.ts";
 import {getDefaultMenuList} from "../../designer/right/util.ts";
-import BaseInfo from "../common-component/base-info/BaseInfo.tsx";
-import AnimationConfig from "../common-component/animation-config/AnimationConfig.tsx";
-import ThemeConfig from "../common-component/theme-config/ThemeConfig.tsx";
+import React from "react";
+
+const BaseInfo = React.lazy(() => import("../common-component/base-info/BaseInfo"));
+const ThemeConfig = React.lazy(() => import("../common-component/theme-config/ThemeConfig.tsx"));
+const AnimationConfig = React.lazy(() => import("../common-component/animation-config/AnimationConfig.tsx"));
+
 
 export default class AMapDefinition extends AbstractDefinition<AMapController, AMapComponentProps> {
     getBaseInfo(): BaseInfoType {

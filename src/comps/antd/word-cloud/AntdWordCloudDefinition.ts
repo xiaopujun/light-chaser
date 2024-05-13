@@ -5,10 +5,13 @@ import {MenuInfo} from "../../../designer/right/MenuType.ts";
 import {ClazzTemplate} from "../../common-component/common-types.ts";
 import {getDefaultMenuList} from "../../../designer/right/util.ts";
 import {AntdWordCloudFieldMapping, AntdWordCloudStyle} from "./AntdWordCloudConfig.tsx";
-import BaseInfo from "../../common-component/base-info/BaseInfo.tsx";
-import DataConfig from "../../common-component/data-config/DataConfig.tsx";
-import ThemeConfig from "../../common-component/theme-config/ThemeConfig.tsx";
-import AnimationConfig from "../../common-component/animation-config/AnimationConfig.tsx";
+import React from "react";
+
+const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
+const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig.tsx"));
+const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig.tsx"));
+const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig.tsx"));
+
 
 class AntdWordCloudDefinition extends AbstractDefinition<AntdWordCloudController, AntdWordCloudProps> {
 
