@@ -21,6 +21,7 @@ import projectHdStore from "../../header/items/project/ProjecManager.ts";
 import designerManager from "../../manager/DesignerManager.ts";
 import FileUtil from "../../../utils/FileUtil.ts";
 import layerListStore from "../../left/layer-list/LayerListStore.ts";
+import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
 
 export const selectAll = () => {
     const {layerConfigs} = layerManager;
@@ -442,7 +443,6 @@ export const toggleSecondaryBorder = () => {
  */
 export const toggleProjectConfig = () => {
     const {projectVisible, setProjectVisible} = projectHdStore;
-    console.log(projectVisible)
     setProjectVisible(!projectVisible);
 }
 
@@ -471,9 +471,12 @@ export const toggleHotKeyDes = () => {
 }
 
 export const exportProject = async () => {
+    globalMessage.messageApi?.open({
+        type: 'loading',
+        content: '正在导出项目数据...'
+    })
     const projectData = designerManager.getData();
     const elemConfigs = projectData.layerManager?.elemConfigs;
-
     if (elemConfigs) {
         const promises: Promise<void>[] = [];
         Object.keys(elemConfigs).forEach((key) => {
@@ -504,6 +507,8 @@ export const exportProject = async () => {
     a.download = `project-${new Date().getTime()}.json`;
     a.click();
     URL.revokeObjectURL(url);
+    globalMessage.messageApi?.destroy();
+    globalMessage.messageApi?.success('项目数据导出成功');
 }
 
 export const importProject = () => {
@@ -511,7 +516,11 @@ export const importProject = () => {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = '.json';
-    input.onchange = async (e: any) => {
+    input.onchange = (e: any) => {
+        globalMessage.messageApi?.open({
+            type: 'loading',
+            content: '正在导入项目数据...'
+        })
         const file = e.target.files[0] as File;
         if (!file)
             return;
@@ -535,10 +544,12 @@ export const importProject = () => {
                         );
                     }
                 });
-                Promise.all(promises);
             }
-            console.log(projectData);
-            designerManager.init(projectData, DesignerMode.EDIT);
+            Promise.all(promises).then(() => {
+                designerManager.init(projectData, DesignerMode.EDIT);
+                globalMessage.messageApi?.destroy();
+                globalMessage.messageApi?.success('项目数据导入成功');
+            });
         })
     }
     input.click();

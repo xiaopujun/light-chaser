@@ -8,7 +8,6 @@ import ComponentContainer from "../../../framework/core/ComponentContainer";
 import {ILayerItem} from "../../DesignerType";
 import GroupLayer from "../../../comps/group-layer/GroupLayer";
 import layerManager from "../../manager/LayerManager.ts";
-import {toJS} from "mobx";
 
 export enum LayerOrder {
     ASC,
@@ -21,7 +20,6 @@ class LayerBuilder {
      * 解析函数
      */
     public parser = (layerMap: Record<string, ILayerItem>, order: LayerOrder = LayerOrder.DESC): ILayerItem[] => {
-        console.log('layerMap', toJS(layerMap));
         layerMap = cloneDeep(layerMap);
         let sourceLayerArr: ILayerItem[] = [];
         const {layerHeader} = layerManager;
