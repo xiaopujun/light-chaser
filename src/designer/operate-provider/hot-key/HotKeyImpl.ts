@@ -20,6 +20,7 @@ import canvasManager from "../../header/items/canvas/CanvasManager.ts";
 import projectHdStore from "../../header/items/project/ProjecManager.ts";
 import designerManager from "../../manager/DesignerManager.ts";
 import FileUtil from "../../../utils/FileUtil.ts";
+import layerListStore from "../../left/layer-list/LayerListStore.ts";
 
 export const selectAll = () => {
     const {layerConfigs} = layerManager;
@@ -541,6 +542,11 @@ export const importProject = () => {
         })
     }
     input.click();
+}
+
+export const searchLayer = () => {
+    const {searchLayer, setSearchLayer} = layerListStore;
+    setSearchLayer(!searchLayer);
 }
 
 /*************************蓝图快捷键实现*************************/

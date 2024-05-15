@@ -64,7 +64,6 @@ class LayerBuilder {
                 }
             }
         }
-        console.log('resData', resData);
         return resData;
     };
 

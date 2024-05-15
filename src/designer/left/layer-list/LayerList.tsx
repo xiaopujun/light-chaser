@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
 import './LayerList.less';
-import layerListStore from "./LayerListStore";
 import layerManager from "../../manager/LayerManager.ts";
 import {observer} from "mobx-react";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 import layerBuilder from "./LayerBuilder";
-import LayerUtil from "./util/LayerUtil";
-import {ILayerItem} from "../../DesignerType";
 import designerLeftStore from "../DesignerLeftStore";
 import {Close} from "@icon-park/react";
 
@@ -39,41 +36,9 @@ class LayerList extends Component<LayerListProps> {
         }
     }
 
-    searchLayer = (data: string | number) => {
-        const {setContent} = layerListStore;
-        setContent && setContent(data as string);
-    }
-
     buildLayerList = () => {
         const {layerConfigs} = layerManager;
-        const {searchContent} = layerListStore;
-        if (!searchContent || searchContent === '')
-            return layerBuilder.buildLayerList(layerConfigs);
-        const filterLayer: Record<string, any> = {};
-        if (searchContent === ':hide') {
-            //仅过展示隐藏的图层
-            Object.values(layerConfigs).forEach((item: ILayerItem) => {
-                if (item.hide && item.type !== 'group')
-                    filterLayer[item.id!] = item;
-            });
-        } else if (searchContent === ':lock') {
-            //仅过展示锁定的图层
-            Object.values(layerConfigs).forEach((item: ILayerItem) => {
-                if (item.lock && item.type !== 'group')
-                    filterLayer[item.id!] = item;
-            });
-        } else {
-            Object.values(layerConfigs).forEach((item: ILayerItem) => {
-                if (item.name?.includes(searchContent) && item.type !== 'group')
-                    filterLayer[item.id!] = item;
-            });
-        }
-        //补充分组图层
-        const groupLayerId = LayerUtil.findPathGroupLayer(Object.keys(filterLayer));
-        groupLayerId.forEach((id: string) => {
-            filterLayer[id] = layerConfigs[id];
-        });
-        return layerBuilder.buildLayerList(filterLayer);
+        return layerBuilder.buildLayerList(layerConfigs);
     }
 
     render() {
