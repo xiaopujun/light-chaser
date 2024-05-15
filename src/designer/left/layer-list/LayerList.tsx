@@ -4,7 +4,6 @@ import layerListStore from "./LayerListStore";
 import layerManager from "../../manager/LayerManager.ts";
 import {observer} from "mobx-react";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
-import Input from "../../../json-schema/ui/input/Input";
 import layerBuilder from "./LayerBuilder";
 import LayerUtil from "./util/LayerUtil";
 import {ILayerItem} from "../../DesignerType";
@@ -88,9 +87,6 @@ class LayerList extends Component<LayerListProps> {
                         const {rulerRef} = eventOperateStore;
                         rulerRef?.ruleWheel();
                     }}/></div>
-                </div>
-                <div className={'list-search'}>
-                    <Input placeholder="搜索图层" onChange={this.searchLayer}/>
                 </div>
                 <div className={'layer-items'}>
                     <div ref={ref => this.layerItemsContainerRef = ref}>
