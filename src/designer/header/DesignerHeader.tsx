@@ -2,7 +2,7 @@ import React, {ReactElement, ReactNode} from 'react';
 import './DesignerHeader.less';
 import {observer} from "mobx-react";
 import eventOperateStore from "../operate-provider/EventOperateStore";
-import {doSave} from "../operate-provider/hot-key/HotKeyImpl";
+import {doSave, exportProject, importProject} from "../operate-provider/hot-key/HotKeyImpl";
 import canvasHdStore from "./items/canvas/CanvasManager.ts";
 import projectHdStore from "./items/project/ProjecManager.ts";
 import themeHdStore from "./items/theme/ThemeManager.ts";
@@ -11,7 +11,7 @@ import CanvasHdConfigImpl from "./items/canvas/CanvasHdConfigImpl.tsx";
 import ProjectHdItemImpl from "./items/project/ProjectHdItemImpl.tsx";
 import ThemeHdItemImpl from "./items/theme/ThemeHdItemImpl.tsx";
 import BluePrintHdImpl from "./items/blue-print/BluePrintHdImpl.tsx";
-import {ConnectionPointTwo, Eyes, HardDiskOne, PageTemplate, Theme} from "@icon-park/react";
+import {AfferentFour, ConnectionPointTwo, EfferentFour, Eyes, HardDiskOne, PageTemplate, Theme} from "@icon-park/react";
 import URLUtil from "../../utils/URLUtil.ts";
 import {DesignerMode} from "../DesignerType.ts";
 
@@ -50,6 +50,18 @@ const centerItems: Array<IHeaderItem> = [
 ];
 
 const leftItems: Array<IHeaderItem> = [
+    {
+        icon: <AfferentFour theme="filled" style={{marginTop: 2}} strokeLinecap="square"/>,
+        name: '导入',
+        key: 'import',
+        onClick: () => importProject()
+    },
+    {
+        icon: <EfferentFour theme="filled" style={{marginTop: 2}} strokeLinecap="square"/>,
+        name: '导出',
+        key: 'export',
+        onClick: () => exportProject()
+    },
     {
         icon: <HardDiskOne theme="filled" style={{marginTop: 2}} strokeLinecap="square"/>,
         name: '保存',

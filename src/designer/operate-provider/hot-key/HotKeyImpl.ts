@@ -1,6 +1,6 @@
 import eventOperateStore from "../EventOperateStore";
 import layerManager from "../../manager/LayerManager.ts";
-import {ILayerItem, IProjectInfo, SaveType} from "../../DesignerType";
+import {DesignerMode, ILayerItem, IProjectInfo, SaveType} from "../../DesignerType";
 import {throttle} from "lodash";
 import {historyOperator} from "../undo-redo/HistoryOperator";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
@@ -16,9 +16,10 @@ import LayerUtil from "../../left/layer-list/util/LayerUtil.ts";
 import bluePrintHdStore from "../../header/items/blue-print/BluePrintHdStore.ts";
 import themeHdStore from "../../header/items/theme/ThemeManager.ts";
 import canvasHdStore from "../../header/items/canvas/CanvasManager.ts";
-import projectHdStore from "../../header/items/project/ProjecManager.ts";
 import canvasManager from "../../header/items/canvas/CanvasManager.ts";
+import projectHdStore from "../../header/items/project/ProjecManager.ts";
 import designerManager from "../../manager/DesignerManager.ts";
+import FileUtil from "../../../utils/FileUtil.ts";
 
 export const selectAll = () => {
     const {layerConfigs} = layerManager;
@@ -466,6 +467,80 @@ export const toggleGlobalThemeConfig = () => {
 export const toggleHotKeyDes = () => {
     const {hotKeyVisible, setHotKeyVisible} = footerStore;
     setHotKeyVisible(!hotKeyVisible)
+}
+
+export const exportProject = async () => {
+    const projectData = designerManager.getData();
+    const elemConfigs = projectData.layerManager?.elemConfigs;
+
+    if (elemConfigs) {
+        const promises: Promise<void>[] = [];
+        Object.keys(elemConfigs).forEach((key) => {
+            const item = elemConfigs[key];
+            if (item.base.type === 'BaseImage' && (item.style.localUrl as string)?.startsWith('blob')) {
+                // 将 blob 数据转换为 base64，并将异步操作添加到 promises 数组中
+                promises.push(
+                    FileUtil.blobToBase64(item.style.localUrl as string).then((res: string | boolean) => {
+                        if (res)
+                            item.style.localUrl = res;
+                        else {
+                            console.error(`${item.base.id + "_" + item.base.name} 图片blob转换失败, ${item.style.localUrl}`);
+                        }
+                    })
+                );
+            }
+        });
+        // 等待所有异步操作完成
+        await Promise.all(promises);
+    }
+
+    // 在所有异步操作完成后，将项目数据转换为 JSON 字符串并导出
+    const projectDataJson = JSON.stringify(projectData);
+    const blob = new Blob([projectDataJson], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a')
+    a.href = url;
+    a.download = `project-${new Date().getTime()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+export const importProject = () => {
+    //打开文件选择框
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = async (e: any) => {
+        const file = e.target.files[0] as File;
+        if (!file)
+            return;
+        const promises: Promise<void>[] = [];
+        file.text().then((fileData: string) => {
+            const projectData = JSON.parse(fileData);
+            const elemConfigs = projectData.layerManager?.elemConfigs;
+            if (elemConfigs) {
+                Object.keys(elemConfigs).forEach((key) => {
+                    const item = elemConfigs[key];
+                    if (item.base.type === 'BaseImage' && (item.style.localUrl as string)?.startsWith('blob')) {
+                        // 将 blob 数据转换为 base64，并将异步操作添加到 promises 数组中
+                        promises.push(
+                            FileUtil.base64ToBlob(item.style.localUrl as string).then((res: string | boolean) => {
+                                if (res)
+                                    item.style.localUrl = res;
+                                else {
+                                    console.error(`${item.base.id + "_" + item.base.name} 图片blob转换失败, ${item.style.localUrl}`);
+                                }
+                            })
+                        );
+                    }
+                });
+                Promise.all(promises);
+            }
+            console.log(projectData);
+            designerManager.init(projectData, DesignerMode.EDIT);
+        })
+    }
+    input.click();
 }
 
 /*************************蓝图快捷键实现*************************/

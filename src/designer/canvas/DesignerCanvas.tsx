@@ -38,6 +38,7 @@ const DesignerCanvas = memo(observer(() => {
     }
 
     const {layerConfigs} = layerManager!;
+    console.log('渲染设计器画布')
     return (
         <Suspense fallback={<Loading/>}>
             <DesignerContainer>
