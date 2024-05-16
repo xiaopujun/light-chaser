@@ -5,7 +5,7 @@ class MapLoader {
 
     loadPromise: Promise<Window["AMap"] | null> | null = null;
 
-    public async load(key: string, securityJsCode: string): Promise<Window["AMap"] | null> {
+    public async load(key: string, securityJsCode: string, rollback?: () => void): Promise<Window["AMap"] | null> {
         if (window.AMap) {
             return window.AMap;
         } else {
@@ -33,8 +33,12 @@ class MapLoader {
                         resolve(AMap);
                     } else {
                         globalMessage.messageApi?.error("地图加载失败...")
+                        this.loadPromise = null;
                         resolve(null);
                     }
+                }).catch((e) => {
+                    this.loadPromise = null;
+                    resolve(null);
                 });
             });
             return this.loadPromise;

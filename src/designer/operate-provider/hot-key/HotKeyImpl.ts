@@ -470,46 +470,49 @@ export const toggleHotKeyDes = () => {
     setHotKeyVisible(!hotKeyVisible)
 }
 
-export const exportProject = async () => {
+export const exportProject = () => {
     globalMessage.messageApi?.open({
         type: 'loading',
         content: '正在导出项目数据...'
     })
-    const projectData = designerManager.getData();
-    const elemConfigs = projectData.layerManager?.elemConfigs;
-    if (elemConfigs) {
+    const timeout = setTimeout(() => {
+        const projectData = designerManager.getData();
+        const elemConfigs = projectData.layerManager?.elemConfigs;
         const promises: Promise<void>[] = [];
-        Object.keys(elemConfigs).forEach((key) => {
-            const item = elemConfigs[key];
-            if (item.base.type === 'BaseImage' && (item.style.localUrl as string)?.startsWith('blob')) {
-                // 将 blob 数据转换为 base64，并将异步操作添加到 promises 数组中
-                promises.push(
-                    FileUtil.blobToBase64(item.style.localUrl as string).then((res: string | boolean) => {
-                        if (res)
-                            item.style.localUrl = res;
-                        else {
-                            console.error(`${item.base.id + "_" + item.base.name} 图片blob转换失败, ${item.style.localUrl}`);
-                        }
-                    })
-                );
-            }
-        });
+        if (elemConfigs) {
+            Object.keys(elemConfigs).forEach((key) => {
+                const item = elemConfigs[key];
+                if (item.base.type === 'BaseImage' && (item.style.localUrl as string)?.startsWith('blob')) {
+                    // 将 blob 数据转换为 base64，并将异步操作添加到 promises 数组中
+                    promises.push(
+                        FileUtil.blobToBase64(item.style.localUrl as string).then((res: string | boolean) => {
+                            if (res)
+                                item.style.localUrl = res;
+                            else {
+                                console.error(`${item.base.id + "_" + item.base.name} 图片blob转换失败, ${item.style.localUrl}`);
+                            }
+                        })
+                    );
+                }
+            });
+        }
         // 等待所有异步操作完成
-        await Promise.all(promises);
-    }
-
-    // 在所有异步操作完成后，将项目数据转换为 JSON 字符串并导出
-    const exportData = {flag: 'pyz_tt', version: 'v1.1.0', data: projectData};
-    const projectDataJson = JSON.stringify(exportData);
-    const blob = new Blob([projectDataJson], {type: 'application/json'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a')
-    a.href = url;
-    a.download = `project-${new Date().getTime()}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-    globalMessage.messageApi?.destroy();
-    globalMessage.messageApi?.success('项目数据导出成功');
+        Promise.all(promises).then(() => {
+            // 在所有异步操作完成后，将项目数据转换为 JSON 字符串并导出
+            const exportData = {flag: 'pyz_tt', version: 'v1.1.0', data: projectData};
+            const projectDataJson = JSON.stringify(exportData);
+            const blob = new Blob([projectDataJson], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a')
+            a.href = url;
+            a.download = `project-${new Date().getTime()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            globalMessage.messageApi?.destroy();
+            globalMessage.messageApi?.success('项目数据导出成功');
+        });
+        clearTimeout(timeout);
+    }, 1000);
 }
 
 export const importProject = () => {
@@ -527,36 +530,39 @@ export const importProject = () => {
             return;
         const promises: Promise<void>[] = [];
         file.text().then((fileData: string) => {
-            const importData = JSON.parse(fileData);
-            if (!('flag' in importData) || importData.flag !== 'pyz_tt') {
-                globalMessage.messageApi?.destroy();
-                globalMessage.messageApi?.info('数据格式错误，请检查导入文件内容。')
-                return;
-            }
-            const projectData = importData.data;
-            const elemConfigs = projectData.layerManager?.elemConfigs;
-            if (elemConfigs) {
-                Object.keys(elemConfigs).forEach((key) => {
-                    const item = elemConfigs[key];
-                    if (item.base.type === 'BaseImage' && (item.style.localUrl as string)?.startsWith('blob')) {
-                        // 将 blob 数据转换为 base64，并将异步操作添加到 promises 数组中
-                        promises.push(
-                            FileUtil.base64ToBlob(item.style.localUrl as string).then((res: string | boolean) => {
-                                if (res)
-                                    item.style.localUrl = res;
-                                else {
-                                    console.error(`${item.base.id + "_" + item.base.name} 图片blob转换失败, ${item.style.localUrl}`);
-                                }
-                            })
-                        );
-                    }
+            const timeout = setTimeout(() => {
+                const importData = JSON.parse(fileData);
+                if (!('flag' in importData) || importData.flag !== 'pyz_tt') {
+                    globalMessage.messageApi?.destroy();
+                    globalMessage.messageApi?.info('数据格式错误，请检查导入文件内容。')
+                    return;
+                }
+                const projectData = importData.data;
+                const elemConfigs = projectData.layerManager?.elemConfigs;
+                if (elemConfigs) {
+                    Object.keys(elemConfigs).forEach((key) => {
+                        const item = elemConfigs[key];
+                        if (item.base.type === 'BaseImage' && (item.style.localUrl as string)?.startsWith('blob')) {
+                            // 将 blob 数据转换为 base64，并将异步操作添加到 promises 数组中
+                            promises.push(
+                                FileUtil.base64ToBlob(item.style.localUrl as string).then((res: string | boolean) => {
+                                    if (res)
+                                        item.style.localUrl = res;
+                                    else {
+                                        console.error(`${item.base.id + "_" + item.base.name} 图片blob转换失败, ${item.style.localUrl}`);
+                                    }
+                                })
+                            );
+                        }
+                    });
+                }
+                Promise.all(promises).then(() => {
+                    designerManager.init(projectData as any, DesignerMode.EDIT);
+                    globalMessage.messageApi?.destroy();
+                    globalMessage.messageApi?.success('项目数据导入成功');
+                    clearTimeout(timeout);
                 });
-            }
-            Promise.all(promises).then(() => {
-                designerManager.init(projectData, DesignerMode.EDIT);
-                globalMessage.messageApi?.destroy();
-                globalMessage.messageApi?.success('项目数据导入成功');
-            });
+            }, 500);
         })
     }
     input.click();
