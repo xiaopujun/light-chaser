@@ -499,7 +499,8 @@ export const exportProject = async () => {
     }
 
     // 在所有异步操作完成后，将项目数据转换为 JSON 字符串并导出
-    const projectDataJson = JSON.stringify(projectData);
+    const exportData = {flag: 'pyz_tt', version: 'v1.1.0', data: projectData};
+    const projectDataJson = JSON.stringify(exportData);
     const blob = new Blob([projectDataJson], {type: 'application/json'});
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a')
@@ -526,7 +527,13 @@ export const importProject = () => {
             return;
         const promises: Promise<void>[] = [];
         file.text().then((fileData: string) => {
-            const projectData = JSON.parse(fileData);
+            const importData = JSON.parse(fileData);
+            if (!('flag' in importData) || importData.flag !== 'pyz_tt') {
+                globalMessage.messageApi?.destroy();
+                globalMessage.messageApi?.info('数据格式错误，请检查导入文件内容。')
+                return;
+            }
+            const projectData = importData.data;
             const elemConfigs = projectData.layerManager?.elemConfigs;
             if (elemConfigs) {
                 Object.keys(elemConfigs).forEach((key) => {
