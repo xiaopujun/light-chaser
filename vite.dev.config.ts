@@ -15,5 +15,6 @@ export default defineConfig({
             //对css预处理器默认配置的覆盖
         },
         devSourcemap: true,
+        postcss: {}
     },
 })
