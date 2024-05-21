@@ -3,6 +3,14 @@ import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
 import {DigitalFlipperController} from "./DigitalFlipperController";
 import {ConfigType} from "../../../designer/right/ConfigContent";
+import {
+    AlignBottomTwo,
+    AlignHorizontalCenterTwo,
+    AlignLeftTwo,
+    AlignRightTwo,
+    AlignTopTwo,
+    AlignVerticalCenterTwo
+} from "@icon-park/react";
 
 export const DigitalFlipperConfig: React.FC<ConfigType<DigitalFlipperController>> = ({controller}) => {
 
@@ -56,7 +64,7 @@ export const DigitalFlipperConfig: React.FC<ConfigType<DigitalFlipperController>
                 key: 'fontFamily',
                 type: 'select',
                 label: '字体',
-                value: '',
+                value: config?.style?.fontFamily,
                 config: {
                     options: [
                         {label: '钉钉进步体', value: 'DingTalk JinBuTi'},
@@ -65,7 +73,71 @@ export const DigitalFlipperConfig: React.FC<ConfigType<DigitalFlipperController>
                         {label: '庞门正道标题', value: '庞门正道标题体免费版'},
                     ],
                 }
-            }
+            },
+            {
+                type: "grid",
+                label: "对齐",
+                config: {
+                    columns: 2,
+                    containerStyle: {
+                        gridColumn: '1/3',
+                    },
+                },
+                children: [
+                    {
+                        type: 'group-button',
+                        key: 'justifyContent',
+                        value: config?.style?.justifyContent,
+                        config: {
+                            items: [
+                                {
+                                    value: 'flex-start',
+                                    content: <AlignLeftTwo theme="filled" size="16"
+                                                           strokeWidth={2}
+                                                           strokeLinecap="square"/>
+                                },
+                                {
+                                    value: 'center',
+                                    content: <AlignHorizontalCenterTwo theme="filled" size="16"
+                                                                       strokeWidth={2} strokeLinecap="square"/>
+                                },
+                                {
+                                    value: 'flex-end',
+                                    content: <AlignRightTwo theme="filled" size="16"
+                                                            strokeWidth={2}
+                                                            strokeLinecap="square"/>
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        type: 'group-button',
+                        key: 'alignItems',
+                        value: config?.style?.alignItems,
+                        config: {
+                            items: [
+                                {
+                                    value: 'flex-start',
+                                    content: <AlignTopTwo theme="filled" size="16"
+                                                          strokeWidth={2}
+                                                          strokeLinecap="square"/>
+                                },
+                                {
+                                    value: 'center',
+                                    content: <AlignVerticalCenterTwo theme="filled" size="16"
+                                                                     strokeWidth={2} strokeLinecap="square"/>
+                                },
+                                {
+                                    value: 'flex-end',
+                                    content: <AlignBottomTwo theme="filled" size="16"
+                                                             strokeWidth={2}
+                                                             strokeLinecap="square"/>
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
         ]
     }
 

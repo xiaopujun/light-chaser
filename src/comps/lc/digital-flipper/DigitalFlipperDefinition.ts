@@ -50,6 +50,8 @@ export default class DigitalFlipperDefinition extends AbstractDefinition<Digital
                 fontFamily: 'Microsoft YaHei',
                 color: '#ffffff',
                 type: 'caper',
+                justifyContent: 'center',
+                alignItems: 'center'
             },
             data: {
                 sourceType: 'static',
