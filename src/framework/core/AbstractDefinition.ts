@@ -1,6 +1,6 @@
 import {MenuInfo} from "../../designer/right/MenuType";
 import AbstractController from "./AbstractController";
-import React from "react";
+import React, {ComponentType} from "react";
 import {ClazzTemplate} from "../../comps/common-component/common-types";
 import AbstractDesignerController from "./AbstractDesignerController";
 
@@ -20,7 +20,7 @@ export interface EventInfo {
 export interface ICategorize {
     key: string;
     name: string;
-    icon?: React.ComponentType;
+    icon?: ComponentType;
     parentKey?: string;
 }
 
@@ -121,14 +121,14 @@ export abstract class AbstractDefinition<C extends AbstractController = Abstract
                 name: "显示",
                 id: "show",
                 handler: (controller: AbstractDesignerController) => {
-                    controller.container!.style.display = "block";
+                    controller.container!.style.visibility = "visible";
                 }
             },
             {
                 name: "隐藏",
                 id: "hide",
                 handler: (controller: AbstractDesignerController) => {
-                    controller.container!.style.display = "none";
+                    controller.container!.style.visibility = "hidden";
                 }
             },
             {

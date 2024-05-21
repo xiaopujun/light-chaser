@@ -34,9 +34,9 @@ class LayerBuilder {
                 let next = currentLayer.next;
                 while (next) {
                     const nextLayer = layerMap[next!];
-                    if (nextLayer.childHeader)
+                    if (nextLayer?.childHeader)
                         iterateLayers(layerMap[nextLayer.childHeader], res);
-                    res.push(nextLayer);
+                    nextLayer && res.push(nextLayer);
                     next = nextLayer?.next;
                 }
             }

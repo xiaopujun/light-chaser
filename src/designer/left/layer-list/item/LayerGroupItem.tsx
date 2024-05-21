@@ -1,5 +1,5 @@
-import {EditFilled, EyeFilled, EyeInvisibleFilled, FolderOpenFilled, UnlockFilled, UsbFilled} from "@ant-design/icons";
 import {BaseLayer} from "./BaseLayer";
+import {Edit, FolderClose, Lock, PreviewClose, PreviewOpen, Unlock} from "@icon-park/react";
 
 export default class LayerGroupItem extends BaseLayer {
 
@@ -14,7 +14,7 @@ export default class LayerGroupItem extends BaseLayer {
                      onClick={(e) => this.onSelected(e)}>
                     <div className={'group-left'}>
                         <div className={'group-icon'} onClick={() => this.setState({showContent: !showContent})}>
-                            <FolderOpenFilled/></div>
+                            <FolderClose size={12}/></div>
                         <div className={'group-name'}>{inputMode ?
                             <input type="text" defaultValue={name} autoFocus={true} onChange={this.changeLayerName}
                                    ref={ref => ref?.select()}
@@ -27,13 +27,13 @@ export default class LayerGroupItem extends BaseLayer {
                     </div>
                     <div className={'group-operators'}>
                         <div className={'group-operator'} onClick={this.openInput}>
-                            <EditFilled/>
+                            <Edit/>
                         </div>
                         <div className={'group-operator'} onClick={this.toggleHide}>
-                            {hide ? <EyeInvisibleFilled/> : <EyeFilled/>}
+                            {hide ? <PreviewClose/> : <PreviewOpen/>}
                         </div>
                         <div className={'group-operator'} onClick={this.toggleLock}>
-                            {lock ? <UsbFilled/> : <UnlockFilled/>}
+                            {lock ? <Lock/> : <Unlock/>}
                         </div>
                     </div>
                 </div>

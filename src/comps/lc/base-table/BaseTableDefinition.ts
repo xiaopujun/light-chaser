@@ -10,10 +10,12 @@ import baseTableImg from './base-table.png';
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {BaseTableController} from "./BaseTableController";
 import {BaseTableComponentProps} from "./BaseTableComponent";
-import BaseInfo from "../../common-component/base-info/BaseInfo";
-import AnimationConfig from "../../common-component/animation-config/AnimationConfig";
 import {BaseTableStyleConfig} from "./BaseTableConfig";
-import DataConfig from "../../common-component/data-config/DataConfig";
+import React from "react";
+
+const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
+const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig.tsx"));
+const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig.tsx"));
 
 export default class BaseTableDefinition extends AbstractDefinition<BaseTableController, BaseTableComponentProps> {
     getBaseInfo(): BaseInfoType {

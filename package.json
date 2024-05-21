@@ -10,9 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@ant-design/icons": "^4.7.0",
     "@antv/g-base": "^0.5.15",
     "@antv/g2plot": "^2.4.31",
+    "@icon-park/react": "^1.4.2",
     "@monaco-editor/react": "^4.6.0",
     "@scena/react-ruler": "^0.17.1",
     "antd": "^5.12.2",
@@ -33,6 +33,8 @@
     "react-selecto": "^1.22.6"
   },
   "devDependencies": {
+    "@amap/amap-jsapi-loader": "^1.0.1",
+    "@amap/amap-jsapi-types": "^0.0.15",
     "@types/lodash": "^4.14.178",
     "@types/node": "^20.10.4",
     "@types/react": "^18.2.45",

@@ -9,8 +9,11 @@ import {MenuInfo} from "../../../designer/right/MenuType";
 import fourAngleGlowBorderImg from './four-angle-glow-border.png';
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {FourAngleGlowBorderController, FourAngleGlowProps} from "./FourAngleGlowBorderController";
-import BaseInfo from "../../common-component/base-info/BaseInfo";
 import {FourAngleGlowBorderConfig} from "./FourAngleGlowBorderConfig";
+import React from "react";
+
+const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
+
 
 export default class FourAngleGlowBorderDefinition extends AbstractDefinition<FourAngleGlowBorderController, FourAngleGlowProps> {
     getBaseInfo(): BaseInfoType {

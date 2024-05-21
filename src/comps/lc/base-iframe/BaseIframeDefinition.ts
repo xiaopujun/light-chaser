@@ -9,9 +9,12 @@ import {MenuInfo} from "../../../designer/right/MenuType";
 import baseIframeImg from './base-iframe.png';
 import {BaseIframeController} from "./BaseIframeController";
 import {BaseIframeComponentProps} from "./BaseIframeComponent";
-import BaseInfo from "../../common-component/base-info/BaseInfo";
 import {BaseIframeStyleConfig} from "./BaseIframeConfig";
-import {AppstoreFilled, HighlightFilled} from "@ant-design/icons";
+import {getDefaultMenuList} from "../../../designer/right/util.ts";
+import React from "react";
+
+const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
+
 
 export default class BaseIframeDefinition extends AbstractDefinition<BaseIframeController, BaseIframeComponentProps> {
     getBaseInfo(): BaseInfoType {
@@ -44,18 +47,7 @@ export default class BaseIframeDefinition extends AbstractDefinition<BaseIframeC
     }
 
     getMenuList(): Array<MenuInfo> | null {
-        return [
-            {
-                icon: AppstoreFilled,
-                name: '基础',
-                key: 'base',
-            },
-            {
-                icon: HighlightFilled,
-                name: '样式',
-                key: 'style',
-            }
-        ];
+        return getDefaultMenuList().filter((menu) => menu.key !== 'mapping' && menu.key !== 'data' && menu.key !== 'theme');
     }
 
     getMenuToConfigContentMap(): MenuToConfigMappingType | null {

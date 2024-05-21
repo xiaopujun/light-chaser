@@ -9,6 +9,8 @@ export interface DigitalFlipperComponentStyle {
     fontFamily?: string;
     color?: string;
     type?: 'slide' | 'caper';
+    alignItems?: string;
+    justifyContent?: string;
 }
 
 export interface DigitalFlipperComponentProps extends ComponentBaseProps {

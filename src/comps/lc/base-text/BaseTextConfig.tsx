@@ -3,6 +3,14 @@ import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
 import {BaseTextController} from "./BaseTextController";
 import {ConfigType} from "../../../designer/right/ConfigContent";
+import {
+    AlignBottomTwo,
+    AlignHorizontalCenterTwo,
+    AlignLeftTwo,
+    AlignRightTwo,
+    AlignTopTwo,
+    AlignVerticalCenterTwo
+} from "@icon-park/react";
 
 export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({controller}) => {
 
@@ -17,6 +25,20 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
         type: 'grid',
         config: {columns: 2},
         children: [
+            {
+                key: 'data',
+                children: [
+                    {
+                        key: 'staticData',
+                        type: 'text-area',
+                        label: '内容',
+                        value: data?.staticData,
+                        config: {
+                            containerStyle: {gridColumn: '1 / 3'},
+                        }
+                    },
+                ]
+            },
             {
                 key: 'style',
                 children: [
@@ -42,7 +64,7 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
                         key: 'color',
                         type: 'color-picker',
                         label: '颜色',
-                        value: '#1c1c1c',
+                        value: style?.color,
                         config: {
                             showText: true,
                         }
@@ -51,7 +73,7 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
                         key: 'fontFamily',
                         type: 'select',
                         label: '字体',
-                        value: '',
+                        value: style?.fontFamily,
                         config: {
                             options: [
                                 {label: '钉钉进步体', value: 'DingTalk JinBuTi'},
@@ -60,23 +82,129 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
                                 {label: '庞门正道标题', value: '庞门正道标题体免费版'},
                             ],
                         }
+                    },
+                    {
+                        key: 'letterSpacing',
+                        type: 'number-input',
+                        label: '字距',
+                        value: style?.letterSpacing,
+                        config: {
+                            min: 0,
+                            max: 10,
+                            step: 1
+                        }
+                    },
+                    {
+                        key: 'lineHeight',
+                        type: 'number-input',
+                        label: '行距',
+                        value: style?.lineHeight,
+                        config: {
+                            min: 0,
+                            max: 10,
+                            step: 0.1
+                        }
+                    },
+                    {
+                        type: "grid",
+                        label: "对齐",
+                        config: {
+                            columns: 2,
+                            containerStyle: {
+                                gridColumn: '1/3',
+                            },
+                        },
+                        children: [
+                            {
+                                type: 'group-button',
+                                key: 'justifyContent',
+                                value: style?.justifyContent,
+                                config: {
+                                    items: [
+                                        {
+                                            value: 'flex-start',
+                                            content: <AlignLeftTwo theme="filled" size="16"
+                                                                   strokeWidth={2}
+                                                                   strokeLinecap="square"/>
+                                        },
+                                        {
+                                            value: 'center',
+                                            content: <AlignHorizontalCenterTwo theme="filled" size="16"
+                                                                               strokeWidth={2} strokeLinecap="square"/>
+                                        },
+                                        {
+                                            value: 'flex-end',
+                                            content: <AlignRightTwo theme="filled" size="16"
+                                                                    strokeWidth={2}
+                                                                    strokeLinecap="square"/>
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                type: 'group-button',
+                                key: 'alignItems',
+                                value: style?.alignItems,
+                                config: {
+                                    items: [
+                                        {
+                                            value: 'flex-start',
+                                            content: <AlignTopTwo theme="filled" size="16"
+                                                                  strokeWidth={2}
+                                                                  strokeLinecap="square"/>
+                                        },
+                                        {
+                                            value: 'center',
+                                            content: <AlignVerticalCenterTwo theme="filled" size="16"
+                                                                             strokeWidth={2} strokeLinecap="square"/>
+                                        },
+                                        {
+                                            value: 'flex-end',
+                                            content: <AlignBottomTwo theme="filled" size="16"
+                                                                     strokeWidth={2}
+                                                                     strokeLinecap="square"/>
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        type: 'grid',
+                        label: '描边',
+                        config: {
+                            columns: 2,
+                            containerStyle: {
+                                gridColumn: '1/3',
+                            },
+                        },
+                        children: [
+                            {
+                                key: 'strokeColor',
+                                type: 'color-picker',
+                                label: '颜色',
+                                value: style?.strokeColor,
+                                config: {
+                                    showText: true,
+                                }
+                            },
+                            {
+                                key: 'strokeWidth',
+                                type: 'number-input',
+                                label: '宽度',
+                                value: style?.strokeWidth,
+                                config: {
+                                    min: 0,
+                                    max: 10,
+                                    step: 1
+                                }
+                            },
+
+                        ]
                     }
                 ]
             },
-            {
-                key: 'data',
-                children: [
-                    {
-                        key: 'staticData',
-                        type: 'text-area',
-                        label: '内容',
-                        value: data?.staticData,
-                        config: {
-                            containerStyle: {gridColumn: '1 / 3'},
-                        }
-                    },
-                ]
-            }
+
         ]
     }
 

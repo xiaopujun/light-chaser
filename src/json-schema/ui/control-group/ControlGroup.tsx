@@ -1,12 +1,12 @@
 import React, {Suspense, useRef} from "react";
 import {Control} from "../../SchemaTypes";
-import {CaretDownFilled, CaretRightFilled, DeleteFilled, PlusCircleFilled} from "@ant-design/icons";
 import './ControlGroup.less';
 import {FieldChangeData, LCGUI} from "../../LCGUI";
 import Loading from "../loading/Loading";
 import LCGUIUtil from "../../LCGUIUtil";
 import ObjectUtil from "../../../utils/ObjectUtil";
 import {cloneDeep} from "lodash";
+import {AddOne, DeleteFive, Down, Right} from "@icon-park/react";
 
 export interface ControlGroupProps {
     label?: string;
@@ -67,12 +67,12 @@ const ControlGroup = (props: ControlGroupProps) => {
             <div className={'control-group-header'}>
                 <div className={'cgh-label'}><span>{label}</span></div>
                 <div className={'cgh-operate'}>
-                    <span className={'operate-icon'} onClick={delGroup}><DeleteFilled/></span>
-                    <span className={'operate-icon'} onClick={addNewGroup}><PlusCircleFilled/></span>
+                    <span className={'operate-icon'} onClick={delGroup}><DeleteFive/></span>
+                    <span className={'operate-icon'} onClick={addNewGroup}><AddOne/></span>
                     <span className={'operate-icon toggle-icon'} onClick={() => setToggle(!toggle)}>
                         {toggle ?
-                            <CaretDownFilled/> :
-                            <CaretRightFilled/>}
+                            <Down size={16}/> :
+                            <Right size={16}/>}
                     </span>
                 </div>
             </div>

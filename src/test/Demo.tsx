@@ -1,22 +1,21 @@
 import './DemoMain.less';
-import {useEffect} from "react";
-import FetchUtil from "../utils/FetchUtil.ts";
-import CheckBox from "../json-schema/ui/checkbox/CheckBox.tsx";
-
+import "@amap/amap-jsapi-types";
+// import * as AntdG2Plot from "@antv/g2plot";
 
 export default function Demo() {
-    useEffect(() => {
-        FetchUtil.post('/api/datasource/pageList', {
-            current: 1,
-            size2: 10,
-            searchValue: null
-        }).then(res => console.log(res));
-    }, []);
+
+    // console.log(AntdG2Plot);
+
+
+    setTimeout(() => {
+        import("@antv/g2plot").then((AntdG2Plot) => {
+            console.log(AntdG2Plot);
+        })
+    }, 3000);
 
     return (
-        <div style={{width: 500, height: 200}}>
-            <CheckBox value={true} onChange={console.log}/>
+        <div>
+            test
         </div>
-
     );
 }

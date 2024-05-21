@@ -2,8 +2,6 @@ import React, {memo, useEffect, useRef} from 'react';
 import './ProjectList.less';
 import {Card, Pagination} from "antd";
 import defaultSnapshot from '../image/default-snapshot.jpg';
-
-import {CopyFilled, DeleteFilled, EditFilled, EyeFilled} from "@ant-design/icons";
 import {DesignerMode, IPage, IProjectInfo, SaveType} from "../../../designer/DesignerType";
 import {AddNewProjectDialog, INewProjectInfo} from "./AddNewProjectDialog";
 import Button from "../../../json-schema/ui/button/Button";
@@ -11,6 +9,7 @@ import Dialog from "../../../json-schema/ui/dialog/Dialog";
 import operatorMap from "../../../framework/operate";
 import {globalMessage} from "../../../framework/message/GlobalMessage";
 import Input from "../../../json-schema/ui/input/Input.tsx";
+import {Copy, Delete, Edit, PreviewOpen} from "@icon-park/react";
 
 export interface ProjectListProps {
     saveType: SaveType;
@@ -155,10 +154,10 @@ export const ProjectList = memo((props: ProjectListProps) => {
                                   hoverable={true}
                                   size={'small'}
                                   actions={[
-                                      <EditFilled key={'edit'} onClick={() => operateHandler(item.id!, "edit")}/>,
-                                      <EyeFilled key={'show'} onClick={() => operateHandler(item.id!, "show")}/>,
-                                      <DeleteFilled key={'del'} onClick={() => operateHandler(item.id!, "del")}/>,
-                                      <CopyFilled key={'clone'} onClick={() => operateHandler(item.id!, "clone")}/>,
+                                      <Edit key={'edit'} onClick={() => operateHandler(item.id!, "edit")}/>,
+                                      <PreviewOpen key={'show'} onClick={() => operateHandler(item.id!, "show")}/>,
+                                      <Delete key={'del'} onClick={() => operateHandler(item.id!, "del")}/>,
+                                      <Copy key={'clone'} onClick={() => operateHandler(item.id!, "clone")}/>,
                                   ]}>
                             </Card>
                         </div>

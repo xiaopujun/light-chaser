@@ -1,10 +1,10 @@
 import {Component} from 'react';
-import {Control} from "../json-schema/SchemaTypes";
-import {FieldChangeData, LCGUI} from "../json-schema/LCGUI";
-import './DemoMain.less'
-import {ImageUpload} from "../json-schema/ui/imag-upload/ImageUpload";
-import ColorMode from "../json-schema/ui/color-mode/ColorMode";
-import CheckBox from "../json-schema/ui/checkbox/CheckBox";
+import {Control} from "../../json-schema/SchemaTypes.ts";
+import {FieldChangeData, LCGUI} from "../../json-schema/LCGUI.tsx";
+import '../DemoMain.less'
+import {ImageUpload} from "../../json-schema/ui/imag-upload/ImageUpload.tsx";
+import ColorMode from "../../json-schema/ui/color-mode/ColorMode.tsx";
+import CheckBox from "../../json-schema/ui/checkbox/CheckBox.tsx";
 
 
 class JsonSchemaDemo extends Component {

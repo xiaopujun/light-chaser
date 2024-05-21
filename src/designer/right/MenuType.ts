@@ -1,8 +1,8 @@
-import React from "react";
+import {ComponentType} from "react";
 
 export interface MenuInfo {
     //图标
-    icon: React.Component | React.FC;
+    icon: ComponentType;
     //名称
     name: string;
     //标识

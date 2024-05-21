@@ -10,11 +10,14 @@ import carouselImg from './carousel.png';
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {CarouselController} from "./CarouselController.ts";
 import {CarouselComponentProps} from "./CarouselComponent.tsx";
-import BaseInfo from "../../common-component/base-info/BaseInfo";
-import AnimationConfig from "../../common-component/animation-config/AnimationConfig";
-import ThemeConfig from "../../common-component/theme-config/ThemeConfig";
 import {CarouselConfig} from "./CarouselConfig.tsx";
-import DataConfig from "../../common-component/data-config/DataConfig.tsx";
+import React from "react";
+
+const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
+const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig.tsx"));
+const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig.tsx"));
+const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig.tsx"));
+
 
 export default class CarouselDefinition extends AbstractDefinition<CarouselController, CarouselComponentProps> {
     getBaseInfo(): BaseInfoType {

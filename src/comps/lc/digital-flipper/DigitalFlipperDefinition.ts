@@ -9,11 +9,14 @@ import {MenuInfo} from "../../../designer/right/MenuType";
 import digitalFlipperImg from './digital-flipper.png';
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {DigitalFlipperController} from "./DigitalFlipperController";
-import BaseInfo from "../../common-component/base-info/BaseInfo";
-import ThemeConfig from "../../common-component/theme-config/ThemeConfig";
 import {DigitalFlipperConfig} from "./DigitalFlipperConfig";
 import {DigitalFlipperComponentProps} from "./DigitalFlipperComponent";
-import DataConfig from "../../common-component/data-config/DataConfig";
+import React from "react";
+
+const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
+const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig.tsx"));
+const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig.tsx"));
+
 
 export default class DigitalFlipperDefinition extends AbstractDefinition<DigitalFlipperController, DigitalFlipperComponentProps> {
     getBaseInfo(): BaseInfoType {
@@ -47,6 +50,8 @@ export default class DigitalFlipperDefinition extends AbstractDefinition<Digital
                 fontFamily: 'Microsoft YaHei',
                 color: '#ffffff',
                 type: 'caper',
+                justifyContent: 'center',
+                alignItems: 'center'
             },
             data: {
                 sourceType: 'static',

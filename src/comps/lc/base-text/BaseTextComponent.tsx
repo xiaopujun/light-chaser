@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import {CSSProperties, ForwardedRef, forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import {ComponentBaseProps} from "../../common-component/common-types";
 import './BaseTextComponent.less';
 
@@ -9,48 +9,59 @@ export interface BaseTextComponentStyle {
     fontFamily?: string;
     alignItems?: string;
     justifyContent?: string;
+    strokeWidth?: number;
+    strokeColor?: string;
+    letterSpacing?: number;
+    lineHeight?: number;
 }
 
 export interface BaseTextComponentProps extends ComponentBaseProps {
     style?: BaseTextComponentStyle;
 }
 
-export interface BaseTextComponentState extends BaseTextComponentProps {
-    edit: boolean;
+export interface BaseTextComponentRef {
+    updateConfig: (newConfig: BaseTextComponentProps) => void;
+    setEventHandler: (eventMap: Record<string, Function>) => void;
 }
 
-class BaseTextComponent extends Component<BaseTextComponentProps, BaseTextComponentState> {
+export const BaseTextComponent = forwardRef((props: BaseTextComponentProps, ref: ForwardedRef<BaseTextComponentRef>) => {
+    const [config, setConfig] = useState<BaseTextComponentProps>({...props});
+    const {style, data} = config;
+    const [edit, setEdit] = useState(false);
+    const eventHandlerMap = useRef<Record<string, Function>>({});
+    const textRef = useRef<HTMLInputElement>(null);
 
-    constructor(props: BaseTextComponentProps) {
-        super(props);
-        this.state = {...props, edit: false};
+    useImperativeHandle(ref, () => ({
+        updateConfig: (newConfig) => setConfig({...newConfig}),
+        setEventHandler: (eventMap) => eventHandlerMap.current = eventMap,
+    }));
+
+    const onClick = () => {
+        if ('click' in eventHandlerMap.current)
+            eventHandlerMap.current['click']();
     }
 
-    eventHandlerMap: Record<string, Function> = {};
-
-    onClick = () => {
-        if ('click' in this.eventHandlerMap)
-            this.eventHandlerMap['click']();
+    const strokeStyle: CSSProperties = {
+        WebkitTextStrokeWidth: style?.strokeWidth,
+        WebkitTextStrokeColor: style?.strokeColor,
     }
 
-    render() {
-        const {style, data, edit} = this.state;
-        return (
-            <div onDoubleClick={() => this.setState({edit: true})}
-                 className={'base-text-component'}
-                 style={{...style}}
-                 onKeyDown={(e) => e.stopPropagation()}
-                 onClick={this.onClick}>
-                {edit ? <input
-                    ref={(ref) => ref?.select()}
-                    onChange={(e) => data!.staticData = e.target.value}
-                    onBlur={() => this.setState({edit: false})}
-                    autoFocus={true}
-                    type={'text'}
-                    defaultValue={data?.staticData}/> : data?.staticData}
-            </div>
-        );
-    }
-}
+    return (
+        <div onDoubleClick={() => setEdit(true)}
+             ref={textRef}
+             className={'base-text-component'}
+             style={{...style, ...strokeStyle}}
+             onKeyDown={(e) => e.stopPropagation()}
+             onClick={onClick}>
+            {edit ? <input
+                ref={(ref) => ref?.select()}
+                onChange={(e) => data!.staticData = e.target.value}
+                onBlur={() => setEdit(false)}
+                autoFocus={true}
+                type={'text'}
+                defaultValue={data?.staticData}/> : data?.staticData}
+        </div>
+    );
+});
 
 export default BaseTextComponent;

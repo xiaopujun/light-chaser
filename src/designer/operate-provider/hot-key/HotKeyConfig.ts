@@ -1,4 +1,4 @@
-import {HotKeyConfigType, HotKeyTriggerType} from "./HotKey";
+import {HotKeyConfigType, HotKeyTriggerType} from "./HotKeyType";
 import {
     delBPLine,
     delBPNode,
@@ -32,7 +32,7 @@ import {
     toggleProjectConfig,
     toggleSecondaryBorder,
     layerToTop,
-    undo
+    undo, searchLayer
 } from "./HotKeyImpl";
 
 const commonHotKeyConfigs: HotKeyConfigType = {
@@ -159,6 +159,9 @@ const commonHotKeyConfigs: HotKeyConfigType = {
     },
     'alt + shift + g': {
         handler: removeFromGroup,
+    },
+    'control + f': {
+        handler: searchLayer,
     }
 }
 

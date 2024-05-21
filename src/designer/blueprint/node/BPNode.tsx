@@ -2,8 +2,8 @@ import React from "react";
 import './BPNode.less';
 import {AnchorPointType, NodeInfoType} from "./core/AbstractBPNodeController";
 import nodeIconMap from "./NodeIconMap";
-import {CodeSandboxOutlined} from "@ant-design/icons";
 import {IPoint} from "../manager/BluePrintManager.ts";
+import {ConnectionPoint} from "@icon-park/react";
 
 export interface NodeProps extends NodeInfoType {
     position?: IPoint;
@@ -13,7 +13,7 @@ export default class BPNode extends React.PureComponent<NodeProps> {
     render() {
         const {icon, name, input = [], output = [], titleBgColor = '#247057'} = this.props;
         const cpList = [...output, ...input];
-        const Icon = nodeIconMap.get(icon) || CodeSandboxOutlined;
+        const Icon = nodeIconMap.get(icon) || ConnectionPoint;
         return (
             <div className={'bp-node'}>
                 <div className={'bp-node-header'} style={{backgroundColor: titleBgColor}}>

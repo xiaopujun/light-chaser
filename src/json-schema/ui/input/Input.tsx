@@ -12,13 +12,14 @@ export interface InputProps extends UIContainerProps {
     minLength?: number;
     maxLength?: number;
     disabled?: boolean;
+    autoFocus?: boolean;
     onChange?: (data: string) => void;
     onKeyDown?: (event: KeyboardEvent) => void;
 }
 
 export default function Input(props: InputProps) {
     const {
-        value, defaultValue, prefix, suffix, type, placeholder,
+        value, defaultValue, prefix, suffix, type, placeholder, autoFocus,
         minLength, maxLength, disabled, onChange, onKeyDown,
         ...containerProps
     } = props;
@@ -38,6 +39,7 @@ export default function Input(props: InputProps) {
                            maxLength={maxLength}
                            disabled={disabled}
                            placeholder={placeholder}
+                           autoFocus={autoFocus}
                            type={type}
                            className={'lc-input'}
                            onKeyDown={onKeyDown}
