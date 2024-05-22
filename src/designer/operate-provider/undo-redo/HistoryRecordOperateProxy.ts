@@ -160,8 +160,6 @@ class HistoryRecordOperateProxy {
         let {targetIds, setTargetIds} = eventOperateStore;
         if (targetIds.length === 0)
             return;
-
-        const {delItem, layerConfigs, compController} = layerManager;
         const {setContentVisible, activeConfig, activeElem} = rightStore;
         //若被删除元素处于配置项的激活状态，则取消激活状态（关闭右侧配置项）
         if (targetIds.includes(activeElem.id!)) {
@@ -169,6 +167,7 @@ class HistoryRecordOperateProxy {
             activeConfig(null, "");
         }
 
+        const {delItem, layerConfigs, compController} = layerManager;
         const delPrev: IDelOperateData[] = [];
         const delNext: IDelOperateData[] = [];
         const updPrev: IUpdLayerOperateData[] = [];
@@ -224,9 +223,9 @@ class HistoryRecordOperateProxy {
                 if (layer.pid) {
                     const parentLayer = layerConfigs[layer.pid];
                     if (parentLayer.childHeader === id)
-                        parentLayer.childHeader = undefined;
+                        parentLayer.childHeader = layer?.next;
                     if (parentLayer.childTail === id)
-                        parentLayer.childTail = undefined;
+                        parentLayer.childTail = layer?.prev;
                 }
             });
             delItem(targetIds);

@@ -143,7 +143,7 @@ class LocalOperator extends AbstractOperator {
         const project = list[index];
         const newProject: IProjectInfo = cloneDeep(project);
         newProject.id = IdGenerate.generateId();
-        newProject.name = name || newProject.name + '-副本';
+        newProject.name = name || newProject.name;
         newProject.createTime = new Date().getTime() + '';
         newProject.updateTime = new Date().getTime() + '';
         list.push(newProject);
