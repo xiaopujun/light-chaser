@@ -1,18 +1,19 @@
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
 import ComponentUtil from "../../../utils/ComponentUtil";
-import BaseTableComponent, {BaseTableComponentProps} from "./BaseTableComponent";
+import BaseTableComponent, {BaseTableComponentProps, BaseTableComponentRef} from "./BaseTableComponent";
 import ObjectUtil from "../../../utils/ObjectUtil";
 
-export class BaseTableController extends AbstractDesignerController<BaseTableComponent, BaseTableComponentProps> {
+export class BaseTableController extends AbstractDesignerController<BaseTableComponentRef, BaseTableComponentProps> {
 
     async create(container: HTMLElement, config: BaseTableComponentProps): Promise<void> {
         this.config = config;
         this.container = container;
-        this.instance = await ComponentUtil.createAndRender<BaseTableComponent>(container, BaseTableComponent, config);
+        this.instance = await ComponentUtil.createAndRender<BaseTableComponentRef>(container, BaseTableComponent, config);
     }
 
     destroy(): void {
+        this.instance?.destroy();
         this.instance = null;
         this.config = null;
     }
@@ -23,14 +24,14 @@ export class BaseTableController extends AbstractDesignerController<BaseTableCom
 
     changeData(data: any) {
         const style = ObjectUtil.merge(this.config?.style, {data});
-        this.instance?.setState(style);
+        this.instance?.updateConfig(style);
     }
 
     update(config: BaseTableComponentProps, upOp?: UpdateOptions | undefined): void {
         this.config = ObjectUtil.merge(this.config, config);
         upOp = upOp || {reRender: true};
         if (upOp.reRender)
-            this.instance?.setState(this.config);
+            this.instance?.updateConfig(this.config!);
     }
 
 }
