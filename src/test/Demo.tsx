@@ -1,21 +1,54 @@
 import './DemoMain.less';
 import "@amap/amap-jsapi-types";
-// import * as AntdG2Plot from "@antv/g2plot";
-
-export default function Demo() {
-
-    // console.log(AntdG2Plot);
+import {useEffect, useState} from "react";
 
 
-    setTimeout(() => {
-        import("@antv/g2plot").then((AntdG2Plot) => {
-            console.log(AntdG2Plot);
-        })
-    }, 3000);
-
+const A = () => {
+    useEffect(() => {
+        const timer = setInterval(() => {
+            console.log('timer')
+        }, 1000)
+        return () => {
+            console.log('clear')
+            clearInterval(timer)
+        }
+    }, []);
     return (
         <div>
-            test
+            <h1>A</h1>
+        </div>
+    );
+}
+
+
+const compMap: Record<number, any> = {
+    1: A,
+}
+
+const Container = ({id}: any) => {
+    const Comp = compMap[id];
+    if (!Comp)
+        return null
+    return (
+        <div>
+            <Comp/>
+        </div>
+    );
+}
+
+export default function Demo() {
+    const [list, setList] = useState([1]);
+    return (
+        <div>
+            {
+                list.map((item, index) => {
+                    return <Container key={index} id={item}/>
+                })
+            }
+            <button onClick={() => {
+                setList([])
+            }}>Toggle
+            </button>
         </div>
     );
 }
