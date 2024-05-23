@@ -303,7 +303,6 @@ class HistoryRecordOperateProxy {
                 const oldLayer = layerConfigs[oldLayerId];
                 const newLayer = cloneDeep(oldLayer);
                 newLayer.id = IdGenerate.generateId();
-                newLayer.name = newLayer.name + "-副本";
                 newLayer.prev = undefined;
                 newLayer.next = undefined;
                 if (newLayer.type !== 'group') {
