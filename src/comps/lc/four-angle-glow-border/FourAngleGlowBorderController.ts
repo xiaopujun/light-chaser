@@ -5,7 +5,7 @@ import ComponentUtil from "../../../utils/ComponentUtil";
 import ObjectUtil from "../../../utils/ObjectUtil";
 import BPExecutor from "../../../designer/blueprint/core/BPExecutor";
 import FourAngleGlowBorder, {FourAngleGlowBorderRef, FourAngleGlowBorderStyle} from "./FourAngleGlowBorder";
-import {ComponentInfoType} from "../../common-component/common-types";
+import {ComponentInfoType} from "../../common-component/CommonTypes.ts";
 
 export interface FourAngleGlowProps {
     base?: ComponentInfoType;

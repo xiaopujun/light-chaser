@@ -1,5 +1,5 @@
 import React, {ForwardedRef, useImperativeHandle, useRef, useState} from 'react';
-import {ComponentInfoType} from "../../common-component/common-types";
+import {ComponentInfoType} from "../../common-component/CommonTypes.ts";
 
 export interface BaseColorBlockComponentStyle {
     borderRadius?: number;

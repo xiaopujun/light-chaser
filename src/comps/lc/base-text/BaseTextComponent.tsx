@@ -1,5 +1,5 @@
 import {CSSProperties, ForwardedRef, forwardRef, useImperativeHandle, useRef, useState} from 'react';
-import {ComponentBaseProps} from "../../common-component/common-types";
+import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
 import './BaseTextComponent.less';
 
 export interface BaseTextComponentStyle {

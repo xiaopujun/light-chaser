@@ -1,5 +1,5 @@
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
-import {ComponentInfoType} from "../../common-component/common-types";
+import {ComponentInfoType} from "../../common-component/CommonTypes.ts";
 import BaseVideoComponent, {BaseVideoComponentRef, BaseVideoComponentStyle} from "./BaseVideoComponent.tsx";
 import ComponentUtil from "../../../utils/ComponentUtil";
 import {UpdateOptions} from "../../../framework/core/AbstractController";

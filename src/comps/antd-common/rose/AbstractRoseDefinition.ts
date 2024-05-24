@@ -2,7 +2,7 @@ import React from "react";
 import {MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import {ClazzTemplate} from "../../common-component/common-types";
+import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import AntdCommonRoseController, {AntdRoseProps} from "./AntdCommonRoseController";
 import {AntdCommonDefinition} from "../AntdCommonDefinition";
 

@@ -1,7 +1,7 @@
 import {MenuInfo} from "../../designer/right/MenuType";
 import AbstractController from "./AbstractController";
 import React, {ComponentType} from "react";
-import {ClazzTemplate} from "../../comps/common-component/common-types";
+import {ClazzTemplate} from "../../comps/common-component/CommonTypes.ts";
 import AbstractDesignerController from "./AbstractDesignerController";
 
 export type MenuToConfigMappingType = Record<string, React.ComponentType<any>>;

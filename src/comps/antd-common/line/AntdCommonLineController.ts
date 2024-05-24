@@ -1,4 +1,4 @@
-import {ComponentBaseProps} from "../../common-component/common-types";
+import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
 import {WritableLineOptions} from "../types";
 import {Line} from "@antv/g2plot";
 import {UpdateOptions} from "../../../framework/core/AbstractController";

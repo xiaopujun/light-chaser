@@ -1,5 +1,5 @@
 import React, {ForwardedRef, useEffect, useImperativeHandle, useRef, useState} from 'react';
-import {ComponentInfoType} from "../common-component/common-types.ts";
+import {ComponentInfoType} from "../common-component/CommonTypes.ts";
 import "@amap/amap-jsapi-types";
 import "./AMapComponent.less";
 import AMapScaleObserver from "./AMapScaleObserver.ts";

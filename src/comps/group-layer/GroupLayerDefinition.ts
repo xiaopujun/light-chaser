@@ -4,7 +4,7 @@ import {
     BaseInfoType,
     MenuToConfigMappingType
 } from "../../framework/core/AbstractDefinition";
-import {ClazzTemplate} from "../common-component/common-types";
+import {ClazzTemplate} from "../common-component/CommonTypes.ts";
 import {MenuInfo} from "../../designer/right/MenuType";
 import GroupLayerController, {GroupLayerProps} from "./GroupLayerController";
 import AbstractController from "../../framework/core/AbstractController.ts";

@@ -1,4 +1,4 @@
-import {ComponentBaseProps} from "../../common-component/common-types";
+import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
 import * as G2Plot from "@antv/g2plot";
 import {Plot} from "@antv/g2plot";
 import {UpdateOptions} from "../../../framework/core/AbstractController";

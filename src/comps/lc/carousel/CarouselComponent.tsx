@@ -1,5 +1,5 @@
 import React, {ForwardedRef, useImperativeHandle, useRef, useState} from 'react';
-import {ComponentBaseProps} from "../../common-component/common-types";
+import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
 import {Carousel} from "antd";
 import './CarouselComponent.less';
 import defaultData from './carousel.png';

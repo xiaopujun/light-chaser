@@ -4,7 +4,7 @@ import {
     EventInfo,
     MenuToConfigMappingType
 } from "../../../framework/core/AbstractDefinition";
-import {ClazzTemplate} from "../../common-component/common-types";
+import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import baseIframeImg from './base-iframe.png';
 import {BaseIframeController} from "./BaseIframeController";

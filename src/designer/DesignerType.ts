@@ -67,6 +67,16 @@ export interface DataConfigType {
     database?: IDatabase;
 }
 
+export interface IFilerConfigType {
+    enable?: boolean;
+    blur?: number;
+    brightness?: number;
+    contrast?: number;
+    opacity?: number;
+    saturate?: number;
+    hueRotate?: number;
+}
+
 /**
  * 存储类型
  */

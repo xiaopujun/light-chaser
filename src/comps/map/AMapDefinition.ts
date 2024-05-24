@@ -8,7 +8,7 @@ import {
     MenuToConfigMappingType
 } from "../../framework/core/AbstractDefinition.ts";
 import {AMapComponentProps} from "./AMapComponent.tsx";
-import {ClazzTemplate} from "../common-component/common-types.ts";
+import {ClazzTemplate} from "../common-component/CommonTypes.ts";
 import {MenuInfo} from "../../designer/right/MenuType.ts";
 import {getDefaultMenuList} from "../../designer/right/util.ts";
 import React from "react";

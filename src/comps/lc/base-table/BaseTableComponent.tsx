@@ -1,5 +1,5 @@
 import {ForwardedRef, forwardRef, useEffect, useImperativeHandle, useRef, useState} from 'react';
-import {ComponentBaseProps} from "../../common-component/common-types";
+import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
 import './BaseTableComponent.less';
 import {debounce} from "lodash";
 

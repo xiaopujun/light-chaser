@@ -4,7 +4,7 @@ import {
     EventInfo,
     MenuToConfigMappingType
 } from "../../../framework/core/AbstractDefinition";
-import {ClazzTemplate} from "../../common-component/common-types";
+import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import fourAngleGlowBorderImg from './four-angle-glow-border.png';
 import {getDefaultMenuList} from "../../../designer/right/util";

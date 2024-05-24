@@ -2,7 +2,7 @@ import baseWordCloudImg from "./word-cloud.png";
 import {AbstractDefinition, BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import AntdWordCloudController, {AntdWordCloudProps} from "./AntdWordCloudController.ts";
 import {MenuInfo} from "../../../designer/right/MenuType.ts";
-import {ClazzTemplate} from "../../common-component/common-types.ts";
+import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import {getDefaultMenuList} from "../../../designer/right/util.ts";
 import {AntdWordCloudFieldMapping, AntdWordCloudStyle} from "./AntdWordCloudConfig.tsx";
 import React from "react";

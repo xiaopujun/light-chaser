@@ -6,7 +6,7 @@ import {
 } from "../../../framework/core/AbstractDefinition";
 import BaseVideoController, {BaseVideoComponentProps} from "./BaseVideoController.ts";
 import baseVideo from './baseVideo.png';
-import {ClazzTemplate} from "../../common-component/common-types";
+import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
 import {BaseVideoStyleConfig} from "./BaseVideoConfig.tsx";

@@ -1,5 +1,5 @@
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
-import {ComponentInfoType} from "../../common-component/common-types";
+import {ComponentInfoType} from "../../common-component/CommonTypes.ts";
 import BaseImageComponent, {BaseImageComponentStyle} from "./BaseImageComponent";
 import ComponentUtil from "../../../utils/ComponentUtil";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
