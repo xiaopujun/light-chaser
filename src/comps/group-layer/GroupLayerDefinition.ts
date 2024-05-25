@@ -40,7 +40,7 @@ export default class GroupLayerDefinition extends AbstractDefinition<GroupLayerC
         };
     }
 
-    getMenuList(): Array<MenuInfo> | null {
+    getMenuList(): Array<MenuInfo> {
         return [
             {
                 icon: SettingOne,
@@ -50,7 +50,7 @@ export default class GroupLayerDefinition extends AbstractDefinition<GroupLayerC
         ];
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         return {
             base: BaseInfo,
         };

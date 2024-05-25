@@ -67,7 +67,7 @@ export interface DataConfigType {
     database?: IDatabase;
 }
 
-export interface IFilerConfigType {
+export interface IFilterConfigType {
     enable?: boolean;
     blur?: number;
     brightness?: number;

@@ -1,10 +1,10 @@
-import {DataConfigType, IFilerConfigType} from "../../designer/DesignerType";
+import {DataConfigType, IFilterConfigType} from "../../designer/DesignerType";
 
 export interface ComponentBaseProps {
     base?: ComponentInfoType;
     style?: Record<string, any>;
     data?: DataConfigType;
-    filter?: IFilerConfigType;
+    filter?: IFilterConfigType;
 }
 
 export interface ComponentInfoType {

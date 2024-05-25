@@ -22,7 +22,7 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
         return baseAreaImg;
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         const menuToConfigContentMap = super.getMenuToConfigContentMap();
         menuToConfigContentMap!['style'] = AntdBaseAreaStyleConfig;
         menuToConfigContentMap!['mapping'] = AntdBaseAreaFieldMapping;

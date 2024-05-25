@@ -2,14 +2,24 @@ import {ConfigType} from "../../../designer/right/ConfigContent.tsx";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI.tsx";
 import {Control} from "../../../json-schema/SchemaTypes.ts";
 import './FilterConfig.less';
-import {IFilerConfigType} from "../../../designer/DesignerType.ts";
+import {IFilterConfigType} from "../../../designer/DesignerType.ts";
 import {useRef} from "react";
 import ObjectUtil from "../../../utils/ObjectUtil.ts";
 
+const defaultConfig: IFilterConfigType = {
+    enable: false,
+    blur: 0,
+    brightness: 1,
+    contrast: 1,
+    opacity: 1,
+    saturate: 1,
+    hueRotate: 0
+}
+
 export default function FilterConfig(props: ConfigType) {
     const {controller} = props;
-    const config = controller.getConfig().filter as IFilerConfigType;
-    const configRef = useRef(config);
+    const config = controller.getConfig()?.filter as IFilterConfigType;
+    const configRef = useRef(config || defaultConfig);
 
 
     const schema: Control = {

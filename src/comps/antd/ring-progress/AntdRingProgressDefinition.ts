@@ -24,7 +24,7 @@ class AntdRingProgressDefinition extends AntdCommonDefinition<AntdRingProgressCo
         return getDefaultMenuList().filter((menuInfo) => menuInfo.key !== "mapping");
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         return {
             base: BaseInfo,
             data: DataConfig,

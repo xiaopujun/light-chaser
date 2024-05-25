@@ -24,7 +24,7 @@ abstract class AbstractBarDefinition extends AntdCommonDefinition<AntdCommonBarC
         return getDefaultMenuList();
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         return {
             base: BaseInfo,
             data: DataConfig,

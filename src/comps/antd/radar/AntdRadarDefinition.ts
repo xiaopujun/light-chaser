@@ -24,7 +24,7 @@ class AntdRadarDefinition extends AntdCommonDefinition<AntdRadarController, Antd
         return getDefaultMenuList();
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         return {
             base: BaseInfo,
             data: DataConfig,

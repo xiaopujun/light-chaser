@@ -24,7 +24,7 @@ class AntdBaseRadialBarDefinition extends AntdCommonDefinition<AntdBaseRadialBar
         return getDefaultMenuList();
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         return {
             base: BaseInfo,
             data: DataConfig,

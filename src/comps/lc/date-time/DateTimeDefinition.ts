@@ -1,25 +1,13 @@
-import {
-    AbstractDefinition,
-    BaseInfoType,
-    EventInfo,
-    MenuToConfigMappingType
-} from "../../../framework/core/AbstractDefinition";
+import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import DateTimeImg from './date-time.png';
-import {getDefaultMenuList} from "../../../designer/right/util";
 import {DateTimeController} from "./DateTimeController.ts";
 import {DateTimeComponentProps, FormatType} from "./DateTimeComponent.tsx";
 import {DateTimeConfig} from "./DateTimeConfig.tsx";
-import React from "react";
+import AbstractDesignerDefinition from "../../../framework/core/AbstractDesignerDefinition.ts";
 
-const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
-const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig.tsx"));
-const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig.tsx"));
-const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig.tsx"));
-
-
-export default class DateTimeDefinition extends AbstractDefinition<DateTimeController, DateTimeComponentProps> {
+export default class DateTimeDefinition extends AbstractDesignerDefinition<DateTimeController, DateTimeComponentProps> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "当前时间",
@@ -56,21 +44,26 @@ export default class DateTimeDefinition extends AbstractDefinition<DateTimeContr
                 letterSpacing: '1',
                 formatType: FormatType.CN
             },
+            filter: {
+                enable: false,
+                blur: 0,
+                brightness: 1,
+                contrast: 1,
+                opacity: 1,
+                saturate: 1,
+                hueRotate: 0
+            },
         };
     }
 
-    getMenuList(): Array<MenuInfo> | null {
-        return getDefaultMenuList().filter((item: MenuInfo) => (item.key !== 'theme' && item.key !== 'mapping' && item.key !== 'data'));
+    getMenuList(): Array<MenuInfo> {
+        return super.getMenuList().filter((item: MenuInfo) => (item.key !== 'theme' && item.key !== 'data'));
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
-        return {
-            base: BaseInfo,
-            style: DateTimeConfig,
-            animation: AnimationConfig,
-            data: DataConfig,
-            theme: ThemeConfig
-        };
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
+        const menuMapping = super.getMenuToConfigContentMap();
+        menuMapping['style'] = DateTimeConfig;
+        return menuMapping;
     }
 
 

@@ -1,21 +1,17 @@
-import {
-    AbstractDefinition,
-    BaseInfoType,
-    EventInfo,
-    MenuToConfigMappingType
-} from "../../../framework/core/AbstractDefinition";
+import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import BaseImageController, {BaseImageComponentProps} from "./BaseImageController";
 import baseImage from './baseImage.png';
 import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import {MenuInfo} from "../../../designer/right/MenuType";
-import {getDefaultMenuList} from "../../../designer/right/util";
 import {BaseImageStyleConfig} from "./BaseImageConfig";
 import React from "react";
+import AbstractDesignerDefinition from "../../../framework/core/AbstractDesignerDefinition.ts";
 
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
+const FilterConfig = React.lazy(() => import("../../common-component/filter-config/FilterConfig.tsx"));
 
 
-export default class BaseImageDefinition extends AbstractDefinition<BaseImageController, BaseImageComponentProps> {
+export default class BaseImageDefinition extends AbstractDesignerDefinition<BaseImageController, BaseImageComponentProps> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "基础图片",
@@ -45,17 +41,27 @@ export default class BaseImageDefinition extends AbstractDefinition<BaseImageCon
                 onLineUrl: '',
                 opacity: 1,
             },
+            filter: {
+                enable: false,
+                blur: 0,
+                brightness: 1,
+                contrast: 1,
+                opacity: 1,
+                saturate: 1,
+                hueRotate: 0
+            },
         };
     }
 
-    getMenuList(): Array<MenuInfo> | null {
-        return getDefaultMenuList().filter((item: MenuInfo) => (item.key !== 'theme' && item.key !== 'data' && item.key !== 'mapping'));
+    getMenuList(): Array<MenuInfo> {
+        return super.getMenuList().filter((item: MenuInfo) => (item.key !== 'theme' && item.key !== 'data'));
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         return {
             base: BaseInfo,
             style: BaseImageStyleConfig,
+            filter: FilterConfig
         };
     }
 

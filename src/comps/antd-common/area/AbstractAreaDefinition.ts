@@ -25,7 +25,7 @@ abstract class AbstractAreaDefinition extends AntdCommonDefinition<AntdCommonAre
         return getDefaultMenuList();
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         return {
             base: BaseInfo,
             data: DataConfig,

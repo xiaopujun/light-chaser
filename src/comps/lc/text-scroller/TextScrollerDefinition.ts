@@ -1,25 +1,14 @@
-import {
-    AbstractDefinition,
-    BaseInfoType,
-    EventInfo,
-    MenuToConfigMappingType
-} from "../../../framework/core/AbstractDefinition";
+import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import textScrollerImg from './text-scroller.png';
-import {getDefaultMenuList} from "../../../designer/right/util";
 import {TextScrollerController} from "./TextScrollerController.ts";
 import {TextScrollerComponentProps} from "./TextScrollerComponent.tsx";
 import {TextScrollerConfig} from "./TextScrollerConfig.tsx";
-import React from "react";
-
-const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
-const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig.tsx"));
-const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig.tsx"));
-const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig.tsx"));
+import AbstractDesignerDefinition from "../../../framework/core/AbstractDesignerDefinition.ts";
 
 
-export default class TextScrollerDefinition extends AbstractDefinition<TextScrollerController, TextScrollerComponentProps> {
+export default class TextScrollerDefinition extends AbstractDesignerDefinition<TextScrollerController, TextScrollerComponentProps> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "文字弹幕",
@@ -53,6 +42,15 @@ export default class TextScrollerDefinition extends AbstractDefinition<TextScrol
                 color: '#fff',
                 fontFamily: 'Arial',
             },
+            filter: {
+                enable: false,
+                blur: 0,
+                brightness: 1,
+                contrast: 1,
+                opacity: 1,
+                saturate: 1,
+                hueRotate: 0
+            },
             data: {
                 sourceType: 'static',
                 staticData: '文字弹幕'
@@ -60,18 +58,14 @@ export default class TextScrollerDefinition extends AbstractDefinition<TextScrol
         };
     }
 
-    getMenuList(): Array<MenuInfo> | null {
-        return getDefaultMenuList().filter((item: MenuInfo) => (item.key !== 'theme' && item.key !== 'mapping'));
+    getMenuList(): Array<MenuInfo> {
+        return super.getMenuList().filter((item: MenuInfo) => (item.key !== 'theme'));
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
-        return {
-            base: BaseInfo,
-            style: TextScrollerConfig,
-            animation: AnimationConfig,
-            data: DataConfig,
-            theme: ThemeConfig
-        };
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
+        const menuMapping = super.getMenuToConfigContentMap();
+        menuMapping['style'] = TextScrollerConfig;
+        return menuMapping;
     }
 
 

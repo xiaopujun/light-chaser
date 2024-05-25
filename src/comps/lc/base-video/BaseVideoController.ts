@@ -4,12 +4,13 @@ import BaseVideoComponent, {BaseVideoComponentRef, BaseVideoComponentStyle} from
 import ComponentUtil from "../../../utils/ComponentUtil";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import ObjectUtil from "../../../utils/ObjectUtil";
-import {ThemeItemType} from "../../../designer/DesignerType";
+import {IFilterConfigType, ThemeItemType} from "../../../designer/DesignerType";
 import BPExecutor from "../../../designer/blueprint/core/BPExecutor";
 
 export interface BaseVideoComponentProps {
     base?: ComponentInfoType;
     style?: BaseVideoComponentStyle;
+    filter?: IFilterConfigType;
 }
 
 

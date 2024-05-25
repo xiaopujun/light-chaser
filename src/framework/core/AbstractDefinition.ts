@@ -93,12 +93,12 @@ export abstract class AbstractDefinition<C extends AbstractController = Abstract
     /**
      * 返回右侧配置菜单列表，双击组件时需要展示该菜单列表
      */
-    abstract getMenuList(): Array<MenuInfo> | null;
+    abstract getMenuList(): Array<MenuInfo>;
 
     /**
      * 返回右侧菜单与对应配置内容组件的映射关系
      */
-    abstract getMenuToConfigContentMap(): MenuToConfigMappingType | null;
+    abstract getMenuToConfigContentMap(): MenuToConfigMappingType;
 
     /**
      * 返回当前组件能触发的事件列表, 在蓝图图层节点中使用

@@ -1,4 +1,4 @@
-import {ThemeItemType} from "../../../designer/DesignerType";
+import {IFilterConfigType, ThemeItemType} from "../../../designer/DesignerType";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
 import ComponentUtil from "../../../utils/ComponentUtil";
@@ -10,6 +10,7 @@ import {ComponentInfoType} from "../../common-component/CommonTypes.ts";
 export interface FourAngleGlowProps {
     base?: ComponentInfoType;
     style?: FourAngleGlowBorderStyle;
+    filter?: IFilterConfigType;
 }
 
 export class FourAngleGlowBorderController extends AbstractDesignerController<FourAngleGlowBorderRef, FourAngleGlowProps> {

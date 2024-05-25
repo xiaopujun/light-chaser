@@ -37,7 +37,7 @@ class G2PlotCustomDefinition extends AntdCommonDefinition<G2PlotCustomController
         ];
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         return {
             base: BaseInfo,
             data: DataConfig,

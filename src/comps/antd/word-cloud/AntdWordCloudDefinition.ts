@@ -1,19 +1,13 @@
 import baseWordCloudImg from "./word-cloud.png";
-import {AbstractDefinition, BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
+import {BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import AntdWordCloudController, {AntdWordCloudProps} from "./AntdWordCloudController.ts";
 import {MenuInfo} from "../../../designer/right/MenuType.ts";
 import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
-import {getDefaultMenuList} from "../../../designer/right/util.ts";
 import {AntdWordCloudFieldMapping, AntdWordCloudStyle} from "./AntdWordCloudConfig.tsx";
-import React from "react";
+import AbstractDesignerDefinition from "../../../framework/core/AbstractDesignerDefinition.ts";
+import {Deeplink} from "@icon-park/react";
 
-const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
-const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig.tsx"));
-const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig.tsx"));
-const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig.tsx"));
-
-
-class AntdWordCloudDefinition extends AbstractDefinition<AntdWordCloudController, AntdWordCloudProps> {
+class AntdWordCloudDefinition extends AbstractDesignerDefinition<AntdWordCloudController, AntdWordCloudProps> {
 
     getBaseInfo(): BaseInfoType {
         return {
@@ -28,23 +22,25 @@ class AntdWordCloudDefinition extends AbstractDefinition<AntdWordCloudController
         return AntdWordCloudController
     }
 
-    getMenuList(): MenuInfo[] | null {
-        return getDefaultMenuList();
+    getMenuList(): MenuInfo[] {
+        const menus = super.getMenuList();
+        menus.splice(3, 0, {
+            icon: Deeplink,
+            name: '映射',
+            key: 'mapping',
+        })
+        return menus;
     }
 
     getChartImg(): string {
         return baseWordCloudImg;
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
-        return {
-            base: BaseInfo,
-            data: DataConfig,
-            style: AntdWordCloudStyle,
-            animation: AnimationConfig,
-            theme: ThemeConfig,
-            mapping: AntdWordCloudFieldMapping
-        };
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
+        const menuMapping = super.getMenuToConfigContentMap();
+        menuMapping['style'] = AntdWordCloudStyle;
+        menuMapping['mapping'] = AntdWordCloudFieldMapping;
+        return menuMapping;
     }
 
     getInitConfig(): AntdWordCloudProps {
@@ -138,6 +134,15 @@ class AntdWordCloudDefinition extends AbstractDefinition<AntdWordCloudController
                     rotation: 0,
                     padding: 1,
                 },
+            },
+            filter: {
+                enable: false,
+                blur: 0,
+                brightness: 1,
+                contrast: 1,
+                opacity: 1,
+                saturate: 1,
+                hueRotate: 0
             },
             data: {
                 sourceType: 'static',

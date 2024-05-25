@@ -4,12 +4,13 @@ import BaseImageComponent, {BaseImageComponentStyle} from "./BaseImageComponent"
 import ComponentUtil from "../../../utils/ComponentUtil";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import ObjectUtil from "../../../utils/ObjectUtil";
-import {ThemeItemType} from "../../../designer/DesignerType";
+import {IFilterConfigType, ThemeItemType} from "../../../designer/DesignerType";
 import BPExecutor from "../../../designer/blueprint/core/BPExecutor";
 
 export interface BaseImageComponentProps {
     base?: ComponentInfoType;
     style?: BaseImageComponentStyle;
+    filter?: IFilterConfigType;
 }
 
 
@@ -41,7 +42,7 @@ export default class BaseImageController extends AbstractDesignerController<Base
     updateTheme(newTheme: ThemeItemType): void {
 
     }
-    
+
     registerEvent() {
         if (this.instance) {
             const nodeId = this.config?.base?.id!;

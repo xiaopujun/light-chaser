@@ -5,6 +5,7 @@ import "./AMapComponent.less";
 import AMapScaleObserver from "./AMapScaleObserver.ts";
 import {globalMessage} from "../../framework/message/GlobalMessage.tsx";
 import mapLoader from "./MapLoader.ts";
+import {IFilterConfigType} from "../../designer/DesignerType.ts";
 
 export interface AMapComponentStyle {
     key?: string;
@@ -15,6 +16,7 @@ export interface AMapComponentStyle {
 export interface AMapComponentProps {
     base?: ComponentInfoType;
     style?: AMapComponentStyle;
+    filter?: IFilterConfigType;
 }
 
 export interface AMapComponentRef {
