@@ -1,27 +1,13 @@
 import './DemoMain.less';
 import "@amap/amap-jsapi-types";
-import ContextMenu, {IContextMenuItem} from "../framework/context-menu/ContextMenu.tsx";
-import {Add, Close} from "@icon-park/react";
+import ProjectItem from "../pages/home/project-list/ProjectItem.tsx";
 
 
 export default function Demo() {
-    const menus: IContextMenuItem[] = [
-        {
-            name: '菜单1',
-            icon: Close,
-            onClick: () => {
-                console.log('菜单1');
-            }
-        },
-        {
-            name: '菜单2',
-            icon: Add,
-            onClick: () => {
-                console.log('菜单2');
-            }
-        }
-    ];
+
     return (
-        <ContextMenu menus={menus} visible={true} position={[20, 100]}/>
+        <ProjectItem id={'22'} name={'使得开发商积分'} doOperate={(id: string, type: string) => {
+        }}
+                     cover={'blob:http://localhost:5173/9fdc377b-540b-4fa2-a9fd-8d33b6b5735b'}/>
     );
 }

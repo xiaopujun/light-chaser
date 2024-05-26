@@ -1,15 +1,16 @@
 import React, {memo, useEffect, useRef} from 'react';
 import './ProjectList.less';
-import {Card, Pagination} from "antd";
+import {Pagination} from "antd";
 import defaultSnapshot from '../image/default-snapshot.jpg';
 import {DesignerMode, IPage, IProjectInfo, SaveType} from "../../../designer/DesignerType";
-import {AddNewProjectDialog, INewProjectInfo} from "./AddNewProjectDialog";
+import {INewProjectInfo, NewProjectDialog} from "./NewProjectDialog.tsx";
 import Button from "../../../json-schema/ui/button/Button";
-import Dialog from "../../../json-schema/ui/dialog/Dialog";
 import operatorMap from "../../../framework/operate";
 import {globalMessage} from "../../../framework/message/GlobalMessage";
 import Input from "../../../json-schema/ui/input/Input.tsx";
-import {Copy, Delete, Edit, PreviewOpen} from "@icon-park/react";
+import DelProjectDialog from "./DelProjectDialog.tsx";
+import CloneProjectDialog from "./CloneProjectDialog.tsx";
+import ProjectItem from "./ProjectItem.tsx";
 
 export interface ProjectListProps {
     saveType: SaveType;
@@ -142,34 +143,17 @@ export const ProjectList = memo((props: ProjectListProps) => {
             <div className={'project-list'}>
                 {pageData && pageData.records.map((item: IProjectInfo, index) => {
                     return (
-                        <div key={index} className={'project-item'}>
-                            <Card style={{padding: 2}} cover={<div className={'project-cover'}
-                                                                   style={{backgroundImage: `url(${item.cover || defaultSnapshot})`}}>
-                                <div className={'project-info'}>
-                                    {item.name}
-                                </div>
-                            </div>}
-                                  bodyStyle={{padding: 0}}
-                                  bordered={true}
-                                  hoverable={true}
-                                  size={'small'}
-                                  actions={[
-                                      <Edit key={'edit'} onClick={() => operateHandler(item.id!, "edit")}/>,
-                                      <PreviewOpen key={'show'} onClick={() => operateHandler(item.id!, "show")}/>,
-                                      <Delete key={'del'} onClick={() => operateHandler(item.id!, "del")}/>,
-                                      <Copy key={'clone'} onClick={() => operateHandler(item.id!, "clone")}/>,
-                                  ]}>
-                            </Card>
-                        </div>
+                        <ProjectItem key={item.id} id={item.id!} name={item.name!} cover={item.cover || defaultSnapshot}
+                                     doOperate={operateHandler}/>
                     )
                 })}
             </div>
             <Pagination rootClassName={'project-list-page'} defaultCurrent={pageData?.current}
                         pageSize={pageData?.size} total={pageData?.total} onChange={pageChange}/>
-            <AddNewProjectDialog onOk={onOk} onCancel={onCancel} visible={addDialog}/>
-            <DeleteDialog visible={delDialog} onOk={confirmDel} onCancel={cancelDel}/>
-            <CloneDialog onOk={() => confirmClone()} onCancel={cancelClone}
-                         visible={cloneDialog}/>
+            <NewProjectDialog onOk={onOk} onCancel={onCancel} visible={addDialog}/>
+            <DelProjectDialog visible={delDialog} onOk={confirmDel} onCancel={cancelDel}/>
+            <CloneProjectDialog onOk={() => confirmClone()} onCancel={cancelClone}
+                                visible={cloneDialog}/>
         </div>
     );
 })
@@ -177,60 +161,3 @@ export const ProjectList = memo((props: ProjectListProps) => {
 export default ProjectList;
 
 
-interface DelDialogProps {
-    onOk: () => void;
-    onCancel: () => void;
-    visible: boolean;
-}
-
-const DeleteDialog = memo((props: DelDialogProps) => {
-
-    const {onOk, onCancel, visible} = props;
-
-    return (
-        <Dialog title={'删除确认'} visible={visible} onClose={onCancel}>
-            <div style={{color: '#aeaeae', padding: 10}}>确定要删除该项目吗？</div>
-            <div className={'del-pro-confirm'} style={{
-                display: 'flex',
-                justifyContent: 'flex-end',
-                borderTop: '2px solid #272b34',
-                paddingTop: 5
-            }}>
-                <Button onClick={onOk}>确认</Button>&nbsp;&nbsp;
-                <Button onClick={onCancel}>取消</Button>
-            </div>
-        </Dialog>
-    )
-})
-
-interface CloneDialogProps {
-    onOk: () => void;
-    onCancel: () => void;
-    visible: boolean;
-}
-
-const CloneDialog = (props: CloneDialogProps) => {
-
-    const {onOk, onCancel, visible} = props;
-
-
-    const onClick = (event: React.MouseEvent): void => {
-        event.preventDefault();
-        onOk();
-    }
-
-    return (
-        <Dialog title={'克隆项目'} visible={visible} onClose={onCancel}>
-            <div style={{color: '#a7a7a7', padding: 10}}>确认复制吗？</div>
-            <div className={'del-pro-confirm'} style={{
-                display: 'flex',
-                justifyContent: 'flex-end',
-                borderTop: '2px solid #272b34',
-                paddingTop: 10
-            }}>
-                <Button onClick={onClick}>确认</Button> &nbsp;&nbsp;
-                <Button onClick={onCancel}>取消</Button>
-            </div>
-        </Dialog>
-    )
-}

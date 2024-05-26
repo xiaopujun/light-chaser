@@ -1,5 +1,5 @@
 import React, {FormEvent} from 'react';
-import './AddNewScreenDialog.less';
+import './NewProjectDialog.less';
 import Dialog from "../../../json-schema/ui/dialog/Dialog";
 import Button from "../../../json-schema/ui/button/Button";
 import {Grid} from "../../../json-schema/ui/grid/Grid";
@@ -19,7 +19,7 @@ interface AddNewScreenDialogProps {
     visible?: boolean;
 }
 
-export const AddNewProjectDialog: React.FC<AddNewScreenDialogProps> = (props) => {
+export const NewProjectDialog: React.FC<AddNewScreenDialogProps> = (props) => {
 
     const projectInfo: INewProjectInfo = {
         name: '未命名项目',
@@ -69,4 +69,4 @@ export const AddNewProjectDialog: React.FC<AddNewScreenDialogProps> = (props) =>
     );
 }
 
-export default AddNewProjectDialog;
+export default NewProjectDialog;

@@ -22,41 +22,10 @@
   .project-list {
     padding: 13px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-    max-height: calc(100% - 135px);
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     overflow-y: scroll;
     grid-gap: 25px;
 
-    .project-item {
-
-      .project-cover {
-        aspect-ratio: 16/9;
-        background-position: center;
-        background-size: cover;
-        position: relative;
-        border: 2px solid #282c34;
-
-        .project-info {
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          padding: 0 10px;
-          width: calc(100% - 20px);
-          height: 40px;
-          line-height: 40px;
-          box-sizing: content-box;
-          background-color: rgba(43, 43, 43, 0.57);
-          backdrop-filter: blur(5px);
-          position: absolute;
-          bottom: 0;
-          color: #bcbcbc;
-        }
-      }
-
-      .ant-card-actions > li {
-        margin: 3px 0 !important;
-      }
-    }
   }
 
   .project-list-page {
