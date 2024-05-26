@@ -1,6 +1,5 @@
 import {observer} from "mobx-react";
-import contextMenuStore from "./ContextMenuStore";
-import './OperateMenu.less';
+import contextMenuStore from "./CanvasContextMenuStore.ts";
 import {
     doCopy,
     doDelete,
@@ -32,9 +31,10 @@ import {
     Unlock,
     Up
 } from "@icon-park/react";
+import ContextMenu from "../../../framework/context-menu/ContextMenu.tsx";
 
 
-const menuList = [
+const defaultDesignerMenus = [
     {
         name: '复制',
         icon: CopyOne,
@@ -72,12 +72,13 @@ const menuList = [
     },
 ];
 
-const ContextMenu = () => {
+const CanvasContextMenu = () => {
 
     const calculateMenus = () => {
-        const menus = [...menuList];
+        const menus = [...defaultDesignerMenus];
         const {targetIds} = eventOperateStore;
-        if (targetIds.length === 0) return menus;
+        if (targetIds.length === 0)
+            return menus;
         const {layerConfigs} = layerManager;
         const lockState = !!layerConfigs[targetIds[0]]?.lock;
         if (lockState) {
@@ -120,60 +121,12 @@ const ContextMenu = () => {
         return menus;
     }
 
-    const buildMenuList = () => {
-        const menuListDom = [];
-        const menus = calculateMenus();
-        for (let i = 0; i < menus.length; i++) {
-            const menuItem = menus[i];
-            const Icon = menuItem.icon;
-            menuListDom.push(
-                <div key={i + ''} className={'menu-item'} onClick={menuItem.onClick}>
-                    <label><Icon/></label>
-                    <span>{menuItem.name}</span>
-                </div>
-            )
-        }
-        return menuListDom;
-    }
+    const {visible, position} = contextMenuStore;
+    const menus = calculateMenus();
 
-    /**
-     * 计算菜单位置
-     */
-    const calculatePosition = (offsetW: number, offsetY: number) => {
-        const [clientX, clientY] = contextMenuStore.position;
-        const {innerWidth, innerHeight} = window;
-        let left = clientX;
-        let top = clientY;
-        if (clientX + offsetW > innerWidth)
-            left = innerWidth - offsetW;
-        if (clientY + offsetY > innerHeight)
-            top = innerHeight - offsetY;
-        return [left, top];
-    }
-
-    //todo 位置计算应需寻找更加合适优雅的方式
-    const calculateMenuSize = (menuCount: number) => {
-        const menuHeight = 33;
-        return [130, menuCount * menuHeight];
-    }
-
-    const {visible} = contextMenuStore;
-    const menus = buildMenuList();
-    const [offsetW, offsetH] = calculateMenuSize(menus.length);
-    const position = calculatePosition(offsetW, offsetH);
     return (
-        <>
-            {visible &&
-                <div className={'context-menu'} style={{
-                    position: 'fixed',
-                    top: position[1],
-                    left: position[0]
-                }}>
-                    {buildMenuList()}
-                </div>}
-        </>
+        <ContextMenu menus={menus} visible={visible} position={position}/>
     );
-
 }
 
-export default observer(ContextMenu);
+export default observer(CanvasContextMenu);

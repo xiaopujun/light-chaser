@@ -3,7 +3,7 @@ import './style/DesignerGlobalStyle.less';
 import DesignerLeft from "./left/DesignerLeft";
 import DesignerRight from "./right/DesignerRight";
 import DesignerFooter from "./footer/DesignerFooter";
-import contextMenuStore from "./operate-provider/right-click-menu/ContextMenuStore";
+import contextMenuStore from "./operate-provider/canvas-context-menu/CanvasContextMenuStore.ts";
 import eventOperateStore from "./operate-provider/EventOperateStore";
 import DesignerHeader from "./header/DesignerHeader";
 import DesignerCanvas from "./canvas/DesignerCanvas";
