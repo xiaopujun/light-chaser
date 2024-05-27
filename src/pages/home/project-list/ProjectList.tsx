@@ -144,6 +144,7 @@ export const ProjectList = memo((props: ProjectListProps) => {
                 {pageData && pageData.records.map((item: IProjectInfo, index) => {
                     return (
                         <ProjectItem key={item.id} id={item.id!} name={item.name!} cover={item.cover || defaultSnapshot}
+                                     saveType={saveType}
                                      doOperate={operateHandler}/>
                     )
                 })}

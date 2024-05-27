@@ -1,13 +1,14 @@
 .project-list-item {
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 8px;
-  padding: 10px;
-  font-size: 12px;
   color: #9a9a9a;
-  cursor: pointer;
   transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 
   .project-item-cover {
+    margin: 10px 10px 0;
     aspect-ratio: 16/9;
     position: relative;
     background-size: 100% 100%;
@@ -32,6 +33,7 @@
 
       .operate-icon:hover {
         color: #2079ff;
+        cursor: pointer;
       }
     }
 
@@ -43,8 +45,44 @@
   }
 
   .project-item-content {
-    padding: 10px 0 0;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s;
+    padding: 0 10px;
+
+    .project-name {
+
+      .project-rename-input {
+        padding: 5px 0 5px;
+      }
+
+      .project-name-content {
+        padding: 10px 0;
+      }
+    }
+
+    .rename-icon {
+      opacity: 0;
+      cursor: pointer;
+      position: relative;
+      top: 1px;
+    }
+
+    .rename-icon:hover {
+      color: #2079ff;
+    }
+
+
   }
+
+  .project-item-content:hover {
+
+    .rename-icon {
+      opacity: 1;
+    }
+  }
+
+
 }
 
 .project-list-item:hover {

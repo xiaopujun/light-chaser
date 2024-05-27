@@ -1,4 +1,4 @@
-import {ChangeEvent, KeyboardEvent} from 'react';
+import {ChangeEvent, FocusEvent, KeyboardEvent} from 'react';
 import './Input.less';
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
 
@@ -14,12 +14,13 @@ export interface InputProps extends UIContainerProps {
     disabled?: boolean;
     autoFocus?: boolean;
     onChange?: (data: string) => void;
+    onBlur?: (event: FocusEvent) => void;
     onKeyDown?: (event: KeyboardEvent) => void;
 }
 
 export default function Input(props: InputProps) {
     const {
-        value, defaultValue, prefix, suffix, type, placeholder, autoFocus,
+        value, defaultValue, prefix, suffix, type, placeholder, autoFocus, onBlur,
         minLength, maxLength, disabled, onChange, onKeyDown,
         ...containerProps
     } = props;
@@ -39,6 +40,7 @@ export default function Input(props: InputProps) {
                            maxLength={maxLength}
                            disabled={disabled}
                            placeholder={placeholder}
+                           onBlur={onBlur}
                            autoFocus={autoFocus}
                            type={type}
                            className={'lc-input'}
