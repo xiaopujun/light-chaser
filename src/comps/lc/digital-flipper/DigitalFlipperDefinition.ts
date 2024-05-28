@@ -1,24 +1,13 @@
-import {
-    AbstractDefinition,
-    BaseInfoType,
-    EventInfo,
-    MenuToConfigMappingType
-} from "../../../framework/core/AbstractDefinition";
-import {ClazzTemplate} from "../../common-component/common-types";
+import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
+import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import digitalFlipperImg from './digital-flipper.png';
-import {getDefaultMenuList} from "../../../designer/right/util";
 import {DigitalFlipperController} from "./DigitalFlipperController";
 import {DigitalFlipperConfig} from "./DigitalFlipperConfig";
 import {DigitalFlipperComponentProps} from "./DigitalFlipperComponent";
-import React from "react";
+import AbstractDesignerDefinition from "../../../framework/core/AbstractDesignerDefinition.ts";
 
-const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
-const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig.tsx"));
-const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig.tsx"));
-
-
-export default class DigitalFlipperDefinition extends AbstractDefinition<DigitalFlipperController, DigitalFlipperComponentProps> {
+export default class DigitalFlipperDefinition extends AbstractDesignerDefinition<DigitalFlipperController, DigitalFlipperComponentProps> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "数字翻牌器",
@@ -53,6 +42,15 @@ export default class DigitalFlipperDefinition extends AbstractDefinition<Digital
                 justifyContent: 'center',
                 alignItems: 'center'
             },
+            filter: {
+                enable: false,
+                blur: 0,
+                brightness: 1,
+                contrast: 1,
+                opacity: 1,
+                saturate: 1,
+                hueRotate: 0
+            },
             data: {
                 sourceType: 'static',
                 staticData: 123456789
@@ -60,17 +58,14 @@ export default class DigitalFlipperDefinition extends AbstractDefinition<Digital
         };
     }
 
-    getMenuList(): Array<MenuInfo> | null {
-        return getDefaultMenuList().filter((item: MenuInfo) => (item.key !== 'theme' && item.key !== 'mapping'));
+    getMenuList(): Array<MenuInfo> {
+        return super.getMenuList().filter((item: MenuInfo) => (item.key !== 'theme'));
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
-        return {
-            base: BaseInfo,
-            style: DigitalFlipperConfig,
-            data: DataConfig,
-            theme: ThemeConfig
-        };
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
+        const menuMapping = super.getMenuToConfigContentMap();
+        menuMapping['style'] = DigitalFlipperConfig;
+        return menuMapping;
     }
 
 

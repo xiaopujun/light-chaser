@@ -1,4 +1,4 @@
-import {ComponentBaseProps} from "../../common-component/common-types";
+import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
 import {WritableAreaOptions} from "../types";
 import {Area} from "@antv/g2plot";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
@@ -13,7 +13,7 @@ export interface AntdAreaProps extends ComponentBaseProps {
 export default class AntdCommonAreaController extends AntdBaseDesignerController<Area, AntdAreaProps> {
 
     async create(container: HTMLElement, config: AntdAreaProps): Promise<void> {
-        await super.commonCreate(container, Area, config);
+        super.commonCreate(container, Area, config);
     }
 
     destroy(): void {

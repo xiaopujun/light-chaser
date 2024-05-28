@@ -1,22 +1,18 @@
-import {
-    AbstractDefinition,
-    BaseInfoType,
-    EventInfo,
-    MenuToConfigMappingType
-} from "../../../framework/core/AbstractDefinition";
-import {ClazzTemplate} from "../../common-component/common-types";
+import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
+import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import baseIframeImg from './base-iframe.png';
 import {BaseIframeController} from "./BaseIframeController";
 import {BaseIframeComponentProps} from "./BaseIframeComponent";
 import {BaseIframeStyleConfig} from "./BaseIframeConfig";
-import {getDefaultMenuList} from "../../../designer/right/util.ts";
 import React from "react";
+import AbstractDesignerDefinition from "../../../framework/core/AbstractDesignerDefinition.ts";
 
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
+const FilterConfig = React.lazy(() => import("../../common-component/filter-config/FilterConfig.tsx"));
 
 
-export default class BaseIframeDefinition extends AbstractDefinition<BaseIframeController, BaseIframeComponentProps> {
+export default class BaseIframeDefinition extends AbstractDesignerDefinition<BaseIframeController, BaseIframeComponentProps> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "基础iframe",
@@ -46,14 +42,15 @@ export default class BaseIframeDefinition extends AbstractDefinition<BaseIframeC
         };
     }
 
-    getMenuList(): Array<MenuInfo> | null {
-        return getDefaultMenuList().filter((menu) => menu.key !== 'mapping' && menu.key !== 'data' && menu.key !== 'theme');
+    getMenuList(): Array<MenuInfo> {
+        return super.getMenuList().filter((menu) => menu.key !== 'data' && menu.key !== 'theme');
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         return {
             base: BaseInfo,
             style: BaseIframeStyleConfig,
+            filter: FilterConfig
         };
     }
 
@@ -62,7 +59,7 @@ export default class BaseIframeDefinition extends AbstractDefinition<BaseIframeC
         return events.concat([
             {
                 id: "load",
-                name: "ifram加载完成时",
+                name: "iframe加载完成时",
             }
         ]);
     }

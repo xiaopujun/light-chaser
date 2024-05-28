@@ -13,7 +13,7 @@ import SearchLayer from "../left/layer-list/search-layer/SearchLayer.tsx";
 const DesignerContainer = lazy(() => import('../operate-provider/DesignerContainer'));
 const DesignerRuler = lazy(() => import('./DesignerRuler'));
 const GroupSelectable = lazy(() => import('../operate-provider/movable/DesignerSelectable'));
-const ContextMenu = lazy(() => import('../operate-provider/right-click-menu/ContextMenu'));
+const ContextMenu = lazy(() => import('../operate-provider/canvas-context-menu/CanvasContextMenu.tsx'));
 const HotKey = lazy(() => import('../operate-provider/hot-key/HotKey'));
 const DesignerDragScaleContainer = lazy(() => import('./DesignerDragScaleContainer'));
 

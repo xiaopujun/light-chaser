@@ -8,11 +8,20 @@ import {globalMessage} from "../message/GlobalMessage";
 import FileUtil from "../../utils/FileUtil";
 import imageSourceCache from "../cache/ImageSourceCache";
 import AbstractConvert from "../convert/AbstractConvert";
-import DesignerLoaderFactory from "../../designer/loader/DesignerLoaderFactory";
 import URLUtil from "../../utils/URLUtil";
 import {IImageData} from "../../comps/lc/base-image/BaseImageComponent";
 import localCoverCache from "../cache/LocalCoverCache";
 import {COVER_PREFIX, IMAGE_SOURCE_PREFIX, LIGHT_CHASER_PROJECT_LIST} from "../../global/GlobalConstants";
+
+
+/**
+ * 使用动态导入的方式，避免资源的过度加载---由于首页也会需要用到本类的api。但是首页不需要加载设计器相关资源，因此不应该导入DesignerLoaderFactory的内容，仅在需要加载时加载。因此使用动态导入的方式
+ * @param mode
+ */
+const loadDesignerLoader = async (mode: DesignerMode) => {
+    const module = await import('../../designer/loader/DesignerLoaderFactory');
+    return module.default;
+}
 
 /**
  * 本地项目数据操作实现
@@ -91,14 +100,17 @@ class LocalOperator extends AbstractOperator {
             //特殊配置数据转换
             if (elemConfigs) {
                 const mode: DesignerMode = URLUtil.parseUrlParams()?.mode as DesignerMode || DesignerMode.EDIT;
-                const {convertMap} = DesignerLoaderFactory.getLoader(mode);
-                for (const item of Object.values(elemConfigs!)) {
-                    const {type} = item?.base;
-                    if (type && convertMap[type]) {
-                        const convert = convertMap[type] as AbstractConvert;
-                        await convert.convertBack(item);
+                //避免es-module的模块直接导入，首页位置无需导入DesignerLoaderFactory。因此采用动态导入的方式
+                loadDesignerLoader(mode).then(async (loader) => {
+                    const {convertMap} = loader.getLoader(mode);
+                    for (const item of Object.values(elemConfigs!)) {
+                        const {type} = item?.base;
+                        if (type && convertMap[type]) {
+                            const convert = convertMap[type] as AbstractConvert;
+                            await convert.convertBack(item);
+                        }
                     }
-                }
+                });
             }
         }
         return projectData;
@@ -143,7 +155,7 @@ class LocalOperator extends AbstractOperator {
         const project = list[index];
         const newProject: IProjectInfo = cloneDeep(project);
         newProject.id = IdGenerate.generateId();
-        newProject.name = name || newProject.name + '-副本';
+        newProject.name = name || newProject.name;
         newProject.createTime = new Date().getTime() + '';
         newProject.updateTime = new Date().getTime() + '';
         list.push(newProject);

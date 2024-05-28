@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import './ThemeItem.less';
 import {ThemeColors, ThemeItemType} from "../../../../designer/DesignerType";
-import closeIcon from './close.svg';
 import ColorPicker from "../../../../json-schema/ui/color-picker/ColorPicker";
+import {Close} from "@icon-park/react";
 
 
 interface ThemeItemProps extends ThemeColors {
@@ -36,7 +36,7 @@ class ThemeItem extends Component<ThemeItemProps> {
                             event.stopPropagation();
                             onDel && onDel(id || '')
                         }}>
-                            <img src={closeIcon} alt={'删除'}/>
+                            <Close/>
                         </div>
                     </div>}
                 </div>

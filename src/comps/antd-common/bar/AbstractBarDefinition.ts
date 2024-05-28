@@ -2,7 +2,7 @@ import React from "react";
 import {MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import {ClazzTemplate} from "../../common-component/common-types";
+import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import AntdCommonBarController, {AntdBarProps} from "../../antd-common/bar/AntdCommonBarController";
 import {AntdCommonDefinition} from "../AntdCommonDefinition";
 
@@ -12,6 +12,7 @@ const AntdBarFieldMapping = React.lazy(() => import("./AntdBarCommonConfig").the
 const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig"));
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
+const FilterConfig = React.lazy(() => import("../../common-component/filter-config/FilterConfig.tsx"));
 
 abstract class AbstractBarDefinition extends AntdCommonDefinition<AntdCommonBarController, AntdBarProps> {
 
@@ -23,7 +24,7 @@ abstract class AbstractBarDefinition extends AntdCommonDefinition<AntdCommonBarC
         return getDefaultMenuList();
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         return {
             base: BaseInfo,
             data: DataConfig,
@@ -31,6 +32,7 @@ abstract class AbstractBarDefinition extends AntdCommonDefinition<AntdCommonBarC
             animation: AnimationConfig,
             theme: ThemeConfig,
             mapping: AntdBarFieldMapping,
+            filter: FilterConfig,
         };
     }
 }

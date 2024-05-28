@@ -119,6 +119,15 @@ class AntdGroupBarDefinition extends AbstractBarDefinition {
                     },
                 },
             },
+            filter: {
+                enable: false,
+                blur: 0,
+                brightness: 1,
+                contrast: 1,
+                opacity: 1,
+                saturate: 1,
+                hueRotate: 0
+            },
             data: {
                 sourceType: 'static',
                 staticData: data

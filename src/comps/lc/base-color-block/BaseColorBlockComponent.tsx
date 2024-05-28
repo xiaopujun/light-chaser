@@ -1,5 +1,6 @@
 import React, {ForwardedRef, useImperativeHandle, useRef, useState} from 'react';
-import {ComponentInfoType} from "../../common-component/common-types";
+import {ComponentInfoType} from "../../common-component/CommonTypes.ts";
+import {IFilterConfigType} from "../../../designer/DesignerType.ts";
 
 export interface BaseColorBlockComponentStyle {
     borderRadius?: number;
@@ -12,6 +13,7 @@ export interface BaseColorBlockComponentStyle {
 export interface BaseColorBlockComponentProps {
     base?: ComponentInfoType;
     style?: BaseColorBlockComponentStyle;
+    filter?: IFilterConfigType;
 }
 
 export interface BaseColorBlockComponentRef {

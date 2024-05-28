@@ -1,5 +1,5 @@
 import {MenuInfo} from "./MenuType";
-import {Data, Deeplink, Optimize, SettingOne, Theme} from "@icon-park/react";
+import {ColorFilter, Data, Deeplink, Optimize, SettingOne, Theme} from "@icon-park/react";
 
 export const getDefaultMenuList = (): Array<MenuInfo> => {
     return [
@@ -22,6 +22,11 @@ export const getDefaultMenuList = (): Array<MenuInfo> => {
             icon: Deeplink,
             name: '映射',
             key: 'mapping',
+        },
+        {
+            icon: ColorFilter,
+            name: '滤镜',
+            key: 'filter',
         },
         // {
         //     icon: VideoCameraFilled,

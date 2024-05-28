@@ -1,4 +1,4 @@
-import {ComponentBaseProps} from "../../common-component/common-types";
+import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
 import {WritableColumnOptions} from "../types";
 import {Column} from "@antv/g2plot";
 import {ThemeItemType} from "../../../designer/DesignerType";

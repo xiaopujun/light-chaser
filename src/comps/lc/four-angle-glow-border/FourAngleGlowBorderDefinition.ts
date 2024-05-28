@@ -1,21 +1,17 @@
-import {
-    AbstractDefinition,
-    BaseInfoType,
-    EventInfo,
-    MenuToConfigMappingType
-} from "../../../framework/core/AbstractDefinition";
-import {ClazzTemplate} from "../../common-component/common-types";
+import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
+import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import fourAngleGlowBorderImg from './four-angle-glow-border.png';
-import {getDefaultMenuList} from "../../../designer/right/util";
 import {FourAngleGlowBorderController, FourAngleGlowProps} from "./FourAngleGlowBorderController";
 import {FourAngleGlowBorderConfig} from "./FourAngleGlowBorderConfig";
 import React from "react";
+import AbstractDesignerDefinition from "../../../framework/core/AbstractDesignerDefinition.ts";
 
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
+const FilterConfig = React.lazy(() => import("../../common-component/filter-config/FilterConfig.tsx"));
 
 
-export default class FourAngleGlowBorderDefinition extends AbstractDefinition<FourAngleGlowBorderController, FourAngleGlowProps> {
+export default class FourAngleGlowBorderDefinition extends AbstractDesignerDefinition<FourAngleGlowBorderController, FourAngleGlowProps> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "四角辉光边框",
@@ -45,17 +41,27 @@ export default class FourAngleGlowBorderDefinition extends AbstractDefinition<Fo
                 radius: 4,
                 length: 10,
             },
+            filter: {
+                enable: false,
+                blur: 0,
+                brightness: 1,
+                contrast: 1,
+                opacity: 1,
+                saturate: 1,
+                hueRotate: 0
+            },
         };
     }
 
-    getMenuList(): Array<MenuInfo> | null {
-        return getDefaultMenuList().filter((item: MenuInfo) => (item.key !== 'theme' && item.key !== 'data' && item.key !== 'mapping'));
+    getMenuList(): Array<MenuInfo> {
+        return super.getMenuList().filter((item: MenuInfo) => (item.key !== 'theme' && item.key !== 'data'));
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         return {
             base: BaseInfo,
             style: FourAngleGlowBorderConfig,
+            filter:FilterConfig
         };
     }
 

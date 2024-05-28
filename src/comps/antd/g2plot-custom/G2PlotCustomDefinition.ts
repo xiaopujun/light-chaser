@@ -1,7 +1,7 @@
 import React from "react";
 import {BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
-import {ClazzTemplate} from "../../common-component/common-types";
+import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import pieImg from './g2-plot-custom.png';
 import G2PlotCustomController, {G2PlotCustomProps} from "./G2PlotCustomController.ts";
 import {AntdCommonDefinition} from "../../antd-common/AntdCommonDefinition";
@@ -37,7 +37,7 @@ class G2PlotCustomDefinition extends AntdCommonDefinition<G2PlotCustomController
         ];
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         return {
             base: BaseInfo,
             data: DataConfig,

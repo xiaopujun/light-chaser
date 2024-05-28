@@ -4,7 +4,7 @@ import {
     BaseInfoType,
     MenuToConfigMappingType
 } from "../../framework/core/AbstractDefinition";
-import {ClazzTemplate} from "../common-component/common-types";
+import {ClazzTemplate} from "../common-component/CommonTypes.ts";
 import {MenuInfo} from "../../designer/right/MenuType";
 import GroupLayerController, {GroupLayerProps} from "./GroupLayerController";
 import AbstractController from "../../framework/core/AbstractController.ts";
@@ -40,7 +40,7 @@ export default class GroupLayerDefinition extends AbstractDefinition<GroupLayerC
         };
     }
 
-    getMenuList(): Array<MenuInfo> | null {
+    getMenuList(): Array<MenuInfo> {
         return [
             {
                 icon: SettingOne,
@@ -50,7 +50,7 @@ export default class GroupLayerDefinition extends AbstractDefinition<GroupLayerC
         ];
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         return {
             base: BaseInfo,
         };

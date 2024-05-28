@@ -1,23 +1,13 @@
-import {
-    AbstractDefinition,
-    BaseInfoType,
-    EventInfo,
-    MenuToConfigMappingType
-} from "../../../framework/core/AbstractDefinition";
-import {ClazzTemplate} from "../../common-component/common-types";
+import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
+import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import baseTableImg from './base-table.png';
-import {getDefaultMenuList} from "../../../designer/right/util";
 import {BaseTableController} from "./BaseTableController";
 import {BaseTableComponentProps} from "./BaseTableComponent";
 import {BaseTableStyleConfig} from "./BaseTableConfig";
-import React from "react";
+import AbstractDesignerDefinition from "../../../framework/core/AbstractDesignerDefinition.ts";
 
-const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
-const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig.tsx"));
-const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig.tsx"));
-
-export default class BaseTableDefinition extends AbstractDefinition<BaseTableController, BaseTableComponentProps> {
+export default class BaseTableDefinition extends AbstractDesignerDefinition<BaseTableController, BaseTableComponentProps> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "基础表格",
@@ -84,6 +74,15 @@ export default class BaseTableDefinition extends AbstractDefinition<BaseTableCon
                     carouselSpeed: 3,
                 }
             },
+            filter: {
+                enable: false,
+                blur: 0,
+                brightness: 1,
+                contrast: 1,
+                opacity: 1,
+                saturate: 1,
+                hueRotate: 0
+            },
             data: {
                 sourceType: 'static',
                 staticData: data
@@ -91,17 +90,14 @@ export default class BaseTableDefinition extends AbstractDefinition<BaseTableCon
         };
     }
 
-    getMenuList(): Array<MenuInfo> | null {
-        return getDefaultMenuList().filter((item: MenuInfo) => item.key !== 'theme' && item.key !== 'mapping');
+    getMenuList(): Array<MenuInfo> {
+        return super.getMenuList().filter((item: MenuInfo) => item.key !== 'theme');
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
-        return {
-            base: BaseInfo,
-            style: BaseTableStyleConfig,
-            animation: AnimationConfig,
-            data: DataConfig,
-        };
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
+        const menuMapping = super.getMenuToConfigContentMap();
+        menuMapping['style'] = BaseTableStyleConfig;
+        return menuMapping;
     }
 
     getEventList(): Array<EventInfo> {

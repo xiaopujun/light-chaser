@@ -19,7 +19,7 @@ class AntdMultiLineDefinition extends AbstractLineDefinition {
         return multiLineImg;
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         const menuToConfigContentMap = super.getMenuToConfigContentMap();
         menuToConfigContentMap!['style'] = AntdMultiLineStyleConfig;
         menuToConfigContentMap!['mapping'] = AntdMultiLineFieldMapping;
