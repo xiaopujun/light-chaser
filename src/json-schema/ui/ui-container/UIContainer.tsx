@@ -1,7 +1,7 @@
 import React from "react";
 import './UIContainer.less';
 import {Tooltip} from "antd";
-import {QuestionCircleOutlined} from "@ant-design/icons";
+import {Help} from "@icon-park/react";
 
 export interface UIContainerProps {
     label?: string;
@@ -21,7 +21,7 @@ export const UIContainer: React.FC<UIContainerProps> = (props) => {
                 <div className={'ui-container-label'} style={{...labelStyle}}>
                     <div>{label}</div>
                     {tip && <div className={'ui-container-tip'}>
-                        <Tooltip title={tip} style={{marginLeft: 1}}><QuestionCircleOutlined/></Tooltip></div>}
+                        <Tooltip title={tip} style={{marginLeft: 1}}><Help/></Tooltip></div>}
                 </div>}
             <div className={'ui-container-content'} style={{...contentStyle}}>{children}</div>
         </div>

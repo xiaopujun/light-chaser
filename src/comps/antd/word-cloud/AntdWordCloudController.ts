@@ -1,4 +1,4 @@
-import {ComponentBaseProps} from "../../common-component/common-types";
+import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
 import {WritableWordCloudOptions} from "../../antd-common/types";
 import {WordCloud} from "@antv/g2plot";
 import {UpdateOptions} from "../../../framework/core/AbstractController";

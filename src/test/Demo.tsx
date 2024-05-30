@@ -1,22 +1,13 @@
 import './DemoMain.less';
-import {useEffect} from "react";
-import FetchUtil from "../utils/FetchUtil.ts";
-import CheckBox from "../json-schema/ui/checkbox/CheckBox.tsx";
+import "@amap/amap-jsapi-types";
+import ProjectItem from "../pages/home/project-list/ProjectItem.tsx";
 
 
 export default function Demo() {
-    useEffect(() => {
-        FetchUtil.post('/api/datasource/pageList', {
-            current: 1,
-            size2: 10,
-            searchValue: null
-        }).then(res => console.log(res));
-    }, []);
 
     return (
-        <div style={{width: 500, height: 200}}>
-            <CheckBox value={true} onChange={console.log}/>
-        </div>
-
+        <ProjectItem id={'22'} name={'使得开发商积分'} doOperate={(id: string, type: string) => {
+        }}
+                     cover={'blob:http://localhost:5173/9fdc377b-540b-4fa2-a9fd-8d33b6b5735b'}/>
     );
 }

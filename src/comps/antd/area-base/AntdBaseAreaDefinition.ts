@@ -22,7 +22,7 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
         return baseAreaImg;
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         const menuToConfigContentMap = super.getMenuToConfigContentMap();
         menuToConfigContentMap!['style'] = AntdBaseAreaStyleConfig;
         menuToConfigContentMap!['mapping'] = AntdBaseAreaFieldMapping;
@@ -114,6 +114,15 @@ class AntdBaseAreaDefinition extends AbstractAreaDefinition {
                         duration: 3000
                     }
                 }
+            },
+            filter: {
+                enable: false,
+                blur: 0,
+                brightness: 1,
+                contrast: 1,
+                opacity: 1,
+                saturate: 1,
+                hueRotate: 0
             },
             data: {
                 sourceType: 'static',

@@ -113,7 +113,6 @@ class CompList extends Component {
                     <div style={{pointerEvents: 'none'}}>
                         <div className={'item-header'} ref={'drag-target'}>
                             <div className={'item-name'}>{compName}</div>
-                            <div className={'item-type'}>Antd</div>
                         </div>
                         <div className={'item-content'}>
                             <img src={chartImg!} alt={compName}/>

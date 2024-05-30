@@ -3,6 +3,7 @@ import DragScaleProvider from "../../framework/drag-scale/DragScaleProvider";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {observer} from "mobx-react";
 import canvasManager from "../header/items/canvas/CanvasManager.ts";
+import ScaleAction from "../../framework/core/ScaleAction.ts";
 
 export interface DesignerDragScaleContainerProps {
     children?: React.ReactNode;
@@ -29,6 +30,7 @@ const DesignerDragScaleContainer = memo(observer((props: DesignerDragScaleContai
                     setScale(scale);
                     setRatio(ratio);
                     rulerRef?.ruleWheel();
+                    ScaleAction.doScale(dsData.scale, dsData.scale);
                 },
                 dragCallback: () => {
                     const {rulerRef} = eventOperateStore;

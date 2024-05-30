@@ -1,33 +1,35 @@
 import React from "react";
 import {MenuInfo} from "../../../designer/right/MenuType";
-import {getDefaultMenuList} from "../../../designer/right/util";
-import {ClazzTemplate} from "../../common-component/common-types";
+import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import AntdLiquidController, {AntdLiquidProps} from "./AntdLiquidController";
 import liquidImg from './liquid.png';
-import {AbstractDefinition, BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
+import {BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
+import AbstractDesignerDefinition from "../../../framework/core/AbstractDesignerDefinition.ts";
 
 const AntdLiquidConfig = React.lazy(() => import("./AntdLiquidConfig"));
 const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig"));
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
+const FilterConfig = React.lazy(() => import("../../common-component/filter-config/FilterConfig.tsx"));
 
 
-class AntdLiquidDefinition extends AbstractDefinition<AntdLiquidController, AntdLiquidProps> {
+class AntdLiquidDefinition extends AbstractDesignerDefinition<AntdLiquidController, AntdLiquidProps> {
 
     getController(): ClazzTemplate<AntdLiquidController> | null {
         return AntdLiquidController;
     }
 
     getMenuList(): Array<MenuInfo> {
-        return getDefaultMenuList().filter((item) => item.key !== 'mapping');
+        return super.getMenuList().filter((item) => item.key !== 'mapping');
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         return {
             base: BaseInfo,
             data: DataConfig,
             style: AntdLiquidConfig,
-            theme: ThemeConfig
+            theme: ThemeConfig,
+            filter: FilterConfig
         };
     }
 
@@ -97,6 +99,15 @@ class AntdLiquidDefinition extends AbstractDefinition<AntdLiquidController, Antd
                         duration: 3000
                     }
                 }
+            },
+            filter: {
+                enable: false,
+                blur: 0,
+                brightness: 1,
+                contrast: 1,
+                opacity: 1,
+                saturate: 1,
+                hueRotate: 0
             },
             data: {
                 sourceType: 'static',

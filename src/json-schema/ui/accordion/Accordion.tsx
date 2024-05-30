@@ -1,8 +1,8 @@
 import {ReactNode, useEffect, useRef, useState} from 'react';
 import './Accordion.less';
-import {QuestionCircleOutlined, RightOutlined} from "@ant-design/icons";
 import Switch from "../switch/Switch";
 import {Tooltip} from "antd";
+import {Help, Right} from "@icon-park/react";
 
 interface AccordionProps {
     /**
@@ -84,10 +84,10 @@ export default function Accordion(props: AccordionProps) {
         <div className={'lc-accordion'}>
             <div className="accordion-header" ref={headerRef} style={{...titleStyle}}>
                 <div className={'title-content'}>{label} &nbsp;
-                    {tip && <Tooltip title={tip}><QuestionCircleOutlined/>&nbsp;&nbsp;</Tooltip>}</div>
+                    {tip && <Tooltip title={tip}><Help/>&nbsp;&nbsp;</Tooltip>}</div>
                 <div className={'title-switch'}>{showSwitch ?
                     <Switch value={finalValue} onChange={switchChange}/>
-                    : <RightOutlined className={'accordion-icon'}/>}</div>
+                    : <Right size={16} className={'accordion-icon'}/>}</div>
             </div>
             <div className="lc-accordion-body" style={{...bodyStyle}} ref={accordionBodyRef}>{children}</div>
         </div>

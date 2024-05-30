@@ -1,19 +1,20 @@
-import {
-    AbstractDefinition, BaseInfoType, EventInfo,
-    MenuToConfigMappingType
-} from "../../../framework/core/AbstractDefinition";
-import {ClazzTemplate} from "../../common-component/common-types";
+import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
+import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import baseTextImg from './base-text.png';
-import {getDefaultMenuList} from "../../../designer/right/util";
 import {BaseTextController} from "./BaseTextController";
 import {BaseTextComponentProps} from "./BaseTextComponent";
-import BaseInfo from "../../common-component/base-info/BaseInfo";
-import AnimationConfig from "../../common-component/animation-config/AnimationConfig";
-import ThemeConfig from "../../common-component/theme-config/ThemeConfig";
 import {BaseTextStyleConfig} from "./BaseTextConfig";
+import React from "react";
+import AbstractDesignerDefinition from "../../../framework/core/AbstractDesignerDefinition.ts";
 
-export default class BaseTextDefinition extends AbstractDefinition<BaseTextController, BaseTextComponentProps> {
+const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
+const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig.tsx"));
+const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig.tsx"));
+const FilterConfig = React.lazy(() => import("../../common-component/filter-config/FilterConfig.tsx"));
+
+
+export default class BaseTextDefinition extends AbstractDesignerDefinition<BaseTextController, BaseTextComponentProps> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "基础文本",
@@ -44,6 +45,19 @@ export default class BaseTextDefinition extends AbstractDefinition<BaseTextContr
                 fontSize: 16,
                 alignItems: 'center',
                 justifyContent: 'center',
+                strokeColor: '#ffffff',
+                strokeWidth: 0,
+                lineHeight: 1,
+                letterSpacing: 0,
+            },
+            filter: {
+                enable: false,
+                blur: 0,
+                brightness: 1,
+                contrast: 1,
+                opacity: 1,
+                saturate: 1,
+                hueRotate: 0
             },
             data: {
                 sourceType: 'static',
@@ -52,16 +66,17 @@ export default class BaseTextDefinition extends AbstractDefinition<BaseTextContr
         };
     }
 
-    getMenuList(): Array<MenuInfo> | null {
-        return getDefaultMenuList().filter((item: MenuInfo) => item.key !== 'theme' && item.key !== 'mapping' && item.key !== 'data');
+    getMenuList(): Array<MenuInfo> {
+        return super.getMenuList().filter((item: MenuInfo) => item.key !== 'theme' && item.key !== 'data');
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         return {
             base: BaseInfo,
             style: BaseTextStyleConfig,
             animation: AnimationConfig,
-            theme: ThemeConfig
+            theme: ThemeConfig,
+            filter: FilterConfig
         };
     }
 

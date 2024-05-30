@@ -1,4 +1,4 @@
-import {ComponentInfoType} from "../common-component/common-types";
+import {ComponentInfoType} from "../common-component/CommonTypes.ts";
 import {UpdateOptions} from "../../framework/core/AbstractController";
 import GroupLayer from "./GroupLayer";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";

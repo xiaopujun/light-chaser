@@ -196,48 +196,6 @@ export const AntdCommonAreaGraphics = (props: ConfigType<AntdCommonAreaControlle
     )
 }
 
-
-export const AntdAreaFieldMapping: React.FC<ConfigType<AntdCommonAreaController>> = ({controller}) => {
-    const options = AntdCommonUtil.getDataFieldOptions(controller);
-
-    const schema: Control = {
-        type: 'grid',
-        config: {
-            columns: 2,
-        },
-        children: [
-            {
-                type: 'select',
-                label: 'X字段',
-                value: 'country',
-                config: {
-                    options,
-                }
-            },
-            {
-                type: 'select',
-                label: 'Y字段',
-                config: {
-                    options,
-                }
-            },
-            {
-                type: 'select',
-                label: '分组字段',
-                config: {
-                    options,
-                }
-            }
-        ]
-    }
-
-    const onFieldChange = (fieldChangeData: FieldChangeData) => {
-
-    }
-
-    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
-}
-
 export const AntdAreaCommonFieldMapping: React.FC<ConfigType> = (props) => {
     const {controller} = props;
     const config = controller.config.style;

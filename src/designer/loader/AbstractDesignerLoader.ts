@@ -13,9 +13,9 @@ export abstract class AbstractDesignerLoader {
     /**
      * 加载设计器
      */
-    public load(id: string, type: SaveType): void {
+    public async load(id: string, type: SaveType): Promise<void> {
         //扫描组件
-        this.scanComponents();
+        await this.scanComponents();
         //初始化项目
         this.initProject(id, type);
     }
@@ -23,10 +23,11 @@ export abstract class AbstractDesignerLoader {
     /**
      * 扫描设计器组件
      */
-    protected scanComponents(): void {
-        const glob = import.meta.glob('../../comps/**/*.ts', {eager: true}) as Record<string, any>;
-        Object.keys(glob).forEach(key => {
-            const Clazz = glob[key]?.default;
+    protected async scanComponents(): Promise<void> {
+        const glob = import.meta.glob('../../comps/**/*.ts') as Record<string, any>;
+        for (const key of Object.keys(glob)) {
+            const module = await glob[key]();
+            const Clazz = module?.default;
             if (Clazz && AbstractDefinition.isPrototypeOf(Clazz)) {
                 const definition: AbstractDefinition = new Clazz();
                 //获取组件的基础信息
@@ -41,7 +42,7 @@ export abstract class AbstractDesignerLoader {
                     if (categorize) {
                         if (!categorize.icon) {
                             console.error("自定义组件的分类必须指定icon");
-                            return;
+                            continue;
                         } else
                             componentCategorize.push(categorize);
                     }
@@ -52,7 +53,7 @@ export abstract class AbstractDesignerLoader {
                     if (subCategorize) {
                         if (!subCategorize.parentKey) {
                             console.error("自定义组件的子类型必须指定parentKey");
-                            return;
+                            continue;
                         } else
                             componentCategorize.push(subCategorize);
                     }
@@ -62,7 +63,7 @@ export abstract class AbstractDesignerLoader {
                 const convertKey = convert.getKey();
                 this.convertMap[convertKey] = convert;
             }
-        });
+        }
     }
 
     /**

@@ -1,5 +1,5 @@
 import React, {ForwardedRef, useEffect, useImperativeHandle, useRef, useState} from 'react';
-import {ComponentBaseProps} from "../../common-component/common-types";
+import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
 import {CountUp} from "countup.js";
 import {Odometer} from "odometer_countup";
 
@@ -9,6 +9,8 @@ export interface DigitalFlipperComponentStyle {
     fontFamily?: string;
     color?: string;
     type?: 'slide' | 'caper';
+    alignItems?: string;
+    justifyContent?: string;
 }
 
 export interface DigitalFlipperComponentProps extends ComponentBaseProps {

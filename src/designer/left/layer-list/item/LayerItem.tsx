@@ -1,5 +1,5 @@
 import {BaseLayer} from "./BaseLayer";
-import {EditFilled, EyeFilled, EyeInvisibleFilled, UnlockFilled, UsbFilled} from "@ant-design/icons";
+import {Edit, Lock, PreviewClose, PreviewOpen, Unlock} from "@icon-park/react";
 
 class LayerItem extends BaseLayer {
 
@@ -20,13 +20,13 @@ class LayerItem extends BaseLayer {
                 </div>
                 <div className={'layer-operators'}>
                     <div className={'layer-operator'} onClick={this.openInput}>
-                        <EditFilled/>
+                        <Edit/>
                     </div>
                     <div className={'layer-operator'} onClick={this.toggleHide}>
-                        {hide ? <EyeInvisibleFilled/> : <EyeFilled/>}
+                        {hide ? <PreviewClose/> : <PreviewOpen/>}
                     </div>
                     <div className={'layer-operator'} onClick={this.toggleLock}>
-                        {lock ? <UsbFilled/> : <UnlockFilled/>}
+                        {lock ? <Lock/> : <Unlock/>}
                     </div>
                 </div>
             </div>

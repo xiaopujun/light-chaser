@@ -36,6 +36,7 @@ const hotkeys = [
     {name: '编组', windows: 'ctrl + g', mac: 'ctrl + g'},
     {name: '解除编组', windows: 'ctrl + shift + g', mac: 'ctrl + shift + g'},
     {name: '从分组中移除', windows: 'alt + shift + g', mac: 'options + shift + g'},
+    {name: '搜索图层', windows: 'ctrl + f', mac: 'ctrl + f'},
 ]
 
 export interface HotKeyDesProps {

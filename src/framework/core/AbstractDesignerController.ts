@@ -1,6 +1,6 @@
-import {APIConfig, IDatabase, ThemeItemType} from "../../designer/DesignerType";
+import {APIConfig, IDatabase, IFilterConfigType, ThemeItemType} from "../../designer/DesignerType";
 import AbstractController from "./AbstractController";
-import {ComponentBaseProps} from "../../comps/common-component/common-types";
+import {ComponentBaseProps} from "../../comps/common-component/CommonTypes.ts";
 import FetchUtil from "../../utils/FetchUtil.ts";
 
 /**
@@ -125,6 +125,18 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
      * @param newTheme 新主题
      */
     public updateTheme(newTheme: ThemeItemType): void {
+    }
+
+    public updateFilter(filter: IFilterConfigType): void {
+        if (this.config && (this.config as ComponentBaseProps).filter)
+            (this.config as ComponentBaseProps)!.filter = filter;
+        if (!this.container)
+            return;
+        if (filter?.enable) {
+            this.container.style.filter = `blur(${filter.blur}px) brightness(${filter.brightness}) contrast(${filter.contrast}) opacity(${filter.opacity}) saturate(${filter.saturate}) hue-rotate(${filter.hueRotate}deg)`
+        } else {
+            this.container.style.filter = 'none';
+        }
     }
 
 }

@@ -1,22 +1,13 @@
-import {
-    AbstractDefinition,
-    BaseInfoType,
-    EventInfo,
-    MenuToConfigMappingType
-} from "../../../framework/core/AbstractDefinition";
-import {ClazzTemplate} from "../../common-component/common-types";
+import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
+import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import carouselImg from './carousel.png';
-import {getDefaultMenuList} from "../../../designer/right/util";
 import {CarouselController} from "./CarouselController.ts";
 import {CarouselComponentProps} from "./CarouselComponent.tsx";
-import BaseInfo from "../../common-component/base-info/BaseInfo";
-import AnimationConfig from "../../common-component/animation-config/AnimationConfig";
-import ThemeConfig from "../../common-component/theme-config/ThemeConfig";
 import {CarouselConfig} from "./CarouselConfig.tsx";
-import DataConfig from "../../common-component/data-config/DataConfig.tsx";
+import AbstractDesignerDefinition from "../../../framework/core/AbstractDesignerDefinition.ts";
 
-export default class CarouselDefinition extends AbstractDefinition<CarouselController, CarouselComponentProps> {
+export default class CarouselDefinition extends AbstractDesignerDefinition<CarouselController, CarouselComponentProps> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "轮播图",
@@ -47,6 +38,15 @@ export default class CarouselDefinition extends AbstractDefinition<CarouselContr
                 fade: false,
                 speed: 500,
             },
+            filter: {
+                enable: false,
+                blur: 0,
+                brightness: 1,
+                contrast: 1,
+                opacity: 1,
+                saturate: 1,
+                hueRotate: 0
+            },
             data: {
                 sourceType: 'static',
                 staticData: [carouselImg, carouselImg]
@@ -54,18 +54,14 @@ export default class CarouselDefinition extends AbstractDefinition<CarouselContr
         };
     }
 
-    getMenuList(): Array<MenuInfo> | null {
-        return getDefaultMenuList().filter((item: MenuInfo) => (item.key !== 'theme' && item.key !== 'mapping'));
+    getMenuList(): Array<MenuInfo> {
+        return super.getMenuList().filter((item: MenuInfo) => (item.key !== 'theme'));
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
-        return {
-            base: BaseInfo,
-            style: CarouselConfig,
-            animation: AnimationConfig,
-            data: DataConfig,
-            theme: ThemeConfig
-        };
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
+        const menuMapping = super.getMenuToConfigContentMap();
+        menuMapping['style'] = CarouselConfig;
+        return menuMapping;
     }
 
 

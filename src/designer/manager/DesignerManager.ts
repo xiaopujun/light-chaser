@@ -19,17 +19,11 @@ class DesignerManager extends AbstractManager<ProjectDataType> {
         })
     }
 
-    /**
-     * 大屏id
-     */
-    id: string = "";
-
     loaded: boolean = false;
 
     setLoaded = (loaded: boolean) => this.loaded = loaded;
 
     destroy(): void {
-        this.id = "";
         canvasManager.destroy();
         layerManager.destroy();
         themeManager.destroy();
@@ -38,7 +32,6 @@ class DesignerManager extends AbstractManager<ProjectDataType> {
 
     getData(): ProjectDataType {
         return {
-            id: this.id,
             canvasManager: canvasManager.getData(),
             themeManager: themeManager.getData()!,
             layerManager: layerManager.getData(),
@@ -48,7 +41,6 @@ class DesignerManager extends AbstractManager<ProjectDataType> {
     }
 
     init(data: ProjectDataType, mode: DesignerMode): void {
-        this.id = data.id!;
         data.canvasManager && canvasManager.init(data.canvasManager!);
         data.themeManager && themeManager.init(data.themeManager!);
         data.layerManager && layerManager.init(data.layerManager!);

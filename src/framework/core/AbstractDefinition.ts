@@ -1,7 +1,7 @@
 import {MenuInfo} from "../../designer/right/MenuType";
 import AbstractController from "./AbstractController";
-import React from "react";
-import {ClazzTemplate} from "../../comps/common-component/common-types";
+import React, {ComponentType} from "react";
+import {ClazzTemplate} from "../../comps/common-component/CommonTypes.ts";
 import AbstractDesignerController from "./AbstractDesignerController";
 
 export type MenuToConfigMappingType = Record<string, React.ComponentType<any>>;
@@ -20,7 +20,7 @@ export interface EventInfo {
 export interface ICategorize {
     key: string;
     name: string;
-    icon?: React.ComponentType;
+    icon?: ComponentType;
     parentKey?: string;
 }
 
@@ -93,12 +93,12 @@ export abstract class AbstractDefinition<C extends AbstractController = Abstract
     /**
      * 返回右侧配置菜单列表，双击组件时需要展示该菜单列表
      */
-    abstract getMenuList(): Array<MenuInfo> | null;
+    abstract getMenuList(): Array<MenuInfo>;
 
     /**
      * 返回右侧菜单与对应配置内容组件的映射关系
      */
-    abstract getMenuToConfigContentMap(): MenuToConfigMappingType | null;
+    abstract getMenuToConfigContentMap(): MenuToConfigMappingType;
 
     /**
      * 返回当前组件能触发的事件列表, 在蓝图图层节点中使用
@@ -121,14 +121,14 @@ export abstract class AbstractDefinition<C extends AbstractController = Abstract
                 name: "显示",
                 id: "show",
                 handler: (controller: AbstractDesignerController) => {
-                    controller.container!.style.display = "block";
+                    controller.container!.style.visibility = "visible";
                 }
             },
             {
                 name: "隐藏",
                 id: "hide",
                 handler: (controller: AbstractDesignerController) => {
-                    controller.container!.style.display = "none";
+                    controller.container!.style.visibility = "hidden";
                 }
             },
             {

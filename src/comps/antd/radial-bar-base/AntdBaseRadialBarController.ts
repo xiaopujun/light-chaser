@@ -1,4 +1,4 @@
-import {ComponentBaseProps} from "../../common-component/common-types";
+import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
 import {WritableRadialBarOptions} from "../../antd-common/types";
 import {RadialBar} from "@antv/g2plot";
 import {UpdateOptions} from "../../../framework/core/AbstractController";

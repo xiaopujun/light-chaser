@@ -1,16 +1,16 @@
-import {
-    AbstractDefinition, BaseInfoType, EventInfo,
-    MenuToConfigMappingType
-} from "../../../framework/core/AbstractDefinition";
+import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import BaseVideoController, {BaseVideoComponentProps} from "./BaseVideoController.ts";
 import baseVideo from './baseVideo.png';
-import {ClazzTemplate} from "../../common-component/common-types";
+import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import {MenuInfo} from "../../../designer/right/MenuType";
-import {getDefaultMenuList} from "../../../designer/right/util";
-import BaseInfo from "../../common-component/base-info/BaseInfo";
 import {BaseVideoStyleConfig} from "./BaseVideoConfig.tsx";
+import React from "react";
+import AbstractDesignerDefinition from "../../../framework/core/AbstractDesignerDefinition.ts";
 
-export default class BaseVideoDefinition extends AbstractDefinition<BaseVideoController, BaseVideoComponentProps> {
+const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
+const FilterConfig = React.lazy(() => import("../../common-component/filter-config/FilterConfig.tsx"));
+
+export default class BaseVideoDefinition extends AbstractDesignerDefinition<BaseVideoController, BaseVideoComponentProps> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "视频",
@@ -37,17 +37,27 @@ export default class BaseVideoDefinition extends AbstractDefinition<BaseVideoCon
             style: {
                 src: undefined,
             },
+            filter: {
+                enable: false,
+                blur: 0,
+                brightness: 1,
+                contrast: 1,
+                opacity: 1,
+                saturate: 1,
+                hueRotate: 0
+            },
         };
     }
 
-    getMenuList(): Array<MenuInfo> | null {
-        return getDefaultMenuList().filter((item: MenuInfo) => (item.key !== 'theme' && item.key !== 'data' && item.key !== 'mapping'));
+    getMenuList(): Array<MenuInfo> {
+        return super.getMenuList().filter((item: MenuInfo) => (item.key !== 'theme' && item.key !== 'data'));
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         return {
             base: BaseInfo,
             style: BaseVideoStyleConfig,
+            filter: FilterConfig
         };
     }
 

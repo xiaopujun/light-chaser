@@ -2,7 +2,7 @@ import React from "react";
 import {BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import {ClazzTemplate} from "../../common-component/common-types";
+import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import pieImg from './pie.png';
 import AntdPieController, {AntdPieProps} from "./AntdPieController";
 import {AntdCommonDefinition} from "../../antd-common/AntdCommonDefinition";
@@ -24,7 +24,7 @@ class AntdPieDefinition extends AntdCommonDefinition<AntdPieController, AntdPieP
         return getDefaultMenuList();
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         return {
             base: BaseInfo,
             data: DataConfig,
