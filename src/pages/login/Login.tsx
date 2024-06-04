@@ -5,6 +5,13 @@ import CheckBox from "../../json-schema/ui/checkbox/CheckBox";
 import {globalMessage} from "../../framework/message/GlobalMessage";
 import {useNavigate} from "react-router-dom";
 import {memo} from "react";
+import LocalOperator from "../../framework/operate/LocalOperator.ts";
+import {SaveType} from "../../designer/DesignerType.ts";
+import proA from './pro1.json';
+import proB from './pro2.json';
+import localforage from "localforage";
+import {LIGHT_CHASER_PROJECT_LIST} from "../../global/GlobalConstants.ts";
+
 
 const Login = memo(() => {
 
@@ -53,3 +60,27 @@ const Login = memo(() => {
 })
 
 export default Login;
+
+const localOperator = new LocalOperator();
+
+localforage.getItem(LIGHT_CHASER_PROJECT_LIST).then((value) => {
+    if (!value) {
+        localOperator.createProject({
+            name: '测试项目A',
+            des: '测试项目A',
+            saveType: SaveType.LOCAL,
+            dataJson: JSON.stringify(proA.data)
+        }).then(() => {
+            localOperator.createProject({
+                name: '测试项目B',
+                des: '测试项目B',
+                saveType: SaveType.LOCAL,
+                dataJson: JSON.stringify(proB.data)
+            })
+        })
+    }
+})
+
+
+
+

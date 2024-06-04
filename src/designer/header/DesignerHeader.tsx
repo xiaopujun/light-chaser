@@ -74,7 +74,7 @@ const leftItems: Array<IHeaderItem> = [
         key: 'preview',
         onClick: () => {
             const {saveType, id} = URLUtil.parseUrlParams();
-            window.open(`/view?id=${id}&saveType=${saveType}&mode=${DesignerMode.VIEW}`, '_blank');
+            window.open(`/light-chaser-app/#/view?id=${id}&saveType=${saveType}&mode=${DesignerMode.VIEW}`, '_blank');
         }
     }
 ];

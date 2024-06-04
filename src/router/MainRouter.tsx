@@ -1,5 +1,5 @@
 import {lazy, memo} from 'react';
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {createHashRouter, RouterProvider} from "react-router-dom";
 import {ConfigProvider, MappingAlgorithm, theme} from "antd";
 
 
@@ -33,7 +33,7 @@ const antdComponentTheme = {
     }
 }
 
-const router = createBrowserRouter([
+const router = createHashRouter([
     {
         path: '/view',
         element: <DesignerViewPage/>

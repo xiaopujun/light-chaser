@@ -54,7 +54,7 @@ export const ProjectList = memo((props: ProjectListProps) => {
                 globalMessage.messageApi?.error('创建失败');
             else {
                 setAddDialog(false);
-                window.open(`/designer?id=${id}&saveType=${saveType}&mode=${DesignerMode.EDIT}`, '_blank');
+                window.open(`/light-chaser-app/#/designer?id=${id}&saveType=${saveType}&mode=${DesignerMode.EDIT}`, '_blank');
                 getProjectPageList(pageData.current, pageData.size)
             }
         });
@@ -65,10 +65,10 @@ export const ProjectList = memo((props: ProjectListProps) => {
     const operateHandler = (id: string, type: string) => {
         switch (type) {
             case 'edit':
-                window.open(`/designer?id=${id}&saveType=${saveType}&mode=${DesignerMode.EDIT}`, '_blank');
+                window.open(`/light-chaser-app/#/designer?id=${id}&saveType=${saveType}&mode=${DesignerMode.EDIT}`, '_blank');
                 break;
             case 'show':
-                window.open(`/view?id=${id}&saveType=${saveType}&mode=${DesignerMode.VIEW}`, '_blank');
+                window.open(`/light-chaser-app/#/view?id=${id}&saveType=${saveType}&mode=${DesignerMode.VIEW}`, '_blank');
                 break;
             case 'del':
                 delIdRef.current = id;
