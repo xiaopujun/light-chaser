@@ -1,6 +1,7 @@
 import {lazy, memo} from 'react';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {ConfigProvider, MappingAlgorithm, theme} from "antd";
+import NotFound from "../pages/result/NotFound.tsx";
 
 
 const DesignerViewPage = lazy(() => import('../pages/view/DesignerViewPage.tsx'));
@@ -14,6 +15,9 @@ const DataSourceList = lazy(() => import('../pages/home/datasource/DataSourceLis
 const TemplateMarket = lazy(() => import('../pages/home/template-market/TemplateMarket.tsx'));
 const MoreInfo = lazy(() => import('../pages/home/more-info/MoreInfo.tsx'));
 const Demo = lazy(() => import('../test/Demo'));
+const UserManagement = lazy(() => import('../pages/home/user-management/UserManagement.tsx'));
+const AuthManagement = lazy(() => import('../pages/home/auth/AuthManagement.tsx'));
+const ProjectManagement = lazy(() => import('../pages/home/project-management/ProjectManagement.tsx'));
 
 const studioDarkAlgorithm: MappingAlgorithm = (seedToken, mapToken) => {
     // 使用 antd 默认的暗色算法生成基础token，这样其他不需要定制的部分则保持原样
@@ -71,6 +75,18 @@ const router = createBrowserRouter([
                 element: <TemplateMarket/>,
             },
             {
+                path: 'user',
+                element: <UserManagement/>,
+            },
+            {
+                path: 'auth',
+                element: <AuthManagement/>,
+            },
+            {
+                path: 'project',
+                element: <ProjectManagement/>,
+            },
+            {
                 path: 'more',
                 element: <MoreInfo/>
             }
@@ -82,7 +98,7 @@ const router = createBrowserRouter([
     },
     {
         path: '*',
-        element: <div>not found</div>
+        element: <NotFound/>
     }
 ])
 
