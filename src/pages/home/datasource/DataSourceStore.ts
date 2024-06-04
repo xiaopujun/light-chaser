@@ -1,7 +1,7 @@
 import {action, makeObservable, observable} from "mobx";
 import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
 import {DataSourceConfigType} from "./edit/EditDataSourceDialog.tsx";
-import FetchUtil from "../../../utils/FetchUtil.ts";
+import AuthFetchUtil from "../../../utils/AuthFetchUtil.ts";
 import {IPage} from "../../../designer/DesignerType.ts";
 
 export const DataSourceMapping = {
@@ -62,7 +62,7 @@ export class DataSourceStore {
     }
 
     testDataSource = (id: string) => {
-        FetchUtil.get(`/api/datasource/test/${id}`).then(res => {
+        AuthFetchUtil.get(`/api/datasource/test/${id}`).then(res => {
             if (res.code === 200)
                 globalMessage.messageApi?.success(res.msg);
             else
@@ -72,7 +72,7 @@ export class DataSourceStore {
 
 
     deleteDataSource = (id: string) => {
-        FetchUtil.get(`/api/datasource/del/${id}`).then(res => {
+        AuthFetchUtil.get(`/api/datasource/del/${id}`).then(res => {
             if (res.code === 200) {
                 globalMessage.messageApi?.success(res.msg);
                 this.getDataSourceList();
@@ -82,7 +82,7 @@ export class DataSourceStore {
     }
 
     copyDataSource = (id: string) => {
-        FetchUtil.get(`/api/datasource/copy/${id}`).then(res => {
+        AuthFetchUtil.get(`/api/datasource/copy/${id}`).then(res => {
             if (res.code === 200) {
                 globalMessage.messageApi?.success(res.msg);
                 this.getDataSourceList();
@@ -92,7 +92,7 @@ export class DataSourceStore {
     }
 
     openDataSourceEditor = (id: string) => {
-        FetchUtil.get(`/api/datasource/get/${id}`).then(res => {
+        AuthFetchUtil.get(`/api/datasource/get/${id}`).then(res => {
             if (res.code === 200) {
                 this.setDataSource(res.data);
                 this.setEditVisible(true);
@@ -102,7 +102,7 @@ export class DataSourceStore {
     }
 
     getDataSourceList = () => {
-        FetchUtil.post(`/api/datasource/pageList`, {
+        AuthFetchUtil.post(`/api/datasource/pageList`, {
             current: this.dataSourcePageData.current,
             size: this.dataSourcePageData.size,
             searchValue: this.searchValue
@@ -128,7 +128,7 @@ export class DataSourceStore {
     }
 
     updateDataSource = (data: DataSourceConfigType) => {
-        FetchUtil.post(`/api/datasource/update`, data).then(res => {
+        AuthFetchUtil.post(`/api/datasource/update`, data).then(res => {
             if (res.code === 200) {
                 globalMessage.messageApi?.success(res.msg);
                 this.getDataSourceList();
@@ -139,7 +139,7 @@ export class DataSourceStore {
     }
 
     createDataSource = (data: DataSourceConfigType) => {
-        FetchUtil.post(`/api/datasource/add`, data).then(res => {
+        AuthFetchUtil.post(`/api/datasource/add`, data).then(res => {
             if (res.code === 200) {
                 globalMessage.messageApi?.success(res.msg);
                 this.getDataSourceList();

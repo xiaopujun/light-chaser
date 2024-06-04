@@ -13,10 +13,9 @@ export default class FetchUtil {
     static async post(url: string, data: any, options: RequestInit = {}): Promise<HttpResponse> {
         options.method = 'POST';
         //默认'Content-Type': 'application/json',
-        if (!options.headers) {
-            options.headers = {
-                'Content-Type': 'application/json',
-            };
+        options.headers = options.headers || {};
+        if (!options.headers || !('Content-Type' in options.headers)) {
+            (options.headers as any)['Content-Type'] = 'application/json';
         }
 
         const contentType = (options.headers as any)['Content-Type'] || 'application/json';

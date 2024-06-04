@@ -7,7 +7,7 @@ import {globalMessage} from "../../../../framework/message/GlobalMessage.tsx";
 import {ISelectOption} from "../../../../json-schema/ui/select/Select.tsx";
 import ObjectUtil from "../../../../utils/ObjectUtil.ts";
 import {IDatabase} from "../../../../designer/DesignerType.ts";
-import FetchUtil from "../../../../utils/FetchUtil.ts";
+import AuthFetchUtil from "../../../../utils/AuthFetchUtil.ts";
 
 export interface DatabaseDataConfigProps {
     controller: AbstractDesignerController;
@@ -22,7 +22,7 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
     const [count, setCount] = useState(0);
 
     useEffect(() => {
-        FetchUtil.get(`/api/datasource/list`).then(res => {
+        AuthFetchUtil.get(`/api/datasource/list`).then(res => {
             if (res.code === 200) {
                 const options = (res.data as Array<DataSourceConfigType>).map(item => {
                     return {label: item.name, value: item.id}
@@ -55,7 +55,7 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
             return;
 
         const {targetDb, sql, filter} = dataRef.current;
-        FetchUtil.post(`/api/db/executor/execute`, {id: targetDb, sql}).then(res => {
+        AuthFetchUtil.post(`/api/db/executor/execute`, {id: targetDb, sql}).then(res => {
             let {data, code, msg} = res;
             if (code === 200) {
                 if (filter && filter !== '') {
