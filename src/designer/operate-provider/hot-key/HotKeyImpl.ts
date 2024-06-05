@@ -26,14 +26,17 @@ import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
 export const selectAll = () => {
     const {layerConfigs} = layerManager;
     const {setTargetIds, calculateGroupCoordinate} = eventOperateStore;
-    const selected = Object.values(layerConfigs).map((item: ILayerItem) => {
+    const selected = [];
+    for (const id in layerConfigs) {
+        const item = layerConfigs[id];
         if (!item.lock && !item.hide)
-            return item.id;
-    });
-    setTargetIds(selected as string[]);
+            selected.push(id);
+    }
 
-    if (selected.length > 0)
+    if (selected.length > 0) {
+        setTargetIds(selected as string[]);
         calculateGroupCoordinate(selected.map((id: string | undefined) => document.getElementById(id!))?.filter((item: HTMLElement | null) => !!item) as HTMLElement[]);
+    }
 }
 
 /**
