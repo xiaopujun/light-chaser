@@ -40,7 +40,7 @@ export const reRenderLine = (lines: IBPLine[]) => {
     });
 
     //重新绘制连线
-    downCtx!.clearRect(0, 0, canvasW, canvasH);
+    downCtx!.clearRect(0, 0, canvasW + 10, canvasH + 10);
     CanvasUtil.drawBezierCurves(downCtx!, lines);
 }
 

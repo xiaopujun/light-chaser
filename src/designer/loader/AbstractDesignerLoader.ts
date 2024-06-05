@@ -25,7 +25,7 @@ export abstract class AbstractDesignerLoader {
      */
     protected scanComponents(): void {
         const glob = import.meta.glob('../../comps/**/*.ts', {eager: true}) as Record<string, any>;
-        Object.keys(glob).forEach(key => {
+        for (const key of Object.keys(glob)) {
             const Clazz = glob[key]?.default;
             if (Clazz && AbstractDefinition.isPrototypeOf(Clazz)) {
                 const definition: AbstractDefinition = new Clazz();
@@ -41,7 +41,7 @@ export abstract class AbstractDesignerLoader {
                     if (categorize) {
                         if (!categorize.icon) {
                             console.error("自定义组件的分类必须指定icon");
-                            return;
+                            continue;
                         } else
                             componentCategorize.push(categorize);
                     }
@@ -52,7 +52,7 @@ export abstract class AbstractDesignerLoader {
                     if (subCategorize) {
                         if (!subCategorize.parentKey) {
                             console.error("自定义组件的子类型必须指定parentKey");
-                            return;
+                            continue;
                         } else
                             componentCategorize.push(subCategorize);
                     }
@@ -62,7 +62,7 @@ export abstract class AbstractDesignerLoader {
                 const convertKey = convert.getKey();
                 this.convertMap[convertKey] = convert;
             }
-        });
+        }
     }
 
     /**

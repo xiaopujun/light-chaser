@@ -64,7 +64,9 @@ class AntdGroupBarDefinition extends AbstractBarDefinition {
                 yField: "label",
                 seriesField: "type",
                 color: ["#00a6ffff", "#5dd1ffff"],
-                barStyle: {},
+                barStyle: {
+                    radius: 0,
+                },
                 xAxis: {
                     grid: null,
                     label: {
@@ -116,6 +118,15 @@ class AntdGroupBarDefinition extends AbstractBarDefinition {
                         duration: 3000,
                     },
                 },
+            },
+            filter: {
+                enable: false,
+                blur: 0,
+                brightness: 1,
+                contrast: 1,
+                opacity: 1,
+                saturate: 1,
+                hueRotate: 0
             },
             data: {
                 sourceType: 'static',

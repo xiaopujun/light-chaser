@@ -9,16 +9,17 @@ import layerManager from "../../manager/LayerManager.ts";
 class LayerListStore {
     constructor() {
         makeObservable(this, {
-            searchContent: observable,
-            setContent: action,
+            searchLayer: observable,
+            setSearchLayer: action,
         });
     }
 
     layerInstances: Record<string, Component> = {};
 
-    searchContent = "";
+    searchLayer: boolean = false;
 
-    setContent = (content: string) => this.searchContent = content;
+    setSearchLayer = (searchlayer: boolean) => this.searchLayer = searchlayer;
+
 
     /**
      * 更新图层的锁定状态，包括普通图层和分组图层

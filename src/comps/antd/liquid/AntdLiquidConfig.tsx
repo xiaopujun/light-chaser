@@ -126,7 +126,20 @@ export default function AntdLiquidConfig(props: ConfigType<AntdLiquidController>
                                     step: 1,
                                 }
                             },
-
+                            {
+                                key: 'style',
+                                children: [
+                                    {
+                                        key: 'stroke',
+                                        type: 'color-picker',
+                                        label: '颜色',
+                                        value: (config?.outline?.style as ShapeAttrs)?.stroke,
+                                        config: {
+                                            showText: true
+                                        }
+                                    }
+                                ]
+                            }
                         ]
                     }
                 ]

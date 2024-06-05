@@ -7,7 +7,7 @@ import {
     LiquidOptions,
     Options,
     PieOptions,
-    RadarOptions,
+    RadarOptions, RadialBarOptions,
     RingProgressOptions,
     RoseOptions,
     ScatterOptions, WordCloudOptions
@@ -59,6 +59,10 @@ export type WritableRadarOptions = {
 
 export type WritableWordCloudOptions = {
     -readonly [K in keyof WordCloudOptions]?: WordCloudOptions[K];
+};
+
+export type WritableRadialBarOptions = {
+    -readonly [K in keyof RadialBarOptions]?: RadialBarOptions[K];
 };
 
 

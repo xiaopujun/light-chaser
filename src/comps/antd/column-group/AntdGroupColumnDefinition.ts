@@ -66,7 +66,9 @@ class AntdGroupColumnDefinition extends AbstractColumnDefinition {
                 maxColumnWidth: 8,
                 supportCSSTransform: true,
                 color: ["#00c0df", "#298aff"],
-                columnStyle: {},
+                columnStyle: {
+                    radius: 0,
+                },
                 xAxis: {
                     grid: null,
                     label: {

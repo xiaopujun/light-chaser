@@ -1,6 +1,6 @@
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
 import {UpdateOptions} from "../../framework/core/AbstractController";
-import {ComponentBaseProps} from "../common-component/common-types";
+import {ComponentBaseProps} from "../common-component/CommonTypes.ts";
 import {Options, Plot} from "@antv/g2plot";
 import ObjectUtil from "../../utils/ObjectUtil";
 import BPExecutor from "../../designer/blueprint/core/BPExecutor";

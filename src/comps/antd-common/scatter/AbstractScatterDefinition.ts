@@ -2,7 +2,7 @@ import React from "react";
 import {MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import {ClazzTemplate} from "../../common-component/common-types";
+import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import AntdCommonScatterController, {AntdScatterProps} from "./AntdCommonScatterController";
 import {AntdCommonDefinition} from "../AntdCommonDefinition";
 
@@ -24,7 +24,7 @@ abstract class AbstractScatterDefinition extends AntdCommonDefinition<AntdCommon
         return getDefaultMenuList();
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         return {
             base: BaseInfo,
             data: DataConfig,

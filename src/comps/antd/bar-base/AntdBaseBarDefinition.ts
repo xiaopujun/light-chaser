@@ -46,7 +46,9 @@ class AntdBaseBarDefinition extends AbstractBarDefinition {
                 seriesField: "name",
                 maxBarWidth: 8,
                 color: ["#005d71ff", "#00d0e4ff", "#5bf0ffff"],
-                barStyle: undefined,
+                barStyle: {
+                    radius: 0,
+                },
                 supportCSSTransform: true,
                 xAxis: {
                     grid: null,

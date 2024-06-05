@@ -1,6 +1,6 @@
 import eventOperateStore from "../EventOperateStore";
 import layerManager from "../../manager/LayerManager.ts";
-import {ILayerItem, IProjectInfo, SaveType} from "../../DesignerType";
+import {DesignerMode, ILayerItem, IProjectInfo, SaveType} from "../../DesignerType";
 import {throttle} from "lodash";
 import {historyOperator} from "../undo-redo/HistoryOperator";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
@@ -16,21 +16,27 @@ import LayerUtil from "../../left/layer-list/util/LayerUtil.ts";
 import bluePrintHdStore from "../../header/items/blue-print/BluePrintHdStore.ts";
 import themeHdStore from "../../header/items/theme/ThemeManager.ts";
 import canvasHdStore from "../../header/items/canvas/CanvasManager.ts";
-import projectHdStore from "../../header/items/project/ProjecManager.ts";
 import canvasManager from "../../header/items/canvas/CanvasManager.ts";
+import projectHdStore from "../../header/items/project/ProjecManager.ts";
 import designerManager from "../../manager/DesignerManager.ts";
+import FileUtil from "../../../utils/FileUtil.ts";
+import layerListStore from "../../left/layer-list/LayerListStore.ts";
+import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
 
 export const selectAll = () => {
     const {layerConfigs} = layerManager;
     const {setTargetIds, calculateGroupCoordinate} = eventOperateStore;
-    const selected = Object.values(layerConfigs).map((item: ILayerItem) => {
+    const selected = [];
+    for (const id in layerConfigs) {
+        const item = layerConfigs[id];
         if (!item.lock && !item.hide)
-            return item.id;
-    });
-    setTargetIds(selected as string[]);
+            selected.push(id);
+    }
 
-    if (selected.length > 0)
+    if (selected.length > 0) {
+        setTargetIds(selected as string[]);
         calculateGroupCoordinate(selected.map((id: string | undefined) => document.getElementById(id!))?.filter((item: HTMLElement | null) => !!item) as HTMLElement[]);
+    }
 }
 
 /**
@@ -440,7 +446,6 @@ export const toggleSecondaryBorder = () => {
  */
 export const toggleProjectConfig = () => {
     const {projectVisible, setProjectVisible} = projectHdStore;
-    console.log(projectVisible)
     setProjectVisible(!projectVisible);
 }
 
@@ -466,6 +471,109 @@ export const toggleGlobalThemeConfig = () => {
 export const toggleHotKeyDes = () => {
     const {hotKeyVisible, setHotKeyVisible} = footerStore;
     setHotKeyVisible(!hotKeyVisible)
+}
+
+export const exportProject = () => {
+    globalMessage.messageApi?.open({
+        type: 'loading',
+        content: '正在导出项目数据...'
+    })
+    const timeout = setTimeout(() => {
+        const projectData = designerManager.getData();
+        const elemConfigs = projectData.layerManager?.elemConfigs;
+        const promises: Promise<void>[] = [];
+        if (elemConfigs) {
+            Object.keys(elemConfigs).forEach((key) => {
+                const item = elemConfigs[key];
+                if (item.base.type === 'BaseImage' && (item.style.localUrl as string)?.startsWith('blob')) {
+                    // 将 blob 数据转换为 base64，并将异步操作添加到 promises 数组中
+                    promises.push(
+                        FileUtil.blobToBase64(item.style.localUrl as string).then((res: string | boolean) => {
+                            if (res)
+                                item.style.localUrl = res;
+                            else {
+                                console.error(`${item.base.id + "_" + item.base.name} 图片blob转换失败, ${item.style.localUrl}`);
+                            }
+                        })
+                    );
+                }
+            });
+        }
+        // 等待所有异步操作完成
+        Promise.all(promises).then(() => {
+            // 在所有异步操作完成后，将项目数据转换为 JSON 字符串并导出
+            const exportData = {flag: 'pyz_tt', version: 'v1.1.0', data: projectData};
+            const projectDataJson = JSON.stringify(exportData);
+            const blob = new Blob([projectDataJson], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a')
+            a.href = url;
+            a.download = `project-${new Date().getTime()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            globalMessage.messageApi?.destroy();
+            globalMessage.messageApi?.success('项目数据导出成功');
+        });
+        clearTimeout(timeout);
+    }, 1000);
+}
+
+export const importProject = () => {
+    //打开文件选择框
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = (e: any) => {
+        globalMessage.messageApi?.open({
+            type: 'loading',
+            content: '正在导入项目数据...'
+        })
+        const file = e.target.files[0] as File;
+        if (!file)
+            return;
+        const promises: Promise<void>[] = [];
+        file.text().then((fileData: string) => {
+            const timeout = setTimeout(() => {
+                const importData = JSON.parse(fileData);
+                if (!('flag' in importData) || importData.flag !== 'pyz_tt') {
+                    globalMessage.messageApi?.destroy();
+                    globalMessage.messageApi?.info('数据格式错误，请检查导入文件内容。')
+                    return;
+                }
+                const projectData = importData.data;
+                const elemConfigs = projectData.layerManager?.elemConfigs;
+                if (elemConfigs) {
+                    Object.keys(elemConfigs).forEach((key) => {
+                        const item = elemConfigs[key];
+                        if (item.base.type === 'BaseImage' && (item.style.localUrl as string)?.startsWith('blob')) {
+                            // 将 blob 数据转换为 base64，并将异步操作添加到 promises 数组中
+                            promises.push(
+                                FileUtil.base64ToBlob(item.style.localUrl as string).then((res: string | boolean) => {
+                                    if (res)
+                                        item.style.localUrl = res;
+                                    else {
+                                        console.error(`${item.base.id + "_" + item.base.name} 图片blob转换失败, ${item.style.localUrl}`);
+                                    }
+                                })
+                            );
+                        }
+                    });
+                }
+                Promise.all(promises).then(() => {
+                    designerManager.init(projectData as any, DesignerMode.EDIT);
+                    globalMessage.messageApi?.destroy();
+                    globalMessage.messageApi?.success('项目数据导入成功');
+                    clearTimeout(timeout);
+                });
+            }, 500);
+        })
+    }
+    input.click();
+}
+
+export const searchLayer = () => {
+    const {searchLayer, setSearchLayer} = layerListStore;
+    setSearchLayer(!searchLayer);
 }
 
 /*************************蓝图快捷键实现*************************/

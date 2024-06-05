@@ -5,7 +5,7 @@ import ObjectUtil from "../../../utils/ObjectUtil";
 import {AbstractBPNodeController, AnchorPointInfoType} from "../node/core/AbstractBPNodeController";
 import bpNodeControllerMap from "../node/core/impl/BPNodeControllerMap";
 import {BluePrintManagerDataType, DesignerMode} from "../../DesignerType.ts";
-import {ClazzTemplate} from "../../../comps/common-component/common-types.ts";
+import {ClazzTemplate} from "../../../comps/common-component/CommonTypes.ts";
 import bpLeftStore from "../left/BPLeftStore.ts";
 import AbstractManager from "../../manager/core/AbstractManager.ts";
 

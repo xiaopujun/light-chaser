@@ -38,10 +38,10 @@ export default function AntdGaugeConfig(props: ConfigType<AntdGaugeController>) 
                                 key: 'startAngle',
                                 type: 'number-input',
                                 label: '起始角度',
-                                value: config!.startAngle! / Math.PI,
+                                value: config!.startAngle! / Math.PI * 180,
                                 config: {
-                                    step: 0.01
-                                },
+                                    suffix: '°'
+                                }
                             },
                             {
                                 key: 'innerRadius',
@@ -60,10 +60,10 @@ export default function AntdGaugeConfig(props: ConfigType<AntdGaugeController>) 
                                 key: 'endAngle',
                                 type: 'number-input',
                                 label: '结束角度',
-                                value: config!.endAngle! / Math.PI,
+                                value: config!.endAngle! / Math.PI * 180,
                                 config: {
-                                    step: 0.01
-                                },
+                                    suffix: '°'
+                                }
                             }
                         ]
                     }
@@ -308,7 +308,7 @@ export default function AntdGaugeConfig(props: ConfigType<AntdGaugeController>) 
                                         key: 'fontSize',
                                         type: 'number-input',
                                         label: '字号',
-                                        value: ((config?.statistic?.content as StatisticText)?.style as CSSProperties)?.fontSize,
+                                        value: parseInt(((config?.statistic?.content as StatisticText)?.style as CSSProperties)?.fontSize as string),
                                         config: {
                                             min: 0,
                                         }
@@ -326,7 +326,7 @@ export default function AntdGaugeConfig(props: ConfigType<AntdGaugeController>) 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
         let {dataFragment, id, data, dataKeyPath} = fieldChangeData;
         if (id === 'startAngle' || id === 'endAngle')
-            dataFragment = LCGUIUtil.createObjectFromArray(dataKeyPath, Number(data!) * Math.PI);
+            dataFragment = LCGUIUtil.createObjectFromArray(dataKeyPath, Number(data!) / 180 * Math.PI);
         controller.update(dataFragment);
     }
 

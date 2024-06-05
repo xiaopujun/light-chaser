@@ -1,7 +1,6 @@
 import React, {Component, useState} from 'react';
 import {WritableRoseOptions} from "../types";
 import {RoseOptions} from "@antv/g2plot";
-import {Legend} from "@antv/g2plot/lib/types/legend";
 import AntdCommonRoseController from "./AntdCommonRoseController";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
@@ -16,11 +15,6 @@ export default class AntdRoseCommonStyleConfig extends Component<ConfigType> {
     roseGraphicsChange = (config: WritableRoseOptions) => {
         const controller = this.props.controller as AntdCommonRoseController;
         controller.update({style: config});
-    }
-
-    legendChange = (legend: Legend) => {
-        const controller = this.props.controller as AntdCommonRoseController;
-        controller.update({style: {legend}});
     }
 
     render() {
@@ -47,7 +41,7 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
         let {id, data, dataKeyPath, dataFragment, reRender} = fieldChangeData;
         if (id === 'startAngle' || id === 'endAngle') {
-            data = Math.PI * (data as number);
+            data = Math.PI * (data as number) / 180;
             onChange && onChange(LCGUIUtil.createObjectFromArray(dataKeyPath, data));
         } else if (id === "labelRotate") {
             onChange({label: {rotate: (data as number) * Math.PI}});
@@ -84,12 +78,9 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                                 key: 'startAngle',
                                 type: 'number-input',
                                 label: '起始角',
-                                value: (config.startAngle || 0) / Math.PI,
+                                value: (config.startAngle || 0) / Math.PI * 180,
                                 config: {
-                                    suffix: 'Π',
-                                    min: 0,
-                                    max: 2,
-                                    step: 0.01
+                                    suffix: '°',
                                 }
                             },
                             {
@@ -108,22 +99,19 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                                 key: 'endAngle',
                                 type: 'number-input',
                                 label: '结束角',
-                                value: (config.endAngle || 2 * Math.PI) / Math.PI,
+                                value: (config.endAngle || 2 * Math.PI) / Math.PI * 180,
                                 config: {
-                                    suffix: 'Π',
-                                    min: 0,
-                                    max: 2,
-                                    step: 0.01
-                                }
+                                    suffix: '°',
+                                },
                             },
                             {
-                                key: 'pieStyle',
+                                key: 'sectorStyle',
                                 children: [
                                     {
                                         key: 'stroke',
                                         type: 'color-picker',
                                         label: '描边色',
-                                        value: '#1c1c1c',
+                                        value: config.sectorStyle?.stroke,
                                         config: {
                                             showText: true,
                                         }
@@ -132,7 +120,7 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                                         key: 'lineWidth',
                                         type: 'number-input',
                                         label: '描边宽',
-                                        value: 0,
+                                        value: config.sectorStyle?.lineWidth,
                                         config: {
                                             min: 0,
                                             max: 30,

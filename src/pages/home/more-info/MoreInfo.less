@@ -1,0 +1,44 @@
+.more-info-list {
+  padding: 15px;
+  color: white;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-gap: 25px;
+  font-size: 20px;
+  font-family: '庞门正道标题体免费版', serif;
+
+  .more-info-item {
+    padding: 10px;
+    position: relative;
+    height: 160px;
+    background-color: #00477a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .more-info-item:nth-child(1) {
+    background-image: url('./image/video.png');
+  }
+
+  .more-info-item:nth-child(2) {
+    background-image: url('./image/document.png');
+  }
+
+  .more-info-item:nth-child(3) {
+    background-image: url('./image/github.png');
+  }
+
+  .more-info-item:nth-child(4) {
+    background-image: url('./image/gitee.png');
+  }
+
+
+  .more-info-item:hover {
+    cursor: pointer;
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(9, 91, 110, 0.53);
+  }
+}

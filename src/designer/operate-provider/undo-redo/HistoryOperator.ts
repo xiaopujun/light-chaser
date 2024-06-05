@@ -2,7 +2,7 @@ import HistoryQueue from "./HistoryQueue";
 import {IHistoryRecords} from "./OperateType";
 
 class HistoryOperator {
-    private queue: HistoryQueue<IHistoryRecords> = new HistoryQueue<IHistoryRecords>(50);
+    private queue: HistoryQueue<IHistoryRecords> = new HistoryQueue<IHistoryRecords>(100);
 
     public put(record: IHistoryRecords): void {
         this.queue.enqueue(record);

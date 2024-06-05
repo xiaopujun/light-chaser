@@ -6,9 +6,7 @@ import {MappingOptions} from "@antv/g2plot/lib/adaptor/geometries/base";
 import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
-import LCGUIUtil from "../../../json-schema/LCGUIUtil";
 import AntdCommonUtil from "../../antd-common/AntdCommonUtil";
-import ColorUtil from "../../../utils/ColorUtil";
 import {ConfigType} from "../../../designer/right/ConfigContent";
 
 class AntdBaseAreaStyleConfig extends Component<ConfigType> {
@@ -42,25 +40,7 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
     const config: AreaOptions = controller.getConfig().style;
 
     const _onChange = (fieldChangeData: FieldChangeData) => {
-        let {id, data, dataKeyPath} = fieldChangeData;
-
-        if (id === 'areaColor') {
-            //解析渐变色
-            if (typeof data === 'string' && data.indexOf('linear-gradient') !== -1) {
-                //线性渐变
-                const gradientColor = ColorUtil.parseGradient(data.toLowerCase());
-                const colorStr = gradientColor?.colors?.map(item => `${item.pos}:${item.color}`).join(' ');
-                data = `l(${gradientColor.angle}) ${colorStr}`;
-                controller.update(LCGUIUtil.createObjectFromArray(dataKeyPath, data));
-            } else if (typeof data === 'string' && data.indexOf('radial-gradient')! === -1) {
-                //径向渐变
-                console.log('暂不径向渐变')
-            } else {
-                controller.update({areaStyle: data});
-            }
-        } else {
-            controller.update(fieldChangeData.dataFragment);
-        }
+        controller.update(fieldChangeData.dataFragment);
     }
 
     const schema: Control = {
@@ -184,16 +164,17 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
                             },
                             {
                                 key: 'line',
-                                children: [{
-                                    key: 'size',
-                                    type: 'number-input',
-                                    label: '宽度',
-                                    value: config?.line?.size as number || 0,
-                                    config: {
-                                        min: 0,
-                                        max: 10,
-                                    }
-                                },
+                                children: [
+                                    {
+                                        key: 'size',
+                                        type: 'number-input',
+                                        label: '宽度',
+                                        value: config?.line?.size as number || 0,
+                                        config: {
+                                            min: 0,
+                                            max: 10,
+                                        }
+                                    },
                                     {
                                         key: 'color',
                                         type: 'color-picker',
@@ -202,7 +183,8 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
                                         config: {
                                             showText: true,
                                         }
-                                    }]
+                                    }
+                                ]
                             }
                         ]
                     }
@@ -211,27 +193,20 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
             {
                 label: '数据面',
                 type: 'card-panel',
+                key: 'areaStyle',
                 children: [
                     {
-                        key: 'areaStyle',
-                        children: [
-                            {
-                                type: 'grid',
-                                config: {
-                                    columns: 2,
-                                },
-                                children: [{
-                                    id: 'areaColor',
-                                    key: 'fill',
-                                    type: 'color-picker',
-                                    label: '颜色',
-                                    value: (config?.point?.style as ShapeStyle)?.fill || '#fff',
-                                    config: {
-                                        showText: true,
-                                    }
-                                }]
+                        type: 'grid',
+                        config: {columns: 2},
+                        children: [{
+                            key: 'fill',
+                            type: 'color-picker',
+                            label: '颜色',
+                            value: (config?.areaStyle as ShapeStyle)?.fill || '#fff',
+                            config: {
+                                showText: true,
                             }
-                        ]
+                        }]
                     }
                 ]
             }

@@ -33,8 +33,6 @@ export class DelRollbackImpl extends AbstractRollback {
         setTargetIds([]);
         //删除元素后重新聚焦画布
         focusDesignerCanvas();
-
-        console.log('del redo', toJS(layerManager.layerConfigs), layerManager.layerHeader, layerManager.layerTail);
     }
 
     undo(record: IHistoryRecord): void {

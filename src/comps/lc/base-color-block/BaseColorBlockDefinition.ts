@@ -1,19 +1,20 @@
-import {
-    AbstractDefinition, BaseInfoType, EventInfo,
-    MenuToConfigMappingType
-} from "../../../framework/core/AbstractDefinition";
-import {ClazzTemplate} from "../../common-component/common-types";
+import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
+import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import baseColorBlockImg from './base-color-block.png';
-import {getDefaultMenuList} from "../../../designer/right/util";
 import {BaseColorBlockController} from "./BaseColorBlockController";
 import {BaseColorBlockComponentProps} from "./BaseColorBlockComponent";
-import BaseInfo from "../../common-component/base-info/BaseInfo";
-import AnimationConfig from "../../common-component/animation-config/AnimationConfig";
-import ThemeConfig from "../../common-component/theme-config/ThemeConfig";
 import {BaseColorBlockConfig} from "./BaseColorBlockConfig";
+import React from "react";
+import AbstractDesignerDefinition from "../../../framework/core/AbstractDesignerDefinition.ts";
 
-export default class BaseColorBlockDefinition extends AbstractDefinition<BaseColorBlockController, BaseColorBlockComponentProps> {
+const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
+const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig.tsx"));
+const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig.tsx"));
+const FilterConfig = React.lazy(() => import("../../common-component/filter-config/FilterConfig.tsx"));
+
+
+export default class BaseColorBlockDefinition extends AbstractDesignerDefinition<BaseColorBlockController, BaseColorBlockComponentProps> {
     getBaseInfo(): BaseInfoType {
         return {
             compName: "基础色块",
@@ -44,19 +45,29 @@ export default class BaseColorBlockDefinition extends AbstractDefinition<BaseCol
                 borderColor: '#74747400',
                 borderStyle: 'none',
             },
+            filter: {
+                enable: false,
+                blur: 0,
+                brightness: 1,
+                contrast: 1,
+                opacity: 1,
+                saturate: 1,
+                hueRotate: 0
+            },
         };
     }
 
-    getMenuList(): Array<MenuInfo> | null {
-        return getDefaultMenuList().filter((item: MenuInfo) => (item.key !== 'theme' && item.key !== 'data' && item.key !== 'mapping'));
+    getMenuList(): Array<MenuInfo> {
+        return super.getMenuList().filter((item: MenuInfo) => (item.key !== 'theme' && item.key !== 'data' && item.key !== 'mapping'));
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         return {
             base: BaseInfo,
             style: BaseColorBlockConfig,
             animation: AnimationConfig,
-            theme: ThemeConfig
+            theme: ThemeConfig,
+            filter: FilterConfig
         };
     }
 

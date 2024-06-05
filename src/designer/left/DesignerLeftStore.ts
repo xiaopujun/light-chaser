@@ -1,9 +1,8 @@
 import {action, makeObservable, observable} from "mobx";
-import {AppstoreAddOutlined, BlockOutlined, UngroupOutlined} from "@ant-design/icons";
-import {ComponentType} from "react";
+import {ReactNode} from "react";
 
 export interface ILeftMenu {
-    icon: ComponentType,
+    icon: ReactNode,
     name: string,
     key: string,
 }
@@ -19,23 +18,28 @@ class DesignerLeftStore {
     /**
      * 分类列表
      */
-    menus: Array<ILeftMenu> = [
-        {
-            icon: BlockOutlined,
-            name: "图层",
-            key: 'layer-list',
-        },
-        {
-            icon: AppstoreAddOutlined,
-            name: "组件库",
-            key: 'components',
-        },
-        {
-            icon: UngroupOutlined,
-            name: "资源库",
-            key: 'source-list',
-        },
-    ];
+    // menus: Array<ILeftMenu> = [
+    //     {
+    //         icon: AppstoreAddOutlined,
+    //         name: "组件库",
+    //         key: 'components',
+    //     },
+    //     {
+    //         icon: UngroupOutlined,
+    //         name: "资源库",
+    //         key: 'source-list',
+    //     },
+    //     {
+    //         icon: FilterOutlined,
+    //         name: "过滤器",
+    //         key: 'filter-list',
+    //     },
+    //     {
+    //         icon: BlockOutlined,
+    //         name: "图层",
+    //         key: 'layer-list',
+    //     },
+    // ];
 
     menu: string = '';
 

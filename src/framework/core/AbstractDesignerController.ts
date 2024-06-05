@@ -1,7 +1,7 @@
-import {ThemeItemType} from "../../designer/DesignerType";
+import {APIConfig, IDatabase, IFilterConfigType, ThemeItemType} from "../../designer/DesignerType";
 import AbstractController from "./AbstractController";
-import HttpUtil from "../../utils/HttpUtil";
-import {ComponentBaseProps} from "../../comps/common-component/common-types";
+import {ComponentBaseProps} from "../../comps/common-component/CommonTypes.ts";
+import FetchUtil from "../../utils/FetchUtil.ts";
 
 /**
  * AbstractDesignerController继承自AbstractController，在泛型的定义和约束上和AbstractController完全保持一致。
@@ -12,8 +12,6 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
     protected interval: NodeJS.Timeout | null = null;
     //上一次数据连接状态 true：成功 false：失败
     protected lastReqState: boolean = true;
-    //断线重连标识
-    protected reConnect: boolean = false;
     //异常提示信息dom元素
     private errMsgDom: HTMLElement | null = null;
 
@@ -30,6 +28,76 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
     public registerEvent(): void {
     }
 
+
+    private doApi = (config: APIConfig) => {
+        const {url, method, params, header, frequency = 5, filter, autoFlush} = config;
+        const request = () => {
+            FetchUtil.doRequest(url!, method!, header, params).then((res) => {
+                let {code, data} = res;
+                if (code === 200) {
+                    if (!this.lastReqState) {
+                        this.lastReqState = true;
+                        this.errMsgDom?.remove();
+                        this.errMsgDom = null;
+                    }
+                    if (filter && filter !== '') {
+                        const func = eval(`(${filter})`);
+                        data = typeof func === 'function' ? func(data) : data;
+                    }
+                    this.changeData(data);
+                } else {
+                    this.lastReqState = false;
+                    //请求失败，在原有容器的基础上添加异常提示信息的dom元素（此处直接操作dom元素，不适用react的api进行组件的反复挂载和卸载）
+                    if (!this.errMsgDom) {
+                        this.errMsgDom = document.createElement("div");
+                        this.errMsgDom.classList.add("view-error-message");
+                        this.errMsgDom.innerText = "数据加载失败...";
+                        this.container!.appendChild(this.errMsgDom);
+                    }
+                }
+            });
+        }
+        if (autoFlush)
+            this.interval = setInterval(() => request(), frequency * 1000);
+        else
+            request();
+    }
+
+    private doDatabase = (config: IDatabase) => {
+        const {sql, targetDb, filter, frequency, autoFlush} = config;
+        const request = () => {
+            FetchUtil.post(`/api/db/executor/execute`, {id: targetDb, sql}).then(res => {
+                let {data, code} = res;
+                if (code === 200) {
+                    if (!this.lastReqState) {
+                        this.lastReqState = true;
+                        this.errMsgDom?.remove();
+                        this.errMsgDom = null;
+                    }
+                    if (filter && filter !== '') {
+                        const func = eval(`(${filter})`);
+                        data = typeof func === 'function' ? func(data) : data;
+                    }
+                    this.changeData(data);
+                } else {
+                    this.lastReqState = false;
+                    //请求失败，在原有容器的基础上添加异常提示信息的dom元素（此处直接操作dom元素，不适用react的api进行组件的反复挂载和卸载）
+                    if (!this.errMsgDom) {
+                        this.errMsgDom = document.createElement("div");
+                        this.errMsgDom.classList.add("view-error-message");
+                        this.errMsgDom.innerText = "数据加载失败...";
+                        this.container!.appendChild(this.errMsgDom);
+                    }
+                }
+            });
+        }
+
+        if (autoFlush)
+            this.interval = setInterval(() => request(), (frequency || 5) * 1000);
+        else
+            request();
+    }
+
     /**
      * 加载组件数据，用于在预览（展示）模式下渲染完组件后根据当前组件的数据配置自动加载并更新组件数组。
      * 注：若自定义组件有自己的数据加载方式，则需要覆写此方法
@@ -44,29 +112,10 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
                 //静态数据不做处理，组件首次渲染时默认读取静态数据
                 break;
             case "api":
-                const {url, method, params, header, frequency = 5} = data?.apiData!;
-                this.interval = setInterval(() => {
-                    HttpUtil.sendHttpRequest(url!, method!, header!, params!).then((data: any) => {
-                        if (data) {
-                            if (!this.lastReqState) {
-                                this.lastReqState = true;
-                                this.errMsgDom?.remove();
-                                this.errMsgDom = null;
-                                this.changeData(data);
-                            }
-                            this.changeData(data);
-                        }
-                    }).catch(() => {
-                        this.lastReqState = false;
-                        //请求失败，在原有容器的基础上添加异常提示信息的dom元素（此处直接操作dom元素，不适用react的api进行组件的反复挂载和卸载）
-                        if (!this.errMsgDom) {
-                            this.errMsgDom = document.createElement("div");
-                            this.errMsgDom.classList.add("view-error-message");
-                            this.errMsgDom.innerText = "数据加载失败...";
-                            this.container!.appendChild(this.errMsgDom);
-                        }
-                    });
-                }, frequency * 1000);
+                this.doApi(data?.apiData!);
+                break;
+            case 'database':
+                this.doDatabase(data?.database!);
                 break;
         }
     }
@@ -76,6 +125,18 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
      * @param newTheme 新主题
      */
     public updateTheme(newTheme: ThemeItemType): void {
+    }
+
+    public updateFilter(filter: IFilterConfigType): void {
+        if (this.config && (this.config as ComponentBaseProps).filter)
+            (this.config as ComponentBaseProps)!.filter = filter;
+        if (!this.container)
+            return;
+        if (filter?.enable) {
+            this.container.style.filter = `blur(${filter.blur}px) brightness(${filter.brightness}) contrast(${filter.contrast}) opacity(${filter.opacity}) saturate(${filter.saturate}) hue-rotate(${filter.hueRotate}deg)`
+        } else {
+            this.container.style.filter = 'none';
+        }
     }
 
 }

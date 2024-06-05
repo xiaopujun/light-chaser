@@ -41,7 +41,7 @@ class AntdRangeColumnDefinition extends AbstractColumnDefinition {
                 supportCSSTransform: true,
                 color: ["#00dbffff"],
                 columnStyle: {
-                    fill: "#00c0df",
+                    radius: 0,
                 },
                 xAxis: {
                     grid: null,

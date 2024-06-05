@@ -66,7 +66,9 @@ class AntdStackBarDefinition extends AbstractBarDefinition {
                 maxBarWidth: 8,
                 supportCSSTransform: true,
                 color: ["#00c0df", "#298aff"],
-                barStyle: {},
+                barStyle: {
+                    radius: 0,
+                },
                 xAxis: {
                     grid: null,
                     label: {

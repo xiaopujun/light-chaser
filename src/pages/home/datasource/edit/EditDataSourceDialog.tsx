@@ -48,6 +48,9 @@ export default function EditDataSourceDialog(props: CreateDataSourceDialogProps)
                 config: {
                     options: [
                         {label: 'MySQL', value: '0'},
+                        {label: 'PostgresSQL', value: '1'},
+                        {label: 'Oracle', value: '2'},
+                        {label: 'SQL Server', value: '3'},
                     ]
                 }
             },

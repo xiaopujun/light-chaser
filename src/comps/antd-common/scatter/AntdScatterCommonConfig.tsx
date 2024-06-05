@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {AntdCartesianCoordinateSys} from "../config/AntdFragment";
 import {Scatter, ScatterOptions} from "@antv/g2plot";
-import {Legend} from "@antv/g2plot/lib/types/legend";
 import AbstractController from "../../../framework/core/AbstractController";
 import AntdCommonScatterController, {AntdScatterProps} from "./AntdCommonScatterController";
 import {WritableScatterOptions} from "../types";
@@ -14,12 +13,6 @@ import {ShapeAttrs} from "@antv/g-base";
 import {ConfigType} from "../../../designer/right/ConfigContent";
 
 class AntdScatterCommonStyleConfig extends Component<ConfigType> {
-
-    legendChange = (legend: Legend) => {
-        const controller = this.props.controller as AntdCommonScatterController;
-        controller.update({style: {legend}});
-    }
-
     scatterCoordinateSysChange = (config: ScatterOptions) => {
         const controller = this.props.controller as AntdCommonScatterController;
         controller.update({style: config});

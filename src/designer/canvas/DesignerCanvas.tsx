@@ -8,11 +8,12 @@ import layerBuilder from "../left/layer-list/LayerBuilder";
 import LayerUtil from "../left/layer-list/util/LayerUtil";
 import DesignerMovable from "../operate-provider/movable/DesignerMovable.tsx";
 import Loading from "../../json-schema/ui/loading/Loading.tsx";
+import SearchLayer from "../left/layer-list/search-layer/SearchLayer.tsx";
 
 const DesignerContainer = lazy(() => import('../operate-provider/DesignerContainer'));
 const DesignerRuler = lazy(() => import('./DesignerRuler'));
 const GroupSelectable = lazy(() => import('../operate-provider/movable/DesignerSelectable'));
-const ContextMenu = lazy(() => import('../operate-provider/right-click-menu/ContextMenu'));
+const ContextMenu = lazy(() => import('../operate-provider/canvas-context-menu/CanvasContextMenu.tsx'));
 const HotKey = lazy(() => import('../operate-provider/hot-key/HotKey'));
 const DesignerDragScaleContainer = lazy(() => import('./DesignerDragScaleContainer'));
 
@@ -53,6 +54,7 @@ const DesignerCanvas = memo(observer(() => {
             </DesignerContainer>
             <ContextMenu/>
             <HotKey handlerMapping={hotkeyConfigs}/>
+            <SearchLayer/>
         </Suspense>
     );
 }))

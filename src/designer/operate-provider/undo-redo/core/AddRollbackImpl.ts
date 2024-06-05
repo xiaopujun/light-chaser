@@ -12,8 +12,11 @@ export class AddRollbackImpl extends AbstractRollback {
         //执行正向操作添加元素
         const {addItem} = layerManager;
         (next as IAddOperateData[]).forEach((item) => {
-            if ('id' in item)
+            if ('id' in item) {
                 addItem(cloneDeep(item.layerConfig!));
+                if ('elemConfig' in item)
+                    layerManager.elemConfigs![item.id!] = cloneDeep(item.elemConfig!);
+            }
             if ('layerHeader' in item)
                 layerManager.layerHeader = item.layerHeader;
             if ('layerTail' in item)

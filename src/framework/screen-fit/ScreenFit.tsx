@@ -1,40 +1,30 @@
 import {CSSProperties, ReactNode, useEffect, useRef, useState} from 'react'
 import {debounce} from "lodash";
+import './ScreenFit.less';
+import {AdaptationType} from "../../designer/DesignerType.ts";
 
 interface ScreenFitProps {
     children?: ReactNode
-    fullScreen?: boolean
     width: number | string
-    height: number | string
+    height: number | string,
     bodyOverflowHidden?: boolean
     delay?: number
-    boxStyle?: CSSProperties
-    wrapperStyle?: CSSProperties
+    mode?: AdaptationType
+    scaleChange?: (xScale: number, yScale: number) => void
+}
+
+const screenFitStyleMap: Record<string, CSSProperties> = {
+    'scale': {overflow: 'hidden'},
+    'full-screen': {overflow: 'hidden'},
+    'full-x': {overflow: 'hidden scroll'},
+    'full-y': {overflow: 'scroll hidden'}
 }
 
 export default function ScreenFit(props: ScreenFitProps) {
-    const {width, height, bodyOverflowHidden = true, delay = 100} = props
+    const {width, height, bodyOverflowHidden = true, delay = 500, scaleChange} = props
     let bodyOverflow: string
     const elRef = useRef<HTMLDivElement>(null)
     const [size, setSize] = useState({width, height, originalHeight: 0, originalWidth: 0})
-
-    const styles: Record<'box' | 'wrapper', CSSProperties> = {
-        box: {
-            overflow: 'hidden',
-            backgroundSize: `100% 100%`,
-            backgroundColor: `#545454`,
-            width: `100vw`,
-            height: `100vh`
-        },
-        wrapper: {
-            transitionProperty: `all`,
-            transitionTimingFunction: `cubic-bezier(0.4, 0, 0.2, 1)`,
-            transitionDuration: `300ms`,
-            position: `relative`,
-            overflow: `hidden`,
-            transformOrigin: `left top`
-        }
-    }
 
     let observer: MutationObserver;
 
@@ -48,18 +38,6 @@ export default function ScreenFit(props: ScreenFitProps) {
         }
     }
 
-    function handleAutoScale(scale: number) {
-        elRef.current!.style.transform = `scale(${scale},${scale})`;
-
-        const domWidth = elRef.current!.clientWidth
-        const domHeight = elRef.current!.clientHeight
-        const currentWidth = document.body.clientWidth
-        const currentHeight = document.body.clientHeight
-        const mx = Math.max((currentWidth - domWidth * scale) / 2, 0)
-        const my = Math.max((currentHeight - domHeight * scale) / 2, 0)
-        elRef.current!.style.margin = `${my}px ${mx}px`
-    }
-
     function updateScale() {
         // 获取真实视口尺寸
         const currentWidth = document.body.clientWidth
@@ -70,14 +48,33 @@ export default function ScreenFit(props: ScreenFitProps) {
         // 计算缩放比例
         const widthScale = currentWidth / +realWidth
         const heightScale = currentHeight / +realHeight
-        // 若要铺满全屏，则按照各自比例缩放
-        if (props.fullScreen) {
-            elRef.current!.style.transform = `scale(${widthScale},${heightScale})`
-            return;
+
+        switch (props.mode) {
+            case 'full-screen':
+                // 若要铺满全屏，则按照各自比例缩放
+                elRef.current!.style.transform = `scale(${widthScale},${heightScale})`
+                scaleChange && scaleChange(widthScale, heightScale)
+                break;
+            case 'full-x':
+                elRef.current!.style.transform = `scale(${widthScale},${widthScale})`
+                scaleChange && scaleChange(widthScale, widthScale)
+                break;
+            case 'full-y':
+                elRef.current!.style.transform = `scale(${heightScale},${heightScale})`
+                scaleChange && scaleChange(heightScale, heightScale)
+                break;
+            default:
+                // 按照宽高最小比例进行缩放
+                const scale = Math.min(widthScale, heightScale)
+                elRef.current!.style.transform = `scale(${scale},${scale})`;
+                const domWidth = elRef.current!.clientWidth
+                const domHeight = elRef.current!.clientHeight
+                const mx = Math.max((currentWidth - domWidth * scale) / 2, 0)
+                const my = Math.max((currentHeight - domHeight * scale) / 2, 0)
+                elRef.current!.style.margin = `${my}px ${mx}px`
+                scaleChange && scaleChange(scale, scale)
+                break;
         }
-        // 按照宽高最小比例进行缩放
-        const scale = Math.min(widthScale, heightScale)
-        handleAutoScale(scale)
     }
 
     const onResize = debounce(() => {
@@ -117,11 +114,12 @@ export default function ScreenFit(props: ScreenFitProps) {
         }
     }, [])
 
+    const scrollStyle = screenFitStyleMap[props.mode || 'scale']
+
     return (
-        <div style={{...styles.box, ...props.boxStyle}}
+        <div style={{...scrollStyle}}
              className={'react-screen-box'}>
             <div className={'screen-wrapper'}
-                 style={{...styles.wrapper, ...props.wrapperStyle}}
                  ref={elRef}>
                 {props.children}
             </div>

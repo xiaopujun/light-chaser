@@ -82,7 +82,9 @@ class AntdPercentColumnDefinition extends AbstractColumnDefinition {
                 maxColumnWidth: 8,
                 supportCSSTransform: true,
                 color: ["#59bfff", "#298aff", "#004294"],
-                columnStyle: {},
+                columnStyle: {
+                    radius: 0,
+                },
                 xAxis: {
                     grid: null,
                     label: {

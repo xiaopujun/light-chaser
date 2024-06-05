@@ -8,8 +8,8 @@ import operatorMap from "../../../framework/operate/index";
 import {SaveType} from "../../DesignerType";
 import {AbstractOperator} from "../../../framework/operate/AbstractOperator";
 import {Upload as AntdUpLoad, UploadFile} from "antd";
-import {PlusOutlined} from "@ant-design/icons";
 import {RcFile} from "antd/es/upload";
+import {UploadLaptop} from "@icon-park/react";
 
 export interface CoverConfigProps {
     onClose: () => void;
@@ -33,8 +33,10 @@ export const CoverConfig = (prop: CoverConfigProps) => {
         }
         const {saveType} = URLUtil.parseUrlParams();
         (operatorMap[saveType as SaveType] as AbstractOperator).uploadCover(imageFileRef.current!).then((data) => {
-            if (data) globalMessage.messageApi?.info('封面生成成功！');
-            else globalMessage.messageApi?.error('封面生成失败！');
+            if (data) {
+                globalMessage.messageApi?.info('封面生成成功！');
+                _onClose();
+            } else globalMessage.messageApi?.error('封面生成失败！');
         });
     }
 
@@ -73,8 +75,8 @@ export const CoverConfig = (prop: CoverConfigProps) => {
                                 onRemove={() => setFileList([])}
                                 onPreview={() => window.open((fileList[0] as any).url)}>
                         {fileList.length > 0 ? null : <div className={'upload-btn'}>
-                            <PlusOutlined/>
-                            <div style={{marginTop: 8}}>Upload</div>
+                            <UploadLaptop size={30} strokeWidth={2}/>
+                            <div style={{marginTop: 8}}>选择文件上传</div>
                         </div>}
                     </AntdUpLoad>
                 </div>

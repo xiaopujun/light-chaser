@@ -6,6 +6,7 @@ import * as monaco from 'monaco-editor';
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
+import 'monaco-editor/esm/vs/basic-languages/sql/sql.contribution';
 
 self.MonacoEnvironment = {
     getWorker(_, label) {
@@ -24,7 +25,7 @@ export interface MonacoEditorProps {
     defaultValue?: string;
     onChange?: (value?: string) => void;
     readonly?: boolean;
-    language?: 'javascript' | 'json';
+    language?: 'javascript' | 'json' | 'sql';
     width?: string | number;
     height?: string | number;
 }
@@ -43,6 +44,13 @@ export default function MonacoEditor(props: MonacoEditorProps) {
                         quickSuggestions: false,
                         folding: false,
                         readOnly: readonly || false,
+                        renderValidationDecorations: 'off',
+                        mouseWheelZoom: true,
+                        scrollBeyondLastLine: false,
+                        renderLineHighlight: 'none',
+                        hideCursorInOverviewRuler: true,
+                        overviewRulerLanes: 0,
+                        overviewRulerBorder: false,
                     }}
                     loading={<Loading/>}
                     value={value}

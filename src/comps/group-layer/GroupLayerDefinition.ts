@@ -4,12 +4,15 @@ import {
     BaseInfoType,
     MenuToConfigMappingType
 } from "../../framework/core/AbstractDefinition";
-import {ClazzTemplate} from "../common-component/common-types";
+import {ClazzTemplate} from "../common-component/CommonTypes.ts";
 import {MenuInfo} from "../../designer/right/MenuType";
-import {AppstoreFilled} from "@ant-design/icons";
-import BaseInfo from "../common-component/base-info/BaseInfo";
 import GroupLayerController, {GroupLayerProps} from "./GroupLayerController";
 import AbstractController from "../../framework/core/AbstractController.ts";
+import {SettingOne} from "@icon-park/react";
+import React from "react";
+
+
+const BaseInfo = React.lazy(() => import("../common-component/base-info/BaseInfo"));
 
 export default class GroupLayerDefinition extends AbstractDefinition<GroupLayerController, GroupLayerProps> {
     getBaseInfo(): BaseInfoType {
@@ -37,17 +40,17 @@ export default class GroupLayerDefinition extends AbstractDefinition<GroupLayerC
         };
     }
 
-    getMenuList(): Array<MenuInfo> | null {
+    getMenuList(): Array<MenuInfo> {
         return [
             {
-                icon: AppstoreFilled,
+                icon: SettingOne,
                 key: 'base',
                 name: '基础',
             }
         ];
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         return {
             base: BaseInfo,
         };

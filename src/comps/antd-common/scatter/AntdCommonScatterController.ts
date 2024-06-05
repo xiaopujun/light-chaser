@@ -1,4 +1,4 @@
-import {ComponentBaseProps} from "../../common-component/common-types";
+import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
 import {WritableScatterOptions} from "../types";
 import {Scatter} from "@antv/g2plot";
 import {UpdateOptions} from "../../../framework/core/AbstractController";

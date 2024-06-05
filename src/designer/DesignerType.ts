@@ -1,4 +1,5 @@
 import {BPNodeLayoutType, IBPLine} from "./blueprint/manager/BluePrintManager.ts";
+import {IFilter} from "./manager/FilterManager.ts";
 
 /**
  * 主题
@@ -33,8 +34,25 @@ export interface APIConfig {
     header?: any;
     //请求参数
     params?: any;
+    //自动刷新
+    autoFlush?: boolean;
     //刷新频率
     frequency?: number;
+    //过滤器
+    filter?: string;
+}
+
+export interface IDatabase {
+    //数据库类型
+    targetDb?: string;
+    //查询sql语句
+    sql?: string;
+    //自动刷新
+    autoFlush?: boolean;
+    //刷新频率
+    frequency?: number;
+    //过滤器
+    filter?: string;
 }
 
 /**
@@ -46,6 +64,17 @@ export interface DataConfigType {
     //静态数据(除了存放静态数据外，该属性还有动态数据的中转站的作用），其他动态数据获取到后统一都存放在静态数据中，需要使用到的时候再从静态数据中获取
     staticData?: any;
     apiData?: APIConfig;
+    database?: IDatabase;
+}
+
+export interface IFilterConfigType {
+    enable?: boolean;
+    blur?: number;
+    brightness?: number;
+    contrast?: number;
+    opacity?: number;
+    saturate?: number;
+    hueRotate?: number;
 }
 
 /**
@@ -104,6 +133,8 @@ export interface IProjectInfo {
     dataJson?: string;
 }
 
+export type AdaptationType = 'scale' | 'full-screen' | 'full-x' | 'full-y';
+
 /**
  * 画布配置
  */
@@ -118,6 +149,8 @@ export interface CanvasConfig {
     width?: number;
     //画布高
     height?: number;
+    //屏幕适配
+    adaptationType?: AdaptationType;
 }
 
 
@@ -130,6 +163,11 @@ export interface LayerManagerDataType {
     layerHeader?: string;
     //图层尾指针
     layerTail?: string;
+}
+
+
+export interface FilterManagerDataType {
+    filters: Record<string, IFilter>;
 }
 
 export interface BluePrintManagerDataType {
@@ -161,6 +199,8 @@ export interface ProjectDataType {
     layerManager?: LayerManagerDataType;
     //蓝图管理
     bluePrintManager?: BluePrintManagerDataType;
+    //过滤器管理
+    filterManager?: FilterManagerDataType;
 }
 
 export interface ILayerItem {
@@ -196,4 +236,20 @@ export interface ILayerItem {
     prev?: string;
     //后指针
     next?: string;
+}
+
+/**
+ * 分页数据
+ */
+export interface IPage<T = {}> {
+    records: T[];
+    total: number;
+    size: number;
+    current: number;
+}
+
+export interface IPageParam {
+    current: number;
+    size: number;
+    searchValue?: string;
 }

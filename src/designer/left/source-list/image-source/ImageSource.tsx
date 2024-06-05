@@ -12,9 +12,9 @@ import IdGenerate from "../../../../utils/IdGenerate";
 import {BaseImageComponentProps} from "../../../../comps/lc/base-image/BaseImageController";
 import {IImageData} from "../../../../comps/lc/base-image/BaseImageComponent";
 import DragAddProvider from "../../../../framework/drag-scale/DragAddProvider";
-import {MinusOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import {Popconfirm} from "antd";
 import historyRecordOperateProxy from "../../../operate-provider/undo-redo/HistoryRecordOperateProxy.ts";
+import {Close, Help} from "@icon-park/react";
 
 
 export default function ImageSource() {
@@ -122,12 +122,17 @@ export default function ImageSource() {
                             <div className={'isi-title'}>{item.name || '无名称信息'}</div>
                             <div className={'isi-operate'}>
                                 <Popconfirm title="确认删除吗?"
-                                            icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
+                                            icon={<Help style={{
+                                                color: 'red',
+                                                position: 'relative',
+                                                top: 3,
+                                                marginRight: 2
+                                            }}/>}
                                             description="可能会导致已经使用的图片组件失效!"
                                             onConfirm={() => confirmDel(item.id!)}
                                             okText="是"
                                             cancelText="否">
-                                    <MinusOutlined/>
+                                    <Close/>
                                 </Popconfirm>
                             </div>
                         </div>

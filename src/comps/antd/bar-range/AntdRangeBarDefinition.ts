@@ -38,7 +38,9 @@ class AntdRangeBarDefinition extends AbstractBarDefinition {
                 seriesField: "type",
                 isRange: true,
                 color: ["#2ea4ffff", "#7cdaffff", "#6cc2ffff"],
-                barStyle: {},
+                barStyle: {
+                    radius: 0,
+                },
                 xAxis: {
                     grid: null,
                     label: {

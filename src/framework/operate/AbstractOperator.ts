@@ -1,4 +1,4 @@
-import {IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
+import {IPage, IPageParam, IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
 import {IImageData} from "../../comps/lc/base-image/BaseImageComponent";
 
 export abstract class AbstractOperator {
@@ -21,9 +21,10 @@ export abstract class AbstractOperator {
     public abstract deleteProject(id: string): Promise<boolean>;
 
     /**
-     * 获取项目列表
+     * 获取项目分页列表
+     * @param pageParam
      */
-    public abstract getProjectInfoList(): Promise<IProjectInfo[]>;
+    public abstract getProjectInfoPageList(pageParam: IPageParam): Promise<IPage<IProjectInfo>>;
 
     /**
      * 获取项目完整数据，包括主设计器数据和蓝图设计器数据及每一个组件的详细配置

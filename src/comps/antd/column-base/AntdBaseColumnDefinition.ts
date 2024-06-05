@@ -49,6 +49,7 @@ class AntdBaseColumnDefinition extends AbstractColumnDefinition {
                 color: ["#00dbffff"],
                 columnStyle: {
                     fill: undefined,
+                    radius: 0,
                 },
                 xAxis: {
                     grid: null,

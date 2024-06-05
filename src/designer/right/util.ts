@@ -1,27 +1,32 @@
-import {AppstoreFilled, DatabaseFilled, HighlightFilled, InteractionFilled, SkinFilled} from "@ant-design/icons";
 import {MenuInfo} from "./MenuType";
+import {ColorFilter, Data, Deeplink, Optimize, SettingOne, Theme} from "@icon-park/react";
 
 export const getDefaultMenuList = (): Array<MenuInfo> => {
     return [
         {
-            icon: AppstoreFilled,
+            icon: SettingOne,
             name: '基础',
             key: 'base',
         },
         {
-            icon: HighlightFilled,
+            icon: Optimize,
             name: '样式',
             key: 'style',
         },
         {
-            icon: DatabaseFilled,
+            icon: Data,
             name: '数据',
             key: 'data',
         },
         {
-            icon: InteractionFilled,
+            icon: Deeplink,
             name: '映射',
             key: 'mapping',
+        },
+        {
+            icon: ColorFilter,
+            name: '滤镜',
+            key: 'filter',
         },
         // {
         //     icon: VideoCameraFilled,
@@ -29,7 +34,7 @@ export const getDefaultMenuList = (): Array<MenuInfo> => {
         //     key: 'animation',
         // },
         {
-            icon: SkinFilled,
+            icon: Theme,
             name: '主题',
             key: 'theme',
         }

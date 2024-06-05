@@ -58,6 +58,8 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
                         controller.registerEvent();
                         controller.loadComponentData();
                     }
+                    //设置组件滤镜效果（todo 考虑是否应该在此处设置？）
+                    controller.updateFilter(controller.getConfig()?.filter);
                     //渲染后删除elemConfigs中的映射关系（需要观察是否会造成其他问题）
                     delete elemConfigs![layer.id!];
                 });
@@ -69,6 +71,7 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
     render() {
         const {layer} = this.props;
         const {auxiliaryBorder} = runtimeConfigStore;
+        const enableEvent = this.mode === DesignerMode.VIEW || layerManager.enableEvent;
         return (
             <Suspense fallback={<Loading/>}>
                 <div
@@ -82,13 +85,13 @@ class ComponentContainer extends React.PureComponent<ComponentContainerProps> {
                         height: layer.height,
                         transform: `translate(${layer.x!}px, ${layer.y!}px)`,
                         position: 'absolute',
-                        display: layer.hide ? 'none' : 'block',
+                        visibility: layer.hide ? "hidden" : "visible",
                         border: auxiliaryBorder ? '1px solid #65eafc' : 'none'
                     }} className={'lc-comp-item'}>
                     <div ref={(ref) => this.ref = ref} style={{
                         width: '100%',
                         height: '100%',
-                        pointerEvents: `${this.mode === DesignerMode.VIEW ? 'auto' : 'none'}`,
+                        pointerEvents: enableEvent ? 'auto' : 'none',
                         position: 'relative'
                     }}/>
                 </div>

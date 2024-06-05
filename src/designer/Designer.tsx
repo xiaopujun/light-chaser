@@ -3,7 +3,7 @@ import './style/DesignerGlobalStyle.less';
 import DesignerLeft from "./left/DesignerLeft";
 import DesignerRight from "./right/DesignerRight";
 import DesignerFooter from "./footer/DesignerFooter";
-import contextMenuStore from "./operate-provider/right-click-menu/ContextMenuStore";
+import contextMenuStore from "./operate-provider/canvas-context-menu/CanvasContextMenuStore.ts";
 import eventOperateStore from "./operate-provider/EventOperateStore";
 import DesignerHeader from "./header/DesignerHeader";
 import DesignerCanvas from "./canvas/DesignerCanvas";
@@ -13,6 +13,7 @@ import DesignerLoaderFactory from "./loader/DesignerLoaderFactory";
 import FrameLayout from "../json-schema/ui/frame-layout/FrameLayout";
 import {DesignerMode, SaveType} from "./DesignerType.ts";
 import designerManager from "./manager/DesignerManager.ts";
+import '../designer/resource/font/FontGlobal.css';
 
 
 /**
@@ -51,9 +52,11 @@ const contextMenuHandler = (event: MouseEvent) => {
     event.preventDefault();
     const {mouseDownTime, mouseUpTime, setPosition, updateVisible} = contextMenuStore;
     const {targetIds} = eventOperateStore;
-    const targetArr = ['lc-comp-item', 'moveable-area', 'layer-item', 'layer-name', 'group-header', 'group-left', 'group-icon', 'group-name'];
+    //由于mac端下 setPointerCapture(e.pointerId); 会导致事件target指向发生变化，进而导致右键菜单失效，因此调整为只要选中了元素，且在主画布范围内均可显示右键菜单
+    const eventContainer = document.querySelector('.lc-event-container');
+    const layerListContainer = document.querySelector('.layer-items');
     if (targetIds && targetIds.length > 0
-        && targetArr.some((item: string) => (event.target as HTMLElement)?.classList.contains(item))
+        && (eventContainer?.contains(event.target as HTMLElement) || layerListContainer?.contains(event.target as HTMLElement))
         && mouseUpTime - mouseDownTime < 200) {
         updateVisible && updateVisible(true);
         setPosition([event.clientX, event.clientY]);

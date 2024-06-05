@@ -1,4 +1,4 @@
-import React from "react";
+import React, {CSSProperties} from "react";
 import {BtnItemType} from "./ui/group-button/GroupButton.tsx";
 import {RadioOption} from "./ui/radio/Radio.tsx";
 import {ISelectOption} from "./ui/select/Select.tsx";
@@ -43,6 +43,8 @@ export interface CheckboxConfigType extends BaseSchemaType {
     config?: {
         disabled?: boolean;
         containerStyle?: React.CSSProperties;
+        labelStyle?: React.CSSProperties;
+        contentStyle?: React.CSSProperties;
     }
 }
 
@@ -50,7 +52,7 @@ export interface CodeEditorConfigType extends BaseSchemaType {
     type: "code-editor";
     config?: {
         readonly?: boolean;
-        language?: 'json' | 'javascript';
+        language?: 'json' | 'javascript' | 'sql';
         width?: string | number;
         height?: string | number;
     }
@@ -204,7 +206,9 @@ export interface TextOnlyConfigType extends BaseSchemaType {
 
 export interface SimpleSchemaType extends BaseSchemaType {
     type?: "card-panel";
-    config?: Record<string, unknown>;
+    config?: {
+        contentStyle?: CSSProperties;
+    };
 }
 
 export type Control =

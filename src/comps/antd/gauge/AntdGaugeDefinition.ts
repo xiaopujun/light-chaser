@@ -1,35 +1,22 @@
 import React from "react";
-import {MenuInfo} from "../../../designer/right/MenuType";
-import {getDefaultMenuList} from "../../../designer/right/util";
-import {ClazzTemplate} from "../../common-component/common-types";
+import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import AntdGaugeController, {AntdGaugeProps} from "./AntdGaugeController";
 import gaugeImg from './gauge.png';
-import {AbstractDefinition, BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
+import {BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
+import AbstractDesignerDefinition from "../../../framework/core/AbstractDesignerDefinition.ts";
 
-const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const AntdGaugeConfig = React.lazy(() => import("./AntdGaugeConfig"));
-const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig"));
-const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
-const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig"));
 
 
-class AntdGaugeDefinition extends AbstractDefinition<AntdGaugeController, AntdGaugeProps> {
+class AntdGaugeDefinition extends AbstractDesignerDefinition<AntdGaugeController, AntdGaugeProps> {
     getController(): ClazzTemplate<AntdGaugeController> | null {
         return AntdGaugeController;
     }
 
-    getMenuList(): Array<MenuInfo> {
-        return getDefaultMenuList().filter((menu) => menu.key !== 'mapping');
-    }
-
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
-        return {
-            base: BaseInfo,
-            data: DataConfig,
-            style: AntdGaugeConfig,
-            animation: AnimationConfig,
-            theme: ThemeConfig
-        };
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
+        const menus = super.getMenuToConfigContentMap();
+        menus['style'] = AntdGaugeConfig;
+        return menus;
     }
 
     getBaseInfo(): BaseInfoType {
@@ -56,8 +43,8 @@ class AntdGaugeDefinition extends AbstractDefinition<AntdGaugeController, AntdGa
                 percent: 0.75,
                 radius: 0.75,
                 innerRadius: 0.95,
-                startAngle: 2.6,
-                endAngle: 0.5,
+                startAngle: (-7 / 6) * Math.PI,
+                endAngle: (1 / 6) * Math.PI,
                 range: {
                     color: ["#6bc2ff", "#5d9eff59"]
                 },
@@ -120,6 +107,15 @@ class AntdGaugeDefinition extends AbstractDefinition<AntdGaugeController, AntdGa
                         duration: 3000
                     }
                 },
+            },
+            filter: {
+                enable: false,
+                blur: 0,
+                brightness: 1,
+                contrast: 1,
+                opacity: 1,
+                saturate: 1,
+                hueRotate: 0
             },
             data: {
                 sourceType: 'static',

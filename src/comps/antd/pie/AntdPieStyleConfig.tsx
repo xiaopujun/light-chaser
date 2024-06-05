@@ -1,99 +1,78 @@
 import React, {Component, useState} from 'react';
 import AntdPieController from "./AntdPieController";
-import {WritablePieOptions} from "../../antd-common/types";
-import {PieOptions, StatisticText} from "@antv/g2plot";
-import {Legend} from "@antv/g2plot/lib/types/legend";
-import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
+import {StatisticText} from "@antv/g2plot";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
 import AntdCommonUtil from "../../antd-common/AntdCommonUtil";
 import {AntdLegend} from "../../antd-common/config/legend/AntdLegend";
 import LCGUIUtil from "../../../json-schema/LCGUIUtil";
 import {ShapeAttrs} from "@antv/g-base";
-import ObjectUtil from "../../../utils/ObjectUtil";
 import {ConfigType} from "../../../designer/right/ConfigContent";
 
-export default class AntdPieStyleConfig extends Component<ConfigType> {
-
-    pieGraphicsChange = (config: WritablePieOptions) => {
-        const controller = this.props.controller as AntdPieController;
-        controller.update({style: config});
-    }
-
-    legendChange = (legend: Legend) => {
-        const controller = this.props.controller as AntdPieController;
-        controller.update({style: {legend}});
-    }
+export default class AntdPieStyleConfig extends Component<ConfigType<AntdPieController>> {
 
     render() {
         const controller = this.props.controller as AntdPieController;
-        const pieConfig = controller.getConfig()!.style as PieOptions;
         return (
             <>
+                <AntdPieGraphicsConfig controller={controller}/>
                 <AntdLegend controller={controller}/>
-                <AntdPieGraphicsConfig onChange={this.pieGraphicsChange} config={pieConfig}/>
             </>
         );
     }
 }
 
-export interface AntdPieGraphicsConfigProps {
-    config: any;
-
-    onChange(config: any): void;
-}
-
-export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({config, onChange}) => {
-
-    const [_config, setConfig] = useState(config);
+export const AntdPieGraphicsConfig = (props: ConfigType<AntdPieController>) => {
+    const {controller} = props;
+    const config = controller.getConfig()!.style!;
+    const [count, setCount] = useState(0);
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
         let {id, data, dataKeyPath, dataFragment, reRender} = fieldChangeData;
         if (id === 'startAngle' || id === 'endAngle') {
-            data = Math.PI * (data as number);
-            onChange && onChange(LCGUIUtil.createObjectFromArray(dataKeyPath, data));
+            data = (data as number) / 180 * Math.PI;
+            controller.update(LCGUIUtil.createObjectFromArray(dataKeyPath, data));
         } else if (id === "titleSwitch") {
             if (data) {
-                const defaultTitleConfig = {
-                    statistic: {
-                        title: {
-                            style: {fontSize: 12, color: '#fff'},
-                            content: 'text'
+                controller.update({
+                    style: {
+                        statistic: {
+                            title: {
+                                style: {fontSize: '12px', color: '#fff'},
+                                content: 'text'
+                            }
                         }
                     }
-                };
-                onChange(defaultTitleConfig);
-                setConfig({...ObjectUtil.merge(_config, defaultTitleConfig)});
+                });
             } else {
-                onChange({statistic: {content: false}});
-                setConfig({...ObjectUtil.merge(_config, {statistic: {title: false}})});
+                controller.update({style: {statistic: {content: false}}});
             }
         } else if (id === "contentSwitch") {
             if (data) {
-                const defaultContentConfig = {
-                    statistic: {
-                        content: {
-                            style: {fontSize: 12, color: '#fff'},
-                            content: 'content'
+                controller.update({
+                    style: {
+                        statistic: {
+                            content: {
+                                style: {fontSize: '12px', color: '#fff'},
+                                content: 'content'
+                            }
                         }
                     }
-                };
-                onChange(defaultContentConfig);
-                setConfig({...ObjectUtil.merge(_config, defaultContentConfig)});
+                })
             } else {
-                onChange({statistic: {title: false}});
-                setConfig({...ObjectUtil.merge(_config, {statistic: {content: false}})});
+                controller.update({style: {statistic: {content: false}}});
             }
         } else if (id === "labelRotate") {
-            onChange({label: {rotate: (data as number) * Math.PI}});
+            controller.update({style: {label: {rotate: (data as number) * Math.PI}}});
         } else {
-            onChange && onChange(dataFragment);
+            controller.update(dataFragment);
         }
         if (reRender)
-            setConfig({..._config, ...dataFragment});
+            setCount(count + 1);
     }
 
     const schema: Control = {
+        key: 'style',
         children: [
             {
                 type: 'accordion',
@@ -119,12 +98,9 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                 key: 'startAngle',
                                 type: 'number-input',
                                 label: '起始角',
-                                value: (config.startAngle || 0) / Math.PI,
+                                value: (config.startAngle || 0) / Math.PI * 180,
                                 config: {
-                                    suffix: 'Π',
-                                    min: 0,
-                                    max: 2,
-                                    step: 0.01
+                                    suffix: '°'
                                 }
                             },
                             {
@@ -143,12 +119,9 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                 key: 'endAngle',
                                 type: 'number-input',
                                 label: '结束角',
-                                value: (config.endAngle || 2 * Math.PI) / Math.PI,
+                                value: (config.endAngle || 2 * Math.PI) / Math.PI * 180,
                                 config: {
-                                    suffix: 'Π',
-                                    min: 0,
-                                    max: 2,
-                                    step: 0.01
+                                    suffix: '°'
                                 }
                             },
                             {
@@ -203,7 +176,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                 key: 'titleSwitch',
                                 type: 'switch',
                                 label: '开启',
-                                value: !!_config.statistic?.title,
+                                value: !!config.statistic?.title,
                             },
                             {
                                 rules: "{titleSwitch} === 'true'",
@@ -212,7 +185,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                         key: 'content',
                                         type: 'input',
                                         label: '内容',
-                                        value: (_config.statistic?.title as StatisticText)?.content,
+                                        value: (config.statistic?.title as StatisticText)?.content,
                                     },
                                     {
                                         key: 'style',
@@ -221,7 +194,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                                 key: 'fontSize',
                                                 type: 'number-input',
                                                 label: '字号',
-                                                value: ((_config.statistic?.title as StatisticText)?.style as ShapeAttrs)?.fontSize || 12,
+                                                value: parseInt(((config.statistic?.title as StatisticText)?.style as ShapeAttrs)?.fontSize + ''),
                                                 config: {
                                                     min: 0,
                                                     max: 100,
@@ -231,7 +204,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                                 key: 'fontWeight',
                                                 type: 'number-input',
                                                 label: '加粗',
-                                                value: ((_config.statistic?.title as StatisticText)?.style as ShapeAttrs)?.fontWeight || 500,
+                                                value: ((config.statistic?.title as StatisticText)?.style as ShapeAttrs)?.fontWeight || 500,
                                                 config: {
                                                     min: 100,
                                                     max: 900,
@@ -242,7 +215,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                                 key: 'color',
                                                 type: 'color-picker',
                                                 label: '颜色',
-                                                value: ((_config.statistic?.title as StatisticText)?.style as ShapeAttrs)?.color,
+                                                value: ((config.statistic?.title as StatisticText)?.style as ShapeAttrs)?.color,
                                                 config: {
                                                     showText: true,
                                                 }
@@ -253,13 +226,13 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                         key: 'offsetX',
                                         type: 'number-input',
                                         label: 'x偏移',
-                                        value: (_config.statistic?.title as StatisticText)?.offsetX || 0,
+                                        value: (config.statistic?.title as StatisticText)?.offsetX || 0,
                                     },
                                     {
                                         key: 'offsetY',
                                         type: 'number-input',
                                         label: 'y偏移',
-                                        value: (_config.statistic?.title as StatisticText)?.offsetY || 0,
+                                        value: (config.statistic?.title as StatisticText)?.offsetY || 0,
                                     },
                                 ]
                             }
@@ -282,7 +255,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                 key: 'contentSwitch',
                                 type: 'switch',
                                 label: '开启',
-                                value: !!_config.statistic?.content,
+                                value: !!config.statistic?.content,
                             },
                             {
                                 rules: "{contentSwitch} === 'true'",
@@ -291,7 +264,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                         key: 'content',
                                         type: 'input',
                                         label: '内容',
-                                        value: (_config.statistic?.content as StatisticText)?.content,
+                                        value: (config.statistic?.content as StatisticText)?.content,
                                     },
                                     {
                                         key: 'style',
@@ -300,7 +273,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                                 key: 'fontSize',
                                                 type: 'number-input',
                                                 label: '字号',
-                                                value: ((_config.statistic?.content as StatisticText)?.style as ShapeAttrs)?.fontSize || 12,
+                                                value: parseInt(((config.statistic?.content as StatisticText)?.style as ShapeAttrs)?.fontSize + ''),
                                                 config: {
                                                     min: 0,
                                                     max: 100,
@@ -310,7 +283,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                                 key: 'fontWeight',
                                                 type: 'number-input',
                                                 label: '加粗',
-                                                value: ((_config.statistic?.content as StatisticText)?.style as ShapeAttrs)?.fontWeight || 500,
+                                                value: ((config.statistic?.content as StatisticText)?.style as ShapeAttrs)?.fontWeight || 500,
                                                 config: {
                                                     min: 100,
                                                     max: 900,
@@ -321,7 +294,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                                 key: 'color',
                                                 type: 'color-picker',
                                                 label: '颜色',
-                                                value: ((_config.statistic?.content as StatisticText)?.style as ShapeAttrs)?.color,
+                                                value: ((config.statistic?.content as StatisticText)?.style as ShapeAttrs)?.color,
                                                 config: {
                                                     showText: true,
                                                 }
@@ -332,13 +305,13 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                         key: 'offsetX',
                                         type: 'number-input',
                                         label: 'x偏移',
-                                        value: (_config.statistic?.content as StatisticText)?.offsetX || 0,
+                                        value: (config.statistic?.content as StatisticText)?.offsetX || 0,
                                     },
                                     {
                                         key: 'offsetY',
                                         type: 'number-input',
                                         label: 'y偏移',
-                                        value: (_config.statistic?.content as StatisticText)?.offsetY || 0,
+                                        value: (config.statistic?.content as StatisticText)?.offsetY || 0,
                                     },
                                 ]
                             }
@@ -359,7 +332,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                 key: 'type',
                                 type: 'select',
                                 label: '位置',
-                                value: _config.label?.type || 'inner',
+                                value: (config.label as any)?.type || 'inner',
                                 config: {
                                     options: [
                                         {value: 'inner', label: '内测'},
@@ -370,7 +343,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                 key: 'offset',
                                 type: 'number-input',
                                 label: '偏移',
-                                value: _config.label?.offset || 0,
+                                value: (config.label as any)?.offset || 0,
                                 config: {
                                     min: 0,
                                     max: 100,
@@ -383,7 +356,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                         key: 'fontSize',
                                         type: 'number-input',
                                         label: '字号',
-                                        value: (_config.label?.style as ShapeAttrs)?.fontSize || 12,
+                                        value: parseInt(((config.label as any)?.style as ShapeAttrs)?.fontSize + ''),
                                         config: {
                                             min: 0,
                                             max: 100,
@@ -393,7 +366,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                         key: 'fontWeight',
                                         type: 'number-input',
                                         label: '加粗',
-                                        value: (_config.label?.style as ShapeAttrs)?.fontWeight || 500,
+                                        value: ((config.label as any)?.style as ShapeAttrs)?.fontWeight || 500,
                                         config: {
                                             min: 100,
                                             max: 900,
@@ -404,7 +377,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                         key: 'fill',
                                         type: 'color-picker',
                                         label: '颜色',
-                                        value: (_config.label?.style as ShapeAttrs)?.fill,
+                                        value: ((config.label as any)?.style as ShapeAttrs)?.fill,
                                         config: {
                                             showText: true,
                                         }
@@ -416,7 +389,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                 type: 'switch',
                                 label: '自动旋转',
                                 reRender: true,
-                                value: _config.label?.autoRotate,
+                                value: (config.label as any)?.autoRotate,
                             },
                             {
                                 id: 'labelRotate',
@@ -424,7 +397,7 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
                                 type: 'number-input',
                                 label: '旋转角度',
                                 rules: "{autoRotate} === 'false'",
-                                value: _config.label?.rotate || 0,
+                                value: (config.label as any)?.rotate || 0,
                                 config: {
                                     min: 0,
                                     max: 2,
@@ -444,24 +417,28 @@ export const AntdPieGraphicsConfig: React.FC<AntdPieGraphicsConfigProps> = ({con
 }
 
 
-export const AntdPieFieldMapping: React.FC<ConfigType<AntdBaseDesignerController>> = ({controller}) => {
+export const AntdPieFieldMapping: React.FC<ConfigType<AntdPieController>> = ({controller}) => {
+    const config = controller.config?.style;
     const options = AntdCommonUtil.getDataFieldOptions(controller);
     const schema: Control = {
         type: 'grid',
-        config: {
-            columns: 2,
-        },
+        key: 'style',
+        config: {columns: 2},
         children: [
             {
                 type: 'select',
+                key: 'angleField',
                 label: '角度字段',
+                value: config?.angleField,
                 config: {
                     options,
                 }
             },
             {
                 type: 'select',
+                key: 'colorField',
                 label: '颜色字段',
+                value: config?.colorField,
                 config: {
                     options,
                 }
@@ -470,7 +447,7 @@ export const AntdPieFieldMapping: React.FC<ConfigType<AntdBaseDesignerController
     }
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
-
+        controller.update(fieldChangeData.dataFragment);
     }
 
     return <LCGUI schema={schema} onFieldChange={onFieldChange}/>

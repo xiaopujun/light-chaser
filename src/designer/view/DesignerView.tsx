@@ -8,6 +8,8 @@ import layerBuilder from "../left/layer-list/LayerBuilder";
 import {DesignerMode, SaveType} from "../DesignerType.ts";
 import canvasManager from "../header/items/canvas/CanvasManager.ts";
 import designerManager from "../manager/DesignerManager.ts";
+import '../../designer/resource/font/FontGlobal.css';
+import ScaleAction from "../../framework/core/ScaleAction.ts";
 
 const ScreenFit = lazy(() => import('../../framework/screen-fit/ScreenFit.tsx'));
 
@@ -26,12 +28,16 @@ const DesignerView = observer((props: DesignerViewProps) => {
 
     const {layerConfigs} = layerManager!;
     const {loaded} = designerManager;
-    const {canvasConfig: {width, height}} = canvasManager
+    const {canvasConfig: {width, height, adaptationType}} = canvasManager
     if (!loaded)
         return <Loading/>;
     return (
         <Suspense fallback={<Loading/>}>
-            <ScreenFit width={width!} height={height!}>
+            <ScreenFit width={width!} height={height!} mode={adaptationType}
+                       scaleChange={(xScale, yScale) => {
+                           ScaleAction.doScale(xScale, yScale)
+                           ScaleAction.doScale(xScale, yScale)
+                       }}>
                 <div style={{width, height, background: 'black', overflow: 'hidden', position: "relative"}}>
                     {layerBuilder.buildCanvasComponents(layerConfigs)}
                 </div>

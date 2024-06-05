@@ -1,7 +1,7 @@
 import {lazy, memo} from 'react';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {ConfigProvider, MappingAlgorithm, theme} from "antd";
-import '../designer/resource/font/FontGlobal.css';
+
 
 const DesignerViewPage = lazy(() => import('../pages/view/DesignerViewPage.tsx'));
 const DesignerPage = lazy(() => import('../pages/designer/DesignerPage.tsx'));
@@ -10,8 +10,9 @@ const Login = lazy(() => import('../pages/login/Login'));
 const Home = lazy(() => import('../pages/home/Home'));
 const LocalProjectList = lazy(() => import('../pages/home/local-list/LocalProjectList.tsx'));
 const ServerProjectList = lazy(() => import('../pages/home/server-list/ServerProjectList.tsx'));
-const DatasourceManager = lazy(() => import('../pages/home/datasource/DatasourceManager.tsx'));
+const DataSourceList = lazy(() => import('../pages/home/datasource/DataSourceList.tsx'));
 const TemplateMarket = lazy(() => import('../pages/home/template-market/TemplateMarket.tsx'));
+const MoreInfo = lazy(() => import('../pages/home/more-info/MoreInfo.tsx'));
 const Demo = lazy(() => import('../test/Demo'));
 
 const studioDarkAlgorithm: MappingAlgorithm = (seedToken, mapToken) => {
@@ -63,11 +64,15 @@ const router = createBrowserRouter([
             },
             {
                 path: 'datasource',
-                element: <DatasourceManager/>,
+                element: <DataSourceList/>,
             },
             {
                 path: 'template',
                 element: <TemplateMarket/>,
+            },
+            {
+                path: 'more',
+                element: <MoreInfo/>
             }
         ]
     },

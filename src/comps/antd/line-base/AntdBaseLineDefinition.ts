@@ -1,10 +1,8 @@
 import baseLineImg from "./base-line.png";
 import AbstractLineDefinition from "../../antd-common/line/AbstractLineDefinition";
 import {AntdLineProps} from "../../antd-common/line/AntdCommonLineController";
-import {BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
-import React from "react";
+import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
 
-const AntdBaseLineStyleConfig = React.lazy(() => import("./AntdBaseLineConfig").then((module) => ({default: module.AntdBaseLineStyleConfig})));
 
 class AntdBaseLineDefinition extends AbstractLineDefinition {
 
@@ -19,12 +17,6 @@ class AntdBaseLineDefinition extends AbstractLineDefinition {
 
     getChartImg(): string {
         return baseLineImg;
-    }
-
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
-        const menuToConfigContentMap = super.getMenuToConfigContentMap();
-        menuToConfigContentMap!['style'] = AntdBaseLineStyleConfig;
-        return menuToConfigContentMap;
     }
 
     getInitConfig(): AntdLineProps {
@@ -49,8 +41,16 @@ class AntdBaseLineDefinition extends AbstractLineDefinition {
                 smooth: false,
                 supportCSSTransform: true,
                 color: "#00d7ff",
+                point: {
+                    size: 4,
+                    color: "#00d7ff",
+                    shape: "circle",
+                    style: {
+                        lineWidth: 0,
+                        stroke: "#00d7ff"
+                    }
+                },
                 lineStyle: {
-                    stroke: undefined,
                     lineWidth: 2,
                 },
                 xAxis: {
@@ -64,7 +64,7 @@ class AntdBaseLineDefinition extends AbstractLineDefinition {
                     line: null,
                     tickLine: null,
                     subTickLine: null,
-                    position: "left",
+                    position: "bottom",
                     title: null,
                 },
                 yAxis: {
@@ -83,7 +83,7 @@ class AntdBaseLineDefinition extends AbstractLineDefinition {
                     },
                     tickLine: null,
                     subTickLine: null,
-                    position: "bottom",
+                    position: "left",
                     title: null,
                 },
                 animation: {
@@ -92,12 +92,7 @@ class AntdBaseLineDefinition extends AbstractLineDefinition {
                         duration: 3000,
                     },
                 },
-                point: {
-                    size: 4,
-                    style: {
-                        fill: "#00d7ff",
-                    }
-                },
+
             },
             data: {
                 sourceType: 'static',

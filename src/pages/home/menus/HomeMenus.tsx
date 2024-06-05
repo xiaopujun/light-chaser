@@ -1,30 +1,35 @@
-import {CloudServerOutlined, DatabaseOutlined, HomeOutlined, ShoppingOutlined} from "@ant-design/icons";
 import {Menu} from "antd";
 import {MenuItemType} from "antd/es/menu/hooks/useItems";
 import {useLocation, useNavigate} from "react-router-dom";
 import {memo} from "react";
+import {Data, LocalPin, NetworkDrive, System} from "@icon-park/react";
 
 const menus: MenuItemType[] = [
     {
-        key: 'local',
-        icon: <HomeOutlined/>,
-        label: '本地项目'
-    },
-    {
         key: 'server',
-        icon: <CloudServerOutlined/>,
+        icon: <NetworkDrive size={16}/>,
         label: '在线项目'
     },
     {
+        key: 'local',
+        icon: <LocalPin size={16}/>,
+        label: '本地项目'
+    },
+    {
         key: 'datasource',
-        icon: <DatabaseOutlined/>,
+        icon: <Data size={16}/>,
         label: '数据源管理'
     },
     {
-        key: 'template',
-        icon: <ShoppingOutlined/>,
-        label: '模板市场'
-    }
+        key: 'more',
+        icon: <System size={16}/>,
+        label: '更多'
+    },
+    // {
+    //     key: 'template',
+    //     icon: <ShoppingOutlined/>,
+    //     label: '模板市场'
+    // }
 ]
 
 export const HomeMenus = memo(() => {
@@ -39,7 +44,7 @@ export const HomeMenus = memo(() => {
     return (
         <div className={'lc-home-menus'}>
             <Menu onClick={changeMenu}
-                  style={{width: 256}}
+                  style={{width: 220}}
                   defaultSelectedKeys={[currentMenu]}
                   mode="inline"
                   items={menus}

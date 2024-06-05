@@ -1,5 +1,5 @@
-import {Component} from 'react';
-import {ComponentBaseProps} from "../../common-component/common-types";
+import {ForwardedRef, forwardRef, useEffect, useImperativeHandle, useRef, useState} from 'react';
+import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
 import './BaseTableComponent.less';
 import {debounce} from "lodash";
 
@@ -43,123 +43,130 @@ export interface BaseTableComponentProps extends ComponentBaseProps {
     style?: BaseTableComponentStyle;
 }
 
-class BaseTableComponent extends Component<BaseTableComponentProps, BaseTableComponentProps> {
+export interface BaseTableComponentRef {
+    updateConfig: (newConfig: BaseTableComponentProps) => void;
+    setEventHandler: (eventMap: Record<string, Function>) => void;
+    destroy: () => void;
+}
 
-    tableRef: HTMLDivElement | null = null;
-    theadRef: HTMLElement | null = null;
-    tbodyRef1: HTMLElement | null = null;
-    tbodyRef2: HTMLElement | null = null;
-    resizeObserver: ResizeObserver | null = null;
-    contentHeight: number | null = null;
+const BaseTableComponent = forwardRef((props: BaseTableComponentProps, ref: ForwardedRef<BaseTableComponentRef>) => {
+    const [config, setConfig] = useState<BaseTableComponentProps>({...props});
+    const tableRef = useRef<HTMLDivElement | null>(null);
+    const theadRef = useRef<HTMLTableSectionElement | null>(null);
+    const tbodyRef1 = useRef<HTMLTableSectionElement | null>(null);
+    const tbodyRef2 = useRef<HTMLTableSectionElement | null>(null);
+    const resizeObserverRef = useRef<ResizeObserver | null>(null);
+    const eventHandlerMap = useRef<Record<string, Function>>({});
+    const contentHeightRef = useRef(0);
 
-    constructor(props: BaseTableComponentProps) {
-        super(props);
-        this.state = {...props};
-    }
+    useImperativeHandle(ref, () => ({
+        updateConfig: (newConfig) => setConfig({...newConfig}),
+        setEventHandler: (eventMap) => eventHandlerMap.current = eventMap,
+        destroy: destroy
+    }));
 
-    eventHandlerMap: Record<string, Function> = {};
-
-    onClick = () => {
-        if ('dataChange' in this.eventHandlerMap)
-            this.eventHandlerMap['dataChange']();
-    }
-
-    componentDidMount() {
-        if (this.tableRef) {
-            this.contentHeight = this.tableRef.clientHeight - this.theadRef!.clientHeight;
-            this.resizeObserver = new ResizeObserver(debounce((entries) => {
-                for (const entry of entries) {
-                    const {height} = entry.contentRect;
-                    this.contentHeight = height - this.theadRef!.clientHeight;
-                    this.tbodyRef1 && (this.tbodyRef1.style.height = `${this.contentHeight}px`);
-                    this.tbodyRef2 && (this.tbodyRef2.style.height = `${this.contentHeight}px`);
-                }
-                this.changeTableTrHeight();
-            }, 100));
-            // 开始观察
-            this.resizeObserver!.observe(this.tableRef);
-            this.changeTableTrHeight();
+    const onClick = () => {
+        if ('click' in eventHandlerMap.current) {
+            eventHandlerMap.current['click']();
         }
     }
 
-    componentWillUnmount() {
-        this.tableRef && (this.tableRef = null);
-        this.theadRef && (this.theadRef = null);
-        this.tbodyRef1 && (this.tbodyRef1 = null);
-        this.tbodyRef2 && (this.tbodyRef2 = null);
-        this.resizeObserver && this.resizeObserver.disconnect();
+    const destroy = () => {
+        tableRef && (tableRef.current = null);
+        theadRef && (theadRef.current = null);
+        tbodyRef1 && (tbodyRef1.current = null);
+        tbodyRef2 && (tbodyRef2.current = null);
+        resizeObserverRef && resizeObserverRef.current?.disconnect();
+        resizeObserverRef.current = null;
     }
 
-    changeTableTrHeight = () => {
-        const {pageSize = 0} = this.state.style!.body!;
+    const changeTableTrHeight = () => {
+        const {pageSize = 0} = config.style!.body!;
         if (pageSize) {
-            const tableBodyTds = this.tableRef?.getElementsByClassName('base-table-tr') || [];
-            const tdHeight = this.contentHeight! / pageSize;
+            const tableBodyTds = tableRef.current?.getElementsByClassName('base-table-tr') || [];
+            const tdHeight = contentHeightRef.current! / pageSize;
             for (let i = 0; i < tableBodyTds.length; i++) {
                 (tableBodyTds[i] as HTMLElement).style.height = `${tdHeight}px`;
             }
         }
     }
 
-    render() {
-        const {columns, data, header, body} = this.state.style!;
-        const {enableCarousel, carouselSpeed = 3, pageSize, ...bodyStyle} = body as ITableBodyStyle;
-        const carouselStyle = enableCarousel ? `scroll ${carouselSpeed}s linear infinite` : `none`;
-        if (pageSize)
-            this.changeTableTrHeight();
-        return (
-            <div className={'base-table'} ref={ref => this.tableRef = ref}>
-                <table>
-                    <thead style={{...header}} ref={ref => this.theadRef = ref}>
-                    <tr>
-                        {columns && columns.map((column: ITableColumn, index: number) => {
-                            return <th key={index}
-                                       style={{
-                                           width: column.width,
-                                           fontWeight: header?.fontWeight,
-                                           textAlign: column.textAlign
-                                       }}>{column.label}</th>
-                        })}
-                    </tr>
-                    </thead>
-                    <tbody style={{...bodyStyle, animation: carouselStyle}}
-                           className="scroll-body" ref={ref => this.tbodyRef1 = ref}>
-                    {
-                        data && data.map((item: Record<string, any>, index: number) => {
-                            return (
-                                <tr key={index} className={'base-table-tr'}>
-                                    {columns && columns.map((column: ITableColumn, i: number) => {
-                                        return <td key={i}
-                                                   style={{
-                                                       textAlign: column.textAlign
-                                                   }}>{item[column.key]}</td>
-                                    })}
-                                </tr>
-                            )
-                        })
-                    }
-                    </tbody>
-                    <tbody style={{...bodyStyle, animation: carouselStyle}} className="scroll-body"
-                           ref={ref => this.tbodyRef2 = ref}>
-                    {
-                        data && data.map((item: Record<string, any>, index: number) => {
-                            return (
-                                <tr key={index} className={'base-table-tr'}>
-                                    {columns && columns.map((column: ITableColumn, i: number) => {
-                                        return <td key={i}
-                                                   style={{
-                                                       textAlign: column.textAlign
-                                                   }}>{item[column.key]}</td>
-                                    })}
-                                </tr>
-                            )
-                        })
-                    }
-                    </tbody>
-                </table>
-            </div>
-        );
-    }
-}
+    useEffect(() => {
+        if (tableRef.current) {
+            contentHeightRef.current = tableRef.current.clientHeight - theadRef.current!.clientHeight;
+            resizeObserverRef.current = new ResizeObserver(debounce((entries) => {
+                for (const entry of entries) {
+                    const {height} = entry.contentRect;
+                    contentHeightRef.current = height - theadRef.current!.clientHeight;
+                    tbodyRef1.current && (tbodyRef1.current.style.height = `${contentHeightRef.current}px`);
+                    tbodyRef2.current && (tbodyRef2.current.style.height = `${contentHeightRef.current}px`);
+                }
+                changeTableTrHeight();
+            }, 100));
+            // 开始观察
+            resizeObserverRef.current!.observe(tableRef.current);
+            changeTableTrHeight();
+        }
+    }, []);
+
+
+    const {columns, data, header, body} = config.style!;
+    const {enableCarousel, carouselSpeed = 3, pageSize, ...bodyStyle} = body as ITableBodyStyle;
+    const carouselStyle = enableCarousel ? `scroll ${carouselSpeed}s linear infinite` : `none`;
+    if (pageSize)
+        changeTableTrHeight();
+    return (
+        <div className={'base-table'} ref={tableRef} onClick={onClick}>
+            <table>
+                <thead style={{...header}} ref={theadRef}>
+                <tr>
+                    {columns && columns.map((column: ITableColumn, index: number) => {
+                        return <th key={index}
+                                   style={{
+                                       width: column.width,
+                                       fontWeight: header?.fontWeight,
+                                       textAlign: column.textAlign
+                                   }}>{column.label}</th>
+                    })}
+                </tr>
+                </thead>
+                <tbody style={{...bodyStyle, animation: carouselStyle}}
+                       className="scroll-body" ref={tbodyRef1}>
+                {
+                    data && data.map((item: Record<string, any>, index: number) => {
+                        return (
+                            <tr key={index} className={'base-table-tr'}>
+                                {columns && columns.map((column: ITableColumn, i: number) => {
+                                    return <td key={i}
+                                               style={{
+                                                   textAlign: column.textAlign
+                                               }}>{item[column.key]}</td>
+                                })}
+                            </tr>
+                        )
+                    })
+                }
+                </tbody>
+                <tbody style={{...bodyStyle, animation: carouselStyle}} className="scroll-body"
+                       ref={tbodyRef2}>
+                {
+                    data && data.map((item: Record<string, any>, index: number) => {
+                        return (
+                            <tr key={index} className={'base-table-tr'}>
+                                {columns && columns.map((column: ITableColumn, i: number) => {
+                                    return <td key={i}
+                                               style={{
+                                                   textAlign: column.textAlign
+                                               }}>{item[column.key]}</td>
+                                })}
+                            </tr>
+                        )
+                    })
+                }
+                </tbody>
+            </table>
+        </div>
+    );
+})
 
 export default BaseTableComponent;

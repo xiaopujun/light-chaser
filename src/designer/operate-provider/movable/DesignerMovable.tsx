@@ -314,7 +314,7 @@ class DesignerMovable extends React.Component<DesignerMovableProps, DesignerMova
                     isDisplaySnapDigit={true}
                     snappable={true}
                     snapGap={false}
-                    snapThreshold={5}
+                    snapThreshold={layerManager.enableAdsorption ? 5 : 0}
                     snapDirections={{
                         top: true,
                         right: true,

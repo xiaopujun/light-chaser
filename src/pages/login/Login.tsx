@@ -1,7 +1,7 @@
 import './Login.less';
 import Input from "../../json-schema/ui/input/Input";
 import Button from "../../json-schema/ui/button/Button";
-import {CheckBox} from "../../json-schema/ui/checkbox/CheckBox";
+import CheckBox from "../../json-schema/ui/checkbox/CheckBox";
 import {globalMessage} from "../../framework/message/GlobalMessage";
 import {useNavigate} from "react-router-dom";
 import {memo} from "react";

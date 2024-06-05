@@ -2,7 +2,7 @@ import React from "react";
 import {BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import {ClazzTemplate} from "../../common-component/common-types";
+import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import AntdRingProgressController, {AntdRingProgressProps} from "./AntdRingProgressController";
 import ringProgressImg from './ring-progress.png';
 import {AntdCommonDefinition} from "../../antd-common/AntdCommonDefinition";
@@ -24,7 +24,7 @@ class AntdRingProgressDefinition extends AntdCommonDefinition<AntdRingProgressCo
         return getDefaultMenuList().filter((menuInfo) => menuInfo.key !== "mapping");
     }
 
-    getMenuToConfigContentMap(): MenuToConfigMappingType | null {
+    getMenuToConfigContentMap(): MenuToConfigMappingType {
         return {
             base: BaseInfo,
             data: DataConfig,

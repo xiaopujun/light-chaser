@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {Upload as AntdUpLoad, UploadFile} from "antd";
-import {PlusOutlined} from "@ant-design/icons";
 import './ImageUpload.less';
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
 import operatorMap from "../../../framework/operate/index";
@@ -10,6 +9,7 @@ import {globalMessage} from "../../../framework/message/GlobalMessage";
 import {SaveType} from "../../../designer/DesignerType";
 import {RcFile} from "antd/es/upload";
 import {IImageData} from "../../../comps/lc/base-image/BaseImageComponent";
+import {Plus} from "@icon-park/react";
 
 export interface UploadDataType {
     url?: string;
@@ -62,7 +62,7 @@ export const ImageUpload: React.FC<UploadProps> = (props) => {
                         }}
                         onPreview={() => window.open(fileList[0].url)}>
                 {fileList.length > 0 ? null : <div className={'upload-btn'}>
-                    <PlusOutlined/>
+                    <Plus/>
                     <div style={{marginTop: 8}}>Upload</div>
                 </div>}
             </AntdUpLoad>
