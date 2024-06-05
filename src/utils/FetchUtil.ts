@@ -30,11 +30,15 @@ export default class FetchUtil {
         } else if (contentType === 'multipart/form-data') {
             // multipart/form-data 不能直接设置 Content-Type，因为需要由浏览器自动生成
             delete (options.headers as any)['Content-Type'];
-            const formData = new FormData();
-            for (const [key, value] of Object.entries(data)) {
-                formData.append(key, value as Blob | string);
+            if (data instanceof FormData) {
+                options.body = data;
+            } else {
+                const formData = new FormData();
+                data.values().forEach((value: any, key: string) => {
+                    formData.append(key, value as Blob | string);
+                })
+                options.body = formData;
             }
-            options.body = formData;
         } else {
             // 默认处理为 text/plain
             options.body = data.toString();

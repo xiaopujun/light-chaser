@@ -2,7 +2,7 @@ import {Menu} from "antd";
 import {MenuItemType} from "antd/es/menu/hooks/useItems";
 import {useLocation, useNavigate} from "react-router-dom";
 import {memo} from "react";
-import {ApplicationTwo, Data, LocalPin, NetworkDrive, Permissions, System, User} from "@icon-park/react";
+import {Data, LocalPin, NetworkDrive, Permissions, System, User} from "@icon-park/react";
 
 const menus: MenuItemType[] = [
     {
@@ -20,11 +20,11 @@ const menus: MenuItemType[] = [
         icon: <Data size={16}/>,
         label: '数据源管理'
     },
-    {
-        key: 'project',
-        icon: <ApplicationTwo size={16}/>,
-        label: '项目管理'
-    },
+    // {
+    //     key: 'project',
+    //     icon: <ApplicationTwo size={16}/>,
+    //     label: '项目管理'
+    // },
     {
         key: 'user',
         icon: <User size={16}/>,

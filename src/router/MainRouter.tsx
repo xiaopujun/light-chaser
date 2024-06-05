@@ -17,7 +17,6 @@ const MoreInfo = lazy(() => import('../pages/home/more-info/MoreInfo.tsx'));
 const Demo = lazy(() => import('../test/Demo'));
 const UserManagement = lazy(() => import('../pages/home/user-management/UserManagement.tsx'));
 const AuthManagement = lazy(() => import('../pages/home/auth/AuthManagement.tsx'));
-const ProjectManagement = lazy(() => import('../pages/home/project-management/ProjectManagement.tsx'));
 
 const studioDarkAlgorithm: MappingAlgorithm = (seedToken, mapToken) => {
     // 使用 antd 默认的暗色算法生成基础token，这样其他不需要定制的部分则保持原样
@@ -34,7 +33,30 @@ const antdComponentTheme = {
     Menu: {
         itemBg: 'none',
         itemColor: '#bfbfbf',
-    }
+        itemSelectedBg: 'none',
+        itemBorderRadius: 2
+    },
+    Table: {
+        borderRadius: 2,
+        headerBorderRadius: 2,
+        cellPaddingBlock: 12,
+        headerBg: '#343434',
+        colorBgContainer: '#252525',
+    },
+    Input: {
+        borderRadius: 2,
+        borderRadiusLG: 2,
+        borderRadiusXS: 2,
+        borderRadiusSM: 2,
+        colorBgContainer: '#252525',
+    },
+    Button: {
+        borderRadius: 2,
+        borderRadiusLG: 2,
+        borderRadiusXS: 2,
+        borderRadiusSM: 2,
+    },
+
 }
 
 const router = createBrowserRouter([
@@ -82,10 +104,10 @@ const router = createBrowserRouter([
                 path: 'auth',
                 element: <AuthManagement/>,
             },
-            {
-                path: 'project',
-                element: <ProjectManagement/>,
-            },
+            // {
+            //     path: 'project',
+            //     element: <ProjectManagement/>,
+            // },
             {
                 path: 'more',
                 element: <MoreInfo/>

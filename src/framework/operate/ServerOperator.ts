@@ -90,7 +90,7 @@ export default class ServerOperator extends AbstractOperator {
         formData.append('file', file);
         formData.append('id', id);
 
-        const res = await AuthFetchUtil.post('/api/project/cover', formData);
+        const res = await AuthFetchUtil.post('/api/project/cover', formData, {headers: {'Content-Type': 'multipart/form-data'}});
         return res.code === 200;
     }
 }
