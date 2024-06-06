@@ -3,10 +3,10 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {ConfigProvider, MappingAlgorithm, theme} from "antd";
 import NotFound from "../pages/result/NotFound.tsx";
 
-
 const DesignerViewPage = lazy(() => import('../pages/view/DesignerViewPage.tsx'));
 const DesignerPage = lazy(() => import('../pages/designer/DesignerPage.tsx'));
 const GlobalMessage = lazy(() => import('../framework/message/GlobalMessage.tsx'));
+const GlobalModal = lazy(() => import('../framework/message/GlobalModal.tsx'));
 const Login = lazy(() => import('../pages/login/Login'));
 const Home = lazy(() => import('../pages/home/Home'));
 const LocalProjectList = lazy(() => import('../pages/home/local-list/LocalProjectList.tsx'));
@@ -132,6 +132,7 @@ const MainRouter = memo(() => {
         }}>
             <RouterProvider router={router}/>
             <GlobalMessage/>
+            <GlobalModal/>
         </ConfigProvider>
     );
 })

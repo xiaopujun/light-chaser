@@ -149,6 +149,19 @@ export class DataSourceStore {
         })
     }
 
+    doBatchDeleteDataSource = (ids: string[]) => {
+        if (ids.length === 0)
+            return;
+        AuthFetchUtil.post('/api/datasource/batchDel', ids).then((res) => {
+            const {code, msg} = res;
+            if (code === 200) {
+                globalMessage.messageApi?.success('删除成功');
+                this.getDataSourceList();
+            } else
+                globalMessage.messageApi?.error(msg);
+        })
+    }
+
 }
 
 const dataSourceStore = new DataSourceStore();

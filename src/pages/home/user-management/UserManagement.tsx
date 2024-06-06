@@ -8,6 +8,7 @@ import userManagementStore from "./UserManagementStore.ts";
 import UserManagementStore, {IUser} from "./UserManagementStore.ts";
 import {Key, useEffect} from "react";
 import UserPanel from "./UserPanel.tsx";
+import {globalModal} from "../../../framework/message/GlobalModal.tsx";
 
 const {Search} = Input;
 
@@ -44,7 +45,13 @@ const columns: ColumnsType<object> = [
             const {id} = record;
             return <div>
                 <a onClick={() => userManagementStore.doEditUserInfo(id!)}>编辑</a>&nbsp;&nbsp;
-                <a onClick={() => userManagementStore.doBatchDeleteUser([id!])}>删除</a>&nbsp;&nbsp;
+                <a onClick={() => {
+                    globalModal.modalApi?.confirm({
+                        title: '删除确认',
+                        content: '确定删除该用户吗？',
+                        onOk: () => userManagementStore.doBatchDeleteUser([id!]),
+                    });
+                }}>删除</a>&nbsp;&nbsp;
             </div>
         },
     }
@@ -101,7 +108,15 @@ const UserManagement = () => {
                 <Button size={'middle'} type={"primary"} onClick={() => openUserPanelWhenCreate()}><Add/>新增</Button>
                 <Button size={'middle'} type={"primary"}><Warehousing/>导入</Button>
                 <Button size={'middle'} danger={true} type={"primary"}
-                        onClick={() => doBatchDeleteUser(selectedIds)}><Delete/>删除</Button>
+                        onClick={() => {
+                            if (selectedIds.length === 0)
+                                return;
+                            globalModal.modalApi?.confirm({
+                                title: '删除确认',
+                                content: '确定删除选中的用户吗？',
+                                onOk: () => doBatchDeleteUser(selectedIds)
+                            });
+                        }}><Delete/>删除</Button>
             </div>
             <div className="user-management-body">
                 <Table dataSource={records} columns={columns}
