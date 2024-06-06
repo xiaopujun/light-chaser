@@ -13,6 +13,8 @@ export interface IUser {
     username?: string;
     phone?: string;
     email?: string;
+    avatar?: string;
+    avatarFile?: File;
 }
 
 class UserManagementStore {
@@ -21,13 +23,18 @@ class UserManagementStore {
             searchValue: observable,
             userPageData: observable,
             user: observable,
+            userPanelVisible: observable,
             setSearchValue: action,
             setUserPageData: action,
-            setUser: action
+            setUser: action,
+            setUserPanelVisible: action,
+            changeCurrentPage: action,
         })
     }
 
     searchValue: string | null = null;
+
+    userPanelVisible: boolean = false;
 
     userPageData: IPage<IUser> = {
         records: [],
@@ -37,12 +44,21 @@ class UserManagementStore {
     };
 
     user: IUser = {
-        id: "",
-        name: '',
-        username: '',
-        phone: '',
-        email: ''
+        id: undefined,
+        name: undefined,
+        password: undefined,
+        username: undefined,
+        phone: undefined,
+        email: undefined,
     }
+
+    setUserPanelVisible = (visible: boolean) => this.userPanelVisible = visible;
+
+    changeCurrentPage = (current: number) => {
+        this.userPageData.current = current;
+        this.doGetUserList();
+    }
+
 
     setSearchValue = (value: string) => this.searchValue = value;
 
@@ -50,7 +66,18 @@ class UserManagementStore {
 
     setUser = (user: IUser) => this.user = user;
 
-    getUserList = () => {
+    openUserPanelWhenCreate = () => {
+        this.setUserPanelVisible(true);
+        this.setUser({
+            id: undefined,
+            name: undefined,
+            password: undefined,
+            username: undefined,
+            phone: undefined,
+        });
+    }
+
+    doGetUserList = () => {
         AuthFetchUtil.post('/api/user/pageList', {
             current: this.userPageData.current,
             size: this.userPageData.size,
@@ -69,6 +96,76 @@ class UserManagementStore {
         })
     }
 
+    docCreateUser = (user: IUser) => {
+        AuthFetchUtil.post('/api/user/create', user).then((res) => {
+            const {code, msg} = res;
+            if (code === 200) {
+                globalMessage.messageApi?.success('创建成功');
+                this.doGetUserList();
+                this.setUserPanelVisible(false);
+            } else
+                globalMessage.messageApi?.error(msg);
+        })
+    }
+
+    doUpdateUser = (user: IUser) => {
+        //将user转换为FormData
+        const formData = new FormData();
+        for (let key in user) {
+            formData.append(key, user[key as keyof IUser] as string);
+        }
+
+        AuthFetchUtil.post('/api/user/update', formData, {headers: {'Content-Type': 'multipart/form-data'}}).then((res) => {
+            const {code, msg} = res;
+            if (code === 200) {
+                globalMessage.messageApi?.success('更新成功');
+                this.doGetUserList();
+                this.setUserPanelVisible(false);
+            } else
+                globalMessage.messageApi?.error(msg);
+        })
+    }
+
+    doEditUserInfo = (id: string) => {
+        AuthFetchUtil.get(`/api/user/getUser/${id}`).then((res) => {
+            const {code, msg, data} = res;
+            if (code === 200) {
+                this.setUser(data);
+                this.setUserPanelVisible(true);
+            } else
+                globalMessage.messageApi?.error(msg);
+        })
+    }
+
+    doBatchDeleteUser = (ids: string[]) => {
+        AuthFetchUtil.post('/api/user/batchDel', ids).then((res) => {
+            const {code, msg} = res;
+            if (code === 200) {
+                globalMessage.messageApi?.success('删除成功');
+                this.doGetUserList();
+            } else
+                globalMessage.messageApi?.error(msg);
+        })
+    }
+
+    destroy = () => {
+        this.searchValue = null;
+        this.userPageData = {
+            records: [],
+            total: 0,
+            size: 8,
+            current: 1
+        };
+        this.user = {
+            id: undefined,
+            name: undefined,
+            password: undefined,
+            username: undefined,
+            phone: undefined,
+            email: undefined,
+        };
+        this.userPanelVisible = false;
+    }
 
 }
 

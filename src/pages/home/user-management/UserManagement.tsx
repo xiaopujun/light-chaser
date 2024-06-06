@@ -1,15 +1,15 @@
 import {ColumnsType} from "antd/es/table";
 import {DataSourceConfigType} from "../datasource/edit/EditDataSourceDialog.tsx";
-import dataSourceStore from "../datasource/DataSourceStore.ts";
-import {Button, Col, Drawer, Form, Input, Row, Select, Space, Table, Upload} from "antd";
+import {Button, Input, Table} from "antd";
 import './UserManagement.less';
-import {Add, Delete, UploadOne, Warehousing} from "@icon-park/react";
+import {Add, Delete, Warehousing} from "@icon-park/react";
 import {observer} from "mobx-react";
-import userManagementStore, {IUser} from "./UserManagementStore.ts";
-import {useEffect, useState} from "react";
+import userManagementStore from "./UserManagementStore.ts";
+import UserManagementStore, {IUser} from "./UserManagementStore.ts";
+import {Key, useEffect} from "react";
+import UserPanel from "./UserPanel.tsx";
 
 const {Search} = Input;
-const {Option} = Select;
 
 const columns: ColumnsType<object> = [
     {
@@ -43,39 +43,65 @@ const columns: ColumnsType<object> = [
         render: (record: DataSourceConfigType) => {
             const {id} = record;
             return <div>
-                <a onClick={() => dataSourceStore.openDataSourceEditor(id!)}>编辑</a>&nbsp;&nbsp;
-                <a onClick={() => dataSourceStore.deleteDataSource(id!)}>删除</a>&nbsp;&nbsp;
+                <a onClick={() => userManagementStore.doEditUserInfo(id!)}>编辑</a>&nbsp;&nbsp;
+                <a onClick={() => userManagementStore.doBatchDeleteUser([id!])}>删除</a>&nbsp;&nbsp;
             </div>
         },
     }
 ];
 
 const UserManagement = () => {
-    const {userPageData} = userManagementStore;
+    const {
+        userPageData,
+        user,
+        userPanelVisible,
+        setUserPanelVisible,
+        openUserPanelWhenCreate,
+        doBatchDeleteUser
+    } = userManagementStore;
     const {current, records, size, total} = userPageData;
-    const [addVisible, setAddVisible] = useState(false);
+    let selectedIds: string[] = [];
 
     const rowSelection = {
-        onChange: (selectedRowKeys: React.Key[], selectedRows: IUser[]) => {
-            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-        },
-        getCheckboxProps: (record: IUser) => ({
-            disabled: record.name === 'Disabled User', // Column configuration not to be checked
-            name: record.name,
-        }),
+        onChange: (selectedRowKeys: Key[]) => {
+            selectedIds = [...selectedRowKeys as string[]];
+        }
     };
 
+    const doSubmit = (data: IUser) => {
+        if (data.id)
+            userManagementStore.doUpdateUser(data);
+        else
+            userManagementStore.docCreateUser(data);
+    }
+
+    const onKeydown = (event: React.KeyboardEvent) => {
+        if (event.key !== 'Enter')
+            return;
+        doSearch((event.target as any).value);
+    }
+
+    const doSearch = (value: string) => {
+        userManagementStore.setSearchValue(value);
+        userManagementStore.doGetUserList();
+    }
+
     useEffect(() => {
-        userManagementStore.getUserList();
+        userManagementStore.doGetUserList();
+        return () => {
+            userManagementStore.destroy();
+        }
     }, []);
 
     return (
         <div className="user-management">
             <div className="user-management-header">
-                <Search placeholder="请输入用户名" size={"middle"} style={{width: 350}}/>
-                <Button size={'middle'} type={"primary"} onClick={() => setAddVisible(true)}><Add/>新增</Button>
+                <Search placeholder="请输入用户名" size={"middle"} style={{width: 350}} onKeyDown={onKeydown}
+                        onSearch={doSearch}/>
+                <Button size={'middle'} type={"primary"} onClick={() => openUserPanelWhenCreate()}><Add/>新增</Button>
                 <Button size={'middle'} type={"primary"}><Warehousing/>导入</Button>
-                <Button size={'middle'} danger={true} type={"primary"}><Delete/>删除</Button>
+                <Button size={'middle'} danger={true} type={"primary"}
+                        onClick={() => doBatchDeleteUser(selectedIds)}><Delete/>删除</Button>
             </div>
             <div className="user-management-body">
                 <Table dataSource={records} columns={columns}
@@ -83,7 +109,7 @@ const UserManagement = () => {
                            type: 'checkbox',
                            ...rowSelection,
                        }}
-                       onChange={(pagination) => dataSourceStore.changeCurrentPage(pagination.current!)}
+                       onChange={(pagination) => UserManagementStore.changeCurrentPage(pagination.current!)}
                        pagination={{
                            showTotal: () => `共${total}条`,
                            pageSize: size,
@@ -92,73 +118,8 @@ const UserManagement = () => {
                        }}/>
 
             </div>
-            <Drawer title="新建用户"
-                    placement="right"
-                    closable={true}
-                    width={700}
-                    onClose={() => setAddVisible(false)}
-                    open={addVisible}
-                    getContainer={false}
-                    extra={
-                        <Space>
-                            <Button onClick={() => setAddVisible(false)}>取消</Button>
-                            <Button type="primary">提交</Button>
-                        </Space>
-                    }>
-                <Form layout="vertical" requiredMark={false}>
-                    <Row gutter={16}>
-                        <Col span={12}>
-                            <Form.Item name="username" label="用户名"
-                                       rules={[{required: true, message: '请输入用户名'}]}>
-                                <Input placeholder="请输入用户名（用于登录）"/>
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item name="url"
-                                       label="姓名"
-                                       rules={[{required: true, message: '请输入姓名（用于显示）'}]}>
-                                <Input placeholder="请输入姓名"/>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={16}>
-                        <Col span={12}>
-                            <Form.Item name="password" label="密码">
-                                <Input type="password" placeholder="请输入密码"/>
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item name="phone" label="电话">
-                                <Input placeholder="请输入电话"/>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={16}>
-                        <Col span={12}>
-                            <Form.Item name="email" label="邮箱">
-                                <Input placeholder="请输入邮箱"/>
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item name="sex" label="性别">
-                                <Select placeholder="请选择性别">
-                                    <Option value="man">男</Option>
-                                    <Option value="woman">女</Option>
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={16}>
-                        <Col span={12}>
-                            <Form.Item name="avatar" label="头像">
-                                <Upload action="/upload.do" listType="picture-card" showUploadList={false}>
-                                    <UploadOne size={20}/>
-                                </Upload>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                </Form>
-            </Drawer>
+            <UserPanel visible={userPanelVisible} data={user} onClose={() => setUserPanelVisible(false)}
+                       onSubmitted={doSubmit}/>
         </div>
     );
 }

@@ -1,12 +1,14 @@
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import dataSourceStore from "./DataSourceStore.ts";
-import {Table} from "antd";
+import {Button, Table} from "antd";
 import EditDataSourceDialog, {DataSourceConfigType} from "./edit/EditDataSourceDialog.tsx";
 import {observer} from "mobx-react";
 import {ColumnsType} from "antd/es/table";
 import './DataSourceList.less';
-import Button from "../../../json-schema/ui/button/Button.tsx";
-import Input from "../../../json-schema/ui/input/Input.tsx";
+import {Input} from "antd";
+import {Add} from "@icon-park/react";
+
+const {Search} = Input;
 
 const columns: ColumnsType<object> = [
     {
@@ -54,8 +56,18 @@ const DataSourceList = observer(() => {
     const onEditClose = () => setEditVisible(false);
     const onEditSave = (data: DataSourceConfigType) => dataSourceStore.updateDataSource(data);
 
-
     const {current, records, size, total} = dataSourcePageData;
+
+    const doSearch = (value: string) => {
+        dataSourceStore.searchValue = value;
+        dataSourceStore.getDataSourceList();
+    }
+
+    const onKeyDown = (event: React.KeyboardEvent) => {
+        if (event.key !== 'Enter')
+            return;
+        doSearch((event.target as any).value);
+    }
 
     useEffect(() => {
         dataSourceStore.getDataSourceList();
@@ -65,15 +77,15 @@ const DataSourceList = observer(() => {
         <div className={'datasource-list'}>
             <div className={'datasource-list-header'}>
                 <div className={'datasource-list-header-left'}>
-                    <Input className={'list-search'} placeholder={'搜索数据源'} onKeyDown={(e) => {
-                        if (e.code === 'Enter') {
-                            dataSourceStore.searchValue = (e.currentTarget as HTMLInputElement).value;
-                            dataSourceStore.getDataSourceList();
-                        }
-                    }}/>
+                    <Search placeholder="搜索数据源" size={"middle"}
+                            className={'project-list-search'}
+                            onKeyDown={onKeyDown}
+                            onSearch={doSearch}
+                            style={{width: 350}}/>
+                    <Button size={'middle'} type={"primary"} onClick={() => setCreateVisible(true)}>
+                        <Add style={{position: 'relative', top: 3, marginRight: 3}}/>新建数据源</Button>
                 </div>
                 <div className={'datasource-list-header-right'}>
-                    <Button onClick={() => setCreateVisible(true)}>+ 新建数据源</Button>
                 </div>
             </div>
             <div className={'datasource-list-body'}>
