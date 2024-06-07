@@ -31,9 +31,9 @@ const menus: MenuItemType[] = [
         label: '角色管理'
     },
     {
-        key: 'menu',
+        key: 'permission',
         icon: <ApplicationMenu size={16}/>,
-        label: '菜单管理'
+        label: '菜单权限'
     },
     {
         key: 'more',

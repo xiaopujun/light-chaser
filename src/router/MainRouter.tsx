@@ -18,7 +18,7 @@ const Demo = lazy(() => import('../test/Demo'));
 const UserManagement = lazy(() => import('../pages/home/user-management/UserManagement.tsx'));
 const RoleManagement = lazy(() => import('../pages/home/role-management/RoleManagement.tsx'));
 const UserInfo = lazy(() => import('../pages/home/user-info/UserInfo.tsx'));
-const MenuManagement = lazy(() => import('../pages/home/menu-management/MenuManagement.tsx'));
+const PermissionManagement = lazy(() => import('../pages/home/permission-management/PermissionManagement.tsx'));
 
 
 const studioDarkAlgorithm: MappingAlgorithm = (seedToken, mapToken) => {
@@ -108,8 +108,8 @@ const router = createBrowserRouter([
                 element: <RoleManagement/>,
             },
             {
-                path: 'menu',
-                element: <MenuManagement/>,
+                path: 'permission',
+                element: <PermissionManagement/>,
             },
             // {
             //     path: 'project',
