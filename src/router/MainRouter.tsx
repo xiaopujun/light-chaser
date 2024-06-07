@@ -16,7 +16,10 @@ const TemplateMarket = lazy(() => import('../pages/home/template-market/Template
 const MoreInfo = lazy(() => import('../pages/home/more-info/MoreInfo.tsx'));
 const Demo = lazy(() => import('../test/Demo'));
 const UserManagement = lazy(() => import('../pages/home/user-management/UserManagement.tsx'));
-const AuthManagement = lazy(() => import('../pages/home/auth/AuthManagement.tsx'));
+const RoleManagement = lazy(() => import('../pages/home/role-management/RoleManagement.tsx'));
+const UserInfo = lazy(() => import('../pages/home/user-info/UserInfo.tsx'));
+const MenuManagement = lazy(() => import('../pages/home/menu-management/MenuManagement.tsx'));
+
 
 const studioDarkAlgorithm: MappingAlgorithm = (seedToken, mapToken) => {
     // 使用 antd 默认的暗色算法生成基础token，这样其他不需要定制的部分则保持原样
@@ -101,13 +104,21 @@ const router = createBrowserRouter([
                 element: <UserManagement/>,
             },
             {
-                path: 'auth',
-                element: <AuthManagement/>,
+                path: 'role',
+                element: <RoleManagement/>,
+            },
+            {
+                path: 'menu',
+                element: <MenuManagement/>,
             },
             // {
             //     path: 'project',
             //     element: <ProjectManagement/>,
             // },
+            {
+                path: 'userInfo',
+                element: <UserInfo/>
+            },
             {
                 path: 'more',
                 element: <MoreInfo/>

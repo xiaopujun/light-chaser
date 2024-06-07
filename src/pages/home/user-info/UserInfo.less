@@ -1,0 +1,52 @@
+.user-info-detail {
+  color: #bebebe;
+
+  .user-info-header {
+    padding: 20px;
+    border-bottom: 1px #383838 solid;
+
+    .info-header-left {
+      display: flex;
+
+      .icon-return {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .user-info-body {
+    padding: 20px;
+
+    .user-info-item {
+      display: flex;
+      padding: 10px;
+      align-items: center;
+      height: 75px;
+
+      .item-label {
+        width: 100px;
+        text-align: right;
+        margin-right: 20px;
+      }
+
+      .item-value {
+        .icon-operate {
+          margin-left: 10px;
+          position: relative;
+          top: 2px;
+          cursor: pointer;
+          opacity: 0;
+          transition: all 0.3s;
+        }
+
+        &:hover {
+          .icon-operate {
+            color: #418bff;
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+  }
+}

@@ -5,13 +5,14 @@ import {globalMessage} from "../../framework/message/GlobalMessage";
 import {useNavigate} from "react-router-dom";
 import {memo, useRef} from "react";
 import FetchUtil from "../../utils/FetchUtil.ts";
+import AuthTools from "../../utils/AuthTools.ts";
 
 const Login = memo(() => {
 
     const navigate = useNavigate();
 
     const usernameRef = useRef("admin");
-    const passwordRef = useRef("123456");
+    const passwordRef = useRef("111");
 
     const login = () => {
         FetchUtil.post("/api/authenticate/login",
@@ -24,7 +25,7 @@ const Login = memo(() => {
         ).then(res => {
             const {code, msg, data} = res;
             if (code === 200) {
-                localStorage.setItem('token', data);
+                AuthTools.setToken(data)
                 navigate('/home/server');
             } else {
                 globalMessage.messageApi?.error(msg);

@@ -1,5 +1,3 @@
- import FetchUtil from "./FetchUtil.ts";
-
 export default class AuthTools {
     public static getToken(): string | null {
         return localStorage.getItem('token') || null;
@@ -14,14 +12,10 @@ export default class AuthTools {
     }
 
 
-    public static async doAuth(): Promise<boolean> {
+    public static getUserId(): string | null {
         const token = AuthTools.getToken();
-        if (!token)
-            return false;
-        const authRes = await FetchUtil.post("/api/authenticate/auth",
-            {token},
-            {headers: {'Content-Type': 'application/x-www-form-urlencoded'}});
-        const {code, data} = authRes;
-        return code === 200 && data;
+        if (token === null)
+            return null;
+        return token.split(':')[0];
     }
 }
