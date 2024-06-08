@@ -139,7 +139,18 @@ const MainRouter = memo(() => {
     return (
         <ConfigProvider theme={{
             algorithm: studioDarkAlgorithm,
-            components: antdComponentTheme
+            components: {
+                ...antdComponentTheme,
+                Select: {
+                    borderRadius: 2,
+                    borderRadiusLG: 2,
+                    borderRadiusXS: 2,
+                    borderRadiusSM: 2,
+                    selectorBg: '#252525'
+                },
+                TreeSelect: {
+                }
+            }
         }}>
             <RouterProvider router={router}/>
             <GlobalMessage/>

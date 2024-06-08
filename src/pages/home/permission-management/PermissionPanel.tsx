@@ -1,33 +1,24 @@
-import {Button, Col, Drawer, Form, Input, Row, Space} from "antd";
-import {IPermission} from "./PermissionManagementStore.ts";
+import {Button, Col, Drawer, Form, Input, Row, Space, TreeSelect} from "antd";
+import permissionManagementStore, {IPermission} from "./PermissionManagementStore.ts";
 import {useEffect, useRef} from "react";
 import './PermissionPanel.less';
+
+const {TextArea} = Input;
 
 
 export interface UserPanelProps {
     width?: number;
     visible: boolean;
     onClose: () => void;
+    permissionTreeData: any;
     onSubmitted: (data: IPermission) => void;
     data?: IPermission;
 }
 
 export default function PermissionPanel(props: UserPanelProps) {
-    const {visible, onClose, data, onSubmitted, width = 700} = props;
+    const {visible, onClose, data, onSubmitted, permissionTreeData, width = 700} = props;
     const avatarFileRef = useRef<File>();
     const [form] = Form.useForm();
-    // const beforeUpload = (file: File) => {
-    //     avatarFileRef.current = file;
-    //     if (file.size > 1024 * 1024) {
-    //         globalMessage.messageApi?.warning(`头像大小不能超过1M`);
-    //         return false;
-    //     }
-    //     //将file转换为可直接访问的url
-    //     const url = URL.createObjectURL(file);
-    //     setAvatarUrl(url);
-    //     //阻止默认上传
-    //     return false;
-    // }
 
     const submit = () => {
         form.validateFields().then((values) => {
@@ -45,6 +36,7 @@ export default function PermissionPanel(props: UserPanelProps) {
     }
 
     useEffect(() => {
+        permissionManagementStore.doGetPermissionTreeData();
         if (visible) {
             form.setFieldsValue(data);
         }
@@ -71,22 +63,44 @@ export default function PermissionPanel(props: UserPanelProps) {
                         <Form.Item hidden={true} name="id">
                             <Input/>
                         </Form.Item>
+                        <Form.Item name="pid" label="上级权限(选填)">
+                            <TreeSelect
+                                style={{width: '100%'}}
+                                dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
+                                placeholder="请选择权限"
+                                treeDefaultExpandAll
+                                showSearch
+                                allowClear
+                                treeLine={true}
+                                treeData={permissionTreeData}
+                            />
+                        </Form.Item>
+                    </Col>
+                    <Col span={12}>
                         <Form.Item name="name" label="权限名"
                                    rules={[{required: true, message: '请输入权限名'}]}>
                             <Input placeholder="请输入权限名"/>
                         </Form.Item>
                     </Col>
+
+                </Row>
+                <Row gutter={16}>
                     <Col span={12}>
-                        <Form.Item name="code" label="权限编码" rules={[{required: true, message: '请输入密码'}]}>
+                        <Form.Item name="code" label="权限编码" rules={[{required: true, message: '请输入编码'}]}>
                             <Input placeholder="请输入权限编码（比如：admin、customer）"/>
+                        </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                        <Form.Item name="resourcePath"
+                                   label="资源路径">
+                            <Input placeholder="请输入资源路径"/>
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row gutter={16}>
                     <Col span={12}>
-                        <Form.Item name="sourcePath"
-                                   label="资源路径">
-                            <Input placeholder="请输入资源路径"/>
+                        <Form.Item name="des" label="备注">
+                            <TextArea placeholder="请输入权限备注"/>
                         </Form.Item>
                     </Col>
                 </Row>

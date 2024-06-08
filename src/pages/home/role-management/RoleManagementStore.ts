@@ -20,11 +20,13 @@ class RoleManagementStore {
             rolePageData: observable,
             role: observable,
             rolePanelVisible: observable,
+            permissionTreeData: observable,
             setSearchValue: action,
             setRolePageData: action,
             setRole: action,
             setRolePanelVisible: action,
             changeCurrentPage: action,
+            setPermissionTreeData: action
         })
     }
 
@@ -45,6 +47,10 @@ class RoleManagementStore {
         des: undefined,
         code: undefined,
     }
+
+    permissionTreeData: any = [];
+
+    setPermissionTreeData = (treeData: any) => this.permissionTreeData = treeData;
 
     setRolePanelVisible = (visible: boolean) => this.rolePanelVisible = visible;
 
@@ -102,13 +108,7 @@ class RoleManagementStore {
     }
 
     doUpdateRole = (role: IRole) => {
-        //将role转换为FormData
-        const formData = new FormData();
-        for (let key in role) {
-            formData.append(key, role[key as keyof IRole] as string);
-        }
-
-        AuthFetchUtil.post('/api/role/update', formData, {headers: {'Content-Type': 'multipart/form-data'}}).then((res) => {
+        AuthFetchUtil.post('/api/role/update', role).then((res) => {
             const {code, msg} = res;
             if (code === 200) {
                 globalMessage.messageApi?.success('更新成功');
@@ -140,6 +140,44 @@ class RoleManagementStore {
                 globalMessage.messageApi?.error(msg);
         })
     }
+
+    doGetPermissionTreeData = () => {
+        AuthFetchUtil.get('/api/permission/getAllPermission').then((res) => {
+            const {data, code} = res;
+            if (code == 200) {
+                //将data转换为指定格式
+                const formatDataArr: any = [];
+                const formatDataMap = data.reduce((acc: any, current: any) => {
+                    const targetData = {
+                        title: current.name,
+                        key: current.id,
+                        value: current.id,
+                        pid: current.pid,
+                    }
+                    acc[current.id] = targetData;
+                    formatDataArr.push(targetData);
+                    return acc;
+                }, {});
+                const result: any = [];
+                // 构建树结构
+                formatDataArr.forEach((item: any) => {
+                    if (item.pid && item.pid === '-1') {
+                        // 根节点
+                        result.push(item);
+                    } else {
+                        // 非根节点，将其加入父节点的 children 中
+                        const parent = formatDataMap[item.pid];
+                        if (parent) {
+                            parent.children = parent.children || [];
+                            parent.children.push(item);
+                        }
+                    }
+                });
+                this.setPermissionTreeData(result);
+            }
+        })
+    }
+
 
     destroy = () => {
         this.searchValue = null;

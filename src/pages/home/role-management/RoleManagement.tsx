@@ -89,6 +89,7 @@ const RoleManagement = () => {
 
     useEffect(() => {
         roleManagementStore.doGetRoleList();
+        roleManagementStore.doGetPermissionTreeData();
         return () => {
             roleManagementStore.destroy();
         }
@@ -126,7 +127,10 @@ const RoleManagement = () => {
                        }}/>
 
             </div>
-            <RolePanel visible={rolePanelVisible} data={role} onClose={() => setRolePanelVisible(false)}
+            <RolePanel visible={rolePanelVisible}
+                       data={role}
+                       permissionTreeData={roleManagementStore.permissionTreeData}
+                       onClose={() => setRolePanelVisible(false)}
                        onSubmitted={doSubmit}/>
         </div>
     );

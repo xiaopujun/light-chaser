@@ -1,33 +1,24 @@
-import {Button, Col, Drawer, Form, Input, Row, Space} from "antd";
+import {Button, Col, Drawer, Form, Input, Row, Space, TreeSelect} from "antd";
 import {IRole} from "./RoleManagementStore.ts";
 import {useEffect, useRef} from "react";
 import './RolePanel.less';
 
+const {TextArea} = Input;
+const {SHOW_ALL} = TreeSelect;
 
 export interface UserPanelProps {
     width?: number;
     visible: boolean;
     onClose: () => void;
+    permissionTreeData: any;
     onSubmitted: (data: IRole) => void;
     data?: IRole;
 }
 
 export default function RolePanel(props: UserPanelProps) {
-    const {visible, onClose, data, onSubmitted, width = 700} = props;
+    const {visible, onClose, data, onSubmitted, permissionTreeData, width = 700} = props;
     const avatarFileRef = useRef<File>();
     const [form] = Form.useForm();
-    // const beforeUpload = (file: File) => {
-    //     avatarFileRef.current = file;
-    //     if (file.size > 1024 * 1024) {
-    //         globalMessage.messageApi?.warning(`头像大小不能超过1M`);
-    //         return false;
-    //     }
-    //     //将file转换为可直接访问的url
-    //     const url = URL.createObjectURL(file);
-    //     setAvatarUrl(url);
-    //     //阻止默认上传
-    //     return false;
-    // }
 
     const submit = () => {
         form.validateFields().then((values) => {
@@ -86,7 +77,22 @@ export default function RolePanel(props: UserPanelProps) {
                     <Col span={12}>
                         <Form.Item name="des"
                                    label="描述">
-                            <Input placeholder="请输入描述"/>
+                            <TextArea placeholder="请输入描述"/>
+                        </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                        <Form.Item name="permissionIds"
+                                   label="权限控制">
+                            <TreeSelect
+                                style={{width: '100%'}}
+                                dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
+                                placeholder="请选择权限"
+                                treeDefaultExpandAll
+                                treeCheckable={true}
+                                showCheckedStrategy={SHOW_ALL}
+                                treeLine={true}
+                                treeData={permissionTreeData}
+                            />
                         </Form.Item>
                     </Col>
                 </Row>

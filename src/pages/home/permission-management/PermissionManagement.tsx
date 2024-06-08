@@ -29,8 +29,8 @@ const columns: ColumnsType<object> = [
     },
     {
         title: '资源路径',
-        dataIndex: 'sourcePath',
-        key: 'sourcePath',
+        dataIndex: 'resourcePath',
+        key: 'resourcePath',
     },
     {
         title: '操作',
@@ -128,6 +128,7 @@ const PermissionManagement = () => {
 
             </div>
             <PermissionPanel visible={permissionPanelVisible} data={permission}
+                             permissionTreeData={permissionManagementStore.permissionTreeData}
                              onClose={() => setPermissionPanelVisible(false)}
                              onSubmitted={doSubmit}/>
         </div>

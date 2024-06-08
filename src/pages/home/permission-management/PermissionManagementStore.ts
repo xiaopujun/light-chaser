@@ -20,11 +20,13 @@ class PermissionManagementStore {
             permissionPageData: observable,
             permission: observable,
             permissionPanelVisible: observable,
+            permissionTreeData: observable,
             setSearchValue: action,
             setPermissionPageData: action,
             setPermission: action,
             setPermissionPanelVisible: action,
             changeCurrentPage: action,
+            setPermissionTreeData: action
         })
     }
 
@@ -59,6 +61,10 @@ class PermissionManagementStore {
     setPermissionPageData = (permissionPageData: IPage<IPermission>) => this.permissionPageData = permissionPageData;
 
     setPermission = (permission: IPermission) => this.permission = permission;
+
+    permissionTreeData: any = [];
+
+    setPermissionTreeData = (treeData: any) => this.permissionTreeData = treeData;
 
     openPermissionPanelWhenCreate = () => {
         this.setPermissionPanelVisible(true);
@@ -102,13 +108,7 @@ class PermissionManagementStore {
     }
 
     doUpdatePermission = (permission: IPermission) => {
-        //将permission转换为FormData
-        const formData = new FormData();
-        for (let key in permission) {
-            formData.append(key, permission[key as keyof IPermission] as string);
-        }
-
-        AuthFetchUtil.post('/api/permission/update', formData, {headers: {'Content-Type': 'multipart/form-data'}}).then((res) => {
+        AuthFetchUtil.post('/api/permission/update', permission).then((res) => {
             const {code, msg} = res;
             if (code === 200) {
                 globalMessage.messageApi?.success('更新成功');
@@ -138,6 +138,43 @@ class PermissionManagementStore {
                 this.doGetPermissionList();
             } else
                 globalMessage.messageApi?.error(msg);
+        })
+    }
+
+    doGetPermissionTreeData = () => {
+        AuthFetchUtil.get('/api/permission/getAllPermission').then((res) => {
+            const {data, code} = res;
+            if (code == 200) {
+                //将data转换为指定格式
+                const formatDataArr: any = [];
+                const formatDataMap = data.reduce((acc: any, current: any) => {
+                    const targetData = {
+                        title: current.name,
+                        key: current.id,
+                        value: current.id,
+                        pid: current.pid,
+                    }
+                    acc[current.id] = targetData;
+                    formatDataArr.push(targetData);
+                    return acc;
+                }, {});
+                const result: any = [];
+                // 构建树结构
+                formatDataArr.forEach((item: any) => {
+                    if (item.pid && item.pid === '-1') {
+                        // 根节点
+                        result.push(item);
+                    } else {
+                        // 非根节点，将其加入父节点的 children 中
+                        const parent = formatDataMap[item.pid];
+                        if (parent) {
+                            parent.children = parent.children || [];
+                            parent.children.push(item);
+                        }
+                    }
+                });
+                this.setPermissionTreeData(result);
+            }
         })
     }
 
