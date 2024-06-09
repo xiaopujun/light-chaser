@@ -1,5 +1,4 @@
 import React, {CSSProperties} from 'react';
-import './LineLayer.less';
 import CanvasUtil from "../util/CanvasUtil";
 import bluePrintManager, {IBPLine} from "../manager/BluePrintManager.ts";
 import {AnchorPointType} from "../node/core/AbstractBPNodeController";
