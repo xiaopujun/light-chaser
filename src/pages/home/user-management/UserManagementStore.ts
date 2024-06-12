@@ -3,6 +3,10 @@ import {IPage} from "../../../designer/DesignerType.ts";
 import AuthFetchUtil from "../../../utils/AuthFetchUtil.ts";
 import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
 
+export interface Option {
+    value: string;
+    label: string;
+}
 
 export interface IUser {
     no?: number;
@@ -24,11 +28,13 @@ class UserManagementStore {
             userPageData: observable,
             user: observable,
             userPanelVisible: observable,
+            roleOptions: observable,
             setSearchValue: action,
             setUserPageData: action,
             setUser: action,
             setUserPanelVisible: action,
             changeCurrentPage: action,
+            setRoleOptions: action,
         })
     }
 
@@ -51,6 +57,10 @@ class UserManagementStore {
         phone: undefined,
         email: undefined,
     }
+
+    roleOptions: Option[] = [];
+
+    setRoleOptions = (roleOptions: Option[]) => this.roleOptions = roleOptions;
 
     setUserPanelVisible = (visible: boolean) => this.userPanelVisible = visible;
 
@@ -75,6 +85,22 @@ class UserManagementStore {
             username: undefined,
             phone: undefined,
         });
+    }
+
+    doGetRoleOptions = () => {
+        AuthFetchUtil.get('/api/role/getRoleList').then((res) => {
+            const {code, msg, data} = res;
+            if (code === 200) {
+                console.log(data);
+                this.setRoleOptions(data.map((item: any) => {
+                    return {
+                        value: item.id,
+                        label: item.name
+                    }
+                }));
+            } else
+                globalMessage.messageApi?.error(msg);
+        })
     }
 
     doGetUserList = () => {
@@ -109,13 +135,7 @@ class UserManagementStore {
     }
 
     doUpdateUser = (user: IUser) => {
-        //将user转换为FormData
-        const formData = new FormData();
-        for (let key in user) {
-            formData.append(key, user[key as keyof IUser] as string);
-        }
-
-        AuthFetchUtil.post('/api/user/update', formData, {headers: {'Content-Type': 'multipart/form-data'}}).then((res) => {
+        AuthFetchUtil.post('/api/user/update', user).then((res) => {
             const {code, msg} = res;
             if (code === 200) {
                 globalMessage.messageApi?.success('更新成功');

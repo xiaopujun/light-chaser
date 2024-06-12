@@ -1,5 +1,5 @@
-import {Button, Col, Drawer, Form, Input, Row, Space} from "antd";
-import {IUser} from "./UserManagementStore.ts";
+import {Button, Col, Drawer, Form, Input, Select, Row, Space} from "antd";
+import {IUser, Option} from "./UserManagementStore.ts";
 import {useEffect, useRef} from "react";
 import './UserPanel.less';
 
@@ -9,25 +9,14 @@ export interface UserPanelProps {
     visible: boolean;
     onClose: () => void;
     onSubmitted: (data: IUser) => void;
+    roleOptions: Option[];
     data?: IUser;
 }
 
 export default function UserPanel(props: UserPanelProps) {
-    const {visible, onClose, data, onSubmitted, width = 700} = props;
+    const {visible, onClose, data, onSubmitted, roleOptions, width = 700} = props;
     const avatarFileRef = useRef<File>();
     const [form] = Form.useForm();
-    // const beforeUpload = (file: File) => {
-    //     avatarFileRef.current = file;
-    //     if (file.size > 1024 * 1024) {
-    //         globalMessage.messageApi?.warning(`头像大小不能超过1M`);
-    //         return false;
-    //     }
-    //     //将file转换为可直接访问的url
-    //     const url = URL.createObjectURL(file);
-    //     setAvatarUrl(url);
-    //     //阻止默认上传
-    //     return false;
-    // }
 
     const submit = () => {
         form.validateFields().then((values) => {
@@ -107,26 +96,15 @@ export default function UserPanel(props: UserPanelProps) {
                             <Input placeholder="请输入邮箱"/>
                         </Form.Item>
                     </Col>
+                    <Col span={12}>
+                        <Form.Item name="roleIds" label="角色">
+                            <Select mode="multiple"
+                                    allowClear
+                                    placeholder="请选择角色"
+                                    options={roleOptions}/>
+                        </Form.Item>
+                    </Col>
                 </Row>
-                {/*<Row gutter={16}>*/}
-                {/*    <Col span={12}>*/}
-                {/*        <Form.Item label="头像">*/}
-                {/*            {avatarUrl ?*/}
-                {/*                <div className="avatar-preview-container">*/}
-                {/*                    <div className="avatar-preview">*/}
-                {/*                        <Image alt='头像' src={avatarUrl}/>*/}
-                {/*                    </div>*/}
-                {/*                    <Button type="primary" danger={true} size={"small"}*/}
-                {/*                            onClick={() => setAvatarUrl(undefined)}><Delete/></Button>*/}
-                {/*                </div>*/}
-                {/*                : <Upload beforeUpload={beforeUpload} listType="picture-card"*/}
-                {/*                          showUploadList={false}>*/}
-                {/*                    <UploadOne size={20}/>*/}
-                {/*                </Upload>*/}
-                {/*            }*/}
-                {/*        </Form.Item>*/}
-                {/*    </Col>*/}
-                {/*</Row>*/}
             </Form>
         </Drawer>
     )

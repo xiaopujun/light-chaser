@@ -41,8 +41,10 @@ const columns: ColumnsType<object> = [
                 <a onClick={() => permissionManagementStore.doEditPermissionInfo(id!)}>编辑</a>&nbsp;&nbsp;
                 <a onClick={() => {
                     globalModal.modalApi?.confirm({
-                        title: '删除确认',
-                        content: '确定删除该权限吗？',
+                        okText: '确定',
+                        cancelText: '取消',
+                        title: '提示信息',
+                        content: '删除权限会将与该权限绑定的角色关系一起删除，且无法撤销，确定删除该权限吗？',
                         onOk: () => permissionManagementStore.doBatchDeletePermission([id!]),
                     });
                 }}>删除</a>&nbsp;&nbsp;
