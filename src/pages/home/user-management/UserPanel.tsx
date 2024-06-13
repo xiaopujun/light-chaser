@@ -91,14 +91,14 @@ export default function UserPanel(props: UserPanelProps) {
                 </Row>
                 <Row gutter={16}>
                     <Col span={12}>
-                        <Form.Item name="roleIds" label="角色">
+                        <Form.Item name="roles" label="角色">
                             <Select mode="multiple"
                                     allowClear
                                     placeholder="请选择角色"
                                     options={[
-                                        {label: '系统管理员', value: '0'},
-                                        {label: '管理员', value: '1'},
-                                        {label: '普通用户', value: '2'}
+                                        {label: '系统管理员', value: 'SYSTEM_ADMIN'},
+                                        {label: '管理员', value: 'ADMIN'},
+                                        {label: '普通用户', value: 'USER'}
                                     ]}/>
                         </Form.Item>
                     </Col>

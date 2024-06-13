@@ -1,7 +1,6 @@
 import {lazy, memo} from 'react';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {ConfigProvider, MappingAlgorithm, theme} from "antd";
-import NotFound from "../pages/result/NotFound.tsx";
 
 const DesignerViewPage = lazy(() => import('../pages/view/DesignerViewPage.tsx'));
 const DesignerPage = lazy(() => import('../pages/designer/DesignerPage.tsx'));
@@ -17,6 +16,9 @@ const MoreInfo = lazy(() => import('../pages/home/more-info/MoreInfo.tsx'));
 const Demo = lazy(() => import('../test/Demo'));
 const UserManagement = lazy(() => import('../pages/home/user-management/UserManagement.tsx'));
 const UserInfo = lazy(() => import('../pages/home/user-info/UserInfo.tsx'));
+const NotFound = lazy(() => import('../pages/result/NotFound.tsx'));
+const NoAuth = lazy(() => import('../pages/result/NoAuth.tsx'));
+const Error = lazy(() => import('../pages/result/Error.tsx'));
 
 
 const studioDarkAlgorithm: MappingAlgorithm = (seedToken, mapToken) => {
@@ -118,6 +120,18 @@ const router = createBrowserRouter([
     {
         path: '/',
         element: <Login/>
+    },
+    {
+        path: '/notFound',
+        element: <NotFound/>
+    },
+    {
+        path: '/noAuth',
+        element: <NoAuth/>
+    },
+    {
+        path: '/error',
+        element: <Error/>
     },
     {
         path: '*',

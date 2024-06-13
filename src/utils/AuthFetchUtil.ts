@@ -30,10 +30,16 @@ export default class AuthFetchUtil {
 
     private static statusAuth(response: HttpResponse): void {
         const {code, msg} = response;
-        if (code === 401 || code === 408) {
+        if (code === 401) {
             AuthTools.removeToken();
             globalMessage.messageApi?.error(msg);
-            window.location.href = '/login';
+            const timer = setTimeout(() => {
+                clearTimeout(timer);
+                window.location.href = '/login';
+            }, 2000)
+        }
+        if (code === 408) {
+
         }
     }
 }
