@@ -1,5 +1,5 @@
-import {Button, Col, Drawer, Form, Input, Select, Row, Space} from "antd";
-import {IUser, Option} from "./UserManagementStore.ts";
+import {Button, Col, Drawer, Form, Input, Row, Select, Space} from "antd";
+import {IUser} from "./UserManagementStore.ts";
 import {useEffect, useRef} from "react";
 import './UserPanel.less';
 
@@ -9,12 +9,11 @@ export interface UserPanelProps {
     visible: boolean;
     onClose: () => void;
     onSubmitted: (data: IUser) => void;
-    roleOptions: Option[];
     data?: IUser;
 }
 
 export default function UserPanel(props: UserPanelProps) {
-    const {visible, onClose, data, onSubmitted, roleOptions, width = 700} = props;
+    const {visible, onClose, data, onSubmitted, width = 700} = props;
     const avatarFileRef = useRef<File>();
     const [form] = Form.useForm();
 
@@ -96,7 +95,11 @@ export default function UserPanel(props: UserPanelProps) {
                             <Select mode="multiple"
                                     allowClear
                                     placeholder="请选择角色"
-                                    options={roleOptions}/>
+                                    options={[
+                                        {label: '系统管理员', value: '0'},
+                                        {label: '管理员', value: '1'},
+                                        {label: '普通用户', value: '2'}
+                                    ]}/>
                         </Form.Item>
                     </Col>
                 </Row>

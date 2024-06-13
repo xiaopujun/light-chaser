@@ -16,9 +16,7 @@ const TemplateMarket = lazy(() => import('../pages/home/template-market/Template
 const MoreInfo = lazy(() => import('../pages/home/more-info/MoreInfo.tsx'));
 const Demo = lazy(() => import('../test/Demo'));
 const UserManagement = lazy(() => import('../pages/home/user-management/UserManagement.tsx'));
-const RoleManagement = lazy(() => import('../pages/home/role-management/RoleManagement.tsx'));
 const UserInfo = lazy(() => import('../pages/home/user-info/UserInfo.tsx'));
-const PermissionManagement = lazy(() => import('../pages/home/permission-management/PermissionManagement.tsx'));
 
 
 const studioDarkAlgorithm: MappingAlgorithm = (seedToken, mapToken) => {
@@ -103,14 +101,6 @@ const router = createBrowserRouter([
                 path: 'user',
                 element: <UserManagement/>,
             },
-            {
-                path: 'role',
-                element: <RoleManagement/>,
-            },
-            {
-                path: 'permission',
-                element: <PermissionManagement/>,
-            },
             // {
             //     path: 'project',
             //     element: <ProjectManagement/>,
@@ -148,8 +138,7 @@ const MainRouter = memo(() => {
                     borderRadiusSM: 2,
                     selectorBg: '#252525'
                 },
-                TreeSelect: {
-                }
+                TreeSelect: {}
             }
         }}>
             <RouterProvider router={router}/>

@@ -6,7 +6,7 @@ import {Add, Delete, Warehousing} from "@icon-park/react";
 import {observer} from "mobx-react";
 import userManagementStore from "./UserManagementStore.ts";
 import UserManagementStore, {IUser} from "./UserManagementStore.ts";
-import {Key, useEffect, KeyboardEvent} from "react";
+import {Key, KeyboardEvent, useEffect} from "react";
 import UserPanel from "./UserPanel.tsx";
 import {globalModal} from "../../../framework/message/GlobalModal.tsx";
 
@@ -62,7 +62,6 @@ const UserManagement = () => {
         userPageData,
         user,
         userPanelVisible,
-        roleOptions,
         setUserPanelVisible,
         openUserPanelWhenCreate,
         doBatchDeleteUser
@@ -96,7 +95,6 @@ const UserManagement = () => {
 
     useEffect(() => {
         userManagementStore.doGetUserList();
-        userManagementStore.doGetRoleOptions();
         return () => {
             userManagementStore.destroy();
         }
@@ -136,7 +134,6 @@ const UserManagement = () => {
 
             </div>
             <UserPanel visible={userPanelVisible}
-                       roleOptions={roleOptions}
                        data={user}
                        onClose={() => setUserPanelVisible(false)}
                        onSubmitted={doSubmit}/>

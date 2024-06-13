@@ -87,22 +87,6 @@ class UserManagementStore {
         });
     }
 
-    doGetRoleOptions = () => {
-        AuthFetchUtil.get('/api/role/getRoleList').then((res) => {
-            const {code, msg, data} = res;
-            if (code === 200) {
-                console.log(data);
-                this.setRoleOptions(data.map((item: any) => {
-                    return {
-                        value: item.id,
-                        label: item.name
-                    }
-                }));
-            } else
-                globalMessage.messageApi?.error(msg);
-        })
-    }
-
     doGetUserList = () => {
         AuthFetchUtil.post('/api/user/pageList', {
             current: this.userPageData.current,

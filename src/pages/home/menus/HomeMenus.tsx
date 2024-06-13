@@ -1,7 +1,7 @@
 import {MenuItemType} from "antd/es/menu/hooks/useItems";
 import {useLocation, useNavigate} from "react-router-dom";
 import {memo} from "react";
-import {ApplicationMenu, Data, LocalPin, NetworkDrive, Permissions, System, User} from "@icon-park/react";
+import {Data, LocalPin, NetworkDrive, System, User} from "@icon-park/react";
 import {Menu} from "antd";
 
 const menus: MenuItemType[] = [
@@ -24,16 +24,6 @@ const menus: MenuItemType[] = [
         key: 'user',
         icon: <User size={16}/>,
         label: '用户管理'
-    },
-    {
-        key: 'role',
-        icon: <Permissions size={16}/>,
-        label: '角色管理'
-    },
-    {
-        key: 'permission',
-        icon: <ApplicationMenu size={16}/>,
-        label: '菜单权限'
     },
     {
         key: 'more',
