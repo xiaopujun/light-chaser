@@ -80,22 +80,17 @@ export default function UserPanel(props: UserPanelProps) {
                 </Row>
                 <Row gutter={16}>
                     <Col span={12}>
-                        <Form.Item name="password" label="密码" rules={[{required: true, message: '请输入密码'}]}>
-                            <Input type="password" placeholder="请输入密码"/>
-                        </Form.Item>
-                    </Col>
-                    <Col span={12}>
                         <Form.Item name="phone" label="电话">
                             <Input placeholder="请输入电话"/>
                         </Form.Item>
                     </Col>
-                </Row>
-                <Row gutter={16}>
                     <Col span={12}>
                         <Form.Item name="email" label="邮箱">
                             <Input placeholder="请输入邮箱"/>
                         </Form.Item>
                     </Col>
+                </Row>
+                <Row gutter={16}>
                     <Col span={12}>
                         <Form.Item name="roleIds" label="角色">
                             <Select mode="multiple"
