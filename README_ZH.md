@@ -115,6 +115,6 @@ docker pull puyinzhen/light-chaser
 ## 联系作者
 
 <div style="display: flex">
-    <div  style="width: 50%"><img alt="group" src="https://i.072333.xyz/file/110e9602ef12a7d93bff0.jpg"></div>
+    <div  style="width: 50%"><img alt="group" src="https://i.072333.xyz/file/2007ed7b558c04d8e3d00.jpg"></div>
 </div>
 
