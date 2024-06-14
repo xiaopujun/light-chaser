@@ -1,7 +1,6 @@
 import {Button, Col, Drawer, Form, Input, Row, Select, Space} from "antd";
 import {IUser} from "./UserManagementStore.ts";
 import {useEffect, useRef} from "react";
-import './UserPanel.less';
 
 
 export interface UserPanelProps {

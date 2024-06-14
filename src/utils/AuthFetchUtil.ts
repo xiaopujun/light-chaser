@@ -31,7 +31,7 @@ export default class AuthFetchUtil {
     private static statusAuth(response: HttpResponse): void {
         const {code, msg} = response;
         if (code === 401) {
-            AuthTools.removeToken();
+            AuthTools.removeUser();
             globalMessage.messageApi?.error(msg);
             const timer = setTimeout(() => {
                 clearTimeout(timer);

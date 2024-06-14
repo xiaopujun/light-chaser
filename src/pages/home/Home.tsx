@@ -13,6 +13,10 @@ const Home = memo(() => {
 
     const navigate = useNavigate();
 
+    let username = AuthTools.getUserInfo()?.name || '';
+    if (username && username.length > 1)
+        username = username?.substring(username?.length - 1, username?.length);
+
     const items: MenuProps['items'] = [
         {
             key: 'user-info',
@@ -26,7 +30,7 @@ const Home = memo(() => {
                     {
                         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                     }).then(() => {
-                    AuthTools.removeToken();
+                    AuthTools.removeUser();
                     navigate('/login');
                 })
             }}><Logout style={{position: 'relative', top: 2}}/>&nbsp;退出登录</span>,
@@ -39,7 +43,7 @@ const Home = memo(() => {
                 <div className={'logo'}>LIGHT CHASER 控制台</div>
                 <div className={'user-info'}>
                     <Dropdown menu={{items}}>
-                        <Avatar style={{background: "#2079ff"}}>PU</Avatar>
+                        <Avatar style={{background: "#2079ff"}}>{username?.toUpperCase()}</Avatar>
                     </Dropdown>
                 </div>
             </div>

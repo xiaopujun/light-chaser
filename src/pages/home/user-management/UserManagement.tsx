@@ -1,5 +1,4 @@
 import {ColumnsType} from "antd/es/table";
-import {DataSourceConfigType} from "../datasource/edit/EditDataSourceDialog.tsx";
 import {Button, Input, Table} from "antd";
 import './UserManagement.less';
 import {Add, Delete, Warehousing} from "@icon-park/react";
@@ -41,7 +40,7 @@ const columns: ColumnsType<object> = [
     {
         title: '操作',
         key: 'operation',
-        render: (record: DataSourceConfigType) => {
+        render: (record: IUser) => {
             const {id} = record;
             return <div>
                 <a onClick={() => userManagementStore.doEditUserInfo(id!)}>编辑</a>&nbsp;&nbsp;

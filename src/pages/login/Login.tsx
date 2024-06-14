@@ -18,14 +18,12 @@ const Login = memo(() => {
         FetchUtil.post("/api/authenticate/login",
             {username: usernameRef.current, password: passwordRef.current},
             {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }
         ).then(res => {
             const {code, msg, data} = res;
             if (code === 200) {
-                AuthTools.setToken(data)
+                AuthTools.setUserInfo(data, true);
                 navigate('/home/server');
             } else {
                 globalMessage.messageApi?.error(msg);
