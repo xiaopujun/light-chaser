@@ -5,6 +5,7 @@ import {useEffect, useRef} from "react";
 
 export interface UserPanelProps {
     width?: number;
+    title?: string;
     visible: boolean;
     onClose: () => void;
     onSubmitted: (data: IUser) => void;
@@ -12,7 +13,7 @@ export interface UserPanelProps {
 }
 
 export default function UserPanel(props: UserPanelProps) {
-    const {visible, onClose, data, onSubmitted, width = 700} = props;
+    const {visible, onClose, data, onSubmitted, title, width = 700} = props;
     const avatarFileRef = useRef<File>();
     const [form] = Form.useForm();
 
@@ -43,7 +44,7 @@ export default function UserPanel(props: UserPanelProps) {
     }, [visible]);
 
     return (
-        <Drawer title="新建用户"
+        <Drawer title={title}
                 className="user-panel"
                 placement="right"
                 closable={true}

@@ -60,6 +60,8 @@ const DataSourceList = observer(() => {
         doBatchDeleteDataSource,
         setPanelVisible,
         doCreateOrUpdateDataSource,
+        init,
+        destroy,
         panelVisible,
         dataSourcePageData,
         dataSource
@@ -85,7 +87,10 @@ const DataSourceList = observer(() => {
     }
 
     useEffect(() => {
-        dataSourceStore.getDataSourceList();
+        init();
+        return () => {
+            destroy();
+        }
     }, []);
 
     return (

@@ -173,6 +173,29 @@ export class DataSourceStore {
         }
     }
 
+    init = () => {
+        this.getDataSourceList();
+    }
+
+    destroy = () => {
+        this.searchValue = null;
+        this.dataSourcePageData = {
+            records: [],
+            total: 0,
+            size: 8,
+            current: 1
+        };
+        this.dataSource = {
+            id: undefined,
+            name: undefined,
+            type: undefined,
+            username: undefined,
+            password: undefined,
+            url: undefined,
+            des: undefined
+        }
+    }
+
 }
 
 const dataSourceStore = new DataSourceStore();

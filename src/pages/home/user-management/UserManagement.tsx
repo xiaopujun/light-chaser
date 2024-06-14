@@ -3,8 +3,7 @@ import {Button, Input, Table} from "antd";
 import './UserManagement.less';
 import {Add, Delete, Warehousing} from "@icon-park/react";
 import {observer} from "mobx-react";
-import userManagementStore from "./UserManagementStore.ts";
-import UserManagementStore, {IUser} from "./UserManagementStore.ts";
+import userManagementStore, {IUser} from "./UserManagementStore.ts";
 import {Key, KeyboardEvent, useEffect} from "react";
 import UserPanel from "./UserPanel.tsx";
 import {globalModal} from "../../../framework/message/GlobalModal.tsx";
@@ -63,7 +62,13 @@ const UserManagement = () => {
         userPanelVisible,
         setUserPanelVisible,
         openUserPanelWhenCreate,
-        doBatchDeleteUser
+        doBatchDeleteUser,
+        doUpdateUser,
+        docCreateUser,
+        setSearchValue,
+        doGetUserList,
+        changeCurrentPage,
+        destroy
     } = userManagementStore;
     const {current, records, size, total} = userPageData;
     let selectedIds: string[] = [];
@@ -76,9 +81,9 @@ const UserManagement = () => {
 
     const doSubmit = (data: IUser) => {
         if (data.id)
-            userManagementStore.doUpdateUser(data);
+            doUpdateUser(data);
         else
-            userManagementStore.docCreateUser(data);
+            docCreateUser(data);
     }
 
     const onKeydown = (event: KeyboardEvent) => {
@@ -88,14 +93,14 @@ const UserManagement = () => {
     }
 
     const doSearch = (value: string) => {
-        userManagementStore.setSearchValue(value);
-        userManagementStore.doGetUserList();
+        setSearchValue(value);
+        doGetUserList();
     }
 
     useEffect(() => {
-        userManagementStore.doGetUserList();
+        doGetUserList();
         return () => {
-            userManagementStore.destroy();
+            destroy();
         }
     }, []);
 
@@ -123,7 +128,7 @@ const UserManagement = () => {
                            type: 'checkbox',
                            ...rowSelection,
                        }}
-                       onChange={(pagination) => UserManagementStore.changeCurrentPage(pagination.current!)}
+                       onChange={(pagination) => changeCurrentPage(pagination.current!)}
                        pagination={{
                            showTotal: () => `共${total}条`,
                            pageSize: size,
@@ -133,6 +138,7 @@ const UserManagement = () => {
 
             </div>
             <UserPanel visible={userPanelVisible}
+                       title={user.id ? '编辑用户' : '新增用户'}
                        data={user}
                        onClose={() => setUserPanelVisible(false)}
                        onSubmitted={doSubmit}/>
