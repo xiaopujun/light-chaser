@@ -1,13 +1,13 @@
 import {action, makeObservable, observable} from "mobx";
 import Moveable from "react-moveable";
 import {Component} from "react";
-import layerManager from "../manager/LayerManager.ts";
 import ObjectUtil from "../../utils/ObjectUtil";
 import {DesignerRulerRef} from "../canvas/DesignerRuler";
 import {ILayerItem} from "../DesignerType";
 import layerListStore from "../left/layer-list/LayerListStore";
 import designerLeftStore from "../left/DesignerLeftStore";
 import Selecto from "react-selecto";
+import {layerManager} from "../loader/EditorDesignerLoader.ts";
 
 /**
  * 组件多选情况下的坐标值

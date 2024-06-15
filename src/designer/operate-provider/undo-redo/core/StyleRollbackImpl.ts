@@ -1,7 +1,7 @@
 import AbstractRollback from "./AbstractRollback";
 import {IHistoryRecord, IUpdStyleOperateData} from "../OperateType";
-import layerManager from "../../../manager/LayerManager.ts";
 import rightStore from "../../../right/RightStore";
+import {layerManager} from "../../../loader/EditorDesignerLoader.ts";
 
 export class StyleRollbackImpl extends AbstractRollback {
     redo(record: IHistoryRecord): void {

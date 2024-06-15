@@ -5,6 +5,7 @@ import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
+import BPExecutor from "../../../designer/blueprint/core/BPExecutor.ts";
 
 export interface AntdWordCloudProps extends ComponentBaseProps {
     style?: WritableWordCloudOptions;
@@ -12,8 +13,8 @@ export interface AntdWordCloudProps extends ComponentBaseProps {
 
 export default class AntdWordCloudController extends AntdBaseDesignerController<WordCloud, AntdWordCloudProps> {
 
-    async create(container: HTMLElement, config: AntdWordCloudProps): Promise<void> {
-        super.commonCreate(container, WordCloud, config);
+    async create(container: HTMLElement, config: AntdWordCloudProps, executor: BPExecutor): Promise<void> {
+        super.commonCreate(container, WordCloud, config, executor);
     }
 
     destroy(): void {

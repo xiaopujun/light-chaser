@@ -11,9 +11,10 @@ import DigitalFlipperComponent, {
 
 export class DigitalFlipperController extends AbstractDesignerController<DigitalFlipperComponentRef, DigitalFlipperComponentProps> {
 
-    async create(container: HTMLElement, config: DigitalFlipperComponentProps): Promise<void> {
+    async create(container: HTMLElement, config: DigitalFlipperComponentProps, executor: BPExecutor): Promise<void> {
         this.config = config;
         this.container = container;
+        this.bpExecutor = executor;
         this.instance = await ComponentUtil.createAndRender<DigitalFlipperComponentRef>(container, DigitalFlipperComponent, config);
     }
 
@@ -32,7 +33,7 @@ export class DigitalFlipperController extends AbstractDesignerController<Digital
         this.instance?.changeData(data);
         //数据变化是触发蓝图事件
         const nodeId = this.config?.base?.id!;
-        BPExecutor.triggerComponentEvent(nodeId!, "dataChange", data);
+        this.bpExecutor?.triggerComponentEvent(nodeId!, "dataChange", data);
     }
 
     update(config: DigitalFlipperComponentProps, upOp?: UpdateOptions | undefined): void {
@@ -49,8 +50,9 @@ export class DigitalFlipperController extends AbstractDesignerController<Digital
 
     registerEvent() {
         const nodeId = this.config?.base?.id!;
+        const executor = this.bpExecutor;
         this.instance?.setEventHandler({
-            click: () => BPExecutor.triggerComponentEvent(nodeId!, "click", this.config),
+            click: () => executor?.triggerComponentEvent(nodeId!, "click", this.config),
         })
     }
 }

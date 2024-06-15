@@ -5,6 +5,7 @@ import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
+import BPExecutor from "../../../designer/blueprint/core/BPExecutor.ts";
 
 export interface AntdScatterProps extends ComponentBaseProps {
     style?: WritableScatterOptions;
@@ -12,8 +13,8 @@ export interface AntdScatterProps extends ComponentBaseProps {
 
 export default class AntdCommonScatterController extends AntdBaseDesignerController<Scatter, AntdScatterProps> {
 
-    async create(container: HTMLElement, config: AntdScatterProps): Promise<void> {
-        await super.commonCreate(container, Scatter, config);
+    async create(container: HTMLElement, config: AntdScatterProps, executor: BPExecutor): Promise<void> {
+        super.commonCreate(container, Scatter, config, executor);
     }
 
     destroy(): void {

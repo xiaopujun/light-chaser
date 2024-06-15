@@ -5,7 +5,6 @@ import ComponentUtil from "../../../utils/ComponentUtil";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import ObjectUtil from "../../../utils/ObjectUtil";
 import {IFilterConfigType, ThemeItemType} from "../../../designer/DesignerType";
-import BPExecutor from "../../../designer/blueprint/core/BPExecutor";
 
 export interface BaseImageComponentProps {
     base?: ComponentInfoType;
@@ -46,8 +45,9 @@ export default class BaseImageController extends AbstractDesignerController<Base
     registerEvent() {
         if (this.instance) {
             const nodeId = this.config?.base?.id!;
+            const executor = this.bpExecutor;
             this.instance.eventHandlerMap = {
-                click: () => BPExecutor.triggerComponentEvent(nodeId!, "click", this.config)
+                click: () => executor?.triggerComponentEvent(nodeId!, "click", this.config)
             }
         }
     }

@@ -4,6 +4,7 @@ import {Radar} from "@antv/g2plot";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
+import BPExecutor from "../../../designer/blueprint/core/BPExecutor.ts";
 
 export interface AntdRadarProps extends ComponentBaseProps {
     style?: WritableRadarOptions;
@@ -11,8 +12,8 @@ export interface AntdRadarProps extends ComponentBaseProps {
 
 export default class AntdRadarController extends AntdBaseDesignerController<Radar, AntdRadarProps> {
 
-    async create(container: HTMLElement, config: AntdRadarProps): Promise<void> {
-        super.commonCreate(container, Radar, config);
+    async create(container: HTMLElement, config: AntdRadarProps, executor: BPExecutor): Promise<void> {
+        super.commonCreate(container, Radar, config, executor);
     }
 
     destroy(): void {

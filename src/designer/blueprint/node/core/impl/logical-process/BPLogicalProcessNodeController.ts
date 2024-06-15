@@ -1,11 +1,10 @@
-import {AbstractBPNodeController, AnchorPointType, ExecuteInfoType, NodeInfoType} from "../../AbstractBPNodeController";
+import {AbstractBPNodeController, AnchorPointType, IBPTaskInfo, NodeInfoType} from "../../AbstractBPNodeController";
 import {UpdateOptions} from "../../../../../../framework/core/AbstractController";
 import ComponentUtil from "../../../../../../utils/ComponentUtil";
 import BPNode, {NodeProps} from "../../../BPNode";
 import React from "react";
 import ObjectUtil from "../../../../../../utils/ObjectUtil";
 import {LogicalProcessNodeConfig} from "./LogicalProcessNodeConfig";
-import BPExecutor from "../../../../core/BPExecutor";
 
 export interface LogicalProcessNodeConfigType extends NodeProps {
     handler?: string;
@@ -21,13 +20,12 @@ export default class BPLogicalProcessNodeController extends AbstractBPNodeContro
         this.instance = await ComponentUtil.createAndRender(container, BPNode, config);
     }
 
-    execute(executeInfo: ExecuteInfoType, executor: BPExecutor, params: any): void {
-        const {nodeId} = executeInfo;
+    execute(taskInfo: IBPTaskInfo, params: any): void {
+        const {nodeId, task, bluePrintManager, layerManager} = taskInfo;
         if (!this.handler) {
             if (!this.config?.handler)
                 return;
             try {
-                // eslint-disable-next-line
                 this.handler = eval(`(${this.config.handler})`);
             } catch (e) {
                 console.error('解析条件函数错误，请检查你写条件判断函数');
@@ -36,7 +34,7 @@ export default class BPLogicalProcessNodeController extends AbstractBPNodeContro
         }
         const newParams = this.handler!(params) || params;
         const apId = nodeId + ':afterExecute:' + AnchorPointType.OUTPUT;
-        executor.execute(apId, executor, newParams);
+        task.run(apId, task, bluePrintManager, layerManager, newParams);
     }
 
     getConfig(): LogicalProcessNodeConfigType | null {

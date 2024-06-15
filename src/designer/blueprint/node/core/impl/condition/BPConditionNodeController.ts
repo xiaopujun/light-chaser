@@ -1,11 +1,10 @@
-import {AbstractBPNodeController, AnchorPointType, ExecuteInfoType, NodeInfoType} from "../../AbstractBPNodeController";
+import {AbstractBPNodeController, AnchorPointType, IBPTaskInfo, NodeInfoType} from "../../AbstractBPNodeController";
 import ComponentUtil from "../../../../../../utils/ComponentUtil";
 import {UpdateOptions} from "../../../../../../framework/core/AbstractController";
 import BPNode from "../../../BPNode";
 import React from "react";
 import {ConditionNodeConfig} from "./ConditionNodeConfig";
 import ObjectUtil from "../../../../../../utils/ObjectUtil";
-import BPExecutor from "../../../../core/BPExecutor";
 
 export interface ConditionConfigType extends NodeInfoType {
     handler?: string;
@@ -21,8 +20,8 @@ export default class BPConditionNodeController extends AbstractBPNodeController<
         this.instance = await ComponentUtil.createAndRender(container, BPNode, config);
     }
 
-    execute(executeInfo: ExecuteInfoType, executor: BPExecutor, params: any): void {
-        const {nodeId, anchorType} = executeInfo;
+    execute(taskInfo: IBPTaskInfo, params: any): void {
+        const {nodeId, anchorType, task, bluePrintManager, layerManager} = taskInfo;
         //输出类型节点不执行
         if (anchorType === 1)
             return;
@@ -40,10 +39,10 @@ export default class BPConditionNodeController extends AbstractBPNodeController<
         const result = this.handler!(params);
         if (result) {
             const anchorId = nodeId + ":satisfy:" + AnchorPointType.OUTPUT;
-            executor.execute(anchorId, executor, params);
+            task.run(anchorId, task, bluePrintManager, layerManager, params);
         } else {
             const anchorId = nodeId + ':unSatisfy:' + AnchorPointType.OUTPUT;
-            executor.execute(anchorId, executor, params);
+            task.run(anchorId, task, bluePrintManager, layerManager, params);
         }
     }
 

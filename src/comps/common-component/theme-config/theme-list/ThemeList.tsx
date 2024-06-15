@@ -2,7 +2,7 @@ import {Component} from 'react';
 import {ThemeColors, ThemeItemType} from "../../../../designer/DesignerType";
 import ThemeItem from "../theme-item/ThemeItem";
 import {observer} from "mobx-react";
-import themeManager from "../../../../designer/header/items/theme/ThemeManager.ts";
+import {themeManager} from "../../../../designer/loader/EditorDesignerLoader.ts";
 
 interface ThemeListProps {
     data?: ThemeItemType[];

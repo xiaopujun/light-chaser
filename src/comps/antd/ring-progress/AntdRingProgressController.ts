@@ -5,6 +5,7 @@ import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {CSSProperties} from "react";
+import BPExecutor from "../../../designer/blueprint/core/BPExecutor.ts";
 
 export interface AntdRingProgressProps extends ComponentBaseProps {
     style?: WritableRingProgressOptions;
@@ -12,8 +13,8 @@ export interface AntdRingProgressProps extends ComponentBaseProps {
 
 export default class AntdRingProgressController extends AntdBaseDesignerController<RingProgress, AntdRingProgressProps> {
 
-    async create(container: HTMLElement, config: AntdRingProgressProps): Promise<void> {
-        super.commonCreate(container, RingProgress, config);
+    async create(container: HTMLElement, config: AntdRingProgressProps, bpExecutor: BPExecutor): Promise<void> {
+        super.commonCreate(container, RingProgress, config, bpExecutor);
     }
 
     destroy(): void {

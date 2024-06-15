@@ -1,5 +1,4 @@
 import eventOperateStore from "../EventOperateStore";
-import layerManager from "../../manager/LayerManager.ts";
 import {DesignerMode, ILayerItem, IProjectInfo, SaveType} from "../../DesignerType";
 import {throttle} from "lodash";
 import {historyOperator} from "../undo-redo/HistoryOperator";
@@ -7,21 +6,23 @@ import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import undoRedoMap from "../undo-redo/core";
 import runtimeConfigStore from "../../store/RuntimeStore.ts";
 import footerStore from "../../footer/FooterStore";
-import bluePrintManager from "../../blueprint/manager/BluePrintManager.ts";
 import {reRenderAllLine} from "../../blueprint/drag/BPMovable.tsx";
 import bpLeftStore from "../../../designer/blueprint/left/BPLeftStore";
 import operatorMap from "../../../framework/operate";
 import URLUtil from "../../../utils/URLUtil";
 import LayerUtil from "../../left/layer-list/util/LayerUtil.ts";
 import bluePrintHdStore from "../../header/items/blue-print/BluePrintHdStore.ts";
-import themeHdStore from "../../header/items/theme/ThemeManager.ts";
-import canvasHdStore from "../../header/items/canvas/CanvasManager.ts";
-import canvasManager from "../../header/items/canvas/CanvasManager.ts";
 import projectHdStore from "../../header/items/project/ProjecManager.ts";
-import designerManager from "../../manager/DesignerManager.ts";
 import FileUtil from "../../../utils/FileUtil.ts";
 import layerListStore from "../../left/layer-list/LayerListStore.ts";
 import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
+import {
+    bluePrintManager,
+    canvasManager,
+    designerManager,
+    layerManager,
+    themeManager
+} from "../../loader/EditorDesignerLoader.ts";
 
 export const selectAll = () => {
     const {layerConfigs} = layerManager;
@@ -453,7 +454,7 @@ export const toggleProjectConfig = () => {
  * 切换画布设置弹框
  */
 export const toggleCanvasConfig = () => {
-    const {canvasVisible, setCanvasVisible} = canvasHdStore;
+    const {canvasVisible, setCanvasVisible} = canvasManager;
     setCanvasVisible(!canvasVisible);
 }
 
@@ -461,7 +462,7 @@ export const toggleCanvasConfig = () => {
  * 切换全局主题设置弹框
  */
 export const toggleGlobalThemeConfig = () => {
-    const {themeVisible, setThemeVisible} = themeHdStore;
+    const {themeVisible, setThemeVisible} = themeManager;
     setThemeVisible(!themeVisible);
 }
 

@@ -1,10 +1,10 @@
 import {BPMovable} from "../drag/BPMovable";
 import {BPSelectable} from "../drag/BPSelectable";
 import {observer} from "mobx-react";
-import bluePrintManager from "../manager/BluePrintManager.ts";
 import {BPDragScaleContainer} from "./BPDragScaleContainer";
 import {BPNodeContainer} from "./core/node-container/BPNodeContainer";
 import {useEffect, useRef} from "react";
+import {bluePrintManager} from "../../loader/EditorDesignerLoader.ts";
 
 const NodeLayer = observer(() => {
     const {bpNodeLayoutMap} = bluePrintManager;

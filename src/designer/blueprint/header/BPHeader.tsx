@@ -1,8 +1,8 @@
 import React from "react";
 import './BPHeader.less';
-import bluePrintManager from "../manager/BluePrintManager.ts";
 import bluePrintHdStore from "../../header/items/blue-print/BluePrintHdStore.ts";
 import {Close} from "@icon-park/react";
+import {bluePrintManager} from "../../loader/EditorDesignerLoader.ts";
 
 const BPHeader: React.FC = () => {
     return (

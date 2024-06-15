@@ -1,17 +1,22 @@
 import {lazy, Suspense, useEffect} from 'react';
 import './DesignerView.less';
-import layerManager from "../manager/LayerManager.ts";
 import {observer} from "mobx-react";
 import Loading from "../../json-schema/ui/loading/Loading";
 import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
-import layerBuilder from "../left/layer-list/LayerBuilder";
+import layerBuilder from "../left/layer-list/LayerBuilder.ts";
 import {DesignerMode, SaveType} from "../DesignerType.ts";
-import canvasManager from "../header/items/canvas/CanvasManager.ts";
-import designerManager from "../manager/DesignerManager.ts";
 import '../../designer/resource/font/FontGlobal.css';
 import ScaleAction from "../../framework/core/ScaleAction.ts";
+import {
+    viewBpExecutor,
+    viewCanvasManager,
+    viewDesignerManager,
+    viewLayerManager
+} from "../loader/ViewDesignerLoader.ts";
+import {toJS} from "mobx";
 
 const ScreenFit = lazy(() => import('../../framework/screen-fit/ScreenFit.tsx'));
+
 
 export interface DesignerViewProps {
     id: string;
@@ -26,9 +31,9 @@ const DesignerView = observer((props: DesignerViewProps) => {
         DesignerLoaderFactory.getLoader(DesignerMode.VIEW).load(id, type);
     }, []);
 
-    const {layerConfigs} = layerManager!;
-    const {loaded} = designerManager;
-    const {canvasConfig: {width, height, adaptationType}} = canvasManager
+    const {loaded} = viewDesignerManager;
+    const {canvasConfig: {width, height, adaptationType}} = viewCanvasManager
+    console.log(toJS(viewDesignerManager))
     if (!loaded)
         return <Loading/>;
     return (
@@ -36,10 +41,9 @@ const DesignerView = observer((props: DesignerViewProps) => {
             <ScreenFit width={width!} height={height!} mode={adaptationType}
                        scaleChange={(xScale, yScale) => {
                            ScaleAction.doScale(xScale, yScale)
-                           ScaleAction.doScale(xScale, yScale)
                        }}>
                 <div style={{width, height, background: 'black', overflow: 'hidden', position: "relative"}}>
-                    {layerBuilder.buildCanvasComponents(layerConfigs)}
+                    {layerBuilder.buildCanvasComponents(viewLayerManager, viewBpExecutor)}
                 </div>
             </ScreenFit>
         </Suspense>

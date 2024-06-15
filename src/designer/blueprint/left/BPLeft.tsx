@@ -1,13 +1,12 @@
 import React, {useEffect, useRef} from "react";
 import './BPLeft.less';
-import bluePrintManager from "../manager/BluePrintManager.ts";
 import bpLeftStore from "./BPLeftStore";
 import {observer} from "mobx-react";
-import layerManager from "../../manager/LayerManager.ts";
 import IdGenerate from "../../../utils/IdGenerate";
 import DragAddProvider from "../../../framework/drag-scale/DragAddProvider";
 import Input from "../../../json-schema/ui/input/Input.tsx";
 import {AddSubset, ApplicationOne, BytedanceMiniApp, Calculator, CardTwo, Filter, MindmapMap} from "@icon-park/react";
+import {bluePrintManager, layerManager} from "../../loader/EditorDesignerLoader.ts";
 
 const BPLeft: React.FC = () => {
     return (

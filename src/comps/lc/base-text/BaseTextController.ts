@@ -1,4 +1,4 @@
-import {DesignerMode, ThemeItemType} from "../../../designer/DesignerType";
+import {DesignerMode} from "../../../designer/DesignerType";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
 import ComponentUtil from "../../../utils/ComponentUtil";
@@ -9,9 +9,10 @@ import URLUtil from "../../../utils/URLUtil";
 
 export class BaseTextController extends AbstractDesignerController<BaseTextComponentRef, BaseTextComponentProps> {
 
-    async create(container: HTMLElement, config: BaseTextComponentProps): Promise<void> {
+    async create(container: HTMLElement, config: BaseTextComponentProps, executor: BPExecutor): Promise<void> {
         this.config = config;
         this.container = container;
+        this.bpExecutor = executor;
         this.instance = await ComponentUtil.createAndRender<BaseTextComponentRef>(container, BaseTextComponent, config);
         const {mode} = URLUtil.parseUrlParams();
         //基础文本在编辑模式下放开事件，以实现双击直接进入编辑状态
@@ -36,15 +37,13 @@ export class BaseTextController extends AbstractDesignerController<BaseTextCompo
 
     }
 
-    updateTheme(newTheme: ThemeItemType): void {
-
-    }
 
     registerEvent() {
         if (this.instance) {
             const nodeId = this.config?.base?.id!;
+            const executor = this.bpExecutor;
             this.instance.setEventHandler({
-                click: () => BPExecutor.triggerComponentEvent(nodeId!, "click", this.config)
+                click: () => executor?.triggerComponentEvent(nodeId!, "click", this.config)
             });
         }
     }

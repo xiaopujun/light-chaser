@@ -22,31 +22,33 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
 
     registerEvent(): void {
         const nodeId = this.config?.base?.id!;
+        const executor = this.bpExecutor;
         this.instance?.on('plot:click', (...args: object[]) => {
-            BPExecutor.triggerComponentEvent(nodeId!, "globalClick", {msg: '这是测试参数'})
+            executor?.triggerComponentEvent(nodeId!, "globalClick", {msg: '这是测试参数'})
         });
         this.instance?.on('element:click', (...args: object[]) => {
-            BPExecutor.triggerComponentEvent(nodeId!, "elementClick", {msg: '这是测试参数'})
+            executor?.triggerComponentEvent(nodeId!, "elementClick", {msg: '这是测试参数'})
         });
         // 图例添加点击事件
         this.instance?.on('legend-item:click', (...args: object[]) => {
-            BPExecutor.triggerComponentEvent(nodeId!, "legendClick", {msg: '这是测试参数'})
+            executor?.triggerComponentEvent(nodeId!, "legendClick", {msg: '这是测试参数'})
         });
         // 图例名称添加点击事件
         this.instance?.on('legend-item-name:click', (...args: object[]) => {
-            BPExecutor.triggerComponentEvent(nodeId!, "elementNameClick", {msg: '这是测试参数'})
+            executor?.triggerComponentEvent(nodeId!, "elementNameClick", {msg: '这是测试参数'})
         });
         // axis-label 添加点击事件
         this.instance?.on('axis-label:click', (...args: object[]) => {
-            BPExecutor.triggerComponentEvent(nodeId!, "axisLabelClick", {msg: '这是测试参数'})
+            executor?.triggerComponentEvent(nodeId!, "axisLabelClick", {msg: '这是测试参数'})
         });
     }
 
-    public commonCreate(container: HTMLElement, Clazz: new (...args: any[]) => I, config: C): void {
+    public commonCreate(container: HTMLElement, Clazz: new (...args: any[]) => I, config: C, executor: BPExecutor): void {
         this.config = config;
         this.container = container;
         this.instance = new Clazz(container, this.config?.style! as C);
         this.instance?.render();
+        this.bpExecutor = executor;
         this.registerEvent();
     }
 

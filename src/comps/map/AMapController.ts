@@ -1,19 +1,16 @@
-import AMapComponent, {
-    AMapComponentProps,
-    AMapComponentRef
-} from "./AMapComponent.tsx";
+import AMapComponent, {AMapComponentProps, AMapComponentRef} from "./AMapComponent.tsx";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController.ts";
 import ComponentUtil from "../../utils/ComponentUtil.ts";
 import ObjectUtil from "../../utils/ObjectUtil.ts";
 import {UpdateOptions} from "../../framework/core/AbstractController.ts";
-import {ThemeItemType} from "../../designer/DesignerType.ts";
 import BPExecutor from "../../designer/blueprint/core/BPExecutor.ts";
 
 export class AMapController extends AbstractDesignerController<AMapComponentRef, AMapComponentProps> {
 
-    async create(container: HTMLElement, config: AMapComponentProps): Promise<void> {
+    async create(container: HTMLElement, config: AMapComponentProps, executor: BPExecutor): Promise<void> {
         this.config = config;
         this.container = container;
+        this.bpExecutor = executor;
         this.instance = await ComponentUtil.createAndRender<AMapComponentRef>(container, AMapComponent, config);
         this.registerEvent();
         if (window.AMap) {
@@ -40,15 +37,12 @@ export class AMapController extends AbstractDesignerController<AMapComponentRef,
             this.instance?.updateConfig(this.config!);
     }
 
-    updateTheme(newTheme: ThemeItemType): void {
-
-    }
-
 
     registerEvent() {
         const nodeId = this.config?.base?.id!;
+        const executor = this.bpExecutor;
         this.instance?.setEventHandler({
-            click: () => BPExecutor.triggerComponentEvent(nodeId!, "click", this.config),
+            click: () => executor?.triggerComponentEvent(nodeId!, "click", this.config),
         })
     }
 }

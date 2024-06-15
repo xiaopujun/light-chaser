@@ -356,5 +356,4 @@ class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
 
 }
 
-const bluePrintManager = new BluePrintManager();
-export default bluePrintManager;
+export default BluePrintManager;

@@ -3,15 +3,14 @@ import Dialog from "../../../../json-schema/ui/dialog/Dialog";
 import './ThemeHdItem.less';
 import ThemeList from "../../../../comps/common-component/theme-config/theme-list/ThemeList";
 import {ThemeItemType} from "../../../DesignerType";
-import layerManager from "../../../manager/LayerManager.ts";
 import ThemeEditor from "../../../../comps/common-component/theme-config/theme-editor/ThemeEditor";
 import Button from "../../../../json-schema/ui/button/Button";
-import themeHdStore from "./ThemeManager.ts";
+import {layerManager, themeManager} from "../../../loader/EditorDesignerLoader.ts";
 
 const ThemeHdItemImpl = () => {
     const selectedThemeRef = useRef<ThemeItemType>();
     const [openEditor, setOpenEditor] = useState(false);
-    const {themeVisible, setThemeVisible} = themeHdStore;
+    const {themeVisible, setThemeVisible} = themeManager;
 
     const onClose = () => setThemeVisible(false);
 

@@ -1,9 +1,9 @@
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 import {DesignerMode, SaveType} from "../DesignerType";
 import operatorMap from "../../framework/operate";
-import {AbstractOperator} from "../../framework/operate/AbstractOperator";
 import {globalMessage} from "../../framework/message/GlobalMessage.tsx";
-import designerManager from "../manager/DesignerManager.ts";
+import DesignerManager from "../manager/DesignerManager.ts";
+
 
 /**
  * 展示模式下的设计器加载器
@@ -15,10 +15,11 @@ class ViewDesignerLoader extends AbstractDesignerLoader {
      * 初始化以更新方式打开时项目信息
      */
     protected initProject(id: string, type: SaveType): void {
-        (operatorMap[type] as AbstractOperator).getProjectData(id).then((data) => {
+        const {init, setLoaded} = viewDesignerManager;
+        operatorMap[type].getProjectData(id).then((data) => {
             if (data) {
-                designerManager.init(data, DesignerMode.VIEW);
-                designerManager.setLoaded(true);
+                init(data, DesignerMode.VIEW);
+                setLoaded(true);
             } else {
                 globalMessage?.messageApi?.error("项目不存在");
             }
@@ -29,3 +30,9 @@ class ViewDesignerLoader extends AbstractDesignerLoader {
 
 const viewDesignerLoader = new ViewDesignerLoader();
 export default viewDesignerLoader;
+
+const viewDesignerManager = new DesignerManager();
+const viewLayerManager = viewDesignerManager.layerManager;
+const viewCanvasManager = viewDesignerManager.canvasManager;
+const viewBpExecutor = viewDesignerManager.bpExecutor;
+export {viewDesignerManager, viewLayerManager, viewCanvasManager, viewBpExecutor};

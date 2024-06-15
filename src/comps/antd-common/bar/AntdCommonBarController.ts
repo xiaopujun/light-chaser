@@ -5,6 +5,7 @@ import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
+import BPExecutor from "../../../designer/blueprint/core/BPExecutor.ts";
 
 export interface AntdBarProps extends ComponentBaseProps {
     style?: WritableBarOptions;
@@ -12,8 +13,8 @@ export interface AntdBarProps extends ComponentBaseProps {
 
 export default class AntdCommonBarController extends AntdBaseDesignerController<Bar, AntdBarProps> {
 
-    async create(container: HTMLElement, config: AntdBarProps): Promise<void> {
-        await super.commonCreate(container, Bar, config);
+    async create(container: HTMLElement, config: AntdBarProps, executor: BPExecutor): Promise<void> {
+        super.commonCreate(container, Bar, config, executor);
     }
 
     destroy(): void {

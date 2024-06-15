@@ -4,6 +4,7 @@ import {Gauge} from "@antv/g2plot";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
+import BPExecutor from "../../../designer/blueprint/core/BPExecutor.ts";
 
 export interface AntdGaugeProps extends ComponentBaseProps {
     style?: WritableGaugeOptions;
@@ -11,8 +12,8 @@ export interface AntdGaugeProps extends ComponentBaseProps {
 
 export default class AntdGaugeController extends AntdBaseDesignerController<Gauge, AntdGaugeProps> {
 
-    async create(container: HTMLElement, config: AntdGaugeProps): Promise<void> {
-        super.commonCreate(container, Gauge, config);
+    async create(container: HTMLElement, config: AntdGaugeProps, executor: BPExecutor): Promise<void> {
+        super.commonCreate(container, Gauge, config, executor);
     }
 
     destroy(): void {

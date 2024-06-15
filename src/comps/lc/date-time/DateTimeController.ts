@@ -1,19 +1,16 @@
-import {ThemeItemType} from "../../../designer/DesignerType";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
 import ComponentUtil from "../../../utils/ComponentUtil";
-import DateTimeComponent, {
-    DateTimeComponentRef,
-    DateTimeComponentProps,
-} from "./DateTimeComponent.tsx";
+import DateTimeComponent, {DateTimeComponentProps, DateTimeComponentRef,} from "./DateTimeComponent.tsx";
 import ObjectUtil from "../../../utils/ObjectUtil";
 import BPExecutor from "../../../designer/blueprint/core/BPExecutor";
 
 export class DateTimeController extends AbstractDesignerController<DateTimeComponentRef, DateTimeComponentProps> {
 
-    async create(container: HTMLElement, config: DateTimeComponentProps): Promise<void> {
+    async create(container: HTMLElement, config: DateTimeComponentProps, executor: BPExecutor): Promise<void> {
         this.config = config;
         this.container = container;
+        this.bpExecutor = executor;
         this.instance = await ComponentUtil.createAndRender<DateTimeComponentRef>(container, DateTimeComponent, config);
     }
 
@@ -35,15 +32,12 @@ export class DateTimeController extends AbstractDesignerController<DateTimeCompo
             this.instance?.updateConfig(this.config!);
     }
 
-    updateTheme(newTheme: ThemeItemType): void {
-
-    }
-
 
     registerEvent() {
         const nodeId = this.config?.base?.id!;
+        const executor = this.bpExecutor;
         this.instance?.setEventHandler({
-            click: () => BPExecutor.triggerComponentEvent(nodeId!, "click", this.config),
+            click: () => executor?.triggerComponentEvent(nodeId!, "click", this.config),
         })
     }
 }

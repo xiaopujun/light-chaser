@@ -50,5 +50,4 @@ class ThemeManager extends AbstractManager<Array<ThemeItemType>> {
 
 }
 
-const themeHdStore = new ThemeManager();
-export default themeHdStore;
+export default ThemeManager;

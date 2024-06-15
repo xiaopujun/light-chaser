@@ -47,5 +47,4 @@ class CanvasManager extends AbstractManager<CanvasConfig> {
 
 }
 
-const canvasHdStore = new CanvasManager();
-export default canvasHdStore;
+export default CanvasManager;

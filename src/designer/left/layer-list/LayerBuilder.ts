@@ -1,4 +1,4 @@
-import {ReactElement} from "react";
+import {createElement, ReactElement} from "react";
 import LayerItem from "./item/LayerItem";
 import LayerGroupItem from "./item/LayerGroupItem";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
@@ -7,7 +7,8 @@ import layerListStore from "./LayerListStore";
 import ComponentContainer from "../../../framework/core/ComponentContainer";
 import {ILayerItem} from "../../DesignerType";
 import GroupLayer from "../../../comps/group-layer/GroupLayer";
-import layerManager from "../../manager/LayerManager.ts";
+import LayerManager from "../../manager/LayerManager.ts";
+import BPExecutor from "../../blueprint/core/BPExecutor.ts";
 
 export enum LayerOrder {
     ASC,
@@ -19,10 +20,9 @@ class LayerBuilder {
     /**
      * 解析函数
      */
-    public parser = (layerMap: Record<string, ILayerItem>, order: LayerOrder = LayerOrder.DESC): ILayerItem[] => {
+    public parser = (layerMap: Record<string, ILayerItem>, layerHeader: string, order: LayerOrder = LayerOrder.DESC): ILayerItem[] => {
         layerMap = cloneDeep(layerMap);
         let sourceLayerArr: ILayerItem[] = [];
-        const {layerHeader} = layerManager;
 
         const iterateLayers = (currentLayer: ILayerItem, res: ILayerItem[]): void => {
             if (currentLayer) {
@@ -69,9 +69,9 @@ class LayerBuilder {
     /**
      * 构建图层组件
      */
-    public buildLayerList = (layerMap: Record<string, ILayerItem>): ReactElement[] => {
+    public buildLayerList = (layerMap: Record<string, ILayerItem>, layerHeader: string): ReactElement[] => {
         const res: ReactElement[] = [];
-        this.parser(layerMap, LayerOrder.DESC).forEach((item: ILayerItem) => {
+        this.parser(layerMap, layerHeader, LayerOrder.DESC).forEach((item: ILayerItem) => {
             res.push(this.buildLayer(item));
         });
         return res;
@@ -97,12 +97,14 @@ class LayerBuilder {
             children?.forEach((item: ILayerItem) => {
                 childDomArr.push(this.buildLayer(item));
             });
-            return <LayerGroupItem {..._props} ref={ref => layerInstances[layer.id!] = ref!}>
-                {childDomArr}
-            </LayerGroupItem>;
+            return createElement(LayerGroupItem, {
+                ..._props,
+                ref: (ref) => layerInstances[layer.id!] = ref!
+            }, ...childDomArr);
+
         } else {
             //直接生成layerItem
-            return <LayerItem {..._props} ref={ref => layerInstances[layer.id!] = ref!}/>;
+            return createElement(LayerItem, {..._props, ref: (ref) => layerInstances[layer.id!] = ref!});
         }
     }
 
@@ -110,22 +112,22 @@ class LayerBuilder {
 
     /**
      * 构建设计器主画布组件
-     * @param layerMap
+     * @param layerManager 图层管理器
+     * @param bpExecutor 蓝图执行器
      */
-    public buildCanvasComponents = (layerMap: Record<string, ILayerItem>): ReactElement[] => {
+    public buildCanvasComponents = (layerManager: LayerManager, bpExecutor: BPExecutor): ReactElement[] => {
         const res: ReactElement[] = [];
-        this.parser(layerMap, LayerOrder.ASC).forEach((item: ILayerItem) => {
-            res.push(this.buildComponents(item));
+        this.parser(layerManager.layerConfigs, layerManager.layerHeader!, LayerOrder.ASC).forEach((item: ILayerItem) => {
+            res.push(this.buildComponents(item, layerManager, bpExecutor));
         });
         //重置排序编号
         this.order = 1;
         return res;
     }
 
-    private buildComponents = (layer: ILayerItem): ReactElement => {
+    private buildComponents = (layer: ILayerItem, layerManager: LayerManager, bpExecutor: BPExecutor): ReactElement => {
         const {type, children} = layer;
-        const {layerConfigs} = layerManager;
-        const targetLayer = layerConfigs[layer.id!];
+        const targetLayer = layerManager.layerConfigs[layer.id!];
         //给每个图层重新设置排序编号,用于在图层移动的过程中提供更好的体验
         if (targetLayer)
             targetLayer.order = this.order++;
@@ -133,11 +135,11 @@ class LayerBuilder {
             //先生成子元素再包裹groupItem
             const childDomArr: ReactElement[] = [];
             children?.forEach((item: ILayerItem) => {
-                childDomArr.push(this.buildComponents(item));
+                childDomArr.push(this.buildComponents(item, layerManager, bpExecutor));
             });
-            return <GroupLayer layer={layer} key={layer.id}>{childDomArr}</GroupLayer>;
+            return createElement(GroupLayer, {layer, key: layer.id}, ...childDomArr)
         } else {
-            return <ComponentContainer layer={layer} key={layer.id}/>;
+            return createElement(ComponentContainer, {layer, layerManager, bpExecutor, key: layer.id});
         }
     }
 

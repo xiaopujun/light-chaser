@@ -60,5 +60,4 @@ class FilterManager extends AbstractManager<FilterManagerDataType> {
     }
 }
 
-const filterManager = new FilterManager();
-export default filterManager;
+export default FilterManager;

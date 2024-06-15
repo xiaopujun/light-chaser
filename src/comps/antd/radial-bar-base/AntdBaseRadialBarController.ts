@@ -4,6 +4,7 @@ import {RadialBar} from "@antv/g2plot";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
+import BPExecutor from "../../../designer/blueprint/core/BPExecutor.ts";
 
 export interface AntdRadialBarProps extends ComponentBaseProps {
     style?: WritableRadialBarOptions;
@@ -11,8 +12,8 @@ export interface AntdRadialBarProps extends ComponentBaseProps {
 
 export default class AntdBaseRadialBarController extends AntdBaseDesignerController<RadialBar, AntdRadialBarProps> {
 
-    async create(container: HTMLElement, config: AntdRadialBarProps): Promise<void> {
-        super.commonCreate(container, RadialBar, config);
+    async create(container: HTMLElement, config: AntdRadialBarProps, executor: BPExecutor): Promise<void> {
+        super.commonCreate(container, RadialBar, config, executor);
     }
 
     destroy(): void {

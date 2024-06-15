@@ -1,6 +1,5 @@
 import {Component} from 'react';
 import './BaseInfo.less';
-import layerManager from "../../../designer/manager/LayerManager.ts";
 import {Control} from "../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {ConfigType} from "../../../designer/right/ConfigContent";
@@ -8,10 +7,9 @@ import {ILayerItem} from "../../../designer/DesignerType";
 import eventOperateStore from "../../../designer/operate-provider/EventOperateStore";
 import baseInfoStore from "./BaseInfoStore";
 import rightStore from "../../../designer/right/RightStore";
-import editorDesignerLoader from "../../../designer/loader/EditorDesignerLoader";
+import editorDesignerLoader, {canvasManager, layerManager} from "../../../designer/loader/EditorDesignerLoader";
 import layerListStore from "../../../designer/left/layer-list/LayerListStore";
 import LayerUtil from "../../../designer/left/layer-list/util/LayerUtil";
-import canvasManager from "../../../designer/header/items/canvas/CanvasManager.ts";
 import {
     AlignBottomTwo,
     AlignHorizontalCenterTwo,

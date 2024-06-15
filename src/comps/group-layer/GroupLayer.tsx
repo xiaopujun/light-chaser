@@ -3,7 +3,7 @@ import GroupLayerController from "./GroupLayerController";
 import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
 import DesignerLoaderFactory from "../../designer/loader/DesignerLoaderFactory";
 import {DesignerMode, ILayerItem} from "../../designer/DesignerType";
-import layerManager from "../../designer/manager/LayerManager.ts";
+import {layerManager} from "../../designer/loader/EditorDesignerLoader.ts";
 
 export interface GroupLayerStyleProps {
     children?: React.ReactNode;

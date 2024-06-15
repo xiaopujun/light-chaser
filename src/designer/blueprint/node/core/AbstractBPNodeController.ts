@@ -1,6 +1,8 @@
 import AbstractController from "../../../../framework/core/AbstractController";
 import React from "react";
-import BPExecutor from "../../core/BPExecutor";
+import BluePrintManager from "../../manager/BluePrintManager.ts";
+import BPTask from "../../core/BPTask.ts";
+import LayerManager from "../../../manager/LayerManager.ts";
 
 export interface NodeInfoType {
     id?: string;
@@ -35,6 +37,15 @@ export interface ExecuteInfoType {
     anchorType: AnchorPointType;
 }
 
+export interface IBPTaskInfo {
+    apId: string;
+    nodeId: string;
+    anchorType: AnchorPointType;
+    task: BPTask;
+    bluePrintManager: BluePrintManager;
+    layerManager: LayerManager;
+}
+
 
 /**
  * 抽象蓝图节点控制器
@@ -52,11 +63,10 @@ export abstract class AbstractBPNodeController<C = any> extends AbstractControll
 
     /**
      * 蓝图节点执行器，当执行蓝图节点构建的逻辑路径时，不同的节点根据该方法执行自己内部对应的逻辑解析方案，并产生对应的输出
-     * @param executeInfo
-     * @param executor
-     * @param params
+     * @param taskInfo 当前任务信息
+     * @param params 节点间传递的参数
      */
-    public abstract execute(executeInfo: ExecuteInfoType, executor: BPExecutor, params: any): void;
+    public abstract execute(taskInfo: IBPTaskInfo, params: any): void;
 
     /**
      * 获取蓝图节点的配置信息

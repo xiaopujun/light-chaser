@@ -1,14 +1,14 @@
 import React, {lazy, memo, Suspense} from 'react';
 import {observer} from "mobx-react";
-import layerManager from "../manager/LayerManager.ts";
 import rightStore from "../right/RightStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {hotkeyConfigs} from "../operate-provider/hot-key/HotKeyConfig";
-import layerBuilder from "../left/layer-list/LayerBuilder";
+import layerBuilder from "../left/layer-list/LayerBuilder.ts";
 import LayerUtil from "../left/layer-list/util/LayerUtil";
 import DesignerMovable from "../operate-provider/movable/DesignerMovable.tsx";
 import Loading from "../../json-schema/ui/loading/Loading.tsx";
 import SearchLayer from "../left/layer-list/search-layer/SearchLayer.tsx";
+import {bpExecutor, layerManager} from "../loader/EditorDesignerLoader.ts";
 
 const DesignerContainer = lazy(() => import('../operate-provider/DesignerContainer'));
 const DesignerRuler = lazy(() => import('./DesignerRuler'));
@@ -38,7 +38,6 @@ const DesignerCanvas = memo(observer(() => {
         activeConfig(layerId, layer.type!);
     }
 
-    const {layerConfigs} = layerManager!;
     return (
         <Suspense fallback={<Loading/>}>
             <DesignerContainer>
@@ -46,7 +45,7 @@ const DesignerCanvas = memo(observer(() => {
                     <DesignerRuler>
                         <DesignerDragScaleContainer onDoubleClick={updateActive}>
                             <DesignerMovable>
-                                {layerBuilder.buildCanvasComponents(layerConfigs)}
+                                {layerBuilder.buildCanvasComponents(layerManager, bpExecutor)}
                             </DesignerMovable>
                         </DesignerDragScaleContainer>
                     </DesignerRuler>

@@ -5,6 +5,7 @@ import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
+import BPExecutor from "../../../designer/blueprint/core/BPExecutor.ts";
 
 export interface AntdLineProps extends ComponentBaseProps {
     style?: WritableLineOptions;
@@ -12,8 +13,8 @@ export interface AntdLineProps extends ComponentBaseProps {
 
 export default class AntdCommonLineController extends AntdBaseDesignerController<Line, AntdLineProps> {
 
-    async create(container: HTMLElement, config: AntdLineProps): Promise<void> {
-        await super.commonCreate(container, Line, config);
+    async create(container: HTMLElement, config: AntdLineProps, executor: BPExecutor): Promise<void> {
+        super.commonCreate(container, Line, config, executor);
     }
 
     destroy(): void {

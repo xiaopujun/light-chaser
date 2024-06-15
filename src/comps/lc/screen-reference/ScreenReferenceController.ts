@@ -1,20 +1,20 @@
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
 import ComponentUtil from "../../../utils/ComponentUtil";
-import BaseColorBlockComponent, {
-    BaseColorBlockComponentProps,
-    BaseColorBlockComponentRef
-} from "./BaseColorBlockComponent";
+import ScreenReferenceComponent, {
+    ScreenReferenceComponentProps,
+    ScreenReferenceComponentRef
+} from './ScreenReferenceComponent.tsx';
 import ObjectUtil from "../../../utils/ObjectUtil";
-import BPExecutor from "../../../designer/blueprint/core/BPExecutor";
+import BPExecutor from "../../../designer/blueprint/core/BPExecutor.ts";
 
-export class BaseColorBlockController extends AbstractDesignerController<BaseColorBlockComponentRef, BaseColorBlockComponentProps> {
+export class ScreenReferenceController extends AbstractDesignerController<ScreenReferenceComponentRef, ScreenReferenceComponentProps> {
 
-    async create(container: HTMLElement, config: BaseColorBlockComponentProps, executor: BPExecutor): Promise<void> {
+    async create(container: HTMLElement, config: ScreenReferenceComponentProps, executor: BPExecutor): Promise<void> {
         this.config = config;
         this.container = container;
         this.bpExecutor = executor;
-        this.instance = await ComponentUtil.createAndRender<BaseColorBlockComponentRef>(container, BaseColorBlockComponent, config);
+        this.instance = await ComponentUtil.createAndRender<ScreenReferenceComponentRef>(container, ScreenReferenceComponent, config);
     }
 
     destroy(): void {
@@ -22,17 +22,16 @@ export class BaseColorBlockController extends AbstractDesignerController<BaseCol
         this.config = null;
     }
 
-    getConfig(): BaseColorBlockComponentProps | null {
+    getConfig(): ScreenReferenceComponentProps | null {
         return this.config;
     }
 
-    update(config: BaseColorBlockComponentProps, upOp?: UpdateOptions | undefined): void {
+    update(config: ScreenReferenceComponentProps, upOp?: UpdateOptions | undefined): void {
         this.config = ObjectUtil.merge(this.config, config);
         upOp = upOp || {reRender: true};
         if (upOp.reRender)
             this.instance?.updateConfig(this.config!);
     }
-
 
     registerEvent() {
         const nodeId = this.config?.base?.id!;

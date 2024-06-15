@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import './LayerList.less';
-import layerManager from "../../manager/LayerManager.ts";
 import {observer} from "mobx-react";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
-import layerBuilder from "./LayerBuilder";
+import layerBuilder from "./LayerBuilder.ts";
 import designerLeftStore from "../DesignerLeftStore";
 import {Close} from "@icon-park/react";
+import {layerManager} from "../../loader/EditorDesignerLoader.ts";
 
 export interface LayerListProps {
     children?: React.ReactNode;
@@ -37,8 +37,8 @@ class LayerList extends Component<LayerListProps> {
     }
 
     buildLayerList = () => {
-        const {layerConfigs} = layerManager;
-        return layerBuilder.buildLayerList(layerConfigs);
+        const {layerConfigs, layerHeader} = layerManager;
+        return layerBuilder.buildLayerList(layerConfigs, layerHeader!);
     }
 
     render() {

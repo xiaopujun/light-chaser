@@ -7,15 +7,14 @@ import {Grid} from "../../../../json-schema/ui/grid/Grid";
 import Switch from "../../../../json-schema/ui/switch/Switch";
 import Button from "../../../../json-schema/ui/button/Button";
 import NumberInput from "../../../../json-schema/ui/number-input/NumberInput";
-import canvasHdStore from "./CanvasManager.ts";
-import canvasManager from "./CanvasManager.ts";
 import Select from "../../../../json-schema/ui/select/Select.tsx";
+import {canvasManager} from "../../../loader/EditorDesignerLoader.ts";
 
 
 const CanvasHdConfigImpl = () => {
     const configRef = useRef<CanvasConfig | null>({...canvasManager.canvasConfig});
     const [_rasterize, setRasterize] = useState(canvasManager.canvasConfig.rasterize || false);
-    const {canvasVisible, setCanvasVisible} = canvasHdStore;
+    const {canvasVisible, setCanvasVisible} = canvasManager;
     const {width, height, rasterize, dragStep, resizeStep} = configRef.current!;
 
     const onClose = () => {

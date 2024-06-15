@@ -4,7 +4,7 @@ import BaseVideoComponent, {BaseVideoComponentRef, BaseVideoComponentStyle} from
 import ComponentUtil from "../../../utils/ComponentUtil";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import ObjectUtil from "../../../utils/ObjectUtil";
-import {IFilterConfigType, ThemeItemType} from "../../../designer/DesignerType";
+import {IFilterConfigType} from "../../../designer/DesignerType";
 import BPExecutor from "../../../designer/blueprint/core/BPExecutor";
 
 export interface BaseVideoComponentProps {
@@ -16,9 +16,10 @@ export interface BaseVideoComponentProps {
 
 export default class BaseVideoController extends AbstractDesignerController<BaseVideoComponentRef, BaseVideoComponentProps> {
 
-    public async create(container: HTMLElement, config: BaseVideoComponentProps): Promise<void> {
+    public async create(container: HTMLElement, config: BaseVideoComponentProps, executor: BPExecutor): Promise<void> {
         this.config = config;
         this.container = container;
+        this.bpExecutor = executor;
         this.instance = await ComponentUtil.createAndRender<BaseVideoComponentRef>(container, BaseVideoComponent, config);
     }
 
@@ -39,15 +40,13 @@ export default class BaseVideoController extends AbstractDesignerController<Base
         }
     }
 
-    updateTheme(newTheme: ThemeItemType): void {
-
-    }
 
     registerEvent() {
         if (this.instance) {
             const nodeId = this.config?.base?.id!;
+            const executor = this.bpExecutor;
             this.instance.setEventHandler({
-                click: () => BPExecutor.triggerComponentEvent(nodeId!, "click", this.config)
+                click: () => executor?.triggerComponentEvent(nodeId!, "click", this.config)
             })
         }
     }

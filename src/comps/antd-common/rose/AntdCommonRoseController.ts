@@ -5,6 +5,7 @@ import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
+import BPExecutor from "../../../designer/blueprint/core/BPExecutor.ts";
 
 export interface AntdRoseProps extends ComponentBaseProps {
     style?: WritableRoseOptions;
@@ -12,8 +13,8 @@ export interface AntdRoseProps extends ComponentBaseProps {
 
 export default class AntdCommonRoseController extends AntdBaseDesignerController<Rose, AntdRoseProps> {
 
-    async create(container: HTMLElement, config: AntdRoseProps): Promise<void> {
-        await super.commonCreate(container, Rose, config);
+    async create(container: HTMLElement, config: AntdRoseProps, executor: BPExecutor): Promise<void> {
+        super.commonCreate(container, Rose, config, executor);
     }
 
     destroy(): void {

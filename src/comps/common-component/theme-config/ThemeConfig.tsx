@@ -4,9 +4,9 @@ import ThemeEditor from "./theme-editor/ThemeEditor";
 import ThemeList from "./theme-list/ThemeList";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import rightStore from "../../../designer/right/RightStore";
-import layerManager from "../../../designer/manager/LayerManager.ts";
 import Button from "../../../json-schema/ui/button/Button";
 import {ConfigType} from "../../../designer/right/ConfigContent";
+import {layerManager} from "../../../designer/loader/EditorDesignerLoader.ts";
 
 class ThemeConfig extends Component<ConfigType> {
     state = {

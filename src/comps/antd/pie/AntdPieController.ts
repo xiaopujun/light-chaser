@@ -6,6 +6,7 @@ import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerCont
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
 import {CSSProperties} from "react";
+import BPExecutor from "../../../designer/blueprint/core/BPExecutor.ts";
 
 export interface AntdPieProps extends ComponentBaseProps {
     style?: WritablePieOptions;
@@ -13,8 +14,8 @@ export interface AntdPieProps extends ComponentBaseProps {
 
 export default class AntdPieController extends AntdBaseDesignerController<Pie, AntdPieProps> {
 
-    async create(container: HTMLElement, config: AntdPieProps): Promise<void> {
-        super.commonCreate(container, Pie, config);
+    async create(container: HTMLElement, config: AntdPieProps, executor: BPExecutor): Promise<void> {
+        super.commonCreate(container, Pie, config, executor);
     }
 
     destroy(): void {

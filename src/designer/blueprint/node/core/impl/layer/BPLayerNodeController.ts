@@ -1,13 +1,12 @@
-import {AbstractBPNodeController, AnchorPointType, ExecuteInfoType, NodeInfoType} from "../../AbstractBPNodeController";
+import {AbstractBPNodeController, AnchorPointType, IBPTaskInfo, NodeInfoType} from "../../AbstractBPNodeController";
 import {UpdateOptions} from "../../../../../../framework/core/AbstractController";
 import ComponentUtil from "../../../../../../utils/ComponentUtil";
 import BPNode, {NodeProps} from "../../../BPNode";
-import layerManager from "../../../../../manager/LayerManager.ts";
 import React from "react";
 import {ActionInfo} from "../../../../../../framework/core/AbstractDefinition";
-import BPExecutor from "../../../../core/BPExecutor";
 import DesignerLoaderFactory from "../../../../../../designer/loader/DesignerLoaderFactory";
 import {DesignerMode} from "../../../../../DesignerType.ts";
+import {layerManager} from "../../../../../loader/EditorDesignerLoader.ts";
 
 export interface LayerNodeConfig extends NodeProps {
 
@@ -21,8 +20,8 @@ export default class BPLayerNodeController extends AbstractBPNodeController<Laye
         this.instance = await ComponentUtil.createAndRender(container, BPNode, config);
     }
 
-    execute(executeInfo: ExecuteInfoType, executor: BPExecutor, params: any): void {
-        const {nodeId, apId, anchorType} = executeInfo;
+    execute(taskInfo: IBPTaskInfo, params: any): void {
+        const {nodeId, apId, anchorType, layerManager} = taskInfo;
         if (anchorType === AnchorPointType.INPUT) {
             //输入点，执行动作
             //1.获取当前组件的控制器实例

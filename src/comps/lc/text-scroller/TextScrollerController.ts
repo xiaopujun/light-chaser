@@ -1,4 +1,3 @@
-import {ThemeItemType} from "../../../designer/DesignerType";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
 import ComponentUtil from "../../../utils/ComponentUtil";
@@ -8,9 +7,10 @@ import BPExecutor from "../../../designer/blueprint/core/BPExecutor";
 
 export class TextScrollerController extends AbstractDesignerController<TextScrollerComponentRef, TextScrollerComponentProps> {
 
-    async create(container: HTMLElement, config: TextScrollerComponentProps): Promise<void> {
+    async create(container: HTMLElement, config: TextScrollerComponentProps, executor: BPExecutor): Promise<void> {
         this.config = config;
         this.container = container;
+        this.bpExecutor = executor;
         this.instance = await ComponentUtil.createAndRender<TextScrollerComponentRef>(container, TextScrollerComponent, config);
     }
 
@@ -36,15 +36,12 @@ export class TextScrollerController extends AbstractDesignerController<TextScrol
             this.instance?.updateConfig(this.config!);
     }
 
-    updateTheme(newTheme: ThemeItemType): void {
-
-    }
-
 
     registerEvent() {
         const nodeId = this.config?.base?.id!;
+        const executor = this.bpExecutor;
         this.instance?.setEventHandler({
-            click: () => BPExecutor.triggerComponentEvent(nodeId!, "click", this.config),
+            click: () => executor?.triggerComponentEvent(nodeId!, "click", this.config),
         })
     }
 }

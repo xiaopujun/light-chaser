@@ -1,7 +1,7 @@
 import React from "react";
 import './BPFooter.less';
-import bluePrintManager from "../manager/BluePrintManager.ts";
 import {observer} from "mobx-react";
+import {bluePrintManager} from "../../loader/EditorDesignerLoader.ts";
 
 const BPFooter: React.FC = observer(() => {
     const {canvasScale} = bluePrintManager;

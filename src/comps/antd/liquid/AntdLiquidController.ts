@@ -4,6 +4,7 @@ import {Liquid} from "@antv/g2plot";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
+import BPExecutor from "../../../designer/blueprint/core/BPExecutor.ts";
 
 export interface AntdLiquidProps extends ComponentBaseProps {
     style?: WritableLiquidOptions;
@@ -11,8 +12,8 @@ export interface AntdLiquidProps extends ComponentBaseProps {
 
 export default class AntdLiquidController extends AntdBaseDesignerController<Liquid, AntdLiquidProps> {
 
-    async create(container: HTMLElement, config: AntdLiquidProps): Promise<void> {
-        super.commonCreate(container, Liquid, config);
+    async create(container: HTMLElement, config: AntdLiquidProps, executor: BPExecutor): Promise<void> {
+        super.commonCreate(container, Liquid, config, executor);
     }
 
     destroy(): void {

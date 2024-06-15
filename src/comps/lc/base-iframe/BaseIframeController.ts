@@ -7,9 +7,10 @@ import BPExecutor from "../../../designer/blueprint/core/BPExecutor";
 
 export class BaseIframeController extends AbstractDesignerController<BaseIframeComponent, BaseIframeComponentProps> {
 
-    async create(container: HTMLElement, config: BaseIframeComponentProps): Promise<void> {
+    async create(container: HTMLElement, config: BaseIframeComponentProps, executor: BPExecutor): Promise<void> {
         this.config = config;
         this.container = container;
+        this.bpExecutor = executor;
         this.instance = await ComponentUtil.createAndRender<BaseIframeComponent>(container, BaseIframeComponent, config);
     }
 
@@ -32,8 +33,9 @@ export class BaseIframeController extends AbstractDesignerController<BaseIframeC
     registerEvent() {
         if (this.instance) {
             const nodeId = this.config?.base?.id!;
+            const executor = this.bpExecutor;
             this.instance.eventHandlerMap = {
-                load: () => BPExecutor.triggerComponentEvent(nodeId!, "load", this.config)
+                load: () => executor?.triggerComponentEvent(nodeId!, "load", this.config)
             }
         }
     }

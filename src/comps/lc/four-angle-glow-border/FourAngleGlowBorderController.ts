@@ -1,4 +1,4 @@
-import {IFilterConfigType, ThemeItemType} from "../../../designer/DesignerType";
+import {IFilterConfigType} from "../../../designer/DesignerType";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
 import ComponentUtil from "../../../utils/ComponentUtil";
@@ -15,9 +15,10 @@ export interface FourAngleGlowProps {
 
 export class FourAngleGlowBorderController extends AbstractDesignerController<FourAngleGlowBorderRef, FourAngleGlowProps> {
 
-    async create(container: HTMLElement, config: FourAngleGlowProps): Promise<void> {
+    async create(container: HTMLElement, config: FourAngleGlowProps, executor: BPExecutor): Promise<void> {
         this.config = config;
         this.container = container;
+        this.bpExecutor = executor;
         this.instance = await ComponentUtil.createAndRender<FourAngleGlowBorderRef>(container, FourAngleGlowBorder, config);
     }
 
@@ -37,15 +38,11 @@ export class FourAngleGlowBorderController extends AbstractDesignerController<Fo
             this.instance?.updateConfig(this.config!.style!);
     }
 
-    updateTheme(newTheme: ThemeItemType): void {
-
-    }
-
-
     registerEvent() {
         const nodeId = this.config?.base?.id!;
+        const executor = this.bpExecutor;
         this.instance?.setEventHandler({
-            click: () => BPExecutor.triggerComponentEvent(nodeId!, "click", this.config),
+            click: () => executor?.triggerComponentEvent(nodeId!, "click", this.config),
         })
     }
 }

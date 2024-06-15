@@ -1,10 +1,10 @@
 import React from "react";
 import './BPRight.less';
 import {observer} from "mobx-react";
-import bluePrintManager from "../manager/BluePrintManager.ts";
 import bpRightStore from "./BPRightStore";
 import Accordion from "../../../json-schema/ui/accordion/Accordion";
 import {AbstractBPNodeController} from "../node/core/AbstractBPNodeController";
+import {bluePrintManager} from "../../loader/EditorDesignerLoader.ts";
 
 export interface BPRightConfigProps {
     controller?: AbstractBPNodeController;

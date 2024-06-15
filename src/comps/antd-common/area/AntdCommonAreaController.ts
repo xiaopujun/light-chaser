@@ -5,15 +5,15 @@ import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
+import BPExecutor from "../../../designer/blueprint/core/BPExecutor.ts";
 
 export interface AntdAreaProps extends ComponentBaseProps {
     style?: WritableAreaOptions;
 }
 
 export default class AntdCommonAreaController extends AntdBaseDesignerController<Area, AntdAreaProps> {
-
-    async create(container: HTMLElement, config: AntdAreaProps): Promise<void> {
-        super.commonCreate(container, Area, config);
+    async create(container: HTMLElement, config: AntdAreaProps, bpExecutor: BPExecutor): Promise<void> {
+        super.commonCreate(container, Area, config, bpExecutor);
     }
 
     destroy(): void {

@@ -1,10 +1,11 @@
 import React, {Suspense, useEffect} from "react";
 import {reRenderAllLine} from "./drag/BPMovable";
-import bluePrintManager, {IBPLine} from "./manager/BluePrintManager.ts";
+import {IBPLine} from "./manager/BluePrintManager.ts";
 import CanvasUtil from "./util/CanvasUtil";
 import Loading from "../../json-schema/ui/loading/Loading.tsx";
 import LineLayer from "./line/LineLayer.tsx";
 import NodeLayer from "./node/NodeLayer.tsx";
+import {bluePrintManager} from "../loader/EditorDesignerLoader.ts";
 
 
 /**

@@ -3,6 +3,7 @@ import AbstractController from "./AbstractController";
 import {ComponentBaseProps} from "../../comps/common-component/CommonTypes.ts";
 import FetchUtil from "../../utils/FetchUtil.ts";
 import AuthFetchUtil from "../../utils/AuthFetchUtil.ts";
+import BPExecutor from "../../designer/blueprint/core/BPExecutor.ts";
 
 /**
  * AbstractDesignerController继承自AbstractController，在泛型的定义和约束上和AbstractController完全保持一致。
@@ -15,6 +16,10 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
     protected lastReqState: boolean = true;
     //异常提示信息dom元素
     private errMsgDom: HTMLElement | null = null;
+    //蓝图事件触发器
+    public bpExecutor: BPExecutor | null = null;
+
+    public abstract create(container: HTMLElement, config: C, bpExecutor: BPExecutor): Promise<void>;
 
     /**
      * 更新组件数据,且必须触发组件的重新渲染

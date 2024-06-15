@@ -3,9 +3,7 @@ import './DesignerHeader.less';
 import {observer} from "mobx-react";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {doSave, exportProject, importProject} from "../operate-provider/hot-key/HotKeyImpl";
-import canvasHdStore from "./items/canvas/CanvasManager.ts";
 import projectHdStore from "./items/project/ProjecManager.ts";
-import themeHdStore from "./items/theme/ThemeManager.ts";
 import bluePrintHdStore from "./items/blue-print/BluePrintHdStore.ts";
 import CanvasHdConfigImpl from "./items/canvas/CanvasHdConfigImpl.tsx";
 import ProjectHdItemImpl from "./items/project/ProjectHdItemImpl.tsx";
@@ -14,6 +12,7 @@ import BluePrintHdImpl from "./items/blue-print/BluePrintHdImpl.tsx";
 import {AfferentFour, ConnectionPointTwo, EfferentFour, Eyes, HardDiskOne, PageTemplate, Theme} from "@icon-park/react";
 import URLUtil from "../../utils/URLUtil.ts";
 import {DesignerMode} from "../DesignerType.ts";
+import {canvasManager, themeManager} from "../loader/EditorDesignerLoader.ts";
 
 
 export interface IHeaderItem {
@@ -39,13 +38,13 @@ const centerItems: Array<IHeaderItem> = [
         icon: <PageTemplate theme="filled" style={{marginTop: 2}} strokeWidth={3} strokeLinecap="square"/>,
         name: '画布',
         key: 'canvas',
-        onClick: () => canvasHdStore.setCanvasVisible(true)
+        onClick: () => canvasManager.setCanvasVisible(true)
     },
     {
         icon: <Theme theme="filled" style={{marginTop: 2}} strokeWidth={4} strokeLinecap="square"/>,
         name: '主题',
         key: 'theme',
-        onClick: () => themeHdStore.setThemeVisible(true)
+        onClick: () => themeManager.setThemeVisible(true)
     }
 ];
 
@@ -108,9 +107,9 @@ const Header: React.FC = observer(() => {
                     <div className={'header-right'}>
                         {buildHeaderItemUI(leftItems)}
                     </div>
-                    {canvasHdStore.canvasVisible && <CanvasHdConfigImpl/>}
+                    {canvasManager.canvasVisible && <CanvasHdConfigImpl/>}
                     {projectHdStore.projectVisible && <ProjectHdItemImpl/>}
-                    {themeHdStore.themeVisible && <ThemeHdItemImpl/>}
+                    {themeManager.themeVisible && <ThemeHdItemImpl/>}
                     {bluePrintHdStore.bluePrintVisible && <BluePrintHdImpl/>}
                 </div>
             </>

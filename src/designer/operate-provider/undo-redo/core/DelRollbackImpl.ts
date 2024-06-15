@@ -1,9 +1,9 @@
 import AbstractRollback from "./AbstractRollback";
 import eventOperateStore from "../../EventOperateStore";
 import {IDelOperateData, IHistoryRecord} from "../OperateType";
-import layerManager from "../../../manager/LayerManager.ts";
 import {cloneDeep} from "lodash";
 import {toJS} from "mobx";
+import {layerManager} from "../../../loader/EditorDesignerLoader.ts";
 
 export class DelRollbackImpl extends AbstractRollback {
     redo(record: IHistoryRecord): void {

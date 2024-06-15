@@ -5,6 +5,7 @@ import {ThemeItemType} from "../../../designer/DesignerType";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {ShapeAttrs} from "@antv/g-base";
 import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
+import BPExecutor from "../../../designer/blueprint/core/BPExecutor.ts";
 
 export interface AntdColumnProps extends ComponentBaseProps {
     style?: WritableColumnOptions;
@@ -12,8 +13,8 @@ export interface AntdColumnProps extends ComponentBaseProps {
 
 export default class AntdCommonColumnController extends AntdBaseDesignerController<Column, AntdColumnProps> {
 
-    async create(container: HTMLElement, config: AntdColumnProps): Promise<void> {
-        await super.commonCreate(container, Column, config);
+    async create(container: HTMLElement, config: AntdColumnProps, executor: BPExecutor): Promise<void> {
+        super.commonCreate(container, Column, config, executor);
     }
 
     destroy(): void {
