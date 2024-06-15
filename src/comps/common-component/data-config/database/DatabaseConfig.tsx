@@ -2,12 +2,12 @@ import AbstractDesignerController from "../../../../framework/core/AbstractDesig
 import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI.tsx";
 import {Control} from "../../../../json-schema/SchemaTypes.ts";
 import {useEffect, useRef, useState} from "react";
-import {DataSourceConfigType} from "../../../../pages/home/datasource/edit/EditDataSourceDialog.tsx";
 import {globalMessage} from "../../../../framework/message/GlobalMessage.tsx";
 import {ISelectOption} from "../../../../json-schema/ui/select/Select.tsx";
 import ObjectUtil from "../../../../utils/ObjectUtil.ts";
 import {IDatabase} from "../../../../designer/DesignerType.ts";
 import FetchUtil from "../../../../utils/FetchUtil.ts";
+import {IDataSource} from "../../../../pages/home/datasource/DataSourceStore.ts";
 
 export interface DatabaseDataConfigProps {
     controller: AbstractDesignerController;
@@ -24,7 +24,7 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
     useEffect(() => {
         FetchUtil.get(`/api/datasource/list`).then(res => {
             if (res.code === 200) {
-                const options = (res.data as Array<DataSourceConfigType>).map(item => {
+                const options = (res.data as Array<IDataSource>).map(item => {
                     return {label: item.name, value: item.id}
                 })
                 setDataSourceList(options as ISelectOption[]);

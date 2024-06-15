@@ -1,16 +1,17 @@
 import React, {memo, useEffect, useRef} from 'react';
 import './ProjectList.less';
-import {Pagination} from "antd";
+import {Input, Button, Pagination} from "antd";
 import defaultSnapshot from '../image/default-snapshot.jpg';
 import {DesignerMode, IPage, IProjectInfo, SaveType} from "../../../designer/DesignerType";
 import {INewProjectInfo, NewProjectDialog} from "./NewProjectDialog.tsx";
-import Button from "../../../json-schema/ui/button/Button";
 import operatorMap from "../../../framework/operate";
 import {globalMessage} from "../../../framework/message/GlobalMessage";
-import Input from "../../../json-schema/ui/input/Input.tsx";
 import DelProjectDialog from "./DelProjectDialog.tsx";
 import CloneProjectDialog from "./CloneProjectDialog.tsx";
 import ProjectItem from "./ProjectItem.tsx";
+import {Add} from "@icon-park/react";
+
+const {Search} = Input;
 
 export interface ProjectListProps {
     saveType: SaveType;
@@ -116,13 +117,17 @@ export const ProjectList = memo((props: ProjectListProps) => {
         }).then((data: IPage<IProjectInfo>) => setPageData(data));
     }
 
-    const doSearch = (event: React.KeyboardEvent) => {
+    const onKeyDown = (event: React.KeyboardEvent) => {
         if (event.key !== 'Enter')
             return;
+        doSearch((event.target as any).value);
+    }
+
+    const doSearch = (value: string) => {
         operatorMap[saveType].getProjectInfoPageList({
             current: pageData.current,
             size: pageData.size,
-            searchValue: (event.target as HTMLInputElement).value
+            searchValue: value
         }).then((data: IPage<IProjectInfo>) => setPageData(data));
     }
 
@@ -134,11 +139,15 @@ export const ProjectList = memo((props: ProjectListProps) => {
         <div className={'project-list-container'}>
             <div className={'project-list-header'}>
                 <div className={'project-list-header-left'}>
-                    <Input className={'list-search'} placeholder={'搜索项目'} onKeyDown={doSearch}/>
+                    <Search placeholder="搜索项目" size={"middle"}
+                            className={'project-list-search'}
+                            onKeyDown={onKeyDown}
+                            onSearch={doSearch}
+                            style={{width: 350}}/>
+                    <Button size={'middle'} type={"primary"} onClick={toggleNewProVisible}>
+                        <Add style={{position: 'relative', top: 3, marginRight: 3}}/>新增</Button>
                 </div>
-                <div className={'project-list-header-right'}>
-                    <Button onClick={toggleNewProVisible}>+ 创建</Button>
-                </div>
+                <div className={'project-list-header-right'}></div>
             </div>
             <div className={'project-list'}>
                 {pageData && pageData.records.map((item: IProjectInfo, index) => {
