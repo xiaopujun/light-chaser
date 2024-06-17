@@ -1,5 +1,4 @@
 import React, {Component, useState} from 'react';
-import './AxisConfig.less';
 import {Axis} from "@antv/g2plot";
 import {isEqual} from "lodash";
 import {Control} from "../../../../json-schema/SchemaTypes";

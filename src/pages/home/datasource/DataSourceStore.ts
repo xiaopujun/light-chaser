@@ -1,8 +1,7 @@
 import {action, makeObservable, observable} from "mobx";
 import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
-import {DataSourceConfigType} from "./edit/EditDataSourceDialog.tsx";
-import FetchUtil from "../../../utils/FetchUtil.ts";
 import {IPage} from "../../../designer/DesignerType.ts";
+import FetchUtil from "../../../utils/FetchUtil.ts";
 
 export const DataSourceMapping = {
     "0": "MySQL",
@@ -11,72 +10,76 @@ export const DataSourceMapping = {
     "3": "SQL Server",
 }
 
+export interface IDataSource {
+    id?: string;
+    key?: string;
+    name?: string;
+    type?: string;
+    username?: string;
+    password?: string;
+    url?: string;
+    des?: string;
+}
+
 export class DataSourceStore {
     constructor() {
         makeObservable(this, {
-            createVisible: observable,
-            editVisible: observable,
+            panelVisible: observable,
             dataSourcePageData: observable,
-            setCreateVisible: action,
-            setEditVisible: action,
             setDataSourceList: action,
             setDataSource: action,
             changeCurrentPage: action,
+            setPanelVisible: action,
         })
     }
 
-    createVisible = false;
-
-    editVisible = false;
-
+    panelVisible = false;
     searchValue: string | null = null;
-
-    dataSourcePageData: IPage<DataSourceConfigType[]> = {
+    dataSourcePageData: IPage<IDataSource[]> = {
         records: [],
         total: 0,
         size: 8,
         current: 1
     };
-
-    dataSource: DataSourceConfigType = {
-        id: "",
-        name: '',
-        type: '',
-        username: '',
-        password: '',
-        url: '',
-        des: ''
+    dataSource: IDataSource = {
+        id: undefined,
+        name: undefined,
+        type: undefined,
+        username: undefined,
+        password: undefined,
+        url: undefined,
+        des: undefined
     }
 
-    setCreateVisible = (visible: boolean) => this.createVisible = visible;
+    setPanelVisible = (visible: boolean) => {
+        this.panelVisible = visible
+        if (!visible) {
+            this.dataSource = {
+                id: undefined,
+                name: undefined,
+                type: undefined,
+                username: undefined,
+                password: undefined,
+                url: undefined,
+                des: undefined
+            }
+        }
+    }
 
-    setEditVisible = (visible: boolean) => this.editVisible = visible;
+    setDataSourceList = (dataSourcePageData: IPage<IDataSource[]>) => this.dataSourcePageData = dataSourcePageData;
 
-    setDataSourceList = (dataSourcePageData: IPage<DataSourceConfigType[]>) => this.dataSourcePageData = dataSourcePageData;
-
-    setDataSource = (dataSource: DataSourceConfigType) => this.dataSource = dataSource;
+    setDataSource = (dataSource: IDataSource) => this.dataSource = dataSource;
 
     changeCurrentPage = (page: number) => {
         this.dataSourcePageData.current = page;
         this.getDataSourceList();
     }
 
-    testDataSource = (id: string) => {
+    testConnect = (id: string) => {
         FetchUtil.get(`/api/datasource/test/${id}`).then(res => {
             if (res.code === 200)
                 globalMessage.messageApi?.success(res.msg);
             else
-                globalMessage.messageApi?.error(res.msg);
-        })
-    }
-
-
-    deleteDataSource = (id: string) => {
-        FetchUtil.get(`/api/datasource/del/${id}`).then(res => {
-            if (res.code === 200) {
-                globalMessage.messageApi?.success(res.msg);
-                this.getDataSourceList();
-            } else
                 globalMessage.messageApi?.error(res.msg);
         })
     }
@@ -95,7 +98,7 @@ export class DataSourceStore {
         FetchUtil.get(`/api/datasource/get/${id}`).then(res => {
             if (res.code === 200) {
                 this.setDataSource(res.data);
-                this.setEditVisible(true);
+                this.setPanelVisible(true);
             } else
                 globalMessage.messageApi?.error(res.msg);
         })
@@ -109,7 +112,7 @@ export class DataSourceStore {
         }).then(res => {
             let {code, data, msg} = res;
             if (code === 200) {
-                (data.records as Array<DataSourceConfigType>).forEach((item) => {
+                (data.records as Array<IDataSource>).forEach((item) => {
                     item.key = item.id;
                     item.type = DataSourceMapping[item!.type as keyof typeof DataSourceMapping];
                 })
@@ -127,26 +130,70 @@ export class DataSourceStore {
         })
     }
 
-    updateDataSource = (data: DataSourceConfigType) => {
+    updateDataSource = (data: IDataSource) => {
         FetchUtil.post(`/api/datasource/update`, data).then(res => {
             if (res.code === 200) {
                 globalMessage.messageApi?.success(res.msg);
                 this.getDataSourceList();
-                this.setEditVisible(false);
+                this.setPanelVisible(false);
             } else
                 globalMessage.messageApi?.error(res.msg);
         })
     }
 
-    createDataSource = (data: DataSourceConfigType) => {
+    createDataSource = (data: IDataSource) => {
         FetchUtil.post(`/api/datasource/add`, data).then(res => {
             if (res.code === 200) {
                 globalMessage.messageApi?.success(res.msg);
                 this.getDataSourceList();
-                this.setCreateVisible(false);
+                this.setPanelVisible(false);
             } else
                 globalMessage.messageApi?.error(res.msg);
         })
+    }
+
+    doBatchDeleteDataSource = (ids: string[]) => {
+        if (ids.length === 0)
+            return;
+        FetchUtil.post('/api/datasource/batchDel', ids).then((res) => {
+            const {code, msg} = res;
+            if (code === 200) {
+                globalMessage.messageApi?.success('删除成功');
+                this.getDataSourceList();
+            } else
+                globalMessage.messageApi?.error(msg);
+        })
+    }
+
+    doCreateOrUpdateDataSource = (data: IDataSource) => {
+        if (data.id) {
+            this.updateDataSource(data);
+        } else {
+            this.createDataSource(data);
+        }
+    }
+
+    init = () => {
+        this.getDataSourceList();
+    }
+
+    destroy = () => {
+        this.searchValue = null;
+        this.dataSourcePageData = {
+            records: [],
+            total: 0,
+            size: 8,
+            current: 1
+        };
+        this.dataSource = {
+            id: undefined,
+            name: undefined,
+            type: undefined,
+            username: undefined,
+            password: undefined,
+            url: undefined,
+            des: undefined
+        }
     }
 
 }
