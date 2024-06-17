@@ -13,6 +13,7 @@ export default class BaseTableDefinition extends AbstractDesignerDefinition<Base
             compName: "基础表格",
             compKey: "LcBaseTable",
             categorize: "web",
+            subCategorize: "container"
         };
     }
 

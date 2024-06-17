@@ -13,6 +13,7 @@ export default class CarouselDefinition extends AbstractDesignerDefinition<Carou
             compName: "轮播图",
             compKey: "carousel",
             categorize: "web",
+            subCategorize: "container"
         };
     }
 
@@ -33,7 +34,7 @@ export default class CarouselDefinition extends AbstractDesignerDefinition<Carou
             },
             style: {
                 autoplay: true,
-                autoplaySpeed: 3000,
+                autoplaySpeed: 4000,
                 dots: true,
                 fade: false,
                 speed: 500,
