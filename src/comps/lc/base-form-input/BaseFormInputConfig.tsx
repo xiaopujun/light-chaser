@@ -149,8 +149,8 @@ export const BaseFormInputConfig: React.FC<ConfigType<BaseFormInputController>> 
                 config: {
                     options: [
                         {label: '默认', value: 'none'},
-                        // {label: '悬浮', value: 'hover'},
-                        // {label: '聚焦', value: 'focus'},
+                        {label: '悬浮', value: 'hover'},
+                        {label: '聚焦', value: 'focus'},
                     ]
                 }
             },

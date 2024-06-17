@@ -34,7 +34,7 @@ export default class CarouselDefinition extends AbstractDesignerDefinition<Carou
             },
             style: {
                 autoplay: true,
-                autoplaySpeed: 4000,
+                autoplaySpeed: 3000,
                 dots: true,
                 fade: false,
                 speed: 500,

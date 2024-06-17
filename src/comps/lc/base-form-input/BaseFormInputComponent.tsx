@@ -1,9 +1,8 @@
-import React, {ForwardedRef, useImperativeHandle, useRef, useState} from 'react';
+import {ForwardedRef, forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
-import {Carousel, Input, ConfigProvider} from "antd";
+import {ConfigProvider, Input} from "antd";
 import './BaseFormInput.less';
-import defaultData from './carousel.png';
-import BaseFormInputDefinition from "./BaseFormInputDefinition";
+import {SizeType} from "antd/es/config-provider/SizeContext";
 
 export interface AntdTokenProps {
     fontSize?: number;
@@ -13,15 +12,16 @@ export interface AntdTokenProps {
     colorBgContainer?: string;
     borderRadius?: number;
     colorBorder?: string;
-    size?: "small"|"middle"|"large";
+    size?: "small" | "middle" | "large";
 }
 
 export interface BaseFormInputComponentStyle {
     //切换样式类型
-    styleType?: 'none'|'hover'|'focus';
+    styleType?: 'none' | 'hover' | 'focus';
     defaultStyle?: AntdTokenProps;
     hoverStyle?: AntdTokenProps;
     focusStyle?: AntdTokenProps;
+    size: SizeType
 }
 
 export interface BaseFormInputComponentProps extends ComponentBaseProps {
@@ -34,7 +34,7 @@ export interface BaseFormInputComponentRef {
 }
 
 function getTypeStyle(style: BaseFormInputComponentStyle | undefined) {
-    const styleType =style?.['styleType'];
+    const styleType = style?.['styleType'];
     let styleObj = {};
     switch (styleType) {
         case "none":
@@ -51,8 +51,8 @@ function getTypeStyle(style: BaseFormInputComponentStyle | undefined) {
     return styleObj;
 }
 
-const BaseFormInputComponent = React.forwardRef((props: BaseFormInputComponentProps,
-                                                 ref: ForwardedRef<BaseFormInputComponentRef>) => {
+const BaseFormInputComponent = forwardRef((props: BaseFormInputComponentProps,
+                                           ref: ForwardedRef<BaseFormInputComponentRef>) => {
     const [config, setConfig] = useState<BaseFormInputComponentProps>({...props});
     const {style} = config;
 
@@ -79,7 +79,7 @@ const BaseFormInputComponent = React.forwardRef((props: BaseFormInputComponentPr
     const styleObj = getTypeStyle(style);
 
     return (
-        <ConfigProvider theme={{token:styleObj}}>
+        <ConfigProvider theme={{token: styleObj}}>
             <div style={{width: '100%', height: '100%', overflow: 'hidden'}} className={'antd-input'}>
                 <Input size={style?.size} onChange={onChange} onPressEnter={onPressEnter}/>
             </div>

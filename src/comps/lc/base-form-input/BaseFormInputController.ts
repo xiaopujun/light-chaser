@@ -2,10 +2,12 @@ import {ThemeItemType} from "../../../designer/DesignerType";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
 import ComponentUtil from "../../../utils/ComponentUtil";
-import BaseFormInputComponent, {BaseFormInputComponentProps, BaseFormInputComponentRef} from "./BaseFormInputComponent.tsx";
+import BaseFormInputComponent, {
+    BaseFormInputComponentProps,
+    BaseFormInputComponentRef
+} from "./BaseFormInputComponent.tsx";
 import ObjectUtil from "../../../utils/ObjectUtil";
 import BPExecutor from "../../../designer/blueprint/core/BPExecutor";
-import BaseFormInputDefinition from "./BaseFormInputDefinition";
 
 export class BaseFormInputController extends AbstractDesignerController<BaseFormInputComponentRef, BaseFormInputComponentProps> {
 

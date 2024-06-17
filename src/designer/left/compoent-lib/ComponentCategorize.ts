@@ -125,4 +125,3 @@ export const componentSubCategorize: ICategorize[] = [
         parentKey: "web"
     },
 ];
-

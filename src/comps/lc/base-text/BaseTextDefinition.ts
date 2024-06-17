@@ -61,7 +61,7 @@ export default class BaseTextDefinition extends AbstractDesignerDefinition<BaseT
             },
             data: {
                 sourceType: 'static',
-                staticData: "基础文本2"
+                staticData: "基础文本"
             },
         };
     }
