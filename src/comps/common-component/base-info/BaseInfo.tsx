@@ -124,7 +124,7 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
     }
 
     buildSchema = (): Control => {
-        const {name, width, height, x, y} = this.state;
+        const {name, width, height, x, y, id} = this.state;
         return {
             type: 'grid',
             config: {columns: 2},

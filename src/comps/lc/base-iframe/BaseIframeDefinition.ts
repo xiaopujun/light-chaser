@@ -18,6 +18,7 @@ export default class BaseIframeDefinition extends AbstractDesignerDefinition<Bas
             compName: "基础iframe",
             compKey: "BaseIframe",
             categorize: "web",
+            subCategorize: "container"
         };
     }
 
