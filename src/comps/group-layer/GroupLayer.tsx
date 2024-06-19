@@ -3,10 +3,11 @@ import GroupLayerController from "./GroupLayerController";
 import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
 import DesignerLoaderFactory from "../../designer/loader/DesignerLoaderFactory";
 import {DesignerMode, ILayerItem} from "../../designer/DesignerType";
-import {layerManager} from "../../designer/loader/EditorDesignerLoader.ts";
+import LayerManager from "../../designer/manager/LayerManager.ts";
 
 export interface GroupLayerStyleProps {
     children?: React.ReactNode;
+    layerManager: LayerManager;
     layer: ILayerItem;
 }
 
@@ -22,7 +23,7 @@ export default class GroupLayer extends React.PureComponent<GroupLayerStyleProps
      * 渲染分组组件时不记录操作日志。已在快捷键处记录
      */
     componentDidMount(): void {
-        const {layer} = this.props;
+        const {layer, layerManager} = this.props;
         const {elemConfigs, compController} = layerManager;
         const groupDefinition: AbstractDefinition = DesignerLoaderFactory.getLoader(DesignerMode.EDIT).definitionMap['group'];
         let config;

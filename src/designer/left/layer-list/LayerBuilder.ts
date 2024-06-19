@@ -137,7 +137,7 @@ class LayerBuilder {
             children?.forEach((item: ILayerItem) => {
                 childDomArr.push(this.buildComponents(item, layerManager, bpExecutor));
             });
-            return createElement(GroupLayer, {layer, key: layer.id}, ...childDomArr)
+            return createElement(GroupLayer, {layer, layerManager, key: layer.id}, ...childDomArr)
         } else {
             return createElement(ComponentContainer, {layer, layerManager, bpExecutor, key: layer.id});
         }
