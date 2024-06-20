@@ -15,33 +15,7 @@ class DesignerLeftStore {
         });
     }
 
-    /**
-     * 分类列表
-     */
-    // menus: Array<ILeftMenu> = [
-    //     {
-    //         icon: AppstoreAddOutlined,
-    //         name: "组件库",
-    //         key: 'components',
-    //     },
-    //     {
-    //         icon: UngroupOutlined,
-    //         name: "资源库",
-    //         key: 'source-list',
-    //     },
-    //     {
-    //         icon: FilterOutlined,
-    //         name: "过滤器",
-    //         key: 'filter-list',
-    //     },
-    //     {
-    //         icon: BlockOutlined,
-    //         name: "图层",
-    //         key: 'layer-list',
-    //     },
-    // ];
-
-    menu: string = '';
+    menu: string = 'components';
 
     setMenu = (menu: string) => this.menu = menu;
 

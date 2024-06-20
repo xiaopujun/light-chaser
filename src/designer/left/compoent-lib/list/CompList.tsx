@@ -24,14 +24,27 @@ class CompList extends Component {
 
 
     componentDidMount() {
-        //处理拖拽元素到画布中
-        this.dragAddProvider = new DragAddProvider(
-            document.getElementById("component-drag-container")!,
-            document.getElementById("designer-ds-content")!,
-            this.dragStart,
-            this.dragover,
-            this.drop
-        );
+        let count = 0;
+        const interval = setInterval(() => {
+            const cdc = document.getElementById("component-drag-container");
+            const ddc = document.getElementById("designer-ds-content");
+            if (cdc && ddc) {
+                clearInterval(interval);
+                //处理拖拽元素到画布中
+                this.dragAddProvider = new DragAddProvider(
+                    document.getElementById("component-drag-container")!,
+                    document.getElementById("designer-ds-content")!,
+                    this.dragStart,
+                    this.dragover,
+                    this.drop
+                );
+            }
+            //尝试挂载拖拽组件100次后放弃
+            if (++count > 100) {
+                clearInterval(interval);
+                console.warn("组件列表与画布拖拽关联失败，无法通过拖拽添加组件。")
+            }
+        }, 100)
     }
 
     componentWillUnmount() {
