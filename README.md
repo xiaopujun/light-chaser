@@ -106,4 +106,10 @@ important role in the continued development and maintenance of the program.
 
 [MIT](LICENSE) © xiaopujun
 
+# Sponsors
+
+| serialNumber | user                                | email            |
+|--------------|-------------------------------------|------------------|
+| 1            | [cxhcmc](https://github.com/cxhcmc) | 133490326@qq.com |
+
 Thank you to every developer and person who contributed to this project!
