@@ -11,8 +11,8 @@ const Login = memo(() => {
 
     const navigate = useNavigate();
 
-    const usernameRef = useRef("admin");
-    const passwordRef = useRef("111");
+    const usernameRef = useRef("");
+    const passwordRef = useRef("");
 
     const login = () => {
         FetchUtil.post("/api/authenticate/login",

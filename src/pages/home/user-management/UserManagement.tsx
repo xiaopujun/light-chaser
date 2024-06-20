@@ -1,7 +1,7 @@
 import {ColumnsType} from "antd/es/table";
 import {Button, Input, Table} from "antd";
 import './UserManagement.less';
-import {Add, Delete, Warehousing} from "@icon-park/react";
+import {Add, Delete} from "@icon-park/react";
 import {observer} from "mobx-react";
 import userManagementStore, {IUser} from "./UserManagementStore.ts";
 import {Key, KeyboardEvent, useEffect} from "react";
@@ -110,7 +110,7 @@ const UserManagement = () => {
                 <Search placeholder="请输入用户名" size={"middle"} style={{width: 350}} onKeyDown={onKeydown}
                         onSearch={doSearch}/>
                 <Button size={'middle'} type={"primary"} onClick={() => openUserPanelWhenCreate()}><Add/>新增</Button>
-                <Button size={'middle'} type={"primary"}><Warehousing/>导入</Button>
+                {/*<Button size={'middle'} type={"primary"}><Warehousing/>导入</Button>*/}
                 <Button size={'middle'} danger={true} type={"primary"}
                         onClick={() => {
                             if (selectedIds.length === 0)

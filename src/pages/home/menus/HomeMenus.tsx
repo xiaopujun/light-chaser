@@ -21,12 +21,12 @@ const getMenus = () => {
         {
             key: 'datasource',
             icon: <Data size={16}/>,
-            label: '数据源管理'
+            label: '数据库管理'
         },
         {
             key: 'more',
             icon: <System size={16}/>,
-            label: '更多'
+            label: '帮助'
         },
     ]
 
