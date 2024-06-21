@@ -13,7 +13,6 @@ export interface AntdTokenProps {
     colorBgContainer?: string;
     borderRadius?: number;
     colorBorder?: string;
-    size?: "small"|"middle"|"large";
 }
 
 export interface BaseFormInputComponentStyle {
@@ -22,6 +21,7 @@ export interface BaseFormInputComponentStyle {
     defaultStyle?: AntdTokenProps;
     hoverStyle?: AntdTokenProps;
     focusStyle?: AntdTokenProps;
+    size?: "small"|"middle"|"large";
 }
 
 export interface BaseFormInputComponentProps extends ComponentBaseProps {
