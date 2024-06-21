@@ -60,7 +60,7 @@ git clone https://gitee.com/xiaopujun/light-chaser.git
 
 - Install project dependencies
 
-> Note: This project uses pnpm as the package management tool, so you need to install [pnpm](https://pnpm.io/) first 
+> Note: This project uses pnpm as the package management tool, so you need to install [pnpm](https://pnpm.io/) first
 > ,if you have installed pnpm, you can skip this step
 
 ```shell
@@ -94,5 +94,11 @@ light chaser follows the Contributor Covenant Code of Conduct.
 # License
 
 [MIT](LICENSE) © xiaopujun
+
+# Sponsors
+
+| serialNumber | user                                | email            |
+|--------------|-------------------------------------|------------------|
+| 1            | [cxhcmc](https://github.com/cxhcmc) | 133490326@qq.com |
 
 Thank you to every developer and person who contributed to this project!
