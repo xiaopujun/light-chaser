@@ -17,6 +17,8 @@
     "@scena/react-ruler": "^0.17.1",
     "antd": "^5.12.2",
     "countup.js": "^2.8.0",
+    "flv.js": "^1.6.2",
+    "hls.js": "^1.5.11",
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
     "mobx": "^6.7.0",
