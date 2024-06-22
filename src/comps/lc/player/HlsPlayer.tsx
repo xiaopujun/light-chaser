@@ -34,6 +34,14 @@ const HlsPlayer = forwardRef((props: HlsPlayerProps, ref: Ref<HlsPlayerRef>) => 
                     video.muted = muted;
                     video.play();
                 });
+                hls.on(Hls.Events.ERROR, (event, data) => {
+                    if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
+                        console.error('Network error', data);
+                    } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
+                        console.error('Media error', data);
+                    }
+                });
+
             }
         }, 100)
 
