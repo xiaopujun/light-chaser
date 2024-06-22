@@ -114,18 +114,19 @@ class LayerBuilder {
      * 构建设计器主画布组件
      * @param layerManager 图层管理器
      * @param bpExecutor 蓝图执行器
+     * @param triggerSource 触发源，来源为编辑模式下触发、预览模式下触发，引用大屏组件触发。（通过大屏组件执行的渲染，渲染的组件不能被选中）
      */
-    public buildCanvasComponents = (layerManager: LayerManager, bpExecutor: BPExecutor): ReactElement[] => {
+    public buildCanvasComponents = (layerManager: LayerManager, bpExecutor: BPExecutor, triggerSource?: string): ReactElement[] => {
         const res: ReactElement[] = [];
         this.parser(layerManager.layerConfigs, layerManager.layerHeader!, LayerOrder.ASC).forEach((item: ILayerItem) => {
-            res.push(this.buildComponents(item, layerManager, bpExecutor));
+            res.push(this.buildComponents(item, layerManager, bpExecutor, triggerSource));
         });
         //重置排序编号
         this.order = 1;
         return res;
     }
 
-    private buildComponents = (layer: ILayerItem, layerManager: LayerManager, bpExecutor: BPExecutor): ReactElement => {
+    private buildComponents = (layer: ILayerItem, layerManager: LayerManager, bpExecutor: BPExecutor, triggerSource?: string): ReactElement => {
         const {type, children} = layer;
         const targetLayer = layerManager.layerConfigs[layer.id!];
         //给每个图层重新设置排序编号,用于在图层移动的过程中提供更好的体验
@@ -135,11 +136,17 @@ class LayerBuilder {
             //先生成子元素再包裹groupItem
             const childDomArr: ReactElement[] = [];
             children?.forEach((item: ILayerItem) => {
-                childDomArr.push(this.buildComponents(item, layerManager, bpExecutor));
+                childDomArr.push(this.buildComponents(item, layerManager, bpExecutor, triggerSource));
             });
             return createElement(GroupLayer, {layer, layerManager, key: layer.id}, ...childDomArr)
         } else {
-            return createElement(ComponentContainer, {layer, layerManager, bpExecutor, key: layer.id});
+            return createElement(ComponentContainer, {
+                layer,
+                layerManager,
+                bpExecutor,
+                key: layer.id,
+                source: triggerSource
+            });
         }
     }
 

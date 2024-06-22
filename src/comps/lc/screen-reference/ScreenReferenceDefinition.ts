@@ -19,7 +19,7 @@ export default class ScreenReferenceDefinition extends AbstractDesignerDefinitio
         return {
             compName: "大屏引用",
             compKey: "ScreenReference",
-            categorize: "ornament",
+            categorize: "other",
         };
     }
 

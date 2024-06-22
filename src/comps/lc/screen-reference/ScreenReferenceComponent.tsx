@@ -89,7 +89,7 @@ const ScreenReferenceComponent = React.forwardRef((props: ScreenReferenceCompone
     return (
         <div style={{...{height: '100%', overflow: 'hidden'}}}>
             <div style={{width, height, background: 'black', overflow: 'hidden', position: "relative"}}>
-                {layerBuilder.buildCanvasComponents(designerManager?.layerManager, designerManager.bpExecutor)}
+                {layerBuilder.buildCanvasComponents(designerManager?.layerManager, designerManager.bpExecutor, "screen-reference")}
             </div>
         </div>
     );
