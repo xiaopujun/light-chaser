@@ -7,9 +7,10 @@ import BPExecutor from "../../../designer/blueprint/core/BPExecutor";
 
 export class HlsPlayerController extends AbstractDesignerController<HlsPlayerComponentRef, HlsPlayerComponentProps> {
 
-    async create(container: HTMLElement, config: HlsPlayerComponentProps): Promise<void> {
+    async create(container: HTMLElement, config: HlsPlayerComponentProps, executor: BPExecutor): Promise<void> {
         this.config = config;
         this.container = container;
+        this.bpExecutor = executor;
         this.instance = await ComponentUtil.createAndRender<HlsPlayerComponentRef>(container, HlsPlayerComponent, config);
     }
 
@@ -32,8 +33,9 @@ export class HlsPlayerController extends AbstractDesignerController<HlsPlayerCom
 
     registerEvent() {
         const nodeId = this.config?.base?.id!;
+        const executor = this.bpExecutor;
         this.instance?.setEventHandler({
-            click: () => BPExecutor.triggerComponentEvent(nodeId!, "click", this.config),
+            click: () => executor?.triggerComponentEvent(nodeId!, "click", this.config),
         })
     }
 }

@@ -7,9 +7,10 @@ import BPExecutor from "../../../designer/blueprint/core/BPExecutor";
 
 export class FlvPlayerController extends AbstractDesignerController<FlvPlayerComponentRef, FlvPlayerComponentProps> {
 
-    async create(container: HTMLElement, config: FlvPlayerComponentProps): Promise<void> {
+    async create(container: HTMLElement, config: FlvPlayerComponentProps, executor: BPExecutor): Promise<void> {
         this.config = config;
         this.container = container;
+        this.bpExecutor = executor;
         this.instance = await ComponentUtil.createAndRender<FlvPlayerComponentRef>(container, FlvPlayerComponent, config);
     }
 
@@ -32,8 +33,9 @@ export class FlvPlayerController extends AbstractDesignerController<FlvPlayerCom
 
     registerEvent() {
         const nodeId = this.config?.base?.id!;
+        const executor = this.bpExecutor;
         this.instance?.setEventHandler({
-            click: () => BPExecutor.triggerComponentEvent(nodeId!, "click", this.config),
+            click: () => executor?.triggerComponentEvent(nodeId!, "click", this.config),
         })
     }
 }
