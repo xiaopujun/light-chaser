@@ -1,3 +1,4 @@
+import DesignerLoaderFactory from "./loader/DesignerLoaderFactory";
 import {useEffect} from 'react';
 import './style/DesignerGlobalStyle.less';
 import DesignerLeft from "./left/DesignerLeft";
@@ -9,11 +10,10 @@ import DesignerHeader from "./header/DesignerHeader";
 import DesignerCanvas from "./canvas/DesignerCanvas";
 import {observer} from "mobx-react";
 import Loading from "../json-schema/ui/loading/Loading";
-import DesignerLoaderFactory from "./loader/DesignerLoaderFactory";
 import FrameLayout from "../json-schema/ui/frame-layout/FrameLayout";
 import {DesignerMode, SaveType} from "./DesignerType.ts";
-import designerManager from "./manager/DesignerManager.ts";
 import '../designer/resource/font/FontGlobal.css';
+import designerManager from "./manager/DesignerManager.ts";
 
 
 /**
