@@ -32,6 +32,8 @@ const ScreenReferenceComponent = React.forwardRef((props: ScreenReferenceCompone
     const [designerManager, setDesignerManager] = useState<DesignerManager>(new DesignerManager());
 
     const loadScreen = (_designerManager: DesignerManager) => {
+        if (!config.style?.screenId)
+            return;
         const {saveType} = URLUtil.parseUrlParams();
         operatorMap[saveType as SaveType].getProjectData(config.style?.screenId!).then((data) => {
             if (data) {
