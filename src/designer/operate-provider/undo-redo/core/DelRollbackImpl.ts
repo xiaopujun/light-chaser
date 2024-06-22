@@ -1,9 +1,8 @@
 import AbstractRollback from "./AbstractRollback";
 import eventOperateStore from "../../EventOperateStore";
 import {IDelOperateData, IHistoryRecord} from "../OperateType";
-import layerManager from "../../../manager/LayerManager.ts";
 import {cloneDeep} from "lodash";
-import {toJS} from "mobx";
+import layerManager from "../../../manager/LayerManager.ts";
 
 export class DelRollbackImpl extends AbstractRollback {
     redo(record: IHistoryRecord): void {
@@ -68,7 +67,6 @@ export class DelRollbackImpl extends AbstractRollback {
 
         //选中目标元素，React18推出了新的批处理和并发执行机制，导致之前17版本中部分逻辑代码的执行顺序发生了变化，因此这里需要将反向执行操作放到下一个事件循环中执行
         Promise.resolve().then(() => setTargetIds(targetIds));
-        console.log('del undo', toJS(layerManager.layerConfigs), layerManager.layerHeader, layerManager.layerTail);
     }
 
 }

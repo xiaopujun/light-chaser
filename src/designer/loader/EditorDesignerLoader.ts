@@ -10,10 +10,11 @@ class EditorDesignerLoader extends AbstractDesignerLoader {
      * 初始化以更新方式打开时项目信息
      */
     protected initProject(id: string, type: SaveType): void {
+        const {init, setLoaded} = designerManager;
         operatorMap[type].getProjectData(id).then((data) => {
             if (data) {
-                designerManager.init(data, DesignerMode.EDIT);
-                designerManager.setLoaded(true);
+                init(data, DesignerMode.EDIT);
+                setLoaded(true);
             } else {
                 globalMessage?.messageApi?.error("项目不存在");
             }

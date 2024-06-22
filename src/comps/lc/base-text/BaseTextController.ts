@@ -1,4 +1,4 @@
-import {DesignerMode, ThemeItemType} from "../../../designer/DesignerType";
+import {DesignerMode} from "../../../designer/DesignerType";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
 import ComponentUtil from "../../../utils/ComponentUtil";
@@ -36,9 +36,6 @@ export class BaseTextController extends AbstractDesignerController<BaseTextCompo
 
     }
 
-    updateTheme(newTheme: ThemeItemType): void {
-
-    }
 
     registerEvent() {
         if (this.instance) {

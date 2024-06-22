@@ -1,4 +1,3 @@
-import layerManager from "../../manager/LayerManager.ts";
 import {
     IAddOperateData,
     IDelOperateData,
@@ -23,6 +22,7 @@ import {ILayerItem} from "../../DesignerType";
 import layerListStore from "../../left/layer-list/LayerListStore";
 import LayerUtil from "../../left/layer-list/util/LayerUtil";
 import designerLeftStore from "../../left/DesignerLeftStore";
+import layerManager from "../../manager/LayerManager.ts";
 
 class HistoryRecordOperateProxy {
 
