@@ -4,6 +4,7 @@ import {ComponentBaseProps} from "../../comps/common-component/CommonTypes.ts";
 import FetchUtil from "../../utils/FetchUtil.ts";
 import AuthFetchUtil from "../../utils/AuthFetchUtil.ts";
 import BPExecutor from "../../designer/blueprint/core/BPExecutor.ts";
+import Base64Util from "../../utils/Base64Util.ts";
 
 /**
  * AbstractDesignerController继承自AbstractController，在泛型的定义和约束上和AbstractController完全保持一致。
@@ -72,7 +73,9 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
     private doDatabase = (config: IDatabase) => {
         const {sql, targetDb, filter, frequency, autoFlush} = config;
         const request = () => {
-            AuthFetchUtil.post(`/api/db/executor/execute`, {id: targetDb, sql}).then(res => {
+            if (!sql || sql === '')
+                return;
+            AuthFetchUtil.post(`/api/db/executor/execute`, {id: targetDb, sql: Base64Util.toBase64(sql)}).then(res => {
                 let {data, code} = res;
                 if (code === 200) {
                     if (!this.lastReqState) {

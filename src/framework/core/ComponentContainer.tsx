@@ -13,11 +13,11 @@ export interface ComponentContainerProps {
     layer: ILayerItem;
     layerManager: LayerManager;
     bpExecutor: BPExecutor;
-    source?: string; //渲染源，可能来自编辑模式，预览模式，或大屏引用组件
+    triggerSource?: string; //渲染源，可能来自编辑模式，预览模式，或大屏引用组件
 }
 
 const ComponentContainer = memo((props: ComponentContainerProps) => {
-    const {layer, layerManager, bpExecutor, source} = props;
+    const {layer, layerManager, bpExecutor, triggerSource} = props;
     const ref = useRef(null);
     const mode: DesignerMode = URLUtil.parseUrlParams()?.mode as DesignerMode || DesignerMode.EDIT;
     const {auxiliaryBorder} = runtimeConfigStore;
@@ -71,8 +71,6 @@ const ComponentContainer = memo((props: ComponentContainerProps) => {
         }
     }, []);
 
-    console.log(source)
-
     return (
         <Suspense fallback={<Loading/>}>
             <div
@@ -88,7 +86,7 @@ const ComponentContainer = memo((props: ComponentContainerProps) => {
                     position: 'absolute',
                     visibility: layer.hide ? "hidden" : "visible",
                     border: auxiliaryBorder ? '1px solid #65eafc' : 'none'
-                }} className={`lc-comp-item${source || ''}`}>
+                }} className={`lc-comp-item${triggerSource || ''}`}>
                 <div ref={ref} style={{
                     width: '100%',
                     height: '100%',

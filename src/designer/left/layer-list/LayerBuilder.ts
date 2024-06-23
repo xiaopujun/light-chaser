@@ -145,7 +145,7 @@ class LayerBuilder {
                 layerManager,
                 bpExecutor,
                 key: layer.id,
-                source: triggerSource
+                triggerSource: triggerSource
             });
         }
     }

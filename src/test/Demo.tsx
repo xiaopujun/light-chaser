@@ -1,22 +1,17 @@
 import './DemoMain.less';
 import "@amap/amap-jsapi-types";
-import TestStoreA, {storeA} from "./alone-store-demo/TestStoreA.tsx";
-import TestStoreB, {storeB} from "./alone-store-demo/TestStoreB.tsx";
+import Base64Util from "../utils/Base64Util.ts";
 
 
 export default function Demo() {
-    console.log('Demo')
+    console.time()
+    const a = Base64Util.toBase64("select * from user where id = 1;")
+    const b = Base64Util.fromBase64(a);
+    console.timeEnd()
     return (
-        <div className="Demo">
-            <TestStoreA/>
-            <br/>
-            <br/>
-            <br/>
-            <TestStoreB/>
-            <br/>
-            <br/>
-            <button onClick={() => storeA.setCount(storeA.count + 1)}>add A store</button>
-            <button onClick={() => storeB.setCount(storeB.count + 1)}>add B store</button>
+        <div>
+            <div>转换：{a}</div>
+            <div>复原：{b}</div>
         </div>
     );
 }
