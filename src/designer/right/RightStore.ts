@@ -73,6 +73,8 @@ class RightStore {
             }
             if (setNewActiveMenu && this.visible)
                 this.activeMenu = this.menus[0].key;
+            if (type === 'group')
+                this.activeMenu = 'base';
             else if (this.activeMenu === '')
                 this.activeMenu = 'style';
         }
