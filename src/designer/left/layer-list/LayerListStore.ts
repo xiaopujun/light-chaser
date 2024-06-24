@@ -128,8 +128,15 @@ class LayerListStore {
                     }
                     if (nextLayer.pid && !nextLayer.next) {
                         //查找到分组图层的最后一个元素依然没有匹配到目标图层，则跳转到父级图层往下继续匹配
-                        const parentLayer = layerConfigs[nextLayer.pid];
-                        calculateLayerIds(selectedIds, layerConfigs[parentLayer.next!], targetId);
+                        let safeLock = 0; //防止死循环
+                        let parentLayer = layerConfigs[nextLayer.pid];
+                        let tempNext = layerConfigs[parentLayer.next!];
+                        while (!tempNext && safeLock < 1000) {
+                            parentLayer = layerConfigs[parentLayer.pid!];
+                            tempNext = layerConfigs[parentLayer.next!];
+                            safeLock++;
+                        }
+                        calculateLayerIds(selectedIds, tempNext, targetId);
                     } else
                         calculateLayerIds(selectedIds, layerConfigs[nextLayer.next!], targetId);
                 }
