@@ -15,7 +15,6 @@ export interface UserPanelProps {
 
 export default function DataSourcePanel(props: UserPanelProps) {
     const {visible, onClose, data, onSubmitted, title, width = 700} = props;
-    console.log(data);
     const [form] = Form.useForm();
 
     const submit = () => {

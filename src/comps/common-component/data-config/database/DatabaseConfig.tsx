@@ -8,6 +8,7 @@ import ObjectUtil from "../../../../utils/ObjectUtil.ts";
 import {IDatabase} from "../../../../designer/DesignerType.ts";
 import FetchUtil from "../../../../utils/FetchUtil.ts";
 import {IDataSource} from "../../../../pages/home/datasource/DataSourceStore.ts";
+import Base64Util from "../../../../utils/Base64Util.ts";
 
 export interface DatabaseDataConfigProps {
     controller: AbstractDesignerController;
@@ -55,7 +56,9 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
             return;
 
         const {targetDb, sql, filter} = dataRef.current;
-        FetchUtil.post(`/api/db/executor/execute`, {id: targetDb, sql}).then(res => {
+        if (!sql || sql === '')
+            return;
+        FetchUtil.post(`/api/db/executor/execute`, {id: targetDb, sql: Base64Util.toBase64(sql)}).then(res => {
             let {data, code, msg} = res;
             if (code === 200) {
                 if (filter && filter !== '') {
