@@ -1,4 +1,4 @@
-import {ReactElement} from "react";
+import {createElement, ReactElement} from "react";
 import LayerItem from "./item/LayerItem";
 import LayerGroupItem from "./item/LayerGroupItem";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
@@ -96,12 +96,14 @@ class LayerBuilder {
             children?.forEach((item: ILayerItem) => {
                 childDomArr.push(this.buildLayer(item));
             });
-            return <LayerGroupItem {..._props} key={layer.id} ref={ref => layerInstances[layer.id!] = ref!}>
-                {childDomArr}
-            </LayerGroupItem>;
+            return createElement(LayerGroupItem, {
+                ..._props,
+                key: layer.id,
+                ref: (ref) => layerInstances[layer.id!] = ref!
+            }, ...childDomArr);
         } else {
             //直接生成layerItem
-            return <LayerItem {..._props} key={layer.id} ref={ref => layerInstances[layer.id!] = ref!}/>;
+            return createElement(LayerItem, {..._props, key: layer.id, ref: (ref) => layerInstances[layer.id!] = ref!});
         }
     }
 
@@ -134,9 +136,9 @@ class LayerBuilder {
             children?.forEach((item: ILayerItem) => {
                 childDomArr.push(this.buildComponents(item));
             });
-            return <GroupLayer layer={layer} key={layer.id}>{childDomArr}</GroupLayer>;
+            return createElement(GroupLayer, {layer, key: layer.id}, ...childDomArr);
         } else {
-            return <ComponentContainer layer={layer} key={layer.id}/>;
+            return createElement(ComponentContainer, {layer, key: layer.id});
         }
     }
 
