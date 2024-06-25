@@ -83,7 +83,6 @@ class LayerBuilder {
         const {targetIds} = eventOperateStore;
         const {layerInstances} = layerListStore;
         const _props = {
-            key: layer.id,
             name: layer.name,
             lock: layer.lock,
             hide: layer.hide,
@@ -99,12 +98,13 @@ class LayerBuilder {
             });
             return createElement(LayerGroupItem, {
                 ..._props,
+                key: layer.id,
                 ref: (ref) => layerInstances[layer.id!] = ref!
             }, ...childDomArr);
 
         } else {
             //直接生成layerItem
-            return createElement(LayerItem, {..._props, ref: (ref) => layerInstances[layer.id!] = ref!});
+            return createElement(LayerItem, {..._props, key: layer.id, ref: (ref) => layerInstances[layer.id!] = ref!});
         }
     }
 
