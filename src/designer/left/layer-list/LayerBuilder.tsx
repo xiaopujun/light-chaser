@@ -83,7 +83,6 @@ class LayerBuilder {
         const {targetIds} = eventOperateStore;
         const {layerInstances} = layerListStore;
         const _props = {
-            key: layer.id,
             name: layer.name,
             lock: layer.lock,
             hide: layer.hide,
@@ -97,12 +96,12 @@ class LayerBuilder {
             children?.forEach((item: ILayerItem) => {
                 childDomArr.push(this.buildLayer(item));
             });
-            return <LayerGroupItem {..._props} ref={ref => layerInstances[layer.id!] = ref!}>
+            return <LayerGroupItem {..._props} key={layer.id} ref={ref => layerInstances[layer.id!] = ref!}>
                 {childDomArr}
             </LayerGroupItem>;
         } else {
             //直接生成layerItem
-            return <LayerItem {..._props} ref={ref => layerInstances[layer.id!] = ref!}/>;
+            return <LayerItem {..._props} key={layer.id} ref={ref => layerInstances[layer.id!] = ref!}/>;
         }
     }
 
