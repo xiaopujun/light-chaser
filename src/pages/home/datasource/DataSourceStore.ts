@@ -1,7 +1,7 @@
 import {action, makeObservable, observable} from "mobx";
 import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
-import {IPage} from "../../../designer/DesignerType.ts";
 import FetchUtil from "../../../utils/FetchUtil.ts";
+import {IPage} from "../../../designer/DesignerType.ts";
 
 export const DataSourceMapping = {
     "0": "MySQL",

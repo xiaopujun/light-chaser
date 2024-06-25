@@ -15,7 +15,6 @@ import {
     removeFromGroup
 } from "../hot-key/HotKeyImpl";
 import eventOperateStore from "../EventOperateStore";
-import layerManager from "../../manager/LayerManager.ts";
 import LayerUtil from "../../left/layer-list/util/LayerUtil";
 import {
     ApplicationTwo,
@@ -32,6 +31,7 @@ import {
     Up
 } from "@icon-park/react";
 import ContextMenu from "../../../framework/context-menu/ContextMenu.tsx";
+import layerManager from "../../manager/LayerManager.ts";
 
 
 const defaultDesignerMenus = [

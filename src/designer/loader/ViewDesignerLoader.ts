@@ -5,6 +5,7 @@ import {AbstractOperator} from "../../framework/operate/AbstractOperator";
 import {globalMessage} from "../../framework/message/GlobalMessage.tsx";
 import designerManager from "../manager/DesignerManager.ts";
 
+
 /**
  * 展示模式下的设计器加载器
  */

@@ -13,6 +13,7 @@ import ScaleAction from "../../framework/core/ScaleAction.ts";
 
 const ScreenFit = lazy(() => import('../../framework/screen-fit/ScreenFit.tsx'));
 
+
 export interface DesignerViewProps {
     id: string;
     type: SaveType;
@@ -35,7 +36,6 @@ const DesignerView = observer((props: DesignerViewProps) => {
         <Suspense fallback={<Loading/>}>
             <ScreenFit width={width!} height={height!} mode={adaptationType}
                        scaleChange={(xScale, yScale) => {
-                           ScaleAction.doScale(xScale, yScale)
                            ScaleAction.doScale(xScale, yScale)
                        }}>
                 <div style={{width, height, background: 'black', overflow: 'hidden', position: "relative"}}>

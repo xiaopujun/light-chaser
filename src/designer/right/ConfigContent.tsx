@@ -2,7 +2,6 @@ import React, {Suspense} from 'react';
 import rightStore from "./RightStore";
 import {observer} from "mobx-react";
 import './ConfigContent.less';
-import layerManager from "../manager/LayerManager.ts";
 import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
 import ObjectUtil from "../../utils/ObjectUtil";
@@ -12,6 +11,7 @@ import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
 import AbstractController from "../../framework/core/AbstractController";
 import {DesignerMode} from "../DesignerType.ts";
 import {Close} from "@icon-park/react";
+import layerManager from "../manager/LayerManager.ts";
 
 export interface ConfigType<T extends AbstractController = AbstractDesignerController> {
     controller: T;

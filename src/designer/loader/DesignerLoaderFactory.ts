@@ -1,7 +1,7 @@
-import editorDesignerLoader from "./EditorDesignerLoader";
-import viewDesignerLoader from "./ViewDesignerLoader";
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 import {DesignerMode} from "../DesignerType";
+import editorDesignerLoader from "./EditorDesignerLoader";
+import viewDesignerLoader from "./ViewDesignerLoader";
 
 const loaderMap = new Map<DesignerMode, AbstractDesignerLoader>();
 loaderMap.set(DesignerMode.EDIT, editorDesignerLoader);

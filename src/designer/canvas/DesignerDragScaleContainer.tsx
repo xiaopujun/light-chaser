@@ -2,8 +2,8 @@ import React, {memo, useEffect} from "react";
 import DragScaleProvider from "../../framework/drag-scale/DragScaleProvider";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {observer} from "mobx-react";
-import canvasManager from "../header/items/canvas/CanvasManager.ts";
 import ScaleAction from "../../framework/core/ScaleAction.ts";
+import canvasManager from "../header/items/canvas/CanvasManager.ts";
 
 export interface DesignerDragScaleContainerProps {
     children?: React.ReactNode;

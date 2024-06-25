@@ -3,10 +3,10 @@ import Selecto, {OnDragStart, OnSelectEnd} from "react-selecto";
 import eventOperateStore from "../EventOperateStore";
 import {observer} from "mobx-react";
 import Moveable from 'react-moveable';
-import layerManager from "../../manager/LayerManager.ts";
 import LayerUtil from "../../left/layer-list/util/LayerUtil";
 import layerListStore from "../../left/layer-list/LayerListStore";
 import designerLeftStore from "../../left/DesignerLeftStore";
+import layerManager from "../../manager/LayerManager.ts";
 
 /**
  * 设置控制点和边框的颜色

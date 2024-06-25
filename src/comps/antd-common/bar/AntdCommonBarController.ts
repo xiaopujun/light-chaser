@@ -13,7 +13,7 @@ export interface AntdBarProps extends ComponentBaseProps {
 export default class AntdCommonBarController extends AntdBaseDesignerController<Bar, AntdBarProps> {
 
     async create(container: HTMLElement, config: AntdBarProps): Promise<void> {
-        await super.commonCreate(container, Bar, config);
+        super.commonCreate(container, Bar, config);
     }
 
     destroy(): void {
