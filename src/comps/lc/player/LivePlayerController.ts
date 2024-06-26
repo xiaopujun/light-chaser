@@ -21,6 +21,10 @@ export default class LivePlayerController extends AbstractDesignerController<Liv
         this.config = config;
         this.container = container;
         this.instance = await ComponentUtil.createAndRender<LivePlayerComponentRef>(container, LivePlayerComponent, config);
+        console.log(config)
+        window.onGlobalDataChangeObservable.add((eventData, eventState)=>{
+            console.log("LivePlayerController");
+        }, 0);
     }
 
     destroy(): void {

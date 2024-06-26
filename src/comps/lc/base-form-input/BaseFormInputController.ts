@@ -14,6 +14,9 @@ export class BaseFormInputController extends AbstractDesignerController<BaseForm
         this.container = container;
         this.instance = await ComponentUtil.createAndRender<BaseFormInputComponentRef>(container, BaseFormInputComponent, config);
         this.registerEvent();
+        window.onGlobalDataChangeObservable.add((eventData, eventState)=>{
+            console.log("BaseFormInputController", eventData);
+        }, 1);
 
     }
 
