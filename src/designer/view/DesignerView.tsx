@@ -1,9 +1,9 @@
+import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
 import {lazy, Suspense, useEffect} from 'react';
 import './DesignerView.less';
 import layerManager from "../manager/LayerManager.ts";
 import {observer} from "mobx-react";
 import Loading from "../../json-schema/ui/loading/Loading";
-import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
 import layerBuilder from "../left/layer-list/LayerBuilder";
 import {DesignerMode, SaveType} from "../DesignerType.ts";
 import canvasManager from "../header/items/canvas/CanvasManager.ts";
