@@ -1,12 +1,11 @@
 import aMapImage from './a-map.png';
 import {AMapController} from "./AMapController.ts";
 import {AMapConfig} from "./AMapConfig.tsx";
-import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../framework/core/AbstractDefinition.ts";
 import {AMapComponentProps} from "./AMapComponent.tsx";
-import {ClazzTemplate} from "../common-component/CommonTypes.ts";
 import {MenuInfo} from "../../designer/right/MenuType.ts";
 import React from "react";
 import AbstractDesignerDefinition from "../../framework/core/AbstractDesignerDefinition.ts";
+import {BaseInfoType, ClazzTemplate, EventInfo, MenuToConfigMappingType} from "../../designer/DesignerType.ts";
 
 const BaseInfo = React.lazy(() => import("../common-component/base-info/BaseInfo"));
 const ThemeConfig = React.lazy(() => import("../common-component/theme-config/ThemeConfig.tsx"));

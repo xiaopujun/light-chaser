@@ -1,10 +1,9 @@
 import React from "react";
-import {MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import AntdCommonScatterController, {AntdScatterProps} from "./AntdCommonScatterController";
 import {AntdCommonDefinition} from "../AntdCommonDefinition";
+import {ClazzTemplate, MenuToConfigMappingType} from "../../../designer/DesignerType.ts";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const AntdScatterCommonStyleConfig = React.lazy(() => import("./AntdScatterCommonConfig").then((module) => ({default: module.AntdScatterCommonStyleConfig})));

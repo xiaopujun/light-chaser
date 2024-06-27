@@ -1,50 +1,7 @@
 import AbstractController from "../../../../framework/core/AbstractController";
 import React from "react";
-import BluePrintManager from "../../manager/BluePrintManager.ts";
-import BPTask from "../../core/BPTask.ts";
-import LayerManager from "../../../manager/LayerManager.ts";
-
-export interface NodeInfoType {
-    id?: string;
-    icon?: string;
-    name?: string;
-    type?: string;
-    titleBgColor?: string;
-    input?: AnchorPointInfoType[];
-    output?: AnchorPointInfoType[];
-}
-
-/**
- * 锚点信息
- */
-export interface AnchorPointInfoType {
-    id?: string;
-    name?: string;
-    type?: AnchorPointType;
-}
-
-/**
- * 锚点类型
- */
-export enum AnchorPointType {
-    INPUT,
-    OUTPUT
-}
-
-export interface ExecuteInfoType {
-    nodeId: string;
-    apId: string;
-    anchorType: AnchorPointType;
-}
-
-export interface IBPTaskInfo {
-    apId: string;
-    nodeId: string;
-    anchorType: AnchorPointType;
-    task: BPTask;
-    bluePrintManager: BluePrintManager;
-    layerManager: LayerManager;
-}
+import {NodeInfoType} from "../../../DesignerType.ts";
+import {IBPTaskInfo} from "../../IBPTyps.ts";
 
 
 /**

@@ -1,11 +1,11 @@
 import React, {Suspense} from "react";
-import {BPRightConfigProps} from "../../../../right/BPRight";
 import {debounce} from "lodash";
 import Loading from "../../../../../../json-schema/ui/loading/Loading.tsx";
+import {AbstractBPNodeController} from "../../AbstractBPNodeController.ts";
 
 const MonacoEditor = React.lazy(() => import("../../../../../../json-schema/ui/code-editor/MonacoEditor"));
 
-export const ConditionNodeConfig: React.FC<BPRightConfigProps> = (props) => {
+export const ConditionNodeConfig = (props: { controller?: AbstractBPNodeController; }) => {
     const {controller} = props;
     const config = controller?.getConfig();
     const handleCode = config.handler || "function handler(data) { \n \n }";

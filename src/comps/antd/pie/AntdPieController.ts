@@ -1,9 +1,8 @@
-import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
+import {ComponentBaseProps, ThemeItemType} from "../../../designer/DesignerType";
 import {WritablePieOptions} from "../../antd-common/types";
 import {Pie, StatisticText} from "@antv/g2plot";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
-import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
 import {CSSProperties} from "react";
 import BPExecutor from "../../../designer/blueprint/core/BPExecutor.ts";

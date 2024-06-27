@@ -1,9 +1,9 @@
 import React, {useEffect} from "react";
 import Moveable, {OnDrag, OnDragEnd, OnDragGroup, OnDragGroupEnd, OnDragStart} from "react-moveable";
-import {IBPLine, IPoint} from "../manager/BluePrintManager.ts";
 import {observer} from "mobx-react";
 import CanvasUtil from "../util/CanvasUtil";
 import {bluePrintManager} from "../../loader/EditorDesignerLoader.ts";
+import {IBPLine, IPoint} from "../../DesignerType.ts";
 
 export interface BPMovableProps {
     children?: React.ReactNode;

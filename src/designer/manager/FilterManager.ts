@@ -1,13 +1,9 @@
 import {action, makeObservable, observable, toJS} from "mobx";
 import AbstractManager from "./core/AbstractManager.ts";
-import {FilterManagerDataType} from "../DesignerType.ts";
+import {FilterManagerDataType, IFilter} from "../DesignerType.ts";
 import idGenerate from "../../utils/IdGenerate.ts";
 
-export interface IFilter {
-    id: string;
-    name: string;
-    func: string;
-}
+
 
 class FilterManager extends AbstractManager<FilterManagerDataType> {
     constructor() {

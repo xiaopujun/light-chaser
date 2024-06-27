@@ -1,9 +1,8 @@
-import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
 import {WritableRadarOptions} from "../../antd-common/types";
 import {Radar} from "@antv/g2plot";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
-import {ThemeItemType} from "../../../designer/DesignerType";
+import {ComponentBaseProps, ThemeItemType} from "../../../designer/DesignerType";
 import BPExecutor from "../../../designer/blueprint/core/BPExecutor.ts";
 
 export interface AntdRadarProps extends ComponentBaseProps {

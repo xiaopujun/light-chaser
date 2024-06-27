@@ -1,9 +1,8 @@
 import React from "react";
 import './BPNode.less';
-import {AnchorPointType, NodeInfoType} from "./core/AbstractBPNodeController";
 import nodeIconMap from "./NodeIconMap";
-import {IPoint} from "../manager/BluePrintManager.ts";
 import {ConnectionPoint} from "@icon-park/react";
+import {AnchorPointType, IPoint, NodeInfoType} from "../../DesignerType.ts";
 
 export interface NodeProps extends NodeInfoType {
     position?: IPoint;

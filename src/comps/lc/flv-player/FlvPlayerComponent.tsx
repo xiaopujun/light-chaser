@@ -1,6 +1,5 @@
 import React, {ForwardedRef, useEffect, useImperativeHandle, useRef, useState} from 'react';
-import {ComponentInfoType} from "../../common-component/CommonTypes.ts";
-import {IFilterConfigType} from "../../../designer/DesignerType.ts";
+import {ComponentInfoType, IFilterConfigType} from "../../../designer/DesignerType.ts";
 import FlvJs from "flv.js";
 
 export interface FlvPlayerComponentStyle {

@@ -1,7 +1,7 @@
-import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
+import {BaseInfoType, ClazzTemplate, EventInfo, MenuToConfigMappingType} from "../../../designer/DesignerType.ts";
 import BaseVideoController, {BaseVideoComponentProps} from "./BaseVideoController.ts";
 import baseVideo from './baseVideo.png';
-import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
+
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {BaseVideoStyleConfig} from "./BaseVideoConfig.tsx";
 import React from "react";

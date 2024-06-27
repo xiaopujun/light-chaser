@@ -1,5 +1,5 @@
 import {ScaleCore} from "../../designer/operate-provider/scale/ScaleCore";
-import {IPoint} from "../../designer/blueprint/manager/BluePrintManager.ts";
+import {IPoint} from "../../designer/DesignerType.ts";
 
 export interface DragScaleData {
     scale: number;

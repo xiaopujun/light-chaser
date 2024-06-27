@@ -1,7 +1,7 @@
 import scatterPoint from "./scatter-point.png";
 import AbstractScatterDefinition from "../../antd-common/scatter/AbstractScatterDefinition";
 import {AntdScatterProps} from "../../antd-common/scatter/AntdCommonScatterController";
-import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
+import {BaseInfoType} from "../../../designer/DesignerType.ts";
 
 class AntdScatterPointDefinition extends AbstractScatterDefinition {
 

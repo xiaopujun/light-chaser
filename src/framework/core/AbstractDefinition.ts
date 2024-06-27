@@ -1,62 +1,8 @@
 import {MenuInfo} from "../../designer/right/MenuType";
 import AbstractController from "./AbstractController";
-import React, {ComponentType} from "react";
-import {ClazzTemplate} from "../../comps/common-component/CommonTypes.ts";
-import AbstractDesignerController from "./AbstractDesignerController";
+import {ICategorize} from "../../designer/left/compoent-lib/ComponentCategorize.ts";
+import {BaseInfoType, ClazzTemplate, EventInfo, MenuToConfigMappingType} from "../../designer/DesignerType.ts";
 
-export type MenuToConfigMappingType = Record<string, React.ComponentType<any>>;
-
-export interface ActionInfo {
-    name: string;
-    id: string;
-    handler: (controller: AbstractDesignerController, params?: any) => void;
-}
-
-export interface EventInfo {
-    id?: string;
-    name?: string;
-}
-
-export interface ICategorize {
-    key: string;
-    name: string;
-    icon?: ComponentType;
-    parentKey?: string;
-}
-
-/**
- * 组件基础信息
- */
-export interface BaseInfoType {
-    /**
-     * 组件显示名称
-     */
-    compName: string;
-    /**
-     * 组件标识
-     */
-    compKey: string;
-    /**
-     * 主分类
-     */
-    categorize?: string;
-    /**
-     * 子分类
-     */
-    subCategorize?: string;
-    /**
-     * 版本
-     */
-    version?: string;
-    /**
-     * 初始宽度
-     */
-    width?: number;
-    /**
-     * 初始高度
-     */
-    height?: number;
-}
 
 /**
  * 自动扫描抽象组件定义核心类。
@@ -112,41 +58,6 @@ export abstract class AbstractDefinition<C extends AbstractController = Abstract
         ];
     }
 
-    /**
-     * 返回当前组件能接受的动作列表，在蓝图图层节点中使用。可据此实现对组件的操作
-     */
-    getActionList(): ActionInfo[] {
-        return [
-            {
-                name: "显示",
-                id: "show",
-                handler: (controller: AbstractDesignerController) => {
-                    controller.container!.style.visibility = "visible";
-                }
-            },
-            {
-                name: "隐藏",
-                id: "hide",
-                handler: (controller: AbstractDesignerController) => {
-                    controller.container!.style.visibility = "hidden";
-                }
-            },
-            {
-                name: "更新组件样式",
-                id: "updateConfig",
-                handler: (controller: AbstractDesignerController, params?: object) => {
-                    controller.update(params);
-                }
-            },
-            {
-                name: "更新组件数据",
-                id: "updateData",
-                handler: (controller: AbstractDesignerController, params?: object) => {
-                    controller.changeData(params);
-                }
-            }
-        ];
-    }
 
     /**
      * 自定义组件主分类，如需要创建一个设计器没有提供的主分类，则实现该方法

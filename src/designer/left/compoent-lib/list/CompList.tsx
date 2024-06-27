@@ -2,13 +2,12 @@ import {Component} from 'react';
 import './CompList.less';
 import {observer} from "mobx-react";
 import eventOperateStore from "../../../operate-provider/EventOperateStore";
-import {DesignerMode, ILayerItem} from "../../../DesignerType";
+import {BaseInfoType, ILayerItem} from "../../../DesignerType";
 import Input from "../../../../json-schema/ui/input/Input";
-import DesignerLoaderFactory from "../../../loader/DesignerLoaderFactory";
 import IdGenerate from "../../../../utils/IdGenerate";
 import editorDesignerLoader from "../../../loader/EditorDesignerLoader";
 import componentListStore from "../ComponentListStore";
-import {AbstractDefinition, BaseInfoType} from "../../../../framework/core/AbstractDefinition";
+import {AbstractDefinition} from "../../../../framework/core/AbstractDefinition";
 import DragAddProvider from "../../../../framework/drag-scale/DragAddProvider";
 import historyRecordOperateProxy from "../../../operate-provider/undo-redo/HistoryRecordOperateProxy";
 
@@ -117,7 +116,7 @@ class CompList extends Component {
         for (let i = 0; i < compInfoArr.length; i++) {
             const compInfo: BaseInfoType = compInfoArr[i];
             const {compName, compKey} = compInfo;
-            const definition: AbstractDefinition = DesignerLoaderFactory.getLoader(DesignerMode.EDIT).definitionMap[compKey];
+            const definition: AbstractDefinition = editorDesignerLoader.definitionMap[compKey];
             const chartImg = definition.getChartImg();
             chartDom.push(
                 <div key={i + ''} className={'list-item droppable-element'} draggable={true}

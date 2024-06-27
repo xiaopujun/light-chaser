@@ -1,9 +1,8 @@
-import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
+import {ComponentBaseProps, ThemeItemType} from "../../../designer/DesignerType";
 import {WritableGaugeOptions} from "../../antd-common/types";
 import {Gauge} from "@antv/g2plot";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../../antd-common/AntdBaseDesignerController";
-import {ThemeItemType} from "../../../designer/DesignerType";
 import BPExecutor from "../../../designer/blueprint/core/BPExecutor.ts";
 
 export interface AntdGaugeProps extends ComponentBaseProps {

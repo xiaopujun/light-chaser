@@ -1,12 +1,13 @@
-import {AbstractBPNodeController, AnchorPointType, IBPTaskInfo, NodeInfoType} from "../../AbstractBPNodeController";
+import {AbstractBPNodeController} from "../../AbstractBPNodeController";
 import {UpdateOptions} from "../../../../../../framework/core/AbstractController";
 import ComponentUtil from "../../../../../../utils/ComponentUtil";
 import BPNode, {NodeProps} from "../../../BPNode";
 import React from "react";
-import {ActionInfo} from "../../../../../../framework/core/AbstractDefinition";
 import DesignerLoaderFactory from "../../../../../../designer/loader/DesignerLoaderFactory";
-import {DesignerMode} from "../../../../../DesignerType.ts";
+import {AnchorPointType, DesignerMode, NodeInfoType} from "../../../../../DesignerType.ts";
 import {layerManager} from "../../../../../loader/EditorDesignerLoader.ts";
+import {IBPTaskInfo} from "../../../../IBPTyps.ts";
+import {ActionInfo} from "../../../../../../framework/core/AbstractDesignerDefinition.ts";
 
 export interface LayerNodeConfig extends NodeProps {
 

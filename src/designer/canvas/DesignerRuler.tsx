@@ -1,13 +1,10 @@
 import React, {memo, useEffect, useRef, useState} from 'react';
 import Ruler, {RulerProps} from "@scena/react-ruler";
 import eventOperateStore from "../operate-provider/EventOperateStore";
-import {IPoint} from "../blueprint/manager/BluePrintManager.ts";
 import designerLeftStore from "../left/DesignerLeftStore";
+import {IPoint} from "../DesignerType.ts";
 
-export interface DesignerRulerRef {
-    ruleWheel: () => void;
-    ruleDrag: () => void;
-}
+
 
 interface DesignerRulerProps {
     offset?: IPoint;

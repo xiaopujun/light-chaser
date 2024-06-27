@@ -1,8 +1,9 @@
 import AbstractController from "../../framework/core/AbstractController";
-import {AbstractDefinition, ActionInfo, EventInfo} from "../../framework/core/AbstractDefinition";
+import AbstractDesignerDefinition from "../../framework/core/AbstractDesignerDefinition.ts";
+import {EventInfo} from "../../designer/DesignerType.ts";
 
 
-export abstract class AntdCommonDefinition<C extends AbstractController = AbstractController, P = any> extends AbstractDefinition<C, P> {
+export abstract class AntdCommonDefinition<C extends AbstractController = AbstractController, P = any> extends AbstractDesignerDefinition<C, P> {
 
     getEventList(): Array<EventInfo> {
         const eventList = super.getEventList();
@@ -35,8 +36,5 @@ export abstract class AntdCommonDefinition<C extends AbstractController = Abstra
         return eventList;
     }
 
-    getActionList(): Array<ActionInfo> {
-        return super.getActionList();
-    }
 }
 

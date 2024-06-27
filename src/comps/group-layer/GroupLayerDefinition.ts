@@ -1,15 +1,11 @@
-import {
-    AbstractDefinition,
-    ActionInfo,
-    BaseInfoType,
-    MenuToConfigMappingType
-} from "../../framework/core/AbstractDefinition";
-import {ClazzTemplate} from "../common-component/CommonTypes.ts";
+import {AbstractDefinition,} from "../../framework/core/AbstractDefinition";
 import {MenuInfo} from "../../designer/right/MenuType";
 import GroupLayerController, {GroupLayerProps} from "./GroupLayerController";
 import AbstractController from "../../framework/core/AbstractController.ts";
 import {SettingOne} from "@icon-park/react";
 import React from "react";
+import {BaseInfoType, ClazzTemplate, MenuToConfigMappingType} from "../../designer/DesignerType.ts";
+import {ActionInfo} from "../../framework/core/AbstractDesignerDefinition.ts";
 
 
 const BaseInfo = React.lazy(() => import("../common-component/base-info/BaseInfo"));

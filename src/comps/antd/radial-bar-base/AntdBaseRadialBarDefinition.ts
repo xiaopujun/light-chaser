@@ -1,11 +1,10 @@
 import React from "react";
-import {BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {getDefaultMenuList} from "../../../designer/right/util";
-import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import baseRadialBarImg from './base-radial-bar.png';
 import AntdBaseRadialBarController, {AntdRadialBarProps} from "./AntdBaseRadialBarController.ts";
 import {AntdCommonDefinition} from "../../antd-common/AntdCommonDefinition";
+import {BaseInfoType, ClazzTemplate, MenuToConfigMappingType} from "../../../designer/DesignerType.ts";
 
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig"));
 const AntdRadialBarConfig = React.lazy(() => import("./AntdBaseRadialBarStyleConfig.tsx"));

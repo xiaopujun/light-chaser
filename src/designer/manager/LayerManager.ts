@@ -2,7 +2,6 @@ import {action, makeObservable, observable, runInAction, toJS} from "mobx";
 import {isEqual} from "lodash";
 import {ILayerItem, LayerManagerDataType, ThemeItemType,} from "../DesignerType.ts";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController.ts";
-import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryRecordOperateProxy.ts";
 import ObjectUtil from "../../utils/ObjectUtil.ts";
 import AbstractManager from "./core/AbstractManager.ts";
 
@@ -23,7 +22,6 @@ class LayerManager extends AbstractManager<LayerManagerDataType> {
             delItem: action,
             updateLayer: action,
             flashGlobalTheme: action,
-            copyItem: action,
             delLayout: action,
         });
     }
@@ -123,8 +121,6 @@ class LayerManager extends AbstractManager<LayerManagerDataType> {
         });
     };
 
-
-    copyItem = (ids: string[]) => historyRecordOperateProxy.doCopy(ids);
 
     /**
      * 获取store数据

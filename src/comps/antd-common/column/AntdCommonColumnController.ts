@@ -1,7 +1,6 @@
-import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
+import {ComponentBaseProps, ThemeItemType} from "../../../designer/DesignerType";
 import {WritableColumnOptions} from "../types";
 import {Column} from "@antv/g2plot";
-import {ThemeItemType} from "../../../designer/DesignerType";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {ShapeAttrs} from "@antv/g-base";
 import {AntdBaseDesignerController} from "../AntdBaseDesignerController";

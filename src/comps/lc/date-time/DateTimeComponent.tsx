@@ -1,7 +1,6 @@
 import React, {ForwardedRef, useEffect, useImperativeHandle, useRef, useState} from 'react';
-import {ComponentInfoType} from "../../common-component/CommonTypes.ts";
 import './DateTimeComponent.less';
-import {IFilterConfigType} from "../../../designer/DesignerType.ts";
+import {ComponentInfoType, IFilterConfigType} from "../../../designer/DesignerType.ts";
 
 export interface DateTimeComponentStyle {
     fontSize?: number;

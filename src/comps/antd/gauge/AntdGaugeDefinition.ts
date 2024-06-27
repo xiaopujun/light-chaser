@@ -1,9 +1,8 @@
 import React from "react";
-import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import AntdGaugeController, {AntdGaugeProps} from "./AntdGaugeController";
 import gaugeImg from './gauge.png';
-import {BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import AbstractDesignerDefinition from "../../../framework/core/AbstractDesignerDefinition.ts";
+import {BaseInfoType, ClazzTemplate, MenuToConfigMappingType} from "../../../designer/DesignerType.ts";
 
 const AntdGaugeConfig = React.lazy(() => import("./AntdGaugeConfig"));
 

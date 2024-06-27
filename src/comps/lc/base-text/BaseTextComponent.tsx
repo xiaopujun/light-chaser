@@ -1,5 +1,6 @@
 import {
-    ChangeEvent, Component,
+    ChangeEvent,
+    Component,
     CSSProperties,
     ForwardedRef,
     forwardRef,
@@ -7,7 +8,7 @@ import {
     useRef,
     useState
 } from 'react';
-import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
+import {ComponentBaseProps} from "../../../designer/DesignerType";
 import './BaseTextComponent.less';
 import {layerManager} from "../../../designer/loader/EditorDesignerLoader.ts";
 import layerListStore from "../../../designer/left/layer-list/LayerListStore.ts";

@@ -1,12 +1,12 @@
-import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
 import AbstractConvert from "../../framework/convert/AbstractConvert";
 import {componentCategorize} from "../left/compoent-lib/ComponentCategorize";
 import {SaveType} from "../DesignerType.ts";
+import AbstractDesignerDefinition from "../../framework/core/AbstractDesignerDefinition.ts";
 
 export abstract class AbstractDesignerLoader {
 
     //自定义组件信息映射
-    public definitionMap: Record<string, AbstractDefinition> = {};
+    public definitionMap: Record<string, AbstractDesignerDefinition> = {};
     //数据转换器
     public convertMap: { [key: string]: AbstractConvert } = {};
 
@@ -27,8 +27,8 @@ export abstract class AbstractDesignerLoader {
         const glob = import.meta.glob('../../comps/**/*.ts', {eager: true}) as Record<string, any>;
         for (const key of Object.keys(glob)) {
             const Clazz = glob[key]?.default;
-            if (Clazz && AbstractDefinition.isPrototypeOf(Clazz)) {
-                const definition: AbstractDefinition = new Clazz();
+            if (Clazz && AbstractDesignerDefinition.isPrototypeOf(Clazz)) {
+                const definition: AbstractDesignerDefinition = new Clazz();
                 //获取组件的基础信息
                 if (typeof definition.getBaseInfo === "function") {
                     const compKey = definition.getBaseInfo().compKey;

@@ -1,7 +1,7 @@
 import groupBarImg from "./group-bar.png";
 import {AntdBarProps} from "../../antd-common/bar/AntdCommonBarController";
 import AbstractBarDefinition from "../../antd-common/bar/AbstractBarDefinition";
-import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
+import {BaseInfoType} from "../../../designer/DesignerType.ts";
 
 class AntdGroupBarDefinition extends AbstractBarDefinition {
 

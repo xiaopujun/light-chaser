@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
+import {ComponentBaseProps} from "../../../designer/DesignerType";
 
 export interface BaseIframeComponentStyle {
     src?: string;

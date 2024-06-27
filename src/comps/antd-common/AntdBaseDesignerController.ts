@@ -1,9 +1,9 @@
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
 import {UpdateOptions} from "../../framework/core/AbstractController";
-import {ComponentBaseProps} from "../common-component/CommonTypes.ts";
 import {Options, Plot} from "@antv/g2plot";
 import ObjectUtil from "../../utils/ObjectUtil";
 import BPExecutor from "../../designer/blueprint/core/BPExecutor";
+import {ComponentBaseProps} from "../../designer/DesignerType.ts";
 
 export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Options>,
     C extends ComponentBaseProps = ComponentBaseProps> extends AbstractDesignerController<I, C> {

@@ -13,7 +13,6 @@ import {
     viewDesignerManager,
     viewLayerManager
 } from "../loader/ViewDesignerLoader.ts";
-import {toJS} from "mobx";
 
 const ScreenFit = lazy(() => import('../../framework/screen-fit/ScreenFit.tsx'));
 
@@ -33,7 +32,6 @@ const DesignerView = observer((props: DesignerViewProps) => {
 
     const {loaded} = viewDesignerManager;
     const {canvasConfig: {width, height, adaptationType}} = viewCanvasManager
-    console.log(toJS(viewDesignerManager))
     if (!loaded)
         return <Loading/>;
     return (

@@ -1,6 +1,5 @@
-import {APIConfig, IDatabase, IFilterConfigType, ThemeItemType} from "../../designer/DesignerType";
+import {APIConfig, ComponentBaseProps, IDatabase, IFilterConfigType, ThemeItemType} from "../../designer/DesignerType";
 import AbstractController from "./AbstractController";
-import {ComponentBaseProps} from "../../comps/common-component/CommonTypes.ts";
 import FetchUtil from "../../utils/FetchUtil.ts";
 import AuthFetchUtil from "../../utils/AuthFetchUtil.ts";
 import BPExecutor from "../../designer/blueprint/core/BPExecutor.ts";

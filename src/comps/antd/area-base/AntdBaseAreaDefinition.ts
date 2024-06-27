@@ -1,7 +1,7 @@
 import baseAreaImg from "./base-area.png";
 import AbstractAreaDefinition from "../../antd-common/area/AbstractAreaDefinition";
 import {AntdAreaProps} from "../../antd-common/area/AntdCommonAreaController";
-import {BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
+import {BaseInfoType, MenuToConfigMappingType} from "../../../designer/DesignerType.ts";
 import React from "react";
 
 const AntdBaseAreaStyleConfig = React.lazy(() => import("./AntdBaseAreaConfig").then((module) => ({default: module.AntdBaseAreaStyleConfig})));

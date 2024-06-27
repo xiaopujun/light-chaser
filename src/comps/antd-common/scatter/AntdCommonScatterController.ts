@@ -1,9 +1,8 @@
-import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
+import {ComponentBaseProps, ThemeItemType} from "../../../designer/DesignerType";
 import {WritableScatterOptions} from "../types";
 import {Scatter} from "@antv/g2plot";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
-import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
 import BPExecutor from "../../../designer/blueprint/core/BPExecutor.ts";
 

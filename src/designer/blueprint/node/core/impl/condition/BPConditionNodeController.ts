@@ -1,10 +1,12 @@
-import {AbstractBPNodeController, AnchorPointType, IBPTaskInfo, NodeInfoType} from "../../AbstractBPNodeController";
+import {AbstractBPNodeController} from "../../AbstractBPNodeController";
 import ComponentUtil from "../../../../../../utils/ComponentUtil";
 import {UpdateOptions} from "../../../../../../framework/core/AbstractController";
 import BPNode from "../../../BPNode";
 import React from "react";
 import {ConditionNodeConfig} from "./ConditionNodeConfig";
 import ObjectUtil from "../../../../../../utils/ObjectUtil";
+import {AnchorPointType, NodeInfoType} from "../../../../../DesignerType";
+import {IBPTaskInfo} from "../../../../IBPTyps.ts";
 
 export interface ConditionConfigType extends NodeInfoType {
     handler?: string;

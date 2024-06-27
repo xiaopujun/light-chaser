@@ -1,11 +1,10 @@
 import baseWordCloudImg from "./word-cloud.png";
-import {BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import AntdWordCloudController, {AntdWordCloudProps} from "./AntdWordCloudController.ts";
 import {MenuInfo} from "../../../designer/right/MenuType.ts";
-import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import {AntdWordCloudFieldMapping, AntdWordCloudStyle} from "./AntdWordCloudConfig.tsx";
 import AbstractDesignerDefinition from "../../../framework/core/AbstractDesignerDefinition.ts";
 import {Deeplink} from "@icon-park/react";
+import {BaseInfoType, ClazzTemplate, MenuToConfigMappingType} from "../../../designer/DesignerType.ts";
 
 class AntdWordCloudDefinition extends AbstractDesignerDefinition<AntdWordCloudController, AntdWordCloudProps> {
 

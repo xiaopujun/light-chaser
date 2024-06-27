@@ -1,5 +1,12 @@
-import {ICategorize} from "../../../framework/core/AbstractDefinition";
 import {AllApplication, Browser, Cube, MapDraw, Monitor, Other, PieThree, Platte, Text} from "@icon-park/react";
+import {ComponentType} from "react";
+
+export interface ICategorize {
+    key: string;
+    name: string;
+    icon?: ComponentType;
+    parentKey?: string;
+}
 
 export const componentCategorize: ICategorize[] = [
     {

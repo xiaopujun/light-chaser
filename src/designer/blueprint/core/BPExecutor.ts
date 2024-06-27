@@ -3,9 +3,9 @@
  * 说明：蓝图设计器中编辑的事件路径统一通过蓝图执行器进行执行，包括事件的触发、事件的执行、事件的终止等
  */
 import BluePrintManager from "../manager/BluePrintManager.ts";
-import {AnchorPointType} from "../node/core/AbstractBPNodeController";
 import BPTask from "./BPTask.ts";
 import LayerManager from "../../manager/LayerManager.ts";
+import {AnchorPointType} from "../../DesignerType.ts";
 
 export default class BPExecutor {
 

@@ -1,8 +1,8 @@
 import BPLayerNodeController from "./layer/BPLayerNodeController";
-import {ClazzTemplate} from "../../../../../comps/common-component/CommonTypes.ts";
 import BPConditionNodeController from "./condition/BPConditionNodeController";
 import {AbstractBPNodeController} from "../AbstractBPNodeController";
 import BPLogicalProcessNodeController from "./logical-process/BPLogicalProcessNodeController";
+import {ClazzTemplate} from "../../../../DesignerType.ts";
 
 const bpNodeControllerMap = new Map<string, ClazzTemplate<AbstractBPNodeController>>();
 

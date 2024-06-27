@@ -1,5 +1,4 @@
-import {BPNodeLayoutType, IBPLine} from "./blueprint/manager/BluePrintManager.ts";
-import {IFilter} from "./manager/FilterManager.ts";
+import {ComponentType} from "react";
 
 /**
  * 主题
@@ -252,4 +251,127 @@ export interface IPageParam {
     current: number;
     size: number;
     searchValue?: string;
+}
+
+export interface ComponentBaseProps {
+    base?: ComponentInfoType;
+    style?: Record<string, any>;
+    data?: DataConfigType;
+    filter?: IFilterConfigType;
+}
+
+
+export interface IBPLine {
+    id?: string;
+    color?: string;
+    lineWidth?: number;
+    lineDash?: number[];
+    startPoint?: IPoint;
+    endPoint?: IPoint;
+    firstCP?: IPoint;
+    secondCP?: IPoint;
+    //采样点列表
+    samplePoints?: IPoint[];
+    //起始锚点id
+    startAnchorId?: string;
+    //结束锚点id
+    endAnchorId?: string;
+}
+
+export type IPoint = { x: number; y: number; }
+
+export interface BPNodeLayoutType {
+    id?: string;
+    type?: string;
+    position?: IPoint;
+}
+
+export interface IFilter {
+    id: string;
+    name: string;
+    func: string;
+}
+
+
+export interface NodeInfoType {
+    id?: string;
+    icon?: string;
+    name?: string;
+    type?: string;
+    titleBgColor?: string;
+    input?: AnchorPointInfoType[];
+    output?: AnchorPointInfoType[];
+}
+
+/**
+ * 锚点信息
+ */
+export interface AnchorPointInfoType {
+    id?: string;
+    name?: string;
+    type?: AnchorPointType;
+}
+
+/**
+ * 锚点类型
+ */
+export enum AnchorPointType {
+    INPUT,
+    OUTPUT
+}
+
+
+export interface DesignerRulerRef {
+    ruleWheel: () => void;
+    ruleDrag: () => void;
+}
+
+export interface ComponentInfoType {
+    id: string;
+    name: string;
+    type: string;
+}
+
+export type ClazzTemplate<C> = new () => C | null;
+
+export type MenuToConfigMappingType = Record<string, ComponentType<any>>;
+
+export interface EventInfo {
+    id?: string;
+    name?: string;
+}
+
+
+/**
+ * 组件基础信息
+ */
+export interface BaseInfoType {
+    /**
+     * 组件显示名称
+     */
+    compName: string;
+    /**
+     * 组件标识
+     */
+    compKey: string;
+    /**
+     * 主分类
+     */
+    categorize?: string;
+    /**
+     * 子分类
+     */
+    subCategorize?: string;
+    /**
+     * 版本
+     */
+    version?: string;
+    /**
+     * 初始宽度
+     */
+    width?: number;
+    /**
+     * 初始高度
+     */
+    height?: number;
 }

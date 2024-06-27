@@ -1,5 +1,5 @@
-import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
-import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
+import {BaseInfoType, ClazzTemplate, EventInfo, MenuToConfigMappingType} from "../../../designer/DesignerType.ts";
+
 import {MenuInfo} from "../../../designer/right/MenuType";
 import DateTimeImg from './date-time.png';
 import {DateTimeController} from "./DateTimeController.ts";

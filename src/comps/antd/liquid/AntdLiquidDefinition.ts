@@ -1,10 +1,9 @@
 import React from "react";
 import {MenuInfo} from "../../../designer/right/MenuType";
-import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
 import AntdLiquidController, {AntdLiquidProps} from "./AntdLiquidController";
 import liquidImg from './liquid.png';
-import {BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import AbstractDesignerDefinition from "../../../framework/core/AbstractDesignerDefinition.ts";
+import {BaseInfoType, ClazzTemplate, MenuToConfigMappingType} from "../../../designer/DesignerType.ts";
 
 const AntdLiquidConfig = React.lazy(() => import("./AntdLiquidConfig"));
 const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig"));

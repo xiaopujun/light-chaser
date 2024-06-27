@@ -1,6 +1,6 @@
 import BluePrintManager from "../manager/BluePrintManager.ts";
-import {AnchorPointType} from "../node/core/AbstractBPNodeController.ts";
 import LayerManager from "../../manager/LayerManager.ts";
+import {AnchorPointType} from "../../DesignerType.ts";
 
 export default class BPTask {
     /**

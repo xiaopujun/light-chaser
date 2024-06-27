@@ -1,7 +1,7 @@
 import percentAreaImg from "./percent-area.png";
 import AbstractAreaDefinition from "../../antd-common/area/AbstractAreaDefinition";
 import {AntdAreaProps} from "../../antd-common/area/AntdCommonAreaController";
-import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
+import {BaseInfoType} from "../../../designer/DesignerType.ts";
 
 class AntdPercentAreaDefinition extends AbstractAreaDefinition {
 

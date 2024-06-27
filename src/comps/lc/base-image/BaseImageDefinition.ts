@@ -1,7 +1,7 @@
-import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
+import {BaseInfoType, ClazzTemplate, EventInfo, MenuToConfigMappingType} from "../../../designer/DesignerType.ts";
 import BaseImageController, {BaseImageComponentProps} from "./BaseImageController";
 import baseImage from './baseImage.png';
-import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
+
 import {MenuInfo} from "../../../designer/right/MenuType";
 import {BaseImageStyleConfig} from "./BaseImageConfig";
 import React from "react";

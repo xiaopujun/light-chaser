@@ -1,6 +1,5 @@
 import React, {ForwardedRef, useEffect, useImperativeHandle, useRef, useState} from 'react';
-import {ComponentInfoType} from "../../common-component/CommonTypes.ts";
-import {DesignerMode, IFilterConfigType, SaveType} from "../../../designer/DesignerType.ts";
+import {ComponentInfoType, DesignerMode, IFilterConfigType, SaveType} from "../../../designer/DesignerType.ts";
 import Loading from "../../../json-schema/ui/loading/Loading.tsx";
 import DesignerManager from "../../../designer/manager/DesignerManager.ts";
 import operatorMap from "../../../framework/operate";

@@ -1,8 +1,8 @@
 import multiLineImg from "./multi-line.png";
 import AbstractLineDefinition from "../../antd-common/line/AbstractLineDefinition";
 import {AntdLineProps} from "../../antd-common/line/AntdCommonLineController";
-import {BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import AntdMultiLineStyleConfig, {AntdMultiLineFieldMapping} from "./AntdMultiLineConfig.tsx";
+import {BaseInfoType, MenuToConfigMappingType} from "../../../designer/DesignerType.ts";
 
 class AntdMultiLineDefinition extends AbstractLineDefinition {
 

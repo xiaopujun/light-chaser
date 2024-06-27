@@ -1,7 +1,7 @@
-import {ComponentInfoType} from "../common-component/CommonTypes.ts";
 import {UpdateOptions} from "../../framework/core/AbstractController";
 import GroupLayer from "./GroupLayer";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController";
+import {ComponentInfoType} from "../../designer/DesignerType.ts";
 
 export interface GroupLayerProps {
     base: ComponentInfoType;

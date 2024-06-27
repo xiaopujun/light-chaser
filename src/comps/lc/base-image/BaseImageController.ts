@@ -1,10 +1,9 @@
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
-import {ComponentInfoType} from "../../common-component/CommonTypes.ts";
 import BaseImageComponent, {BaseImageComponentStyle} from "./BaseImageComponent";
 import ComponentUtil from "../../../utils/ComponentUtil";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import ObjectUtil from "../../../utils/ObjectUtil";
-import {IFilterConfigType, ThemeItemType} from "../../../designer/DesignerType";
+import {ComponentInfoType, IFilterConfigType, ThemeItemType} from "../../../designer/DesignerType";
 
 export interface BaseImageComponentProps {
     base?: ComponentInfoType;

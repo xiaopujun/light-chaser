@@ -1,5 +1,4 @@
-import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
-import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
+import {BaseInfoType, ClazzTemplate, EventInfo, MenuToConfigMappingType} from "../../../designer/DesignerType.ts";
 import {MenuInfo} from "../../../designer/right/MenuType";
 import digitalFlipperImg from './digital-flipper.png';
 import {DigitalFlipperController} from "./DigitalFlipperController";

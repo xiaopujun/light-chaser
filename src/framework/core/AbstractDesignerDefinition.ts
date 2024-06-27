@@ -1,9 +1,17 @@
-import {AbstractDefinition, MenuToConfigMappingType} from "./AbstractDefinition.ts";
+import {AbstractDefinition} from "./AbstractDefinition.ts";
 import AbstractController from "./AbstractController.ts";
 import AbstractDesignerController from "./AbstractDesignerController.ts";
 import {MenuInfo} from "../../designer/right/MenuType.ts";
 import {ColorFilter, Data, Optimize, SettingOne, Theme} from "@icon-park/react";
 import {lazy} from "react";
+import {MenuToConfigMappingType} from "../../designer/DesignerType.ts";
+
+export interface ActionInfo {
+    name: string;
+    id: string;
+    handler: (controller: AbstractDesignerController, params?: any) => void;
+}
+
 
 const AnimationConfig = lazy(() => import("../../comps/common-component/animation-config/AnimationConfig.tsx"));
 const ThemeConfig = lazy(() => import("../../comps/common-component/theme-config/ThemeConfig.tsx"));
@@ -57,5 +65,41 @@ export default abstract class AbstractDesignerDefinition<C extends AbstractContr
             theme: ThemeConfig,
             filter: FilterConfig
         };
+    }
+
+    /**
+     * 返回当前组件能接受的动作列表，在蓝图图层节点中使用。可据此实现对组件的操作
+     */
+    getActionList(): ActionInfo[] {
+        return [
+            {
+                name: "显示",
+                id: "show",
+                handler: (controller: AbstractDesignerController) => {
+                    controller.container!.style.visibility = "visible";
+                }
+            },
+            {
+                name: "隐藏",
+                id: "hide",
+                handler: (controller: AbstractDesignerController) => {
+                    controller.container!.style.visibility = "hidden";
+                }
+            },
+            {
+                name: "更新组件样式",
+                id: "updateConfig",
+                handler: (controller: AbstractDesignerController, params?: object) => {
+                    controller.update(params);
+                }
+            },
+            {
+                name: "更新组件数据",
+                id: "updateData",
+                handler: (controller: AbstractDesignerController, params?: object) => {
+                    controller.changeData(params);
+                }
+            }
+        ];
     }
 }

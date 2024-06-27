@@ -2,37 +2,19 @@ import {action, makeObservable, observable, runInAction} from "mobx";
 import Moveable from "react-moveable";
 import Selecto from "react-selecto";
 import ObjectUtil from "../../../utils/ObjectUtil";
-import {AbstractBPNodeController, AnchorPointInfoType} from "../node/core/AbstractBPNodeController";
+import {AbstractBPNodeController} from "../node/core/AbstractBPNodeController";
 import bpNodeControllerMap from "../node/core/impl/BPNodeControllerMap";
-import {BluePrintManagerDataType, DesignerMode} from "../../DesignerType.ts";
-import {ClazzTemplate} from "../../../comps/common-component/CommonTypes.ts";
+import {
+    AnchorPointInfoType,
+    BluePrintManagerDataType,
+    BPNodeLayoutType, ClazzTemplate,
+    DesignerMode,
+    IBPLine,
+    IPoint
+} from "../../DesignerType.ts";
 import bpLeftStore from "../left/BPLeftStore.ts";
 import AbstractManager from "../../manager/core/AbstractManager.ts";
 
-export interface IBPLine {
-    id?: string;
-    color?: string;
-    lineWidth?: number;
-    lineDash?: number[];
-    startPoint?: IPoint;
-    endPoint?: IPoint;
-    firstCP?: IPoint;
-    secondCP?: IPoint;
-    //采样点列表
-    samplePoints?: IPoint[];
-    //起始锚点id
-    startAnchorId?: string;
-    //结束锚点id
-    endAnchorId?: string;
-}
-
-export type IPoint = { x: number; y: number; }
-
-export interface BPNodeLayoutType {
-    id?: string;
-    type?: string;
-    position?: IPoint;
-}
 
 class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
 

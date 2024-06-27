@@ -1,10 +1,9 @@
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
-import {ComponentInfoType} from "../../common-component/CommonTypes.ts";
 import BaseVideoComponent, {BaseVideoComponentRef, BaseVideoComponentStyle} from "./BaseVideoComponent.tsx";
 import ComponentUtil from "../../../utils/ComponentUtil";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import ObjectUtil from "../../../utils/ObjectUtil";
-import {IFilterConfigType} from "../../../designer/DesignerType";
+import {ComponentInfoType, IFilterConfigType} from "../../../designer/DesignerType";
 import BPExecutor from "../../../designer/blueprint/core/BPExecutor";
 
 export interface BaseVideoComponentProps {
