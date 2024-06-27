@@ -1,7 +1,6 @@
 import {action, makeObservable, observable} from "mobx";
-import DesignerLoaderFactory from "../../loader/DesignerLoaderFactory";
 import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
-import {DesignerMode} from "../../DesignerType.ts";
+import editorDesignerLoader from "../../loader/EditorDesignerLoader.ts";
 
 class ComponentListStore {
     constructor() {
@@ -35,7 +34,7 @@ class ComponentListStore {
 
     doInit = () => {
         const comps: Array<BaseInfoType> = [];
-        const {definitionMap} = DesignerLoaderFactory.getLoader(DesignerMode.EDIT);
+        const {definitionMap} = editorDesignerLoader;
         if (definitionMap) {
             Object.keys(definitionMap).forEach(key => {
                 const baseInfo = definitionMap[key].getBaseInfo();

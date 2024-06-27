@@ -12,16 +12,7 @@ import URLUtil from "../../utils/URLUtil";
 import {IImageData} from "../../comps/lc/base-image/BaseImageComponent";
 import localCoverCache from "../cache/LocalCoverCache";
 import {COVER_PREFIX, IMAGE_SOURCE_PREFIX, LIGHT_CHASER_PROJECT_LIST} from "../../global/GlobalConstants";
-
-
-/**
- * 使用动态导入的方式，避免资源的过度加载---由于首页也会需要用到本类的api。但是首页不需要加载设计器相关资源，因此不应该导入DesignerLoaderFactory的内容，仅在需要加载时加载。因此使用动态导入的方式
- * @param mode
- */
-const loadDesignerLoader = async (mode: DesignerMode) => {
-    const module = await import('../../designer/loader/DesignerLoaderFactory');
-    return module.default;
-}
+import DesignerLoaderFactory from "../../designer/loader/DesignerLoaderFactory.ts";
 
 /**
  * 本地项目数据操作实现
@@ -101,8 +92,8 @@ class LocalOperator extends AbstractOperator {
             if (elemConfigs) {
                 const mode: DesignerMode = URLUtil.parseUrlParams()?.mode as DesignerMode || DesignerMode.EDIT;
                 //避免es-module的模块直接导入，首页位置无需导入DesignerLoaderFactory。因此采用动态导入的方式
-                loadDesignerLoader(mode).then(async (loader) => {
-                    const {convertMap} = loader.getLoader(mode);
+                DesignerLoaderFactory.getLoader(mode).then(async (loader) => {
+                    const {convertMap} = loader;
                     for (const item of Object.values(elemConfigs!)) {
                         const {type} = item?.base;
                         if (type && convertMap[type]) {
@@ -110,7 +101,7 @@ class LocalOperator extends AbstractOperator {
                             await convert.convertBack(item);
                         }
                     }
-                });
+                })
             }
         }
         return projectData;

@@ -45,8 +45,7 @@ export const doCopy = () => {
     const {targetIds, setTargetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
 
-    const {copyItem} = layerManager;
-    const newIds = copyItem(targetIds);
+    const newIds = historyRecordOperateProxy.doCopy(targetIds);
     //延迟10毫秒，等待dom元素渲染完毕后再获取。
     const tempTimer = setTimeout(() => {
         setTargetIds(newIds);

@@ -1,9 +1,9 @@
+import designerManager from "../manager/DesignerManager.ts";
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 import {DesignerMode, SaveType} from "../DesignerType";
 import operatorMap from "../../framework/operate";
 import {AbstractOperator} from "../../framework/operate/AbstractOperator";
 import {globalMessage} from "../../framework/message/GlobalMessage.tsx";
-import designerManager from "../manager/DesignerManager.ts";
 
 
 /**
