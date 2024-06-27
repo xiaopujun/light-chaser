@@ -1,8 +1,8 @@
-import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
+import designerManager from "../manager/DesignerManager.ts";
 import operatorMap from "../../framework/operate";
 import {DesignerMode, SaveType} from "../DesignerType";
 import {globalMessage} from "../../framework/message/GlobalMessage.tsx";
-import designerManager from "../manager/DesignerManager.ts";
+import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 
 class EditorDesignerLoader extends AbstractDesignerLoader {
 

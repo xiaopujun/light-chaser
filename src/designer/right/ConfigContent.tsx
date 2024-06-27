@@ -7,11 +7,10 @@ import AbstractDesignerController from "../../framework/core/AbstractDesignerCon
 import ObjectUtil from "../../utils/ObjectUtil";
 import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryRecordOperateProxy";
 import Loading from "../../json-schema/ui/loading/Loading";
-import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
 import AbstractController from "../../framework/core/AbstractController";
-import {DesignerMode} from "../DesignerType.ts";
 import {Close} from "@icon-park/react";
 import layerManager from "../manager/LayerManager.ts";
+import editorDesignerLoader from "../loader/EditorDesignerLoader.ts";
 
 export interface ConfigType<T extends AbstractController = AbstractDesignerController> {
     controller: T;
@@ -40,7 +39,7 @@ const ConfigContent = () => {
     const buildConfigContent = () => {
         const {compController} = layerManager;
         const {activeMenu, activeElem} = rightStore;
-        const abstractConfigObj: AbstractDefinition = DesignerLoaderFactory.getLoader(DesignerMode.EDIT).definitionMap[activeElem.type + '']
+        const abstractConfigObj: AbstractDefinition = editorDesignerLoader.definitionMap[activeElem.type + '']
         if (!abstractConfigObj) return;
         const configMapping = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp: React.ComponentType<ConfigType> = configMapping![activeMenu];
