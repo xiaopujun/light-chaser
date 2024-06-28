@@ -64,8 +64,7 @@ class RightStore {
         }
         this.activeElem = {id, type};
         //更新菜单列表
-        // this.menus = editorDesignerLoader?.definitionMap[type]?.getMenuList() || [];
-        this.menus = DesignerLoaderFactory.getLoader(DesignerMode.EDIT)?.definitionMap[type]?.getMenuList() || [];
+        this.menus = editorDesignerLoader?.definitionMap[type]?.getMenuList() || [];
 
         if (this.menus.length > 0) {
             let setNewActiveMenu = true;
