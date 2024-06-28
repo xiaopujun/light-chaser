@@ -1,8 +1,8 @@
 import React from 'react';
-import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
-import {Control} from "../../../json-schema/SchemaTypes";
+import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI";
+import {Control} from "../../../../json-schema/SchemaTypes";
 import {TextScrollerController} from "./TextScrollerController.ts";
-import {ConfigType} from "../../../designer/right/ConfigContent";
+import {ConfigType} from "../../../../designer/right/ConfigContent";
 
 export const TextScrollerConfig: React.FC<ConfigType<TextScrollerController>> = ({controller}) => {
 

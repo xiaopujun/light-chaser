@@ -1,11 +1,11 @@
-import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
-import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
-import {MenuInfo} from "../../../designer/right/MenuType";
+import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../../framework/core/AbstractDefinition";
+import {ClazzTemplate} from "../../../common-component/CommonTypes.ts";
+import {MenuInfo} from "../../../../designer/right/MenuType";
 import DateTimeImg from './date-time.png';
 import {DateTimeController} from "./DateTimeController.ts";
 import {DateTimeComponentProps, FormatType} from "./DateTimeComponent.tsx";
 import {DateTimeConfig} from "./DateTimeConfig.tsx";
-import AbstractDesignerDefinition from "../../../framework/core/AbstractDesignerDefinition.ts";
+import AbstractDesignerDefinition from "../../../../framework/core/AbstractDesignerDefinition.ts";
 
 export default class DateTimeDefinition extends AbstractDesignerDefinition<DateTimeController, DateTimeComponentProps> {
     getBaseInfo(): BaseInfoType {

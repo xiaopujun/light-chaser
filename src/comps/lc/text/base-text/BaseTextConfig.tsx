@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
-import {Control} from "../../../json-schema/SchemaTypes";
+import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI";
+import {Control} from "../../../../json-schema/SchemaTypes";
 import {BaseTextController} from "./BaseTextController";
-import {ConfigType} from "../../../designer/right/ConfigContent";
+import {ConfigType} from "../../../../designer/right/ConfigContent";
 import {
     AlignBottomTwo,
     AlignHorizontalCenterTwo,
@@ -11,8 +11,8 @@ import {
     AlignTopTwo,
     AlignVerticalCenterTwo
 } from "@icon-park/react";
-import layerListStore from "../../../designer/left/layer-list/LayerListStore.ts";
-import layerManager from "../../../designer/manager/LayerManager.ts";
+import layerListStore from "../../../../designer/left/layer-list/LayerListStore.ts";
+import layerManager from "../../../../designer/manager/LayerManager.ts";
 
 export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({controller}) => {
 

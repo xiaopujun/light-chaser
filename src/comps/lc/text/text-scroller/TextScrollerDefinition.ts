@@ -1,11 +1,11 @@
-import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
-import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
-import {MenuInfo} from "../../../designer/right/MenuType";
+import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../../framework/core/AbstractDefinition";
+import {ClazzTemplate} from "../../../common-component/CommonTypes.ts";
+import {MenuInfo} from "../../../../designer/right/MenuType";
 import textScrollerImg from './text-scroller.png';
 import {TextScrollerController} from "./TextScrollerController.ts";
 import {TextScrollerComponentProps} from "./TextScrollerComponent.tsx";
 import {TextScrollerConfig} from "./TextScrollerConfig.tsx";
-import AbstractDesignerDefinition from "../../../framework/core/AbstractDesignerDefinition.ts";
+import AbstractDesignerDefinition from "../../../../framework/core/AbstractDesignerDefinition.ts";
 
 
 export default class TextScrollerDefinition extends AbstractDesignerDefinition<TextScrollerController, TextScrollerComponentProps> {

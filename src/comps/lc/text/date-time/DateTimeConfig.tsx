@@ -1,8 +1,8 @@
 import React from 'react';
-import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
-import {Control} from "../../../json-schema/SchemaTypes";
+import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI";
+import {Control} from "../../../../json-schema/SchemaTypes";
 import {DateTimeController} from "./DateTimeController.ts";
-import {ConfigType} from "../../../designer/right/ConfigContent";
+import {ConfigType} from "../../../../designer/right/ConfigContent";
 import {
     AlignBottomTwo,
     AlignHorizontalCenterTwo,

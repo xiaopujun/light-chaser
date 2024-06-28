@@ -1,11 +1,11 @@
-import {DesignerMode} from "../../../designer/DesignerType";
-import {UpdateOptions} from "../../../framework/core/AbstractController";
-import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
-import ComponentUtil from "../../../utils/ComponentUtil";
+import {DesignerMode} from "../../../../designer/DesignerType";
+import {UpdateOptions} from "../../../../framework/core/AbstractController";
+import AbstractDesignerController from "../../../../framework/core/AbstractDesignerController";
+import ComponentUtil from "../../../../utils/ComponentUtil";
 import BaseTextComponent, {BaseTextComponentProps, BaseTextComponentRef} from "./BaseTextComponent";
-import ObjectUtil from "../../../utils/ObjectUtil";
-import BPExecutor from "../../../designer/blueprint/core/BPExecutor";
-import URLUtil from "../../../utils/URLUtil";
+import ObjectUtil from "../../../../utils/ObjectUtil";
+import BPExecutor from "../../../../designer/blueprint/core/BPExecutor";
+import URLUtil from "../../../../utils/URLUtil";
 
 export class BaseTextController extends AbstractDesignerController<BaseTextComponentRef, BaseTextComponentProps> {
 

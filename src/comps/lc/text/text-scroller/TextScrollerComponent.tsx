@@ -1,5 +1,5 @@
 import React, {ForwardedRef, useEffect, useImperativeHandle, useRef, useState} from 'react';
-import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
+import {ComponentBaseProps} from "../../../common-component/CommonTypes.ts";
 import './TextScrollerComponent.less';
 import {debounce} from "lodash";
 

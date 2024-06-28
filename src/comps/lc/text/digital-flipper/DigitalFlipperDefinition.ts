@@ -1,11 +1,11 @@
-import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
-import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
-import {MenuInfo} from "../../../designer/right/MenuType";
+import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../../framework/core/AbstractDefinition";
+import {ClazzTemplate} from "../../../common-component/CommonTypes.ts";
+import {MenuInfo} from "../../../../designer/right/MenuType";
 import digitalFlipperImg from './digital-flipper.png';
 import {DigitalFlipperController} from "./DigitalFlipperController";
 import {DigitalFlipperConfig} from "./DigitalFlipperConfig";
 import {DigitalFlipperComponentProps} from "./DigitalFlipperComponent";
-import AbstractDesignerDefinition from "../../../framework/core/AbstractDesignerDefinition.ts";
+import AbstractDesignerDefinition from "../../../../framework/core/AbstractDesignerDefinition.ts";
 
 export default class DigitalFlipperDefinition extends AbstractDesignerDefinition<DigitalFlipperController, DigitalFlipperComponentProps> {
     getBaseInfo(): BaseInfoType {

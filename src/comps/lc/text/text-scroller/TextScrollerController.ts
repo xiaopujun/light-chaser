@@ -1,10 +1,10 @@
-import {ThemeItemType} from "../../../designer/DesignerType";
-import {UpdateOptions} from "../../../framework/core/AbstractController";
-import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
-import ComponentUtil from "../../../utils/ComponentUtil";
+import {ThemeItemType} from "../../../../designer/DesignerType";
+import {UpdateOptions} from "../../../../framework/core/AbstractController";
+import AbstractDesignerController from "../../../../framework/core/AbstractDesignerController";
+import ComponentUtil from "../../../../utils/ComponentUtil";
 import TextScrollerComponent, {TextScrollerComponentProps, TextScrollerComponentRef} from "./TextScrollerComponent.tsx";
-import ObjectUtil from "../../../utils/ObjectUtil";
-import BPExecutor from "../../../designer/blueprint/core/BPExecutor";
+import ObjectUtil from "../../../../utils/ObjectUtil";
+import BPExecutor from "../../../../designer/blueprint/core/BPExecutor";
 
 export class TextScrollerController extends AbstractDesignerController<TextScrollerComponentRef, TextScrollerComponentProps> {
 

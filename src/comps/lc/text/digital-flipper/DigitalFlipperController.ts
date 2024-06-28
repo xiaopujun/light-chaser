@@ -1,9 +1,9 @@
-import {ThemeItemType} from "../../../designer/DesignerType";
-import {UpdateOptions} from "../../../framework/core/AbstractController";
-import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
-import ComponentUtil from "../../../utils/ComponentUtil";
-import ObjectUtil from "../../../utils/ObjectUtil";
-import BPExecutor from "../../../designer/blueprint/core/BPExecutor";
+import {ThemeItemType} from "../../../../designer/DesignerType";
+import {UpdateOptions} from "../../../../framework/core/AbstractController";
+import AbstractDesignerController from "../../../../framework/core/AbstractDesignerController";
+import ComponentUtil from "../../../../utils/ComponentUtil";
+import ObjectUtil from "../../../../utils/ObjectUtil";
+import BPExecutor from "../../../../designer/blueprint/core/BPExecutor";
 import DigitalFlipperComponent, {
     DigitalFlipperComponentProps,
     DigitalFlipperComponentRef

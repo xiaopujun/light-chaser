@@ -8,12 +8,12 @@ import {
     useRef,
     useState
 } from 'react';
-import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
-import './BaseTextComponent.less';
-import layerManager from "../../../designer/manager/LayerManager.ts";
-import layerListStore from "../../../designer/left/layer-list/LayerListStore.ts";
+import {ComponentBaseProps} from "../../../common-component/CommonTypes.ts";
+import './BaseIndicatorCardComponent.less';
+import layerManager from "../../../../designer/manager/LayerManager.ts";
+import layerListStore from "../../../../designer/left/layer-list/LayerListStore.ts";
 
-export interface BaseTextComponentStyle {
+export interface BaseIndicatorCardComponentStyle {
     color?: string;
     fontSize?: number;
     fontWeight?: number;
@@ -26,17 +26,17 @@ export interface BaseTextComponentStyle {
     lineHeight?: number;
 }
 
-export interface BaseTextComponentProps extends ComponentBaseProps {
-    style?: BaseTextComponentStyle;
+export interface BaseIndicatorCardComponentProps extends ComponentBaseProps {
+    style?: BaseIndicatorCardComponentStyle;
 }
 
-export interface BaseTextComponentRef {
-    updateConfig: (newConfig: BaseTextComponentProps) => void;
+export interface BaseIndicatorCardComponentRef {
+    updateConfig: (newConfig: BaseIndicatorCardComponentProps) => void;
     setEventHandler: (eventMap: Record<string, Function>) => void;
 }
 
-export const BaseTextComponent = forwardRef((props: BaseTextComponentProps, ref: ForwardedRef<BaseTextComponentRef>) => {
-    const [config, setConfig] = useState<BaseTextComponentProps>({...props});
+export const BaseIndicatorCardComponent = forwardRef((props: BaseIndicatorCardComponentProps, ref: ForwardedRef<BaseIndicatorCardComponentRef>) => {
+    const [config, setConfig] = useState<BaseIndicatorCardComponentProps>({...props});
     const {style, data} = config;
     const [edit, setEdit] = useState(false);
     const eventHandlerMap = useRef<Record<string, Function>>({});
@@ -87,4 +87,4 @@ export const BaseTextComponent = forwardRef((props: BaseTextComponentProps, ref:
     );
 });
 
-export default BaseTextComponent;
+export default BaseIndicatorCardComponent;

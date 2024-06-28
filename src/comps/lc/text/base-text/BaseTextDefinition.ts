@@ -1,17 +1,17 @@
-import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
-import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
-import {MenuInfo} from "../../../designer/right/MenuType";
+import {BaseInfoType, EventInfo, MenuToConfigMappingType} from "../../../../framework/core/AbstractDefinition";
+import {ClazzTemplate} from "../../../common-component/CommonTypes.ts";
+import {MenuInfo} from "../../../../designer/right/MenuType";
 import baseTextImg from './base-text.png';
 import {BaseTextController} from "./BaseTextController";
 import {BaseTextComponentProps} from "./BaseTextComponent";
 import {BaseTextStyleConfig} from "./BaseTextConfig";
 import React from "react";
-import AbstractDesignerDefinition from "../../../framework/core/AbstractDesignerDefinition.ts";
+import AbstractDesignerDefinition from "../../../../framework/core/AbstractDesignerDefinition.ts";
 
-const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
-const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig.tsx"));
-const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig.tsx"));
-const FilterConfig = React.lazy(() => import("../../common-component/filter-config/FilterConfig.tsx"));
+const BaseInfo = React.lazy(() => import("../../../common-component/base-info/BaseInfo"));
+const ThemeConfig = React.lazy(() => import("../../../common-component/theme-config/ThemeConfig.tsx"));
+const AnimationConfig = React.lazy(() => import("../../../common-component/animation-config/AnimationConfig.tsx"));
+const FilterConfig = React.lazy(() => import("../../../common-component/filter-config/FilterConfig.tsx"));
 
 
 export default class BaseTextDefinition extends AbstractDesignerDefinition<BaseTextController, BaseTextComponentProps> {

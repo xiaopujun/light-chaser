@@ -23,15 +23,15 @@ export function DynamicDataConfig(props: DynamicDataConfigProps) {
     const [count, setCount] = useState(0);
 
     useEffect(() => {
-        FetchUtil.get(`/api/datasource/list`).then(res => {
-            if (res.code === 200) {
-                const options = (res.data as Array<IDataSource>).map(item => {
-                    return {label: item.name, value: item.id}
-                })
-                setDataSourceList(options as ISelectOption[]);
-            } else
-                globalMessage.messageApi?.error(res.msg);
-        })
+        // FetchUtil.get(`/api/datasource/list`).then(res => {
+        //     if (res.code === 200) {
+        //         const options = (res.data as Array<IDataSource>).map(item => {
+        //             return {label: item.name, value: item.id}
+        //         })
+        //         setDataSourceList(options as ISelectOption[]);
+        //     } else
+        //         globalMessage.messageApi?.error(res.msg);
+        // })
     }, []);
 
     const validate = () => {
@@ -56,10 +56,11 @@ export function DynamicDataConfig(props: DynamicDataConfigProps) {
         // controller.update({data: {database: dataRef.current}}, {reRender: false});
         console.log("dataRef.current>>>", dataRef.current, controller);
         // controller.onGlobalDataChangeObservable.notifyObservers({...dataRef.current})
-        window.onGlobalDataChangeObservable.notifyObservers({...dataRef.current},1)
+        window.onGlobalDataChangeObservable.notifyObservers(dataRef.current);
     }
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
+        console.log("onFieldChange>>>", fieldChangeData);
         const {reRender, id, dataFragment} = fieldChangeData;
         if (id === 'testAndSave')
             testAndSave();

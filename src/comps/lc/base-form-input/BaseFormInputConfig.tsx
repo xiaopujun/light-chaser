@@ -37,6 +37,8 @@ export const BaseFormInputConfig: React.FC<ConfigType<BaseFormInputController>> 
 
     let pathName = getPropPath(config);
 
+    console.log("pathName>>>", pathName)
+
     const fontStyle: any = [
         {
             type: 'grid',

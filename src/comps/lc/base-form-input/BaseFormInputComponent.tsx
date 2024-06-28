@@ -1,4 +1,4 @@
-import React, {ForwardedRef, useImperativeHandle, useRef, useState} from 'react';
+import React, {ForwardedRef, useEffect, useImperativeHandle, useRef, useState} from 'react';
 import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
 import {Carousel, Input, ConfigProvider} from "antd";
 import './BaseFormInput.less';
@@ -55,6 +55,11 @@ const BaseFormInputComponent = React.forwardRef((props: BaseFormInputComponentPr
                                                  ref: ForwardedRef<BaseFormInputComponentRef>) => {
     const [config, setConfig] = useState<BaseFormInputComponentProps>({...props});
     const {style} = config;
+    const [value, setValue] = useState("");
+
+    useEffect(()=>{
+        setValue(config.data?.staticData);
+    },[config.data?.staticData])
 
     const eventHandlerMap = useRef<Record<string, Function>>({});
 
@@ -78,10 +83,12 @@ const BaseFormInputComponent = React.forwardRef((props: BaseFormInputComponentPr
 
     const styleObj = getTypeStyle(style);
 
+    console.log(config);
+
     return (
         <ConfigProvider theme={{token:styleObj}}>
             <div style={{width: '100%', height: '100%', overflow: 'hidden'}} className={'antd-input'}>
-                <Input size={style?.size} onChange={onChange} onPressEnter={onPressEnter}/>
+                <Input size={style?.size} onChange={onChange} value={value} onPressEnter={onPressEnter}/>
             </div>
         </ConfigProvider>
     );
