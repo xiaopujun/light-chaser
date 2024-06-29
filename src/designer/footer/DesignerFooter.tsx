@@ -1,6 +1,5 @@
 import './DesignerFooter.less';
 import {observer} from "mobx-react";
-import layerManager from "../manager/LayerManager.ts";
 import {HotKeyDes} from "./hotkey-des/HotKeyDes";
 import footerStore from "./FooterStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
@@ -8,6 +7,7 @@ import {CoverConfig} from "./cover/CoverConfig.tsx";
 import {useState} from "react";
 import {Tooltip} from "antd";
 import {Keyboard, Lightning, Magnet, MaterialThree} from "@icon-park/react";
+import layerManager from "../manager/LayerManager.ts";
 
 //将DesignerFooter调整为hook组件
 const DesignerFooter = () => {

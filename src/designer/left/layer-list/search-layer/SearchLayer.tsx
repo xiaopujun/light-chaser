@@ -3,10 +3,10 @@ import layerListStore from "../LayerListStore.ts";
 import Dialog from "../../../../json-schema/ui/dialog/Dialog.tsx";
 import Input from "../../../../json-schema/ui/input/Input.tsx";
 import './SearchLayer.less';
-import layerManager from "../../../manager/LayerManager.ts";
 import {useState} from "react";
 import {ILayerItem} from "../../../DesignerType.ts";
 import eventOperateStore from "../../../operate-provider/EventOperateStore.ts";
+import layerManager from "../../../manager/LayerManager.ts";
 
 export const SearchLayer = observer(() => {
     const [list, setList] = useState<ILayerItem[]>([]);

@@ -23,8 +23,8 @@ export class BaseTableController extends AbstractDesignerController<BaseTableCom
     }
 
     changeData(data: any) {
-        const style = ObjectUtil.merge(this.config?.style, {data});
-        this.instance?.updateConfig(style);
+        this.config = ObjectUtil.merge(this.config, {style: {data}, data: {staticData: data}});
+        this.instance?.updateConfig(this.config!);
     }
 
     update(config: BaseTableComponentProps, upOp?: UpdateOptions | undefined): void {

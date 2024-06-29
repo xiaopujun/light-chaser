@@ -17,12 +17,12 @@ import Moveable, {
 } from "react-moveable";
 import {observer} from "mobx-react";
 import eventOperateStore from "../EventOperateStore";
-import layerManager from "../../manager/LayerManager.ts";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import {ILayerItem} from "../../DesignerType";
 import './DesignerMovable.less';
 import baseInfoStore from "../../../comps/common-component/base-info/BaseInfoStore";
 import LayerUtil from "../../left/layer-list/util/LayerUtil";
+import layerManager from "../../manager/LayerManager.ts";
 import canvasManager from "../../header/items/canvas/CanvasManager.ts";
 
 export interface DesignerMovableProps {

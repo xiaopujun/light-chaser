@@ -13,9 +13,9 @@ export abstract class AbstractDesignerLoader {
     /**
      * 加载设计器
      */
-    public async load(id: string, type: SaveType): Promise<void> {
+    public load(id: string, type: SaveType): void {
         //扫描组件
-        await this.scanComponents();
+        this.scanComponents();
         //初始化项目
         this.initProject(id, type);
     }
@@ -23,11 +23,10 @@ export abstract class AbstractDesignerLoader {
     /**
      * 扫描设计器组件
      */
-    protected async scanComponents(): Promise<void> {
-        const glob = import.meta.glob('../../comps/**/*.ts') as Record<string, any>;
+    protected scanComponents(): void {
+        const glob = import.meta.glob('../../comps/**/*.ts', {eager: true}) as Record<string, any>;
         for (const key of Object.keys(glob)) {
-            const module = await glob[key]();
-            const Clazz = module?.default;
+            const Clazz = glob[key]?.default;
             if (Clazz && AbstractDefinition.isPrototypeOf(Clazz)) {
                 const definition: AbstractDefinition = new Clazz();
                 //获取组件的基础信息

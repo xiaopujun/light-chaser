@@ -1,9 +1,9 @@
 import AbstractRollback from "./AbstractRollback";
 import {IHistoryRecord, ILockOperateData} from "../OperateType";
-import layerManager from "../../../manager/LayerManager.ts";
 import {Component} from "react";
 import layerListStore from "../../../left/layer-list/LayerListStore";
 import designerLeftStore from "../../../left/DesignerLeftStore";
+import layerManager from "../../../manager/LayerManager.ts";
 
 /**
  * hide, lock, order的撤销与回滚操作实现

@@ -1,16 +1,16 @@
 import {observer} from "mobx-react";
-import {FormEvent, useRef, useState} from 'react';
+import {FormEvent, lazy, useRef, useState} from 'react';
 import Dialog from "../../../../json-schema/ui/dialog/Dialog";
 import {AdaptationType, CanvasConfig} from "../../../DesignerType";
 import './CanvasHdConfigImpl.less';
 import {Grid} from "../../../../json-schema/ui/grid/Grid";
-import Switch from "../../../../json-schema/ui/switch/Switch";
-import Button from "../../../../json-schema/ui/button/Button";
 import NumberInput from "../../../../json-schema/ui/number-input/NumberInput";
 import canvasHdStore from "./CanvasManager.ts";
 import canvasManager from "./CanvasManager.ts";
 import Select from "../../../../json-schema/ui/select/Select.tsx";
 
+const Button = lazy(() => import("../../../../json-schema/ui/button/Button"));
+const Switch = lazy(() => import("../../../../json-schema/ui/switch/Switch"))
 
 const CanvasHdConfigImpl = () => {
     const configRef = useRef<CanvasConfig | null>({...canvasManager.canvasConfig});

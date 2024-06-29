@@ -1,5 +1,4 @@
 import eventOperateStore from "../EventOperateStore";
-import layerManager from "../../manager/LayerManager.ts";
 import {DesignerMode, ILayerItem, IProjectInfo, SaveType} from "../../DesignerType";
 import {throttle} from "lodash";
 import {historyOperator} from "../undo-redo/HistoryOperator";
@@ -7,33 +6,36 @@ import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import undoRedoMap from "../undo-redo/core";
 import runtimeConfigStore from "../../store/RuntimeStore.ts";
 import footerStore from "../../footer/FooterStore";
-import bluePrintManager from "../../blueprint/manager/BluePrintManager.ts";
 import {reRenderAllLine} from "../../blueprint/drag/BPMovable.tsx";
 import bpLeftStore from "../../../designer/blueprint/left/BPLeftStore";
 import operatorMap from "../../../framework/operate";
 import URLUtil from "../../../utils/URLUtil";
 import LayerUtil from "../../left/layer-list/util/LayerUtil.ts";
 import bluePrintHdStore from "../../header/items/blue-print/BluePrintHdStore.ts";
-import themeHdStore from "../../header/items/theme/ThemeManager.ts";
-import canvasHdStore from "../../header/items/canvas/CanvasManager.ts";
-import canvasManager from "../../header/items/canvas/CanvasManager.ts";
 import projectHdStore from "../../header/items/project/ProjecManager.ts";
-import designerManager from "../../manager/DesignerManager.ts";
 import FileUtil from "../../../utils/FileUtil.ts";
 import layerListStore from "../../left/layer-list/LayerListStore.ts";
 import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
+import layerManager from "../../manager/LayerManager.ts";
+import themeHdStore from "../../header/items/theme/ThemeManager.ts";
+import bluePrintManager from "../../blueprint/manager/BluePrintManager.ts";
+import canvasManager from "../../header/items/canvas/CanvasManager.ts";
+import designerManager from "../../manager/DesignerManager.ts";
 
 export const selectAll = () => {
     const {layerConfigs} = layerManager;
     const {setTargetIds, calculateGroupCoordinate} = eventOperateStore;
-    const selected = Object.values(layerConfigs).map((item: ILayerItem) => {
+    const selected = [];
+    for (const id in layerConfigs) {
+        const item = layerConfigs[id];
         if (!item.lock && !item.hide)
-            return item.id;
-    });
-    setTargetIds(selected as string[]);
+            selected.push(id);
+    }
 
-    if (selected.length > 0)
+    if (selected.length > 0) {
+        setTargetIds(selected as string[]);
         calculateGroupCoordinate(selected.map((id: string | undefined) => document.getElementById(id!))?.filter((item: HTMLElement | null) => !!item) as HTMLElement[]);
+    }
 }
 
 /**
@@ -43,8 +45,7 @@ export const doCopy = () => {
     const {targetIds, setTargetIds} = eventOperateStore;
     if (!targetIds || targetIds.length === 0) return;
 
-    const {copyItem} = layerManager;
-    const newIds = copyItem(targetIds);
+    const newIds = historyRecordOperateProxy.doCopy(targetIds);
     //延迟10毫秒，等待dom元素渲染完毕后再获取。
     const tempTimer = setTimeout(() => {
         setTargetIds(newIds);
@@ -450,7 +451,7 @@ export const toggleProjectConfig = () => {
  * 切换画布设置弹框
  */
 export const toggleCanvasConfig = () => {
-    const {canvasVisible, setCanvasVisible} = canvasHdStore;
+    const {canvasVisible, setCanvasVisible} = canvasManager;
     setCanvasVisible(!canvasVisible);
 }
 

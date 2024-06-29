@@ -12,14 +12,36 @@ export default class FetchUtil {
 
     static async post(url: string, data: any, options: RequestInit = {}): Promise<HttpResponse> {
         options.method = 'POST';
-        if (data instanceof FormData) {
-            options.body = data;
-        } else {
-            options.headers = {
-                'Content-Type': 'application/json',
-                ...options.headers,
-            };
+        //默认'Content-Type': 'application/json',
+        options.headers = options.headers || {};
+        if (!options.headers || !('Content-Type' in options.headers)) {
+            (options.headers as any)['Content-Type'] = 'application/json';
+        }
+
+        const contentType = (options.headers as any)['Content-Type'] || 'application/json';
+        if (contentType === 'application/json') {
             options.body = JSON.stringify(data);
+        } else if (contentType === 'application/x-www-form-urlencoded') {
+            const params = new URLSearchParams();
+            for (const [key, value] of Object.entries(data)) {
+                params.append(key, value as string);
+            }
+            options.body = params.toString();
+        } else if (contentType === 'multipart/form-data') {
+            // multipart/form-data 不能直接设置 Content-Type，因为需要由浏览器自动生成
+            delete (options.headers as any)['Content-Type'];
+            if (data instanceof FormData) {
+                options.body = data;
+            } else {
+                const formData = new FormData();
+                data.values().forEach((value: any, key: string) => {
+                    formData.append(key, value as Blob | string);
+                })
+                options.body = formData;
+            }
+        } else {
+            // 默认处理为 text/plain
+            options.body = data.toString();
         }
         return FetchUtil.request(url, options);
     }

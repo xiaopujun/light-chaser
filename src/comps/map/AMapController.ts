@@ -1,12 +1,8 @@
-import AMapComponent, {
-    AMapComponentProps,
-    AMapComponentRef
-} from "./AMapComponent.tsx";
+import AMapComponent, {AMapComponentProps, AMapComponentRef} from "./AMapComponent.tsx";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController.ts";
 import ComponentUtil from "../../utils/ComponentUtil.ts";
 import ObjectUtil from "../../utils/ObjectUtil.ts";
 import {UpdateOptions} from "../../framework/core/AbstractController.ts";
-import {ThemeItemType} from "../../designer/DesignerType.ts";
 import BPExecutor from "../../designer/blueprint/core/BPExecutor.ts";
 
 export class AMapController extends AbstractDesignerController<AMapComponentRef, AMapComponentProps> {
@@ -38,10 +34,6 @@ export class AMapController extends AbstractDesignerController<AMapComponentRef,
         upOp = upOp || {reRender: true};
         if (upOp.reRender)
             this.instance?.updateConfig(this.config!);
-    }
-
-    updateTheme(newTheme: ThemeItemType): void {
-
     }
 
 

@@ -1,8 +1,8 @@
-import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
+import designerManager from "../manager/DesignerManager.ts";
 import operatorMap from "../../framework/operate";
 import {DesignerMode, SaveType} from "../DesignerType";
 import {globalMessage} from "../../framework/message/GlobalMessage.tsx";
-import designerManager from "../manager/DesignerManager.ts";
+import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 
 class EditorDesignerLoader extends AbstractDesignerLoader {
 
@@ -10,10 +10,11 @@ class EditorDesignerLoader extends AbstractDesignerLoader {
      * 初始化以更新方式打开时项目信息
      */
     protected initProject(id: string, type: SaveType): void {
+        const {init, setLoaded} = designerManager;
         operatorMap[type].getProjectData(id).then((data) => {
             if (data) {
-                designerManager.init(data, DesignerMode.EDIT);
-                designerManager.setLoaded(true);
+                init(data, DesignerMode.EDIT);
+                setLoaded(true);
             } else {
                 globalMessage?.messageApi?.error("项目不存在");
             }

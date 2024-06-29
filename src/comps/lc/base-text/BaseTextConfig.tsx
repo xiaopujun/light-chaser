@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
 import {Control} from "../../../json-schema/SchemaTypes";
 import {BaseTextController} from "./BaseTextController";
@@ -11,14 +11,27 @@ import {
     AlignTopTwo,
     AlignVerticalCenterTwo
 } from "@icon-park/react";
+import layerListStore from "../../../designer/left/layer-list/LayerListStore.ts";
+import layerManager from "../../../designer/manager/LayerManager.ts";
 
 export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({controller}) => {
 
-    const {data, style} = controller.getConfig()!;
+    const {data, style, base} = controller.getConfig()!;
+
+    const changeContent = (data: string) => {
+        controller.update({data: {staticData: data}});
+        layerManager.layerConfigs[base?.id!].name = data;
+        const {layerInstances} = layerListStore;
+        const layerInstance = layerInstances[base?.id!];
+        layerInstance && (layerInstance as Component).setState({name: data});
+    }
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
-        const {dataFragment} = fieldChangeData;
-        controller.update(dataFragment!);
+        const {dataFragment, id, data} = fieldChangeData;
+        if (id === 'baseTextContent')
+            changeContent(data as string)
+        else
+            controller.update(dataFragment!);
     }
 
     const schema: Control = {
@@ -29,6 +42,7 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
                 key: 'data',
                 children: [
                     {
+                        id: 'baseTextContent',
                         key: 'staticData',
                         type: 'text-area',
                         label: '内容',

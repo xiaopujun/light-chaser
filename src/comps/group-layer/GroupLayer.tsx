@@ -1,9 +1,9 @@
 import React from "react";
 import GroupLayerController from "./GroupLayerController";
 import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
-import DesignerLoaderFactory from "../../designer/loader/DesignerLoaderFactory";
-import {DesignerMode, ILayerItem} from "../../designer/DesignerType";
+import {ILayerItem} from "../../designer/DesignerType";
 import layerManager from "../../designer/manager/LayerManager.ts";
+import editorDesignerLoader from "../../designer/loader/EditorDesignerLoader.ts";
 
 export interface GroupLayerStyleProps {
     children?: React.ReactNode;
@@ -24,7 +24,7 @@ export default class GroupLayer extends React.PureComponent<GroupLayerStyleProps
     componentDidMount(): void {
         const {layer} = this.props;
         const {elemConfigs, compController} = layerManager;
-        const groupDefinition: AbstractDefinition = DesignerLoaderFactory.getLoader(DesignerMode.EDIT).definitionMap['group'];
+        const groupDefinition: AbstractDefinition = editorDesignerLoader.definitionMap['group'];
         let config;
         if (layer.id! in compController!) {
             //重新编组后，被编组组件会重新渲染，需从之前的实例中获取原有数据

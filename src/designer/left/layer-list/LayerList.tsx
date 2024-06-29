@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useEffect} from 'react';
 import './LayerList.less';
 import layerManager from "../../manager/LayerManager.ts";
 import {observer} from "mobx-react";
@@ -7,60 +7,51 @@ import layerBuilder from "./LayerBuilder";
 import designerLeftStore from "../DesignerLeftStore";
 import {Close} from "@icon-park/react";
 
-export interface LayerListProps {
-    children?: React.ReactNode;
-}
 
-class LayerList extends Component<LayerListProps> {
+const LayerList = () => {
+    const layerListRef = React.useRef<HTMLDivElement | null>(null);
+    const layerItemsContainerRef = React.useRef<HTMLDivElement | null>(null);
 
-    layerListRef: HTMLElement | null = null;
-
-    layerItemsContainerRef: HTMLDivElement | null = null;
-
-    componentDidMount() {
-        this.layerListRef?.addEventListener("click", this.cancelSelected);
-    }
-
-    componentWillUnmount() {
-        this.layerListRef?.removeEventListener("click", this.cancelSelected);
-    }
-
-    cancelSelected = (e: MouseEvent) => {
-        if (!this.layerListRef)
+    const cancelSelected = (e: MouseEvent) => {
+        if (!layerListRef.current)
             return;
-        if (this.layerListRef.contains(e.target as Node)
-            && !this.layerItemsContainerRef?.contains(e.target as Node)) {
+        if (layerListRef.current.contains(e.target as Node)
+            && !layerItemsContainerRef.current?.contains(e.target as Node)) {
             const {setTargetIds, targetIds} = eventOperateStore;
             if (targetIds.length > 0)
                 setTargetIds([]);
         }
     }
 
-    buildLayerList = () => {
+    const buildLayerList = () => {
         const {layerConfigs} = layerManager;
         return layerBuilder.buildLayerList(layerConfigs);
     }
 
-    render() {
-        return (
-            <div className={'layer-list'} ref={ref => this.layerListRef = ref}>
-                <div className={'dl-ll-header'}>
-                    <div className={'dl-ll-header-title'}>图层列表</div>
-                    <div className={'dl-ll-header-operate'}><Close style={{cursor: 'pointer'}} onClick={() => {
-                        const {setMenu} = designerLeftStore;
-                        setMenu("");
-                        const {rulerRef} = eventOperateStore;
-                        rulerRef?.ruleWheel();
-                    }}/></div>
-                </div>
-                <div className={'layer-items'}>
-                    <div ref={ref => this.layerItemsContainerRef = ref}>
-                        {this.buildLayerList()}
-                    </div>
+
+    useEffect(() => {
+        layerListRef.current?.addEventListener("click", cancelSelected);
+        return () => layerListRef.current?.removeEventListener("click", cancelSelected);
+    }, []);
+
+    return (
+        <div className={'layer-list'} ref={layerListRef}>
+            <div className={'dl-ll-header'}>
+                <div className={'dl-ll-header-title'}>图层列表</div>
+                <div className={'dl-ll-header-operate'}><Close style={{cursor: 'pointer'}} onClick={() => {
+                    const {setMenu} = designerLeftStore;
+                    setMenu("");
+                    const {rulerRef} = eventOperateStore;
+                    rulerRef?.ruleWheel();
+                }}/></div>
+            </div>
+            <div className={'layer-items'}>
+                <div ref={layerItemsContainerRef}>
+                    {buildLayerList()}
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 export default observer(LayerList);

@@ -13,7 +13,7 @@ export interface AntdRoseProps extends ComponentBaseProps {
 export default class AntdCommonRoseController extends AntdBaseDesignerController<Rose, AntdRoseProps> {
 
     async create(container: HTMLElement, config: AntdRoseProps): Promise<void> {
-        await super.commonCreate(container, Rose, config);
+        super.commonCreate(container, Rose, config);
     }
 
     destroy(): void {

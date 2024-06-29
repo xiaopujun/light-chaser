@@ -43,7 +43,6 @@ export const ImageUpload: React.FC<UploadProps> = (props) => {
                 globalMessage.messageApi?.error('上传失败');
             } else {
                 const {url, hash} = data as IImageData;
-                console.log(url)
                 onChange && onChange({url, hash});
                 setFileList([{...fileInfo, url}]);
             }

@@ -1,12 +1,12 @@
-import React, {Component, useState} from 'react';
-import './AxisConfig.less';
+import React, {Component, lazy, useState} from 'react';
 import {Axis} from "@antv/g2plot";
 import {isEqual} from "lodash";
 import {Control} from "../../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI";
-import Accordion from "../../../../json-schema/ui/accordion/Accordion";
-import Radio from "../../../../json-schema/ui/radio/Radio";
 import {ShapeAttrs} from "@antv/g-base";
+
+const Accordion = lazy(() => import("../../../../json-schema/ui/accordion/Accordion"));
+const Radio = lazy(() => import("../../../../json-schema/ui/radio/Radio"));
 
 
 interface AxisConfigProps {
