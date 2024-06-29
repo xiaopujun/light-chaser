@@ -1,5 +1,5 @@
 import eventOperateStore from "../EventOperateStore";
-import {DesignerMode, ILayerItem, IProjectInfo, SaveType} from "../../DesignerType";
+import {DesignerMode, ILayerItem, IProjectInfo} from "../../DesignerType";
 import {throttle} from "lodash";
 import {historyOperator} from "../undo-redo/HistoryOperator";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
@@ -8,7 +8,6 @@ import runtimeConfigStore from "../../store/RuntimeStore.ts";
 import footerStore from "../../footer/FooterStore";
 import {reRenderAllLine} from "../../blueprint/drag/BPMovable.tsx";
 import bpLeftStore from "../../../designer/blueprint/left/BPLeftStore";
-import operatorMap from "../../../framework/operate";
 import URLUtil from "../../../utils/URLUtil";
 import LayerUtil from "../../left/layer-list/util/LayerUtil.ts";
 import bluePrintHdStore from "../../header/items/blue-print/BluePrintHdStore.ts";
@@ -23,6 +22,7 @@ import {
     layerManager,
     themeManager
 } from "../../loader/EditorDesignerLoader.ts";
+import serverOperator from "../../../framework/operate/ServerOperator.ts";
 
 export const selectAll = () => {
     const {layerConfigs} = layerManager;
@@ -121,7 +121,7 @@ export const doDelete = () => {
 //保存函数节流5s, 5s内不可重复保存
 export const doSave = throttle(() => {
     return new Promise(() => {
-        const {saveType, id} = URLUtil.parseUrlParams();
+        const {id} = URLUtil.parseUrlParams();
         const proData = designerManager.getData();
 
         //转换为最终保存的数据格式
@@ -129,7 +129,7 @@ export const doSave = throttle(() => {
             id,
             dataJson: JSON.stringify(proData),
         }
-        operatorMap[saveType as SaveType].updateProject(projectInfo);
+        serverOperator.updateProject(projectInfo);
     });
 }, 5000);
 

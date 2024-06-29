@@ -1,7 +1,7 @@
 import {MenuItemType} from "antd/es/menu/hooks/useItems";
 import {useLocation, useNavigate} from "react-router-dom";
 import {memo} from "react";
-import {Data, LocalPin, NetworkDrive, System, User} from "@icon-park/react";
+import {Data, NetworkDrive, System, User} from "@icon-park/react";
 import {Menu} from "antd";
 import AuthTools, {RoleType} from "../../../utils/AuthTools.ts";
 
@@ -12,11 +12,6 @@ const getMenus = () => {
             key: 'server',
             icon: <NetworkDrive size={16}/>,
             label: '在线项目'
-        },
-        {
-            key: 'local',
-            icon: <LocalPin size={16}/>,
-            label: '本地项目'
         },
         {
             key: 'datasource',

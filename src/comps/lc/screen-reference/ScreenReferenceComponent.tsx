@@ -1,11 +1,10 @@
 import React, {ForwardedRef, useEffect, useImperativeHandle, useRef, useState} from 'react';
-import {ComponentInfoType, DesignerMode, IFilterConfigType, SaveType} from "../../../designer/DesignerType.ts";
+import {ComponentInfoType, DesignerMode, IFilterConfigType} from "../../../designer/DesignerType.ts";
 import Loading from "../../../json-schema/ui/loading/Loading.tsx";
 import DesignerManager from "../../../designer/manager/DesignerManager.ts";
-import operatorMap from "../../../framework/operate";
 import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
-import URLUtil from "../../../utils/URLUtil.ts";
 import layerBuilder from "../../../designer/left/layer-list/LayerBuilder.ts";
+import serverOperator from "../../../framework/operate/ServerOperator.ts";
 
 export interface ScreenReferenceComponentStyle {
     screenId?: string;
@@ -33,8 +32,7 @@ const ScreenReferenceComponent = React.forwardRef((props: ScreenReferenceCompone
     const loadScreen = (_designerManager: DesignerManager) => {
         if (!config.style?.screenId)
             return;
-        const {saveType} = URLUtil.parseUrlParams();
-        operatorMap[saveType as SaveType].getProjectData(config.style?.screenId!).then((data) => {
+        serverOperator.getProjectData(config.style?.screenId!).then((data) => {
             if (data) {
                 _designerManager.init(data, DesignerMode.VIEW);
                 setLoaded(true);

@@ -2,14 +2,11 @@ import React, {useState} from "react";
 import {Upload as AntdUpLoad, UploadFile} from "antd";
 import './ImageUpload.less';
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
-import operatorMap from "../../../framework/operate/index";
-import URLUtil from "../../../utils/URLUtil";
-import {AbstractOperator} from "../../../framework/operate/AbstractOperator";
 import {globalMessage} from "../../../framework/message/GlobalMessage";
-import {SaveType} from "../../../designer/DesignerType";
 import {RcFile} from "antd/es/upload";
 import {IImageData} from "../../../comps/lc/base-image/BaseImageComponent";
 import {Plus} from "@icon-park/react";
+import ServerOperator from "../../../framework/operate/ServerOperator.ts";
 
 export interface UploadDataType {
     url?: string;
@@ -37,8 +34,7 @@ export const ImageUpload: React.FC<UploadProps> = (props) => {
             globalMessage.messageApi?.warning(`文件大小不能超过${size}M`);
             return false;
         }
-        const {saveType} = URLUtil.parseUrlParams();
-        (operatorMap[saveType as SaveType] as AbstractOperator).uploadImage(file).then((data) => {
+        ServerOperator.uploadImage(file).then((data) => {
             if (!data) {
                 globalMessage.messageApi?.error('上传失败');
             } else {

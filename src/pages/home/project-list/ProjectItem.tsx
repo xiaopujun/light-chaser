@@ -4,7 +4,7 @@ import {Popover} from "antd";
 import {useState} from "react";
 import Input from "../../../json-schema/ui/input/Input.tsx";
 import {IProjectInfo, SaveType} from "../../../designer/DesignerType.ts";
-import operatorMap from "../../../framework/operate";
+import serverOperator from "../../../framework/operate/ServerOperator.ts";
 
 export interface ProjectItemProps {
     id: string;
@@ -15,14 +15,14 @@ export interface ProjectItemProps {
 }
 
 export default function ProjectItem(props: ProjectItemProps) {
-    const {cover, id, saveType, doOperate} = props;
+    const {cover, id, doOperate} = props;
     const [rename, setRename] = useState(false);
     const [name, setName] = useState(props.name);
 
     const updateName = () => {
         if (name !== props.name) {
             const data: IProjectInfo = {id, name};
-            operatorMap[saveType].updateProject(data);
+            serverOperator.updateProject(data);
         }
     }
 

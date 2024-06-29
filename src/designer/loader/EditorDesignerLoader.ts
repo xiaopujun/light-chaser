@@ -1,8 +1,8 @@
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
-import operatorMap from "../../framework/operate";
 import {DesignerMode, SaveType} from "../DesignerType";
 import {globalMessage} from "../../framework/message/GlobalMessage.tsx";
 import DesignerManager from "../manager/DesignerManager.ts";
+import serverOperator from "../../framework/operate/ServerOperator.ts";
 
 const designerManager = new DesignerManager();
 const layerManager = designerManager.layerManager;
@@ -20,7 +20,7 @@ class EditorDesignerLoader extends AbstractDesignerLoader {
      */
     protected initProject(id: string, type: SaveType): void {
         const {init, setLoaded} = designerManager;
-        operatorMap[type].getProjectData(id).then((data) => {
+        serverOperator.getProjectData(id).then((data) => {
             if (data) {
                 init(data, DesignerMode.EDIT);
                 setLoaded(true);

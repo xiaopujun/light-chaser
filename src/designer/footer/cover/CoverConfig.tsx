@@ -3,13 +3,10 @@ import './CoverConfig.less';
 import Button from "../../../json-schema/ui/button/Button";
 import {useRef, useState} from "react";
 import {globalMessage} from "../../../framework/message/GlobalMessage";
-import URLUtil from "../../../utils/URLUtil";
-import operatorMap from "../../../framework/operate/index";
-import {SaveType} from "../../DesignerType";
-import {AbstractOperator} from "../../../framework/operate/AbstractOperator";
 import {Upload as AntdUpLoad, UploadFile} from "antd";
 import {RcFile} from "antd/es/upload";
 import {UploadLaptop} from "@icon-park/react";
+import serverOperator from "../../../framework/operate/ServerOperator.ts";
 
 export interface CoverConfigProps {
     onClose: () => void;
@@ -31,8 +28,7 @@ export const CoverConfig = (prop: CoverConfigProps) => {
             globalMessage.messageApi?.warning('请先上传封面');
             return;
         }
-        const {saveType} = URLUtil.parseUrlParams();
-        (operatorMap[saveType as SaveType] as AbstractOperator).uploadCover(imageFileRef.current!).then((data) => {
+        serverOperator.uploadCover(imageFileRef.current!).then((data) => {
             if (data) {
                 globalMessage.messageApi?.info('封面生成成功！');
                 _onClose();

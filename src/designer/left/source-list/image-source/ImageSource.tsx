@@ -1,9 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import URLUtil from "../../../../utils/URLUtil";
-import {ILayerItem, SaveType} from "../../../DesignerType";
-import operatorMap from "../../../../framework/operate/index";
-import {AbstractOperator} from "../../../../framework/operate/AbstractOperator";
-// import Input from "../../../../json-schema/ui/input/Input";
+import {ILayerItem} from "../../../DesignerType";
 import './ImageSource.less';
 import eventOperateStore from "../../../operate-provider/EventOperateStore";
 import editorDesignerLoader, {layerManager} from "../../../loader/EditorDesignerLoader";
@@ -14,6 +11,8 @@ import DragAddProvider from "../../../../framework/drag-scale/DragAddProvider";
 import {Popconfirm} from "antd";
 import historyRecordOperateProxy from "../../../operate-provider/undo-redo/HistoryRecordOperateProxy.ts";
 import {Close, Help} from "@icon-park/react";
+import serverOperator from "../../../../framework/operate/ServerOperator.ts";
+import ServerOperator from "../../../../framework/operate/ServerOperator.ts";
 
 
 export default function ImageSource() {
@@ -79,8 +78,8 @@ export default function ImageSource() {
     }
 
     const getImageList = () => {
-        const {saveType, id} = URLUtil.parseUrlParams();
-        (operatorMap[saveType as SaveType] as AbstractOperator).getImageSourceList(id).then((data) => {
+        const {id} = URLUtil.parseUrlParams();
+        serverOperator.getImageSourceList(id).then((data) => {
             setImageList(data);
         });
     }
@@ -100,8 +99,7 @@ export default function ImageSource() {
     }, []);
 
     const confirmDel = (imageId: string) => {
-        const {saveType} = URLUtil.parseUrlParams();
-        (operatorMap[saveType as SaveType] as AbstractOperator).delImageSource(imageId).then((data) => {
+        ServerOperator.delImageSource(imageId).then((data) => {
             if (data)
                 getImageList();
         });

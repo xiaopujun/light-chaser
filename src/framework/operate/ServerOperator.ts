@@ -5,7 +5,7 @@ import {globalMessage} from "../message/GlobalMessage";
 import {IImageData} from "../../comps/lc/base-image/BaseImageComponent";
 import AuthFetchUtil from "../../utils/AuthFetchUtil.ts";
 
-export default class ServerOperator extends AbstractOperator {
+class ServerOperator extends AbstractOperator {
 
     async createProject(project: IProjectInfo): Promise<string> {
         const res = await AuthFetchUtil.post('/api/project/create', project);
@@ -94,3 +94,6 @@ export default class ServerOperator extends AbstractOperator {
         return res.code === 200;
     }
 }
+
+const serverOperator = new ServerOperator();
+export default serverOperator;
