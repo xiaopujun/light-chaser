@@ -105,7 +105,7 @@ docker pull puyinzhen/light-chaser
 ## 社区
 
 <div style="display: flex">
-    <div  style="width: 50%"><img alt="group" src="https://i.072333.xyz/file/2007ed7b558c04d8e3d00.jpg"></div>
+    <div  style="width: 50%"><img alt="group" src="https://i.072333.xyz/file/c836427f84fc513a06387.jpg"></div>
 </div>
 
 ## 可持续
