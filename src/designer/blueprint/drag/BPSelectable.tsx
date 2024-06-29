@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import Selecto, {OnDragStart, OnSelectEnd} from "react-selecto";
-import {bluePrintManager} from "../../loader/EditorDesignerLoader.ts";
+import {bluePrintManager} from "../../loader/EditDesignerManager.ts";
 
 export interface BPSelectableProps {
     children?: React.ReactNode;

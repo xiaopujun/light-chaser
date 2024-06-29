@@ -3,7 +3,7 @@ import URLUtil from "../../../../utils/URLUtil";
 import {ILayerItem} from "../../../DesignerType";
 import './ImageSource.less';
 import eventOperateStore from "../../../operate-provider/EventOperateStore";
-import editorDesignerLoader, {layerManager} from "../../../loader/EditorDesignerLoader";
+import editorDesignerLoader from "../../../loader/EditorDesignerLoader";
 import IdGenerate from "../../../../utils/IdGenerate";
 import {BaseImageComponentProps} from "../../../../comps/lc/base-image/BaseImageController";
 import {IImageData} from "../../../../comps/lc/base-image/BaseImageComponent";
@@ -13,6 +13,7 @@ import historyRecordOperateProxy from "../../../operate-provider/undo-redo/Histo
 import {Close, Help} from "@icon-park/react";
 import serverOperator from "../../../../framework/operate/ServerOperator.ts";
 import ServerOperator from "../../../../framework/operate/ServerOperator.ts";
+import {layerManager} from "../../../loader/EditDesignerManager.ts";
 
 
 export default function ImageSource() {

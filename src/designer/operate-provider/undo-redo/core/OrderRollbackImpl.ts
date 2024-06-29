@@ -1,6 +1,6 @@
 import AbstractRollback from "./AbstractRollback";
 import {IHistoryRecord, IOrderOperateData} from "../OperateType";
-import {layerManager} from "../../../loader/EditorDesignerLoader.ts";
+import {layerManager} from "../../../loader/EditDesignerManager.ts";
 
 /**
  * hide, lock, order的撤销与回滚操作实现

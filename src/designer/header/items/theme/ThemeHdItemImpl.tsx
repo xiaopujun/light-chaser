@@ -5,7 +5,7 @@ import ThemeList from "../../../../comps/common-component/theme-config/theme-lis
 import {ThemeItemType} from "../../../DesignerType";
 import ThemeEditor from "../../../../comps/common-component/theme-config/theme-editor/ThemeEditor";
 import Button from "../../../../json-schema/ui/button/Button";
-import {layerManager, themeManager} from "../../../loader/EditorDesignerLoader.ts";
+import {layerManager, themeManager} from "../../../loader/EditDesignerManager.ts";
 
 const ThemeHdItemImpl = () => {
     const selectedThemeRef = useRef<ThemeItemType>();

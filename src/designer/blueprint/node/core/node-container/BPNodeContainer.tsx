@@ -2,8 +2,8 @@ import React, {useEffect, useRef} from "react";
 import bpNodeControllerMap from "../impl/BPNodeControllerMap";
 import bpRightStore from "../../../right/BPRightStore";
 import './BPNodeContainer.less';
-import {bluePrintManager} from "../../../../loader/EditorDesignerLoader.ts";
 import {BPNodeLayoutType} from "../../../../DesignerType.ts";
+import {bluePrintManager} from "../../../../loader/EditDesignerManager.ts";
 
 export interface BPNodeContainerProps {
     layout: BPNodeLayoutType;

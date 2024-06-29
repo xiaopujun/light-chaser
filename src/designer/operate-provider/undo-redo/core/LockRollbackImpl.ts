@@ -3,7 +3,7 @@ import {IHistoryRecord, ILockOperateData} from "../OperateType";
 import {Component} from "react";
 import layerListStore from "../../../left/layer-list/LayerListStore";
 import designerLeftStore from "../../../left/DesignerLeftStore";
-import {layerManager} from "../../../loader/EditorDesignerLoader.ts";
+import {layerManager} from "../../../loader/EditDesignerManager.ts";
 
 /**
  * hide, lock, order的撤销与回滚操作实现

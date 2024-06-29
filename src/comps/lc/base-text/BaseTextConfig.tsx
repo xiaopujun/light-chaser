@@ -11,8 +11,8 @@ import {
     AlignTopTwo,
     AlignVerticalCenterTwo
 } from "@icon-park/react";
-import {layerManager} from "../../../designer/loader/EditorDesignerLoader.ts";
 import layerListStore from "../../../designer/left/layer-list/LayerListStore.ts";
+import {layerManager} from "../../../designer/loader/EditDesignerManager.ts";
 
 export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({controller}) => {
 

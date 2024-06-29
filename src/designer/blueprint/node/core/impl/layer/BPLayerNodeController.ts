@@ -5,9 +5,9 @@ import BPNode, {NodeProps} from "../../../BPNode";
 import React from "react";
 import DesignerLoaderFactory from "../../../../../../designer/loader/DesignerLoaderFactory";
 import {AnchorPointType, DesignerMode, NodeInfoType} from "../../../../../DesignerType.ts";
-import {layerManager} from "../../../../../loader/EditorDesignerLoader.ts";
 import {IBPTaskInfo} from "../../../../IBPTyps.ts";
 import {ActionInfo} from "../../../../../../framework/core/AbstractDesignerDefinition.ts";
+import {layerManager} from "../../../../../loader/EditDesignerManager.ts";
 
 export interface LayerNodeConfig extends NodeProps {
 

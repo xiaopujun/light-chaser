@@ -4,8 +4,8 @@ import {Component, MouseEvent} from "react";
 import {setControlPointLineColor} from "../../operate-provider/movable/DesignerSelectable";
 import historyRecordOperateProxy from "../../operate-provider/undo-redo/HistoryRecordOperateProxy";
 import LayerUtil from "./util/LayerUtil";
-import {layerManager} from "../../loader/EditorDesignerLoader.ts";
 import {ILayerItem} from "../../DesignerType.ts";
+import {layerManager} from "../../loader/EditDesignerManager.ts";
 
 class LayerListStore {
     constructor() {

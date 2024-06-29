@@ -31,7 +31,7 @@ import {
     Up
 } from "@icon-park/react";
 import ContextMenu from "../../../framework/context-menu/ContextMenu.tsx";
-import {layerManager} from "../../loader/EditorDesignerLoader.ts";
+import {layerManager} from "../../loader/EditDesignerManager.ts";
 
 
 const defaultDesignerMenus = [

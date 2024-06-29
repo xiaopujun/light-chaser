@@ -8,7 +8,7 @@ import LayerUtil from "../left/layer-list/util/LayerUtil";
 import DesignerMovable from "../operate-provider/movable/DesignerMovable.tsx";
 import Loading from "../../json-schema/ui/loading/Loading.tsx";
 import SearchLayer from "../left/layer-list/search-layer/SearchLayer.tsx";
-import {bpExecutor, layerManager} from "../loader/EditorDesignerLoader.ts";
+import {bpExecutor, layerManager} from "../loader/EditDesignerManager.ts";
 
 const DesignerContainer = lazy(() => import('../operate-provider/DesignerContainer'));
 const DesignerRuler = lazy(() => import('./DesignerRuler'));

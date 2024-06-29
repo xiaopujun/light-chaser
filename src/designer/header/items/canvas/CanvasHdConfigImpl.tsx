@@ -8,7 +8,7 @@ import Switch from "../../../../json-schema/ui/switch/Switch";
 import Button from "../../../../json-schema/ui/button/Button";
 import NumberInput from "../../../../json-schema/ui/number-input/NumberInput";
 import Select from "../../../../json-schema/ui/select/Select.tsx";
-import {canvasManager} from "../../../loader/EditorDesignerLoader.ts";
+import {canvasManager} from "../../../loader/EditDesignerManager.ts";
 
 
 const CanvasHdConfigImpl = () => {

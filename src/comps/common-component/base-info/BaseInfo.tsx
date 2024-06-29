@@ -7,7 +7,7 @@ import {ILayerItem} from "../../../designer/DesignerType";
 import eventOperateStore from "../../../designer/operate-provider/EventOperateStore";
 import baseInfoStore from "./BaseInfoStore";
 import rightStore from "../../../designer/right/RightStore";
-import editorDesignerLoader, {canvasManager, layerManager} from "../../../designer/loader/EditorDesignerLoader";
+import editorDesignerLoader from "../../../designer/loader/EditorDesignerLoader";
 import layerListStore from "../../../designer/left/layer-list/LayerListStore";
 import LayerUtil from "../../../designer/left/layer-list/util/LayerUtil";
 import {
@@ -19,6 +19,7 @@ import {
     AlignVerticalCenterTwo,
     Info
 } from "@icon-park/react";
+import {canvasManager, layerManager} from "../../../designer/loader/EditDesignerManager.ts";
 
 /**
  * lc组件基础信息

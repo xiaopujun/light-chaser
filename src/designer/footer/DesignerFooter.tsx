@@ -7,7 +7,7 @@ import {CoverConfig} from "./cover/CoverConfig.tsx";
 import {useState} from "react";
 import {Tooltip} from "antd";
 import {Keyboard, Lightning, Magnet, MaterialThree} from "@icon-park/react";
-import {layerManager} from "../loader/EditorDesignerLoader.ts";
+import {layerManager} from "../loader/EditDesignerManager.ts";
 
 //将DesignerFooter调整为hook组件
 const DesignerFooter = () => {

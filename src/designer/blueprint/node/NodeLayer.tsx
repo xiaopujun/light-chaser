@@ -4,7 +4,7 @@ import {observer} from "mobx-react";
 import {BPDragScaleContainer} from "./BPDragScaleContainer";
 import {BPNodeContainer} from "./core/node-container/BPNodeContainer";
 import {useEffect, useRef} from "react";
-import {bluePrintManager} from "../../loader/EditorDesignerLoader.ts";
+import {bluePrintManager} from "../../loader/EditDesignerManager.ts";
 
 const NodeLayer = observer(() => {
     const {bpNodeLayoutMap} = bluePrintManager;

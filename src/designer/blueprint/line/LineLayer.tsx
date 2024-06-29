@@ -1,7 +1,7 @@
 import React, {CSSProperties} from 'react';
 import CanvasUtil from "../util/CanvasUtil";
 import IdGenerate from "../../../utils/IdGenerate";
-import {bluePrintManager} from "../../loader/EditorDesignerLoader.ts";
+import {bluePrintManager} from "../../loader/EditDesignerManager.ts";
 import {AnchorPointType, IBPLine} from "../../DesignerType.ts";
 
 class LineLayer extends React.Component {

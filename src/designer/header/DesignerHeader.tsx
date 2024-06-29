@@ -12,7 +12,7 @@ import BluePrintHdImpl from "./items/blue-print/BluePrintHdImpl.tsx";
 import {AfferentFour, ConnectionPointTwo, EfferentFour, Eyes, HardDiskOne, PageTemplate, Theme} from "@icon-park/react";
 import URLUtil from "../../utils/URLUtil.ts";
 import {DesignerMode} from "../DesignerType.ts";
-import {canvasManager, themeManager} from "../loader/EditorDesignerLoader.ts";
+import {canvasManager, themeManager} from "../loader/EditDesignerManager.ts";
 
 
 export interface IHeaderItem {

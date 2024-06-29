@@ -3,7 +3,7 @@ import DragScaleProvider from "../../framework/drag-scale/DragScaleProvider";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {observer} from "mobx-react";
 import ScaleAction from "../../framework/core/ScaleAction.ts";
-import {canvasManager} from "../loader/EditorDesignerLoader.ts";
+import {canvasManager} from "../loader/EditDesignerManager.ts";
 
 export interface DesignerDragScaleContainerProps {
     children?: React.ReactNode;

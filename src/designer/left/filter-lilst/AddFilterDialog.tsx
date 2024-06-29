@@ -5,7 +5,7 @@ import Input from "../../../json-schema/ui/input/Input.tsx";
 import MonacoEditor from "../../../json-schema/ui/code-editor/MonacoEditor.tsx";
 import Button from "../../../json-schema/ui/button/Button.tsx";
 import {useRef} from "react";
-import {filterManager} from "../../loader/EditorDesignerLoader.ts";
+import {filterManager} from "../../loader/EditDesignerManager.ts";
 
 const AddFilterDialog = observer(() => {
 

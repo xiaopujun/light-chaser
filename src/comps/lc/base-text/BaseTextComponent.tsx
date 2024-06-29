@@ -10,8 +10,8 @@ import {
 } from 'react';
 import {ComponentBaseProps} from "../../../designer/DesignerType";
 import './BaseTextComponent.less';
-import {layerManager} from "../../../designer/loader/EditorDesignerLoader.ts";
 import layerListStore from "../../../designer/left/layer-list/LayerListStore.ts";
+import {layerManager} from "../../../designer/loader/EditDesignerManager.ts";
 
 export interface BaseTextComponentStyle {
     color?: string;

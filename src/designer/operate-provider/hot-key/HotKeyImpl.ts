@@ -17,11 +17,10 @@ import layerListStore from "../../left/layer-list/LayerListStore.ts";
 import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
 import {
     bluePrintManager,
-    canvasManager,
-    designerManager,
+    canvasManager, editDesignerManager,
     layerManager,
     themeManager
-} from "../../loader/EditorDesignerLoader.ts";
+} from "../../loader/EditDesignerManager.ts";
 import serverOperator from "../../../framework/operate/ServerOperator.ts";
 
 export const selectAll = () => {
@@ -122,7 +121,7 @@ export const doDelete = () => {
 export const doSave = throttle(() => {
     return new Promise(() => {
         const {id} = URLUtil.parseUrlParams();
-        const proData = designerManager.getData();
+        const proData = editDesignerManager.getData();
 
         //转换为最终保存的数据格式
         const projectInfo: IProjectInfo = {
@@ -479,7 +478,7 @@ export const exportProject = () => {
         content: '正在导出项目数据...'
     })
     const timeout = setTimeout(() => {
-        const projectData = designerManager.getData();
+        const projectData = editDesignerManager.getData();
         const elemConfigs = projectData.layerManager?.elemConfigs;
         const promises: Promise<void>[] = [];
         if (elemConfigs) {
@@ -560,7 +559,7 @@ export const importProject = () => {
                     });
                 }
                 Promise.all(promises).then(() => {
-                    designerManager.init(projectData as any, DesignerMode.EDIT);
+                    editDesignerManager.init(projectData as any, DesignerMode.EDIT);
                     globalMessage.messageApi?.destroy();
                     globalMessage.messageApi?.success('项目数据导入成功');
                     clearTimeout(timeout);

@@ -13,7 +13,7 @@ import Loading from "../json-schema/ui/loading/Loading";
 import FrameLayout from "../json-schema/ui/frame-layout/FrameLayout";
 import {DesignerMode, SaveType} from "./DesignerType.ts";
 import '../designer/resource/font/FontGlobal.css';
-import {designerManager} from "./loader/EditorDesignerLoader.ts";
+import {editDesignerManager} from "./loader/EditDesignerManager.ts";
 
 
 /**
@@ -84,16 +84,16 @@ export interface DesignerProps {
 }
 
 const Designer = (props: DesignerProps) => {
-    const {id, type} = props;
+    const {id} = props;
     useEffect(() => {
         //加载设计器
-        DesignerLoaderFactory.getLoader(DesignerMode.EDIT).load(id, type);
+        DesignerLoaderFactory.getLoader(DesignerMode.EDIT).load(id);
         //绑定事件到dom元素
         bindEventToDom();
         return () => unbindEventToDom();//卸载dom元素上的事件
     }, []);
 
-    const {loaded} = designerManager;
+    const {loaded} = editDesignerManager;
     if (!loaded)
         return <Loading/>;
     return (

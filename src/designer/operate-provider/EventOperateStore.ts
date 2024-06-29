@@ -6,7 +6,7 @@ import {DesignerRulerRef, ILayerItem} from "../DesignerType";
 import layerListStore from "../left/layer-list/LayerListStore";
 import designerLeftStore from "../left/DesignerLeftStore";
 import Selecto from "react-selecto";
-import {layerManager} from "../loader/EditorDesignerLoader.ts";
+import {layerManager} from "../loader/EditDesignerManager.ts";
 
 /**
  * 组件多选情况下的坐标值

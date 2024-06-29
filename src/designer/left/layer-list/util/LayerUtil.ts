@@ -1,5 +1,5 @@
 import {ILayerItem} from "../../../DesignerType.ts";
-import {layerManager} from "../../../loader/EditorDesignerLoader.ts";
+import {layerManager} from "../../../loader/EditDesignerManager.ts";
 
 export default class LayerUtil {
 

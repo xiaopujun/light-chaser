@@ -9,7 +9,8 @@ import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryReco
 import Loading from "../../json-schema/ui/loading/Loading";
 import AbstractController from "../../framework/core/AbstractController";
 import {Close} from "@icon-park/react";
-import editorDesignerLoader, {layerManager} from "../loader/EditorDesignerLoader.ts";
+import editorDesignerLoader from "../loader/EditorDesignerLoader.ts";
+import {layerManager} from "../loader/EditDesignerManager.ts";
 
 export interface ConfigType<T extends AbstractController = AbstractDesignerController> {
     controller: T;

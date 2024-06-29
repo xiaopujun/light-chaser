@@ -9,7 +9,7 @@ import Input from "../../../../json-schema/ui/input/Input";
 import {UIContainer} from "../../../../json-schema/ui/ui-container/UIContainer";
 import {Grid} from "../../../../json-schema/ui/grid/Grid";
 import Button from "../../../../json-schema/ui/button/Button";
-import {themeManager} from "../../../../designer/loader/EditorDesignerLoader.ts";
+import {themeManager} from "../../../../designer/loader/EditDesignerManager.ts";
 
 
 const ThemeEditor = () => {

@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import Moveable, {OnDrag, OnDragEnd, OnDragGroup, OnDragGroupEnd, OnDragStart} from "react-moveable";
 import {observer} from "mobx-react";
 import CanvasUtil from "../util/CanvasUtil";
-import {bluePrintManager} from "../../loader/EditorDesignerLoader.ts";
+import {bluePrintManager} from "../../loader/EditDesignerManager.ts";
 import {IBPLine, IPoint} from "../../DesignerType.ts";
 
 export interface BPMovableProps {

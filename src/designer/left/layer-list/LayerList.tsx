@@ -5,7 +5,7 @@ import eventOperateStore from "../../operate-provider/EventOperateStore";
 import layerBuilder from "./LayerBuilder.ts";
 import designerLeftStore from "../DesignerLeftStore";
 import {Close} from "@icon-park/react";
-import {layerManager} from "../../loader/EditorDesignerLoader.ts";
+import {layerManager} from "../../loader/EditDesignerManager.ts";
 
 const LayerList = () => {
     const layerListRef = React.useRef<HTMLDivElement | null>(null);

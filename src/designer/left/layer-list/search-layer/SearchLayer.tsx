@@ -6,7 +6,7 @@ import './SearchLayer.less';
 import {useState} from "react";
 import {ILayerItem} from "../../../DesignerType.ts";
 import eventOperateStore from "../../../operate-provider/EventOperateStore.ts";
-import {layerManager} from "../../../loader/EditorDesignerLoader.ts";
+import {layerManager} from "../../../loader/EditDesignerManager.ts";
 
 export const SearchLayer = observer(() => {
     const [list, setList] = useState<ILayerItem[]>([]);

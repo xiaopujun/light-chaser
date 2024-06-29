@@ -4,7 +4,7 @@ import {observer} from "mobx-react";
 import bpRightStore from "./BPRightStore";
 import Accordion from "../../../json-schema/ui/accordion/Accordion";
 import {AbstractBPNodeController} from "../node/core/AbstractBPNodeController";
-import {bluePrintManager} from "../../loader/EditorDesignerLoader.ts";
+import {bluePrintManager} from "../../loader/EditDesignerManager.ts";
 
 export interface BPRightConfigProps {
     controller?: AbstractBPNodeController;

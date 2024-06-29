@@ -5,7 +5,7 @@ import {observer} from "mobx-react";
 import AddFilterDialog from "./AddFilterDialog.tsx";
 import {Popconfirm} from "antd";
 import {Close, Help, Plus} from "@icon-park/react";
-import {filterManager} from "../../loader/EditorDesignerLoader.ts";
+import {filterManager} from "../../loader/EditDesignerManager.ts";
 
 export const FilterList = observer(() => {
     const {filters, setEditFilter, delFilter, setVisibility} = filterManager;

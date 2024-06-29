@@ -22,7 +22,7 @@ import {ILayerItem} from "../../DesignerType";
 import './DesignerMovable.less';
 import baseInfoStore from "../../../comps/common-component/base-info/BaseInfoStore";
 import LayerUtil from "../../left/layer-list/util/LayerUtil";
-import {canvasManager, layerManager} from "../../loader/EditorDesignerLoader.ts";
+import {canvasManager, layerManager} from "../../loader/EditDesignerManager.ts";
 
 export interface DesignerMovableProps {
     children?: React.ReactNode;

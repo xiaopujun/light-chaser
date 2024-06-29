@@ -1,7 +1,7 @@
 import React, {ChangeEvent, MouseEvent} from "react";
 import layerListStore from "../LayerListStore";
 import contextMenuStore from "../../../operate-provider/canvas-context-menu/CanvasContextMenuStore.ts";
-import {layerManager} from "../../../loader/EditorDesignerLoader.ts";
+import {layerManager} from "../../../loader/EditDesignerManager.ts";
 
 export interface LayerProps {
     compId?: string;

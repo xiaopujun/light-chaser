@@ -1,4 +1,4 @@
-import {bluePrintManager} from "../../loader/EditorDesignerLoader.ts";
+import {bluePrintManager} from "../../loader/EditDesignerManager.ts";
 import {IBPLine, IPoint} from "../../DesignerType.ts";
 
 export interface CubicBezierCurvesCP {

@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import DragScaleProvider from "../../../framework/drag-scale/DragScaleProvider";
 import {reRenderAllLine} from "../drag/BPMovable";
 import CanvasUtil from "../util/CanvasUtil";
-import {bluePrintManager} from "../../loader/EditorDesignerLoader.ts";
+import {bluePrintManager} from "../../loader/EditDesignerManager.ts";
 
 
 export interface BPDragScaleContainerContainerProps {

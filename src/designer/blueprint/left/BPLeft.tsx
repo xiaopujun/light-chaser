@@ -6,7 +6,7 @@ import IdGenerate from "../../../utils/IdGenerate";
 import DragAddProvider from "../../../framework/drag-scale/DragAddProvider";
 import Input from "../../../json-schema/ui/input/Input.tsx";
 import {AddSubset, ApplicationOne, BytedanceMiniApp, Calculator, CardTwo, Filter, MindmapMap} from "@icon-park/react";
-import {bluePrintManager, layerManager} from "../../loader/EditorDesignerLoader.ts";
+import {bluePrintManager, layerManager} from "../../loader/EditDesignerManager.ts";
 
 const BPLeft: React.FC = () => {
     return (

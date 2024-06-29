@@ -12,7 +12,8 @@ import {
     viewCanvasManager,
     viewDesignerManager,
     viewLayerManager
-} from "../loader/ViewDesignerLoader.ts";
+} from "../loader/ViewDesignerManager.ts";
+
 
 const ScreenFit = lazy(() => import('../../framework/screen-fit/ScreenFit.tsx'));
 
@@ -24,10 +25,10 @@ export interface DesignerViewProps {
 
 const DesignerView = observer((props: DesignerViewProps) => {
 
-    const {id, type} = props;
+    const {id} = props;
 
     useEffect(() => {
-        DesignerLoaderFactory.getLoader(DesignerMode.VIEW).load(id, type);
+        DesignerLoaderFactory.getLoader(DesignerMode.VIEW).load(id);
     }, []);
 
     const {loaded} = viewDesignerManager;

@@ -1,6 +1,5 @@
 import AbstractConvert from "../../framework/convert/AbstractConvert";
 import {componentCategorize} from "../left/compoent-lib/ComponentCategorize";
-import {SaveType} from "../DesignerType.ts";
 import AbstractDesignerDefinition from "../../framework/core/AbstractDesignerDefinition.ts";
 
 export abstract class AbstractDesignerLoader {
@@ -13,11 +12,11 @@ export abstract class AbstractDesignerLoader {
     /**
      * 加载设计器
      */
-    public load(id: string, type: SaveType): void {
+    public load(id: string): void {
         //扫描组件
         this.scanComponents();
         //初始化项目
-        this.initProject(id, type);
+        this.initProject(id);
     }
 
     /**
@@ -68,5 +67,5 @@ export abstract class AbstractDesignerLoader {
     /**
      * 加载设计器项目数据
      */
-    protected abstract initProject(id: string, type: SaveType): void;
+    protected abstract initProject(id: string): void;
 }
