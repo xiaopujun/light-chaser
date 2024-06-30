@@ -13,6 +13,7 @@ import {
     viewDesignerManager,
     viewLayerManager
 } from "../loader/ViewDesignerManager.ts";
+import bluePrintLoader from "../loader/BluePrintLoader.ts";
 
 
 const ScreenFit = lazy(() => import('../../framework/screen-fit/ScreenFit.tsx'));
@@ -28,7 +29,10 @@ const DesignerView = observer((props: DesignerViewProps) => {
     const {id} = props;
 
     useEffect(() => {
+        //加载设计器
         DesignerLoaderFactory.getLoader(DesignerMode.VIEW).load(id);
+        //加载蓝图
+        bluePrintLoader.load();
     }, []);
 
     const {loaded} = viewDesignerManager;

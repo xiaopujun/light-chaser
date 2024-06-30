@@ -72,7 +72,7 @@ export default class BPLayerNodeController extends AbstractBPNodeController<Laye
             id: nodeId,
             name: compLayout.name,
             icon: "CodeSandboxOutlined",
-            type: 'layer-node',
+            type: 'BPLayerNode',
             titleBgColor: "#247057",
             input,
             output

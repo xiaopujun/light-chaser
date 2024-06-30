@@ -1,9 +1,9 @@
 import React, {useEffect, useRef} from "react";
-import bpNodeControllerMap from "../impl/BPNodeControllerMap";
 import bpRightStore from "../../../right/BPRightStore";
 import './BPNodeContainer.less';
 import {BPNodeLayoutType} from "../../../../DesignerType.ts";
 import {bluePrintManager} from "../../../../loader/EditDesignerManager.ts";
+import bluePrintLoader from "../../../../loader/BluePrintLoader.ts";
 
 export interface BPNodeContainerProps {
     layout: BPNodeLayoutType;
@@ -18,7 +18,7 @@ export const BPNodeContainer: React.FC<BPNodeContainerProps> = React.memo(({layo
     }
 
     useEffect(() => {
-        const NodeController = bpNodeControllerMap.get(layout.type!);
+        const NodeController = bluePrintLoader.bpControllerMap[layout.type!];
         if (!NodeController) return;
         const ncIns = new NodeController();
         if (!ncIns) return;

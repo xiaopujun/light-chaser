@@ -5,10 +5,10 @@ import ThemeList from "./theme-list/ThemeList";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import rightStore from "../../../designer/right/RightStore";
 import Button from "../../../json-schema/ui/button/Button";
-import {ConfigType} from "../../../designer/right/ConfigContent";
 import {layerManager} from "../../../designer/loader/EditDesignerManager.ts";
+import AbstractDesignerController from "../../../framework/core/AbstractDesignerController.ts";
 
-class ThemeConfig extends Component<ConfigType> {
+class ThemeConfig extends Component<{ controller: AbstractDesignerController }> {
     state = {
         editTheme: false,
     }

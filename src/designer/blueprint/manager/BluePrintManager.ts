@@ -3,17 +3,17 @@ import Moveable from "react-moveable";
 import Selecto from "react-selecto";
 import ObjectUtil from "../../../utils/ObjectUtil";
 import {AbstractBPNodeController} from "../node/core/AbstractBPNodeController";
-import bpNodeControllerMap from "../node/core/impl/BPNodeControllerMap";
 import {
     AnchorPointInfoType,
     BluePrintManagerDataType,
-    BPNodeLayoutType, ClazzTemplate,
+    BPNodeLayoutType,
     DesignerMode,
     IBPLine,
     IPoint
 } from "../../DesignerType.ts";
 import bpLeftStore from "../left/BPLeftStore.ts";
 import AbstractManager from "../../manager/core/AbstractManager.ts";
+import bluePrintLoader from "../../loader/BluePrintLoader.ts";
 
 
 class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
@@ -231,7 +231,7 @@ class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
                 if (Object.keys(this.bpNodeControllerInsMap).length === 0 && nodeLayoutList.length !== 0) {
                     //存在节点布局信息，但没有controller实例信息，说明没有打开过蓝图编辑器（实例信息在渲染节点时才产生）
                     nodeLayoutList.forEach(layout => {
-                        const Controller = bpNodeControllerMap.get(layout.type!);
+                        const Controller = bluePrintLoader.bpControllerMap[layout.type!];
                         const config = this.bpNodeConfigMap[layout.id!];
                         if (Controller) {
                             //@ts-ignore  todo这里在抽象类中统一定义了构造器格式，理论上应该支持，后续研究下是否ts不支持这种方式
@@ -305,9 +305,10 @@ class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
                 initUsedLayerNodes(usedLayerNodes);
             } else {
                 const bpNodeControllerInsMap: Record<string, AbstractBPNodeController> = {};
+                const {bpControllerMap} = bluePrintLoader;
                 Object.values(data?.bpNodeLayoutMap!).forEach((layout: BPNodeLayoutType) => {
                     const {type, id} = layout;
-                    const NodeController = bpNodeControllerMap.get(type!) as ClazzTemplate<AbstractBPNodeController>;
+                    const NodeController = bpControllerMap[type!];
                     const config = data?.bpNodeConfigMap![id!];
                     // @ts-ignore
                     bpNodeControllerInsMap[id!] = new NodeController!(config)!;

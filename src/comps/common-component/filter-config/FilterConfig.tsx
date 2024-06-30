@@ -1,10 +1,10 @@
-import {ConfigType} from "../../../designer/right/ConfigContent.tsx";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI.tsx";
 import {Control} from "../../../json-schema/SchemaTypes.ts";
 import './FilterConfig.less';
 import {IFilterConfigType} from "../../../designer/DesignerType.ts";
 import {useRef} from "react";
 import ObjectUtil from "../../../utils/ObjectUtil.ts";
+import AbstractDesignerController from "../../../framework/core/AbstractDesignerController.ts";
 
 const defaultConfig: IFilterConfigType = {
     enable: false,
@@ -16,7 +16,7 @@ const defaultConfig: IFilterConfigType = {
     hueRotate: 0
 }
 
-export default function FilterConfig(props: ConfigType) {
+export default function FilterConfig(props: { controller: AbstractDesignerController }) {
     const {controller} = props;
     const config = controller.getConfig()?.filter as IFilterConfigType;
     const configRef = useRef(config || defaultConfig);

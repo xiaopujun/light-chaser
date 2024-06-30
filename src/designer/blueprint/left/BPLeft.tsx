@@ -86,7 +86,7 @@ const drop = (event: DragEvent) => {
         x: (event.clientX - (contentPos?.x || 0)) / canvasScale,
         y: (event.clientY - (contentPos?.y || 0)) / canvasScale
     };
-    if (type === 'layer-node') {
+    if (type === 'BPLayerNode') {
         const {setUsedLayerNodes} = bpLeftStore;
         setUsedLayerNodes(nodeId!, true);
     } else {
@@ -149,7 +149,7 @@ export const BPLayerNodeList = observer(() => {
                     return (
                         <div className={`bp-node-list-item bp-drag-node ${used ? 'bp-node-list-item-used' : ''}`}
                              data-id={item.id}
-                             data-type={'layer-node'}
+                             data-type={'BPLayerNode'}
                              draggable={!used} key={index}>
                             <div className={'bpn-li-icon'}><CardTwo/></div>
                             <div className={'bpn-li-label'}>{item.name}</div>
@@ -164,8 +164,8 @@ export const BPLayerNodeList = observer(() => {
 export const BPLogicalNodeList = observer(() => {
 
     const logicalNodeList = [
-        {name: '条件判断', icon: AddSubset, type: 'condition-node'},
-        {name: '逻辑处理', icon: BytedanceMiniApp, type: 'logical-process-node'},
+        {name: '条件判断', icon: AddSubset, type: 'BPConditionNode'},
+        {name: '逻辑处理', icon: BytedanceMiniApp, type: 'BPLogicalProcessNode'},
     ].filter((item) => item.name.indexOf(bpLeftStore.searchValue) !== -1)
 
     return (

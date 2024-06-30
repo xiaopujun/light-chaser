@@ -61,7 +61,7 @@ export default class BPConditionNodeController extends AbstractBPNodeController<
             id: nodeId,
             name: "条件判断",
             titleBgColor: "#247ba6",
-            type: "condition-node",
+            type: "BPConditionNode",
             icon: "BranchesOutlined",
             input: [
                 {

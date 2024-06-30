@@ -52,7 +52,7 @@ export default class BPLogicalProcessNodeController extends AbstractBPNodeContro
             id: nodeId,
             name: "逻辑处理",
             titleBgColor: "#a62469",
-            type: "logical-process-node",
+            type: "BPLogicalProcessNode",
             icon: "FunctionOutlined",
             input: [
                 {

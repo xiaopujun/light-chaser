@@ -14,6 +14,7 @@ import FrameLayout from "../json-schema/ui/frame-layout/FrameLayout";
 import {DesignerMode, SaveType} from "./DesignerType.ts";
 import '../designer/resource/font/FontGlobal.css';
 import {editDesignerManager} from "./loader/EditDesignerManager.ts";
+import bluePrintLoader from "./loader/BluePrintLoader.ts";
 
 
 /**
@@ -88,6 +89,8 @@ const Designer = (props: DesignerProps) => {
     useEffect(() => {
         //加载设计器
         DesignerLoaderFactory.getLoader(DesignerMode.EDIT).load(id);
+        //加载蓝图
+        bluePrintLoader.load();
         //绑定事件到dom元素
         bindEventToDom();
         return () => unbindEventToDom();//卸载dom元素上的事件

@@ -3,7 +3,6 @@ import './DataConfig.less';
 import AbstractController from "../../../framework/core/AbstractController";
 import {Control} from "../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
-import {ConfigType} from "../../../designer/right/ConfigContent";
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
 import {DataConfigType} from "../../../designer/DesignerType.ts";
 import {StaticDataConfig} from "./static/StaticDataConfig.tsx";
@@ -14,7 +13,8 @@ type DataTypeItem = 'static' | 'api' | 'database' | 'excel';
 
 type DataTypes = (DataTypeItem)[];
 
-export interface DataConfigProps<T extends AbstractController = AbstractDesignerController> extends ConfigType<T> {
+export interface DataConfigProps<T extends AbstractController = AbstractDesignerController> {
+    controller: T;
     // 限制数据源类型，默认全部。（针对如进度图类型的图表，其数据只是一个简单的数字，一般不通过excel导入）
     dataTypes?: DataTypes;
     // 接口数据转换函数，默认按照json格式转换（对于有自己特殊类型的图表，可以自定义转换函数，比如仪表盘，其数据是一个数字，而不是json）

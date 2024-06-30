@@ -6,6 +6,7 @@ export abstract class AbstractDesignerLoader {
 
     //自定义组件信息映射
     public definitionMap: Record<string, AbstractDesignerDefinition> = {};
+
     //数据转换器
     public convertMap: { [key: string]: AbstractConvert } = {};
 
@@ -63,6 +64,7 @@ export abstract class AbstractDesignerLoader {
             }
         }
     }
+
 
     /**
      * 加载设计器项目数据

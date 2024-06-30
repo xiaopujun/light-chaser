@@ -2,7 +2,6 @@ import {Component} from 'react';
 import './BaseInfo.less';
 import {Control} from "../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../json-schema/LCGUI";
-import {ConfigType} from "../../../designer/right/ConfigContent";
 import {ILayerItem} from "../../../designer/DesignerType";
 import eventOperateStore from "../../../designer/operate-provider/EventOperateStore";
 import baseInfoStore from "./BaseInfoStore";
@@ -20,13 +19,14 @@ import {
     Info
 } from "@icon-park/react";
 import {canvasManager, layerManager} from "../../../designer/loader/EditDesignerManager.ts";
+import AbstractDesignerController from "../../../framework/core/AbstractDesignerController.ts";
 
 /**
  * lc组件基础信息
  */
-class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> {
+class BaseInfo extends Component<{ controller: AbstractDesignerController }, ILayerItem & { version?: string }> {
 
-    constructor(props: ConfigType) {
+    constructor(props: { controller: AbstractDesignerController }) {
         super(props);
         this.init();
     }
