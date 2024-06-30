@@ -1,4 +1,3 @@
-import AbstractConvert from "../../framework/convert/AbstractConvert";
 import {componentCategorize} from "../left/compoent-lib/ComponentCategorize";
 import AbstractDesignerDefinition from "../../framework/core/AbstractDesignerDefinition.ts";
 
@@ -6,9 +5,6 @@ export abstract class AbstractDesignerLoader {
 
     //自定义组件信息映射
     public definitionMap: Record<string, AbstractDesignerDefinition> = {};
-
-    //数据转换器
-    public convertMap: { [key: string]: AbstractConvert } = {};
 
     /**
      * 加载设计器
@@ -57,10 +53,6 @@ export abstract class AbstractDesignerLoader {
                             componentCategorize.push(subCategorize);
                     }
                 }
-            } else if (Clazz && AbstractConvert.isPrototypeOf(Clazz)) {
-                const convert: AbstractConvert = new Clazz();
-                const convertKey = convert.getKey();
-                this.convertMap[convertKey] = convert;
             }
         }
     }
