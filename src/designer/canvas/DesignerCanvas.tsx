@@ -3,12 +3,12 @@ import {observer} from "mobx-react";
 import rightStore from "../right/RightStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {hotkeyConfigs} from "../operate-provider/hot-key/HotKeyConfig";
-import layerBuilder from "../left/layer-list/LayerBuilder.ts";
 import LayerUtil from "../left/layer-list/util/LayerUtil";
 import DesignerMovable from "../operate-provider/movable/DesignerMovable.tsx";
 import Loading from "../../json-schema/ui/loading/Loading.tsx";
 import SearchLayer from "../left/layer-list/search-layer/SearchLayer.tsx";
 import {bpExecutor, layerManager} from "../loader/EditDesignerManager.ts";
+import canvasRender from "../left/layer-list/CanvasRender.ts";
 
 const DesignerContainer = lazy(() => import('../operate-provider/DesignerContainer'));
 const DesignerRuler = lazy(() => import('./DesignerRuler'));
@@ -45,7 +45,7 @@ const DesignerCanvas = memo(observer(() => {
                     <DesignerRuler>
                         <DesignerDragScaleContainer onDoubleClick={updateActive}>
                             <DesignerMovable>
-                                {layerBuilder.buildCanvasComponents(layerManager, bpExecutor)}
+                                {canvasRender.buildCanvasComponents(layerManager, bpExecutor)}
                             </DesignerMovable>
                         </DesignerDragScaleContainer>
                     </DesignerRuler>

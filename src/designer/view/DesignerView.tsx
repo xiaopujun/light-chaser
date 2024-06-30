@@ -3,7 +3,6 @@ import './DesignerView.less';
 import {observer} from "mobx-react";
 import Loading from "../../json-schema/ui/loading/Loading";
 import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
-import layerBuilder from "../left/layer-list/LayerBuilder.ts";
 import {DesignerMode, SaveType} from "../DesignerType.ts";
 import '../../designer/resource/font/FontGlobal.css';
 import ScaleAction from "../../framework/core/ScaleAction.ts";
@@ -14,6 +13,7 @@ import {
     viewLayerManager
 } from "../loader/ViewDesignerManager.ts";
 import bluePrintLoader from "../loader/BluePrintLoader.ts";
+import canvasRender from "../left/layer-list/CanvasRender.ts";
 
 
 const ScreenFit = lazy(() => import('../../framework/screen-fit/ScreenFit.tsx'));
@@ -46,7 +46,7 @@ const DesignerView = observer((props: DesignerViewProps) => {
                            ScaleAction.doScale(xScale, yScale)
                        }}>
                 <div style={{width, height, background: 'black', overflow: 'hidden', position: "relative"}}>
-                    {layerBuilder.buildCanvasComponents(viewLayerManager, viewBpExecutor)}
+                    {canvasRender.buildCanvasComponents(viewLayerManager, viewBpExecutor)}
                 </div>
             </ScreenFit>
         </Suspense>

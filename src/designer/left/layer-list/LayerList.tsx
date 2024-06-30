@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import './LayerList.less';
 import {observer} from "mobx-react";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
-import layerBuilder from "./LayerBuilder.ts";
+import layerRender from "./LayerRender.ts";
 import designerLeftStore from "../DesignerLeftStore";
 import {Close} from "@icon-park/react";
 import {layerManager} from "../../loader/EditDesignerManager.ts";
@@ -24,7 +24,7 @@ const LayerList = () => {
 
     const buildLayerList = () => {
         const {layerConfigs, layerHeader} = layerManager;
-        return layerBuilder.buildLayerList(layerConfigs, layerHeader!);
+        return layerRender.buildLayerList(layerConfigs, layerHeader!);
     }
 
 

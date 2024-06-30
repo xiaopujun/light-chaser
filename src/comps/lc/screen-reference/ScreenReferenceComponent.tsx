@@ -3,8 +3,8 @@ import {ComponentInfoType, DesignerMode, IFilterConfigType} from "../../../desig
 import Loading from "../../../json-schema/ui/loading/Loading.tsx";
 import DesignerManager from "../../../designer/manager/DesignerManager.ts";
 import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
-import layerBuilder from "../../../designer/left/layer-list/LayerBuilder.ts";
 import serverOperator from "../../../framework/operate/ServerOperator.ts";
+import canvasRender from "../../../designer/left/layer-list/CanvasRender.ts";
 
 export interface ScreenReferenceComponentStyle {
     screenId?: string;
@@ -88,7 +88,7 @@ const ScreenReferenceComponent = React.forwardRef((props: ScreenReferenceCompone
     return (
         <div style={{...{height: '100%', overflow: 'hidden'}}}>
             <div style={{width, height, background: 'black', overflow: 'hidden', position: "relative"}}>
-                {layerBuilder.buildCanvasComponents(designerManager?.layerManager, designerManager.bpExecutor, "screen-reference")}
+                {canvasRender.buildCanvasComponents(designerManager?.layerManager, designerManager.bpExecutor, "screen-reference")}
             </div>
         </div>
     );
