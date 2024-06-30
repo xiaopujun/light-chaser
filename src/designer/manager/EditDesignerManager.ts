@@ -35,4 +35,5 @@ class EditDesignerManager extends DesignerManager {
 }
 
 const editDesignerManager = new EditDesignerManager();
+window.__EDIT_LAYER_MANAGER__ = editDesignerManager.layerManager;
 export default editDesignerManager;

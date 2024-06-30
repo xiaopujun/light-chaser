@@ -197,4 +197,6 @@ class LayerListStore {
 }
 
 const layerListStore = new LayerListStore();
+window.__EDIT_LAYER_LIST_STORE__ = layerListStore;
 export default layerListStore;
+export {LayerListStore}

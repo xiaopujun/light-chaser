@@ -7,7 +7,6 @@ import {AnchorPointType, NodeInfoType} from "../../../../../DesignerType.ts";
 import {IBPTaskInfo} from "../../../../IBPTyps.ts";
 import {ActionInfo} from "../../../../../../framework/core/AbstractDesignerDefinition.ts";
 import DesignerManager from "../../../../../manager/DesignerManager.ts";
-import editDesignerManager from "../../../../../manager/EditDesignerManager.ts";
 
 export interface LayerNodeConfig extends NodeProps {
 
@@ -50,7 +49,7 @@ export default class BPLayerNodeController extends AbstractBPNodeController<Laye
     }
 
     getNodeInfo(nodeId: string): NodeInfoType | null {
-        const {layerConfigs} = editDesignerManager.layerManager;
+        const {layerConfigs} = window.__EDIT_LAYER_MANAGER__;
         const compLayout = layerConfigs[nodeId];
         const output = DesignerManager.definitionMap[compLayout.type!].getEventList().map((item) => {
             return {

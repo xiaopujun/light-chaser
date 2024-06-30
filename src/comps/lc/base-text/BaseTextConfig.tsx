@@ -11,8 +11,6 @@ import {
     AlignTopTwo,
     AlignVerticalCenterTwo
 } from "@icon-park/react";
-import layerListStore from "../../../designer/left/layer-list/LayerListStore.ts";
-import editDesignerManager from "../../../designer/manager/EditDesignerManager.ts";
 
 export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({controller}) => {
 
@@ -20,8 +18,8 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
 
     const changeContent = (data: string) => {
         controller.update({data: {staticData: data}});
-        editDesignerManager.layerManager.layerConfigs[base?.id!].name = data;
-        const {layerInstances} = layerListStore;
+        window.__EDIT_LAYER_MANAGER__.layerConfigs[base?.id!].name = data;
+        const {layerInstances} = window.__EDIT_LAYER_LIST_STORE__;
         const layerInstance = layerInstances[base?.id!];
         layerInstance && (layerInstance as Component).setState({name: data});
     }

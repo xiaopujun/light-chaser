@@ -10,8 +10,6 @@ import {
 } from 'react';
 import {ComponentBaseProps} from "../../../designer/DesignerType";
 import './BaseTextComponent.less';
-import layerListStore from "../../../designer/left/layer-list/LayerListStore.ts";
-import editDesignerManager from "../../../designer/manager/EditDesignerManager.ts";
 
 export interface BaseTextComponentStyle {
     color?: string;
@@ -63,8 +61,8 @@ export const BaseTextComponent = forwardRef((props: BaseTextComponentProps, ref:
      */
     const changeContent = (e: ChangeEvent<HTMLInputElement>) => {
         data!.staticData = e.target.value;
-        editDesignerManager.layerManager.layerConfigs[config.base?.id!].name = e.target.value;
-        const {layerInstances} = layerListStore;
+        window.__EDIT_LAYER_MANAGER__.layerConfigs[config.base?.id!].name = e.target.value;
+        const {layerInstances} = window.__EDIT_LAYER_LIST_STORE__;
         const layerInstance = layerInstances[config.base?.id!];
         layerInstance && (layerInstance as Component).setState({name: e.target.value});
     }
