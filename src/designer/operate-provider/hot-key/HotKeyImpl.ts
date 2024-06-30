@@ -15,13 +15,10 @@ import projectHdStore from "../../header/items/project/ProjecManager.ts";
 import FileUtil from "../../../utils/FileUtil.ts";
 import layerListStore from "../../left/layer-list/LayerListStore.ts";
 import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
-import {
-    bluePrintManager,
-    canvasManager, editDesignerManager,
-    layerManager,
-    themeManager
-} from "../../loader/EditDesignerManager.ts";
 import serverOperator from "../../../framework/operate/ServerOperator.ts";
+import editDesignerManager from "../../manager/EditDesignerManager.ts";
+
+const {layerManager, canvasManager, bluePrintManager, themeManager} = editDesignerManager;
 
 export const selectAll = () => {
     const {layerConfigs} = layerManager;

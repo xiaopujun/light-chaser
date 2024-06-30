@@ -1,7 +1,7 @@
 import React, {ChangeEvent, MouseEvent} from "react";
 import layerListStore from "../LayerListStore";
 import contextMenuStore from "../../../operate-provider/canvas-context-menu/CanvasContextMenuStore.ts";
-import {layerManager} from "../../../loader/EditDesignerManager.ts";
+import editDesignerManager from "../../../manager/EditDesignerManager.ts";
 
 export interface LayerProps {
     compId?: string;
@@ -66,7 +66,7 @@ export abstract class BaseLayer extends React.PureComponent<LayerProps, LayerPro
     closeInput = () => {
         const {inputMode, compId, name} = this.state;
         if (inputMode && name !== this.layerName) {
-            const {updateLayer, compController} = layerManager;
+            const {updateLayer, compController} = editDesignerManager.layerManager;
             updateLayer([{id: compId!, name: this.layerName}], false);
             const compInstance = compController[compId!];
             compInstance && compInstance.update({base: {name: this.layerName}}, {reRender: false});

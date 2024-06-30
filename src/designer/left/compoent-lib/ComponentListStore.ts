@@ -1,6 +1,6 @@
 import {action, makeObservable, observable} from "mobx";
-import editorDesignerLoader from "../../loader/EditorDesignerLoader.ts";
 import {BaseInfoType} from "../../DesignerType.ts";
+import DesignerManager from "../../manager/DesignerManager.ts";
 
 class ComponentListStore {
     constructor() {
@@ -34,10 +34,9 @@ class ComponentListStore {
 
     doInit = () => {
         const comps: Array<BaseInfoType> = [];
-        const {definitionMap} = editorDesignerLoader;
-        if (definitionMap) {
-            Object.keys(definitionMap).forEach(key => {
-                const baseInfo = definitionMap[key].getBaseInfo();
+        if (DesignerManager.definitionMap) {
+            Object.keys(DesignerManager.definitionMap).forEach(key => {
+                const baseInfo = DesignerManager.definitionMap[key].getBaseInfo();
                 if (baseInfo.compKey !== 'group') comps.push(baseInfo);
             });
         }

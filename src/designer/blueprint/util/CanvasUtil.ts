@@ -1,5 +1,5 @@
-import {bluePrintManager} from "../../loader/EditDesignerManager.ts";
 import {IBPLine, IPoint} from "../../DesignerType.ts";
+import editDesignerManager from "../../manager/EditDesignerManager.ts";
 
 export interface CubicBezierCurvesCP {
     firstCP: IPoint;
@@ -149,7 +149,7 @@ export default class CanvasUtil {
      * 单独计算线段采样点可以避免渲染线段同时大量无效采样点的计算（只有最后一次渲染的采样点是有效的）
      */
     public static updSegmentSamplingPoint() {
-        const {bpLines} = bluePrintManager;
+        const {bpLines} = editDesignerManager.bluePrintManager;
         Object.values(bpLines).forEach(line => {
             const {startPoint, firstCP, secondCP, endPoint} = line;
             line.samplePoints = CanvasUtil.sampleBezierCurve(startPoint!, firstCP!, secondCP!, endPoint!, 20);

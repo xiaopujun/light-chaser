@@ -1,10 +1,10 @@
 import React from "react";
 import './BPFooter.less';
 import {observer} from "mobx-react";
-import {bluePrintManager} from "../../loader/EditDesignerManager.ts";
+import editDesignerManager from "../../manager/EditDesignerManager.ts";
 
 const BPFooter: React.FC = observer(() => {
-    const {canvasScale} = bluePrintManager;
+    const {canvasScale} = editDesignerManager.bluePrintManager;
     return (
         <div className={'bp-footer'}>
             <div className={'bp-footer-item'}>缩放:{(canvasScale * 100).toFixed(0)}%</div>

@@ -2,7 +2,7 @@ import React from "react";
 import './BPHeader.less';
 import bluePrintHdStore from "../../header/items/blue-print/BluePrintHdStore.ts";
 import {Close} from "@icon-park/react";
-import {bluePrintManager} from "../../loader/EditDesignerManager.ts";
+import editDesignerManager from "../../manager/EditDesignerManager.ts";
 
 const BPHeader: React.FC = () => {
     return (
@@ -11,7 +11,7 @@ const BPHeader: React.FC = () => {
             <div className={'bp-header-menu'}><Close style={{cursor: 'pointer'}} onClick={() => {
                 const {setBluePrintVisible} = bluePrintHdStore;
                 setBluePrintVisible(false);
-                const {setCanvasTranslate, setCanvasScale} = bluePrintManager;
+                const {setCanvasTranslate, setCanvasScale} = editDesignerManager.bluePrintManager;
                 setCanvasTranslate({x: 0, y: 0});
                 setCanvasScale(1);
             }}/></div>

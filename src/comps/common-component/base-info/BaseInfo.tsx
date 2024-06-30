@@ -6,7 +6,6 @@ import {ILayerItem} from "../../../designer/DesignerType";
 import eventOperateStore from "../../../designer/operate-provider/EventOperateStore";
 import baseInfoStore from "./BaseInfoStore";
 import rightStore from "../../../designer/right/RightStore";
-import editorDesignerLoader from "../../../designer/loader/EditorDesignerLoader";
 import layerListStore from "../../../designer/left/layer-list/LayerListStore";
 import LayerUtil from "../../../designer/left/layer-list/util/LayerUtil";
 import {
@@ -18,8 +17,9 @@ import {
     AlignVerticalCenterTwo,
     Info
 } from "@icon-park/react";
-import {canvasManager, layerManager} from "../../../designer/loader/EditDesignerManager.ts";
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController.ts";
+import editDesignerManager from "../../../designer/manager/EditDesignerManager.ts";
+import DesignerManager from "../../../designer/manager/DesignerManager.ts";
 
 /**
  * lc组件基础信息
@@ -33,7 +33,7 @@ class BaseInfo extends Component<{ controller: AbstractDesignerController }, ILa
 
     init = () => {
         const {activeElem} = rightStore;
-        const {layerConfigs} = layerManager;
+        const {layerConfigs} = editDesignerManager.layerManager;
         const layer: ILayerItem = layerConfigs[activeElem.id!];
         if (!layer) return;
         if (layer.type === 'group') {
@@ -43,13 +43,13 @@ class BaseInfo extends Component<{ controller: AbstractDesignerController }, ILa
             this.state = {...layer, ...rect};
         } else {
             //普通组件
-            const baseInfo = editorDesignerLoader.definitionMap[layer.type!]?.getBaseInfo();
+            const baseInfo = DesignerManager.definitionMap[layer.type!]?.getBaseInfo();
             this.state = {...layer, version: baseInfo?.version};
         }
     }
 
     calculateGroupRect = (childLayerIds: string[]) => {
-        const {layerConfigs} = layerManager;
+        const {layerConfigs} = editDesignerManager.layerManager;
         let minX = +Infinity, minY = +Infinity, maxX = -Infinity, maxY = -Infinity;
         childLayerIds.forEach((layerId: string) => {
             const {x = 0, y = 0, width = 0, height = 0} = layerConfigs[layerId];
@@ -74,7 +74,7 @@ class BaseInfo extends Component<{ controller: AbstractDesignerController }, ILa
     changeName = (value: string) => {
         const {controller} = this.props;
         controller.update({base: {name: value}}, {reRender: false});
-        const {updateLayer} = layerManager;
+        const {updateLayer} = editDesignerManager.layerManager;
         updateLayer && updateLayer([{id: this.state.id!, name: value as string}]);
         //如果显示图层,则更新图层名称
         const {layerInstances} = layerListStore;
@@ -96,11 +96,11 @@ class BaseInfo extends Component<{ controller: AbstractDesignerController }, ILa
         "posY": (value: number) => eventOperateStore.movableRef?.request("draggable", {y: value as number}, true),
         "align": (align: string) => this.handleMap[align](),
         "left": () => eventOperateStore.movableRef?.request("draggable", {x: 0}, true),
-        "horizontally": () => eventOperateStore.movableRef?.request("draggable", {x: canvasManager.canvasConfig.width! / 2 - this.state.width! / 2}, true),
-        "right": () => eventOperateStore.movableRef?.request("draggable", {x: canvasManager.canvasConfig.width! - this.state.width!}, true),
+        "horizontally": () => eventOperateStore.movableRef?.request("draggable", {x: editDesignerManager.canvasManager.canvasConfig.width! / 2 - this.state.width! / 2}, true),
+        "right": () => eventOperateStore.movableRef?.request("draggable", {x: editDesignerManager.canvasManager.canvasConfig.width! - this.state.width!}, true),
         "top": () => eventOperateStore.movableRef?.request("draggable", {y: 0}, true),
-        "vertically": () => eventOperateStore.movableRef?.request("draggable", {y: canvasManager.canvasConfig.height! / 2 - this.state.height! / 2}, true),
-        "bottom": () => eventOperateStore.movableRef?.request("draggable", {y: canvasManager.canvasConfig.height! - this.state.height!}, true),
+        "vertically": () => eventOperateStore.movableRef?.request("draggable", {y: editDesignerManager.canvasManager.canvasConfig.height! / 2 - this.state.height! / 2}, true),
+        "bottom": () => eventOperateStore.movableRef?.request("draggable", {y: editDesignerManager.canvasManager.canvasConfig.height! - this.state.height!}, true),
     }
 
     onFieldChange = (fieldChangeData: FieldChangeData) => {
@@ -109,7 +109,7 @@ class BaseInfo extends Component<{ controller: AbstractDesignerController }, ILa
         if (!targetIds.includes(this.state.id as string)) {
             const {type} = this.state;
             if (type === 'group') {
-                const {layerConfigs} = layerManager;
+                const {layerConfigs} = editDesignerManager.layerManager;
                 const childIds = LayerUtil.findAllChildLayer([this.state.id!]).filter((id: string) => layerConfigs[id].type !== 'group');
                 setTargetIds(childIds!);
             } else {

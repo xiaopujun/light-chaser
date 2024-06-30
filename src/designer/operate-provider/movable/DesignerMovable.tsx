@@ -22,7 +22,7 @@ import {ILayerItem} from "../../DesignerType";
 import './DesignerMovable.less';
 import baseInfoStore from "../../../comps/common-component/base-info/BaseInfoStore";
 import LayerUtil from "../../left/layer-list/util/LayerUtil";
-import {canvasManager, layerManager} from "../../loader/EditDesignerManager.ts";
+import editDesignerManager from "../../manager/EditDesignerManager.ts";
 
 export interface DesignerMovableProps {
     children?: React.ReactNode;
@@ -32,6 +32,8 @@ export interface DesignerMovableState {
     throttleDragRotate: number;
     keepRatio: boolean;
 }
+
+const {layerManager, canvasManager} = editDesignerManager;
 
 class DesignerMovable extends React.Component<DesignerMovableProps, DesignerMovableState> {
     movableRef = React.createRef<Moveable>();

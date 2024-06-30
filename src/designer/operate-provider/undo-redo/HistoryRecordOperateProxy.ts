@@ -22,7 +22,9 @@ import {ILayerItem} from "../../DesignerType";
 import layerListStore from "../../left/layer-list/LayerListStore";
 import LayerUtil from "../../left/layer-list/util/LayerUtil";
 import designerLeftStore from "../../left/DesignerLeftStore";
-import {layerManager} from "../../loader/EditDesignerManager";
+import editDesignerManager from "../../manager/EditDesignerManager.ts";
+
+const {layerManager} = editDesignerManager;
 
 class HistoryRecordOperateProxy {
 

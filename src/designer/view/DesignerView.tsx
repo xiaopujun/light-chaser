@@ -1,23 +1,14 @@
+import viewDesignerManager from "../manager/ViewDesignerManager.ts";
 import {lazy, Suspense, useEffect} from 'react';
 import './DesignerView.less';
 import {observer} from "mobx-react";
 import Loading from "../../json-schema/ui/loading/Loading";
-import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
-import {DesignerMode, SaveType} from "../DesignerType.ts";
+import {SaveType} from "../DesignerType.ts";
 import '../../designer/resource/font/FontGlobal.css';
 import ScaleAction from "../../framework/core/ScaleAction.ts";
-import {
-    viewBpExecutor,
-    viewCanvasManager,
-    viewDesignerManager,
-    viewLayerManager
-} from "../loader/ViewDesignerManager.ts";
-import bluePrintLoader from "../loader/BluePrintLoader.ts";
 import canvasRender from "../left/layer-list/CanvasRender.ts";
 
-
 const ScreenFit = lazy(() => import('../../framework/screen-fit/ScreenFit.tsx'));
-
 
 export interface DesignerViewProps {
     id: string;
@@ -26,18 +17,13 @@ export interface DesignerViewProps {
 
 const DesignerView = observer((props: DesignerViewProps) => {
 
-    const {id} = props;
 
     useEffect(() => {
-        //加载设计器
-        DesignerLoaderFactory.getLoader(DesignerMode.VIEW).load(id);
-        //加载蓝图
-        bluePrintLoader.load();
+        viewDesignerManager.load(props.id);
     }, []);
 
-    const {loaded} = viewDesignerManager;
-    const {canvasConfig: {width, height, adaptationType}} = viewCanvasManager
-    if (!loaded)
+    const {canvasConfig: {width, height, adaptationType}} = viewDesignerManager.canvasManager;
+    if (!viewDesignerManager?.loaded)
         return <Loading/>;
     return (
         <Suspense fallback={<Loading/>}>
@@ -46,7 +32,7 @@ const DesignerView = observer((props: DesignerViewProps) => {
                            ScaleAction.doScale(xScale, yScale)
                        }}>
                 <div style={{width, height, background: 'black', overflow: 'hidden', position: "relative"}}>
-                    {canvasRender.buildCanvasComponents(viewLayerManager, viewBpExecutor)}
+                    {canvasRender.buildCanvasComponents(viewDesignerManager.layerManager, viewDesignerManager.bpExecutor)}
                 </div>
             </ScreenFit>
         </Suspense>

@@ -5,13 +5,13 @@ import Input from "../../../json-schema/ui/input/Input.tsx";
 import MonacoEditor from "../../../json-schema/ui/code-editor/MonacoEditor.tsx";
 import Button from "../../../json-schema/ui/button/Button.tsx";
 import {useRef} from "react";
-import {filterManager} from "../../loader/EditDesignerManager.ts";
+import editDesignerManager from "../../manager/EditDesignerManager.ts";
 
 const AddFilterDialog = observer(() => {
 
-    const {setVisibility, addFilter, updateFilter} = filterManager;
+    const {setVisibility, addFilter, updateFilter} = editDesignerManager.filterManager;
 
-    const filterRef = useRef(filterManager.editFilter);
+    const filterRef = useRef(editDesignerManager.filterManager.editFilter);
 
     const doSave = () => {
         if (filterRef.current.id)
@@ -23,7 +23,7 @@ const AddFilterDialog = observer(() => {
 
     return <Dialog title={'新增过滤器'} visible={true} width={600}
                    className={'add-filter-dialog'}
-                   onClose={() => filterManager.setVisibility(false)}>
+                   onClose={() => editDesignerManager.filterManager.setVisibility(false)}>
         <Grid>
             <Input label={'名称'} defaultValue={filterRef.current.name}
                    onChange={(data) => filterRef.current.name = data}/>
@@ -39,7 +39,7 @@ const AddFilterDialog = observer(() => {
         </Grid>
         <div className={'add-filter-dialog-footer'}>
             <Button onClick={doSave}>保存</Button>&nbsp;&nbsp;
-            <Button onClick={() => filterManager.setVisibility(false)}>取消</Button>
+            <Button onClick={() => editDesignerManager.filterManager.setVisibility(false)}>取消</Button>
         </div>
     </Dialog>
 })

@@ -8,13 +8,13 @@ import Switch from "../../../../json-schema/ui/switch/Switch";
 import Button from "../../../../json-schema/ui/button/Button";
 import NumberInput from "../../../../json-schema/ui/number-input/NumberInput";
 import Select from "../../../../json-schema/ui/select/Select.tsx";
-import {canvasManager} from "../../../loader/EditDesignerManager.ts";
+import editDesignerManager from "../../../manager/EditDesignerManager.ts";
 
 
 const CanvasHdConfigImpl = () => {
-    const configRef = useRef<CanvasConfig | null>({...canvasManager.canvasConfig});
-    const [_rasterize, setRasterize] = useState(canvasManager.canvasConfig.rasterize || false);
-    const {canvasVisible, setCanvasVisible} = canvasManager;
+    const configRef = useRef<CanvasConfig | null>({...editDesignerManager.canvasManager.canvasConfig});
+    const [_rasterize, setRasterize] = useState(editDesignerManager.canvasManager.canvasConfig.rasterize || false);
+    const {canvasVisible, setCanvasVisible} = editDesignerManager.canvasManager;
     const {width, height, rasterize, dragStep, resizeStep} = configRef.current!;
 
     const onClose = () => {
@@ -22,7 +22,7 @@ const CanvasHdConfigImpl = () => {
     }
 
     const doSave = (e: FormEvent<HTMLFormElement>) => {
-        canvasManager.updateCanvasConfig(configRef.current!);
+        editDesignerManager.canvasManager.updateCanvasConfig(configRef.current!);
         e.preventDefault();
         onClose();
     }

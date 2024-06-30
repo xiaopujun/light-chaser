@@ -5,7 +5,7 @@ import {setControlPointLineColor} from "../../operate-provider/movable/DesignerS
 import historyRecordOperateProxy from "../../operate-provider/undo-redo/HistoryRecordOperateProxy";
 import LayerUtil from "./util/LayerUtil";
 import {ILayerItem} from "../../DesignerType.ts";
-import {layerManager} from "../../loader/EditDesignerManager.ts";
+import editDesignerManager from "../../manager/EditDesignerManager.ts";
 
 class LayerListStore {
     constructor() {
@@ -28,7 +28,7 @@ class LayerListStore {
      */
     lockChange = (id: string, lock: boolean) => {
         const updData = [];
-        const {layerConfigs} = layerManager;
+        const {layerConfigs} = editDesignerManager.layerManager;
         const {type} = layerConfigs[id];
         if (type === 'group') {
             //分组图层
@@ -51,7 +51,7 @@ class LayerListStore {
      */
     selectedChange = (id: string, event: MouseEvent) => {
         const {targetIds, setTargetIds} = eventOperateStore;
-        const {layerConfigs} = layerManager;
+        const {layerConfigs} = editDesignerManager.layerManager;
         const {type, lock} = layerConfigs[id];
         if (!type) return;
         const groupLayer = type === 'group';
@@ -183,7 +183,7 @@ class LayerListStore {
 
     hideChange = (id: string, hide: boolean) => {
         const updData = [];
-        const {layerConfigs} = layerManager;
+        const {layerConfigs} = editDesignerManager.layerManager;
         const {type} = layerConfigs[id];
         if (type === 'group') {
             //分组图层

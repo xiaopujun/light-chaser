@@ -12,7 +12,7 @@ import BluePrintHdImpl from "./items/blue-print/BluePrintHdImpl.tsx";
 import {AfferentFour, ConnectionPointTwo, EfferentFour, Eyes, HardDiskOne, PageTemplate, Theme} from "@icon-park/react";
 import URLUtil from "../../utils/URLUtil.ts";
 import {DesignerMode} from "../DesignerType.ts";
-import {canvasManager, themeManager} from "../loader/EditDesignerManager.ts";
+import editDesignerManager from "../manager/EditDesignerManager.ts";
 
 
 export interface IHeaderItem {
@@ -38,13 +38,13 @@ const centerItems: Array<IHeaderItem> = [
         icon: <PageTemplate theme="filled" style={{marginTop: 2}} strokeWidth={3} strokeLinecap="square"/>,
         name: '画布',
         key: 'canvas',
-        onClick: () => canvasManager.setCanvasVisible(true)
+        onClick: () => editDesignerManager.canvasManager.setCanvasVisible(true)
     },
     {
         icon: <Theme theme="filled" style={{marginTop: 2}} strokeWidth={4} strokeLinecap="square"/>,
         name: '主题',
         key: 'theme',
-        onClick: () => themeManager.setThemeVisible(true)
+        onClick: () => editDesignerManager.themeManager.setThemeVisible(true)
     }
 ];
 
@@ -107,9 +107,9 @@ const Header: React.FC = observer(() => {
                     <div className={'header-right'}>
                         {buildHeaderItemUI(leftItems)}
                     </div>
-                    {canvasManager.canvasVisible && <CanvasHdConfigImpl/>}
+                    {editDesignerManager.canvasManager.canvasVisible && <CanvasHdConfigImpl/>}
                     {projectHdStore.projectVisible && <ProjectHdItemImpl/>}
-                    {themeManager.themeVisible && <ThemeHdItemImpl/>}
+                    {editDesignerManager.themeManager.themeVisible && <ThemeHdItemImpl/>}
                     {bluePrintHdStore.bluePrintVisible && <BluePrintHdImpl/>}
                 </div>
             </>

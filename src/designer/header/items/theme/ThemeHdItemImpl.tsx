@@ -5,17 +5,17 @@ import ThemeList from "../../../../comps/common-component/theme-config/theme-lis
 import {ThemeItemType} from "../../../DesignerType";
 import ThemeEditor from "../../../../comps/common-component/theme-config/theme-editor/ThemeEditor";
 import Button from "../../../../json-schema/ui/button/Button";
-import {layerManager, themeManager} from "../../../loader/EditDesignerManager.ts";
+import editDesignerManager from "../../../manager/EditDesignerManager.ts";
 
 const ThemeHdItemImpl = () => {
     const selectedThemeRef = useRef<ThemeItemType>();
     const [openEditor, setOpenEditor] = useState(false);
-    const {themeVisible, setThemeVisible} = themeManager;
+    const {themeVisible, setThemeVisible} = editDesignerManager.themeManager;
 
     const onClose = () => setThemeVisible(false);
 
     const updateGlobalTheme = () => {
-        const {flashGlobalTheme} = layerManager;
+        const {flashGlobalTheme} = editDesignerManager.layerManager;
         if (selectedThemeRef.current) {
             flashGlobalTheme(selectedThemeRef.current);
             onClose();

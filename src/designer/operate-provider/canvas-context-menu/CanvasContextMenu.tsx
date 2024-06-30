@@ -31,7 +31,7 @@ import {
     Up
 } from "@icon-park/react";
 import ContextMenu from "../../../framework/context-menu/ContextMenu.tsx";
-import {layerManager} from "../../loader/EditDesignerManager.ts";
+import editDesignerManager from "../../manager/EditDesignerManager.ts";
 
 
 const defaultDesignerMenus = [
@@ -79,7 +79,7 @@ const CanvasContextMenu = () => {
         const {targetIds} = eventOperateStore;
         if (targetIds.length === 0)
             return menus;
-        const {layerConfigs} = layerManager;
+        const {layerConfigs} = editDesignerManager.layerManager;
         const lockState = !!layerConfigs[targetIds[0]]?.lock;
         if (lockState) {
             menus.push({

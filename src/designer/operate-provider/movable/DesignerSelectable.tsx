@@ -6,7 +6,7 @@ import Moveable from 'react-moveable';
 import LayerUtil from "../../left/layer-list/util/LayerUtil";
 import layerListStore from "../../left/layer-list/LayerListStore";
 import designerLeftStore from "../../left/DesignerLeftStore";
-import {layerManager} from "../../loader/EditDesignerManager.ts";
+import editDesignerManager from "../../manager/EditDesignerManager.ts";
 
 /**
  * 设置控制点和边框的颜色
@@ -56,7 +56,7 @@ class DesignerSelectable extends Component<DesignerSelectableProps> {
             });
         }
 
-        const {layerConfigs} = layerManager;
+        const {layerConfigs} = editDesignerManager.layerManager;
         let layerIds = selected.map((item) => item.id);
         let lockState = !!layerConfigs[layerIds[0]]?.lock;
         if (layerIds.length === 1) {

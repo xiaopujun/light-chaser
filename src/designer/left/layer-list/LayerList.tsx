@@ -5,7 +5,7 @@ import eventOperateStore from "../../operate-provider/EventOperateStore";
 import layerRender from "./LayerRender.ts";
 import designerLeftStore from "../DesignerLeftStore";
 import {Close} from "@icon-park/react";
-import {layerManager} from "../../loader/EditDesignerManager.ts";
+import editDesignerManager from "../../manager/EditDesignerManager.ts";
 
 const LayerList = () => {
     const layerListRef = React.useRef<HTMLDivElement | null>(null);
@@ -23,7 +23,7 @@ const LayerList = () => {
     }
 
     const buildLayerList = () => {
-        const {layerConfigs, layerHeader} = layerManager;
+        const {layerConfigs, layerHeader} = editDesignerManager.layerManager;
         return layerRender.buildLayerList(layerConfigs, layerHeader!);
     }
 

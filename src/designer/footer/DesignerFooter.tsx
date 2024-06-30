@@ -7,7 +7,7 @@ import {CoverConfig} from "./cover/CoverConfig.tsx";
 import {useState} from "react";
 import {Tooltip} from "antd";
 import {Keyboard, Lightning, Magnet, MaterialThree} from "@icon-park/react";
-import {layerManager} from "../loader/EditDesignerManager.ts";
+import editDesignerManager from "../manager/EditDesignerManager.ts";
 
 //将DesignerFooter调整为hook组件
 const DesignerFooter = () => {
@@ -25,15 +25,15 @@ const DesignerFooter = () => {
     }
 
     const toggleEnableEvent = () => {
-        layerManager.setEnableEvent(!enableEvent)
+        editDesignerManager.layerManager.setEnableEvent(!enableEvent)
         setEnableEvent(!enableEvent)
     }
 
     const toggleAdsorption = () => {
-        layerManager.setEnableAdsorption(!layerManager.enableAdsorption)
+        editDesignerManager.layerManager.setEnableAdsorption(!editDesignerManager.layerManager.enableAdsorption)
     }
 
-    const {layerConfigs, enableAdsorption} = layerManager;
+    const {layerConfigs, enableAdsorption} = editDesignerManager.layerManager;
     const {hotKeyVisible, snapShotVisible} = footerStore;
     const {scale} = eventOperateStore;
     return (

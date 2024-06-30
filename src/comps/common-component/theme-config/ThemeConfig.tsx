@@ -5,8 +5,8 @@ import ThemeList from "./theme-list/ThemeList";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import rightStore from "../../../designer/right/RightStore";
 import Button from "../../../json-schema/ui/button/Button";
-import {layerManager} from "../../../designer/loader/EditDesignerManager.ts";
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController.ts";
+import editDesignerManager from "../../../designer/manager/EditDesignerManager.ts";
 
 class ThemeConfig extends Component<{ controller: AbstractDesignerController }> {
     state = {
@@ -20,7 +20,7 @@ class ThemeConfig extends Component<{ controller: AbstractDesignerController }> 
     themeChange = (theme: ThemeItemType) => {
         if (!theme) return;
         const {activeElem: {id}} = rightStore;
-        const {compController} = layerManager;
+        const {compController} = editDesignerManager.layerManager;
         const instance = compController[id + ''];
         instance && instance.updateTheme(theme);
     }

@@ -6,7 +6,7 @@ import {DesignerRulerRef, ILayerItem} from "../DesignerType";
 import layerListStore from "../left/layer-list/LayerListStore";
 import designerLeftStore from "../left/DesignerLeftStore";
 import Selecto from "react-selecto";
-import {layerManager} from "../loader/EditDesignerManager.ts";
+import editDesignerManager from "../manager/EditDesignerManager.ts";
 
 /**
  * 组件多选情况下的坐标值
@@ -180,7 +180,7 @@ class EventOperateStore {
      * @param compArr
      */
     calculateGroupCoordinate = (compArr: HTMLElement[]) => {
-        const {layerConfigs} = layerManager;
+        const {layerConfigs} = editDesignerManager.layerManager;
         const groupCoordinate: GroupCoordinateType = {
             minX: Infinity,
             minY: Infinity,

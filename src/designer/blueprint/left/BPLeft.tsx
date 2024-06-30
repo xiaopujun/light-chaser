@@ -6,7 +6,7 @@ import IdGenerate from "../../../utils/IdGenerate";
 import DragAddProvider from "../../../framework/drag-scale/DragAddProvider";
 import Input from "../../../json-schema/ui/input/Input.tsx";
 import {AddSubset, ApplicationOne, BytedanceMiniApp, Calculator, CardTwo, Filter, MindmapMap} from "@icon-park/react";
-import {bluePrintManager, layerManager} from "../../loader/EditDesignerManager.ts";
+import editDesignerManager from "../../manager/EditDesignerManager.ts";
 
 const BPLeft: React.FC = () => {
     return (
@@ -79,7 +79,7 @@ const drop = (event: DragEvent) => {
     event.preventDefault();
     let nodeId = event.dataTransfer?.getData('nodeId');
     const type = event.dataTransfer?.getData('type');
-    const {bpDragContentRef, canvasScale} = bluePrintManager;
+    const {bpDragContentRef, canvasScale} = editDesignerManager.bluePrintManager;
     const contentPos = bpDragContentRef?.getBoundingClientRect();
     //获取鼠标位置
     const position = {
@@ -93,7 +93,7 @@ const drop = (event: DragEvent) => {
         //非图层节点，需要单独生成一个唯一节点id
         nodeId = IdGenerate.generateId();
     }
-    const {addBPNodeLayout} = bluePrintManager;
+    const {addBPNodeLayout} = editDesignerManager.bluePrintManager;
     addBPNodeLayout({id: nodeId, type, position});
 }
 
@@ -131,7 +131,7 @@ export const BPNodeList = observer(() => {
 })
 
 export const BPLayerNodeList = observer(() => {
-    const {layerConfigs} = layerManager;
+    const {layerConfigs} = editDesignerManager.layerManager;
     const {usedLayerNodes, searchValue} = bpLeftStore;
     let layerIdList = layerConfigs ? Object.keys(layerConfigs) : [];
     if (searchValue !== '') {

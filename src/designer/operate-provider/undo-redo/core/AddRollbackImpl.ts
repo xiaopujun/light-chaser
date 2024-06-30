@@ -3,7 +3,9 @@ import eventOperateStore from "../../EventOperateStore";
 import {IAddOperateData, IHistoryRecord} from "../OperateType";
 import rightStore from "../../../right/RightStore";
 import {cloneDeep} from "lodash";
-import {layerManager} from "../../../loader/EditDesignerManager.ts";
+import editDesignerManager from "../../../manager/EditDesignerManager.ts";
+
+const {layerManager} = editDesignerManager;
 
 export class AddRollbackImpl extends AbstractRollback {
     redo(record: IHistoryRecord): void {

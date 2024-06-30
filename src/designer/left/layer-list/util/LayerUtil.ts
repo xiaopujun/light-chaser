@@ -1,5 +1,5 @@
 import {ILayerItem} from "../../../DesignerType.ts";
-import {layerManager} from "../../../loader/EditDesignerManager.ts";
+import editDesignerManager from "../../../manager/EditDesignerManager.ts";
 
 export default class LayerUtil {
 
@@ -15,7 +15,7 @@ export default class LayerUtil {
     public static findTopGroupLayer = (layerIds: string[], hasSelf: boolean = false): string[] => {
         //使用set数据结构去重，多个不同的组件可能存在同一个分组内
         const groupLayerIdSet = new Set<string>();
-        const {layerConfigs} = layerManager;
+        const {layerConfigs} = editDesignerManager.layerManager;
         layerIds.forEach((id) => {
             let _id = id;
             let _pid = layerConfigs[id]?.pid;
@@ -47,7 +47,7 @@ export default class LayerUtil {
      */
     public static findAllChildLayer = (groupIds: string[], hasSelf: boolean = true): string[] => {
         let layerIdArr: string[] = [];
-        const {layerConfigs} = layerManager;
+        const {layerConfigs} = editDesignerManager.layerManager;
         groupIds.forEach((id) => {
             layerIdArr.push(id);
             let layer: ILayerItem = layerConfigs[id];
@@ -66,7 +66,7 @@ export default class LayerUtil {
      * @private
      */
     public static iterateLayerLink(layerHeader: string, res: string[]) {
-        const {layerConfigs} = layerManager;
+        const {layerConfigs} = editDesignerManager.layerManager;
         let layer: ILayerItem = layerConfigs[layerHeader];
         if (layer) {
             res.push(layer.id!);
@@ -89,7 +89,7 @@ export default class LayerUtil {
      */
     public static hasSameGroup = (layerIds: string[]): boolean => {
         if (layerIds.length <= 1) return false;
-        const {layerConfigs} = layerManager;
+        const {layerConfigs} = editDesignerManager.layerManager;
         //如果layerIds中存在没有pid的图层，则说明这个图层一定没有编组，则直接返回false，说明本次可以编组
         if (layerIds.some((id) => layerConfigs[id].type !== 'group' && !layerConfigs[id].pid)) return false;
         const groupLayerIds = new Set();

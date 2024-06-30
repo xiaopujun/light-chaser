@@ -5,9 +5,9 @@ import URLUtil from "../../utils/URLUtil";
 import {DesignerMode, ILayerItem} from "../../designer/DesignerType";
 import LayerManager from "../../designer/manager/LayerManager.ts";
 import {AbstractDefinition} from "./AbstractDefinition";
-import DesignerLoaderFactory from "../../designer/loader/DesignerLoaderFactory";
 import AbstractDesignerController from "./AbstractDesignerController";
 import BPExecutor from "../../designer/blueprint/core/BPExecutor.ts";
+import DesignerManager from "../../designer/manager/DesignerManager.ts";
 
 export interface ComponentContainerProps {
     layer: ILayerItem;
@@ -26,7 +26,7 @@ const ComponentContainer = memo((props: ComponentContainerProps) => {
     useEffect(() => {
         //通过ref创建组件，并将组件实例存入Map中。后续通过Map匹配到具体实例，调用实例的对象方法进行组件的更新操作
         const {elemConfigs, compController} = layerManager;
-        const componentDefine: AbstractDefinition = DesignerLoaderFactory.getLoader(mode).definitionMap[layer!.type!];
+        const componentDefine: AbstractDefinition = DesignerManager.definitionMap[layer!.type!];
         if (componentDefine) {
             const Controller = componentDefine.getController();
             if (Controller) {

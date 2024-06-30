@@ -13,7 +13,7 @@ import {
 } from "../../DesignerType.ts";
 import bpLeftStore from "../left/BPLeftStore.ts";
 import AbstractManager from "../../manager/core/AbstractManager.ts";
-import bluePrintLoader from "../../loader/BluePrintLoader.ts";
+import DesignerManager from "../../manager/DesignerManager.ts";
 
 
 class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
@@ -231,7 +231,7 @@ class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
                 if (Object.keys(this.bpNodeControllerInsMap).length === 0 && nodeLayoutList.length !== 0) {
                     //存在节点布局信息，但没有controller实例信息，说明没有打开过蓝图编辑器（实例信息在渲染节点时才产生）
                     nodeLayoutList.forEach(layout => {
-                        const Controller = bluePrintLoader.bpControllerMap[layout.type!];
+                        const Controller = DesignerManager.bpControllerMap[layout.type!];
                         const config = this.bpNodeConfigMap[layout.id!];
                         if (Controller) {
                             //@ts-ignore  todo这里在抽象类中统一定义了构造器格式，理论上应该支持，后续研究下是否ts不支持这种方式
@@ -305,10 +305,9 @@ class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
                 initUsedLayerNodes(usedLayerNodes);
             } else {
                 const bpNodeControllerInsMap: Record<string, AbstractBPNodeController> = {};
-                const {bpControllerMap} = bluePrintLoader;
                 Object.values(data?.bpNodeLayoutMap!).forEach((layout: BPNodeLayoutType) => {
                     const {type, id} = layout;
-                    const NodeController = bpControllerMap[type!];
+                    const NodeController = DesignerManager.bpControllerMap[type!];
                     const config = data?.bpNodeConfigMap![id!];
                     // @ts-ignore
                     bpNodeControllerInsMap[id!] = new NodeController!(config)!;

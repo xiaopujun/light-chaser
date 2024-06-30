@@ -9,8 +9,8 @@ import historyRecordOperateProxy from "../operate-provider/undo-redo/HistoryReco
 import Loading from "../../json-schema/ui/loading/Loading";
 import AbstractController from "../../framework/core/AbstractController";
 import {Close} from "@icon-park/react";
-import editorDesignerLoader from "../loader/EditorDesignerLoader.ts";
-import {layerManager} from "../loader/EditDesignerManager.ts";
+import editDesignerManager from "../manager/EditDesignerManager.ts";
+import DesignerManager from "../manager/DesignerManager.ts";
 
 export interface ConfigType<T extends AbstractController = AbstractDesignerController> {
     controller: T;
@@ -37,9 +37,9 @@ const ConfigContent = () => {
     }
 
     const buildConfigContent = () => {
-        const {compController} = layerManager;
+        const {compController} = editDesignerManager.layerManager;
         const {activeMenu, activeElem} = rightStore;
-        const abstractConfigObj: AbstractDefinition = editorDesignerLoader.definitionMap[activeElem.type + '']
+        const abstractConfigObj: AbstractDefinition = DesignerManager.definitionMap[activeElem.type + '']
         if (!abstractConfigObj) return;
         const configMapping = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp: React.ComponentType<ConfigType> = configMapping![activeMenu];

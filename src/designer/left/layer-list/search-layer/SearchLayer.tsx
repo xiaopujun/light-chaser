@@ -6,7 +6,7 @@ import './SearchLayer.less';
 import {useState} from "react";
 import {ILayerItem} from "../../../DesignerType.ts";
 import eventOperateStore from "../../../operate-provider/EventOperateStore.ts";
-import {layerManager} from "../../../loader/EditDesignerManager.ts";
+import editDesignerManager from "../../../manager/EditDesignerManager.ts";
 
 export const SearchLayer = observer(() => {
     const [list, setList] = useState<ILayerItem[]>([]);
@@ -21,7 +21,7 @@ export const SearchLayer = observer(() => {
             setList([]);
             return;
         }
-        const {layerConfigs} = layerManager;
+        const {layerConfigs} = editDesignerManager.layerManager;
         const searchResult: ILayerItem[] = [];
         Object.keys(layerConfigs).forEach(id => {
             if (layerConfigs[id].name?.includes(value))

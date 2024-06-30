@@ -5,10 +5,10 @@ import {observer} from "mobx-react";
 import AddFilterDialog from "./AddFilterDialog.tsx";
 import {Popconfirm} from "antd";
 import {Close, Help, Plus} from "@icon-park/react";
-import {filterManager} from "../../loader/EditDesignerManager.ts";
+import editDesignerManager from "../../manager/EditDesignerManager.ts";
 
 export const FilterList = observer(() => {
-    const {filters, setEditFilter, delFilter, setVisibility} = filterManager;
+    const {filters, setEditFilter, delFilter, setVisibility} = editDesignerManager.filterManager;
 
     return <>
         <div className={'dl-filter-list'}>
@@ -50,6 +50,6 @@ export const FilterList = observer(() => {
                 }
             </div>
         </div>
-        {filterManager.visible && <AddFilterDialog/>}
+        {editDesignerManager.filterManager.visible && <AddFilterDialog/>}
     </>
 })

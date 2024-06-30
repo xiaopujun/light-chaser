@@ -4,14 +4,14 @@ import {observer} from "mobx-react";
 import bpRightStore from "./BPRightStore";
 import Accordion from "../../../json-schema/ui/accordion/Accordion";
 import {AbstractBPNodeController} from "../node/core/AbstractBPNodeController";
-import {bluePrintManager} from "../../loader/EditDesignerManager.ts";
+import editDesignerManager from "../../manager/EditDesignerManager.ts";
 
 export interface BPRightConfigProps {
     controller?: AbstractBPNodeController;
 }
 
 const BPRight: React.FC = observer(() => {
-    const {bpNodeControllerInsMap} = bluePrintManager;
+    const {bpNodeControllerInsMap} = editDesignerManager.bluePrintManager;
     const {activeNode} = bpRightStore;
     const activeNodeController = bpNodeControllerInsMap[activeNode!];
     const nodeConfig = activeNodeController?.getConfig();

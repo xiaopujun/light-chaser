@@ -1,4 +1,3 @@
-import DesignerLoaderFactory from "./loader/DesignerLoaderFactory";
 import {useEffect} from 'react';
 import './style/DesignerGlobalStyle.less';
 import DesignerLeft from "./left/DesignerLeft";
@@ -11,10 +10,9 @@ import DesignerCanvas from "./canvas/DesignerCanvas";
 import {observer} from "mobx-react";
 import Loading from "../json-schema/ui/loading/Loading";
 import FrameLayout from "../json-schema/ui/frame-layout/FrameLayout";
-import {DesignerMode, SaveType} from "./DesignerType.ts";
+import {SaveType} from "./DesignerType.ts";
 import '../designer/resource/font/FontGlobal.css';
-import {editDesignerManager} from "./loader/EditDesignerManager.ts";
-import bluePrintLoader from "./loader/BluePrintLoader.ts";
+import editDesignerManager from "./manager/EditDesignerManager.ts";
 
 
 /**
@@ -85,12 +83,8 @@ export interface DesignerProps {
 }
 
 const Designer = (props: DesignerProps) => {
-    const {id} = props;
     useEffect(() => {
-        //加载设计器
-        DesignerLoaderFactory.getLoader(DesignerMode.EDIT).load(id);
-        //加载蓝图
-        bluePrintLoader.load();
+        editDesignerManager.load(props.id);
         //绑定事件到dom元素
         bindEventToDom();
         return () => unbindEventToDom();//卸载dom元素上的事件

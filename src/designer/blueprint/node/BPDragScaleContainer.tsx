@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import DragScaleProvider from "../../../framework/drag-scale/DragScaleProvider";
 import {reRenderAllLine} from "../drag/BPMovable";
 import CanvasUtil from "../util/CanvasUtil";
-import {bluePrintManager} from "../../loader/EditDesignerManager.ts";
+import editDesignerManager from "../../manager/EditDesignerManager.ts";
 
 
 export interface BPDragScaleContainerContainerProps {
@@ -14,7 +14,7 @@ export const BPDragScaleContainer: React.FC<BPDragScaleContainerContainerProps> 
     const containerRef = React.useRef<HTMLDivElement>(null);
     const contentRef = React.useRef<HTMLDivElement>(null);
     useEffect(() => {
-        const {setCanvasTranslate, setCanvasScale, setBpDragContentRef} = bluePrintManager;
+        const {setCanvasTranslate, setCanvasScale, setBpDragContentRef} = editDesignerManager.bluePrintManager;
         const container = containerRef.current;
         const content = contentRef.current;
         setBpDragContentRef(content!);

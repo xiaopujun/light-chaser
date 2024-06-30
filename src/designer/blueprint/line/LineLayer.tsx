@@ -1,8 +1,10 @@
 import React, {CSSProperties} from 'react';
 import CanvasUtil from "../util/CanvasUtil";
 import IdGenerate from "../../../utils/IdGenerate";
-import {bluePrintManager} from "../../loader/EditDesignerManager.ts";
 import {AnchorPointType, IBPLine} from "../../DesignerType.ts";
+import editDesignerManager from "../../manager/EditDesignerManager.ts";
+
+const {bluePrintManager} = editDesignerManager
 
 class LineLayer extends React.Component {
 
@@ -27,7 +29,7 @@ class LineLayer extends React.Component {
     keyMove: boolean = false;
 
     componentDidMount() {
-        const {setUpCtx, setDownCtx} = bluePrintManager;
+        const {setUpCtx, setDownCtx} = editDesignerManager.bluePrintManager;
         setUpCtx(this.upLayer!.getContext('2d')!);
         setDownCtx(this.downLayer!.getContext('2d')!);
         document.addEventListener('mousedown', this.bpMouseDown);

@@ -3,7 +3,6 @@ import URLUtil from "../../../../utils/URLUtil";
 import {ILayerItem} from "../../../DesignerType";
 import './ImageSource.less';
 import eventOperateStore from "../../../operate-provider/EventOperateStore";
-import editorDesignerLoader from "../../../loader/EditorDesignerLoader";
 import IdGenerate from "../../../../utils/IdGenerate";
 import {BaseImageComponentProps} from "../../../../comps/lc/base-image/BaseImageController";
 import {IImageData} from "../../../../comps/lc/base-image/BaseImageComponent";
@@ -13,7 +12,8 @@ import historyRecordOperateProxy from "../../../operate-provider/undo-redo/Histo
 import {Close, Help} from "@icon-park/react";
 import serverOperator from "../../../../framework/operate/ServerOperator.ts";
 import ServerOperator from "../../../../framework/operate/ServerOperator.ts";
-import {layerManager} from "../../../loader/EditDesignerManager.ts";
+import editDesignerManager from "../../../manager/EditDesignerManager.ts";
+import DesignerManager from "../../../manager/DesignerManager.ts";
 
 
 export default function ImageSource() {
@@ -50,10 +50,9 @@ export default function ImageSource() {
     }
 
     const addItem = (compKey: string, position = [0, 0], url: string, hash?: string) => {
-        const {elemConfigs} = layerManager;
+        const {elemConfigs} = editDesignerManager.layerManager;
         let {setAddRecordCompId} = eventOperateStore;
-        const {definitionMap} = editorDesignerLoader;
-        const definition = definitionMap[compKey];
+        const definition = DesignerManager.definitionMap[compKey];
         const {compName, width = 320, height = 200} = definition.getBaseInfo();
         const id = IdGenerate.generateId();
         const movableItem: ILayerItem = {

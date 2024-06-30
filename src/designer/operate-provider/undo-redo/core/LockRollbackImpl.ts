@@ -3,7 +3,7 @@ import {IHistoryRecord, ILockOperateData} from "../OperateType";
 import {Component} from "react";
 import layerListStore from "../../../left/layer-list/LayerListStore";
 import designerLeftStore from "../../../left/DesignerLeftStore";
-import {layerManager} from "../../../loader/EditDesignerManager.ts";
+import editDesignerManager from "../../../manager/EditDesignerManager.ts";
 
 /**
  * hide, lock, order的撤销与回滚操作实现
@@ -11,7 +11,7 @@ import {layerManager} from "../../../loader/EditDesignerManager.ts";
 export class LockRollbackImpl extends AbstractRollback {
     redo(record: IHistoryRecord): void {
         const {next} = record;
-        const {updateLayer} = layerManager;
+        const {updateLayer} = editDesignerManager.layerManager;
         if (next)
             updateLayer(next as ILockOperateData[]);
         const {layerInstances} = layerListStore;
@@ -27,7 +27,7 @@ export class LockRollbackImpl extends AbstractRollback {
 
     undo(record: IHistoryRecord): void {
         const {prev} = record;
-        const {updateLayer} = layerManager;
+        const {updateLayer} = editDesignerManager.layerManager;
         if (prev)
             updateLayer(prev as ILockOperateData[]);
         const {layerInstances} = layerListStore;

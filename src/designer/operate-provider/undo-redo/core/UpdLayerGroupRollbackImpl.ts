@@ -2,7 +2,9 @@ import AbstractRollback from "./AbstractRollback";
 import {IHistoryRecord} from "../OperateType";
 import {ILayerItem} from "../../../DesignerType";
 import {cloneDeep} from "lodash";
-import {layerManager} from "../../../loader/EditDesignerManager.ts";
+import editDesignerManager from "../../../manager/EditDesignerManager.ts";
+
+const {layerManager} = editDesignerManager;
 
 /**
  * 图层编组和解除编组不能简单的认为只需要调用doGrouping和doUnGrouping即可。撤销和重做的额过程中，图层对应的设置项也要完整的撤销和重做

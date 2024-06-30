@@ -2,8 +2,8 @@ import React, {useEffect, useRef} from "react";
 import bpRightStore from "../../../right/BPRightStore";
 import './BPNodeContainer.less';
 import {BPNodeLayoutType} from "../../../../DesignerType.ts";
-import {bluePrintManager} from "../../../../loader/EditDesignerManager.ts";
-import bluePrintLoader from "../../../../loader/BluePrintLoader.ts";
+import editDesignerManager from "../../../../manager/EditDesignerManager.ts";
+import DesignerManager from "../../../../manager/DesignerManager.ts";
 
 export interface BPNodeContainerProps {
     layout: BPNodeLayoutType;
@@ -18,11 +18,11 @@ export const BPNodeContainer: React.FC<BPNodeContainerProps> = React.memo(({layo
     }
 
     useEffect(() => {
-        const NodeController = bluePrintLoader.bpControllerMap[layout.type!];
+        const NodeController = DesignerManager.bpControllerMap[layout.type!];
         if (!NodeController) return;
         const ncIns = new NodeController();
         if (!ncIns) return;
-        const {bpNodeControllerInsMap, bpNodeConfigMap} = bluePrintManager;
+        const {bpNodeControllerInsMap, bpNodeConfigMap} = editDesignerManager.bluePrintManager;
         //获取节点配置，优先从bpStore.bpNodeConfigMap中获取【已经保存的配置】，没有的，则调用controller的getNodeConfig方法获取【默认配置】
         let nodeInfo = bpNodeConfigMap[layout.id!];
         if (!nodeInfo)

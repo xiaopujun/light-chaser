@@ -1,21 +1,21 @@
-import React, {useEffect} from "react";
+import React, {ReactNode, useEffect} from "react";
 import Moveable, {OnDrag, OnDragEnd, OnDragGroup, OnDragGroupEnd, OnDragStart} from "react-moveable";
 import {observer} from "mobx-react";
 import CanvasUtil from "../util/CanvasUtil";
-import {bluePrintManager} from "../../loader/EditDesignerManager.ts";
 import {IBPLine, IPoint} from "../../DesignerType.ts";
+import editDesignerManager from "../../manager/EditDesignerManager.ts";
 
 export interface BPMovableProps {
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 export const reRenderAllLine = () => {
-    const {bpLines} = bluePrintManager;
+    const {bpLines} = editDesignerManager.bluePrintManager;
     reRenderLine(Object.values(bpLines));
 }
 
 export const reRenderLine = (lines: IBPLine[]) => {
-    const {downCtx, canvasOffset, nodeContainerRef} = bluePrintManager;
+    const {downCtx, canvasOffset, nodeContainerRef} = editDesignerManager.bluePrintManager;
     const {width: canvasW, height: canvasH} = nodeContainerRef?.getBoundingClientRect()!;
     //更新每条线的起始点和终点
     lines.forEach((line: IBPLine) => {
@@ -49,7 +49,7 @@ export const updNodeAndLinePos = (nodeId: string, position: IPoint) => {
     const {
         bpNodeControllerInsMap, bpAPLineMap, bpLines,
         updLinePos, updBpNodeLayout, canvasOffset
-    } = bluePrintManager;
+    } = editDesignerManager.bluePrintManager;
     //更新节点位置
     updBpNodeLayout({
         id: nodeId,
@@ -94,7 +94,7 @@ export const BPMovable = observer((props: BPMovableProps) => {
         const movableRef = React.createRef<Moveable>();
 
         useEffect(() => {
-            const {setBpMovableRef} = bluePrintManager;
+            const {setBpMovableRef} = editDesignerManager.bluePrintManager;
             setBpMovableRef(movableRef.current!);
         })
 
@@ -139,7 +139,7 @@ export const BPMovable = observer((props: BPMovableProps) => {
             CanvasUtil.updSegmentSamplingPoint();
         }
 
-        const {selectedNodes} = bluePrintManager;
+        const {selectedNodes} = editDesignerManager.bluePrintManager;
         return (
             <>
                 {children}

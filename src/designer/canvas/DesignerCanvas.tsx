@@ -7,8 +7,8 @@ import LayerUtil from "../left/layer-list/util/LayerUtil";
 import DesignerMovable from "../operate-provider/movable/DesignerMovable.tsx";
 import Loading from "../../json-schema/ui/loading/Loading.tsx";
 import SearchLayer from "../left/layer-list/search-layer/SearchLayer.tsx";
-import {bpExecutor, layerManager} from "../loader/EditDesignerManager.ts";
 import canvasRender from "../left/layer-list/CanvasRender.ts";
+import editDesignerManager from "../manager/EditDesignerManager.ts";
 
 const DesignerContainer = lazy(() => import('../operate-provider/DesignerContainer'));
 const DesignerRuler = lazy(() => import('./DesignerRuler'));
@@ -32,7 +32,7 @@ const DesignerCanvas = memo(observer(() => {
             targetIds = LayerUtil.findTopGroupLayer(targetIds, true);
         if (targetIds.length !== 1) return;
         const layerId = targetIds[0];
-        const {layerConfigs} = layerManager!;
+        const {layerConfigs} = editDesignerManager.layerManager!;
         const layer = layerConfigs[layerId];
         if (layerId === activeElem.id) return;
         activeConfig(layerId, layer.type!);
@@ -45,7 +45,7 @@ const DesignerCanvas = memo(observer(() => {
                     <DesignerRuler>
                         <DesignerDragScaleContainer onDoubleClick={updateActive}>
                             <DesignerMovable>
-                                {canvasRender.buildCanvasComponents(layerManager, bpExecutor)}
+                                {canvasRender.buildCanvasComponents(editDesignerManager.layerManager, editDesignerManager.bpExecutor)}
                             </DesignerMovable>
                         </DesignerDragScaleContainer>
                     </DesignerRuler>
