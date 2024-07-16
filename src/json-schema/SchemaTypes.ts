@@ -55,6 +55,7 @@ export interface CodeEditorConfigType extends BaseSchemaType {
         language?: 'json' | 'javascript' | 'sql';
         width?: string | number;
         height?: string | number;
+        showExtend?: boolean;
     }
 }
 
