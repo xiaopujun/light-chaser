@@ -55,7 +55,8 @@ export const AMapConfig: React.FC<ConfigType<AMapController>> = ({controller}) =
                         value: codeRef.current,
                         config: {
                             language: 'javascript',
-                            height: 600
+                            height: 600,
+                            showExtend: true
                         }
                     }
                 ]
