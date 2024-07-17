@@ -38,11 +38,12 @@ export interface MonacoEditorProps {
 
 export default function MonacoEditor(props: MonacoEditorProps) {
     const {value, defaultValue, onChange, language, width, height, readonly, showExtend} = props;
-    console.log(props)
+
     const monacoRef = useRef(null);
     const editorRef = useRef(null);
     const [currentLine, setCurrentLine] = useState(1);
     const [currentCol, setCurrentCol] = useState(1);
+    const [extendProps, setExtendProps] = useState({...props,showExtend: false});
 
     function handleEditorDidMount(editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) {
         editor.onDidChangeCursorPosition(()=>{
@@ -56,9 +57,14 @@ export default function MonacoEditor(props: MonacoEditorProps) {
         monacoRef.current = monaco;
     }
 
+    function handleChange(value:string | undefined){
+        setExtendProps({...extendProps,value: value});
+        onChange && onChange(value);
+    }
+
     const handleDialogOpen = () => {
         monacoEditorDialogManager.setCloseHandler(handleDialogClose);
-        monacoEditorDialogManager.setProps({...props,showExtend: false});
+        monacoEditorDialogManager.setProps(extendProps);
         monacoEditorDialogManager.setVisibility(true);
     }
 
@@ -72,7 +78,7 @@ export default function MonacoEditor(props: MonacoEditorProps) {
             <div style={{width, height}} className={'monaco-editor-main'}>
                 <Editor defaultLanguage={language || 'json'}
                         theme="vs-dark"
-                        onChange={onChange}
+                        onChange={handleChange}
                         height={'100%'}
                         width={'100%'}
                         options={{
