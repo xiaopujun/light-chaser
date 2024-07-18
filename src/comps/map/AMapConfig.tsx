@@ -56,7 +56,7 @@ export const AMapConfig: React.FC<ConfigType<AMapController>> = ({controller}) =
                         config: {
                             language: 'javascript',
                             height: 600,
-                            showExtend: true
+                            fullScreen: true
                         }
                     }
                 ]

@@ -14,8 +14,6 @@ import Loading from "../json-schema/ui/loading/Loading";
 import FrameLayout from "../json-schema/ui/frame-layout/FrameLayout";
 import {SaveType} from "./DesignerType.ts";
 import designerManager from "./manager/DesignerManager.ts";
-import MonacoEditorDialog from "../json-schema/ui/code-editor/MonacoEditorDialog.tsx";
-import monacoEditorDialogManager from "../json-schema/ui/code-editor/MonacoEditorDialogManager.ts";
 
 
 /**
@@ -105,7 +103,6 @@ const Designer = (props: DesignerProps) => {
                          content={<DesignerCanvas/>}
                          right={<DesignerRight/>}
                          footer={<DesignerFooter/>}/>
-            {monacoEditorDialogManager.visible && <MonacoEditorDialog/>}
         </div>
     );
 }

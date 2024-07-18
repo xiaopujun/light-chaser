@@ -64,7 +64,9 @@ class HotKey extends Component<HotKeyProps> {
     }
 
     keyDown = (e: KeyboardEvent) => {
-        const key = e.key.toLowerCase();
+        const key = e.key?.toLowerCase();
+        if (!key)
+            return;
         if (!this.currHotKey.some(item => item === key))
             this.currHotKey.push(key);
         const hotKey = this.currHotKey.join(' + ');

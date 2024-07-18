@@ -2,24 +2,33 @@
   border: 2px solid #2d2d2d;
 }
 
-.monaco-editor-main {
+.monaco-editor-button-bar {
+  display: flex;
+  flex-direction: row-reverse;
+
+  .editor-full-btn {
+    position: relative;
+    top: -24px;
+    right: 6px;
+    font-size: 16px;
+    color: #939393;
+    transition: all 0.3s;
+
+    &:hover {
+      cursor: pointer;
+      color: #47a4ff;
+    }
+  }
 }
 
-.monaco-editor-buttom-bar {
-  border-top: 2px solid #2d2d2d;
-  width: 100%;
-  display: flex;
-  padding: 0px 5px;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-content: center;
-  justify-content: space-between;
-  align-items: center;
-  .monaco-editor-status-item {
-    padding-right: 5px;
-  }
-  .left-border {
-    border-left: 2px solid #2d2d2d;
-    padding-left: 5px;
+.full-editor-dialog {
+  .full-editor-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+
+    .lc-button {
+      margin-left: 10px;
+    }
   }
 }
