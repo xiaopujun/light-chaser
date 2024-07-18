@@ -79,9 +79,6 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                                 type: 'number-input',
                                 label: '起始角',
                                 value: (config.startAngle || 0) / Math.PI * 180,
-                                config: {
-                                    suffix: '°',
-                                }
                             },
                             {
                                 key: 'innerRadius',
@@ -100,9 +97,6 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                                 type: 'number-input',
                                 label: '结束角',
                                 value: (config.endAngle || 2 * Math.PI) / Math.PI * 180,
-                                config: {
-                                    suffix: '°',
-                                },
                             },
                             {
                                 key: 'sectorStyle',

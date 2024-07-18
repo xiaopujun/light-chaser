@@ -66,9 +66,6 @@ export const AMapConfig: React.FC<ConfigType<AMapController>> = ({controller}) =
                 id: 'refreshMap',
                 config: {
                     children: '刷新地图',
-                    style: {
-                        width: '100%'
-                    }
                 }
             }
         ]

@@ -39,9 +39,6 @@ export default function AntdGaugeConfig(props: ConfigType<AntdGaugeController>) 
                                 type: 'number-input',
                                 label: '起始角度',
                                 value: config!.startAngle! / Math.PI * 180,
-                                config: {
-                                    suffix: '°'
-                                }
                             },
                             {
                                 key: 'innerRadius',
@@ -61,9 +58,6 @@ export default function AntdGaugeConfig(props: ConfigType<AntdGaugeController>) 
                                 type: 'number-input',
                                 label: '结束角度',
                                 value: config!.endAngle! / Math.PI * 180,
-                                config: {
-                                    suffix: '°'
-                                }
                             }
                         ]
                     }

@@ -1,7 +1,6 @@
-import Dialog from "../dialog/Dialog.tsx";
 import MonacoEditor, {MonacoEditorProps} from "./MonacoEditor.tsx";
-import Button from "../button/Button.tsx";
 import {useRef} from "react";
+import {Button, Modal} from "antd";
 
 export interface FullEditorProps extends MonacoEditorProps {
     onClose?: () => void;
@@ -21,13 +20,12 @@ export default function FullEditor(props: FullEditorProps) {
     }
 
     return (
-        <Dialog title={'代码编辑'} visible={true} width={800} height={600} onClose={onClose}
-                className={'full-editor-dialog'}>
-            <MonacoEditor onChange={_onChange} {...restProps} height={'92%'}/>
-            <div className={'full-editor-footer'}>
-                <Button onClick={_onSave}>保存</Button>
-                <Button onClick={onClose}>取消</Button>
-            </div>
-        </Dialog>
+        <Modal title={'代码编辑'} open={true} width={1000} onCancel={onClose}
+               footer={[
+                   <Button style={{width: 70, height: 30}} onClick={_onSave} type="primary">保存</Button>,
+                   <Button style={{width: 70, height: 30}} onClick={onClose}>取消</Button>
+               ]}>
+            <MonacoEditor onChange={_onChange} {...restProps} height={600}/>
+        </Modal>
     )
 }

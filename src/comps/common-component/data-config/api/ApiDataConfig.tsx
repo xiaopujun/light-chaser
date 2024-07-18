@@ -57,16 +57,11 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
                         key: 'autoFlush',
                         type: 'checkbox',
                         value: !!dataRef.current?.autoFlush,
-                        config: {
-                            contentStyle: {marginLeft: 4}
-                        }
                     },
                     {
                         key: 'frequency',
                         type: 'number-input',
                         config: {
-                            prefix: '每',
-                            suffix: '秒',
                             min: 5,
                             containerStyle: {
                                 gridColumn: '2/9',
@@ -160,9 +155,6 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
                         type: 'button',
                         config: {
                             children: '测试接口并保存',
-                            style: {
-                                width: '100%'
-                            }
                         }
                     }
                 ]

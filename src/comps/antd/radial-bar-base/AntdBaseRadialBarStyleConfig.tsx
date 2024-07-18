@@ -87,7 +87,6 @@ export default function AntdBaseRadialBarStyleConfig(props: ConfigType<AntdBaseR
                             id: 'startAngle',
                             config: {
                                 step: 1,
-                                suffix: '°'
                             },
                             value: (config?.startAngle || 0) / Math.PI * 180
                         },
@@ -98,7 +97,6 @@ export default function AntdBaseRadialBarStyleConfig(props: ConfigType<AntdBaseR
                             id: 'startAngle',
                             config: {
                                 step: 1,
-                                suffix: '°'
                             },
                             value: (config?.endAngle || 0) / Math.PI * 180
                         },
@@ -110,7 +108,6 @@ export default function AntdBaseRadialBarStyleConfig(props: ConfigType<AntdBaseR
                                 min: -360,
                                 max: 360,
                                 step: 1,
-                                suffix: '°'
                             },
                             value: config?.maxAngle
                         },

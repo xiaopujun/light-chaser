@@ -23,17 +23,20 @@ export interface BaseSchemaType {
 
 export interface AccordionConfigType extends BaseSchemaType {
     type: "accordion";
-    config?: {
-        showSwitch?: boolean;
-        titleStyle?: React.CSSProperties;
-        bodyStyle?: React.CSSProperties;
-    }
+    config?: Record<string, unknown>;
+}
+
+export interface SubAccordionConfigType extends BaseSchemaType {
+    type: "sub-accordion";
+    config?: Record<string, unknown>;
 }
 
 export interface ButtonConfigType extends BaseSchemaType {
     type: "button";
     config?: {
-        style?: React.CSSProperties;
+        type?: readonly ["default", "primary", "dashed", "link", "text"];
+        width?: string | number;
+        height?: string | number;
         children?: React.ReactNode;
     }
 }
@@ -41,10 +44,7 @@ export interface ButtonConfigType extends BaseSchemaType {
 export interface CheckboxConfigType extends BaseSchemaType {
     type: "checkbox";
     config?: {
-        disabled?: boolean;
         containerStyle?: React.CSSProperties;
-        labelStyle?: React.CSSProperties;
-        contentStyle?: React.CSSProperties;
     }
 }
 
@@ -120,13 +120,9 @@ export interface ImageUploadConfigType extends BaseSchemaType {
 export interface InputConfigType extends BaseSchemaType {
     type: "input";
     config?: {
-        prefix?: string;
-        suffix?: string;
         placeholder?: string;
-        type?: string;
-        minLength?: number;
-        maxLength?: number;
         disabled?: boolean;
+        type?: "text" | "password" | "email" | "number";
         containerStyle?: React.CSSProperties;
     }
 }
@@ -134,8 +130,6 @@ export interface InputConfigType extends BaseSchemaType {
 export interface NumberInputConfigType extends BaseSchemaType {
     type: "number-input";
     config?: {
-        prefix?: string;
-        suffix?: string;
         disabled?: boolean;
         min?: number;
         max?: number;
@@ -205,7 +199,7 @@ export interface TextOnlyConfigType extends BaseSchemaType {
     }
 }
 
-export interface SimpleSchemaType extends BaseSchemaType {
+export interface CardPanelType extends BaseSchemaType {
     type?: "card-panel";
     config?: {
         contentStyle?: CSSProperties;
@@ -215,6 +209,7 @@ export interface SimpleSchemaType extends BaseSchemaType {
 export type Control =
     ButtonConfigType
     | AccordionConfigType
+    | SubAccordionConfigType
     | CheckboxConfigType
     | CodeEditorConfigType
     | ColorModeConfigType
@@ -233,4 +228,4 @@ export type Control =
     | SwitchConfigType
     | TextAreaConfigType
     | TextOnlyConfigType
-    | SimpleSchemaType;
+    | CardPanelType;

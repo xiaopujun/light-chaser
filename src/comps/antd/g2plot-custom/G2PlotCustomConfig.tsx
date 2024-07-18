@@ -53,9 +53,6 @@ export default function G2PlotCustomConfig(props: ConfigType<AMapController>) {
                 id: 'refreshChart',
                 config: {
                     children: '刷新图表',
-                    style: {
-                        width: '100%'
-                    }
                 }
             }
         ]

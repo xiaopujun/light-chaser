@@ -52,7 +52,7 @@ class AxisConfig extends Component<AxisConfigProps> {
         const {grid, line, label, title: _title, tickLine, subTickLine} = config || {};
         const enable = !!(grid || line || label || _title || tickLine || subTickLine);
         return (
-            <Accordion label={title} showSwitch={true} defaultValue={enable}
+            <Accordion label={title} defaultValue={enable}
                        onChange={value => {
                            onChange(value ?
                                (isEqual(this.oldData, this.emptyData) ?

@@ -1,8 +1,8 @@
-import {MenuItemType} from "antd/es/menu/hooks/useItems";
 import {useLocation, useNavigate} from "react-router-dom";
 import {memo} from "react";
 import {Data, LocalPin, NetworkDrive, System} from "@icon-park/react";
 import {Menu} from "antd";
+import {MenuItemType} from "antd/es/menu/interface";
 
 
 const getMenus = () => {
