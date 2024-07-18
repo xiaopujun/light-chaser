@@ -88,7 +88,6 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                 children: [
                     {
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 key: 'radius',
@@ -141,9 +140,6 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                                 type: 'color-mode',
                                 label: '颜色',
                                 value: _config?.color || '#5B8FF9',
-                                config: {
-                                    containerStyle: {gridColumn: '1 / 3'},
-                                }
                             },
                         ]
                     }
@@ -157,7 +153,6 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                     {
                         key: 'title',
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 id: 'titleSwitch',
@@ -236,7 +231,6 @@ export const AntdRingProgressGraphicsConfig: React.FC<AntdRingProgressGraphicsCo
                     {
                         key: 'content',
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 id: 'contentSwitch',

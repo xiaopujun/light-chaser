@@ -13,13 +13,12 @@ export default function AntdBaseRadialBarStyleConfig(props: ConfigType<AntdBaseR
 
     const schema: Control[] = [
         {
-            type: 'card-panel',
+            type: 'accordion',
             label: '图形',
             children: [
                 {
                     type: 'grid',
                     key: 'style',
-                    config: {columns: 2},
                     children: [
                         {
                             type: 'number-input',
@@ -73,11 +72,6 @@ export default function AntdBaseRadialBarStyleConfig(props: ConfigType<AntdBaseR
                             type: 'color-mode',
                             key: 'color',
                             label: '颜色',
-                            config: {
-                                containerStyle: {
-                                    gridColumn: '1/3'
-                                }
-                            },
                             value: config?.color
                         },
                         {
@@ -128,14 +122,13 @@ export default function AntdBaseRadialBarStyleConfig(props: ConfigType<AntdBaseR
             ]
         },
         {
-            type: 'card-panel',
+            type: 'accordion',
             label: '文本',
             key: 'style',
             children: [
                 {
                     type: 'grid',
                     key: 'xAxis',
-                    config: {columns: 2},
                     children: [
                         {
                             key: 'label',
@@ -201,7 +194,7 @@ export default function AntdBaseRadialBarStyleConfig(props: ConfigType<AntdBaseR
     ]
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
-        let {dataFragment, data, id} = fieldChangeData;
+        const {dataFragment, data, id} = fieldChangeData;
         if (id === 'startAngle') {
             controller.update({style: {startAngle: data as number / 180 * Math.PI}})
         } else {
@@ -219,7 +212,6 @@ export const AntdRadialBarFieldMapping: React.FC<ConfigType<AntdBaseRadialBarCon
     const schema: Control = {
         type: 'grid',
         key: 'style',
-        config: {columns: 2},
         children: [
             {
                 type: 'select',
@@ -243,5 +235,5 @@ export const AntdRadialBarFieldMapping: React.FC<ConfigType<AntdBaseRadialBarCon
     }
 
 
-    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+    return <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
 }

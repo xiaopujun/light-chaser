@@ -6,7 +6,7 @@ import {ConfigType} from "../../../designer/right/ConfigContent";
 
 export const BaseColorBlockConfig: React.FC<ConfigType<BaseColorBlockController>> = ({controller}) => {
 
-    const {background, borderWidth, borderColor, borderStyle, borderRadius} = controller.getConfig()?.style!;
+    const {background, borderWidth, borderColor, borderStyle, borderRadius} = controller.getConfig()?.style ?? {};
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
         const {dataFragment} = fieldChangeData;
@@ -16,7 +16,6 @@ export const BaseColorBlockConfig: React.FC<ConfigType<BaseColorBlockController>
     const schema: Control = {
         key: 'style',
         type: 'grid',
-        config: {columns: 2},
         children: [
             {
                 key: 'background',
@@ -80,7 +79,7 @@ export const BaseColorBlockConfig: React.FC<ConfigType<BaseColorBlockController>
 
 
     return (
-        <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+        <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
     )
 }
 

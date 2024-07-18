@@ -42,18 +42,22 @@ export default function ProjectItem(props: ProjectItemProps) {
             <div className="project-item-content">
                 <div className="project-name">
                     {rename ?
-                        <Input className={'project-rename-input'} type="text" autoFocus={true} value={name}
+                        <div className="project-rename-input">
+                            <Input autoFocus={true}
+                                   size={"small"}
+                                   value={name}
                                onBlur={() => {
+                                       updateName();
                                    setRename(false);
-                                   updateName();
                                }}
                                onKeyDown={(event) => {
                                    if (event.key === 'Enter') {
+                                           updateName();
                                        setRename(false);
-                                       updateName();
                                    }
                                }}
-                               onChange={(event) => setName(event.target.value)}/> :
+                                   onChange={(e) => setName(e.target.value)}/>
+                        </div> :
                         <div className="project-name-content">{name}</div>
                     }
                 </div>

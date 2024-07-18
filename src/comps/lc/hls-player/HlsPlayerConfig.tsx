@@ -27,7 +27,7 @@ export const HlsPlayerConfig: React.FC<ConfigType<HlsPlayerController>> = ({cont
     }
 
     return (
-        <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+        <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
     )
 }
 

@@ -1,6 +1,5 @@
 import React from "react";
-import Dialog from "../../../json-schema/ui/dialog/Dialog.tsx";
-import Button from "../../../json-schema/ui/button/Button.tsx";
+import {Modal, Button} from "antd";
 
 interface CloneDialogProps {
     onOk: () => void;
@@ -19,18 +18,14 @@ const CloneProjectDialog = (props: CloneDialogProps) => {
     }
 
     return (
-        <Dialog title={'克隆项目'} visible={visible} onClose={onCancel}>
-            <div style={{color: '#a7a7a7', padding: 10}}>确认复制吗？</div>
-            <div className={'del-pro-confirm'} style={{
-                display: 'flex',
-                justifyContent: 'flex-end',
-                borderTop: '2px solid #272b34',
-                paddingTop: 10
-            }}>
-                <Button onClick={onClick}>确认</Button> &nbsp;&nbsp;
+        <Modal title={'克隆项目'} open={visible} onCancel={onCancel} onOk={onClick}
+               width={350}
+               footer={[
+                   <Button type="primary" onClick={onClick}>确认</Button>,
                 <Button onClick={onCancel}>取消</Button>
-            </div>
-        </Dialog>
+               ]}>
+            <div style={{color: '#a7a7a7', padding: 10}}>确认克隆项目吗？</div>
+        </Modal>
     )
 }
 

@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import {useState} from 'react';
 import {ThemeColors, ThemeItemType} from "../../../../designer/DesignerType";
 import ThemeItem from "../theme-item/ThemeItem";
 import {observer} from "mobx-react";
@@ -11,18 +11,11 @@ interface ThemeListProps {
     onDel?: (id: string) => void;
 }
 
-type ThemeListState = {
-    activeId: string;
-}
+const ThemeList = observer((props: ThemeListProps) => {
+    const {onSelected, showOperator, onDel} = props;
+    const [activeId, setActiveId] = useState('');
 
-class ThemeList extends Component<ThemeListProps, ThemeListState> {
-
-    state: ThemeListState = {
-        activeId: '',
-    }
-
-    onDel = (id: string) => {
-        const {onDel} = this.props;
+    const _onDel = (id: string) => {
         const {themeConfig, updateThemeConfig} = themeManager;
         const newThemes = themeConfig!.filter((item: ThemeItemType) => item.id !== id);
         updateThemeConfig(newThemes);
@@ -30,31 +23,29 @@ class ThemeList extends Component<ThemeListProps, ThemeListState> {
     }
 
 
-    onSelected = (data: ThemeItemType) => {
-        this.setState({activeId: data.id})
-        const {onSelected} = this.props;
+    const _onSelected = (data: ThemeItemType) => {
         onSelected && onSelected(data);
+        if (data.id !== activeId)
+            setActiveId(data.id);
+        else
+            setActiveId('');
     }
 
-    render() {
-        const {activeId} = this.state;
-        const {showOperator} = this.props;
-        const {themeConfig} = themeManager;
-        const themeList = [];
-        for (let i = 0; i < themeConfig!.length; i++) {
-            themeList.push(<ThemeItem key={i} id={themeConfig![i].id} selected={themeConfig![i].id === activeId}
-                                      name={themeConfig![i].name}
-                                      showOperator={showOperator}
-                                      onDel={this.onDel}
-                                      onSelected={this.onSelected}
-                                      colors={themeConfig![i].colors as ThemeColors}/>)
-        }
-        return (
-            <div className={'lc-theme-list'} style={{width: '100%'}}>
-                {themeList}
-            </div>
-        );
+    const {themeConfig} = themeManager;
+    const themeList = [];
+    for (let i = 0; i < themeConfig!.length; i++) {
+        themeList.push(<ThemeItem key={i} id={themeConfig![i].id} selected={themeConfig![i].id === activeId}
+                                  name={themeConfig![i].name}
+                                  showOperator={showOperator}
+                                  onDel={_onDel}
+                                  onSelected={_onSelected}
+                                  colors={themeConfig![i].colors as ThemeColors}/>)
     }
-}
+    return (
+        <div className={'lc-theme-list'} style={{width: '100%'}}>
+            {themeList}
+        </div>
+    );
+});
 
-export default observer(ThemeList);
+export default ThemeList;

@@ -9,7 +9,7 @@ export default function G2PlotCustomConfig(props: ConfigType<AMapController>) {
     const {controller} = props;
     const config = controller.getConfig()?.style;
 
-    const codeRef = useRef<string>(config?.customCode || '') ;
+    const codeRef = useRef<string>(config?.customCode || '');
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
         const {id, data, dataFragment} = fieldChangeData;
@@ -60,6 +60,6 @@ export default function G2PlotCustomConfig(props: ConfigType<AMapController>) {
 
 
     return (
-        <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+        <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
     )
 }

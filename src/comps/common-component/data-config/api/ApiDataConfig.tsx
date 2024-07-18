@@ -195,9 +195,10 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
     const testAndSave = () => {
         if (!validate())
             return;
-        let {params, header, url, method, filter} = dataRef.current!;
+        const {params, header, url, method, filter} = dataRef.current!;
         FetchUtil.doRequest(url!, method!, header, params).then(res => {
-            let {data, code} = res;
+            let {data} = res;
+            const {code} = res;
             if (code === 200) {
                 if (filter && filter !== '') {
                     const func = eval(`(${filter})`);

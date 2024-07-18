@@ -6,7 +6,7 @@ import {ConfigType} from "../../../designer/right/ConfigContent";
 
 export const CarouselConfig: React.FC<ConfigType<CarouselController>> = ({controller}) => {
 
-    const config = controller.getConfig()?.style!;
+    const config = controller.getConfig()?.style ?? {};
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
         const {dataFragment} = fieldChangeData;
@@ -16,7 +16,6 @@ export const CarouselConfig: React.FC<ConfigType<CarouselController>> = ({contro
     const schema: Control = {
         key: 'style',
         type: 'grid',
-        config: {columns: 2},
         children: [
             {
                 type: 'switch',
@@ -53,7 +52,7 @@ export const CarouselConfig: React.FC<ConfigType<CarouselController>> = ({contro
 
 
     return (
-        <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+        <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
     )
 }
 

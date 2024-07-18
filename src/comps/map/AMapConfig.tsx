@@ -27,53 +27,66 @@ export const AMapConfig: React.FC<ConfigType<AMapController>> = ({controller}) =
         type: 'grid',
         children: [
             {
-                type: 'input',
-                label: 'KEY',
-                key: 'key',
-                value: config?.key
-            },
-            {
-                type: 'input',
-                label: '密钥',
-                key: 'securityJsCode',
-                value: config?.securityJsCode,
-                config: {
-                    type: "password"
-                }
-            },
-            {
-                type: 'card-panel',
-                config: {
-                    contentStyle: {
-                        padding: 0
-                    }
-                },
+                type: 'accordion',
+                label: '基础信息',
                 children: [
                     {
-                        id: 'customCode',
-                        type: 'code-editor',
-                        value: codeRef.current,
-                        config: {
-                            language: 'javascript',
-                            height: 600,
-                            fullScreen: true
-                        }
+                        type: "grid",
+                        children: [
+                            {
+                                type: 'input',
+                                label: 'KEY',
+                                key: 'key',
+                                value: config?.key
+                            },
+                            {
+                                type: 'input',
+                                label: '密钥',
+                                key: 'securityJsCode',
+                                value: config?.securityJsCode,
+                                config: {
+                                    type: "password"
+                                }
+                            },
+                        ]
                     }
                 ]
             },
             {
-                type: 'button',
-                id: 'refreshMap',
-                config: {
-                    children: '刷新地图',
-                }
+                type: 'accordion',
+                label: '自定义地图',
+                children: [
+                    {
+                        type: 'grid',
+                        children: [
+                            {
+                                id: 'customCode',
+                                type: 'code-editor',
+                                value: codeRef.current,
+                                config: {
+                                    language: 'javascript',
+                                    height: 600,
+                                    fullScreen: true
+                                }
+                            },
+                            {
+                                type: 'button',
+                                id: 'refreshMap',
+                                config: {
+                                    children: '刷新地图',
+                                }
+                            }
+                        ]
+                    },
+                ]
             }
+
         ]
     }
 
 
     return (
-        <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+        <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
     )
 }
 

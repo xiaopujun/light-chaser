@@ -57,7 +57,6 @@ export const AntdCommonScatterGraphics: React.FC<AntdCommonScatterGraphicsProps>
         children: [
             {
                 type: 'grid',
-                config: {columns: 2},
                 children: [
                     {
                         key: 'size',
@@ -113,9 +112,6 @@ export const AntdCommonScatterGraphics: React.FC<AntdCommonScatterGraphicsProps>
                         type: 'color-mode',
                         label: '颜色',
                         value: config?.color,
-                        config: {
-                            containerStyle: {gridColumn: '1 / 3'},
-                        }
                     },
                 ]
             }
@@ -135,7 +131,6 @@ export const AntdScatterFieldMapping: React.FC<ConfigType<AntdBaseDesignerContro
     const schema: Control = {
         type: 'grid',
         key: 'style',
-        config: {columns: 2},
         children: [
             {
                 key: 'xField',
@@ -180,5 +175,5 @@ export const AntdScatterFieldMapping: React.FC<ConfigType<AntdBaseDesignerContro
         controller.update(fieldChangeData.dataFragment);
     }
 
-    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+    return <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
 }

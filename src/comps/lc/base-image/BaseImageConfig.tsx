@@ -25,7 +25,6 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImageController>> = (
     const schema: Control = {
         key: 'style',
         type: 'grid',
-        config: {columns: 2},
         children: [
             {
                 key: 'type',
@@ -38,9 +37,6 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImageController>> = (
                         {label: '本地', value: 'local'},
                         {label: '在线', value: 'online'},
                     ],
-                    containerStyle: {
-                        gridColumn: '1/3'
-                    }
                 }
             },
             {
@@ -49,11 +45,6 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImageController>> = (
                 type: 'input',
                 label: '链接',
                 value: onLineUrl,
-                config: {
-                    containerStyle: {
-                        gridColumn: '1/3'
-                    }
-                }
             },
             {
                 id: 'localUrl',
@@ -65,9 +56,6 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImageController>> = (
                 config: {
                     accept: 'image/*',
                     size: 3,
-                    containerStyle: {
-                        gridColumn: '1/3'
-                    }
                 }
             },
             {
@@ -85,6 +73,6 @@ export const BaseImageStyleConfig: React.FC<ConfigType<BaseImageController>> = (
     }
 
     return (
-        <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+        <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
     )
 }

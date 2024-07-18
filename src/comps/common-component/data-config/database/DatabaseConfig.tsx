@@ -59,7 +59,8 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
         if (!sql || sql === '')
             return;
         FetchUtil.post(`/api/db/executor/execute`, {id: targetDb, sql: Base64Util.toBase64(sql)}).then(res => {
-            let {data, code, msg} = res;
+            let {data} = res;
+            const {code, msg} = res;
             if (code === 200) {
                 if (filter && filter !== '') {
                     const func = eval(`(${filter})`);
