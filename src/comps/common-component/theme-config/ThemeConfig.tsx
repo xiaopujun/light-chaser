@@ -1,14 +1,14 @@
 import {Component} from 'react';
-import Dialog from "../../../json-schema/ui/dialog/Dialog";
 import ThemeEditor from "./theme-editor/ThemeEditor";
 import ThemeList from "./theme-list/ThemeList";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import rightStore from "../../../designer/right/RightStore";
 import layerManager from "../../../designer/manager/LayerManager.ts";
 import Button from "../../../json-schema/ui/button/Button";
-import {ConfigType} from "../../../designer/right/ConfigContent";
+import AbstractDesignerController from "../../../framework/core/AbstractDesignerController.ts";
+import {Modal} from "antd";
 
-class ThemeConfig extends Component<ConfigType> {
+class ThemeConfig extends Component<{ controller: AbstractDesignerController }> {
     state = {
         editTheme: false,
     }
@@ -28,16 +28,17 @@ class ThemeConfig extends Component<ConfigType> {
     render() {
         return (
             <>
-                <div className={'lc-theme-config'}>
+                <div className={'lc-theme-config'} style={{padding: 10}}>
                     <div className={'lc-theme-custom'}>
-                        <Button onClick={this.openThemeEditor} style={{width: '100%'}}>+ 自定义主题</Button>
+                        <Button onClick={this.openThemeEditor}>+ 自定义主题</Button>
                     </div>
                     <br/>
                     <ThemeList onSelected={this.themeChange}/>
                 </div>
-                <Dialog onClose={this.closeEditor} title={'编辑主题'} visible={this.state.editTheme} width={860}>
+                <Modal title={'编辑主题'} open={this.state.editTheme} onCancel={this.closeEditor} width={860}
+                       footer={null}>
                     <ThemeEditor/>
-                </Dialog>
+                </Modal>
             </>
         );
     }

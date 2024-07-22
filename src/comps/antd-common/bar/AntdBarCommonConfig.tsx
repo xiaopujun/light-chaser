@@ -57,7 +57,6 @@ export const AntdBarGraphics: React.FC<ConfigType<AntdCommonBarController>> = ({
         children: [
             {
                 type: 'grid',
-                config: {columns: 2},
                 children: [
                     {
                         key: 'maxBarWidth',
@@ -90,11 +89,6 @@ export const AntdBarGraphics: React.FC<ConfigType<AntdCommonBarController>> = ({
                         type: 'color-mode',
                         label: '颜色',
                         value: config?.color,
-                        config: {
-                            containerStyle: {
-                                gridColumn: '1/3'
-                            }
-                        }
                     }
                 ]
             },
@@ -123,9 +117,6 @@ export const AntdBarFieldMapping: React.FC<ConfigType<AntdCommonBarController>> 
     const schema: Control = {
         key: 'style',
         type: 'grid',
-        config: {
-            columns: 2,
-        },
         children: [
             {
                 key: 'xField',
@@ -158,6 +149,6 @@ export const AntdBarFieldMapping: React.FC<ConfigType<AntdCommonBarController>> 
     }
 
     return (
-        <LCGUI schema={schema} onFieldChange={fieldChange}/>
+        <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={fieldChange}/></div>
     )
 }

@@ -69,7 +69,6 @@ export const AntdColumnGraphics: React.FC<AntdColumnGraphicsProps> = ({config, o
         children: [
             {
                 type: 'grid',
-                config: {columns: 2},
                 children: [
                     {
                         key: 'maxColumnWidth',
@@ -102,11 +101,6 @@ export const AntdColumnGraphics: React.FC<AntdColumnGraphicsProps> = ({config, o
                         type: 'color-mode',
                         label: '颜色',
                         value: '#1c1c1c',
-                        config: {
-                            containerStyle: {
-                                gridColumn: '1/3'
-                            }
-                        }
                     }
                 ]
             },
@@ -127,7 +121,6 @@ export const AntdColumnCommonFieldMapping: React.FC<ConfigType> = (props) => {
     const schema: Control = {
         key: 'style',
         type: 'grid',
-        config: {columns: 2},
         children: [
             {
                 key: 'xField',
@@ -164,5 +157,5 @@ export const AntdColumnCommonFieldMapping: React.FC<ConfigType> = (props) => {
         controller.update(dataFragment);
     }
 
-    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+    return <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
 }

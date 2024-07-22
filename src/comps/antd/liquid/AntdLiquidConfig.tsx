@@ -15,12 +15,11 @@ export default function AntdLiquidConfig(props: ConfigType<AntdLiquidController>
         key: 'style',
         children: [
             {
-                type: 'card-panel',
+                type: 'sub-accordion',
                 label: '基础样式',
                 children: [
                     {
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 type: 'select',
@@ -53,13 +52,12 @@ export default function AntdLiquidConfig(props: ConfigType<AntdLiquidController>
                 ]
             },
             {
-                type: 'card-panel',
+                type: 'sub-accordion',
                 label: '水波样式',
                 key: 'liquidStyle',
                 children: [
                     {
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 key: 'fill',
@@ -84,13 +82,12 @@ export default function AntdLiquidConfig(props: ConfigType<AntdLiquidController>
                 ]
             },
             {
-                type: 'card-panel',
+                type: 'sub-accordion',
                 label: '图形样式',
                 key: 'shapeStyle',
                 children: [
                     {
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 key: 'fill',
@@ -107,13 +104,12 @@ export default function AntdLiquidConfig(props: ConfigType<AntdLiquidController>
                 ]
             },
             {
-                type: 'card-panel',
+                type: 'sub-accordion',
                 label: '外边框',
                 key: 'outline',
                 children: [
                     {
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 key: 'border',
@@ -145,13 +141,12 @@ export default function AntdLiquidConfig(props: ConfigType<AntdLiquidController>
                 ]
             },
             {
-                type: 'card-panel',
+                type: 'sub-accordion',
                 label: '水波',
                 key: 'wave',
                 children: [
                     {
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 type: 'number-input',
@@ -178,13 +173,12 @@ export default function AntdLiquidConfig(props: ConfigType<AntdLiquidController>
             },
             {
                 key: 'statistic',
-                type: 'card-panel',
+                type: 'sub-accordion',
                 label: '标题',
                 children: [
                     {
                         key: 'title',
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 key: 'content',
@@ -245,13 +239,12 @@ export default function AntdLiquidConfig(props: ConfigType<AntdLiquidController>
             },
             {
                 key: 'statistic',
-                type: 'card-panel',
+                type: 'sub-accordion',
                 label: '内容',
                 children: [
                     {
                         key: 'content',
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 key: 'style',
@@ -312,5 +305,5 @@ export default function AntdLiquidConfig(props: ConfigType<AntdLiquidController>
         controller.update(dataFragment);
     }
 
-    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>;
+    return <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>;
 }

@@ -1,51 +1,43 @@
-@import "../../../designer/style/DesignerStyle.less";
-
 .lc-accordion {
-  color: @lc-config-title;
-  background-color: rgba(0, 0, 0, 0);
+  .ant-collapse-borderless {
+    background: #00000000;
 
-  .accordion-header {
-    font-size: @lc-font-ml;
-    font-weight: 500;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: @lc-config-title;
-    cursor: pointer;
-    padding: 10px 0;
-    width: 100%;
-    text-align: left;
-    border-bottom: none;
-    outline: none;
-    transition: 0.4s;
-
-    .title-switch {
-      .accordion-icon {
-        display: inline-block;
-        transition: transform 0.2s;
-        transform: rotate(0deg);
-        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-      }
+    .ant-collapse-header {
+      padding: 10px;
     }
   }
 
-  .accordion-active, .accordion-header:hover {
-    background-color: rgba(0, 0, 0, 0);
-  }
-
-  .accordion-active {
-    .title-switch {
-      .accordion-icon {
-        transition: transform 0.2s;
-        transform: rotate(90deg);
-        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  .ant-collapse-item {
+    .ant-collapse-content {
+      .ant-collapse-content-box {
+        padding-block: 0;
+        padding: 0 13px;
+        background: #212121;
       }
     }
-  }
-
-  .lc-accordion-body {
-    padding: 0 5px;
-    background-color: rgba(0, 0, 0, 0);
   }
 }
 
+.lc-sub-accordion {
+  margin-bottom: 10px;
+
+  .ant-collapse-borderless {
+    background: #00000000;
+
+    .ant-collapse-header {
+      padding: 5px 2px 5px;
+      color: #b6b6b6;
+    }
+  }
+
+  .ant-collapse-item {
+    .ant-collapse-content {
+      .ant-collapse-content-box {
+        padding-block: 0;
+        padding: 10px;
+        background: #1c1c1c;
+        border-radius: 5px;
+      }
+    }
+  }
+}

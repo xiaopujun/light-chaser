@@ -1,3 +1,23 @@
 .monaco-editor-container {
   border: 2px solid #2d2d2d;
 }
+
+.monaco-editor-button-bar {
+  display: flex;
+  flex-direction: row-reverse;
+
+  .editor-full-btn {
+    position: relative;
+    top: -24px;
+    right: 6px;
+    font-size: 16px;
+    color: #939393;
+    transition: all 0.3s;
+
+    &:hover {
+      cursor: pointer;
+      color: #47a4ff;
+    }
+  }
+}
+

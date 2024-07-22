@@ -1,13 +1,17 @@
 import React from 'react';
-import './Button.less';
+import {Button as AntdButton, ButtonProps as AntdButtonProps} from 'antd';
 
-export interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onChange"> {
+export interface ButtonProps {
     children?: React.ReactNode;
+    onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
     onChange?: () => void;
+    type?: AntdButtonProps['type'];
+    width?: string | number;
+    height?: string | number;
 }
 
 export default function Button(props: ButtonProps) {
-    const {onChange, onClick, ...rest} = props;
+    const {onChange, onClick, type, width, height, children} = props;
 
     const _onChange = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         onChange && onChange();
@@ -15,6 +19,7 @@ export default function Button(props: ButtonProps) {
     }
 
     return (
-        <button {...rest} onClick={_onChange} className="lc-button">{props.children}</button>
+        <AntdButton type={type ?? 'primary'} style={{width: width ?? '100%', height}} onClick={_onChange}
+                    className="lc-button">{children}</AntdButton>
     );
 }

@@ -83,6 +83,7 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
         layerInstance && (layerInstance as Component).setState({name: value});
     }
 
+    // eslint-disable-next-line @typescript-eslint/ban-types
     handleMap: Record<string, Function> = {
         "name": this.changeName,
         "width": (value: number) => eventOperateStore.movableRef?.request("resizable", {
@@ -127,7 +128,6 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
         const {name, width, height, x, y, id} = this.state;
         return {
             type: 'grid',
-            config: {columns: 2},
             children: [
                 {
                     id: "name",
@@ -135,116 +135,85 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
                     label: "名称",
                     type: "input",
                     value: name,
-                    config: {
-                        containerStyle: {
-                            gridColumn: '1/3'
-                        }
-                    }
+
                 },
                 {
-                    type: 'grid',
-                    label: '尺寸',
-                    config: {
-                        columns: 2,
-                        containerStyle: {
-                            gridColumn: '1/3',
-                        }
-                    },
-                    children: [
-                        {
-                            id: "width",
-                            key: "width",
-                            type: "number-input",
-                            label: "宽度",
-                            value: width,
-                            reRender: true,
-                        },
-                        {
-                            id: "height",
-                            key: "height",
-                            type: "number-input",
-                            label: "高度",
-                            value: height,
-                            reRender: true,
-                        },
-                    ]
+                    id: "width",
+                    key: "width",
+                    type: "number-input",
+                    label: "宽度",
+                    value: width,
+                    reRender: true,
                 },
                 {
-                    type: 'grid',
-                    label: '位置',
-                    config: {
-                        columns: 2,
-                        containerStyle: {
-                            gridColumn: '1/3',
-                        }
-                    },
-                    children: [
-                        {
-                            id: "posX",
-                            key: "posX",
-                            type: "number-input",
-                            label: "X轴",
-                            reRender: true,
-                            value: x,
-                        },
-                        {
-                            id: "posY",
-                            key: "posY",
-                            type: "number-input",
-                            label: "Y轴",
-                            reRender: true,
-                            value: y,
-                        },
-                    ]
+                    id: "height",
+                    key: "height",
+                    type: "number-input",
+                    label: "高度",
+                    value: height,
+                    reRender: true,
+                },
+                {
+                    id: "posX",
+                    key: "posX",
+                    type: "number-input",
+                    label: "X轴",
+                    reRender: true,
+                    value: x,
+                },
+                {
+                    id: "posY",
+                    key: "posY",
+                    type: "number-input",
+                    label: "Y轴",
+                    reRender: true,
+                    value: y,
                 },
                 {
                     id: 'align',
                     label: '对齐',
                     type: 'group-button',
                     config: {
-                        containerStyle: {
-                            gridColumn: '1/3',
-                        },
                         items: [
                             {
                                 value: 'left',
                                 content: <AlignLeftTwo theme="filled"
-                                                       size="16"
+                                                       size="14"
                                                        strokeWidth={2}
                                                        strokeLinecap="square"/>
                             },
                             {
                                 value: 'horizontally',
                                 content: <AlignHorizontalCenterTwo theme="filled"
-                                                                   size="16"
+                                                                   size="14"
                                                                    strokeWidth={2}
                                                                    strokeLinecap="square"/>
                             },
                             {
                                 value: 'right',
                                 content: <AlignRightTwo theme="filled"
-                                                        size="16"
+                                                        size="14"
                                                         strokeWidth={2}
                                                         strokeLinecap="square"/>
                             },
                             {
                                 value: 'top',
                                 content: <AlignTopTwo theme="filled"
-                                                      size="16"
+                                                      size="14"
                                                       strokeWidth={2}
                                                       strokeLinecap="square"/>
                             },
                             {
                                 value: 'vertically',
                                 content: <AlignVerticalCenterTwo theme="filled"
-                                                                 size="16"
+                                                                 size="14"
                                                                  strokeWidth={2}
                                                                  strokeLinecap="square"/>
                             },
                             {
                                 value: 'bottom',
                                 content: <AlignBottomTwo theme="filled"
-                                                         size="16"
+                                                         size="14"
                                                          strokeWidth={2}
                                                          strokeLinecap="square"/>
                             }

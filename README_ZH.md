@@ -1,15 +1,18 @@
 <h2> LIGHT CHASER</h2>
 
 <p>
-    <img alt="" src="https://img.shields.io/badge/version-v0.0.9-blue">
-    <img alt="" src="https://img.shields.io/badge/language-typescript-blue">
+    <img alt="" src="https://img.shields.io/badge/version-v1.2.0-blue">
     <img alt="" src="https://img.shields.io/badge/license-MIT-08CE5D?logoColor=08CE5D">
-    <img alt="" src="https://img.shields.io/badge/framework-React-61daeb?logoColor=08CE5D">
+    <img alt="" src="https://img.shields.io/badge/TypeScript-blue">
+    <img alt="" src="https://img.shields.io/badge/React-61daeb?logoColor=08CE5D">
+    <img alt="" src="https://img.shields.io/badge/Vite-purple">
+    <img alt="" src="https://img.shields.io/badge/Mobx-FFEB0B">
 </p>
 
 <p>数据可视化工具</p>
 
-light chaser 是一款开源免费的数据可视化设计工具，基于 React18、Vite5、TypeScript5 技术栈实现。 通过它，你可以简单快速地制作数据可视化相关内容。它可用于大屏幕数据 可视化展示、数据报告、数据分析等场景。
+light chaser 是一款开源免费的数据可视化设计工具，基于 React18、Vite5、TypeScript5 技术栈实现。
+通过它，你可以简单快速地制作数据可视化相关内容。它可用于大屏幕数据 可视化展示、数据报告、数据分析等场景。
 
 这个项目包含:
 
@@ -39,7 +42,12 @@ light chaser 专为数据可视化而设计，并将不断发展和完善！
 
 ![lightchaser1](https://i.072333.xyz/file/8ff8361817216f2fb1c47.png)
 
-![lightchaser](https://i.072333.xyz/file/3cacaaa9edc640ce64536.png)
+![lightchaser](https://i.072333.xyz/file/b3d60f091201818432a98.png)
+
+![lightchaser](https://i.072333.xyz/file/802e2d2b4d95fa32fae48.png)
+
+![lightchaser](https://i.072333.xyz/file/51819086932cb1b559a15.png)
+
 
 # 部署和使用
 
@@ -78,15 +86,31 @@ http://localhost:5173
 pnpm build
 ```
 
+# Docker 镜像
+
+```shell
+docker pull puyinzhen/light-chaser
+```
+
 # 贡献
 
 欢迎随时加入！打开issue或提交PR。
 
-light chaser遵守《贡献者公约行为准则》。
-
 # License
 
 [MIT](LICENSE) © xiaopujun
+
+感谢为本项目做出贡献的每一个人！
+
+## 社区
+
+<div style="display: flex">
+    <div style="width: 50%"><img alt="group" src="https://i.072333.xyz/file/a01641245cc45d8fb8573.jpg"></div>
+</div>
+
+## 可持续
+
+如果您有捐赠，赞助，商业合作等想法，请联系作者。这将对项目的持续发展和维护起到重要作用。
 
 # 赞助
 
@@ -96,8 +120,9 @@ light chaser遵守《贡献者公约行为准则》。
 
 感谢每一位项目贡献者、捐赠者和赞助商
 
-## 社区
+## 联系作者
 
 <div style="display: flex">
-    <div  style="padding: 20px"><img alt="group" src="https://i.072333.xyz/file/8b4b56b773a55d3888a12.jpg"></div>
+    <div  style="width: 50%"><img alt="group" src="https://i.072333.xyz/file/110e9602ef12a7d93bff0.jpg"></div>
 </div>
+

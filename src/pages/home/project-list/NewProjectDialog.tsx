@@ -1,10 +1,9 @@
-import React, {FormEvent} from 'react';
+import React, {MouseEvent} from 'react';
 import './NewProjectDialog.less';
-import Dialog from "../../../json-schema/ui/dialog/Dialog";
-import Button from "../../../json-schema/ui/button/Button";
 import {Grid} from "../../../json-schema/ui/grid/Grid";
-import NumberInput from "../../../json-schema/ui/number-input/NumberInput";
+import NumberInput from "../../../json-schema/ui/input/NumberInput.tsx";
 import Input from "../../../json-schema/ui/input/Input";
+import {Button, Modal} from "antd";
 
 export interface INewProjectInfo {
     name: string;
@@ -28,7 +27,7 @@ export const NewProjectDialog: React.FC<AddNewScreenDialogProps> = (props) => {
         height: 1080,
     }
 
-    const onOk = (e: FormEvent<HTMLFormElement>) => {
+    const onOk = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         const {onOk} = props;
         onOk && onOk(projectInfo);
@@ -41,31 +40,26 @@ export const NewProjectDialog: React.FC<AddNewScreenDialogProps> = (props) => {
 
     const {visible = false} = props;
     return (
-        <Dialog title={'新建大屏'} visible={visible} className={'add-new-screen-dialog'} onClose={onCancel}>
-            <form onSubmit={onOk}>
-                <div className={'lc-add-new-screen'}>
-                    <Grid gridGap={'15px'} columns={2}>
-                        <Input label={'名称'} maxLength={20} defaultValue={projectInfo.name}
-                               onChange={(name: string | number) => projectInfo.name = name as string}/>
-                        <Input label={'描述'} maxLength={20}
-                               onChange={(description: string | number) => projectInfo.des = description as string}/>
-                        <NumberInput label={'宽度'} min={300} defaultValue={projectInfo.width}
-                                     onChange={(width: string | number) => projectInfo.width = Number(width)}/>
-                        <NumberInput label={'高度'} min={300} defaultValue={projectInfo.height}
-                                     onChange={(height: number | string) => projectInfo.height = Number(height)}/>
-                    </Grid>
-                </div>
-                <div className={'add-new-screen-explain'}>
-                    <p>说明：</p>
-                    <p>1、名称不超过20字，描述不超过60字</p>
-                    <p>2、宽度必须&ge;500，高度必须&ge;300</p>
-                </div>
-                <div className={'add-new-screen-footer'}>
-                    <Button type={"submit"}>创建</Button>
-                    <Button onClick={onCancel}>取消</Button>
-                </div>
-            </form>
-        </Dialog>
+        <Modal title={'新建大屏'} open={visible} className={'add-new-screen-dialog'} onCancel={onCancel} footer={[
+            <Button type={"primary"} onClick={onOk}>创建</Button>,
+            <Button onClick={onCancel}>取消</Button>
+        ]}>
+            <div className={'lc-add-new-screen'}>
+                <Grid gridGap={'15px'} columns={2}>
+                    <Input label={'名称'} defaultValue={projectInfo.name}
+                           onChange={(name: string | number) => projectInfo.name = name as string}/>
+                    <Input label={'描述'}
+                           onChange={(description: string | number) => projectInfo.des = description as string}/>
+                    <NumberInput label={'宽度'} min={300} defaultValue={projectInfo.width}
+                                 onChange={(width: string | number) => projectInfo.width = Number(width)}/>
+                    <NumberInput label={'高度'} min={300} defaultValue={projectInfo.height}
+                                 onChange={(height: number | string) => projectInfo.height = Number(height)}/>
+                </Grid>
+            </div>
+            <div className={'add-new-screen-explain'}>
+                <p>说明：1、名称不超过20字，描述不超过60字。2、宽度必须&ge;500，高度必须&ge;300</p>
+            </div>
+        </Modal>
     );
 }
 

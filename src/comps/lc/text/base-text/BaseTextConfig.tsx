@@ -20,9 +20,9 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
 
     const changeContent = (data: string) => {
         controller.update({data: {staticData: data}});
-        layerManager.layerConfigs[base?.id!].name = data;
+        layerManager.layerConfigs[base?.id ?? ''].name = data;
         const {layerInstances} = layerListStore;
-        const layerInstance = layerInstances[base?.id!];
+        const layerInstance = layerInstances[base?.id ?? ''];
         layerInstance && (layerInstance as Component).setState({name: data});
     }
 
@@ -36,7 +36,6 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
 
     const schema: Control = {
         type: 'grid',
-        config: {columns: 2},
         children: [
             {
                 key: 'data',
@@ -47,9 +46,6 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
                         type: 'text-area',
                         label: '内容',
                         value: data?.staticData,
-                        config: {
-                            containerStyle: {gridColumn: '1 / 3'},
-                        }
                     },
                 ]
             },
@@ -120,102 +116,79 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
                         }
                     },
                     {
-                        type: "grid",
-                        label: "对齐",
+                        label: "水平对齐",
+                        type: 'group-button',
+                        key: 'justifyContent',
+                        value: style?.justifyContent,
                         config: {
-                            columns: 2,
-                            containerStyle: {
-                                gridColumn: '1/3',
-                            },
-                        },
-                        children: [
-                            {
-                                type: 'group-button',
-                                key: 'justifyContent',
-                                value: style?.justifyContent,
-                                config: {
-                                    items: [
-                                        {
-                                            value: 'flex-start',
-                                            content: <AlignLeftTwo theme="filled" size="16"
-                                                                   strokeWidth={2}
-                                                                   strokeLinecap="square"/>
-                                        },
-                                        {
-                                            value: 'center',
-                                            content: <AlignHorizontalCenterTwo theme="filled" size="16"
-                                                                               strokeWidth={2} strokeLinecap="square"/>
-                                        },
-                                        {
-                                            value: 'flex-end',
-                                            content: <AlignRightTwo theme="filled" size="16"
-                                                                    strokeWidth={2}
-                                                                    strokeLinecap="square"/>
-                                        }
-                                    ]
+                            items: [
+                                {
+                                    value: 'flex-start',
+                                    content: <AlignLeftTwo theme="filled" size="16"
+                                                           strokeWidth={2}
+                                                           strokeLinecap="square"/>
+                                },
+                                {
+                                    value: 'center',
+                                    content: <AlignHorizontalCenterTwo theme="filled" size="16"
+                                                                       strokeWidth={2} strokeLinecap="square"/>
+                                },
+                                {
+                                    value: 'flex-end',
+                                    content: <AlignRightTwo theme="filled" size="16"
+                                                            strokeWidth={2}
+                                                            strokeLinecap="square"/>
                                 }
-                            },
-                            {
-                                type: 'group-button',
-                                key: 'alignItems',
-                                value: style?.alignItems,
-                                config: {
-                                    items: [
-                                        {
-                                            value: 'flex-start',
-                                            content: <AlignTopTwo theme="filled" size="16"
-                                                                  strokeWidth={2}
-                                                                  strokeLinecap="square"/>
-                                        },
-                                        {
-                                            value: 'center',
-                                            content: <AlignVerticalCenterTwo theme="filled" size="16"
-                                                                             strokeWidth={2} strokeLinecap="square"/>
-                                        },
-                                        {
-                                            value: 'flex-end',
-                                            content: <AlignBottomTwo theme="filled" size="16"
-                                                                     strokeWidth={2}
-                                                                     strokeLinecap="square"/>
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
+                            ]
+                        }
                     },
                     {
-                        type: 'grid',
-                        label: '描边',
+                        label: '垂直对齐',
+                        type: 'group-button',
+                        key: 'alignItems',
+                        value: style?.alignItems,
                         config: {
-                            columns: 2,
-                            containerStyle: {
-                                gridColumn: '1/3',
-                            },
-                        },
-                        children: [
-                            {
-                                key: 'strokeColor',
-                                type: 'color-picker',
-                                label: '颜色',
-                                value: style?.strokeColor,
-                                config: {
-                                    showText: true,
+                            items: [
+                                {
+                                    value: 'flex-start',
+                                    content: <AlignTopTwo theme="filled" size="16"
+                                                          strokeWidth={2}
+                                                          strokeLinecap="square"/>
+                                },
+                                {
+                                    value: 'center',
+                                    content: <AlignVerticalCenterTwo theme="filled" size="16"
+                                                                     strokeWidth={2} strokeLinecap="square"/>
+                                },
+                                {
+                                    value: 'flex-end',
+                                    content: <AlignBottomTwo theme="filled" size="16"
+                                                             strokeWidth={2}
+                                                             strokeLinecap="square"/>
                                 }
-                            },
-                            {
-                                key: 'strokeWidth',
-                                type: 'number-input',
-                                label: '宽度',
-                                value: style?.strokeWidth,
-                                config: {
-                                    min: 0,
-                                    max: 10,
-                                    step: 1
-                                }
-                            },
-
-                        ]
-                    }
+                            ]
+                        }
+                    },
+                    {
+                        key: 'strokeColor',
+                        type: 'color-picker',
+                        label: '描边色',
+                        value: style?.strokeColor,
+                        config: {
+                            showText: true,
+                        }
+                    },
+                    {
+                        key: 'strokeWidth',
+                        type: 'number-input',
+                        label: '描边宽',
+                        value: style?.strokeWidth,
+                        config: {
+                            min: 0,
+                            max: 10,
+                            step: 1
+                        }
+                    },
                 ]
             },
 
@@ -223,6 +196,6 @@ export const BaseTextStyleConfig: React.FC<ConfigType<BaseTextController>> = ({c
     }
 
     return (
-        <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+        <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
     )
 }

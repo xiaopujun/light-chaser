@@ -19,9 +19,6 @@ export const BaseTableStyleConfig: React.FC<ConfigType<BaseTableController>> = (
                 children: [
                     {
                         type: 'grid',
-                        config: {
-                            columns: 2
-                        },
                         children: [
                             {
                                 key: 'height',
@@ -81,9 +78,6 @@ export const BaseTableStyleConfig: React.FC<ConfigType<BaseTableController>> = (
                 children: [
                     {
                         type: 'grid',
-                        config: {
-                            columns: 2
-                        },
                         children: [
                             {
                                 key: 'background',
@@ -165,9 +159,6 @@ export const BaseTableStyleConfig: React.FC<ConfigType<BaseTableController>> = (
                     itemName: '列',
                     template: {
                         type: 'grid',
-                        config: {
-                            columns: 2
-                        },
                         children: [
                             {
                                 key: 'key',

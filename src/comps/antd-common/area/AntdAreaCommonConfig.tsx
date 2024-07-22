@@ -51,13 +51,12 @@ export const AntdCommonAreaGraphics = (props: ConfigType<AntdCommonAreaControlle
         },
         children: [
             {
-                type: 'card-panel',
+                type: 'sub-accordion',
                 label: '数据点',
                 key: 'point',
                 children: [
                     {
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 key: 'size',
@@ -112,23 +111,17 @@ export const AntdCommonAreaGraphics = (props: ConfigType<AntdCommonAreaControlle
                                 type: 'color-mode',
                                 label: '颜色',
                                 value: config?.point?.color || '#1c1c1c',
-                                config: {
-                                    containerStyle: {
-                                        gridColumn: '1/3'
-                                    }
-                                }
                             },
                         ]
                     }
                 ]
             },
             {
-                type: 'card-panel',
+                type: 'sub-accordion',
                 label: '数据线',
                 children: [
                     {
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 key: 'smooth',
@@ -159,11 +152,6 @@ export const AntdCommonAreaGraphics = (props: ConfigType<AntdCommonAreaControlle
                                         type: 'color-mode',
                                         label: '颜色',
                                         value: config?.line?.color as string || '#fff',
-                                        config: {
-                                            containerStyle: {
-                                                gridColumn: '1/3'
-                                            }
-                                        }
                                     }
                                 ]
                             }
@@ -172,7 +160,7 @@ export const AntdCommonAreaGraphics = (props: ConfigType<AntdCommonAreaControlle
                 ]
             },
             {
-                type: 'card-panel',
+                type: 'sub-accordion',
                 label: '数据面',
                 children: [
                     {
@@ -203,7 +191,6 @@ export const AntdAreaCommonFieldMapping: React.FC<ConfigType> = (props) => {
     const schema: Control = {
         key: 'style',
         type: 'grid',
-        config: {columns: 2},
         children: [
             {
                 key: 'xField',
@@ -239,5 +226,5 @@ export const AntdAreaCommonFieldMapping: React.FC<ConfigType> = (props) => {
         controller.update(fieldChangeData.dataFragment);
     }
 
-    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+    return <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
 }
