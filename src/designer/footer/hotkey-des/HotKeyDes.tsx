@@ -1,5 +1,5 @@
 import './HotKeyDes.less';
-import Dialog from "../../../json-schema/ui/dialog/Dialog";
+import {Modal} from 'antd';
 
 const hotkeys = [
     {name: '保存项目', windows: 'ctrl + s', mac: 'ctrl + s'},
@@ -46,7 +46,7 @@ export interface HotKeyDesProps {
 export const HotKeyDes = (prop: HotKeyDesProps) => {
     const {onClose} = prop;
     return (
-        <Dialog title={'快捷键说明'} visible={true} width={800} onClose={onClose}>
+        <Modal title={'快捷键说明'} open={true} width={800} onCancel={onClose} footer={null}>
             <div className={'lc-hotkey-des'} style={{color: 'white'}}>
                 <table className={'hotkey-des-table'}>
                     <thead>
@@ -72,6 +72,6 @@ export const HotKeyDes = (prop: HotKeyDesProps) => {
                     </tbody>
                 </table>
             </div>
-        </Dialog>
+        </Modal>
     );
 }

@@ -114,7 +114,7 @@ class HistoryRecordOperateProxy {
         const addNext: IAddOperateData[] = [];
         const updLayerPrev: IUpdLayerOperateData[] = [];
         const updLayerNext: IUpdLayerOperateData[] = [];
-        const {layerConfigs, updateLayer} = layerManager;
+        const {layerConfigs, updateLayer, addItem} = layerManager;
 
         //头插法建立双向链表
         if (!layerManager.layerHeader) {
@@ -152,7 +152,7 @@ class HistoryRecordOperateProxy {
             });
             setAddRecordCompId(null);
         }
-        layerConfigs[layer.id + ""] = layer;
+        addItem(layer);
         updateLayer(updLayerNext);
     }
 

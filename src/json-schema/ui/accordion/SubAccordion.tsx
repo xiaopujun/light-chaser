@@ -3,6 +3,7 @@ import {Help} from "@icon-park/react";
 import './Accordion.less';
 import {AccordionProps} from "./IAccordionType.ts";
 
+
 /**
  * 手风琴组件
  * 说明:该组件的。 Title属性show switch属性。 都是非受控的属性。 也就是说只能在创建这个组件的时候就确定这两个属性的值，
@@ -10,7 +11,7 @@ import {AccordionProps} from "./IAccordionType.ts";
  * 则这个组件的值是受控的。 可以通过外部控制来更新这个组件的状态值。 如果你使用的是defaultValue属性，则这个组件的值是非受控的。
  * 操作这个组件的时候。 组件值，由本组件自身维护，不受外部控制。
  */
-export default function Accordion(props: AccordionProps) {
+export default function SubAccordion(props: AccordionProps) {
     const {label, tip, children} = props;
     const items: CollapseProps['items'] = [
         {
@@ -22,7 +23,7 @@ export default function Accordion(props: AccordionProps) {
     ];
 
     return (
-        <div className={'lc-accordion'}>
+        <div className={'lc-sub-accordion'}>
             <Collapse bordered={false}
                       expandIconPosition={'end'}
                       items={items}/>

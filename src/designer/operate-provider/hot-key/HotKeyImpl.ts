@@ -12,7 +12,7 @@ import operatorMap from "../../../framework/operate";
 import URLUtil from "../../../utils/URLUtil";
 import LayerUtil from "../../left/layer-list/util/LayerUtil.ts";
 import bluePrintHdStore from "../../header/items/blue-print/BluePrintHdStore.ts";
-import projectHdStore from "../../header/items/project/ProjecManager.ts";
+import projectHdStore from "../../header/items/project/ProjectManager.ts";
 import FileUtil from "../../../utils/FileUtil.ts";
 import layerListStore from "../../left/layer-list/LayerListStore.ts";
 import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";

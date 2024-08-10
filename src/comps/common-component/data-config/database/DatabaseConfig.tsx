@@ -59,7 +59,8 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
         if (!sql || sql === '')
             return;
         FetchUtil.post(`/api/db/executor/execute`, {id: targetDb, sql: Base64Util.toBase64(sql)}).then(res => {
-            let {data, code, msg} = res;
+            let {data} = res;
+            const {code, msg} = res;
             if (code === 200) {
                 if (filter && filter !== '') {
                     const func = eval(`(${filter})`);
@@ -110,16 +111,11 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
                         key: 'autoFlush',
                         type: 'checkbox',
                         value: !!dataRef.current?.autoFlush,
-                        config: {
-                            contentStyle: {marginLeft: 4}
-                        }
                     },
                     {
                         key: 'frequency',
                         type: 'number-input',
                         config: {
-                            prefix: '每',
-                            suffix: '秒',
                             min: 5,
                             containerStyle: {
                                 gridColumn: '2/9',
@@ -193,9 +189,6 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
                         type: 'button',
                         config: {
                             children: '测试SQL并保存',
-                            style: {
-                                width: '100%'
-                            }
                         }
                     }
                 ]

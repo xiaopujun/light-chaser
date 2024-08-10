@@ -1,15 +1,15 @@
-import {Component} from 'react';
+import {ChangeEvent, Component} from 'react';
 import './CompList.less';
 import {observer} from "mobx-react";
 import eventOperateStore from "../../../operate-provider/EventOperateStore";
 import {ILayerItem} from "../../../DesignerType";
-import Input from "../../../../json-schema/ui/input/Input";
 import IdGenerate from "../../../../utils/IdGenerate";
 import editorDesignerLoader from "../../../loader/EditorDesignerLoader";
 import componentListStore from "../ComponentListStore";
 import {AbstractDefinition, BaseInfoType} from "../../../../framework/core/AbstractDefinition";
 import DragAddProvider from "../../../../framework/drag-scale/DragAddProvider";
 import historyRecordOperateProxy from "../../../operate-provider/undo-redo/HistoryRecordOperateProxy";
+import {Input} from "antd";
 
 class CompList extends Component {
 
@@ -137,16 +137,16 @@ class CompList extends Component {
     }
 
 
-    searchChart = (data: string | number) => {
+    searchChart = (e: ChangeEvent<HTMLInputElement>) => {
         const {setSearch} = componentListStore;
-        setSearch && setSearch(data as string);
+        setSearch && setSearch((e.target as HTMLInputElement).value);
     }
 
     render() {
         return (
             <>
                 <div className={'list-search'}>
-                    <Input placeholder="搜索组件" onChange={this.searchChart}/>
+                    <Input placeholder={"搜索组件"} onChange={this.searchChart} style={{height: 28}}/>
                 </div>
                 <div className={'list-items'} id={'component-drag-container'}>
                     {this.getChartDom()}

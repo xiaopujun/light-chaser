@@ -14,7 +14,7 @@ import {
 
 export const DateTimeConfig: React.FC<ConfigType<DateTimeController>> = ({controller}) => {
 
-    const config = controller.getConfig()?.style!;
+    const config = controller.getConfig()?.style ?? {};
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
         const {dataFragment} = fieldChangeData;
@@ -23,9 +23,6 @@ export const DateTimeConfig: React.FC<ConfigType<DateTimeController>> = ({contro
 
     const schema: Control = {
         type: 'grid',
-        config: {
-            columns: 2
-        },
         children: [
             {
                 key: 'style',
@@ -94,69 +91,59 @@ export const DateTimeConfig: React.FC<ConfigType<DateTimeController>> = ({contro
                         }
                     },
                     {
-                        type: "grid",
-                        label: "对齐",
+                        label: "水平对齐",
+                        type: 'group-button',
+                        key: 'justifyContent',
+                        value: config?.justifyContent,
                         config: {
-                            columns: 2,
-                            containerStyle: {
-                                gridColumn: '1/3',
-                            },
-                        },
-                        children: [
-                            {
-                                type: 'group-button',
-                                key: 'justifyContent',
-                                value: config?.justifyContent,
-                                config: {
-                                    items: [
-                                        {
-                                            value: 'flex-start',
-                                            content: <AlignLeftTwo theme="filled" size="16"
-                                                                   strokeWidth={2}
-                                                                   strokeLinecap="square"/>
-                                        },
-                                        {
-                                            value: 'center',
-                                            content: <AlignHorizontalCenterTwo theme="filled" size="16"
-                                                                               strokeWidth={2} strokeLinecap="square"/>
-                                        },
-                                        {
-                                            value: 'flex-end',
-                                            content: <AlignRightTwo theme="filled" size="16"
-                                                                    strokeWidth={2}
-                                                                    strokeLinecap="square"/>
-                                        }
-                                    ]
+                            items: [
+                                {
+                                    value: 'flex-start',
+                                    content: <AlignLeftTwo theme="filled" size="16"
+                                                           strokeWidth={2}
+                                                           strokeLinecap="square"/>
+                                },
+                                {
+                                    value: 'center',
+                                    content: <AlignHorizontalCenterTwo theme="filled" size="16"
+                                                                       strokeWidth={2} strokeLinecap="square"/>
+                                },
+                                {
+                                    value: 'flex-end',
+                                    content: <AlignRightTwo theme="filled" size="16"
+                                                            strokeWidth={2}
+                                                            strokeLinecap="square"/>
                                 }
-                            },
-                            {
-                                type: 'group-button',
-                                key: 'alignItems',
-                                value: config?.alignItems,
-                                config: {
-                                    items: [
-                                        {
-                                            value: 'flex-start',
-                                            content: <AlignTopTwo theme="filled" size="16"
-                                                                  strokeWidth={2}
-                                                                  strokeLinecap="square"/>
-                                        },
-                                        {
-                                            value: 'center',
-                                            content: <AlignVerticalCenterTwo theme="filled" size="16"
-                                                                             strokeWidth={2} strokeLinecap="square"/>
-                                        },
-                                        {
-                                            value: 'flex-end',
-                                            content: <AlignBottomTwo theme="filled" size="16"
-                                                                     strokeWidth={2}
-                                                                     strokeLinecap="square"/>
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
+                            ]
+                        }
                     },
+                    {
+                        label: "垂直对齐",
+                        type: 'group-button',
+                        key: 'alignItems',
+                        value: config?.alignItems,
+                        config: {
+                            items: [
+                                {
+                                    value: 'flex-start',
+                                    content: <AlignTopTwo theme="filled" size="16"
+                                                          strokeWidth={2}
+                                                          strokeLinecap="square"/>
+                                },
+                                {
+                                    value: 'center',
+                                    content: <AlignVerticalCenterTwo theme="filled" size="16"
+                                                                     strokeWidth={2} strokeLinecap="square"/>
+                                },
+                                {
+                                    value: 'flex-end',
+                                    content: <AlignBottomTwo theme="filled" size="16"
+                                                             strokeWidth={2}
+                                                             strokeLinecap="square"/>
+                                }
+                            ]
+                        }
+                    }
                 ]
             }
         ]
@@ -164,7 +151,7 @@ export const DateTimeConfig: React.FC<ConfigType<DateTimeController>> = ({contro
 
 
     return (
-        <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+        <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
     )
 }
 

@@ -4,7 +4,7 @@ import {observer} from "mobx-react";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {doSave, exportProject, importProject} from "../operate-provider/hot-key/HotKeyImpl";
 import canvasHdStore from "./items/canvas/CanvasManager.ts";
-import projectHdStore from "./items/project/ProjecManager.ts";
+import projectHdStore from "./items/project/ProjectManager.ts";
 import themeHdStore from "./items/theme/ThemeManager.ts";
 import bluePrintHdStore from "./items/blue-print/BluePrintHdStore.ts";
 import CanvasHdConfigImpl from "./items/canvas/CanvasHdConfigImpl.tsx";

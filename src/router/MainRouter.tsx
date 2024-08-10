@@ -30,35 +30,7 @@ const studioDarkAlgorithm: MappingAlgorithm = (seedToken, mapToken) => {
     };
 };
 
-const antdComponentTheme = {
-    Menu: {
-        itemBg: 'none',
-        itemColor: '#bfbfbf',
-        itemSelectedBg: 'none',
-        itemBorderRadius: 2
-    },
-    Table: {
-        borderRadius: 2,
-        headerBorderRadius: 2,
-        cellPaddingBlock: 12,
-        headerBg: '#343434',
-        colorBgContainer: '#252525',
-    },
-    Input: {
-        borderRadius: 2,
-        borderRadiusLG: 2,
-        borderRadiusXS: 2,
-        borderRadiusSM: 2,
-        colorBgContainer: '#252525',
-    },
-    Button: {
-        borderRadius: 2,
-        borderRadiusLG: 2,
-        borderRadiusXS: 2,
-        borderRadiusSM: 2,
-    },
-
-}
+const antdComponentTheme = {}
 
 const router = createBrowserRouter([
     {
@@ -131,14 +103,69 @@ const MainRouter = memo(() => {
             algorithm: studioDarkAlgorithm,
             components: {
                 ...antdComponentTheme,
+                Menu: {
+                    itemBg: 'none',
+                    itemColor: '#bfbfbf',
+                    itemSelectedBg: 'none',
+                    itemBorderRadius: 2
+                },
+                Table: {
+                    borderRadius: 2,
+                    headerBorderRadius: 2,
+                    cellPaddingBlock: 12,
+                    headerBg: '#343434',
+                    colorBgContainer: '#252525',
+                },
+                Input: {
+                    borderRadius: 2,
+                    borderRadiusLG: 2,
+                    borderRadiusXS: 2,
+                    borderRadiusSM: 2,
+                    colorBgContainer: '#252525',
+                },
+                Button: {
+                    borderRadius: 2,
+                    borderRadiusLG: 2,
+                    borderRadiusXS: 2,
+                    borderRadiusSM: 2,
+                },
                 Select: {
                     borderRadius: 2,
                     borderRadiusLG: 2,
                     borderRadiusXS: 2,
                     borderRadiusSM: 2,
-                    selectorBg: '#252525'
+                    selectorBg: '#252525',
+                    optionSelectedBg: '#29323f'
                 },
-                TreeSelect: {}
+                TreeSelect: {},
+                InputNumber: {
+                    borderRadius: 2,
+                    borderRadiusLG: 2,
+                    borderRadiusXS: 2,
+                    borderRadiusSM: 2,
+                },
+                Slider: {
+                    trackBg: '#0086ce',
+                    trackHoverBg: '#1EB1FFFF',
+                    dotBorderColor: '#7fabff',
+                    handleColor: '#3e80ff',
+                    railSize: 3,
+                },
+                Collapse: {
+                    borderRadius: 2,
+                    borderRadiusLG: 2,
+                    borderRadiusXS: 2,
+                    borderRadiusSM: 2,
+                },
+                Modal: {
+                    borderRadiusLG: 4,
+                    headerBg: '#1f1f1f',
+                    colorBgContainer: '#1f1f1f',
+                    colorBgElevated: '#1f1f1f',
+                    paddingMD: 15,
+                    paddingContentHorizontalLG: 15
+                }
+
             }
         }}>
             <RouterProvider router={router}/>

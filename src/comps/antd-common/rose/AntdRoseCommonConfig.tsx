@@ -39,7 +39,8 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
     const [_config, setConfig] = useState(config);
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
-        let {id, data, dataKeyPath, dataFragment, reRender} = fieldChangeData;
+        const {id, dataKeyPath, dataFragment, reRender} = fieldChangeData;
+        let {data} = fieldChangeData;
         if (id === 'startAngle' || id === 'endAngle') {
             data = Math.PI * (data as number) / 180;
             onChange && onChange(LCGUIUtil.createObjectFromArray(dataKeyPath, data));
@@ -60,7 +61,6 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                 children: [
                     {
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 key: 'radius',
@@ -79,9 +79,6 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                                 type: 'number-input',
                                 label: '起始角',
                                 value: (config.startAngle || 0) / Math.PI * 180,
-                                config: {
-                                    suffix: '°',
-                                }
                             },
                             {
                                 key: 'innerRadius',
@@ -100,9 +97,6 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                                 type: 'number-input',
                                 label: '结束角',
                                 value: (config.endAngle || 2 * Math.PI) / Math.PI * 180,
-                                config: {
-                                    suffix: '°',
-                                },
                             },
                             {
                                 key: 'sectorStyle',
@@ -133,9 +127,6 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                                 type: 'color-mode',
                                 label: '颜色',
                                 value: '#1c1c1c',
-                                config: {
-                                    containerStyle: {gridColumn: '1 / 3'},
-                                }
                             },
                         ]
                     }
@@ -148,7 +139,6 @@ export const AntdRoseGraphicsConfig: React.FC<AntdRoseGraphicsConfigProps> = ({c
                     {
                         key: 'label',
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 key: 'offset',
@@ -230,7 +220,6 @@ export const AntdRoseFieldMapping: React.FC<ConfigType<AntdCommonRoseController>
     const options = AntdCommonUtil.getDataFieldOptions(controller);
     const schema: Control = {
         type: 'grid',
-        config: {columns: 2},
         children: [
             {
                 key: 'xField',
@@ -260,5 +249,5 @@ export const AntdRoseFieldMapping: React.FC<ConfigType<AntdCommonRoseController>
         controller.update(fieldChangeData.dataFragment);
     }
 
-    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+    return <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
 }

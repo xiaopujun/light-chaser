@@ -1,13 +1,12 @@
-import Dialog from "../../../json-schema/ui/dialog/Dialog";
 import './CoverConfig.less';
 import Button from "../../../json-schema/ui/button/Button";
 import {useRef, useState} from "react";
 import {globalMessage} from "../../../framework/message/GlobalMessage";
+import {Modal, Upload as AntdUpLoad, UploadFile} from "antd";
 import URLUtil from "../../../utils/URLUtil";
 import operatorMap from "../../../framework/operate/index";
 import {SaveType} from "../../DesignerType";
 import {AbstractOperator} from "../../../framework/operate/AbstractOperator";
-import {Upload as AntdUpLoad, UploadFile} from "antd";
 import {RcFile} from "antd/es/upload";
 import {UploadLaptop} from "@icon-park/react";
 
@@ -64,9 +63,10 @@ export const CoverConfig = (prop: CoverConfigProps) => {
     }
 
     return (
-        <Dialog title={'封面'} className={'cover-config'}
-                visible={true} width={500}
-                onClose={_onClose}>
+        <Modal title={'封面'} className={'cover-config'}
+               open={true} width={500}
+               footer={null}
+               onCancel={_onClose}>
             <div className={'cover-content'}>
                 <div className={'cover-left'}>
                     <AntdUpLoad name={'file'} beforeUpload={beforeUpload} listType={'picture-card'}
@@ -84,6 +84,6 @@ export const CoverConfig = (prop: CoverConfigProps) => {
                     <Button onClick={doSave}>保存</Button>
                 </div>
             </div>
-        </Dialog>
+        </Modal>
     );
 }

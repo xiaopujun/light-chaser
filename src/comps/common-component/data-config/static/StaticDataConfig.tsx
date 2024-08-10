@@ -41,9 +41,6 @@ export function StaticDataConfig(props: StaticDataConfigProps) {
                 type: 'button',
                 config: {
                     children: '保存并刷新数据',
-                    style: {
-                        width: '100%'
-                    }
                 }
             }
         ]

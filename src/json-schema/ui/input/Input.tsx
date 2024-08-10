@@ -1,28 +1,21 @@
-import {ChangeEvent, FocusEvent, KeyboardEvent} from 'react';
-import './Input.less';
+import {ChangeEvent} from 'react';
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
+import {Input as AntdInput} from 'antd';
+
 
 export interface InputProps extends UIContainerProps {
     value?: string;
     defaultValue?: string;
-    prefix?: string;
-    suffix?: string;
-    type?: string;
-    placeholder?: string;
-    minLength?: number;
-    maxLength?: number;
-    disabled?: boolean;
-    autoFocus?: boolean;
     onChange?: (data: string) => void;
-    onBlur?: (event: FocusEvent) => void;
-    onKeyDown?: (event: KeyboardEvent) => void;
+    placeholder?: string;
+    type?: string;
+    disabled?: boolean;
 }
 
 export default function Input(props: InputProps) {
     const {
-        value, defaultValue, prefix, suffix, type, placeholder, autoFocus, onBlur,
-        minLength, maxLength, disabled, onChange, onKeyDown,
-        ...containerProps
+        value, defaultValue, onChange, placeholder,
+        type, disabled, ...containerProps
     } = props;
 
     const _onChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -31,24 +24,14 @@ export default function Input(props: InputProps) {
 
     return (
         <UIContainer {...containerProps}>
-            <div className={'lc-input-content'}>
-                {prefix && <div className={'lc-input-prefix'}>{prefix}&nbsp;</div>}
-                <div className={'lc-input-body'}>
-                    <input value={value}
-                           defaultValue={defaultValue}
-                           minLength={minLength}
-                           maxLength={maxLength}
-                           disabled={disabled}
-                           placeholder={placeholder}
-                           onBlur={onBlur}
-                           autoFocus={autoFocus}
-                           type={type}
-                           className={'lc-input'}
-                           onKeyDown={onKeyDown}
-                           onChange={_onChange}/>
-                </div>
-                {suffix && <div className={'lc-input-suffix'}>&nbsp;{suffix}</div>}
-            </div>
+            <AntdInput value={value}
+                       placeholder={placeholder}
+                       type={type}
+                       style={{width: '100%'}}
+                       defaultValue={defaultValue}
+                       disabled={disabled}
+                       className={'lc-input'}
+                       onChange={_onChange}/>
         </UIContainer>
     );
 }

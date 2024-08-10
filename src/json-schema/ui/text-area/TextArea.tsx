@@ -1,6 +1,8 @@
 import React, {ChangeEvent, useState} from 'react';
-import './TextArea.less';
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
+import {Input as AntdInput} from 'antd';
+
+const {TextArea: AntdTextArea} = AntdInput;
 
 export interface TextAreaProps extends UIContainerProps {
     value?: string;
@@ -27,7 +29,7 @@ export const TextArea: React.FC<TextAreaProps> = (props) => {
     return (
         <UIContainer {...rest}>
             <div className={'lc-text-area-container'}>
-                <textarea value={control ? value : text} onChange={onChange} className={'lc-text-area'}/>
+                <AntdTextArea value={control ? value : text} onChange={onChange}/>
             </div>
         </UIContainer>
     );

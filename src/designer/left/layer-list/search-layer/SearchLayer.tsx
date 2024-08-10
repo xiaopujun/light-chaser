@@ -1,12 +1,12 @@
 import {observer} from "mobx-react";
 import layerListStore from "../LayerListStore.ts";
 import Dialog from "../../../../json-schema/ui/dialog/Dialog.tsx";
-import Input from "../../../../json-schema/ui/input/Input.tsx";
 import './SearchLayer.less';
-import {useState} from "react";
+import {useState, ChangeEvent} from "react";
 import {ILayerItem} from "../../../DesignerType.ts";
 import eventOperateStore from "../../../operate-provider/EventOperateStore.ts";
 import layerManager from "../../../manager/LayerManager.ts";
+import {Input} from "antd";
 
 export const SearchLayer = observer(() => {
     const [list, setList] = useState<ILayerItem[]>([]);
@@ -16,7 +16,8 @@ export const SearchLayer = observer(() => {
         setList([]);
     };
 
-    const doSearch = (value: string) => {
+    const doSearch = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
         if (!value || value === '') {
             setList([]);
             return;

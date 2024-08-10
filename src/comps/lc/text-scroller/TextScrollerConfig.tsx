@@ -6,7 +6,7 @@ import {ConfigType} from "../../../designer/right/ConfigContent";
 
 export const TextScrollerConfig: React.FC<ConfigType<TextScrollerController>> = ({controller}) => {
 
-    const config = controller.getConfig()?.style!;
+    const config = controller.getConfig()?.style ?? {};
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
         const {dataFragment} = fieldChangeData;
@@ -16,7 +16,6 @@ export const TextScrollerConfig: React.FC<ConfigType<TextScrollerController>> = 
     const schema: Control = {
         key: 'style',
         type: 'grid',
-        config: {columns: 2},
         children: [
             {
                 key: 'speed',
@@ -76,7 +75,7 @@ export const TextScrollerConfig: React.FC<ConfigType<TextScrollerController>> = 
 
 
     return (
-        <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+        <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
     )
 }
 

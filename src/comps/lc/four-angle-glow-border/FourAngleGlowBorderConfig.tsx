@@ -15,7 +15,6 @@ export const FourAngleGlowBorderConfig: React.FC<ConfigType<FourAngleGlowBorderC
     const schema: Control = {
         key: 'style',
         type: 'grid',
-        config: {columns: 2},
         children: [
             {
                 key: 'width',
@@ -51,7 +50,7 @@ export const FourAngleGlowBorderConfig: React.FC<ConfigType<FourAngleGlowBorderC
     }
 
     return (
-        <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+        <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
     )
 }
 

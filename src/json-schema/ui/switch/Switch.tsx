@@ -1,6 +1,6 @@
-import React, {useState} from "react";
-import "./Switch.less";
+import {useState} from "react";
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
+import {Switch as AntdSwitch} from 'antd';
 
 interface SwitchProps extends UIContainerProps {
     onChange?: (data: boolean) => void;
@@ -17,8 +17,7 @@ export default function Switch(props: SwitchProps) {
     const [stateValue, setStateValue] = useState<boolean>(!!(controlled ? value : defaultValue));
     const finalValue: boolean = !!(controlled ? value : stateValue);
 
-    const _onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {checked} = e.target;
+    const _onChange = (checked: boolean) => {
         onChange && onChange(checked);
         if (!controlled)
             setStateValue(checked);
@@ -26,14 +25,7 @@ export default function Switch(props: SwitchProps) {
 
     return (
         <UIContainer {...containerProps} className={'lc-switch'}>
-            <div style={{display: 'flex'}}>
-                <label className="lc-switch-body">
-                    <input disabled={disabled}
-                           checked={finalValue}
-                           onChange={_onChange} type="checkbox"/>
-                    <span/>
-                </label>
-            </div>
+            <AntdSwitch disabled={disabled} checked={finalValue} onChange={_onChange}/>
         </UIContainer>
     );
 }
