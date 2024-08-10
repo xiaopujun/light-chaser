@@ -1,8 +1,8 @@
 import {ColorPicker as AntdColorPicker} from 'antd';
 import './ColorPicker.less';
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
-import {Color} from "antd/es/color-picker/color";
 import {useState} from "react";
+import {Color} from "antd/es/color-picker";
 
 interface ColorPickerProps extends UIContainerProps {
     value?: string;
