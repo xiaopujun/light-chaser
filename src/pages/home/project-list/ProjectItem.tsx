@@ -29,13 +29,13 @@ export default function ProjectItem(props: ProjectItemProps) {
         <div className="project-list-item">
             <div className="project-item-cover" style={{backgroundImage: `url(${cover})`}}>
                 <div className="operate-icon-list">
-                    <div className="operate-icon"><Popover content={'编辑项目'}><Edit
+                    <div className="operate-icon"><Popover content={'编辑大屏'}><Edit
                         onClick={() => doOperate(id, "edit")}/></Popover></div>
-                    <div className="operate-icon"><Popover content={'预览项目'}><PreviewOpen
+                    <div className="operate-icon"><Popover content={'预览大屏'}><PreviewOpen
                         onClick={() => doOperate(id, "show")}/></Popover></div>
-                    <div className="operate-icon"><Popover content={'删除项目'}><Delete
+                    <div className="operate-icon"><Popover content={'删除大屏'}><Delete
                         onClick={() => doOperate(id, "del")}/></Popover></div>
-                    <div className="operate-icon"><Popover content={'复制项目'}><Copy
+                    <div className="operate-icon"><Popover content={'复制大屏'}><Copy
                         onClick={() => doOperate(id, "clone")}/></Popover></div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 import React, {memo, useEffect, useRef} from 'react';
 import './ProjectList.less';
-import {Input, Button, Pagination} from "antd";
+import {Input, Button, Pagination, Breadcrumb} from "antd";
 import defaultSnapshot from '../image/default-snapshot.jpg';
 import {DesignerMode, IPage, IProjectInfo, SaveType} from "../../../designer/DesignerType";
 import {INewProjectInfo, NewProjectDialog} from "./NewProjectDialog.tsx";
@@ -139,15 +139,27 @@ export const ProjectList = memo((props: ProjectListProps) => {
         <div className={'project-list-container'}>
             <div className={'project-list-header'}>
                 <div className={'project-list-header-left'}>
-                    <Search placeholder="搜索项目" size={"middle"}
+                    <Breadcrumb
+                        items={[
+                            {
+                                title: '我的文件',
+                            },
+                            {
+                                title: <a href="">宝洁有限公司</a>,
+                            }
+                        ]}
+                    />
+                </div>
+                <div className={'project-list-header-right'}>
+                    <Search placeholder="搜索大屏" size={"middle"}
                             className={'project-list-search'}
                             onKeyDown={onKeyDown}
                             onSearch={doSearch}
                             style={{width: 350}}/>
+                    <span>&nbsp;</span>
                     <Button size={'middle'} type={"primary"} onClick={toggleNewProVisible}>
-                        <Add style={{position: 'relative', top: 3, marginRight: 3}}/>新增</Button>
+                        <Add style={{position: 'relative', top: 3, marginRight: 3}}/>新建大屏</Button>
                 </div>
-                <div className={'project-list-header-right'}></div>
             </div>
             <div className={'project-list'}>
                 {pageData && pageData.records.map((item: IProjectInfo, index) => {
