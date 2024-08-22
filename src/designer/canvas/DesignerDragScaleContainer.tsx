@@ -58,7 +58,7 @@ const DesignerDragScaleContainer = memo(observer((props: DesignerDragScaleContai
                  style={{
                      width: canvasConfig?.width,
                      height: canvasConfig?.height,
-                     background: '#1c1c1c',
+                     background: '#1f1f1f',
                      position: 'absolute',
                  }}>
                 {children}

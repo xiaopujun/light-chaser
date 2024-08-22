@@ -23,15 +23,15 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
     const [count, setCount] = useState(0);
 
     useEffect(() => {
-        FetchUtil.get(`/api/datasource/list`).then(res => {
-            if (res.code === 200) {
-                const options = (res.data as Array<IDataSource>).map(item => {
-                    return {label: item.name, value: item.id}
-                })
-                setDataSourceList(options as ISelectOption[]);
-            } else
-                globalMessage.messageApi?.error(res.msg);
-        })
+        // FetchUtil.get(`/api/datasource/list`).then(res => {
+        //     if (res.code === 200) {
+        //         const options = (res.data as Array<IDataSource>).map(item => {
+        //             return {label: item.name, value: item.id}
+        //         })
+        //         setDataSourceList(options as ISelectOption[]);
+        //     } else
+        //         globalMessage.messageApi?.error(res.msg);
+        // })
     }, []);
 
     const validate = () => {

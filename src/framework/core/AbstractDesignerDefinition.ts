@@ -4,6 +4,7 @@ import AbstractDesignerController from "./AbstractDesignerController.ts";
 import {MenuInfo} from "../../designer/right/MenuType.ts";
 import {ColorFilter, Data, Optimize, SettingOne, Theme} from "@icon-park/react";
 import {lazy} from "react";
+import {Observable} from "../../utils/observable";
 
 const AnimationConfig = lazy(() => import("../../comps/common-component/animation-config/AnimationConfig.tsx"));
 const ThemeConfig = lazy(() => import("../../comps/common-component/theme-config/ThemeConfig.tsx"));
@@ -13,6 +14,10 @@ const FilterConfig = lazy(() => import("../../comps/common-component/filter-conf
 
 
 export default abstract class AbstractDesignerDefinition<C extends AbstractController = AbstractDesignerController, P = any> extends AbstractDefinition<C, P> {
+
+    // 全局的数据发生变化的时候，通知组件更新数据，挂在在window下是否合适？？？
+    public onGlobalDataChangeObservable = window.onGlobalDataChangeObservable = new Observable();
+
 
     getMenuList(): Array<MenuInfo> {
         return [
