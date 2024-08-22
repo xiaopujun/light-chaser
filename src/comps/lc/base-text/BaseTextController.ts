@@ -31,7 +31,7 @@ export class BaseTextController extends AbstractDesignerController<BaseTextCompo
     update(config: BaseTextComponentProps, upOp?: UpdateOptions | undefined): void {
         this.config = ObjectUtil.merge(this.config, config);
         upOp = upOp || {reRender: true};
-        if (upOp.reRender)
+        // if (upOp.reRender)
             this.instance?.updateConfig(this.config!);
 
     }

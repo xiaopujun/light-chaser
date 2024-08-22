@@ -7,6 +7,7 @@ import {BaseTextComponentProps} from "./BaseTextComponent";
 import {BaseTextStyleConfig} from "./BaseTextConfig";
 import React from "react";
 import AbstractDesignerDefinition from "../../../framework/core/AbstractDesignerDefinition.ts";
+import DataConfig from "../../common-component/data-config/DataConfig.tsx";
 
 const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseInfo"));
 const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig.tsx"));
@@ -67,7 +68,7 @@ export default class BaseTextDefinition extends AbstractDesignerDefinition<BaseT
     }
 
     getMenuList(): Array<MenuInfo> {
-        return super.getMenuList().filter((item: MenuInfo) => item.key !== 'theme' && item.key !== 'data');
+        return super.getMenuList().filter((item: MenuInfo) => item.key !== 'theme');
     }
 
     getMenuToConfigContentMap(): MenuToConfigMappingType {
@@ -76,7 +77,8 @@ export default class BaseTextDefinition extends AbstractDesignerDefinition<BaseT
             style: BaseTextStyleConfig,
             animation: AnimationConfig,
             theme: ThemeConfig,
-            filter: FilterConfig
+            filter: FilterConfig,
+            data: DataConfig
         };
     }
 
@@ -87,6 +89,10 @@ export default class BaseTextDefinition extends AbstractDesignerDefinition<BaseT
             {
                 id: "click",
                 name: "点击时",
+            },
+            {
+                id: "dataChange",
+                name: "数据变化时"
             }
         ]);
     }
