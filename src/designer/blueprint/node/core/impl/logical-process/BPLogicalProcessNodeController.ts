@@ -34,9 +34,15 @@ export default class BPLogicalProcessNodeController extends AbstractBPNodeContro
                 return;
             }
         }
-        const newParams = this.handler!(params) || params;
         const apId = nodeId + ':afterExecute:' + AnchorPointType.OUTPUT;
-        executor.execute(apId, executor, newParams);
+        const newParams = this.handler!(params) || params;
+        if (newParams instanceof Promise) {
+            newParams.then(params => {
+                executor.execute(apId, executor, params);
+            })
+        } else {
+            executor.execute(apId, executor, newParams);
+        }
     }
 
     getConfig(): LogicalProcessNodeConfigType | null {
