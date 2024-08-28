@@ -48,6 +48,7 @@ export default class BPExecutor {
         if (!nextAnchorIds)
             return;
         //分发执行已链接的下一个节点
+        console.log(nextAnchorIds);
         nextAnchorIds.forEach((nextAnchorId: string) => {
             const [nodeId, apId, anchorType] = nextAnchorId.split(":");
             const {bpNodeControllerInsMap} = bluePrintManager;

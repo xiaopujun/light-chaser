@@ -45,24 +45,28 @@ export default class BPSelectMultipleNodeController extends AbstractBPNodeContro
         const apId = nodeId + ':afterExecute:' + AnchorPointType.OUTPUT;
 
         const config = this.getConfig();
-        this.selectedNodes = config?.selectedNodes;
+        const { selectedNodes = [] }  = config;
+        this.selectedNodes = selectedNodes;
         const {layerConfigs, compController} = layerManager;
         const layerList = layerBuilder.buildLayerList(layerConfigs);
         const newParams = {};
-        this.selectedNodes?.forEach(nodeId=>{
-            const selectedNode = layerList.find(item=>item.key==nodeId);
-            if(selectedNode && selectedNode.props.children){
-                selectedNode.props.children.map(({key})=>{
-                    const controller = compController[key];
-                    newParams[key] = controller.getConfig();
-                });
+        // 这样有问题，如果嵌套编组就有问题，后面需要用递归的方式实现
+        selectedNodes?.forEach(nodeId=>{
+            let selectedNode = layerConfigs[nodeId];
+            if(selectedNode.type !== "group"){
+                const controller = compController[selectedNode.id];
+                newParams[selectedNode.id] = controller.getConfig();
+            }else{
+                selectedNode = layerList.find(item=>item.key==nodeId);
+                if(selectedNode && selectedNode.props.children){
+                    console.log(selectedNode.props.children);
+                    selectedNode.props.children.map(({key})=>{
+                        const controller = compController[key];
+                        newParams[key] = controller.getConfig();
+                    });
+                }
             }
         });
-        console.log(newParams);
-
-
-
-
         executor.execute(apId, executor, newParams);
     }
 
@@ -84,14 +88,14 @@ export default class BPSelectMultipleNodeController extends AbstractBPNodeContro
             input: [
                 {
                     id: nodeId + ':execute:' + AnchorPointType.INPUT,
-                    name: "执行",
+                    name: "选择节点",
                     type: AnchorPointType.INPUT
                 }
             ],
             output: [
                 {
                     id: nodeId + ":afterExecute:" + AnchorPointType.OUTPUT,
-                    name: "执行后3",
+                    name: "选择节点后",
                     type: AnchorPointType.OUTPUT
                 }
             ]
