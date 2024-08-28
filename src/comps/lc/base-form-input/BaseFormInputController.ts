@@ -5,7 +5,6 @@ import ComponentUtil from "../../../utils/ComponentUtil";
 import BaseFormInputComponent, {BaseFormInputComponentProps, BaseFormInputComponentRef} from "./BaseFormInputComponent.tsx";
 import ObjectUtil from "../../../utils/ObjectUtil";
 import BPExecutor from "../../../designer/blueprint/core/BPExecutor";
-import BaseFormInputDefinition from "./BaseFormInputDefinition";
 
 export class BaseFormInputController extends AbstractDesignerController<BaseFormInputComponentRef, BaseFormInputComponentProps> {
 
@@ -58,6 +57,9 @@ export class BaseFormInputController extends AbstractDesignerController<BaseForm
             click: () => BPExecutor.triggerComponentEvent(nodeId!, "click", this.config),
             onChange: (value: string) => BPExecutor.triggerComponentEvent(nodeId!, "onChange", value),
             onPressEnter: (value: string) => BPExecutor.triggerComponentEvent(nodeId!, "onPressEnter", value),
+            update:(newConfig)=>{
+                this.update(newConfig);
+            }
         });
     }
 }

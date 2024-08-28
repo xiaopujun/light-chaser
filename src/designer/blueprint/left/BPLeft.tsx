@@ -7,7 +7,16 @@ import layerManager from "../../manager/LayerManager.ts";
 import IdGenerate from "../../../utils/IdGenerate";
 import DragAddProvider from "../../../framework/drag-scale/DragAddProvider";
 import Input from "../../../json-schema/ui/input/Input.tsx";
-import {AddSubset, ApplicationOne, BytedanceMiniApp, Calculator, CardTwo, Filter, MindmapMap} from "@icon-park/react";
+import {
+    AddSubset,
+    ApplicationOne,
+    BytedanceMiniApp,
+    Calculator,
+    CardTwo,
+    Filter,
+    MindmapMap,
+    ListCheckbox
+} from "@icon-park/react";
 
 const BPLeft: React.FC = () => {
     return (
@@ -167,6 +176,7 @@ export const BPLogicalNodeList = observer(() => {
     const logicalNodeList = [
         {name: '条件判断', icon: AddSubset, type: 'condition-node'},
         {name: '逻辑处理', icon: BytedanceMiniApp, type: 'logical-process-node'},
+        {name: '选择多个节点', icon: ListCheckbox, type: 'select-multiple-node'},
     ].filter((item) => item.name.indexOf(bpLeftStore.searchValue) !== -1)
 
     return (

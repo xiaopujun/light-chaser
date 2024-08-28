@@ -1,40 +1,94 @@
+import React, {FC} from 'react';
 import AbstractDesignerController from "../../../../framework/core/AbstractDesignerController.ts";
-import {APIConfig} from "../../../../designer/DesignerType.ts";
-import {useRef, useState} from "react";
-import ObjectUtil from "../../../../utils/ObjectUtil.ts";
-import {Control} from "../../../../json-schema/SchemaTypes.ts";
-import {globalMessage} from "../../../../framework/message/GlobalMessage.tsx";
 import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI.tsx";
-import FetchUtil from "../../../../utils/FetchUtil.ts";
+import {Control} from "../../../../json-schema/SchemaTypes.ts";
+import {useEffect, useRef, useState} from "react";
+import {globalMessage} from "../../../../framework/message/GlobalMessage.tsx";
+import {ISelectOption} from "../../../../json-schema/ui/select/Select.tsx";
+import ObjectUtil from "../../../../utils/ObjectUtil.ts";
+import {IDatabase} from "../../../../designer/DesignerType.ts";
 
-export interface ApiDataConfigProps {
+
+export interface DynamicDataConfigProps {
     controller: AbstractDesignerController;
-    data: APIConfig;
+    data: IDatabase;
 }
 
-export function ApiDataConfig(props: ApiDataConfigProps) {
+function DataSetConfig(props: DynamicDataConfigProps) {
     const {data, controller} = props;
-    const dataRef = useRef<APIConfig>(ObjectUtil.merge({
-        url: '',
-        method: 'get',
-        header: {},
-        params: {},
-        autoFlush: false,
-        frequency: 5,
-        filter: undefined,
-    }, data));
-    const apiTestResRef = useRef<string>("")
+    const dataRef = useRef(data);
+    const apiTestResRef = useRef<string>("");
+    const [dataSourceList, setDataSourceList] = useState<ISelectOption[]>([]);
+    const [testRes, setTestRes] = useState<string | null>(null);
     const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        // FetchUtil.get(`/api/datasource/list`).then(res => {
+        //     if (res.code === 200) {
+        //         const options = (res.data as Array<IDataSource>).map(item => {
+        //             return {label: item.name, value: item.id}
+        //         })
+        //         setDataSourceList(options as ISelectOption[]);
+        //     } else
+        //         globalMessage.messageApi?.error(res.msg);
+        // })
+    }, []);
+
+    const validate = () => {
+        const {targetDb, sql} = dataRef.current;
+        if (!targetDb) {
+            globalMessage.messageApi?.error('请选择数据库');
+            return false;
+        }
+        if (!sql) {
+            globalMessage.messageApi?.error('请输入SQL语句');
+            return false;
+        }
+        if (!sql.trim().startsWith('select')) {
+            globalMessage.messageApi?.error('SQL语句必须以select开头');
+            return false;
+        }
+        return true;
+    }
+
+    const testAndSave = () => {
+        // 这里应该去获取全局变量的数据并更新组件的数据
+        // controller.update({data: {database: dataRef.current}}, {reRender: false});
+        console.log("dataRef.current>>>", dataRef.current, controller);
+        // controller.onGlobalDataChangeObservable.notifyObservers({...dataRef.current})
+        window.onGlobalDataChangeObservable.notifyObservers(dataRef.current);
+    }
+
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+        console.log("onFieldChange>>>", fieldChangeData);
+        const {reRender, id, dataFragment} = fieldChangeData;
+        if (id === 'testAndSave')
+            testAndSave();
+        else
+            dataRef.current = ObjectUtil.merge(dataRef.current, dataFragment);
+        if (reRender)
+            setCount(count + 1);
+    }
 
     const schema: Control = {
         type: 'grid',
         config: {gridGap: '10px'},
         children: [
             {
-                key: 'url',
-                type: 'input',
-                label: '接口地址',
-                value: dataRef.current?.url || '',
+                key: 'datasetId',
+                label: '数据集',
+                value: dataRef.current?.datasetId,
+                reRender: true,
+                type: 'select',
+                tip: '选择数据集',
+                config: {
+                    disabled: false,
+                    placeholder: '请选择',
+                    options: [
+                        {label: '选项1', value: '1'},
+                        {label: '选项2', value: '2'},
+                    ]
+                }
             },
             {
                 key: 'method',
@@ -72,7 +126,6 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
                 ]
             },
             {
-
                 type: 'card-panel',
                 label: '请求头',
                 tip: '请求头信息，json格式',
@@ -160,77 +213,11 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
                 ]
             },
         ]
-
-    }
-
-
-    const validate = () => {
-        if (!dataRef.current?.url) {
-            globalMessage.messageApi?.error('接口地址不能为空');
-            return false;
-        }
-        if (!dataRef.current?.method) {
-            globalMessage.messageApi?.error('请求方式不能为空');
-            return false;
-        }
-        if (typeof dataRef.current.header === 'string') {
-            const header = ObjectUtil.stringToJsObj(dataRef.current.header)
-            if (!header) {
-                globalMessage.messageApi?.error('请求头不符合json格式');
-                return false;
-            } else
-                dataRef.current.header = header;
-        }
-        if (typeof dataRef.current.params === 'string') {
-            const param = ObjectUtil.stringToJsObj(dataRef.current.params)
-            if (!param) {
-                globalMessage.messageApi?.error('请求参数不符合json格式');
-                return false;
-            } else
-                dataRef.current.params = param;
-        }
-        return true;
-    }
-
-    const testAndSave = () => {
-        if (!validate())
-            return;
-        const {params, header, url, method, filter} = dataRef.current!;
-        FetchUtil.doRequest(url!, method!, header, params).then(res => {
-            let {data} = res;
-            const {code} = res;
-            if (code === 200) {
-                if (filter && filter !== '') {
-                    const func = eval(`(${filter})`);
-                    data = typeof func === 'function' ? func(data) : data;
-                }
-                apiTestResRef.current = JSON.stringify(data, null, 2);
-                controller.update({data: {apiData: dataRef.current, staticData: data}}, {reRender: false});
-                controller.changeData(data);
-            } else {
-                apiTestResRef.current = JSON.stringify({msg: '请求错误'}, null, 2);
-                controller.update({data: {apiData: dataRef.current}}, {reRender: false});
-                globalMessage.messageApi?.warning('配置项已保存，但数据未成功刷新');
-            }
-        }).finally(() => {
-            setCount(count + 1);
-        })
-    }
-
-    const onFieldChange = (fieldChangeData: FieldChangeData) => {
-        const {reRender, id, dataFragment} = fieldChangeData;
-        if (id === 'testAndSave')
-            testAndSave();
-        else if (id === 'apiTestRes')
-            return
-        else {
-            dataRef.current = ObjectUtil.merge(dataRef.current, dataFragment)
-        }
-        if (reRender)
-            setCount(count + 1)
     }
 
     return (
         <LCGUI schema={schema} onFieldChange={onFieldChange}/>
     );
 }
+
+export default DataSetConfig;

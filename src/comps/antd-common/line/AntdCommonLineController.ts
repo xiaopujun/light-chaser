@@ -5,6 +5,7 @@ import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
+import {AntdBarProps} from "../bar/AntdCommonBarController";
 
 export interface AntdLineProps extends ComponentBaseProps {
     style?: WritableLineOptions;
@@ -29,6 +30,11 @@ export default class AntdCommonLineController extends AntdBaseDesignerController
 
     update(config: AntdLineProps, upOp?: UpdateOptions): void {
         super.commonUpdate(config, Line, upOp);
+    }
+
+    updateAsync(config: AntdBarProps, upOp?: UpdateOptions): void {
+        this.commonUpdate(config, Line, upOp);
+        this.doApi(this.config.data.apiData);
     }
 
     updateTheme(newTheme: ThemeItemType): void {

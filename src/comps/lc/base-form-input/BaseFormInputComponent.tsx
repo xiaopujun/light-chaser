@@ -73,6 +73,9 @@ const BaseFormInputComponent = React.forwardRef((props: BaseFormInputComponentPr
     const onChange = (e) => {
         if ('onChange' in eventHandlerMap.current) {
             eventHandlerMap.current['onChange'](e.target.value);
+            setValue(e.target.value);
+            // 更新config
+            eventHandlerMap.current['update']({data:{staticData: e.target.value}});
         }
     }
     const onPressEnter = (e) => {
@@ -82,8 +85,6 @@ const BaseFormInputComponent = React.forwardRef((props: BaseFormInputComponentPr
     }
 
     const styleObj = getTypeStyle(style);
-
-    console.log(config);
 
     return (
         <ConfigProvider theme={{token:styleObj}}>

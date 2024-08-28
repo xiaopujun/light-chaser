@@ -31,6 +31,11 @@ export default class AntdCommonBarController extends AntdBaseDesignerController<
         super.commonUpdate(config, Bar, upOp);
     }
 
+    updateAsync(config: AntdBarProps, upOp?: UpdateOptions): void {
+        this.commonUpdate(config, Bar, upOp);
+        this.doApi(this.config.data.apiData);
+    }
+
     updateTheme(newTheme: ThemeItemType): void {
         if (!newTheme) return;
         const styleConfig = this.config?.style!;

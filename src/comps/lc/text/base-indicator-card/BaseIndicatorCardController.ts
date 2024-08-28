@@ -29,6 +29,7 @@ export class BaseIndicatorCardController extends AbstractDesignerController<Base
     }
 
     update(config: BaseIndicatorCardComponentProps, upOp?: UpdateOptions | undefined): void {
+
         this.config = ObjectUtil.merge(this.config, config);
         upOp = upOp || {reRender: true};
         if (upOp.reRender){
@@ -36,10 +37,18 @@ export class BaseIndicatorCardController extends AbstractDesignerController<Base
         }
     }
 
+    updateAsync(config: BaseIndicatorCardComponentProps, upOp?: UpdateOptions): void {
+        this.config = ObjectUtil.merge(this.config, config);
+        this.instance?.updateConfig(this.config!);
+        this.doApi(this.config.data.apiData);
+    }
 
     changeData(data: any) {
-        super.changeData(data);
-        this.update(data);
+        if(typeof data == 'string' || typeof data == 'number'){
+            this.update({data:{staticData: data}});
+        }else{
+            this.update(data);
+        }
     }
 
     registerEvent() {

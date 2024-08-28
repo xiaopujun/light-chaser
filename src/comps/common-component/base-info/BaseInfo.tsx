@@ -130,12 +130,18 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
             type: 'grid',
             children: [
                 {
+                    id: "id",
+                    key: "id",
+                    label: "ID",
+                    type: "input",
+                    value: id,
+                },
+                {
                     id: "name",
                     key: "name",
                     label: "名称",
                     type: "input",
                     value: name,
-
                 },
                 {
                     id: "width",

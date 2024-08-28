@@ -173,7 +173,7 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
                         id: 'databaseTestRes',
                         type: 'code-editor',
                         config: {
-                            height: 200,
+                            height: 60,
                             language: 'json'
                         },
                         reRender: true,

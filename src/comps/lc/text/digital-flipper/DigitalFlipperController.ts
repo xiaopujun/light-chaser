@@ -8,6 +8,7 @@ import DigitalFlipperComponent, {
     DigitalFlipperComponentProps,
     DigitalFlipperComponentRef
 } from "./DigitalFlipperComponent";
+import {BaseIndicatorCardComponentProps} from "../base-indicator-card/BaseIndicatorCardComponent";
 
 export class DigitalFlipperController extends AbstractDesignerController<DigitalFlipperComponentRef, DigitalFlipperComponentProps> {
 
@@ -41,11 +42,15 @@ export class DigitalFlipperController extends AbstractDesignerController<Digital
         if (upOp.reRender)
             this.instance?.updateConfig(this.config!);
     }
+    updateAsync(config: BaseIndicatorCardComponentProps, upOp?: UpdateOptions): void {
+        this.config = ObjectUtil.merge(this.config, config);
+        this.instance?.updateConfig(this.config!);
+        this.doApi(this.config.data.apiData);
+    }
 
     updateTheme(newTheme: ThemeItemType): void {
 
     }
-
 
     registerEvent() {
         const nodeId = this.config?.base?.id!;

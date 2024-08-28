@@ -44,6 +44,13 @@ abstract class AbstractController<I = any, C = any> {
     public abstract update(config: C, upOp?: UpdateOptions): void;
 
     /**
+     * 更新组件配置，并触发组件获取异步数据并更新组件数据，触发重新渲染
+     * @param config 组件属性（参数）
+     * @param upOp 操作类型
+     */
+    public abstract updateAsync(config: C, upOp?: UpdateOptions): void;
+
+    /**
      * 销毁组件
      */
     public destroy(): void {
