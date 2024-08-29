@@ -18,7 +18,7 @@ import layerListStore from "../../left/layer-list/LayerListStore.ts";
 import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
 import layerManager from "../../manager/LayerManager.ts";
 import themeHdStore from "../../header/items/theme/ThemeManager.ts";
-import bluePrintManager from "../../blueprint/manager/BluePrintManager.ts";
+import bluePrintGroupManager from "../../blueprint/manager/BluePrintGroupManager.ts";
 import canvasManager from "../../header/items/canvas/CanvasManager.ts";
 import designerManager from "../../manager/DesignerManager.ts";
 
@@ -581,6 +581,7 @@ export const searchLayer = () => {
  */
 export const delBPNode = () => {
     if (!bluePrintHdStore.bluePrintVisible) return;
+    const {bluePrintManager} = bluePrintGroupManager;
     const {selectedNodes, delNode} = bluePrintManager;
     if (selectedNodes.length === 0) return;
     const selectedNodeIds = selectedNodes.map(node => node.id.split(':')[1]!);
@@ -599,6 +600,7 @@ export const delBPNode = () => {
  */
 export const delBPLine = () => {
     if (!bluePrintHdStore.bluePrintVisible) return;
+    const {bluePrintManager} = bluePrintGroupManager;
     const {selectedLines, delLine} = bluePrintManager;
     if (selectedLines.length === 0) return;
     const selectedLineIds = selectedLines.map(line => line.id!);

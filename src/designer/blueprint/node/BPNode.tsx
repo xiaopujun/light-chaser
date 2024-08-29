@@ -14,7 +14,6 @@ export default class BPNode extends React.PureComponent<NodeProps> {
         const {icon, name, input = [], output = [], titleBgColor = '#247057'} = this.props;
         const cpList = [...output, ...input];
         const Icon = nodeIconMap.get(icon) || ConnectionPoint;
-        console.log("this.props>>", this.props);
         return (
             <div className={'bp-node'}>
                 <div className={'bp-node-header'} style={{backgroundColor: titleBgColor}}>

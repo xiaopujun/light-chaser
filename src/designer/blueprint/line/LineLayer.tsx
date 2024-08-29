@@ -1,8 +1,9 @@
 import React, {CSSProperties} from 'react';
 import CanvasUtil from "../util/CanvasUtil";
-import bluePrintManager, {IBPLine} from "../manager/BluePrintManager.ts";
+import {IBPLine} from "../manager/BluePrintManager.ts";
 import {AnchorPointType} from "../node/core/AbstractBPNodeController";
 import IdGenerate from "../../../utils/IdGenerate";
+import bluePrintGroupManager from "../manager/BluePrintGroupManager";
 
 class LineLayer extends React.Component {
 
@@ -27,6 +28,7 @@ class LineLayer extends React.Component {
     keyMove: boolean = false;
 
     componentDidMount() {
+        const {bluePrintManager} = bluePrintGroupManager;
         const {setUpCtx, setDownCtx} = bluePrintManager;
         setUpCtx(this.upLayer!.getContext('2d')!);
         setDownCtx(this.downLayer!.getContext('2d')!);
@@ -42,6 +44,7 @@ class LineLayer extends React.Component {
     }
 
     bpMouseDown = (e: MouseEvent) => {
+        const {bluePrintManager} = bluePrintGroupManager;
         const {target} = e;
         if (!target || !(target as HTMLElement).classList.contains('ap-circle')) return;
         const pointDom = e.target as HTMLElement;
@@ -57,7 +60,11 @@ class LineLayer extends React.Component {
     }
 
     bpMouseUp = (e: MouseEvent) => {
+        // const {bluePrintManager} = bluePrintGroupManager;
+        let bluePrintManager = bluePrintGroupManager.bluePrintManager;
+
         const {nodeContainerRef, upCtx} = bluePrintManager;
+
         const {width: canvasW, height: canvasH} = nodeContainerRef?.getBoundingClientRect()!;
         const endElem = e.target as HTMLElement;
         if (!this.keyMove || !endElem || !endElem.classList.contains('ap-circle')
@@ -107,6 +114,7 @@ class LineLayer extends React.Component {
     }
 
     bpMouseMove = (e: MouseEvent) => {
+        const {bluePrintManager} = bluePrintGroupManager;
         if (!this.keyDown) return;
         this.keyMove = true;
         const {startPoint, endPoint} = this.currentLine;

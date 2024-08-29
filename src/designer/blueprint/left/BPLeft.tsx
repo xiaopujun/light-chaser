@@ -1,6 +1,5 @@
 import React, {useEffect, useRef} from "react";
 import './BPLeft.less';
-import bluePrintManager from "../manager/BluePrintManager.ts";
 import bpLeftStore from "./BPLeftStore";
 import {observer} from "mobx-react";
 import layerManager from "../../manager/LayerManager.ts";
@@ -17,6 +16,7 @@ import {
     MindmapMap,
     ListCheckbox
 } from "@icon-park/react";
+import bluePrintGroupManager from "../manager/BluePrintGroupManager";
 
 const BPLeft: React.FC = () => {
     return (
@@ -89,6 +89,7 @@ const drop = (event: DragEvent) => {
     event.preventDefault();
     let nodeId = event.dataTransfer?.getData('nodeId');
     const type = event.dataTransfer?.getData('type');
+    const {bluePrintManager} = bluePrintGroupManager;
     const {bpDragContentRef, canvasScale} = bluePrintManager;
     const contentPos = bpDragContentRef?.getBoundingClientRect();
     //获取鼠标位置

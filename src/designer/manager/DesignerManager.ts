@@ -4,7 +4,8 @@ import {DesignerMode, ProjectDataType} from "../DesignerType.ts";
 import canvasManager from "../header/items/canvas/CanvasManager.ts";
 import layerManager from "./LayerManager.ts";
 import themeManager from "../header/items/theme/ThemeManager.ts";
-import bluePrintManager from "../blueprint/manager/BluePrintManager.ts";
+// import bluePrintManager from "../blueprint/manager/BluePrintManager.ts";
+import bluePrintGroupManager from "../blueprint/manager/BluePrintGroupManager.ts";
 import FilterManager from "./FilterManager.ts";
 
 /**
@@ -27,7 +28,8 @@ class DesignerManager extends AbstractManager<ProjectDataType> {
         canvasManager.destroy();
         layerManager.destroy();
         themeManager.destroy();
-        bluePrintManager.destroy();
+        // bluePrintManager.destroy();
+        bluePrintGroupManager.destroy();
     }
 
     getData(): ProjectDataType {
@@ -35,7 +37,8 @@ class DesignerManager extends AbstractManager<ProjectDataType> {
             canvasManager: canvasManager.getData(),
             themeManager: themeManager.getData()!,
             layerManager: layerManager.getData(),
-            bluePrintManager: bluePrintManager.getData(),
+            // bluePrintManager: bluePrintManager.getData(),
+            bluePrintGroupManager: bluePrintGroupManager.getData(),
             filterManager: FilterManager.getData(),
         };
     }
@@ -44,7 +47,8 @@ class DesignerManager extends AbstractManager<ProjectDataType> {
         data.canvasManager && canvasManager.init(data.canvasManager!);
         data.themeManager && themeManager.init(data.themeManager!);
         data.layerManager && layerManager.init(data.layerManager!);
-        data.bluePrintManager && bluePrintManager.init(data.bluePrintManager!, mode)
+        // data.bluePrintManager && bluePrintManager.init(data.bluePrintManager!, mode)
+        data.bluePrintGroupManager && bluePrintGroupManager.init(data.bluePrintGroupManager!, mode)
         data.filterManager && FilterManager.init(data.filterManager!);
     }
 

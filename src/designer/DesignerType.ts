@@ -1,4 +1,3 @@
-import {BPNodeLayoutType, IBPLine} from "./blueprint/manager/BluePrintManager.ts";
 import {IFilter} from "./manager/FilterManager.ts";
 
 /**
@@ -171,6 +170,8 @@ export interface FilterManagerDataType {
 }
 
 export interface BluePrintManagerDataType {
+    //蓝图组名称
+    bpgName: string;
     //蓝图节点布局
     bpNodeLayoutMap?: Record<string, BPNodeLayoutType>;
     //蓝图节点配置
@@ -182,6 +183,13 @@ export interface BluePrintManagerDataType {
     //蓝图锚点与线条之间的关系映射
     bpAPLineMap?: Record<string, string[]>;
 }
+
+interface BluePrintGroupDataType{
+    bpgId: string;
+    bpgName: string;
+    bluePrintManagerMap: BluePrintManagerDataType;
+}
+export type BluePrintGroupManagerDataType = Record<string, BluePrintGroupDataType>;
 
 /**
  * lc设计器配置
@@ -199,6 +207,8 @@ export interface ProjectDataType {
     layerManager?: LayerManagerDataType;
     //蓝图管理
     bluePrintManager?: BluePrintManagerDataType;
+    //蓝图组管理
+    bluePrintGroupManager?: BluePrintGroupManagerDataType;
     //过滤器管理
     filterManager?: FilterManagerDataType;
 }
