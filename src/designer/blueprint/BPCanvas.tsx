@@ -76,7 +76,7 @@ const BPCanvas: React.FC = () => {
         }}>
             <Suspense fallback={<Loading/>}>
                 <LineLayer key={bluePrintGroupManager.activeBpgId}/>
-                <NodeLayer/>
+                <NodeLayer />
             </Suspense>
         </div>
     )

@@ -43,7 +43,7 @@ export const BPDragScaleContainer: React.FC<BPDragScaleContainerContainerProps> 
                 dragScaleProvider.destroy();
             }
         }
-    }, []);
+    }, [bluePrintGroupManager.activeBpgId]);
     return (
         <div className={'bp-ds-container'} id={'bp-ds-container'} ref={containerRef}
              style={{overflow: "hidden", width: '100%', height: '100%'}}>
