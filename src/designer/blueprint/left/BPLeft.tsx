@@ -19,13 +19,15 @@ import {
 import bluePrintGroupManager from "../manager/BluePrintGroupManager";
 
 const BPLeft: React.FC = () => {
+
     return (
         <div className={'bp-left'}>
-            <BPNodeSortList/>
-            <BPNodeList/>
+            <BPNodeSortList />
+            <BPNodeList />
         </div>
     )
 }
+
 export default BPLeft;
 
 export const BPNodeSortList = observer(() => {
@@ -145,6 +147,7 @@ export const BPLayerNodeList = observer(() => {
     const {layerConfigs} = layerManager;
     const {usedLayerNodes, searchValue} = bpLeftStore;
     let layerIdList = layerConfigs ? Object.keys(layerConfigs) : [];
+    console.log("layerIdList>>>", layerIdList);
     if (searchValue !== '') {
         layerIdList = layerIdList.filter((key) => {
             const item = layerConfigs[key];

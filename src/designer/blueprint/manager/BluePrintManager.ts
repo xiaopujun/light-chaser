@@ -316,6 +316,17 @@ export class BluePrintManager extends AbstractManager<BluePrintManagerDataType> 
         this.setSelectedLines([]);
     }
 
+    updateUsedLayerNodes(){
+        const data = this.getData();
+        //初始化蓝图左侧节点列表
+        const {initUsedLayerNodes} = bpLeftStore;
+        const usedLayerNodes: Record<string, boolean> = {};
+        Object.keys(data?.bpNodeLayoutMap || {}).forEach(key => {
+            usedLayerNodes[key] = true;
+        })
+        initUsedLayerNodes(usedLayerNodes);
+    }
+
     public init(data: BluePrintManagerDataType, mode: DesignerMode): void {
         runInAction(() => {
             this.bpAPMap = data.bpAPMap || {};
@@ -324,13 +335,13 @@ export class BluePrintManager extends AbstractManager<BluePrintManagerDataType> 
             this.bpNodeConfigMap = data.bpNodeConfigMap || {};
             if (mode === DesignerMode.EDIT) {
                 this.bpNodeLayoutMap = data.bpNodeLayoutMap || {};
-                //初始化蓝图左侧节点列表
-                const {initUsedLayerNodes} = bpLeftStore;
-                const usedLayerNodes: Record<string, boolean> = {};
-                Object.keys(data?.bpNodeLayoutMap || {}).forEach(key => {
-                    usedLayerNodes[key] = true;
-                })
-                initUsedLayerNodes(usedLayerNodes);
+                //初始化蓝图左侧节点列表, 单独初始化
+                // const {initUsedLayerNodes} = bpLeftStore;
+                // const usedLayerNodes: Record<string, boolean> = {};
+                // Object.keys(data?.bpNodeLayoutMap || {}).forEach(key => {
+                //     usedLayerNodes[key] = true;
+                // })
+                // initUsedLayerNodes(usedLayerNodes);
             } else {
                 const bpNodeControllerInsMap: Record<string, AbstractBPNodeController> = {};
                 Object.values(data?.bpNodeLayoutMap!).forEach((layout: BPNodeLayoutType) => {

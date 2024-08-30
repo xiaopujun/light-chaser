@@ -122,6 +122,8 @@ export const doSave = throttle(() => {
         const {saveType, id} = URLUtil.parseUrlParams();
         const proData = designerManager.getData();
 
+        console.log("proData>>>", proData);
+
         //转换为最终保存的数据格式
         const projectInfo: IProjectInfo = {
             id,

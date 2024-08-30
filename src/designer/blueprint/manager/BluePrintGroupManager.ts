@@ -3,6 +3,7 @@ import {BluePrintGroupManagerDataType, DesignerMode} from "../../DesignerType";
 import IdGenerate from "../../../utils/IdGenerate";
 import {action, makeObservable, observable, runInAction} from "mobx";
 import AbstractManager from "../../manager/core/AbstractManager";
+import bpLeftStore from "../left/BPLeftStore";
 
 
 class BluePrintGroupManager  extends AbstractManager<BluePrintGroupManagerDataType>{
@@ -43,6 +44,7 @@ class BluePrintGroupManager  extends AbstractManager<BluePrintGroupManagerDataTy
             bpNodeConfigMap: {},
             bpNodeLayoutMap: {},
         }, DesignerMode.EDIT);
+        this.bluePrintManager.updateUsedLayerNodes();
         return this.activeBpgId;
     }
 
@@ -54,7 +56,24 @@ class BluePrintGroupManager  extends AbstractManager<BluePrintGroupManagerDataTy
         if(this.bluePrintManagerMap[bpgId]){
             this.activeBpgId = bpgId;
             this.bluePrintManager = this.bluePrintManagerMap[bpgId];
+            //初始化蓝图左侧节点列表
+            this.bluePrintManager.updateUsedLayerNodes();
             return this.bluePrintManager;
+        }
+    }
+
+    /**
+     * 删除蓝图
+     * @param bpgId
+     */
+    deleteBluePrintManager(bpgId: string){
+        if(this.bluePrintManagerMap[bpgId]){
+            // this.activeBpgId = bpgId;
+            // this.bluePrintManager = this.bluePrintManagerMap[bpgId];
+            // //初始化蓝图左侧节点列表
+            // this.bluePrintManager.updateUsedLayerNodes();
+            // return this.bluePrintManager;
+            delete this.bluePrintManagerMap[bpgId];
         }
     }
 
@@ -68,7 +87,6 @@ class BluePrintGroupManager  extends AbstractManager<BluePrintGroupManagerDataTy
                 for (let dataKey in data) {
                     const bpgName = data[dataKey].bpgName;
                     const bluePrintManager = new BluePrintManager(bpgName);
-                    console.log(data,dataKey, data[dataKey]);
                     bluePrintManager && bluePrintManager.init(data[dataKey], mode);
                     if(bpgName=="初始化"){
                         this.activeBpgId = dataKey;
@@ -77,7 +95,12 @@ class BluePrintGroupManager  extends AbstractManager<BluePrintGroupManagerDataTy
                     this.bluePrintManagerMap[dataKey] = bluePrintManager;
                 }
             } else {
-
+                for (let dataKey in data) {
+                    const bpgName = data[dataKey].bpgName;
+                    const bluePrintManager = new BluePrintManager(bpgName);
+                    bluePrintManager && bluePrintManager.init(data[dataKey], mode);
+                    this.bluePrintManagerMap[dataKey] = bluePrintManager;
+                }
             }
         });
     }
