@@ -20,7 +20,7 @@ const NodeLayer = observer(() => {
         <div id={'bp-node-container'} style={{position: 'relative', width: '100%', height: '100%'}}
              ref={_npNodeConRef}>
             <BPSelectable>
-                <BPDragScaleContainer>
+                <BPDragScaleContainer key={bluePrintGroupManager.activeBpgId}>
                     <BPMovable>
                         {Object.values(bpNodeLayoutMap).map((layout) => {
                             return <BPNodeContainer key={layout.id} layout={layout}/>

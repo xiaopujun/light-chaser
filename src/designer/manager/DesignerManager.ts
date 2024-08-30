@@ -44,7 +44,6 @@ class DesignerManager extends AbstractManager<ProjectDataType> {
     }
 
     init(data: ProjectDataType, mode: DesignerMode): void {
-        console.log("编辑器初始化===》》》", data);
         data.canvasManager && canvasManager.init(data.canvasManager!);
         data.themeManager && themeManager.init(data.themeManager!);
         data.layerManager && layerManager.init(data.layerManager!);

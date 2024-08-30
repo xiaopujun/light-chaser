@@ -14,15 +14,12 @@ interface IProps {
 }
 
 const TabItem = ({bpgName, remove, tabKey, tabId}) => {
-    console.log(bpgName, remove, tabKey, tabId);
     const confirm: PopconfirmProps['onConfirm'] = (e) => {
-        console.log(e);
         e.stopPropagation();
         remove && remove(tabKey, tabId);
     };
 
     const cancel: PopconfirmProps['onCancel'] = (e) => {
-        console.log(e);
         e.stopPropagation();
     };
 
@@ -155,8 +152,6 @@ const BPGroup: FC<IProps> = (props) => {
             </div>
         </div>
     );
-
-    console.log("activeKey>>>", activeKey)
 
     return (
         <div className={'bp-footer-item'} style={{width}}>

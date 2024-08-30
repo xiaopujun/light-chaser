@@ -147,7 +147,6 @@ export const BPLayerNodeList = observer(() => {
     const {layerConfigs} = layerManager;
     const {usedLayerNodes, searchValue} = bpLeftStore;
     let layerIdList = layerConfigs ? Object.keys(layerConfigs) : [];
-    console.log("layerIdList>>>", layerIdList);
     if (searchValue !== '') {
         layerIdList = layerIdList.filter((key) => {
             const item = layerConfigs[key];
