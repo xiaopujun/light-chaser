@@ -39,12 +39,20 @@ export class BaseTextController extends AbstractDesignerController<BaseTextCompo
 
     registerEvent() {
         if (this.instance) {
-            const nodeId = this.config?.base?.id!;
+            const nodeId = this.config?.base?.id ?? '';
             this.instance.setEventHandler({
                 click: () => BPExecutor.triggerComponentEvent(nodeId!, "click", this.config)
             });
         }
     }
 
-
+    changeData(data: any) {
+        if (typeof data !== 'string') {
+            console.error('数据类型错误, 基础文本仅接受字符串类型的数据: ', data);
+            this.config!['data']!['staticData'] = "";
+            return;
+        }
+        this.config!['data']!['staticData'] = data;
+        this.instance?.updateConfig(this.config!);
+    }
 }

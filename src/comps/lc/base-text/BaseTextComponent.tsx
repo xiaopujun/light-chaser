@@ -39,6 +39,7 @@ export const BaseTextComponent = forwardRef((props: BaseTextComponentProps, ref:
     const [config, setConfig] = useState<BaseTextComponentProps>({...props});
     const {style, data} = config;
     const [edit, setEdit] = useState(false);
+    // eslint-disable-next-line @typescript-eslint/ban-types
     const eventHandlerMap = useRef<Record<string, Function>>({});
     const textRef = useRef<HTMLInputElement>(null);
 

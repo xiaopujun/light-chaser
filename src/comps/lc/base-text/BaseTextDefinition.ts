@@ -12,6 +12,7 @@ const BaseInfo = React.lazy(() => import("../../common-component/base-info/BaseI
 const ThemeConfig = React.lazy(() => import("../../common-component/theme-config/ThemeConfig.tsx"));
 const AnimationConfig = React.lazy(() => import("../../common-component/animation-config/AnimationConfig.tsx"));
 const FilterConfig = React.lazy(() => import("../../common-component/filter-config/FilterConfig.tsx"));
+const DataConfig = React.lazy(() => import("../../common-component/data-config/DataConfig.tsx"));
 
 
 export default class BaseTextDefinition extends AbstractDesignerDefinition<BaseTextController, BaseTextComponentProps> {
@@ -67,7 +68,7 @@ export default class BaseTextDefinition extends AbstractDesignerDefinition<BaseT
     }
 
     getMenuList(): Array<MenuInfo> {
-        return super.getMenuList().filter((item: MenuInfo) => item.key !== 'theme' && item.key !== 'data');
+        return super.getMenuList().filter((item: MenuInfo) => item.key !== 'theme');
     }
 
     getMenuToConfigContentMap(): MenuToConfigMappingType {
@@ -75,6 +76,7 @@ export default class BaseTextDefinition extends AbstractDesignerDefinition<BaseT
             base: BaseInfo,
             style: BaseTextStyleConfig,
             animation: AnimationConfig,
+            data: DataConfig,
             theme: ThemeConfig,
             filter: FilterConfig
         };
