@@ -67,12 +67,12 @@ export default class HlsPlayerDefinition extends AbstractDesignerDefinition<HlsP
 
 
     getEventList(): EventInfo[] {
-        const events = super.getEventList();
-        return events.concat([
+        return [
+            ...super.getEventList(),
             {
                 id: "click",
                 name: "点击时",
             }
-        ]);
+        ]
     }
 }

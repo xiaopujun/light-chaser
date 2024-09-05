@@ -70,8 +70,8 @@ export default class DigitalFlipperDefinition extends AbstractDesignerDefinition
 
 
     getEventList(): EventInfo[] {
-        const events = super.getEventList();
-        return events.concat([
+        return [
+            ...super.getEventList(),
             {
                 id: "click",
                 name: "点击时",
@@ -80,6 +80,6 @@ export default class DigitalFlipperDefinition extends AbstractDesignerDefinition
                 id: "dataChange",
                 name: "数据变化时"
             }
-        ]);
+        ]
     }
 }

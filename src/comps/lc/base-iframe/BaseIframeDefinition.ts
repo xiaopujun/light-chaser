@@ -55,12 +55,12 @@ export default class BaseIframeDefinition extends AbstractDesignerDefinition<Bas
     }
 
     getEventList(): EventInfo[] {
-        const events = super.getEventList();
-        return events.concat([
+        return [
+            ...super.getEventList(),
             {
                 id: "load",
                 name: "iframe加载完成时",
             }
-        ]);
+        ]
     }
 }

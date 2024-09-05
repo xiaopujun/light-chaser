@@ -101,13 +101,12 @@ export default class BaseTableDefinition extends AbstractDesignerDefinition<Base
     }
 
     getEventList(): Array<EventInfo> {
-        const eventList = super.getEventList();
-        eventList.push(...[
+        return [
+            ...super.getEventList(),
             {
                 id: "dataChange",
                 name: "数据变更时",
             }
-        ])
-        return eventList;
+        ]
     }
 }

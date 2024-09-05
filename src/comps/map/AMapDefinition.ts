@@ -82,12 +82,12 @@ export default class AMapDefinition extends AbstractDesignerDefinition<AMapContr
 
 
     getEventList(): EventInfo[] {
-        const events = super.getEventList();
-        return events.concat([
+        return [
+            ...super.getEventList(),
             {
                 id: "click",
                 name: "点击时",
             }
-        ]);
+        ]
     }
 }
