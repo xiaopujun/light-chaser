@@ -32,16 +32,18 @@ const DesignerView = observer((props: DesignerViewProps) => {
     const {canvasConfig: {width, height, adaptationType}} = canvasManager
     if (!loaded)
         return <Loading/>;
+
+    const canvasDom = <div style={{width, height, background: 'black', overflow: 'hidden', position: "relative"}}>
+        {layerBuilder.buildCanvasComponents(layerConfigs)}
+    </div>
+
     return (
         <Suspense fallback={<Loading/>}>
-            <ScreenFit width={width!} height={height!} mode={adaptationType}
-                       scaleChange={(xScale, yScale) => {
-                           ScaleAction.doScale(xScale, yScale)
-                       }}>
-                <div style={{width, height, background: 'black', overflow: 'hidden', position: "relative"}}>
-                    {layerBuilder.buildCanvasComponents(layerConfigs)}
-                </div>
-            </ScreenFit>
+            {adaptationType && adaptationType === 'none' ? canvasDom :
+                <ScreenFit width={width!} height={height!} mode={adaptationType}
+                           scaleChange={(xScale, yScale) => {
+                               ScaleAction.doScale(xScale, yScale)
+                           }}>{canvasDom}</ScreenFit>}
         </Suspense>
     );
 });

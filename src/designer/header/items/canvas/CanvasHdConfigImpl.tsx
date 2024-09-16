@@ -9,7 +9,7 @@ import canvasHdStore from "./CanvasManager.ts";
 import canvasManager from "./CanvasManager.ts";
 
 
-const CanvasHdConfigImpl = () => {
+const CanvasHdConfigImpl = observer(() => {
     const configRef = useRef<CanvasConfig | null>({...canvasManager.canvasConfig});
     const {canvasVisible, setCanvasVisible} = canvasHdStore;
     const {width, height, rasterize, dragStep, resizeStep} = configRef.current!;
@@ -59,7 +59,8 @@ const CanvasHdConfigImpl = () => {
                         {label: '自适应', value: 'scale'},
                         {label: '撑满宽度', value: 'full-x'},
                         {label: '撑满高度', value: 'full-y'},
-                        {label: '撑满全屏', value: 'full-screen'}
+                        {label: '撑满全屏', value: 'full-screen'},
+                        {label: '无自适应', value: 'none'}
                     ]
                 }
             },
@@ -104,6 +105,6 @@ const CanvasHdConfigImpl = () => {
         </Modal>
     );
 
-}
+})
 
-export default observer(CanvasHdConfigImpl);
+export default CanvasHdConfigImpl;

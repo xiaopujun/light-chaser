@@ -133,7 +133,7 @@ export interface IProjectInfo {
     dataJson?: string;
 }
 
-export type AdaptationType = 'scale' | 'full-screen' | 'full-x' | 'full-y';
+export type AdaptationType = 'scale' | 'full-screen' | 'full-x' | 'full-y' | 'none';
 
 /**
  * 画布配置
