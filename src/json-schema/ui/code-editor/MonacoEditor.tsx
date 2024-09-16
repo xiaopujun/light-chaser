@@ -3,9 +3,9 @@ import {loader} from "@monaco-editor/react";
 import './MonacoEditor.less';
 
 import * as monaco from 'monaco-editor';
-import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
-import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
-import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
+import EditorSimpleWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
+import JSONWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
+import TypeScriptWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
 import 'monaco-editor/esm/vs/basic-languages/sql/sql.contribution';
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer.tsx";
 import {Suspense, lazy} from "react";
@@ -13,10 +13,10 @@ import {Suspense, lazy} from "react";
 self.MonacoEnvironment = {
     getWorker(_, label) {
         if (label === 'json')
-            return new jsonWorker();
+            return new JSONWorker();
         if (label === 'typescript' || label === 'javascript')
-            return new tsWorker();
-        return new editorWorker();
+            return new TypeScriptWorker();
+        return new EditorSimpleWorker();
     },
 };
 
@@ -32,10 +32,14 @@ export interface MonacoEditorProps extends UIContainerProps {
     language?: 'javascript' | 'json' | 'sql';
     width?: string | number;
     height?: string | number;
+    quickSuggestions?: boolean;
 }
 
 export default function MonacoEditor(props: MonacoEditorProps) {
-    const {value, defaultValue, onChange, language, width, height, readonly, ...containerProps} = props;
+    const {
+        value, defaultValue, onChange, language
+        , width, height, readonly, quickSuggestions, ...containerProps
+    } = props;
     return (
         <UIContainer className={'lc-code-editor'} {...containerProps}>
             <div style={{width, height}} className={'monaco-editor-container'}>
@@ -47,7 +51,7 @@ export default function MonacoEditor(props: MonacoEditorProps) {
                             width={'100%'}
                             options={{
                                 minimap: {enabled: false},
-                                quickSuggestions: false,
+                                quickSuggestions: !!quickSuggestions,
                                 folding: false,
                                 readOnly: readonly || false,
                                 renderValidationDecorations: 'off',

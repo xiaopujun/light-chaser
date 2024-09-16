@@ -7,8 +7,9 @@ export interface FullEditorProps extends MonacoEditorProps {
 }
 
 export default function FullEditor(props: FullEditorProps) {
+    const {value, defaultValue} = props;
     const {onClose, onChange, ...restProps} = props;
-    const valueRef = useRef("");
+    const valueRef = useRef(value ?? defaultValue);
 
     const _onChange = (value?: string) => {
         valueRef.current = value || "";
@@ -19,13 +20,15 @@ export default function FullEditor(props: FullEditorProps) {
         onClose && onClose();
     }
 
+    const _editProps = {...restProps, label: undefined};
+
     return (
         <Modal title={'代码编辑'} open={true} width={1000} onCancel={onClose}
                footer={[
-                   <Button style={{width: 70, height: 30}} onClick={_onSave} type="primary">保存</Button>,
-                   <Button style={{width: 70, height: 30}} onClick={onClose}>取消</Button>
+                   <Button key={'save'} style={{width: 70, height: 30}} onClick={_onSave} type="primary">保存</Button>,
+                   <Button key={'cancel'} style={{width: 70, height: 30}} onClick={onClose}>取消</Button>
                ]}>
-            <MonacoEditor onChange={_onChange} {...restProps} height={600}/>
+            <MonacoEditor onChange={_onChange} {..._editProps} quickSuggestions={true} height={600}/>
         </Modal>
     )
 }
