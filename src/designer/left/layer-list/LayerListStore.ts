@@ -108,6 +108,9 @@ class LayerListStore {
                     maxId = id;
                     minId = targetIds[0];
                 }
+                //按住shift后点击的是原图层，则不处理
+                if (maxId === minId)
+                    return;
 
                 let finished = false;
                 const calculateLayerIds = (selectedIds: string[], nextLayer: ILayerItem, targetId: string) => {
@@ -131,10 +134,15 @@ class LayerListStore {
                         let safeLock = 0; //防止死循环
                         let parentLayer = layerConfigs[nextLayer.pid];
                         let tempNext = layerConfigs[parentLayer.next!];
-                        while (!tempNext && safeLock < 1000) {
+                        while (!tempNext && parentLayer && safeLock < 1000) {
                             parentLayer = layerConfigs[parentLayer.pid!];
-                            tempNext = layerConfigs[parentLayer.next!];
+                            tempNext = layerConfigs[parentLayer?.next ?? ''];
                             safeLock++;
+                        }
+                        //向下查找之前再次判断parentLayer是否已经是要查找的目标节点
+                        if (parentLayer && parentLayer.id === targetId) {
+                            finished = true;
+                            return;
                         }
                         calculateLayerIds(selectedIds, tempNext, targetId);
                     } else
