@@ -40,13 +40,13 @@ export const AntdPieGraphicsConfig = (props: ConfigType<AntdPieController>) => {
                         statistic: {
                             title: {
                                 style: {fontSize: '12px', color: '#fff'},
-                                content: 'text'
+                                content: '标题'
                             }
                         }
                     }
                 });
             } else {
-                controller.update({style: {statistic: {content: false}}});
+                controller.update({style: {statistic: {title: false}}});
             }
         } else if (id === "contentSwitch") {
             if (data) {
@@ -55,7 +55,7 @@ export const AntdPieGraphicsConfig = (props: ConfigType<AntdPieController>) => {
                         statistic: {
                             content: {
                                 style: {fontSize: '12px', color: '#fff'},
-                                content: 'content'
+                                content: '内容'
                             }
                         }
                     }
