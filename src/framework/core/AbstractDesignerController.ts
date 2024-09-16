@@ -20,6 +20,7 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
      * 更新组件数据,且必须触发组件的重新渲染
      * @param data
      */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public changeData(data: any): void {
     }
 
@@ -33,9 +34,8 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
     private doApi = (config: APIConfig) => {
         const {url, method, params, header, frequency = 5, filter, autoFlush} = config;
         const request = () => {
-            FetchUtil.doRequest(url!, method!, header, params).then((res) => {
-                let {code, data} = res;
-                if (code === 200) {
+            FetchUtil.doRequestNativeResult(url!, method!, header, params).then((res) => {
+                if (res) {
                     if (!this.lastReqState) {
                         this.lastReqState = true;
                         this.errMsgDom?.remove();
@@ -43,9 +43,9 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
                     }
                     if (filter && filter !== '') {
                         const func = eval(`(${filter})`);
-                        data = typeof func === 'function' ? func(data) : data;
+                        res = typeof func === 'function' ? func(res) : res;
                     }
-                    this.changeData(data);
+                    this.changeData(res);
                 } else {
                     this.lastReqState = false;
                     //请求失败，在原有容器的基础上添加异常提示信息的dom元素（此处直接操作dom元素，不适用react的api进行组件的反复挂载和卸载）
@@ -70,8 +70,8 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
             if (!sql || sql === '')
                 return;
             FetchUtil.post(`/api/db/executor/execute`, {id: targetDb, sql: Base64Util.toBase64(sql)}).then(res => {
-                let {data, code} = res;
-                if (code === 200) {
+                let {data} = res;
+                if (res.code === 200) {
                     if (!this.lastReqState) {
                         this.lastReqState = true;
                         this.errMsgDom?.remove();
@@ -115,10 +115,10 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
                 //静态数据不做处理，组件首次渲染时默认读取静态数据
                 break;
             case "api":
-                this.doApi(data?.apiData!);
+                this.doApi(data?.apiData ?? {});
                 break;
             case 'database':
-                this.doDatabase(data?.database!);
+                this.doDatabase(data?.database ?? {});
                 break;
         }
     }
@@ -127,6 +127,7 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
      * 更新本组件的主题样式方法，用于在全局切换主题时使用
      * @param newTheme 新主题
      */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public updateTheme(newTheme: ThemeItemType): void {
     }
 

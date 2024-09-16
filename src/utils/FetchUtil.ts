@@ -5,11 +5,22 @@ export interface HttpResponse {
 }
 
 export default class FetchUtil {
+    /**
+     * GET请求
+     * @param url
+     * @param options
+     */
     static async get(url: string, options: RequestInit = {}): Promise<HttpResponse> {
         options.method = 'GET';
         return FetchUtil.request(url, options);
     }
 
+    /**
+     * POST请求
+     * @param url
+     * @param data
+     * @param options
+     */
     static async post(url: string, data: any, options: RequestInit = {}): Promise<HttpResponse> {
         options.method = 'POST';
         //默认'Content-Type': 'application/json',
@@ -46,37 +57,80 @@ export default class FetchUtil {
         return FetchUtil.request(url, options);
     }
 
+    /**
+     * 请求的标准返回结果必须包含code、msg字段，data字段可选，且code为200时，data为有效数据
+     * @param url
+     * @param options
+     * @private
+     */
     private static async request(url: string, options: RequestInit = {}): Promise<HttpResponse> {
+        let response: Response | null = null;
         try {
-            const response = await fetch(url, options);
-            if (!response.ok)
-                return {code: response.status, msg: response.statusText, data: null};
-
+            response = await fetch(url, options);
             const contentType = response.headers.get('content-type');
             if (contentType && contentType.includes('application/json')) {
                 const res = await response.json();
-                if (typeof res === 'object' && 'code' in res && 'msg' in res && 'data' in res)
+                if (typeof res === 'object' && 'code' in res && 'msg' in res)
                     return res;
                 else
-                    return {code: 200, msg: 'success', data: res};
-            } else if (contentType && contentType.includes('text/html')) {
+                    return {code: 200, msg: '操作成功', data: res};
+            } else if (contentType && (contentType.includes('text/html') || contentType.includes('text/plain'))) {
                 const text = await response.text()
-                return {code: 200, msg: 'success', data: text}
+                return {code: 200, msg: '操作成功', data: text}
             } else {
                 const blob = await response.blob()
-                return {code: 200, msg: 'success', data: blob}
+                return {code: 200, msg: '操作成功', data: blob}
             }
         } catch (error: any) {
-            return {code: 500, msg: error.msg, data: null};
+            return {code: response?.status ?? 500, msg: response?.statusText ?? '', data: null};
         }
     }
 
-    static async doRequest(url: string, method: string, headers: Record<string, string>, params: FormData | Record<string, any>): Promise<HttpResponse> {
+    /**
+     * 返回原生结果，不做任何封装
+     * @param url
+     * @param options
+     * @private
+     */
+    private static async requestNativeResult(url: string, options: RequestInit = {}): Promise<any> {
+        let response: Response | null = null;
+        try {
+            response = await fetch(url, options);
+            if (response.ok) {
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('application/json')) {
+                    return await response.json();
+                } else if (contentType && (contentType.includes('text/html') || contentType.includes('text/plain'))) {
+                    return await response.text()
+                } else {
+                    return await response.blob()
+                }
+            } else {
+                console.error('请求错误:', response?.status, response?.statusText);
+                return null;
+            }
+        } catch (error) {
+            console.error('请求错误:', error);
+            return null;
+        }
+    }
+
+    /**
+     * 请求前置处理，返回处理后的url和options
+     * @param url
+     * @param method
+     * @param headers
+     * @param params
+     * @private
+     */
+    private static doRequestBefore(url: string, method: string, headers: Record<string, string>, params: FormData | Record<string, any>): {
+        url: string,
+        options: RequestInit
+    } {
         const options: RequestInit = {
             method: method.toUpperCase(),
             headers: headers,
         };
-
         if (params) {
             if (method.toUpperCase() === 'GET') {
                 const queryString = new URLSearchParams(params as Record<string, string>).toString();
@@ -89,7 +143,32 @@ export default class FetchUtil {
                 options.body = JSON.stringify(params);
             }
         }
-
-        return FetchUtil.request(url, options);
+        return {url, options};
     }
+
+    /**
+     * 执行自定义请求，请求参数均通过外部指定，返回结果必须为HttpResponse对象，必须包含code、msg字段，data字段可选
+     * @param url
+     * @param method
+     * @param headers
+     * @param params
+     */
+    static async doRequest(url: string, method: string, headers: Record<string, string>, params: FormData | Record<string, any>): Promise<HttpResponse> {
+        const reqInfo = FetchUtil.doRequestBefore(url, method, headers, params);
+        return FetchUtil.request(reqInfo.url, reqInfo.options);
+    }
+
+    /**
+     * 执行自定义请求，请求参数均通过外部指定，返回结果为接口原生结果
+     * @param url
+     * @param method
+     * @param headers
+     * @param params
+     */
+    static async doRequestNativeResult(url: string, method: string, headers: Record<string, string>, params: FormData | Record<string, any>): Promise<object> {
+        const reqInfo = FetchUtil.doRequestBefore(url, method, headers, params);
+        return FetchUtil.requestNativeResult(reqInfo.url, reqInfo.options);
+    }
+
+
 }
