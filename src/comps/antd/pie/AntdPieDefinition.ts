@@ -63,6 +63,7 @@ class AntdPieDefinition extends AntdCommonDefinition<AntdPieController, AntdPieP
             },
             style: {
                 data,
+                supportCSSTransform: true,
                 angleField: "value",
                 colorField: "type",
                 radius: 0.7,
