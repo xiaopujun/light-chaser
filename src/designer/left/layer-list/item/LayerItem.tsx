@@ -8,7 +8,7 @@ class LayerItem extends BaseLayer {
         return (
             <div className={`layer-item ${selected ? "layer-selected" :
                 hide ? "layer-hide" : lock ? "layer-lock" : ""}`} onClick={this.onSelected}
-                 onDoubleClick={this.openInput}>
+                 onDoubleClick={this.activeComponentConfig}>
                 <div className={'layer-name'}>
                     {inputMode ? <input type="text" defaultValue={name} autoFocus={true} onChange={this.changeLayerName}
                                         ref={ref => ref?.select()}
@@ -20,13 +20,13 @@ class LayerItem extends BaseLayer {
                 </div>
                 <div className={'layer-operators'}>
                     <div className={'layer-operator'} onClick={this.openInput}>
-                        <Edit/>
+                        <Edit size={14}/>
                     </div>
                     <div className={'layer-operator'} onClick={this.toggleHide}>
-                        {hide ? <PreviewClose/> : <PreviewOpen/>}
+                        {hide ? <PreviewClose size={14}/> : <PreviewOpen size={14}/>}
                     </div>
                     <div className={'layer-operator'} onClick={this.toggleLock}>
-                        {lock ? <Lock/> : <Unlock/>}
+                        {lock ? <Lock size={14}/> : <Unlock size={14}/>}
                     </div>
                 </div>
             </div>

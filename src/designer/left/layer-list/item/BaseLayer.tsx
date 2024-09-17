@@ -2,6 +2,7 @@ import React, {ChangeEvent, MouseEvent} from "react";
 import layerListStore from "../LayerListStore";
 import contextMenuStore from "../../../operate-provider/canvas-context-menu/CanvasContextMenuStore.ts";
 import layerManager from "../../../manager/LayerManager.ts";
+import rightStore from "../../../right/RightStore.ts";
 
 export interface LayerProps {
     compId?: string;
@@ -61,6 +62,16 @@ export abstract class BaseLayer extends React.PureComponent<LayerProps, LayerPro
         if (!inputMode)
             this.setState({inputMode: true});
         this.closeContextMenu();
+    }
+
+    activeComponentConfig = () => {
+        const {compId} = this.state;
+        const {activeElem, activeConfig} = rightStore;
+        const {layerConfigs} = layerManager!;
+        const layer = layerConfigs[compId!];
+        if (compId === activeElem.id)
+            return;
+        activeConfig(compId!, layer.type!);
     }
 
     closeInput = () => {
