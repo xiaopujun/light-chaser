@@ -2,7 +2,7 @@ import {observer} from "mobx-react";
 import './LeftMenus.less';
 import designerLeftStore, {ILeftMenu} from "../DesignerLeftStore";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
-import {Connect, Filter, Layers, System} from "@icon-park/react";
+import {Connect, Layers, System} from "@icon-park/react";
 
 
 const menus: Array<ILeftMenu> = [
@@ -16,11 +16,11 @@ const menus: Array<ILeftMenu> = [
         name: "资源库",
         key: 'source-list',
     },
-    {
-        icon: <Filter theme="filled" size={20} strokeWidth={2} strokeLinecap="square"/>,
-        name: "过滤器",
-        key: 'filter-list',
-    },
+    // {
+    //     icon: <Filter theme="filled" size={20} strokeWidth={2} strokeLinecap="square"/>,
+    //     name: "过滤器",
+    //     key: 'filter-list',
+    // },
     {
         icon: <Layers theme="filled" size={20} strokeWidth={2} strokeLinecap="square"/>,
         name: "图层",

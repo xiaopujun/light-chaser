@@ -7,7 +7,7 @@ import layerManager from "../../manager/LayerManager.ts";
 import IdGenerate from "../../../utils/IdGenerate";
 import DragAddProvider from "../../../framework/drag-scale/DragAddProvider";
 import Input from "../../../json-schema/ui/input/Input.tsx";
-import {AddSubset, ApplicationOne, BytedanceMiniApp, Calculator, CardTwo, Filter, MindmapMap} from "@icon-park/react";
+import {AddSubset, ApplicationOne, BytedanceMiniApp, CardTwo, MindmapMap} from "@icon-park/react";
 
 const BPLeft: React.FC = () => {
     return (
@@ -32,16 +32,16 @@ export const BPNodeSortList = observer(() => {
             label: '逻辑节点',
             key: 'logical'
         },
-        {
-            icon: <Calculator/>,
-            label: '全局变量',
-            key: 'global'
-        },
-        {
-            icon: <Filter/>,
-            label: '过滤器',
-            key: 'filter'
-        }
+        // {
+        //     icon: <Calculator/>,
+        //     label: '全局变量',
+        //     key: 'global'
+        // },
+        // {
+        //     icon: <Filter/>,
+        //     label: '过滤器',
+        //     key: 'filter'
+        // }
     ]
     return (
         <div className={'bp-node-sort-list'}>
