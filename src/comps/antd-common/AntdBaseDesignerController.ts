@@ -15,37 +15,40 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
     protected reConnect: boolean = false;
 
     changeData(data: any) {
+        this.instance?.changeData(data);
+        //g2plot系列图表，style.data是其内部存储图表数据的地方，因此每次更新数据，该属性可以主动更新
         if (this.config?.style?.data)
             this.config!.style!.data = data;
-        this.instance?.changeData(data);
+        //data.staticData是LC表中组件属性存储静态数据的地方，也作为其他数据源存储结果的中转站，更新数据时应该同时更新staticData属性
+        this.config!['data']!['staticData'] = data;
     }
 
     registerEvent(): void {
-        const nodeId = this.config?.base?.id!;
-        this.instance?.on('plot:click', (...args: object[]) => {
-            BPExecutor.triggerComponentEvent(nodeId!, "globalClick", {msg: '这是测试参数'})
+        const nodeId = this.config?.base?.id ?? "";
+        this.instance?.on('plot:click', () => {
+            BPExecutor.triggerComponentEvent(nodeId!, "globalClick", this.config)
         });
-        this.instance?.on('element:click', (...args: object[]) => {
-            BPExecutor.triggerComponentEvent(nodeId!, "elementClick", {msg: '这是测试参数'})
+        this.instance?.on('element:click', () => {
+            BPExecutor.triggerComponentEvent(nodeId!, "elementClick", this.config)
         });
         // 图例添加点击事件
-        this.instance?.on('legend-item:click', (...args: object[]) => {
-            BPExecutor.triggerComponentEvent(nodeId!, "legendClick", {msg: '这是测试参数'})
+        this.instance?.on('legend-item:click', () => {
+            BPExecutor.triggerComponentEvent(nodeId!, "legendClick", this.config)
         });
         // 图例名称添加点击事件
-        this.instance?.on('legend-item-name:click', (...args: object[]) => {
-            BPExecutor.triggerComponentEvent(nodeId!, "elementNameClick", {msg: '这是测试参数'})
+        this.instance?.on('legend-item-name:click', () => {
+            BPExecutor.triggerComponentEvent(nodeId!, "elementNameClick", this.config)
         });
         // axis-label 添加点击事件
-        this.instance?.on('axis-label:click', (...args: object[]) => {
-            BPExecutor.triggerComponentEvent(nodeId!, "axisLabelClick", {msg: '这是测试参数'})
+        this.instance?.on('axis-label:click', () => {
+            BPExecutor.triggerComponentEvent(nodeId!, "axisLabelClick", this.config)
         });
     }
 
     public commonCreate(container: HTMLElement, Clazz: new (...args: any[]) => I, config: C): void {
         this.config = config;
         this.container = container;
-        this.instance = new Clazz(container, this.config?.style! as C);
+        this.instance = new Clazz(container, this.config?.style ?? {} as C);
         this.instance?.render();
         this.registerEvent();
     }
@@ -54,6 +57,6 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
         this.config = ObjectUtil.merge(this.config, config);
         upOp = upOp || {reRender: true};
         if (upOp.reRender)
-            this.instance?.update(this.config?.style!);
+            this.instance?.update(this.config?.style ?? {});
     }
 }

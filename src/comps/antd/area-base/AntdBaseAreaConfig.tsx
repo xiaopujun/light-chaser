@@ -49,35 +49,23 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
         label: '图形',
         children: [
             {
-                type: 'grid',
-                config: {
-                    containerStyle: {
-                        marginBottom: 10
-                    }
-                },
+                type: 'sub-accordion',
+                label: '基础',
                 children: [
                     {
                         label: '基准填充',
                         type: 'switch',
                         key: 'startOnZero',
                         value: !!config?.startOnZero,
-                        config: {
-                            containerStyle: {
-                                marginBottom: 10
-                            }
-                        }
                     },
                 ]
             },
             {
                 label: '数据点',
-                type: 'card-panel',
+                type: 'sub-accordion',
                 children: [
                     {
                         type: 'grid',
-                        config: {
-                            columns: 2,
-                        },
                         children: [
                             {
                                 key: 'point',
@@ -96,21 +84,21 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
                                         key: 'style',
                                         children: [
                                             {
-                                                key: 'fill',
-                                                type: 'color-picker',
-                                                label: '颜色',
-                                                value: (config?.point?.style as ShapeStyle)?.fill,
-                                                config: {
-                                                    showText: true,
-                                                }
-                                            },
-                                            {
                                                 key: 'lineWidth',
                                                 type: 'number-input',
                                                 label: '描边宽',
                                                 value: (config?.point?.style as ShapeStyle)?.lineWidth,
                                                 config: {
                                                     min: 0
+                                                }
+                                            },
+                                            {
+                                                key: 'fill',
+                                                type: 'color-picker',
+                                                label: '颜色',
+                                                value: (config?.point?.style as ShapeStyle)?.fill,
+                                                config: {
+                                                    showText: true,
                                                 }
                                             },
                                             {
@@ -147,13 +135,12 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
             },
             {
                 label: '数据线',
-                type: 'card-panel',
+                type: 'sub-accordion',
                 children: [
                     {
                         type: 'grid',
                         config: {
-                            gridGap: '15px',
-                            columns: 2,
+                            gridGap: '15px'
                         },
                         children: [
                             {
@@ -192,12 +179,11 @@ export const AntdBaseAreaGraphics: React.FC<ConfigType> = ({controller}) => {
             },
             {
                 label: '数据面',
-                type: 'card-panel',
+                type: 'sub-accordion',
                 key: 'areaStyle',
                 children: [
                     {
                         type: 'grid',
-                        config: {columns: 2},
                         children: [{
                             key: 'fill',
                             type: 'color-picker',
@@ -225,7 +211,6 @@ export const AntdBaseAreaFieldMapping: React.FC<ConfigType<AntdBaseDesignerContr
     const schema: Control = {
         key: 'style',
         type: 'grid',
-        config: {columns: 2},
         children: [
             {
                 key: 'xField',
@@ -252,5 +237,5 @@ export const AntdBaseAreaFieldMapping: React.FC<ConfigType<AntdBaseDesignerContr
         controller.update(fieldChangeData.dataFragment);
     }
 
-    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+    return <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
 }

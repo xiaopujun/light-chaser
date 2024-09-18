@@ -3,10 +3,12 @@
 <h2> LIGHT CHASER</h2>
 
 <p>
-    <img alt="" src="https://img.shields.io/badge/version-v0.0.9-blue">
-    <img alt="" src="https://img.shields.io/badge/language-typescript-blue">
+    <img alt="" src="https://img.shields.io/badge/version-v1.2.0-blue">
     <img alt="" src="https://img.shields.io/badge/license-MIT-08CE5D?logoColor=08CE5D">
-    <img alt="" src="https://img.shields.io/badge/framework-React-61daeb?logoColor=08CE5D">
+    <img alt="" src="https://img.shields.io/badge/TypeScript-blue">
+    <img alt="" src="https://img.shields.io/badge/React-61daeb?logoColor=08CE5D">
+    <img alt="" src="https://img.shields.io/badge/Vite-purple">
+    <img alt="" src="https://img.shields.io/badge/Mobx-FFEB0B">
 </p>
 
 <p>Data visualization tools</p>
@@ -45,7 +47,11 @@ preview image：
 
 ![lightchaser1](https://i.072333.xyz/file/8ff8361817216f2fb1c47.png)
 
-![lightchaser](https://i.072333.xyz/file/3cacaaa9edc640ce64536.png)
+![lightchaser](https://i.072333.xyz/file/b3d60f091201818432a98.png)
+
+![lightchaser](https://i.072333.xyz/file/802e2d2b4d95fa32fae48.png)
+
+![lightchaser](https://i.072333.xyz/file/51819086932cb1b559a15.png)
 
 # Usage & Deployment
 
@@ -60,7 +66,7 @@ git clone https://gitee.com/xiaopujun/light-chaser.git
 
 - Install project dependencies
 
-> Note: This project uses pnpm as the package management tool, so you need to install [pnpm](https://pnpm.io/) first 
+> Note: This project uses pnpm as the package management tool, so you need to install [pnpm](https://pnpm.io/) first
 > ,if you have installed pnpm, you can skip this step
 
 ```shell
@@ -91,8 +97,19 @@ Feel free to dive in! Open an issue or submit PRs.
 
 light chaser follows the Contributor Covenant Code of Conduct.
 
+## Sustainability
+
+If you have ideas for donations, sponsorships, business partnerships, etc., please contact the author. This will play an
+important role in the continued development and maintenance of the program.
+
 # License
 
 [MIT](LICENSE) © xiaopujun
+
+# Sponsors
+
+| serialNumber | user                                | email            |
+|--------------|-------------------------------------|------------------|
+| 1            | [cxhcmc](https://github.com/cxhcmc) | 133490326@qq.com |
 
 Thank you to every developer and person who contributed to this project!

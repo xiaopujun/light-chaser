@@ -2,12 +2,13 @@ import AbstractDesignerController from "../../../../framework/core/AbstractDesig
 import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI.tsx";
 import {Control} from "../../../../json-schema/SchemaTypes.ts";
 import {useEffect, useRef, useState} from "react";
-import {DataSourceConfigType} from "../../../../pages/home/datasource/edit/EditDataSourceDialog.tsx";
 import {globalMessage} from "../../../../framework/message/GlobalMessage.tsx";
 import {ISelectOption} from "../../../../json-schema/ui/select/Select.tsx";
 import ObjectUtil from "../../../../utils/ObjectUtil.ts";
 import {IDatabase} from "../../../../designer/DesignerType.ts";
 import FetchUtil from "../../../../utils/FetchUtil.ts";
+import {IDataSource} from "../../../../pages/home/datasource/DataSourceStore.ts";
+import Base64Util from "../../../../utils/Base64Util.ts";
 
 export interface DatabaseDataConfigProps {
     controller: AbstractDesignerController;
@@ -24,7 +25,7 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
     useEffect(() => {
         FetchUtil.get(`/api/datasource/list`).then(res => {
             if (res.code === 200) {
-                const options = (res.data as Array<DataSourceConfigType>).map(item => {
+                const options = (res.data as Array<IDataSource>).map(item => {
                     return {label: item.name, value: item.id}
                 })
                 setDataSourceList(options as ISelectOption[]);
@@ -55,8 +56,11 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
             return;
 
         const {targetDb, sql, filter} = dataRef.current;
-        FetchUtil.post(`/api/db/executor/execute`, {id: targetDb, sql}).then(res => {
-            let {data, code, msg} = res;
+        if (!sql || sql === '')
+            return;
+        FetchUtil.post(`/api/db/executor/execute`, {id: targetDb, sql: Base64Util.toBase64(sql)}).then(res => {
+            let {data} = res;
+            const {code, msg} = res;
             if (code === 200) {
                 if (filter && filter !== '') {
                     const func = eval(`(${filter})`);
@@ -107,16 +111,11 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
                         key: 'autoFlush',
                         type: 'checkbox',
                         value: !!dataRef.current?.autoFlush,
-                        config: {
-                            contentStyle: {marginLeft: 4}
-                        }
                     },
                     {
                         key: 'frequency',
                         type: 'number-input',
                         config: {
-                            prefix: '每',
-                            suffix: '秒',
                             min: 5,
                             containerStyle: {
                                 gridColumn: '2/9',
@@ -190,9 +189,6 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
                         type: 'button',
                         config: {
                             children: '测试SQL并保存',
-                            style: {
-                                width: '100%'
-                            }
                         }
                     }
                 ]

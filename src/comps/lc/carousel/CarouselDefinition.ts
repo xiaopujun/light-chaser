@@ -66,12 +66,12 @@ export default class CarouselDefinition extends AbstractDesignerDefinition<Carou
 
 
     getEventList(): EventInfo[] {
-        const events = super.getEventList();
-        return events.concat([
+        return [
+            ...super.getEventList(),
             {
                 id: "click",
                 name: "点击时",
             }
-        ]);
+        ]
     }
 }

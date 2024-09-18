@@ -1,72 +1,110 @@
 import {observer} from "mobx-react";
-import {FormEvent, useRef, useState} from 'react';
-import Dialog from "../../../../json-schema/ui/dialog/Dialog";
-import {AdaptationType, CanvasConfig} from "../../../DesignerType";
+import {MouseEvent, useRef, useState} from 'react';
+import {CanvasConfig} from "../../../DesignerType";
 import './CanvasHdConfigImpl.less';
-import {Grid} from "../../../../json-schema/ui/grid/Grid";
-import Switch from "../../../../json-schema/ui/switch/Switch";
-import Button from "../../../../json-schema/ui/button/Button";
-import NumberInput from "../../../../json-schema/ui/number-input/NumberInput";
+import {Button, Modal} from "antd";
+import {Control} from "../../../../json-schema/SchemaTypes.ts";
+import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI.tsx";
 import canvasHdStore from "./CanvasManager.ts";
 import canvasManager from "./CanvasManager.ts";
-import Select from "../../../../json-schema/ui/select/Select.tsx";
 
 
-const CanvasHdConfigImpl = () => {
+const CanvasHdConfigImpl = observer(() => {
     const configRef = useRef<CanvasConfig | null>({...canvasManager.canvasConfig});
-    const [_rasterize, setRasterize] = useState(canvasManager.canvasConfig.rasterize || false);
     const {canvasVisible, setCanvasVisible} = canvasHdStore;
     const {width, height, rasterize, dragStep, resizeStep} = configRef.current!;
+    const [count, setCount] = useState(0);
 
     const onClose = () => {
         setCanvasVisible(false);
     }
 
-    const doSave = (e: FormEvent<HTMLFormElement>) => {
+    const doSave = (e: MouseEvent<HTMLButtonElement>) => {
         canvasManager.updateCanvasConfig(configRef.current!);
         e.preventDefault();
         onClose();
     }
 
+    const onFieldChange = (fieldChangeData: FieldChangeData) => {
+        const {dataFragment, reRender} = fieldChangeData;
+        configRef.current = {...configRef.current!, ...dataFragment};
+        if (reRender)
+            setCount(count + 1);
+    }
+
+
+    const schema: Control = {
+        type: 'grid',
+        config: {gridGap: '15px'},
+        children: [
+            {
+                type: 'number-input',
+                label: '宽度',
+                value: width,
+                key: 'width',
+            },
+            {
+                type: 'number-input',
+                label: '高度',
+                value: height,
+                key: 'height',
+            },
+            {
+                type: 'select',
+                label: '屏幕适配',
+                value: configRef.current!.adaptationType,
+                key: 'adaptationType',
+                config: {
+                    options: [
+                        {label: '自适应', value: 'scale'},
+                        {label: '撑满宽度', value: 'full-x'},
+                        {label: '撑满高度', value: 'full-y'},
+                        {label: '撑满全屏', value: 'full-screen'},
+                        {label: '无自适应', value: 'none'}
+                    ]
+                }
+            },
+            {
+                type: 'switch',
+                label: '栅格化',
+                value: rasterize,
+                reRender: true,
+                key: 'rasterize',
+            },
+            {
+                rules: "{rasterize} === 'true'",
+                children: [
+                    {
+                        type: 'number-input',
+                        label: '拖拽步长',
+                        value: dragStep,
+                        key: 'dragStep',
+                    },
+                    {
+                        type: 'number-input',
+                        label: '缩放步长',
+                        value: resizeStep,
+                        key: 'resizeStep',
+                    }
+                ]
+            }
+        ]
+    }
+
+
     return (
-        <Dialog className={'lc-header-canvas'} title={'画布设置'} visible={canvasVisible} onClose={onClose}>
-            <form onSubmit={doSave}>
-                <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                    <Grid gridGap={'15px'} columns={2}>
-                        <NumberInput label={'宽度'} defaultValue={width} min={500}
-                                     onChange={(width) => configRef.current!.width = width as number}/>
-                        <NumberInput label={'高度'} defaultValue={height} min={300}
-                                     onChange={(height) => configRef.current!.height = height as number}/>
-                        <Select label={'屏幕适配'}
-                                options={[
-                                    {label: '自适应', value: 'scale'},
-                                    {label: '撑满宽度', value: 'full-x'},
-                                    {label: '撑满高度', value: 'full-y'},
-                                    {label: '撑满全屏', value: 'full-screen'}
-                                ]} defaultValue={configRef.current!.adaptationType}
-                                onChange={(value) => configRef.current!.adaptationType = value as AdaptationType}/>
-                        <Switch label={'栅格化'} defaultValue={rasterize}
-                                onChange={value => {
-                                    configRef.current!.rasterize = value;
-                                    setRasterize(value)
-                                }}/>
-                        <NumberInput label={'拖拽'} disabled={!_rasterize}
-                                     defaultValue={dragStep} min={1}
-                                     onChange={(dragStep) => configRef.current!.dragStep = dragStep}/>
-                        <NumberInput label={'缩放'} disabled={!_rasterize}
-                                     defaultValue={resizeStep} min={1}
-                                     onChange={(resizeStep) => configRef.current!.resizeStep = resizeStep}/>
-                    </Grid>
-                </div>
-                <p className={'canvas-config-desc'}>说明：修改画布设置，会对整体效果产生较大影响，建议先调试好画布设置后再进行大屏设计</p>
-                <div className={'lc-header-canvas-footer'}>
-                    <Button type={'submit'}>保存</Button>&nbsp;&nbsp;
-                    <Button type={'button'} onClick={onClose}>取消</Button>
-                </div>
-            </form>
-        </Dialog>
+        <Modal title="画布设置" width={350} open={canvasVisible} onOk={doSave} onCancel={onClose}
+               footer={[
+                   <Button key="submit" style={{width: 70, height: 30}} size="small" type="primary"
+                           onClick={doSave}>确定</Button>,
+                   <Button key="back" style={{width: 70, height: 30}} size="small" onClick={onClose}>取消</Button>
+               ]}
+               className={"lc-header-canvas"}>
+            <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+            <p className={'canvas-config-desc'}>说明：修改画布设置，会对整体效果产生较大影响，建议先调试好画布设置后再进行大屏设计</p>
+        </Modal>
     );
 
-}
+})
 
-export default observer(CanvasHdConfigImpl);
+export default CanvasHdConfigImpl;

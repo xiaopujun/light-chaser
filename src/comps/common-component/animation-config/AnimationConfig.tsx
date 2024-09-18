@@ -1,8 +1,8 @@
 import {Component} from 'react';
 import './AnimationConfig.less';
-import {ConfigType} from "../../../designer/right/ConfigContent";
+import AbstractDesignerController from "../../../framework/core/AbstractDesignerController.ts";
 
-class AnimationConfig extends Component<ConfigType> {
+class AnimationConfig extends Component<{ controller: AbstractDesignerController }> {
     render() {
         return (
             <div className={'lc-animation-config'}>

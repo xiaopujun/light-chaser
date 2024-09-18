@@ -2,10 +2,10 @@ import {lazy, memo} from 'react';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {ConfigProvider, MappingAlgorithm, theme} from "antd";
 
-
 const DesignerViewPage = lazy(() => import('../pages/view/DesignerViewPage.tsx'));
 const DesignerPage = lazy(() => import('../pages/designer/DesignerPage.tsx'));
 const GlobalMessage = lazy(() => import('../framework/message/GlobalMessage.tsx'));
+const GlobalModal = lazy(() => import('../framework/message/GlobalModal.tsx'));
 const Login = lazy(() => import('../pages/login/Login'));
 const Home = lazy(() => import('../pages/home/Home'));
 const LocalProjectList = lazy(() => import('../pages/home/local-list/LocalProjectList.tsx'));
@@ -14,6 +14,10 @@ const DataSourceList = lazy(() => import('../pages/home/datasource/DataSourceLis
 const TemplateMarket = lazy(() => import('../pages/home/template-market/TemplateMarket.tsx'));
 const MoreInfo = lazy(() => import('../pages/home/more-info/MoreInfo.tsx'));
 const Demo = lazy(() => import('../test/Demo'));
+const NotFound = lazy(() => import('../pages/result/NotFound.tsx'));
+const NoAuth = lazy(() => import('../pages/result/NoAuth.tsx'));
+const Error = lazy(() => import('../pages/result/Error.tsx'));
+
 
 const studioDarkAlgorithm: MappingAlgorithm = (seedToken, mapToken) => {
     // 使用 antd 默认的暗色算法生成基础token，这样其他不需要定制的部分则保持原样
@@ -26,12 +30,7 @@ const studioDarkAlgorithm: MappingAlgorithm = (seedToken, mapToken) => {
     };
 };
 
-const antdComponentTheme = {
-    Menu: {
-        itemBg: 'none',
-        itemColor: '#bfbfbf',
-    }
-}
+const antdComponentTheme = {}
 
 const router = createBrowserRouter([
     {
@@ -81,8 +80,20 @@ const router = createBrowserRouter([
         element: <Login/>
     },
     {
+        path: '/notFound',
+        element: <NotFound/>
+    },
+    {
+        path: '/noAuth',
+        element: <NoAuth/>
+    },
+    {
+        path: '/error',
+        element: <Error/>
+    },
+    {
         path: '*',
-        element: <div>not found</div>
+        element: <NotFound/>
     }
 ])
 
@@ -90,10 +101,76 @@ const MainRouter = memo(() => {
     return (
         <ConfigProvider theme={{
             algorithm: studioDarkAlgorithm,
-            components: antdComponentTheme
+            components: {
+                ...antdComponentTheme,
+                Menu: {
+                    itemBg: 'none',
+                    itemColor: '#bfbfbf',
+                    itemSelectedBg: 'none',
+                    itemBorderRadius: 2
+                },
+                Table: {
+                    borderRadius: 2,
+                    headerBorderRadius: 2,
+                    cellPaddingBlock: 12,
+                    headerBg: '#343434',
+                    colorBgContainer: '#252525',
+                },
+                Input: {
+                    borderRadius: 2,
+                    borderRadiusLG: 2,
+                    borderRadiusXS: 2,
+                    borderRadiusSM: 2,
+                    colorBgContainer: '#252525',
+                },
+                Button: {
+                    borderRadius: 2,
+                    borderRadiusLG: 2,
+                    borderRadiusXS: 2,
+                    borderRadiusSM: 2,
+                },
+                Select: {
+                    borderRadius: 2,
+                    borderRadiusLG: 2,
+                    borderRadiusXS: 2,
+                    borderRadiusSM: 2,
+                    selectorBg: '#252525',
+                    optionSelectedBg: '#29323f'
+                },
+                TreeSelect: {},
+                InputNumber: {
+                    borderRadius: 2,
+                    borderRadiusLG: 2,
+                    borderRadiusXS: 2,
+                    borderRadiusSM: 2,
+                },
+                Slider: {
+                    trackBg: '#0086ce',
+                    trackHoverBg: '#1EB1FFFF',
+                    dotBorderColor: '#7fabff',
+                    handleColor: '#3e80ff',
+                    railSize: 3,
+                },
+                Collapse: {
+                    borderRadius: 2,
+                    borderRadiusLG: 2,
+                    borderRadiusXS: 2,
+                    borderRadiusSM: 2,
+                },
+                Modal: {
+                    borderRadiusLG: 4,
+                    headerBg: '#1f1f1f',
+                    colorBgContainer: '#1f1f1f',
+                    colorBgElevated: '#1f1f1f',
+                    paddingMD: 15,
+                    paddingContentHorizontalLG: 15
+                }
+
+            }
         }}>
             <RouterProvider router={router}/>
             <GlobalMessage/>
+            <GlobalModal/>
         </ConfigProvider>
     );
 })

@@ -44,12 +44,11 @@ export const AntdMultiLineGraphics = (props: ConfigType<AntdCommonLineController
         config: {bodyStyle: {marginTop: 10}},
         children: [
             {
-                type: 'card-panel',
+                type: 'sub-accordion',
                 label: '线条',
                 children: [
                     {
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 key: 'smooth',
@@ -77,24 +76,18 @@ export const AntdMultiLineGraphics = (props: ConfigType<AntdCommonLineController
                                 type: 'color-mode',
                                 label: '颜色',
                                 value: config?.color,
-                                config: {
-                                    containerStyle: {
-                                        gridColumn: '1/3',
-                                    }
-                                }
                             }
                         ]
                     }
                 ]
             },
             {
-                type: 'card-panel',
+                type: 'sub-accordion',
                 label: '数据点',
                 children: [
                     {
                         key: 'point',
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 key: 'size',
@@ -111,11 +104,6 @@ export const AntdMultiLineGraphics = (props: ConfigType<AntdCommonLineController
                                 type: 'color-mode',
                                 label: '颜色',
                                 value: (config?.point as ShapeAttrs)?.color,
-                                config: {
-                                    containerStyle: {
-                                        gridColumn: '1/3',
-                                    }
-                                }
                             },
                             {
                                 key: 'style',
@@ -171,11 +159,10 @@ export const AntdMultiLineGraphics = (props: ConfigType<AntdCommonLineController
 
 export const AntdMultiLineFieldMapping: React.FC<ConfigType<AntdCommonLineController>> = ({controller}) => {
     const options = AntdCommonUtil.getDataFieldOptions(controller);
-    const {xField, yField, seriesField} = controller.getConfig()?.style!;
+    const {xField, yField, seriesField} = controller.getConfig()?.style ?? {};
     const schema: Control = {
         type: 'grid',
         key: 'style',
-        config: {columns: 2},
         children: [
             {
                 key: 'xField',
@@ -212,5 +199,5 @@ export const AntdMultiLineFieldMapping: React.FC<ConfigType<AntdCommonLineContro
         controller.update(dataFragment);
     }
 
-    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+    return <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
 }

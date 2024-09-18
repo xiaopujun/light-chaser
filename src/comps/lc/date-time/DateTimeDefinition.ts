@@ -68,12 +68,12 @@ export default class DateTimeDefinition extends AbstractDesignerDefinition<DateT
 
 
     getEventList(): EventInfo[] {
-        const events = super.getEventList();
-        return events.concat([
+        return [
+            ...super.getEventList(),
             {
                 id: "click",
                 name: "点击时",
             }
-        ]);
+        ]
     }
 }

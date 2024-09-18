@@ -2,10 +2,10 @@ import './FilterList.less';
 import designerLeftStore from "../DesignerLeftStore.ts";
 import eventOperateStore from "../../operate-provider/EventOperateStore.ts";
 import {observer} from "mobx-react";
-import filterManager from "../../manager/FilterManager.ts";
 import AddFilterDialog from "./AddFilterDialog.tsx";
 import {Popconfirm} from "antd";
 import {Close, Help, Plus} from "@icon-park/react";
+import filterManager from "../../manager/FilterManager.ts";
 
 export const FilterList = observer(() => {
     const {filters, setEditFilter, delFilter, setVisibility} = filterManager;

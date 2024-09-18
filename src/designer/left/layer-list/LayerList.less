@@ -3,7 +3,7 @@
   padding: 5px;
   font-size: 10px;
   height: 25px;
-  margin: 3px 0;
+  margin: 5px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -49,11 +49,18 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        color: #9a9a9a;
+        color: #d5d5d5;
+        opacity: 0;
 
         .layer-operator {
           padding: 4px;
           font-size: 12px;
+        }
+      }
+
+      &:hover {
+        .layer-operators {
+          opacity: 1;
         }
       }
     }
@@ -93,12 +100,19 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
-          color: #9a9a9a;
+          color: #d5d5d5;
+          opacity: 0;
 
           .group-operator {
             padding: 4px;
             font-size: 12px;
             cursor: pointer;
+          }
+        }
+
+        &:hover {
+          .group-operators {
+            opacity: 1;
           }
         }
       }

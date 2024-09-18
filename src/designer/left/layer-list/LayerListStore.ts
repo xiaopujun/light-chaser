@@ -5,6 +5,7 @@ import {setControlPointLineColor} from "../../operate-provider/movable/DesignerS
 import historyRecordOperateProxy from "../../operate-provider/undo-redo/HistoryRecordOperateProxy";
 import LayerUtil from "./util/LayerUtil";
 import layerManager from "../../manager/LayerManager.ts";
+import {ILayerItem} from "../../DesignerType.ts";
 
 class LayerListStore {
     constructor() {
@@ -93,6 +94,78 @@ class LayerListStore {
                     }
                     //多选模式下需要去重，（避免在图层列表选中先选中子图层，再多选选中分组图层时候，分组图层被重复计算的问题）
                     selectedLayerIds = [...new Set(selectedLayerIds)];
+                }
+            }
+        } else if (event.shiftKey) {
+            if (targetIds.length === 1) {
+                const startLayer = layerConfigs[targetIds[0]];
+                const endLayer = layerConfigs[id];
+                let maxId, minId;
+                if (startLayer.order! > endLayer.order!) {
+                    maxId = targetIds[0];
+                    minId = id;
+                } else {
+                    maxId = id;
+                    minId = targetIds[0];
+                }
+                //按住shift后点击的是原图层，则不处理
+                if (maxId === minId)
+                    return;
+
+                let finished = false;
+                const calculateLayerIds = (selectedIds: string[], nextLayer: ILayerItem, targetId: string) => {
+                    if (!nextLayer || finished)
+                        return;
+                    if (nextLayer.type === 'group') {
+                        selectedIds.push(nextLayer.id!)
+                        const childHeaderLayer = layerConfigs[nextLayer.childHeader!];
+                        if (!childHeaderLayer)
+                            return;
+                        calculateLayerIds(selectedLayerIds, childHeaderLayer, targetId);
+                    } else {
+                        selectedIds.push(nextLayer.id!);
+                    }
+                    if (nextLayer.id === targetId) {
+                        finished = true;
+                        return;
+                    }
+                    if (nextLayer.pid && !nextLayer.next) {
+                        //查找到分组图层的最后一个元素依然没有匹配到目标图层，则跳转到父级图层往下继续匹配
+                        let safeLock = 0; //防止死循环
+                        let parentLayer = layerConfigs[nextLayer.pid];
+                        let tempNext = layerConfigs[parentLayer.next!];
+                        while (!tempNext && parentLayer && safeLock < 1000) {
+                            parentLayer = layerConfigs[parentLayer.pid!];
+                            tempNext = layerConfigs[parentLayer?.next ?? ''];
+                            safeLock++;
+                        }
+                        //向下查找之前再次判断parentLayer是否已经是要查找的目标节点
+                        if (parentLayer && parentLayer.id === targetId) {
+                            finished = true;
+                            return;
+                        }
+                        calculateLayerIds(selectedIds, tempNext, targetId);
+                    } else
+                        calculateLayerIds(selectedIds, layerConfigs[nextLayer.next!], targetId);
+                }
+
+                const maxLayer = layerConfigs[maxId];
+                selectedLayerIds.push(maxId);
+                if (maxLayer.type === 'group') {
+                    calculateLayerIds(selectedLayerIds, layerConfigs[maxLayer.childHeader!], minId);
+                } else if (maxLayer.pid && !maxLayer.next) {
+                    //第一个图层是分组图层下的最后一个子图层，则跳转到父级图层往下继续匹配
+                    let safeLock = 0; //防止死循环
+                    let parentLayer = layerConfigs[maxLayer.pid];
+                    let tempNext = layerConfigs[parentLayer.next!];
+                    while (!tempNext && safeLock < 1000) {
+                        parentLayer = layerConfigs[parentLayer.pid!];
+                        tempNext = layerConfigs[parentLayer.next!];
+                        safeLock++;
+                    }
+                    calculateLayerIds(selectedLayerIds, tempNext, minId);
+                } else {
+                    calculateLayerIds(selectedLayerIds, layerConfigs[maxLayer.next!], minId);
                 }
             }
         } else {

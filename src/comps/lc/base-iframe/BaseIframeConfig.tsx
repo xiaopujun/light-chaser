@@ -6,7 +6,7 @@ import {ConfigType} from "../../../designer/right/ConfigContent";
 
 export const BaseIframeStyleConfig: React.FC<ConfigType<BaseIframeController>> = ({controller}) => {
 
-    const {src} = (controller as BaseIframeController).getConfig()?.style!;
+    const {src} = (controller as BaseIframeController).getConfig()?.style ?? {};
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
         const {dataFragment} = fieldChangeData;
@@ -28,7 +28,7 @@ export const BaseIframeStyleConfig: React.FC<ConfigType<BaseIframeController>> =
 
 
     return (
-        <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+        <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
     )
 }
 

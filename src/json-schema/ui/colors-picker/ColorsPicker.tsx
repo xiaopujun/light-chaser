@@ -52,15 +52,13 @@ export default function ColorsPicker(props: ColorsPickerProp) {
                 {finalValue?.map((item: string, i: number) => {
                     return (
                         <div className={"colors-item"} key={i + ''}>
-                            <ColorPicker value={item}
-                                         onChange={(color: string) => _onChange(color, i)}/>
+                            <ColorPicker value={item} onChange={(color: string) => _onChange(color, i)}/>
                             <span onClick={() => delColor(i)}><label>×</label></span>
                         </div>
                     )
                 })}
                 {stateCanAdd &&
-                <div onClick={addColor} className={'colors-pick-add-btn'}><span>+</span></div>}
-            </div>
+                    <div onClick={addColor} className={'colors-pick-add-btn'}><div className="add-icon">+</div></div>}            </div>
         </UIContainer>
     )
 }

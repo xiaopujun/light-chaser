@@ -32,7 +32,6 @@ export const AntdLineCommonFieldMapping: React.FC<ConfigType<AntdBaseDesignerCon
     const schema: Control = {
         type: 'grid',
         key: 'style',
-        config: {columns: 2},
         children: [
             {
                 type: 'select',
@@ -59,7 +58,7 @@ export const AntdLineCommonFieldMapping: React.FC<ConfigType<AntdBaseDesignerCon
         controller.update(fieldChangeData.dataFragment);
     }
 
-    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+    return <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
 }
 
 export function AntdLineCommonGraphics(props: ConfigType<AntdCommonLineController>) {
@@ -79,12 +78,11 @@ export function AntdLineCommonGraphics(props: ConfigType<AntdCommonLineControlle
         config: {bodyStyle: {marginTop: 10}},
         children: [
             {
-                type: 'card-panel',
+                type: 'sub-accordion',
                 label: '线条',
                 children: [
                     {
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 key: 'smooth',
@@ -122,13 +120,12 @@ export function AntdLineCommonGraphics(props: ConfigType<AntdCommonLineControlle
                 ]
             },
             {
-                type: 'card-panel',
+                type: 'sub-accordion',
                 label: '数据点',
                 children: [
                     {
                         key: 'point',
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 key: 'size',

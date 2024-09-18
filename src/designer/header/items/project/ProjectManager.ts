@@ -2,7 +2,7 @@ import {action, makeObservable, observable, toJS} from "mobx";
 import AbstractManager from "../../../manager/core/AbstractManager.ts";
 import {IProjectInfo, ProjectState, SaveType} from "../../../DesignerType.ts";
 
-class ProjecManager extends AbstractManager<IProjectInfo> {
+class ProjectManager extends AbstractManager<IProjectInfo> {
     constructor() {
         super();
         makeObservable(this, {
@@ -47,5 +47,5 @@ class ProjecManager extends AbstractManager<IProjectInfo> {
 
 }
 
-const projectHdStore = new ProjecManager();
+const projectHdStore = new ProjectManager();
 export default projectHdStore;

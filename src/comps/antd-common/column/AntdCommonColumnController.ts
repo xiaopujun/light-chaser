@@ -13,7 +13,7 @@ export interface AntdColumnProps extends ComponentBaseProps {
 export default class AntdCommonColumnController extends AntdBaseDesignerController<Column, AntdColumnProps> {
 
     async create(container: HTMLElement, config: AntdColumnProps): Promise<void> {
-        await super.commonCreate(container, Column, config);
+        super.commonCreate(container, Column, config);
     }
 
     destroy(): void {

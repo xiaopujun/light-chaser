@@ -1,5 +1,5 @@
 import {BaseLayer} from "./BaseLayer";
-import {Edit, FolderClose, Lock, PreviewClose, PreviewOpen, Unlock} from "@icon-park/react";
+import {Edit, FolderClose, FolderOpen, Lock, PreviewClose, PreviewOpen, Unlock} from "@icon-park/react";
 
 export default class LayerGroupItem extends BaseLayer {
 
@@ -10,11 +10,12 @@ export default class LayerGroupItem extends BaseLayer {
             <div className={'layer-group'}>
                 <div className={`group-header ${selected ? "layer-selected" : hide
                     ? "layer-hide" : lock ? "layer-lock" : ""}`}
-                     onDoubleClick={this.openInput}
+                     onDoubleClick={this.activeComponentConfig}
                      onClick={(e) => this.onSelected(e)}>
                     <div className={'group-left'}>
                         <div className={'group-icon'} onClick={() => this.setState({showContent: !showContent})}>
-                            <FolderClose size={12}/></div>
+                            {showContent ? <FolderOpen size={14}/> : <FolderClose size={14}/>}
+                        </div>
                         <div className={'group-name'}>{inputMode ?
                             <input type="text" defaultValue={name} autoFocus={true} onChange={this.changeLayerName}
                                    ref={ref => ref?.select()}
@@ -27,13 +28,13 @@ export default class LayerGroupItem extends BaseLayer {
                     </div>
                     <div className={'group-operators'}>
                         <div className={'group-operator'} onClick={this.openInput}>
-                            <Edit/>
+                            <Edit size={14}/>
                         </div>
                         <div className={'group-operator'} onClick={this.toggleHide}>
-                            {hide ? <PreviewClose/> : <PreviewOpen/>}
+                            {hide ? <PreviewClose size={14}/> : <PreviewOpen size={14}/>}
                         </div>
                         <div className={'group-operator'} onClick={this.toggleLock}>
-                            {lock ? <Lock/> : <Unlock/>}
+                            {lock ? <Lock size={14}/> : <Unlock size={14}/>}
                         </div>
                     </div>
                 </div>

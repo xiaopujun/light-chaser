@@ -1,4 +1,3 @@
-import layerManager from "../../manager/LayerManager.ts";
 import {
     IAddOperateData,
     IDelOperateData,
@@ -23,6 +22,7 @@ import {ILayerItem} from "../../DesignerType";
 import layerListStore from "../../left/layer-list/LayerListStore";
 import LayerUtil from "../../left/layer-list/util/LayerUtil";
 import designerLeftStore from "../../left/DesignerLeftStore";
+import layerManager from "../../manager/LayerManager.ts";
 
 class HistoryRecordOperateProxy {
 
@@ -114,7 +114,7 @@ class HistoryRecordOperateProxy {
         const addNext: IAddOperateData[] = [];
         const updLayerPrev: IUpdLayerOperateData[] = [];
         const updLayerNext: IUpdLayerOperateData[] = [];
-        const {layerConfigs, updateLayer} = layerManager;
+        const {layerConfigs, updateLayer, addItem} = layerManager;
 
         //头插法建立双向链表
         if (!layerManager.layerHeader) {
@@ -152,7 +152,7 @@ class HistoryRecordOperateProxy {
             });
             setAddRecordCompId(null);
         }
-        layerConfigs[layer.id + ""] = layer;
+        addItem(layer);
         updateLayer(updLayerNext);
     }
 

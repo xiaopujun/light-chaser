@@ -1,4 +1,4 @@
-import {action, makeObservable, observable, toJS} from "mobx";
+import {action, makeObservable, observable} from "mobx";
 
 export interface Student {
     id?: string;
@@ -32,7 +32,6 @@ class DemoStore {
 
     updateStudent = (student: Student) => {
         this.student = student
-        console.log(toJS(this.student))
     }
 }
 

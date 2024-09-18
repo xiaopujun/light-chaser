@@ -1,32 +1,7 @@
-import {ReactNode, useEffect, useRef, useState} from 'react';
+import {Collapse, CollapseProps, Tooltip} from "antd";
+import {Help} from "@icon-park/react";
 import './Accordion.less';
-import Switch from "../switch/Switch";
-import {Tooltip} from "antd";
-import {Help, Right} from "@icon-park/react";
-
-interface AccordionProps {
-    /**
-     * 标题
-     */
-    label?: string;
-    /**
-     * 说明文字
-     */
-    tip?: string;
-    /**
-     * 是否显示开关
-     */
-    showSwitch?: boolean;
-    // 开关值变化回调
-    onChange?: (data: boolean) => void;
-    // 开关状态值（受控）
-    value?: boolean;
-    // 开关状态值（非受控）
-    defaultValue?: boolean;
-    titleStyle?: React.CSSProperties;
-    bodyStyle?: React.CSSProperties;
-    children?: ReactNode;
-}
+import {AccordionProps} from "./IAccordionType.ts";
 
 /**
  * 手风琴组件
@@ -36,60 +11,21 @@ interface AccordionProps {
  * 操作这个组件的时候。 组件值，由本组件自身维护，不受外部控制。
  */
 export default function Accordion(props: AccordionProps) {
-    const {
-        label, tip, showSwitch, value, defaultValue,
-        titleStyle, bodyStyle, onChange, children
-    } = props;
-    const accordionBodyRef = useRef<HTMLDivElement | null>(null);
-    const headerRef = useRef<HTMLDivElement | null>(null);
-    const controlled = value !== undefined && defaultValue === undefined;
-    const [stateValue, setStateValue] = useState(controlled ? !!value : !!defaultValue);
-    const finalValue = controlled ? value : stateValue;
-
-    const titleClickMode = () => {
-        calculateFold(!headerRef?.current?.classList.contains("accordion-active"));
-    };
-
-    const calculateFold = (_value: boolean) => {
-        if (!headerRef.current || !accordionBodyRef.current) return;
-        if (!showSwitch)
-            headerRef?.current?.classList.toggle("accordion-active");
-        if (_value)
-            accordionBodyRef.current!.style.display = 'block';
-        else
-            accordionBodyRef.current!.style.display = 'none';
-    }
-
-    const switchChange = (_value: boolean) => {
-        calculateFold(_value);
-        onChange && onChange(_value);
-        if (!controlled) setStateValue(_value);
-    }
-
-    useEffect(() => {
-        if (!showSwitch) {
-            //普通模式
-            headerRef?.current?.addEventListener("click", titleClickMode);
-            accordionBodyRef!.current!.style.display = 'none';
-        }
-        if (showSwitch && finalValue)
-            accordionBodyRef!.current!.style.display = 'block';  //开关模式处于开启
-        else
-            accordionBodyRef!.current!.style.display = 'none'; //开关模式处于关闭
-
-        return () => headerRef?.current?.removeEventListener("click", titleClickMode);
-    }, []);
+    const {label, tip, children} = props;
+    const items: CollapseProps['items'] = [
+        {
+            key: '1',
+            label: label,
+            children: <div>{children}</div>,
+            extra: tip && <Tooltip title={tip} style={{marginLeft: 1}}><Help/></Tooltip>
+        },
+    ];
 
     return (
         <div className={'lc-accordion'}>
-            <div className="accordion-header" ref={headerRef} style={{...titleStyle}}>
-                <div className={'title-content'}>{label} &nbsp;
-                    {tip && <Tooltip title={tip}><Help/>&nbsp;&nbsp;</Tooltip>}</div>
-                <div className={'title-switch'}>{showSwitch ?
-                    <Switch value={finalValue} onChange={switchChange}/>
-                    : <Right size={16} className={'accordion-icon'}/>}</div>
-            </div>
-            <div className="lc-accordion-body" style={{...bodyStyle}} ref={accordionBodyRef}>{children}</div>
+            <Collapse bordered={false}
+                      expandIconPosition={'end'}
+                      items={items}/>
         </div>
     );
 }

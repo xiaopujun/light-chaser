@@ -1,11 +1,11 @@
 import {observer} from "mobx-react";
 import Dialog from "../../../json-schema/ui/dialog/Dialog.tsx";
-import filterManager from "../../manager/FilterManager.ts";
 import {Grid} from "../../../json-schema/ui/grid/Grid.tsx";
 import Input from "../../../json-schema/ui/input/Input.tsx";
 import MonacoEditor from "../../../json-schema/ui/code-editor/MonacoEditor.tsx";
 import Button from "../../../json-schema/ui/button/Button.tsx";
 import {useRef} from "react";
+import filterManager from "../../manager/FilterManager.ts";
 
 const AddFilterDialog = observer(() => {
 

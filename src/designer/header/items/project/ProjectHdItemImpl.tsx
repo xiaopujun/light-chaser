@@ -7,12 +7,12 @@ import Input from "../../../../json-schema/ui/input/Input";
 import Radio from "../../../../json-schema/ui/radio/Radio";
 import Select from "../../../../json-schema/ui/select/Select";
 import Button from "../../../../json-schema/ui/button/Button";
-import projectHdStore from "./ProjecManager.ts";
-import projecManager from "./ProjecManager.ts";
+import projectHdStore from "./ProjectManager.ts";
+import projectManager from "./ProjectManager.ts";
 
 
 const ProjectHdItemImpl = () => {
-    const configRef = useRef<IProjectInfo | null>({...projecManager.projectConfig});
+    const configRef = useRef<IProjectInfo | null>({...projectManager.projectConfig});
     const {projectVisible, setProjectVisible} = projectHdStore;
     const {name, des, state, saveType} = configRef.current!;
 
@@ -20,7 +20,7 @@ const ProjectHdItemImpl = () => {
 
     const doSave = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const {updateProjectConfig} = projecManager;
+        const {updateProjectConfig} = projectManager;
         updateProjectConfig(configRef.current!);
         onClose();
     }
@@ -31,9 +31,9 @@ const ProjectHdItemImpl = () => {
             <form onSubmit={doSave}>
                 <div style={{display: 'flex', flexWrap: 'wrap'}}>
                     <Grid gridGap={'15px'} columns={2}>
-                        <Input label={'项目名称'} maxLength={20} defaultValue={name}
+                        <Input label={'项目名称'} defaultValue={name}
                                onChange={(name) => configRef.current!.name = name}/>
-                        <Input label={'项目描述'} maxLength={60} defaultValue={des}
+                        <Input label={'项目描述'} defaultValue={des}
                                onChange={(des) => configRef.current!.des = des}/>
                         <Radio label={'项目状态'} onChange={value => configRef.current!.state = value as ProjectState}
                                containerStyle={{gridColumn: '1/3'}}
@@ -49,8 +49,8 @@ const ProjectHdItemImpl = () => {
 
                 </div>
                 <div className={'lc-header-project-footer'}>
-                    <Button type={'submit'}>保存</Button>
-                    <Button type={'button'} onClick={onClose}>取消</Button>
+                    <Button>保存</Button>
+                    <Button onClick={onClose}>取消</Button>
                 </div>
             </form>
         </Dialog>

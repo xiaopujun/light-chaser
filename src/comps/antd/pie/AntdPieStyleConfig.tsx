@@ -28,7 +28,8 @@ export const AntdPieGraphicsConfig = (props: ConfigType<AntdPieController>) => {
     const [count, setCount] = useState(0);
 
     const onFieldChange = (fieldChangeData: FieldChangeData) => {
-        let {id, data, dataKeyPath, dataFragment, reRender} = fieldChangeData;
+        const {id, dataKeyPath, dataFragment, reRender} = fieldChangeData;
+        let {data} = fieldChangeData;
         if (id === 'startAngle' || id === 'endAngle') {
             data = (data as number) / 180 * Math.PI;
             controller.update(LCGUIUtil.createObjectFromArray(dataKeyPath, data));
@@ -39,13 +40,13 @@ export const AntdPieGraphicsConfig = (props: ConfigType<AntdPieController>) => {
                         statistic: {
                             title: {
                                 style: {fontSize: '12px', color: '#fff'},
-                                content: 'text'
+                                content: '标题'
                             }
                         }
                     }
                 });
             } else {
-                controller.update({style: {statistic: {content: false}}});
+                controller.update({style: {statistic: {title: false}}});
             }
         } else if (id === "contentSwitch") {
             if (data) {
@@ -54,7 +55,7 @@ export const AntdPieGraphicsConfig = (props: ConfigType<AntdPieController>) => {
                         statistic: {
                             content: {
                                 style: {fontSize: '12px', color: '#fff'},
-                                content: 'content'
+                                content: '内容'
                             }
                         }
                     }
@@ -80,7 +81,6 @@ export const AntdPieGraphicsConfig = (props: ConfigType<AntdPieController>) => {
                 children: [
                     {
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 key: 'radius',
@@ -99,9 +99,6 @@ export const AntdPieGraphicsConfig = (props: ConfigType<AntdPieController>) => {
                                 type: 'number-input',
                                 label: '起始角',
                                 value: (config.startAngle || 0) / Math.PI * 180,
-                                config: {
-                                    suffix: '°'
-                                }
                             },
                             {
                                 key: 'innerRadius',
@@ -120,9 +117,6 @@ export const AntdPieGraphicsConfig = (props: ConfigType<AntdPieController>) => {
                                 type: 'number-input',
                                 label: '结束角',
                                 value: (config.endAngle || 2 * Math.PI) / Math.PI * 180,
-                                config: {
-                                    suffix: '°'
-                                }
                             },
                             {
                                 key: 'pieStyle',
@@ -153,9 +147,6 @@ export const AntdPieGraphicsConfig = (props: ConfigType<AntdPieController>) => {
                                 type: 'color-mode',
                                 label: '颜色',
                                 value: '#1c1c1c',
-                                config: {
-                                    containerStyle: {gridColumn: '1 / 3',},
-                                }
                             },
                         ]
                     }
@@ -169,7 +160,6 @@ export const AntdPieGraphicsConfig = (props: ConfigType<AntdPieController>) => {
                     {
                         key: 'title',
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 id: 'titleSwitch',
@@ -248,7 +238,6 @@ export const AntdPieGraphicsConfig = (props: ConfigType<AntdPieController>) => {
                     {
                         key: 'content',
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 id: 'contentSwitch',
@@ -326,7 +315,6 @@ export const AntdPieGraphicsConfig = (props: ConfigType<AntdPieController>) => {
                     {
                         key: 'label',
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 key: 'type',
@@ -423,7 +411,6 @@ export const AntdPieFieldMapping: React.FC<ConfigType<AntdPieController>> = ({co
     const schema: Control = {
         type: 'grid',
         key: 'style',
-        config: {columns: 2},
         children: [
             {
                 type: 'select',
@@ -450,5 +437,5 @@ export const AntdPieFieldMapping: React.FC<ConfigType<AntdPieController>> = ({co
         controller.update(fieldChangeData.dataFragment);
     }
 
-    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+    return <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
 }

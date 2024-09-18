@@ -10,30 +10,18 @@ export const AntdWordCloudStyle = (props: ConfigType<AntdWordCloudController>) =
     const schema: Control = {
         type: 'grid',
         key: 'style',
-        config: {columns: 2},
         children: [
             {
                 type: 'input',
                 label: '遮罩',
                 key: 'imageMask',
                 value: style?.imageMask,
-                config: {
-                    containerStyle: {
-                        gridColumn: '1/3',
-                        marginBottom: '10px'
-                    }
-                }
             },
             {
                 type: 'color-mode',
                 key: 'color',
                 label: '颜色',
                 value: style?.color,
-                config: {
-                    containerStyle: {
-                        gridColumn: '1/3'
-                    }
-                }
             },
             {
                 id: 'randomPosition',
@@ -108,7 +96,7 @@ export const AntdWordCloudStyle = (props: ConfigType<AntdWordCloudController>) =
         }
     }
 
-    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+    return <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
 }
 export const AntdWordCloudFieldMapping = (props: ConfigType<AntdWordCloudController>) => {
     const {controller} = props;
@@ -117,7 +105,6 @@ export const AntdWordCloudFieldMapping = (props: ConfigType<AntdWordCloudControl
     const schema: Control = {
         type: 'grid',
         key: "style",
-        config: {columns: 2},
         children: [
             {
                 type: 'select',
@@ -154,5 +141,5 @@ export const AntdWordCloudFieldMapping = (props: ConfigType<AntdWordCloudControl
         controller.update(dataFragment);
     }
 
-    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+    return <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
 }

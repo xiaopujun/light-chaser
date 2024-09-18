@@ -1,37 +1,46 @@
-import {Component} from 'react';
+import {useEffect, useRef} from 'react';
 import eventOperateStore from "../EventOperateStore";
 import {HotKeyConfigType, HotKeyTriggerType} from "./HotKeyType.ts";
 
 //需要屏蔽浏览器默认快捷键效果的快捷键列表
-const shieldKeyList = ['control + s', 'alt', 'control + l', 'control + shift + l', 'control + h', 'control + f',
-    'control + k', 'control + 1', 'control + 2', 'control + 3', 'control + 4', 'control + 5', 'control + g', 'control + shift + g',]
+const shieldKeyList = [
+    'alt',
+    'tab',
+    'control + s',
+    'control + l',
+    'control + shift + l',
+    'control + h',
+    'control + f',
+    'control + k',
+    'control + 1',
+    'control + 2',
+    'control + 3',
+    'control + 4',
+    'control + 5',
+    'control + g',
+    'control + d',
+    'control + shift + g',
+]
 
 interface HotKeyProps {
     handlerMapping: HotKeyConfigType;
 }
 
-class HotKey extends Component<HotKeyProps> {
+export default function HotKey(props: HotKeyProps) {
+    const handlerMappingRef = useRef<HotKeyConfigType>(props.handlerMapping ?? {});
+    const currHotKeyRef = useRef<string[]>([]);
+    const specialDomCacheRef = useRef<Record<string, HTMLElement>>({});
 
-    handlerMapping: HotKeyConfigType = {}
-    currHotKey: string[] = [];
-    existHandlerKey: string = "";
-    specialDomCache: Record<string, HTMLElement> = {};
-
-    constructor(props: HotKeyProps) {
-        super(props);
-        this.handlerMapping = props.handlerMapping;
-    }
-
-    getSpecialDomCache = (classSelector: string) => {
+    const getSpecialDomCache = (classSelector: string) => {
         //先从缓存中获取dom元素，如果没有则从document中获取并缓存
-        const specialDom = this.specialDomCache[classSelector];
+        const specialDom = specialDomCacheRef.current[classSelector];
         if (specialDom)
             return specialDom;
         else {
             const specialDom = document.querySelector(classSelector);
             if (!specialDom)
                 return null;
-            this.specialDomCache[classSelector] = specialDom as HTMLElement;
+            specialDomCacheRef.current[classSelector] = specialDom as HTMLElement;
             return specialDom;
         }
     }
@@ -41,69 +50,61 @@ class HotKey extends Component<HotKeyProps> {
      * @param e 鼠标事件对象
      * @param hotKey 当前按下的快捷键
      */
-    doHandler = (e: KeyboardEvent, hotKey: string) => {
-        const {handler, triggerType = HotKeyTriggerType.SINGLE, range} = this.handlerMapping[hotKey] || {};
-        if (handler) {
-            if ((triggerType === HotKeyTriggerType.SINGLE && this.existHandlerKey !== hotKey) || triggerType === HotKeyTriggerType.COILED) {
-                const {pointerTarget} = eventOperateStore;
-                //如果设定了指定范围并且不在范围内则不执行
-                if (range) {
-                    //先从缓存中获取dom元素，如果没有则从document中获取并缓存
-                    const targetDom = this.getSpecialDomCache(range);
-                    if (!targetDom || !targetDom.contains(pointerTarget as Node))
-                        return;
-                }
-                //其余情况均执行快捷键，如果是数组则遍历执行，反之直接执行
-                if (Array.isArray(handler))
-                    handler.forEach(func => func(e));
-                else
-                    handler(e);
-                this.existHandlerKey = hotKey;
+    const doHandler = (e: KeyboardEvent, hotKey: string) => {
+        const {handler, triggerType = HotKeyTriggerType.SINGLE, range} = handlerMappingRef.current[hotKey] || {};
+        if (!handler)
+            return;
+        if (triggerType === HotKeyTriggerType.SINGLE || triggerType === HotKeyTriggerType.COILED) {
+            const {pointerTarget} = eventOperateStore;
+            //如果设定了指定范围并且不在范围内则不执行
+            if (range) {
+                //先从缓存中获取dom元素，如果没有则从document中获取并缓存
+                const targetDom = getSpecialDomCache(range);
+                if (!targetDom || !targetDom.contains(pointerTarget as Node))
+                    return;
             }
+            //其余情况均执行快捷键，如果是数组则遍历执行，反之直接执行
+            if (Array.isArray(handler))
+                handler.forEach(func => func(e));
+            else
+                handler(e);
         }
     }
 
-    keyDown = (e: KeyboardEvent) => {
-        const key = e.key.toLowerCase();
-        if (!this.currHotKey.some(item => item === key))
-            this.currHotKey.push(key);
-        const hotKey = this.currHotKey.join(' + ');
+    const keyDown = (e: KeyboardEvent) => {
+        const key = e.key?.toLowerCase();
+        if (!key)
+            return;
+        if (!currHotKeyRef.current.some(item => item === key))
+            currHotKeyRef.current.push(key);
+        const hotKey = currHotKeyRef.current.join(' + ');
         if (shieldKeyList.some(item => item === hotKey))
             e.preventDefault();
-        this.doHandler(e, hotKey);
+        doHandler(e, hotKey);
     };
 
-    keyUp = (e: KeyboardEvent) => {
+    const keyUp = (e: KeyboardEvent) => {
         const key = e.key.toLowerCase();
-        if (this.currHotKey.some(item => item === key)) {
-            this.currHotKey = this.currHotKey.filter(item => item !== key);
-            this.existHandlerKey = '';
+        if (currHotKeyRef.current.some(item => item === key))
+            currHotKeyRef.current = currHotKeyRef.current.filter(item => item !== key);
+    }
+
+    useEffect(() => {
+        document.addEventListener('keydown', keyDown);
+        document.addEventListener('keyup', keyUp);
+        document.onvisibilitychange = () => {
+            if (document.visibilityState === "visible")
+                currHotKeyRef.current = [];
+        };
+        window.onfocus = () => currHotKeyRef.current = [];
+
+        return () => {
+            document.removeEventListener('keydown', keyDown);
+            document.removeEventListener('keyup', keyUp);
+            document.onvisibilitychange = null;
+            window.onfocus = null;
         }
-    }
+    }, []);
 
-    /**
-     * 失去焦点时清空当前热键（一般是切换屏幕）
-     */
-    onBlur = () => {
-        this.currHotKey = [];
-        this.existHandlerKey = '';
-    }
-
-    componentDidMount() {
-        document.addEventListener('keydown', this.keyDown);
-        document.addEventListener('keyup', this.keyUp);
-        window.onblur = this.onBlur;
-    }
-
-    componentWillUnmount() {
-        document.removeEventListener('keydown', this.keyDown);
-        document.removeEventListener('keyup', this.keyUp);
-        window.onblur = null;
-    }
-
-    render() {
-        return null;
-    }
+    return null;
 }
-
-export default HotKey;

@@ -57,16 +57,11 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
                         key: 'autoFlush',
                         type: 'checkbox',
                         value: !!dataRef.current?.autoFlush,
-                        config: {
-                            contentStyle: {marginLeft: 4}
-                        }
                     },
                     {
                         key: 'frequency',
                         type: 'number-input',
                         config: {
-                            prefix: '每',
-                            suffix: '秒',
                             min: 5,
                             containerStyle: {
                                 gridColumn: '2/9',
@@ -160,9 +155,6 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
                         type: 'button',
                         config: {
                             children: '测试接口并保存',
-                            style: {
-                                width: '100%'
-                            }
                         }
                     }
                 ]
@@ -203,17 +195,16 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
     const testAndSave = () => {
         if (!validate())
             return;
-        let {params, header, url, method, filter} = dataRef.current!;
-        FetchUtil.doRequest(url!, method!, header, params).then(res => {
-            let {data, code} = res;
-            if (code === 200) {
+        const {params, header, url, method, filter} = dataRef.current!;
+        FetchUtil.doRequestNativeResult(url!, method!, header, params).then(res => {
+            if (res) {
                 if (filter && filter !== '') {
                     const func = eval(`(${filter})`);
-                    data = typeof func === 'function' ? func(data) : data;
+                    res = typeof func === 'function' ? func(res) : res;
                 }
-                apiTestResRef.current = JSON.stringify(data, null, 2);
-                controller.update({data: {apiData: dataRef.current, staticData: data}}, {reRender: false});
-                controller.changeData(data);
+                apiTestResRef.current = JSON.stringify(res, null, 2);
+                controller.update({data: {apiData: dataRef.current, staticData: res}}, {reRender: false});
+                controller.changeData(res);
             } else {
                 apiTestResRef.current = JSON.stringify({msg: '请求错误'}, null, 2);
                 controller.update({data: {apiData: dataRef.current}}, {reRender: false});

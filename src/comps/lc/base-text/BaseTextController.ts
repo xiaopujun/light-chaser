@@ -1,4 +1,4 @@
-import {DesignerMode, ThemeItemType} from "../../../designer/DesignerType";
+import {DesignerMode} from "../../../designer/DesignerType";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
 import ComponentUtil from "../../../utils/ComponentUtil";
@@ -36,18 +36,23 @@ export class BaseTextController extends AbstractDesignerController<BaseTextCompo
 
     }
 
-    updateTheme(newTheme: ThemeItemType): void {
-
-    }
 
     registerEvent() {
         if (this.instance) {
-            const nodeId = this.config?.base?.id!;
+            const nodeId = this.config?.base?.id ?? '';
             this.instance.setEventHandler({
                 click: () => BPExecutor.triggerComponentEvent(nodeId!, "click", this.config)
             });
         }
     }
 
-
+    changeData(data: any) {
+        if (typeof data !== 'string') {
+            console.error('数据类型错误, 基础文本仅接受字符串类型的数据: ', data);
+            this.config!['data']!['staticData'] = "";
+            return;
+        }
+        this.config!['data']!['staticData'] = data;
+        this.instance?.updateConfig(this.config!);
+    }
 }

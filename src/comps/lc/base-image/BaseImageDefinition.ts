@@ -66,13 +66,13 @@ export default class BaseImageDefinition extends AbstractDesignerDefinition<Base
     }
 
     getEventList(): EventInfo[] {
-        const events = super.getEventList();
-        return events.concat([
+        return [
+            ...super.getEventList(),
             {
                 id: "click",
                 name: "点击时",
             }
-        ]);
+        ]
     }
 
 }

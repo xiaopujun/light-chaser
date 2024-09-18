@@ -1,8 +1,7 @@
 import './ProjectItem.less';
 import {Copy, Delete, Edit, PreviewOpen} from "@icon-park/react";
-import {Popover} from "antd";
+import {Input, Popover} from "antd";
 import {useState} from "react";
-import Input from "../../../json-schema/ui/input/Input.tsx";
 import {IProjectInfo, SaveType} from "../../../designer/DesignerType.ts";
 import operatorMap from "../../../framework/operate";
 
@@ -43,18 +42,22 @@ export default function ProjectItem(props: ProjectItemProps) {
             <div className="project-item-content">
                 <div className="project-name">
                     {rename ?
-                        <Input className={'project-rename-input'} type="text" autoFocus={true} value={name}
+                        <div className="project-rename-input">
+                            <Input autoFocus={true}
+                                   size={"small"}
+                                   value={name}
                                onBlur={() => {
+                                       updateName();
                                    setRename(false);
-                                   updateName();
                                }}
                                onKeyDown={(event) => {
                                    if (event.key === 'Enter') {
+                                           updateName();
                                        setRename(false);
-                                       updateName();
                                    }
                                }}
-                               onChange={(value) => setName(value)}/> :
+                                   onChange={(e) => setName(e.target.value)}/>
+                        </div> :
                         <div className="project-name-content">{name}</div>
                     }
                 </div>

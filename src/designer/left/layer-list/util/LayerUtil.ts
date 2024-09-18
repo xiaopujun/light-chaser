@@ -1,33 +1,7 @@
-import layerManager from "../../../manager/LayerManager.ts";
 import {ILayerItem} from "../../../DesignerType.ts";
+import layerManager from "../../../manager/LayerManager.ts";
 
 export default class LayerUtil {
-
-    /**
-     * 查找图层上层路径的所有分组图层，比如
-     * |A
-     * |-B
-     * |--C
-     * 传入C的id，返回[A,B]，未找到则返回空数组
-     * @param layerIds
-     */
-    public static findPathGroupLayer = (layerIds: string[]): string[] => {
-        const groupLayerIdSet = new Set<string>();
-        const {layerConfigs} = layerManager;
-        layerIds.forEach((id) => {
-            const layer = layerConfigs[id];
-            if (layer.type === 'group')
-                groupLayerIdSet.add(id);
-            let _pid = layer?.pid;
-            while (_pid) {
-                const {pid, id, type} = layerConfigs[_pid];
-                _pid = pid;
-                if (type === 'group')
-                    groupLayerIdSet.add(id!);
-            }
-        });
-        return Array.from(groupLayerIdSet);
-    }
 
     /**
      * 查找layerIds对应的图层中最顶层的分组图层，例如：
@@ -68,7 +42,7 @@ export default class LayerUtil {
 
     /**
      * 查找分组图层下的所有子图层id，包括分组图层本身id.
-     * @param  分组图层ids
+     * @param  groupIds 分组图层id
      * @param hasSelf 是否包含自身id
      */
     public static findAllChildLayer = (groupIds: string[], hasSelf: boolean = true): string[] => {

@@ -5,8 +5,8 @@ import {AbstractDefinition, ActionInfo, EventInfo} from "../../framework/core/Ab
 export abstract class AntdCommonDefinition<C extends AbstractController = AbstractController, P = any> extends AbstractDefinition<C, P> {
 
     getEventList(): Array<EventInfo> {
-        const eventList = super.getEventList();
-        eventList.push(...[
+        return [
+            ...super.getEventList(),
             {
                 id: "dataChange",
                 name: "数据变更时",
@@ -30,9 +30,7 @@ export abstract class AntdCommonDefinition<C extends AbstractController = Abstra
             {
                 id: "axisLabelClick",
                 name: "点击坐标文字时"
-            }
-        ])
-        return eventList;
+            }]
     }
 
     getActionList(): Array<ActionInfo> {

@@ -29,12 +29,11 @@ export default function AntdRadarStyleConfig(props: ConfigType<AntdRadarControll
         },
         children: [
             {
-                type: 'card-panel',
+                type: 'sub-accordion',
                 label: '基础',
                 children: [
                     {
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 type: 'number-input',
@@ -58,13 +57,12 @@ export default function AntdRadarStyleConfig(props: ConfigType<AntdRadarControll
                 ]
             },
             {
-                type: 'card-panel',
+                type: 'sub-accordion',
                 label: '辅助点',
                 key: 'point',
                 children: [
                     {
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 type: 'number-input',
@@ -120,13 +118,12 @@ export default function AntdRadarStyleConfig(props: ConfigType<AntdRadarControll
                 ]
             },
             {
-                type: 'card-panel',
+                type: 'sub-accordion',
                 label: '面积边框',
                 key: 'lineStyle',
                 children: [
                     {
                         type: 'grid',
-                        config: {columns: 2},
                         children: [
                             {
                                 type: 'color-picker',
@@ -162,14 +159,13 @@ export default function AntdRadarStyleConfig(props: ConfigType<AntdRadarControll
                 ]
             },
             {
-                type: 'card-panel',
+                type: 'sub-accordion',
                 label: '雷达面',
                 key: 'area',
                 children: [
                     {
                         type: 'grid',
                         key: 'style',
-                        config: {columns: 2},
                         children: [
                             {
                                 type: 'color-picker',
@@ -210,9 +206,6 @@ export const AntdRadarFieldMapping: React.FC<ConfigType<AntdRadarController>> = 
     const schema: Control = {
         type: 'grid',
         key: 'style',
-        config: {
-            columns: 2,
-        },
         children: [
             {
                 type: 'select',
@@ -240,5 +233,5 @@ export const AntdRadarFieldMapping: React.FC<ConfigType<AntdRadarController>> = 
         controller.update(dataFragment);
     }
 
-    return <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+    return <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
 }

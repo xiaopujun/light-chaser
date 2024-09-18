@@ -1,6 +1,17 @@
-import {CSSProperties, ForwardedRef, forwardRef, useImperativeHandle, useRef, useState} from 'react';
+import {
+    ChangeEvent,
+    Component,
+    CSSProperties,
+    ForwardedRef,
+    forwardRef,
+    useImperativeHandle,
+    useRef,
+    useState
+} from 'react';
 import {ComponentBaseProps} from "../../common-component/CommonTypes.ts";
 import './BaseTextComponent.less';
+import layerManager from "../../../designer/manager/LayerManager.ts";
+import layerListStore from "../../../designer/left/layer-list/LayerListStore.ts";
 
 export interface BaseTextComponentStyle {
     color?: string;
@@ -28,6 +39,7 @@ export const BaseTextComponent = forwardRef((props: BaseTextComponentProps, ref:
     const [config, setConfig] = useState<BaseTextComponentProps>({...props});
     const {style, data} = config;
     const [edit, setEdit] = useState(false);
+    // eslint-disable-next-line @typescript-eslint/ban-types
     const eventHandlerMap = useRef<Record<string, Function>>({});
     const textRef = useRef<HTMLInputElement>(null);
 
@@ -46,6 +58,18 @@ export const BaseTextComponent = forwardRef((props: BaseTextComponentProps, ref:
         WebkitTextStrokeColor: style?.strokeColor,
     }
 
+    /**
+     * 只在编辑模式下有效
+     * @param e
+     */
+    const changeContent = (e: ChangeEvent<HTMLInputElement>) => {
+        data!.staticData = e.target.value;
+        layerManager.layerConfigs[config.base?.id!].name = e.target.value;
+        const {layerInstances} = layerListStore;
+        const layerInstance = layerInstances[config.base?.id!];
+        layerInstance && (layerInstance as Component).setState({name: e.target.value});
+    }
+
     return (
         <div onDoubleClick={() => setEdit(true)}
              ref={textRef}
@@ -55,7 +79,7 @@ export const BaseTextComponent = forwardRef((props: BaseTextComponentProps, ref:
              onClick={onClick}>
             {edit ? <input
                 ref={(ref) => ref?.select()}
-                onChange={(e) => data!.staticData = e.target.value}
+                onChange={changeContent}
                 onBlur={() => setEdit(false)}
                 autoFocus={true}
                 type={'text'}

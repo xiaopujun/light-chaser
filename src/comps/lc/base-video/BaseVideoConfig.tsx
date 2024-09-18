@@ -27,6 +27,6 @@ export const BaseVideoStyleConfig: React.FC<ConfigType<BaseVideoController>> = (
     }
 
     return (
-        <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+        <div style={{padding: 10}}><LCGUI schema={schema} onFieldChange={onFieldChange}/></div>
     )
 }

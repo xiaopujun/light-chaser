@@ -22,11 +22,16 @@ export const BPNodeContainer: React.FC<BPNodeContainerProps> = React.memo(({layo
         const ncIns = new NodeController();
         if (!ncIns) return;
         const {bpNodeControllerInsMap, bpNodeConfigMap} = bluePrintManager;
-        //获取节点配置，优先从bpStore.bpNodeConfigMap中获取【已经保存的配置】，没有的，则调用controller的getNodeConfig方法获取【默认配置】
-        let nodeInfo = bpNodeConfigMap[layout.id!];
-        if (!nodeInfo)
-            nodeInfo = ncIns.getNodeInfo(layout.id!);
-        ncIns.create(ref.current!, nodeInfo!);
+        //获取节点配置，优先从bpNodeControllerInsMap中获取，没有则从bpStore.bpNodeConfigMap中获取【上一次保存的配置】，没有的，则最终调用controller的getNodeConfig方法获取【默认配置】
+        let nodeConfig = null;
+        const prevNodeController = bpNodeControllerInsMap[layout.id!];
+        if (prevNodeController)
+            nodeConfig = prevNodeController.getConfig();
+        else if (bpNodeConfigMap[layout.id!])
+            nodeConfig = bpNodeConfigMap[layout.id!];
+        else
+            nodeConfig = ncIns.getNodeInfo(layout.id!);
+        ncIns.create(ref.current!, nodeConfig);
         bpNodeControllerInsMap[layout.id!] = ncIns;
     }, [layout.id, layout.type]);
     const {position, id} = layout;

@@ -1,16 +1,15 @@
-import {Component} from 'react';
+import {ChangeEvent, Component} from 'react';
 import './CompList.less';
 import {observer} from "mobx-react";
 import eventOperateStore from "../../../operate-provider/EventOperateStore";
-import {DesignerMode, ILayerItem} from "../../../DesignerType";
-import Input from "../../../../json-schema/ui/input/Input";
-import DesignerLoaderFactory from "../../../loader/DesignerLoaderFactory";
+import {ILayerItem} from "../../../DesignerType";
 import IdGenerate from "../../../../utils/IdGenerate";
 import editorDesignerLoader from "../../../loader/EditorDesignerLoader";
 import componentListStore from "../ComponentListStore";
 import {AbstractDefinition, BaseInfoType} from "../../../../framework/core/AbstractDefinition";
 import DragAddProvider from "../../../../framework/drag-scale/DragAddProvider";
 import historyRecordOperateProxy from "../../../operate-provider/undo-redo/HistoryRecordOperateProxy";
+import {Input} from "antd";
 
 class CompList extends Component {
 
@@ -24,14 +23,27 @@ class CompList extends Component {
 
 
     componentDidMount() {
-        //处理拖拽元素到画布中
-        this.dragAddProvider = new DragAddProvider(
-            document.getElementById("component-drag-container")!,
-            document.getElementById("designer-ds-content")!,
-            this.dragStart,
-            this.dragover,
-            this.drop
-        );
+        let count = 0;
+        const interval = setInterval(() => {
+            const cdc = document.getElementById("component-drag-container");
+            const ddc = document.getElementById("designer-ds-content");
+            if (cdc && ddc) {
+                clearInterval(interval);
+                //处理拖拽元素到画布中
+                this.dragAddProvider = new DragAddProvider(
+                    document.getElementById("component-drag-container")!,
+                    document.getElementById("designer-ds-content")!,
+                    this.dragStart,
+                    this.dragover,
+                    this.drop
+                );
+            }
+            //尝试挂载拖拽组件100次后放弃
+            if (++count > 100) {
+                clearInterval(interval);
+                console.warn("组件列表与画布拖拽关联失败，无法通过拖拽添加组件。")
+            }
+        }, 100)
     }
 
     componentWillUnmount() {
@@ -104,7 +116,7 @@ class CompList extends Component {
         for (let i = 0; i < compInfoArr.length; i++) {
             const compInfo: BaseInfoType = compInfoArr[i];
             const {compName, compKey} = compInfo;
-            const definition: AbstractDefinition = DesignerLoaderFactory.getLoader(DesignerMode.EDIT).definitionMap[compKey];
+            const definition: AbstractDefinition = editorDesignerLoader.definitionMap[compKey];
             const chartImg = definition.getChartImg();
             chartDom.push(
                 <div key={i + ''} className={'list-item droppable-element'} draggable={true}
@@ -125,16 +137,16 @@ class CompList extends Component {
     }
 
 
-    searchChart = (data: string | number) => {
+    searchChart = (e: ChangeEvent<HTMLInputElement>) => {
         const {setSearch} = componentListStore;
-        setSearch && setSearch(data as string);
+        setSearch && setSearch((e.target as HTMLInputElement).value);
     }
 
     render() {
         return (
             <>
                 <div className={'list-search'}>
-                    <Input placeholder="搜索组件" onChange={this.searchChart}/>
+                    <Input placeholder={"搜索组件"} onChange={this.searchChart} style={{height: 28}}/>
                 </div>
                 <div className={'list-items'} id={'component-drag-container'}>
                     {this.getChartDom()}
