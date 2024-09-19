@@ -20,6 +20,10 @@ class ViewDesignerLoader extends AbstractDesignerLoader {
             if (data) {
                 designerManager.init(data, DesignerMode.VIEW);
                 designerManager.setLoaded(true);
+                window.LC_ENV = {
+                    createdController: 0,
+                    totalController: Object.keys(data.layerManager?.layerConfigs ?? []).length
+                }
             } else {
                 globalMessage?.messageApi?.error("项目不存在");
             }
