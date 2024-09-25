@@ -150,7 +150,7 @@ export const ProjectList = memo((props: ProjectListProps) => {
                 <div className={'project-list-header-right'}></div>
             </div>
             <div className={'project-list'}>
-                {pageData && pageData.records.map((item: IProjectInfo, index) => {
+                {pageData && pageData.records.map((item: IProjectInfo) => {
                     return (
                         <ProjectItem key={item.id} id={item.id!} name={item.name!} cover={item.cover || defaultSnapshot}
                                      saveType={saveType}

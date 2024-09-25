@@ -40,7 +40,6 @@ export default class ServerOperator extends AbstractOperator {
         if (res.code === 200)
             return res.data;
         else {
-            res.msg = "服务器链接失败";
             globalMessage.messageApi?.error(res.msg);
             return {records: [], total: 0, current: 1, size: 10};
         }
