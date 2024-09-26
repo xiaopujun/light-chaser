@@ -1,9 +1,11 @@
 import React from "react";
 import GroupLayerController from "./GroupLayerController";
 import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
-import {ILayerItem} from "../../designer/DesignerType";
+import {DesignerMode, ILayerItem} from "../../designer/DesignerType";
 import layerManager from "../../designer/manager/LayerManager.ts";
 import editorDesignerLoader from "../../designer/loader/EditorDesignerLoader.ts";
+import URLUtil from "../../utils/URLUtil.ts";
+import BPExecutor from "../../designer/blueprint/core/BPExecutor.ts";
 
 export interface GroupLayerStyleProps {
     children?: React.ReactNode;
@@ -25,6 +27,7 @@ export default class GroupLayer extends React.PureComponent<GroupLayerStyleProps
         const {layer} = this.props;
         const {elemConfigs, compController} = layerManager;
         const groupDefinition: AbstractDefinition = editorDesignerLoader.definitionMap['group'];
+        const {mode} = URLUtil.parseUrlParams();
         let config;
         if (layer.id! in compController!) {
             //重新编组后，被编组组件会重新渲染，需从之前的实例中获取原有数据
@@ -38,6 +41,15 @@ export default class GroupLayer extends React.PureComponent<GroupLayerStyleProps
         compController![layer.id!] = new GroupLayerController(this.groupLayerRef!, config, this);
         //渲染后删除elemConfigs中的映射关系（需要观察是否会造成其他问题）
         delete elemConfigs![layer.id!];
+
+        if (mode as DesignerMode === DesignerMode.VIEW) {
+            //所有组件都加载完毕之后。 触发bpExecutor的loaded事件
+            if (++window.LC_ENV.createdController! === window.LC_ENV.totalController) {
+                layerManager.compController && Object.values(layerManager.compController).forEach((controller) => {
+                    BPExecutor?.triggerComponentEvent(controller.config.base.id, 'loaded', controller.config);
+                });
+            }
+        }
     }
 
     render() {

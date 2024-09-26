@@ -1,7 +1,7 @@
 <h2> LIGHT CHASER</h2>
 
 <p>
-    <img alt="" src="https://img.shields.io/badge/version-v1.2.0-blue">
+    <img alt="" src="https://img.shields.io/badge/version-v1.5.0-blue">
     <img alt="" src="https://img.shields.io/badge/license-MIT-08CE5D?logoColor=08CE5D">
     <img alt="" src="https://img.shields.io/badge/TypeScript-blue">
     <img alt="" src="https://img.shields.io/badge/React-61daeb?logoColor=08CE5D">
@@ -105,7 +105,7 @@ docker pull puyinzhen/light-chaser
 ## 社区
 
 <div style="display: flex">
-    <img style="width: 300px" alt="group" src="https://s2.loli.net/2024/09/16/oTmvi97Vt465zC1.jpg">
+    <img style="width: 300px" alt="group" src="https://s2.loli.net/2024/09/24/4GKtyWDQAJ6nOFx.jpg">
 </div>
 
 ## 可持续

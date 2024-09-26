@@ -57,6 +57,12 @@ const ComponentContainer = memo((props: ComponentContainerProps) => {
                         if (mode as DesignerMode === DesignerMode.VIEW) {
                             controller.registerEvent();
                             controller.loadComponentData();
+                            //所有组件都加载完毕之后。 触发bpExecutor的loaded事件
+                            if (++window.LC_ENV.createdController! === window.LC_ENV.totalController) {
+                                layerManager.compController && Object.values(layerManager.compController).forEach((controller) => {
+                                    BPExecutor?.triggerComponentEvent(controller.config.base.id, 'loaded', controller.config);
+                                });
+                            }
                         }
                         //设置组件滤镜效果（todo 考虑是否应该在此处设置？）
                         controller.updateFilter(controller.getConfig()?.filter);
@@ -100,13 +106,6 @@ const ComponentContainer = memo((props: ComponentContainerProps) => {
 export default ComponentContainer;
 
 const registerProxy = (compId: string, controller: AbstractDesignerController) => {
-    controller.create = new Proxy(controller.create, {
-        apply(target, thisArg, argus) {
-            const proxy = target.apply(thisArg, argus as any);
-            BPExecutor.triggerComponentEvent(compId, "loaded", controller.config);
-            return proxy;
-        }
-    });
     controller.changeData = new Proxy(controller.changeData, {
         apply(target, thisArg, argus) {
             BPExecutor.triggerComponentEvent(compId, "dataChange", argus[0]);

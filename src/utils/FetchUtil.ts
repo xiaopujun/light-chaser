@@ -67,6 +67,10 @@ export default class FetchUtil {
         let response: Response | null = null;
         try {
             response = await fetch(url, options);
+            if (!response.ok) {
+                console.error('请求错误:', response?.status, response?.statusText);
+                return {code: response?.status ?? 500, msg: response?.statusText ?? '', data: null};
+            }
             const contentType = response.headers.get('content-type');
             if (contentType && contentType.includes('application/json')) {
                 const res = await response.json();
