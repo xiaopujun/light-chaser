@@ -125,17 +125,23 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
     }
 
     buildSchema = (): Control => {
-        const {name, width, height, x, y} = this.state;
+        const {name, width, height, x, y, id} = this.state;
         return {
             type: 'grid',
             children: [
+                {
+                    id: "id",
+                    key: "id",
+                    label: "ID",
+                    type: "input",
+                    value: id,
+                },
                 {
                     id: "name",
                     key: "name",
                     label: "名称",
                     type: "input",
                     value: name,
-
                 },
                 {
                     id: "width",

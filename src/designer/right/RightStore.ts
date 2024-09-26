@@ -1,6 +1,9 @@
 import {action, makeObservable, observable, runInAction} from "mobx";
 import {MenuInfo} from "./MenuType";
+import {DesignerMode} from "../DesignerType.ts";
 import editorDesignerLoader from "../loader/EditorDesignerLoader.ts";
+import DesignerLoaderFactory from "../loader/DesignerLoaderFactory.ts";
+
 
 /**
  * 激活元素
@@ -62,6 +65,7 @@ class RightStore {
         this.activeElem = {id, type};
         //更新菜单列表
         this.menus = editorDesignerLoader?.definitionMap[type]?.getMenuList() || [];
+
         if (this.menus.length > 0) {
             let setNewActiveMenu = true;
             for (let i = 0; i < this.menus.length; i++) {

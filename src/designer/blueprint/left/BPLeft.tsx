@@ -1,22 +1,33 @@
 import React, {useEffect, useRef} from "react";
 import './BPLeft.less';
-import bluePrintManager from "../manager/BluePrintManager.ts";
 import bpLeftStore from "./BPLeftStore";
 import {observer} from "mobx-react";
 import layerManager from "../../manager/LayerManager.ts";
 import IdGenerate from "../../../utils/IdGenerate";
 import DragAddProvider from "../../../framework/drag-scale/DragAddProvider";
 import Input from "../../../json-schema/ui/input/Input.tsx";
-import {AddSubset, ApplicationOne, BytedanceMiniApp, Calculator, CardTwo, Filter, MindmapMap} from "@icon-park/react";
+import {
+    AddSubset,
+    ApplicationOne,
+    BytedanceMiniApp,
+    Calculator,
+    CardTwo,
+    Filter,
+    MindmapMap,
+    ListCheckbox
+} from "@icon-park/react";
+import bluePrintGroupManager from "../manager/BluePrintGroupManager";
 
 const BPLeft: React.FC = () => {
+
     return (
         <div className={'bp-left'}>
-            <BPNodeSortList/>
-            <BPNodeList/>
+            <BPNodeSortList />
+            <BPNodeList />
         </div>
     )
 }
+
 export default BPLeft;
 
 export const BPNodeSortList = observer(() => {
@@ -80,6 +91,7 @@ const drop = (event: DragEvent) => {
     event.preventDefault();
     let nodeId = event.dataTransfer?.getData('nodeId');
     const type = event.dataTransfer?.getData('type');
+    const {bluePrintManager} = bluePrintGroupManager;
     const {bpDragContentRef, canvasScale} = bluePrintManager;
     const contentPos = bpDragContentRef?.getBoundingClientRect();
     //获取鼠标位置
@@ -167,6 +179,7 @@ export const BPLogicalNodeList = observer(() => {
     const logicalNodeList = [
         {name: '条件判断', icon: AddSubset, type: 'condition-node'},
         {name: '逻辑处理', icon: BytedanceMiniApp, type: 'logical-process-node'},
+        {name: '选择多个节点', icon: ListCheckbox, type: 'select-multiple-node'},
     ].filter((item) => item.name.indexOf(bpLeftStore.searchValue) !== -1)
 
     return (

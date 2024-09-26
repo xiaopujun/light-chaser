@@ -18,7 +18,7 @@ import layerListStore from "../../left/layer-list/LayerListStore.ts";
 import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
 import layerManager from "../../manager/LayerManager.ts";
 import themeHdStore from "../../header/items/theme/ThemeManager.ts";
-import bluePrintManager from "../../blueprint/manager/BluePrintManager.ts";
+import bluePrintGroupManager from "../../blueprint/manager/BluePrintGroupManager.ts";
 import canvasManager from "../../header/items/canvas/CanvasManager.ts";
 import designerManager from "../../manager/DesignerManager.ts";
 
@@ -102,14 +102,16 @@ export const doDelete = () => {
     //如果蓝图中使用了当前要被删除的组件，则需要先删除蓝图中的组件和连线，且蓝图中的删除操作目前无法回退
     const {targetIds} = eventOperateStore;
     if (targetIds && targetIds.length > 0) {
-        const {delNode, bpNodeLayoutMap} = bluePrintManager;
-        const preDelNodeIds: string[] = [];
-        targetIds.forEach((id: string) => {
-            if (bpNodeLayoutMap[id])
-                preDelNodeIds.push(id);
-        });
-        if (preDelNodeIds.length > 0)
-            delNode(preDelNodeIds);
+        for (const targetIdsKey in bluePrintGroupManager.bluePrintManagerMap) {
+            const {delNode, bpNodeLayoutMap} =  bluePrintGroupManager.bluePrintManagerMap[targetIdsKey];
+            const preDelNodeIds: string[] = [];
+            targetIds.forEach((id: string) => {
+                if (bpNodeLayoutMap[id])
+                    preDelNodeIds.push(id);
+            });
+            if (preDelNodeIds.length > 0)
+                delNode(preDelNodeIds);
+        }
     }
 
     //删除设计器中的组件，并记录到历史操作
@@ -121,6 +123,8 @@ export const doSave = throttle(() => {
     return new Promise(() => {
         const {saveType, id} = URLUtil.parseUrlParams();
         const proData = designerManager.getData();
+
+        console.log("proData>>>", proData);
 
         //转换为最终保存的数据格式
         const projectInfo: IProjectInfo = {
@@ -581,6 +585,7 @@ export const searchLayer = () => {
  */
 export const delBPNode = () => {
     if (!bluePrintHdStore.bluePrintVisible) return;
+    const {bluePrintManager} = bluePrintGroupManager;
     const {selectedNodes, delNode} = bluePrintManager;
     if (selectedNodes.length === 0) return;
     const selectedNodeIds = selectedNodes.map(node => node.id.split(':')[1]!);
@@ -599,6 +604,7 @@ export const delBPNode = () => {
  */
 export const delBPLine = () => {
     if (!bluePrintHdStore.bluePrintVisible) return;
+    const {bluePrintManager} = bluePrintGroupManager;
     const {selectedLines, delLine} = bluePrintManager;
     if (selectedLines.length === 0) return;
     const selectedLineIds = selectedLines.map(line => line.id!);

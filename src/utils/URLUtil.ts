@@ -1,6 +1,8 @@
+
 export interface UrlParams {
     [key: string]: string;
 }
+
 
 export default class URLUtil {
 

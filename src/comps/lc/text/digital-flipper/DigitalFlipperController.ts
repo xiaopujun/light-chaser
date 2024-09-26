@@ -1,0 +1,61 @@
+import {ThemeItemType} from "../../../../designer/DesignerType";
+import {UpdateOptions} from "../../../../framework/core/AbstractController";
+import AbstractDesignerController from "../../../../framework/core/AbstractDesignerController";
+import ComponentUtil from "../../../../utils/ComponentUtil";
+import ObjectUtil from "../../../../utils/ObjectUtil";
+import BPExecutor from "../../../../designer/blueprint/core/BPExecutor";
+import DigitalFlipperComponent, {
+    DigitalFlipperComponentProps,
+    DigitalFlipperComponentRef
+} from "./DigitalFlipperComponent";
+import {BaseIndicatorCardComponentProps} from "../base-indicator-card/BaseIndicatorCardComponent";
+
+export class DigitalFlipperController extends AbstractDesignerController<DigitalFlipperComponentRef, DigitalFlipperComponentProps> {
+
+    async create(container: HTMLElement, config: DigitalFlipperComponentProps): Promise<void> {
+        this.config = config;
+        this.container = container;
+        this.instance = await ComponentUtil.createAndRender<DigitalFlipperComponentRef>(container, DigitalFlipperComponent, config);
+    }
+
+    destroy(): void {
+        this.instance = null;
+        this.config = null;
+    }
+
+    getConfig(): DigitalFlipperComponentProps | null {
+        return this.config;
+    }
+
+
+    changeData(data: number) {
+        this.config!.data!.staticData = data;
+        this.instance?.changeData(data);
+        //数据变化是触发蓝图事件
+        const nodeId = this.config?.base?.id!;
+        BPExecutor.triggerComponentEvent(nodeId!, "dataChange", data);
+    }
+
+    update(config: DigitalFlipperComponentProps, upOp?: UpdateOptions | undefined): void {
+        this.config = ObjectUtil.merge(this.config, config);
+        upOp = upOp || {reRender: true};
+        if (upOp.reRender)
+            this.instance?.updateConfig(this.config!);
+    }
+    updateAsync(config: BaseIndicatorCardComponentProps, upOp?: UpdateOptions): void {
+        this.config = ObjectUtil.merge(this.config, config);
+        this.instance?.updateConfig(this.config!);
+        this.doApi(this.config.data.apiData);
+    }
+
+    updateTheme(newTheme: ThemeItemType): void {
+
+    }
+
+    registerEvent() {
+        const nodeId = this.config?.base?.id!;
+        this.instance?.setEventHandler({
+            click: () => BPExecutor.triggerComponentEvent(nodeId!, "click", this.config),
+        })
+    }
+}

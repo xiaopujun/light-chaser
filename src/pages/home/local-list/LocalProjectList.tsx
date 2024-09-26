@@ -2,6 +2,7 @@ import {memo, useEffect} from "react";
 import ProjectList from "../project-list/ProjectList";
 import {SaveType} from "../../../designer/DesignerType";
 import localCoverCache from "../../../framework/cache/LocalCoverCache";
+import ProjectGroup from "../project-group/ProjectGroup";
 
 const LocalProjectList = memo(() => {
 
@@ -13,7 +14,10 @@ const LocalProjectList = memo(() => {
     }, []);
 
     return (
-        <ProjectList saveType={SaveType.LOCAL}/>
+        <div style={{display:"flex"}}>
+            <ProjectGroup/>
+            <ProjectList saveType={SaveType.LOCAL}/>
+        </div>
     )
 })
 

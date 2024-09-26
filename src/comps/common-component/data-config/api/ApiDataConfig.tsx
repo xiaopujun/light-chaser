@@ -140,7 +140,7 @@ export function ApiDataConfig(props: ApiDataConfigProps) {
                         type: 'code-editor',
                         config: {
                             readonly: true,
-                            height: 160,
+                            height: 60,
                         },
                         reRender: true,
                         value: apiTestResRef.current,

@@ -34,18 +34,24 @@ export interface BPNodeLayoutType {
     position?: IPoint;
 }
 
-class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
+export class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
 
-    constructor() {
+    /**蓝图组名称*/
+    bpgName: string;
+
+    constructor(bpgName:string = "初始化") {
         super();
+        this.bpgName = bpgName;
         makeObservable(this, {
             selectedNodes: observable,
+            bpgName: observable,
             bpNodeLayoutMap: observable,
             canvasScale: observable,
             setSelectedNodes: action,
             addBPNodeLayout: action,
             updBpNodeLayout: action,
             setCanvasScale: action,
+            updateBpgName: action,
         });
     }
 
@@ -126,6 +132,10 @@ class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
 
     addBPNodeLayout = (layout: BPNodeLayoutType) => {
         this.bpNodeLayoutMap[layout.id!] = layout;
+    }
+
+    updateBpgName(bpgName: string){
+        this.bpgName = bpgName;
     }
 
     updBpNodeLayout = (layout: BPNodeLayoutType) => {
@@ -253,7 +263,7 @@ class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
                         const config = this.bpNodeConfigMap[layout.id!];
                         if (Controller) {
                             //@ts-ignore  todo这里在抽象类中统一定义了构造器格式，理论上应该支持，后续研究下是否ts不支持这种方式
-                            this.bpNodeControllerInsMap[layout.id!] = new Controller(config)!;
+                            this.bpNodeControllerInsMap[layout.id!] = new Controller()!;
                         }
                     })
                 }
@@ -306,6 +316,17 @@ class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
         this.setSelectedLines([]);
     }
 
+    updateUsedLayerNodes(){
+        const data = this.getData();
+        //初始化蓝图左侧节点列表
+        const {initUsedLayerNodes} = bpLeftStore;
+        const usedLayerNodes: Record<string, boolean> = {};
+        Object.keys(data?.bpNodeLayoutMap || {}).forEach(key => {
+            usedLayerNodes[key] = true;
+        })
+        initUsedLayerNodes(usedLayerNodes);
+    }
+
     public init(data: BluePrintManagerDataType, mode: DesignerMode): void {
         runInAction(() => {
             this.bpAPMap = data.bpAPMap || {};
@@ -314,13 +335,13 @@ class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
             this.bpNodeConfigMap = data.bpNodeConfigMap || {};
             if (mode === DesignerMode.EDIT) {
                 this.bpNodeLayoutMap = data.bpNodeLayoutMap || {};
-                //初始化蓝图左侧节点列表
-                const {initUsedLayerNodes} = bpLeftStore;
-                const usedLayerNodes: Record<string, boolean> = {};
-                Object.keys(data?.bpNodeLayoutMap || {}).forEach(key => {
-                    usedLayerNodes[key] = true;
-                })
-                initUsedLayerNodes(usedLayerNodes);
+                //初始化蓝图左侧节点列表, 单独初始化
+                // const {initUsedLayerNodes} = bpLeftStore;
+                // const usedLayerNodes: Record<string, boolean> = {};
+                // Object.keys(data?.bpNodeLayoutMap || {}).forEach(key => {
+                //     usedLayerNodes[key] = true;
+                // })
+                // initUsedLayerNodes(usedLayerNodes);
             } else {
                 const bpNodeControllerInsMap: Record<string, AbstractBPNodeController> = {};
                 Object.values(data?.bpNodeLayoutMap!).forEach((layout: BPNodeLayoutType) => {
@@ -337,6 +358,7 @@ class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
 
     public getData(): BluePrintManagerDataType {
         return {
+            bpgName: this.bpgName,
             bpAPMap: this.bpAPMap,
             bpLines: this.bpLines,
             bpAPLineMap: this.bpAPLineMap,
@@ -356,5 +378,5 @@ class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
 
 }
 
-const bluePrintManager = new BluePrintManager();
-export default bluePrintManager;
+// const bluePrintManager = new BluePrintManager();
+// export default bluePrintManager;

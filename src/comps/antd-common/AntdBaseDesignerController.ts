@@ -4,6 +4,7 @@ import {ComponentBaseProps} from "../common-component/CommonTypes.ts";
 import {Options, Plot} from "@antv/g2plot";
 import ObjectUtil from "../../utils/ObjectUtil";
 import BPExecutor from "../../designer/blueprint/core/BPExecutor";
+import {AntdBarProps} from "./bar/AntdCommonBarController";
 
 export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Options>,
     C extends ComponentBaseProps = ComponentBaseProps> extends AbstractDesignerController<I, C> {
@@ -53,7 +54,8 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
     public commonUpdate(config: C, Clazz: new (...args: any[]) => I, upOp?: UpdateOptions,): void {
         this.config = ObjectUtil.merge(this.config, config);
         upOp = upOp || {reRender: true};
-        if (upOp.reRender)
+        if (upOp.reRender){
             this.instance?.update(this.config?.style!);
+        }
     }
 }

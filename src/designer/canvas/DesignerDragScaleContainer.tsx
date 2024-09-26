@@ -4,6 +4,7 @@ import eventOperateStore from "../operate-provider/EventOperateStore";
 import {observer} from "mobx-react";
 import ScaleAction from "../../framework/core/ScaleAction.ts";
 import canvasManager from "../header/items/canvas/CanvasManager.ts";
+import "./DesignerCanvas.less";
 
 export interface DesignerDragScaleContainerProps {
     children?: React.ReactNode;
@@ -48,7 +49,7 @@ const DesignerDragScaleContainer = memo(observer((props: DesignerDragScaleContai
                  overflow: "hidden",
                  height: window.innerHeight - 110,
                  width: window.innerWidth - 115,
-                 backgroundColor: '#434343',
+                 // backgroundColor: '#434343',
                  position: 'relative'
              }}>
             <div className={'designer-ds-content lc-drag-scale-provider'}
@@ -58,7 +59,7 @@ const DesignerDragScaleContainer = memo(observer((props: DesignerDragScaleContai
                  style={{
                      width: canvasConfig?.width,
                      height: canvasConfig?.height,
-                     background: '#1c1c1c',
+                     background: '#232324',
                      position: 'absolute',
                  }}>
                 {children}

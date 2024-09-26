@@ -5,6 +5,7 @@ import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
+import {AntdBarProps} from "../bar/AntdCommonBarController";
 
 export interface AntdRoseProps extends ComponentBaseProps {
     style?: WritableRoseOptions;
@@ -29,6 +30,11 @@ export default class AntdCommonRoseController extends AntdBaseDesignerController
 
     update(config: AntdRoseProps, upOp?: UpdateOptions): void {
         super.commonUpdate(config, Rose, upOp);
+    }
+
+    updateAsync(config: AntdBarProps, upOp?: UpdateOptions): void {
+        this.commonUpdate(config, Rose, upOp);
+        this.doApi(this.config.data.apiData);
     }
 
     updateTheme(newTheme: ThemeItemType): void {

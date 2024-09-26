@@ -9,6 +9,8 @@ import {DataConfigType} from "../../../designer/DesignerType.ts";
 import {StaticDataConfig} from "./static/StaticDataConfig.tsx";
 import {ApiDataConfig} from "./api/ApiDataConfig.tsx";
 import {DatabaseDataConfig} from "./database/DatabaseConfig.tsx";
+import {DynamicDataConfig} from "./dynamic/DynamicDataConfig.tsx";
+import DataSetConfig from "./dataset/DataSetConfig";
 
 type DataTypeItem = 'static' | 'api' | 'database' | 'excel';
 
@@ -48,7 +50,9 @@ const DataConfig = (props: DataConfigProps) => {
                     options: [
                         {value: 'static', label: '静态数据'},
                         {value: 'api', label: '接口(API)'},
-                        {value: 'database', label: '数据库'}
+                        {value: 'database', label: '数据库'},
+                        {value: 'dynamic', label: '动态数据'},
+                        {value: 'dataset', label: '数据集'},
                     ],
                     containerStyle: {
                         marginBottom: 10
@@ -63,6 +67,8 @@ const DataConfig = (props: DataConfigProps) => {
             {sourceType === 'static' && <StaticDataConfig controller={controller} data={dataSource.staticData}/>}
             {sourceType === 'api' && <ApiDataConfig controller={controller} data={dataSource.apiData!}/>}
             {sourceType === 'database' && <DatabaseDataConfig controller={controller} data={dataSource.database!}/>}
+            {sourceType === 'dynamic' && <DynamicDataConfig controller={controller} data={dataSource.dynamic!}/>}
+            {sourceType === 'dataset' && <DataSetConfig controller={controller} data={dataSource.dataset!}/>}
         </div>
     );
 }

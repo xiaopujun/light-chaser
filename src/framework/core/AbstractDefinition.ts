@@ -139,6 +139,13 @@ export abstract class AbstractDefinition<C extends AbstractController = Abstract
                 }
             },
             {
+                name: "更新组件异步数据",
+                id: "updateAsync",
+                handler: (controller: AbstractDesignerController, params?: object) => {
+                    controller.updateAsync(params);
+                }
+            },
+            {
                 name: "更新组件数据",
                 id: "updateData",
                 handler: (controller: AbstractDesignerController, params?: object) => {

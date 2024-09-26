@@ -5,6 +5,7 @@ import {UpdateOptions} from "../../../framework/core/AbstractController";
 import {AntdBaseDesignerController} from "../AntdBaseDesignerController";
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {ShapeAttrs} from "@antv/g-base";
+import {AntdBarProps} from "../bar/AntdCommonBarController";
 
 export interface AntdScatterProps extends ComponentBaseProps {
     style?: WritableScatterOptions;
@@ -29,6 +30,11 @@ export default class AntdCommonScatterController extends AntdBaseDesignerControl
 
     update(config: AntdScatterProps, upOp?: UpdateOptions): void {
         super.commonUpdate(config, Scatter, upOp);
+    }
+
+    updateAsync(config: AntdBarProps, upOp?: UpdateOptions): void {
+        this.commonUpdate(config, Scatter, upOp);
+        this.doApi(this.config.data.apiData);
     }
 
     updateTheme(newTheme: ThemeItemType): void {

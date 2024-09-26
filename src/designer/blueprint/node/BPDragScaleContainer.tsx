@@ -1,8 +1,8 @@
 import React, {useEffect} from "react";
 import DragScaleProvider from "../../../framework/drag-scale/DragScaleProvider";
-import bluePrintManager from "../manager/BluePrintManager.ts";
 import {reRenderAllLine} from "../drag/BPMovable";
 import CanvasUtil from "../util/CanvasUtil";
+import bluePrintGroupManager from "../manager/BluePrintGroupManager";
 
 
 export interface BPDragScaleContainerContainerProps {
@@ -13,6 +13,7 @@ export const BPDragScaleContainer: React.FC<BPDragScaleContainerContainerProps> 
     const {children} = props;
     const containerRef = React.useRef<HTMLDivElement>(null);
     const contentRef = React.useRef<HTMLDivElement>(null);
+    const {bluePrintManager} = bluePrintGroupManager;
     useEffect(() => {
         const {setCanvasTranslate, setCanvasScale, setBpDragContentRef} = bluePrintManager;
         const container = containerRef.current;
@@ -42,7 +43,7 @@ export const BPDragScaleContainer: React.FC<BPDragScaleContainerContainerProps> 
                 dragScaleProvider.destroy();
             }
         }
-    }, []);
+    }, [bluePrintGroupManager.activeBpgId]);
     return (
         <div className={'bp-ds-container'} id={'bp-ds-container'} ref={containerRef}
              style={{overflow: "hidden", width: '100%', height: '100%'}}>

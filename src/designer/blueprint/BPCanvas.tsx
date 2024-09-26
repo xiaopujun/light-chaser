@@ -1,10 +1,12 @@
 import React, {Suspense, useEffect} from "react";
 import {reRenderAllLine} from "./drag/BPMovable";
-import bluePrintManager, {IBPLine} from "./manager/BluePrintManager.ts";
+import  {IBPLine} from "./manager/BluePrintManager.ts";
+import bluePrintGroupManager from "./manager/BluePrintGroupManager.ts";
 import CanvasUtil from "./util/CanvasUtil";
 import Loading from "../../json-schema/ui/loading/Loading.tsx";
 import LineLayer from "./line/LineLayer.tsx";
 import NodeLayer from "./node/NodeLayer.tsx";
+import {observer} from "mobx-react";
 
 
 /**
@@ -14,6 +16,7 @@ import NodeLayer from "./node/NodeLayer.tsx";
  */
 const lineSegmentCollisions = (event: MouseEvent) => {
     const {clientX, clientY, shiftKey} = event;
+    const {bluePrintManager} = bluePrintGroupManager;
     const {selectedLines, setSelectedLines, downCtx} = bluePrintManager;
     //清除之前的选中线
     if (selectedLines.length > 0) {
@@ -51,6 +54,7 @@ const lineSegmentCollisions = (event: MouseEvent) => {
 }
 
 const BPCanvas: React.FC = () => {
+    const {bluePrintManager} = bluePrintGroupManager;
     useEffect(() => {
         //加载完毕后绘制链接线（由于节点组件的创建与渲染都是异步的，需要等节点的锚点都渲染完毕后才能确定连线的位置，因此暂时使用异步延时连线的渲染时机）
         // todo  要调整为更精确的时机
@@ -62,7 +66,8 @@ const BPCanvas: React.FC = () => {
         const {nodeContainerRef} = bluePrintManager;
         nodeContainerRef?.addEventListener('click', lineSegmentCollisions);
         return () => nodeContainerRef?.removeEventListener('click', lineSegmentCollisions);
-    }, [])
+    }, [bluePrintGroupManager.activeBpgId])
+
     return (
         <div className={'blue-print-canvas'} style={{
             overflow: "hidden",
@@ -70,10 +75,10 @@ const BPCanvas: React.FC = () => {
             height: '100%',
         }}>
             <Suspense fallback={<Loading/>}>
-                <LineLayer/>
-                <NodeLayer/>
+                <LineLayer key={bluePrintGroupManager.activeBpgId}/>
+                <NodeLayer />
             </Suspense>
         </div>
     )
 }
-export default BPCanvas;
+export default observer(BPCanvas);

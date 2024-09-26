@@ -1,10 +1,11 @@
 import React from "react";
 import './BPHeader.less';
-import bluePrintManager from "../manager/BluePrintManager.ts";
+import bluePrintGroupManager from "../manager/BluePrintGroupManager.ts";
 import bluePrintHdStore from "../../header/items/blue-print/BluePrintHdStore.ts";
 import {Close} from "@icon-park/react";
 
 const BPHeader: React.FC = () => {
+    const {bluePrintManager} = bluePrintGroupManager;
     return (
         <div className={'bp-header'}>
             <div className={'bp-header-title'}>蓝图编辑器</div>

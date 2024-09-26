@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import Selecto, {OnDragStart, OnSelectEnd} from "react-selecto";
-import bluePrintManager from "../manager/BluePrintManager.ts";
+import bluePrintGroupManager from "../manager/BluePrintGroupManager.ts";
 
 export interface BPSelectableProps {
     children?: React.ReactNode;
@@ -9,6 +9,7 @@ export interface BPSelectableProps {
 export const BPSelectable: React.FC<BPSelectableProps> = (props) => {
     const {children} = props;
     const selectorRef = React.createRef<Selecto>();
+    const {bluePrintManager} = bluePrintGroupManager;
 
     useEffect(() => {
         const {setBpSelectRef} = bluePrintManager;

@@ -30,8 +30,11 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
     }
 
 
-    private doApi = (config: APIConfig) => {
+    public doApi = (config: APIConfig) => {
         const {url, method, params, header, frequency = 5, filter, autoFlush} = config;
+        if(this.interval){
+            clearInterval(this.interval as number);
+        }
         const request = () => {
             FetchUtil.doRequest(url!, method!, header, params).then((res) => {
                 let {code, data} = res;
@@ -58,13 +61,14 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
                 }
             });
         }
-        if (autoFlush)
+        if (autoFlush){
             this.interval = setInterval(() => request(), frequency * 1000);
-        else
+        } else {
             request();
+        }
     }
 
-    private doDatabase = (config: IDatabase) => {
+    public doDatabase = (config: IDatabase) => {
         const {sql, targetDb, filter, frequency, autoFlush} = config;
         const request = () => {
             if (!sql || sql === '')
