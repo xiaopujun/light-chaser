@@ -18,7 +18,7 @@ const FrameLayout: React.FC<FrameLayoutProps> = (props) => {
                 <div className={'fl-left'}>{left}</div>
                 <div className={'fl-crf-box'}>
                     <div className={'fl-cr-box'}>
-                        <div className={'fl-content'}>{content}</div>
+                        <div className={'fl-content fl-content-bg'}>{content}</div>
                         <div className={'fl-right'}>{right}</div>
                     </div>
                     <div className={'fl-footer'}>{footer}</div>
