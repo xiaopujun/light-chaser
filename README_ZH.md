@@ -1,4 +1,4 @@
-<h2> LIGHT CHASER</h2>
+# LIGHT CHASER
 
 <p>
     <img alt="" src="https://img.shields.io/badge/version-v1.5.0-blue">
@@ -14,87 +14,62 @@
 light chaser 是一款开源免费的数据可视化设计工具，基于 React18、Vite5、TypeScript5 技术栈实现。
 通过它，你可以简单快速地制作数据可视化相关内容。它可用于大屏幕数据 可视化展示、数据报告、数据分析等场景。
 
-这个项目包含:
-
-- 一个标准的组件编辑面板
-- 一个用于事件交互的蓝图编辑器
-- 丰富的组件、快捷键和扩展能力
-
 light chaser 专为数据可视化而设计，并将不断发展和完善！
 
-# 目录
+开发文档：https://xiaopujun.github.io/light-chaser-doc
 
-- [文档](#文档)
-- [样例](#样例)
-- [部署和使用](#部署和使用)
-- [贡献](#贡献)
-- [License](#License)
+在线体验：https://xiaopujun.github.io/light-chaser-app
 
-# 文档
+Pro在线体验：http://www.lcdesigner.cn/   账：ee0274ed 密：ee0274ed
 
-设计器详细内容请参考 [文档](https://xiaopujun.github.io/light-chaser-doc/#/)
+开源后端：https://github.com/xiaopujun/light-chaser-server
 
-# 样例
+# 功能概览
 
-您可以访问 [light chaser online](https://xiaopujun.github.io/light-chaser-app/#) 在线体验，也可以 克隆项目代码在本地启动后进行体验！
+注：包含Pro功能
 
-预览图：
+1. 50+组件
+2. 拖拽式组件编辑
+3. 拖拽式布局编辑
+4. 可视化事件编辑（蓝图）
+5. 动态数据源
+6. 组件主题
+7. 全局主题
+8. 组件滤镜
+9. 图表资源库
+10. 图层管理
+11. 全局变量
+12. 自适应屏幕
+13. 加密发布
+14. 服务器组件
+15. 组件开发脚手架
+16. 自定义G2Plot组件
+17. 自定义Echarts组件
+    ...
 
-![lightchaser1](https://i.072333.xyz/file/8ff8361817216f2fb1c47.png)
+# 示例
 
-![lightchaser](https://i.072333.xyz/file/b3d60f091201818432a98.png)
+#### 主编辑器
 
-![lightchaser](https://i.072333.xyz/file/802e2d2b4d95fa32fae48.png)
+![示例1](https://s2.loli.net/2024/09/21/U2Ni3pfaE1rJVAM.png)
 
-![lightchaser](https://i.072333.xyz/file/51819086932cb1b559a15.png)
+#### 可视化事件编辑器
 
+![示例2](https://s2.loli.net/2024/09/26/pitkUF2GogRYnxO.jpg)
+
+#### 设计完成图1
+
+![示例3](https://i.072333.xyz/file/802e2d2b4d95fa32fae48.png)
+
+#### 设计完成图2
+
+![示例4](https://i.072333.xyz/file/51819086932cb1b559a15.png)
 
 # 部署和使用
 
-如果您需要在本地启动该项目，或将其构建并部署到自己的服务器上，请参考以下命令：
+LIGHT CHASER 支持常规部署和docker部署，请参考以下连接：
 
-- 将项目克隆到本地计算机
-
-```shell
-git clone https://gitee.com/xiaopujun/light-chaser.git
-```
-
-- 安装项目依赖
-
-> 注意：本项目使用 pnpm 作为包管理工具，因此需要先安装pnpm，安装步骤参考 [pnpm](https://pnpm.io/zh/)
-> ，如果已安装 pnpm，则可以跳过此步骤
-
-```shell
-pnpm install
-```
-
-- 启动项目
-
-```shell
-pnpm dev
-```
-
-- 访问链接
-
-```shell
-http://localhost:5173
-```
-
-- 构建项目
-
-```shell
-pnpm build
-```
-
-# Docker 镜像
-
-```shell
-docker pull puyinzhen/light-chaser
-```
-
-# 贡献
-
-欢迎随时加入！打开issue或提交PR。
+部署教程：https://xiaopujun.github.io/light-chaser-doc/#/deploy/deploy_open
 
 # License
 
@@ -102,25 +77,21 @@ docker pull puyinzhen/light-chaser
 
 感谢为本项目做出贡献的每一个人！
 
-## 社区
+# 社区 & 可持续发展
+
+如果你对LIGHT CHASER项目感兴趣，欢迎加入社区群聊，反馈问题。帮助我们改进LIGHT CHASER。
 
 <div style="display: flex">
     <img style="width: 300px" alt="group" src="https://s2.loli.net/2024/09/24/4GKtyWDQAJ6nOFx.jpg">
 </div>
 
-## 可持续
+LIGHT CHASER 现已推出Pro版本。如果您有捐赠，商业合作想法，请赞助我，我将送出LIGHT CHASER Pro版本作为感谢。
 
-如果您有捐赠，赞助，商业合作等想法，请联系作者。这将对项目的持续发展和维护起到重要作用。
-
-# 赞助
-
-| 用户                                  | 邮箱               |
-|-------------------------------------|------------------|
-| [cxhcmc](https://github.com/cxhcmc) | 133490326@qq.com |
+现在你已经可以通过http://www.lcdesigner.cn/   账：ee0274ed 密：ee0274ed 快速体验Pro的所有功能
 
 感谢每一位项目贡献者、捐赠者和赞助商
 
-## 联系作者
+# 联系作者
 
 <div style="display: flex">
     <div  style="width: 50%"><img alt="group" src="https://i.072333.xyz/file/110e9602ef12a7d93bff0.jpg"></div>
