@@ -1,24 +1,30 @@
 import designerManager from "../manager/DesignerManager.ts";
 import operatorMap from "../../framework/operate";
-import {DesignerMode, SaveType} from "../DesignerType";
-import {globalMessage} from "../../framework/message/GlobalMessage.tsx";
+import {DesignerMode, ProjectDataType, SaveType} from "../DesignerType";
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
+import layerManager from "../manager/LayerManager.ts";
+import BPExecutor from "../blueprint/core/BPExecutor.ts";
 
 class EditorDesignerLoader extends AbstractDesignerLoader {
 
-    /**
-     * 初始化以更新方式打开时项目信息
-     */
-    protected initProject(id: string, type: SaveType): void {
-        const {init, setLoaded} = designerManager;
-        operatorMap[type].getProjectData(id).then((data) => {
-            if (data) {
-                init(data, DesignerMode.EDIT);
-                setLoaded(true);
-            } else {
-                globalMessage?.messageApi?.error("项目不存在");
-            }
-        })
+    protected async getProjectData(id: string, type: SaveType): Promise<ProjectDataType | null> {
+        return await operatorMap[type].getProjectData(id);
+    }
+
+    protected getProjectDataAfter(id: string, type: SaveType, data: ProjectDataType): void {
+        designerManager.init(data, DesignerMode.EDIT);
+        window.LC_ENV = {
+            projectId: id,
+            saveType: type,
+            mode: DesignerMode.EDIT,
+            createdController: 0,
+            totalController: Object.keys(data.layerManager?.layerConfigs ?? []).length,
+            controllers: layerManager.compController,
+            definitions: this.definitionMap,
+            bpExecutor: BPExecutor,
+            layerManager: layerManager,
+            ...window.LC_ENV
+        }
     }
 }
 
