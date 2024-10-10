@@ -45,13 +45,11 @@ launch it locally with the code to experience it!
 
 preview image：
 
-![lightchaser1](https://i.072333.xyz/file/8ff8361817216f2fb1c47.png)
+![示例1](https://s2.loli.net/2024/09/21/U2Ni3pfaE1rJVAM.png)
 
-![lightchaser](https://i.072333.xyz/file/b3d60f091201818432a98.png)
+![示例2](https://s2.loli.net/2024/09/26/pitkUF2GogRYnxO.jpg)
 
-![lightchaser](https://i.072333.xyz/file/802e2d2b4d95fa32fae48.png)
-
-![lightchaser](https://i.072333.xyz/file/51819086932cb1b559a15.png)
+![示例3](https://i.072333.xyz/file/802e2d2b4d95fa32fae48.png)
 
 # Usage & Deployment
 
@@ -97,19 +95,8 @@ Feel free to dive in! Open an issue or submit PRs.
 
 light chaser follows the Contributor Covenant Code of Conduct.
 
-## Sustainability
-
-If you have ideas for donations, sponsorships, business partnerships, etc., please contact the author. This will play an
-important role in the continued development and maintenance of the program.
-
 # License
 
 [MIT](LICENSE) © xiaopujun
-
-# Sponsors
-
-| serialNumber | user                                | email            |
-|--------------|-------------------------------------|------------------|
-| 1            | [cxhcmc](https://github.com/cxhcmc) | 133490326@qq.com |
 
 Thank you to every developer and person who contributed to this project!

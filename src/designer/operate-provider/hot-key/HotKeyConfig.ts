@@ -175,7 +175,7 @@ const winHotKey: HotKeyConfigType = {
 }
 
 const macHotKey: HotKeyConfigType = {
-    'meta + backspace': {
+    'backspace': {
         handler: [delBPLine, delBPNode, doDelete],
     },
     ...commonHotKeyConfigs

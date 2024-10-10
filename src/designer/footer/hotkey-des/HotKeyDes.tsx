@@ -12,7 +12,7 @@ const hotkeys = [
     {name: '图层置底', windows: 'ctrl + down-arrow(方向下键)', mac: 'ctrl + down-arrow(方向下键)'},
     {name: '图层上移', windows: 'alt + up-arrow(方向上键)', mac: 'options + up-arrow(方向上键)'},
     {name: '图层下移', windows: 'alt + down-arrow(方向下键)', mac: 'options + down-arrow(方向下键)'},
-    {name: '删除组件', windows: 'delete', mac: 'command + backspace'},
+    {name: '删除组件', windows: 'delete', mac: 'backspace'},
     {name: '缩放画布', windows: 'alt + wheel(鼠标滑轮)', mac: 'options + wheel(鼠标滑轮)'},
     {name: '拖拽画布', windows: '长按鼠标右键', mac: '长按鼠标右键'},
     {name: '组件上移', windows: '方向上键', mac: '方向上键'},
