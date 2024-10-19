@@ -24,7 +24,7 @@ Pro在线体验：http://www.lcdesigner.cn/home/server
 
 开源后端：https://github.com/xiaopujun/light-chaser-server
 
-# 软件特点：
+# 软件特点
 
 - 拖拽式设计：所有组件坐标、尺寸均支持拖拽式操作
 - 性能优秀：面向对象式管理组件状态，所有组件可独立渲染。可承载1000+组件在画布上的同时渲染
@@ -33,7 +33,7 @@ Pro在线体验：http://www.lcdesigner.cn/home/server
 - 事件交互简单：支持蓝图节点系统，通过线段链接各组件之间的交互，配合各种功能性节点，数据联动无比简单
 - 平台无关：支持Window、Linux、Mac等所有支持现代浏览器的操作系统
 
-# 功能介绍（包含Pro版本功能）：
+# 功能介绍（包含Pro版本功能）
 
 - 项目管理：支持项目快速创建、增删改、克隆、封面
 - 数据源管理：支持多种关系型数据库、API、WebSocket、MQTT等数据源
