@@ -20,7 +20,7 @@ light chaser 专为数据可视化而设计，并将不断发展和完善！
 
 在线体验：https://xiaopujun.github.io/light-chaser-app
 
-Pro在线体验：http://www.lcdesigner.cn/   账：ee0274ed 密：ee0274ed
+Pro在线体验：http://www.lcdesigner.cn/home/server
 
 开源后端：https://github.com/xiaopujun/light-chaser-server
 
