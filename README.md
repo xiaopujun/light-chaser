@@ -99,4 +99,14 @@ light chaser follows the Contributor Covenant Code of Conduct.
 
 [MIT](LICENSE) © xiaopujun
 
+Supplemental Terms
+
+Note: In the event of a conflict between the Supplemental Terms and the above Terms, the Supplemental Terms shall prevail
+
+1. This project is open to individual and enterprise users, and is free of charge or commercial use within the scope permitted by this agreement
+2. The author of the project retains all intellectual property rights of the project, and individuals or enterprises can use the software after the secondary development of the project for commercial use within the scope permitted by this agreement, but shall not use the source code of the project for copyright declaration or confirmation
+3. The scope of commercial use by individuals or enterprises using this project or the software redeveloped based on this project is limited to their own business, and the project and its source code, binary files, documents, pictures, etc. shall not be directly sold
+4. This project has applied for software copyright, we respect the concept of open source products, and at the same time call on users to respect the results of the author's labor.
+5. All legal disputes and liabilities arising from the use of this software have nothing to do with the author, and the user shall bear the corresponding consequences.
+
 Thank you to every developer and person who contributed to this project!
