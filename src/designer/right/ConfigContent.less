@@ -24,6 +24,7 @@
     .panel-operate {
       padding: 4px 8px;
     }
+
     .panel-operate:hover {
       cursor: pointer;
     }
@@ -34,6 +35,22 @@
     overflow-y: auto;
     padding: 10px;
   }
+
+  .resize-handle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    cursor: col-resize;
+    background-color: #64646400;
+    transition: background-color 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .resize-handle:hover {
+    background-color: #1645a4;
+  }
+
 }
 
 
