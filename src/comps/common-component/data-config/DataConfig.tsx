@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import './DataConfig.less';
 import AbstractController from "../../../framework/core/AbstractController";
 import {Control} from "../../../json-schema/SchemaTypes";
@@ -33,7 +33,6 @@ const DataConfig = (props: DataConfigProps) => {
         controller.update({data: {sourceType: data}}, {reRender: false});
     }
 
-
     const schema: Control = {
         type: 'grid',
         config: {gridGap: '10px'},
@@ -57,6 +56,40 @@ const DataConfig = (props: DataConfigProps) => {
             }
         ]
     }
+
+    useEffect(() => {
+        /**
+         * 监视配置面板宽度变化，以实时调整代码编辑器的宽度，达到代码编辑器宽度自适应的效果。后续如果有更好的解决方案，请修改此处代码。
+         */
+        const configPanelDom = document.querySelector(".lc-config-panel");
+        if (configPanelDom) {
+            // 创建一个 ResizeObserver 实例
+            const resizeObserver = new ResizeObserver(() => {
+                const dataConfigDom = document.querySelector('.data-config');
+                if (!dataConfigDom)
+                    return;
+                const computedStyle = window.getComputedStyle(dataConfigDom);
+                const contentWidth = dataConfigDom.clientWidth - parseFloat(computedStyle.paddingLeft) - parseFloat(computedStyle.paddingRight);
+                const editorContainerDomArr = configPanelDom.getElementsByClassName('monaco-editor-container');
+                if (editorContainerDomArr.length > 0) {
+                    for (let i = 0; i < editorContainerDomArr.length; i++) {
+                        const editorDom = editorContainerDomArr[i] as HTMLElement;
+                        if (editorDom)
+                            editorDom.style.width = contentWidth + 'px';
+                    }
+                }
+            });
+
+            // 开始观察目标元素
+            resizeObserver.observe(configPanelDom);
+
+            return () => {
+                resizeObserver.unobserve(configPanelDom);
+                resizeObserver.disconnect();
+            }
+        }
+    }, []);
+
     return (
         <div className={'data-config'}>
             <LCGUI schema={schema} onFieldChange={onFieldChange}/>

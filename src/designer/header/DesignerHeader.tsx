@@ -14,6 +14,7 @@ import BluePrintHdImpl from "./items/blue-print/BluePrintHdImpl.tsx";
 import {AfferentFour, ConnectionPointTwo, EfferentFour, Eyes, HardDiskOne, PageTemplate, Theme} from "@icon-park/react";
 import URLUtil from "../../utils/URLUtil.ts";
 import {DesignerMode} from "../DesignerType.ts";
+import logo from "../../images/logo.png";
 
 
 export interface IHeaderItem {
@@ -100,7 +101,7 @@ const Header: React.FC = observer(() => {
             <>
                 <div className={'designer-header'}>
                     <div className={'header-left'}>
-                        <div className={'header-title'}>LIGHT CHASER</div>
+                        <div className={'header-title'}><img style={{width: '60%'}} src={logo} alt={'logo'}/></div>
                     </div>
                     <div className={'header-center'}>
                         {buildHeaderItemUI(centerItems)}

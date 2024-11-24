@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React, {Suspense, useEffect, useRef} from 'react';
 import rightStore from "./RightStore";
 import {observer} from "mobx-react";
 import './ConfigContent.less';
@@ -16,7 +16,10 @@ export interface ConfigType<T extends AbstractController = AbstractDesignerContr
     controller: T;
 }
 
-const ConfigContent = () => {
+const ConfigContent = observer(() => {
+    const configPanelRef = useRef<HTMLDivElement | null>(null);
+    const resizeHandleRef = useRef<HTMLDivElement | null>(null);
+
     const createProxy = (controller: AbstractDesignerController) => {
         return new Proxy(controller, {
             get(target, prop) {
@@ -50,16 +53,51 @@ const ConfigContent = () => {
             <Suspense fallback={<Loading/>}>
                 <ConfigComp controller={controller}/>
             </Suspense>
-        )
+        );
+    };
 
-    }
+    const handleMouseDown = (e: MouseEvent) => {
+        e.preventDefault();
+        if (configPanelRef.current) {
+            const startX = e.clientX;
+            const initialWidth = configPanelRef.current.offsetWidth;
+            resizeHandleRef.current && (resizeHandleRef.current.style.backgroundColor = '#1645a4');
+
+            const handleMouseMove = (e: MouseEvent) => {
+                const endX = e.clientX;
+                const diffX = startX - endX;
+                const newWidth = initialWidth + diffX;
+                if (newWidth > 330 && newWidth <= 800 && configPanelRef.current)
+                    configPanelRef.current.style.width = newWidth + 'px';
+            };
+
+            const handleMouseUp = () => {
+                document.removeEventListener('mousemove', handleMouseMove);
+                document.removeEventListener('mouseup', handleMouseUp);
+                resizeHandleRef.current && (resizeHandleRef.current.style.backgroundColor = '#1645a400');
+            };
+
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', handleMouseUp);
+        }
+    };
+
+    useEffect(() => {
+        const resizeHandle = resizeHandleRef.current;
+        if (resizeHandleRef.current)
+            resizeHandleRef.current.addEventListener('mousedown', handleMouseDown);
+
+        return () => {
+            if (resizeHandle)
+                resizeHandle.removeEventListener('mousedown', handleMouseDown);
+        };
+    }, []);
 
     const onClose = () => {
         const {setContentVisible, setActiveMenu} = rightStore;
         setContentVisible && setContentVisible(false);
         setActiveMenu && setActiveMenu('');
     }
-
 
     const {activeMenu, menus} = rightStore;
     let activeMenuName = '';
@@ -69,18 +107,19 @@ const ConfigContent = () => {
             break;
         }
     }
+
     return (
-        <div className={'lc-config-panel'}>
+        <div className={'lc-config-panel'} ref={configPanelRef}>
             <div className={'lc-panel-top'}>
-                <div className={'panel-title'}>
-                    <span>{activeMenuName}</span></div>
+                <div className={'panel-title'}><span>{activeMenuName}</span></div>
                 <div className={'panel-operate'} onClick={onClose}><Close/></div>
             </div>
             <div className={'lc-panel-content'}>
                 {buildConfigContent()}
             </div>
+            <div className="resize-handle" ref={resizeHandleRef}></div>
         </div>
     );
-}
+})
 
-export default observer(ConfigContent);
+export default ConfigContent;
