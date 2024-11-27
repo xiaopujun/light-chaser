@@ -58,10 +58,9 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
                 }
             });
         }
+        request();
         if (autoFlush)
             this.interval = setInterval(() => request(), frequency * 1000);
-        else
-            request();
     }
 
     private doDatabase = (config: IDatabase) => {
@@ -94,11 +93,9 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
                 }
             });
         }
-
+        request();
         if (autoFlush)
             this.interval = setInterval(() => request(), (frequency || 5) * 1000);
-        else
-            request();
     }
 
     /**
