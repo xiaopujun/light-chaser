@@ -1,0 +1,30 @@
+.text-scroller-container {
+  --speed: 10s;
+  --container-width: 320px;
+
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+
+  .text-scroller {
+    height: inherit;
+    position: absolute;
+    color: white;
+    animation: scrollText var(--speed) linear infinite;
+    display: flex;
+    align-items: center;
+  }
+
+  @keyframes scrollText {
+    0% {
+      transform: translateX(var(--container-width));
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+}
+
+

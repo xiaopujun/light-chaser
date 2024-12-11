@@ -1,0 +1,36 @@
+body {
+  background-color: #000000;
+  color: white;
+
+  .demo-canvas {
+    position: absolute;
+  }
+
+  #demo-transform {
+    position: relative;
+    left: 100px;
+    top: 100px;
+    background: #00b2ff;
+    transform-origin: -100px -100px;
+
+
+    //transform: rotate(45deg) translateX(100px);
+  }
+
+  #demo-transform:hover {
+    animation: moveAndScale 4s ease-in-out infinite;
+  }
+
+  @keyframes moveAndScale {
+    0% {
+      transform: translateX(0); /* 初始位置 */
+    }
+    50% {
+      transform: translateX(100px); /* 1s 时向右移动 100px */
+    }
+    100% {
+      transform: scale(0.5) translateX(100px); /* 2s 时缩小为原来的一半并保持向右移动 100px */
+    }
+  }
+
+}

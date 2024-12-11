@@ -1,0 +1,146 @@
+.layerItemStyle {
+  color: #b6b6b6ff;
+  padding: 5px;
+  font-size: 10px;
+  height: 25px;
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.layer-list {
+  width: 250px;
+  border-right: 1px solid #404040;
+
+  .dl-ll-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 13px 10px;
+    height: 47px;
+    align-items: center;
+    font-size: 12px;
+    border-bottom: 1px solid #404040;
+    color: #bababa;
+  }
+
+  .layer-items {
+    overflow-y: scroll;
+    height: calc(100% - 47px);
+    padding: 0 5px;
+
+    .layer-item {
+      .layerItemStyle();
+
+      .layer-name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        input {
+          background-color: #00000000;
+          outline: none;
+          border: none;
+          width: 100%;
+        }
+      }
+
+      .layer-operators {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #d5d5d5;
+        opacity: 0;
+
+        .layer-operator {
+          padding: 4px;
+          font-size: 12px;
+        }
+      }
+
+      &:hover {
+        .layer-operators {
+          opacity: 1;
+        }
+      }
+    }
+
+    .layer-group {
+      width: 100%;
+      color: #b6b6b6ff;
+      margin-bottom: 5px;
+
+      .group-header {
+        .layerItemStyle();
+
+        .group-left {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .group-icon {
+            margin-right: 5px;
+          }
+
+          .group-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            input {
+              background-color: #00000000;
+              outline: none;
+              border: none;
+              width: 100%;
+            }
+          }
+        }
+
+        .group-operators {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          color: #d5d5d5;
+          opacity: 0;
+
+          .group-operator {
+            padding: 4px;
+            font-size: 12px;
+            cursor: pointer;
+          }
+        }
+
+        &:hover {
+          .group-operators {
+            opacity: 1;
+          }
+        }
+      }
+
+      .group-content {
+        padding: 0 0 0 5px;
+      }
+    }
+
+    .layer-item:hover, .group-header:hover {
+      transition: all 0.2s;
+      background: #00aeff54;
+    }
+
+    .layer-selected {
+      background: #1f6aff !important;
+      color: #ffffff !important;
+    }
+
+    .layer-lock {
+      background: #970000 !important;
+    }
+
+    .layer-hide {
+      background: rgba(140, 140, 140, 0.6) !important;
+    }
+
+  }
+}

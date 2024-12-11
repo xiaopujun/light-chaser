@@ -1,0 +1,37 @@
+.designer-left-menus {
+  width: 60px;
+  border-right: 1px solid #404040;
+
+  .menu-item {
+    width: 60px;
+    height: 63px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #9c9c9cd6;
+    transition: color 0.5s, background-color 0.5s, border-right-color 0.5s;
+
+    .menu-item-icon {
+      font-size: 20px;
+      padding: 3px;
+    }
+
+    .menu-item-content {
+      padding: 2px;
+      font-size: 12px;
+    }
+  }
+
+  .menu-item:hover {
+    color: #ebebeb;
+    background-color: rgba(188, 188, 188, 0.27);
+  }
+
+  .menu-item-active {
+    color: #0080ff;
+  }
+}
+
+

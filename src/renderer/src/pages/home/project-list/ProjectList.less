@@ -1,0 +1,33 @@
+.project-list-container {
+  height: calc(100vh - 60px);
+  overflow: scroll;
+
+  .project-list-header {
+    color: #c5c5c5;
+    display: flex;
+    padding: 13px;
+    border-bottom: 1px solid #2e2e2e;
+    justify-content: space-between;
+
+    .project-list-header-left {
+      .project-list-search {
+        margin-right: 13px;
+      }
+    }
+  }
+
+  .project-list {
+    padding: 13px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    overflow-y: scroll;
+    grid-gap: 25px;
+
+  }
+
+  .project-list-page {
+    text-align: right;
+    margin: 30px 10px 0 0;
+    display: block;
+  }
+}

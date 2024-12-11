@@ -1,0 +1,56 @@
+@import "../../../../designer/style/DesignerStyle.less";
+
+.lc-theme-item {
+  padding: 5px 0;
+  margin-bottom: 10px;
+  background-color: rgba(49, 49, 49, 0.32);
+  border-radius: 5px;
+  border: 2px solid transparent;
+
+  .lc-theme-item-header {
+    padding: 5px 7px;
+    font-size: @lc-font-sm;
+    color: #aeaeae;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .lc-theme-item-operators {
+      display: flex;
+
+      .operator-item {
+        margin-left: 5px;
+
+        img {
+          width: 13px;
+        }
+      }
+    }
+
+    .lc-theme-item-operators:hover {
+      color: #47f1ff;
+    }
+  }
+
+  .lc-theme-item-body {
+    pointer-events: none;
+    padding: 8px 7px;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.lc-theme-item:hover {
+  background-color: rgba(105, 105, 105, 0.32);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.lc-theme-item-active {
+  border: 2px solid transparent;
+  border-radius: 5px;
+  background-color: rgba(49, 49, 49, 0.32);
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  background-image: linear-gradient(to right, #222, #222), linear-gradient(90deg, #0080be, #005c82);
+}

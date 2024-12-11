@@ -1,0 +1,45 @@
+@titleColor: #00d6ff;
+@menuColor: #b7b1b1;
+
+.designer-header {
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #bababa;
+  font-size: 14px;
+  border-bottom: 1px solid #404040;
+
+  .header-left {
+    .header-title {
+      font-size: 16px;
+      font-weight: 500;
+      padding-left: 15px;
+    }
+  }
+
+  .header-center, .header-right {
+    display: flex;
+    align-items: center;
+  }
+
+  .header-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      color: #0095db;
+    }
+
+    &:active {
+      color: #2cbdff;
+    }
+
+    span {
+      padding: 2px;
+    }
+  }
+}
