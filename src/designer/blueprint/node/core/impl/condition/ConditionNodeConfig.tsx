@@ -1,6 +1,6 @@
 import React, {Suspense, useState} from "react";
 import {BPRightConfigProps} from "../../../../right/BPRight";
-import {debounce} from "lodash";
+import debounce from "lodash/debounce";
 import Loading from "../../../../../../json-schema/ui/loading/Loading.tsx";
 
 const CodeEditor = React.lazy(() => import("../../../../../../json-schema/ui/code-editor/CodeEditor.tsx"));

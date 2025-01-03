@@ -1,5 +1,6 @@
 import {Axis} from "@antv/g2plot";
-import {cloneDeep, isEqual} from "lodash";
+import cloneDeep from "lodash/cloneDeep";
+import isEqual from "lodash/isEqual";
 import {Control} from "../../../../json-schema/SchemaTypes";
 import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI";
 import {ShapeAttrs} from "@antv/g-base";
