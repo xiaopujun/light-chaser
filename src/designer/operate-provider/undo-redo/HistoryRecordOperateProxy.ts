@@ -14,7 +14,7 @@ import {historyOperator} from "./HistoryOperator";
 import eventOperateStore from "../EventOperateStore";
 import {runInAction} from "mobx";
 import rightStore from "../../right/RightStore";
-import {cloneDeep} from "lodash";
+import cloneDeep from "lodash/cloneDeep";
 import {ConfigureObjectFragments} from "../../../utils/ObjectUtil";
 import IdGenerate from "../../../utils/IdGenerate";
 import {Component} from "react";
