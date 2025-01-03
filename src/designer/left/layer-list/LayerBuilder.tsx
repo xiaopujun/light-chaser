@@ -2,7 +2,7 @@ import {createElement, ReactElement} from "react";
 import LayerItem from "./item/LayerItem";
 import LayerGroupItem from "./item/LayerGroupItem";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
-import {cloneDeep} from "lodash";
+import cloneDeep from "lodash/cloneDeep";
 import layerListStore from "./LayerListStore";
 import ComponentContainer from "../../../framework/core/ComponentContainer";
 import {ILayerItem} from "../../DesignerType";

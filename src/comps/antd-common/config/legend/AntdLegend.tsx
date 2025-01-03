@@ -2,7 +2,7 @@ import './Legend.less';
 import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI";
 import {Control} from "../../../../json-schema/SchemaTypes";
 import {ConfigType} from "../../../../designer/right/ConfigContent";
-import {cloneDeep} from "lodash";
+import cloneDeep from "lodash/cloneDeep";
 import {useState} from "react";
 
 const defaultLegendConfig = {

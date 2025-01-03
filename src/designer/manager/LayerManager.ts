@@ -1,5 +1,5 @@
 import {action, makeObservable, observable, runInAction, toJS} from "mobx";
-import {isEqual} from "lodash";
+import isEqual from "lodash/isEqual";
 import {ILayerItem, LayerManagerDataType, ThemeItemType,} from "../DesignerType.ts";
 import AbstractDesignerController from "../../framework/core/AbstractDesignerController.ts";
 import ObjectUtil from "../../utils/ObjectUtil.ts";

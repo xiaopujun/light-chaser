@@ -1,7 +1,7 @@
 import AbstractRollback from "./AbstractRollback";
 import {IHistoryRecord} from "../OperateType";
 import {ILayerItem} from "../../../DesignerType";
-import {cloneDeep} from "lodash";
+import cloneDeep from "lodash/cloneDeep";
 import layerManager from "../../../manager/LayerManager.ts";
 
 /**

@@ -1,7 +1,7 @@
 import {DesignerMode, IPage, IPageParam, IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
 import localforage from "localforage";
 import {AbstractOperator} from "./AbstractOperator";
-import {cloneDeep} from "lodash";
+import cloneDeep from "lodash/cloneDeep";
 import IdGenerate from "../../utils/IdGenerate";
 import ObjectUtil from "../../utils/ObjectUtil";
 import {globalMessage} from "../message/GlobalMessage";

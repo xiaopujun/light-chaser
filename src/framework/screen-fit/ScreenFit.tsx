@@ -1,5 +1,5 @@
 import {CSSProperties, ReactNode, useEffect, useRef, useState} from 'react'
-import {debounce} from "lodash";
+import debounce from "lodash/debounce";
 import './ScreenFit.less';
 import {AdaptationType} from "../../designer/DesignerType.ts";
 

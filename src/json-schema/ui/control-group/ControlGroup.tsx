@@ -5,7 +5,7 @@ import {FieldChangeData, LCGUI} from "../../LCGUI";
 import Loading from "../loading/Loading";
 import LCGUIUtil from "../../LCGUIUtil";
 import ObjectUtil from "../../../utils/ObjectUtil";
-import {cloneDeep} from "lodash";
+import cloneDeep from "lodash/cloneDeep";
 import {AddOne, DeleteFive, Down, Right} from "@icon-park/react";
 
 export interface ControlGroupProps {

@@ -1,7 +1,7 @@
 import AbstractRollback from "./AbstractRollback";
 import eventOperateStore from "../../EventOperateStore";
 import {IDelOperateData, IHistoryRecord} from "../OperateType";
-import {cloneDeep} from "lodash";
+import cloneDeep from "lodash/cloneDeep";
 import layerManager from "../../../manager/LayerManager.ts";
 
 export class DelRollbackImpl extends AbstractRollback {

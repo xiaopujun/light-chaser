@@ -2,7 +2,7 @@ import {MouseEvent, useState} from 'react';
 import './ThemeEditor.less';
 import {ThemeItemType} from "../../../../designer/DesignerType";
 import ThemeList from "../theme-list/ThemeList";
-import {cloneDeep} from "lodash";
+import cloneDeep from "lodash/cloneDeep";
 import {CardPanel} from "../../../../json-schema/ui/card-panel/CardPanel";
 import Button from "../../../../json-schema/ui/button/Button";
 import {Control} from "../../../../json-schema/SchemaTypes.ts";
