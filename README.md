@@ -1,6 +1,6 @@
 [中文](README_ZH.md)
 
-<h2> LIGHT CHASER</h2>
+<h2> LIGHT CHASER(Nestjs)</h2>
 
 <p>
     <img alt="" src="https://img.shields.io/badge/version-v1.5.0-blue">
@@ -36,11 +36,11 @@ light chaser is built for data visualization and will continue to grow and impro
 # Document
 
 For more information about the designer, please refer to it
-[Document](https://xiaopujun.github.io/light-chaser-doc/#/)
+[Document](http://114.55.91.77:3000/docs)
 
 # Example
 
-You can visit [LIGHT CHASER online](https://xiaopujun.github.io/light-chaser-app/#) to experience it online, or you can
+You can visit [LIGHT CHASER online](http://114.55.91.77/light-chaser-app/#) to experience it online, or you can
 launch it locally with the code to experience it!
 
 preview image：
@@ -94,6 +94,7 @@ pnpm build
 Feel free to dive in! Open an issue or submit PRs.
 
 light chaser follows the Contributor Covenant Code of Conduct.
+
 
 # License
 

@@ -9,7 +9,7 @@ const Home = memo(() => {
     return (
         <div className={'lc-home'}>
             <div className={'lc-home-header'}>
-                <div className={'logo'}><img style={{width: '70%'}} src={logo} alt={'logo'}/></div>
+                <div className={'logo'}><img style={{width: '70%'}} src={logo} alt={'logo'}/>(Nestjs)</div>
             </div>
             <div className={'lc-home-body'}>
                 <div className={'lc-home-body-left'}><HomeMenus/></div>
@@ -24,5 +24,3 @@ const Home = memo(() => {
 })
 
 export default Home;
-
-
