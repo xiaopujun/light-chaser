@@ -36,8 +36,8 @@ class AntdBaseColumnDefinition extends AbstractColumnDefinition {
         return {
             base: {
                 id: "",
-                name: '基础条形图',
-                type: 'AntdBaseBar',
+                name: 'Antd基础柱状图',
+                type: 'AntdBaseColumn',
             },
             style: {
                 data: data,
@@ -62,7 +62,7 @@ class AntdBaseColumnDefinition extends AbstractColumnDefinition {
                     line: null,
                     tickLine: null,
                     subTickLine: null,
-                    position: "left",
+                    position: "bottom",
                     title: null,
                 },
                 yAxis: {
@@ -81,7 +81,7 @@ class AntdBaseColumnDefinition extends AbstractColumnDefinition {
                     },
                     tickLine: null,
                     subTickLine: null,
-                    position: "bottom",
+                    position: "left",
                     title: null,
                 },
                 legend: {

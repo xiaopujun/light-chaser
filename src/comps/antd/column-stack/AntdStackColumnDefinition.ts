@@ -79,7 +79,7 @@ class AntdStackColumnDefinition extends AbstractColumnDefinition {
                     line: null,
                     tickLine: null,
                     subTickLine: null,
-                    position: "left",
+                    position: "bottom",
                     title: null,
                 },
                 yAxis: {
@@ -97,7 +97,7 @@ class AntdStackColumnDefinition extends AbstractColumnDefinition {
                     },
                     tickLine: null,
                     subTickLine: null,
-                    position: "bottom",
+                    position: "left",
                     title: null,
                 },
                 legend: {
