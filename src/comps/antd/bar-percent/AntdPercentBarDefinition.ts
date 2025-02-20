@@ -2,8 +2,14 @@ import percentBarImg from "./percent-bar.png";
 import {AntdBarProps} from "../../antd-common/bar/AntdCommonBarController";
 import AbstractBarDefinition from "../../antd-common/bar/AbstractBarDefinition";
 import {BaseInfoType} from "../../../framework/core/AbstractDefinition";
+import {ClazzTemplate} from "../../common-component/CommonTypes.ts";
+import AntdPercentBarController from "./AntdPercentBarController.ts";
 
 class AntdPercentBarDefinition extends AbstractBarDefinition {
+
+    getController(): ClazzTemplate<AntdPercentBarController> | null {
+        return AntdPercentBarController;
+    }
 
     getBaseInfo(): BaseInfoType {
         return {

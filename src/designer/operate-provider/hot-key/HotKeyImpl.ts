@@ -1,6 +1,6 @@
 import eventOperateStore from "../EventOperateStore";
 import {DesignerMode, ILayerItem, IProjectInfo, SaveType} from "../../DesignerType";
-import {throttle} from "lodash";
+import throttle from "lodash/throttle";
 import {historyOperator} from "../undo-redo/HistoryOperator";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import undoRedoMap from "../undo-redo/core";
