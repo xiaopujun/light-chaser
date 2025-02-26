@@ -106,7 +106,7 @@ class AntdMultiLineDefinition extends AbstractLineDefinition {
                     line: null,
                     tickLine: null,
                     subTickLine: null,
-                    position: "left",
+                    position: "bottom",
                     title: null,
                 },
                 yAxis: {
@@ -125,7 +125,7 @@ class AntdMultiLineDefinition extends AbstractLineDefinition {
                     },
                     tickLine: null,
                     subTickLine: null,
-                    position: "bottom",
+                    position: "left",
                     title: null,
                 },
                 smooth: false,
