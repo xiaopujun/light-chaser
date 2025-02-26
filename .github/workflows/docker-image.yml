@@ -1,7 +1,7 @@
 name: Docker Image CI/CD
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
     tags: [ "v*.*.*" ]  # 支持标签触发（如 v1.0.0）
 jobs:
   build-and-push:
