@@ -71,7 +71,7 @@ class AntdStepLineDefinition extends AbstractLineDefinition {
                     line: null,
                     tickLine: null,
                     subTickLine: null,
-                    position: "left",
+                    position: "bottom",
                     title: null,
                 },
                 yAxis: {
@@ -89,7 +89,7 @@ class AntdStepLineDefinition extends AbstractLineDefinition {
                     },
                     tickLine: null,
                     subTickLine: null,
-                    position: "bottom",
+                    position: "left",
                     title: null,
                 },
                 legend: {
