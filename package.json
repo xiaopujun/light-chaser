@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-     "build": "tsc && vite build --outDir light-chaser-app",
+     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "check": "npx tsc --noEmit --watch",
     "preview": "vite preview",
-    "tar": "tar -czf light-chaser-app.tar.gz  light-chaser-app",
+    "tar": "tar -czf light-chaser-app.tar.gz  dist",
     "jie": "tar -zxvf light-chaser-app.tar.gz"
   },
   "dependencies": {
