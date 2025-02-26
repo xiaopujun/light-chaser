@@ -1,0 +1,37 @@
+name: Docker Image CI/CD
+on:
+  push:
+    branches: [ "main" ]
+    tags: [ "v*.*.*" ]  # 支持标签触发（如 v1.0.0）
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write  # 必须授权以推送镜像
+    env:
+      REPO_NAME: ${{ github.repository }}
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置小写镜像名称
+        run: |
+          LOWER_NAME=$(echo "$REPO_NAME" | tr '[:upper:]' '[:lower:]')
+          echo "LOWER_NAME=$LOWER_NAME" >> $GITHUB_ENV
+
+      - name: 登录到 GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 构建并推送 Docker 镜像
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: ${{ github.event_name == 'push' }}  # 仅推送代码时上传镜像
+          tags: |
+            ghcr.io/${{ env.LOWER_NAME }}:latest
+            ghcr.io/${{ env.LOWER_NAME }}:${{ github.sha }}
