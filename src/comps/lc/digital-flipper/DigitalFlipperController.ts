@@ -30,9 +30,6 @@ export class DigitalFlipperController extends AbstractDesignerController<Digital
     changeData(data: number) {
         this.config!.data!.staticData = data;
         this.instance?.changeData(data);
-        //数据变化是触发蓝图事件
-        const nodeId = this.config?.base?.id!;
-        BPExecutor.triggerComponentEvent(nodeId!, "dataChange", data);
     }
 
     update(config: DigitalFlipperComponentProps, upOp?: UpdateOptions | undefined): void {
