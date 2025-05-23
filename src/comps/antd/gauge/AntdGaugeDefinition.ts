@@ -52,12 +52,15 @@ class AntdGaugeDefinition extends AbstractDesignerDefinition<AntdGaugeController
             },
             style: {
                 percent: 0.75,
-                radius: 0.75,
-                innerRadius: 0.95,
-                startAngle: (-7 / 6) * Math.PI,
-                endAngle: (1 / 6) * Math.PI,
+                radius: 0.9,
+                innerRadius: 0.85,
+                startAngle: -3.6651914291880923,
+                endAngle: 0.5235987755982988,
                 range: {
-                    color: ["#6bc2ff", "#5d9eff59"]
+                    color: [
+                        "l(128) 0:#3c90ff 1:#934bff",
+                        "#5d9eff00"
+                    ]
                 },
                 indicator: {
                     pointer: {
@@ -78,7 +81,7 @@ class AntdGaugeDefinition extends AbstractDesignerDefinition<AntdGaugeController
                 axis: {
                     tickLine: {
                         style: {
-                            stroke: "#89d2ff",
+                            stroke: "#ffffff",
                             lineWidth: 1
                         },
                         length: -4
@@ -86,25 +89,25 @@ class AntdGaugeDefinition extends AbstractDesignerDefinition<AntdGaugeController
                     subTickLine: {
                         count: 11,
                         style: {
-                            stroke: "#2caaff",
+                            stroke: "#ffffff",
                             lineWidth: 1
                         },
                         length: -2
                     },
                     label: {
                         style: {
-                            fill: "#69c6ff",
+                            fill: "#ffffff",
                             fontSize: 12,
                             textAlign: "center",
-                            textBaseline: "middle"
+                            textBaseline: "bottom"
                         }
                     }
                 },
                 statistic: {
                     content: {
                         style: {
-                            color: "#49c1ff",
-                            fontSize: '11px'
+                            color: "#ffffff",
+                            fontSize: "16"
                         }
                     }
                 },
@@ -114,10 +117,10 @@ class AntdGaugeDefinition extends AbstractDesignerDefinition<AntdGaugeController
                         duration: 3000
                     },
                     update: {
-                        animation: 'grow-in-x',
+                        animation: "grow-in-x",
                         duration: 3000
                     }
-                },
+                }
             },
             filter: {
                 enable: false,

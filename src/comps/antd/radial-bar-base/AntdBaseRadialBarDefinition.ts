@@ -78,35 +78,38 @@ class AntdBaseRadialBarDefinition extends AntdCommonDefinition<AntdBaseRadialBar
             },
             style: {
                 data,
-                xField: 'name',
-                yField: 'star',
+                xField: "name",
+                yField: "star",
                 maxAngle: 270,
-                startAngle: -Math.PI / 2,
-                endAngle: Math.PI / 2 * 3,
-                radius: 0.8,
-                innerRadius: 0.2,
-                colorField: 'star',
-                type: '',
+                startAngle: -1.5707963267948966,
+                endAngle: 4.71238898038469,
+                radius: 1,
+                innerRadius: 0.1,
+                colorField: "name",
+                type: "",
                 supportCSSTransform: true,
-                maxBarWidth: 20,
+                maxBarWidth: 11,
+                color: [
+                    "l(90) 0:#3ea2ff 1:#007bff",
+                    "l(90) 0:#a362ff 1:#c375ff"
+                ],
                 barStyle: {
-                    lineCap: 'round',
+                    lineCap: "round"
                 },
                 xAxis: {
                     label: {
                         style: {
-                            fill: "#ffdede",
-                            fontSize: 10,
-                        },
-                    },
+                            fill: "#ffffff",
+                            fontSize: 14
+                        }
+                    }
                 },
                 animation: {
                     appear: {
                         animation: "wave-in",
-                        duration: 3000,
-                    },
-                },
-                color: ["#0089FF", "#F2FF00"],
+                        duration: 3000
+                    }
+                }
             },
             data: {
                 sourceType: 'static',

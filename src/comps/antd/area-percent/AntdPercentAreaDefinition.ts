@@ -151,75 +151,84 @@ class AntdPercentAreaDefinition extends AbstractAreaDefinition {
                 isPercent: true,
                 smooth: true,
                 supportCSSTransform: true,
-                color: ["#4fa3ff67", "#009aff67", "#006d7f67"],
+                color: [
+                    "l(90) 0:#016eb7 0.42:#016eb700",
+                    "l(90) 0:#016eb7 0.53:#016eb700",
+                    "l(90) 0:#016eb7 0.72:#016eb700"
+                ],
                 point: {
-                    size: 3,
-                    color: ["#4fa3ff67", "#009aff67", "#006d7f67"],
+                    size: 0,
+                    color: [
+                        "#4fa3ff67",
+                        "#009aff67",
+                        "#006d7f67"
+                    ],
                     style: {
                         stroke: "#ffffff",
                         lineWidth: 0
                     },
-                    shape: "circle",
+                    shape: "circle"
                 },
                 line: {
                     style: {
-                        lineWidth: 0,
+                        lineWidth: 2
                     },
-                    color: ["#4fa3ff", "#009aff", "#006d7f"],
+                    color: [
+                        "r(0.5,0.5,1) 0.24:#0099ff 1:#005c9936"
+                    ]
                 },
                 areaStyle: {
-                    fillOpacity: 1,
+                    fillOpacity: 1
                 },
                 xAxis: {
                     position: "bottom",
-                    range: [0, 1],
+                    range: [
+                        0,
+                        1
+                    ],
                     grid: null,
                     label: {
                         style: {
-                            fill: "#aaaaaaff",
-                            fontSize: 8,
-                        },
+                            fill: "#ffffff",
+                            fontSize: 10
+                        }
                     },
                     line: null,
                     tickLine: null,
                     subTickLine: null,
-                    title: null,
+                    title: null
                 },
                 yAxis: {
                     position: "left",
                     grid: null,
                     label: {
                         style: {
-                            fill: "#afafafff",
-                            fontSize: 8,
-                        },
+                            fill: "#ffffff",
+                            fontSize: 12
+                        }
                     },
-                    line: {
-                        style: {
-                            stroke: "#545454c7",
-                            lineWidth: 1,
-                        },
-                    },
+                    line: null,
                     tickLine: null,
                     subTickLine: null,
                     title: null,
+                    tickCount: 4
                 },
                 legend: {
                     position: "top",
                     layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#b1b1b1ff",
-                            fontSize: 12,
-                        },
-                    },
+                            fill: "#ffffff",
+                            fontSize: 12
+                        }
+                    }
                 },
                 animation: {
                     appear: {
                         animation: "wave-in",
-                        duration: 3000,
-                    },
-                },
+                        duration: 3000
+                    }
+                }
             },
             data: {
                 sourceType: 'static',

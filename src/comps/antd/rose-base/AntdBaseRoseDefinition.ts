@@ -43,42 +43,53 @@ class AntdBaseRoseDefinition extends AbstractRoseDefinition {
                 type: 'AntdBaseRose',
             },
             style: {
-                data: data,
+                data,
                 xField: "type",
                 yField: "value",
                 seriesField: "type",
-                radius: 0.8,
+                radius: 1,
                 innerRadius: 0,
-                padding: [50, 0, 0, 0],
+                padding: [
+                    50,
+                    0,
+                    0,
+                    0
+                ],
                 supportCSSTransform: true,
                 sectorStyle: {
                     stroke: "#fff",
-                    lineWidth: 0,
+                    lineWidth: 0
                 },
                 label: {
                     style: {
-                        fill: "#b5b5b5ff",
-                        fontSize: 13,
+                        fill: "#ffffff",
+                        fontSize: 16
                     },
-                    autoRotate: true,
+                    autoRotate: true
                 },
                 legend: {
-                    position: "top",
-                    layout: "horizontal",
+                    position: "left",
+                    layout: "vertical",
                     itemName: {
                         style: {
-                            fill: "#a6a6a6ff",
-                            fontSize: 12,
-                        },
+                            fill: "#ffffff",
+                            fontSize: 14
+                        }
                     },
+                    itemSpacing: 0
                 },
                 animation: {
                     appear: {
                         animation: "grow-in-xy",
-                        duration: 3000,
-                    },
+                        duration: 3000
+                    }
                 },
-                color: ["#0091ffff", "#68beffff", "#b4e0ffff", "#408ec9ff"],
+                color: [
+                    "#0091ffff",
+                    "#68beffff",
+                    "#b4e0ffff",
+                    "#408ec9ff"
+                ]
             },
             data: {
                 sourceType: 'static',

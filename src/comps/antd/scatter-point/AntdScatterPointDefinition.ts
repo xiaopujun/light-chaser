@@ -64,68 +64,73 @@ class AntdScatterPointDefinition extends AbstractScatterDefinition {
                 type: 'AntdScatterPoint',
             },
             style: {
-                data: data,
+                data,
                 xField: "x",
                 yField: "y",
                 colorField: "type",
                 sizeField: "y",
-                size: 6,
+                size: 17,
                 shape: "circle",
                 pointStyle: {
                     fillOpacity: 1,
-                    lineWidth: 0,
+                    lineWidth: 0
                 },
                 xAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#a8a8a8ff",
-                            fontSize: 10,
-                        },
+                            fill: "#ffffff",
+                            fontSize: 12
+                        }
                     },
                     line: {
                         style: {
                             stroke: "#a4a4a470",
-                            lineWidth: 1,
-                        },
+                            lineWidth: 1
+                        }
                     },
                     tickLine: null,
                     subTickLine: null,
                     position: "bottom",
                     title: null,
+                    tickCount: 3
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#a0a0a0ff",
-                            fontSize: 10,
-                        },
+                            fill: "#ffffff",
+                            fontSize: 12
+                        }
                     },
                     line: null,
                     tickLine: null,
                     subTickLine: null,
                     position: "left",
                     title: null,
+                    tickCount: 4
                 },
                 legend: {
                     position: "top",
                     layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#969696ff",
-                            fontSize: 10,
-                        },
-                    },
+                            fill: "#ffffff",
+                            fontSize: 14
+                        }
+                    }
                 },
                 supportCSSTransform: true,
                 animation: {
                     appear: {
                         animation: "fade-in",
-                        duration: 3000,
-                    },
+                        duration: 3000
+                    }
                 },
-                color: ["#00b7ffff", "#006d98ff"],
+                color: [
+                    "#00b7ffff",
+                    "#006d98ff"
+                ]
             },
             data: {
                 sourceType: 'static',

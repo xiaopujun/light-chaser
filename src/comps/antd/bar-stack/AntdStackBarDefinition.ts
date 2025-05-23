@@ -74,61 +74,64 @@ class AntdStackBarDefinition extends AbstractBarDefinition {
                 yField: "year",
                 seriesField: "type",
                 isStack: true,
-                maxBarWidth: 8,
+                maxBarWidth: 15,
                 supportCSSTransform: true,
-                color: ["#00c0df", "#298aff"],
+                color: [
+                    "l(180) 0:#398fff 1:#62bbff",
+                    "l(180) 0:#e62dff 1:#ac40ff"
+                ],
                 barStyle: {
-                    radius: 0,
+                    radius: 5
                 },
                 xAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#b9b9b9ff",
-                            fontSize: 10,
-                        },
+                            fill: "#ffffff",
+                            fontSize: 12
+                        }
                     },
                     line: {
                         style: {
                             stroke: "#b9b9b980",
-                            lineWidth: 1,
-                        },
+                            lineWidth: 1
+                        }
                     },
                     tickLine: null,
                     subTickLine: null,
                     position: "right",
-                    title: null,
+                    title: null
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#b3b3b3ff",
-                            fontSize: 10,
-                        },
+                            fill: "#ffffff",
+                            fontSize: 12
+                        }
                     },
                     line: null,
                     tickLine: null,
                     subTickLine: null,
                     position: "bottom",
-                    title: null,
+                    title: null
                 },
                 legend: {
                     position: "top",
                     layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#00f0ffff",
-                            fontSize: 12,
-                        },
-                    },
+                            fill: "#ffffff",
+                            fontSize: 14
+                        }
+                    }
                 },
                 animation: {
                     appear: {
                         animation: "scale-in-x",
-                        duration: 3000,
-                    },
-                },
+                        duration: 3000
+                    }
+                }
             },
             data: {
                 sourceType: 'static',

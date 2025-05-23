@@ -111,69 +111,75 @@ class AntdScatterBubbleDefinition extends AbstractScatterDefinition {
                 type: 'AntdScatterBubble',
             },
             style: {
-                data: data,
+                data,
                 xField: "x",
                 yField: "y",
                 colorField: "genre",
                 sizeField: "size",
-                size: [5, 20],
+                size: [
+                    5,
+                    20
+                ],
                 shape: "circle",
                 xAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#9a9a9aff",
-                            fontSize: 10,
+                            fill: "#ffffff",
+                            fontSize: 12
                         },
-                        offset: 16,
+                        offset: 16
                     },
                     line: null,
                     tickLine: null,
                     subTickLine: null,
-                    position: "left",
-                    title: null,
+                    position: "bottom",
+                    title: null
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#a0a0a0ff",
-                            fontSize: 10,
+                            fill: "#ffffff",
+                            fontSize: 12
                         },
-                        offset: 5,
+                        offset: 5
                     },
                     line: {
                         style: {
                             stroke: "#a2a2a275",
-                            lineWidth: 1,
-                        },
+                            lineWidth: 1
+                        }
                     },
                     tickLine: null,
                     subTickLine: null,
-                    position: "bottom",
-                    title: null,
+                    position: "left",
+                    title: null
                 },
                 legend: {
                     position: "top",
                     layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#a0a0a0ff",
-                            fontSize: 10,
-                        },
-                    },
+                            fill: "#ffffff",
+                            fontSize: 14
+                        }
+                    }
                 },
                 supportCSSTransform: true,
                 animation: {
                     appear: {
                         animation: "fade-in",
-                        duration: 3000,
-                    },
+                        duration: 3000
+                    }
                 },
-                color: ["#116BA2", "#58c1ffff"],
+                color: [
+                    "l(90) 0:#35b5ff 1:#0073ff",
+                    "l(90) 0:#d296ff 1:#008cff"
+                ],
                 pointStyle: {
-                    lineWidth: 0,
-                },
+                    lineWidth: 0
+                }
             },
             data: {
                 sourceType: 'static',

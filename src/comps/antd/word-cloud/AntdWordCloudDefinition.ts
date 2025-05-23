@@ -133,18 +133,26 @@ class AntdWordCloudDefinition extends AbstractDesignerDefinition<AntdWordCloudCo
             },
             style: {
                 data,
-                wordField: 'name',
-                weightField: 'value',
-                colorField: 'name',
+                wordField: "name",
+                weightField: "value",
+                colorField: "name",
                 supportCSSTransform: true,
-                spiral: 'rectangular',
+                spiral: "rectangular",
+                color: [
+                    "#2294ff",
+                    "#ff8934",
+                    "#f370ff"
+                ],
                 wordStyle: {
-                    fontFamily: '优设标题黑',
+                    fontFamily: "DingTalk JinBuTi",
                     fontWeight: 500,
-                    fontSize: [8, 32],
+                    fontSize: [
+                        14,
+                        37
+                    ],
                     rotation: 0,
-                    padding: 1,
-                },
+                    padding: 7
+                }
             },
             filter: {
                 enable: false,

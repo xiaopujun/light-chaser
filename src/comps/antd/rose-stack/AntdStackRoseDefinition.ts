@@ -89,44 +89,47 @@ class AntdStackRoseDefinition extends AbstractRoseDefinition {
                 type: 'AntdStackRose',
             },
             style: {
-                data: data,
+                data,
                 xField: "type",
                 yField: "value",
                 isStack: true,
                 seriesField: "user",
-                color: ["#00b7ffff", "#8ed2ffff"],
+                color: [
+                    "#00b7ffff",
+                    "#8ed2ffff"
+                ],
                 radius: 1,
                 innerRadius: 0,
                 supportCSSTransform: true,
                 sectorStyle: {
                     stroke: "#fff",
-                    lineWidth: 0,
+                    lineWidth: 0
                 },
                 label: {
-                    offset: -12,
+                    offset: 0,
                     style: {
                         fill: "#ffffffff",
-                        fontSize: 9,
-                        fontWeight: 700,
+                        fontSize: 10,
+                        fontWeight: 400
                     },
+                    autoRotate: false
                 },
                 legend: {
                     position: "top",
                     layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#b9b9b9ff",
-                            fontSize: 12,
-                        },
-                    },
+                            fill: "#ffffff",
+                            fontSize: 16
+                        }
+                    }
                 },
                 animation: {
                     appear: {
                         animation: "wave-in",
-                        duration: 3000,
-                    },
-                },
-
+                        duration: 3000
+                    }
+                }
             },
             data: {
                 sourceType: 'static',

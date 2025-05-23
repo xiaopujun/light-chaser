@@ -69,7 +69,7 @@ class AntdLiquidDefinition extends AbstractDesignerDefinition<AntdLiquidControll
                 percent: 0.65,
                 radius: 0.9,
                 liquidStyle: {
-                    fill: "#2399ffea",
+                    fill: "l(90) 0:#45aeff 1:#0015ff",
                     stroke: "#1a75c8d6"
                 },
                 shapeStyle: {
@@ -84,29 +84,30 @@ class AntdLiquidDefinition extends AbstractDesignerDefinition<AntdLiquidControll
                 },
                 wave: {
                     length: 150,
-                    count: 5
+                    count: 3
                 },
                 statistic: {
                     content: {
                         style: {
                             fill: "#7de0ff",
                             fontSize: '20',
-                            color: "#81d8ff"
+                            color: "#ffffff",
+                            fontWeight: 200
                         }
                     },
                     title: {
                         content: "指标1",
                         style: {
-                            fontSize: '22',
-                            color: "#61a0f9c2",
-                            fontWeight: 900
+                            fontSize: "22",
+                            color: "#ffffffc2",
+                            fontWeight: 500
                         },
                         offsetY: -10
                     }
                 },
                 animation: {
                     appear: {
-                        animation: 'wave-in',
+                        animation: "wave-in",
                         duration: 3000
                     }
                 }

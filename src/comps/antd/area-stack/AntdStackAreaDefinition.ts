@@ -118,76 +118,88 @@ class AntdStackAreaDefinition extends AbstractAreaDefinition {
                 xField: "year",
                 yField: "value",
                 seriesField: "country",
-                smooth: false,
+                smooth: true,
                 supportCSSTransform: true,
-                color: ["#4ebfff67", "#00a3ff67", "#0060b167"],
+                color: [
+                    "l(90) 0:#016eb7 1:#016eb700",
+                    "l(90) 0:#0489e2 1:#016eb700",
+                    "l(90) 0:#0099ff 1:#016eb700"
+                ],
                 point: {
-                    size: 3,
-                    color: ["#4fa3ff67", "#009aff67", "#006d7f67"],
+                    size: 0,
+                    color: [
+                        "#4fa3ff67",
+                        "#009aff67",
+                        "#006d7f67"
+                    ],
                     style: {
                         stroke: "#ffffff",
                         lineWidth: 0
                     },
-                    shape: "circle",
+                    shape: "circle"
                 },
                 line: {
                     style: {
-                        lineWidth: 0,
+                        lineWidth: 2
                     },
-                    color: ["#4fa3ff", "#009aff", "#006d7f"],
+                    color: [
+                        "#0099ff"
+                    ]
                 },
                 areaStyle: {
-                    fillOpacity: 1,
+                    fillOpacity: 1
                 },
                 xAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#8c8c8cff",
-                            fontSize: 10,
-                        },
+                            fill: "#ffffff",
+                            fontSize: 12
+                        }
                     },
                     line: null,
                     tickLine: null,
                     subTickLine: null,
                     title: null,
                     position: "bottom",
+                    tickCount: 3
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#a8a8a8ff",
-                            fontSize: 10,
-                        },
+                            fill: "#f9f9f9",
+                            fontSize: 12
+                        }
                     },
                     line: {
                         style: {
                             stroke: "#9e9e9e6e",
-                            lineWidth: 1,
-                        },
+                            lineWidth: 1
+                        }
                     },
                     tickLine: null,
                     subTickLine: null,
                     title: null,
                     position: "left",
+                    tickCount: 3
                 },
                 legend: {
                     position: "top",
                     layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#a4a4a4ff",
-                            fontSize: 10,
-                        },
-                    },
+                            fill: "#ffffff",
+                            fontSize: 10
+                        }
+                    }
                 },
                 animation: {
                     appear: {
                         animation: "wave-in",
-                        duration: 3000,
-                    },
-                },
+                        duration: 3000
+                    }
+                }
             },
             data: {
                 sourceType: 'static',

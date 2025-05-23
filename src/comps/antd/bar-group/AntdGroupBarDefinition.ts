@@ -74,61 +74,71 @@ class AntdGroupBarDefinition extends AbstractBarDefinition {
                 xField: "value",
                 yField: "label",
                 seriesField: "type",
-                color: ["#00a6ffff", "#5dd1ffff"],
+                color: [
+                    "#00a6ffff",
+                    "#5dd1ffff"
+                ],
                 barStyle: {
-                    radius: 0,
+                    radius: 5
                 },
                 xAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#929292ff",
-                            fontSize: 10,
-                        },
+                            fill: "#ffffff",
+                            fontSize: 12
+                        }
                     },
                     line: {
                         style: {
                             stroke: "#a2a2a273",
-                            lineWidth: 1,
-                        },
+                            lineWidth: 1
+                        }
                     },
                     tickLine: null,
                     subTickLine: null,
                     position: "right",
-                    title: null,
+                    title: null
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#9c9c9cff",
-                            fontSize: 10,
-                        },
+                            fill: "#ffffff",
+                            fontSize: 12
+                        }
                     },
                     line: null,
                     tickLine: null,
                     subTickLine: null,
                     position: "bottom",
-                    title: null,
+                    title: null
                 },
                 legend: {
                     position: "top",
                     layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#adadadff",
-                            fontSize: 12,
-                        },
-                    },
+                            fill: "#ffffff",
+                            fontSize: 14
+                        }
+                    }
                 },
-                maxBarWidth: 8,
+                maxBarWidth: 11,
                 supportCSSTransform: true,
                 animation: {
                     appear: {
                         animation: "scale-in-x",
-                        duration: 3000,
-                    },
+                        duration: 3000
+                    }
                 },
+                label: {
+                    position: "right",
+                    style: {
+                        fill: "#efefef",
+                        fontSize: 10
+                    }
+                }
             },
             filter: {
                 enable: false,

@@ -68,25 +68,25 @@ class AntdRingProgressDefinition extends AntdCommonDefinition<AntdRingProgressCo
             style: {
                 percent: 0.7,
                 color: [
-                    "#3cc2f8bd",
-                    "#66d2ff3e"
+                    "l(140) 0:#9cd1ff 0.81:#0084ff",
+                    "#a9a9a900"
                 ],
                 statistic: {
                     content: {
                         style: {
                             fill: "#fff",
-                            fontSize: '24',
-                            fontWeight: 900,
-                            color: "#57c6ff"
+                            fontSize: '21',
+                            fontWeight: 500,
+                            color: "#ffffff"
                         },
                         offsetY: 7,
                         offsetX: 0
                     },
                     title: {
                         style: {
-                            fontSize: '21',
-                            fontWeight: 900,
-                            color: "#6ad1ff"
+                            fontSize: '15',
+                            fontWeight: 500,
+                            color: "#ffffff"
                         },
                         content: "指标1",
                         offsetY: -11
@@ -98,7 +98,10 @@ class AntdRingProgressDefinition extends AntdCommonDefinition<AntdRingProgressCo
                         duration: 3000
                     }
                 },
-                progressStyle: {}
+                progressStyle: {
+                    lineWidth: 0,
+                    stroke: "l(90) 0:#78cdff 1:#a481ff"
+                }
             },
             data: {
                 sourceType: 'static',
