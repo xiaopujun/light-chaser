@@ -17,11 +17,11 @@ import eventOperateStore from "../operate-provider/EventOperateStore";
 import {CoverConfig} from "./cover/CoverConfig.tsx";
 import {useState} from "react";
 import {Tooltip} from "antd";
-import {Keyboard, Lightning, Magnet, MaterialThree} from "@icon-park/react";
+import {CodeBrackets, Keyboard, Lightning, Magnet, MaterialThree} from "@icon-park/react";
 import layerManager from "../manager/LayerManager.ts";
+import ConfigCode from "../../comps/common-component/config-code/ConfigCode.tsx";
 
-//将DesignerFooter调整为hook组件
-const DesignerFooter = () => {
+const DesignerFooter = observer(() => {
 
     const [enableEvent, setEnableEvent] = useState(false);
 
@@ -44,8 +44,15 @@ const DesignerFooter = () => {
         layerManager.setEnableAdsorption(!layerManager.enableAdsorption)
     }
 
+    const toggleConfigCode = () => {
+        const {targetIds} = eventOperateStore;
+        if (targetIds.length === 1 && layerConfigs[targetIds[0]].type !== 'group')
+            footerStore.setConfigCodeVisible(true)
+    }
+
+
     const {layerConfigs, enableAdsorption} = layerManager;
-    const {hotKeyVisible, snapShotVisible} = footerStore;
+    const {hotKeyVisible, snapShotVisible, configCodeVisible} = footerStore;
     const {scale} = eventOperateStore;
     return (
         <div className={'lc-designer-footer'}>
@@ -64,13 +71,16 @@ const DesignerFooter = () => {
                      onClick={toggleEnableEvent}>
                     <Tooltip mouseEnterDelay={1} title={'编辑模式下允许触发组件原生事件'}>
                         <Lightning/></Tooltip>
-
                 </div>
                 <div className={`footer-center-item ${enableAdsorption ? 'footer-center-item-active' : ''}`}
                      onClick={toggleAdsorption}>
                     <Tooltip mouseEnterDelay={1} title={'开启后排版会有吸附效果'}>
                         <Magnet/></Tooltip>
-
+                </div>
+                <div className={`footer-center-item`}
+                     onClick={toggleConfigCode}>
+                    <Tooltip mouseEnterDelay={1} title={'以代码方式直接编辑组件配置项'}>
+                        <CodeBrackets/></Tooltip>
                 </div>
             </div>
             <div className={'footer-right'}>
@@ -79,9 +89,9 @@ const DesignerFooter = () => {
             </div>
             {hotKeyVisible && <HotKeyDes onClose={toggleHotKeyDes}/>}
             {snapShotVisible && <CoverConfig onClose={toggleSnapShot}/>}
+            {configCodeVisible && <ConfigCode/>}
         </div>
     );
+})
 
-}
-
-export default observer(DesignerFooter);
+export default DesignerFooter;

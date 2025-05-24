@@ -17,8 +17,10 @@ class FooterStore {
         makeObservable(this, {
             hotKeyVisible: observable,
             snapShotVisible: observable,
+            configCodeVisible: observable,
             setHotKeyVisible: action,
             setSnapShotVisible: action,
+            setConfigCodeVisible: action
         })
     }
 
@@ -26,9 +28,13 @@ class FooterStore {
 
     snapShotVisible: boolean = false;
 
+    configCodeVisible: boolean = false;
+
     setHotKeyVisible = (visible: boolean) => this.hotKeyVisible = visible;
 
     setSnapShotVisible = (visible: boolean) => this.snapShotVisible = visible;
+
+    setConfigCodeVisible = (visible: boolean) => this.configCodeVisible = visible;
 
 }
 
