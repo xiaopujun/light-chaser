@@ -13,7 +13,7 @@
 
 <p>Data visualization tools</p>
 
-light chaser is an open source free data visualization design tool based on React technology stack implementation .
+light chaser is an open-source high-performance, easy-to-extend, and powerful data visualization design tool, based on the React18, Vite5, and TypeScript5 technology stacks.
 Through it you can simply and quickly produce data visualization related content. It can be used for large-screen data
 visualization display , data reports, data analysis and other scenes
 
