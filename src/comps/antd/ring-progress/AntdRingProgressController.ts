@@ -38,6 +38,13 @@ export default class AntdRingProgressController extends AntdBaseDesignerControll
         return this.config;
     }
 
+    changeData(data: any) {
+        this.instance?.changeData(data);
+        if (this.config?.style?.percent)
+            this.config!.style!.percent = data;
+        this.config!['data']!['staticData'] = data;
+    }
+
     update(config: AntdRingProgressProps, upOp?: UpdateOptions): void {
         super.commonUpdate(config, RingProgress, upOp);
         console.log(this.config?.style)
