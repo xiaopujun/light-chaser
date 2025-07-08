@@ -1,8 +1,7 @@
 # LIGHT CHASER
 
 <p>
-    <img alt="" src="https://img.shields.io/badge/version-v1.5.0-blue">
-    <img alt="" src="https://img.shields.io/badge/license-MIT-08CE5D?logoColor=08CE5D">
+    <img alt="" src="https://img.shields.io/badge/version-v1.6.0-blue">
     <img alt="" src="https://img.shields.io/badge/TypeScript-blue">
     <img alt="" src="https://img.shields.io/badge/React-61daeb?logoColor=08CE5D">
     <img alt="" src="https://img.shields.io/badge/Vite-purple">
@@ -75,20 +74,6 @@ LIGHT CHASER 支持常规部署和docker部署，请参考以下连接：
 
 部署教程：https://xiaopujun.github.io/light-chaser-doc/#/deploy/deploy_open
 
-# License
-
-[MIT](LICENSE) © xiaopujun
-
-补充条款（与补充条款产生冲突的以补充条款为准）
-
-1. 本项目面向个人和企业用户在本协议允许的范围内免费使用或商用
-2. 项目作者保留对本项目的所有知识产权，个人或企业在使用本项目二次开发后的软件可以进行本协议允许范围内的商业化使用，但不得以本项目的源代码进行版权声明或确权
-3. 个人或企业使用本项目或者基于本项目二次开发的软件进行商业使用的范围仅限于个人或企业自身的业务，不得直接将本项目构建的软件、项目源码、基于本项目的衍生品、二进制文件、文档、图片等直接进行出售。若需商业化，请联系作者获取授权。
-4. 本项目已申请软件著作权，我们尊重开源产品的理念，同时呼吁用户尊重作者所付出的劳动成果。 
-5. 对于因使用本软件而产生的一切法律纠纷和责任，均与作者无关，用户需自行承担相应后果。
-
-感谢为本项目做出贡献的每一个人！
-
 # 社区 & 可持续发展
 
 如果你对LIGHT CHASER项目感兴趣，欢迎加入社区群聊，反馈问题。帮助我们改进LIGHT CHASER。
@@ -102,6 +87,11 @@ LIGHT CHASER 现已推出Pro版本。如果您有捐赠，商业合作想法，�
 现在你已经可以通过http://www.lcdesigner.cn/   账：ee0274ed 密：ee0274ed 快速体验Pro的所有功能
 
 感谢每一位项目贡献者、捐赠者和赞助商
+
+# 商用注意事项
+
+1. 本项目遵循Apache 2.0协议，请保留作品声明
+2. 本项目仅用于学习交流，商业用途请务必获取授权
 
 # 联系作者
 
