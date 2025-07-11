@@ -99,7 +99,7 @@ LIGHT CHASER 现已推出Pro版本。如果您有捐赠，商业合作想法，�
     <div  style="width: 50%"><img alt="group" src="https://i.072333.xyz/file/110e9602ef12a7d93bff0.jpg"></div>
 </div>
 
-## :fa-chain-broken: 友情链接
+# :fa-chain-broken: 友情链接
 
 :+1:  **enjoy-iot 物联网平台**([https://gitee.com/open-enjoy/enjoy-iot](https://gitee.com/open-enjoy/enjoy-iot))
 
