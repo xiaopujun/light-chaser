@@ -15,10 +15,11 @@ import FetchUtil from "../../../utils/FetchUtil.ts";
 import {IPage} from "../../../designer/DesignerType.ts";
 
 export const DataSourceMapping = {
-    "0": "MySQL",
-    "1": "PostgresSQL",
-    "2": "Oracle",
-    "3": "SQL Server",
+    "0": "SQLite",
+    "1": "MySQL",
+    "2": "PostgresSQL",
+    "3": "Oracle",
+    "4": "SQL Server",
 }
 
 export interface IDataSource {
