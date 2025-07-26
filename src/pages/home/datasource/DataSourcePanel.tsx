@@ -79,10 +79,11 @@ export default function DataSourcePanel(props: UserPanelProps) {
                             <Select allowClear
                                     placeholder="请选择数据类型"
                                     options={[
-                                        {label: 'MySQL', value: '0'},
-                                        {label: 'PostgresSQL', value: '1'},
-                                        {label: 'Oracle', value: '2'},
-                                        {label: 'SQL Server', value: '3'},
+                                        {label: 'SQLite', value: '0'},
+                                        {label: 'MySQL', value: '1'},
+                                        {label: 'PostgresSQL', value: '2'},
+                                        {label: 'Oracle', value: '3'},
+                                        {label: 'SQL Server', value: '4'},
                                     ]}/>
                         </Form.Item>
                     </Col>
