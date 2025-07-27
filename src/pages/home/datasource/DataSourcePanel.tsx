@@ -20,7 +20,7 @@ export interface UserPanelProps {
     width?: number;
     visible: boolean;
     onClose: () => void;
-    onSubmitted: (data: IDataSource) => void;
+    onSubmitted: (data: IDataSource) => Promise<void>;
     data?: IDataSource;
 }
 
@@ -29,10 +29,14 @@ export default function DataSourcePanel(props: UserPanelProps) {
     const [form] = Form.useForm();
 
     const submit = () => {
-        form.validateFields().then((values) => {
-            onSubmitted(values);
+        form.validateFields().then(async (values) => {
+            try {
+                await onSubmitted(values);
+            } catch (error) {
+                console.error('提交数据源失败:', error);
+            }
         }).catch((error) => {
-            console.error(error);
+            console.error('表单验证失败:', error);
         })
     }
 
