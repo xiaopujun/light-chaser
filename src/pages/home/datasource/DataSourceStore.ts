@@ -12,6 +12,7 @@
 import {action, makeObservable, observable} from "mobx";
 import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
 import FetchUtil from "../../../utils/FetchUtil.ts";
+import CryptoUtil from "../../../utils/CryptoUtil.ts";
 import {IPage} from "../../../designer/DesignerType.ts";
 
 export const DataSourceMapping = {
@@ -31,6 +32,7 @@ export interface IDataSource {
     password?: string;
     url?: string;
     des?: string;
+    aesKey?: string; // 加密后的AES密钥
 }
 
 export class DataSourceStore {
@@ -122,7 +124,7 @@ export class DataSourceStore {
             size: this.dataSourcePageData.size,
             searchValue: this.searchValue
         }).then(res => {
-            let {code, data, msg} = res;
+            const {code, data, msg} = res;
             if (code === 200) {
                 (data.records as Array<IDataSource>).forEach((item) => {
                     item.key = item.id;
@@ -136,32 +138,75 @@ export class DataSourceStore {
                 });
                 this.searchValue = null;
             } else {
-                msg = "服务器链接失败";
-                globalMessage.messageApi?.error(msg);
+                globalMessage.messageApi?.error(msg || "服务器链接失败");
             }
         })
     }
 
-    updateDataSource = (data: IDataSource) => {
-        FetchUtil.post(`/api/datasource/update`, data).then(res => {
-            if (res.code === 200) {
-                globalMessage.messageApi?.success(res.msg);
-                this.getDataSourceList();
-                this.setPanelVisible(false);
-            } else
-                globalMessage.messageApi?.error(res.msg);
-        })
+    /**
+     * 对数据源密码进行AES+RSA双重加密
+     * @param data 数据源数据
+     * @returns 加密后的数据源数据
+     */
+    private async encryptPassword(data: IDataSource): Promise<IDataSource> {
+        if (data.password) {
+            try {
+                // 生成随机AES密钥
+                const aesKey = CryptoUtil.generateAESKey();
+                
+                // 使用AES加密密码
+                const encryptedPassword = CryptoUtil.encryptAES(data.password, aesKey);
+                
+                // 获取RSA公钥
+                const publicKey = await FetchUtil.getRSAPublicKey();
+                
+                // 使用RSA公钥加密encryptedPassword
+                const encryptedData = CryptoUtil.encryptRSA(encryptedPassword, publicKey);
+                
+                return {
+                    ...data,
+                    password: encryptedData,
+                    aesKey: aesKey
+                };
+            } catch (error) {
+                console.error('密码加密失败:', error);
+                globalMessage.messageApi?.error('密码加密失败，请重试');
+                throw error;
+            }
+        }
+        return data;
     }
 
-    createDataSource = (data: IDataSource) => {
-        FetchUtil.post(`/api/datasource/add`, data).then(res => {
+    updateDataSource = async (data: IDataSource) => {
+        try {
+            const encryptedData = await this.encryptPassword(data);
+            const res = await FetchUtil.post(`/api/datasource/update`, encryptedData);
             if (res.code === 200) {
                 globalMessage.messageApi?.success(res.msg);
                 this.getDataSourceList();
                 this.setPanelVisible(false);
-            } else
+            } else {
                 globalMessage.messageApi?.error(res.msg);
-        })
+            }
+        } catch (error) {
+            console.error('更新数据源失败:', error);
+        }
+    }
+
+    createDataSource = async (data: IDataSource) => {
+        try {
+            const encryptedData = await this.encryptPassword(data);
+            const res = await FetchUtil.post(`/api/datasource/add`, encryptedData);
+            if (res.code === 200) {
+                globalMessage.messageApi?.success(res.msg);
+                this.getDataSourceList();
+                this.setPanelVisible(false);
+            } else {
+                globalMessage.messageApi?.error(res.msg);
+            }
+        } catch (error) {
+            console.error('创建数据源失败:', error);
+        }
     }
 
     doBatchDeleteDataSource = (ids: string[]) => {
@@ -177,11 +222,11 @@ export class DataSourceStore {
         })
     }
 
-    doCreateOrUpdateDataSource = (data: IDataSource) => {
+    doCreateOrUpdateDataSource = async (data: IDataSource) => {
         if (data.id) {
-            this.updateDataSource(data);
+            await this.updateDataSource(data);
         } else {
-            this.createDataSource(data);
+            await this.createDataSource(data);
         }
     }
 
