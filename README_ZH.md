@@ -79,7 +79,7 @@ LIGHT CHASER 支持常规部署和docker部署，请参考以下连接：
 如果你对LIGHT CHASER项目感兴趣，欢迎加入社区群聊，反馈问题。帮助我们改进LIGHT CHASER。
 
 <div style="display: flex">
-    <img style="width: 300px" alt="group" src="https://s2.loli.net/2025/07/20/wchGAFS8ygNrO5a.jpg">
+    <img style="width: 300px" alt="group" src="https://s2.loli.net/2025/08/05/Z8T6dHCJ1sPEKQU.jpg">
 </div>
 
 LIGHT CHASER 现已推出Pro版本。如果您有捐赠，商业合作想法，请赞助我，我将送出LIGHT CHASER Pro版本作为感谢。
@@ -102,5 +102,3 @@ LIGHT CHASER 现已推出Pro版本。如果您有捐赠，商业合作想法，�
 # :fa-chain-broken: 友情链接
 
 :+1:  **enjoy-iot 物联网平台**([https://gitee.com/open-enjoy/enjoy-iot](https://gitee.com/open-enjoy/enjoy-iot))
-
-<a href="https://smms.app/image/NTLWpS38eFtZHQb" target="_blank"><img src="https://s2.loli.net/2025/07/20/NTLWpS38eFtZHQb.png" alt="2025.2.png"></a>
