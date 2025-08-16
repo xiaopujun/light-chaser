@@ -36,34 +36,39 @@ export interface DragScaleProviderParams {
  *
  * 主编辑器、蓝图编辑器均使用该类提供拖拽缩放功能
  */
-export default class DragScaleProvider {
-    private container: HTMLDivElement | null = null;
-    private content: HTMLDivElement | null = null;
-    private readonly position: IPoint = {x: 0, y: 0};
-    private readonly dragCallback?: (dsData: DragScaleData, e: PointerEvent) => void;
-    private readonly scaleCallback?: (dsData: DragScaleData, e: WheelEvent) => void;
-    private readonly dragStartCallback?: (dsData: DragScaleData, e: PointerEvent) => void;
-    private readonly dragEndCallback?: (dsData: DragScaleData, e: PointerEvent) => void;
+export interface DragScaleData {
+    scale: number;
+    ratio: number;
+    position: IPoint;
+}
 
+export interface DragScaleProviderConfig {
+    eventContainer: HTMLDivElement;
+    dsTarget: HTMLDivElement;
+    content?: HTMLDivElement | null;
+    position?: IPoint;
+    dragCallback?: (dsData: DragScaleData, e: PointerEvent) => void;
+    dragStartCallback?: (dsData: DragScaleData, e: PointerEvent) => void;
+    dragEndCallback?: (dsData: DragScaleData, e: PointerEvent) => void;
+    scaleCallback?: (dsData: DragScaleData, e: WheelEvent) => void;
+}
+
+/**
+ * 拖拽缩放容器，独立提供拖拽与缩放功能。
+ * 1.拖拽画布统一操作方式为长按鼠标右键
+ * 2.缩放画布统一操作方式alt+鼠标滚轮
+ * 上述两种操作的相关事件均在此组件内部完成（除缩放逻辑外，缩放逻辑调用外部方法获取scale比例）
+ *
+ * 主编辑器、蓝图编辑器均使用该类提供拖拽缩放功能
+ */
+export default class DragScaleProvider {
+    private config: DragScaleProviderConfig;
     public scaleCore: ScaleCore = new ScaleCore();
 
-    constructor(params: DragScaleProviderParams) {
-        const {
-            container, content, position,
-            dragCallback, scaleCallback, dragStartCallback, dragEndCallback
-        } = params;
-        this.container = container;
-        this.content = content;
-        if (position)
-            this.position = position;
-        if (dragCallback)
-            this.dragCallback = dragCallback;
-        if (scaleCallback)
-            this.scaleCallback = scaleCallback;
-        if (dragStartCallback)
-            this.dragStartCallback = dragStartCallback;
-        if (dragEndCallback)
-            this.dragEndCallback = dragEndCallback;
+    constructor(config: DragScaleProviderConfig) {
+        this.config = config;
+        if (!this.config.position)
+            this.config.position = {x: 0, y: 0};
         //注册拖拽
         this.registerDrag();
         //注册缩放
@@ -72,20 +77,22 @@ export default class DragScaleProvider {
 
     /************************事件、变量销毁************************/
     public destroy() {
-        this.container?.removeEventListener('pointerdown', this.pointerDown);
-        this.container?.removeEventListener('pointerup', this.pointerUp);
-        this.container?.removeEventListener('wheel', this.doWheel);
-        this.container?.removeEventListener('contextmenu', this.contextMenu);
-        this.container = null;
-        this.content = null;
+        const container = this.config.eventContainer;
+        if (container) {
+            container?.removeEventListener('pointerdown', this.pointerDown);
+            container?.removeEventListener('pointerup', this.pointerUp);
+            container?.removeEventListener('wheel', this.doWheel);
+            container?.removeEventListener('contextmenu', this.contextMenu);
+        }
     }
 
     /************************注册拖拽事件************************/
     private registerDrag() {
+        const {eventContainer, dsTarget, position = {x: 0, y: 0}} = this.config;
         //初始化被拖拽对象位置
-        this.content!.style.transform = 'translate3d(' + this.position.x + 'px, ' + this.position.y + 'px, 0) scale(' + this.scaleCore.scale + ')';
+        dsTarget.style.transform = 'translate3d(' + position.x + 'px, ' + position.y + 'px, 0) scale(' + this.scaleCore.scale + ')';
         //阻止系统右键菜单显示
-        this.container?.addEventListener("contextmenu", this.contextMenu)
+        eventContainer.addEventListener("contextmenu", this.contextMenu)
         //监听拖拽开始
         this.onDragStart();
         //监听拖拽结束
@@ -94,65 +101,65 @@ export default class DragScaleProvider {
 
     private contextMenu = (e: MouseEvent): void => e.preventDefault();
 
-    private onDragStart = (): void => this.container?.addEventListener('pointerdown', this.pointerDown);
+    private onDragStart = (): void => this.config.eventContainer.addEventListener('pointerdown', this.pointerDown);
 
     private onDragMove = (e: PointerEvent): void => {
         if (e.buttons === 2) {
-            this.position.x += e.movementX;
-            this.position.y += e.movementY;
-            this.content!.style.transform = 'translate3d(' + this.position.x + 'px, ' + this.position.y + 'px, 0) scale(' + this.scaleCore.scale + ')';
-            if (this.dragCallback) {
+            this.config.position!.x += e.movementX;
+            this.config.position!.y += e.movementY;
+            this.config.dsTarget.style.transform = 'translate3d(' + this.config.position!.x + 'px, ' + this.config.position!.y + 'px, 0) scale(' + this.scaleCore.scale + ')';
+            if (this.config.dragCallback) {
                 const {scale, ratio} = this.scaleCore;
-                this.dragCallback({scale, ratio, position: this.position}, e);
+                this.config.dragCallback({scale, ratio, position: this.config.position ?? {x: 0, y: 0}}, e);
             }
         }
     }
 
-    private onDragEnd = (): void => this.container?.addEventListener('pointerup', this.pointerUp);
+    private onDragEnd = (): void => this.config.eventContainer.addEventListener('pointerup', this.pointerUp);
 
     private pointerDown = (e: PointerEvent): void => {
         if (e.button === 2) {
             //设置鼠标捕获，当鼠标移出视口外时，仍然能够监听到鼠标移动事件
-            this.container?.setPointerCapture(e.pointerId);
+            this.config.eventContainer.setPointerCapture(e.pointerId);
             //监听拖拽移动
-            this.container?.addEventListener('pointermove', this.onDragMove);
-            if (this.dragStartCallback) {
+            this.config.eventContainer.addEventListener('pointermove', this.onDragMove);
+            if (this.config.dragStartCallback) {
                 const {scale, ratio} = this.scaleCore;
-                this.dragStartCallback({scale, ratio, position: this.position}, e);
+                this.config.dragStartCallback({scale, ratio, position: this.config.position ?? {x: 0, y: 0}}, e);
             }
         }
     }
 
     private pointerUp = (e: PointerEvent): void => {
         if (e.button === 2) {
-            this.container?.releasePointerCapture(e.pointerId);
+            this.config.eventContainer.releasePointerCapture(e.pointerId);
             //取消拖拽移动监听
-            this.container?.removeEventListener('pointermove', this.onDragMove);
-            if (this.dragEndCallback) {
+            this.config.eventContainer.removeEventListener('pointermove', this.onDragMove);
+            if (this.config.dragEndCallback) {
                 const {scale, ratio} = this.scaleCore;
-                this.dragEndCallback({scale, ratio, position: this.position}, e);
+                this.config.dragEndCallback({scale, ratio, position: this.config.position ?? {x: 0, y: 0}}, e);
             }
         }
     }
 
 
     /************************注册缩放事件************************/
-    private registerScale = (): void => this.container?.addEventListener('wheel', this.doWheel);
+    private registerScale = (): void => this.config.eventContainer.addEventListener('wheel', this.doWheel);
 
     private doWheel = (e: WheelEvent): void => {
         if (e.altKey && e.buttons !== 2) {
             //计算缩放比例
             this.scaleCore.compute(e.deltaY > 0 ? 0 : 1);
-            const {x: offSetX, y: offSetY} = this.container!.getBoundingClientRect();
+            const {x: offSetX, y: offSetY} = this.config.eventContainer.getBoundingClientRect();
             //执行缩放
-            const {width, height} = this.content?.style!;
-            this.position.x = this.position.x - ((this.scaleCore.ratio - 1) * (e.clientX - offSetX - this.position.x - parseFloat(width) * 0.5));
-            this.position.y = this.position.y - ((this.scaleCore.ratio - 1) * (e.clientY - offSetY - this.position.y - parseFloat(height) * 0.5));
-            this.content!.style.transform = 'translate3d(' + this.position.x + 'px, ' + this.position.y + 'px, 0) scale(' + this.scaleCore.scale + ')';
+            const {width = '0px', height = '0px'} = this.config.dsTarget?.style ?? {};
+            this.config.position!.x = this.config.position!.x - ((this.scaleCore.ratio - 1) * (e.clientX - offSetX - this.config.position!.x - parseFloat(width ?? '0') * 0.5));
+            this.config.position!.y = this.config.position!.y - ((this.scaleCore.ratio - 1) * (e.clientY - offSetY - this.config.position!.y - parseFloat(height ?? '0') * 0.5));
+            this.config.dsTarget.style.transform = 'translate3d(' + this.config.position!.x + 'px, ' + this.config.position!.y + 'px, 0) scale(' + this.scaleCore.scale + ')';
             //执行回调
-            if (this.scaleCallback) {
+            if (this.config.scaleCallback) {
                 const {scale, ratio} = this.scaleCore;
-                this.scaleCallback({scale, ratio, position: this.position}, e);
+                this.config.scaleCallback({scale, ratio, position: this.config.position ?? {x: 0, y: 0}}, e);
             }
         }
     }

@@ -33,8 +33,8 @@ const DesignerDragScaleContainer = memo(observer((props: DesignerDragScaleContai
             const {setDsContentRef} = eventOperateStore;
             setDsContentRef(content)
             const dragScaleProvider = new DragScaleProvider({
-                container,
-                content,
+                eventContainer: container,
+                dsTarget: content,
                 scaleCallback: (dsData) => {
                     const {scale, ratio} = dsData;
                     const {setScale, setRatio, rulerRef} = eventOperateStore;

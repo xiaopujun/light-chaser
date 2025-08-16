@@ -117,7 +117,7 @@ export const BPNodeList = observer(() => {
     useEffect(() => {
         dragAddProvider.current = new DragAddProvider(
             document.getElementById("bp-node-draggable")!,
-            document.getElementById("bp-ds-container")!,
+            document.querySelector(".blue-print-canvas")!,
             dragStart,
             dragover,
             drop

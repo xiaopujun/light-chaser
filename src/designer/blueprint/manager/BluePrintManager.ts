@@ -19,18 +19,17 @@ import {BluePrintManagerDataType, DesignerMode} from "../../DesignerType.ts";
 import {ClazzTemplate} from "../../../comps/common-component/CommonTypes.ts";
 import bpLeftStore from "../left/BPLeftStore.ts";
 import AbstractManager from "../../manager/core/AbstractManager.ts";
+import {Application, Graphics} from "pixi.js";
+
 
 export interface IBPLine {
     id?: string;
     color?: string;
     lineWidth?: number;
-    lineDash?: number[];
     startPoint?: IPoint;
     endPoint?: IPoint;
     firstCP?: IPoint;
     secondCP?: IPoint;
-    //采样点列表
-    samplePoints?: IPoint[];
     //起始锚点id
     startAnchorId?: string;
     //结束锚点id
@@ -82,7 +81,7 @@ class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
     selectedNodes: HTMLElement[] = [];
 
     //被选中的线条列表
-    selectedLines: IBPLine[] = [];
+    selectedLines: string[] = [];
 
     //蓝图移动框架引用
     bpMovableRef: Moveable | null = null;
@@ -90,11 +89,11 @@ class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
     //蓝图选择框架引用
     bpSelectRef: Selecto | null = null;
 
-    //蓝图canvas图层的上层画笔
-    upCtx: CanvasRenderingContext2D | null = null;
+    //pixijs 线段实例
+    lineInstances: Record<string, Graphics> = {};
 
-    //蓝图canvas图层的下层画笔
-    downCtx: CanvasRenderingContext2D | null = null;
+    //pixijs 应用实例
+    pixiApp: Application | null = null;
 
     //节点容器
     nodeContainerRef: HTMLDivElement | null = null;
@@ -145,7 +144,7 @@ class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
             ObjectUtil.merge(oldLayout, layout);
     }
 
-    setSelectedLines = (lines: IBPLine[]) => {
+    setSelectedLines = (lines: string[]) => {
         this.selectedLines = lines;
     }
 
@@ -225,13 +224,6 @@ class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
         this.bpSelectRef = ref;
     }
 
-    setUpCtx = (ctx: CanvasRenderingContext2D) => {
-        this.upCtx = ctx;
-    }
-
-    setDownCtx = (ctx: CanvasRenderingContext2D) => {
-        this.downCtx = ctx;
-    }
 
     setNodeContainerRef = (ref: HTMLDivElement) => {
         this.nodeContainerRef = ref;
@@ -263,8 +255,7 @@ class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
                         const Controller = bpNodeControllerMap.get(layout.type!);
                         const config = this.bpNodeConfigMap[layout.id!];
                         if (Controller) {
-                            //@ts-ignore  todo这里在抽象类中统一定义了构造器格式，理论上应该支持，后续研究下是否ts不支持这种方式
-                            this.bpNodeControllerInsMap[layout.id!] = new Controller(config)!;
+                            this.bpNodeControllerInsMap[layout.id!] = new (Controller as new (config?: any) => AbstractBPNodeController)(config);
                         }
                     })
                 }
@@ -313,6 +304,12 @@ class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
             //删除锚点与链接线段的映射关系
             this.delAPLineMap(line.startAnchorId!, id);
             this.delAPLineMap(line.endAnchorId!, id);
+            const graphic = this.lineInstances[id];
+            if (graphic) {
+                graphic.clear();
+                graphic.destroy();
+            }
+            delete this.lineInstances[id];
         });
         this.setSelectedLines([]);
     }
@@ -334,12 +331,11 @@ class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
                 initUsedLayerNodes(usedLayerNodes);
             } else {
                 const bpNodeControllerInsMap: Record<string, AbstractBPNodeController> = {};
-                Object.values(data?.bpNodeLayoutMap!).forEach((layout: BPNodeLayoutType) => {
+                Object.values(data?.bpNodeLayoutMap ?? {}).forEach((layout: BPNodeLayoutType) => {
                     const {type, id} = layout;
                     const NodeController = bpNodeControllerMap.get(type!) as ClazzTemplate<AbstractBPNodeController>;
                     const config = data?.bpNodeConfigMap![id!];
-                    // @ts-ignore
-                    bpNodeControllerInsMap[id!] = new NodeController!(config)!;
+                    bpNodeControllerInsMap[id!] = new (NodeController as new (config?: any) => AbstractBPNodeController)(config);
                 })
                 this.bpNodeControllerInsMap = bpNodeControllerInsMap;
             }

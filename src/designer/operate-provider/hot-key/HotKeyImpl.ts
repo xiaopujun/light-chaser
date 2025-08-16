@@ -17,7 +17,6 @@ import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import undoRedoMap from "../undo-redo/core";
 import runtimeConfigStore from "../../store/RuntimeStore.ts";
 import footerStore from "../../footer/FooterStore";
-import {reRenderAllLine} from "../../blueprint/drag/BPMovable.tsx";
 import bpLeftStore from "../../../designer/blueprint/left/BPLeftStore";
 import operatorMap from "../../../framework/operate";
 import URLUtil from "../../../utils/URLUtil";
@@ -32,6 +31,7 @@ import themeHdStore from "../../header/items/theme/ThemeManager.ts";
 import bluePrintManager from "../../blueprint/manager/BluePrintManager.ts";
 import canvasManager from "../../header/items/canvas/CanvasManager.ts";
 import designerManager from "../../manager/DesignerManager.ts";
+import BpCanvasUtil from "../../blueprint/util/BpCanvasUtil.ts";
 
 export const selectAll = () => {
     const {layerConfigs} = layerManager;
@@ -602,7 +602,7 @@ export const delBPNode = () => {
         if (nodeId in usedLayerNodes)
             setUsedLayerNodes(nodeId, false);
     })
-    reRenderAllLine();
+    BpCanvasUtil.reRenderAllLine();
 }
 
 /**
@@ -612,7 +612,8 @@ export const delBPLine = () => {
     if (!bluePrintHdStore.bluePrintVisible) return;
     const {selectedLines, delLine} = bluePrintManager;
     if (selectedLines.length === 0) return;
-    const selectedLineIds = selectedLines.map(line => line.id!);
-    delLine(selectedLineIds);
-    reRenderAllLine();
+    if (selectedLines.length === 0)
+        return;
+    delLine(selectedLines);
+    BpCanvasUtil.reRenderAllLine();
 }
