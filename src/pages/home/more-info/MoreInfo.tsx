@@ -8,23 +8,30 @@
  *
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
+import "./MoreInfo.less";
 
-import './MoreInfo.less';
+const cards = [
+    {title: "视频教程", link: "/tutorials", icon: "📺"},
+    {title: "使用文档", link: "/docs", icon: "📖"},
+    {title: "GitHub", link: "https://github.com/your-repo", icon: "💻"},
+    {title: "Gitee", link: "https://gitee.com/your-repo", icon: "🌏"},
+    {title: "Demo 体验", link: "/demo", icon: "⚡"},
+    {title: "社区支持", link: "/community", icon: "🤝"},
+    {title: "更新日志", link: "/changelog", icon: "📝"},
+    {title: "FAQ", link: "/faq", icon: "❓"},
+];
 
 export default function MoreInfo() {
     return (
-        <div className={'more-info-list'}>
-            <div className={'more-info-item'}
-                 onClick={() => window.open('https://www.bilibili.com/video/BV1z1421m7v2/?share_source=copy_web&vd_source=ece0559aa5b8c4f5c0d7307cb2b06aac')}>视频教程
-            </div>
-            <div className={'more-info-item'}
-                 onClick={() => window.open('https://xiaopujun.github.io/light-chaser-doc/#/')}>使用文档
-            </div>
-            <div className={'more-info-item'}
-                 onClick={() => window.open('https://github.com/xiaopujun/light-chaser')}>GitHub
-            </div>
-            <div className={'more-info-item'}
-                 onClick={() => window.open('https://gitee.com/xiaopujun/light-chaser')}>Gitee
+        <div className="homepage">
+            <h1 className="homepage-title">欢迎使用本项目 🚀</h1>
+            <div className="card-grid">
+                {cards.map((card) => (
+                    <a key={card.title} href={card.link} className="card">
+                        <div className="card-icon">{card.icon}</div>
+                        <div className="card-title">{card.title}</div>
+                    </a>
+                ))}
             </div>
         </div>
     );

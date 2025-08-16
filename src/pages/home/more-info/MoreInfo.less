@@ -9,47 +9,56 @@
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
 
-.more-info-list {
-  padding: 15px;
-  color: white;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  grid-gap: 25px;
-  font-size: 20px;
-  font-family: '庞门正道标题体免费版', serif;
+.homepage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  font-family: Arial, sans-serif;
+  color: #e0e0e0;
 
-  .more-info-item {
-    padding: 10px;
-    position: relative;
-    height: 160px;
-    background-color: #00477a;
+  .homepage-title {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1000px;
+    width: 100%;
+  }
+
+  .card {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    border-radius: 5px;
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
+    padding: 25px 15px;
+    border-radius: 12px;
+    text-decoration: none;
+    background: #1e1e1e; // 深色卡片
+    border: 1px solid #2a2a2a;
+    transition: all 0.25s ease-in-out;
 
-  .more-info-item:nth-child(1) {
-    background-image: url('./image/video.png');
-  }
+    &:hover {
+      background: #2c2c2c;
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    }
 
-  .more-info-item:nth-child(2) {
-    background-image: url('./image/document.png');
-  }
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
 
-  .more-info-item:nth-child(3) {
-    background-image: url('./image/github.png');
-  }
-
-  .more-info-item:nth-child(4) {
-    background-image: url('./image/gitee.png');
-  }
-
-
-  .more-info-item:hover {
-    cursor: pointer;
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(9, 91, 110, 0.53);
+    .card-title {
+      font-size: 1rem;
+      color: #e0e0e0;
+      font-weight: 500;
+    }
   }
 }
