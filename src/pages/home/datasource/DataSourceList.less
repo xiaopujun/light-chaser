@@ -1,33 +1,201 @@
-/*
- * Copyright © 2023-2025 puyinzhen
- * All rights reserved.
- *
- * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
- *
- * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
- *
- * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
- */
-
 .datasource-list {
   position: relative;
+  padding: 20px;
   height: 100%;
+  background-color: #1f1f1f;
+  color: #c5c5c5;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 
   .datasource-list-header {
-    color: #c5c5c5;
     display: flex;
-    padding: 13px;
-    border-bottom: 1px solid #2e2e2e;
     justify-content: space-between;
+    padding: 16px 24px;
+    border-bottom: 1px solid #2e2e2e;
+    background-color: #2a2a2a;
+    will-change: transform;
 
-    .datasource-list-header-left {
-      .project-list-search, .operate-btn {
-        margin-right: 13px;
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .project-list-search {
+        flex-shrink: 0;
+
+        .ant-input {
+          border-radius: 0;
+          transition: border-radius 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
+          box-shadow 0.3s ease;
+          transform: translateZ(0); // 新增：启用GPU加速
+
+          &:hover,
+          &:focus {
+            border-radius: 4px;
+            box-shadow: 0 0 0 2px rgba(0, 166, 80, 0.2);
+          }
+        }
+      }
+
+      .operate-btn {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        transform: translateZ(0); // 新增：启用GPU加速
+
+        &.primary {
+          background-color: #00A650;
+          border: none;
+          color: #fff;
+
+          &:hover {
+            transform: scale(1.02);
+          }
+        }
+
+        &.danger {
+          background-color: #ff4d4f;
+          border: none;
+          color: #fff;
+
+          &:hover {
+            transform: scale(1.02);
+          }
+        }
       }
     }
   }
 
   .datasource-list-body {
-    padding: 13px;
+    flex: 1;
+    padding: 16px 0;
+
+    .datasource-card {
+      background-color: #2a2a2a;
+      border: 1px solid #2e2e2e;
+      color: #c5c5c5;
+      padding: 12px;
+      height: 100%;
+      cursor: pointer;
+      position: relative;
+      border-radius: 3px;
+      transition: transform 0.3s ease, background-color 0.3s ease, border 0.3s ease;
+
+      &:hover {
+        border-color: #00A650;
+        background-color: #333;
+        transform: scale(1.02);
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+
+        .type-tag {
+          margin: 0;
+          font-weight: 700;
+          border: none;
+          padding: 0 6px;
+          height: 20px;
+          line-height: 20px;
+          font-size: 12px;
+          transition: transform 0.2s ease-out;
+
+          &:hover {
+            transform: scale(1.05);
+          }
+        }
+
+        .card-actions {
+          display: flex;
+          gap: 8px;
+          height: 20px;
+          transition: opacity 0.3s ease;
+
+          .action-btn {
+            color: #c5c5c5;
+            font-size: 12px;
+            cursor: pointer;
+            height: 100%;
+            display: inline-block;
+            transition: color 0.2s ease,
+            transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+            &:hover {
+              color: #00A650;
+              transform: scale(1.15);
+            }
+
+            &[onclick*="copy"] {
+              color: #1890ff;
+            }
+
+            &[onclick*="delete"] {
+              color: #ff4d4f;
+            }
+
+            &[onclick*="test"] {
+              color: #c5c5c5;
+            }
+          }
+        }
+      }
+
+      .card-title {
+        font-weight: 700;
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+.datasource-card:not(:hover) .card-actions {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.datasource-card:hover .card-actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 优化分页器动画 */
+.ant-pagination {
+  .ant-pagination-item,
+  .ant-pagination-prev,
+  .ant-pagination-next,
+  .ant-pagination-jump-prev,
+  .ant-pagination-jump-next {
+    will-change: transform;
+    transition: transform 0.3s ease;
+
+    a {
+      transition: color 0.2s ease;
+    }
+
+    &:hover {
+      transform: translateY(-1px) scale(1.05); // 修改
+
+      a {
+        color: #00A650;
+      }
+    }
+
+    &.ant-pagination-item-active {
+      transform: scale(1.1);
+    }
   }
 }

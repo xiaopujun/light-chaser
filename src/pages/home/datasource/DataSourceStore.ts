@@ -49,7 +49,7 @@ export class DataSourceStore {
 
     panelVisible = false;
     searchValue: string | null = null;
-    dataSourcePageData: IPage<IDataSource[]> = {
+    dataSourcePageData: IPage<IDataSource> = {
         records: [],
         total: 0,
         size: 8,
@@ -80,7 +80,7 @@ export class DataSourceStore {
         }
     }
 
-    setDataSourceList = (dataSourcePageData: IPage<IDataSource[]>) => this.dataSourcePageData = dataSourcePageData;
+    setDataSourceList = (dataSourcePageData: IPage<IDataSource>) => this.dataSourcePageData = dataSourcePageData;
 
     setDataSource = (dataSource: IDataSource) => this.dataSource = dataSource;
 
@@ -153,16 +153,16 @@ export class DataSourceStore {
             try {
                 // 生成随机AES密钥
                 const aesKey = CryptoUtil.generateAESKey();
-                
+
                 // 使用AES加密密码
                 const encryptedPassword = CryptoUtil.encryptAES(data.password, aesKey);
-                
+
                 // 获取RSA公钥
                 const publicKey = await FetchUtil.getRSAPublicKey();
-                
+
                 // 使用RSA公钥加密encryptedPassword
                 const encryptedData = CryptoUtil.encryptRSA(encryptedPassword, publicKey);
-                
+
                 return {
                     ...data,
                     password: encryptedData,
