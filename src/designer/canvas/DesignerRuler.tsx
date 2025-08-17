@@ -122,7 +122,7 @@ const DesignerRuler = memo((props: RulerProps & DesignerRulerProps) => {
             <div className={'lc-ruler-vertical'}
                  style={{
                      width: baseOffsetRef.current,
-                     height: window.innerHeight - baseOffsetRef.current - 90,
+                     height: window.innerHeight - baseOffsetRef.current - 100,
                      position: 'relative',
                      overflow: 'hidden'
                  }}>
