@@ -39,7 +39,7 @@ export const ProjectList = memo((props: ProjectListProps) => {
         records: [],
         total: 0,
         current: 1,
-        size: 24
+        size: 12
     });
 
     const getProjectPageList = (current: number, size: number, searchValue?: string) => {

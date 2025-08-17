@@ -10,22 +10,30 @@
  */
 
 .project-list-item {
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background-color: #2C2C3E;
+  border: 1px solid #3A3A4E;
   border-radius: 8px;
-  color: #9a9a9a;
-  transition: all 0.3s;
+  color: #FFFFFF;
+  transition: all 0.2s ease;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    border-color: #4FB8FF;
+  }
 
   .project-item-cover {
-    margin: 10px 10px 0;
+    margin: 12px 12px 0;
     aspect-ratio: 16/9;
     position: relative;
-    background-size: 100% 100%;
+    background-size: cover;
+    background-position: center;
+    border-radius: 4px;
     overflow: hidden;
-    border-radius: 3px;
-
 
     .operate-icon-list {
       width: 100%;
@@ -33,72 +41,82 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s;
+      gap: 16px;
+      background: rgba(0, 0, 0, 0.5);
       opacity: 0;
+      transition: opacity 0.2s ease;
 
       .operate-icon {
-        font-size: 16px;
-        padding: 10px;
-        color: #c0c0c0;
-      }
-
-      .operate-icon:hover {
-        color: #2079ff;
+        color: #A0A0B2;
+        font-size: 18px;
+        padding: 8px;
+        border-radius: 4px;
+        transition: all 0.2s ease;
         cursor: pointer;
+
+        &:hover {
+          color: #4FB8FF;
+          background-color: rgba(79, 184, 255, 0.1);
+        }
       }
     }
 
-    .operate-icon-list:hover {
-      background: rgba(0, 0, 0, 0.53);
+    &:hover .operate-icon-list {
       opacity: 1;
     }
-
   }
 
   .project-item-content {
     display: flex;
     align-items: center;
-    transition: all 0.3s;
-    padding: 0 10px;
+    justify-content: space-between;
+    padding: 12px;
+    margin-top: 8px;
 
     .project-name {
+      flex: 1;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 500;
+      color: #FFFFFF;
 
       .project-rename-input {
-        padding: 3px 0;
+        .ant-input {
+          background-color: #2C2C3E;
+          border-color: #3A3A4E;
+          color: #FFFFFF;
+          border-radius: 4px;
+
+          &:hover, &:focus {
+            border-color: #4FB8FF;
+            box-shadow: 0 0 0 2px rgba(79, 184, 255, 0.2);
+          }
+        }
       }
 
       .project-name-content {
-        padding: 10px 0;
-        font-size: 16px;
+        padding: 4px 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
 
     .rename-icon {
+      color: #A0A0B2;
+      font-size: 14px;
+      margin-left: 8px;
       opacity: 0;
+      transition: all 0.2s ease;
       cursor: pointer;
-      position: relative;
-      top: 1px;
-    }
 
-    .rename-icon:hover {
-      color: #2079ff;
-    }
-
-
-  }
-
-  .project-item-content:hover {
-
-    .rename-icon {
-      opacity: 1;
+      &:hover {
+        color: #4FB8FF;
+      }
     }
   }
 
-
-}
-
-.project-list-item:hover {
-  box-shadow: 0 0 20px rgba(38, 69, 121, 0.68);
-  border: 1px solid rgba(20, 119, 178, 0.65);
-  transform: translateY(-7px);
+  &:hover .project-item-content .rename-icon {
+    opacity: 1;
+  }
 }

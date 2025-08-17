@@ -10,35 +10,151 @@
  */
 
 .project-list-container {
+  padding: 24px;
+  background-color: #1E1E2F;
+  color: #FFFFFF;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
   height: calc(100vh - 60px);
-  overflow: scroll;
+  overflow: hidden;
 
   .project-list-header {
-    color: #c5c5c5;
     display: flex;
-    padding: 13px;
-    border-bottom: 1px solid #2e2e2e;
     justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    margin-bottom: 24px;
+    background-color: #2C2C3E;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 
     .project-list-header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
       .project-list-search {
-        margin-right: 13px;
+        .ant-input {
+          background-color: #2C2C3E;
+          border: 1px solid #3A3A4E;
+          color: #FFFFFF;
+          border-radius: 4px;
+          transition: all 0.2s ease;
+
+          &:hover,
+          &:focus {
+            border-color: #4FB8FF;
+            box-shadow: 0 0 0 2px rgba(79, 184, 255, 0.2);
+          }
+        }
+      }
+
+      .ant-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 32px;
+        padding: 0 12px;
+        border-radius: 4px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+
+        &.ant-btn-primary {
+          background-color: #4FB8FF;
+          border: none;
+          color: #FFFFFF;
+
+          &:hover {
+            background-color: lighten(#4FB8FF, 10%);
+          }
+
+          &:active {
+            background-color: darken(#4FB8FF, 10%);
+          }
+        }
       }
     }
   }
 
   .project-list {
-    padding: 13px;
+    flex: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    overflow-y: scroll;
-    grid-gap: 25px;
+    grid-template-columns: repeat(4, 1fr); // 固定4列
+    gap: 20px; // 元素间距20px
+    align-content: start; // 从上往下排列
+    height: 0; // 关键：允许flex子项收缩
 
+    // 滚动条样式
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #4FB8FF;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: #2C2C3E;
+    }
+
+    // 确保网格项不会拉伸
+    & > * {
+      min-width: 0; // 防止内容溢出
+      min-height: 0; // 防止内容溢出
+    }
+
+    // 响应式调整（可选）
+    @media (max-width: 1400px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 1100px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
   }
 
   .project-list-page {
-    text-align: right;
-    margin: 30px 10px 0 0;
-    display: block;
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+
+    .ant-pagination {
+      .ant-pagination-item,
+      .ant-pagination-prev,
+      .ant-pagination-next,
+      .ant-pagination-jump-prev,
+      .ant-pagination-jump-next {
+        background-color: #2C2C3E;
+        border-color: #3A3A4E;
+        transition: all 0.2s ease;
+
+        a {
+          color: #A0A0B2;
+        }
+
+        &:hover {
+          border-color: #4FB8FF;
+          transform: translateY(-1px);
+
+          a {
+            color: #4FB8FF;
+          }
+        }
+
+        &.ant-pagination-item-active {
+          background-color: #4FB8FF;
+          border-color: #4FB8FF;
+
+          a {
+            color: #FFFFFF;
+          }
+        }
+      }
+    }
   }
 }
