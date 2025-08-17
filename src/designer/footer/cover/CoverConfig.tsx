@@ -8,12 +8,10 @@
  *
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
-
 import './CoverConfig.less';
-import Button from "../../../json-schema/ui/button/Button";
 import {useRef, useState} from "react";
 import {globalMessage} from "../../../framework/message/GlobalMessage";
-import {Modal, Upload as AntdUpLoad, UploadFile} from "antd";
+import {Button, Modal, Upload as AntdUpLoad, UploadFile} from "antd";
 import URLUtil from "../../../utils/URLUtil";
 import operatorMap from "../../../framework/operate/index";
 import {SaveType} from "../../DesignerType";
@@ -34,7 +32,7 @@ export const CoverConfig = (prop: CoverConfigProps) => {
         name: 'image.png',
         status: 'done',
     }
-    const [fileList, setFileList] = useState([]);
+    const [fileList, setFileList] = useState<UploadFile[]>([]);
 
     const doSave = () => {
         if (!imageFileRef.current) {
@@ -67,32 +65,46 @@ export const CoverConfig = (prop: CoverConfigProps) => {
             urlRef.current = url;
             setFileList([{...fileInfo, url}] as any);
         };
-        //通过二进制流读取文件，读取完毕后会调用上方设置好的onload事件
         fileReader.readAsArrayBuffer(file);
-        //阻止默认上传
         return false;
     }
 
     return (
-        <Modal title={'封面'} className={'cover-config'}
-               open={true} width={500}
-               footer={null}
-               onCancel={_onClose}>
-            <div className={'cover-content'}>
-                <div className={'cover-left'}>
-                    <AntdUpLoad name={'file'} beforeUpload={beforeUpload} listType={'picture-card'}
-                                fileList={fileList as Array<UploadFile>}
-                                accept={'image/*'}
-                                onRemove={() => setFileList([])}
-                                onPreview={() => window.open((fileList[0] as any).url)}>
-                        {fileList.length > 0 ? null : <div className={'upload-btn'}>
-                            <UploadLaptop size={30} strokeWidth={2}/>
-                            <div style={{marginTop: 8}}>选择文件上传</div>
-                        </div>}
+        <Modal
+            title={<span className="cover-modal-title">封面配置</span>}
+            className="cover-config-modal"
+            open={true}
+            width={600}
+            footer={null}
+            onCancel={_onClose}
+            bodyStyle={{padding: '20px'}}
+        >
+            <div className="cover-content">
+                <div className="cover-upload-container">
+                    <AntdUpLoad
+                        name="file"
+                        beforeUpload={beforeUpload}
+                        listType="picture-card"
+                        fileList={fileList}
+                        accept="image/*"
+                        onRemove={() => setFileList([])}
+                        onPreview={() => window.open((fileList[0] as any).url)}
+                    >
+                        {fileList.length > 0 ? null : (
+                            <div className="upload-btn-content">
+                                <UploadLaptop theme="outline" size={30} fill="#4FB8FF" strokeWidth={2}/>
+                                <div className="upload-text">选择文件上传</div>
+                                <div className="upload-hint">支持 JPG/PNG 格式</div>
+                            </div>
+                        )}
                     </AntdUpLoad>
                 </div>
-                <div className={'cover-right'}>
-                    <Button onClick={doSave}>保存</Button>
+                <div className="cover-action-container">
+                    <Button type="primary"
+                            onClick={doSave}
+                            className="cover-save-btn">
+                        保存封面
+                    </Button>
                 </div>
             </div>
         </Modal>

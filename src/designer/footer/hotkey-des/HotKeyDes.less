@@ -8,32 +8,80 @@
  *
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
+.hotkey-modal {
+  .ant-modal-content {
+    background-color: #1E1E2F;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+    .ant-modal-header {
+      background-color: #1e1e2f;
+      border-radius: 8px 8px 0 0;
+
+      .ant-modal-title {
+        color: #FFFFFF;
+        font-size: 16px;
+        font-weight: 600;
+      }
+    }
+
+    .ant-modal-close {
+      color: #A0A0B2;
+      &:hover {
+        color: #FFFFFF;
+      }
+    }
+  }
+}
 
 .lc-hotkey-des {
-  max-height: 700px;
+  max-height: 60vh;
   overflow-y: auto;
-
+  color: #FFFFFF;
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
 
   .hotkey-des-table {
     width: 100%;
-    text-align: center;
-    font-size: 12px;
-    color: #a6a6a6;
+    border-collapse: collapse;
+    font-size: 14px;
 
     thead {
-      color: #d7d7d7;
-      font-size: 13px;
+      tr {
+        th {
+          color: #FFFFFF;
+          font-weight: 500;
+          padding: 12px 16px;
+          background-color: #2C2C3E;
+          border-bottom: 1px solid #3A3A4E;
+          text-align: left;
+        }
+      }
     }
 
-    tr {
-      height: 35px;
-    }
+    tbody {
+      tr {
+        td {
+          padding: 12px 16px;
+          color: #A0A0B2;
+          border-bottom: 1px solid #3A3A4E;
+        }
 
-    tr:hover {
-      background-color: rgba(220, 220, 220, 0.16);
-      transition: background-color 0.3s;
+        &:hover {
+          background-color: rgba(79, 184, 255, 0.1);
+          transition: background-color 0.2s ease;
+        }
+      }
     }
-
   }
 
+  .keyboard-key {
+    display: inline-block;
+    padding: 2px 8px;
+    background-color: #2C2C3E;
+    border: 1px solid #3A3A4E;
+    border-radius: 4px;
+    color: #4FB8FF;
+    font-family: monospace;
+    margin-right: 4px;
+  }
 }

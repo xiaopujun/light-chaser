@@ -8,75 +8,91 @@
  *
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
-
-@import "../../designer/style/DesignerStyle.less";
-
 .lc-designer-footer {
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid #404040;
+  padding: 0 16px;
+  background-color: #1E1E2F;
+  border-top: 1px solid #3A3A4E;
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
 
   .footer-left {
     display: flex;
-    padding-left: 10px;
+    gap: 16px;
 
     .footer-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
       cursor: pointer;
-      margin-right: 10px;
-      color: #bababa;
-      font-size: 14px;
-
-      .i-icon {
-        position: relative;
-        top: 3px;
-      }
+      transition: all 0.2s ease;
+      color: #A0A0B2;
 
       &:hover {
-        transition: all 0.2s;
-        color: #0095db;
+        background-color: rgba(79, 184, 255, 0.1);
+        color: #4FB8FF;
       }
 
-      span {
-        padding: 2px;
+      &.active {
+        color: #4FB8FF;
+        background-color: rgba(79, 184, 255, 0.1);
       }
     }
   }
 
   .footer-center {
     display: flex;
+    gap: 12px;
 
     .footer-center-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
       cursor: pointer;
-      margin: 0 5px;
-      padding: 5px;
-      border-radius: 5px;
-      transition: all 0.2s;
-      font-size: 18px;
+      transition: all 0.2s ease;
+      color: #A0A0B2;
 
-      .i-icon {
-        position: relative;
-        top: 3px;
+      &:hover {
+        background-color: rgba(79, 184, 255, 0.1);
+        color: #4FB8FF;
       }
 
-    }
-
-    .footer-center-item-active {
-      color: #00b2ff;
-    }
-
-    .footer-center-item:hover {
-      color: #00b2ff;
+      &.active {
+        color: #4FB8FF;
+        background-color: rgba(79, 184, 255, 0.1);
+      }
     }
   }
 
   .footer-right {
     display: flex;
+    gap: 24px;
+    font-size: 12px;
 
     .right-info-item {
-      color: @footer-item-color;
-      margin-right: 20px;
+      color: #A0A0B2;
     }
+  }
+}
+
+.designer-tooltip {
+  .ant-tooltip-inner {
+    background-color: #2C2C3E;
+    color: #FFFFFF;
+    font-size: 12px;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  }
+
+  .ant-tooltip-arrow::before {
+    background-color: #2C2C3E;
   }
 }

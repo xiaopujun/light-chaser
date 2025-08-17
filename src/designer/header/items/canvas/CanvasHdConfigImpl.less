@@ -8,16 +8,125 @@
  *
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
+// CanvasHdConfigImpl.less
+.lc-header-canvas-modal {
+  .ant-modal-content {
+    background-color: #1E1E2F;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 
-.lc-header-canvas {
+    .ant-modal-header {
+      background-color: transparent;
+      border-bottom: 1px solid #3A3A4E;
+      padding: 16px 20px;
 
-  .ant-modal-header {
-    margin-bottom: 14px !important;
+      .canvas-config-title {
+        color: #FFFFFF;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 28px;
+      }
+    }
+
+    .ant-modal-close {
+      color: #A0A0B2;
+      &:hover {
+        color: #FFFFFF;
+      }
+    }
+
+    .ant-modal-body {
+      padding: 0;
+    }
+  }
+
+  .canvas-config-content {
+    padding: 0 20px;
+
+    .lc-gui {
+      .lc-field {
+        margin-bottom: 16px;
+
+        .lc-field-label {
+          color: #A0A0B2;
+          font-size: 14px;
+          margin-bottom: 8px;
+        }
+
+        .ant-input-number, .ant-select-selector, .ant-input {
+          background-color: #2C2C3E !important;
+          border-color: #3A3A4E !important;
+          color: #FFFFFF !important;
+          border-radius: 4px;
+          transition: all 0.2s;
+
+          &:hover {
+            border-color: #4FB8FF !important;
+          }
+
+          &:focus {
+            box-shadow: 0 0 0 2px rgba(79, 184, 255, 0.2);
+          }
+        }
+
+        .ant-switch {
+          background-color: #3A3A4E;
+
+          &.ant-switch-checked {
+            background-color: #4FB8FF;
+          }
+        }
+      }
+    }
   }
 
   .canvas-config-desc {
-    color: #949494;
-    padding: 10px 0 0 0;
-    font-size: 12px
+    color: #A0A0B2;
+    font-size: 12px;
+    line-height: 16px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #3A3A4E;
+  }
+
+  .canvas-config-btn {
+    height: 36px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0 16px;
+    transition: all 0.2s;
+
+    &.primary {
+      background-color: #4FB8FF;
+      border-color: #4FB8FF;
+      color: #FFFFFF;
+
+      &:hover {
+        background-color: lighten(#4FB8FF, 10%);
+        border-color: lighten(#4FB8FF, 10%);
+      }
+
+      &:active {
+        background-color: darken(#4FB8FF, 10%);
+        border-color: darken(#4FB8FF, 10%);
+      }
+    }
+
+    &.secondary {
+      background-color: transparent;
+      border-color: #4FB8FF;
+      color: #4FB8FF;
+
+      &:hover {
+        color: lighten(#4FB8FF, 10%);
+        border-color: lighten(#4FB8FF, 10%);
+      }
+
+      &:active {
+        color: darken(#4FB8FF, 10%);
+        border-color: darken(#4FB8FF, 10%);
+      }
+    }
   }
 }
