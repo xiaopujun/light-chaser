@@ -11,7 +11,7 @@
 
 import {useLocation, useNavigate} from "react-router-dom";
 import {memo} from "react";
-import {Data, LocalPin, NetworkDrive, System} from "@icon-park/react";
+import {Data, NetworkDrive, System} from "@icon-park/react";
 import {Menu} from "antd";
 import {MenuItemType} from "antd/es/menu/interface";
 
@@ -19,14 +19,9 @@ import {MenuItemType} from "antd/es/menu/interface";
 const getMenus = () => {
     const baseMenus: MenuItemType[] = [
         {
-            key: 'server',
+            key: 'projects',
             icon: <NetworkDrive size={16}/>,
-            label: '在线项目'
-        },
-        {
-            key: 'local',
-            icon: <LocalPin size={16}/>,
-            label: '本地项目'
+            label: '项目列表'
         },
         {
             key: 'datasource',

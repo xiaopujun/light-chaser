@@ -10,16 +10,14 @@
  */
 
 import {lazy, memo} from 'react';
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import {ConfigProvider, MappingAlgorithm, theme} from "antd";
 
 const DesignerViewPage = lazy(() => import('../pages/view/DesignerViewPage.tsx'));
 const DesignerPage = lazy(() => import('../pages/designer/DesignerPage.tsx'));
 const GlobalMessage = lazy(() => import('../framework/message/GlobalMessage.tsx'));
 const GlobalModal = lazy(() => import('../framework/message/GlobalModal.tsx'));
-const Login = lazy(() => import('../pages/login/Login'));
 const Home = lazy(() => import('../pages/home/Home'));
-const LocalProjectList = lazy(() => import('../pages/home/local-list/LocalProjectList.tsx'));
 const ServerProjectList = lazy(() => import('../pages/home/server-list/ServerProjectList.tsx'));
 const DataSourceList = lazy(() => import('../pages/home/datasource/DataSourceList.tsx'));
 const TemplateMarket = lazy(() => import('../pages/home/template-market/TemplateMarket.tsx'));
@@ -49,10 +47,6 @@ const router = createBrowserRouter([
         element: <DesignerViewPage/>
     },
     {
-        path: '/login',
-        element: <Login/>
-    },
-    {
         path: '/test',
         element: <Demo/>
     },
@@ -65,11 +59,7 @@ const router = createBrowserRouter([
         element: <Home/>,
         children: [
             {
-                path: 'local',
-                element: <LocalProjectList/>,
-            },
-            {
-                path: 'server',
+                path: 'projects',
                 element: <ServerProjectList/>,
             },
             {
@@ -88,7 +78,7 @@ const router = createBrowserRouter([
     },
     {
         path: '/',
-        element: <Login/>
+        element: <Navigate to="/home/projects" replace/>
     },
     {
         path: '/notFound',
