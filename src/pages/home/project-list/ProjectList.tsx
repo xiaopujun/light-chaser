@@ -11,7 +11,7 @@
 
 import React, {memo, useEffect, useRef} from 'react';
 import './ProjectList.less';
-import {Input, Button, Pagination} from "antd";
+import {Button, Input, Pagination} from "antd";
 import defaultSnapshot from '../image/default-snapshot.jpg';
 import {DesignerMode, IPage, IProjectInfo, SaveType} from "../../../designer/DesignerType";
 import {INewProjectInfo, NewProjectDialog} from "./NewProjectDialog.tsx";
@@ -114,6 +114,7 @@ export const ProjectList = memo((props: ProjectListProps) => {
             if (res) {
                 setDelDialog(false);
                 getProjectPageList(pageData.current, pageData.size);
+                globalMessage.messageApi?.success('删除成功');
             } else {
                 globalMessage.messageApi?.error('删除失败');
             }

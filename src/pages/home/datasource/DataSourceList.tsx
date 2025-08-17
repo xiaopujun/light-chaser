@@ -13,7 +13,7 @@ import React, {useEffect, useState} from "react";
 import dataSourceStore from "./DataSourceStore.ts";
 import {Button, Input, List, Space, Tag} from "antd";
 import {observer} from "mobx-react";
-import {Add, Delete} from "@icon-park/react";
+import {Add} from "@icon-park/react";
 import {globalModal} from "../../../framework/message/GlobalModal.tsx";
 import DataSourcePanel from "./DataSourcePanel.tsx";
 import './DataSourceList.less';
@@ -22,7 +22,6 @@ const {Search} = Input;
 
 const DataSourceList = observer(() => {
     const {
-        doBatchDeleteDataSource,
         setPanelVisible,
         doCreateOrUpdateDataSource,
         init,
@@ -34,9 +33,6 @@ const DataSourceList = observer(() => {
 
     const {current, records, size, total} = dataSourcePageData;
     const [hoveredCard, setHoveredCard] = useState<string | null>(null);
-
-    // 选中 ID 列表
-    const selectedIds: string[] = [];
 
     useEffect(() => {
         init();
@@ -50,15 +46,6 @@ const DataSourceList = observer(() => {
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') handleSearch((event.target as HTMLInputElement).value);
-    };
-
-    const handleBatchDelete = () => {
-        if (!selectedIds.length) return;
-        globalModal.modalApi?.confirm({
-            title: '删除确认',
-            content: '确定删除选中的数据源吗？',
-            onOk: () => doBatchDeleteDataSource(selectedIds)
-        });
     };
 
     const handleActionClick = (e: React.MouseEvent, action: string, id: string) => {
@@ -105,14 +92,6 @@ const DataSourceList = observer(() => {
                         <Add style={{position: 'relative', top: 2, marginRight: 3}}/>
                         新建
                     </Button>
-                    <Button
-                        className="operate-btn danger"
-                        size="middle"
-                        onClick={handleBatchDelete}
-                    >
-                        <Delete style={{position: 'relative', top: 2, marginRight: 3}}/>
-                        删除
-                    </Button>
                 </div>
                 <div className="header-right"></div>
             </div>
@@ -126,7 +105,8 @@ const DataSourceList = observer(() => {
                           current,
                           total,
                           position: 'bottom',
-                          align: 'center'
+                          align: 'center',
+                          onChange: (page) => dataSourceStore.changeCurrentPage(page!)
                       }}
                       renderItem={(item) => (
                           <List.Item className="datasource-item"
