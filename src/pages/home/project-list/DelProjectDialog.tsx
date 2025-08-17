@@ -10,7 +10,7 @@
  */
 
 import {memo} from "react";
-import {Modal, Button} from "antd";
+import {Button, Modal} from "antd";
 
 interface DelDialogProps {
     onOk: () => void;
@@ -26,8 +26,8 @@ const DelProjectDialog = memo((props: DelDialogProps) => {
         <Modal title={'删除确认'} open={visible} onCancel={onCancel} onOk={onOk}
                width={350}
                footer={[
-                   <Button type="primary" onClick={onOk}>确认</Button>,
-                   <Button onClick={onCancel}>取消</Button>
+                   <Button key={'ok'} type="primary" onClick={onOk}>确认</Button>,
+                   <Button key={'cancel'} onClick={onCancel}>取消</Button>
                ]}>
             <div style={{color: '#aeaeae', padding: 10}}>确定要删除该项目吗？</div>
         </Modal>

@@ -1,14 +1,14 @@
 import "./MoreInfo.less";
 
 const cards = [
-    {title: "视频教程", link: "/tutorials", icon: "🎬"},
-    {title: "使用文档", link: "/docs", icon: "📚"},
-    {title: "GitHub", link: "https://github.com/your-repo", icon: "👨‍💻"},
-    {title: "Gitee", link: "https://gitee.com/your-repo", icon: "🌐"},
-    {title: "Demo 体验", link: "/demo", icon: "✨"},
-    {title: "社区支持", link: "/community", icon: "👥"},
-    {title: "更新日志", link: "/changelog", icon: "🔄"},
-    {title: "FAQ", link: "/faq", icon: "❔"},
+    {title: "视频教程", link: "https://space.bilibili.com/29136350?spm_id_from=333.1007.0.0", icon: "🎬"},
+    {title: "使用文档", link: "https://xiaopujun.github.io/light-chaser-doc", icon: "📚"},
+    {title: "GitHub", link: "https://github.com/xiaopujun/light-chaser", icon: "👨‍💻"},
+    {title: "Gitee", link: "https://gitee.com/xiaopujun/light-chaser", icon: "🌐"},
+    {title: "Demo 体验", link: "https://xiaopujun.github.io/light-chaser-app", icon: "✨"},
+    {title: "社区支持", link: "https://gitee.com/xiaopujun/light-chaser#%E7%A4%BE%E5%8C%BA--%E5%8F%AF%E6%8C%81%E7%BB%AD%E5%8F%91%E5%B1%95", icon: "👥"},
+    {title: "更新日志", link: "https://xiaopujun.github.io/light-chaser-doc/#/log/log", icon: "🔄"},
+    {title: "FAQ", link: "https://github.com/xiaopujun/light-chaser/issues", icon: "❔"},
 ];
 
 export default function MoreInfo() {

@@ -1,0 +1,112 @@
+.datasource-panel {
+  // 抽屉整体样式
+  .ant-drawer {
+    &-content {
+      background-color: #2C2C3E;
+      box-shadow: -4px 0 12px rgba(0, 0, 0, 0.3);
+    }
+
+    &-header {
+      background-color: #2C2C3E;
+      border-bottom: 1px solid #3A3A4E;
+      padding: 16px 24px;
+
+      .ant-drawer-title {
+        color: #FFFFFF;
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .ant-drawer-close {
+        color: #A0A0B2;
+
+        &:hover {
+          color: #4FB8FF;
+        }
+      }
+    }
+
+    &-body {
+      padding: 24px;
+      color: #FFFFFF;
+    }
+  }
+
+  // 表单样式
+  .ant-form {
+    .ant-form-item {
+      margin-bottom: 20px;
+
+      &-label {
+        > label {
+          color: #A0A0B2;
+          font-size: 14px;
+          height: 24px;
+          line-height: 24px;
+        }
+      }
+
+      .ant-input,
+      .ant-input-password,
+      .ant-select-selector,
+      .ant-select-selection-item,
+      .ant-textarea {
+        background-color: #2C2C3E;
+        border: 1px solid #3A3A4E;
+        color: #FFFFFF;
+        border-radius: 4px;
+        transition: all 0.2s;
+
+        &:hover,
+        &:focus {
+          border-color: #4FB8FF;
+          box-shadow: 0 0 0 2px rgba(79, 184, 255, 0.2);
+        }
+
+        &::placeholder {
+          color: #5A5A6E;
+        }
+      }
+
+      .ant-select-arrow {
+        color: #A0A0B2;
+      }
+    }
+  }
+
+  // 按钮样式
+  .ant-btn {
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.2s;
+
+    &:not(.ant-btn-primary) {
+      background-color: transparent;
+      border-color: #4FB8FF;
+      color: #4FB8FF;
+
+      &:hover {
+        background-color: rgba(79, 184, 255, 0.1);
+      }
+    }
+
+    &.ant-btn-primary {
+      background-color: #4FB8FF;
+      border-color: #4FB8FF;
+      color: #FFFFFF;
+
+      &:hover {
+        background-color: lighten(#4FB8FF, 10%);
+      }
+    }
+  }
+
+  // 响应式调整
+  @media (max-width: 768px) {
+    .ant-drawer {
+      width: 100% !important;
+    }
+  }
+}

@@ -74,6 +74,8 @@ const DataSourceList = observer(() => {
                 globalModal.modalApi?.confirm({
                     title: '删除确认',
                     content: '确定删除该数据源吗？',
+                    okText: '删除',
+                    cancelText: '取消',
                     onOk: () => dataSourceStore.doBatchDeleteDataSource([id])
                 });
                 break;

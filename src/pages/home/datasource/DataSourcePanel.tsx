@@ -12,6 +12,7 @@
 import {Button, Col, Drawer, Form, Input, Row, Select, Space} from "antd";
 import {useEffect} from "react";
 import {IDataSource} from "./DataSourceStore.ts";
+import './DataSourcePanel.less';
 
 const {TextArea} = Input;
 

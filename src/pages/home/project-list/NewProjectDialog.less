@@ -10,42 +10,109 @@
  */
 
 .add-new-screen-dialog {
+  .ant-modal {
+    &-content {
+      background-color: #2C2C3E;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    &-header {
+      background-color: #2C2C3E;
+      border-bottom: 1px solid #3A3A4E;
+      padding: 16px 24px;
+      border-radius: 8px 8px 0 0;
+
+      .ant-modal-title {
+        color: #FFFFFF;
+        font-size: 18px;
+        font-weight: 600;
+      }
+    }
+
+    &-body {
+      padding: 24px;
+    }
+
+    &-footer {
+      border-top: 1px solid #3A3A4E;
+      padding: 16px 24px;
+      text-align: right;
+    }
+  }
 
   .lc-add-new-screen {
-    padding: 15px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    .grid-container {
+      gap: 16px;
+    }
 
-    .item-content {
-      width: 150px !important;
+    .input-container, .number-input-container {
+      margin-bottom: 0;
+
+      .input-label {
+        color: #A0A0B2;
+        font-size: 14px;
+        margin-bottom: 8px;
+        display: block;
+      }
+
+      input {
+        background-color: #2C2C3E;
+        border: 1px solid #3A3A4E;
+        color: #FFFFFF;
+        border-radius: 4px;
+        padding: 8px 12px;
+        width: 100%;
+        transition: all 0.2s;
+
+        &:hover {
+          border-color: #4FB8FF;
+        }
+
+        &:focus {
+          border-color: #4FB8FF;
+          box-shadow: 0 0 0 2px rgba(79, 184, 255, 0.2);
+        }
+      }
     }
   }
 
   .add-new-screen-explain {
-    color: #6e6e6e;
-    padding: 0 15px;
-    margin-bottom: 10px;
+    color: #A0A0B2;
+    font-size: 12px;
+    line-height: 16px;
+    margin-top: 24px;
 
     p {
-      line-height: 20px;
-      font-size: 12px;
-      margin-bottom: 2px;
+      margin: 0;
     }
   }
 
-  .add-new-screen-footer {
-    margin-top: 3px;
-    border-top: 2px solid #272b34;
-    display: flex;
-    flex-direction: row-reverse;
+  .ant-btn {
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.2s;
 
-    .lc-button {
-      font-size: 12px;
-      color: #a3a3a3;
-      width: 85px;
-      height: 30px;
-      margin: 6px 5px 10px 0;
+    &:not(.ant-btn-primary) {
+      background-color: transparent;
+      border-color: #4FB8FF;
+      color: #4FB8FF;
+
+      &:hover {
+        background-color: rgba(79, 184, 255, 0.1);
+      }
+    }
+
+    &.ant-btn-primary {
+      background-color: #4FB8FF;
+      border-color: #4FB8FF;
+      color: #FFFFFF;
+
+      &:hover {
+        background-color: lighten(#4FB8FF, 10%);
+      }
     }
   }
 }

@@ -52,8 +52,8 @@ export const NewProjectDialog: React.FC<AddNewScreenDialogProps> = (props) => {
     const {visible = false} = props;
     return (
         <Modal title={'新建大屏'} open={visible} className={'add-new-screen-dialog'} onCancel={onCancel} footer={[
-            <Button type={"primary"} onClick={onOk}>创建</Button>,
-            <Button onClick={onCancel}>取消</Button>
+            <Button key={'ok'} type={"primary"} onClick={onOk}>创建</Button>,
+            <Button key={'cancel'} onClick={onCancel}>取消</Button>
         ]}>
             <div className={'lc-add-new-screen'}>
                 <Grid gridGap={'15px'} columns={2}>
