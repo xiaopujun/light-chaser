@@ -9,6 +9,7 @@
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
 
+import './HomeMenus.less'
 import {useLocation, useNavigate} from "react-router-dom";
 import {memo} from "react";
 import {Data, NetworkDrive, System} from "@icon-park/react";

@@ -1,0 +1,120 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+.lc-home-menus {
+  width: 220px;
+  height: 100%;
+  background-color: #2C2C3E;
+  border-right: 1px solid #3A3A4E;
+  padding: 16px 0;
+
+  .ant-menu {
+    background-color: transparent;
+    border-right: none;
+
+    &.ant-menu-inline {
+      .ant-menu-item {
+        height: 40px;
+        line-height: 40px;
+        margin: 4px 12px;
+        border-radius: 4px;
+        padding-left: 16px !important;
+        transition: all 0.2s ease;
+        position: relative;
+        overflow: visible;
+
+
+        &:not(.ant-menu-item-selected):hover {
+          background-color: rgba(79, 184, 255, 0.1);
+          color: #4FB8FF;
+        }
+
+        &.ant-menu-item-selected {
+          background-color: rgba(79, 184, 255, 0.2);
+          color: #4FB8FF;
+          font-weight: 500;
+        }
+
+        // 关键修复：将::after定义移到此处
+        &.ant-menu-item-selected::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          right: 0;
+          border-right: 3px solid #4FB8FF !important;
+          transform: scaleY(1) !important;
+          opacity: 1 !important;
+          transition: transform 0.2s cubic-bezier(0.645, 0.045, 0.355, 1),
+          opacity 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+      }
+    }
+
+    .ant-menu-item-group-title {
+      color: #A0A0B2;
+      font-size: 12px;
+      padding-left: 24px;
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+  }
+}
+
+.ant-menu-item {
+  color: #FFFFFF;
+  font-size: 14px;
+
+  .anticon {
+    font-size: 16px;
+    margin-right: 12px;
+    color: inherit;
+  }
+}
+
+.ant-menu-submenu {
+  .ant-menu-submenu-title {
+    color: #FFFFFF;
+    font-size: 14px;
+    height: 40px;
+    line-height: 40px;
+    margin: 4px 12px;
+    border-radius: 4px;
+    padding-left: 16px !important;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: #4FB8FF;
+    }
+
+    .anticon {
+      font-size: 16px;
+      margin-right: 12px;
+    }
+
+    .ant-menu-submenu-arrow {
+      color: #A0A0B2;
+
+      &::before, &::after {
+        background: currentColor;
+      }
+    }
+  }
+
+  &.ant-menu-submenu-selected {
+    .ant-menu-submenu-title {
+      color: #4FB8FF;
+    }
+  }
+
+  .ant-menu {
+    background-color: darken(#2C2C3E, 3%);
+  }
+}
