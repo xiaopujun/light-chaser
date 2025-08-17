@@ -36,7 +36,7 @@ const getMenus = () => {
         {
             key: 'more',
             icon: <System size={16}/>,
-            label: '帮助'
+            label: '更多'
         },
     ]
     return baseMenus;

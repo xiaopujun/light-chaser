@@ -1,64 +1,68 @@
-/*
- * Copyright © 2023-2025 puyinzhen
- * All rights reserved.
- *
- * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
- *
- * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
- *
- * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
- */
-
-.homepage {
+.more-info-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 20px;
-  font-family: Arial, sans-serif;
-  color: #e0e0e0;
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  //background-color: #1E1E2F;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
 
-  .homepage-title {
-    font-size: 2rem;
-    margin-bottom: 30px;
-    color: #ffffff;
-    font-weight: 600;
+  .more-info-title {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 32px;
+    margin-bottom: 24px;
+    color: #FFFFFF;
+    text-align: center;
   }
 
-  .card-grid {
+  .more-info-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    max-width: 1000px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
     width: 100%;
   }
 
-  .card {
+  .more-info-card {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 25px 15px;
-    border-radius: 12px;
+    padding: 20px;
+    background-color: #2C2C3E;
+    border-radius: 8px;
     text-decoration: none;
-    background: #1e1e1e; // 深色卡片
-    border: 1px solid #2a2a2a;
-    transition: all 0.25s ease-in-out;
+    color: #FFFFFF;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    border: 1px solid #3A3A4E;
 
     &:hover {
-      background: #2c2c2c;
-      transform: translateY(-4px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+      background-color: lighten(#2C2C3E, 5%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      border-color: #4FB8FF;
+    }
+
+    &:active {
+      background-color: darken(#2C2C3E, 5%);
+      transform: translateY(0);
     }
 
     .card-icon {
-      font-size: 2rem;
-      margin-bottom: 10px;
+      font-size: 32px;
+      margin-bottom: 12px;
     }
 
     .card-title {
-      font-size: 1rem;
-      color: #e0e0e0;
+      font-size: 14px;
       font-weight: 500;
+      line-height: 20px;
+      color: #FFFFFF;
     }
   }
 }
