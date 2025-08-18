@@ -8,32 +8,60 @@
  *
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
-
 .lc-theme-editor {
   width: 860px;
   height: 450px;
-  padding: 7px;
   display: flex;
+  background-color: #1E1E2F;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
 
   .editor-left {
-    padding: 5px;
     width: 460px;
+    padding: 20px;
+    border-right: 1px solid #3A3A4E;
+
+    .theme-tip {
+      color: #A0A0B2;
+      font-size: 12px;
+      line-height: 16px;
+      margin: 16px 0 0;
+    }
 
     .theme-operate-btn {
-      display: flex;
-      justify-content: space-between;
+      margin-top: 24px;
 
       .lc-button {
         width: 100%;
-        margin-right: 5px;
+        height: 36px;
+        background-color: #4FB8FF;
+        color: #FFFFFF;
+        border: none;
+        border-radius: 4px;
+        font-size: 14px;
+        transition: all 0.2s;
+
+        &:hover {
+          background-color: #3CA8EF;
+        }
       }
     }
   }
 
   .editor-right {
-    width: 380px;
-    padding: 5px;
-    overflow-y: scroll;
-  }
+    width: 400px;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #2C2C3E;
 
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #3A3A4E;
+      border-radius: 3px;
+    }
+  }
 }

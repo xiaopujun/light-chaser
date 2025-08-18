@@ -176,10 +176,9 @@ const ThemeEditor = () => {
         <div className={'lc-theme-editor'}>
             <div className={'editor-left'}>
                 <LCGUI schema={schema} onFieldChange={onFieldChange}/>
-                <p style={{
-                    color: '#6e6e6e',
-                    fontSize: 12
-                }}>说明：自定义主题色的色值应该保持在同一色系。以确保整体统一的风格。主题色占据主要面积</p>
+        <p className={'theme-tip'}>
+          说明：自定义主题色的色值应该保持在同一色系。以确保整体统一的风格。主题色占据主要面积
+        </p>
                 <div className={'theme-operate-btn'}>
                     <Button onClick={doSaveOrUpd}>添加 / 更新</Button>
                 </div>

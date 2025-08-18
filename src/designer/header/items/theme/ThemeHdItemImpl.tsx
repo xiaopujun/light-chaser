@@ -8,7 +8,6 @@
  *
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
-
 import {useRef, useState} from 'react';
 import './ThemeHdItem.less';
 import ThemeList from "../../../../comps/common-component/theme-config/theme-list/ThemeList";
@@ -35,25 +34,51 @@ const ThemeHdItemImpl = () => {
 
     return (
         <>
-            <Modal title="画布设置" width={500} open={themeVisible} onCancel={onClose}
+            <Modal title={<span style={{fontSize: '18px', fontWeight: 600}}>全局主题</span>}
+                   width={500}
+                   open={themeVisible}
+                   onCancel={onClose}
                    footer={[
-                       <Button type="primary" onClick={updateGlobalTheme}>更新全局主题</Button>,
-                       <Button type="dashed" onClick={() => setOpenEditor(true)}>自定义主题</Button>,
-                       <Button onClick={onClose}>取消</Button>,
+                       <Button type="primary" onClick={updateGlobalTheme} style={{marginRight: 8}}>
+                           更新全局主题
+                       </Button>,
+                       <Button onClick={() => setOpenEditor(true)} style={{marginRight: 8}}>
+                           自定义主题
+                       </Button>,
+                       <Button onClick={onClose}>
+                           取消
+                       </Button>,
                    ]}
-                   className={"lc-theme-config-global"}>
-
-                <div style={{maxHeight: 360, overflowY: "scroll", padding: '3px 0 6px 0'}}>
+                   className="lc-theme-config-global"
+                   style={{padding: '16px 0'}}>
+                <div style={{
+                    maxHeight: 360,
+                    overflowY: "auto",
+                    padding: '8px 0',
+                    marginBottom: 16,
+                    borderRadius: 8
+                }}>
                     <ThemeList onSelected={(value) => selectedThemeRef.current = value}/>
                 </div>
-                <p style={{color: '#6e6e6e'}}>警告：全局主题设置在更新后，会影响到当前项目的所有组件。请谨慎操作！</p>
+                <p style={{
+                    color: '#FF6E6E',
+                    fontSize: 12,
+                    lineHeight: '16px',
+                    margin: 0
+                }}>
+                    警告：全局主题设置在更新后，会影响到当前项目的所有组件。请谨慎操作！
+                </p>
             </Modal>
-            <Modal title={'编辑主题'} open={openEditor} onCancel={() => setOpenEditor(false)} width={860} footer={null}>
+            <Modal title={<span style={{fontSize: '18px', fontWeight: 600}}>编辑主题</span>}
+                   open={openEditor}
+                   onCancel={() => setOpenEditor(false)}
+                   width={890}
+                   className={'lc-edit-theme-config'}
+                   footer={null}>
                 <ThemeEditor/>
             </Modal>
         </>
     );
-
 }
 
 export default ThemeHdItemImpl;
