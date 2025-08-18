@@ -8,45 +8,70 @@
  *
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
-
-@import "../../designer/style/DesignerStyle.less";
-
 .lc-config-menu {
   height: 100%;
-  width: 35px;
+  width: 35px; // 从35px调整为48px，符合间距规范
+  background-color: #1E1E2F; // 使用主色板背景色
 
   .menu-list {
-    width: 35px;
+    width: 100%;
     height: 100%;
-    background-color: #1f1f1f;
+    background-color: #2C2C3E; // 使用容器色
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #bababa;
+    color: #A0A0B2; // 使用次级文字色
+    border-right: 1px solid #3A3A4E; // 添加分割线
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); // 添加阴影
 
-    .menu-item-active {
-      color: #2cbdff;
+    .empty-tip {
+      writing-mode: vertical-rl;
+      color: #A0A0B2;
+      letter-spacing: 4px;
+      padding: 16px 4px;
+      font-size: 12px;
+      line-height: 16px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .empty-icon {
+        font-size: 16px;
+        margin-bottom: 8px;
+        color: #4FB8FF; // 使用主高亮色
+      }
     }
 
     .menu-item {
-      &:hover {
-        transition: all 0.5s;
-        color: #2cbdff;
-      }
-
       width: 100%;
       display: flex;
-      cursor: pointer;
-      padding: 10px 5px;
-
-      font-size: 12px;
       align-items: center;
+      cursor: pointer;
+      padding: 16px 0; // 调整间距
+      font-size: 12px;
+      line-height: 16px;
       writing-mode: vertical-lr;
+      transition: color 0.2s ease; // 符合交互动效规范
+      border-left: 2px solid transparent; // 为激活态留出空间
+      flex-direction: row;
+
+      &:hover {
+        color: #4FB8FF; // 使用主高亮色
+      }
+
+      &.menu-item-active {
+        color: #4FB8FF;
+        border-left: 2px solid #4FB8FF; // 激活态左侧高亮
+        background-color: rgba(79, 184, 255, 0.1); // 半透明背景
+      }
 
       .item-icon {
         font-size: 16px;
-        margin-bottom: 5px;
-        position: relative;
+        margin-bottom: 8px; // 调整间距
+      }
+
+      .item-content {
+        letter-spacing: 2px; // 调整字间距
       }
     }
   }

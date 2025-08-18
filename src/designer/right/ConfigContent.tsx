@@ -123,7 +123,9 @@ const ConfigContent = observer(() => {
         <div className={'lc-config-panel'} ref={configPanelRef}>
             <div className={'lc-panel-top'}>
                 <div className={'panel-title'}><span>{activeMenuName}</span></div>
-                <div className={'panel-operate'} onClick={onClose}><Close/></div>
+        <div className={'panel-operate'} onClick={onClose}>
+          <Close theme="filled" size={18} />
+        </div>
             </div>
             <div className={'lc-panel-content'}>
                 {buildConfigContent()}
