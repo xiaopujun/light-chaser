@@ -46,7 +46,7 @@ class ThemeConfig extends Component<{ controller: AbstractDesignerController }> 
                     <br/>
                     <ThemeList onSelected={this.themeChange}/>
                 </div>
-                <Modal title={'编辑主题'} open={this.state.editTheme} onCancel={this.closeEditor} width={860}
+                <Modal title={'编辑主题'} open={this.state.editTheme} onCancel={this.closeEditor} width={890}
                        footer={null}>
                     <ThemeEditor/>
                 </Modal>

@@ -27,9 +27,18 @@ export default function SubAccordion(props: AccordionProps) {
     const items: CollapseProps['items'] = [
         {
             key: '1',
-            label: label,
-            children: <div>{children}</div>,
-            extra: tip && <Tooltip title={tip} style={{marginLeft: 1}}><Help/></Tooltip>
+      label: (
+        <div className="lc-sub-accordion-label">
+          <span>{label}</span>
+          {tip && (
+            <Tooltip title={tip} overlayClassName="lc-tooltip">
+              <Help className="lc-sub-accordion-icon" />
+            </Tooltip>
+          )}
+        </div>
+      ),
+      children: <div className="lc-sub-accordion-content">{children}</div>,
+      showArrow: false
         },
     ];
 
@@ -37,7 +46,9 @@ export default function SubAccordion(props: AccordionProps) {
         <div className={'lc-sub-accordion'}>
             <Collapse bordered={false}
                       expandIconPosition={'end'}
-                      items={items}/>
+        items={items}
+        className="lc-sub-accordion-collapse"
+      />
         </div>
     );
 }
