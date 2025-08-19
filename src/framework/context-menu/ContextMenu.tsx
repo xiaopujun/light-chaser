@@ -27,8 +27,8 @@ export default function ContextMenu(props: ContextMenuProps) {
     const {menus, visible, position} = props;
 
     const calculateMenuSize = (menuCount: number) => {
-        const menuHeight = 33;
-        return [130, menuCount * menuHeight];
+        const menuHeight = 40; // 调整菜单项高度
+        return [180, menuCount * menuHeight + 16]; // 增加宽度和内边距
     }
     const buildMenuList = () => {
         const menuListDom = [];
@@ -37,8 +37,8 @@ export default function ContextMenu(props: ContextMenuProps) {
             const Icon = menuItem.icon;
             menuListDom.push(
                 <div key={i + ''} className={'menu-item'} onClick={menuItem.onClick}>
-                    <label><Icon/></label>
-                    <span>{menuItem.name}</span>
+                    <span className="menu-item-icon"><Icon/></span>
+                    <span className="menu-item-text">{menuItem.name}</span>
                 </div>
             )
         }
@@ -65,7 +65,9 @@ export default function ContextMenu(props: ContextMenuProps) {
                 <div className={'context-menu'} style={{
                     position: 'fixed',
                     top: _position[1],
-                    left: _position[0]
+                    left: _position[0],
+                    width: offsetW,
+                    minHeight: offsetH
                 }}>
                     {buildMenuList()}
                 </div>}
