@@ -8,13 +8,9 @@
  *
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
-
 import React, {MouseEvent} from 'react';
 import './NewProjectDialog.less';
-import {Grid} from "../../../json-schema/ui/grid/Grid";
-import NumberInput from "../../../json-schema/ui/input/NumberInput.tsx";
-import Input from "../../../json-schema/ui/input/Input";
-import {Button, Modal} from "antd";
+import {Button, Col, Divider, Form, Input, InputNumber, Modal, Row} from "antd";
 
 export interface INewProjectInfo {
     name: string;
@@ -31,6 +27,7 @@ interface AddNewScreenDialogProps {
 
 export const NewProjectDialog: React.FC<AddNewScreenDialogProps> = (props) => {
 
+    const [form] = Form.useForm();
     const projectInfo: INewProjectInfo = {
         name: '未命名项目',
         des: '',
@@ -41,34 +38,58 @@ export const NewProjectDialog: React.FC<AddNewScreenDialogProps> = (props) => {
     const onOk = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         const {onOk} = props;
-        onOk && onOk(projectInfo);
+        const values = form.getFieldsValue();
+        onOk && onOk({...projectInfo, ...values});
     }
 
     const onCancel = () => {
         const {onCancel} = props;
+        form.resetFields();
         onCancel && onCancel();
     }
 
     const {visible = false} = props;
     return (
-        <Modal title={'新建大屏'} open={visible} className={'add-new-screen-dialog'} onCancel={onCancel} footer={[
-            <Button key={'ok'} type={"primary"} onClick={onOk}>创建</Button>,
-            <Button key={'cancel'} onClick={onCancel}>取消</Button>
-        ]}>
-            <div className={'lc-add-new-screen'}>
-                <Grid gridGap={'15px'} columns={2}>
-                    <Input label={'名称'} defaultValue={projectInfo.name}
-                           onChange={(name: string | number) => projectInfo.name = name as string}/>
-                    <Input label={'描述'}
-                           onChange={(description: string | number) => projectInfo.des = description as string}/>
-                    <NumberInput label={'宽度'} min={300} defaultValue={projectInfo.width}
-                                 onChange={(width: string | number) => projectInfo.width = Number(width)}/>
-                    <NumberInput label={'高度'} min={300} defaultValue={projectInfo.height}
-                                 onChange={(height: number | string) => projectInfo.height = Number(height)}/>
-                </Grid>
-            </div>
-            <div className={'add-new-screen-explain'}>
-                <p>说明：1、名称不超过20字，描述不超过60字。2、宽度必须&ge;500，高度必须&ge;300</p>
+        <Modal title={<span className="dialog-title">新建大屏</span>}
+               open={visible}
+               className={'new-project-dialog'}
+               onCancel={onCancel}
+               footer={
+                   <div className="dialog-footer">
+                       <Button key={'cancel'} className="cancel-btn" onClick={onCancel}>取消</Button>
+                       <Button key={'ok'} type={"primary"} className="create-btn" onClick={onOk}>创建项目</Button>
+                   </div>
+               }>
+            <div className="dialog-content">
+                <Form form={form} initialValues={projectInfo} layout="vertical">
+                    <Row gutter={24}>
+                        <Col span={12}>
+                            <Form.Item label={<span className="form-label">名称</span>} name="name">
+                                <Input placeholder="请输入项目名称" maxLength={20} className="project-input"/>
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item label={<span className="form-label">描述</span>} name="des">
+                                <Input placeholder="请输入项目描述" maxLength={60} className="project-input"/>
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item label={<span className="form-label">宽度</span>} name="width" rules={[{required: true, message: '宽度必须≥500'}]}>
+                                <InputNumber min={500} style={{width: '100%'}} className="project-input"/>
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item label={<span className="form-label">高度</span>} name="height" rules={[{required: true, message: '高度必须≥300'}]}>
+                                <InputNumber min={300} style={{width: '100%'}} className="project-input"/>
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                </Form>
+                <Divider className="divider"/>
+                <div className="dialog-tips">
+                    <span className="tip-icon">i</span>
+                    <span className="tip-text">名称不超过20字，描述不超过60字。宽度必须≥500，高度必须≥300</span>
+                </div>
             </div>
         </Modal>
     );

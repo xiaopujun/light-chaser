@@ -151,13 +151,13 @@ export const ProjectList = memo((props: ProjectListProps) => {
         <div className={'project-list-container'}>
             <div className={'project-list-header'}>
                 <div className={'project-list-header-left'}>
-                    <Search placeholder="搜索项目" size={"middle"}
+                    <Search placeholder="搜索项目" size={"small"}
                             className={'project-list-search'}
                             onKeyDown={onKeyDown}
                             onSearch={doSearch}
                             style={{width: 350}}/>
-                    <Button size={'middle'} type={"primary"} onClick={toggleNewProVisible}>
-                        <Add style={{position: 'relative', top: 3, marginRight: 3}}/>新增</Button>
+                    <Button size={'small'} type={"primary"} onClick={toggleNewProVisible}>
+                        <Add style={{position: 'relative', top: 2, marginRight: 3}}/>新增</Button>
                 </div>
                 <div className={'project-list-header-right'}></div>
             </div>

@@ -76,22 +76,13 @@ const DataSourceList = observer(() => {
         <div className="datasource-list">
             <div className="datasource-list-header">
                 <div className="header-left">
-                    <Search
-                        placeholder="搜索数据源"
-                        size="middle"
-                        className="project-list-search"
-                        onKeyDown={handleKeyDown}
-                        onSearch={handleSearch}
-                        style={{width: 350}}
-                    />
-                    <Button
-                        className="operate-btn primary"
-                        size="middle"
-                        onClick={() => setPanelVisible(true)}
-                    >
-                        <Add style={{position: 'relative', top: 2, marginRight: 3}}/>
-                        新建
-                    </Button>
+                    <Search placeholder="搜索数据源" size={"small"}
+                            className="project-list-search"
+                            onKeyDown={handleKeyDown}
+                            onSearch={handleSearch}
+                            style={{width: 350}}/>
+                    <Button size={'small'} className="operate-btn primary" onClick={() => setPanelVisible(true)}>
+                        <Add style={{position: 'relative', top: 2, marginRight: 3}}/>新建</Button>
                 </div>
                 <div className="header-right"></div>
             </div>
