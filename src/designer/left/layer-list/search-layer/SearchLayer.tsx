@@ -54,7 +54,7 @@ export const SearchLayer = observer(() => {
             width={480}
             footer={null}
             className="search-layer-modal"
-            bodyStyle={{padding: '24px'}}
+            styles={{body: {padding: '24px'}}}
             centered
             destroyOnClose
         >

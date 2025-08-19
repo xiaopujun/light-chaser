@@ -63,7 +63,7 @@ const BPCanvas: React.FC = () => {
         };
     }, [])
     return (
-        <div className={'blue-print-canvas'} style={{overflow: "hidden", width: '100%', height: '100%'}}
+        <div className={'blue-print-canvas'} style={{overflow: "hidden", width: '100%', height: '100%',backgroundColor:'#171724'}}
              ref={containerRef}>
             <Suspense fallback={<Loading/>}>
                 <LineLayer/>

@@ -17,7 +17,6 @@ import bluePrintManager, {IBPLine} from "../manager/BluePrintManager.ts";
 import {AnchorPointType} from "../node/core/AbstractBPNodeController.ts";
 import IdGenerate from "../../../utils/IdGenerate.ts";
 
-
 export default function LineLayer() {
 
     const bpLineContainerRef = useRef<HTMLDivElement | null>(null);
@@ -25,6 +24,12 @@ export default function LineLayer() {
     const keyMoveRef = useRef(false);
     const width = window.innerWidth - 670, height = window.innerHeight - 85;
     const dragLineRef = useRef<Graphics>();
+
+    // 新增：存储当前悬停的目标锚点信息
+    const hoverAnchorRef = useRef<{ element: HTMLElement | null; id: string | null }>({
+        element: null,
+        id: null
+    });
 
     const currentLineRef = useRef<IBPLine>({
         color: bpLineConfig.lineColor,
@@ -54,7 +59,6 @@ export default function LineLayer() {
         const {canvasOffset} = bluePrintManager;
         //设置起始点坐标
         const {x, y, width, height} = pointDom.getBoundingClientRect();
-        console.log('point info:', x, width, pointDom)
         currentLineRef.current.startPoint = {x: x + width / 2 - canvasOffset.x, y: y + height / 2 - canvasOffset.y}
         currentLineRef.current.startAnchorId = pointDom.id;
         keyDownRef.current = true;
@@ -67,7 +71,25 @@ export default function LineLayer() {
         const {startPoint, endPoint} = currentLineRef.current;
         const {canvasOffset} = bluePrintManager;
         //设置鼠标坐标
-        currentLineRef.current.endPoint = {x: e.clientX - canvasOffset.x, y: e.clientY - canvasOffset.y};
+        const mouseX = e.clientX - canvasOffset.x;
+        const mouseY = e.clientY - canvasOffset.y;
+
+        // 新增：检测附近的锚点并自动吸附
+        const {targetAnchor, targetElement} = findNearbyAnchor(mouseX, mouseY, 10); // 10像素吸附范围
+
+        if (targetAnchor && targetElement) {
+            // 如果找到附近的锚点，使用锚点中心坐标
+            const rect = (targetElement as HTMLElement).getBoundingClientRect();
+            currentLineRef.current.endPoint = {
+                x: rect.x + rect.width / 2 - canvasOffset.x,
+                y: rect.y + rect.height / 2 - canvasOffset.y
+            };
+            hoverAnchorRef.current = {element: targetElement, id: targetAnchor};
+        } else {
+            // 如果没有找到附近的锚点，使用鼠标当前位置
+            currentLineRef.current.endPoint = {x: mouseX, y: mouseY};
+            hoverAnchorRef.current = {element: null, id: null};
+        }
 
         const contPoi = BpCanvasUtil.calculateControlPoint(startPoint!, endPoint!);
         currentLineRef.current.firstCP = contPoi.firstCP;
@@ -77,13 +99,56 @@ export default function LineLayer() {
         BpCanvasUtil.reDrawLine(currentLineRef.current, dragLineRef.current!)
     }
 
+    // 新增：查找附近锚点的函数
+    const findNearbyAnchor = (mouseX: number, mouseY: number, range: number = 10) => {
+        // 获取所有锚点元素
+        const anchorPoints = document.querySelectorAll('.ap-circle');
+        let closestAnchor: string | null = null;
+        let closestElement: HTMLElement | null = null;
+        let minDistance = range; // 最小距离阈值
+
+        anchorPoints.forEach((ap: Element) => {
+            const anchorElement = ap as HTMLElement;
+            const pointInfoArr = anchorElement.id.split(":");
+
+            // 只检测输入类型的锚点（作为连线目标）
+            if (pointInfoArr && pointInfoArr.length === 3 && pointInfoArr[2] === AnchorPointType.INPUT.toString()) {
+                const rect = anchorElement.getBoundingClientRect();
+                const anchorCenterX = rect.x + rect.width / 2 - bluePrintManager.canvasOffset.x;
+                const anchorCenterY = rect.y + rect.height / 2 - bluePrintManager.canvasOffset.y;
+
+                // 计算鼠标位置与锚点中心的距离
+                const distance = Math.sqrt(
+                    Math.pow(mouseX - anchorCenterX, 2) +
+                    Math.pow(mouseY - anchorCenterY, 2)
+                );
+
+                // 如果距离在范围内且比当前最近锚点更近，更新最近锚点
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestAnchor = anchorElement.id;
+                    closestElement = anchorElement;
+                }
+            }
+        });
+
+        return {targetAnchor: closestAnchor, targetElement: closestElement};
+    }
+
     const bpMouseUp = (e: MouseEvent) => {
         const endElem = e.target as HTMLElement;
-        if (!keyMoveRef.current || !keyDownRef.current || !endElem || !endElem.classList.contains('ap-circle')
-            || endElem.id?.split(":")[2] !== AnchorPointType.INPUT.toString()) {
+
+        // 新增：优先使用悬停的锚点（如果存在）
+        const targetElement = hoverAnchorRef.current.element || endElem;
+        const targetId = hoverAnchorRef.current.id || targetElement?.id;
+
+        if (!keyMoveRef.current || !keyDownRef.current || !targetElement ||
+            !targetElement.classList.contains('ap-circle') ||
+            targetId?.split(":")[2] !== AnchorPointType.INPUT.toString()) {
             //清空画布
             dragLineRef.current?.clear();
             keyDownRef.current = false;
+            hoverAnchorRef.current = {element: null, id: null}; // 重置悬停状态
             return;
         }
         const {canvasOffset, addAPMap, addLine, addAPLineMap} = bluePrintManager;
@@ -94,8 +159,9 @@ export default function LineLayer() {
         currentLineRef.current.id = IdGenerate.generateId();
         currentLineRef.current.lineWidth = bpLineConfig.lineWidth;
         currentLineRef.current.color = bpLineConfig.lineColor;
-        currentLineRef.current.endAnchorId = (e!.target as HTMLElement).id;
-        const {x, y, width: apw, height: aph} = (e.target as HTMLElement)?.getBoundingClientRect() ?? {};
+        currentLineRef.current.endAnchorId = targetId;
+
+        const {x, y, width: apw, height: aph} = targetElement.getBoundingClientRect();
         currentLineRef.current.endPoint = {x: x + apw / 2 - canvasOffset.x, y: y + aph / 2 - canvasOffset.y};
 
         const copyLine = cloneDeep(currentLineRef.current);
@@ -106,6 +172,9 @@ export default function LineLayer() {
         //添加锚点与线条的关联关系
         addAPLineMap(currentLineRef.current.startAnchorId!, currentLineRef.current.id!);
         addAPLineMap(currentLineRef.current.endAnchorId!, currentLineRef.current.id!);
+
+        // 重置悬停状态
+        hoverAnchorRef.current = {element: null, id: null};
     }
 
     useEffect(() => {
@@ -150,7 +219,6 @@ export default function LineLayer() {
             }
         }
     })
-
 
     return (
         <div style={{position: 'absolute'}} ref={bpLineContainerRef}/>

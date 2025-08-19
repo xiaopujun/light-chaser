@@ -50,26 +50,14 @@ const CanvasHdConfigImpl = observer(() => {
                 label: '宽度',
                 value: width,
                 key: 'width',
-                config: {
-                    style: {
-                        backgroundColor: '#2C2C3E',
-                        borderColor: '#3A3A4E',
-                        color: '#FFFFFF'
-                    }
-                }
+                config: {}
             },
             {
                 type: 'number-input',
                 label: '高度',
                 value: height,
                 key: 'height',
-                config: {
-                    style: {
-                        backgroundColor: '#2C2C3E',
-                        borderColor: '#3A3A4E',
-                        color: '#FFFFFF'
-                    }
-                }
+                config: {}
             },
             {
                 type: 'select',
@@ -84,11 +72,6 @@ const CanvasHdConfigImpl = observer(() => {
                         {label: '撑满全屏', value: 'full-screen'},
                         {label: '无自适应', value: 'none'}
                     ],
-                    style: {
-                        backgroundColor: '#2C2C3E',
-                        borderColor: '#3A3A4E',
-                        color: '#FFFFFF'
-                    }
                 }
             },
             {
@@ -106,26 +89,14 @@ const CanvasHdConfigImpl = observer(() => {
                         label: '拖拽步长',
                         value: dragStep,
                         key: 'dragStep',
-                        config: {
-                            style: {
-                                backgroundColor: '#2C2C3E',
-                                borderColor: '#3A3A4E',
-                                color: '#FFFFFF'
-                            }
-                        }
+                        config: {}
                     },
                     {
                         type: 'number-input',
                         label: '缩放步长',
                         value: resizeStep,
                         key: 'resizeStep',
-                        config: {
-                            style: {
-                                backgroundColor: '#2C2C3E',
-                                borderColor: '#3A3A4E',
-                                color: '#FFFFFF'
-                            }
-                        }
+                        config: {}
                     }
                 ]
             }
@@ -133,31 +104,25 @@ const CanvasHdConfigImpl = observer(() => {
     }
 
     return (
-        <Modal
-            title={<span className="canvas-config-title">画布设置</span>}
-            width={400}
-            open={canvasVisible}
-            onCancel={onClose}
-            footer={[
-                <Button
-                    key="cancel"
-                    className="canvas-config-btn secondary"
-                    onClick={onClose}
-                >
-                    取消
-                </Button>,
-                <Button
-                    key="submit"
-                    className="canvas-config-btn primary"
-                    type="primary"
-                    onClick={doSave}
-                >
-                    确定
-                </Button>
-            ]}
-            className="lc-header-canvas-modal"
-            bodyStyle={{padding: '20px'}}
-        >
+        <Modal title={<span className="canvas-config-title">画布设置</span>}
+               width={400}
+               open={canvasVisible}
+               onCancel={onClose}
+               footer={[
+                   <Button key="cancel"
+                           className="canvas-config-btn secondary"
+                           onClick={onClose}>
+                       取消
+                   </Button>,
+                   <Button key="submit"
+                           className="canvas-config-btn primary"
+                           type="primary"
+                           onClick={doSave}>
+                       确定
+                   </Button>
+               ]}
+               className="lc-header-canvas-modal"
+               styles={{body: {padding: '20px'}}}>
             <div className="canvas-config-content">
                 <LCGUI schema={schema} onFieldChange={onFieldChange}/>
                 <p className="canvas-config-desc">

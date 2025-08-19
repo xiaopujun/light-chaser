@@ -77,7 +77,7 @@ export const CoverConfig = (prop: CoverConfigProps) => {
             width={600}
             footer={null}
             onCancel={_onClose}
-            bodyStyle={{padding: '20px'}}
+            styles={{body: {padding: '20px'}}}
         >
             <div className="cover-content">
                 <div className="cover-upload-container">

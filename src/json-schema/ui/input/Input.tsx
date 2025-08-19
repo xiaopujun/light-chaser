@@ -38,7 +38,7 @@ export default function Input(props: InputProps) {
             <AntdInput value={value}
                        placeholder={placeholder}
                        type={type}
-                       style={{width: '100%'}}
+                       style={{width: '100%', height: 28}}
                        defaultValue={defaultValue}
                        disabled={disabled}
                        className={'lc-input'}
