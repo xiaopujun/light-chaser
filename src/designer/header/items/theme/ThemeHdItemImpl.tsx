@@ -39,13 +39,13 @@ const ThemeHdItemImpl = () => {
                    open={themeVisible}
                    onCancel={onClose}
                    footer={[
-                       <Button type="primary" onClick={updateGlobalTheme} style={{marginRight: 8}}>
+                       <Button key="global-theme" type="primary" onClick={updateGlobalTheme} style={{marginRight: 8}}>
                            更新全局主题
                        </Button>,
-                       <Button onClick={() => setOpenEditor(true)} style={{marginRight: 8}}>
+                       <Button key="custom-theme" onClick={() => setOpenEditor(true)} style={{marginRight: 8}}>
                            自定义主题
                        </Button>,
-                       <Button onClick={onClose}>
+                       <Button key="cancel" onClick={onClose}>
                            取消
                        </Button>,
                    ]}

@@ -47,17 +47,15 @@ export const SearchLayer = observer(() => {
     }
 
     return (
-        <Modal
-            title={<span className="search-dialog-title">图层搜索</span>}
-            open={searchLayer}
-            onCancel={onClose}
-            width={480}
-            footer={null}
-            className="search-layer-modal"
-            styles={{body: {padding: '24px'}}}
-            centered
-            destroyOnClose
-        >
+        <Modal title={<span className="search-dialog-title">图层搜索</span>}
+               open={searchLayer}
+               onCancel={onClose}
+               width={480}
+               footer={null}
+               className="search-layer-modal"
+               styles={{body: {padding: '24px'}}}
+               centered
+               destroyOnClose>
             <div className="search-layer-content">
                 <div className="search-input-container">
                     <Input

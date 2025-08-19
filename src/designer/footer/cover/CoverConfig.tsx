@@ -70,15 +70,13 @@ export const CoverConfig = (prop: CoverConfigProps) => {
     }
 
     return (
-        <Modal
-            title={<span className="cover-modal-title">封面配置</span>}
-            className="cover-config-modal"
-            open={true}
-            width={600}
-            footer={null}
-            onCancel={_onClose}
-            styles={{body: {padding: '20px'}}}
-        >
+        <Modal title={<span className="cover-modal-title">封面配置</span>}
+               className="cover-config-modal"
+               open={true}
+               width={600}
+               footer={null}
+               onCancel={_onClose}
+               styles={{body: {padding: '20px'}}}>
             <div className="cover-content">
                 <div className="cover-upload-container">
                     <AntdUpLoad
