@@ -93,7 +93,7 @@ export default class BpCanvasUtil {
         const {
             bpNodeControllerInsMap, bpAPLineMap, bpLines,
             updLinePos, updBpNodeLayout, canvasOffset
-        } = window.LC_ENV.bpManager!;
+        } = bluePrintManager;
         //更新节点位置
         updBpNodeLayout({
             id: nodeId,

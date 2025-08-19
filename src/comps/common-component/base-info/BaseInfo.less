@@ -8,20 +8,40 @@
  *
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
-
 .base-info-config {
-  padding: 10px;
+  padding: 20px;
+  background-color: #2C2C3E;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 
   .version-info {
+    display: flex;
+    align-items: center;
     font-size: 12px;
-    color: #b6b8bb;
-    padding: 8px;
-    margin-bottom: 10px;
-    border-left: 3px solid #626262;
-    background-color: #313131;
+    line-height: 16px;
+    color: #A0A0B2;
+    padding: 10px 14px;
+    margin-bottom: 16px;
+    background-color: #1E1E2F;
+    border-left: 3px solid #4FB8FF;
+    border-radius: 4px;
+    transition: all 0.2s ease;
 
+    &:hover {
+      background-color: lighten(#1E1E2F, 5%);
+      border-left-color: #3CED92;
+    }
 
+    .version-icon {
+      font-size: 16px;
+      margin-right: 8px;
+      color: #4FB8FF;
+      flex-shrink: 0;
+    }
+
+    .version-text {
+      color: #FFFFFF;
+      font-weight: 400;
+    }
   }
-
-
 }

@@ -8,7 +8,6 @@
  *
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
-
 import React, {Suspense, useRef} from "react";
 import {Control} from "../../SchemaTypes";
 import './ControlGroup.less';
@@ -73,25 +72,44 @@ const ControlGroup = (props: ControlGroupProps) => {
         const {onChange} = props;
         onChange && onChange(dataRef.current);
     }
+
     return (
         <div className="control-group">
-            <div className={'control-group-header'}>
-                <div className={'cgh-label'}><span>{label}</span></div>
+            <div className={'control-group-header'} onClick={() => setToggle(!toggle)}>
+                <div className={'cgh-label'}>
+                    <span>{label}</span>
+                </div>
                 <div className={'cgh-operate'}>
-                    <span className={'operate-icon'} onClick={delGroup}><DeleteFive/></span>
-                    <span className={'operate-icon'} onClick={addNewGroup}><AddOne/></span>
-                    <span className={'operate-icon toggle-icon'} onClick={() => setToggle(!toggle)}>
-                        {toggle ?
-                            <Down size={16}/> :
-                            <Right size={16}/>}
-                    </span>
+          <span
+              className={'operate-icon del-icon'}
+              onClick={(e) => {e.stopPropagation(); delGroup()}}
+              title="删除组"
+          >
+            <DeleteFive size={16}/>
+          </span>
+                    <span
+                        className={'operate-icon add-icon'}
+                        onClick={(e) => {e.stopPropagation(); addNewGroup()}}
+                        title="添加组"
+                    >
+            <AddOne size={16}/>
+          </span>
+                    <span
+                        className={'operate-icon toggle-icon'}
+                        onClick={(e) => {e.stopPropagation(); setToggle(!toggle)}}
+                        title={toggle ? "折叠" : "展开"}
+                    >
+            {toggle ? <Down size={16}/> : <Right size={16}/>}
+          </span>
                 </div>
             </div>
-            {toggle && <div className={'control-group-body'} style={{display: toggle ? 'block' : 'none'}}>
-                <Suspense fallback={<Loading/>}>
-                    <LCGUI schema={schema} onFieldChange={onFieldChange}/>
-                </Suspense>
-            </div>}
+            {toggle && (
+                <div className={'control-group-body'}>
+                    <Suspense fallback={<Loading/>}>
+                        <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+                    </Suspense>
+                </div>
+            )}
         </div>
     )
 }

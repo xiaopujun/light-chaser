@@ -19,7 +19,14 @@ const BPHeader: React.FC = () => {
     return (
         <div className={'bp-header'}>
             <div className={'bp-header-title'}>蓝图编辑器</div>
-            <div className={'bp-header-menu'}><Close style={{cursor: 'pointer'}} onClick={() => {
+      <div className={'bp-header-menu'}>
+        <Close
+          theme="outline"
+          size="20"
+          fill="#A0A0B2"
+          strokeWidth={2}
+          className="bp-close-icon"
+          onClick={() => {
                 const {setBluePrintVisible} = bluePrintHdStore;
                 setBluePrintVisible(false);
                 const {setCanvasTranslate, setCanvasScale} = bluePrintManager;

@@ -23,15 +23,7 @@ import editorDesignerLoader from "../../../designer/loader/EditorDesignerLoader"
 import layerListStore from "../../../designer/left/layer-list/LayerListStore";
 import LayerUtil from "../../../designer/left/layer-list/util/LayerUtil";
 import canvasManager from "../../../designer/header/items/canvas/CanvasManager.ts";
-import {
-    AlignBottomTwo,
-    AlignHorizontalCenterTwo,
-    AlignLeftTwo,
-    AlignRightTwo,
-    AlignTopTwo,
-    AlignVerticalCenterTwo,
-    Info
-} from "@icon-park/react";
+import {AlignBottomTwo, AlignHorizontalCenterTwo, AlignLeftTwo, AlignRightTwo, AlignTopTwo, AlignVerticalCenterTwo, Info} from "@icon-park/react";
 
 /**
  * lc组件基础信息
@@ -241,7 +233,10 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
         return (
             <div className={'base-info-config'}>
                 <div className={'version-info'}>
-                    <span><Info/> {type} | {version ? `版本: ${version}` : '无版本信息'}</span>
+                    <Info className="version-icon"/>
+                    <span className="version-text">
+                      {type} | {version ? `版本: ${version}` : '无版本信息'}
+                    </span>
                 </div>
                 <LCGUI schema={schema} onFieldChange={this.onFieldChange}/>
             </div>

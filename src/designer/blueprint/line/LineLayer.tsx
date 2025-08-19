@@ -54,6 +54,7 @@ export default function LineLayer() {
         const {canvasOffset} = bluePrintManager;
         //设置起始点坐标
         const {x, y, width, height} = pointDom.getBoundingClientRect();
+        console.log('point info:', x, width, pointDom)
         currentLineRef.current.startPoint = {x: x + width / 2 - canvasOffset.x, y: y + height / 2 - canvasOffset.y}
         currentLineRef.current.startAnchorId = pointDom.id;
         keyDownRef.current = true;

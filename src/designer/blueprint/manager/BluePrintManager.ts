@@ -102,7 +102,7 @@ class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
     bpDragContentRef: HTMLDivElement | null = null;
 
     //蓝图画布相对于屏幕的偏移量
-    canvasOffset: IPoint = {x: 320, y: 50};
+    canvasOffset: IPoint = {x: 360, y: 56};
 
     //蓝图画布拖拽后的偏移量
     canvasTranslate: IPoint = {x: 0, y: 0};
