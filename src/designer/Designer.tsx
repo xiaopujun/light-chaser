@@ -25,7 +25,7 @@ import Loading from "../json-schema/ui/loading/Loading";
 import FrameLayout from "../json-schema/ui/frame-layout/FrameLayout";
 import {SaveType} from "./DesignerType.ts";
 import designerManager from "./manager/DesignerManager.ts";
-
+import 'nprogress/nprogress.css';
 
 /**
  * 绑定事件到dom元素

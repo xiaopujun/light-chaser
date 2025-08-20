@@ -58,9 +58,7 @@ export default class ServerOperator extends AbstractOperator {
 
     public async updateProject(data: IProjectInfo): Promise<void> {
         const res = await FetchUtil.post('/api/project/update', data);
-        if (res.code === 200)
-            globalMessage.messageApi?.success('保存成功');
-        else
+        if (res.code !== 200)
             globalMessage.messageApi?.error(res.msg);
     }
 

@@ -32,6 +32,7 @@ import bluePrintManager from "../../blueprint/manager/BluePrintManager.ts";
 import canvasManager from "../../header/items/canvas/CanvasManager.ts";
 import designerManager from "../../manager/DesignerManager.ts";
 import BpCanvasUtil from "../../blueprint/util/BpCanvasUtil.ts";
+import NProgress from "nprogress";
 
 export const selectAll = () => {
     const {layerConfigs} = layerManager;
@@ -128,19 +129,19 @@ export const doDelete = () => {
 }
 
 //保存函数节流5s, 5s内不可重复保存
-export const doSave = throttle(() => {
-    return new Promise(() => {
-        const {saveType, id} = URLUtil.parseUrlParams();
-        const proData = designerManager.getData();
-
-        //转换为最终保存的数据格式
-        const projectInfo: IProjectInfo = {
-            id,
-            dataJson: JSON.stringify(proData),
-        }
-        operatorMap[saveType as SaveType].updateProject(projectInfo);
-    });
-}, 5000);
+export const doSave = throttle(async () => {
+    NProgress.configure({minimum: 0.5});
+    NProgress.start();
+    const {saveType, id} = URLUtil.parseUrlParams();
+    const proData = designerManager.getData();
+    //转换为最终保存的数据格式
+    const projectInfo: IProjectInfo = {
+        id,
+        dataJson: JSON.stringify(proData),
+    }
+    await operatorMap[saveType as SaveType].updateProject(projectInfo);
+    NProgress.done()
+}, 5000, {trailing: false});
 
 export const doHide = () => {
     const {targetIds, setTargetIds} = eventOperateStore;
@@ -217,7 +218,7 @@ export const doMoveDown = () => {
         const yPos = layerConfigs[id].y! + dragStep;
         movableRef?.request("draggable", {y: yPos}, true);
     } else {
-        const yPos = groupCoordinate?.minY! + dragStep;
+        const yPos = (groupCoordinate?.minY ?? 0) + dragStep;
         movableRef?.request("draggable", {y: yPos}, true);
     }
 }
@@ -232,7 +233,7 @@ export const doMoveLeft = () => {
         const xPos = layerConfigs[id].x!;
         movableRef?.request("draggable", {x: xPos - dragStep}, true);
     } else {
-        const xPos = groupCoordinate?.minX! - dragStep;
+        const xPos = (groupCoordinate?.minX ?? 0) - dragStep;
         movableRef?.request("draggable", {x: xPos}, true);
     }
 }
@@ -247,7 +248,7 @@ export const doMoveRight = () => {
         const xPos = layerConfigs[id].x!;
         movableRef?.request("draggable", {x: xPos + dragStep}, true);
     } else {
-        const xPos = groupCoordinate?.minX! + dragStep;
+        const xPos = (groupCoordinate?.minX ?? 0) + dragStep;
         movableRef?.request("draggable", {x: xPos}, true);
     }
 }
