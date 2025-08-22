@@ -69,14 +69,17 @@ export default class ServerOperator extends AbstractOperator {
         formData.append('projectId', id);
         formData.append('type', "1");
 
-        const res = await FetchUtil.post('/api/file/upload', formData, {headers: {'Content-Type': 'multipart/form-data'}});
+        const res = await FetchUtil.post('/api/image/upload', formData, {headers: {'Content-Type': 'multipart/form-data'}});
         return res.code === 200 ? {url: res.data} : false;
     }
 
-    async getImageSourceList(projectId: string): Promise<IImageData[]> {
-        const res = await FetchUtil.get(`/api/file/getList/${projectId}`);
+    async getImageSourceList(): Promise<IImageData[]> {
+        const res = await FetchUtil.post(`/api/image/pageList`, {
+            current: 1,
+            size: 1000
+        });
         if (res.code === 200)
-            return res.data;
+            return res.data.records;
         else {
             globalMessage.messageApi?.error(res.msg);
             return [];
@@ -84,9 +87,11 @@ export default class ServerOperator extends AbstractOperator {
     }
 
     public async delImageSource(imageId: string): Promise<boolean> {
-        const res = await FetchUtil.get(`/api/file/del/${imageId}`);
-        if (res.code === 200) return true;
-        else {
+        const res = await FetchUtil.post(`/api/image/batchDelete`, [imageId]);
+        if (res.code === 200) {
+            globalMessage.messageApi?.success("操作成功");
+            return true;
+        } else {
             globalMessage.messageApi?.error(res.msg);
             return false;
         }

@@ -21,12 +21,13 @@ import IdGenerate from "../../../../utils/IdGenerate";
 import {BaseImageComponentProps} from "../../../../comps/lc/base-image/BaseImageController";
 import {IImageData} from "../../../../comps/lc/base-image/BaseImageComponent";
 import DragAddProvider from "../../../../framework/drag-scale/DragAddProvider";
-import {Popconfirm} from "antd";
+import {Popconfirm, Input} from "antd";
 import historyRecordOperateProxy from "../../../operate-provider/undo-redo/HistoryRecordOperateProxy.ts";
-import {Close} from "@icon-park/react";
+import {Close, Search} from "@icon-park/react";
 
 export default function ImageSource() {
     const [imageList, setImageList] = useState<IImageData[]>([]);
+    const [searchValue, setSearchValue] = useState<string>('');
     const dragAddProvider = useRef<DragAddProvider | null>(null);
 
     const dragStart = (event: DragEvent) => {
@@ -108,10 +109,25 @@ export default function ImageSource() {
         });
     }
 
+    const filteredImageList = imageList.filter(item =>
+        item.name?.toLowerCase().includes(searchValue.toLowerCase()) ||
+        '未命名图片'.toLowerCase().includes(searchValue.toLowerCase())
+    );
+
     return (
         <div className={'image-source'}>
+            <div className={'image-source-search'}>
+                <Input
+                    prefix={<Search className="search-icon"/>}
+                    placeholder="搜索图片名称"
+                    value={searchValue}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    className="image-search-input"
+                    allowClear
+                />
+            </div>
             <div className={'image-source-list'} id={'image-source-list'}>
-                {imageList.map((item: IImageData, index: number) => (
+                {filteredImageList.map((item: IImageData, index: number) => (
                     <div
                         className={'image-source-item droppable-element'}
                         key={index}

@@ -90,7 +90,7 @@ export class DataSourceStore {
     }
 
     testConnect = (id: string) => {
-        FetchUtil.get(`/api/datasource/test/${id}`).then(res => {
+        FetchUtil.get(`/api/commonDatabase/test/${id}`).then(res => {
             if (res.code === 200)
                 globalMessage.messageApi?.success(res.msg);
             else
@@ -99,7 +99,7 @@ export class DataSourceStore {
     }
 
     copyDataSource = (id: string) => {
-        FetchUtil.get(`/api/datasource/copy/${id}`).then(res => {
+        FetchUtil.get(`/api/commonDatabase/copy/${id}`).then(res => {
             if (res.code === 200) {
                 globalMessage.messageApi?.success(res.msg);
                 this.getDataSourceList();
@@ -109,7 +109,7 @@ export class DataSourceStore {
     }
 
     openDataSourceEditor = (id: string) => {
-        FetchUtil.get(`/api/datasource/get/${id}`).then(res => {
+        FetchUtil.get(`/api/commonDatabase/get/${id}`).then(res => {
             if (res.code === 200) {
                 this.setDataSource(res.data);
                 this.setPanelVisible(true);
@@ -119,7 +119,7 @@ export class DataSourceStore {
     }
 
     getDataSourceList = () => {
-        FetchUtil.post(`/api/datasource/pageList`, {
+        FetchUtil.post(`/api/commonDatabase/pageList`, {
             current: this.dataSourcePageData.current,
             size: this.dataSourcePageData.size,
             searchValue: this.searchValue
@@ -180,7 +180,7 @@ export class DataSourceStore {
     updateDataSource = async (data: IDataSource) => {
         try {
             const encryptedData = await this.encryptPassword(data);
-            const res = await FetchUtil.post(`/api/datasource/update`, encryptedData);
+            const res = await FetchUtil.post(`/api/commonDatabase/update`, encryptedData);
             if (res.code === 200) {
                 globalMessage.messageApi?.success(res.msg);
                 this.getDataSourceList();
@@ -196,7 +196,7 @@ export class DataSourceStore {
     createDataSource = async (data: IDataSource) => {
         try {
             const encryptedData = await this.encryptPassword(data);
-            const res = await FetchUtil.post(`/api/datasource/add`, encryptedData);
+            const res = await FetchUtil.post(`/api/commonDatabase/add`, encryptedData);
             if (res.code === 200) {
                 globalMessage.messageApi?.success(res.msg);
                 this.getDataSourceList();
@@ -212,7 +212,7 @@ export class DataSourceStore {
     doBatchDeleteDataSource = (ids: string[]) => {
         if (ids.length === 0)
             return;
-        FetchUtil.post('/api/datasource/batchDel', ids).then((res) => {
+        FetchUtil.post('/api/commonDatabase/batchDel', ids).then((res) => {
             const {code, msg} = res;
             if (code === 200) {
                 globalMessage.messageApi?.success('删除成功');
