@@ -10,7 +10,7 @@
  */
 
 import {AbstractApi} from "./AbstractApi.ts";
-import {IPage, IPageParam, IProjectInfo, ProjectDataType} from "../designer/DesignerType.ts";
+import {IPage, IPageParam, IProject, IProjectInfo, ProjectDataType} from "../designer/DesignerType.ts";
 import URLUtil from "../utils/URLUtil.ts";
 import {globalMessage} from "../framework/message/GlobalMessage.tsx";
 import {IImageData} from "../comps/lc/base-image/BaseImageComponent.tsx";
@@ -37,6 +37,21 @@ class BaseApi extends AbstractApi {
         const res = await FetchUtil.get(`/api/project/getProjectData/${id}`);
         if (res.code === 200)
             return JSON.parse(res.data);
+        else {
+            globalMessage.messageApi?.error(res.msg);
+            return null;
+        }
+    }
+
+    /**
+     * 获取项目信息（包含项目数据）
+     * @param id
+     */
+    async getProjectInfo(id: string): Promise<IProject | null> {
+        const res = await FetchUtil.get(`/api/project/getProjectInfo/${id}`);
+        const {code, data} = res;
+        if (code === 200)
+            return data;
         else {
             globalMessage.messageApi?.error(res.msg);
             return null;

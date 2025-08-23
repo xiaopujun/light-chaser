@@ -10,7 +10,7 @@
  */
 
 import eventOperateStore from "../EventOperateStore";
-import {DesignerMode, ILayerItem, IProjectInfo} from "../../DesignerType";
+import {ILayerItem, IProjectInfo} from "../../DesignerType";
 import throttle from "lodash/throttle";
 import {historyOperator} from "../undo-redo/HistoryOperator";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
@@ -22,7 +22,6 @@ import URLUtil from "../../../utils/URLUtil";
 import LayerUtil from "../../left/layer-list/util/LayerUtil.ts";
 import bluePrintHdStore from "../../header/items/blue-print/BluePrintHdStore.ts";
 import projectHdStore from "../../header/items/project/ProjectManager.ts";
-import FileUtil from "../../../utils/FileUtil.ts";
 import layerListStore from "../../left/layer-list/LayerListStore.ts";
 import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
 import layerManager from "../../manager/LayerManager.ts";
@@ -34,6 +33,7 @@ import BpCanvasUtil from "../../blueprint/util/BpCanvasUtil.ts";
 import NProgress from "nprogress";
 import ProjectUtil from "../../../utils/ProjectUtil.ts";
 import baseApi from "../../../api/BaseApi.ts";
+import FetchUtil from "../../../utils/FetchUtil.ts";
 
 export const selectAll = () => {
     const {layerConfigs} = layerManager;
@@ -519,50 +519,31 @@ export const importProject = () => {
     //打开文件选择框
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = '.json';
+    input.accept = '.zip';
     input.onchange = (e: any) => {
         globalMessage.messageApi?.open({
+            key: 'importProject',
             type: 'loading',
             content: '正在导入项目数据...'
         })
         const file = e.target.files[0] as File;
         if (!file)
             return;
-        const promises: Promise<void>[] = [];
-        file.text().then((fileData: string) => {
-            const timeout = setTimeout(() => {
-                const importData = JSON.parse(fileData);
-                if (!('flag' in importData) || importData.flag !== 'pyz_tt') {
-                    globalMessage.messageApi?.destroy();
-                    globalMessage.messageApi?.info('数据格式错误，请检查导入文件内容。')
-                    return;
-                }
-                const projectData = importData.data;
-                const elemConfigs = projectData.layerManager?.elemConfigs;
-                if (elemConfigs) {
-                    Object.keys(elemConfigs).forEach((key) => {
-                        const item = elemConfigs[key];
-                        if (item.base.type === 'BaseImage' && (item.style.localUrl as string)?.startsWith('blob')) {
-                            // 将 blob 数据转换为 base64，并将异步操作添加到 promises 数组中
-                            promises.push(
-                                FileUtil.base64ToBlob(item.style.localUrl as string).then((res: string | boolean) => {
-                                    if (res)
-                                        item.style.localUrl = res;
-                                    else {
-                                        console.error(`${item.base.id + "_" + item.base.name} 图片blob转换失败, ${item.style.localUrl}`);
-                                    }
-                                })
-                            );
-                        }
-                    });
-                }
-                Promise.all(promises).then(() => {
-                    designerManager.init(projectData as any, DesignerMode.EDIT);
-                    globalMessage.messageApi?.destroy();
-                    globalMessage.messageApi?.success('项目数据导入成功');
-                    clearTimeout(timeout);
-                });
-            }, 500);
+
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('projectId', window.LC_ENV.projectId!);
+        FetchUtil.post('/api/project/importProject', formData, {headers: {'Content-Type': 'multipart/form-data'}}).then((res) => {
+            const {code, data, msg} = res;
+            const timer = setTimeout(() => {
+                clearTimeout(timer);
+                globalMessage.messageApi?.destroy("importProject");
+                if (code === 200 && data) {
+                    globalMessage.messageApi?.success({content: '项目数据导入成功, 将重新加载页面！', duration: 1}).then(() => location.reload());
+                } else
+                    globalMessage.messageApi?.error(msg);
+            }, 1000)
+
         })
     }
     input.click();

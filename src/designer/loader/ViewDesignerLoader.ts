@@ -14,7 +14,7 @@ import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 import {DesignerMode, ProjectDataType, SaveType} from "../DesignerType";
 import layerManager from "../manager/LayerManager.ts";
 import BPExecutor from "../blueprint/core/BPExecutor.ts";
-import BaseApi from "../../api/BaseApi.ts";
+import baseApi from "../../api/BaseApi.ts";
 
 
 /**
@@ -23,7 +23,10 @@ import BaseApi from "../../api/BaseApi.ts";
 class ViewDesignerLoader extends AbstractDesignerLoader {
 
     protected async getProjectData(id: string): Promise<ProjectDataType | null> {
-        return await BaseApi.getProjectData(id);
+        const projectInfo = await baseApi.getProjectInfo(id);
+        const {name, dataJson} = projectInfo!
+        name && (document.title = name);
+        return JSON.parse(dataJson!);
     }
 
     protected getProjectDataAfter(id: string, type: SaveType, data: ProjectDataType): void {

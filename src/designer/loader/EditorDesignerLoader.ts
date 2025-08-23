@@ -19,7 +19,10 @@ import baseApi from "../../api/BaseApi.ts";
 class EditorDesignerLoader extends AbstractDesignerLoader {
 
     protected async getProjectData(id: string): Promise<ProjectDataType | null> {
-        return await baseApi.getProjectData(id);
+        const projectInfo = await baseApi.getProjectInfo(id);
+        const {name, dataJson} = projectInfo!
+        name && (document.title = name);
+        return JSON.parse(dataJson!);
     }
 
     protected getProjectDataAfter(id: string, type: SaveType, data: ProjectDataType): void {

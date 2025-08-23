@@ -36,7 +36,6 @@ export default function ProjectItem(props: ProjectItemProps) {
         }
     }
 
-    console.log(cover)
     return (
         <div className="project-list-item">
             <div className="project-item-cover" style={{backgroundImage: `url(${cover})`}}>

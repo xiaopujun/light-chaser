@@ -194,6 +194,13 @@ export interface BluePrintManagerDataType {
     bpAPLineMap?: Record<string, string[]>;
 }
 
+export interface IProject {
+    id?: string;
+    name?: string;
+    des?: string;
+    dataJson?: string;
+}
+
 /**
  * lc设计器配置
  */
