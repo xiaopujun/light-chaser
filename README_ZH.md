@@ -50,23 +50,17 @@ Pro在线体验：http://www.lcdesigner.cn/home/server
 - 蓝图编辑器：支持蓝图节点系统，支持图层节点、全局变量节点，逻辑操作、条件判断、全局节点等多种功能节点
 - 全局变量：数据源支持绑定全局变量，动态修改api参数、支持主动渲染实时更新组件数据状态
 
-# 示例
+# 效果图
 
-#### 主编辑器
+![效果图1](https://s2.loli.net/2025/08/23/BO2AiFes7vwlkL6.jpg)
 
-![示例1](https://s2.loli.net/2024/09/21/U2Ni3pfaE1rJVAM.png)
+![效果图2](https://s2.loli.net/2025/08/23/qTlnx7LOWUKaYRA.jpg)
 
-#### 可视化事件编辑器
+![效果图3](https://s2.loli.net/2025/08/23/IpBrYJAO4nyPGil.jpg)
 
-![示例2](https://s2.loli.net/2024/09/26/pitkUF2GogRYnxO.jpg)
+![效果图4](https://s2.loli.net/2025/08/23/zREQuATd3GyCUvx.jpg)
 
-#### 设计完成图1
-
-![示例3](https://i.072333.xyz/file/802e2d2b4d95fa32fae48.png)
-
-#### 设计完成图2
-
-![示例4](https://i.072333.xyz/file/51819086932cb1b559a15.png)
+![效果图5](https://s2.loli.net/2025/08/23/iOSYhAMQPGj5e3V.jpg)
 
 # 部署和使用
 
