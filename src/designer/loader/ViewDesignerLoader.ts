@@ -12,9 +12,9 @@
 import designerManager from "../manager/DesignerManager.ts";
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 import {DesignerMode, ProjectDataType, SaveType} from "../DesignerType";
-import operatorMap from "../../framework/operate";
 import layerManager from "../manager/LayerManager.ts";
 import BPExecutor from "../blueprint/core/BPExecutor.ts";
+import BaseApi from "../../api/BaseApi.ts";
 
 
 /**
@@ -22,8 +22,8 @@ import BPExecutor from "../blueprint/core/BPExecutor.ts";
  */
 class ViewDesignerLoader extends AbstractDesignerLoader {
 
-    protected async getProjectData(id: string, type: SaveType): Promise<ProjectDataType | null> {
-        return await operatorMap[type].getProjectData(id);
+    protected async getProjectData(id: string): Promise<ProjectDataType | null> {
+        return await BaseApi.getProjectData(id);
     }
 
     protected getProjectDataAfter(id: string, type: SaveType, data: ProjectDataType): void {

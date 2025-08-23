@@ -10,16 +10,16 @@
  */
 
 import designerManager from "../manager/DesignerManager.ts";
-import operatorMap from "../../framework/operate";
 import {DesignerMode, ProjectDataType, SaveType} from "../DesignerType";
 import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
 import layerManager from "../manager/LayerManager.ts";
 import BPExecutor from "../blueprint/core/BPExecutor.ts";
+import baseApi from "../../api/BaseApi.ts";
 
 class EditorDesignerLoader extends AbstractDesignerLoader {
 
-    protected async getProjectData(id: string, type: SaveType): Promise<ProjectDataType | null> {
-        return await operatorMap[type].getProjectData(id);
+    protected async getProjectData(id: string): Promise<ProjectDataType | null> {
+        return await baseApi.getProjectData(id);
     }
 
     protected getProjectDataAfter(id: string, type: SaveType, data: ProjectDataType): void {

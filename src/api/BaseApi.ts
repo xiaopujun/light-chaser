@@ -9,14 +9,14 @@
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
 
-import {AbstractOperator} from "./AbstractOperator";
-import {IPage, IPageParam, IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
-import URLUtil from "../../utils/URLUtil";
-import {globalMessage} from "../message/GlobalMessage";
-import {IImageData} from "../../comps/lc/base-image/BaseImageComponent";
-import FetchUtil from "../../utils/FetchUtil.ts";
+import {AbstractApi} from "./AbstractApi.ts";
+import {IPage, IPageParam, IProjectInfo, ProjectDataType} from "../designer/DesignerType.ts";
+import URLUtil from "../utils/URLUtil.ts";
+import {globalMessage} from "../framework/message/GlobalMessage.tsx";
+import {IImageData} from "../comps/lc/base-image/BaseImageComponent.tsx";
+import FetchUtil from "../utils/FetchUtil.ts";
 
-export default class ServerOperator extends AbstractOperator {
+class BaseApi extends AbstractApi {
 
     async createProject(project: IProjectInfo): Promise<string> {
         const res = await FetchUtil.post('/api/project/create', project);
@@ -106,4 +106,12 @@ export default class ServerOperator extends AbstractOperator {
         const res = await FetchUtil.post('/api/project/cover', formData, {headers: {'Content-Type': 'multipart/form-data'}});
         return res.code === 200;
     }
+
+    public async exportProjectApi(projectDependency: any) {
+        return await FetchUtil.post('/api/project/exportProject', projectDependency);
+    }
+
 }
+
+const baseApi = new BaseApi();
+export default baseApi;

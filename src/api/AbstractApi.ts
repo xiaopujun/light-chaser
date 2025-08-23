@@ -9,10 +9,10 @@
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
 
-import {IPage, IPageParam, IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
-import {IImageData} from "../../comps/lc/base-image/BaseImageComponent";
+import {IPage, IPageParam, IProjectInfo, ProjectDataType} from "../designer/DesignerType.ts";
+import {IImageData} from "../comps/lc/base-image/BaseImageComponent.tsx";
 
-export abstract class AbstractOperator {
+export abstract class AbstractApi {
     /**
      * 创建项目
      * @param project 项目初始化数据

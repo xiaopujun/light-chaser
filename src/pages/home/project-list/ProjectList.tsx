@@ -15,12 +15,12 @@ import {Button, Input, Pagination} from "antd";
 import defaultSnapshot from '../image/default-snapshot.jpg';
 import {DesignerMode, IPage, IProjectInfo, SaveType} from "../../../designer/DesignerType";
 import {INewProjectInfo, NewProjectDialog} from "./NewProjectDialog.tsx";
-import operatorMap from "../../../framework/operate";
 import {globalMessage} from "../../../framework/message/GlobalMessage";
 import DelProjectDialog from "./DelProjectDialog.tsx";
 import CloneProjectDialog from "./CloneProjectDialog.tsx";
 import ProjectItem from "./ProjectItem.tsx";
 import {Add} from "@icon-park/react";
+import baseApi from "../../../api/BaseApi.ts";
 
 const {Search} = Input;
 
@@ -43,7 +43,7 @@ export const ProjectList = memo((props: ProjectListProps) => {
     });
 
     const getProjectPageList = (current: number, size: number, searchValue?: string) => {
-        operatorMap[saveType].getProjectInfoPageList({
+        baseApi.getProjectInfoPageList({
             current,
             size,
             searchValue
@@ -61,7 +61,7 @@ export const ProjectList = memo((props: ProjectListProps) => {
             saveType: saveType,
             dataJson: JSON.stringify({canvasManager: {width, height}}),
         }
-        operatorMap[saveType].createProject(project).then((id) => {
+        baseApi.createProject(project).then((id) => {
             if (id === "")
                 globalMessage.messageApi?.error('创建失败');
             else {
@@ -96,7 +96,7 @@ export const ProjectList = memo((props: ProjectListProps) => {
     const cancelDel = () => setDelDialog(false);
 
     const confirmClone = () => {
-        operatorMap[saveType].copyProject(cloneIdRef.current).then((id) => {
+        baseApi.copyProject(cloneIdRef.current).then((id) => {
             if (id !== "") {
                 setCloneDialog(false);
                 getProjectPageList(pageData.current, pageData.size);
@@ -110,7 +110,7 @@ export const ProjectList = memo((props: ProjectListProps) => {
     const cancelClone = () => setCloneDialog(false);
 
     const confirmDel = () => {
-        operatorMap[saveType].deleteProject(delIdRef.current).then((res) => {
+        baseApi.deleteProject(delIdRef.current).then((res) => {
             if (res) {
                 setDelDialog(false);
                 getProjectPageList(pageData.current, pageData.size);
@@ -123,7 +123,7 @@ export const ProjectList = memo((props: ProjectListProps) => {
     }
 
     const pageChange = (page: number, size: number) => {
-        operatorMap[saveType].getProjectInfoPageList({
+        baseApi.getProjectInfoPageList({
             current: page,
             size: size
         }).then((data: IPage<IProjectInfo>) => setPageData(data));
@@ -136,7 +136,7 @@ export const ProjectList = memo((props: ProjectListProps) => {
     }
 
     const doSearch = (value: string) => {
-        operatorMap[saveType].getProjectInfoPageList({
+        baseApi.getProjectInfoPageList({
             current: pageData.current,
             size: pageData.size,
             searchValue: value

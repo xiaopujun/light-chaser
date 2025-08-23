@@ -10,7 +10,7 @@
  */
 
 import eventOperateStore from "../EventOperateStore";
-import {DesignerMode, ILayerItem, IProjectInfo, SaveType} from "../../DesignerType";
+import {DesignerMode, ILayerItem, IProjectInfo} from "../../DesignerType";
 import throttle from "lodash/throttle";
 import {historyOperator} from "../undo-redo/HistoryOperator";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
@@ -18,7 +18,6 @@ import undoRedoMap from "../undo-redo/core";
 import runtimeConfigStore from "../../store/RuntimeStore.ts";
 import footerStore from "../../footer/FooterStore";
 import bpLeftStore from "../../../designer/blueprint/left/BPLeftStore";
-import operatorMap from "../../../framework/operate";
 import URLUtil from "../../../utils/URLUtil";
 import LayerUtil from "../../left/layer-list/util/LayerUtil.ts";
 import bluePrintHdStore from "../../header/items/blue-print/BluePrintHdStore.ts";
@@ -33,6 +32,8 @@ import canvasManager from "../../header/items/canvas/CanvasManager.ts";
 import designerManager from "../../manager/DesignerManager.ts";
 import BpCanvasUtil from "../../blueprint/util/BpCanvasUtil.ts";
 import NProgress from "nprogress";
+import ProjectUtil from "../../../utils/ProjectUtil.ts";
+import baseApi from "../../../api/BaseApi.ts";
 
 export const selectAll = () => {
     const {layerConfigs} = layerManager;
@@ -132,14 +133,14 @@ export const doDelete = () => {
 export const doSave = throttle(async () => {
     NProgress.configure({minimum: 0.5});
     NProgress.start();
-    const {saveType, id} = URLUtil.parseUrlParams();
+    const {id} = URLUtil.parseUrlParams();
     const proData = designerManager.getData();
     //转换为最终保存的数据格式
     const projectInfo: IProjectInfo = {
         id,
         dataJson: JSON.stringify(proData),
     }
-    await operatorMap[saveType as SaveType].updateProject(projectInfo);
+    await baseApi.updateProject(projectInfo);
     NProgress.done()
 }, 5000, {trailing: false});
 
@@ -483,49 +484,35 @@ export const toggleHotKeyDes = () => {
     setHotKeyVisible(!hotKeyVisible)
 }
 
-export const exportProject = () => {
+export const exportProject = async () => {
     globalMessage.messageApi?.open({
+        key: 'exportProject',
         type: 'loading',
-        content: '正在导出项目数据...'
+        content: '正在导出项目数据，需要一些时间，请耐心等候...',
+        duration: 0,
     })
     const timeout = setTimeout(() => {
-        const projectData = designerManager.getData();
-        const elemConfigs = projectData.layerManager?.elemConfigs;
-        const promises: Promise<void>[] = [];
-        if (elemConfigs) {
-            Object.keys(elemConfigs).forEach((key) => {
-                const item = elemConfigs[key];
-                if (item.base.type === 'BaseImage' && (item.style.localUrl as string)?.startsWith('blob')) {
-                    // 将 blob 数据转换为 base64，并将异步操作添加到 promises 数组中
-                    promises.push(
-                        FileUtil.blobToBase64(item.style.localUrl as string).then((res: string | boolean) => {
-                            if (res)
-                                item.style.localUrl = res;
-                            else {
-                                console.error(`${item.base.id + "_" + item.base.name} 图片blob转换失败, ${item.style.localUrl}`);
-                            }
-                        })
-                    );
-                }
-            });
-        }
-        // 等待所有异步操作完成
-        Promise.all(promises).then(() => {
-            // 在所有异步操作完成后，将项目数据转换为 JSON 字符串并导出
-            const exportData = {flag: 'pyz_tt', version: 'v1.1.0', data: projectData};
-            const projectDataJson = JSON.stringify(exportData);
-            const blob = new Blob([projectDataJson], {type: 'application/json'});
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a')
-            a.href = url;
-            a.download = `project-${new Date().getTime()}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-            globalMessage.messageApi?.destroy();
-            globalMessage.messageApi?.success('项目数据导出成功');
-        });
+        //1. 计算当前项目所依赖的外部资源
+        const projectDependency = ProjectUtil.calculateProjectDependency();
+        baseApi.exportProjectApi(projectDependency).then((res) => {
+            const {code, data, msg} = res;
+            if (code === 200) {
+                //3. 自动下载后端生成的压缩包
+                const url = URL.createObjectURL(data);
+                const a = document.createElement('a')
+                a.href = url;
+                a.download = `${document.title}.zip`;
+                a.click();
+                URL.revokeObjectURL(url);
+                globalMessage.messageApi?.success('项目数据导出成功');
+            } else {
+                globalMessage.messageApi?.error(msg);
+            }
+            globalMessage.messageApi?.destroy("exportProject");
+        })
         clearTimeout(timeout);
     }, 1000);
+
 }
 
 export const importProject = () => {

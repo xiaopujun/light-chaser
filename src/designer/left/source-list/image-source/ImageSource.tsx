@@ -9,10 +9,7 @@
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
 import {useEffect, useRef, useState} from "react";
-import URLUtil from "../../../../utils/URLUtil";
-import {ILayerItem, SaveType} from "../../../DesignerType";
-import operatorMap from "../../../../framework/operate/index";
-import {AbstractOperator} from "../../../../framework/operate/AbstractOperator";
+import {ILayerItem} from "../../../DesignerType";
 import './ImageSource.less';
 import eventOperateStore from "../../../operate-provider/EventOperateStore";
 import layerManager from "../../../manager/LayerManager.ts";
@@ -21,9 +18,10 @@ import IdGenerate from "../../../../utils/IdGenerate";
 import {BaseImageComponentProps} from "../../../../comps/lc/base-image/BaseImageController";
 import {IImageData} from "../../../../comps/lc/base-image/BaseImageComponent";
 import DragAddProvider from "../../../../framework/drag-scale/DragAddProvider";
-import {Popconfirm, Input} from "antd";
+import {Input, Popconfirm} from "antd";
 import historyRecordOperateProxy from "../../../operate-provider/undo-redo/HistoryRecordOperateProxy.ts";
 import {Close, Search} from "@icon-park/react";
+import baseApi from "../../../../api/BaseApi.ts";
 
 export default function ImageSource() {
     const [imageList, setImageList] = useState<IImageData[]>([]);
@@ -83,8 +81,7 @@ export default function ImageSource() {
     }
 
     const getImageList = () => {
-        const {saveType, id} = URLUtil.parseUrlParams();
-        (operatorMap[saveType as SaveType] as AbstractOperator).getImageSourceList(id).then((data) => {
+        baseApi.getImageSourceList().then((data) => {
             setImageList(data);
         });
     }
@@ -102,8 +99,7 @@ export default function ImageSource() {
     }, []);
 
     const confirmDel = (imageId: string) => {
-        const {saveType} = URLUtil.parseUrlParams();
-        (operatorMap[saveType as SaveType] as AbstractOperator).delImageSource(imageId).then((data) => {
+        baseApi.delImageSource(imageId).then((data) => {
             if (data)
                 getImageList();
         });

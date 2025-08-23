@@ -14,7 +14,7 @@ import {Copy, Delete, Edit, PreviewOpen} from "@icon-park/react";
 import {Input, Popover} from "antd";
 import {useState} from "react";
 import {IProjectInfo, SaveType} from "../../../designer/DesignerType.ts";
-import operatorMap from "../../../framework/operate";
+import baseApi from "../../../api/BaseApi.ts";
 
 export interface ProjectItemProps {
     id: string;
@@ -25,14 +25,14 @@ export interface ProjectItemProps {
 }
 
 export default function ProjectItem(props: ProjectItemProps) {
-    const {cover, id, saveType, doOperate} = props;
+    const {cover, id, doOperate} = props;
     const [rename, setRename] = useState(false);
     const [name, setName] = useState(props.name);
 
     const updateName = () => {
         if (name !== props.name) {
             const data: IProjectInfo = {id, name};
-            operatorMap[saveType].updateProject(data);
+            baseApi.updateProject(data);
         }
     }
 
