@@ -75,7 +75,7 @@ export default function LineLayer() {
         const mouseY = e.clientY - canvasOffset.y;
 
         // 新增：检测附近的锚点并自动吸附
-        const {targetAnchor, targetElement} = findNearbyAnchor(mouseX, mouseY, 10); // 10像素吸附范围
+        const {targetAnchor, targetElement} = findNearbyAnchor(mouseX, mouseY, 20); // 10像素吸附范围
 
         if (targetAnchor && targetElement) {
             // 如果找到附近的锚点，使用锚点中心坐标
@@ -188,7 +188,9 @@ export default function LineLayer() {
             height,
             antialias: true,
             backgroundAlpha: 0,
-            resolution: window.devicePixelRatio,
+            resolution: window.devicePixelRatio || 1,
+            autoDensity: true,
+            resizeTo: document.getElementById("bp-node-content")!,
             preference: 'webgpu'
         }).then(() => {
             bluePrintManager.pixiApp!.stage.interactive = true;
