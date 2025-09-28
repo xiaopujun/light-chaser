@@ -1,3 +1,14 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import React from "react";
 import './BPHeader.less';
 import bluePrintManager from "../manager/BluePrintManager.ts";
@@ -8,7 +19,14 @@ const BPHeader: React.FC = () => {
     return (
         <div className={'bp-header'}>
             <div className={'bp-header-title'}>蓝图编辑器</div>
-            <div className={'bp-header-menu'}><Close style={{cursor: 'pointer'}} onClick={() => {
+      <div className={'bp-header-menu'}>
+        <Close
+          theme="outline"
+          size="20"
+          fill="#A0A0B2"
+          strokeWidth={2}
+          className="bp-close-icon"
+          onClick={() => {
                 const {setBluePrintVisible} = bluePrintHdStore;
                 setBluePrintVisible(false);
                 const {setCanvasTranslate, setCanvasScale} = bluePrintManager;

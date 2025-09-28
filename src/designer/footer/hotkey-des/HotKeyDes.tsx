@@ -1,3 +1,14 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import './HotKeyDes.less';
 import {Modal} from 'antd';
 
@@ -46,29 +57,36 @@ export interface HotKeyDesProps {
 export const HotKeyDes = (prop: HotKeyDesProps) => {
     const {onClose} = prop;
     return (
-        <Modal title={'快捷键说明'} open={true} width={800} onCancel={onClose} footer={null}>
-            <div className={'lc-hotkey-des'} style={{color: 'white'}}>
-                <table className={'hotkey-des-table'}>
+        <Modal title="快捷键说明"
+               open={true}
+               width={800}
+               onCancel={onClose}
+               footer={null}
+               className="hotkey-modal"
+               styles={{body: {padding: '16px 24px'}}}>
+            <div className="lc-hotkey-des">
+                <table className="hotkey-des-table">
                     <thead>
                     <tr>
                         <th style={{width: '10%'}}>编号</th>
-                        <th style={{textAlign: 'left'}}>功能</th>
-                        <th style={{textAlign: 'left'}}>Windows</th>
-                        <th style={{textAlign: 'left'}}>Mac</th>
+                        <th style={{textAlign: 'left', width: '30%'}}>功能</th>
+                        <th style={{textAlign: 'left', width: '30%'}}>Windows</th>
+                        <th style={{textAlign: 'left', width: '30%'}}>Mac</th>
                     </tr>
                     </thead>
                     <tbody>
-
-                    {hotkeys.map((item, index) => {
-                        return (
-                            <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td style={{textAlign: 'left'}}>{item.name}</td>
-                                <td style={{textAlign: 'left'}}>{item.windows}</td>
-                                <td style={{textAlign: 'left'}}>{item.mac}</td>
-                            </tr>
-                        )
-                    })}
+                    {hotkeys.map((item, index) => (
+                        <tr key={index}>
+                            <td>{index + 1}</td>
+                            <td style={{textAlign: 'left'}}>{item.name}</td>
+                            <td style={{textAlign: 'left'}}>
+                                <span className="keyboard-key">{item.windows}</span>
+                            </td>
+                            <td style={{textAlign: 'left'}}>
+                                <span className="keyboard-key">{item.mac}</span>
+                            </td>
+                        </tr>
+                    ))}
                     </tbody>
                 </table>
             </div>

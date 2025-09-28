@@ -1,3 +1,14 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import {HotKeyConfigType, HotKeyTriggerType} from "./HotKeyType";
 import {
     delBPLine,
@@ -36,59 +47,59 @@ import {
 } from "./HotKeyImpl";
 
 const commonHotKeyConfigs: HotKeyConfigType = {
-    'control + a': {
+    'control+a': {
         handler: selectAll,
         range: ".lc-ruler-content"
     },
-    'control + v': {
+    'control+v': {
         handler: doCopy,
         range: ".lc-ruler-content"
     },
 
 
-    'control + l': {
+    'control+l': {
         handler: doLock,
     },
-    'control + shift + l': {
+    'control+shift+l': {
         handler: doUnLock,
     },
-    'control + h': {
+    'control+h': {
         handler: doHide,
     },
-    'control + arrowup': {
+    'control+arrowup': {
         handler: layerToTop,
     },
-    'control + arrowdown': {
+    'control+arrowdown': {
         handler: layerToBottom,
     },
-    'alt + arrowup': {
+    'alt+arrowup': {
         handler: layerMoveUp,
     },
-    'alt + arrowdown': {
+    'alt+arrowdown': {
         handler: layerMoveDown,
     },
-    'control + s': {
+    'control+s': {
         handler: doSave,
     },
-    'control + z': {
+    'control+z': {
         handler: undo,
     },
-    'control + shift + z': {
+    'control+shift+z': {
         handler: redo,
     },
-    'control + k': {
+    'control+k': {
         handler: toggleSecondaryBorder,
     },
-    'control + 1': {
+    'control+1': {
         handler: toggleProjectConfig,
     },
-    'control + 2': {
+    'control+2': {
         handler: toggleCanvasConfig,
     },
-    'control + 3': {
+    'control+3': {
         handler: toggleGlobalThemeConfig,
     },
-    'control + 4': {
+    'control+4': {
         handler: toggleHotKeyDes,
     },
     'arrowup': {
@@ -111,56 +122,56 @@ const commonHotKeyConfigs: HotKeyConfigType = {
         triggerType: HotKeyTriggerType.COILED,
         range: ".lc-ruler-content"
     },
-    'control + shift + arrowup': {
+    'control+shift+arrowup': {
         handler: doBaseBottomEnlargeUp,
         triggerType: HotKeyTriggerType.COILED,
         range: ".lc-ruler-content"
     },
-    'control + shift + arrowdown': {
+    'control+shift+arrowdown': {
         handler: doBaseUpEnlargeDown,
         triggerType: HotKeyTriggerType.COILED,
         range: ".lc-ruler-content"
     },
-    'control + shift + arrowleft': {
+    'control+shift+arrowleft': {
         handler: doBaseRightEnlargeLeft,
         triggerType: HotKeyTriggerType.COILED,
         range: ".lc-ruler-content"
     },
-    'control + shift + arrowright': {
+    'control+shift+arrowright': {
         handler: doBaseLeftEnlargeRight,
         triggerType: HotKeyTriggerType.COILED,
         range: ".lc-ruler-content"
     },
-    'control + alt + arrowup': {
+    'control+alt+arrowup': {
         handler: doBaseBottomDecreaseUp,
         triggerType: HotKeyTriggerType.COILED,
         range: ".lc-ruler-content"
     },
-    'control + alt + arrowdown': {
+    'control+alt+arrowdown': {
         handler: doBaseUpDecreaseDown,
         triggerType: HotKeyTriggerType.COILED,
         range: ".lc-ruler-content"
     },
-    'control + alt + arrowleft': {
+    'control+alt+arrowleft': {
         handler: doBaseRightDecreaseLeft,
         triggerType: HotKeyTriggerType.COILED,
         range: ".lc-ruler-content"
     },
-    'control + alt + arrowright': {
+    'control+alt+arrowright': {
         handler: doBaseLeftDecreaseRight,
         triggerType: HotKeyTriggerType.COILED,
         range: ".lc-ruler-content"
     },
-    'control + g': {
+    'control+g': {
         handler: doGrouping,
     },
-    'control + shift + g': {
+    'control+shift+g': {
         handler: doUnGrouping,
     },
-    'alt + shift + g': {
+    'alt+shift+g': {
         handler: removeFromGroup,
     },
-    'control + f': {
+    'control+f': {
         handler: searchLayer,
     }
 }

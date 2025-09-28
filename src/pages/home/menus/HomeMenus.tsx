@@ -1,6 +1,18 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
+import './HomeMenus.less'
 import {useLocation, useNavigate} from "react-router-dom";
 import {memo} from "react";
-import {Data, LocalPin, NetworkDrive, System} from "@icon-park/react";
+import {Data, NetworkDrive, System} from "@icon-park/react";
 import {Menu} from "antd";
 import {MenuItemType} from "antd/es/menu/interface";
 
@@ -8,14 +20,9 @@ import {MenuItemType} from "antd/es/menu/interface";
 const getMenus = () => {
     const baseMenus: MenuItemType[] = [
         {
-            key: 'server',
+            key: 'projects',
             icon: <NetworkDrive size={16}/>,
-            label: '在线项目'
-        },
-        {
-            key: 'local',
-            icon: <LocalPin size={16}/>,
-            label: '本地项目'
+            label: '项目列表'
         },
         {
             key: 'datasource',
@@ -25,7 +32,7 @@ const getMenus = () => {
         {
             key: 'more',
             icon: <System size={16}/>,
-            label: '帮助'
+            label: '更多'
         },
     ]
     return baseMenus;

@@ -1,29 +1,99 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
 .context-menu {
-  background-color: #1b1e23;
-  padding: 5px;
-  width: 130px;
-  min-height: 150px;
-  transition: opacity 250ms ease !important;
-  z-index: 2;
+  background-color: #2C2C3E;
+  border: 1px solid #3A3A4E;
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
+  z-index: 1000;
+
+  // 添加箭头指示器（可选）
+  &::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 20px;
+    width: 12px;
+    height: 12px;
+    background-color: #2C2C3E;
+    border-left: 1px solid #3A3A4E;
+    border-top: 1px solid #3A3A4E;
+    transform: rotate(45deg);
+    z-index: -1;
+  }
 
   .menu-item {
     display: flex;
-    color: rgba(206, 206, 206, 0.86);
-    font-size: 13px;
-    padding: 9px 8px;
+    align-items: center;
+    color: #A0A0B2;
+    font-size: 14px;
+    font-family: 'Helvetica Neue', 'Inter', 'Roboto', sans-serif;
+    padding: 12px 16px;
     cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    margin-bottom: 4px;
 
-    label {
-      margin-right: 10px;
+    &:last-child {
+      margin-bottom: 0;
     }
 
-    label, span {
+    .menu-item-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      margin-right: 12px;
+      color: #4FB8FF;
+
+      // 图标样式统一
+      svg {
+        width: 16px;
+        height: 16px;
+        stroke-width: 2px;
+      }
+    }
+
+    .menu-item-text {
+      flex: 1;
+      font-weight: 400;
+      line-height: 20px;
       pointer-events: none;
     }
   }
 
   .menu-item:hover {
-    transition: background-color 0.3s ease;
-    background-color: rgba(107, 107, 107, 0.44);
+    background-color: rgba(79, 184, 255, 0.15);
+    color: #FFFFFF;
+    transform: translateX(2px);
+
+    .menu-item-icon {
+      color: #3CED92;
+    }
+  }
+
+  .menu-item:active {
+    background-color: rgba(79, 184, 255, 0.25);
+    transform: translateX(1px);
+  }
+
+  // 分隔线样式（如果有分隔需求）
+  .menu-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #3A3A4E, transparent);
+    margin: 8px 0;
+    opacity: 0.6;
   }
 }

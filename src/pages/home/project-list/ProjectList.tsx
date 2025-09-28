@@ -1,15 +1,26 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import React, {memo, useEffect, useRef} from 'react';
 import './ProjectList.less';
-import {Input, Button, Pagination} from "antd";
+import {Button, Input, Pagination} from "antd";
 import defaultSnapshot from '../image/default-snapshot.jpg';
 import {DesignerMode, IPage, IProjectInfo, SaveType} from "../../../designer/DesignerType";
 import {INewProjectInfo, NewProjectDialog} from "./NewProjectDialog.tsx";
-import operatorMap from "../../../framework/operate";
 import {globalMessage} from "../../../framework/message/GlobalMessage";
 import DelProjectDialog from "./DelProjectDialog.tsx";
 import CloneProjectDialog from "./CloneProjectDialog.tsx";
 import ProjectItem from "./ProjectItem.tsx";
 import {Add} from "@icon-park/react";
+import baseApi from "../../../api/BaseApi.ts";
 
 const {Search} = Input;
 
@@ -28,11 +39,11 @@ export const ProjectList = memo((props: ProjectListProps) => {
         records: [],
         total: 0,
         current: 1,
-        size: 24
+        size: 12
     });
 
     const getProjectPageList = (current: number, size: number, searchValue?: string) => {
-        operatorMap[saveType].getProjectInfoPageList({
+        baseApi.getProjectInfoPageList({
             current,
             size,
             searchValue
@@ -50,7 +61,7 @@ export const ProjectList = memo((props: ProjectListProps) => {
             saveType: saveType,
             dataJson: JSON.stringify({canvasManager: {width, height}}),
         }
-        operatorMap[saveType].createProject(project).then((id) => {
+        baseApi.createProject(project).then((id) => {
             if (id === "")
                 globalMessage.messageApi?.error('创建失败');
             else {
@@ -85,7 +96,7 @@ export const ProjectList = memo((props: ProjectListProps) => {
     const cancelDel = () => setDelDialog(false);
 
     const confirmClone = () => {
-        operatorMap[saveType].copyProject(cloneIdRef.current).then((id) => {
+        baseApi.copyProject(cloneIdRef.current).then((id) => {
             if (id !== "") {
                 setCloneDialog(false);
                 getProjectPageList(pageData.current, pageData.size);
@@ -99,10 +110,11 @@ export const ProjectList = memo((props: ProjectListProps) => {
     const cancelClone = () => setCloneDialog(false);
 
     const confirmDel = () => {
-        operatorMap[saveType].deleteProject(delIdRef.current).then((res) => {
+        baseApi.deleteProject(delIdRef.current).then((res) => {
             if (res) {
                 setDelDialog(false);
                 getProjectPageList(pageData.current, pageData.size);
+                globalMessage.messageApi?.success('删除成功');
             } else {
                 globalMessage.messageApi?.error('删除失败');
             }
@@ -111,7 +123,7 @@ export const ProjectList = memo((props: ProjectListProps) => {
     }
 
     const pageChange = (page: number, size: number) => {
-        operatorMap[saveType].getProjectInfoPageList({
+        baseApi.getProjectInfoPageList({
             current: page,
             size: size
         }).then((data: IPage<IProjectInfo>) => setPageData(data));
@@ -124,7 +136,7 @@ export const ProjectList = memo((props: ProjectListProps) => {
     }
 
     const doSearch = (value: string) => {
-        operatorMap[saveType].getProjectInfoPageList({
+        baseApi.getProjectInfoPageList({
             current: pageData.current,
             size: pageData.size,
             searchValue: value
@@ -139,13 +151,13 @@ export const ProjectList = memo((props: ProjectListProps) => {
         <div className={'project-list-container'}>
             <div className={'project-list-header'}>
                 <div className={'project-list-header-left'}>
-                    <Search placeholder="搜索项目" size={"middle"}
+                    <Search placeholder="搜索项目" size={"small"}
                             className={'project-list-search'}
                             onKeyDown={onKeyDown}
                             onSearch={doSearch}
                             style={{width: 350}}/>
-                    <Button size={'middle'} type={"primary"} onClick={toggleNewProVisible}>
-                        <Add style={{position: 'relative', top: 3, marginRight: 3}}/>新增</Button>
+                    <Button size={'small'} type={"primary"} onClick={toggleNewProVisible}>
+                        <Add style={{position: 'relative', top: 2, marginRight: 3}}/>新增</Button>
                 </div>
                 <div className={'project-list-header-right'}></div>
             </div>

@@ -1,44 +1,68 @@
-.more-info-list {
-  padding: 15px;
-  color: white;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  grid-gap: 25px;
-  font-size: 20px;
-  font-family: '庞门正道标题体免费版', serif;
+.more-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  //background-color: #1E1E2F;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
 
-  .more-info-item {
-    padding: 10px;
-    position: relative;
-    height: 160px;
-    background-color: #00477a;
+  .more-info-title {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 32px;
+    margin-bottom: 24px;
+    color: #FFFFFF;
+    text-align: center;
+  }
+
+  .more-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    width: 100%;
+  }
+
+  .more-info-card {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    border-radius: 5px;
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
+    padding: 20px;
+    background-color: #2C2C3E;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #FFFFFF;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    border: 1px solid #3A3A4E;
 
-  .more-info-item:nth-child(1) {
-    background-image: url('./image/video.png');
-  }
+    &:hover {
+      background-color: lighten(#2C2C3E, 5%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      border-color: #4FB8FF;
+    }
 
-  .more-info-item:nth-child(2) {
-    background-image: url('./image/document.png');
-  }
+    &:active {
+      background-color: darken(#2C2C3E, 5%);
+      transform: translateY(0);
+    }
 
-  .more-info-item:nth-child(3) {
-    background-image: url('./image/github.png');
-  }
+    .card-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
 
-  .more-info-item:nth-child(4) {
-    background-image: url('./image/gitee.png');
-  }
-
-
-  .more-info-item:hover {
-    cursor: pointer;
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(9, 91, 110, 0.53);
+    .card-title {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+      color: #FFFFFF;
+    }
   }
 }

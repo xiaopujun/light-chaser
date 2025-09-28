@@ -1,9 +1,20 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import './ProjectItem.less';
 import {Copy, Delete, Edit, PreviewOpen} from "@icon-park/react";
 import {Input, Popover} from "antd";
 import {useState} from "react";
 import {IProjectInfo, SaveType} from "../../../designer/DesignerType.ts";
-import operatorMap from "../../../framework/operate";
+import baseApi from "../../../api/BaseApi.ts";
 
 export interface ProjectItemProps {
     id: string;
@@ -14,14 +25,14 @@ export interface ProjectItemProps {
 }
 
 export default function ProjectItem(props: ProjectItemProps) {
-    const {cover, id, saveType, doOperate} = props;
+    const {cover, id, doOperate} = props;
     const [rename, setRename] = useState(false);
     const [name, setName] = useState(props.name);
 
     const updateName = () => {
         if (name !== props.name) {
             const data: IProjectInfo = {id, name};
-            operatorMap[saveType].updateProject(data);
+            baseApi.updateProject(data);
         }
     }
 
@@ -46,16 +57,16 @@ export default function ProjectItem(props: ProjectItemProps) {
                             <Input autoFocus={true}
                                    size={"small"}
                                    value={name}
-                               onBlur={() => {
+                                   onBlur={() => {
                                        updateName();
-                                   setRename(false);
-                               }}
-                               onKeyDown={(event) => {
-                                   if (event.key === 'Enter') {
-                                           updateName();
                                        setRename(false);
-                                   }
-                               }}
+                                   }}
+                                   onKeyDown={(event) => {
+                                       if (event.key === 'Enter') {
+                                           updateName();
+                                           setRename(false);
+                                       }
+                                   }}
                                    onChange={(e) => setName(e.target.value)}/>
                         </div> :
                         <div className="project-name-content">{name}</div>

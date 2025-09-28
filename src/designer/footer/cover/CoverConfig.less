@@ -1,29 +1,111 @@
-.cover-config {
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
+// CoverConfig.less
+.cover-config-modal {
+  .ant-modal-content {
+    background-color: #1E1E2F;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+    .ant-modal-header {
+      background-color: transparent;
+      border-bottom: 1px solid #3A3A4E;
+      padding: 16px 20px;
+
+      .cover-modal-title {
+        color: #FFFFFF;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 28px;
+      }
+    }
+
+    .ant-modal-close {
+      color: #A0A0B2;
+
+      &:hover {
+        color: #FFFFFF;
+      }
+    }
+  }
 
   .cover-content {
     display: flex;
-    padding: 5px;
+    gap: 24px;
+    align-items: center;
 
-    .cover-left {
-      width: 650px;
-      height: 300px;
-      padding: 5px;
+    .cover-upload-container {
+      flex: 1;
 
-      .image-upload, .ui-container-content, .ant-upload-wrapper,
-      .ant-upload-list, .ant-upload, .ant-upload-list-item-container {
-        width: 100% !important;
-        height: 100% !important;
+      .ant-upload {
+        width: 100%;
+        height: 280px;
+        background-color: #2C2C3E;
+        border: 1px dashed #3A3A4E;
+        border-radius: 8px;
+        transition: all 0.2s;
+
+        &:hover {
+          border-color: #4FB8FF;
+          background-color: lighten(#2C2C3E, 5%);
+        }
+
+        .upload-btn-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+          color: #A0A0B2;
+
+          .upload-text {
+            margin-top: 12px;
+            font-size: 14px;
+            color: #FFFFFF;
+          }
+
+          .upload-hint {
+            margin-top: 4px;
+            font-size: 12px;
+          }
+        }
       }
 
+      .ant-upload-list-item-container {
+        width: 100% !important;
+        height: 280px !important;
+      }
     }
 
-    .cover-right {
-      flex-grow: 1;
-      padding-left: 10px;
+    .cover-action-container {
+      width: 120px;
 
-      .lc-button {
-        width: 85px;
-        margin: 5px 0;
+      .cover-save-btn {
+        width: 100%;
+        height: 40px;
+        background-color: #4FB8FF;
+        border: none;
+        border-radius: 4px;
+        color: #FFFFFF;
+        font-weight: 500;
+        transition: all 0.2s;
+
+        &:hover {
+          background-color: lighten(#4FB8FF, 10%);
+        }
+
+        &:active {
+          background-color: darken(#4FB8FF, 10%);
+        }
       }
     }
   }

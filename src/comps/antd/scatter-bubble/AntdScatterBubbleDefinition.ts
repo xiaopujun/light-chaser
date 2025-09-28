@@ -1,3 +1,14 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import scatterBubble from "./scatter-bubble.png";
 import AbstractScatterDefinition from "../../antd-common/scatter/AbstractScatterDefinition";
 import {AntdScatterProps} from "../../antd-common/scatter/AntdCommonScatterController";
@@ -100,69 +111,75 @@ class AntdScatterBubbleDefinition extends AbstractScatterDefinition {
                 type: 'AntdScatterBubble',
             },
             style: {
-                data: data,
+                data,
                 xField: "x",
                 yField: "y",
                 colorField: "genre",
                 sizeField: "size",
-                size: [5, 20],
+                size: [
+                    5,
+                    20
+                ],
                 shape: "circle",
                 xAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#9a9a9aff",
-                            fontSize: 10,
+                            fill: "#ffffff",
+                            fontSize: 12
                         },
-                        offset: 16,
+                        offset: 16
                     },
                     line: null,
                     tickLine: null,
                     subTickLine: null,
-                    position: "left",
-                    title: null,
+                    position: "bottom",
+                    title: null
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#a0a0a0ff",
-                            fontSize: 10,
+                            fill: "#ffffff",
+                            fontSize: 12
                         },
-                        offset: 5,
+                        offset: 5
                     },
                     line: {
                         style: {
                             stroke: "#a2a2a275",
-                            lineWidth: 1,
-                        },
+                            lineWidth: 1
+                        }
                     },
                     tickLine: null,
                     subTickLine: null,
-                    position: "bottom",
-                    title: null,
+                    position: "left",
+                    title: null
                 },
                 legend: {
                     position: "top",
                     layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#a0a0a0ff",
-                            fontSize: 10,
-                        },
-                    },
+                            fill: "#ffffff",
+                            fontSize: 14
+                        }
+                    }
                 },
                 supportCSSTransform: true,
                 animation: {
                     appear: {
                         animation: "fade-in",
-                        duration: 3000,
-                    },
+                        duration: 3000
+                    }
                 },
-                color: ["#116BA2", "#58c1ffff"],
+                color: [
+                    "l(90) 0:#35b5ff 1:#0073ff",
+                    "l(90) 0:#d296ff 1:#008cff"
+                ],
                 pointStyle: {
-                    lineWidth: 0,
-                },
+                    lineWidth: 0
+                }
             },
             data: {
                 sourceType: 'static',

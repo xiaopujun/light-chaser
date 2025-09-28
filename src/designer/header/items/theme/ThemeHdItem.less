@@ -1,7 +1,75 @@
-.lc-theme-config-global {
-  .dialog-body {
-    .dialog-content {
-      padding: 10px;
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+.lc-theme-config-global, .lc-edit-theme-config {
+  .ant-modal-content {
+    background-color: #1E1E2F;
+    color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+    .ant-modal-close {
+      top: 30px;
+      right: 24px;
+    }
+
+    .ant-modal-header {
+      background-color: #2C2C3E;
+      border-bottom: 1px solid #3A3A4E;
+      border-radius: 8px 8px 0 0;
+      padding: 16px 20px;
+
+      .ant-modal-title {
+        color: #FFFFFF;
+      }
+    }
+
+    .ant-modal-footer {
+      border-top: 1px solid #3A3A4E;
+      padding: 12px 20px;
+      background-color: #2C2C3E;
+      border-radius: 0 0 8px 8px;
+    }
+  }
+
+  .ant-btn {
+    border-radius: 4px;
+    padding: 6px 16px;
+    height: auto;
+    font-size: 14px;
+    line-height: 20px;
+    transition: all 0.2s;
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    &-primary {
+      background-color: #4FB8FF;
+      border-color: #4FB8FF;
+      color: #FFFFFF;
+
+      &:hover {
+        background-color: #3CA8EF;
+        border-color: #3CA8EF;
+      }
+    }
+
+    &-default {
+      background-color: transparent;
+      border-color: #4FB8FF;
+      color: #4FB8FF;
+
+      &:hover {
+        background-color: rgba(79, 184, 255, 0.1);
+      }
     }
   }
 }

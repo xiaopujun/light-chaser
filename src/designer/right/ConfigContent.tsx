@@ -1,3 +1,14 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import React, {Suspense, useEffect, useRef} from 'react';
 import rightStore from "./RightStore";
 import {observer} from "mobx-react";
@@ -112,7 +123,9 @@ const ConfigContent = observer(() => {
         <div className={'lc-config-panel'} ref={configPanelRef}>
             <div className={'lc-panel-top'}>
                 <div className={'panel-title'}><span>{activeMenuName}</span></div>
-                <div className={'panel-operate'} onClick={onClose}><Close/></div>
+        <div className={'panel-operate'} onClick={onClose}>
+          <Close theme="filled" size={18} />
+        </div>
             </div>
             <div className={'lc-panel-content'}>
                 {buildConfigContent()}

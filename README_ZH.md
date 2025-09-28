@@ -1,8 +1,7 @@
 # LIGHT CHASER
 
 <p>
-    <img alt="" src="https://img.shields.io/badge/version-v1.5.0-blue">
-    <img alt="" src="https://img.shields.io/badge/license-MIT-08CE5D?logoColor=08CE5D">
+    <img alt="" src="https://img.shields.io/badge/version-v1.6.0-blue">
     <img alt="" src="https://img.shields.io/badge/TypeScript-blue">
     <img alt="" src="https://img.shields.io/badge/React-61daeb?logoColor=08CE5D">
     <img alt="" src="https://img.shields.io/badge/Vite-purple">
@@ -11,7 +10,7 @@
 
 <p>数据可视化工具</p>
 
-light chaser 是一款开源免费的数据可视化设计工具，基于 React18、Vite5、TypeScript5 技术栈实现。
+light chaser 是一款开源的高性能、易扩展、功能强大的数据可视化设计工具，基于 React18、Vite5、TypeScript5 技术栈实现。
 通过它，你可以简单快速地制作数据可视化相关内容。它可用于大屏幕数据 可视化展示、数据报告、数据分析等场景。
 
 light chaser 专为数据可视化而设计，并将不断发展和完善！
@@ -51,29 +50,24 @@ Pro在线体验：http://www.lcdesigner.cn/home/server
 - 蓝图编辑器：支持蓝图节点系统，支持图层节点、全局变量节点，逻辑操作、条件判断、全局节点等多种功能节点
 - 全局变量：数据源支持绑定全局变量，动态修改api参数、支持主动渲染实时更新组件数据状态
 
-# 示例
+# 效果图
 
-#### 主编辑器
+![效果图1](https://s2.loli.net/2025/08/23/BO2AiFes7vwlkL6.jpg)
 
-![示例1](https://s2.loli.net/2024/09/21/U2Ni3pfaE1rJVAM.png)
+![效果图2](https://s2.loli.net/2025/08/23/qTlnx7LOWUKaYRA.jpg)
 
-#### 可视化事件编辑器
+![效果图3](https://s2.loli.net/2025/08/23/IpBrYJAO4nyPGil.jpg)
 
-![示例2](https://s2.loli.net/2024/09/26/pitkUF2GogRYnxO.jpg)
+![效果图4](https://s2.loli.net/2025/08/23/zREQuATd3GyCUvx.jpg)
 
-#### 设计完成图1
-
-![示例3](https://i.072333.xyz/file/802e2d2b4d95fa32fae48.png)
-
-#### 设计完成图2
-
-![示例4](https://i.072333.xyz/file/51819086932cb1b559a15.png)
+![效果图5](https://s2.loli.net/2025/08/23/iOSYhAMQPGj5e3V.jpg)
 
 # 部署和使用
 
 LIGHT CHASER 支持常规部署和docker部署，请参考以下连接：
 
 部署教程：https://xiaopujun.github.io/light-chaser-doc/#/deploy/deploy_open
+
 
 # License
 
@@ -89,12 +83,13 @@ LIGHT CHASER 支持常规部署和docker部署，请参考以下连接：
 
 感谢为本项目做出贡献的每一个人！
 
+
 # 社区 & 可持续发展
 
 如果你对LIGHT CHASER项目感兴趣，欢迎加入社区群聊，反馈问题。帮助我们改进LIGHT CHASER。
 
 <div style="display: flex">
-    <img style="width: 300px" alt="group" src="https://s2.loli.net/2025/02/19/Zz6N25VbMSHg3XW.jpg">
+    <img style="width: 300px" alt="group" src="https://s2.loli.net/2025/09/21/4Rb9GABUCeTsq5f.jpg">
 </div>
 
 LIGHT CHASER 现已推出Pro版本。如果您有捐赠，商业合作想法，请赞助我，我将送出LIGHT CHASER Pro版本作为感谢。
@@ -103,9 +98,19 @@ LIGHT CHASER 现已推出Pro版本。如果您有捐赠，商业合作想法，�
 
 感谢每一位项目贡献者、捐赠者和赞助商
 
+# 商用注意事项
+
+1. 本项目遵循Apache 2.0协议，请保留作品声明
+2. 本项目仅用于学习交流，商业用途请务必获取授权
+
 # 联系作者
 
 <div style="display: flex">
     <div  style="width: 50%"><img alt="group" src="https://i.072333.xyz/file/110e9602ef12a7d93bff0.jpg"></div>
 </div>
-修改
+
+
+# :fa-chain-broken: 友情链接
+
+:+1:  **enjoy-iot 物联网平台**([https://gitee.com/open-enjoy/enjoy-iot](https://gitee.com/open-enjoy/enjoy-iot))
+

@@ -1,3 +1,14 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import {BPNodeLayoutType, IBPLine} from "./blueprint/manager/BluePrintManager.ts";
 import {IFilter} from "./manager/FilterManager.ts";
 
@@ -181,6 +192,13 @@ export interface BluePrintManagerDataType {
     bpAPMap?: Record<string, string[]>;
     //蓝图锚点与线条之间的关系映射
     bpAPLineMap?: Record<string, string[]>;
+}
+
+export interface IProject {
+    id?: string;
+    name?: string;
+    des?: string;
+    dataJson?: string;
 }
 
 /**

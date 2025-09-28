@@ -1,3 +1,14 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import {ThemeItemType} from "../../../designer/DesignerType";
 import {UpdateOptions} from "../../../framework/core/AbstractController";
 import AbstractDesignerController from "../../../framework/core/AbstractDesignerController";
@@ -30,9 +41,6 @@ export class DigitalFlipperController extends AbstractDesignerController<Digital
     changeData(data: number) {
         this.config!.data!.staticData = data;
         this.instance?.changeData(data);
-        //数据变化是触发蓝图事件
-        const nodeId = this.config?.base?.id!;
-        BPExecutor.triggerComponentEvent(nodeId!, "dataChange", data);
     }
 
     update(config: DigitalFlipperComponentProps, upOp?: UpdateOptions | undefined): void {

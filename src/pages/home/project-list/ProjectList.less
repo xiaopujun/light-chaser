@@ -1,33 +1,173 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 .project-list-container {
-  height: calc(100vh - 60px);
-  overflow: scroll;
+  padding: 25px;
+  background-color: #1E1E2F;
+  color: #FFFFFF;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 110px);
+  overflow: hidden;
 
   .project-list-header {
-    color: #c5c5c5;
     display: flex;
-    padding: 13px;
-    border-bottom: 1px solid #2e2e2e;
     justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    margin-bottom: 24px;
+    background-color: #2C2C3E;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 
     .project-list-header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
       .project-list-search {
-        margin-right: 13px;
+        .ant-input {
+          background-color: #2C2C3E;
+          border: 1px solid #3A3A4E;
+          color: #FFFFFF;
+          border-radius: 4px;
+          transition: all 0.2s ease;
+
+          &:hover,
+          &:focus {
+            border-color: #4FB8FF;
+            box-shadow: 0 0 0 2px rgba(79, 184, 255, 0.2);
+          }
+        }
+      }
+
+      .ant-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 32px;
+        padding: 0 12px;
+        border-radius: 4px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+
+        &.ant-btn-primary {
+          background-color: #4FB8FF;
+          border: none;
+          color: #FFFFFF;
+
+          &:hover {
+            background-color: lighten(#4FB8FF, 10%);
+          }
+
+          &:active {
+            background-color: darken(#4FB8FF, 10%);
+          }
+        }
       }
     }
   }
 
   .project-list {
-    padding: 13px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    overflow-y: scroll;
-    grid-gap: 25px;
+    //flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; // 保持元素间距20px
+    align-content: flex-start; // 从上往下排列
+    overflow-y: auto;
+    padding: 4px; // 补偿边缘间距
 
+    // 滚动条样式（保持原样）
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #4FB8FF;
+      border-radius: 4px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: #2C2C3E;
+    }
+
+    // 网格项样式
+    & > * {
+      flex: 1 1 calc(25% - 20px); // 4列布局（25%宽度减去gap）
+      min-width: 0; // 防止内容溢出
+      min-height: 0; // 防止内容溢出
+      max-width: calc(25% - 20px); // 确保不超过4列宽度
+
+      // 保持卡片比例（如有）
+      aspect-ratio: 16/9; // 如果原来是固定比例卡片
+    }
+
+    // 响应式调整（保持原逻辑）
+    @media (max-width: 1400px) {
+      & > * {
+        flex-basis: calc(33.333% - 20px);
+        max-width: calc(33.333% - 20px);
+      }
+    }
+    @media (max-width: 1100px) {
+      & > * {
+        flex-basis: calc(50% - 20px);
+        max-width: calc(50% - 20px);
+      }
+    }
+    @media (max-width: 768px) {
+      & > * {
+        flex-basis: 100%;
+        max-width: 100%;
+      }
+    }
   }
 
   .project-list-page {
-    text-align: right;
-    margin: 30px 10px 0 0;
-    display: block;
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+
+    .ant-pagination {
+      .ant-pagination-item,
+      .ant-pagination-prev,
+      .ant-pagination-next,
+      .ant-pagination-jump-prev,
+      .ant-pagination-jump-next {
+        background-color: #2C2C3E;
+        border-color: #3A3A4E;
+        transition: all 0.2s ease;
+
+        a {
+          color: #A0A0B2;
+        }
+
+        &:hover {
+          border-color: #4FB8FF;
+          transform: translateY(-1px);
+
+          a {
+            color: #4FB8FF;
+          }
+        }
+
+        &.ant-pagination-item-active {
+          background-color: #4FB8FF;
+          border-color: #4FB8FF;
+
+          a {
+            color: #FFFFFF;
+          }
+        }
+      }
+    }
   }
 }

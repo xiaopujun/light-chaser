@@ -1,40 +1,197 @@
-.add-new-screen-dialog {
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+.new-project-dialog {
+  .ant-modal {
+    max-width: 640px;
 
-  .lc-add-new-screen {
-    padding: 15px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    &-content {
+      background: linear-gradient(135deg, #252536 0%, #2C2C3E 100%);
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      border: 1px solid #3A3A4E;
+      overflow: hidden;
+    }
 
-    .item-content {
-      width: 150px !important;
+    &-header {
+      background: linear-gradient(to right, #252536, #2C2C3E);
+      border-bottom: none;
+      padding: 20px 24px;
+      border-radius: 12px 12px 0 0;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 24px;
+        right: 24px;
+        height: 1px;
+        background: linear-gradient(to right, transparent, #4FB8FF, transparent);
+        opacity: 0.3;
+      }
+
+      .dialog-title {
+        color: #FFFFFF;
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+
+        &::before {
+          content: '';
+          display: inline-block;
+          width: 4px;
+          height: 16px;
+          background: #4FB8FF;
+          margin-right: 12px;
+          border-radius: 2px;
+        }
+      }
+    }
+
+    &-body {
+      padding: 0;
+      color: #FFFFFF;
+    }
+
+    &-footer {
+      border-top: none;
+      padding: 0;
+      background: transparent;
     }
   }
 
-  .add-new-screen-explain {
-    color: #6e6e6e;
-    padding: 0 15px;
-    margin-bottom: 10px;
+  .dialog-content {
+    padding: 24px;
+  }
 
-    p {
-      line-height: 20px;
-      font-size: 12px;
-      margin-bottom: 2px;
+  .form-label {
+    color: #A0A0B2;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+  }
+
+  .project-input, .ant-input-number-input {
+    background-color: rgba(30, 30, 47, 0.6);
+    border: 1px solid #3A3A4E;
+    color: #FFFFFF;
+    border-radius: 6px;
+    height: 40px;
+    transition: all 0.3s;
+
+    &:hover {
+      border-color: #4FB8FF;
+      box-shadow: 0 0 0 2px rgba(79, 184, 255, 0.1);
+    }
+
+    &:focus {
+      border-color: #4FB8FF;
+      box-shadow: 0 0 0 3px rgba(79, 184, 255, 0.2);
+    }
+
+    &::placeholder {
+      color: #5A5A6E;
     }
   }
 
-  .add-new-screen-footer {
-    margin-top: 3px;
-    border-top: 2px solid #272b34;
-    display: flex;
-    flex-direction: row-reverse;
+  .divider {
+    margin: 16px 0;
+    border-color: #3A3A4E;
+    opacity: 0.5;
+  }
 
-    .lc-button {
-      font-size: 12px;
-      color: #a3a3a3;
-      width: 85px;
-      height: 30px;
-      margin: 6px 5px 10px 0;
+  .dialog-tips {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: rgba(30, 30, 47, 0.4);
+    border-radius: 6px;
+    border-left: 3px solid #4FB8FF;
+  }
+
+  .tip-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(79, 184, 255, 0.2);
+    color: #4FB8FF;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 12px;
+  }
+
+  .tip-text {
+    color: #A0A0B2;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px 24px;
+    background-color: #252536;
+    border-radius: 0 0 12px 12px;
+  }
+
+  .cancel-btn {
+    height: 40px;
+    padding: 0 24px;
+    border-radius: 6px;
+    font-weight: 500;
+    background-color: transparent;
+    border: 1px solid #4FB8FF;
+    color: #4FB8FF;
+    transition: all 0.3s;
+    margin-right: 12px;
+
+    &:hover {
+      background-color: rgba(79, 184, 255, 0.1);
+      border-color: lighten(#4FB8FF, 10%);
+      color: lighten(#4FB8FF, 10%);
+      transform: translateY(-1px);
+    }
+  }
+
+  .create-btn {
+    height: 40px;
+    padding: 0 24px;
+    border-radius: 6px;
+    font-weight: 500;
+    background: linear-gradient(to right, #4FB8FF, #3CED92);
+    border: none;
+    color: #1E1E2F;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(79, 184, 255, 0.3);
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+      pointer-events: none;
     }
   }
 }

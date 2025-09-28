@@ -1,19 +1,27 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import eventOperateStore from "../EventOperateStore";
-import {DesignerMode, ILayerItem, IProjectInfo, SaveType} from "../../DesignerType";
+import {ILayerItem, IProjectInfo} from "../../DesignerType";
 import throttle from "lodash/throttle";
 import {historyOperator} from "../undo-redo/HistoryOperator";
 import historyRecordOperateProxy from "../undo-redo/HistoryRecordOperateProxy";
 import undoRedoMap from "../undo-redo/core";
 import runtimeConfigStore from "../../store/RuntimeStore.ts";
 import footerStore from "../../footer/FooterStore";
-import {reRenderAllLine} from "../../blueprint/drag/BPMovable.tsx";
 import bpLeftStore from "../../../designer/blueprint/left/BPLeftStore";
-import operatorMap from "../../../framework/operate";
 import URLUtil from "../../../utils/URLUtil";
 import LayerUtil from "../../left/layer-list/util/LayerUtil.ts";
 import bluePrintHdStore from "../../header/items/blue-print/BluePrintHdStore.ts";
 import projectHdStore from "../../header/items/project/ProjectManager.ts";
-import FileUtil from "../../../utils/FileUtil.ts";
 import layerListStore from "../../left/layer-list/LayerListStore.ts";
 import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
 import layerManager from "../../manager/LayerManager.ts";
@@ -21,6 +29,11 @@ import themeHdStore from "../../header/items/theme/ThemeManager.ts";
 import bluePrintManager from "../../blueprint/manager/BluePrintManager.ts";
 import canvasManager from "../../header/items/canvas/CanvasManager.ts";
 import designerManager from "../../manager/DesignerManager.ts";
+import BpCanvasUtil from "../../blueprint/util/BpCanvasUtil.ts";
+import NProgress from "nprogress";
+import ProjectUtil from "../../../utils/ProjectUtil.ts";
+import baseApi from "../../../api/BaseApi.ts";
+import FetchUtil from "../../../utils/FetchUtil.ts";
 
 export const selectAll = () => {
     const {layerConfigs} = layerManager;
@@ -117,19 +130,19 @@ export const doDelete = () => {
 }
 
 //保存函数节流5s, 5s内不可重复保存
-export const doSave = throttle(() => {
-    return new Promise(() => {
-        const {saveType, id} = URLUtil.parseUrlParams();
-        const proData = designerManager.getData();
-
-        //转换为最终保存的数据格式
-        const projectInfo: IProjectInfo = {
-            id,
-            dataJson: JSON.stringify(proData),
-        }
-        operatorMap[saveType as SaveType].updateProject(projectInfo);
-    });
-}, 5000);
+export const doSave = throttle(async () => {
+    NProgress.configure({minimum: 0.5});
+    NProgress.start();
+    const {id} = URLUtil.parseUrlParams();
+    const proData = designerManager.getData();
+    //转换为最终保存的数据格式
+    const projectInfo: IProjectInfo = {
+        id,
+        dataJson: JSON.stringify(proData),
+    }
+    await baseApi.updateProject(projectInfo);
+    NProgress.done()
+}, 5000, {trailing: false});
 
 export const doHide = () => {
     const {targetIds, setTargetIds} = eventOperateStore;
@@ -206,7 +219,7 @@ export const doMoveDown = () => {
         const yPos = layerConfigs[id].y! + dragStep;
         movableRef?.request("draggable", {y: yPos}, true);
     } else {
-        const yPos = groupCoordinate?.minY! + dragStep;
+        const yPos = (groupCoordinate?.minY ?? 0) + dragStep;
         movableRef?.request("draggable", {y: yPos}, true);
     }
 }
@@ -221,7 +234,7 @@ export const doMoveLeft = () => {
         const xPos = layerConfigs[id].x!;
         movableRef?.request("draggable", {x: xPos - dragStep}, true);
     } else {
-        const xPos = groupCoordinate?.minX! - dragStep;
+        const xPos = (groupCoordinate?.minX ?? 0) - dragStep;
         movableRef?.request("draggable", {x: xPos}, true);
     }
 }
@@ -236,7 +249,7 @@ export const doMoveRight = () => {
         const xPos = layerConfigs[id].x!;
         movableRef?.request("draggable", {x: xPos + dragStep}, true);
     } else {
-        const xPos = groupCoordinate?.minX! + dragStep;
+        const xPos = (groupCoordinate?.minX ?? 0) + dragStep;
         movableRef?.request("draggable", {x: xPos}, true);
     }
 }
@@ -471,99 +484,66 @@ export const toggleHotKeyDes = () => {
     setHotKeyVisible(!hotKeyVisible)
 }
 
-export const exportProject = () => {
+export const exportProject = async () => {
     globalMessage.messageApi?.open({
+        key: 'exportProject',
         type: 'loading',
-        content: '正在导出项目数据...'
+        content: '正在导出项目数据，需要一些时间，请耐心等候...',
+        duration: 0,
     })
     const timeout = setTimeout(() => {
-        const projectData = designerManager.getData();
-        const elemConfigs = projectData.layerManager?.elemConfigs;
-        const promises: Promise<void>[] = [];
-        if (elemConfigs) {
-            Object.keys(elemConfigs).forEach((key) => {
-                const item = elemConfigs[key];
-                if (item.base.type === 'BaseImage' && (item.style.localUrl as string)?.startsWith('blob')) {
-                    // 将 blob 数据转换为 base64，并将异步操作添加到 promises 数组中
-                    promises.push(
-                        FileUtil.blobToBase64(item.style.localUrl as string).then((res: string | boolean) => {
-                            if (res)
-                                item.style.localUrl = res;
-                            else {
-                                console.error(`${item.base.id + "_" + item.base.name} 图片blob转换失败, ${item.style.localUrl}`);
-                            }
-                        })
-                    );
-                }
-            });
-        }
-        // 等待所有异步操作完成
-        Promise.all(promises).then(() => {
-            // 在所有异步操作完成后，将项目数据转换为 JSON 字符串并导出
-            const exportData = {flag: 'pyz_tt', version: 'v1.1.0', data: projectData};
-            const projectDataJson = JSON.stringify(exportData);
-            const blob = new Blob([projectDataJson], {type: 'application/json'});
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a')
-            a.href = url;
-            a.download = `project-${new Date().getTime()}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-            globalMessage.messageApi?.destroy();
-            globalMessage.messageApi?.success('项目数据导出成功');
-        });
+        //1. 计算当前项目所依赖的外部资源
+        const projectDependency = ProjectUtil.calculateProjectDependency();
+        baseApi.exportProjectApi(projectDependency).then((res) => {
+            const {code, data, msg} = res;
+            if (code === 200) {
+                //3. 自动下载后端生成的压缩包
+                const url = URL.createObjectURL(data);
+                const a = document.createElement('a')
+                a.href = url;
+                a.download = `${document.title}.zip`;
+                a.click();
+                URL.revokeObjectURL(url);
+                globalMessage.messageApi?.success('项目数据导出成功');
+            } else {
+                globalMessage.messageApi?.error(msg);
+            }
+            globalMessage.messageApi?.destroy("exportProject");
+        })
         clearTimeout(timeout);
     }, 1000);
+
 }
 
 export const importProject = () => {
     //打开文件选择框
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = '.json';
+    input.accept = '.zip';
     input.onchange = (e: any) => {
         globalMessage.messageApi?.open({
+            key: 'importProject',
             type: 'loading',
             content: '正在导入项目数据...'
         })
         const file = e.target.files[0] as File;
         if (!file)
             return;
-        const promises: Promise<void>[] = [];
-        file.text().then((fileData: string) => {
-            const timeout = setTimeout(() => {
-                const importData = JSON.parse(fileData);
-                if (!('flag' in importData) || importData.flag !== 'pyz_tt') {
-                    globalMessage.messageApi?.destroy();
-                    globalMessage.messageApi?.info('数据格式错误，请检查导入文件内容。')
-                    return;
-                }
-                const projectData = importData.data;
-                const elemConfigs = projectData.layerManager?.elemConfigs;
-                if (elemConfigs) {
-                    Object.keys(elemConfigs).forEach((key) => {
-                        const item = elemConfigs[key];
-                        if (item.base.type === 'BaseImage' && (item.style.localUrl as string)?.startsWith('blob')) {
-                            // 将 blob 数据转换为 base64，并将异步操作添加到 promises 数组中
-                            promises.push(
-                                FileUtil.base64ToBlob(item.style.localUrl as string).then((res: string | boolean) => {
-                                    if (res)
-                                        item.style.localUrl = res;
-                                    else {
-                                        console.error(`${item.base.id + "_" + item.base.name} 图片blob转换失败, ${item.style.localUrl}`);
-                                    }
-                                })
-                            );
-                        }
-                    });
-                }
-                Promise.all(promises).then(() => {
-                    designerManager.init(projectData as any, DesignerMode.EDIT);
-                    globalMessage.messageApi?.destroy();
-                    globalMessage.messageApi?.success('项目数据导入成功');
-                    clearTimeout(timeout);
-                });
-            }, 500);
+
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('projectId', window.LC_ENV.projectId!);
+        FetchUtil.post('/api/project/importProject', formData, {headers: {'Content-Type': 'multipart/form-data'}}).then((res) => {
+            const {code, data, msg} = res;
+            const timer = setTimeout(() => {
+                clearTimeout(timer);
+                globalMessage.messageApi?.destroy("importProject");
+                if (code === 200 && data) {
+                    globalMessage.messageApi?.success({content: '项目数据导入成功, 将重新加载页面！', duration: 1}).then(() => location.reload());
+                } else
+                    globalMessage.messageApi?.error(msg);
+            }, 1000)
+
         })
     }
     input.click();
@@ -591,7 +571,7 @@ export const delBPNode = () => {
         if (nodeId in usedLayerNodes)
             setUsedLayerNodes(nodeId, false);
     })
-    reRenderAllLine();
+    BpCanvasUtil.reRenderAllLine();
 }
 
 /**
@@ -601,7 +581,8 @@ export const delBPLine = () => {
     if (!bluePrintHdStore.bluePrintVisible) return;
     const {selectedLines, delLine} = bluePrintManager;
     if (selectedLines.length === 0) return;
-    const selectedLineIds = selectedLines.map(line => line.id!);
-    delLine(selectedLineIds);
-    reRenderAllLine();
+    if (selectedLines.length === 0)
+        return;
+    delLine(selectedLines);
+    BpCanvasUtil.reRenderAllLine();
 }

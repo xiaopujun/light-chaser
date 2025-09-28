@@ -1,3 +1,14 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import stepLineImg from "./step-line.png";
 import AbstractLineDefinition from "../../antd-common/line/AbstractLineDefinition";
 import {AntdLineProps} from "../../antd-common/line/AntdCommonLineController";
@@ -44,11 +55,11 @@ class AntdStepLineDefinition extends AbstractLineDefinition {
                 xField: "year",
                 yField: "value",
                 stepType: "vh",
-                color: "#00d7ff",
+                color: "l(90) 0:#2e88ff 1:#b95eff",
                 smooth: true,
                 supportCSSTransform: true,
                 point: {
-                    size: 3,
+                    size: 0,
                     color: "#00d7ff",
                     shape: "bowtie",
                     style: {
@@ -57,40 +68,41 @@ class AntdStepLineDefinition extends AbstractLineDefinition {
                     }
                 },
                 lineStyle: {
-                    stroke: undefined,
-                    lineWidth: 1,
+                    lineWidth: 5
                 },
                 xAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#989898ff",
-                            fontSize: 10,
-                        },
+                            fill: "#ffffff",
+                            fontSize: 12
+                        }
                     },
                     line: null,
                     tickLine: null,
                     subTickLine: null,
                     position: "bottom",
                     title: null,
+                    tickCount: 5
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#a6a6a6ff",
-                        },
+                            fill: "#ffffff",
+                            fontSize: 12
+                        }
                     },
                     line: {
                         style: {
                             stroke: "#9a9a9a8c",
-                            lineWidth: 1,
-                        },
+                            lineWidth: 1
+                        }
                     },
                     tickLine: null,
                     subTickLine: null,
                     position: "left",
-                    title: null,
+                    title: null
                 },
                 legend: {
                     position: "right-top",
@@ -98,17 +110,25 @@ class AntdStepLineDefinition extends AbstractLineDefinition {
                     itemName: {
                         style: {
                             fill: "#00f0ffff",
-                            fontSize: 12,
-                        },
-                    },
+                            fontSize: 12
+                        }
+                    }
                 },
                 animation: {
                     appear: {
                         animation: "wave-in",
-                        duration: 3000,
-                    },
+                        duration: 3000
+                    }
                 },
-
+                label: {
+                    position: "top",
+                    style: {
+                        fill: "#ffffff",
+                        fontSize: 10
+                    },
+                    offsetY: -11,
+                    offsetX: -6
+                }
             },
             data: {
                 sourceType: 'static',

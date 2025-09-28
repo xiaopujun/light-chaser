@@ -1,3 +1,13 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
 import {observer} from "mobx-react";
 import {MouseEvent, useRef, useState} from 'react';
 import {CanvasConfig} from "../../../DesignerType";
@@ -7,7 +17,6 @@ import {Control} from "../../../../json-schema/SchemaTypes.ts";
 import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI.tsx";
 import canvasHdStore from "./CanvasManager.ts";
 import canvasManager from "./CanvasManager.ts";
-
 
 const CanvasHdConfigImpl = observer(() => {
     const configRef = useRef<CanvasConfig | null>({...canvasManager.canvasConfig});
@@ -32,22 +41,23 @@ const CanvasHdConfigImpl = observer(() => {
             setCount(count + 1);
     }
 
-
     const schema: Control = {
         type: 'grid',
-        config: {gridGap: '15px'},
+        config: {gridGap: '16px'},
         children: [
             {
                 type: 'number-input',
                 label: '宽度',
                 value: width,
                 key: 'width',
+                config: {}
             },
             {
                 type: 'number-input',
                 label: '高度',
                 value: height,
                 key: 'height',
+                config: {}
             },
             {
                 type: 'select',
@@ -61,7 +71,7 @@ const CanvasHdConfigImpl = observer(() => {
                         {label: '撑满高度', value: 'full-y'},
                         {label: '撑满全屏', value: 'full-screen'},
                         {label: '无自适应', value: 'none'}
-                    ]
+                    ],
                 }
             },
             {
@@ -79,32 +89,48 @@ const CanvasHdConfigImpl = observer(() => {
                         label: '拖拽步长',
                         value: dragStep,
                         key: 'dragStep',
+                        config: {}
                     },
                     {
                         type: 'number-input',
                         label: '缩放步长',
                         value: resizeStep,
                         key: 'resizeStep',
+                        config: {}
                     }
                 ]
             }
         ]
     }
 
-
     return (
-        <Modal title="画布设置" width={350} open={canvasVisible} onOk={doSave} onCancel={onClose}
+        <Modal title={<span className="canvas-config-title">画布设置</span>}
+               width={400}
+               open={canvasVisible}
+               onCancel={onClose}
                footer={[
-                   <Button key="submit" style={{width: 70, height: 30}} size="small" type="primary"
-                           onClick={doSave}>确定</Button>,
-                   <Button key="back" style={{width: 70, height: 30}} size="small" onClick={onClose}>取消</Button>
+                   <Button key="cancel"
+                           className="canvas-config-btn secondary"
+                           onClick={onClose}>
+                       取消
+                   </Button>,
+                   <Button key="submit"
+                           className="canvas-config-btn primary"
+                           type="primary"
+                           onClick={doSave}>
+                       确定
+                   </Button>
                ]}
-               className={"lc-header-canvas"}>
-            <LCGUI schema={schema} onFieldChange={onFieldChange}/>
-            <p className={'canvas-config-desc'}>说明：修改画布设置，会对整体效果产生较大影响，建议先调试好画布设置后再进行大屏设计</p>
+               className="lc-header-canvas-modal"
+               styles={{body: {padding: '20px'}}}>
+            <div className="canvas-config-content">
+                <LCGUI schema={schema} onFieldChange={onFieldChange}/>
+                <p className="canvas-config-desc">
+                    说明：修改画布设置，会对整体效果产生较大影响，建议先调试好画布设置后再进行大屏设计
+                </p>
+            </div>
         </Modal>
     );
-
 })
 
 export default CanvasHdConfigImpl;

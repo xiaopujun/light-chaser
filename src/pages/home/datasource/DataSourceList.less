@@ -1,22 +1,231 @@
 .datasource-list {
-  position: relative;
+  padding: 25px;
   height: 100%;
+  background-color: #1E1E2F;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
 
   .datasource-list-header {
-    color: #c5c5c5;
     display: flex;
-    padding: 13px;
-    border-bottom: 1px solid #2e2e2e;
     justify-content: space-between;
+    padding: 16px 24px;
+    margin-bottom: 24px;
+    background-color: #2C2C3E;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 
-    .datasource-list-header-left {
-      .project-list-search, .operate-btn {
-        margin-right: 13px;
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      .project-list-search {
+        .ant-input {
+          background-color: #2C2C3E;
+          border: 1px solid #3A3A4E;
+          color: #FFFFFF;
+          border-radius: 4px;
+          transition: all 0.2s ease;
+
+          &:hover,
+          &:focus {
+            border-color: #4FB8FF;
+            box-shadow: 0 0 0 2px rgba(79, 184, 255, 0.2);
+          }
+        }
+      }
+
+      .ant-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
+        height: 32px;
+        padding: 0 12px;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+
+        &.primary {
+          background-color: #4FB8FF;
+          border: none;
+          color: #FFFFFF;
+
+          &:hover {
+            background-color: lighten(#4FB8FF, 10%);
+          }
+
+          &:active {
+            background-color: darken(#4FB8FF, 10%);
+          }
+        }
+
+        &.danger {
+          background-color: #FF6E6E;
+          border: none;
+          color: #FFFFFF;
+
+          &:hover {
+            background-color: lighten(#FF6E6E, 10%);
+          }
+
+          &:active {
+            background-color: darken(#FF6E6E, 10%);
+          }
+        }
       }
     }
   }
 
   .datasource-list-body {
-    padding: 13px;
+    flex: 1;
+    padding: 16px 0;
+    overflow-y: auto;
+
+    .ant-list-grid {
+      .ant-col {
+        padding: 8px !important;
+      }
+    }
+
+    .datasource-card {
+      background-color: #2C2C3E;
+      border: 1px solid #3A3A4E;
+      color: #bababa;
+      padding: 16px;
+      height: 120px;
+      cursor: pointer;
+      position: relative;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+      &:hover {
+        border-color: #4FB8FF;
+        background-color: lighten(#2C2C3E, 5%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+
+        .type-tag {
+          margin: 0;
+          font-weight: 600;
+          border: none;
+          padding: 0 8px;
+          height: 24px;
+          line-height: 24px;
+          font-size: 12px;
+          background-color: #3CED92;
+          color: #1E1E2F;
+        }
+
+        .card-actions {
+          display: flex;
+          gap: 12px;
+          height: 24px;
+          transition: opacity 0.2s ease;
+
+          .action-btn {
+            color: #A0A0B2;
+            font-size: 12px;
+            cursor: pointer;
+            height: 100%;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.2s ease;
+
+            &:hover {
+              color: #4FB8FF;
+              transform: scale(1.1);
+            }
+
+            &[onclick*="copy"] {
+              &:hover {
+                color: #4FB8FF;
+              }
+            }
+
+            &[onclick*="delete"] {
+              &:hover {
+                color: #FF6E6E;
+              }
+            }
+
+            &[onclick*="test"] {
+              &:hover {
+                color: #3CED92;
+              }
+            }
+          }
+        }
+      }
+
+      .card-title {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 20px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
   }
+}
+
+/* 分页器样式 */
+.ant-pagination {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+
+  .ant-pagination-item,
+  .ant-pagination-prev,
+  .ant-pagination-next,
+  .ant-pagination-jump-prev,
+  .ant-pagination-jump-next {
+    background-color: #2C2C3E;
+    border-color: #3A3A4E;
+    transition: all 0.2s ease;
+
+    a {
+      color: #A0A0B2;
+    }
+
+    &:hover {
+      border-color: #4FB8FF;
+      transform: translateY(-1px);
+
+      a {
+        color: #4FB8FF;
+      }
+    }
+
+    &.ant-pagination-item-active {
+      background-color: #4FB8FF;
+      border-color: #4FB8FF;
+
+      a {
+        color: #FFFFFF;
+      }
+    }
+  }
+}
+
+/* 卡片操作按钮显示逻辑 */
+.datasource-card:not(:hover) .card-actions {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.datasource-card:hover .card-actions {
+  opacity: 1;
+  pointer-events: auto;
 }

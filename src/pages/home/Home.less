@@ -1,23 +1,44 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
 .lc-home {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #1E1E2F;
+  color: #FFFFFF;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+
   .lc-home-header {
-    border-bottom: 1px solid #2e2e2e;
-    display: flex;
     height: 60px;
-    padding: 0 20px;
+    padding: 0 24px;
+    display: flex;
     align-items: center;
-    background-color: #292929;
-    justify-content: space-between;
+    background-color: #2C2C3E;
+    border-bottom: 1px solid #3A3A4E;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 
     .logo {
-      font-size: 16px;
-      font-weight: 500;
-      color: #bfbfbfff;
+      img {
+        width: 70%;
+        max-height: 40px;
+        object-fit: contain;
+      }
     }
   }
 
   .lc-home-body {
-    background-color: #1f1f1f;
+    flex: 1;
     display: flex;
+    overflow: hidden;
 
     .lc-home-body-left {
       width: 220px;
@@ -27,7 +48,15 @@
     }
 
     .lc-home-body-right {
-      flex-grow: 1;
+      flex: 1;
+      padding: 24px;
+      background-color: #1E1E2F;
+      overflow-y: auto;
+
+      > * {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
     }
   }
 }

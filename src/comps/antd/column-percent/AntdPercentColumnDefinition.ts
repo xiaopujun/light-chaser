@@ -1,3 +1,14 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import percentColumnImg from "./percent-column.png";
 import AbstractColumnDefinition from "../../antd-common/column/AbstractColumnDefinition";
 import {AntdColumnProps} from "../../antd-common/column/AntdCommonColumnController";
@@ -79,61 +90,72 @@ class AntdPercentColumnDefinition extends AbstractColumnDefinition {
                 seriesField: "country",
                 isPercent: true,
                 isStack: true,
-                maxColumnWidth: 8,
+                maxColumnWidth: 18,
                 supportCSSTransform: true,
-                color: ["#59bfff", "#298aff", "#004294"],
+                color: [
+                    "#59bfff",
+                    "#298aff",
+                    "#004294"
+                ],
                 columnStyle: {
-                    radius: 0,
+                    radius: 6
                 },
                 xAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#a2a2a2ff",
-                            fontSize: 10,
-                        },
+                            fill: "#ffffff",
+                            fontSize: 12
+                        }
                     },
-                    line: null,
+                    line: {
+                        style: {
+                            stroke: "#7c7c7c",
+                            lineWidth: 1
+                        }
+                    },
                     tickLine: null,
                     subTickLine: null,
                     position: "bottom",
-                    title: null,
+                    title: null
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#b3b3b3ff",
-                            fontSize: 10,
-                        },
+                            fill: "#ffffff",
+                            fontSize: 12
+                        }
                     },
-                    line: {
-                        style: {
-                            stroke: "#92929278",
-                            lineWidth: 1,
-                        },
-                    },
+                    line: null,
                     tickLine: null,
                     subTickLine: null,
                     position: "left",
                     title: null,
+                    tickCount: 3
                 },
                 legend: {
                     position: "top",
                     layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#00f0ffff",
-                            fontSize: 12,
-                        },
-                    },
+                            fill: "#ffffff",
+                            fontSize: 13
+                        }
+                    }
                 },
                 animation: {
                     appear: {
                         animation: "scale-in-y",
-                        duration: 3000,
-                    },
+                        duration: 3000
+                    }
                 },
+                label: {
+                    position: "left",
+                    style: {
+                        fontSize: 0
+                    }
+                }
             },
             data: {
                 sourceType: 'static',

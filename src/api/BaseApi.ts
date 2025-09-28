@@ -1,11 +1,22 @@
-import {AbstractOperator} from "./AbstractOperator";
-import {IPage, IPageParam, IProjectInfo, ProjectDataType} from "../../designer/DesignerType";
-import URLUtil from "../../utils/URLUtil";
-import {globalMessage} from "../message/GlobalMessage";
-import {IImageData} from "../../comps/lc/base-image/BaseImageComponent";
-import FetchUtil from "../../utils/FetchUtil.ts";
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
 
-export default class ServerOperator extends AbstractOperator {
+import {AbstractApi} from "./AbstractApi.ts";
+import {IPage, IPageParam, IProject, IProjectInfo, ProjectDataType} from "../designer/DesignerType.ts";
+import URLUtil from "../utils/URLUtil.ts";
+import {globalMessage} from "../framework/message/GlobalMessage.tsx";
+import {IImageData} from "../comps/lc/base-image/BaseImageComponent.tsx";
+import FetchUtil from "../utils/FetchUtil.ts";
+
+class BaseApi extends AbstractApi {
 
     async createProject(project: IProjectInfo): Promise<string> {
         const res = await FetchUtil.post('/api/project/create', project);
@@ -33,6 +44,21 @@ export default class ServerOperator extends AbstractOperator {
     }
 
     /**
+     * 获取项目信息（包含项目数据）
+     * @param id
+     */
+    async getProjectInfo(id: string): Promise<IProject | null> {
+        const res = await FetchUtil.get(`/api/project/getProjectInfo/${id}`);
+        const {code, data} = res;
+        if (code === 200)
+            return data;
+        else {
+            globalMessage.messageApi?.error(res.msg);
+            return null;
+        }
+    }
+
+    /**
      * 获取项目分页列表
      */
     public async getProjectInfoPageList(pageParam: IPageParam): Promise<IPage<IProjectInfo>> {
@@ -47,9 +73,7 @@ export default class ServerOperator extends AbstractOperator {
 
     public async updateProject(data: IProjectInfo): Promise<void> {
         const res = await FetchUtil.post('/api/project/update', data);
-        if (res.code === 200)
-            globalMessage.messageApi?.success('保存成功');
-        else
+        if (res.code !== 200)
             globalMessage.messageApi?.error(res.msg);
     }
 
@@ -60,14 +84,17 @@ export default class ServerOperator extends AbstractOperator {
         formData.append('projectId', id);
         formData.append('type', "1");
 
-        const res = await FetchUtil.post('/api/file/upload', formData, {headers: {'Content-Type': 'multipart/form-data'}});
+        const res = await FetchUtil.post('/api/image/upload', formData, {headers: {'Content-Type': 'multipart/form-data'}});
         return res.code === 200 ? {url: res.data} : false;
     }
 
-    async getImageSourceList(projectId: string): Promise<IImageData[]> {
-        const res = await FetchUtil.get(`/api/file/getList/${projectId}`);
+    async getImageSourceList(): Promise<IImageData[]> {
+        const res = await FetchUtil.post(`/api/image/pageList`, {
+            current: 1,
+            size: 1000
+        });
         if (res.code === 200)
-            return res.data;
+            return res.data.records;
         else {
             globalMessage.messageApi?.error(res.msg);
             return [];
@@ -75,9 +102,11 @@ export default class ServerOperator extends AbstractOperator {
     }
 
     public async delImageSource(imageId: string): Promise<boolean> {
-        const res = await FetchUtil.get(`/api/file/del/${imageId}`);
-        if (res.code === 200) return true;
-        else {
+        const res = await FetchUtil.post(`/api/image/batchDelete`, [imageId]);
+        if (res.code === 200) {
+            globalMessage.messageApi?.success("操作成功");
+            return true;
+        } else {
             globalMessage.messageApi?.error(res.msg);
             return false;
         }
@@ -92,4 +121,12 @@ export default class ServerOperator extends AbstractOperator {
         const res = await FetchUtil.post('/api/project/cover', formData, {headers: {'Content-Type': 'multipart/form-data'}});
         return res.code === 200;
     }
+
+    public async exportProjectApi(projectDependency: any) {
+        return await FetchUtil.post('/api/project/exportProject', projectDependency);
+    }
+
 }
+
+const baseApi = new BaseApi();
+export default baseApi;

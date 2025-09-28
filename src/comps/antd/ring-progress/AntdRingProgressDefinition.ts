@@ -1,3 +1,14 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import React from "react";
 import {BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
@@ -57,25 +68,25 @@ class AntdRingProgressDefinition extends AntdCommonDefinition<AntdRingProgressCo
             style: {
                 percent: 0.7,
                 color: [
-                    "#3cc2f8bd",
-                    "#66d2ff3e"
+                    "l(140) 0:#9cd1ff 0.81:#0084ff",
+                    "#a9a9a900"
                 ],
                 statistic: {
                     content: {
                         style: {
                             fill: "#fff",
-                            fontSize: '24',
-                            fontWeight: 900,
-                            color: "#57c6ff"
+                            fontSize: '21',
+                            fontWeight: 500,
+                            color: "#ffffff"
                         },
                         offsetY: 7,
                         offsetX: 0
                     },
                     title: {
                         style: {
-                            fontSize: '21',
-                            fontWeight: 900,
-                            color: "#6ad1ff"
+                            fontSize: '15',
+                            fontWeight: 500,
+                            color: "#ffffff"
                         },
                         content: "指标1",
                         offsetY: -11
@@ -87,7 +98,10 @@ class AntdRingProgressDefinition extends AntdCommonDefinition<AntdRingProgressCo
                         duration: 3000
                     }
                 },
-                progressStyle: {}
+                progressStyle: {
+                    lineWidth: 0,
+                    stroke: "l(90) 0:#78cdff 1:#a481ff"
+                }
             },
             data: {
                 sourceType: 'static',

@@ -1,146 +1,216 @@
-.layerItemStyle {
-  color: #b6b6b6ff;
-  padding: 5px;
-  font-size: 10px;
-  height: 25px;
-  margin: 5px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  border-radius: 2px;
-}
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
 
 .layer-list {
-  width: 250px;
-  border-right: 1px solid #404040;
+  width: 280px;
+  height: 100%;
+  background-color: #2C2C3E;
+  border-right: 1px solid #3A3A4E;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
 
   .dl-ll-header {
     display: flex;
     justify-content: space-between;
-    padding: 13px 10px;
-    height: 47px;
     align-items: center;
-    font-size: 12px;
-    border-bottom: 1px solid #404040;
-    color: #bababa;
+    padding: 16px 20px;
+    border-bottom: 1px solid #3A3A4E;
+
+    .dl-ll-header-title {
+      color: #FFFFFF;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 20px;
+    }
+
+    .dl-ll-header-operate {
+      color: #A0A0B2;
+      cursor: pointer;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #FF6E6E;
+      }
+
+      .icon-park {
+        font-size: 18px;
+      }
+    }
   }
 
   .layer-items {
-    overflow-y: scroll;
-    height: calc(100% - 47px);
-    padding: 0 5px;
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 12px;
 
-    .layer-item {
-      .layerItemStyle();
+    &::-webkit-scrollbar {
+      width: 3px;
+    }
 
-      .layer-name {
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(79, 184, 255, 0.47);
+      border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: #2C2C3E;
+    }
+  }
+}
+
+/* 基础图层项样式 */
+.layer-item-base {
+  color: #A0A0B2;
+  font-size: 12px;
+  line-height: 20px;
+  padding: 8px 12px;
+  margin: 4px 0;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 36px;
+  box-sizing: border-box;
+
+  &:hover {
+    background-color: rgba(79, 184, 255, 0.1);
+
+    .layer-operators,
+    .group-operators {
+      opacity: 1;
+    }
+  }
+}
+
+/* 普通图层项 */
+.layer-item {
+  .layer-item-base;
+
+  .layer-name {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 12px;
+
+    input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: inherit;
+      width: 100%;
+      height: 20px;
+      font-size: 12px;
+    }
+  }
+
+  .layer-operators {
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.2s;
+
+    .i-icon {
+      font-size: 16px;
+      color: #A0A0B2;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #4FB8FF;
+      }
+    }
+  }
+}
+
+/* 图层组 */
+.layer-group {
+  .group-header {
+    .layer-item-base;
+
+    .group-left {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      min-width: 0;
+
+      .group-icon {
+        margin-right: 8px;
+        color: #4FB8FF;
+
+        .i-icon {
+          font-size: 16px;
+        }
+      }
+
+      .group-name {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        padding-right: 12px;
 
         input {
-          background-color: #00000000;
-          outline: none;
+          background: transparent;
           border: none;
+          outline: none;
+          color: inherit;
           width: 100%;
-        }
-      }
-
-      .layer-operators {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: #d5d5d5;
-        opacity: 0;
-
-        .layer-operator {
-          padding: 4px;
+          height: 20px;
           font-size: 12px;
         }
       }
-
-      &:hover {
-        .layer-operators {
-          opacity: 1;
-        }
-      }
     }
 
-    .layer-group {
-      width: 100%;
-      color: #b6b6b6ff;
-      margin-bottom: 5px;
+    .group-operators {
+      display: flex;
+      gap: 8px;
+      opacity: 0;
+      transition: opacity 0.2s;
 
-      .group-header {
-        .layerItemStyle();
-
-        .group-left {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-
-          .group-icon {
-            margin-right: 5px;
-          }
-
-          .group-name {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-
-            input {
-              background-color: #00000000;
-              outline: none;
-              border: none;
-              width: 100%;
-            }
-          }
-        }
-
-        .group-operators {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          color: #d5d5d5;
-          opacity: 0;
-
-          .group-operator {
-            padding: 4px;
-            font-size: 12px;
-            cursor: pointer;
-          }
-        }
+      .i-icon {
+        font-size: 16px;
+        color: #A0A0B2;
+        transition: color 0.2s;
 
         &:hover {
-          .group-operators {
-            opacity: 1;
-          }
+          color: #4FB8FF;
         }
       }
-
-      .group-content {
-        padding: 0 0 0 5px;
-      }
     }
-
-    .layer-item:hover, .group-header:hover {
-      transition: all 0.2s;
-      background: #00aeff54;
-    }
-
-    .layer-selected {
-      background: #1f6aff !important;
-      color: #ffffff !important;
-    }
-
-    .layer-lock {
-      background: #970000 !important;
-    }
-
-    .layer-hide {
-      background: rgba(140, 140, 140, 0.6) !important;
-    }
-
   }
+
+  .group-content {
+    padding-left: 24px;
+  }
+}
+
+/* 状态类 */
+.layer-selected {
+  background-color: rgba(79, 184, 255, 0.2) !important;
+  color: #FFFFFF !important;
+}
+
+.layer-lock {
+  background-color: rgba(255, 110, 110, 0.2) !important;
+  color: #FF6E6E !important;
+
+  .group-icon {
+    color: #FF6E6E !important;
+  }
+}
+
+.layer-hide {
+  background-color: rgba(160, 160, 178, 0.2) !important;
+  opacity: 0.6;
 }

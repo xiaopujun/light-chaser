@@ -1,3 +1,14 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import baseWordCloudImg from "./word-cloud.png";
 import {BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import AntdWordCloudController, {AntdWordCloudProps} from "./AntdWordCloudController.ts";
@@ -122,18 +133,26 @@ class AntdWordCloudDefinition extends AbstractDesignerDefinition<AntdWordCloudCo
             },
             style: {
                 data,
-                wordField: 'name',
-                weightField: 'value',
-                colorField: 'name',
+                wordField: "name",
+                weightField: "value",
+                colorField: "name",
                 supportCSSTransform: true,
-                spiral: 'rectangular',
+                spiral: "rectangular",
+                color: [
+                    "#2294ff",
+                    "#ff8934",
+                    "#f370ff"
+                ],
                 wordStyle: {
-                    fontFamily: '优设标题黑',
+                    fontFamily: "DingTalk JinBuTi",
                     fontWeight: 500,
-                    fontSize: [8, 32],
+                    fontSize: [
+                        14,
+                        37
+                    ],
                     rotation: 0,
-                    padding: 1,
-                },
+                    padding: 7
+                }
             },
             filter: {
                 enable: false,

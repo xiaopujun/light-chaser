@@ -1,7 +1,74 @@
-.filter-config {
-  padding: 10px;
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
 
-  .ui-container .ui-container-label {
-    min-width: 55px;
+.filter-config {
+  padding: 20px;
+  background-color: #1E1E2F;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  .ui-container {
+    margin-bottom: 16px;
+
+    &-label {
+      min-width: 55px;
+      font-size: 14px;
+      color: #FFFFFF;
+      margin-right: 12px;
+      display: inline-block;
+      line-height: 20px;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // 假设 LCGUI 内部使用的输入组件样式
+  input, select {
+    background-color: #2C2C3E;
+    border: 1px solid #3A3A4E;
+    border-radius: 4px;
+    color: #FFFFFF;
+    padding: 8px 12px;
+    transition: all 0.2s;
+
+    &:hover {
+      border-color: #4FB8FF;
+    }
+
+    &:focus {
+      border-color: #4FB8FF;
+      box-shadow: 0 0 0 2px rgba(79, 184, 255, 0.2);
+      outline: none;
+    }
+  }
+
+  // 按钮样式假设
+  button {
+    &.primary {
+      background-color: #4FB8FF;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 4px;
+      padding: 6px 12px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: lighten(#4FB8FF, 10%);
+      }
+
+      &:active {
+        background-color: darken(#4FB8FF, 10%);
+      }
+    }
   }
 }

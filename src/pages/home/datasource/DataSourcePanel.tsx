@@ -1,6 +1,18 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import {Button, Col, Drawer, Form, Input, Row, Select, Space} from "antd";
 import {useEffect} from "react";
 import {IDataSource} from "./DataSourceStore.ts";
+import './DataSourcePanel.less';
 
 const {TextArea} = Input;
 
@@ -9,7 +21,7 @@ export interface UserPanelProps {
     width?: number;
     visible: boolean;
     onClose: () => void;
-    onSubmitted: (data: IDataSource) => void;
+    onSubmitted: (data: IDataSource) => Promise<void>;
     data?: IDataSource;
 }
 
@@ -18,10 +30,14 @@ export default function DataSourcePanel(props: UserPanelProps) {
     const [form] = Form.useForm();
 
     const submit = () => {
-        form.validateFields().then((values) => {
-            onSubmitted(values);
+        form.validateFields().then(async (values) => {
+            try {
+                await onSubmitted(values);
+            } catch (error) {
+                console.error('提交数据源失败:', error);
+            }
         }).catch((error) => {
-            console.error(error);
+            console.error('表单验证失败:', error);
         })
     }
 
@@ -68,10 +84,11 @@ export default function DataSourcePanel(props: UserPanelProps) {
                             <Select allowClear
                                     placeholder="请选择数据类型"
                                     options={[
-                                        {label: 'MySQL', value: '0'},
-                                        {label: 'PostgresSQL', value: '1'},
-                                        {label: 'Oracle', value: '2'},
-                                        {label: 'SQL Server', value: '3'},
+                                        {label: 'SQLite', value: '0'},
+                                        {label: 'MySQL', value: '1'},
+                                        {label: 'PostgresSQL', value: '2'},
+                                        {label: 'Oracle', value: '3'},
+                                        {label: 'SQL Server', value: '4'},
                                     ]}/>
                         </Form.Item>
                     </Col>

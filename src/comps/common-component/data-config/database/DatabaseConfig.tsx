@@ -1,3 +1,14 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import AbstractDesignerController from "../../../../framework/core/AbstractDesignerController.ts";
 import {FieldChangeData, LCGUI} from "../../../../json-schema/LCGUI.tsx";
 import {Control} from "../../../../json-schema/SchemaTypes.ts";
@@ -23,7 +34,7 @@ export function DatabaseDataConfig(props: DatabaseDataConfigProps) {
     const [count, setCount] = useState(0);
 
     useEffect(() => {
-        FetchUtil.get(`/api/datasource/list`).then(res => {
+        FetchUtil.get(`/api/commonDatabase/list`).then(res => {
             if (res.code === 200) {
                 const options = (res.data as Array<IDataSource>).map(item => {
                     return {label: item.name, value: item.id}

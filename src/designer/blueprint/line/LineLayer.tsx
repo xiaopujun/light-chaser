@@ -1,147 +1,229 @@
-import React, {CSSProperties} from 'react';
-import CanvasUtil from "../util/CanvasUtil";
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
+import {useEffect, useRef} from 'react';
+import BpCanvasUtil, {bpLineConfig} from "../util/BpCanvasUtil.ts";
+import {Application, Graphics} from "pixi.js";
+import {cloneDeep} from "lodash";
 import bluePrintManager, {IBPLine} from "../manager/BluePrintManager.ts";
-import {AnchorPointType} from "../node/core/AbstractBPNodeController";
-import IdGenerate from "../../../utils/IdGenerate";
+import {AnchorPointType} from "../node/core/AbstractBPNodeController.ts";
+import IdGenerate from "../../../utils/IdGenerate.ts";
 
-class LineLayer extends React.Component {
+export default function LineLayer() {
 
-    //上层
-    upLayer: HTMLCanvasElement | null = null;
-    //下层
-    downLayer: HTMLCanvasElement | null = null;
+    const bpLineContainerRef = useRef<HTMLDivElement | null>(null);
+    const keyDownRef = useRef(false);
+    const keyMoveRef = useRef(false);
+    const width = window.innerWidth - 670, height = window.innerHeight - 85;
+    const dragLineRef = useRef<Graphics>();
 
-    currentLine: IBPLine = {
-        color: "#c0c0c0",
-        lineWidth: 1,
-        lineDash: [10, 10],
+    // 新增：存储当前悬停的目标锚点信息
+    const hoverAnchorRef = useRef<{ element: HTMLElement | null; id: string | null }>({
+        element: null,
+        id: null
+    });
+
+    const currentLineRef = useRef<IBPLine>({
+        color: bpLineConfig.lineColor,
+        lineWidth: bpLineConfig.lineWidth,
         startPoint: {x: 0, y: 0},
         endPoint: {x: 0, y: 0},
         firstCP: {x: 0, y: 0},
         secondCP: {x: 0, y: 0},
-    };
+    });
 
-    //鼠标是否按下
-    keyDown: boolean = false;
-    //是否移动
-    keyMove: boolean = false;
-
-    componentDidMount() {
-        const {setUpCtx, setDownCtx} = bluePrintManager;
-        setUpCtx(this.upLayer!.getContext('2d')!);
-        setDownCtx(this.downLayer!.getContext('2d')!);
-        document.addEventListener('mousedown', this.bpMouseDown);
-        document.addEventListener('mouseup', this.bpMouseUp);
-        document.addEventListener('mousemove', this.bpMouseMove);
-    }
-
-    componentWillUnmount() {
-        document.removeEventListener('mousedown', this.bpMouseDown);
-        document.removeEventListener('mouseup', this.bpMouseUp);
-        document.removeEventListener('mousemove', this.bpMouseMove);
-    }
-
-    bpMouseDown = (e: MouseEvent) => {
+    const bpMouseDown = (e: MouseEvent) => {
+        if (bluePrintManager.selectedLines && bluePrintManager.selectedLines.length > 0) {
+            bluePrintManager.selectedLines.forEach(lineId => {
+                const graphics = bluePrintManager.lineInstances[lineId!];
+                const currentLine = bluePrintManager.bpLines[lineId!]!;
+                BpCanvasUtil.reDrawLine(currentLine, graphics);
+            })
+            bluePrintManager.setSelectedLines([]);
+        }
         const {target} = e;
-        if (!target || !(target as HTMLElement).classList.contains('ap-circle')) return;
-        const pointDom = e.target as HTMLElement;
+        if (!target || !(target as HTMLElement).classList.contains('ap-circle'))
+            return;
+        const pointDom = target as HTMLElement;
         const pointInfoArr = pointDom.id.split(":");
         if (pointInfoArr && pointInfoArr.length === 3 && pointInfoArr[2] === AnchorPointType.INPUT.toString())
             return;
         const {canvasOffset} = bluePrintManager;
         //设置起始点坐标
         const {x, y, width, height} = pointDom.getBoundingClientRect();
-        this.currentLine.startPoint = {x: x + width / 2 - canvasOffset.x, y: y + height / 2 - canvasOffset.y}
-        this.currentLine.startAnchorId = pointDom.id;
-        this.keyDown = true;
+        currentLineRef.current.startPoint = {x: x + width / 2 - canvasOffset.x, y: y + height / 2 - canvasOffset.y}
+        currentLineRef.current.startAnchorId = pointDom.id;
+        keyDownRef.current = true;
     }
 
-    bpMouseUp = (e: MouseEvent) => {
-        const {nodeContainerRef, upCtx} = bluePrintManager;
-        const {width: canvasW, height: canvasH} = nodeContainerRef?.getBoundingClientRect()!;
+    const bpMouseMove = (e: MouseEvent) => {
+        if (!keyDownRef.current)
+            return;
+        keyMoveRef.current = true;
+        const {startPoint, endPoint} = currentLineRef.current;
+        const {canvasOffset} = bluePrintManager;
+        //设置鼠标坐标
+        const mouseX = e.clientX - canvasOffset.x;
+        const mouseY = e.clientY - canvasOffset.y;
+
+        // 新增：检测附近的锚点并自动吸附
+        const {targetAnchor, targetElement} = findNearbyAnchor(mouseX, mouseY, 20); // 10像素吸附范围
+
+        if (targetAnchor && targetElement) {
+            // 如果找到附近的锚点，使用锚点中心坐标
+            const rect = (targetElement as HTMLElement).getBoundingClientRect();
+            currentLineRef.current.endPoint = {
+                x: rect.x + rect.width / 2 - canvasOffset.x,
+                y: rect.y + rect.height / 2 - canvasOffset.y
+            };
+            hoverAnchorRef.current = {element: targetElement, id: targetAnchor};
+        } else {
+            // 如果没有找到附近的锚点，使用鼠标当前位置
+            currentLineRef.current.endPoint = {x: mouseX, y: mouseY};
+            hoverAnchorRef.current = {element: null, id: null};
+        }
+
+        const contPoi = BpCanvasUtil.calculateControlPoint(startPoint!, endPoint!);
+        currentLineRef.current.firstCP = contPoi.firstCP;
+        currentLineRef.current.secondCP = contPoi.secondCP;
+        currentLineRef.current.color = bpLineConfig.connectingColor;
+        currentLineRef.current.lineWidth = bpLineConfig.connectingWidth;
+        BpCanvasUtil.reDrawLine(currentLineRef.current, dragLineRef.current!)
+    }
+
+    // 新增：查找附近锚点的函数
+    const findNearbyAnchor = (mouseX: number, mouseY: number, range: number = 10) => {
+        // 获取所有锚点元素
+        const anchorPoints = document.querySelectorAll('.ap-circle');
+        let closestAnchor: string | null = null;
+        let closestElement: HTMLElement | null = null;
+        let minDistance = range; // 最小距离阈值
+
+        anchorPoints.forEach((ap: Element) => {
+            const anchorElement = ap as HTMLElement;
+            const pointInfoArr = anchorElement.id.split(":");
+
+            // 只检测输入类型的锚点（作为连线目标）
+            if (pointInfoArr && pointInfoArr.length === 3 && pointInfoArr[2] === AnchorPointType.INPUT.toString()) {
+                const rect = anchorElement.getBoundingClientRect();
+                const anchorCenterX = rect.x + rect.width / 2 - bluePrintManager.canvasOffset.x;
+                const anchorCenterY = rect.y + rect.height / 2 - bluePrintManager.canvasOffset.y;
+
+                // 计算鼠标位置与锚点中心的距离
+                const distance = Math.sqrt(
+                    Math.pow(mouseX - anchorCenterX, 2) +
+                    Math.pow(mouseY - anchorCenterY, 2)
+                );
+
+                // 如果距离在范围内且比当前最近锚点更近，更新最近锚点
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestAnchor = anchorElement.id;
+                    closestElement = anchorElement;
+                }
+            }
+        });
+
+        return {targetAnchor: closestAnchor, targetElement: closestElement};
+    }
+
+    const bpMouseUp = (e: MouseEvent) => {
         const endElem = e.target as HTMLElement;
-        if (!this.keyMove || !endElem || !endElem.classList.contains('ap-circle')
-            || endElem.id?.split(":")[2] !== AnchorPointType.INPUT.toString()) {
+
+        // 新增：优先使用悬停的锚点（如果存在）
+        const targetElement = hoverAnchorRef.current.element || endElem;
+        const targetId = hoverAnchorRef.current.id || targetElement?.id;
+
+        if (!keyMoveRef.current || !keyDownRef.current || !targetElement ||
+            !targetElement.classList.contains('ap-circle') ||
+            targetId?.split(":")[2] !== AnchorPointType.INPUT.toString()) {
             //清空画布
-            upCtx?.clearRect(0, 0, canvasW + 10, canvasH + 10);
-            this.keyDown = false;
+            dragLineRef.current?.clear();
+            keyDownRef.current = false;
+            hoverAnchorRef.current = {element: null, id: null}; // 重置悬停状态
             return;
         }
-        const {canvasOffset} = bluePrintManager;
-        this.keyMove = false;
-        this.keyDown = false;
-        bluePrintManager.upCtx!.clearRect(0, 0, canvasW + 10, canvasH + 10)
-        //在下层绘制当前操作的线条
-        this.currentLine.id = IdGenerate.generateId();
-        this.currentLine.lineDash = [];
-        this.currentLine.lineWidth = 1;
-        this.currentLine.color = "#a2a2a2";
-        this.currentLine.endAnchorId = (e!.target as HTMLElement).id;
-        const {x, y, width: apw, height: aph} = (e.target as HTMLElement)?.getBoundingClientRect();
-        this.currentLine.endPoint = {x: x + apw / 2 - canvasOffset.x, y: y + aph / 2 - canvasOffset.y}
-        CanvasUtil.drawBezierCurves(bluePrintManager.downCtx!, [this.currentLine])
-        //计算线条的采样点，用于计算线条是否被选中
-        const {
-            id, startPoint, endPoint, firstCP, secondCP, lineDash,
-            startAnchorId, endAnchorId, color, lineWidth
-        } = this.currentLine;
-        const samplePointArr = CanvasUtil.sampleBezierCurve(startPoint!, firstCP!, secondCP!, endPoint, 20);
-        const {addAPMap, addLine, addAPLineMap} = bluePrintManager;
-        addLine({
-            id: id!,
-            color: color,
-            lineWidth: lineWidth,
-            lineDash: lineDash,
-            startPoint: {...startPoint!},
-            endPoint: {...endPoint},
-            firstCP: {...firstCP!},
-            secondCP: {...secondCP!},
-            samplePoints: samplePointArr,
-            startAnchorId: startAnchorId!,
-            endAnchorId: endAnchorId!,
-        });
-        addAPMap(this.currentLine.startAnchorId!, this.currentLine.endAnchorId);
+        const {canvasOffset, addAPMap, addLine, addAPLineMap} = bluePrintManager;
+        keyDownRef.current = false;
+        //清空临时拖拽线
+        dragLineRef.current?.clear();
+
+        currentLineRef.current.id = IdGenerate.generateId();
+        currentLineRef.current.lineWidth = bpLineConfig.lineWidth;
+        currentLineRef.current.color = bpLineConfig.lineColor;
+        currentLineRef.current.endAnchorId = targetId;
+
+        const {x, y, width: apw, height: aph} = targetElement.getBoundingClientRect();
+        currentLineRef.current.endPoint = {x: x + apw / 2 - canvasOffset.x, y: y + aph / 2 - canvasOffset.y};
+
+        const copyLine = cloneDeep(currentLineRef.current);
+        BpCanvasUtil.createLine(copyLine);
+        addLine(copyLine);
+
+        addAPMap(currentLineRef.current.startAnchorId!, currentLineRef.current.endAnchorId);
         //添加锚点与线条的关联关系
-        addAPLineMap(this.currentLine.startAnchorId!, this.currentLine.id!);
-        addAPLineMap(this.currentLine.endAnchorId!, this.currentLine.id!);
+        addAPLineMap(currentLineRef.current.startAnchorId!, currentLineRef.current.id!);
+        addAPLineMap(currentLineRef.current.endAnchorId!, currentLineRef.current.id!);
+
+        // 重置悬停状态
+        hoverAnchorRef.current = {element: null, id: null};
     }
 
-    bpMouseMove = (e: MouseEvent) => {
-        if (!this.keyDown) return;
-        this.keyMove = true;
-        const {startPoint, endPoint} = this.currentLine;
-        const {nodeContainerRef, canvasOffset} = bluePrintManager;
-        const {width: canvasW, height: canvasH} = nodeContainerRef?.getBoundingClientRect()!;
-        //设置鼠标坐标
-        this.currentLine.endPoint = {x: e.clientX - canvasOffset.x, y: e.clientY - canvasOffset.y}
+    useEffect(() => {
+        bluePrintManager.pixiApp = new Application();
+        if (!bluePrintManager.pixiApp) {
+            console.warn('pixi app create failed');
+            return;
+        }
+        bluePrintManager.pixiApp.init({
+            width,
+            height,
+            antialias: true,
+            backgroundAlpha: 0,
+            resolution: window.devicePixelRatio || 1,
+            autoDensity: true,
+            resizeTo: document.getElementById("bp-node-content")!,
+            preference: 'webgpu'
+        }).then(() => {
+            bluePrintManager.pixiApp!.stage.interactive = true;
+            BpCanvasUtil.reRenderAllLine();
+            if (!bluePrintManager.pixiApp?.canvas)
+                return;
+            bpLineContainerRef.current?.appendChild(bluePrintManager.pixiApp.canvas);
+            document.addEventListener('mousedown', bpMouseDown);
+            document.addEventListener('mouseup', bpMouseUp);
+            document.addEventListener('mousemove', bpMouseMove);
+            const tempLine = new Graphics();
+            bluePrintManager.pixiApp!.stage.addChild(tempLine);
+            dragLineRef.current = tempLine;
 
-        const contPoi = CanvasUtil.calculateControlPoint(startPoint!, endPoint!)
-        this.currentLine.firstCP = contPoi.firstCP
-        this.currentLine.secondCP = contPoi.secondCP
-        //清空画布
-        bluePrintManager.upCtx!.clearRect(0, 0, canvasW + 10, canvasH + 10)
-        CanvasUtil.drawBezierCurves(bluePrintManager.upCtx!, [{
-            color: "#c0c0c0",
-            lineWidth: 1,
-            lineDash: [10, 10],
-            startPoint: this.currentLine.startPoint,
-            endPoint: this.currentLine.endPoint,
-            firstCP: this.currentLine.firstCP,
-            secondCP: this.currentLine.secondCP
-        }])
-    }
+        })
 
-    render() {
-        const width = window.innerWidth - 670, height = window.innerHeight - 85;
-        const _canvasStyle: CSSProperties = {position: "inherit", top: 0, left: 0};
-        return (
-            <div style={{position: "absolute"}}>
-                <canvas style={_canvasStyle} width={width} height={height} ref={ref => this.downLayer = ref}/>
-                <canvas style={_canvasStyle} width={width} height={height} ref={ref => this.upLayer = ref}/>
-            </div>
-        )
-    }
+        return () => {
+            if (bluePrintManager.pixiApp) {
+                document.removeEventListener('mousedown', bpMouseDown);
+                document.removeEventListener('mouseup', bpMouseUp);
+                document.removeEventListener('mousemove', bpMouseMove);
+                try {
+                    bluePrintManager.pixiApp?.destroy();
+                    bluePrintManager.pixiApp = null;
+                } catch (e) {
+                    console.error('Failed to terminate the pixi instance ', e);
+                }
+            }
+        }
+    })
 
+    return (
+        <div style={{position: 'absolute'}} ref={bpLineContainerRef}/>
+    )
 }
 
-export default LineLayer;

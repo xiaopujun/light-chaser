@@ -1,3 +1,14 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import stackRoseImg from "./stack-rose.png";
 import AbstractRoseDefinition from "../../antd-common/rose/AbstractRoseDefinition";
 import {AntdRoseProps} from "../../antd-common/rose/AntdCommonRoseController";
@@ -78,44 +89,47 @@ class AntdStackRoseDefinition extends AbstractRoseDefinition {
                 type: 'AntdStackRose',
             },
             style: {
-                data: data,
+                data,
                 xField: "type",
                 yField: "value",
                 isStack: true,
                 seriesField: "user",
-                color: ["#00b7ffff", "#8ed2ffff"],
+                color: [
+                    "#00b7ffff",
+                    "#8ed2ffff"
+                ],
                 radius: 1,
                 innerRadius: 0,
                 supportCSSTransform: true,
                 sectorStyle: {
                     stroke: "#fff",
-                    lineWidth: 0,
+                    lineWidth: 0
                 },
                 label: {
-                    offset: -12,
+                    offset: 0,
                     style: {
                         fill: "#ffffffff",
-                        fontSize: 9,
-                        fontWeight: 700,
+                        fontSize: 10,
+                        fontWeight: 400
                     },
+                    autoRotate: false
                 },
                 legend: {
                     position: "top",
                     layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#b9b9b9ff",
-                            fontSize: 12,
-                        },
-                    },
+                            fill: "#ffffff",
+                            fontSize: 16
+                        }
+                    }
                 },
                 animation: {
                     appear: {
                         animation: "wave-in",
-                        duration: 3000,
-                    },
-                },
-
+                        duration: 3000
+                    }
+                }
             },
             data: {
                 sourceType: 'static',

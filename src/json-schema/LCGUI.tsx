@@ -1,8 +1,20 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import {Control, ControlValueType} from "./SchemaTypes";
 import React, {ReactNode} from "react";
 import LCGUIUtil from "./LCGUIUtil";
 import UIMap from "./ui";
-import {ConfigProvider, MappingAlgorithm, theme} from "antd";
+import {ConfigProvider} from "antd";
+import {antdComponentTheme, studioDarkAlgorithm} from "./AntdTheme.ts";
 
 export interface FieldChangeData {
     id?: string;
@@ -56,7 +68,7 @@ export class LCGUI extends React.Component<LCGUIProps> {
         }
         //从control本层级开始逐级向上匹配，直到所有变量都匹配结束
         const analyze = (control: Control, variable: string[], rules: string): string => {
-            if (variable.length === 0){
+            if (variable.length === 0) {
                 //如果没有按照LCGUI设计的变量格式设置变量，如："{variable}==='true'",则会直接返回rule本身，并使用eval解析执行。这意味着可以直接写js脚本，转换为字符串匹配执行。这无意间提升了rule字段的灵活性
                 return rules;
             }
@@ -165,30 +177,7 @@ export class LCGUI extends React.Component<LCGUIProps> {
         return (
             <ConfigProvider theme={{
                 algorithm: studioDarkAlgorithm,
-                components: {
-                    InputNumber: {
-                        paddingInline: 7,
-                        colorBgContainer: "#292929",
-                    },
-                    Input: {
-                        paddingInline: 7,
-                        colorBgContainer: "#292929",
-                    },
-                    Switch: {
-                        trackHeight: 17,
-                        colorBgContainer: "#292929",
-                        handleSize: 13,
-                        trackMinWidth: 30,
-                    },
-                    Select: {
-                        optionSelectedBg: '#29323f',
-                        paddingSM: 7,
-                    },
-                    Radio: {
-                        radioSize: 12,
-                        wrapperMarginInlineEnd: 3,
-                    }
-                }
+                components: antdComponentTheme
             }}>
                 {this.init()}
             </ConfigProvider>
@@ -196,12 +185,3 @@ export class LCGUI extends React.Component<LCGUIProps> {
     }
 }
 
-const studioDarkAlgorithm: MappingAlgorithm = (seedToken, mapToken) => {
-    const baseToken = theme.darkAlgorithm(seedToken, mapToken);
-    return {
-        ...baseToken,
-        controlHeight: 26,
-        borderRadius: 3,
-        fontSize: 12,
-    };
-};

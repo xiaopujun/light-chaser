@@ -1,3 +1,14 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import {MouseEvent, useState} from 'react';
 import './ThemeEditor.less';
 import {ThemeItemType} from "../../../../designer/DesignerType";
@@ -165,10 +176,9 @@ const ThemeEditor = () => {
         <div className={'lc-theme-editor'}>
             <div className={'editor-left'}>
                 <LCGUI schema={schema} onFieldChange={onFieldChange}/>
-                <p style={{
-                    color: '#6e6e6e',
-                    fontSize: 12
-                }}>说明：自定义主题色的色值应该保持在同一色系。以确保整体统一的风格。主题色占据主要面积</p>
+        <p className={'theme-tip'}>
+          说明：自定义主题色的色值应该保持在同一色系。以确保整体统一的风格。主题色占据主要面积
+        </p>
                 <div className={'theme-operate-btn'}>
                     <Button onClick={doSaveOrUpd}>添加 / 更新</Button>
                 </div>

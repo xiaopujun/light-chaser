@@ -1,75 +1,96 @@
-@import "../../designer/style/DesignerStyle.less";
-
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
 .lc-config-panel {
   z-index: 1;
-  animation: lcFadeInUp 0.7s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  width: 330px;
-  top: 50px;
-  right: 35px;
+  animation: lcFadeInUp 0.2s forwards;
+  width: 350px;
+  top: 60px;
+  right: 35px; // 与菜单栏宽度匹配
   position: absolute;
-  height: calc(100% - 90px);
-  background-color: @rightConfigPanelBgColor;
-  border-left: 1px solid #2e2e2e;
+  height: calc(100% - 100px);
+  background-color: #2C2C3E; // 使用容器色
+  border-left: 1px solid #3A3A4E; // 使用边框色
+  border-radius: 8px 0 0 8px; // 左侧圆角
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3); // 左侧阴影
+  overflow: hidden;
 
   .lc-panel-top {
     width: 100%;
-    height: 30px;
+    height: 40px; // 增加高度
     display: flex;
-    color: @rightConfigPanelTitleColor;
-    padding: 5px 10px;
+    color: #FFFFFF; // 主要文字色
+    padding: 0 16px; // 调整内边距
     align-items: center;
-    background-color: @rightConfigPanelTitleBgColor;
+    background-color: #1E1E2F; // 使用背景色
     justify-content: space-between;
+    border-bottom: 1px solid #3A3A4E; // 添加分割线
 
-    .panel-operate {
-      padding: 4px 8px;
+    .panel-title {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
     }
 
-    .panel-operate:hover {
+    .panel-operate {
+      padding: 8px;
+      border-radius: 4px;
       cursor: pointer;
+      transition: all 0.2s;
+      color: #A0A0B2; // 次级文字色
+
+      &:hover {
+        color: #FF6E6E; // 警示色
+        background-color: rgba(255, 110, 110, 0.1); // 半透明背景
+      }
     }
   }
 
   .lc-panel-content {
-    height: calc(100% - 30px);
+    height: calc(100% - 40px); // 与顶部高度匹配
     overflow-y: auto;
-    padding: 10px;
+    padding: 16px;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #3A3A4E;
+      border-radius: 3px;
+    }
   }
 
   .resize-handle {
     position: absolute;
     top: 0;
     left: 0;
-    width: 3px;
+    width: 4px;
     height: 100%;
     cursor: col-resize;
-    background-color: #64646400;
-    transition: background-color 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
+    background-color: transparent;
+    transition: background-color 0.2s;
 
-  .resize-handle:hover {
-    background-color: #1645a4;
+    &:hover {
+      background-color: #4FB8FF; // 主高亮色
+    }
   }
-
 }
-
 
 @keyframes lcFadeInUp {
   0% {
     opacity: 0;
-    transform: translateX(35px);
-  }
-  50% {
-    opacity: 1;
-    transform: translateX(35px);
-  }
-  55% {
-    opacity: 1;
-    transform: translateX(35px);
+    transform: translateX(48px);
   }
   100% {
     opacity: 1;
     transform: translateX(0);
   }
-
 }

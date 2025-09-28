@@ -4,7 +4,6 @@
 
 <p>
     <img alt="" src="https://img.shields.io/badge/version-v1.5.0-blue">
-    <img alt="" src="https://img.shields.io/badge/license-MIT-08CE5D?logoColor=08CE5D">
     <img alt="" src="https://img.shields.io/badge/TypeScript-blue">
     <img alt="" src="https://img.shields.io/badge/React-61daeb?logoColor=08CE5D">
     <img alt="" src="https://img.shields.io/badge/Vite-purple">
@@ -13,7 +12,7 @@
 
 <p>Data visualization tools</p>
 
-light chaser is an open source free data visualization design tool based on React technology stack implementation .
+light chaser is an open-source high-performance, easy-to-extend, and powerful data visualization design tool, based on the React18, Vite5, and TypeScript5 technology stacks.
 Through it you can simply and quickly produce data visualization related content. It can be used for large-screen data
 visualization display , data reports, data analysis and other scenes
 
@@ -45,11 +44,15 @@ launch it locally with the code to experience it!
 
 preview image：
 
-![示例1](https://s2.loli.net/2024/09/21/U2Ni3pfaE1rJVAM.png)
+![效果图1](https://s2.loli.net/2025/08/23/BO2AiFes7vwlkL6.jpg)
 
-![示例2](https://s2.loli.net/2024/09/26/pitkUF2GogRYnxO.jpg)
+![效果图2](https://s2.loli.net/2025/08/23/qTlnx7LOWUKaYRA.jpg)
 
-![示例3](https://i.072333.xyz/file/802e2d2b4d95fa32fae48.png)
+![效果图3](https://s2.loli.net/2025/08/23/IpBrYJAO4nyPGil.jpg)
+
+![效果图4](https://s2.loli.net/2025/08/23/zREQuATd3GyCUvx.jpg)
+
+![效果图5](https://s2.loli.net/2025/08/23/iOSYhAMQPGj5e3V.jpg)
 
 # Usage & Deployment
 
@@ -96,6 +99,7 @@ Feel free to dive in! Open an issue or submit PRs.
 light chaser follows the Contributor Covenant Code of Conduct.
 
 
+
 # License
 
 [MIT](LICENSE) © xiaopujun
@@ -109,5 +113,9 @@ Note: In the event of a conflict between the Supplemental Terms and the above Te
 3. The scope of commercial use by individuals or enterprises using this project or the software redeveloped based on this project is limited to their own business, and the project and its source code, binary files, documents, pictures, etc. shall not be directly sold
 4. This project has applied for software copyright, we respect the concept of open source products, and at the same time call on users to respect the results of the author's labor.
 5. All legal disputes and liabilities arising from the use of this software have nothing to do with the author, and the user shall bear the corresponding consequences.
+=======
+# Commercial considerations
 
-Thank you to every developer and person who contributed to this project!
+
+1. This project follows the Apache 2.0 license, please keep the work statement
+2. This program is for learning and communication purposes only, please be sure to obtain authorization for commercial use

@@ -1,65 +1,114 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
 .bp-node {
-  font-size: 12px;
-  width: 160px;
-  min-height: 60px;
-  background-color: #333333;
-  border-radius: 5px;
-  box-sizing: border-box;
-  padding: 5px;
-  color: #fff;
+  width: 200px;
+  min-height: 80px;
+  background-color: #2C2C3E;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: #FFFFFF;
+  transition: all 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
 
   .bp-node-header {
-    padding: 8px 7px;
-    border-radius: 2px;
+    padding: 12px 16px;
     display: flex;
     align-items: center;
+    background-color: #247057; // 保留原有titleBgColor逻辑
 
     .bp-node-icon {
-      position: relative;
-      top: 2px;
+      margin-right: 8px;
+
+      svg {
+        width: 18px;
+        height: 18px;
+        stroke-width: 2px;
+        color: #FFFFFF;
+      }
+    }
+
+    .bp-node-title {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 20px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
   .bp-node-body {
-    color: #adadad;
-
-    .bp-node-ap:hover {
-      background-color: #4b4b4b;
-    }
+    padding: 12px 16px;
 
     .bp-node-ap {
       display: flex;
+      align-items: center;
       padding: 8px 0;
-      box-sizing: border-box;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
+      border-radius: 4px;
+      transition: all 0.2s ease;
 
-      .bp-node-ap-circle {
-        span {
-          display: inline-block;
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-          border: 2px solid #b4b4b4;
-          position: relative;
-          background-color: #333333;
+      &:hover {
+        background-color: #3A3A4E;
+
+        .bp-node-ap-circle span {
+          border-color: #4FB8FF;
+          background-color: #4FB8FF;
         }
 
-        span:hover {
-          border: 4px solid #d6d6d6;
-          background-color: #7b7b7b;
+        .bg-node-ap-label {
+          color: #FFFFFF;
+        }
+      }
+
+      .bp-node-ap-circle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+
+        span {
+          display: block;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          border: 2px solid #A0A0B2;
+          background-color: #2C2C3E;
+          transition: all 0.2s ease;
           cursor: pointer;
         }
 
         .ap-circle-input {
-          flex-direction: row;
-          left: -10px;
+          margin-right: 8px;
         }
 
         .ap-circle-output {
-          flex-direction: row-reverse;
-          right: -10px;
+          margin-left: 8px;
         }
+      }
+
+      .bg-node-ap-label {
+        font-size: 12px;
+        line-height: 16px;
+        color: #d9d9d9;
+        transition: color 0.2s ease;
+        padding: 0 4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
 

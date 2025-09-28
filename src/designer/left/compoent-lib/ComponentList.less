@@ -1,73 +1,140 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
 .dl-component-list {
-  width: 250px;
-  border-right: 1px solid #404040;
+  width: 300px;
+  height: 100%;
+  background-color: #1E1E2F;
+  border-right: 1px solid #3A3A4E;
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
 
   .dl-cl-header {
     display: flex;
     justify-content: space-between;
-    padding: 13px 10px;
-    font-size: 12px;
-    height: 47px;
     align-items: center;
-    border-bottom: 1px solid #404040;
-    color: #bababa;
+    padding: 16px 20px;
+    height: 56px;
+    border-bottom: 1px solid #3A3A4E;
+
+    .dl-cl-header-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #FFFFFF;
+    }
+
+    .dl-cl-header-operate {
+      .close-icon {
+        color: #A0A0B2;
+        font-size: 18px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        padding: 2px;
+        border-radius: 2px;
+
+        &:hover {
+          color: #FF6E6E;
+          background-color: rgba(255, 110, 110, 0.1);
+        }
+      }
+    }
   }
 
   .dl-cl-body {
     display: flex;
-    height: calc(100% - 47px);
+    height: calc(100% - 56px);
 
     .main-categories {
       display: flex;
       flex-direction: column;
       align-items: center;
-      background-color: #181818;
-      width: 35px;
-      font-size: 16px;
+      background-color: #2C2C3E;
+      width: 48px;
+      padding: 12px 0;
 
       .clo-item {
+        margin: 8px 0;
+        padding: 8px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        color: #A0A0B2;
+
         &:hover {
-          color: #0080ff;
+          color: #4FB8FF;
+          background-color: rgba(79, 184, 255, 0.1);
         }
 
-        transition: color 0.3s;
-        color: #aaaaaa;
-        padding: 5px;
-        margin-top: 15px;
-        cursor: pointer;
+        svg {
+          width: 20px;
+          height: 20px;
+        }
       }
 
       .clo-item-active {
-        color: #0080ff;
+        color: #4FB8FF;
+        background-color: rgba(79, 184, 255, 0.2);
       }
     }
 
     .sub-categories {
-      width: 60px;
+      width: 80px;
       height: 100%;
-      overflow: scroll;
+      overflow-y: auto;
+      background-color: #252538;
+      padding: 12px 0;
+      scrollbar-width: thin;
+      scrollbar-color: #3A3A4E #252538;
+
 
       .clt-item {
-        &:hover {
-          color: #3b9bff;
-        }
-
-        transition: all 0.2s;
-        text-align: center;
-        color: #aaaaaa;
+        padding: 8px 12px;
+        margin: 8px;
         font-size: 12px;
-        padding: 10px 5px;
-        margin-top: 10px;
+        color: #A0A0B2;
         cursor: pointer;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &:hover {
+          color: #4FB8FF;
+          background-color: rgba(79, 184, 255, 0.1);
+        }
       }
 
       .clt-item-active {
-        color: #0080ff;
+        color: #4FB8FF;
+        background-color: rgba(79, 184, 255, 0.2);
+        font-weight: 500;
       }
     }
 
     .component-list {
-      width: 155px;
+      width: 170px;
+      background-color: #1E1E2F;
     }
+  }
+}
+
+.component-tooltip {
+  .ant-tooltip-inner {
+    background-color: #2C2C3E;
+    color: #FFFFFF;
+    font-size: 12px;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  }
+
+  .ant-tooltip-arrow::before {
+    background-color: #2C2C3E;
   }
 }

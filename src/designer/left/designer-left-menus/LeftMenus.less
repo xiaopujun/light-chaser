@@ -1,37 +1,80 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 .designer-left-menus {
-  width: 60px;
-  border-right: 1px solid #404040;
+  width: 64px;
+  background-color: #2C2C3E;
+  border-right: 1px solid #3A3A4E;
+  padding: 8px 0;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
 
   .menu-item {
-    width: 60px;
-    height: 63px;
+    width: 100%;
+    height: 72px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    color: #9c9c9cd6;
-    transition: color 0.5s, background-color 0.5s, border-right-color 0.5s;
+    color: #A0A0B2;
+    transition: all 0.2s ease;
+    margin-bottom: 4px;
+    border-radius: 4px;
+    position: relative;
 
-    .menu-item-icon {
-      font-size: 20px;
-      padding: 3px;
+    &-icon {
+      font-size: 24px;
+      margin-bottom: 6px;
+      transition: color 0.2s ease;
     }
 
-    .menu-item-content {
-      padding: 2px;
+    &-content {
       font-size: 12px;
+      line-height: 16px;
+      font-weight: 500;
+      transition: color 0.2s ease;
     }
-  }
 
-  .menu-item:hover {
-    color: #ebebeb;
-    background-color: rgba(188, 188, 188, 0.27);
-  }
+    &:hover {
+      color: #4FB8FF;
+      background-color: rgba(79, 184, 255, 0.1);
 
-  .menu-item-active {
-    color: #0080ff;
+      .menu-item-icon {
+        color: #4FB8FF;
+      }
+    }
+
+    &-active {
+      color: #4FB8FF;
+      background-color: rgba(79, 184, 255, 0.2);
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background-color: #4FB8FF;
+        border-radius: 0 2px 2px 0;
+      }
+
+      .menu-item-icon {
+        color: #4FB8FF;
+      }
+    }
   }
 }
-
-

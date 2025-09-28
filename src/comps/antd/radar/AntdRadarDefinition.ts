@@ -1,3 +1,14 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import React from "react";
 import {BaseInfoType, MenuToConfigMappingType} from "../../../framework/core/AbstractDefinition";
 import {MenuInfo} from "../../../designer/right/MenuType";
@@ -92,7 +103,7 @@ class AntdRadarDefinition extends AntdCommonDefinition<AntdRadarController, Antd
                 radius: 1,
                 smooth: true,
                 lineStyle: {
-                    stroke: "#8fe0ff",
+                    stroke: "l(90) 0:#49a4ff 1:#ff70ff",
                     lineWidth: 2,
                     opacity: 0.5
                 },
@@ -100,14 +111,14 @@ class AntdRadarDefinition extends AntdCommonDefinition<AntdRadarController, Antd
                     size: 3,
                     shape: "circle",
                     style: {
-                        fill: "#4c9cff",
+                        fill: "l(90) 0:#248eff 1:#f36fff",
                         stroke: "#64d6ff",
-                        lineWidth: 1
+                        lineWidth: 0
                     }
                 },
                 area: {
                     style: {
-                        fill: "#3991ff",
+                        fill: "l(90) 0:#57a3ff 1:#c041ff",
                         fillOpacity: 0.6
                     }
                 },
@@ -118,7 +129,7 @@ class AntdRadarDefinition extends AntdCommonDefinition<AntdRadarController, Antd
                         alignTick: true,
                         line: {
                             style: {
-                                stroke: "#42cdffbb",
+                                stroke: "#a2a2a2bb",
                                 lineWidth: 1
                             },
                             type: "line"
@@ -126,7 +137,8 @@ class AntdRadarDefinition extends AntdCommonDefinition<AntdRadarController, Antd
                     },
                     label: {
                         style: {
-                            fill: "#41bbff"
+                            fill: "#ffffff",
+                            fontSize: 13
                         }
                     }
                 },
@@ -142,7 +154,7 @@ class AntdRadarDefinition extends AntdCommonDefinition<AntdRadarController, Antd
                         alignTick: true,
                         line: {
                             style: {
-                                stroke: "#7ee5ff95",
+                                stroke: "l(90) 0:#f9a5ff 1:#89c6ff",
                                 lineWidth: 1
                             },
                             type: "line"
@@ -150,16 +162,17 @@ class AntdRadarDefinition extends AntdCommonDefinition<AntdRadarController, Antd
                     },
                     label: {
                         style: {
-                            fill: "#78b3fa"
+                            fill: "#ffffff"
                         }
-                    }
+                    },
+                    tickCount: 3
                 },
                 animation: {
                     appear: {
                         animation: "wave-in",
-                        duration: 3000,
-                    },
-                },
+                        duration: 3000
+                    }
+                }
             },
             data: {
                 sourceType: 'static',

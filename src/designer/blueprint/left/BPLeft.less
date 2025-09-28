@@ -1,110 +1,156 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
 .bp-left {
   display: flex;
-  height: calc(100vh - 50px);
-  background-color: #1a1a1a;
-  border-right: 1px solid #2e2e2e;
+  height: calc(100vh - 56px);
+  background-color: #1E1E2F;
+  border-right: 1px solid #3A3A4E;
 
   .bp-node-sort-list {
     height: 100%;
-    width: 70px;
-    border-right: 1px solid #2e2e2e;
-
-    .bp-left-item:hover {
-      transition: all 0.3s ease-in-out;
-      background-color: #3d3d3d;
-      color: #0095db;
-      cursor: pointer;
-    }
+    width: 80px;
+    border-right: 1px solid #3A3A4E;
+    padding: 16px 0;
+    background-color: #2C2C3E;
 
     .bp-left-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      color: #999999;
-      padding: 10px 2px;
-      transition: background-color, color, 0.3s ease-in-out;
-
-      .bp-item-label {
-        margin-top: 5px;
-        font-size: 12px;
-      }
+      color: #A0A0B2;
+      padding: 12px 0;
+      margin: 0 8px 8px;
+      border-radius: 4px;
+      transition: all 0.2s ease;
 
       .bp-item-icon {
-        font-size: 20px;
+        font-size: 24px;
+        margin-bottom: 4px;
+        svg {
+          stroke-width: 2px;
+        }
+      }
+
+      .bp-item-label {
+        font-size: 12px;
+        line-height: 16px;
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+      }
+
+      &:hover {
+        background-color: #3A3A4E;
+        color: #4FB8FF;
+        cursor: pointer;
       }
     }
 
     .bp-left-item-active {
-      color: #0095db;
+      background-color: #3A3A4E;
+      color: #4FB8FF;
     }
   }
 
   .bp-node-list {
-    width: 250px;
+    width: 280px;
     height: 100%;
-    background-color: #1a1a1a;
-    z-index: 1;
-    font-size: 12px;
+    background-color: #1E1E2F;
+    display: flex;
+    flex-direction: column;
 
     .bp-node-list-header {
-      width: 100%;
-      height: 50px;
-      border-bottom: 1px solid #2e2e2e;
-      display: flex;
-      padding: 5px 10px;
-      color: #999999;
-      align-items: center;
+      padding: 16px;
+      border-bottom: 1px solid #3A3A4E;
 
       .bp-node-list-search {
         width: 100%;
+
+        .input-container {
+          background-color: #2C2C3E;
+          border: 1px solid #3A3A4E;
+          border-radius: 4px;
+
+          input {
+            color: #FFFFFF;
+            &::placeholder {
+              color: #A0A0B2;
+            }
+          }
+        }
       }
     }
 
-
     .bp-node-list-body {
-      padding: 10px;
-      color: #999999;
-      height: calc(100vh - 100px);
-      overflow-y: scroll;
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
 
       .bp-node-list-container {
-
-        .bp-node-list-item-used {
-          background-color: #181818;
-          color: #656565;
-        }
-
-        .bp-node-list-item:hover {
-          background-color: #3d3d3d;
-          color: #9ed4ff;
-          cursor: pointer;
-        }
-
         .bp-node-list-item {
-          margin-bottom: 5px;
-          background-color: #262626;
-          padding: 10px 5px;
-          border-radius: 5px;
-          transition: background-color, color, 0.2s ease-in-out;
           display: flex;
           align-items: center;
+          padding: 12px;
+          margin-bottom: 8px;
+          background-color: #2C2C3E;
+          border-radius: 4px;
+          border: 1px solid transparent;
+          transition: all 0.2s ease;
+          color: #FFFFFF;
 
           .bpn-li-icon {
-            width: 18px;
-            height: 18px;
-            margin-right: 5px;
-            border-radius: 3px;
-            padding: 3px;
-            color: white;
-            background-color: rgba(0, 152, 255, 0.25);
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(79, 184, 255, 0.15);
+            border-radius: 4px;
+            padding: 4px;
 
-            span {
-              position: relative;
+            svg {
+              stroke-width: 2px;
+              color: #4FB8FF;
+            }
+          }
+
+          .bpn-li-label {
+            font-size: 14px;
+            line-height: 20px;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+          }
+
+          &:hover {
+            background-color: #3A3A4E;
+            border-color: #4FB8FF;
+            cursor: grab;
+          }
+
+          &:active {
+            cursor: grabbing;
+          }
+        }
+
+        .bp-node-list-item-used {
+          background-color: #2C2C3E;
+          color: #A0A0B2;
+          cursor: not-allowed;
+
+          .bpn-li-icon {
+            background-color: rgba(160, 160, 178, 0.1);
+            svg {
+              color: #A0A0B2;
             }
           }
         }
       }
     }
   }
-
 }

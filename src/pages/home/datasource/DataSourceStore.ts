@@ -1,13 +1,26 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import {action, makeObservable, observable} from "mobx";
 import {globalMessage} from "../../../framework/message/GlobalMessage.tsx";
 import FetchUtil from "../../../utils/FetchUtil.ts";
+import CryptoUtil from "../../../utils/CryptoUtil.ts";
 import {IPage} from "../../../designer/DesignerType.ts";
 
 export const DataSourceMapping = {
-    "0": "MySQL",
-    "1": "PostgresSQL",
-    "2": "Oracle",
-    "3": "SQL Server",
+    "0": "SQLite",
+    "1": "MySQL",
+    "2": "PostgresSQL",
+    "3": "Oracle",
+    "4": "SQL Server",
 }
 
 export interface IDataSource {
@@ -19,6 +32,7 @@ export interface IDataSource {
     password?: string;
     url?: string;
     des?: string;
+    aesKey?: string; // 加密后的AES密钥
 }
 
 export class DataSourceStore {
@@ -35,7 +49,7 @@ export class DataSourceStore {
 
     panelVisible = false;
     searchValue: string | null = null;
-    dataSourcePageData: IPage<IDataSource[]> = {
+    dataSourcePageData: IPage<IDataSource> = {
         records: [],
         total: 0,
         size: 8,
@@ -66,7 +80,7 @@ export class DataSourceStore {
         }
     }
 
-    setDataSourceList = (dataSourcePageData: IPage<IDataSource[]>) => this.dataSourcePageData = dataSourcePageData;
+    setDataSourceList = (dataSourcePageData: IPage<IDataSource>) => this.dataSourcePageData = dataSourcePageData;
 
     setDataSource = (dataSource: IDataSource) => this.dataSource = dataSource;
 
@@ -76,7 +90,7 @@ export class DataSourceStore {
     }
 
     testConnect = (id: string) => {
-        FetchUtil.get(`/api/datasource/test/${id}`).then(res => {
+        FetchUtil.get(`/api/commonDatabase/test/${id}`).then(res => {
             if (res.code === 200)
                 globalMessage.messageApi?.success(res.msg);
             else
@@ -85,7 +99,7 @@ export class DataSourceStore {
     }
 
     copyDataSource = (id: string) => {
-        FetchUtil.get(`/api/datasource/copy/${id}`).then(res => {
+        FetchUtil.get(`/api/commonDatabase/copy/${id}`).then(res => {
             if (res.code === 200) {
                 globalMessage.messageApi?.success(res.msg);
                 this.getDataSourceList();
@@ -95,7 +109,7 @@ export class DataSourceStore {
     }
 
     openDataSourceEditor = (id: string) => {
-        FetchUtil.get(`/api/datasource/get/${id}`).then(res => {
+        FetchUtil.get(`/api/commonDatabase/get/${id}`).then(res => {
             if (res.code === 200) {
                 this.setDataSource(res.data);
                 this.setPanelVisible(true);
@@ -105,12 +119,12 @@ export class DataSourceStore {
     }
 
     getDataSourceList = () => {
-        FetchUtil.post(`/api/datasource/pageList`, {
+        FetchUtil.post(`/api/commonDatabase/pageList`, {
             current: this.dataSourcePageData.current,
             size: this.dataSourcePageData.size,
             searchValue: this.searchValue
         }).then(res => {
-            let {code, data, msg} = res;
+            const {code, data, msg} = res;
             if (code === 200) {
                 (data.records as Array<IDataSource>).forEach((item) => {
                     item.key = item.id;
@@ -124,38 +138,81 @@ export class DataSourceStore {
                 });
                 this.searchValue = null;
             } else {
-                msg = "服务器链接失败";
-                globalMessage.messageApi?.error(msg);
+                globalMessage.messageApi?.error(msg || "服务器链接失败");
             }
         })
     }
 
-    updateDataSource = (data: IDataSource) => {
-        FetchUtil.post(`/api/datasource/update`, data).then(res => {
-            if (res.code === 200) {
-                globalMessage.messageApi?.success(res.msg);
-                this.getDataSourceList();
-                this.setPanelVisible(false);
-            } else
-                globalMessage.messageApi?.error(res.msg);
-        })
+    /**
+     * 对数据源密码进行AES+RSA双重加密
+     * @param data 数据源数据
+     * @returns 加密后的数据源数据
+     */
+    private async encryptPassword(data: IDataSource): Promise<IDataSource> {
+        if (data.password) {
+            try {
+                // 生成随机AES密钥
+                const aesKey = CryptoUtil.generateAESKey();
+
+                // 使用AES加密密码
+                const encryptedPassword = CryptoUtil.encryptAES(data.password, aesKey);
+
+                // 获取RSA公钥
+                const publicKey = await FetchUtil.getRSAPublicKey();
+
+                // 使用RSA公钥加密encryptedPassword
+                const encryptedData = CryptoUtil.encryptRSA(encryptedPassword, publicKey);
+
+                return {
+                    ...data,
+                    password: encryptedData,
+                    aesKey: aesKey
+                };
+            } catch (error) {
+                console.error('密码加密失败:', error);
+                globalMessage.messageApi?.error('密码加密失败，请重试');
+                throw error;
+            }
+        }
+        return data;
     }
 
-    createDataSource = (data: IDataSource) => {
-        FetchUtil.post(`/api/datasource/add`, data).then(res => {
+    updateDataSource = async (data: IDataSource) => {
+        try {
+            const encryptedData = await this.encryptPassword(data);
+            const res = await FetchUtil.post(`/api/commonDatabase/update`, encryptedData);
             if (res.code === 200) {
                 globalMessage.messageApi?.success(res.msg);
                 this.getDataSourceList();
                 this.setPanelVisible(false);
-            } else
+            } else {
                 globalMessage.messageApi?.error(res.msg);
-        })
+            }
+        } catch (error) {
+            console.error('更新数据源失败:', error);
+        }
+    }
+
+    createDataSource = async (data: IDataSource) => {
+        try {
+            const encryptedData = await this.encryptPassword(data);
+            const res = await FetchUtil.post(`/api/commonDatabase/add`, encryptedData);
+            if (res.code === 200) {
+                globalMessage.messageApi?.success(res.msg);
+                this.getDataSourceList();
+                this.setPanelVisible(false);
+            } else {
+                globalMessage.messageApi?.error(res.msg);
+            }
+        } catch (error) {
+            console.error('创建数据源失败:', error);
+        }
     }
 
     doBatchDeleteDataSource = (ids: string[]) => {
         if (ids.length === 0)
             return;
-        FetchUtil.post('/api/datasource/batchDel', ids).then((res) => {
+        FetchUtil.post('/api/commonDatabase/batchDel', ids).then((res) => {
             const {code, msg} = res;
             if (code === 200) {
                 globalMessage.messageApi?.success('删除成功');
@@ -165,11 +222,11 @@ export class DataSourceStore {
         })
     }
 
-    doCreateOrUpdateDataSource = (data: IDataSource) => {
+    doCreateOrUpdateDataSource = async (data: IDataSource) => {
         if (data.id) {
-            this.updateDataSource(data);
+            await this.updateDataSource(data);
         } else {
-            this.createDataSource(data);
+            await this.createDataSource(data);
         }
     }
 

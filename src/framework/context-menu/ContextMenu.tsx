@@ -1,3 +1,14 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import './ContextMenu.less';
 
 export interface IContextMenuItem {
@@ -16,8 +27,8 @@ export default function ContextMenu(props: ContextMenuProps) {
     const {menus, visible, position} = props;
 
     const calculateMenuSize = (menuCount: number) => {
-        const menuHeight = 33;
-        return [130, menuCount * menuHeight];
+        const menuHeight = 40; // 调整菜单项高度
+        return [180, menuCount * menuHeight + 16]; // 增加宽度和内边距
     }
     const buildMenuList = () => {
         const menuListDom = [];
@@ -26,8 +37,8 @@ export default function ContextMenu(props: ContextMenuProps) {
             const Icon = menuItem.icon;
             menuListDom.push(
                 <div key={i + ''} className={'menu-item'} onClick={menuItem.onClick}>
-                    <label><Icon/></label>
-                    <span>{menuItem.name}</span>
+                    <span className="menu-item-icon"><Icon/></span>
+                    <span className="menu-item-text">{menuItem.name}</span>
                 </div>
             )
         }
@@ -54,7 +65,9 @@ export default function ContextMenu(props: ContextMenuProps) {
                 <div className={'context-menu'} style={{
                     position: 'fixed',
                     top: _position[1],
-                    left: _position[0]
+                    left: _position[0],
+                    width: offsetW,
+                    minHeight: offsetH
                 }}>
                     {buildMenuList()}
                 </div>}

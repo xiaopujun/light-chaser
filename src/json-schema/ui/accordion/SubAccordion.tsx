@@ -1,3 +1,14 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import {Collapse, CollapseProps, Tooltip} from "antd";
 import {Help} from "@icon-park/react";
 import './Accordion.less';
@@ -16,9 +27,18 @@ export default function SubAccordion(props: AccordionProps) {
     const items: CollapseProps['items'] = [
         {
             key: '1',
-            label: label,
-            children: <div>{children}</div>,
-            extra: tip && <Tooltip title={tip} style={{marginLeft: 1}}><Help/></Tooltip>
+      label: (
+        <div className="lc-sub-accordion-label">
+          <span>{label}</span>
+          {tip && (
+            <Tooltip title={tip} overlayClassName="lc-tooltip">
+              <Help className="lc-sub-accordion-icon" />
+            </Tooltip>
+          )}
+        </div>
+      ),
+      children: <div className="lc-sub-accordion-content">{children}</div>,
+      showArrow: false
         },
     ];
 
@@ -26,7 +46,9 @@ export default function SubAccordion(props: AccordionProps) {
         <div className={'lc-sub-accordion'}>
             <Collapse bordered={false}
                       expandIconPosition={'end'}
-                      items={items}/>
+        items={items}
+        className="lc-sub-accordion-collapse"
+      />
         </div>
     );
 }

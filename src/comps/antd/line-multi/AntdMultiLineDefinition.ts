@@ -1,3 +1,14 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import multiLineImg from "./multi-line.png";
 import AbstractLineDefinition from "../../antd-common/line/AbstractLineDefinition";
 import {AntdLineProps} from "../../antd-common/line/AntdCommonLineController";
@@ -82,10 +93,16 @@ class AntdMultiLineDefinition extends AbstractLineDefinition {
                 yField: "value",
                 seriesField: "category",
                 supportCSSTransform: true,
-                color: ["#00a8ff", "#00ffc9"],
+                color: [
+                    "l(0) 0:#266bff 1:#af47ff",
+                    "l(0) 0:#ff9a6e 1:#ff5e00"
+                ],
                 point: {
-                    color: ["#00a8ff", "#00ffc9"],
-                    size: 3,
+                    color: [
+                        "#00a8ff",
+                        "#00ffc9"
+                    ],
+                    size: 0,
                     shape: "circle",
                     style: {
                         stroke: "#00a8ff",
@@ -93,58 +110,65 @@ class AntdMultiLineDefinition extends AbstractLineDefinition {
                     }
                 },
                 lineStyle: {
-                    lineWidth: 2,
+                    lineWidth: 4
                 },
                 xAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#969696ff",
-                            fontSize: 11,
-                        },
+                            fill: "#ffffff",
+                            fontSize: 12
+                        }
                     },
                     line: null,
                     tickLine: null,
                     subTickLine: null,
                     position: "bottom",
-                    title: null,
+                    title: null
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#a0a0a0ff",
-                            fontSize: 10,
-                        },
+                            fill: "#ffffff",
+                            fontSize: 12
+                        }
                     },
                     line: {
                         style: {
                             stroke: "#adadad75",
-                            lineWidth: 1,
-                        },
+                            lineWidth: 1
+                        }
                     },
                     tickLine: null,
                     subTickLine: null,
                     position: "left",
-                    title: null,
+                    title: null
                 },
-                smooth: false,
+                smooth: true,
                 legend: {
                     position: "top",
                     layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#a0a0a0ff",
-                            fontSize: 12,
-                        },
-                    },
+                            fill: "#ffffff",
+                            fontSize: 14
+                        }
+                    }
                 },
                 animation: {
                     appear: {
                         animation: "wave-in",
-                        duration: 3000,
-                    },
+                        duration: 3000
+                    }
                 },
+                label: {
+                    position: "middle",
+                    style: {
+                        fontSize: 8,
+                        fill: "#ffffff"
+                    }
+                }
             },
             data: {
                 sourceType: 'static',

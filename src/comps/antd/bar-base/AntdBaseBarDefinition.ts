@@ -1,3 +1,14 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import baseBarImg from "./base-bar.png";
 import {AntdBarProps} from "../../antd-common/bar/AntdCommonBarController";
 import AbstractBarDefinition from "../../antd-common/bar/AbstractBarDefinition";
@@ -41,65 +52,76 @@ class AntdBaseBarDefinition extends AbstractBarDefinition {
             },
             style: {
                 data: data,
+                label: {
+                    style: {
+                        fill: "#ffffff",
+                        fontWeight: 500
+                    },
+                    position: "right"
+                },
                 xField: "value",
                 yField: "name",
                 seriesField: "name",
-                maxBarWidth: 8,
-                color: ["#005d71ff", "#00d0e4ff", "#5bf0ffff"],
+                maxBarWidth: 12,
+                color: [
+                    "l(135) 0:#43cbff 1:#0090d9",
+                    "l(135) 0:#3e95ff 1:#256eff",
+                    "l(135) 0:#428bff 1:#7e64ff"
+                ],
                 barStyle: {
-                    radius: 0,
+                    radius: 6
                 },
                 supportCSSTransform: true,
                 xAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#878787ff",
-                            fontSize: 10,
-                        },
+                            fill: "#d9d9d9",
+                            fontSize: 12
+                        }
                     },
                     line: {
                         style: {
-                            stroke: "#6f6f6f91",
-                            lineWidth: 1,
-                        },
+                            stroke: "#bcbcbc91",
+                            lineWidth: 1
+                        }
                     },
                     tickLine: null,
                     subTickLine: null,
                     position: "right",
-                    title: null,
+                    title: null
                 },
                 yAxis: {
                     grid: null,
                     label: {
                         style: {
-                            fill: "#6b6b6bff",
-                            fontSize: 10,
+                            fill: "#d6d6d6",
+                            fontSize: 12
                         },
-                        offset: 9,
+                        offset: 9
                     },
                     line: null,
                     tickLine: null,
                     subTickLine: null,
                     position: "bottom",
-                    title: null,
+                    title: null
                 },
                 legend: {
                     position: "top",
                     layout: "horizontal",
                     itemName: {
                         style: {
-                            fill: "#989898ff",
-                            fontSize: 10,
-                        },
-                    },
+                            fill: "#e4e4e4",
+                            fontSize: 12
+                        }
+                    }
                 },
                 animation: {
                     appear: {
                         animation: "scale-in-x",
-                        duration: 3000,
-                    },
-                },
+                        duration: 3000
+                    }
+                }
             },
             data: {
                 sourceType: 'static',

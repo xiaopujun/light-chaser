@@ -1,3 +1,14 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 import {Component} from 'react';
 import './BaseInfo.less';
 import layerManager from "../../../designer/manager/LayerManager.ts";
@@ -12,15 +23,7 @@ import editorDesignerLoader from "../../../designer/loader/EditorDesignerLoader"
 import layerListStore from "../../../designer/left/layer-list/LayerListStore";
 import LayerUtil from "../../../designer/left/layer-list/util/LayerUtil";
 import canvasManager from "../../../designer/header/items/canvas/CanvasManager.ts";
-import {
-    AlignBottomTwo,
-    AlignHorizontalCenterTwo,
-    AlignLeftTwo,
-    AlignRightTwo,
-    AlignTopTwo,
-    AlignVerticalCenterTwo,
-    Info
-} from "@icon-park/react";
+import {AlignBottomTwo, AlignHorizontalCenterTwo, AlignLeftTwo, AlignRightTwo, AlignTopTwo, AlignVerticalCenterTwo, Info} from "@icon-park/react";
 
 /**
  * lc组件基础信息
@@ -230,7 +233,10 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
         return (
             <div className={'base-info-config'}>
                 <div className={'version-info'}>
-                    <span><Info/> {type} | {version ? `版本: ${version}` : '无版本信息'}</span>
+                    <Info className="version-icon"/>
+                    <span className="version-text">
+                      {type} | {version ? `版本: ${version}` : '无版本信息'}
+                    </span>
                 </div>
                 <LCGUI schema={schema} onFieldChange={this.onFieldChange}/>
             </div>

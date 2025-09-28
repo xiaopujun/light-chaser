@@ -1,3 +1,13 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
 import {ChangeEvent, Component} from 'react';
 import './CompList.less';
 import {observer} from "mobx-react";
@@ -20,7 +30,6 @@ class CompList extends Component {
         const {doInit} = componentListStore;
         doInit && doInit();
     }
-
 
     componentDidMount() {
         let count = 0;
@@ -76,7 +85,7 @@ class CompList extends Component {
     }
 
     addItem = (compKey: string, position = [0, 0]) => {
-        let {setAddRecordCompId} = eventOperateStore;
+        const {setAddRecordCompId} = eventOperateStore;
         const {definitionMap} = editorDesignerLoader;
         const {compName, width = 320, height = 200} = definitionMap[compKey].getBaseInfo();
         const movableItem: ILayerItem = {
@@ -97,7 +106,8 @@ class CompList extends Component {
 
     getChartDom = () => {
         const chartDom = [];
-        let {compInfoArr, search, categories, subCategories} = componentListStore;
+        const {search, categories, subCategories} = componentListStore;
+        let {compInfoArr} = componentListStore;
         if (categories !== "all") {
             compInfoArr = compInfoArr.filter((item: BaseInfoType) => {
                 return item.categorize === categories;
@@ -119,11 +129,15 @@ class CompList extends Component {
             const definition: AbstractDefinition = editorDesignerLoader.definitionMap[compKey];
             const chartImg = definition.getChartImg();
             chartDom.push(
-                <div key={i + ''} className={'list-item droppable-element'} draggable={true}
-                     onDoubleClick={() => this.addItem(compKey)}
-                     data-type={compKey}>
+                <div
+                    key={i + ''}
+                    className={'list-item droppable-element'}
+                    draggable={true}
+                    onDoubleClick={() => this.addItem(compKey)}
+                    data-type={compKey}
+                >
                     <div style={{pointerEvents: 'none'}}>
-                        <div className={'item-header'} ref={'drag-target'}>
+                        <div className={'item-header'}>
                             <div className={'item-name'}>{compName}</div>
                         </div>
                         <div className={'item-content'}>
@@ -136,7 +150,6 @@ class CompList extends Component {
         return chartDom;
     }
 
-
     searchChart = (e: ChangeEvent<HTMLInputElement>) => {
         const {setSearch} = componentListStore;
         setSearch && setSearch((e.target as HTMLInputElement).value);
@@ -144,14 +157,18 @@ class CompList extends Component {
 
     render() {
         return (
-            <>
+            <div className={'comp-list-container'}>
                 <div className={'list-search'}>
-                    <Input placeholder={"搜索组件"} onChange={this.searchChart} style={{height: 28}}/>
+                    <Input
+                        placeholder="搜索组件"
+                        onChange={this.searchChart}
+                        className="component-search-input"
+                    />
                 </div>
                 <div className={'list-items'} id={'component-drag-container'}>
                     {this.getChartDom()}
                 </div>
-            </>
+            </div>
         );
     }
 }
