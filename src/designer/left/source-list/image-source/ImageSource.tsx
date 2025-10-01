@@ -13,7 +13,6 @@ import {ILayerItem} from "../../../DesignerType";
 import './ImageSource.less';
 import eventOperateStore from "../../../operate-provider/EventOperateStore";
 import layerManager from "../../../manager/LayerManager.ts";
-import editorDesignerLoader from "../../../loader/EditorDesignerLoader";
 import IdGenerate from "../../../../utils/IdGenerate";
 import {BaseImageComponentProps} from "../../../../comps/lc/base-image/BaseImageController";
 import {IImageData} from "../../../../comps/lc/base-image/BaseImageComponent";
@@ -22,6 +21,7 @@ import {Input, Popconfirm} from "antd";
 import historyRecordOperateProxy from "../../../operate-provider/undo-redo/HistoryRecordOperateProxy.ts";
 import {Close, Search} from "@icon-park/react";
 import baseApi from "../../../../api/BaseApi.ts";
+import {DesignerLoader} from "../../../loader/DesignerLoader.ts";
 
 export default function ImageSource() {
     const [imageList, setImageList] = useState<IImageData[]>([]);
@@ -55,7 +55,7 @@ export default function ImageSource() {
     const addItem = (compKey: string, position = [0, 0], url: string, hash?: string) => {
         const {elemConfigs} = layerManager;
         const {setAddRecordCompId} = eventOperateStore;
-        const {definitionMap} = editorDesignerLoader;
+        const {definitionMap} = DesignerLoader;
         const definition = definitionMap[compKey];
         const {compName, width = 320, height = 200} = definition.getBaseInfo();
         const id = IdGenerate.generateId();

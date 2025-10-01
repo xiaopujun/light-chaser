@@ -9,18 +9,18 @@
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
 
-import viewDesignerLoader from "../loader/ViewDesignerLoader.ts";
-import {lazy, Suspense, useEffect} from 'react';
+import {ViewDesignerLoader} from "../loader/ViewDesignerLoader.ts";
+import {lazy, Suspense, useEffect, useRef} from 'react';
 import './DesignerView.less';
 import layerManager from "../manager/LayerManager.ts";
 import {observer} from "mobx-react";
 import Loading from "../../json-schema/ui/loading/Loading";
 import layerBuilder from "../left/layer-list/LayerBuilder";
-import {SaveType} from "../DesignerType.ts";
+import {DesignerMode, SaveType} from "../DesignerType.ts";
 import canvasManager from "../header/items/canvas/CanvasManager.ts";
-import designerManager from "../manager/DesignerManager.ts";
 import '../../designer/resource/font/FontGlobal.css';
 import ScaleAction from "../../framework/core/ScaleAction.ts";
+import {DesignerLoader} from "../loader/DesignerLoader.ts";
 
 const ScreenFit = lazy(() => import('../../framework/screen-fit/ScreenFit.tsx'));
 
@@ -33,15 +33,15 @@ export interface DesignerViewProps {
 const DesignerView = observer((props: DesignerViewProps) => {
 
     const {id, type} = props;
+    const loaderRef = useRef<DesignerLoader | null>(new ViewDesignerLoader(DesignerMode.VIEW));
 
     useEffect(() => {
-        viewDesignerLoader.load(id, type);
+        loaderRef.current?.load(id, type);
     }, []);
 
     const {layerConfigs} = layerManager!;
-    const {loaded} = designerManager;
     const {canvasConfig: {width, height, adaptationType}} = canvasManager
-    if (!loaded)
+    if (!loaderRef.current?.loaded)
         return <Loading/>;
 
     const canvasDom = <div style={{width, height, background: 'black', overflow: 'hidden', position: "relative"}}>

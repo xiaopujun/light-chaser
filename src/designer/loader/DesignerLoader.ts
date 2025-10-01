@@ -12,20 +12,38 @@
 import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
 import AbstractConvert from "../../framework/convert/AbstractConvert";
 import {componentCategorize} from "../left/compoent-lib/ComponentCategorize";
-import {ProjectDataType, SaveType} from "../DesignerType.ts";
-import designerManager from "../manager/DesignerManager.ts";
+import {DesignerMode, ProjectDataType, SaveType} from "../DesignerType.ts";
 import {globalMessage} from "../../framework/message/GlobalMessage.tsx";
+import {action, makeObservable, observable} from "../../../.vite/deps/mobx";
 
-export abstract class AbstractDesignerLoader {
+export class DesignerLoader {
 
+    constructor(mode: DesignerMode) {
+        this.mode = mode;
+        makeObservable(this, {
+            loaded: observable,
+            setLoaded: action,
+        });
+    }
+
+    //设计器是否已加载完成
+    public loaded: boolean = false;
+    //设计器所处模式：编辑、预览、发布
+    public mode: DesignerMode = DesignerMode.EDIT;
     //自定义组件信息映射
-    public definitionMap: Record<string, AbstractDefinition> = {};
+    public static definitionMap: Record<string, AbstractDefinition> = {};
     //数据转换器
     public convertMap: { [key: string]: AbstractConvert } = {};
 
-    protected abstract getProjectData(id: string, type: SaveType): Promise<ProjectDataType | null>;
+    public setLoaded = (loaded: boolean) => this.loaded = loaded;
 
-    protected abstract getProjectDataAfter(id: string, type: SaveType, data: ProjectDataType): void;
+    protected getProjectData(id: string, type: SaveType): Promise<ProjectDataType | null> {
+        throw new Error(`Method not implemented. ${id} - ${type}`);
+    }
+
+    protected getProjectDataAfter(id: string, type: SaveType, data: ProjectDataType): void {
+        throw new Error(`Method not implemented. ${id} - ${type} - ${data}`);
+    }
 
 
     /**
@@ -43,7 +61,7 @@ export abstract class AbstractDesignerLoader {
             //后置处理
             this.getProjectDataAfter(id, type, data);
             //数据加载完成
-            designerManager.setLoaded(true);
+            this.setLoaded(true);
         });
     }
 
@@ -54,13 +72,13 @@ export abstract class AbstractDesignerLoader {
         const glob = import.meta.glob('../../comps/**/*.ts', {eager: true}) as Record<string, any>;
         for (const key of Object.keys(glob)) {
             const Clazz = glob[key]?.default;
-            if (Clazz && AbstractDefinition.isPrototypeOf(Clazz)) {
+            if (Clazz && Object.prototype.isPrototypeOf.call(AbstractDefinition, Clazz)) {
                 const definition: AbstractDefinition = new Clazz();
                 //获取组件的基础信息
                 if (typeof definition.getBaseInfo === "function") {
                     const compKey = definition.getBaseInfo().compKey;
                     if (compKey)
-                        this.definitionMap[compKey] = definition;
+                        DesignerLoader.definitionMap[compKey] = definition;
                 }
                 //获取自定义分类
                 if (typeof definition.getCategorize === "function") {
@@ -83,7 +101,7 @@ export abstract class AbstractDesignerLoader {
                             componentCategorize.push(subCategorize);
                     }
                 }
-            } else if (Clazz && AbstractConvert.isPrototypeOf(Clazz)) {
+            } else if (Clazz && Object.prototype.isPrototypeOf.call(AbstractConvert, Clazz)) {
                 const convert: AbstractConvert = new Clazz();
                 const convertKey = convert.getKey();
                 this.convertMap[convertKey] = convert;

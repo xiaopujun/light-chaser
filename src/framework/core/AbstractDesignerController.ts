@@ -151,6 +151,20 @@ abstract class AbstractDesignerController<I = any, C = any> extends AbstractCont
         }
     }
 
+    /**
+     * 设置组件的显示状态，默认直接使用css属性控制组件显示。
+     * 接入组件的过程中，建议自行实现该方法以达到更好的性能表现。建议的做法是显示时重新渲染组件. 隐藏时卸载整个组件即dom元素。可以节省内存开销
+     * @param visible
+     */
+    public setVisible(visible: boolean): void {
+        if (this.container) {
+            if (visible)
+                this.container.style.visibility = "visible";
+            else
+                this.container.style.visibility = "hidden";
+        }
+    }
+
 }
 
 export default AbstractDesignerController;

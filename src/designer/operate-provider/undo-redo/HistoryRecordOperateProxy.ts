@@ -168,7 +168,7 @@ class HistoryRecordOperateProxy {
     }
 
     public doDelete(): void {
-        let {targetIds, setTargetIds} = eventOperateStore;
+        const {targetIds, setTargetIds} = eventOperateStore;
         if (targetIds.length === 0)
             return;
         const {setContentVisible, activeConfig, activeElem} = rightStore;
@@ -429,6 +429,10 @@ class HistoryRecordOperateProxy {
                 (layerInstances[item.id!] as Component)?.setState({hide: item.hide, selected: false})
             })
         }
+        const {compController} = window.LC_ENV.layerManager!;
+        items.forEach(item => {
+            compController[item.id!]?.setVisible(!item.hide)
+        })
     }
 
     public doLockUpd(items: ILayerItem[]): void {

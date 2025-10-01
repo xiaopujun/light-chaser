@@ -9,12 +9,7 @@
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
 
-import {
-    AbstractDefinition,
-    ActionInfo,
-    BaseInfoType,
-    MenuToConfigMappingType
-} from "../../framework/core/AbstractDefinition";
+import {AbstractDefinition, ActionInfo, BaseInfoType, MenuToConfigMappingType} from "../../framework/core/AbstractDefinition";
 import {ClazzTemplate} from "../common-component/CommonTypes.ts";
 import {MenuInfo} from "../../designer/right/MenuType";
 import GroupLayerController, {GroupLayerProps} from "./GroupLayerController";
@@ -73,14 +68,14 @@ export default class GroupLayerDefinition extends AbstractDefinition<GroupLayerC
                 name: "显示",
                 id: "show",
                 handler: (controller: AbstractController) => {
-                    (controller as GroupLayerController).show();
+                    (controller as GroupLayerController).setVisible(true);
                 }
             },
             {
                 name: "隐藏",
                 id: "hide",
                 handler: (controller: AbstractController) => {
-                    (controller as GroupLayerController).hide();
+                    (controller as GroupLayerController).setVisible(false);
                 }
             }
         ];

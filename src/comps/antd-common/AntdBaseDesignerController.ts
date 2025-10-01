@@ -22,8 +22,7 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
     protected interval: NodeJS.Timeout | null = null;
     //上一次数据连接状态 true：成功 false：失败
     protected lastReqState: boolean = true;
-    //是否为断开后重新连接
-    protected reConnect: boolean = false;
+    private ClazzTemplate: (new (...args: any[]) => I) | undefined;
 
     changeData(data: any) {
         this.instance?.changeData(data);
@@ -61,6 +60,7 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
         this.container = container;
         this.instance = new Clazz(container, this.config?.style ?? {} as C);
         this.instance?.render();
+        this.ClazzTemplate = Clazz;
         this.registerEvent();
     }
 
@@ -69,5 +69,24 @@ export abstract class AntdBaseDesignerController<I extends Plot<any> = Plot<Opti
         upOp = upOp || {reRender: true};
         if (upOp.reRender)
             this.instance?.update(this.config?.style ?? {});
+    }
+
+    setVisible(visible: boolean) {
+        if (visible) {
+            //显示
+            if (!this.ClazzTemplate || this.instance)
+                return;
+            this.instance = new this.ClazzTemplate(this.container, this.config?.style ?? {} as C);
+            this.instance?.render();
+        } else {
+            //隐藏
+            this.instance?.destroy();
+            this.instance = null;
+            //移除container下的所有子dom
+            while (this.container?.firstChild) {
+                this.container?.removeChild(this.container?.firstChild);
+            }
+        }
+
     }
 }

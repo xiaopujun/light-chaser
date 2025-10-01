@@ -201,17 +201,7 @@ class LayerListStore {
     }
 
     hideChange = (id: string, hide: boolean) => {
-        const updData = [];
-        const {layerConfigs} = layerManager;
-        const {type} = layerConfigs[id];
-        if (type === 'group') {
-            //分组图层
-            LayerUtil.findAllChildLayer([id]).forEach(id => updData.push({id, hide}));
-        } else {
-            //普通图层
-            updData.push({id, hide});
-        }
-        historyRecordOperateProxy.doHideUpd(updData);
+        historyRecordOperateProxy.doHideUpd([{id, hide}]);
     }
 }
 

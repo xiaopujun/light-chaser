@@ -19,11 +19,11 @@ import {ILayerItem} from "../../../designer/DesignerType";
 import eventOperateStore from "../../../designer/operate-provider/EventOperateStore";
 import baseInfoStore from "./BaseInfoStore";
 import rightStore from "../../../designer/right/RightStore";
-import editorDesignerLoader from "../../../designer/loader/EditorDesignerLoader";
 import layerListStore from "../../../designer/left/layer-list/LayerListStore";
 import LayerUtil from "../../../designer/left/layer-list/util/LayerUtil";
 import canvasManager from "../../../designer/header/items/canvas/CanvasManager.ts";
 import {AlignBottomTwo, AlignHorizontalCenterTwo, AlignLeftTwo, AlignRightTwo, AlignTopTwo, AlignVerticalCenterTwo, Info} from "@icon-park/react";
+import {DesignerLoader} from "../../../designer/loader/DesignerLoader.ts";
 
 /**
  * lc组件基础信息
@@ -47,7 +47,7 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
             this.state = {...layer, ...rect};
         } else {
             //普通组件
-            const baseInfo = editorDesignerLoader.definitionMap[layer.type!]?.getBaseInfo();
+            const baseInfo = DesignerLoader.definitionMap[layer.type!]?.getBaseInfo();
             this.state = {...layer, version: baseInfo?.version};
         }
     }

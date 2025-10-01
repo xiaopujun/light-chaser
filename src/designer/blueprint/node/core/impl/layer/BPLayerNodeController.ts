@@ -17,8 +17,7 @@ import layerManager from "../../../../../manager/LayerManager.ts";
 import React from "react";
 import {ActionInfo} from "../../../../../../framework/core/AbstractDefinition";
 import BPExecutor from "../../../../core/BPExecutor";
-import viewDesignerLoader from "../../../../../loader/ViewDesignerLoader.ts";
-import editorDesignerLoader from "../../../../../loader/EditorDesignerLoader.ts";
+import {DesignerLoader} from "../../../../../loader/DesignerLoader.ts";
 
 export interface LayerNodeConfig extends NodeProps {
 
@@ -42,7 +41,7 @@ export default class BPLayerNodeController extends AbstractBPNodeController<Laye
             if (!compInstance)
                 return;
             const {type} = layerConfigs[nodeId];
-            const {definitionMap} = viewDesignerLoader;
+            const {definitionMap} = DesignerLoader;
             if (!definitionMap)
                 return;
             const actionList = definitionMap[type!].getActionList();
@@ -61,12 +60,13 @@ export default class BPLayerNodeController extends AbstractBPNodeController<Laye
     }
 
     update(config: LayerNodeConfig, upOp: UpdateOptions | undefined): void {
+        console.log('BPLayerNodeController', config, upOp);
     }
 
     getNodeInfo(nodeId: string): NodeInfoType | null {
         const {layerConfigs} = layerManager;
         const compLayout = layerConfigs[nodeId];
-        const {definitionMap} = editorDesignerLoader;
+        const {definitionMap} = DesignerLoader;
         const output = definitionMap[compLayout.type!].getEventList().map((item) => {
             return {
                 id: nodeId + ':' + item.id + ':' + AnchorPointType.OUTPUT,

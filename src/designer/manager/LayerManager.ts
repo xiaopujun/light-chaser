@@ -164,5 +164,6 @@ class LayerManager extends AbstractManager<LayerManagerDataType> {
 }
 
 const layerManager = new LayerManager();
+export {LayerManager}
 
 export default layerManager;

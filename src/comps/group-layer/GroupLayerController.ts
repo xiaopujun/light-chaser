@@ -37,13 +37,7 @@ export default class GroupLayerController extends AbstractDesignerController<Gro
     public update(config: GroupLayerProps, upOp: UpdateOptions | undefined): void {
     }
 
-    public show(): void {
-        this.instance?.setState({load: true})
+    setVisible(visible: boolean) {
+        this.instance?.setState({load: visible})
     }
-
-    public hide(): void {
-        this.instance?.setState({load: false})
-    }
-
-
 }

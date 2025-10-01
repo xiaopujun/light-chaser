@@ -11,13 +11,11 @@
  */
 
 
-
-
 import {DesignerMode, SaveType} from "./designer/DesignerType.ts";
 import AbstractDesignerController from "./framework/core/AbstractDesignerController.ts";
 import {AbstractDefinition} from "./framework/core/AbstractDefinition.ts";
-import LayerManager from "./designer/manager/LayerManager.ts";
 import BPExecutor from "./designer/blueprint/core/BPExecutor.ts";
+import {LayerManager} from "./designer/manager/LayerManager.ts";
 
 declare global {
     interface Window {

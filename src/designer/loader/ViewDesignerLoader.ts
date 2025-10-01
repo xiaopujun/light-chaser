@@ -10,7 +10,7 @@
  */
 
 import designerManager from "../manager/DesignerManager.ts";
-import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
+import {DesignerLoader} from "./DesignerLoader.ts";
 import {DesignerMode, ProjectDataType, SaveType} from "../DesignerType";
 import layerManager from "../manager/LayerManager.ts";
 import BPExecutor from "../blueprint/core/BPExecutor.ts";
@@ -20,7 +20,7 @@ import baseApi from "../../api/BaseApi.ts";
 /**
  * 展示模式下的设计器加载器
  */
-class ViewDesignerLoader extends AbstractDesignerLoader {
+class ViewDesignerLoader extends DesignerLoader {
 
     protected async getProjectData(id: string): Promise<ProjectDataType | null> {
         const projectInfo = await baseApi.getProjectInfo(id);
@@ -38,7 +38,7 @@ class ViewDesignerLoader extends AbstractDesignerLoader {
             createdController: 0,
             totalController: Object.keys(data.layerManager?.layerConfigs ?? []).length,
             controllers: layerManager.compController,
-            definitions: this.definitionMap,
+            definitions: DesignerLoader.definitionMap,
             bpExecutor: BPExecutor,
             layerManager: layerManager,
             ...window.LC_ENV
@@ -46,5 +46,6 @@ class ViewDesignerLoader extends AbstractDesignerLoader {
     }
 }
 
-const viewDesignerLoader = new ViewDesignerLoader();
+export {ViewDesignerLoader};
+const viewDesignerLoader = new ViewDesignerLoader(DesignerMode.VIEW);
 export default viewDesignerLoader;

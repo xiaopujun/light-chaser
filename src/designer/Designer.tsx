@@ -9,8 +9,8 @@
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
 
-import editorDesignerLoader from "./loader/EditorDesignerLoader.ts";
-import {useEffect} from 'react';
+import {EditorDesignerLoader} from "./loader/EditorDesignerLoader.ts";
+import {useEffect, useRef} from 'react';
 import './style/DesignerGlobalStyle.less';
 import '../designer/resource/font/FontGlobal.css';
 import DesignerLeft from "./left/DesignerLeft";
@@ -23,9 +23,9 @@ import DesignerCanvas from "./canvas/DesignerCanvas";
 import {observer} from "mobx-react";
 import Loading from "../json-schema/ui/loading/Loading";
 import FrameLayout from "../json-schema/ui/frame-layout/FrameLayout";
-import {SaveType} from "./DesignerType.ts";
-import designerManager from "./manager/DesignerManager.ts";
+import {DesignerMode, SaveType} from "./DesignerType.ts";
 import 'nprogress/nprogress.css';
+import {DesignerLoader} from "./loader/DesignerLoader.ts";
 
 /**
  * 绑定事件到dom元素
@@ -94,18 +94,18 @@ export interface DesignerProps {
     type: SaveType;
 }
 
-const Designer = (props: DesignerProps) => {
+const Designer = observer((props: DesignerProps) => {
     const {id, type} = props;
+    const loaderRef = useRef<DesignerLoader>(new EditorDesignerLoader(DesignerMode.EDIT));
     useEffect(() => {
         //加载设计器
-        editorDesignerLoader.load(id, type);
+        loaderRef.current?.load(id, type);
         //绑定事件到dom元素
         bindEventToDom();
         return () => unbindEventToDom();//卸载dom元素上的事件
     }, []);
 
-    const {loaded} = designerManager;
-    if (!loaded)
+    if (!loaderRef.current?.loaded)
         return <Loading/>;
     return (
         <div style={{backgroundColor: '#1f1f1f'}}>
@@ -116,7 +116,7 @@ const Designer = (props: DesignerProps) => {
                          footer={<DesignerFooter/>}/>
         </div>
     );
-}
+})
 
-export default observer(Designer);
+export default Designer;
 

@@ -14,12 +14,12 @@ import {observer} from "mobx-react";
 import eventOperateStore from "../../../operate-provider/EventOperateStore";
 import {ILayerItem} from "../../../DesignerType";
 import IdGenerate from "../../../../utils/IdGenerate";
-import editorDesignerLoader from "../../../loader/EditorDesignerLoader";
 import componentListStore from "../ComponentListStore";
 import {AbstractDefinition, BaseInfoType} from "../../../../framework/core/AbstractDefinition";
 import DragAddProvider from "../../../../framework/drag-scale/DragAddProvider";
 import historyRecordOperateProxy from "../../../operate-provider/undo-redo/HistoryRecordOperateProxy";
 import {Input} from "antd";
+import {DesignerLoader} from "../../../loader/DesignerLoader.ts";
 
 class CompList extends Component {
 
@@ -86,7 +86,7 @@ class CompList extends Component {
 
     addItem = (compKey: string, position = [0, 0]) => {
         const {setAddRecordCompId} = eventOperateStore;
-        const {definitionMap} = editorDesignerLoader;
+        const {definitionMap} = DesignerLoader;
         const {compName, width = 320, height = 200} = definitionMap[compKey].getBaseInfo();
         const movableItem: ILayerItem = {
             name: compName,
@@ -126,7 +126,7 @@ class CompList extends Component {
         for (let i = 0; i < compInfoArr.length; i++) {
             const compInfo: BaseInfoType = compInfoArr[i];
             const {compName, compKey} = compInfo;
-            const definition: AbstractDefinition = editorDesignerLoader.definitionMap[compKey];
+            const definition: AbstractDefinition = DesignerLoader.definitionMap[compKey];
             const chartImg = definition.getChartImg();
             chartDom.push(
                 <div

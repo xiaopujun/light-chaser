@@ -14,9 +14,9 @@ import GroupLayerController from "./GroupLayerController";
 import {AbstractDefinition} from "../../framework/core/AbstractDefinition";
 import {DesignerMode, ILayerItem} from "../../designer/DesignerType";
 import layerManager from "../../designer/manager/LayerManager.ts";
-import editorDesignerLoader from "../../designer/loader/EditorDesignerLoader.ts";
 import URLUtil from "../../utils/URLUtil.ts";
 import BPExecutor from "../../designer/blueprint/core/BPExecutor.ts";
+import {DesignerLoader} from "../../designer/loader/DesignerLoader.ts";
 
 export interface GroupLayerStyleProps {
     children?: React.ReactNode;
@@ -37,7 +37,7 @@ export default class GroupLayer extends React.PureComponent<GroupLayerStyleProps
     componentDidMount(): void {
         const {layer} = this.props;
         const {elemConfigs, compController} = layerManager;
-        const groupDefinition: AbstractDefinition = editorDesignerLoader.definitionMap['group'];
+        const groupDefinition: AbstractDefinition = DesignerLoader.definitionMap['group'];
         const {mode} = URLUtil.parseUrlParams();
         let config;
         if (layer.id! in compController!) {
@@ -49,10 +49,13 @@ export default class GroupLayer extends React.PureComponent<GroupLayerStyleProps
             config = groupDefinition.getInitConfig();
             config.base.id = layer.id!;
         }
-        compController![layer.id!] = new GroupLayerController(this.groupLayerRef!, config, this);
+        const controller = new GroupLayerController(this.groupLayerRef!, config, this);
+        compController![layer.id!] = controller;
         //渲染后删除elemConfigs中的映射关系（需要观察是否会造成其他问题）
         delete elemConfigs![layer.id!];
 
+        //根据图层hide控制初始时图层显示和隐藏
+        controller?.setVisible(!layer.hide);
         if (mode as DesignerMode === DesignerMode.VIEW) {
             //所有组件都加载完毕之后。 触发bpExecutor的loaded事件
             if (++window.LC_ENV.createdController! === window.LC_ENV.totalController) {

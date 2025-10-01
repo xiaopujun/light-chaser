@@ -11,12 +11,12 @@
 
 import designerManager from "../manager/DesignerManager.ts";
 import {DesignerMode, ProjectDataType, SaveType} from "../DesignerType";
-import {AbstractDesignerLoader} from "./AbstractDesignerLoader";
+import {DesignerLoader} from "./DesignerLoader.ts";
 import layerManager from "../manager/LayerManager.ts";
 import BPExecutor from "../blueprint/core/BPExecutor.ts";
 import baseApi from "../../api/BaseApi.ts";
 
-class EditorDesignerLoader extends AbstractDesignerLoader {
+class EditorDesignerLoader extends DesignerLoader {
 
     protected async getProjectData(id: string): Promise<ProjectDataType | null> {
         const projectInfo = await baseApi.getProjectInfo(id);
@@ -34,7 +34,7 @@ class EditorDesignerLoader extends AbstractDesignerLoader {
             createdController: 0,
             totalController: Object.keys(data.layerManager?.layerConfigs ?? []).length,
             controllers: layerManager.compController,
-            definitions: this.definitionMap,
+            definitions: DesignerLoader.definitionMap,
             bpExecutor: BPExecutor,
             layerManager: layerManager,
             ...window.LC_ENV
@@ -42,5 +42,4 @@ class EditorDesignerLoader extends AbstractDesignerLoader {
     }
 }
 
-const editorDesignerLoader = new EditorDesignerLoader();
-export default editorDesignerLoader;
+export {EditorDesignerLoader}

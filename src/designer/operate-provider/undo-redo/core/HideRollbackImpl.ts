@@ -23,7 +23,7 @@ export class HideRollbackImpl extends AbstractRollback {
     redo(record: IHistoryRecord): void {
         if (!record) return;
         const {next} = record;
-        const {updateLayer} = layerManager;
+        const {updateLayer, compController} = layerManager;
         if (next)
             updateLayer(next as IHideOperateData[]);
         const {layerInstances} = layerListStore;
@@ -33,6 +33,7 @@ export class HideRollbackImpl extends AbstractRollback {
             (next as IHideOperateData[])?.forEach((item) => {
                 const {id, hide} = item;
                 (layerInstances[id] as Component).setState({hide});
+                compController[id].setVisible(!hide)
             })
         }
     }
@@ -40,7 +41,7 @@ export class HideRollbackImpl extends AbstractRollback {
     undo(record: IHistoryRecord): void {
         if (!record) return;
         const {prev} = record;
-        const {updateLayer} = layerManager;
+        const {updateLayer, compController} = layerManager;
         if (prev)
             updateLayer(prev as IHideOperateData[]);
         const {layerInstances} = layerListStore;
@@ -50,6 +51,7 @@ export class HideRollbackImpl extends AbstractRollback {
             (prev as IHideOperateData[])?.forEach((item) => {
                 const {id, hide} = item;
                 (layerInstances[id] as Component).setState({hide});
+                compController[id].setVisible(!hide)
             })
         }
     }

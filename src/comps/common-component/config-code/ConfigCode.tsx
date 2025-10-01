@@ -19,7 +19,7 @@ import MonacoEditor from "../../../json-schema/ui/code-editor/MonacoEditor.tsx";
 export default function ConfigCode() {
     const codeRef = useRef("");
     const {targetIds} = eventOperateStore;
-    const {layerConfigs, compController} = window.LC_ENV.layerManager;
+    const {layerConfigs, compController} = window.LC_ENV.layerManager!;
     if (targetIds.length !== 1 || layerConfigs[targetIds[0]].type === 'group') {
         globalMessage.messageApi?.warning('请选择组件后进行操作');
         return null;

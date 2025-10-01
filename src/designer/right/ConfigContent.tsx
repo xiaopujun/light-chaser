@@ -21,7 +21,7 @@ import Loading from "../../json-schema/ui/loading/Loading";
 import AbstractController from "../../framework/core/AbstractController";
 import {Close} from "@icon-park/react";
 import layerManager from "../manager/LayerManager.ts";
-import editorDesignerLoader from "../loader/EditorDesignerLoader.ts";
+import {DesignerLoader} from "../loader/DesignerLoader.ts";
 
 export interface ConfigType<T extends AbstractController = AbstractDesignerController> {
     controller: T;
@@ -53,7 +53,7 @@ const ConfigContent = observer(() => {
     const buildConfigContent = () => {
         const {compController} = layerManager;
         const {activeMenu, activeElem} = rightStore;
-        const abstractConfigObj: AbstractDefinition = editorDesignerLoader.definitionMap[activeElem.type + '']
+        const abstractConfigObj: AbstractDefinition = DesignerLoader.definitionMap[activeElem.type + '']
         if (!abstractConfigObj) return;
         const configMapping = abstractConfigObj.getMenuToConfigContentMap();
         const ConfigComp: React.ComponentType<ConfigType> = configMapping![activeMenu];
@@ -123,9 +123,9 @@ const ConfigContent = observer(() => {
         <div className={'lc-config-panel'} ref={configPanelRef}>
             <div className={'lc-panel-top'}>
                 <div className={'panel-title'}><span>{activeMenuName}</span></div>
-        <div className={'panel-operate'} onClick={onClose}>
-          <Close theme="filled" size={18} />
-        </div>
+                <div className={'panel-operate'} onClick={onClose}>
+                    <Close theme="filled" size={18}/>
+                </div>
             </div>
             <div className={'lc-panel-content'}>
                 {buildConfigContent()}
