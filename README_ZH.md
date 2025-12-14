@@ -90,7 +90,7 @@ LIGHT CHASER 现已推出Pro版本。如果您有捐赠，商业合作想法，�
 # 联系作者
 
 <div style="display: flex">
-    <div  style="width: 50%"><img alt="group" src="https://i.072333.xyz/file/110e9602ef12a7d93bff0.jpg"></div>
+    <div  style="width: 50%"><img alt="group" src="https://s2.loli.net/2025/12/14/kmpzKUJRiWgXAac.jpg"></div>
 </div>
 
 # :fa-chain-broken: 友情链接
