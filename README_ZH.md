@@ -73,7 +73,7 @@ LIGHT CHASER 支持常规部署和docker部署，请参考以下连接：
 如果你对LIGHT CHASER项目感兴趣，欢迎加入社区群聊，反馈问题。帮助我们改进LIGHT CHASER。
 
 <div style="display: flex">
-    <img style="width: 300px" alt="group" src="https://s2.loli.net/2025/12/07/nKJ7MuIvfjW35QZ.jpg">
+    <img style="width: 300px" alt="group" src="https://s2.loli.net/2025/12/14/kmpzKUJRiWgXAac.jpg">
 </div>
 
 LIGHT CHASER 现已推出Pro版本。如果您有捐赠，商业合作想法，请赞助我，我将送出LIGHT CHASER Pro版本作为感谢。
@@ -90,7 +90,7 @@ LIGHT CHASER 现已推出Pro版本。如果您有捐赠，商业合作想法，�
 # 联系作者
 
 <div style="display: flex">
-    <div  style="width: 50%"><img alt="group" src="https://s2.loli.net/2025/12/14/kmpzKUJRiWgXAac.jpg"></div>
+    <div  style="width: 50%"><img alt="group" src="https://i.072333.xyz/file/110e9602ef12a7d93bff0.jpg"></div>
 </div>
 
 # :fa-chain-broken: 友情链接
