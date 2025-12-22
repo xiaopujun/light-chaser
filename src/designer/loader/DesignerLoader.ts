@@ -14,7 +14,7 @@ import AbstractConvert from "../../framework/convert/AbstractConvert";
 import {componentCategorize} from "../left/compoent-lib/ComponentCategorize";
 import {DesignerMode, ProjectDataType, SaveType} from "../DesignerType.ts";
 import {globalMessage} from "../../framework/message/GlobalMessage.tsx";
-import {action, makeObservable, observable} from "../../../.vite/deps/mobx";
+import {action, makeObservable, observable} from "mobx";
 
 export class DesignerLoader {
 
