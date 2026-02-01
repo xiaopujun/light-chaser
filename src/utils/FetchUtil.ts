@@ -16,6 +16,48 @@ export interface HttpResponse {
 }
 
 export default class FetchUtil {
+    private static isTauri(): boolean {
+        // 桌面端（Tauri）环境判定：
+        // 1) Tauri WebView 内没有浏览器 devServer proxy 的概念，必须直接请求本地后端
+        // 2) 通过 Tauri 注入的全局对象判断当前是否运行在 Tauri 中
+        return typeof window !== 'undefined' && (Boolean((window as any).__TAURI_INTERNALS__) || Boolean((window as any).__TAURI__));
+    }
+
+    private static getApiBaseUrl(): string {
+        // API 基础地址选择优先级：
+        // 1) 显式环境变量（便于切换到远端服务 / CI / 自定义端口）
+        // 2) Tauri 环境：使用本地 Rust 后端（固定端口 14210）
+        // 3) 开发环境：为了避免 Vite 代理在后端未启动时产生大量 ECONNREFUSED 日志，
+        //    直接将 /api 与 /static 指向本地后端，让前端“等后端起来再正常请求”
+        const envBaseUrl = (import.meta as any)?.env?.VITE_API_BASE_URL as string | undefined;
+        if (envBaseUrl && envBaseUrl.trim() !== '') {
+            return envBaseUrl.replace(/\/+$/, '');
+        }
+        if (FetchUtil.isTauri()) {
+            return 'http://127.0.0.1:14210';
+        }
+        if ((import.meta as any)?.env?.DEV) {
+            return 'http://127.0.0.1:14210';
+        }
+        return '';
+    }
+
+    private static normalizeUrl(url: string): string {
+        // URL 归一化：
+        // - 绝对地址（http/https）保持不变，便于外部传入完整 URL
+        // - 相对地址中，仅对 /api 与 /static 增加 baseUrl 前缀：
+        //   1) 保持代码里原有的 “/api/xxx” 调用方式不变
+        //   2) 同时兼容浏览器（走同源/代理）与桌面端（直连本地后端）
+        if (!url) return url;
+        if (/^https?:\/\//i.test(url)) return url;
+        const baseUrl = FetchUtil.getApiBaseUrl();
+        if (!baseUrl) return url;
+        if (url.startsWith('/api/') || url.startsWith('/static/')) {
+            return `${baseUrl}${url}`;
+        }
+        return url;
+    }
+
     /**
      * GET请求
      * @param url
@@ -77,7 +119,7 @@ export default class FetchUtil {
     private static async request(url: string, options: RequestInit = {}): Promise<HttpResponse> {
         let response: Response | null = null;
         try {
-            response = await fetch(url, options);
+            response = await fetch(FetchUtil.normalizeUrl(url), options);
             if (!response.ok) {
                 console.error('请求错误:', response?.status, response?.statusText);
                 return {code: response?.status ?? 500, msg: response?.statusText ?? '', data: null};
@@ -110,7 +152,7 @@ export default class FetchUtil {
     private static async requestNativeResult(url: string, options: RequestInit = {}): Promise<any> {
         let response: Response | null = null;
         try {
-            response = await fetch(url, options);
+            response = await fetch(FetchUtil.normalizeUrl(url), options);
             if (response.ok) {
                 const contentType = response.headers.get('content-type');
                 if (contentType && contentType.includes('application/json')) {
@@ -142,6 +184,7 @@ export default class FetchUtil {
         url: string,
         options: RequestInit
     } {
+        url = FetchUtil.normalizeUrl(url);
         const options: RequestInit = {
             method: method.toUpperCase(),
             headers: headers,

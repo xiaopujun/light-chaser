@@ -10,6 +10,9 @@
     "frontendDist": "../dist"
   },
   "app": {
+    "security": {
+      "csp": "default-src 'self'; connect-src 'self' http://127.0.0.1:14210 http://localhost:14210; img-src 'self' asset: http://127.0.0.1:14210 http://localhost:14210 data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-eval'"
+    },
     "windows": [
       {
         "title": "light-chaser",

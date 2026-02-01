@@ -1,0 +1,2 @@
+[source.rsproxy]
+registry = "https://mirrors.ustc.edu.cn/crates.io-index"
