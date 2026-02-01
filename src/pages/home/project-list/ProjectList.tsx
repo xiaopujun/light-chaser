@@ -21,6 +21,7 @@ import CloneProjectDialog from "./CloneProjectDialog.tsx";
 import ProjectItem from "./ProjectItem.tsx";
 import {Add} from "@icon-park/react";
 import baseApi from "../../../api/BaseApi.ts";
+import {useNavigate} from "react-router-dom";
 
 const {Search} = Input;
 
@@ -30,6 +31,7 @@ export interface ProjectListProps {
 
 export const ProjectList = memo((props: ProjectListProps) => {
     const {saveType} = props;
+    const navigate = useNavigate();
     const [addDialog, setAddDialog] = React.useState(false);
     const [delDialog, setDelDialog] = React.useState(false);
     const [cloneDialog, setCloneDialog] = React.useState(false);
@@ -50,7 +52,6 @@ export const ProjectList = memo((props: ProjectListProps) => {
         }).then((data: IPage<IProjectInfo>) => setPageData(data));
     }
 
-
     const toggleNewProVisible = () => setAddDialog(!addDialog);
 
     const onOk = (data: INewProjectInfo) => {
@@ -66,7 +67,7 @@ export const ProjectList = memo((props: ProjectListProps) => {
                 globalMessage.messageApi?.error('创建失败');
             else {
                 setAddDialog(false);
-                window.open(`/designer?id=${id}&saveType=${saveType}&mode=${DesignerMode.EDIT}`, '_blank');
+                navigate(`/designer?id=${id}&saveType=${saveType}&mode=${DesignerMode.EDIT}`);
                 getProjectPageList(pageData.current, pageData.size)
             }
         });
@@ -77,10 +78,10 @@ export const ProjectList = memo((props: ProjectListProps) => {
     const operateHandler = (id: string, type: string) => {
         switch (type) {
             case 'edit':
-                window.open(`/designer?id=${id}&saveType=${saveType}&mode=${DesignerMode.EDIT}`, '_blank');
+                navigate(`/designer?id=${id}&saveType=${saveType}&mode=${DesignerMode.EDIT}`);
                 break;
             case 'show':
-                window.open(`/view?id=${id}&saveType=${saveType}&mode=${DesignerMode.VIEW}`, '_blank');
+                navigate(`/view?id=${id}&saveType=${saveType}&mode=${DesignerMode.VIEW}`);
                 break;
             case 'del':
                 delIdRef.current = id;

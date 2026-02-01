@@ -61,38 +61,56 @@ const centerItems: Array<IHeaderItem> = [
     }
 ];
 
-const leftItems: Array<IHeaderItem> = [
-    {
-        icon: <AfferentFour theme="filled" style={{marginTop: 2}} strokeLinecap="square"/>,
-        name: '导入',
-        key: 'import',
-        onClick: () => importProject()
-    },
-    {
-        icon: <EfferentFour theme="filled" style={{marginTop: 2}} strokeLinecap="square"/>,
-        name: '导出',
-        key: 'export',
-        onClick: () => exportProject()
-    },
-    {
-        icon: <HardDiskOne theme="filled" style={{marginTop: 2}} strokeLinecap="square"/>,
-        name: '保存',
-        key: 'save',
-        onClick: () => doSave()
-    },
-    {
-        icon: <Eyes theme="outline" style={{marginTop: 2}} strokeWidth={4} strokeLinecap="square"/>,
-        name: '预览',
-        key: 'preview',
-        onClick: () => {
-            const {saveType, id} = URLUtil.parseUrlParams();
-            window.open(`/view?id=${id}&saveType=${saveType}&mode=${DesignerMode.VIEW}`, '_blank');
-        }
-    }
-];
-
-
 const Header: React.FC = observer(() => {
+        const openPreviewWindow = async (url: string) => {
+            const absoluteUrl = new URL(url, window.location.href).toString();
+            try {
+                const {isTauri} = await import('@tauri-apps/api/core');
+                if (!isTauri()) {
+                    window.open(absoluteUrl, '_blank');
+                    return;
+                }
+                const {WebviewWindow} = await import('@tauri-apps/api/webviewWindow');
+                const label = `preview-${Date.now()}`;
+                const webview = new WebviewWindow(label, {url: absoluteUrl, title: '预览'});
+                webview.once('tauri://error', () => {
+                    window.location.href = absoluteUrl;
+                });
+            } catch {
+                window.location.href = absoluteUrl;
+            }
+        }
+
+        const leftItems: Array<IHeaderItem> = [
+            {
+                icon: <AfferentFour theme="filled" style={{marginTop: 2}} strokeLinecap="square"/>,
+                name: '导入',
+                key: 'import',
+                onClick: () => importProject()
+            },
+            {
+                icon: <EfferentFour theme="filled" style={{marginTop: 2}} strokeLinecap="square"/>,
+                name: '导出',
+                key: 'export',
+                onClick: () => exportProject()
+            },
+            {
+                icon: <HardDiskOne theme="filled" style={{marginTop: 2}} strokeLinecap="square"/>,
+                name: '保存',
+                key: 'save',
+                onClick: () => doSave()
+            },
+            {
+                icon: <Eyes theme="outline" style={{marginTop: 2}} strokeWidth={4} strokeLinecap="square"/>,
+                name: '预览',
+                key: 'preview',
+                onClick: () => {
+                    const {saveType, id} = URLUtil.parseUrlParams();
+                    const url = `/view?id=${id}&saveType=${saveType}&mode=${DesignerMode.VIEW}`;
+                    void openPreviewWindow(url);
+                }
+            }
+        ];
 
         const buildHeaderItemUI = (items: Array<IHeaderItem>): Array<ReactElement> => {
             const headerItems: Array<ReactElement> = [];
