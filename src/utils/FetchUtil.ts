@@ -9,6 +9,8 @@
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
 
+import {isTauri} from '@tauri-apps/api/core';
+
 export interface HttpResponse {
     code: number;
     msg: string;
@@ -17,10 +19,7 @@ export interface HttpResponse {
 
 export default class FetchUtil {
     private static isTauri(): boolean {
-        // 桌面端（Tauri）环境判定：
-        // 1) Tauri WebView 内没有浏览器 devServer proxy 的概念，必须直接请求本地后端
-        // 2) 通过 Tauri 注入的全局对象判断当前是否运行在 Tauri 中
-        return typeof window !== 'undefined' && (Boolean((window as any).__TAURI_INTERNALS__) || Boolean((window as any).__TAURI__));
+        return isTauri();
     }
 
     private static getApiBaseUrl(): string {
