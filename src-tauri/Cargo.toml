@@ -1,0 +1,13 @@
+[package]
+name = "light-chaser"
+version = "1.7.0"
+description = "Light Chaser"
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tauri = { version = "2", features = [] }
