@@ -13,7 +13,7 @@ import React, {ReactElement, ReactNode} from 'react';
 import './DesignerHeader.less';
 import {observer} from "mobx-react";
 import eventOperateStore from "../operate-provider/EventOperateStore";
-import {doSave, exportProject, importProject} from "../operate-provider/hot-key/HotKeyImpl";
+import {doSave, exportProject, importProject, saveProject} from "../operate-provider/hot-key/HotKeyImpl";
 import canvasHdStore from "./items/canvas/CanvasManager.ts";
 import projectHdStore from "./items/project/ProjectManager.ts";
 import themeHdStore from "./items/theme/ThemeManager.ts";
@@ -26,6 +26,8 @@ import {AfferentFour, ConnectionPointTwo, EfferentFour, Eyes, HardDiskOne, PageT
 import URLUtil from "../../utils/URLUtil.ts";
 import {DesignerMode} from "../DesignerType.ts";
 import logo from "../../images/logo.png";
+import {useNavigate} from "react-router-dom";
+import {globalMessage} from "../../framework/message/GlobalMessage.tsx";
 
 
 export interface IHeaderItem {
@@ -62,6 +64,17 @@ const centerItems: Array<IHeaderItem> = [
 ];
 
 const Header: React.FC = observer(() => {
+        const navigate = useNavigate();
+
+        const handleGoHome = async () => {
+            try {
+                await saveProject();
+                navigate('/home/projects');
+            } catch {
+                globalMessage.messageApi?.error('保存失败');
+            }
+        }
+
         const openPreviewWindow = async (url: string) => {
             const absoluteUrl = new URL(url, window.location.href).toString();
             try {
@@ -130,7 +143,7 @@ const Header: React.FC = observer(() => {
             <>
                 <div className={'designer-header'}>
                     <div className={'header-left'}>
-                        <div className={'header-title'}><img style={{width: '60%'}} src={logo} alt={'logo'}/></div>
+                        <div className={'header-title'} onClick={handleGoHome}><img style={{width: '60%'}} src={logo} alt={'logo'}/></div>
                     </div>
                     <div className={'header-center'}>
                         {buildHeaderItemUI(centerItems)}

@@ -130,18 +130,25 @@ export const doDelete = () => {
 }
 
 //保存函数节流5s, 5s内不可重复保存
-export const doSave = throttle(async () => {
+export const saveProject = async () => {
     NProgress.configure({minimum: 0.5});
     NProgress.start();
-    const {id} = URLUtil.parseUrlParams();
-    const proData = designerManager.getData();
-    //转换为最终保存的数据格式
-    const projectInfo: IProjectInfo = {
-        id,
-        dataJson: JSON.stringify(proData),
+    try {
+        const {id} = URLUtil.parseUrlParams();
+        const proData = designerManager.getData();
+        const projectInfo: IProjectInfo = {
+            id,
+            dataJson: JSON.stringify(proData),
+        }
+        await baseApi.updateProject(projectInfo);
+    } finally {
+        NProgress.done()
     }
-    await baseApi.updateProject(projectInfo);
-    NProgress.done()
+}
+
+//保存函数节流5s, 5s内不可重复保存
+export const doSave = throttle(async () => {
+    await saveProject();
 }, 5000, {trailing: false});
 
 export const doHide = () => {

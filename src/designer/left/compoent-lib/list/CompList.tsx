@@ -16,14 +16,19 @@ import {ILayerItem} from "../../../DesignerType";
 import IdGenerate from "../../../../utils/IdGenerate";
 import componentListStore from "../ComponentListStore";
 import {AbstractDefinition, BaseInfoType} from "../../../../framework/core/AbstractDefinition";
-import DragAddProvider from "../../../../framework/drag-scale/DragAddProvider";
 import historyRecordOperateProxy from "../../../operate-provider/undo-redo/HistoryRecordOperateProxy";
 import {Input} from "antd";
 import {DesignerLoader} from "../../../loader/DesignerLoader.ts";
 
 class CompList extends Component {
 
-    private dragAddProvider: DragAddProvider | null = null;
+    private currentDragType: string | null = null;
+    private currentDragName: string | null = null;
+    private dragging = false;
+    private dragPreviewEl: HTMLDivElement | null = null;
+    private onMouseUpBound: ((e: MouseEvent) => void) | null = null;
+    private onMouseMoveBound: ((e: MouseEvent) => void) | null = null;
+    private previousBodyCursor: string = '';
 
     constructor(props: any) {
         super(props);
@@ -31,57 +36,76 @@ class CompList extends Component {
         doInit && doInit();
     }
 
-    componentDidMount() {
-        let count = 0;
-        const interval = setInterval(() => {
-            const cdc = document.getElementById("component-drag-container");
-            const ddc = document.getElementById("designer-ds-content");
-            if (cdc && ddc) {
-                clearInterval(interval);
-                //处理拖拽元素到画布中
-                this.dragAddProvider = new DragAddProvider(
-                    document.getElementById("component-drag-container")!,
-                    document.getElementById("designer-ds-content")!,
-                    this.dragStart,
-                    this.dragover,
-                    this.drop
-                );
-            }
-            //尝试挂载拖拽组件100次后放弃
-            if (++count > 100) {
-                clearInterval(interval);
-                console.warn("组件列表与画布拖拽关联失败，无法通过拖拽添加组件。")
-            }
-        }, 100)
-    }
-
     componentWillUnmount() {
-        this.dragAddProvider?.destroy();
+        this.teardownDragging();
     }
 
-    //拖拽开始
-    dragStart = (event: DragEvent) => {
-        // 设置拖拽数据
-        if ((event.target as HTMLElement).classList.contains('droppable-element')) {
-            const element = event.target as HTMLElement;
-            event.dataTransfer?.setData('type', element.getAttribute('data-type')!);
+    desktopPointerDown = (compKey: string, compName: string, event: React.MouseEvent<HTMLDivElement>) => {
+        this.currentDragType = compKey;
+        this.currentDragName = compName;
+        this.dragging = true;
+        this.setupPreview(event.clientX, event.clientY);
+        if (!this.onMouseUpBound) {
+            this.onMouseUpBound = this.desktopMouseUp;
+            window.addEventListener('mouseup', this.onMouseUpBound);
+        }
+        if (!this.onMouseMoveBound) {
+            this.onMouseMoveBound = this.desktopMouseMove;
+            window.addEventListener('mousemove', this.onMouseMoveBound);
         }
     }
-    //拖拽覆盖
-    dragover = (event: DragEvent) => {
-        event.preventDefault(); // 阻止默认行为以允许拖放
+
+    desktopMouseMove = (event: MouseEvent) => {
+        if (!this.dragging || !this.dragPreviewEl) return;
+        this.dragPreviewEl.style.left = `${event.clientX + 12}px`;
+        this.dragPreviewEl.style.top = `${event.clientY + 12}px`;
     }
-    //释放拖拽元素
-    drop = (event: DragEvent) => {
-        event.preventDefault();
-        const type = event.dataTransfer?.getData('type');
+
+    desktopMouseUp = (event: MouseEvent) => {
+        const type = this.currentDragType;
+        this.currentDragType = null;
+        this.currentDragName = null;
+        this.dragging = false;
+        this.teardownDragging();
         if (!type) return;
-        //获取鼠标位置,添加元素
         const {scale, dsContentRef} = eventOperateStore;
         const contentPos = dsContentRef?.getBoundingClientRect();
-        const x = (event.clientX - (contentPos?.x || 0)) / scale;
-        const y = (event.clientY - (contentPos?.y || 0)) / scale;
+        if (!contentPos) return;
+        const withinX = event.clientX >= contentPos.left && event.clientX <= contentPos.right;
+        const withinY = event.clientY >= contentPos.top && event.clientY <= contentPos.bottom;
+        if (!withinX || !withinY) return;
+        const x = (event.clientX - contentPos.left) / scale;
+        const y = (event.clientY - contentPos.top) / scale;
         this.addItem(type, [x, y]);
+    }
+
+    setupPreview = (x: number, y: number) => {
+        if (!this.dragPreviewEl) {
+            this.dragPreviewEl = document.createElement('div');
+            this.dragPreviewEl.className = 'component-drag-preview';
+            this.dragPreviewEl.innerText = this.currentDragName || '';
+            document.body.appendChild(this.dragPreviewEl);
+        }
+        this.dragPreviewEl.style.left = `${x + 12}px`;
+        this.dragPreviewEl.style.top = `${y + 12}px`;
+        this.previousBodyCursor = document.body.style.cursor;
+        document.body.style.cursor = 'grabbing';
+    }
+
+    teardownDragging = () => {
+        if (this.onMouseUpBound) {
+            window.removeEventListener('mouseup', this.onMouseUpBound);
+            this.onMouseUpBound = null;
+        }
+        if (this.onMouseMoveBound) {
+            window.removeEventListener('mousemove', this.onMouseMoveBound);
+            this.onMouseMoveBound = null;
+        }
+        if (this.dragPreviewEl && this.dragPreviewEl.parentNode) {
+            this.dragPreviewEl.parentNode.removeChild(this.dragPreviewEl);
+            this.dragPreviewEl = null;
+        }
+        document.body.style.cursor = this.previousBodyCursor || '';
     }
 
     addItem = (compKey: string, position = [0, 0]) => {
@@ -132,7 +156,8 @@ class CompList extends Component {
                 <div
                     key={i + ''}
                     className={'list-item droppable-element'}
-                    draggable={true}
+                        draggable={false}
+                        onMouseDown={(e) => this.desktopPointerDown(compKey, compName, e)}
                     onDoubleClick={() => this.addItem(compKey)}
                     data-type={compKey}
                 >
