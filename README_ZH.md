@@ -65,7 +65,7 @@
 如果你对 LIGHT CHASER 感兴趣，欢迎加入社区交流并反馈问题，帮助项目持续改进。
 
 <div style="display: flex">
-    <img style="width: 300px" alt="group" src="https://files.seeusercontent.com/2026/03/08/kk8R/_20260308123029_20_96.jpg">
+    <img style="width: 300px" alt="group" src="https://files.seeusercontent.com/2026/04/04/ebO7/91a5f8fe21c3b97d12f8747f4c533430.jpg">
 </div>
 
 感谢每一位项目贡献者、捐赠者和赞助商。
