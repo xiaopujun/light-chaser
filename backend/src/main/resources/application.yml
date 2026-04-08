@@ -1,0 +1,49 @@
+spring:
+  datasource:
+    driver-class-name: org.sqlite.JDBC
+    url: "jdbc:sqlite:${user.dir}/lc-server.db"
+    username:
+    password:
+    # 使用HikariCP连接池
+    hikari:
+      minimum-idle: 1
+      maximum-pool-size: 5
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+
+
+# mybatis-plus配置
+mybatis-plus:
+  type-aliases-package: com.dagu.lightchaser.entity
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+light-chaser:
+  #  project-resource-path: ./data/resources # 项目资源路径
+  migration: # 是否自动跑sql脚本
+    enable: true
+  crypto:
+    rsa:
+      public-key-path: keys/public_key.pem # RSA公钥文件路径
+      private-key-path: keys/private_key.pem # RSA私钥文件路径
+    aes:
+      key: YmVVaTJUNGdvV3huQnZXZzlEUE9kdnBaaS9ZcTZ0UzZtWXl2TWVXTzQ0Qz0=
+
+
+logging:
+  config: classpath:log4j2-spring.xml
+  level:
+    cn.jay.repository: info
