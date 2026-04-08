@@ -1,0 +1,215 @@
+[English](README_EN.md) | 中文
+
+# LIGHT CHASER
+
+LIGHT CHASER 是一套面向大屏展示、数据报表和数据分析场景的开源可视化设计平台。当前仓库已将前端设计器和后端服务合并到同一个代码库，便于统一开发、联调、构建和部署。
+
+<p>
+  <img alt="version" src="https://img.shields.io/badge/version-v1.7.0-blue">
+  <img alt="React" src="https://img.shields.io/badge/React-61daeb?logoColor=08CE5D">
+  <img alt="Vite" src="https://img.shields.io/badge/Vite-purple">
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-blue">
+  <img alt="Spring Boot" src="https://img.shields.io/badge/Spring%20Boot-6DB33F?logo=springboot&logoColor=white">
+  <img alt="Java" src="https://img.shields.io/badge/Java-007396?logo=java&logoColor=white">
+  <img alt="SQLite" src="https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=white">
+</p>
+
+## 项目定位
+
+LIGHT CHASER 不是一个简单的页面拼装器，而是一套可视化设计底座。它把“组件编排、蓝图交互、数据源接入、资源管理、项目导出”放在同一条工作流里，适合快速搭建可交付的数据可视化产品。
+
+## 项目特色
+
+| 特色 | 说明 |
+|---|---|
+| 前后端同仓 | 前端设计器、后端服务、部署脚本和开发规范统一维护，减少跨仓库协作成本 |
+| 拖拽式设计 | 在画布中完成组件摆放、尺寸调整和属性配置，更贴近可视化搭建场景 |
+| 蓝图式交互 | 将事件联动、数据流转和节点关系以蓝图方式表达，复杂交互更容易组织 |
+| 多数据源接入 | 默认 SQLite 开箱即用，同时支持 MySQL、PostgreSQL、Oracle、SQL Server 等数据库 |
+| 资源统一管理 | 项目资源、图片、封面和静态文件统一保存与访问，便于项目资产管理 |
+| 可部署性强 | 支持本地开发、Nginx 静态托管、Docker 镜像和 Compose 编排 |
+
+## 技术栈
+
+| 端 | 技术 |
+|---|---|
+| 前端 | React 18、Vite 5、TypeScript 5、MobX |
+| 后端 | Java 17、Spring Boot 3.2.5、MyBatis Plus 3.5.5 |
+| 数据库 | SQLite 默认开箱即用，同时兼容多数据库驱动 |
+| 部署 | Nginx、Docker、Docker Compose |
+
+## 目录结构
+
+| 路径 | 说明 |
+|---|---|
+| `frontend/` | 前端设计器工程 |
+| `backend/` | 后端服务工程 |
+| `docs/` | 开发规范、Git 规范等文档 |
+| `lc-server.db` | SQLite 数据库文件，启动后生成 |
+| `logs/` | 服务运行日志目录 |
+
+## 系统架构
+
+```mermaid
+flowchart LR
+  B["浏览器 / 设计器"] --> F["frontend: React + Vite + MobX"]
+  F -->|/api /static| S["backend: Spring Boot + MyBatis Plus"]
+  S --> D["SQLite / MySQL / PostgreSQL / Oracle / SQL Server"]
+  S --> R["项目资源 / 图片 / 封面"]
+```
+
+## 核心能力
+
+### 前端设计器
+
+- 画布拖拽、缩放和选择
+- 属性面板配置样式、布局和行为
+- 蓝图式节点交互编排
+- 组件库和图表扩展
+- 代码编辑器和复杂配置支持
+- 首页、模板市场、设计器、预览和结果页形成完整链路
+
+### 后端服务
+
+- 项目创建、复制、更新、导入和导出
+- 数据源列表、分页、添加、更新、删除和连接测试
+- 图片上传、封面管理和静态资源访问
+- SQL 执行器和调试接口
+- 加密接口支持，便于前后端协同处理敏感请求
+- 数据库迁移能力，启动时可自动执行初始化脚本
+
+### 典型工作流
+
+- 创建或导入项目
+- 在设计器中拖拽组件并完成页面布局
+- 绑定数据源并配置 SQL 或接口数据
+- 使用蓝图节点定义事件联动
+- 预览、导出并部署到目标环境
+
+## 效果展示
+
+![效果图1](https://s2.loli.net/2025/08/23/BO2AiFes7vwlkL6.jpg)
+
+![效果图2](https://s2.loli.net/2025/08/23/qTlnx7LOWUKaYRA.jpg)
+
+![效果图3](https://s2.loli.net/2025/08/23/IpBrYJAO4nyPGil.jpg)
+
+![效果图4](https://s2.loli.net/2025/08/23/zREQuATd3GyCUvx.jpg)
+
+## 文档与入口
+
+- [开发文档](https://xiaopujun.github.io/light-chaser-doc/#/)
+- [在线体验](https://xiaopujun.github.io/light-chaser-app/#)
+- [部署教程](https://xiaopujun.github.io/light-chaser-doc/#/deploy/deploy_open)
+- [开发规范](docs/开发规范.md)
+- [Git 规范](docs/GIT规范.md)
+
+## 推荐版本
+
+如果你正在构建企业级数据可视化平台，或者需要更完整的协作与交付能力，可以优先考虑以下版本。
+
+### LIGHT CHASER Pro（私有化部署）
+
+- 官网入口：https://lcpdesigner.cn/home
+- 适用场景：团队协作、权限管理、业务化交付、企业内部系统
+- 推荐人群：商业项目、生产环境、需要持续扩展的团队
+
+### LIGHT CHASER Pro 桌面端
+
+- 下载入口：https://lcpdesigner.cn/download
+- 适用场景：离线演示、内网环境、轻量部署、单机交付
+- 推荐人群：需要开箱即用桌面客户端的个人或团队
+
+## 快速开始
+
+### 环境要求
+
+- Node.js
+- pnpm
+- Java 17+
+- Maven 3.6+
+
+### 1. 启动后端
+
+建议先启动后端，再启动前端。
+
+```bash
+cd backend
+mvn spring-boot:run
+```
+
+后端默认监听 `http://localhost:8080`。SQLite 数据库默认使用 `jdbc:sqlite:${user.dir}/lc-server.db`，数据库文件会生成在当前启动目录中。
+
+### 2. 启动前端
+
+```bash
+cd frontend
+pnpm install
+pnpm dev
+```
+
+前端默认访问 `http://localhost:5173`。开发模式下，`/api` 和 `/static` 请求会代理到 `http://127.0.0.1:8080`，因此需要后端同时启动。
+
+### 3. 常用命令
+
+前端：
+
+```bash
+pnpm build
+pnpm lint
+pnpm preview
+pnpm check
+```
+
+后端：
+
+```bash
+mvn clean compile
+mvn test
+mvn clean package
+```
+
+## 配置说明
+
+### 后端
+
+- 配置文件：`backend/src/main/resources/application.yml`
+- `spring.datasource.url` 默认指向 `jdbc:sqlite:${user.dir}/lc-server.db`
+- `light-chaser.project-resource-path` 未配置时默认取启动目录 `user.dir`
+- 图片资源默认映射到 `/static/images`
+- 封面资源默认映射到 `/static/covers`
+- RSA 和 AES 相关配置已内置在 `light-chaser.crypto`
+
+### 前端
+
+- 开发代理配置：`frontend/vite.dev.config.ts`
+- 生产 Nginx 配置：`frontend/nginx.conf`
+- 构建产物由 `frontend/Dockerfile` 中的 Nginx 镜像托管
+
+## 接口速览
+
+| 模块 | 说明 |
+|---|---|
+| `/api/project` | 项目创建、更新、复制、导入、导出和详情获取 |
+| `/api/commonDatabase` | 数据源管理和连接测试 |
+| `/api/image` | 图片上传、分页和删除 |
+| `/api/db/executor` | SQL 执行 |
+| `/api/crypto` | 加密相关能力 |
+| `/api/debug` | 调试接口 |
+
+## 部署说明
+
+- 前端可先执行 `pnpm build`，再使用 `frontend/Dockerfile` 或现有 Nginx 配置部署 `frontend/dist`
+- 后端可先执行 `mvn clean package`，再参考 `backend/Dockerfile` 打包成镜像，使用前请确认 jar 文件名与实际构建产物一致
+- `backend/docker-compose.yml` 提供了前后端容器联动的示例，镜像标签和挂载路径可按实际环境调整
+
+## 贡献与支持
+
+- 欢迎提交 Issue 或 PR
+- 更细的开发规范和 Git 规范请参考 `docs/` 目录
+- 如果你在部署或二次开发中遇到问题，可以先对照文档与源码确认实际配置项
+
+## 许可证与商用
+
+- 本项目遵循 Apache 2.0 协议，请保留作品声明
+- 本项目仅用于学习交流，商业用途请务必先获取授权
