@@ -10,9 +10,11 @@
  */
 
 import './ProjectItem.less';
-import {Copy, Delete, Edit, PreviewOpen} from "@icon-park/react";
-import {Input, Popover} from "antd";
+
+import {CopyOne, Delete, Edit, MoreOne, PreviewOpen} from "@icon-park/react";
+import {Button, Dropdown, Input, type MenuProps} from "antd";
 import {useState} from "react";
+
 import {IProjectInfo, SaveType} from "../../../designer/DesignerType.ts";
 import baseApi from "../../../api/BaseApi.ts";
 
@@ -29,53 +31,90 @@ export default function ProjectItem(props: ProjectItemProps) {
     const [rename, setRename] = useState(false);
     const [name, setName] = useState(props.name);
 
+    const moreActions: MenuProps['items'] = [
+        {
+            key: 'preview',
+            label: '预览',
+            icon: <PreviewOpen size={14}/>,
+            onClick: () => doOperate(id, 'show')
+        },
+        {
+            key: 'edit',
+            label: '编辑',
+            icon: <Edit size={14}/>,
+            onClick: () => doOperate(id, 'edit')
+        },
+        {
+            key: 'clone',
+            label: '复制',
+            icon: <CopyOne size={14}/>,
+            onClick: () => doOperate(id, 'clone')
+        },
+        {
+            key: 'delete',
+            label: '删除',
+            icon: <Delete size={14}/>,
+            onClick: () => doOperate(id, 'del')
+        }
+    ];
+
     const updateName = () => {
         if (name !== props.name) {
             const data: IProjectInfo = {id, name};
             baseApi.updateProject(data);
         }
-    }
+    };
 
     return (
         <div className="project-list-item">
             <div className="project-item-cover" style={{backgroundImage: `url(${cover})`}}>
                 <div className="operate-icon-list">
-                    <div className="operate-icon"><Popover content={'编辑项目'}><Edit
-                        onClick={() => doOperate(id, "edit")}/></Popover></div>
-                    <div className="operate-icon"><Popover content={'预览项目'}><PreviewOpen
-                        onClick={() => doOperate(id, "show")}/></Popover></div>
-                    <div className="operate-icon"><Popover content={'删除项目'}><Delete
-                        onClick={() => doOperate(id, "del")}/></Popover></div>
-                    <div className="operate-icon"><Popover content={'复制项目'}><Copy
-                        onClick={() => doOperate(id, "clone")}/></Popover></div>
+                    <div className="operate-btn">
+                        <Button type="default" onClick={() => doOperate(id, 'show')}>预览</Button>
+                    </div>
+                    <div className="operate-btn">
+                        <Button type="primary" onClick={() => doOperate(id, 'edit')}>编辑</Button>
+                    </div>
                 </div>
             </div>
             <div className="project-item-content">
                 <div className="project-name">
-                    {rename ?
+                    {rename ? (
                         <div className="project-rename-input">
-                            <Input autoFocus={true}
-                                   size={"small"}
-                                   value={name}
-                                   onBlur={() => {
-                                       updateName();
-                                       setRename(false);
-                                   }}
-                                   onKeyDown={(event) => {
-                                       if (event.key === 'Enter') {
-                                           updateName();
-                                           setRename(false);
-                                       }
-                                   }}
-                                   onChange={(e) => setName(e.target.value)}/>
-                        </div> :
-                        <div className="project-name-content">{name}</div>
-                    }
+                            <Input
+                                autoFocus={true}
+                                size="small"
+                                value={name}
+                                onBlur={() => {
+                                    updateName();
+                                    setRename(false);
+                                }}
+                                onKeyDown={(event) => {
+                                    if (event.key === 'Enter') {
+                                        updateName();
+                                        setRename(false);
+                                    }
+                                }}
+                                onChange={(e) => setName(e.target.value)}
+                            />
+                        </div>
+                    ) : (
+                        <div className="project-name-content-wrapper">
+                            <div className="project-name-content" title={name}>{name}</div>
+                            <div className="rename-icon" onClick={() => setRename(true)}>
+                                <Edit size={14}/>
+                            </div>
+                        </div>
+                    )}
                 </div>
-                <div className="rename-icon" onClick={() => setRename(true)}>
-                    {rename || <Popover content={'重命名'}><Edit/></Popover>}
+                <div className="more-actions">
+                    <Dropdown menu={{items: moreActions}} trigger={['click']} placement="bottomRight">
+                        <div className="more-actions-trigger" aria-label="更多操作">
+                            <MoreOne size={16}/>
+                        </div>
+                    </Dropdown>
                 </div>
             </div>
         </div>
-    )
+    );
 }
