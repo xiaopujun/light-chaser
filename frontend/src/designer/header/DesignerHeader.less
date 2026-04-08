@@ -9,20 +9,35 @@
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
 .designer-header {
-  height: 60px;
+  height: 56px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  background-color: #2C2C3E;
-  border-bottom: 1px solid #3A3A4E;
+  background-color: #1E1E2F;
+  color: #FFFFFF;
+  font-family: 'Inter', 'Helvetica Neue', 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  border-bottom: 1px solid #2C2C3E;
   padding: 0 24px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  position: relative;
+  z-index: 1;
 
   .header-left {
+    margin-right: 32px;
+    min-width: 100px;
+    max-width: 180px;
+    height: 32px;
+    flex-shrink: 0;
+
     .header-title {
+      height: 100%;
+
       img {
-        height: 32px;
+        width: auto;
+        height: 100%;
         object-fit: contain;
         transition: opacity 0.2s;
 
@@ -33,59 +48,64 @@
     }
   }
 
-  .header-center, .header-right {
+  .header-center,
+  .header-right {
     display: flex;
     align-items: center;
-    gap: 16px;
+    height: 100%;
+  }
+
+  .header-center {
+    flex: 1;
+    justify-content: center;
+    margin: 0 24px;
+  }
+
+  .header-right {
+    margin-left: auto;
   }
 
   .header-item {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-width: 60px;
-    height: 40px;
-    cursor: pointer;
+    height: 36px;
+    margin: 0 4px;
+    padding: 8px 12px;
     border-radius: 4px;
+    cursor: pointer;
     transition: all 0.2s ease;
-    padding: 0 8px;
     color: #A0A0B2;
+    white-space: nowrap;
 
     &:hover {
       background-color: rgba(79, 184, 255, 0.1);
       color: #4FB8FF;
-
-      .icon-park {
-        color: #4FB8FF;
-      }
     }
 
-    &:active {
+    &:active,
+    &.header-item-active {
       background-color: rgba(79, 184, 255, 0.2);
+      color: #4FB8FF;
+      font-weight: 500;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #4FB8FF;
+      outline-offset: 2px;
     }
 
     .icon-park {
-      font-size: 20px;
-      margin-bottom: 2px;
+      font-size: 16px;
+      margin-right: 6px;
       color: inherit;
       transition: color 0.2s;
     }
 
     .item-span {
-      font-size: 12px;
-      line-height: 16px;
+      padding: 0 4px;
+      font-size: 14px;
+      line-height: 20px;
       font-weight: 500;
-    }
-  }
-
-  // 特殊高亮项（如当前激活的菜单项）
-  .header-item-active {
-    color: #4FB8FF;
-    background-color: rgba(79, 184, 255, 0.1);
-
-    .icon-park {
-      color: #4FB8FF;
     }
   }
 }

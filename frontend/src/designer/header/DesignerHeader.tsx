@@ -93,13 +93,22 @@ const leftItems: Array<IHeaderItem> = [
 
 
 const Header: React.FC = observer(() => {
+        const activeKeySet = new Set<string>([
+            bluePrintHdStore.bluePrintVisible ? 'blue-print' : '',
+            canvasHdStore.canvasVisible ? 'canvas' : '',
+            themeHdStore.themeVisible ? 'theme' : '',
+        ].filter(Boolean));
+
+        const getHeaderItemClassName = (key: string) => {
+            return activeKeySet.has(key) ? 'header-item header-item-active' : 'header-item';
+        };
 
         const buildHeaderItemUI = (items: Array<IHeaderItem>): Array<ReactElement> => {
             const headerItems: Array<ReactElement> = [];
             for (let i = 0; i < items.length; i++) {
                 const {icon: Icon, name, key, onClick} = items[i];
                 headerItems.push(
-                    <div key={key} className={'header-item'} onClick={onClick}>
+                    <div key={key} className={getHeaderItemClassName(key)} onClick={onClick}>
                         {Icon}
                         <span className={'item-span'}>{name}</span>
                     </div>
@@ -112,7 +121,7 @@ const Header: React.FC = observer(() => {
             <>
                 <div className={'designer-header'}>
                     <div className={'header-left'}>
-                        <div className={'header-title'}><img style={{width: '60%'}} src={logo} alt={'logo'}/></div>
+                        <div className={'header-title'}><img style={{height: '100%'}} src={logo} alt={'logo'}/></div>
                     </div>
                     <div className={'header-center'}>
                         {buildHeaderItemUI(centerItems)}
