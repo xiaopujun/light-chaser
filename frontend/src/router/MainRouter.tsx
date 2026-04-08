@@ -18,6 +18,7 @@ const DesignerPage = lazy(() => import('../pages/designer/DesignerPage.tsx'));
 const GlobalMessage = lazy(() => import('../framework/message/GlobalMessage.tsx'));
 const GlobalModal = lazy(() => import('../framework/message/GlobalModal.tsx'));
 const Home = lazy(() => import('../pages/home/Home'));
+const ConsoleDashboard = lazy(() => import('../pages/home/console/ConsoleDashboard.tsx'));
 const ServerProjectList = lazy(() => import('../pages/home/server-list/ServerProjectList.tsx'));
 const DataSourceList = lazy(() => import('../pages/home/datasource/DataSourceList.tsx'));
 const TemplateMarket = lazy(() => import('../pages/home/template-market/TemplateMarket.tsx'));
@@ -438,6 +439,10 @@ const router = createBrowserRouter([
         element: <Home/>,
         children: [
             {
+                path: 'console',
+                element: <ConsoleDashboard/>,
+            },
+            {
                 path: 'projects',
                 element: <ServerProjectList/>,
             },
@@ -452,12 +457,16 @@ const router = createBrowserRouter([
             {
                 path: 'more',
                 element: <MoreInfo/>
+            },
+            {
+                index: true,
+                element: <Navigate to="console" replace/>
             }
         ]
     },
     {
         path: '/',
-        element: <Navigate to="/home/projects" replace/>
+        element: <Navigate to="/home/console" replace/>
     },
     {
         path: '/notFound',

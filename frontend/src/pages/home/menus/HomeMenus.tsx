@@ -12,13 +12,18 @@
 import './HomeMenus.less'
 import {useLocation, useNavigate} from "react-router-dom";
 import {memo} from "react";
-import {Data, NetworkDrive, System} from "@icon-park/react";
+import {DashboardOne, Data, NetworkDrive, System} from "@icon-park/react";
 import {Menu, type MenuProps} from "antd";
 import {MenuItemType} from "antd/es/menu/interface";
 
 
 const getMenus = () => {
     const baseMenus: MenuItemType[] = [
+        {
+            key: 'console',
+            icon: <DashboardOne size={16}/>,
+            label: '控制台'
+        },
         {
             key: 'projects',
             icon: <NetworkDrive size={16}/>,
@@ -44,7 +49,7 @@ export const HomeMenus = memo(() => {
     const location = useLocation();
     const {pathname} = location;
     const currentMenu = pathname === '/home'
-        ? 'projects'
+        ? 'console'
         : pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length);
 
     const navigateWithTransition = (target: string) => {
