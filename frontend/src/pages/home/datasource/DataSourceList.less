@@ -1,79 +1,114 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
 .datasource-list {
-  padding: 25px;
-  height: 100%;
-  background-color: #1E1E2F;
-  color: #FFFFFF;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  gap: 16px;
+  color: var(--lc-home-text-primary);
   font-family: 'Helvetica Neue', Arial, sans-serif;
 
   .datasource-list-header {
     display: flex;
     justify-content: space-between;
-    padding: 16px 24px;
-    margin-bottom: 24px;
-    background-color: #2C2C3E;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 14px 18px;
+    border-radius: 12px;
+    background: var(--lc-home-panel-weak);
+    border: 1px solid var(--lc-home-border);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px);
 
     .header-left {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
+      min-width: 0;
+      flex: 1;
+      flex-wrap: wrap;
 
       .project-list-search {
-        .ant-input {
-          background-color: #2C2C3E;
-          border: 1px solid #3A3A4E;
-          color: #FFFFFF;
-          border-radius: 4px;
-          transition: all 0.2s ease;
+        max-width: 100%;
 
-          &:hover,
-          &:focus {
-            border-color: #4FB8FF;
-            box-shadow: 0 0 0 2px rgba(79, 184, 255, 0.2);
+        .ant-input-affix-wrapper {
+          background: rgba(18, 19, 32, 0.72);
+          border: 1px solid var(--lc-home-border-soft);
+          border-radius: 10px;
+          transition: all 0.2s ease;
+          box-shadow: none;
+
+          &:hover {
+            border-color: rgba(79, 184, 255, 0.42);
+          }
+
+          &.ant-input-affix-wrapper-focused,
+          &:focus,
+          &:focus-within {
+            border-color: var(--lc-home-primary);
+            box-shadow: 0 0 0 2px rgba(79, 184, 255, 0.18);
+          }
+
+          .ant-input-prefix {
+            margin-right: 8px;
+
+            svg {
+              color: rgba(255, 255, 255, 0.48);
+            }
+          }
+
+          .ant-input {
+            background: transparent;
+            color: var(--lc-home-text-primary);
+            font-size: 14px;
+
+            &::placeholder {
+              color: rgba(255, 255, 255, 0.42);
+            }
           }
         }
       }
 
       .ant-btn {
-        display: flex;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
-        font-weight: 500;
-        height: 32px;
-        padding: 0 12px;
-        border-radius: 4px;
+        height: 36px;
+        padding: 0 14px;
+        border-radius: 10px;
+        font-weight: 600;
         transition: all 0.2s ease;
 
         &.primary {
-          background-color: #4FB8FF;
+          background: linear-gradient(135deg, rgba(29, 140, 248, 0.92), rgba(51, 88, 244, 0.86));
           border: none;
-          color: #FFFFFF;
+          color: #ffffff;
+          box-shadow: 0 10px 24px rgba(29, 140, 248, 0.22);
 
           &:hover {
-            background-color: lighten(#4FB8FF, 10%);
+            transform: translateY(-1px);
+            box-shadow: 0 14px 28px rgba(29, 140, 248, 0.28);
           }
 
           &:active {
-            background-color: darken(#4FB8FF, 10%);
+            transform: translateY(0);
           }
         }
 
         &.danger {
-          background-color: #FF6E6E;
-          border: none;
-          color: #FFFFFF;
-
-          &:hover {
-            background-color: lighten(#FF6E6E, 10%);
-          }
-
-          &:active {
-            background-color: darken(#FF6E6E, 10%);
-          }
+          background: rgba(253, 93, 147, 0.12);
+          border: 1px solid rgba(253, 93, 147, 0.24);
+          color: #ffffff;
         }
       }
     }
@@ -81,8 +116,8 @@
 
   .datasource-list-body {
     flex: 1;
-    padding: 16px 0;
-    overflow-y: auto;
+    min-height: 0;
+    padding: 0;
 
     .ant-list-grid {
       .ant-col {
@@ -91,141 +126,127 @@
     }
 
     .datasource-card {
-      background-color: #2C2C3E;
-      border: 1px solid #3A3A4E;
-      color: #bababa;
-      padding: 16px;
-      height: 120px;
-      cursor: pointer;
       position: relative;
-      border-radius: 8px;
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      height: 120px;
+      padding: 16px;
+      border-radius: 12px;
+      background: var(--lc-home-panel);
+      border: 1px solid var(--lc-home-border);
+      box-shadow: var(--lc-home-shadow);
+      color: rgba(255, 255, 255, 0.78);
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      backdrop-filter: blur(20px);
 
       &:hover {
-        border-color: #4FB8FF;
-        background-color: lighten(#2C2C3E, 5%);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        transform: translateY(-3px);
+        border-color: rgba(79, 184, 255, 0.28);
+        background: rgba(39, 41, 61, 0.98);
+        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(79, 184, 255, 0.08);
       }
 
       .card-header {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
+        gap: 12px;
         margin-bottom: 12px;
 
         .type-tag {
           margin: 0;
-          font-weight: 600;
-          border: none;
-          padding: 0 8px;
           height: 24px;
-          line-height: 24px;
-          font-size: 12px;
-          background-color: #3CED92;
-          color: #1E1E2F;
+          padding: 0 8px;
+          border: none;
+          border-radius: 999px;
+          background: rgba(0, 242, 195, 0.12);
+          color: var(--lc-home-success);
+          font-weight: 600;
         }
 
         .card-actions {
           display: flex;
+          align-items: center;
           gap: 12px;
           height: 24px;
           transition: opacity 0.2s ease;
 
           .action-btn {
-            color: #A0A0B2;
-            font-size: 12px;
-            cursor: pointer;
-            height: 100%;
             display: inline-flex;
             align-items: center;
+            height: 100%;
+            color: rgba(255, 255, 255, 0.58);
+            font-size: 12px;
+            cursor: pointer;
             transition: all 0.2s ease;
 
             &:hover {
-              color: #4FB8FF;
-              transform: scale(1.1);
-            }
-
-            &[onclick*="copy"] {
-              &:hover {
-                color: #4FB8FF;
-              }
-            }
-
-            &[onclick*="delete"] {
-              &:hover {
-                color: #FF6E6E;
-              }
-            }
-
-            &[onclick*="test"] {
-              &:hover {
-                color: #3CED92;
-              }
+              color: var(--lc-home-primary);
+              transform: translateY(-1px);
             }
           }
         }
       }
 
       .card-title {
-        font-weight: 600;
         font-size: 14px;
+        font-weight: 600;
         line-height: 20px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        color: var(--lc-home-text-primary);
       }
     }
   }
 }
 
-/* 分页器样式 */
-.ant-pagination {
-  margin-top: 24px;
-  display: flex;
-  justify-content: center;
+.datasource-list {
+  .ant-pagination {
+    margin-top: 24px;
+    display: flex;
+    justify-content: flex-end;
 
-  .ant-pagination-item,
-  .ant-pagination-prev,
-  .ant-pagination-next,
-  .ant-pagination-jump-prev,
-  .ant-pagination-jump-next {
-    background-color: #2C2C3E;
-    border-color: #3A3A4E;
-    transition: all 0.2s ease;
-
-    a {
-      color: #A0A0B2;
-    }
-
-    &:hover {
-      border-color: #4FB8FF;
-      transform: translateY(-1px);
+    .ant-pagination-item,
+    .ant-pagination-prev,
+    .ant-pagination-next,
+    .ant-pagination-jump-prev,
+    .ant-pagination-jump-next {
+      background: rgba(18, 19, 32, 0.72);
+      border-color: var(--lc-home-border-soft);
+      transition: all 0.2s ease;
 
       a {
-        color: #4FB8FF;
+        color: rgba(255, 255, 255, 0.62);
       }
-    }
 
-    &.ant-pagination-item-active {
-      background-color: #4FB8FF;
-      border-color: #4FB8FF;
+      &:hover {
+        border-color: rgba(79, 184, 255, 0.42);
+        transform: translateY(-1px);
 
-      a {
-        color: #FFFFFF;
+        a {
+          color: var(--lc-home-primary);
+        }
+      }
+
+      &.ant-pagination-item-active {
+        background: linear-gradient(135deg, rgba(29, 140, 248, 0.92), rgba(51, 88, 244, 0.86));
+        border-color: transparent;
+
+        a {
+          color: #ffffff;
+        }
       }
     }
   }
-}
 
-/* 卡片操作按钮显示逻辑 */
-.datasource-card:not(:hover) .card-actions {
-  opacity: 0;
-  pointer-events: none;
-}
+  .datasource-card:not(:hover) .card-actions {
+    opacity: 0;
+    pointer-events: none;
+  }
 
-.datasource-card:hover .card-actions {
-  opacity: 1;
-  pointer-events: auto;
+  .datasource-card:hover .card-actions {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }

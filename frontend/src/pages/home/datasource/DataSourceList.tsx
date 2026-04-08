@@ -80,7 +80,7 @@ const DataSourceList = observer(() => {
                             className="project-list-search"
                             onKeyDown={handleKeyDown}
                             onSearch={handleSearch}
-                            style={{width: 350}}/>
+                            style={{width: 'min(350px, 100%)'}}/>
                     <Button size={'small'} className="operate-btn primary" onClick={() => setPanelVisible(true)}>
                         <Add style={{position: 'relative', top: 2, marginRight: 3}}/>新建</Button>
                 </div>

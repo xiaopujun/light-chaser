@@ -8,113 +8,204 @@
  *
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
+
 .lc-home-menus {
-  width: 220px;
   height: 100%;
-  background-color: #2C2C3E;
-  border-right: 1px solid #3A3A4E;
-  padding: 16px 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--lc-home-text-primary);
+
+  .menus-container {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 6px;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(255, 255, 255, 0.18);
+    }
+  }
 
   .ant-menu {
-    background-color: transparent;
-    border-right: none;
+    width: 100% !important;
+    min-width: 0;
+    background: transparent;
+    border: none;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
 
-    &.ant-menu-inline {
-      .ant-menu-item {
-        height: 40px;
-        line-height: 40px;
-        margin: 4px;
-        border-radius: 4px;
-        padding-left: 16px !important;
-        transition: all 0.2s ease;
-        position: relative;
-        overflow: visible;
+    .ant-menu-item,
+    .ant-menu-submenu-title {
+      display: flex;
+      align-items: center;
+      height: 46px;
+      margin: 6px 0;
+      padding: 0 14px !important;
+      overflow: hidden;
+      border-radius: 10px;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 14px;
+      line-height: 20px;
+      transition: all 0.2s ease;
 
+      .ant-menu-title-content {
+        display: flex;
+        align-items: center;
+        min-width: 0;
+        font-weight: 500;
 
-        &:not(.ant-menu-item-selected):hover {
-          background-color: rgba(79, 184, 255, 0.1);
-          color: #4FB8FF;
+        span {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
+      }
 
-        &.ant-menu-item-selected {
-          background-color: rgba(79, 184, 255, 0.2);
-          color: #4FB8FF;
-          font-weight: 500;
+      .ant-menu-item-icon {
+        margin-right: 14px;
+        color: rgba(255, 255, 255, 0.55);
+        transition: color 0.2s ease;
+
+        .i-icon {
+          width: 18px;
+          height: 18px;
         }
+      }
 
-        // 关键修复：将::after定义移到此处
-        &.ant-menu-item-selected::after {
-          content: "";
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          right: 0;
-          border-right: 3px solid #4FB8FF !important;
-          transform: scaleY(1) !important;
-          opacity: 1 !important;
-          transition: transform 0.2s cubic-bezier(0.645, 0.045, 0.355, 1),
-          opacity 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+      &:hover {
+        color: var(--lc-home-text-primary);
+        background: rgba(255, 255, 255, 0.06);
+
+        .ant-menu-item-icon {
+          color: var(--lc-home-primary);
         }
       }
     }
 
-    .ant-menu-item-group-title {
-      color: #A0A0B2;
-      font-size: 12px;
-      padding-left: 24px;
-      margin-top: 16px;
-      margin-bottom: 8px;
+    .ant-menu-item {
+      &:active {
+        transform: scale(0.99);
+      }
+
+      &::after {
+        display: none;
+      }
+
+      &.ant-menu-item-selected {
+        color: var(--lc-home-text-primary);
+        background: linear-gradient(135deg, rgba(29, 140, 248, 0.82), rgba(51, 88, 244, 0.78));
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+        font-weight: 600;
+
+        .ant-menu-item-icon {
+          color: #ffffff;
+        }
+      }
+    }
+
+    .ant-menu-submenu {
+      min-width: 0;
+
+      .ant-menu-submenu-title {
+        .ant-menu-submenu-arrow {
+          color: rgba(255, 255, 255, 0.48);
+
+          &::before,
+          &::after {
+            background: currentColor !important;
+          }
+        }
+      }
+
+      &.ant-menu-submenu-open,
+      &.ant-menu-submenu-selected {
+        & > .ant-menu-submenu-title {
+          color: var(--lc-home-text-primary);
+          background: rgba(255, 255, 255, 0.06);
+
+          .ant-menu-item-icon,
+          .ant-menu-submenu-arrow {
+            color: var(--lc-home-primary);
+          }
+        }
+      }
+
+      .ant-menu-sub {
+        background: transparent;
+        min-width: 0;
+
+        .ant-menu-item {
+          min-width: 0;
+          height: 40px;
+          margin: 4px 0;
+          padding-left: 52px !important;
+          border-radius: 10px;
+
+          &.ant-menu-item-selected {
+            color: var(--lc-home-primary);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: none;
+
+            .ant-menu-item-icon {
+              color: var(--lc-home-primary);
+            }
+          }
+        }
+      }
     }
   }
-}
 
-.ant-menu-item {
-  color: #FFFFFF;
-  font-size: 14px;
-
-  .anticon {
-    font-size: 16px;
-    margin-right: 12px;
-    color: inherit;
-  }
-}
-
-.ant-menu-submenu {
-  .ant-menu-submenu-title {
-    color: #FFFFFF;
-    font-size: 14px;
-    height: 40px;
-    line-height: 40px;
-    margin: 4px 12px;
-    border-radius: 4px;
-    padding-left: 16px !important;
-    transition: all 0.2s ease;
+  .home-edition {
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 12px;
+    background: rgba(18, 19, 32, 0.55);
+    border: 1px solid var(--lc-home-border-soft);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 
     &:hover {
-      color: #4FB8FF;
-    }
-
-    .anticon {
-      font-size: 16px;
-      margin-right: 12px;
-    }
-
-    .ant-menu-submenu-arrow {
-      color: #A0A0B2;
-
-      &::before, &::after {
-        background: currentColor;
-      }
+      background: rgba(30, 30, 47, 0.7);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.22);
     }
   }
 
-  &.ant-menu-submenu-selected {
-    .ant-menu-submenu-title {
-      color: #4FB8FF;
-    }
+  .home-edition-label {
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--lc-home-text-tertiary);
   }
 
-  .ant-menu {
-    background-color: darken(#2C2C3E, 3%);
+  .home-edition-value {
+    margin-top: 4px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+    color: var(--lc-home-text-primary);
+  }
+
+  .home-edition-note {
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--lc-home-text-secondary);
   }
 }

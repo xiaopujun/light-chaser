@@ -13,7 +13,7 @@ import './HomeMenus.less'
 import {useLocation, useNavigate} from "react-router-dom";
 import {memo} from "react";
 import {Data, NetworkDrive, System} from "@icon-park/react";
-import {Menu} from "antd";
+import {Menu, type MenuProps} from "antd";
 import {MenuItemType} from "antd/es/menu/interface";
 
 
@@ -42,19 +42,37 @@ export const HomeMenus = memo(() => {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const changeMenu = (menu: MenuItemType) => {
-        navigate(`${menu.key}`);
-    }
     const {pathname} = location;
-    const currentMenu = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length);
+    const currentMenu = pathname === '/home'
+        ? 'projects'
+        : pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length);
+
+    const navigateWithTransition = (target: string) => {
+        if (target === currentMenu) return;
+        window.dispatchEvent(new CustomEvent('lc-home-route-leave'));
+        window.setTimeout(() => navigate(target), 140);
+    };
+
+    const changeMenu: MenuProps['onClick'] = (menu) => {
+        navigateWithTransition(`${menu.key}`);
+    };
+
     return (
         <div className={'lc-home-menus'}>
-            <Menu onClick={changeMenu}
-                  style={{width: 220}}
-                  defaultSelectedKeys={[currentMenu]}
-                  mode="inline"
-                  items={getMenus()}
-            />
+            <div className="menus-container">
+                <Menu onClick={changeMenu}
+                      style={{width: '100%'}}
+                      defaultSelectedKeys={[currentMenu]}
+                      selectedKeys={[currentMenu]}
+                      mode="inline"
+                      items={getMenus()}
+                />
+            </div>
+            <div className="home-edition">
+                <div className="home-edition-label">Open Source Edition</div>
+                <div className="home-edition-value">LIGHT CHASER</div>
+                <div className="home-edition-note">Visual design workspace</div>
+            </div>
         </div>
     );
 })

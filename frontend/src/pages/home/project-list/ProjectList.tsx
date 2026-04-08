@@ -155,7 +155,7 @@ export const ProjectList = memo((props: ProjectListProps) => {
                             className={'project-list-search'}
                             onKeyDown={onKeyDown}
                             onSearch={doSearch}
-                            style={{width: 350}}/>
+                            style={{width: 'min(350px, 100%)'}}/>
                     <Button size={'small'} type={"primary"} onClick={toggleNewProVisible}>
                         <Add style={{position: 'relative', top: 2, marginRight: 3}}/>新增</Button>
                 </div>
@@ -181,5 +181,4 @@ export const ProjectList = memo((props: ProjectListProps) => {
 })
 
 export default ProjectList;
-
 

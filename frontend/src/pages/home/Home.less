@@ -8,55 +8,234 @@
  *
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
+
 .lc-home {
-  position: relative;
-  height: 100vh;
+  --lc-home-bg-app:
+    radial-gradient(1100px circle at 18% 0%, rgba(29, 140, 248, 0.16), transparent 60%),
+    radial-gradient(900px circle at 88% 12%, rgba(0, 242, 195, 0.10), transparent 58%),
+    linear-gradient(180deg, rgba(18, 19, 32, 1) 0%, rgba(30, 30, 47, 1) 55%, rgba(18, 19, 32, 1) 100%);
+  --lc-home-panel: rgba(39, 41, 61, 0.96);
+  --lc-home-panel-strong: rgba(18, 19, 32, 0.55);
+  --lc-home-panel-weak: rgba(18, 19, 32, 0.42);
+  --lc-home-border: rgba(255, 255, 255, 0.08);
+  --lc-home-border-soft: rgba(255, 255, 255, 0.06);
+  --lc-home-text-primary: #ffffff;
+  --lc-home-text-secondary: rgba(255, 255, 255, 0.62);
+  --lc-home-text-tertiary: rgba(255, 255, 255, 0.48);
+  --lc-home-primary: #4fb8ff;
+  --lc-home-primary-strong: #3ced92;
+  --lc-home-success: #3ced92;
+  --lc-home-shadow: 0 14px 40px rgba(0, 0, 0, 0.38);
+
   display: flex;
-  flex-direction: column;
-  background-color: #1E1E2F;
-  color: #FFFFFF;
+  height: 100vh;
+  background: var(--lc-home-bg-app);
   font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: var(--lc-home-text-primary);
+  overflow: hidden;
 
-  .lc-home-header {
-    height: 60px;
-    padding: 0 24px;
+  .home-left {
+    width: 280px;
+    flex-shrink: 0;
     display: flex;
-    align-items: center;
-    background-color: #2C2C3E;
-    border-bottom: 1px solid #3A3A4E;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    flex-direction: column;
+    padding: 20px 16px 20px 20px;
 
-    .logo {
-      img {
-        width: 70%;
-        max-height: 40px;
-        object-fit: contain;
+    .home-side-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 12px;
+      background: var(--lc-home-panel);
+      border: 1px solid var(--lc-home-border);
+      box-shadow: var(--lc-home-shadow);
+      backdrop-filter: blur(20px);
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 1px;
+        background: linear-gradient(90deg, rgba(29, 140, 248, 0.55), rgba(253, 93, 147, 0) 55%, rgba(0, 242, 195, 0.35));
+        opacity: 0.55;
+        pointer-events: none;
+      }
+
+      .home-logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 18px 18px 14px;
+        border-bottom: 1px solid var(--lc-home-border-soft);
+
+        .home-logo {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 28px;
+
+          img {
+            width: auto;
+            max-width: 132px;
+            height: 100%;
+            object-fit: contain;
+            filter: brightness(1.08);
+          }
+        }
+      }
+
+      .lc-home-body-left {
+        flex: 1;
+        min-height: 0;
+        padding: 14px 12px 14px 12px;
+        overflow: hidden;
       }
     }
   }
 
-  .lc-home-body {
+  .home-right {
     flex: 1;
+    min-width: 0;
     display: flex;
-    overflow: hidden;
+    padding: 20px 20px 18px 0;
 
-    .lc-home-body-left {
-      width: 220px;
-      height: calc(100vh - 60px);
-      border-right: 1px solid #2e2e2e;
-      background-color: #232323;
+    .home-main-card {
+      position: relative;
+      display: flex;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      border-radius: 14px;
+      background: var(--lc-home-panel);
+      border: 1px solid var(--lc-home-border);
+      box-shadow: 0 14px 46px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(20px);
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 1px;
+        background: linear-gradient(90deg, rgba(253, 93, 147, 0.55), rgba(29, 140, 248, 0.35) 55%, rgba(0, 242, 195, 0.25));
+        opacity: 0.55;
+        pointer-events: none;
+      }
+
+      .home-content {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+
+        .home-route {
+          flex: 1;
+          min-height: 0;
+          overflow: auto;
+          padding: 18px 22px 22px;
+
+          &::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+          }
+
+          &::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.14);
+            border-radius: 999px;
+          }
+
+          &::-webkit-scrollbar-track {
+            background: transparent;
+          }
+
+          .home-route-inner {
+            min-height: 100%;
+            will-change: opacity, transform, filter;
+          }
+
+          .home-route-inner.is-entering {
+            animation: lc-home-route-in 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+          }
+
+          .home-route-inner.is-leaving {
+            opacity: 0;
+            transform: translateY(6px);
+            filter: blur(3px);
+            transition: opacity 140ms ease, transform 140ms ease, filter 140ms ease;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes lc-home-route-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+    filter: blur(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lc-home {
+    .home-right {
+      .home-main-card {
+        .home-content {
+          .home-route {
+            .home-route-inner.is-entering {
+              animation: none;
+            }
+
+            .home-route-inner.is-leaving {
+              transition: none;
+              opacity: 1;
+              transform: none;
+              filter: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 960px) {
+  .lc-home {
+    flex-direction: column;
+    height: auto;
+    min-height: 100svh;
+    overflow: auto;
+
+    .home-left {
+      width: 100%;
+      padding: 12px 12px 0;
     }
 
-    .lc-home-body-right {
-      flex: 1;
-      padding: 24px;
-      background-color: #1E1E2F;
-      overflow-y: auto;
+    .home-right {
+      padding: 12px;
 
-      > * {
-        max-width: 1200px;
-        margin: 0 auto;
+      .home-main-card {
+        min-height: 0;
       }
+    }
+
+    .home-left,
+    .home-right {
+      flex: none;
     }
   }
 }

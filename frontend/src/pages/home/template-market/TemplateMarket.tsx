@@ -10,11 +10,18 @@
  */
 
 import {memo} from "react";
+import './TemplateMarket.less';
 
 const TemplateMarket = memo(() => {
     return (
-        <div style={{color: 'wheat'}}>
-            开发中...
+        <div className="template-market">
+            <div className="template-market-card">
+                <div className="template-market-kicker">Template Market</div>
+                <h1 className="template-market-title">开发中...</h1>
+                <p className="template-market-copy">
+                    这里将承载模板浏览、筛选和一键应用能力，视觉上先保持和首页一致的卡片风格。
+                </p>
+            </div>
         </div>
     );
 })
