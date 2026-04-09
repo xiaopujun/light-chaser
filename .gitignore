@@ -3,3 +3,4 @@ logs
 .idea
 frontend/node_modules
 backend/target
+backend/src/main/resources/static

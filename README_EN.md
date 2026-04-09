@@ -25,7 +25,7 @@ LIGHT CHASER is more than a page builder. It is a visual design foundation that 
 | Monorepo workflow | Frontend designer, backend service, deployment scripts, and development docs live in one repository |
 | Drag-and-drop design | Arrange components, resize elements, and configure properties directly on the canvas |
 | Blueprint interactions | Model event linking, data flow, and node relationships in a visual blueprint editor |
-| Multi-data-source support | SQLite works out of the box, with support for MySQL, PostgreSQL, Oracle, and SQL Server |
+| External data source access | SQLite works out of the box, and the data-source management page supports connection testing and maintenance |
 | Unified asset management | Project resources, images, covers, and static files are stored and served consistently |
 | Deployment-friendly | Supports local development, Nginx hosting, Docker images, and Compose-based orchestration |
 
@@ -35,7 +35,7 @@ LIGHT CHASER is more than a page builder. It is a visual design foundation that 
 |---|---|
 | Frontend | React 18, Vite 5, TypeScript 5, MobX |
 | Backend | Java 17, Spring Boot 3.2.5, MyBatis Plus 3.5.5 |
-| Database | SQLite by default, with support for multiple database drivers |
+| Database | SQLite (default main database) |
 | Deployment | Nginx, Docker, Docker Compose |
 
 ## Repository Layout
@@ -54,7 +54,7 @@ LIGHT CHASER is more than a page builder. It is a visual design foundation that 
 flowchart LR
   B["Browser / Designer"] --> F["frontend: React + Vite + MobX"]
   F -->|/api /static| S["backend: Spring Boot + MyBatis Plus"]
-  S --> D["SQLite / MySQL / PostgreSQL / Oracle / SQL Server"]
+  S --> D["SQLite main database"]
   S --> R["Project assets / images / covers"]
 ```
 
@@ -101,6 +101,7 @@ flowchart LR
 - [Developer Docs](https://xiaopujun.github.io/light-chaser-doc/#/)
 - [Online Demo](https://xiaopujun.github.io/light-chaser-app/#)
 - [Deployment Guide](https://xiaopujun.github.io/light-chaser-doc/#/deploy/deploy_open)
+- [Deployment & Ops Guide](docs/部署运维说明.md)
 - [Development Guidelines](docs/开发规范.md)
 - [Git Guidelines](docs/GIT规范.md)
 
@@ -199,9 +200,14 @@ mvn clean package
 
 ## Deployment
 
-- Build the frontend with `pnpm build`, then deploy `frontend/dist` using `frontend/Dockerfile` or your own Nginx setup
-- Build the backend with `mvn clean package`, then package it into a Docker image. Make sure the jar name matches the actual build output
-- `backend/docker-compose.yml` provides an example for frontend-backend container orchestration, and you can adjust image tags and mount paths for your environment
+- The recommended same-origin deployment flow is `node scripts/deploy-same-origin.js`. The script builds the frontend, copies `frontend/dist` into `backend/src/main/resources/static`, repackages the backend, and also generates `backend/target/lc-server-release.zip`. The release zip contains both `lc-server.jar` and `docs/部署运维说明.md`, so it can be handed directly to operations or deployment teams.
+- After startup, open `http://localhost:8080/`; for a remote server, replace `localhost` with the server IP or domain.
+- If you only want to preview the workflow, add `--dry-run` first.
+- If your default Java version is below 17, pass `--java-home /path/to/jdk17` to point the backend build to a JDK 17 installation.
+- For the full startup, configuration, logging, upgrade, and rollback procedure, see `docs/部署运维说明.md`.
+- If you still need split deployment, build the frontend with `pnpm build` and deploy `frontend/dist` using `frontend/Dockerfile` or your own Nginx setup
+- Build the backend with `mvn clean package`; the default artifact is `backend/target/lc-server.jar`, and the backend Dockerfile references that fixed name directly
+- `backend/docker-compose.yml` remains as a split-deployment example, and you can adjust image tags and mount paths for your environment
 
 ## Contributing & Support
 

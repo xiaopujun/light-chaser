@@ -18,6 +18,10 @@ public class StaticSourceInterceptor extends WebMvcConfigurationSupport {
 
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/index.html", "/favicon.ico")
+                .addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/assets/**")
+                .addResourceLocations("classpath:/static/assets/");
         registry.addResourceHandler("/static/images/**").addResourceLocations(String.join("", "file:", globalProperties.getImageAbsolutPath(), File.separator));
         registry.addResourceHandler("/static/covers/**").addResourceLocations(String.join("", "file:", globalProperties.getCoverAbsolutePath(), File.separator));
         super.addResourceHandlers(registry);

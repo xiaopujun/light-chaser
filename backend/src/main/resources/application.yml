@@ -1,4 +1,6 @@
 spring:
+  mvc:
+    throw-exception-if-no-handler-found: true
   datasource:
     driver-class-name: org.sqlite.JDBC
     url: "jdbc:sqlite:${user.dir}/lc-server.db"
