@@ -179,11 +179,12 @@ mvn clean package
 
 - Config file: `backend/src/main/resources/application.yml`
 - `spring.datasource.url` defaults to `jdbc:sqlite:${user.dir}/lc-server.db`
-- `light-chaser.project-resource-path` defaults to the startup directory `user.dir` if not configured
+- `light-chaser.project-resource-path` defaults to the startup directory `user.dir` if not configured, and should point to a writable persistent directory
 - Images are served from `/static/images`
 - Covers are served from `/static/covers`
 - `light-chaser.ai.enabled` toggles the AI features
 - `light-chaser.ai.models` defines the available model list, and the default values can be overridden by `LC_AI_MODEL`, `LC_AI_BASE_URL`, and `LC_AI_API_KEY`
+- `light-chaser.crypto.rsa.public-key-path` and `light-chaser.crypto.rsa.private-key-path` default to `light-chaser.project-resource-path/keys/`; if missing, they are generated and persisted on startup
 - RSA and AES settings are built into `light-chaser.crypto`
 
 ### Frontend

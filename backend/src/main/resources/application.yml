@@ -57,10 +57,10 @@ light-chaser:
         max-tokens: 2048
   crypto:
     rsa:
-      public-key-path: keys/public_key.pem # RSA公钥文件路径
-      private-key-path: keys/private_key.pem # RSA私钥文件路径
+      public-key-path: keys/public_key.pem # RSA公钥文件路径，若不存在会在 project-resource-path/keys 下自动生成
+      private-key-path: keys/private_key.pem # RSA私钥文件路径，若不存在会在 project-resource-path/keys 下自动生成
     aes:
-      key: YmVVaTJUNGdvV3huQnZXZzlEUE9kdnBaaS9ZcTZ0UzZtWXl2TWVXTzQ0Qz0=
+      key: YmVVaTJUNGdvV3huQnZXZzlEUE9kdnBaaS9ZcTZ0UzZtWXl2TWVXTzQ0Qz0= # 后端 AES 密钥，需与前端约定保持一致
 
 
 logging:

@@ -1,24 +1,40 @@
 package com.dagu.lightchaser.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Component;
-import org.springframework.util.FileCopyUtils;
-
+import com.dagu.lightchaser.global.GlobalProperties;
+import com.dagu.lightchaser.util.CryptoUtil;
 import jakarta.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.security.KeyPair;
 
 /**
- * 加密配置类
- * 从配置文件指定的.pem文件读取RSA密钥配置
- * 
+ * 加密配置类。
+ * 启动时优先加载持久化的 RSA 密钥文件，若文件缺失则自动生成并写入到项目资源目录。
+ *
  * @author lightchaser
  */
 @Component
 @ConfigurationProperties(prefix = "light-chaser.crypto")
 public class CryptoConfig {
+
+    private static final Logger logger = LoggerFactory.getLogger(CryptoConfig.class);
+
+    private static final String DEFAULT_PUBLIC_KEY_PATH = "keys/public_key.pem";
+    private static final String DEFAULT_PRIVATE_KEY_PATH = "keys/private_key.pem";
+    private static final String DEFAULT_AES_KEY = "YmVVaTJUNGdvV3huQnZXZzlEUE9kdnBaaS9ZcTZ0UzZtWXl2TWVXTzQ0Qz0=";
+
+    @Autowired
+    private GlobalProperties globalProperties;
     
     private Rsa rsa = new Rsa();
     private Aes aes = new Aes();
@@ -26,37 +42,93 @@ public class CryptoConfig {
     @PostConstruct
     public void init() {
         try {
-            // 从配置文件指定的路径读取公钥文件
-            ClassPathResource publicKeyResource = new ClassPathResource(rsa.getPublicKeyPath());
-            String publicKeyContent = FileCopyUtils.copyToString(
-                new InputStreamReader(publicKeyResource.getInputStream(), StandardCharsets.UTF_8)
-            );
-            
-            // 从配置文件指定的路径读取私钥文件
-            ClassPathResource privateKeyResource = new ClassPathResource(rsa.getPrivateKeyPath());
-            String privateKeyContent = FileCopyUtils.copyToString(
-                new InputStreamReader(privateKeyResource.getInputStream(), StandardCharsets.UTF_8)
-            );
-            
-            // 移除PEM格式的头尾标识，只保留Base64编码的密钥内容
-            // 这是必需的，因为Java的KeyFactory.generatePublic/generatePrivate方法
-            // 需要纯Base64编码的密钥数据，而不是完整的PEM格式
-            String publicKey = publicKeyContent
-                .replace("-----BEGIN PUBLIC KEY-----", "")
-                .replace("-----END PUBLIC KEY-----", "")
-                .replaceAll("\\s+", "");
-                
-            String privateKey = privateKeyContent
-                .replace("-----BEGIN PRIVATE KEY-----", "")
-                .replace("-----END PRIVATE KEY-----", "")
-                .replaceAll("\\s+", "");
-            
+            String publicKeyPath = resolvePath(rsa.getPublicKeyPath(), DEFAULT_PUBLIC_KEY_PATH);
+            String privateKeyPath = resolvePath(rsa.getPrivateKeyPath(), DEFAULT_PRIVATE_KEY_PATH);
+
+            Path publicKeyFile = resolveRuntimePath(publicKeyPath);
+            Path privateKeyFile = resolveRuntimePath(privateKeyPath);
+
+            if (Files.isRegularFile(publicKeyFile) && Files.isRegularFile(privateKeyFile)) {
+                loadExistingKeyPair(publicKeyFile, privateKeyFile);
+                logger.info("Loaded RSA key pair from {}", publicKeyFile.getParent());
+                return;
+            }
+
+            logger.warn("RSA key pair is missing, generating a new pair under {}", publicKeyFile.getParent());
+            KeyPair keyPair = CryptoUtil.generateRSAKeyPair();
+            String publicKey = CryptoUtil.getPublicKeyString(keyPair);
+            String privateKey = CryptoUtil.getPrivateKeyString(keyPair);
+
+            persistPem(publicKeyFile, convertToPemFormat(publicKey, "PUBLIC KEY"));
+            persistPem(privateKeyFile, convertToPemFormat(privateKey, "PRIVATE KEY"));
+
             rsa.setPublicKey(publicKey);
             rsa.setPrivateKey(privateKey);
-            
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to load RSA keys from PEM files", e);
+        } catch (Exception e) {
+            throw new RuntimeException(
+                "Failed to initialize RSA key pair. " +
+                    "Please make sure light-chaser.project-resource-path is writable so the generated keys can be persisted.",
+                e
+            );
         }
+    }
+
+    private void loadExistingKeyPair(Path publicKeyFile, Path privateKeyFile) throws IOException {
+        String publicKeyContent = Files.readString(publicKeyFile, StandardCharsets.UTF_8);
+        String privateKeyContent = Files.readString(privateKeyFile, StandardCharsets.UTF_8);
+
+        rsa.setPublicKey(extractPemBody(publicKeyContent, "PUBLIC KEY"));
+        rsa.setPrivateKey(extractPemBody(privateKeyContent, "PRIVATE KEY"));
+    }
+
+    private void persistPem(Path target, String pemContent) throws IOException {
+        Path parent = target.getParent();
+        if (parent != null) {
+            Files.createDirectories(parent);
+        }
+        Files.writeString(
+            target,
+            pemContent,
+            StandardCharsets.UTF_8,
+            StandardOpenOption.CREATE,
+            StandardOpenOption.TRUNCATE_EXISTING,
+            StandardOpenOption.WRITE
+        );
+    }
+
+    private String resolvePath(String configuredPath, String defaultPath) {
+        return StringUtils.hasText(configuredPath) ? configuredPath.trim() : defaultPath;
+    }
+
+    private Path resolveRuntimePath(String configuredPath) {
+        Path path = Path.of(configuredPath);
+        if (path.isAbsolute()) {
+            return path.normalize();
+        }
+
+        String baseDir = globalProperties != null ? globalProperties.getProjectResourcePath() : null;
+        if (!StringUtils.hasText(baseDir)) {
+            baseDir = System.getProperty("user.dir");
+        }
+        return Path.of(baseDir).resolve(path).normalize();
+    }
+
+    private String extractPemBody(String pemContent, String keyType) {
+        return pemContent
+            .replace("-----BEGIN " + keyType + "-----", "")
+            .replace("-----END " + keyType + "-----", "")
+            .replaceAll("\\s+", "");
+    }
+
+    private String convertToPemFormat(String base64Key, String keyType) {
+        StringBuilder pem = new StringBuilder();
+        pem.append("-----BEGIN ").append(keyType).append("-----\n");
+        for (int i = 0; i < base64Key.length(); i += 64) {
+            int end = Math.min(i + 64, base64Key.length());
+            pem.append(base64Key, i, end).append("\n");
+        }
+        pem.append("-----END ").append(keyType).append("-----");
+        return pem.toString();
     }
     
     public Rsa getRsa() {
@@ -72,8 +144,8 @@ public class CryptoConfig {
     }
     
     public static class Rsa {
-        private String publicKeyPath;
-        private String privateKeyPath;
+        private String publicKeyPath = DEFAULT_PUBLIC_KEY_PATH;
+        private String privateKeyPath = DEFAULT_PRIVATE_KEY_PATH;
         private String publicKey;
         private String privateKey;
         
@@ -111,7 +183,7 @@ public class CryptoConfig {
     }
     
     public static class Aes {
-        private String key;
+        private String key = DEFAULT_AES_KEY;
         
         public String getKey() {
             return key;

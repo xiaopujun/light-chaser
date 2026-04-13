@@ -26,8 +26,8 @@ public class RSAKeyGenerator {
             String publicKeyPem = convertToPemFormat(publicKeyBase64, "PUBLIC KEY");
             String privateKeyPem = convertToPemFormat(privateKeyBase64, "PRIVATE KEY");
             
-            // 创建keys目录
-            String keysDir = "src/main/resources/keys";
+            // 创建keys目录，默认写入当前工作目录下的 keys/
+            String keysDir = args.length > 0 ? args[0] : "keys";
             Files.createDirectories(Paths.get(keysDir));
             
             // 保存公钥文件

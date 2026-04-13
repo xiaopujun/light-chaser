@@ -179,11 +179,12 @@ mvn clean package
 
 - 配置文件：`backend/src/main/resources/application.yml`
 - `spring.datasource.url` 默认指向 `jdbc:sqlite:${user.dir}/lc-server.db`
-- `light-chaser.project-resource-path` 未配置时默认取启动目录 `user.dir`
+- `light-chaser.project-resource-path` 未配置时默认取启动目录 `user.dir`，建议指向一个可持久化且可写的目录
 - 图片资源默认映射到 `/static/images`
 - 封面资源默认映射到 `/static/covers`
 - `light-chaser.ai.enabled` 控制 AI 功能是否启用
 - `light-chaser.ai.models` 用于配置可调用模型列表，默认支持通过 `LC_AI_MODEL`、`LC_AI_BASE_URL` 和 `LC_AI_API_KEY` 环境变量覆盖
+- `light-chaser.crypto.rsa.public-key-path` 和 `light-chaser.crypto.rsa.private-key-path` 默认位于 `light-chaser.project-resource-path/keys/`，如果文件不存在，启动时会自动生成并持久化
 - RSA 和 AES 相关配置已内置在 `light-chaser.crypto`
 
 ### 前端

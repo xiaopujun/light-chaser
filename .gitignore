@@ -1,6 +1,9 @@
 lc-server.db
 logs
+keys/
+backend/keys/
 .idea
 frontend/node_modules
+node_modules
 backend/target
 backend/src/main/resources/static
