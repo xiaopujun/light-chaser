@@ -13,7 +13,8 @@ import {observer} from "mobx-react";
 import './LeftMenus.less';
 import designerLeftStore, {ILeftMenu} from "../DesignerLeftStore";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
-import {Connect, Layers, System} from "@icon-park/react";
+import {Brain, Connect, Layers, System} from "@icon-park/react";
+import AiFusionPromptBar from "../ai-fusion/AiFusionPromptBar.tsx";
 
 
 const menus: Array<ILeftMenu> = [
@@ -44,12 +45,17 @@ const LeftMenus = () => {
         if (!menu || menu === '')
             return;
         const {setMenu} = designerLeftStore;
+        designerLeftStore.setAiFusionVisible(false);
         setMenu(menu);
         //更新标尺位置
         const {rulerRef} = eventOperateStore;
         if (rulerRef)
             rulerRef.ruleWheel();
     }
+
+    const handleAiFusion = () => {
+        designerLeftStore.toggleAiFusionVisible();
+    };
 
     const buildClassifyList = () => {
         const {menu} = designerLeftStore;
@@ -68,8 +74,25 @@ const LeftMenus = () => {
     }
 
     return (
-        <div className={'designer-left-menus'} style={{overflowY: 'scroll'}}>
-            {buildClassifyList()}
+        <div className={'designer-left-menus'}>
+            <div className={'designer-left-menus-top'}>
+                {buildClassifyList()}
+            </div>
+            <div className={'designer-left-menus-bottom'}>
+                <button
+                    type="button"
+                    className={`ai-fusion-button ${designerLeftStore.aiFusionVisible ? "ai-fusion-button-active" : ""}`}
+                    onClick={handleAiFusion}
+                    title="AI 优化"
+                >
+                    <Brain theme="filled" size={20} strokeWidth={2} strokeLinecap="square"/>
+                    <span>AI 优化</span>
+                </button>
+            </div>
+            <AiFusionPromptBar
+                open={designerLeftStore.aiFusionVisible}
+                onClose={() => designerLeftStore.setAiFusionVisible(false)}
+            />
         </div>
     );
 }

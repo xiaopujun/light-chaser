@@ -12,7 +12,7 @@
 import './HomeMenus.less'
 import {useLocation, useNavigate} from "react-router-dom";
 import {memo} from "react";
-import {DashboardOne, Data, NetworkDrive, System} from "@icon-park/react";
+import {Brain, DashboardOne, Data, NetworkDrive, System} from "@icon-park/react";
 import {Menu, type MenuProps} from "antd";
 import {MenuItemType} from "antd/es/menu/interface";
 
@@ -33,6 +33,11 @@ const getMenus = () => {
             key: 'datasource',
             icon: <Data size={16}/>,
             label: '数据库管理'
+        },
+        {
+            key: 'ai-model',
+            icon: <Brain size={16}/>,
+            label: 'AI 模型'
         },
         {
             key: 'more',

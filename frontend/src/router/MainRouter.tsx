@@ -21,6 +21,7 @@ const Home = lazy(() => import('../pages/home/Home'));
 const ConsoleDashboard = lazy(() => import('../pages/home/console/ConsoleDashboard.tsx'));
 const ServerProjectList = lazy(() => import('../pages/home/server-list/ServerProjectList.tsx'));
 const DataSourceList = lazy(() => import('../pages/home/datasource/DataSourceList.tsx'));
+const AiModelManagement = lazy(() => import('../pages/home/ai-model-management/AiModelManagement.tsx'));
 const TemplateMarket = lazy(() => import('../pages/home/template-market/TemplateMarket.tsx'));
 const MoreInfo = lazy(() => import('../pages/home/more-info/MoreInfo.tsx'));
 const Demo = lazy(() => import('../test/Demo'));
@@ -449,6 +450,10 @@ const router = createBrowserRouter([
             {
                 path: 'datasource',
                 element: <DataSourceList/>,
+            },
+            {
+                path: 'ai-model',
+                element: <AiModelManagement/>,
             },
             {
                 path: 'template',

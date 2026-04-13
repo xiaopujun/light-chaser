@@ -37,6 +37,24 @@ light-chaser:
   #  project-resource-path: ./data/resources # 项目资源路径
   migration: # 是否自动跑sql脚本
     enable: true
+  ai:
+    # 通过环境变量或直接修改模型配置来启用 AI 功能。
+    # 开源版提供模型管理页，但不提供 AI 生成组件功能。
+    enabled: true
+    models:
+      - id: default
+        label: 默认模型
+        provider: openai-compatible
+        model-name: ${LC_AI_MODEL:gpt-4o-mini}
+        base-url: ${LC_AI_BASE_URL:https://api.openai.com/v1}
+        api-key: ${LC_AI_API_KEY:}
+        api-key-header: Authorization
+        api-key-prefix: Bearer
+        chat-completions-path: /chat/completions
+        enabled: true
+        is-default: true
+        temperature: 0.3
+        max-tokens: 2048
   crypto:
     rsa:
       public-key-path: keys/public_key.pem # RSA公钥文件路径

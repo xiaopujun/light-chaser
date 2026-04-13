@@ -9,10 +9,16 @@
  * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
  */
 
+import {globalMessage} from "../framework/message/GlobalMessage.tsx";
+
 export interface HttpResponse {
     code: number;
     msg: string;
     data: any;
+}
+
+export interface FetchRequestInit extends RequestInit {
+    loadingText?: string;
 }
 
 export default class FetchUtil {
@@ -21,7 +27,7 @@ export default class FetchUtil {
      * @param url
      * @param options
      */
-    static async get(url: string, options: RequestInit = {}): Promise<HttpResponse> {
+    static async get(url: string, options: FetchRequestInit = {}): Promise<HttpResponse> {
         options.method = 'GET';
         return FetchUtil.request(url, options);
     }
@@ -32,7 +38,7 @@ export default class FetchUtil {
      * @param data
      * @param options
      */
-    static async post(url: string, data: any, options: RequestInit = {}): Promise<HttpResponse> {
+    static async post(url: string, data: any, options: FetchRequestInit = {}): Promise<HttpResponse> {
         options.method = 'POST';
         //默认'Content-Type': 'application/json',
         options.headers = options.headers || {};
@@ -74,10 +80,13 @@ export default class FetchUtil {
      * @param options
      * @private
      */
-    private static async request(url: string, options: RequestInit = {}): Promise<HttpResponse> {
+    private static async request(url: string, options: FetchRequestInit = {}): Promise<HttpResponse> {
         let response: Response | null = null;
+        const loadingKey = FetchUtil.openLoadingMessage(options.loadingText);
+        const requestOptions: FetchRequestInit = {...options};
+        delete requestOptions.loadingText;
         try {
-            response = await fetch(url, options);
+            response = await fetch(url, requestOptions);
             if (!response.ok) {
                 console.error('请求错误:', response?.status, response?.statusText);
                 return {code: response?.status ?? 500, msg: response?.statusText ?? '', data: null};
@@ -98,6 +107,10 @@ export default class FetchUtil {
             }
         } catch (error: any) {
             return {code: response?.status ?? 500, msg: response?.statusText ?? '', data: null};
+        } finally {
+            if (loadingKey) {
+                globalMessage.messageApi?.destroy(loadingKey);
+            }
         }
     }
 
@@ -107,10 +120,13 @@ export default class FetchUtil {
      * @param options
      * @private
      */
-    private static async requestNativeResult(url: string, options: RequestInit = {}): Promise<any> {
+    private static async requestNativeResult(url: string, options: FetchRequestInit = {}): Promise<any> {
         let response: Response | null = null;
+        const loadingKey = FetchUtil.openLoadingMessage(options.loadingText);
+        const requestOptions: FetchRequestInit = {...options};
+        delete requestOptions.loadingText;
         try {
-            response = await fetch(url, options);
+            response = await fetch(url, requestOptions);
             if (response.ok) {
                 const contentType = response.headers.get('content-type');
                 if (contentType && contentType.includes('application/json')) {
@@ -127,7 +143,26 @@ export default class FetchUtil {
         } catch (error) {
             console.error('请求错误:', error);
             return null;
+        } finally {
+            if (loadingKey) {
+                globalMessage.messageApi?.destroy(loadingKey);
+            }
         }
+    }
+
+    private static openLoadingMessage(loadingText?: string): string | null {
+        if (!loadingText || !globalMessage.messageApi) {
+            return null;
+        }
+
+        const loadingKey = `fetch-loading-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+        globalMessage.messageApi.open({
+            key: loadingKey,
+            type: 'loading',
+            content: loadingText,
+            duration: 0,
+        });
+        return loadingKey;
     }
 
     /**

@@ -1,0 +1,123 @@
+/*
+ * Copyright © 2023-2025 puyinzhen
+ * All rights reserved.
+ *
+ * The copyright of this work (or idea/project/document) is owned by puyinzhen. Without explicit written permission, no part of this work may be reproduced, distributed, or modified in any form for commercial purposes.
+ *
+ * This copyright statement applies to, but is not limited to: concept descriptions, design documents, source code, images, presentation files, and any related content.
+ *
+ * For permission to use this work or any part of it, please contact 1182810784@qq.com to obtain written authorization.
+ */
+
+.ai-fusion-history-modal {
+  .ant-modal-content {
+    background: linear-gradient(180deg, rgba(24, 30, 47, 0.98) 0%, rgba(20, 26, 39, 0.98) 100%);
+    border: 1px solid rgba(79, 184, 255, 0.12);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.42);
+    color: #DCE3F3;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+
+  .ant-modal-header {
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .ant-modal-title {
+    color: #FFFFFF;
+  }
+
+  .ant-modal-close {
+    color: #B9C7E4;
+  }
+
+  .ant-modal-close:hover {
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .ant-modal-body {
+    max-height: ~"min(70vh, 720px)";
+    overflow: auto;
+    padding-right: 6px;
+  }
+}
+
+.ai-fusion-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ai-fusion-history-item {
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(79, 184, 255, 0.10);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.ai-fusion-history-item-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.ai-fusion-history-item-title-group {
+  min-width: 0;
+}
+
+.ai-fusion-history-item-title {
+  color: #FFFFFF;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.ai-fusion-history-item-subtitle {
+  margin-top: 2px;
+  color: #93A0B9;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.ai-fusion-history-item-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.ai-fusion-history-item-block + .ai-fusion-history-item-block {
+  margin-top: 10px;
+}
+
+.ai-fusion-history-item-label {
+  margin-bottom: 6px;
+  color: #9FB0CF;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.ai-fusion-history-item-text {
+  margin: 0;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.22);
+  color: #DCE3F3;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.ai-fusion-history-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  color: #9AA4BC;
+}

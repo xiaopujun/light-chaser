@@ -1,0 +1,131 @@
+.ai-model-edit-modal {
+  .ant-modal-content {
+    background: #2c2c3e;
+    border-radius: 8px;
+    border: 1px solid #3a3a4e;
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+  }
+
+  .ant-modal-header {
+    background: transparent;
+    border-bottom: 1px solid #3a3a4e;
+    padding: 16px 24px;
+
+    .ant-modal-title {
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+
+  .ant-modal-close {
+    color: #a0a0b2;
+
+    &:hover {
+      color: #4fb8ff;
+    }
+  }
+
+  .ant-modal-body {
+    padding: 16px 20px 6px;
+  }
+
+  .ant-modal-footer {
+    border-top: 1px solid #3a3a4e;
+    padding: 14px 20px;
+  }
+
+  .ant-btn-primary {
+    background: #4fb8ff;
+    border-color: #4fb8ff;
+
+    &:hover {
+      background: #3ca5e5;
+      border-color: #3ca5e5;
+    }
+  }
+}
+
+.modal-lead {
+  margin-bottom: 10px;
+  color: #a0a0b2;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.edit-form {
+  .ant-form-item {
+    margin-bottom: 20px;
+
+    &-label > label {
+      color: #a0a0b2;
+      font-size: 14px;
+      height: 24px;
+      line-height: 24px;
+    }
+  }
+
+  .ant-input,
+  .ant-input-affix-wrapper,
+  .ant-input-password,
+  .ant-select-selector,
+  .ant-input-number,
+  .ant-input-textarea {
+    background-color: #2c2c3e;
+    border: 1px solid #3a3a4e;
+    color: #ffffff;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+
+  .ant-input,
+  .ant-input-affix-wrapper,
+  .ant-input-password,
+  .ant-select-selector,
+  .ant-input-number,
+  .ant-input-textarea {
+    &:hover {
+      border-color: #4fb8ff;
+    }
+  }
+
+  .ant-input-affix-wrapper-focused,
+  .ant-input:focus,
+  .ant-input-focused,
+  .ant-select-focused .ant-select-selector,
+  .ant-input-number-focused,
+  .ant-input-number-affix-wrapper-focused {
+    border-color: #4fb8ff;
+    box-shadow: 0 0 0 2px rgba(79, 184, 255, 0.2);
+  }
+
+  .ant-input::placeholder,
+  .ant-input-textarea::placeholder {
+    color: #5a5a6e;
+  }
+
+  .ant-select-arrow {
+    color: #a0a0b2;
+  }
+}
+
+.switch-card {
+  margin-bottom: 0 !important;
+
+  .ant-form-item-control-input-content {
+    display: flex;
+  }
+}
+
+@media (max-width: 768px) {
+  .ai-model-edit-modal {
+    .ant-modal {
+      max-width: calc(100vw - 24px);
+      margin: 12px auto;
+    }
+
+    .ant-modal-content {
+      border-radius: 10px;
+    }
+  }
+}

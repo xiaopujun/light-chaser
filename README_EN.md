@@ -25,6 +25,7 @@ LIGHT CHASER is more than a page builder. It is a visual design foundation that 
 | Monorepo workflow | Frontend designer, backend service, deployment scripts, and development docs live in one repository |
 | Drag-and-drop design | Arrange components, resize elements, and configure properties directly on the canvas |
 | Blueprint interactions | Model event linking, data flow, and node relationships in a visual blueprint editor |
+| AI-assisted design | Model management, style optimization, and data optimization that match the desktop experience |
 | External data source access | SQLite works out of the box, and the data-source management page supports connection testing and maintenance |
 | Unified asset management | Project resources, images, covers, and static files are stored and served consistently |
 | Deployment-friendly | Supports local development, Nginx hosting, Docker images, and Compose-based orchestration |
@@ -65,6 +66,7 @@ flowchart LR
 - Canvas drag, zoom, and selection
 - Property panels for style, layout, and behavior
 - Blueprint-based node interaction orchestration
+- AI model management, AI style optimization, and AI data optimization
 - Component library and chart extensions
 - Code editor support for advanced configuration
 - End-to-end flow from home page to template market, designer, preview, and result views
@@ -73,6 +75,7 @@ flowchart LR
 
 - Project creation, duplication, update, import, and export
 - Data source listing, pagination, add, update, delete, and connection testing
+- AI model proxy APIs for calling OpenAI-compatible model services from the frontend
 - Image upload, cover management, and static resource serving
 - SQL execution and debugging APIs
 - Encryption-related APIs for secure frontend-backend coordination
@@ -179,6 +182,8 @@ mvn clean package
 - `light-chaser.project-resource-path` defaults to the startup directory `user.dir` if not configured
 - Images are served from `/static/images`
 - Covers are served from `/static/covers`
+- `light-chaser.ai.enabled` toggles the AI features
+- `light-chaser.ai.models` defines the available model list, and the default values can be overridden by `LC_AI_MODEL`, `LC_AI_BASE_URL`, and `LC_AI_API_KEY`
 - RSA and AES settings are built into `light-chaser.crypto`
 
 ### Frontend
@@ -193,6 +198,7 @@ mvn clean package
 |---|---|
 | `/api/project` | Project creation, update, duplication, import, export, and detail retrieval |
 | `/api/commonDatabase` | Data source management and connection testing |
+| `/api/aiModel` | AI model management, listing, and execution |
 | `/api/image` | Image upload, pagination, and deletion |
 | `/api/db/executor` | SQL execution |
 | `/api/crypto` | Encryption-related capabilities |
@@ -208,6 +214,7 @@ mvn clean package
 - If you still need split deployment, build the frontend with `pnpm build` and deploy `frontend/dist` using `frontend/Dockerfile` or your own Nginx setup
 - Build the backend with `mvn clean package`; the default artifact is `backend/target/lc-server.jar`, and the backend Dockerfile references that fixed name directly
 - `backend/docker-compose.yml` remains as a split-deployment example, and you can adjust image tags and mount paths for your environment
+- AI features currently provide model management, style optimization, and data optimization. Data optimization is limited to the open-source data source types already supported by the repository: `static`, `api`, and `database`
 
 ## Contributing & Support
 

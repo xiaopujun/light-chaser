@@ -22,13 +22,19 @@ class DesignerLeftStore {
     constructor() {
         makeObservable(this, {
             menu: observable,
+            aiFusionVisible: observable,
             setMenu: action,
+            setAiFusionVisible: action,
+            toggleAiFusionVisible: action,
         });
     }
 
     menu: string = 'components';
+    aiFusionVisible: boolean = false;
 
     setMenu = (menu: string) => this.menu = menu;
+    setAiFusionVisible = (visible: boolean) => this.aiFusionVisible = visible;
+    toggleAiFusionVisible = () => this.aiFusionVisible = !this.aiFusionVisible;
 
     designerLeftRef: HTMLElement | null = null;
 

@@ -119,4 +119,3 @@ const Designer = observer((props: DesignerProps) => {
 })
 
 export default Designer;
-
