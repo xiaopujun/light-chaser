@@ -5,7 +5,7 @@
 LIGHT CHASER is an open-source visual design platform for large-screen dashboards, data reports, and data analysis scenarios. This repository combines the frontend designer and backend service into a single codebase for easier development, integration, builds, and deployment.
 
 <p>
-  <img alt="version" src="https://img.shields.io/badge/version-v1.7.0-blue">
+  <img alt="version" src="https://img.shields.io/badge/version-v2.0.0-blue">
   <img alt="React" src="https://img.shields.io/badge/React-61daeb?logoColor=08CE5D">
   <img alt="Vite" src="https://img.shields.io/badge/Vite-purple">
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-blue">

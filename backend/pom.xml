@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.dagu</groupId>
     <artifactId>light-chaser-server</artifactId>
-    <version>1.7.0</version>
+    <version>2.0.0</version>
     <name>light-chaser-server</name>
     <description>light-chaser-server</description>
     <properties>
