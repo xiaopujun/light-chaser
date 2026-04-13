@@ -189,7 +189,7 @@ const AiFusionPromptBar = observer((props: AiFusionPromptBarProps) => {
                 enterFrameRef.current = null;
             }
         };
-    }, [mounted]);
+    }, [mounted, open]);
 
     useEffect(() => {
         if (!mounted || typeof window === "undefined") {
