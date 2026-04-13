@@ -226,3 +226,32 @@ mvn clean package
 
 - 本项目遵循 Apache 2.0 协议，请保留作品声明
 - 本项目仅用于学习交流，商业用途请务必先获取授权
+
+## 联系作者
+
+如需反馈问题、沟通合作，或了解项目最新进展，可以通过下方方式联系作者。
+
+<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
+    <div style="width: 100%; max-width: 420px">
+        <img alt="contact" src="https://i.072333.xyz/file/110e9602ef12a7d93bff0.jpg" style="width: 100%; max-width: 420px;">
+    </div>
+</div>
+
+## 社区 & 可持续发展
+
+如果你对 LIGHT CHASER 项目感兴趣，欢迎加入社区群聊交流使用经验、反馈问题，也欢迎通过 Issue 或 PR 参与项目改进。你的每一次反馈，都会帮助我们把这个项目做得更好。
+
+<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
+    <div style="width: 100%; max-width: 360px">
+        <img alt="group" src="https://files.seeusercontent.com/2026/04/12/2sSt/c13ca3a48db826541cb9aef2288ad739.jpg" style="width: 100%; max-width: 360px;">
+    </div>
+</div>
+
+LIGHT CHASER 已推出 Pro 版本。如果你有捐赠意愿，或希望洽谈商业合作，欢迎赞助我。作为感谢，我会向支持者提供 LIGHT CHASER Pro 版本。
+
+你现在可以通过 [http://www.lcdesigner.cn/](http://www.lcdesigner.cn/) 快速体验 Pro 的全部功能。
+
+- 账号：`admin`
+- 密码：`123456`
+
+感谢每一位项目贡献者、捐赠者和赞助商。
